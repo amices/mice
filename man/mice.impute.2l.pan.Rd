@@ -1,0 +1,125 @@
+\name{mice.impute.2l.pan}
+\alias{mice.impute.2L.pan}
+\alias{mice.impute.2l.pan}
+\alias{2L.pan}
+\alias{2l.pan}
+
+\title{Imputation by a Two-Level Normal Model using pan}
+\usage{
+mice.impute.2l.pan(y, ry, x, type, intercept=TRUE, paniter=500 , groupcenter.slope=FALSE , ...)
+mice.impute.2L.pan(y, ry, x, type, intercept=TRUE, paniter=500 , groupcenter.slope=FALSE , ...)
+}
+\description{Imputes univariate missing data using a two-level normal model with
+    homogeneous within group variances. Aggregated group effects (i.e. group means)
+    can be automatically created and included as predictors in the two-level
+    regression (see argument \code{type}). This function needs the \code{pan} package.}
+\arguments{
+  \item{y}{Incomplete data vector of length \code{n}}
+  \item{ry}{Vector of missing data pattern (\code{FALSE}=missing, \code{TRUE}=observed)}
+  \item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
+  \item{type}{Vector of length \code{ncol(x)} identifying random and class variables. 
+      Random effects are identified by a '2'. The group variable (only one 
+      is allowed) is coded as '-2'. Random effects also include the fixed 
+      effect. If for a covariates X1 group means shall be calculated and included as
+      further fixed effects choose '3'. In addition to the effects in '3', specification '4' also
+      includes random effects of X1.
+      }
+  \item{intercept}{Logical determining whether the intercept is
+      automatically added.}
+  \item{paniter}{Number of iterations in \code{pan}. Default is 500.}
+  \item{groupcenter.slope}{If \code{TRUE}, in case of group means (\code{type} is '3' or'4')  group mean
+    centering for these predictors are conducted before doing imputations. Default is \code{FALSE}.}
+  \item{...}{Other named arguments.}
+
+}
+
+\value{A vector of length \code{nmis} with imputations.
+}
+\details{
+    Implements the Gibbs sampler for the linear two-level model with homogeneous
+    within group variances which is a special case of a multivariate linear
+    mixed effects model (Schafer & Yucel, 2002).
+    For a two-level imputation with heterogeneous within-group variances see
+    {\code{\link{mice.impute.2l.norm}}}.
+%    The random intercept is automatically added in
+%    \code{mice.impute.2L.norm()}. 
+}
+\references{
+
+Schafer J L, Yucel RM (2002). Computational strategies for multivariate linear mixed-effects models with missing values. 
+\emph{Journal of Computational and Graphical Statistics}. \bold{11}, 437-457.
+
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011).
+\code{mice}: Multivariate Imputation by Chained Equations in \code{R}.
+\emph{Journal of Statistical Software}, \bold{45}(3), 1-67.
+\url{http://www.jstatsoft.org/v45/i03/}
+
+}
+
+\author{
+    Alexander Robitzsch (Federal Institute for Education Research, Innovation, and Development of the Austrian School System, Salzburg, Austria),
+    \email{a.robitzsch@bifie.at}
+    } 
+
+
+%% \keyword{datagen} 
+\seealso{\code{\link{mice.impute.2l.norm}}}
+
+
+\examples{
+###################################
+# simulate some data
+# two-level regression model with fixed slope
+
+# number of groups
+G <- 250
+# number of persons
+n <- 20
+# regression parameter
+beta <- .3
+# intraclass correlation
+rho <- .30
+# correlation with missing response
+rho.miss <- .10
+# missing proportion
+missrate <- .50
+y1 <- rep( rnorm( G , sd = sqrt( rho ) ) , each=n ) + rnorm(G*n , sd = sqrt( 1 - rho )) 
+x <-  rnorm( G*n )
+y <- y1 + beta  * x
+dfr0 <- dfr <- data.frame( "group" = rep(1:G , each=n ) , "x" = x , "y" = y )
+dfr[ rho.miss * x + rnorm( G*n , sd = sqrt( 1 - rho.miss ) ) < qnorm( missrate ) , "y" ] <- NA
+
+#.....
+# empty imputation in mice
+imp0 <- mice( as.matrix(dfr)  , maxit=0 )
+predM <- imp0$predictorMatrix
+impM <- imp0$method
+
+#...
+# specify predictor matrix and imputationMethod
+predM1 <- predM
+predM1["y","group"] <- -2
+predM1["y","x"] <- 1        # fixed x effects imputation
+impM1 <- impM
+impM1["y"] <- "2l.pan"
+
+# multilevel imputation
+imp1 <- mice( as.matrix( dfr ) , m = 1 , predictorMatrix = predM1 , 
+            imputationMethod = impM1 , maxit=1 )
+# multilevel analysis
+library(lme4)
+mod <- lmer( y ~ ( 1 + x | group) + x , data = complete(imp1) )
+summary(mod)
+
+############################################
+# Examples of predictorMatrix specification
+
+# random x effects
+# predM1["y","x"] <- 2
+
+# fixed x effects and group mean of x
+# predM1["y","x"] <- 3        
+
+# random x effects and group mean of x
+# predM1["y","x"] <- 4        
+}

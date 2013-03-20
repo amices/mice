@@ -1,0 +1,23 @@
+Package: mice
+Type: Package
+Version: 2.15
+Title: Multivariate Imputation by Chained Equations
+Date: 2013-03-20
+Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
+                    email = "stef.vanbuuren@tno.nl"),
+             person("Karin", "Groothuis-Oudshoorn", role = "aut",
+                    email = "c.g.m.oudshoorn@utwente.nl"),
+             person("Alexander", "Robitzsch", role = "ctb",
+                    email = "a.robitzsch@bifie.at"),
+             person("Gerko","Vink", role = "ctb",
+                    email = "g.vink@uu.nl"))
+Author: Stef van Buuren and Karin Groothuis-Oudshoorn, with contributions from Alexander Robitzsch and Gerko Vink
+Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
+Depends: R (>= 2.4.0), MASS, nnet, lattice, methods
+Suggests: AGD, mitools, nlme, Zelig, lme4, survival, gamlss, pan, VIM
+Description: Multiple imputation using Fully Conditional Specification (FCS) implemented by the MICE algorithm. Each variable has its own imputation model. Built-in imputation models are provided for continuous data (predictive mean matching, normal), binary data (logistic regression), unordered categorical data (polytomous logistic regression) and ordered categorical data (proportional odds). MICE can also impute continuous two-level data (normal model, pan, second-level variables). Passive imputation can be used to maintain consistency between variables. Various diagnostic plots are available to inspect the quality of the imputations.
+License: GPL-2 | GPL-3
+LazyLoad: yes
+LazyData: yes
+URL: http://www.stefvanbuuren.nl ; http://www.multiple-imputation.com
+

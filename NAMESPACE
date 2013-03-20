@@ -1,0 +1,111 @@
+importFrom("stats",lm)
+importFrom("stats",glm)
+importFrom("nnet",multinom)
+importFrom("MASS",lda,polr)
+importFrom("utils",packageDescription)
+importFrom("graphics",plot)
+importFrom("lattice",bwplot)
+importFrom("lattice",stripplot)
+importFrom("lattice",densityplot)
+importFrom("lattice",xyplot)
+
+exportClasses("mids",
+              "mira",
+              "mipo"
+)
+
+export("mice",
+       "mice.mids",
+       "sampler",
+       "padModel",
+       "check.df",
+       "remove.lindep",
+       "find.collinear",
+       "updateLog",
+       "mice.impute.norm",
+       "mice.impute.norm.nob",
+       "mice.impute.norm.predict",
+       "mice.impute.norm.boot",
+       "mice.impute.pmm",
+       "mice.impute.pmm2",
+       "mice.impute.logreg",
+       "mice.impute.logreg.boot",
+       "mice.impute.polyreg",
+       "mice.impute.polr",
+       "mice.impute.lda",
+       "mice.impute.mean",
+       "mice.impute.sample",
+       "mice.impute.passive",
+       "mice.impute.2l.norm",
+       "mice.impute.2L.norm",
+       "mice.impute.2l.pan",
+       "mice.impute.2L.pan",
+       "mice.impute.2lonly.mean",
+       "mice.impute.2lonly.pmm",
+       "mice.impute.2lonly.norm",
+       "mice.impute.quadratic",
+       ".norm.draw",
+       ".norm.fix",
+       ".pmm.match",
+       "augment",
+       "squeeze",
+       "md.pattern",
+       "md.pairs",
+       "mids2spss",
+       "mids2mplus",
+       "cc",
+       "ic",
+       "cci",
+       "ici",
+       "ccn",
+       "icn",
+       "quickpred",
+       "nelsonaalen",
+       "is.mids",
+       "is.mira",
+       "is.mipo",
+       "is.passive",
+       "as.mira",
+       "cbind.mids",
+       "rbind.mids",
+       "ibind",
+       "complete",
+       "lm.mids",
+       "glm.mids",
+       "with.mids",
+       "getfit",
+       "pool",
+       "pool.scalar",
+       "pool.r.squared",
+       "pool.compare",
+       "version",
+       "supports.transparent",
+       "mdc",
+       "mice.theme",
+       "stripplot.mids",
+       "bwplot.mids",
+       "densityplot.mids",
+       "xyplot.mids",
+       "flux",
+       "fluxplot",
+       "long2mids",
+       "ifdo",
+       "appendbreak",
+       "extractBS"
+       )
+
+exportMethods(print,
+              summary,
+              plot)
+
+S3method(cbind, mids)
+S3method(rbind, mids)
+S3method(with, mids)
+S3method(lm, mids)
+S3method(glm, mids)
+S3method(stripplot, mids)
+S3method(bwplot, mids)
+S3method(densityplot, mids)
+S3method(xyplot, mids)
+
+
