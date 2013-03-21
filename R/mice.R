@@ -2608,7 +2608,7 @@ LLlogistic<-function(formula, data, coefs){
 
     # Calculation of degrees of freedom for F distribution; the same for both methods.  
     v<-dimQ2 * (m-1)
-    if (v>4) w <- 4 + (v-4)*((1+(1-v/2)*(1/rm))^2)
+    if (v>4) w <- 4 + (v-4)*((1+(1-2/v)*(1/rm))^2)  ## SvB 21mar13 - according to Li 1991
     else w <- v*(1+1/dimQ2)*((1+1/rm)^2)/2
 
     statistic <- list(call = call, call11 = fit1$call, call12 = fit1$call1,

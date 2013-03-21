@@ -13,6 +13,10 @@ Question or suggestions about MICE can be send to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.15 - SvB
+FIXED    calculation of degrees of freedom in pool.compare() (thanks Lorenz Uhlmann) 
+
+
 V2.14 - 11-03-2013 / SvB
 ADDED    mice.impute.2l.mean() for imputing class means at level 2
 ADDED    sampler(): new checks of degrees of freedom per variable at iteration 1
