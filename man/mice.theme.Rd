@@ -1,0 +1,29 @@
+\name{mice.theme}
+\alias{mice.theme}
+\title{Set the theme for the plotting Trellis functions}
+\usage{
+  mice.theme(transparent = TRUE, alpha.fill = 0.3)
+}
+\arguments{
+  \item{transparent}{A logical indicating whether
+  alpha-transparancy is allowed. The default is
+  \code{TRUE}.}
+
+  \item{alpha.fill}{A numerical values between 0 and 1 that
+  indicates the default alpha value for fills.}
+}
+\value{
+  \code{mice.theme()} returns a named list that can be used
+  as a theme in the functions in \pkg{lattice}. By default,
+  the \code{mice.theme()} function sets \code{transparent
+  <- TRUE} if the current device \code{.Device} supports
+  semi-transparent colors.
+}
+\description{
+  The \code{mice.theme()} function sets default choices for
+  Trellis plots that are built into \pkg{mice}.
+}
+\author{
+  Stef van Buuren 2011
+}
+

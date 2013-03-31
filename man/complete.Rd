@@ -1,93 +1,100 @@
 \name{complete}
 \alias{complete}
-\title{Creates a Complete Flat File from a Multiply Imputed Data Set}
-\description{
-  Takes an object of class \code{mids}, fills in the missing data, and
-  returns the completed data in a specified format.
-}
+\title{Creates imputed data sets from a \code{mids} object}
 \usage{
-    complete(x, action=1, include=FALSE)
+  complete(x, action = 1, include = FALSE)
 }
-
 \arguments{
-  \item{x}{An object of class \code{mids}
-    as created by the function \code{mice()}.}
-  \item{action}{If action is a scalar between 1 and \code{x$m},
-    the function returns the data with imputation number \code{action}
-    filled in. Thus, \code{action=1} returns
-    the first completed data set, \code{action=2} returns the second 
-    completed data set, and so on. 
-    The value of \code{action} can also be one of the following
-    strings: \code{"long"}, \code{"broad"}, \code{"repeated"}. 
-    See 'Details' for the interpretation.}
-  \item{include}{Flag to indicate whether the orginal data with the
-    missing values should be included. This requires that \code{action} 
-    is specified as \code{"long"}, \code{"broad"} or \code{"repeated"}.
-    }
+  \item{x}{An object of class \code{mids} as created by the
+  function \code{mice()}.}
+
+  \item{action}{If action is a scalar between 1 and
+  \code{x$m}, the function returns the data with imputation
+  number \code{action} filled in. Thus, \code{action=1}
+  returns the first completed data set, \code{action=2}
+  returns the second completed data set, and so on.  The
+  value of \code{action} can also be one of the following
+  strings: \code{'long'}, \code{'broad'},
+  \code{'repeated'}.  See 'Details' for the
+  interpretation.}
+
+  \item{include}{Flag to indicate whether the orginal data
+  with the missing values should be included. This requires
+  that \code{action} is specified as \code{'long'},
+  \code{'broad'} or \code{'repeated'}.}
+}
+\value{
+  A data frame with the imputed values filled in.
+  Optionally, the original data are appended.
+}
+\description{
+  Takes an object of class \code{mids}, fills in the
+  missing data, and returns the completed data in a
+  specified format.
 }
 \details{
-    The argument \code{action} can also be a string, which is partially matched as follows:
-    \describe{
-        \item{\code{"long"}}{
-        produces a long data frame of vertically stacked imputed data sets with \code{nrow(x$data)} 
-        * \code{x$m}
-        rows and \code{ncol(x$data)+2} columns. The two additional columns are labeled
-        \code{.id} containing the row names of \code{x$data}, 
-        and \code{.imp} containing the imputation number.
-        If \code{include=TRUE} then \code{nrow(x$data)} additional rows with the original data are appended
-        with \code{.imp} set equal to \code{0}.
-        }
-    
-        \item{\code{"broad"}}{
-        produces a broad data frame with \code{nrow(x$data)} rows and \code{ncol(x$data)} * \code{x$m} columns. 
-        Columns are ordered such that the first \code{ncol(x$data)} columns corresponds to the first 
-        imputed data matrix. The imputation number is appended to each column name.
-        If \code{include=TRUE} then \code{ncol(x$data)} additional columns with the original data are appended.
-        The number \code{.0} is appended to the column names.
-        }
+  The argument \code{action} can also be a string, which is
+  partially matched as follows: \describe{
+  \item{list('\'long\'')}{ produces a long data frame of
+  vertically stacked imputed data sets with
+  \code{nrow(x$data)} * \code{x$m} rows and
+  \code{ncol(x$data)+2} columns. The two additional columns
+  are labeled \code{.id} containing the row names of
+  \code{x$data}, and \code{.imp} containing the imputation
+  number.  If \code{include=TRUE} then \code{nrow(x$data)}
+  additional rows with the original data are appended with
+  \code{.imp} set equal to \code{0}.  }
 
-        \item{\code{"repeated"}}{
-        produces a broad data frame with \code{nrow(x$data)} rows and \code{ncol(x$data)} * \code{x$m} columns. 
-        Columns are ordered such that the first \code{x$m} columns correspond to the \code{x$m} imputed 
-        versions of the first column in \code{x$data}. The imputation number is appended to each column name.
-        If \code{include=TRUE} then \code{ncol(x$data)} additional columns with the original data are appended.
-        The number \code{.0} is appended to the column names.
-        }
-    }
+  \item{list('\'broad\'')}{ produces a broad data frame
+  with \code{nrow(x$data)} rows and \code{ncol(x$data)} *
+  \code{x$m} columns. Columns are ordered such that the
+  first \code{ncol(x$data)} columns corresponds to the
+  first imputed data matrix. The imputation number is
+  appended to each column name.  If \code{include=TRUE}
+  then \code{ncol(x$data)} additional columns with the
+  original data are appended. The number \code{.0} is
+  appended to the column names.  }
+
+  \item{list('\'repeated\'')}{ produces a broad data frame
+  with \code{nrow(x$data)} rows and \code{ncol(x$data)} *
+  \code{x$m} columns. Columns are ordered such that the
+  first \code{x$m} columns correspond to the \code{x$m}
+  imputed versions of the first column in \code{x$data}.
+  The imputation number is appended to each column name.
+  If \code{include=TRUE} then \code{ncol(x$data)}
+  additional columns with the original data are appended.
+  The number \code{.0} is appended to the column names.  }
+  }
 }
-
-\value{
-  A data frame with the imputed values filled in. Optionally, the original data are appended.
-}
-
-\seealso{\code{\link{mice}}, \code{\link{mids}} }
-
 \examples{
-
 # do default multiple imputation on a numeric matrix
-imp <- mice(nhanes)          
+imp <- mice(nhanes)
 
 # obtain first imputated matrix
-mat <- complete(imp)         
+mat <- complete(imp)
 
 # fill in the third imputation
-mat <- complete(imp, 3)      
+mat <- complete(imp, 3)
 
 # long matrix with stacked complete data
-mat <- complete(imp, "long") 
+mat <- complete(imp, 'long')
 
 # long matrix with stacked complete data, including the original data
-mat <- complete(imp, "long", inc=TRUE)
+mat <- complete(imp, 'long', inc=TRUE)
 
 # repeated matrix with complete data
-mat <- complete(imp, "r")    
+mat <- complete(imp, 'r')
 
 # for numeric data, produces a blocked correlation matrix, where
 # each block contains of the same variable pair over different
 # multiple imputations.
-cor(mat)               
+cor(mat)
 }
+\author{
+  Stef van Buuren, Karin Groothuis-Oudshoorn, 2009
+}
+\seealso{
+  \code{\link{mice}}, \code{\link[=mids-class]{mids}}
+}
+\keyword{manip}
 
-\author{Stef van Buuren, Karin Groothuis-Oudshoorn, 2009}
-
-\keyword{manip} 
