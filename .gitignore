@@ -3,3 +3,6 @@
 .RData
 .DS_Store
 mice.Rproj
+NAMESPACE
+*.rd
+*.Rd

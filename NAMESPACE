@@ -1,111 +1,80 @@
-importFrom("stats",lm)
-importFrom("stats",glm)
-importFrom("nnet",multinom)
-importFrom("MASS",lda,polr)
-importFrom("utils",packageDescription)
-importFrom("graphics",plot)
-importFrom("lattice",bwplot)
-importFrom("lattice",stripplot)
-importFrom("lattice",densityplot)
-importFrom("lattice",xyplot)
-
-exportClasses("mids",
-              "mira",
-              "mipo"
-)
-
-export("mice",
-       "mice.mids",
-       "sampler",
-       "padModel",
-       "check.df",
-       "remove.lindep",
-       "find.collinear",
-       "updateLog",
-       "mice.impute.norm",
-       "mice.impute.norm.nob",
-       "mice.impute.norm.predict",
-       "mice.impute.norm.boot",
-       "mice.impute.pmm",
-       "mice.impute.pmm2",
-       "mice.impute.logreg",
-       "mice.impute.logreg.boot",
-       "mice.impute.polyreg",
-       "mice.impute.polr",
-       "mice.impute.lda",
-       "mice.impute.mean",
-       "mice.impute.sample",
-       "mice.impute.passive",
-       "mice.impute.2l.norm",
-       "mice.impute.2L.norm",
-       "mice.impute.2l.pan",
-       "mice.impute.2L.pan",
-       "mice.impute.2lonly.mean",
-       "mice.impute.2lonly.pmm",
-       "mice.impute.2lonly.norm",
-       "mice.impute.quadratic",
-       ".norm.draw",
-       ".norm.fix",
-       ".pmm.match",
-       "augment",
-       "squeeze",
-       "md.pattern",
-       "md.pairs",
-       "mids2spss",
-       "mids2mplus",
-       "cc",
-       "ic",
-       "cci",
-       "ici",
-       "ccn",
-       "icn",
-       "quickpred",
-       "nelsonaalen",
-       "is.mids",
-       "is.mira",
-       "is.mipo",
-       "is.passive",
-       "as.mira",
-       "cbind.mids",
-       "rbind.mids",
-       "ibind",
-       "complete",
-       "lm.mids",
-       "glm.mids",
-       "with.mids",
-       "getfit",
-       "pool",
-       "pool.scalar",
-       "pool.r.squared",
-       "pool.compare",
-       "version",
-       "supports.transparent",
-       "mdc",
-       "mice.theme",
-       "stripplot.mids",
-       "bwplot.mids",
-       "densityplot.mids",
-       "xyplot.mids",
-       "flux",
-       "fluxplot",
-       "long2mids",
-       "ifdo",
-       "appendbreak",
-       "extractBS"
-       )
-
-exportMethods(print,
-              summary,
-              plot)
-
-S3method(cbind, mids)
-S3method(rbind, mids)
-S3method(with, mids)
-S3method(lm, mids)
-S3method(glm, mids)
-S3method(stripplot, mids)
-S3method(bwplot, mids)
-S3method(densityplot, mids)
-S3method(xyplot, mids)
-
-
+export(appendbreak)
+export(as.mira)
+export(cbind.mids)
+export(ccn)
+export(complete)
+export(extractBS)
+export(fico)
+export(flux)
+export(fluxplot)
+export(getfit)
+export(glm.mids)
+export(ibind)
+export(icn)
+export(lm.mids)
+export(md.pairs)
+export(md.pattern)
+export(mdc)
+export(mice.impute.2l.norm)
+export(mice.impute.2l.pan)
+export(mice.impute.2lonly.mean)
+export(mice.impute.2lonly.norm)
+export(mice.impute.2lonly.pmm)
+export(mice.impute.lda)
+export(mice.impute.logreg)
+export(mice.impute.mean)
+export(mice.impute.norm.boot)
+export(mice.impute.norm.nob)
+export(mice.impute.norm.predict)
+export(mice.impute.norm)
+export(mice.impute.passive)
+export(mice.impute.pmm)
+export(mice.impute.polr)
+export(mice.impute.polyreg)
+export(mice.impute.quadratic)
+export(mice.impute.sample)
+export(mice.mids)
+export(mice.theme)
+export(mice)
+export(mids2mplus)
+export(mids2spss)
+export(nelsonaalen)
+export(pool.compare)
+export(pool.r.squared)
+export(pool.scalar)
+export(pool)
+export(quickpred)
+export(rbind.mids)
+export(squeeze)
+export(supports.transparent)
+export(version)
+exportClasses(mids)
+exportClasses(mipo)
+exportClasses(mira)
+exportMethods(cc)
+exportMethods(cci)
+exportMethods(ic)
+exportMethods(ici)
+importFrom(graphics,plot)
+importFrom(lattice,bwplot)
+importFrom(lattice,densityplot)
+importFrom(lattice,stripplot)
+importFrom(lattice,xyplot)
+importFrom(MASS,lda)
+importFrom(MASS,polr)
+importFrom(nnet,multinom)
+importFrom(stats,glm)
+importFrom(stats,lm)
+importFrom(utils,packageDescription)
+S3method(bwplot,mids)
+S3method(densityplot,mids)
+S3method(plot,mids)
+S3method(print,mids)
+S3method(print,mipo)
+S3method(print,mira)
+S3method(stripplot,mids)
+S3method(summary,mids)
+S3method(summary,mipo)
+S3method(summary,mira)
+S3method(with,mids)
+S3method(xyplot,mids)
