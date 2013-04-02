@@ -1,6 +1,6 @@
 # -------------------------MICE.IMPUTE.LOGREG-------------------------
 
-#'Multiple imputation by logistic regression
+#'Imputation by logistic regression
 #'
 #'Imputes univariate missing data using logistic regression.
 #'
