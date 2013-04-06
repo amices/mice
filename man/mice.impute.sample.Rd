@@ -1,6 +1,6 @@
 \name{mice.impute.sample}
 \alias{mice.impute.sample}
-\title{Imputation by simple random sampling}
+\title{Imputation by Simple Random Sampling}
 \usage{
   mice.impute.sample(y, ry, x = NULL, ...)
 }

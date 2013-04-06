@@ -1,6 +1,6 @@
 # -------------------MICE.IMPUTE.SAMPLE----------------------------
 
-#'Imputation by simple random sampling
+#'Imputation by Simple Random Sampling
 #'
 #'Imputes a random sample from the observed \code{y} data
 #'

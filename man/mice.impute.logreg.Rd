@@ -1,6 +1,6 @@
 \name{mice.impute.logreg}
 \alias{mice.impute.logreg}
-\title{Imputation by logistic regression}
+\title{Multiple imputation by logistic regression}
 \usage{
   mice.impute.logreg(y, ry, x, ...)
 }

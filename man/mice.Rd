@@ -175,9 +175,8 @@
   \item{polyreg}{Polytomous logistic regression (factor, >=
   2 levels)} \item{polr}{Proportional odds model (ordered,
   >=2 levels)} \item{lda}{Linear discriminant analysis
-  (factor, >= 2 categories)} \item{cart}{Classification and
-  regression tress (any)} \item{sample}{Random sample from
-  the observed values (any)} }
+  (factor, >= 2 categories)} \item{sample}{Random sample
+  from the observed values (any)} }
 
   These corresponding functions are coded in the
   \code{mice} library under names

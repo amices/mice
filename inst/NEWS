@@ -13,12 +13,9 @@ Question or suggestions about MICE can be send to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
-V2.15 - 02-04-1013 SvB
-CHANGED  complete reorganization of documentation and source files
-ADDED    source published on GitHub.com
-ADDED    new imputation method mice.impute.cart() (thanks Lisa Doove)
+V2.15 - SvB
 FIXED    calculation of degrees of freedom in pool.compare() (thanks Lorenz Uhlmann) 
-FIXED    error in DESCRIPTION file (thanks Kurt Hornik)
+
 
 V2.14 - 11-03-2013 / SvB
 ADDED    mice.impute.2l.mean() for imputing class means at level 2

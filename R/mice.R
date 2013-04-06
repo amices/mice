@@ -44,7 +44,6 @@
 #'\item{polyreg}{Polytomous logistic regression (factor, >= 2 levels)}
 #'\item{polr}{Proportional odds model (ordered, >=2 levels)}
 #'\item{lda}{Linear discriminant analysis (factor, >= 2 categories)}
-#'\item{cart}{Classification and regression tress (any)}
 #'\item{sample}{Random sample from the observed values (any)} }
 #'
 #'These corresponding functions are coded in the \code{mice} library under
@@ -334,11 +333,10 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
             y <- data[, j]
             vname <- dimnames(data)[[2]][j]
             mj <- method[j]
-            mlist <- list(m1 = c("logreg", "logreg.boot", "polyreg", "lda", "polr"), 
-                          m2 = c("norm", "norm.nob", "norm.predict", "norm.boot", "mean", 
-                                 "2l.norm", "2L.norm", "2l.pan", "2L.pan", "2lonly.pan", "quadratic"), 
-                          m3 = c("norm", "norm.nob", "norm.predict", "norm.boot", "mean", 
-                                 "2l.norm", "2L.norm", "2l.pan", "2L.pan", "2lonly.pan", "quadratic", "logreg", "logreg.boot"))
+            mlist <- list(m1 = c("logreg", "logreg.boot", "polyreg", "lda", "polr"), m2 = c("norm", "norm.nob", "norm.predict", 
+                "norm.boot", "mean", "2l.norm", "2L.norm", "2l.pan", "2L.pan", "2lonly.pan", "quadratic"), m3 = c("norm", "norm.nob", 
+                "norm.predict", "norm.boot", "mean", "2l.norm", "2L.norm", "2l.pan", "2L.pan", "2lonly.pan", "quadratic", "logreg", 
+                "logreg.boot"))
             
             if (is.numeric(y) & (mj %in% mlist$m1)) 
                 warning("Type mismatch for variable ", vname, "\nImputation method ", mj, " is for categorical data.", "\nIf you want that, turn variable ", 

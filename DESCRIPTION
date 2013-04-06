@@ -2,7 +2,7 @@ Package: mice
 Type: Package
 Version: 2.15
 Title: Multivariate Imputation by Chained Equations
-Date: 2013-04-02
+Date: 2013-03-31
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -10,29 +10,26 @@ Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     person("Alexander", "Robitzsch", role = "ctb",
     email = "a.robitzsch@bifie.at"),
     person("Gerko","Vink", role = "ctb",
-    email = "g.vink@uu.nl"),
-    person("Lisa","Doove", role = "ctb",
-    email = "lisa.doove@ppw.kuleuven.be"))
+    email = "g.vink@uu.nl"))
 Author: Stef van Buuren and Karin Groothuis-Oudshoorn, with contributions from
-    Alexander Robitzsch, Gerko Vink and Lisa Doove
+    Alexander Robitzsch and Gerko Vink
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
-    R (>= 2.10.0),
+    R (>= 2.4.0),
     MASS,
-    methods,
-    lattice
-Imports:
     nnet,
-    rpart
+    lattice,
+    methods
 Suggests:
     AGD,
-    gamlss,
-    lme4,
     mitools,
     nlme,
-    pan,
+    Zelig,
+    lme4,
     survival,
-    Zelig
+    gamlss,
+    pan,
+    VIM
 Description: Multiple imputation using Fully Conditional Specification (FCS)
     implemented by the MICE algorithm. Each variable has its own imputation
     model. Built-in imputation models are provided for continuous data
@@ -45,7 +42,7 @@ Description: Multiple imputation using Fully Conditional Specification (FCS)
 License: GPL-2 | GPL-3
 LazyLoad: yes
 LazyData: yes
-URL: http://www.stefvanbuuren.nl , http://www.multiple-imputation.com
+URL: http://www.stefvanbuuren.nl ; http://www.multiple-imputation.com
 Collate:
     'as.r'
     'auxiliary.r'
@@ -128,4 +125,3 @@ Collate:
     'densityplot.r'
     'cci.r'
     'ccn.r'
-    'mice.impute.cart.r'
