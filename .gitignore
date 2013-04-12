@@ -5,7 +5,7 @@
 mice.Rproj
 NAMESPACE
 .Rproj.user
-?.patch
-?~
-?.orig
-?.rej
+*.patch
+*~
+*.orig
+*.rej
