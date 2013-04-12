@@ -13,11 +13,11 @@ Question or suggestions about MICE can be send to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
-V2.15 - 02-04-1013 SvB
+V2.15 - 02-04-2013 SvB
 CHANGED  complete reorganization of documentation and source files
 ADDED    source published on GitHub.com
 ADDED    new imputation method mice.impute.cart() (thanks Lisa Doove)
-FIXED    calculation of degrees of freedom in pool.compare() (thanks Lorenz Uhlmann) 
+FIXED    calculation of degrees of freedom in pool.compare() (thanks Lorenz Uhlmann)
 FIXED    error in DESCRIPTION file (thanks Kurt Hornik)
 
 V2.14 - 11-03-2013 / SvB
@@ -30,24 +30,24 @@ FIXED    family argument in call to glm() in glm.mids() (thanks Nicholas Horton)
 FIXED    .norm.draw(): evading NaN imputed values by setting df in rchisq() to a minimum of 1
 FIXED    bug in mice.df() that prevented the classic Rubin df calculation (thanks Jean-Batiste Pingaul)
 FIXED    bug fixed in mice.impute.2l.norm() (thanks Robert Long)
-CHANGED  faster .pmm.match2() from version 2.12 renamed to default .pmm.match() 
+CHANGED  faster .pmm.match2() from version 2.12 renamed to default .pmm.match()
 
 V2.13 - 03-07-2012 / SvB
 ADDED    new multilevel functions 2l.pan(), 2lonly.norm(), 2lonly.pmm() (contributed by Alexander Robitzsch)
 ADDED    new quadratic imputation function: quadratic() (contributed by Gerko Vink)
-ADDED    pmm2(), five times faster than pmm() 
+ADDED    pmm2(), five times faster than pmm()
 ADDED    new argument data.init in mice() for initialization (suggested by Alexander Robitzsch)
 ADDED    mice() now accepts pmm as method for (ordered) factors
-ADDED    warning and a note to 2l.norm() that advises to use type=2 for the predictors 
+ADDED    warning and a note to 2l.norm() that advises to use type=2 for the predictors
 FIXED    bug that chrashed plot.mids() if there was only one incomplete variable (thanks Dennis Prangle)
 FIXED    bug in sample() in .pmm.match() when donor=1 (thanks Alexander Robitzsch)
-FIXED    bug in sample() in mice.impute.sample() 
+FIXED    bug in sample() in mice.impute.sample()
 FIXED    fixed '?data' bug in check.method()
 REMOVED	 wp.twin(). Now available from the AGD package
 
 V2.12 - 25-03-2012 / SvB
 UPDATE   version for launch of Flexible Imputation of Missing Data (FIMD)
-ADDED    code fimd1.r-fim9.r to inst/doc for calculating solutions in FIMD  
+ADDED    code fimd1.r-fim9.r to inst/doc for calculating solutions in FIMD
 FIXED    more robust version of supports.transparent() (thanks Brian Ripley)
 ADDED    auxiliary functions ifdo(), long2mids(), appendbreak(), extractBS(), wp.twin()
 ADDED    getfit() function
@@ -56,8 +56,8 @@ FIXED    as.mira() added to namespace
 ADDED 	 functions flux(), fluxplot() and fico() for missing data patterns
 ADDED    function nelsonaalen() for imputing survival data
 CHANGED  rm.whitespace() shortened
-FIXED    bug in pool() that crashed on nonstandard behavior of survreg() (thanks Erich Studerus) 
-CHANGED  pool() streamlined, warnings about incompatibility in lengths of coef() and vcov() 
+FIXED    bug in pool() that crashed on nonstandard behavior of survreg() (thanks Erich Studerus)
+CHANGED  pool() streamlined, warnings about incompatibility in lengths of coef() and vcov()
 FIXED    mdc() bug that ignored transparent=FALSE argument, now made visible
 FIXED    bug in md.pattern() for >32 variables (thanks Sascha Vieweg, Joshua Wiley)
 
@@ -103,31 +103,31 @@ ADDED:   internal functions mice.df() and df.residual()
 FIXED:   error in rm calculation for "likelihood" in pool.compare()
 CHANGED: default ridge parameter changed
 
-V2.5 - 06-01-2011 / SvB 
+V2.5 - 06-01-2011 / SvB
 ADDED:   various stability enhancements and code clean-up
 ADDED:   find.collinear() function
 CHANGED: automatic removal of constant and collinear variables
 ADDED:   ridge parameter in .norm.draw() and .norm.fix()
 ADDED:   mice.impute.polr() for ordered factors
-FIXED:   chainMean and chainVar in mice.mids() 
-FIXED:   iteration counter for mice.mids and sampler() 
+FIXED:   chainMean and chainVar in mice.mids()
+FIXED:   iteration counter for mice.mids and sampler()
 ADDED:   component 'loggedEvents' to mids-object for logging actions
 REMOVED: annoying warnings about removed predictors
 ADDED:   updateLog() function
-CHANGED: smarter handling of model setup in mice()   
-CHANGED: .pmm.match() now draws from the three closest donors 
+CHANGED: smarter handling of model setup in mice()
+CHANGED: .pmm.match() now draws from the three closest donors
 ADDED:   mids2spss() for shipping a mids-object to SPSS
 FIXED:   change in summary.mipo() to work with as.mira()
 ADDED:   function mice.impute.2L.norm.noint()
 ADDED:   function as.mira()
 FIXED:   global assign() removed from mice.impute.polyreg()
-FIXED:   improved handling of factors by complete() 
+FIXED:   improved handling of factors by complete()
 FIXED:   improved labeling of nhanes2 data
 
 V2.4 - 17-10-2010 / SvB
-ADDED:   pool() now supports class 'polr' (Jean-Baptiste Pingault) 
-FIXED:   solved problem in mice.impute.polyreg when one of the variables was named y or x 
-FIXED:   remove.lindep: intercept prediction bug 
+ADDED:   pool() now supports class 'polr' (Jean-Baptiste Pingault)
+FIXED:   solved problem in mice.impute.polyreg when one of the variables was named y or x
+FIXED:   remove.lindep: intercept prediction bug
 ADDED:   version() function
 ADDED:   cc(), cci() and ccn() convenience functions
 
@@ -135,7 +135,7 @@ V2.3 - 14-02-2010 / SvB
 FIXED:   check.method: logicals are now treated as binary variables (Emmanuel Charpentier)
 FIXED:   complete: the NULL imputation case is now properly handled
 FIXED:   mice.impute.pmm: now creates between imputation variability for univariate predictor
-FIXED:   remove.lindep: returns 'keep' vector instead of data 
+FIXED:   remove.lindep: returns 'keep' vector instead of data
 
 V2.2 - 13-01-2010 / SvB
 ADDED:   pool() now supports class 'multinom' (Jean-Baptiste Pingault)
@@ -147,9 +147,9 @@ V2.1 - 14-09-2009 / SvB
 ADDED:   pool() now also supports class 'mer'
 CHANGED: nlme and lme4 are now only loaded if needed (by pool())
 FIXED:   bug fixed in mice.impute.polyreg() when there was one missing entry (Emmanuel Charpentier)
-FIXED:   bug fixed in plot.mids() when there was one missing entry (Emmanuel Charpentier) 
+FIXED:   bug fixed in plot.mids() when there was one missing entry (Emmanuel Charpentier)
 CHANGED: NAMESPACE expanded to allow easy access to function code
-FIXED:   mice() can now find mice.impute.xxx() functions in the .GlobalEnv 
+FIXED:   mice() can now find mice.impute.xxx() functions in the .GlobalEnv
 
 v2.0 - 26-08-2009 / SvB, KO 	Major upgrade for JSS manuscript
 ADDED:   new functions cbind.mids(), rbind.mids(), ibind()
