@@ -176,8 +176,9 @@
   2 levels)} \item{polr}{Proportional odds model (ordered,
   >=2 levels)} \item{lda}{Linear discriminant analysis
   (factor, >= 2 categories)} \item{cart}{Classification and
-  regression tress (any)} \item{sample}{Random sample from
-  the observed values (any)} }
+  regression tress (any)} \item{ri}{Random indicator method
+  for nonignorable data (numeric)} \item{sample}{Random
+  sample from the observed values (any)} }
 
   These corresponding functions are coded in the
   \code{mice} library under names
@@ -253,8 +254,9 @@ mice(nhanes2, meth=c('sample','pmm','logreg','norm'))
   Stef van Buuren \email{stef.vanbuuren@tno.nl}, Karin
   Groothuis-Oudshoorn \email{c.g.m.oudshoorn@utwente.nl},
   2000-2010, with contributions of Alexander Robitzsch,
-  Gerko Vink, Roel de Jong, Jason Turner, John Fox, Frank
-  E. Harrell, and Peter Malewski.
+  Gerko Vink, Shahab Jolani, Roel de Jong, Jason Turner,
+  Lisa Doove, John Fox, Frank E. Harrell, and Peter
+  Malewski.
 }
 \references{
   Van Buuren, S., Groothuis-Oudshoorn, K. (2011).

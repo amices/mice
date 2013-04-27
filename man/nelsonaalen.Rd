@@ -31,6 +31,8 @@
   for an example.
 }
 \examples{
+require(MASS)
+
 leuk$status <- 1  ## no censoring occurs in leuk data (MASS)
 ch <- nelsonaalen(leuk, time, status)
 plot(x = leuk$time, y = ch, ylab='Cumulative hazard', xlab='Time')

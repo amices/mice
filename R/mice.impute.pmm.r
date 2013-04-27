@@ -68,14 +68,40 @@ mice.impute.pmm <- function(y, ry, x, ...)
     ynum <- y
     if (is.factor(y)) 
         ynum <- as.integer(y)  ## added 25/04/2012
-    parm <- .norm.draw(y, ry, x, ...)
+    parm <- .norm.draw(ynum, ry, x, ...)  ## bug fix 10apr2013
     yhatobs <- x[ry, ] %*% parm$coef
     yhatmis <- x[!ry, ] %*% parm$beta
     return(apply(as.array(yhatmis), 1, .pmm.match, yhat = yhatobs, y = y[ry], ...))
 }
 
-# -------------------------.PMM.MATCH-------------------------------- faster .pmm.match2() from version 2.12 renamed to
-# default .pmm.match()
+# -------------------------.PMM.MATCH-------------------------------- 
+#' Finds an imputed value from matches in the predictive metric
+#' 
+#' This function finds matches among the observed data in the predictive 
+#' mean metric. It selects the \code{donors} closest matches, randomly 
+#' samples one of the donors, and returns the observed value of the
+#' match.
+#' 
+#'@aliases .pmm.match
+#'@param z A scalar containing the predicted value for the current case
+#'to be imputed.
+#'@param yhat A vector containing the predicted values for all cases with an observed 
+#'outcome.
+#'@param y A vector of \code{length(yhat)} elements containing the observed outcome
+#'@param donors The size of the donor pool among which a draw is made. The default is 
+#'\code{donors = 3}. Setting \code{donors = 1} always selects the closest match. Values 
+#'between 3 and 10 provide the best results.
+#'@param \dots Other parameters (not used).
+#'@return A scalar containing the observed value of the selected donor.
+#'@author Stef van Buuren
+#'@references
+#'Schenker N \& Taylor JMG (1996) Partially parametric techniques 
+#'for multiple imputation. \emph{Computational Statistics and Data Analysis}, 22, 425-446.
+#'
+#'Little RJA (1988) Missing-data adjustments in large surveys (with discussion). 
+#'\emph{Journal of Business Economics and Statistics}, 6, 287-301.
+#'
+#'@export
 .pmm.match <- function(z, yhat = yhat, y = y, donors = 3, ...) {
     d <- abs(yhat - z)
     f <- d > 0

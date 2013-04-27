@@ -155,6 +155,8 @@
   All other arguments have identical interpretation.
 }
 \examples{
+require(lattice)
+
 imp <- mice(boys, maxit=1)
 
 ### xyplot: scatterplot by imputation number

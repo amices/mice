@@ -92,6 +92,7 @@ mice.impute.2l.norm <- function(y, ry, x, type, intercept = TRUE, ...) {
     n.iter <- 100
     nry <- !ry
     n.class <- length(unique(x[, type == (-2)]))
+    if (n.class == 0) stop("No class variable")   ## SvB 27apr2013
     gf.full <- factor(x[, type == (-2)], labels = 1:n.class)
     gf <- gf.full[ry]
     XG <- split.data.frame(as.matrix(x[ry, type == 2]), gf)

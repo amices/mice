@@ -43,7 +43,7 @@
 #'\emph{Sociological Methods & Research}, accepted for publication.
 #'@keywords datagen
 #'@examples
-#'
+#'require(lattice)
 #'	
 #'# Create Data
 #'B1=.5

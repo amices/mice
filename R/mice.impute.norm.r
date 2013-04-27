@@ -41,14 +41,30 @@ mice.impute.norm <- function(y, ry, x, ...) {
     return(x[!ry, ] %*% parm$beta + rnorm(sum(!ry)) * parm$sigma)
 }
 
-# --------------------------------.NORM.DRAW-----------------------------
+#' Draws values of beta and sigma by Bayesian linear regression
+#' 
+#' This function draws random values of beta and sigma under the Bayesian 
+#' linear regression model as described in Rubin (1987, p. 167). This function
+#' can be called by user-specified imputation functions.
+#' 
+#'@aliases .norm.draw
+#'@param y Incomplete data vector of length \code{n}
+#'@param ry Vector of missing data pattern (\code{FALSE}=missing,
+#'\code{TRUE}=observed)
+#'@param x Matrix (\code{n} x \code{p}) of complete covariates.
+#'@param ridge A small numerical value specifying the size of the ridge used. 
+#' The default value \code{ridge = 1e-05} represents a compromise between stability
+#' and unbiasedness. Decrease \code{ridge} if the data contain many junk variables.
+#' Increase \code{ridge} for highly collinear data. 
+#'@param ... Other named arguments.
+#'@return A \code{list} containing components \code{coef} (least squares estimate),
+#'\code{beta} (drawn regression weights) and \code{sigma} (drawn value of the 
+#'residual standard deviation).
+#'@references
+#'Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
+#'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+#'@export
 .norm.draw <- function(y, ry, x, ridge = 1e-05, ...) {
-    # .norm.draw Draws values of beta and sigma for Bayesian linear regrssion imputation of y given x according to Rubin p.
-    # 167 x is complete.
-    # 
-    # TNO Quality of Life authors: S. van Buuren and K. Groothuis-Oudshoorn
-    # 
-    # adapted 17/12 nrow(x) should be sum(ry)
     xobs <- x[ry, ]
     yobs <- y[ry]
     xtx <- t(xobs) %*% xobs
@@ -58,7 +74,6 @@ mice.impute.norm <- function(y, ry, x, ...) {
     v <- solve(xtx + diag(pen))
     coef <- t(yobs %*% xobs %*% v)
     residuals <- yobs - xobs %*% coef
-    # sigma.star <- sqrt(sum((residuals)^2)/rgamma(1, sum(ry) - ncol(x)))
     df <- max(sum(ry) - ncol(x), 1)  # SvB 31/10/2012
     sigma.star <- sqrt(sum((residuals)^2)/rchisq(1, df))  # SvB 01/02/2011
     beta.star <- coef + (t(chol((v + t(v))/2)) %*% rnorm(ncol(x))) * sigma.star

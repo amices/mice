@@ -52,6 +52,8 @@
   impute.
 }
 \examples{
+require(lattice)
+
 # Create Data
 B1=.5
 B2=.5

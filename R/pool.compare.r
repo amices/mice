@@ -79,8 +79,8 @@
 #'#
 #'
 #'### Comparison of two general linear models (logistic regression).
+#'\dontrun{
 #'imp  <- mice(boys, maxit=2)
-#'\donttest{
 #'fit0 <- with(imp, glm(gen>levels(gen)[1] ~ hgt+hc,family=binomial))
 #'fit1 <- with(imp, glm(gen>levels(gen)[1] ~ hgt+hc+reg,family=binomial))
 #'pool.compare(fit1, fit0, method='likelihood', data=imp)}

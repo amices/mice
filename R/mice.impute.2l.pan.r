@@ -124,6 +124,7 @@ mice.impute.2l.pan <- function(y, ry, x, type, intercept=TRUE, paniter = 500 ,
         x <- cbind(1, as.matrix(x))
         type <- c(2, type)
     }
+        
     # add groupmeans in the regression model
     if ( sum( type %in% c(3,4)) > 0 ){ 
         x0 <- as.matrix(cbind( x[ , type == -2  ]  , x[ , type %in% c(3,4) ]  ))
@@ -177,6 +178,9 @@ mice.impute.2l.pan <- function(y, ry, x, type, intercept=TRUE, paniter = 500 ,
     # noninformative priors
     prior <- list( a=ncol(y1),   Binv= diag( rep(1,ncol(y1) ) ) , 
                    c= ncol(y1) * length(zcol) ,  Dinv= diag( rep(1 ,ncol(y1)*length(zcol) ) )     )
+    
+    if (length(subj) != nrow(y1)) stop("No class variable")     ## fixed SvB 27apr2013
+
     # pan imputation
     ii <- 0
     while (ii == 0){ 

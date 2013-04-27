@@ -47,6 +47,7 @@
 #' xlab = "Imputed BMI", ylab="Calculated BMI")   
 #'
 #'# also, BMI distributions are somewhat different
+#'require(MASS)
 #'oldpar <- par(mfrow=c(1,2))
 #'truehist(z$bmi[!is.na(boys$bmi)],h=1,xlim=c(10,30),ymax=0.25,
 #' col=mdc(1),xlab="BMI observed")

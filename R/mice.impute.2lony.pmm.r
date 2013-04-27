@@ -87,7 +87,7 @@ mice.impute.2lonly.pmm <- function (y, ry, x, type , ...){
 # can be done with norm and pmm
 .imputation.level2 <- function( y , ry , x , type , imputationMethod , ... ){
     if ( sum(type==-2 ) != 1 ){
-        stop( "define for 2lonly imputation one and only grouping variable with type=-2")
+        stop( "No class variable")
     }
     # extract cluster index
     clusterx <- x[,type == -2 ]

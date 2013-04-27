@@ -28,6 +28,7 @@ mice.impute.2lonly.mean <- function(y, ry, x, type, ...) {
         stop("No missing data found")
     yobs <- y[ry]
     class <- x[, type == -2]
+    if (ncol(class) == 0) stop("No class variable")   ## SvB 27apr2013
     classobs <- class[ry]
     classmis <- class[!ry]
     

@@ -22,6 +22,9 @@ pattern} \item{list("pattern4")}{Data with a general missing data pattern} }}
   illustrate various missing data patterns.
 }
 \examples{
+require(lattice)
+require(MASS)
+
 pattern4
 
 data <- rbind(pattern1, pattern2, pattern3, pattern4)

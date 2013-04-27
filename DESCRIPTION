@@ -1,8 +1,8 @@
 Package: mice
 Type: Package
-Version: 2.15
+Version: 2.16
 Title: Multivariate Imputation by Chained Equations
-Date: 2013-04-02
+Date: 2013-04-27
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -12,17 +12,19 @@ Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     person("Gerko","Vink", role = "ctb",
     email = "g.vink@uu.nl"),
     person("Lisa","Doove", role = "ctb",
-    email = "lisa.doove@ppw.kuleuven.be"))
+    email = "lisa.doove@ppw.kuleuven.be"),
+    person("Shahab","Jolani", role = "ctb",
+    email = "s.jolani@uu.nl"))
 Author: Stef van Buuren and Karin Groothuis-Oudshoorn, with contributions from
-    Alexander Robitzsch, Gerko Vink and Lisa Doove
+    Alexander Robitzsch, Gerko Vink, Shahab Jolani and Lisa Doove
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
     R (>= 2.10.0),
-    MASS,
     methods,
-    lattice
+    lattice,
+    MASS,
+    nnet
 Imports:
-    nnet,
     rpart
 Suggests:
     AGD,
@@ -120,7 +122,6 @@ Collate:
     'windspeed.r'
     'with.r'
     'zzz.r'
-    'namespace.r'
     'mice.theme.r'
     'xyplot.r'
     'stripplot.r'
@@ -129,3 +130,4 @@ Collate:
     'cci.r'
     'ccn.r'
     'mice.impute.cart.r'
+    'mice.impute.ri.r'

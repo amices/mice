@@ -192,6 +192,8 @@
   \code{stripplot} as a replacement.
 }
 \examples{
+require(lattice)
+
 imp <- mice(boys, maxit=1)
 
 ### density plot of head circumference per imputation

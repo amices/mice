@@ -126,8 +126,9 @@
 #'Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 #'Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 #'@keywords hplot
+#'@importFrom lattice bwplot
 #'@examples
-#'
+#'require(lattice)
 #'
 #'imp <- mice(boys, maxit=1)
 #'

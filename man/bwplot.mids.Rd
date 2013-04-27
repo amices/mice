@@ -170,6 +170,8 @@
   All other arguments have identical interpretation.
 }
 \examples{
+require(lattice)
+
 imp <- mice(boys, maxit=1)
 
 ### box-and-whisker plot per imputation of all numerical variables

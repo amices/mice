@@ -16,7 +16,8 @@
 #'Boca Raton, FL: Chapman & Hall/CRC Press.
 #'@keywords datasets
 #'@examples
-#'
+#'require(lattice)
+#'require(MASS)
 #'
 #'pattern4
 #'

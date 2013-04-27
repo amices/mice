@@ -24,7 +24,7 @@
 #'Raton, FL: Chapman \& Hall/CRC Press.
 #'@keywords misc
 #'@examples
-#'
+#'require(MASS)
 #'
 #'leuk$status <- 1  ## no censoring occurs in leuk data (MASS)
 #'ch <- nelsonaalen(leuk, time, status)

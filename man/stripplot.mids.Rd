@@ -174,33 +174,35 @@
   All other arguments have identical interpretation.
 }
 \examples{
+require(lattice)
+
 imp <- mice(boys, maxit=1)
 
 ### stripplot, all numerical variables
-stripplot(imp)
+\dontrun{stripplot(imp)}
 
 ### same, but with improved display
-stripplot(imp, col=c("grey",mdc(2)),pch=c(1,20))
+\dontrun{stripplot(imp, col=c("grey",mdc(2)),pch=c(1,20))}
 
 ### distribution per imputation of height, weight and bmi
 ### labeled by their own missingness
-stripplot(imp, hgt+wgt+bmi~.imp, cex=c(2,4), pch=c(1,20),jitter=FALSE,
-layout=c(3,1))
+\dontrun{stripplot(imp, hgt+wgt+bmi~.imp, cex=c(2,4), pch=c(1,20),jitter=FALSE,
+layout=c(3,1))}
 
 ### same, but labeled with the missingness of wgt (just four cases)
-stripplot(imp, hgt+wgt+bmi~.imp, na=wgt, cex=c(2,4), pch=c(1,20),jitter=FALSE,
-layout=c(3,1))
+\dontrun{stripplot(imp, hgt+wgt+bmi~.imp, na=wgt, cex=c(2,4), pch=c(1,20),jitter=FALSE,
+layout=c(3,1))}
 
 ### distribution of age and height, labeled by missingness in height
 ### most height values are missing for those around
 ### the age of two years
 ### some additional missings occur in region WEST
-stripplot(imp, age+hgt~.imp|reg, hgt, col=c(hcl(0,0,40,0.2), mdc(2)),pch=c(1,20))
+\dontrun{stripplot(imp, age+hgt~.imp|reg, hgt, col=c(hcl(0,0,40,0.2), mdc(2)),pch=c(1,20))}
 
 ### heavily jitted relation between two categorical variables
 ### labeled by missingness of gen
 ### aggregated over all imputed data sets
-stripplot(imp, gen~phb, factor=2, cex=c(8,1), hor=TRUE)
+\dontrun{stripplot(imp, gen~phb, factor=2, cex=c(8,1), hor=TRUE)}
 
 ### circle fun
 stripplot(imp, gen~.imp, factor=2, cex=c(8,6), hor=FALSE, na=wgt,outer=TRUE,scales="free",pch=c(1,19))

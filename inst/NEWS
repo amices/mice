@@ -13,6 +13,14 @@ Question or suggestions about MICE can be send to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.16    27-04-2013 SvB
+ADDED    random indicator imputation by mice.impute.ri() for nonignorable models (thanks Shahab Jolani)
+ADDED    workhorse functions .norm.draw() and .pmm.match() are exported
+FIXED    bug in 2.14 and 2.15 in mice.impute.pmm() that produced an error on factors
+FIXED    bug that crashed R when the class variable was incomplete (thanks Robert Long)
+FIXED    bug in 2l.pan and 2l.norm by convert a class factor to integer (thanks Robert Long)
+FIXED    warning eliminated caused by character variables (thanks Robert Long)
+
 V2.15 - 02-04-1013 SvB
 CHANGED  complete reorganization of documentation and source files
 ADDED    source published on GitHub.com

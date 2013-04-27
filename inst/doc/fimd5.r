@@ -10,6 +10,7 @@ if (packageVersion("mice")<'2.12') stop("This code requires mice 2.12.")
 
 library("mice")
 library("gamlss")
+library("AGD")
 
 ### set Trellis layout parameters
 lhset <- trellis.par.get("layout.heights")
