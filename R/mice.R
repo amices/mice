@@ -26,7 +26,7 @@
 #'
 #'Built-in elementary imputation methods are:
 #'
-#'\describe{ 
+#'\describe{
 #'\item{pmm}{Predictive mean matching (any)}
 #'\item{norm}{Bayesian linear regression (numeric)}
 #'\item{norm.nob}{Linear regression ignoring model error (numeric)}
@@ -36,10 +36,10 @@
 #'\item{2l.norm}{Two-level normal imputation (numeric)}
 #'\item{2l.pan}{Two-level normal imputation using pan (numeric)}
 #'\item{2lonly.mean}{Imputation at level-2 of the class mean (numeric)}
-#'\item{2lonly.norm}{Imputation at level-2 by Bayesian linear regression (numeric)} 
-#'\item{2lonly.pmm}{Imputation at level-2 by Predictive mean matching (any)} 
-#'\item{quadratic}{Imputation of quadratic terms (numeric)} 
-#'\item{logreg}{Logistic regression (factor, 2 levels)} 
+#'\item{2lonly.norm}{Imputation at level-2 by Bayesian linear regression (numeric)}
+#'\item{2lonly.pmm}{Imputation at level-2 by Predictive mean matching (any)}
+#'\item{quadratic}{Imputation of quadratic terms (numeric)}
+#'\item{logreg}{Logistic regression (factor, 2 levels)}
 #'\item{logreg.boot}{Logistic regression with bootstrap}
 #'\item{polyreg}{Polytomous logistic regression (factor, >= 2 levels)}
 #'\item{polr}{Proportional odds model (ordered, >=2 levels)}
@@ -125,6 +125,12 @@
 #'expressions. Each string is parsed and executed within the \code{sampler()}
 #'function to postprocess imputed values.  The default is to do nothing,
 #'indicated by a vector of empty strings \code{''}.
+#'@param form A vector of strings with length \code{ncol(data)}, specifying
+#'formulae. Each string is parsed and executed within the \code{sampler()}
+#'function to create terms for the predictor.  The default is to do nothing,
+#'indicated by a vector of empty strings \code{''}.  The main value
+#'lies in the easy specification of interaction terms.  The user must
+#'ensure that the set of variables in the formula match those in \code{predictors}.
 #'@param defaultMethod A vector of three strings containing the default
 #'imputation methods for numerical columns, factor columns with 2 levels, and
 #'columns with (unordered or ordered) factors with more than two levels,
@@ -174,7 +180,7 @@
 #'Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
 #'Fully conditional specification in multivariate imputation.  \emph{Journal of
 #'Statistical Computation and Simulation}, \bold{76}, 12, 1049--1064.
-#' 
+#'
 #'Van Buuren, S. (2007) Multiple imputation of discrete and continuous data by
 #'fully conditional specification.  \emph{Statistical Methods in Medical
 #'Research}, \bold{16}, 3, 219--242.
@@ -211,18 +217,20 @@
 #'mice(nhanes2, meth=c('sample','pmm','logreg','norm'))
 #'
 #'@export
-mice <- function(data, m = 5, method = vector("character", length = ncol(data)), predictorMatrix = (1 - diag(1, ncol(data))), 
-    visitSequence = (1:ncol(data))[apply(is.na(data), 2, any)], post = vector("character", length = ncol(data)), defaultMethod = c("pmm", 
-        "logreg", "polyreg", "polr"), maxit = 5, diagnostics = TRUE, printFlag = TRUE, seed = NA, imputationMethod = NULL, 
-    defaultImputationMethod = NULL, data.init = NULL, ...) 
+mice <- function(data, m = 5, method = vector("character", length = ncol(data)), predictorMatrix = (1 - diag(1, ncol(data))),
+    visitSequence = (1:ncol(data))[apply(is.na(data), 2, any)],
+    form = vector("character", length = ncol(data)),
+    post = vector("character", length = ncol(data)), defaultMethod = c("pmm",
+        "logreg", "polyreg", "polr"), maxit = 5, diagnostics = TRUE, printFlag = TRUE, seed = NA, imputationMethod = NULL,
+    defaultImputationMethod = NULL, data.init = NULL, ...)
 {
     # MICE - Multivariate Imputation by Chained Equations
-    # 
+    #
     # Main algorithm for imputing datasets.  Authors: K. Groothuis-Oudshoorn and S. van Buuren TNO Quality of Life, Leiden
     # The Netherlands
-    # 
+    #
     # Copyright (c) 2010 TNO Quality of Life, Leiden
-    # 
+    #
     # ------------------------------CHECK.VISITSEQUENCE------------------------
     check.visitSequence <- function(setup) {
         nmis <- setup$nmis
@@ -230,30 +238,30 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
         visitSequence <- setup$visitSequence
         if (!is.numeric(visitSequence)) {
             code <- pmatch(visitSequence, c("roman", "arabic", "monotone", "revmonotone"))
-            if (!is.na(code) && code == 1) 
+            if (!is.na(code) && code == 1)
                 visitSequence <- (1:nvar)[nmis > 0]
-            if (!is.na(code) && code == 2) 
+            if (!is.na(code) && code == 2)
                 visitSequence <- rev((1:nvar)[nmis > 0])
-            if (!is.na(code) && code == 3) 
+            if (!is.na(code) && code == 3)
                 visitSequence <- order(nmis)[(sum(nmis == 0) + 1):length(nmis)]  # SvB sept 2011
-            if (!is.na(code) && code == 4) 
+            if (!is.na(code) && code == 4)
                 visitSequence <- rev(order(nmis)[(sum(nmis == 0) + 1):length(nmis)])
-            if (is.na(code)) 
+            if (is.na(code))
                 stop("Argument visitSequence not recognized.\n")
         }
-        if (all(nmis[visitSequence] == 0)) 
+        if (all(nmis[visitSequence] == 0))
             stop(paste("No missing values found."))
         flags <- nmis == 0 & is.element(1:nvar, visitSequence)
-        if (any(flags)) 
+        if (any(flags))
             visitSequence <- visitSequence[!flags]
         visitSequence <- visitSequence[visitSequence <= nvar]
         visitSequence <- visitSequence[visitSequence >= 1]
-        if (length(visitSequence) == 0) 
+        if (length(visitSequence) == 0)
             stop(paste("No missing values found."))
         setup$visitSequence <- visitSequence
         return(setup)
     }
-    
+
     ## ------------------------------CHECK.predictorMatrix-------------------------------
     check.predictorMatrix <- function(setup) {
         ## checks the predictorMatrix makes consistency edits of the predictormatrix
@@ -264,10 +272,10 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
         vis <- setup$visitSequence
         method <- setup$method
         post <- setup$post
-        
-        if (!is.matrix(pred)) 
+
+        if (!is.matrix(pred))
             stop("Argument 'predictorMatrix' not a matrix.")
-        if (nvar != nrow(pred) | nvar != ncol(pred)) 
+        if (nvar != nrow(pred) | nvar != ncol(pred))
             stop(paste("The predictorMatrix has", nrow(pred), "rows and", ncol(pred), "columns. Both should be", nvar, "."))
         dimnames(pred) <- list(varnames, varnames)
         diag(pred) <- 0
@@ -284,18 +292,18 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
                 post[j] <- ""
                 if (isclassvar[j]) stop("Removed an incomplete class variable.")  ## SvB 25apr13
             }
-            if (nmis[j] == 0 & any(pred[j, ] != 0)) 
+            if (nmis[j] == 0 & any(pred[j, ] != 0))
                 pred[j, ] <- 0
-        }        
-        
+        }
+
         setup$predictorMatrix <- pred
         setup$visitSequence <- vis
         setup$post <- post
         return(setup)
     }
-    
+
     ## ------------------------------CHECK.method-------------------------------
-    
+
     check.method <- function(setup, data) {
         ## check method, set defaults if appropriate
         method <- setup$method
@@ -303,45 +311,45 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
         visitSequence <- setup$visitSequence
         nmis <- setup$nmis
         nvar <- setup$nvar
-        
+
         if (all(method == "")) {
             # the default argument
             for (j in visitSequence) {
                 y <- data[, j]
-                if (is.numeric(y)) 
-                  method[j] <- defaultMethod[1] else if (nlevels(y) == 2) 
-                  method[j] <- defaultMethod[2] else if (is.ordered(y) & nlevels(y) > 2) 
-                  method[j] <- defaultMethod[4] else if (nlevels(y) > 2) 
-                  method[j] <- defaultMethod[3] else if (is.logical(y)) 
+                if (is.numeric(y))
+                  method[j] <- defaultMethod[1] else if (nlevels(y) == 2)
+                  method[j] <- defaultMethod[2] else if (is.ordered(y) & nlevels(y) > 2)
+                  method[j] <- defaultMethod[4] else if (nlevels(y) > 2)
+                  method[j] <- defaultMethod[3] else if (is.logical(y))
                   method[j] <- defaultMethod[2]  # SvB 18/1/2010
  else method[j] <- defaultMethod[1]
             }
         }
         ## expand user's imputation method to all visited columns
-        ## 
+        ##
         ## single string supplied by user (note implicit assumption of two columns)
         if (length(method) == 1) {
-            if (is.passive(method)) 
+            if (is.passive(method))
                 stop("Cannot have a passive imputation method for every column.")
             method <- rep(method, nvar)
         }
         ## if user specifies multiple methods, check the length of the argument
-        if (length(method) != nvar) 
-            stop(paste("The length of method (", length(method), ") does not match the number of columns in the data (", nvar, 
+        if (length(method) != nvar)
+            stop(paste("The length of method (", length(method), ") does not match the number of columns in the data (", nvar,
                 ").", sep = ""))
         ## check whether the elementary imputation methods are actually available on the search path
         active <- !is.passive(method) & nmis > 0 & !(method == "")
         ## BEGIN patch by Gerko Vink, 22sep2011
         passive.check <- is.passive(method) & nmis > 0 & !(method == "")
         check <- all(active == FALSE) & any(passive.check != FALSE)
-        if (check) 
+        if (check)
             fullNames <- rep("mice.impute.passive", length(method[passive.check])) else fullNames <- paste("mice.impute", method[active], sep = ".")
         ## END patch
         notFound <- !sapply(fullNames, exists, mode = "function", inherit = TRUE)  ## SVB 6 Feb 2004
-        if (any(notFound)) 
+        if (any(notFound))
             stop(paste("The following functions were not found:", paste(fullNames[notFound], collapse = ", ")))
         ## type checks on built-in imputation methods Added SvB June 2009
-        
+
         for (j in visitSequence) {
             y <- data[, j]
             vname <- dimnames(data)[[2]][j]
@@ -359,14 +367,14 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
                 warning("Type mismatch for variable ", vname, "\nImputation method ", mj, " is not for factors with three or more levels.", 
                   call. = FALSE)
         }
-        
+
         setup$method <- method
         return(setup)
     }
     ## ------------------------------CHECK.data-------------------------------
-    
+
     check.data <- function(setup, data, allow.na = FALSE, ...) {
-        
+
         pred <- setup$predictorMatrix
         nvar <- setup$nvar
         varnames <- setup$varnames
@@ -385,7 +393,7 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
                 v <- ifelse(is.character(data[,j]), NA, var(data[, j], na.rm = TRUE))
                 if (allow.na) {
                   constant <- FALSE  # SvB 10/3/2011
-                  if (!is.na(v)) 
+                  if (!is.na(v))
                     constant <- (v < 1000 * .Machine$double.eps)  # SvB 10/3/2011
                 } else constant <- is.na(v) | v < 1000 * .Machine$double.eps
                 didlog <- FALSE
@@ -398,18 +406,18 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
                 if (constant & meth[j] != "") {
                   out <- varnames[j]
                   pred[j, ] <- 0
-                  if (!didlog) 
+                  if (!didlog)
                     updateLog(out = out, meth = "constant")
                   meth[j] <- ""
                   vis <- vis[vis != j]
                   post[j] <- ""
                 }
-            }                    
+            }
         }
-        
+
         ## remove collinear variables
         ispredictor <- apply(pred != 0, 2, any)  # SvB 16/3/11
-        if (any(ispredictor)) 
+        if (any(ispredictor))
             droplist <- find.collinear(data[, ispredictor, drop = FALSE], ...) else droplist <- NULL
         if (length(droplist) > 0) {
             for (k in 1:length(droplist)) {
@@ -425,7 +433,7 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
                 if (meth[j] != "") {
                   out <- varnames[j]
                   pred[j, ] <- 0
-                  if (!didlog) 
+                  if (!didlog)
                     updateLog(out = out, meth = "collinear")
                   meth[j] <- ""
                   vis <- vis[vis != j]
@@ -433,61 +441,64 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
                 }
             }
         }
-                
+
         setup$predictorMatrix <- pred
         setup$visitSequence <- vis
         setup$post <- post
         setup$meth <- meth
         return(setup)
     }
-    
+
     ## Start with some preliminary calculations and error checks
     call <- match.call()
-    if (!is.na(seed)) 
+    if (!is.na(seed))
         set.seed(seed)  ## FEH 1apr02
-    if (!(is.matrix(data) | is.data.frame(data))) 
+    if (!(is.matrix(data) | is.data.frame(data)))
         stop("Data should be a matrix or data frame")
-    if ((nvar <- ncol(data)) < 2) 
+    if ((nvar <- ncol(data)) < 2)
         stop("Data should contain at least two columns")
     data <- as.data.frame(data)
     nmis <- apply(is.na(data), 2, sum)
-    if (sum(nmis) == 0) 
+    if (sum(nmis) == 0)
         stop("No missing values found")
     varnames <- dimnames(data)[[2]]
-        
+
     ## list for storing current computational state
     state <- list(it = 0, im = 0, co = 0, dep = "", meth = "", log = FALSE)
-    
+
     ## data frame for storing the event log
     loggedEvents <- data.frame(it = 0, im = 0, co = 0, dep = "", meth = "", out = "")
-    
+
     ## Perform various validity checks on the specified arguments
-    if (!is.null(imputationMethod)) 
+    if (!is.null(imputationMethod))
         method <- imputationMethod
-    if (!is.null(defaultImputationMethod)) 
+    if (!is.null(defaultImputationMethod))
         defaultMethod <- defaultImputationMethod
-    
-    setup <- list(visitSequence = visitSequence, method = method, defaultMethod = defaultMethod, predictorMatrix = predictorMatrix, 
+
+    setup <- list(visitSequence = visitSequence, method = method,
+                  defaultMethod = defaultMethod,
+                  predictorMatrix = predictorMatrix,
+                  form = form,
         post = post, nvar = nvar, nmis = nmis, varnames = varnames)
     setup <- check.visitSequence(setup)
     setup <- check.method(setup, data)
     setup <- check.predictorMatrix(setup)
     setup <- check.data(setup, data, ...)
-    
+
     ## Pad the imputation model with dummy variables for the factors
     method <- setup$method
     predictorMatrix <- setup$predictorMatrix
     visitSequence <- setup$visitSequence
     post <- setup$post
-    p <- padModel(data, method, predictorMatrix, visitSequence, post, nmis, nvar)
-    if (sum(duplicated(names(p$data))) > 0) 
+    p <- padModel(data, method, predictorMatrix, visitSequence, form, post, nmis, nvar)
+    if (sum(duplicated(names(p$data))) > 0)
         stop("Column names of padded data should be unique")
-    
+
     ## Initialize response matrix r, imputation array imp, as well as some other stuff
     r <- (!is.na(p$data))
     imp <- vector("list", ncol(p$data))
     if (m > 0) {
-        
+
         ## Initializes the imputed values
         for (j in visitSequence) {
             imp[[j]] <- as.data.frame(matrix(NA, nrow = sum(!r[, j]), ncol = m))
@@ -510,31 +521,32 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
             }
         }
     }
-    
+
     # OK. Iterate.
     from <- 1
     to <- from + maxit - 1
     q <- sampler(p, data, m, imp, r, visitSequence, c(from, to), printFlag, ...)
-    
+
     ## restore the original NA's in the data
     for (j in p$visitSequence) p$data[(!r[, j]), j] <- NA
-    
+
     ## delete data and imputations of automatic dummy variables
     imp <- q$imp[1:nvar]
     names(imp) <- varnames
     names(method) <- varnames
+    names(form) <- varnames
     names(post) <- varnames
     names(visitSequence) <- varnames[visitSequence]
-    if (!state$log) 
+    if (!state$log)
         loggedEvents <- NULL
-    if (state$log) 
+    if (state$log)
         row.names(loggedEvents) <- 1:nrow(loggedEvents)
-    
+
     ## save, and return
-    midsobj <- list(call = call, data = as.data.frame(p$data[, 1:nvar]), m = m, nmis = nmis, imp = imp, method = method, predictorMatrix = predictorMatrix, 
-        visitSequence = visitSequence, post = post, seed = seed, iteration = q$iteration, lastSeedValue = .Random.seed, chainMean = q$chainMean, 
+    midsobj <- list(call = call, data = as.data.frame(p$data[, 1:nvar]), m = m, nmis = nmis, imp = imp, method = method, predictorMatrix = predictorMatrix,
+        visitSequence = visitSequence, form = form, post = post, seed = seed, iteration = q$iteration, lastSeedValue = .Random.seed, chainMean = q$chainMean,
         chainVar = q$chainVar, loggedEvents = loggedEvents)
-    if (diagnostics) 
+    if (diagnostics)
         midsobj <- c(midsobj, list(pad = p))
     oldClass(midsobj) <- "mids"
     return(midsobj)
