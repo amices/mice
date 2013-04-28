@@ -1,55 +1,54 @@
 \name{pool.scalar}
 \alias{pool.scalar}
-\title{Multiple Imputation Pooling: Univariate version}
-
-\description{
-  Pools univariate estimates of m repeated complete data analysis
-}
+\title{Multiple imputation pooling: univariate version}
 \usage{
-pool.scalar(Q,U)
+  pool.scalar(Q, U)
 }
-
 \arguments{
-  \item{Q}{A vector of univariate estimates of m repeated complete data analyses.}
-  \item{U}{A vector containing the corresponding m variances of the univariate estimates.}
-}
-\value{ Returns a list with components
-\item{m}{The number of imputations}
-\item{qhat}{The m univariate estimates of repeated complete data analyses}
-\item{u}{The corresponding m variances of the univariate estimates}
-\item{qbar}{The pooled univariate estimate, formula (3.1.2) Rubin (1987).}
-\item{ubar}{The mean of the variances, formula (3.1.3) Rubin (1987).}
-\item{b}{The within imputation variance, formula (3.1.4) Rubin (1987).}
-\item{t}{Total variance of the pooled estimated, formula (3.1.5) Rubin (1987).}
-\item{r}{Relative increase in variance due to nonresponse, formula (3.1.7) Rubin (1987).}
-\item{df}{Degrees of freedom for t reference distribution, formula (3.1.6) Rubin (1987).}
-\item{f}{Fraction missing information due to nonresponse, formula (3.1.10) Rubin (1987).}
-}
+  \item{Q}{A vector of univariate estimates of m repeated
+  complete data analyses.}
 
+  \item{U}{A vector containing the corresponding m
+  variances of the univariate estimates.}
+}
+\value{
+  Returns a list with components. Component \code{m} is the
+  number of imputations. Component \code{qhat} contains the
+  \code{m} univariate estimates of repeated complete data
+  analyses. Component \code{u} contains the corresponding
+  \code{m} variances of the univariate estimates. Component
+  \code{qbar} is the pooled univariate estimate, formula
+  (3.1.2) Rubin (1987). Component \code{ubar} is the mean
+  of the variances, formula (3.1.3) Rubin (1987). Component
+  \code{b} is the within imputation variance, formula
+  (3.1.4) Rubin (1987). Component \code{t} is the total
+  variance of the pooled estimated, formula (3.1.5) Rubin
+  (1987). Component \code{r} is the relative increase in
+  variance due to nonresponse, formula (3.1.7) Rubin
+  (1987). Component \code{df} is the degrees of freedom for
+  t reference distribution, formula (3.1.6) Rubin (1987).
+  Component \code{f} is the fraction missing information
+  due to nonresponse, formula (3.1.10) Rubin (1987).
+}
+\description{
+  Pools univariate estimates of m repeated complete data
+  analysis
+}
 \details{
-  The function averages the univariate estimates of the complete data model,
-  computes the total variance over the repeated analyses, and computes
-  the relative increase in variance due to nonresponse and the fraction
-  of missing information.
+  The function averages the univariate estimates of the
+  complete data model, computes the total variance over the
+  repeated analyses, and computes the relative increase in
+  variance due to nonresponse and the fraction of missing
+  information.
 }
-
-\references{
-  Rubin, D.B. (1987). Multiple Imputation for Nonresponse in Surveys.
-  New York: John Wiley and Sons.
-  }
-\seealso{
-  \code{\link{pool}}
-}
-  
 \examples{
-
 imp <- mice(nhanes)
 m <- imp$m
 Q <- rep(NA,m)
 U <- rep(NA,m)
 for (i in 1:m) {
-    Q[i] <- mean(complete(imp,i)$bmi)
-    U[i] <- var(complete(imp,i)$bmi)
+   Q[i] <- mean(complete(imp,i)$bmi)
+   U[i] <- var(complete(imp,i)$bmi)
 }
 pool.scalar(Q,U)
 
@@ -85,7 +84,15 @@ pool.scalar(Q,U)
 #[1] 0.007308785
 #
 }
-
-\author{Karin Groothuis-Oudshoorn and Stef van Buuren, 2009}
-
+\author{
+  Karin Groothuis-Oudshoorn and Stef van Buuren, 2009
+}
+\references{
+  Rubin, D.B. (1987). Multiple Imputation for Nonresponse
+  in Surveys.  New York: John Wiley and Sons.
+}
+\seealso{
+  \code{\link{pool}}
+}
 \keyword{htest}
+

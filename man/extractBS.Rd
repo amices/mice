@@ -1,0 +1,19 @@
+\name{extractBS}
+\alias{extractBS}
+\title{Extract broken stick estimates from a \code{lmer} object}
+\usage{
+  extractBS(fit)
+}
+\arguments{
+  \item{fit}{An object of class \code{lmer}}
+}
+\value{
+  A matrix containing broken stick estimates
+}
+\description{
+  Extract broken stick estimates from a \code{lmer} object
+}
+\author{
+  Stef van Buuren, 2012
+}
+

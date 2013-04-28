@@ -1,91 +1,46 @@
 \name{pool}
 \alias{pool}
-\title{Multiple Imputation Pooling}
+\title{Multiple imputation pooling}
+\usage{
+  pool(object, method = "smallsample")
+}
+\arguments{
+  \item{object}{An object of class \code{mira}, produced by
+  \code{with.mids()} or \code{as.mira()}}
 
+  \item{method}{A string describing the method to compute
+  the degrees of freedom.  The default value is
+  "smallsample", which specifies the is Barnard-Rubin
+  adjusted degrees of freedom (Barnard and Rubin, 1999) for
+  small samples. Specifying a different string produces the
+  conventional degrees of freedom as in Rubin (1987).}
+}
+\value{
+  An object of class \code{mipo}, which stands for
+  'multiple imputation pooled outcome'.
+}
 \description{
   Pools the results of m repeated complete data analysis
 }
-\usage{
-pool(object, method="smallsample")
-}
-
-\arguments{
-  \item{object}{An object of class \code{mira}, produced by \code{with.mids()}.}
-  \item{method}{ A string describing the method to compute the degrees of freedom. 
-    The default value is "smallsample", which specifies the is 
-    Barnard-Rubin adjusted degrees of freedom (Barnard and Rubin, 1999) 
-    for small samples. Specifying a different string 
-    produces the conventional degrees of freedom as in Rubin (1987).}
-}
-   
-\value{
-  An object of class \code{mipo}, which stands for 'multiple imputation pooled outcome'. The object
-  is a list containing the following items:
-  \item{call}{The call to the pool function.}
-  \item{call1}{The original call how the mira object was calculated.}
-  \item{call2}{The original call to the mice function to calculate the underlying midsobject.}
-  \item{formula}{The formula that is used in call1.}
-  \item{nmis}{The number of missing entries for each variable.}
-  \item{m}{The number of imputations}
-  \item{qhat}{A matrix, containing the estimated coeffients of the \emph{m} repeated complete data analyses}
-  \item{u}{The corresponding \emph{m} variancematrices of the estimates in an three dimensional array.}
-  \item{qbar}{The pooled estimate, formula (3.1.2) Rubin (1987).}
-  \item{ubar}{The mean of the variances, formula (3.1.3), Rubin (1987).}
-  \item{b}{The within imputation variance, formula (3.1.4), Rubin (1987).}
-  \item{t}{Total variance of the pooled estimates, formula (3.1.5), Rubin (1987).}
-  \item{r}{Relative increase in variance due to nonresponse, formula
-      (3.1.7), Rubin (1987).}
-  \item{dfcom}{Degrees of freedom for estimates in the complete data analysis.}
-  \item{df}{Degrees of freedom for t reference distribution, calculated  according to the 
-  article of Barnard and Rubin (1999).}
-  \item{fmi}{Fraction missing information due to nonresponse, formula (3.1.10), Rubin (1987).}
-  \item{gamma}{Proportion of the total variance explained by the imputations.}
-}
-
-
 \details{
-  The function averages the estimates of the complete data model, 
-  computes the total variance over the repeated analyses, and computes
-  the relative increase in variance due to nonresponse and the fraction 
-  of missing information. The function relies on the availability
-  of
-  \enumerate{
-    \item the estimates of the model, typically present as 'coefficients' in 
-    the fit object
-    \item an appropriate estimate of the variance-covariance matrix of the 
-    estimates per analyses (estimated by \code{\link{vcov}}.
-  }
-  The function pools also estimates obtained with \code{lme()} and \code{lmer()}, 
-  BUT only the fixed part of the model.
-}   
-
-\references{
-  Barnard, J. and Rubin, D.B. (1999). Small sample degrees of freedom with
-  multiple imputation. \emph{Biometrika}, 86, 948-955.
-  
-  Rubin, D.B. (1987). 
-  \emph{Multiple Imputation for Nonresponse in Surveys}. 
-  New York: John Wiley and Sons.
-  
-van Buuren S and Groothuis-Oudshoorn K (2011).
-\code{mice}: Multivariate Imputation by Chained Equations in \code{R}.
-\emph{Journal of Statistical Software}, \bold{45}(3), 1-67.
-\url{http://www.jstatsoft.org/v45/i03/}
-
- Pinheiro, J.C. and Bates, D.M. (2000).
- \emph{Mixed-Effects Models in S and S-PLUS}.
- Berlin: Springer.
+  The function averages the estimates of the complete data
+  model, computes the total variance over the repeated
+  analyses, and computes the relative increase in variance
+  due to nonresponse and the fraction of missing
+  information. The function relies on the availability of
+  \enumerate{ \item the estimates of the model, typically
+  present as 'coefficients' in the fit object \item an
+  appropriate estimate of the variance-covariance matrix of
+  the estimates per analyses (estimated by
+  \code{\link{vcov}}.  } The function pools also estimates
+  obtained with \code{lme()} and \code{lmer()}, BUT only
+  the fixed part of the model.
 }
-
-\seealso{
-  \code{\link{with.mids}}, \code{\link{vcov}}
-}
-
 \examples{
 # which vcov methods can R find
 methods(vcov)
 
-# 
+#
 imp <- mice(nhanes)
 fit <- with(data=imp,exp=lm(bmi~hyp+chl))
 pool(fit)
@@ -93,12 +48,12 @@ pool(fit)
 #Call: pool(object = fit)
 #
 #Pooled coefficients:
-#(Intercept)         hyp         chl 
-#  22.01313    -1.45578     0.03459 
+#(Intercept)         hyp         chl
+#  22.01313    -1.45578     0.03459
 #
-#Fraction of information about the coefficients missing due to nonresponse: 
-#(Intercept)         hyp         chl 
-#    0.29571     0.05639     0.38759 
+#Fraction of information about the coefficients missing due to nonresponse:
+#(Intercept)         hyp         chl
+#    0.29571     0.05639     0.38759
 #> summary(pool(fit))
 #                 est      se       t     df Pr(>|t|)    lo 95    hi 95 missing
 #(Intercept) 22.01313 4.94086  4.4553 12.016 0.000783 11.24954 32.77673      NA
@@ -108,10 +63,32 @@ pool(fit)
 #(Intercept) 0.29571
 #hyp         0.05639
 #chl         0.38759
-# 
+#
 }
+\author{
+  Stef van Buuren, Karin Groothuis-Oudshoorn, 2009
+}
+\references{
+  Barnard, J. and Rubin, D.B. (1999). Small sample degrees
+  of freedom with multiple imputation. \emph{Biometrika},
+  86, 948-955.
 
+  Rubin, D.B. (1987).  \emph{Multiple Imputation for
+  Nonresponse in Surveys}. New York: John Wiley and Sons.
 
-\author{Stef van Buuren, Karin Groothuis-Oudshoorn, 2009} 
+  van Buuren S and Groothuis-Oudshoorn K (2011).
+  \code{mice}: Multivariate Imputation by Chained Equations
+  in \code{R}. \emph{Journal of Statistical Software},
+  \bold{45}(3), 1-67.
+  \url{http://www.jstatsoft.org/v45/i03/}
 
-\keyword{htest}  
+  Pinheiro, J.C. and Bates, D.M. (2000).
+  \emph{Mixed-Effects Models in S and S-PLUS}.  Berlin:
+  Springer.
+}
+\seealso{
+  \code{\link{with.mids}}, \code{\link{as.mira}},
+  \code{\link{vcov}}
+}
+\keyword{htest}
+
