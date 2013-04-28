@@ -1,23 +1,133 @@
 Package: mice
 Type: Package
-Version: 2.15
+Version: 2.16
 Title: Multivariate Imputation by Chained Equations
-Date: 2013-03-20
+Date: 2013-04-27
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
-                    email = "stef.vanbuuren@tno.nl"),
-             person("Karin", "Groothuis-Oudshoorn", role = "aut",
-                    email = "c.g.m.oudshoorn@utwente.nl"),
-             person("Alexander", "Robitzsch", role = "ctb",
-                    email = "a.robitzsch@bifie.at"),
-             person("Gerko","Vink", role = "ctb",
-                    email = "g.vink@uu.nl"))
-Author: Stef van Buuren and Karin Groothuis-Oudshoorn, with contributions from Alexander Robitzsch and Gerko Vink
+    email = "stef.vanbuuren@tno.nl"),
+    person("Karin", "Groothuis-Oudshoorn", role = "aut",
+    email = "c.g.m.oudshoorn@utwente.nl"),
+    person("Alexander", "Robitzsch", role = "ctb",
+    email = "a.robitzsch@bifie.at"),
+    person("Gerko","Vink", role = "ctb",
+    email = "g.vink@uu.nl"),
+    person("Lisa","Doove", role = "ctb",
+    email = "lisa.doove@ppw.kuleuven.be"),
+    person("Shahab","Jolani", role = "ctb",
+    email = "s.jolani@uu.nl"))
+Author: Stef van Buuren and Karin Groothuis-Oudshoorn, with contributions from
+    Alexander Robitzsch, Gerko Vink, Shahab Jolani and Lisa Doove
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
-Depends: R (>= 2.4.0), MASS, nnet, lattice, methods
-Suggests: AGD, mitools, nlme, Zelig, lme4, survival, gamlss, pan, VIM
-Description: Multiple imputation using Fully Conditional Specification (FCS) implemented by the MICE algorithm. Each variable has its own imputation model. Built-in imputation models are provided for continuous data (predictive mean matching, normal), binary data (logistic regression), unordered categorical data (polytomous logistic regression) and ordered categorical data (proportional odds). MICE can also impute continuous two-level data (normal model, pan, second-level variables). Passive imputation can be used to maintain consistency between variables. Various diagnostic plots are available to inspect the quality of the imputations.
+Depends:
+    R (>= 2.10.0),
+    methods,
+    lattice,
+    MASS,
+    nnet
+Imports:
+    rpart
+Suggests:
+    AGD,
+    gamlss,
+    lme4,
+    mitools,
+    nlme,
+    pan,
+    survival,
+    Zelig
+Description: Multiple imputation using Fully Conditional Specification (FCS)
+    implemented by the MICE algorithm. Each variable has its own imputation
+    model. Built-in imputation models are provided for continuous data
+    (predictive mean matching, normal), binary data (logistic regression),
+    unordered categorical data (polytomous logistic regression) and ordered
+    categorical data (proportional odds). MICE can also impute continuous
+    two-level data (normal model, pan, second-level variables). Passive
+    imputation can be used to maintain consistency between variables. Various
+    diagnostic plots are available to inspect the quality of the imputations.
 License: GPL-2 | GPL-3
 LazyLoad: yes
 LazyData: yes
-URL: http://www.stefvanbuuren.nl ; http://www.multiple-imputation.com
-
+URL: http://www.stefvanbuuren.nl , http://www.multiple-imputation.com
+Collate:
+    'as.r'
+    'auxiliary.r'
+    'boys.r'
+    'cbind.r'
+    'cc.r'
+    'complete.r'
+    'df.residual.r'
+    'expandcov.r'
+    'fdd.r'
+    'fdgs.r'
+    'flux.r'
+    'getfit.r'
+    'ibind.r'
+    'internal.r'
+    'is.r'
+    'leiden85.r'
+    'lm.r'
+    'long2mids.r'
+    'mammalsleep.r'
+    'md.pairs.r'
+    'md.pattern.r'
+    'mdc.r'
+    'mice.df.r'
+    'mice.impute.2l.norm.r'
+    'mice.impute.2l.pan.r'
+    'mice.impute.2lonly.mean.r'
+    'mice.impute.2lonly.norm.r'
+    'mice.impute.2lony.pmm.r'
+    'mice.impute.lda.r'
+    'mice.impute.logreg.r'
+    'mice.impute.mean.r'
+    'mice.impute.norm.boot.r'
+    'mice.impute.norm.nob.r'
+    'mice.impute.norm.predict.r'
+    'mice.impute.norm.r'
+    'mice.impute.passive.r'
+    'mice.impute.pmm.r'
+    'mice.impute.polr.r'
+    'mice.impute.polyreg.r'
+    'mice.impute.quadratic.r'
+    'mice.impute.sample.r'
+    'mice.mids.r'
+    'mice.r'
+    'mids.r'
+    'mids2mplus.r'
+    'mids2spss.r'
+    'mipo.r'
+    'mira.r'
+    'nelsonaalen.r'
+    'nhanes.r'
+    'nhanes2.r'
+    'pattern1.r'
+    'plot.r'
+    'pool.compare.r'
+    'pool.r'
+    'pool.r.squared.r'
+    'pool.scalar.r'
+    'popmis.r'
+    'pops.r'
+    'potthoffroy.r'
+    'print.r'
+    'quickpred.r'
+    'rbind.r'
+    'rm.whitespace.r'
+    'selfreport.r'
+    'squeeze.r'
+    'summary.r'
+    'supports.transparent.r'
+    'tbc.r'
+    'walking.r'
+    'windspeed.r'
+    'with.r'
+    'zzz.r'
+    'mice.theme.r'
+    'xyplot.r'
+    'stripplot.r'
+    'bwplot.r'
+    'densityplot.r'
+    'cci.r'
+    'ccn.r'
+    'mice.impute.cart.r'
+    'mice.impute.ri.r'
