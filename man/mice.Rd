@@ -6,6 +6,7 @@
     method = vector("character", length = ncol(data)),
     predictorMatrix = (1 - diag(1, ncol(data))),
     visitSequence = (1:ncol(data))[apply(is.na(data), 2, any)],
+    form = vector("character", length = ncol(data)),
     post = vector("character", length = ncol(data)),
     defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
     maxit = 5, diagnostics = TRUE, printFlag = TRUE,
@@ -65,6 +66,16 @@
   to postprocess imputed values.  The default is to do
   nothing, indicated by a vector of empty strings
   \code{''}.}
+
+  \item{form}{A vector of strings with length
+  \code{ncol(data)}, specifying formulae. Each string is
+  parsed and executed within the \code{sampler()} function
+  to create terms for the predictor.  The default is to do
+  nothing, indicated by a vector of empty strings
+  \code{''}.  The main value lies in the easy specification
+  of interaction terms.  The user must ensure that the set
+  of variables in the formula match those in
+  \code{predictors}.}
 
   \item{defaultMethod}{A vector of three strings containing
   the default imputation methods for numerical columns,

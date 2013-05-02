@@ -39,7 +39,8 @@ mice.impute.ri <- function(y, ry, x, ri.maxit = 10, ...)
 # generting a realization of the response indicator r 
 .r.draw <- function(ydot, ry, xr, ...)
 {
-    n <- length(ry)	
+    n <- length(ry)
+    xr <- cbind(xr, ydot)
     expr <- expression(glm.fit(xr, ry, family = binomial(link = logit)))
     fit <- suppressWarnings(eval(expr))
     fit.sum <- summary.glm(fit)

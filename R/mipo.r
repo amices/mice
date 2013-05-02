@@ -18,12 +18,12 @@
 #'data estimates for the \code{npar} parameters of the \code{m} complete data
 #'analyses.}
 #'    \item{\code{u}:}{An \code{m} by \code{npar} by \code{npar} array containing the
-#'variance-covariance matrices of the \code{m} complete data analyses.}
-#'    \item{\code{qbar}:}{The average of complete data estimates.}
+#'variance-covariance matrices of the estimates of the \code{m} complete data analyses.}
+#'    \item{\code{qbar}:}{The average of complete data estimates. The multiple imputation estimate.}
 #'    \item{\code{ubar}:}{The average of the variance-covariance matrix of the
-#'complete data estimes.}
-#'    \item{\code{b}:}{The between imputation variance-covariance matrix.}
-#'    \item{\code{t}:}{The total variance-covariance matrix.}
+#'complete data estimates.}
+#'    \item{\code{b}:}{The between imputation variance-covariance matrix for the estimates.}
+#'    \item{\code{t}:}{The total variance-covariance matrix for the estimates.}
 #'    \item{\code{r}:}{Relative increases in variance due to missing data.}
 #'    \item{\code{dfcom}:}{Degrees of freedom in the hypothetically complete data: the
 #'sample size minus the number of free parameters.}

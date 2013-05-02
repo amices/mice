@@ -19,8 +19,9 @@
   \code{m} variances of the univariate estimates. Component
   \code{qbar} is the pooled univariate estimate, formula
   (3.1.2) Rubin (1987). Component \code{ubar} is the mean
-  of the variances, formula (3.1.3) Rubin (1987). Component
-  \code{b} is the within imputation variance, formula
+  of the variances (i.e. the pooled within-imputation
+  variance), formula (3.1.3) Rubin (1987). Component
+  \code{b} is the between-imputation variance, formula
   (3.1.4) Rubin (1987). Component \code{t} is the total
   variance of the pooled estimated, formula (3.1.5) Rubin
   (1987). Component \code{r} is the relative increase in
@@ -48,7 +49,7 @@ Q <- rep(NA,m)
 U <- rep(NA,m)
 for (i in 1:m) {
    Q[i] <- mean(complete(imp,i)$bmi)
-   U[i] <- var(complete(imp,i)$bmi)
+   U[i] <- var(complete(imp,i)$bmi)/(nrow(nhanes))
 }
 pool.scalar(Q,U)
 
