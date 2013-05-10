@@ -13,9 +13,10 @@ Question or suggestions about MICE can be send to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
-V2.17    02-05-2013 SvB
+V2.17    10-05-2013 SvB
 ADDED    new form argument to mice() to specify imputation models using forms (contributed Ross Boylan)
-FIXED    eliminated some errors in the documentation of pool.scalar()
+FIXED    with.mids(), is.mids(), is.mira() and is.mipo() exported
+FIXED    eliminated errors in the documentation of pool.scalar()
 FIXED    error in mice.impute.ri() (thanks Shahab Jolani)
 
 V2.16    27-04-2013 SvB

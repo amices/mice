@@ -2,6 +2,12 @@
 
 # --------------------------------IS.MIDS--------------------------------------
 
+#' Check for \code{mids} object
+#' 
+#' @aliases is.mids
+#' @param x An object
+#' @return A logical indicating whether \code{x} is an object of class \code{mids}
+#' @export
 is.mids <- function(x) {
     inherits(x, "mids")
 }
@@ -9,6 +15,12 @@ is.mids <- function(x) {
 
 # --------------------------------IS.MIRA--------------------------------------
 
+#' Check for \code{mira} object
+#' 
+#' @aliases is.mira
+#' @param x An object
+#' @return A logical indicating whether \code{x} is an object of class \code{mira}
+#' @export
 is.mira <- function(x) {
     inherits(x, "mira")
 }
@@ -16,6 +28,12 @@ is.mira <- function(x) {
 
 # --------------------------------IS.MIPO--------------------------------------
 
+#' Check for \code{mipo} object
+#' 
+#' @aliases is.mipo
+#' @param x An object
+#' @return A logical indicating whether \code{x} is an object of class \code{mipo}
+#' @export
 is.mipo <- function(x) {
     inherits(x, "mipo")
 }
