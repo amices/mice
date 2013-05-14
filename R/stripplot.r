@@ -158,7 +158,8 @@
 #'\dontrun{stripplot(imp, gen~phb, factor=2, cex=c(8,1), hor=TRUE)}
 #'
 #'### circle fun
-#'stripplot(imp, gen~.imp, factor=2, cex=c(8,6), hor=FALSE, na=wgt,outer=TRUE,scales="free",pch=c(1,19))
+#'stripplot(imp, gen~.imp, na = wgt, factor = 2, cex = c(8.6), 
+#'          hor = FALSE, outer = TRUE, scales = "free", pch = c(1,19))
 #'
 #'@method stripplot mids
 #'@S3method stripplot mids
