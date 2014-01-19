@@ -141,8 +141,16 @@ rbind.mids <- function(x, y, ...) {
             warning("Visitsequence is not equal in x and y; y$visitSequence is ignored\n.")
         if (!all(x$post == y$post)) 
             warning("The post vector is not equal in x and y; y$post is ignored\n")
-        if (!all(x$pad$categories == y$pad$categories)) 
+        #if (!all(x$pad$categories == y$pad$categories)) 
+        #    warning("The categories in the padmodels are not equal in x and y; y$pad is ignored.\n")
+        # Altered GV July 31, 2013 
+        if (nrow(x$pad$categories) != nrow(y$pad$categories)){
+          warning("The number of categories in the padmodels are not equal in x and y; y$pad is ignored.\n")
+        } else {
+          if (!all(x$pad$categories == y$pad$categories)){
             warning("The categories in the padmodels are not equal in x and y; y$pad is ignored.\n")
+          }  
+        }    
         
         varnames <- c(dimnames(x$data)[[2]])
         
@@ -167,8 +175,14 @@ rbind.mids <- function(x, y, ...) {
         
         # The original data of y will be binded into the multiple imputed dataset, including the imputed values of y.
         imp <- vector("list", ncol(x$data))
+        #for (j in 1:ncol(x$data)) {
+        #    imp[[j]] <- rbind(x$imp[[j]], y$imp[[j]])
+        #}
+        # Altered GV July 31, 2013
         for (j in 1:ncol(x$data)) {
-            imp[[j]] <- rbind(x$imp[[j]], y$imp[[j]])
+          if(!is.null(x$imp[[j]]) | !is.null(y$imp[[j]])){
+            imp[[j]] <- rbind(x$imp[[j]], y$imp[[j]])  
+          }
         }
         names(imp) <- varnames
         

@@ -16,6 +16,7 @@ CHANGELOG MICE
 V2.18    31-07-2013 SvB
 ADDED    as.mids() for converting long format in a mids object (thanks Gerko Vink)
 FIXED    mice.impute.logreg.boot() now properly exported (thanks Suresh Pujar)
+FIXED    two bugs in rbind.mids() (thanks Gerko Vink)
 
 V2.17    10-05-2013 SvB
 ADDED    new form argument to mice() to specify imputation models using forms (contributed Ross Boylan)

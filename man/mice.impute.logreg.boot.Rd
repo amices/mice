@@ -1,8 +1,8 @@
-\name{mice.impute.logreg}
-\alias{mice.impute.logreg}
-\title{Imputation by logistic regression}
+\name{mice.impute.logreg.boot}
+\alias{mice.impute.logreg.boot}
+\title{Imputation by logistic regression using the bootstrap}
 \usage{
-  mice.impute.logreg(y, ry, x, ...)
+  mice.impute.logreg.boot(y, ry, x, ...)
 }
 \arguments{
   \item{y}{Incomplete data vector of length \code{n}}
@@ -19,21 +19,12 @@
   A vector of length \code{nmis} with imputations (0 or 1).
 }
 \description{
-  Imputes univariate missing data using logistic
-  regression.
-}
-\details{
-  Imputation for binary response variables by the Bayesian
-  logistic regression model (Rubin 1987, p. 169-170).  The
-  Bayesian method consists of the following steps:
-  \enumerate{ \item Fit a logit, and find (bhat, V(bhat))
-  \item Draw BETA from N(bhat, V(bhat)) \item Compute
-  predicted scores for m.d., i.e. logit-1(X BETA) \item
-  Compare the score to a random (0,1) deviate, and impute.
-  } The method relies on the standard \code{glm.fit}
-  function. Warnings from \code{glm.fit} are suppressed.
-  Perfect prediction is handled by the data augmentation
-  method.
+  Imputes univariate missing data using logistic regression
+  by a bootstrapped logistic regression model. The
+  bootstrap method draws a simple bootstrap sample with
+  replacement from the observed data \code{y[ry]} and
+  \code{x[ry,]}. Perfect prediction is handled by the data
+  augmentation method.
 }
 \author{
   Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2011
