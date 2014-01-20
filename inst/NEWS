@@ -13,6 +13,10 @@ Question or suggestions about MICE can be send to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.19    19-01-2014 SvB
+FIXED    relocate MASS, nnet, lattice as imports
+FIXED    proper handling of rare case in remove.lindep() that removed all predictors (thanks Jaap Brand)
+
 V2.18    31-07-2013 SvB
 ADDED    as.mids() for converting long format in a mids object (thanks Gerko Vink)
 FIXED    mice.impute.logreg.boot() now properly exported (thanks Suresh Pujar)

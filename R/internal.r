@@ -216,9 +216,11 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99, allow.na = FALSE
     yobs <- as.numeric(y[ry])
     keep <- unlist(apply(xobs, 2, var) > eps)
     keep[is.na(keep)] <- FALSE
-    keep <- keep & suppressWarnings((unlist(apply(xobs, 2, cor, yobs)) < maxcor))
+    highcor <- suppressWarnings((unlist(apply(xobs, 2, cor, yobs)) < maxcor))
+    keep <- keep & highcor
     if (all(!keep))
-        warning("All predictors are constant or have too high correlation.")
+        updateLog(out = "All predictors are constant or have too high correlation.", frame = 3)
+    if (length(keep) == 1) keep[1] <- TRUE  # SvB 19/1/14
     k <- sum(keep)
     cx <- cor(xobs[, keep, drop = FALSE], use = "all.obs")
     eig <- eigen(cx, symmetric = TRUE)
