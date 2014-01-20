@@ -54,10 +54,10 @@ plot(imp)
   Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
 }
 \references{
-  Doove, L.L., van Buuren, S., Dusseldorp, E. (2013).
+  Doove, L.L., van Buuren, S., Dusseldorp, E. (2014),
   Recursive partitioning for missing data imputation in the
-  presence of interaction Effects. Submitted for
-  publication.
+  presence of interaction Effects. Computational Statistics
+  \& Data Analysis, 72, 92-104.
 
   Breiman, L., Friedman, J. H., Olshen, R. A., and Stone,
   C. J. (1984), Classification and regression trees,
@@ -66,6 +66,11 @@ plot(imp)
 
   Van Buuren, S.(2012), Flexible imputation of missing
   data, Boca Raton, FL: Chapman & Hall/CRC.
+}
+\seealso{
+  \code{\link{mice}}, \code{\link{mice.impute.rf}},
+  \code{\link[rpart]{rpart}},
+  \code{\link[rpart]{rpart.control}}
 }
 \keyword{datagen}
 
