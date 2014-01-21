@@ -89,8 +89,9 @@ mice.impute.pmm <- function(y, ry, x, ...)
 #'outcome.
 #'@param y A vector of \code{length(yhat)} elements containing the observed outcome
 #'@param donors The size of the donor pool among which a draw is made. The default is 
-#'\code{donors = 3}. Setting \code{donors = 1} always selects the closest match. Values 
-#'between 3 and 10 provide the best results.
+#'\code{donors = 5}. Setting \code{donors = 1} always selects the closest match. Values 
+#'between 3 and 10 provide the best results. Note: This setting was changed from 
+#'3 to 5 in version 2.19, based on simulation work by Tim Morris (UCL).
 #'@param \dots Other parameters (not used).
 #'@return A scalar containing the observed value of the selected donor.
 #'@author Stef van Buuren
@@ -102,7 +103,7 @@ mice.impute.pmm <- function(y, ry, x, ...)
 #'\emph{Journal of Business Economics and Statistics}, 6, 287-301.
 #'
 #'@export
-.pmm.match <- function(z, yhat = yhat, y = y, donors = 3, ...) {
+.pmm.match <- function(z, yhat = yhat, y = y, donors = 5, ...) {
     d <- abs(yhat - z)
     f <- d > 0
     a1 <- ifelse(any(f), min(d[f]), 1)

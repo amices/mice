@@ -92,7 +92,12 @@ mice.impute.2lonly.pmm <- function (y, ry, x, type , ...){
     # extract cluster index
     clusterx <- x[,type == -2 ]
     x <- cbind(1, as.matrix(x[,type %in% c(1,2)]))      # calculate aggregated values
-    a1 <- aggregate( (cbind(x,y)) , list( clusterx ) , mean , na.rm=F)
+    # change ARb 2013-02-12
+    # a1 <- aggregate( (cbind(x,y)) , list( clusterx ) , mean , na.rm=F)
+    a2 <- rowsum( cbind(x,y) , clusterx , na.rm=FALSE)
+    a2 <- a2 / rowsum( 1+0*y , clusterx , na.rm=FALSE )[,1] 
+    a1 <- cbind( clusterx  , a2 )
+    #*****	
     N1 <- ncol(a1)
     cly2 <- unique( clusterx[  ry ] )  # clusters without missings on y
     ry2 <- a1[,1] %in% cly2  

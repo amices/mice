@@ -13,8 +13,12 @@ Question or suggestions about MICE can be send to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
-V2.19    19-01-2014 SvB
-FIXED    relocate MASS, nnet, lattice as imports
+V2.19    21-01-2014 SvB
+CHANGED  default number of donors in mice.impute.pmm() changed from 3 to 5.
+         Use mice(..., donors = 3) to get the old behavior.
+CHANGED  speedup in .norm.draw() by using crossprod() (thanks Alexander Robitzsch)
+CHANGED  speedup in .imputation.level2() (thanks Alexander Robitzsch)
+FIXED    define MASS, nnet, lattice as imports instead of depends
 FIXED    proper handling of rare case in remove.lindep() that removed all predictors (thanks Jaap Brand)
 
 V2.18    31-07-2013 SvB
