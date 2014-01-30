@@ -200,6 +200,8 @@
 #'@importFrom utils packageDescription
 #'@importFrom graphics plot
 #'@importFrom rpart rpart rpart.control
+#'@importFrom Rcpp sourceCpp
+#'@useDynLib mice
 #'@examples
 #'
 #'
