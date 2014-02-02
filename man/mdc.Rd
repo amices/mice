@@ -2,11 +2,10 @@
 \alias{mdc}
 \title{Graphical parameter for missing data plots.}
 \usage{
-  mdc(r = "observed", s = "symbol", transparent = TRUE,
-    cso = hcl(240, 100, 40, 0.7),
-    csi = hcl(0, 100, 40, 0.7), csc = "gray50",
-    clo = hcl(240, 100, 40, 0.8),
-    cli = hcl(0, 100, 40, 0.8), clc = "gray50")
+mdc(r = "observed", s = "symbol", transparent = TRUE, cso = hcl(240,
+  100, 40, 0.7), csi = hcl(0, 100, 40, 0.7), csc = "gray50",
+  clo = hcl(240, 100, 40, 0.8), cli = hcl(0, 100, 40, 0.8),
+  clc = "gray50")
 }
 \arguments{
   \item{r}{A numerical or character vector. The numbers 1-6
@@ -43,23 +42,23 @@
   imputed data. The default is a grey color.}
 }
 \value{
-  \code{mdc()} returns a vector containing color
-  definitions. The length of the output vector is calculate
-  from the length of \code{r} and \code{s}. Elements of the
-  input vectors are repeated if needed.
+\code{mdc()} returns a vector containing color definitions.
+The length of the output vector is calculate from the
+length of \code{r} and \code{s}. Elements of the input
+vectors are repeated if needed.
 }
 \description{
-  \code{mdc} returns colors used to distinguish observed,
-  missing and combined data in plotting. \code{mice.theme}
-  return a partial list of named objects that can be used
-  as a theme in \code{stripplot}, \code{bwplot},
-  \code{densityplot} and \code{xyplot}.
+\code{mdc} returns colors used to distinguish observed,
+missing and combined data in plotting. \code{mice.theme}
+return a partial list of named objects that can be used as
+a theme in \code{stripplot}, \code{bwplot},
+\code{densityplot} and \code{xyplot}.
 }
 \details{
-  This function eases consistent use of colors in plots.
-  The default follows the Abayomi convention, which uses
-  blue for observed data, red for missing or imputed data,
-  and black for combined data.
+This function eases consistent use of colors in plots. The
+default follows the Abayomi convention, which uses blue for
+observed data, red for missing or imputed data, and black
+for combined data.
 }
 \examples{
 # all six colors
@@ -69,18 +68,18 @@ mdc(1:6)
 mdc(c('obs','mis'), 'lin')
 }
 \author{
-  Stef van Buuren, sept 2012.
+Stef van Buuren, sept 2012.
 }
 \references{
-  Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
-  Visualization with R}, Springer.
-  \url{http://lmdvr.r-forge.r-project.org/}
+Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
+Visualization with R}, Springer.
+\url{http://lmdvr.r-forge.r-project.org/}
 }
 \seealso{
-  \code{\link{hcl}}, \code{\link{rgb}},
-  \code{\link[mice:xyplot]{xyplot.mids}},
-  \code{\link[lattice:xyplot]{xyplot}},
-  \code{\link[lattice:trellis.par.set]{trellis.par.set}}
+\code{\link{hcl}}, \code{\link{rgb}},
+\code{\link[mice:xyplot]{xyplot.mids}},
+\code{\link[lattice:xyplot]{xyplot}},
+\code{\link[lattice:trellis.par.set]{trellis.par.set}}
 }
 \keyword{hplot}
 

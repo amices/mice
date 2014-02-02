@@ -2,8 +2,8 @@
 \alias{plot.mids}
 \title{Plot the trace lines of the MICE algorithm}
 \usage{
-  \method{plot}{mids} (x, y = NULL, theme = mice.theme(),
-    layout = c(2, 3), type = "l", col = 1:10, lty = 1, ...)
+\method{plot}{mids}(x, y = NULL, theme = mice.theme(), layout = c(2, 3),
+  type = "l", col = 1:10, lty = 1, ...)
 }
 \arguments{
   \item{x}{An object of class \code{mids}}
@@ -31,27 +31,26 @@
   \item{...}{Extra arguments for \code{\link{xyplot}}.}
 }
 \value{
-  An object of class \code{"trellis"}.
+An object of class \code{"trellis"}.
 }
 \description{
-  Trace line plots, also called stream plots or history
-  plots, portray the value of an estimate against the
-  iteration number. The estimate can be anything that you
-  can calculate, but typically are chosen as parameter of
-  scientific interest. The \code{plot} method for a
-  \code{mids} object plots the mean and standard deviation
-  of the imputed (not observed) values against the
-  iteration number for each of the $m$ replications. By
-  default, the function plot the development of the mean
-  and standard deviation for each incomplete variable. On
-  convergence, the streams should intermingle and be free
-  of any trend.
+Trace line plots, also called stream plots or history
+plots, portray the value of an estimate against the
+iteration number. The estimate can be anything that you can
+calculate, but typically are chosen as parameter of
+scientific interest. The \code{plot} method for a
+\code{mids} object plots the mean and standard deviation of
+the imputed (not observed) values against the iteration
+number for each of the $m$ replications. By default, the
+function plot the development of the mean and standard
+deviation for each incomplete variable. On convergence, the
+streams should intermingle and be free of any trend.
 }
 \author{
-  Stef van Buuren 2011
+Stef van Buuren 2011
 }
 \seealso{
-  \code{\link{mice}}, \code{\link[=mids-class]{mids}},
-  \code{\link{xyplot}}
+\code{\link{mice}}, \code{\link[=mids-class]{mids}},
+\code{\link{xyplot}}
 }
 

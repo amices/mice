@@ -5,6 +5,9 @@
 \alias{ic,matrix-method}
 \alias{ic,mids-method}
 \title{Incomplete cases}
+\usage{
+ic(x, drop = TRUE)
+}
 \arguments{
   \item{x}{An \code{R} object. Currently supported are
   methods for the following classes: \code{mids},
@@ -17,13 +20,13 @@
   possible dimension.}
 }
 \value{
-  A \code{vector}, \code{matrix} of \code{data.frame}
-  containing the data of the incomplete cases.
+A \code{vector}, \code{matrix} of \code{data.frame}
+containing the data of the incomplete cases.
 }
 \description{
-  Extracts incomplete cases from a data set. Missing values
-  in \code{x} are coded as \code{NA}. The companion
-  function for selecting the complete cases is \code{cc()}.
+Extracts incomplete cases from a data set. Missing values
+in \code{x} are coded as \code{NA}. The companion function
+for selecting the complete cases is \code{cc()}.
 }
 \examples{
 ic(nhanes)   # get the 12 rows with incomplete cases
@@ -31,12 +34,11 @@ ic(nhanes[1:10,])  # incomplete cases within the first ten rows
 ic(nhanes[,2:3])  # restrict extraction to variables bmi and hyp
 }
 \author{
-  Stef van Buuren, 2010.
+Stef van Buuren, 2010.
 }
 \seealso{
-  \code{\link{na.omit}}, \code{\link{cc}},
-  \code{\link{cci}}, \code{\link{ici}}, \code{\link{ccn}},
-  \code{\link{icn}}
+\code{\link{na.omit}}, \code{\link{cc}}, \code{\link{cci}},
+\code{\link{ici}}, \code{\link{ccn}}, \code{\link{icn}}
 }
 \keyword{univar}
 

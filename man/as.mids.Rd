@@ -2,7 +2,7 @@
 \alias{as.mids}
 \title{Converts an multiply imputed dataset (long format) into a \code{mids} object}
 \usage{
-  as.mids(data, .imp=1, .id=2)
+as.mids(data, .imp=1, .id=2)
 }
 \arguments{
   \item{data}{A multiply imputed data set in long format}
@@ -17,22 +17,22 @@
   Default is \code{2}.}
 }
 \value{
-  An object of class \code{mids}
+An object of class \code{mids}
 }
 \description{
-  This function converts imputed data stored in long format
-  into an object of class \code{mids}. The original
-  incomplete data set needs to be available so that we know
-  where the missing data are. The function is useful to
-  convert back operations applied to the imputed data back
-  in a \code{mids} object. It may also be used to store
-  multiply imputed data sets from other software into the
-  format used by \code{mice}.
+This function converts imputed data stored in long format
+into an object of class \code{mids}. The original
+incomplete data set needs to be available so that we know
+where the missing data are. The function is useful to
+convert back operations applied to the imputed data back in
+a \code{mids} object. It may also be used to store multiply
+imputed data sets from other software into the format used
+by \code{mice}.
 }
 \details{
-  If \code{.id} is specified, row names from the original
-  data (if supplied) will be copied to the \code{mids}
-  object.
+If \code{.id} is specified, row names from the original
+data (if supplied) will be copied to the \code{mids}
+object.
 }
 \examples{
 # nhanes example without .id
@@ -51,7 +51,7 @@ test.dat <- complete(test, action = "long", include = TRUE)
 # original rownumbers are automatically copied from .id
 }
 \author{
-  Gerko Vink, 2012
+Gerko Vink, 2012
 }
 \keyword{mids}
 

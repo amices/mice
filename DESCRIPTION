@@ -1,8 +1,8 @@
 Package: mice
 Type: Package
-Version: 2.19
+Version: 2.20
 Title: Multivariate Imputation by Chained Equations
-Date: 2014-01-30
+Date: 2014-02-02
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -20,9 +20,9 @@ Author: Stef van Buuren and Karin Groothuis-Oudshoorn, with contributions from
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
     R (>= 2.10.0),
-    methods
+    methods,
+    Rcpp (>= 0.10.6)
 Imports:
-    Rcpp,
     lattice,
     MASS,
     nnet,
@@ -51,89 +51,3 @@ License: GPL-2 | GPL-3
 LazyLoad: yes
 LazyData: yes
 URL: http://www.stefvanbuuren.nl , http://www.multiple-imputation.com
-Collate:
-    'as.r'
-    'auxiliary.r'
-    'boys.r'
-    'cc.r'
-    'flux.r'
-    'mice.impute.2l.norm.r'
-    'mice.impute.2l.pan.r'
-    'mice.impute.2lonly.mean.r'
-    'mice.impute.2lony.pmm.r'
-    'mice.impute.norm.r'
-    'mice.impute.pmm.r'
-    'mice.impute.polyreg.r'
-    'mice.impute.quadratic.r'
-    'mids2mplus.r'
-    'nelsonaalen.r'
-    'pattern1.r'
-    'pool.compare.r'
-    'rm.whitespace.r'
-    'zzz.r'
-    'xyplot.r'
-    'stripplot.r'
-    'bwplot.r'
-    'densityplot.r'
-    'mice.impute.cart.r'
-    'mice.impute.ri.r'
-    'cbind.r'
-    'cci.r'
-    'ccn.r'
-    'complete.r'
-    'df.residual.r'
-    'expandcov.r'
-    'fdd.r'
-    'fdgs.r'
-    'getfit.r'
-    'ibind.r'
-    'internal.r'
-    'is.r'
-    'leiden85.r'
-    'lm.r'
-    'long2mids.r'
-    'mammalsleep.r'
-    'md.pairs.r'
-    'md.pattern.r'
-    'mdc.r'
-    'mice.df.r'
-    'mice.impute.2lonly.norm.r'
-    'mice.impute.lda.r'
-    'mice.impute.logreg.r'
-    'mice.impute.mean.r'
-    'mice.impute.norm.boot.r'
-    'mice.impute.norm.nob.r'
-    'mice.impute.norm.predict.r'
-    'mice.impute.passive.r'
-    'mice.impute.polr.r'
-    'mice.impute.sample.r'
-    'mice.mids.r'
-    'mice.r'
-    'mids.r'
-    'mids2spss.r'
-    'mipo.r'
-    'mira.r'
-    'nhanes.r'
-    'nhanes2.r'
-    'plot.r'
-    'pool.r'
-    'pool.r.squared.r'
-    'pool.scalar.r'
-    'popmis.r'
-    'pops.r'
-    'potthoffroy.r'
-    'print.r'
-    'quickpred.r'
-    'rbind.r'
-    'selfreport.r'
-    'squeeze.r'
-    'summary.r'
-    'supports.transparent.r'
-    'tbc.r'
-    'walking.r'
-    'windspeed.r'
-    'with.r'
-    'mice.theme.r'
-    'mice.impute.rf.r'
-    'RcppExports.r'
-    'mice.impute.fastpmm.r'

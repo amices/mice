@@ -2,7 +2,7 @@
 \alias{pool.r.squared}
 \title{Pooling: R squared}
 \usage{
-  pool.r.squared(object, adjusted = FALSE)
+pool.r.squared(object, adjusted = FALSE)
 }
 \arguments{
   \item{object}{An object of class 'mira', produced by
@@ -14,21 +14,21 @@
   FALSE.}
 }
 \value{
-  Returns a 1x4 table with components. Component \code{est}
-  is the pooled R^2 estimate. Component \code{lo95} is the
-  95 \% lower bound of the pooled R^2. Component
-  \code{hi95} is the 95 \% upper bound of the pooled R^2.
-  Component \code{fmi} is the fraction of missing
-  information due to nonresponse.
+Returns a 1x4 table with components. Component \code{est}
+is the pooled R^2 estimate. Component \code{lo95} is the 95
+\% lower bound of the pooled R^2. Component \code{hi95} is
+the 95 \% upper bound of the pooled R^2. Component
+\code{fmi} is the fraction of missing information due to
+nonresponse.
 }
 \description{
-  Pools R^2 of m repeated complete data models.
+Pools R^2 of m repeated complete data models.
 }
 \details{
-  The function pools the coefficients of determination R^2
-  or the adjusted coefficients of determination (R^2_a)
-  obtained with the \code{lm} modelling function. For
-  pooling it uses the Fisher \emph{z}-transformation.
+The function pools the coefficients of determination R^2 or
+the adjusted coefficients of determination (R^2_a) obtained
+with the \code{lm} modelling function. For pooling it uses
+the Fisher \emph{z}-transformation.
 }
 \examples{
 imp<-mice(nhanes)
@@ -49,24 +49,23 @@ pool.r.squared(fit,adjusted=TRUE)
 #
 }
 \author{
-  Karin Groothuis-Oudshoorn and Stef van Buuren, 2009
+Karin Groothuis-Oudshoorn and Stef van Buuren, 2009
 }
 \references{
-  Harel, O (2009). The estimation of R^2 and adjusted R^2
-  in incomplete data sets using multiple imputation,
-  Journal of Applied Statistics, 36:1109-1118.
+Harel, O (2009). The estimation of R^2 and adjusted R^2 in
+incomplete data sets using multiple imputation, Journal of
+Applied Statistics, 36:1109-1118.
 
-  Rubin, D.B. (1987). Multiple Imputation for Nonresponse
-  in Surveys.  New York: John Wiley and Sons.
+Rubin, D.B. (1987). Multiple Imputation for Nonresponse in
+Surveys.  New York: John Wiley and Sons.
 
-  van Buuren S and Groothuis-Oudshoorn K (2011).
-  \code{mice}: Multivariate Imputation by Chained Equations
-  in \code{R}. \emph{Journal of Statistical Software},
-  \bold{45}(3), 1-67.
-  \url{http://www.jstatsoft.org/v45/i03/}
+van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
+Multivariate Imputation by Chained Equations in \code{R}.
+\emph{Journal of Statistical Software}, \bold{45}(3), 1-67.
+\url{http://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-  \code{\link{pool}},\code{\link{pool.scalar}}
+\code{\link{pool}},\code{\link{pool.scalar}}
 }
 \keyword{htest}
 

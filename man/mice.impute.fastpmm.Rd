@@ -3,8 +3,7 @@
 \alias{mice.impute.fastpmm}
 \title{Imputation by fast predictive mean matching}
 \usage{
-  mice.impute.fastpmm(y, ry, x, donors = 5, type = 1,
-    ridge = 1e-05, ...)
+mice.impute.fastpmm(y, ry, x, donors = 5, type = 1, ridge = 1e-05, ...)
 }
 \arguments{
   \item{y}{Numeric vector with incomplete data}
@@ -38,41 +37,40 @@
   \item{...}{Other named arguments.}
 }
 \value{
-  Numeric vector of length \code{sum(!ry)} with imputations
+Numeric vector of length \code{sum(!ry)} with imputations
 }
 \description{
-  Imputes univariate missing data using fast predictive
-  mean matching
+Imputes univariate missing data using fast predictive mean
+matching
 }
 \details{
-  Imputation of \code{y} by predictive mean matching, based
-  on Rubin (1987, p. 168, formulas a and b).  The procedure
-  is as follows: \enumerate{ \item Estimate beta and sigma
-  by linear regression \item Draw beta* and sigma* from the
-  proper posterior \item Compute predicted values for
-  \code{yobs}beta and \code{ymis}beta* \item For each
-  \code{ymis}, find the observation with closest predicted
-  value, and take its observed value in \code{y} as the
-  imputation.  \item If there is more than one candidate,
-  make a random draw among them.  Note: The matching is
-  done on predicted \code{y}, NOT on observed \code{y}. }
+Imputation of \code{y} by predictive mean matching, based
+on Rubin (1987, p. 168, formulas a and b).  The procedure
+is as follows: \enumerate{ \item Estimate beta and sigma by
+linear regression \item Draw beta* and sigma* from the
+proper posterior \item Compute predicted values for
+\code{yobs}beta and \code{ymis}beta* \item For each
+\code{ymis}, find the observation with closest predicted
+value, and take its observed value in \code{y} as the
+imputation.  \item If there is more than one candidate,
+make a random draw among them.  Note: The matching is done
+on predicted \code{y}, NOT on observed \code{y}. }
 }
 \note{
-  \code{mice.impute.fastpmm()} was introduced on \code{mice
-  2.19} and after a faster alternative to
-  \code{mice.impute.pmm()}. This is an experimental
-  feature.
+\code{mice.impute.fastpmm()} was introduced on \code{mice
+2.19} and after a faster alternative to
+\code{mice.impute.pmm()}. This is an experimental feature.
 }
 \author{
-  Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2012
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2012
 }
 \references{
-  Little, R.J.A. (1988), Missing data adjustments in large
-  surveys (with discussion), Journal of Business Economics
-  and Statistics, 6, 287--301.
+Little, R.J.A. (1988), Missing data adjustments in large
+surveys (with discussion), Journal of Business Economics
+and Statistics, 6, 287--301.
 
-  Rubin, D.B. (1987). Multiple imputation for nonresponse
-  in surveys. New York: Wiley.
+Rubin, D.B. (1987). Multiple imputation for nonresponse in
+surveys. New York: Wiley.
 }
 \keyword{datagen}
 

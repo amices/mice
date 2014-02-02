@@ -74,33 +74,32 @@
 \code{fdd.pred} is the 65 by 65 binary
 predictor matrix used to impute \code{fdd}.}
 \source{
-  de Roos, C., Greenwald, R., den Hollander-Gijsman, M.,
-  Noorthoorn, E., van Buuren, S., de Jong, A. (2011). A
-  Randomised Comparison of Cognitive Behavioral Therapy
-  (CBT) and Eye Movement Desensitisation and Reprocessing
-  (EMDR) in disaster-exposed children. \emph{European
-  Journal of Psychotraumatology}, \emph{2}, 5694.
+de Roos, C., Greenwald, R., den Hollander-Gijsman, M.,
+Noorthoorn, E., van Buuren, S., de Jong, A. (2011). A
+Randomised Comparison of Cognitive Behavioral Therapy (CBT)
+and Eye Movement Desensitisation and Reprocessing (EMDR) in
+disaster-exposed children. \emph{European Journal of
+Psychotraumatology}, \emph{2}, 5694.
 
-  van Buuren, S. (2012). \emph{Flexible Imputation of
-  Missing Data.} Boca Raton, FL: Chapman \& Hall/CRC Press.
+van Buuren, S. (2012). \emph{Flexible Imputation of Missing
+Data.} Boca Raton, FL: Chapman \& Hall/CRC Press.
 }
 \description{
-  Multiple outcomes of a randomized study to reduce
-  post-traumatic stress.
+Multiple outcomes of a randomized study to reduce
+post-traumatic stress.
 }
 \details{
-  Data from a randomized experiment to reduce
-  post-traumatic stress by two treatments: Eye Movement
-  Desensitization and Reprocessing (EMDR) (experimental
-  treatment), and cognitive behavioral therapy (CBT)
-  (control treatment). 52 children were randomized to one
-  of these two treatments. Outcomes were measured at three
-  time points: at baseline (pre-treatment, T1),
-  post-treatment (T2, 4-8 weeks), and at follow-up (T3, 3
-  months). For more details, see de Roos et al (2011).
-  Some person covariates were reshuffled. The imputation
-  methodology is explained in Chapter 9 of van Buuren
-  (2012).
+Data from a randomized experiment to reduce post-traumatic
+stress by two treatments: Eye Movement Desensitization and
+Reprocessing (EMDR) (experimental treatment), and cognitive
+behavioral therapy (CBT) (control treatment). 52 children
+were randomized to one of these two treatments. Outcomes
+were measured at three time points: at baseline
+(pre-treatment, T1), post-treatment (T2, 4-8 weeks), and at
+follow-up (T3, 3 months). For more details, see de Roos et
+al (2011).  Some person covariates were reshuffled. The
+imputation methodology is explained in Chapter 9 of van
+Buuren (2012).
 }
 \examples{
 data <- fdd

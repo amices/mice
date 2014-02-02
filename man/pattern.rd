@@ -11,15 +11,15 @@ data pattern} \item{list("pattern2")}{Data with a monotone missing data
 pattern} \item{list("pattern3")}{Data with a file matching missing data
 pattern} \item{list("pattern4")}{Data with a general missing data pattern} }}
 \source{
-  van Buuren, S. (2012). \emph{Flexible Imputation of
-  Missing Data.} Boca Raton, FL: Chapman & Hall/CRC Press.
+van Buuren, S. (2012). \emph{Flexible Imputation of Missing
+Data.} Boca Raton, FL: Chapman & Hall/CRC Press.
 }
 \description{
-  Four simple datasets with various missing data patterns
+Four simple datasets with various missing data patterns
 }
 \details{
-  Van Buuren (2012) uses these four artificial datasets to
-  illustrate various missing data patterns.
+Van Buuren (2012) uses these four artificial datasets to
+illustrate various missing data patterns.
 }
 \examples{
 require(lattice)

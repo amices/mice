@@ -2,30 +2,30 @@
 \alias{md.pattern}
 \title{Missing data pattern}
 \usage{
-  md.pattern(x)
+md.pattern(x)
 }
 \arguments{
   \item{x}{A data frame or a matrix containing the
   incomplete data.  Missing values are coded as NA's.}
 }
 \value{
-  A matrix with \code{ncol(x)+1} columns, in which each row
-  corresponds to a missing data pattern (1=observed,
-  0=missing).  Rows and columns are sorted in increasing
-  amounts of missing information. The last column and row
-  contain row and column counts, respectively.
+A matrix with \code{ncol(x)+1} columns, in which each row
+corresponds to a missing data pattern (1=observed,
+0=missing).  Rows and columns are sorted in increasing
+amounts of missing information. The last column and row
+contain row and column counts, respectively.
 }
 \description{
-  Display missing-data patterns.
+Display missing-data patterns.
 }
 \details{
-  This function is useful for investigating any structure
-  of missing observation in the data. In specific case, the
-  missing data pattern could be (nearly) monotone.
-  Monotonicity can be used to simplify the imputation
-  model. See Schafer (1997) for details. Also, the missing
-  pattern could suggest which variables could potentially
-  be useful for imputation of missing entries.
+This function is useful for investigating any structure of
+missing observation in the data. In specific case, the
+missing data pattern could be (nearly) monotone.
+Monotonicity can be used to simplify the imputation model.
+See Schafer (1997) for details. Also, the missing pattern
+could suggest which variables could potentially be useful
+for imputation of missing entries.
 }
 \examples{
 md.pattern(nhanes)
@@ -38,17 +38,16 @@ md.pattern(nhanes)
 #   0   8   9  10 27
 }
 \author{
-  Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
 }
 \references{
-  Schafer, J.L. (1997), Analysis of multivariate incomplete
-  data. London: Chapman&Hall.
+Schafer, J.L. (1997), Analysis of multivariate incomplete
+data. London: Chapman&Hall.
 
-  Van Buuren, S., Groothuis-Oudshoorn, K. (2011).
-  \code{mice}: Multivariate Imputation by Chained Equations
-  in \code{R}. \emph{Journal of Statistical Software},
-  \bold{45}(3), 1-67.
-  \url{http://www.jstatsoft.org/v45/i03/}
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011).
+\code{mice}: Multivariate Imputation by Chained Equations
+in \code{R}. \emph{Journal of Statistical Software},
+\bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 }
 \keyword{univar}
 

@@ -2,7 +2,7 @@
 \alias{mice.impute.mean}
 \title{Imputation by the mean}
 \usage{
-  mice.impute.mean(y, ry, x = NULL, ...)
+mice.impute.mean(y, ry, x = NULL, ...)
 }
 \arguments{
   \item{y}{Incomplete data vector of length \code{n}}
@@ -16,31 +16,29 @@
   \item{...}{Other named arguments.}
 }
 \value{
-  A vector of length \code{nmis} with imputations.
+A vector of length \code{nmis} with imputations.
 }
 \description{
-  Imputes the arithmetic mean of the observed data
+Imputes the arithmetic mean of the observed data
 }
 \section{Warning}{
   Imputing the mean of a variable is almost never
   appropriate.  See Little and Rubin (1987).
 }
 \author{
-  Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
 }
 \references{
-  Van Buuren, S., Groothuis-Oudshoorn, K. (2011).
-  \code{mice}: Multivariate Imputation by Chained Equations
-  in \code{R}. \emph{Journal of Statistical Software},
-  \bold{45}(3), 1-67.
-  \url{http://www.jstatsoft.org/v45/i03/}
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011).
+\code{mice}: Multivariate Imputation by Chained Equations
+in \code{R}. \emph{Journal of Statistical Software},
+\bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 
-  Little, R.J.A. and Rubin, D.B. (1987). Statistical
-  Analysis with Missing Data.  New York: John Wiley and
-  Sons.
+Little, R.J.A. and Rubin, D.B. (1987). Statistical Analysis
+with Missing Data.  New York: John Wiley and Sons.
 }
 \seealso{
-  \code{\link{mice}}, \code{\link{mean}}
+\code{\link{mice}}, \code{\link{mean}}
 }
 \keyword{datagen}
 

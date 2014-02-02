@@ -3,14 +3,14 @@
 \alias{densityplot.mids}
 \title{Density plot of observed and imputed data}
 \usage{
-  \method{densityplot}{mids} (x, data, na.groups = NULL,
-    groups = NULL, as.table = TRUE, plot.points = FALSE,
-    theme = mice.theme(), mayreplicate = TRUE,
-    thicker = 2.5, allow.multiple = TRUE, outer = TRUE,
-    drop.unused.levels = lattice.getOption("drop.unused.levels"),
-    panel = lattice.getOption("panel.densityplot"),
-    default.prepanel = lattice.getOption("prepanel.default.densityplot"),
-    ..., subscripts = TRUE, subset = TRUE)
+\method{densityplot}{mids}(x, data, na.groups = NULL, groups = NULL,
+  as.table = TRUE, plot.points = FALSE, theme = mice.theme(),
+  mayreplicate = TRUE, thicker = 2.5, allow.multiple = TRUE,
+  outer = TRUE,
+  drop.unused.levels = lattice.getOption("drop.unused.levels"),
+  panel = lattice.getOption("panel.densityplot"),
+  default.prepanel = lattice.getOption("prepanel.default.densityplot"), ...,
+  subscripts = TRUE, subset = TRUE)
 }
 \arguments{
   \item{x}{A \code{mids} object, typically created by
@@ -126,70 +126,70 @@
   but instead passed on to other functions.}
 }
 \value{
-  The high-level functions documented here, as well as
-  other high-level Lattice functions, return an object of
-  class \code{"trellis"}.  The
-  \code{\link[lattice:update.trellis]{update}} method can
-  be used to subsequently update components of the object,
-  and the \code{\link[lattice:print.trellis]{print}} method
-  (usually called by default) will plot it on an
-  appropriate plotting device.
+The high-level functions documented here, as well as other
+high-level Lattice functions, return an object of class
+\code{"trellis"}.  The
+\code{\link[lattice:update.trellis]{update}} method can be
+used to subsequently update components of the object, and
+the \code{\link[lattice:print.trellis]{print}} method
+(usually called by default) will plot it on an appropriate
+plotting device.
 }
 \description{
-  Plotting methods for imputed data using \pkg{lattice}.
-  \code{densityplot} produces plots of the densities. The
-  function automatically separates the observed and imputed
-  data. The functions extend the usual features of
-  \pkg{lattice}.
+Plotting methods for imputed data using \pkg{lattice}.
+\code{densityplot} produces plots of the densities. The
+function automatically separates the observed and imputed
+data. The functions extend the usual features of
+\pkg{lattice}.
 }
 \details{
-  The argument \code{na.groups} may be used to specify
-  (combinations of) missingness in any of the variables.
-  The argument \code{groups} can be used to specify groups
-  based on the variable values themselves. Only one of both
-  may be active at the same time. When both are specified,
-  \code{na.groups} takes precedence over \code{groups}.
+The argument \code{na.groups} may be used to specify
+(combinations of) missingness in any of the variables. The
+argument \code{groups} can be used to specify groups based
+on the variable values themselves. Only one of both may be
+active at the same time. When both are specified,
+\code{na.groups} takes precedence over \code{groups}.
 
-  Use the \code{subset} and \code{na.groups} together to
-  plots parts of the data. For example, select the first
-  imputed data set by by \code{subset=.imp==1}.
+Use the \code{subset} and \code{na.groups} together to
+plots parts of the data. For example, select the first
+imputed data set by by \code{subset=.imp==1}.
 
-  Graphical paramaters like \code{col}, \code{pch} and
-  \code{cex} can be specified in the arguments list to
-  alter the plotting symbols. If \code{length(col)==2}, the
-  color specification to define the observed and missing
-  groups. \code{col[1]} is the color of the 'observed'
-  data, \code{col[2]} is the color of the missing or
-  imputed data. A convenient color choice is
-  \code{col=mdc(1:2)}, a transparent blue color for the
-  observed data, and a transparent red color for the
-  imputed data. A good choice is \code{col=mdc(1:2),
-  pch=20, cex=1.5}. These choices can be set for the
-  duration of the session by running \code{mice.theme()}.
+Graphical paramaters like \code{col}, \code{pch} and
+\code{cex} can be specified in the arguments list to alter
+the plotting symbols. If \code{length(col)==2}, the color
+specification to define the observed and missing groups.
+\code{col[1]} is the color of the 'observed' data,
+\code{col[2]} is the color of the missing or imputed data.
+A convenient color choice is \code{col=mdc(1:2)}, a
+transparent blue color for the observed data, and a
+transparent red color for the imputed data. A good choice
+is \code{col=mdc(1:2), pch=20, cex=1.5}. These choices can
+be set for the duration of the session by running
+\code{mice.theme()}.
 }
 \note{
-  The first two arguments (\code{x} and \code{data}) are
-  reversed compared to the standard Trellis syntax
-  implemented in \pkg{lattice}. This reversal was necessary
-  in order to benefit from automatic method dispatch.
+The first two arguments (\code{x} and \code{data}) are
+reversed compared to the standard Trellis syntax
+implemented in \pkg{lattice}. This reversal was necessary
+in order to benefit from automatic method dispatch.
 
-  In \pkg{mice} the argument \code{x} is always a
-  \code{mids} object, whereas in \pkg{lattice} the argument
-  \code{x} is always a formula.
+In \pkg{mice} the argument \code{x} is always a \code{mids}
+object, whereas in \pkg{lattice} the argument \code{x} is
+always a formula.
 
-  In \pkg{mice} the argument \code{data} is always a
-  formula object, whereas in \pkg{lattice} the argument
-  \code{data} is usually a data frame.
+In \pkg{mice} the argument \code{data} is always a formula
+object, whereas in \pkg{lattice} the argument \code{data}
+is usually a data frame.
 
-  All other arguments have identical interpretation.
+All other arguments have identical interpretation.
 
-  \code{densityplot} errs on empty groups, which occurs if
-  all observations in the subgroup contain \code{NA}. The
-  relevant error message is: \code{Error in
-  density.default: ... need at least 2 points to select a
-  bandwidth automatically}. There is yet no workaround for
-  this problem. Use the more robust \code{bwplot} or
-  \code{stripplot} as a replacement.
+\code{densityplot} errs on empty groups, which occurs if
+all observations in the subgroup contain \code{NA}. The
+relevant error message is: \code{Error in density.default:
+... need at least 2 points to select a bandwidth
+automatically}. There is yet no workaround for this
+problem. Use the more robust \code{bwplot} or
+\code{stripplot} as a replacement.
 }
 \examples{
 require(lattice)
@@ -204,27 +204,26 @@ densityplot(imp, ~hc|.imp)
 densityplot(imp, ~hc)
 }
 \author{
-  Stef van Buuren
+Stef van Buuren
 }
 \references{
-  Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
-  Visualization with R}, Springer.
-  \url{http://lmdvr.r-forge.r-project.org/}
+Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
+Visualization with R}, Springer.
+\url{http://lmdvr.r-forge.r-project.org/}
 
-  van Buuren S and Groothuis-Oudshoorn K (2011).
-  \code{mice}: Multivariate Imputation by Chained Equations
-  in \code{R}. \emph{Journal of Statistical Software},
-  \bold{45}(3), 1-67.
-  \url{http://www.jstatsoft.org/v45/i03/}
+van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
+Multivariate Imputation by Chained Equations in \code{R}.
+\emph{Journal of Statistical Software}, \bold{45}(3), 1-67.
+\url{http://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-  \code{\link{mice}}, \code{\link{xyplot}},
-  \code{\link{stripplot}}, \code{\link{bwplot}},
-  \code{\link{Lattice}} for an overview of the package, as
-  well as \code{\link[lattice:densityplot]{densityplot}},
-  \code{\link[lattice:panel.densityplot]{panel.densityplot}},
-  \code{\link[lattice:print.trellis]{print.trellis}},
-  \code{\link[lattice:trellis.par.set]{trellis.par.set}}
+\code{\link{mice}}, \code{\link{xyplot}},
+\code{\link{stripplot}}, \code{\link{bwplot}},
+\code{\link{Lattice}} for an overview of the package, as
+well as \code{\link[lattice:densityplot]{densityplot}},
+\code{\link[lattice:panel.densityplot]{panel.densityplot}},
+\code{\link[lattice:print.trellis]{print.trellis}},
+\code{\link[lattice:trellis.par.set]{trellis.par.set}}
 }
 \keyword{hplot}
 
