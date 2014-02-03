@@ -15,8 +15,10 @@ CHANGELOG MICE
 ~~~~~~~~~~~~~~
 V2.20    02-02-2014 SvB
 ADDED    experimental fastpmm() function using Rcpp
+FIXED    fixes to mice.impute.cart() and mice.impute.rf() (thanks Anoop Shah)
 
 V2.19    21-01-2014 SvB
+ADDED    mice.impute.rf() for random forest imputation (thanks Lisa Doove)
 CHANGED  default number of donors in mice.impute.pmm() changed from 3 to 5.
          Use mice(..., donors = 3) to get the old behavior.
 CHANGED  speedup in .norm.draw() by using crossprod() (thanks Alexander Robitzsch)

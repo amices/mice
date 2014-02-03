@@ -17,9 +17,11 @@ the S4 class definitions, and instead rely on the S3 list
 equivalent \code{oldClass(obj) <- "mids"}.
 }
 \section{Slots}{
-  \describe{ \item{\code{call}:}{The call that created the
-  object.} \item{\code{data}:}{A copy of the incomplete
-  data set.} \item{\code{m}:}{The number of imputations.}
+  \describe{ \item{\code{.Data}:}{Object of class
+  \code{"list"} containing the following slots:}
+  \item{\code{call}:}{The call that created the object.}
+  \item{\code{data}:}{A copy of the incomplete data set.}
+  \item{\code{m}:}{The number of imputations.}
   \item{\code{nmis}:}{An array containing the number of
   missing observations per column.} \item{\code{imp}:}{A
   list of \code{ncol(data)} components with the generated
@@ -45,39 +47,41 @@ equivalent \code{oldClass(obj) <- "mids"}.
   convergence.  Note that observed data are not present in
   this mean.} \item{\code{chainVar}:}{A list with similar
   structure of \code{chainMean}, containing the covariances
-  of the imputed values.} \item{\code{pad}:}{A list
-  containing various settings of the padded imputation
-  model, i.e. the imputation model after creating dummy
-  variables. Normally, this list is only useful for error
-  checking. List members are \code{pad$data} (data padded
-  with columns for factors), \code{pad$predictorMatrix}
-  (predictor matrix for the padded data), \code{pad$method}
-  (imputation methods applied to the padded data), the
-  vector \code{pad$visitSequence} (the visit sequence
-  applied to the padded data), \code{pad$post}
-  (post-processing commands for padded data) and
-  \code{categories} (a matrix containing descriptive
-  information about the padding operation).}
-  \item{\code{loggedEvents}:}{A matrix with six columns
-  containing a record of automatic removal actions. It is
-  \code{NULL} is no action was made.  At initialization the
-  program does the following three actions: 1. A variable
-  that contains missing values, that is not imputed and
-  that is used as a predictor is removed, 2. a constant
-  variable is removed, and 3. a collinear variable is
-  removed. During iteration, the program does the following
-  actions: 1. one or more variables that are linearly
-  dependent are removed (for categorical data, a 'variable'
-  corresponds to a dummy variable), and 2. proportional
-  odds regression imputation that does not converge and is
-  replaced by \code{polyreg}. Column \code{it} is the
-  iteration number at which the record was added, \code{im}
-  is the imputation number, \code{co} is the column number
-  in the data, \code{dep} is the name of the name of the
-  dependent variable, \code{meth} is the imputation method
-  used, and \code{out} is a (possibly long) character
-  vector with the names of the altered or removed
-  predictors.} }
+  of the imputed values.} \item{\code{loggedEvents}:}{A
+  \code{data.frame} with six columns containing warnings,
+  corrective actions, and other inside info.}
+  \item{\code{pad}:}{A list containing various settings of
+  the padded imputation model, i.e. the imputation model
+  after creating dummy variables. Normally, this list is
+  only useful for error checking. List members are
+  \code{pad$data} (data padded with columns for factors),
+  \code{pad$predictorMatrix} (predictor matrix for the
+  padded data), \code{pad$method} (imputation methods
+  applied to the padded data), the vector
+  \code{pad$visitSequence} (the visit sequence applied to
+  the padded data), \code{pad$post} (post-processing
+  commands for padded data) and \code{categories} (a matrix
+  containing descriptive information about the padding
+  operation).} \item{\code{loggedEvents}:}{A matrix with
+  six columns containing a record of automatic removal
+  actions. It is \code{NULL} is no action was made.  At
+  initialization the program does the following three
+  actions: 1. A variable that contains missing values, that
+  is not imputed and that is used as a predictor is
+  removed, 2. a constant variable is removed, and 3. a
+  collinear variable is removed. During iteration, the
+  program does the following actions: 1. one or more
+  variables that are linearly dependent are removed (for
+  categorical data, a 'variable' corresponds to a dummy
+  variable), and 2. proportional odds regression imputation
+  that does not converge and is replaced by \code{polyreg}.
+  Column \code{it} is the iteration number at which the
+  record was added, \code{im} is the imputation number,
+  \code{co} is the column number in the data, \code{dep} is
+  the name of the name of the dependent variable,
+  \code{meth} is the imputation method used, and \code{out}
+  is a (possibly long) character vector with the names of
+  the altered or removed predictors.} }
 }
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn, 2000

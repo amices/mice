@@ -19,10 +19,11 @@ the S4 class definitions, and instead rely on the S3 list
 equivalent \code{oldClass(obj) <- "mira"}.
 }
 \section{Slots}{
-  \describe{ \item{\code{call}:}{The call that created the
-  object.} \item{\code{call1}:}{The call that created the
+  \describe{ #' \item{\code{.Data}:}{Object of class
+  \code{"list"} containing the following slots:}
+  \item{\code{call}:}{The call that created the object.}
+  \item{\code{call1}:}{The call that created the
   \code{mids} object that was used in \code{call}.}
-  \item{\code{m}:}{The number of imputations.}
   \item{\code{nmis}:}{An array containing the number of
   missing observations per column.}
   \item{\code{analyses}:}{A list of \code{m} components

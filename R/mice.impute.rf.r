@@ -54,16 +54,15 @@ mice.impute.rf <- function(y, ry, x, ntree = 100, ...)
     ntree <- max(1, ntree)  # safety
     xobs <- x[ry, ]
     xmis <- x[!ry, ]
-    yobs <- y[ry]                                           
+    yobs <- y[ry]
     onetree <- function(xobs, xmis, yobs, ...)
     {
         fit <- randomForest(x = xobs, 
                             y = yobs, 
                             ntree = 1, ...)
-        leafnr <- predict(object = fit, newdata = xobs, nodes = TRUE)                        
-        yval <- predict(object = fit, newdata = xobs, nodes = FALSE)                     
-        nodes <- predict(object = fit, newdata = xmis, nodes = TRUE)                   
-        donor <- lapply(nodes, function(s) yobs[leafnr == s])                   
+        leafnr <- predict(object = fit, newdata = xobs, nodes = TRUE)
+        nodes <- predict(object = fit, newdata = xmis, nodes = TRUE)
+        donor <- lapply(nodes, function(s) yobs[leafnr == s])
         return(donor)
     }
     forest <- sapply(1:ntree, FUN = function(s) onetree(xobs, xmis, yobs, ...))

@@ -16,11 +16,14 @@ class definitions, and instead rely on the S3 list
 equivalent \code{oldClass(obj) <- "mipo"}.
 }
 \section{Slots}{
-  \describe{ \item{\code{call}:}{The call that created the
-  \code{mipo} object.} \item{\code{call1}:}{The call that
-  created the \code{mira} object that was used in
-  \code{call}.} \item{\code{call2}:}{ The call that created
-  the \code{mids} object that was used in \code{call1}.}
+  \describe{ \item{\code{.Data}:}{Object of class
+  \code{"list"} containing the following slots:}
+  \item{\code{call}:}{The call that created the \code{mipo}
+  object.} \item{\code{call1}:}{The call that created the
+  \code{mira} object that was used in \code{call}.}
+  \item{\code{call2}:}{ The call that created the
+  \code{mids} object that was used in \code{call1}.}
+  \item{\code{data}:}{A copy of the incomplete data set.}
   \item{\code{nmis}:}{An array containing the number of
   missing observations per column.} \item{\code{m}:}{Number
   of multiple imputations.} \item{\code{qhat}:}{An \code{m}
