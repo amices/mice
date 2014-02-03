@@ -3,7 +3,7 @@
 \alias{mice.impute.2lonly.mean}
 \title{Imputation of the mean within the class}
 \usage{
-  mice.impute.2lonly.mean(y, ry, x, type, ...)
+mice.impute.2lonly.mean(y, ry, x, type, ...)
 }
 \arguments{
   \item{y}{Incomplete data vector of length \code{n}}
@@ -21,22 +21,21 @@
   \item{...}{Other named arguments.}
 }
 \value{
-  A vector of length \code{nmis} with imputations.
+A vector of length \code{nmis} with imputations.
 }
 \description{
-  Imputes the mean of within the class
+Imputes the mean of within the class
 }
 \details{
-  Observed values in \code{y} are averaged within the
-  class, and replicated to the missing \code{y} within that
-  class. If there are no observed data in the class, all
-  entries of the class are set to \code{NaN}.  This
-  function is primarily useful for repairing incomplete
-  data that are constant within the class, but that vary
-  over the classes.
+Observed values in \code{y} are averaged within the class,
+and replicated to the missing \code{y} within that class.
+If there are no observed data in the class, all entries of
+the class are set to \code{NaN}.  This function is
+primarily useful for repairing incomplete data that are
+constant within the class, but that vary over the classes.
 }
 \author{
-  Gerko Vink, Stef van Buuren, 2013
+Gerko Vink, Stef van Buuren, 2013
 }
 \keyword{datagen}
 

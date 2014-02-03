@@ -3,7 +3,7 @@
 \alias{nelsonaalen}
 \title{Cumulative hazard rate or Nelson-Aalen estimator}
 \usage{
-  nelsonaalen(data, timevar, statusvar)
+nelsonaalen(data, timevar, statusvar)
 }
 \arguments{
   \item{data}{A data frame containing the data.}
@@ -15,20 +15,19 @@
   death in \code{data}.}
 }
 \value{
-  A vector with \code{nrow(data)} elements containing the
-  Nelson-Aalen estimates of the cumulative hazard function.
+A vector with \code{nrow(data)} elements containing the
+Nelson-Aalen estimates of the cumulative hazard function.
 }
 \description{
-  Calculates the cumulative hazard rate (Nelson-Aalen
-  estimator)
+Calculates the cumulative hazard rate (Nelson-Aalen
+estimator)
 }
 \details{
-  This function is useful for imputing variables that
-  depend on survival time. White and Royston (2009)
-  suggested using the cumulative hazard to the survival
-  time H0(T) rather than T or log(T) as a predictor in
-  imputation models.  See section 7.1 of Van Buuren (2012)
-  for an example.
+This function is useful for imputing variables that depend
+on survival time. White and Royston (2009) suggested using
+the cumulative hazard to the survival time H0(T) rather
+than T or log(T) as a predictor in imputation models.  See
+section 7.1 of Van Buuren (2012) for an example.
 }
 \examples{
 require(MASS)
@@ -45,15 +44,15 @@ ch <- nelsonaalen(eng, time, status)
 plot(x = time, y = ch, ylab='Cumulative hazard', xlab='Time')
 }
 \author{
-  Stef van Buuren, 2012
+Stef van Buuren, 2012
 }
 \references{
-  White, I. R., Royston, P. (2009). Imputing missing
-  covariate values for the Cox model.  \emph{Statistics in
-  Medicine}, \emph{28}(15), 1982-1998.
+White, I. R., Royston, P. (2009). Imputing missing
+covariate values for the Cox model.  \emph{Statistics in
+Medicine}, \emph{28}(15), 1982-1998.
 
-  van Buuren, S. (2012). \emph{Flexible Imputation of
-  Missing Data.} Boca Raton, FL: Chapman \& Hall/CRC Press.
+van Buuren, S. (2012). \emph{Flexible Imputation of Missing
+Data.} Boca Raton, FL: Chapman \& Hall/CRC Press.
 }
 \keyword{misc}
 

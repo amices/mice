@@ -84,21 +84,13 @@ mice.impute.logreg <- function(y, ry, x, ...) {
 
 
 # -------------------------MICE.IMPUTE.LOGREG.BOOT--------------------
-
 #'Imputation by logistic regression using the bootstrap
 #'
-#'Imputes univariate missing data using logistic regression.
-#'
-#'Imputation for binary response variables by the Bayesian logistic regression
-#'model (Rubin 1987, p. 169-170) or bootstrap logistic regression model.  The
-#'Bayesian method consists of the following steps: \enumerate{ \item Fit a
-#'logit, and find (bhat, V(bhat)) \item Draw BETA from N(bhat, V(bhat)) \item
-#'Compute predicted scores for m.d., i.e. logit-1(X BETA) \item Compare the
-#'score to a random (0,1) deviate, and impute.} The method relies on the
-#'standard \code{glm.fit} function. Warnings from \code{glm.fit} are
-#'suppressed.  The bootstrap method draws a bootstrap sample from \code{y[ry]}
-#'and \code{x[ry,]}.  Perfect prediction is handled by the data augmentation
-#'method.
+#'Imputes univariate missing data using logistic regression
+#'by a bootstrapped logistic regression model.
+#'The bootstrap method draws a simple bootstrap sample with replacement 
+#'from the observed data \code{y[ry]} and \code{x[ry,]}.  
+#'Perfect prediction is handled by the data augmentation method.
 #'
 #'@aliases mice.impute.logreg.boot
 #'@param y Incomplete data vector of length \code{n}

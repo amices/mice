@@ -3,8 +3,8 @@
 \alias{mice.impute.2l.pan}
 \title{Imputation by a two-level normal model using \code{pan}}
 \usage{
-  mice.impute.2l.pan(y, ry, x, type, intercept = TRUE,
-    paniter = 500, groupcenter.slope = FALSE, ...)
+mice.impute.2l.pan(y, ry, x, type, intercept = TRUE, paniter = 500,
+  groupcenter.slope = FALSE, ...)
 }
 \arguments{
   \item{y}{Incomplete data vector of length \code{n}}
@@ -38,24 +38,24 @@
   \item{...}{Other named arguments.}
 }
 \value{
-  A vector of length \code{nmis} with imputations.
+A vector of length \code{nmis} with imputations.
 }
 \description{
-  Imputes univariate missing data using a two-level normal
-  model with homogeneous within group variances. Aggregated
-  group effects (i.e. group means) can be automatically
-  created and included as predictors in the two-level
-  regression (see argument \code{type}). This function
-  needs the \code{pan} package.
+Imputes univariate missing data using a two-level normal
+model with homogeneous within group variances. Aggregated
+group effects (i.e. group means) can be automatically
+created and included as predictors in the two-level
+regression (see argument \code{type}). This function needs
+the \code{pan} package.
 }
 \details{
-  Implements the Gibbs sampler for the linear two-level
-  model with homogeneous within group variances which is a
-  special case of a multivariate linear mixed effects model
-  (Schafer & Yucel, 2002).  For a two-level imputation with
-  heterogeneous within-group variances see
-  \code{\link{mice.impute.2l.norm}}. % The random intercept
-  is automatically added in % \code{mice.impute.2l.norm()}.
+Implements the Gibbs sampler for the linear two-level model
+with homogeneous within group variances which is a special
+case of a multivariate linear mixed effects model (Schafer
+& Yucel, 2002).  For a two-level imputation with
+heterogeneous within-group variances see
+\code{\link{mice.impute.2l.norm}}. % The random intercept
+is automatically added in % \code{mice.impute.2l.norm()}.
 }
 \examples{
 ###################################
@@ -115,24 +115,23 @@ summary(mod)
 # predM1["y","x"] <- 4
 }
 \author{
-  Alexander Robitzsch (Federal Institute for Education
-  Research, Innovation, and Development of the Austrian
-  School System, Salzburg, Austria),
-  \email{a.robitzsch@bifie.at}
+Alexander Robitzsch (Federal Institute for Education
+Research, Innovation, and Development of the Austrian
+School System, Salzburg, Austria),
+\email{a.robitzsch@bifie.at}
 }
 \references{
-  Schafer J L, Yucel RM (2002). Computational strategies
-  for multivariate linear mixed-effects models with missing
-  values.  \emph{Journal of Computational and Graphical
-  Statistics}. \bold{11}, 437-457.
+Schafer J L, Yucel RM (2002). Computational strategies for
+multivariate linear mixed-effects models with missing
+values.  \emph{Journal of Computational and Graphical
+Statistics}. \bold{11}, 437-457.
 
-  Van Buuren, S., Groothuis-Oudshoorn, K. (2011).
-  \code{mice}: Multivariate Imputation by Chained Equations
-  in \code{R}. \emph{Journal of Statistical Software},
-  \bold{45}(3), 1-67.
-  \url{http://www.jstatsoft.org/v45/i03/}
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011).
+\code{mice}: Multivariate Imputation by Chained Equations
+in \code{R}. \emph{Journal of Statistical Software},
+\bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-  \code{\link{mice.impute.2l.norm}}
+\code{\link{mice.impute.2l.norm}}
 }
 

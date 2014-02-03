@@ -2,18 +2,18 @@
 \alias{extractBS}
 \title{Extract broken stick estimates from a \code{lmer} object}
 \usage{
-  extractBS(fit)
+extractBS(fit)
 }
 \arguments{
   \item{fit}{An object of class \code{lmer}}
 }
 \value{
-  A matrix containing broken stick estimates
+A matrix containing broken stick estimates
 }
 \description{
-  Extract broken stick estimates from a \code{lmer} object
+Extract broken stick estimates from a \code{lmer} object
 }
 \author{
-  Stef van Buuren, 2012
+Stef van Buuren, 2012
 }
 

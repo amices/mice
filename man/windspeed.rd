@@ -13,30 +13,29 @@ Republic of Ireland. The data are a random sample from a larger data set.
 \item{Clones}{Clones}
 \item{MalinHead}{Malin Head} }}
 \description{
-  Subset of Irish wind speed data
+Subset of Irish wind speed data
 }
 \details{
-  The original data set is much larger and was analyzed in
-  detail by Haslett and Raftery (1989). Van Buuren et al
-  (2006) used this subset to investigate the influence of
-  extreme MAR mechanisms on the quality of imputation.
+The original data set is much larger and was analyzed in
+detail by Haslett and Raftery (1989). Van Buuren et al
+(2006) used this subset to investigate the influence of
+extreme MAR mechanisms on the quality of imputation.
 }
 \examples{
 windspeed[1:3,]
 }
 \references{
-  Haslett, J. and Raftery, A. E. (1989).  \emph{Space-time
-  Modelling with Long-memory Dependence: Assessing
-  Ireland's Wind Power Resource (with Discussion)}. Applied
-  Statistics 38, 1-50.
-  \url{http:http://lib.stat.cmu.edu/datasets/wind.desc}
-  \url{http:http://lib.stat.cmu.edu/datasets/wind.data}
+Haslett, J. and Raftery, A. E. (1989).  \emph{Space-time
+Modelling with Long-memory Dependence: Assessing Ireland's
+Wind Power Resource (with Discussion)}. Applied Statistics
+38, 1-50.
+\url{http:http://lib.stat.cmu.edu/datasets/wind.desc}
+\url{http:http://lib.stat.cmu.edu/datasets/wind.data}
 
-  Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn
-  C.G.M., Rubin, D.B. (2006) Fully conditional
-  specification in multivariate imputation.  \emph{Journal
-  of Statistical Computation and Simulation}, \bold{76},
-  12, 1049--1064.
+Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M.,
+Rubin, D.B. (2006) Fully conditional specification in
+multivariate imputation.  \emph{Journal of Statistical
+Computation and Simulation}, \bold{76}, 12, 1049--1064.
 }
 \keyword{datasets}
 

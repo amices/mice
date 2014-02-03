@@ -7,6 +7,8 @@
 #'
 #'@section Slots: 
 #'  \describe{
+#'    \item{\code{.Data}:}{Object of class \code{"list"} containing the 
+#'    following slots:}
 #'    \item{\code{call}:}{The call that created the object.}
 #'    \item{\code{data}:}{A copy of the incomplete data set.}
 #'    \item{\code{m}:}{The number of imputations.}
@@ -30,6 +32,7 @@
 #'convergence.  Note that observed data are not present in this mean.}
 #'    \item{\code{chainVar}:}{A list with similar structure of \code{chainMean},
 #'containing the covariances of the imputed values.}
+#'    \item{\code{loggedEvents}:}{A \code{data.frame} with six columns containing warnings, corrective actions, and other inside info.}
 #'    \item{\code{pad}:}{A list containing various settings of the padded imputation
 #'model, i.e. the imputation model after creating dummy variables. Normally,
 #'this list is only useful for error checking. List members are \code{pad$data}
@@ -86,6 +89,7 @@ setClass("mids",
              lastSeedValue = "integer",
              chainMean = "array",
              chainVar  = "array",
+             loggedEvents = "data.frame",
              pad       = "list"),
          contains  = "list"
 )

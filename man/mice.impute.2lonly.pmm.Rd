@@ -3,7 +3,7 @@
 \alias{mice.impute.2lonly.pmm}
 \title{Imputation at level 2 by predictive mean matching}
 \usage{
-  mice.impute.2lonly.pmm(y, ry, x, type, ...)
+mice.impute.2lonly.pmm(y, ry, x, type, ...)
 }
 \arguments{
   \item{y}{Incomplete data vector of length \code{n}}
@@ -21,20 +21,19 @@
   \item{...}{Other named arguments.}
 }
 \value{
-  A vector of length \code{nmis} with imputations.
+A vector of length \code{nmis} with imputations.
 }
 \description{
-  Imputes univariate missing data at level 2 using
-  predictive mean matching. Variables are level 1 are
-  aggregated at level 2. The group identifier at level 2
-  must be indicated by \code{type=-2} in the
-  \code{predictorMatrix}.
+Imputes univariate missing data at level 2 using predictive
+mean matching. Variables are level 1 are aggregated at
+level 2. The group identifier at level 2 must be indicated
+by \code{type=-2} in the \code{predictorMatrix}.
 }
 \details{
-  This function allows in combination with
-  \code{\link{mice.impute.2l.pan}} switching regression
-  imputation between level 1 and level 2 as described in
-  Yucel (2008) or Gelman and Hill (2007, p. 541).
+This function allows in combination with
+\code{\link{mice.impute.2l.pan}} switching regression
+imputation between level 1 and level 2 as described in
+Yucel (2008) or Gelman and Hill (2007, p. 541).
 }
 \examples{
 ##################################################
@@ -80,24 +79,24 @@ imp1 <- mice( as.matrix( dfr ) , m = 1 , predictorMatrix = predM1 ,
            imputationMethod = impM1 , maxit=1 , paniter=500)
 }
 \author{
-  Alexander Robitzsch (Federal Institute for Education
-  Research, Innovation, and Development of the Austrian
-  School System, Salzburg, Austria),
-  \email{a.robitzsch@bifie.at}
+Alexander Robitzsch (Federal Institute for Education
+Research, Innovation, and Development of the Austrian
+School System, Salzburg, Austria),
+\email{a.robitzsch@bifie.at}
 }
 \references{
-  Gelman, A. and Hill, J. (2007). \emph{Data analysis using
-  regression and multilevel/hierarchical models}.
-  Cambridge, Cambridge University Press.
+Gelman, A. and Hill, J. (2007). \emph{Data analysis using
+regression and multilevel/hierarchical models}. Cambridge,
+Cambridge University Press.
 
-  Yucel, RM (2008). Multiple imputation inference for
-  multivariate multilevel continuous data with ignorable
-  non-response.  \emph{Philosophical Transactions of the
-  Royal Society A}, \bold{366}, 2389-2404.
+Yucel, RM (2008). Multiple imputation inference for
+multivariate multilevel continuous data with ignorable
+non-response.  \emph{Philosophical Transactions of the
+Royal Society A}, \bold{366}, 2389-2404.
 }
 \seealso{
-  \code{\link{mice.impute.pmm}},
-  \code{\link{mice.impute.2lonly.norm}},
-  \code{\link{mice.impute.2l.pan}}
+\code{\link{mice.impute.pmm}},
+\code{\link{mice.impute.2lonly.norm}},
+\code{\link{mice.impute.2l.pan}}
 }
 

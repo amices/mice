@@ -2,8 +2,8 @@
 \alias{mids2mplus}
 \title{Export \code{mids} object to Mplus}
 \usage{
-  mids2mplus(imp, file.prefix = "imp", path = getwd(),
-    sep = "\t", dec = ".", silent = FALSE)
+mids2mplus(imp, file.prefix = "imp", path = getwd(), sep = "\\t",
+  dec = ".", silent = FALSE)
 }
 \arguments{
   \item{imp}{The \code{imp} argument is an object of class
@@ -25,29 +25,28 @@
   the files should be printed.}
 }
 \value{
-  The return value is \code{NULL}.
+The return value is \code{NULL}.
 }
 \description{
-  Converts a \code{mids} object into a format recognized by
-  Mplus, and writes the data and the Mplus input files
+Converts a \code{mids} object into a format recognized by
+Mplus, and writes the data and the Mplus input files
 }
 \details{
-  This function automates most of the work needed to export
-  a \code{mids} object to \code{Mplus}. The function writes
-  the multiple imputation datasets, the file that contains
-  the names of the multiple imputation data sets and an
-  \code{Mplus} input file. The \code{Mplus} input file has
-  the proper file names, so in principle it should run and
-  read the data without alteration. \code{Mplus} will
-  recognize the data set as a multiply imputed data set,
-  and do automatic pooling in procedures where that is
-  supported.
+This function automates most of the work needed to export a
+\code{mids} object to \code{Mplus}. The function writes the
+multiple imputation datasets, the file that contains the
+names of the multiple imputation data sets and an
+\code{Mplus} input file. The \code{Mplus} input file has
+the proper file names, so in principle it should run and
+read the data without alteration. \code{Mplus} will
+recognize the data set as a multiply imputed data set, and
+do automatic pooling in procedures where that is supported.
 }
 \author{
-  Gerko Vink, 2011.
+Gerko Vink, 2011.
 }
 \seealso{
-  \code{\link[=mids-class]{mids}}, \code{\link{mids2spss}}
+\code{\link[=mids-class]{mids}}, \code{\link{mids2spss}}
 }
 \keyword{manip}
 

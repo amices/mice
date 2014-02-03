@@ -3,8 +3,7 @@
 \alias{mice.impute.cart}
 \title{Imputation by classification and regression trees}
 \usage{
-  mice.impute.cart(y, ry, x, minbucket = 5, cp = 1e-04,
-    ...)
+mice.impute.cart(y, ry, x, minbucket = 5, cp = 1e-04, ...)
 }
 \arguments{
   \item{y}{Numeric vector with incomplete data}
@@ -27,21 +26,20 @@
   \code{rpart()}.}
 }
 \value{
-  Numeric vector of length \code{sum(!ry)} with imputations
+Numeric vector of length \code{sum(!ry)} with imputations
 }
 \description{
-  Imputes univariate missing data using classification and
-  regression trees.
+Imputes univariate missing data using classification and
+regression trees.
 }
 \details{
-  Imputation of \code{y} by classification and regression
-  trees. The procedure is as follows: \enumerate{ \item Fit
-  a classification or regression tree by recursive
-  partitioning; \item For each \code{ymis}, find the
-  terminal node they end up according to the fitted tree;
-  \item Make a random draw among the member in the node,
-  and take the observed value from that draw as the
-  imputation. }
+Imputation of \code{y} by classification and regression
+trees. The procedure is as follows: \enumerate{ \item Fit a
+classification or regression tree by recursive
+partitioning; \item For each \code{ymis}, find the terminal
+node they end up according to the fitted tree; \item Make a
+random draw among the member in the node, and take the
+observed value from that draw as the imputation. }
 }
 \examples{
 require(rpart)
@@ -51,21 +49,25 @@ imp <- mice(nhanes2, meth = "cart", minbucket = 4)
 plot(imp)
 }
 \author{
-  Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
+Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
 }
 \references{
-  Doove, L.L., van Buuren, S., Dusseldorp, E. (2013).
-  Recursive partitioning for missing data imputation in the
-  presence of interaction Effects. Submitted for
-  publication.
+Doove, L.L., van Buuren, S., Dusseldorp, E. (2014),
+Recursive partitioning for missing data imputation in the
+presence of interaction Effects. Computational Statistics
+\& Data Analysis, 72, 92-104.
 
-  Breiman, L., Friedman, J. H., Olshen, R. A., and Stone,
-  C. J. (1984), Classification and regression trees,
-  Monterey, CA: Wadsworth & Brooks/Cole Advanced Books &
-  Software.
+Breiman, L., Friedman, J. H., Olshen, R. A., and Stone, C.
+J. (1984), Classification and regression trees, Monterey,
+CA: Wadsworth & Brooks/Cole Advanced Books & Software.
 
-  Van Buuren, S.(2012), Flexible imputation of missing
-  data, Boca Raton, FL: Chapman & Hall/CRC.
+Van Buuren, S.(2012), Flexible imputation of missing data,
+Boca Raton, FL: Chapman & Hall/CRC.
+}
+\seealso{
+\code{\link{mice}}, \code{\link{mice.impute.rf}},
+\code{\link[rpart]{rpart}},
+\code{\link[rpart]{rpart.control}}
 }
 \keyword{datagen}
 

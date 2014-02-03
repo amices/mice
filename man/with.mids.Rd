@@ -2,7 +2,7 @@
 \alias{with.mids}
 \title{Evaluate an expression in multiple imputed datasets}
 \usage{
-  \method{with}{mids} (data, expr, ...)
+\method{with}{mids}(data, expr, ...)
 }
 \arguments{
   \item{data}{An object of type \code{mids}, which stands
@@ -18,11 +18,10 @@
   \item{\dots}{Additional parameters passed to \code{expr}}
 }
 \value{
-  A list object of S3 class \code{mira}
+A list object of S3 class \code{mira}
 }
 \description{
-  Performs a computation of each of imputed datasets in
-  data.
+Performs a computation of each of imputed datasets in data.
 }
 \examples{
 imp <- mice(nhanes2)
@@ -31,19 +30,18 @@ fit2 <- with(data=imp,exp=glm(hyp~age+bmi+chl,family=binomial))
 anova.imp <- with(data=imp,exp=anova(lm(bmi~age+hyp+chl)))
 }
 \author{
-  Karin Oudshoorn, Stef van Buuren 2009-2012
+Karin Oudshoorn, Stef van Buuren 2009-2012
 }
 \references{
-  van Buuren S and Groothuis-Oudshoorn K (2011).
-  \code{mice}: Multivariate Imputation by Chained Equations
-  in \code{R}. \emph{Journal of Statistical Software},
-  \bold{45}(3), 1-67.
-  \url{http://www.jstatsoft.org/v45/i03/}
+van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
+Multivariate Imputation by Chained Equations in \code{R}.
+\emph{Journal of Statistical Software}, \bold{45}(3), 1-67.
+\url{http://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-  \code{\link[=mids-class]{mids}},
-  \code{\link[=mira-class]{mira}}, \code{\link{pool}},
-  \code{\link{pool.compare}}, \code{\link{pool.r.squared}}
+\code{\link[=mids-class]{mids}},
+\code{\link[=mira-class]{mira}}, \code{\link{pool}},
+\code{\link{pool.compare}}, \code{\link{pool.r.squared}}
 }
 \keyword{multivariate}
 

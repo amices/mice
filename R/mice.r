@@ -44,9 +44,12 @@
 #'\item{polyreg}{Polytomous logistic regression (factor, >= 2 levels)}
 #'\item{polr}{Proportional odds model (ordered, >=2 levels)}
 #'\item{lda}{Linear discriminant analysis (factor, >= 2 categories)}
-#'\item{cart}{Classification and regression tress (any)}
+#'\item{cart}{Classification and regression trees (any)}
+#'\item{rf}{Random forest imputations (any)}
 #'\item{ri}{Random indicator method for nonignorable data (numeric)}
 #'\item{sample}{Random sample from the observed values (any)} }
+#'\item{fastpmm}{Experimental: Fast predictive mean matching using C++ (any)}
+#'
 #'
 #'These corresponding functions are coded in the \code{mice} library under
 #'names \code{mice.impute.method}, where \code{method} is a string with the
@@ -193,11 +196,15 @@
 #'multiple imputation strategies for the statistical analysis of incomplete
 #'data sets.} Dissertation. Rotterdam: Erasmus University.
 #'@keywords iteration
-#'@import MASS nnet
+#'@import methods
+#'@importFrom MASS eqscplot lda mvrnorm polr truehist
+#'@importFrom nnet multinom nnet
 #'@importFrom stats lm glm
 #'@importFrom utils packageDescription
 #'@importFrom graphics plot
 #'@importFrom rpart rpart rpart.control
+#'@importFrom Rcpp sourceCpp
+#'@useDynLib mice
 #'@examples
 #'
 #'

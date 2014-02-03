@@ -70,7 +70,6 @@ mice.impute.polyreg <- function(y, ry, x, nnet.maxit = 100, nnet.trace = FALSE, 
     #
     # SvB May 2009   # augmented data added for stability
     # SvB Dec 2010   # assign(data) hack removed
-    require(nnet)
     x <- as.matrix(x)
     aug <- augment(y, ry, x, ...)
     x <- aug$x

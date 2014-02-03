@@ -11,24 +11,24 @@
 \item{src}{Source: Sample A, B or E (factor)}
 }}
 \description{
-  Two items YA and YB measuring walking disability in
-  samples A, B and E.
+Two items YA and YB measuring walking disability in samples
+A, B and E.
 }
 \details{
-  Example dataset to demonstrate imputation of two items
-  (YA and YB). Item YA is administered to sample A and
-  sample E, item YB is administered to sample B and sample
-  E, so sample E acts as a bridge study. Imputation using a
-  bridge study is better than simple equating or than
-  imputation under independence.
+Example dataset to demonstrate imputation of two items (YA
+and YB). Item YA is administered to sample A and sample E,
+item YB is administered to sample B and sample E, so sample
+E acts as a bridge study. Imputation using a bridge study
+is better than simple equating or than imputation under
+independence.
 
-  Item YA corresponds to the HAQ8 item, and item YB
-  corresponds to the GAR9 items from Van Buuren et al
-  (2005).  Sample E (as well as sample B) is the Euridiss
-  study (n=292), sample A is the ERGOPLUS study (n=306).
+Item YA corresponds to the HAQ8 item, and item YB
+corresponds to the GAR9 items from Van Buuren et al (2005).
+Sample E (as well as sample B) is the Euridiss study
+(n=292), sample A is the ERGOPLUS study (n=306).
 
-  See Van Buuren (2012) chapter 7 for more details on the
-  imputation methodology.
+See Van Buuren (2012) chapter 7 for more details on the
+imputation methodology.
 }
 \examples{
 md.pattern(walking)
@@ -60,13 +60,13 @@ plotit()
 ### to get figure 7.8 van Buuren (2012) use m=10 and micemill(20)
 }
 \references{
-  van Buuren, S., Eyres, S., Tennant, A., Hopman-Rock, M.
-  (2005). Improving comparability of existing data by
-  Response Conversion. \emph{Journal of Official
-  Statistics}, \bold{21}(1), 53-72.
+van Buuren, S., Eyres, S., Tennant, A., Hopman-Rock, M.
+(2005). Improving comparability of existing data by
+Response Conversion. \emph{Journal of Official Statistics},
+\bold{21}(1), 53-72.
 
-  van Buuren, S. (2012). \emph{Flexible Imputation of
-  Missing Data.} Boca Raton, FL: Chapman & Hall/CRC.
+van Buuren, S. (2012). \emph{Flexible Imputation of Missing
+Data.} Boca Raton, FL: Chapman & Hall/CRC.
 }
 \keyword{datasets}
 

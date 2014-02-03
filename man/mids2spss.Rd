@@ -2,9 +2,8 @@
 \alias{mids2spss}
 \title{Export \code{mids} object to SPSS}
 \usage{
-  mids2spss(imp, filedat = "midsdata.txt",
-    filesps = "readmids.sps", path = getwd(), sep = "\t",
-    dec = ".", silent = FALSE)
+mids2spss(imp, filedat = "midsdata.txt", filesps = "readmids.sps",
+  path = getwd(), sep = "\\t", dec = ".", silent = FALSE)
 }
 \arguments{
   \item{imp}{The \code{imp} argument is an object of class
@@ -31,56 +30,56 @@
   the files should be printed.}
 }
 \value{
-  The return value is \code{NULL}.
+The return value is \code{NULL}.
 }
 \description{
-  Converts a \code{mids} object into a format recognized by
-  SPSS, and writes the data and the SPSS syntax files.
+Converts a \code{mids} object into a format recognized by
+SPSS, and writes the data and the SPSS syntax files.
 }
 \details{
-  This function automates most of the work needed to export
-  a \code{mids} object to SPSS. It uses a modified version
-  of \code{writeForeignSPSS()} from the \code{foreign}
-  package. The modified version allows for a choice of the
-  field and decimal separators, and makes some improvements
-  to the formatting, so that the generated syntax file is
-  amenable to the \code{INCLUDE} statement in SPSS.
+This function automates most of the work needed to export a
+\code{mids} object to SPSS. It uses a modified version of
+\code{writeForeignSPSS()} from the \code{foreign} package.
+The modified version allows for a choice of the field and
+decimal separators, and makes some improvements to the
+formatting, so that the generated syntax file is amenable
+to the \code{INCLUDE} statement in SPSS.
 
-  Below are some things to pay attention to.
+Below are some things to pay attention to.
 
-  The \code{SPSS} syntax file has the proper file names and
-  separators set, so in principle it should run and read
-  the data without alteration. \code{SPSS} is more strict
-  than \code{R} with respect to the paths. Always use the
-  full path, otherwise \code{SPSS} may not be able to find
-  the data file.
+The \code{SPSS} syntax file has the proper file names and
+separators set, so in principle it should run and read the
+data without alteration. \code{SPSS} is more strict than
+\code{R} with respect to the paths. Always use the full
+path, otherwise \code{SPSS} may not be able to find the
+data file.
 
-  Factors in \code{R} translate into categorical variables
-  in \code{SPSS}. The internal coding of factor levels used
-  in \code{R} is exported. This is generally acceptable for
-  \code{SPSS}. However, when the data are to be combined
-  with existing \code{SPSS} data, watch out for any changes
-  in the factor levels codes. The \code{read.spss()} in
-  package \code{foreign} for reading \code{.sav} uses its
-  own internal numbering scheme \code{1,2,3,...} for the
-  levels of a factor. Consequently, changes in factor code
-  can cause discrepancies in factor level when re-imported
-  to \code{SPSS}. The solution is to manually recode the
-  factor level in \code{SPSS}.
+Factors in \code{R} translate into categorical variables in
+\code{SPSS}. The internal coding of factor levels used in
+\code{R} is exported. This is generally acceptable for
+\code{SPSS}. However, when the data are to be combined with
+existing \code{SPSS} data, watch out for any changes in the
+factor levels codes. The \code{read.spss()} in package
+\code{foreign} for reading \code{.sav} uses its own
+internal numbering scheme \code{1,2,3,...} for the levels
+of a factor. Consequently, changes in factor code can cause
+discrepancies in factor level when re-imported to
+\code{SPSS}. The solution is to manually recode the factor
+level in \code{SPSS}.
 
-  \code{SPSS} will recognize the data set as a multiply
-  imputed data set, and do automatic pooling in procedures
-  where that is supported. Note however that pooling is an
-  extra option only available to those who licence the
-  \code{MISSING VALUES} module. Without this licence,
-  \code{SPSS} will still recognize the structure of the
-  data, but not do any pooling.
+\code{SPSS} will recognize the data set as a multiply
+imputed data set, and do automatic pooling in procedures
+where that is supported. Note however that pooling is an
+extra option only available to those who licence the
+\code{MISSING VALUES} module. Without this licence,
+\code{SPSS} will still recognize the structure of the data,
+but not do any pooling.
 }
 \author{
-  Stef van Buuren, dec 2010.
+Stef van Buuren, dec 2010.
 }
 \seealso{
-  \code{\link[=mids-class]{mids}}
+\code{\link[=mids-class]{mids}}
 }
 \keyword{manip}
 

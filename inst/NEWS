@@ -13,9 +13,23 @@ Question or suggestions about MICE can be send to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.20    02-02-2014 SvB
+ADDED    experimental fastpmm() function using Rcpp
+FIXED    fixes to mice.impute.cart() and mice.impute.rf() (thanks Anoop Shah)
+
+V2.19    21-01-2014 SvB
+ADDED    mice.impute.rf() for random forest imputation (thanks Lisa Doove)
+CHANGED  default number of donors in mice.impute.pmm() changed from 3 to 5.
+         Use mice(..., donors = 3) to get the old behavior.
+CHANGED  speedup in .norm.draw() by using crossprod() (thanks Alexander Robitzsch)
+CHANGED  speedup in .imputation.level2() (thanks Alexander Robitzsch)
+FIXED    define MASS, nnet, lattice as imports instead of depends
+FIXED    proper handling of rare case in remove.lindep() that removed all predictors (thanks Jaap Brand)
+
 V2.18    31-07-2013 SvB
 ADDED    as.mids() for converting long format in a mids object (thanks Gerko Vink)
 FIXED    mice.impute.logreg.boot() now properly exported (thanks Suresh Pujar)
+FIXED    two bugs in rbind.mids() (thanks Gerko Vink)
 
 V2.17    10-05-2013 SvB
 ADDED    new form argument to mice() to specify imputation models using forms (contributed Ross Boylan)

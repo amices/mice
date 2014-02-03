@@ -4,11 +4,11 @@
 \alias{summary.mira}
 \title{Summary of a \code{mira} object}
 \usage{
-  \method{summary}{mira} (object, ...)
+\method{summary}{mira}(object, ...)
 
-  \method{summary}{mipo} (object, ...)
+\method{summary}{mipo}(object, ...)
 
-  \method{summary}{mids} (object, ...)
+\method{summary}{mids}(object, ...)
 }
 \arguments{
   \item{object}{A \code{mira} object}
@@ -17,25 +17,24 @@
   and \code{summary()}}
 }
 \value{
-  \code{NULL}
+\code{NULL}
 
-  A table containing summary statistis of the pooled
-  analysis
+A table containing summary statistis of the pooled analysis
 
-  \code{NULL}
+\code{NULL}
 }
 \description{
-  Summary of a \code{mira} object
+Summary of a \code{mira} object
 
-  Summary of a \code{mipo} object
+Summary of a \code{mipo} object
 
-  Summary of a \code{mids} object
+Summary of a \code{mids} object
 }
 \seealso{
-  \code{\link[=mira-class]{mira}}
+\code{\link[=mira-class]{mira}}
 
-  \code{\link[=mipo-class]{mipo}}
+\code{\link[=mipo-class]{mipo}}
 
-  \code{\link[=mids-class]{mids}}
+\code{\link[=mids-class]{mids}}
 }
 

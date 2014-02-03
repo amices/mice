@@ -2,7 +2,7 @@
 \alias{pool}
 \title{Multiple imputation pooling}
 \usage{
-  pool(object, method = "smallsample")
+pool(object, method = "smallsample")
 }
 \arguments{
   \item{object}{An object of class \code{mira}, produced by
@@ -16,25 +16,24 @@
   conventional degrees of freedom as in Rubin (1987).}
 }
 \value{
-  An object of class \code{mipo}, which stands for
-  'multiple imputation pooled outcome'.
+An object of class \code{mipo}, which stands for 'multiple
+imputation pooled outcome'.
 }
 \description{
-  Pools the results of m repeated complete data analysis
+Pools the results of m repeated complete data analysis
 }
 \details{
-  The function averages the estimates of the complete data
-  model, computes the total variance over the repeated
-  analyses, and computes the relative increase in variance
-  due to nonresponse and the fraction of missing
-  information. The function relies on the availability of
-  \enumerate{ \item the estimates of the model, typically
-  present as 'coefficients' in the fit object \item an
-  appropriate estimate of the variance-covariance matrix of
-  the estimates per analyses (estimated by
-  \code{\link{vcov}}.  } The function pools also estimates
-  obtained with \code{lme()} and \code{lmer()}, BUT only
-  the fixed part of the model.
+The function averages the estimates of the complete data
+model, computes the total variance over the repeated
+analyses, and computes the relative increase in variance
+due to nonresponse and the fraction of missing information.
+The function relies on the availability of \enumerate{
+\item the estimates of the model, typically present as
+'coefficients' in the fit object \item an appropriate
+estimate of the variance-covariance matrix of the estimates
+per analyses (estimated by \code{\link{vcov}}.  } The
+function pools also estimates obtained with \code{lme()}
+and \code{lmer()}, BUT only the fixed part of the model.
 }
 \examples{
 # which vcov methods can R find
@@ -66,29 +65,27 @@ pool(fit)
 #
 }
 \author{
-  Stef van Buuren, Karin Groothuis-Oudshoorn, 2009
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2009
 }
 \references{
-  Barnard, J. and Rubin, D.B. (1999). Small sample degrees
-  of freedom with multiple imputation. \emph{Biometrika},
-  86, 948-955.
+Barnard, J. and Rubin, D.B. (1999). Small sample degrees of
+freedom with multiple imputation. \emph{Biometrika}, 86,
+948-955.
 
-  Rubin, D.B. (1987).  \emph{Multiple Imputation for
-  Nonresponse in Surveys}. New York: John Wiley and Sons.
+Rubin, D.B. (1987).  \emph{Multiple Imputation for
+Nonresponse in Surveys}. New York: John Wiley and Sons.
 
-  van Buuren S and Groothuis-Oudshoorn K (2011).
-  \code{mice}: Multivariate Imputation by Chained Equations
-  in \code{R}. \emph{Journal of Statistical Software},
-  \bold{45}(3), 1-67.
-  \url{http://www.jstatsoft.org/v45/i03/}
+van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
+Multivariate Imputation by Chained Equations in \code{R}.
+\emph{Journal of Statistical Software}, \bold{45}(3), 1-67.
+\url{http://www.jstatsoft.org/v45/i03/}
 
-  Pinheiro, J.C. and Bates, D.M. (2000).
-  \emph{Mixed-Effects Models in S and S-PLUS}.  Berlin:
-  Springer.
+Pinheiro, J.C. and Bates, D.M. (2000).  \emph{Mixed-Effects
+Models in S and S-PLUS}.  Berlin: Springer.
 }
 \seealso{
-  \code{\link{with.mids}}, \code{\link{as.mira}},
-  \code{\link{vcov}}
+\code{\link{with.mids}}, \code{\link{as.mira}},
+\code{\link{vcov}}
 }
 \keyword{htest}
 

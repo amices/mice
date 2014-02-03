@@ -67,7 +67,7 @@ mice.impute.norm <- function(y, ry, x, ...) {
 .norm.draw <- function(y, ry, x, ridge = 1e-05, ...) {
     xobs <- x[ry, ]
     yobs <- y[ry]
-    xtx <- t(xobs) %*% xobs
+    xtx <- crossprod(xobs)  # SvB 21/01/2014
     pen <- ridge * diag(xtx)
     if (length(pen) == 1) 
         pen <- matrix(pen)

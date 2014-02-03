@@ -20,28 +20,28 @@ well-protected den), 5 = most exposed}
 danger (from other animals), 5 = most danger (from other animals)}
 }}
 \source{
-  Allison, T., Cicchetti, D.V. (1976). Sleep in Mammals:
-  Ecological and Constitutional Correlates. Science,
-  194(4266), 732-734.
+Allison, T., Cicchetti, D.V. (1976). Sleep in Mammals:
+Ecological and Constitutional Correlates. Science,
+194(4266), 732-734.
 }
 \description{
-  Dataset from Allison and Cicchetti (1976) of 62 mammal
-  species on the interrelationship between sleep,
-  ecological, and constitutional variables. The dataset
-  contains missing values on five variables.
+Dataset from Allison and Cicchetti (1976) of 62 mammal
+species on the interrelationship between sleep, ecological,
+and constitutional variables. The dataset contains missing
+values on five variables.
 }
 \details{
-  Allison and Cicchetti (1976) investigated the
-  interrelationship between sleep, ecological, and
-  constitutional variables.  They assessed these variables
-  for 39 mammalian species. The authors concluded that
-  slow-wave sleep is negatively associated with a factor
-  related to body size. This suggests that large amounts of
-  this sleep phase are disadvantageous in large species.
-  Also, paradoxical sleep (REM sleep) was associated with a
-  factor related to predatory danger, suggesting that large
-  amounts of this sleep phase are disadvantageous in prey
-  species.
+Allison and Cicchetti (1976) investigated the
+interrelationship between sleep, ecological, and
+constitutional variables.  They assessed these variables
+for 39 mammalian species. The authors concluded that
+slow-wave sleep is negatively associated with a factor
+related to body size. This suggests that large amounts of
+this sleep phase are disadvantageous in large species.
+Also, paradoxical sleep (REM sleep) was associated with a
+factor related to predatory danger, suggesting that large
+amounts of this sleep phase are disadvantageous in prey
+species.
 }
 \examples{
 sleep <- data(mammalsleep)
