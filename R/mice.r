@@ -47,8 +47,9 @@
 #'\item{cart}{Classification and regression trees (any)}
 #'\item{rf}{Random forest imputations (any)}
 #'\item{ri}{Random indicator method for nonignorable data (numeric)}
-#'\item{sample}{Random sample from the observed values (any)} }
+#'\item{sample}{Random sample from the observed values (any)}
 #'\item{fastpmm}{Experimental: Fast predictive mean matching using C++ (any)}
+#'}
 #'
 #'
 #'These corresponding functions are coded in the \code{mice} library under

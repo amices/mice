@@ -13,6 +13,9 @@ Question or suggestions about MICE can be send to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.21    02-05-2014 SvB
+FIXED    compilation problem in match.cpp on solaris CC 
+
 V2.20    02-02-2014 SvB
 ADDED    experimental fastpmm() function using Rcpp
 FIXED    fixes to mice.impute.cart() and mice.impute.rf() (thanks Anoop Shah)

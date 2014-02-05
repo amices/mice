@@ -32,14 +32,15 @@ IntegerVector matcher(NumericVector obs, NumericVector mis, int k) {
   // in advance, uniform sample from k potential donors
   NumericVector which = floor(runif(n0, 1, k + 1));
   NumericVector mm = range(obs);
-  double jitter = (mm[1] - mm[0]) / 65536;
+  double small = (mm[1] - mm[0]) / 65536;
   
   // loop over the missing values
   for(int i = 0; i < n0; i++) {
       
       // calculate the distance and add noise to break ties
-      d = abs(obs - mis[i]);
-      d += runif(n1, 0, jitter);
+      d2 = runif(n1, 0, small);
+      dk = mis[i];
+      for (int k = 0; k < n1; k++) d[k] = std::abs(obs[k] - dk) + d2[k];
       
       // find the k'th lowest value in d
       for (int j = 0; j < n1; j++) d2[j] = d[j];

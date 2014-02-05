@@ -182,10 +182,12 @@ bootstrap} \item{polyreg}{Polytomous logistic regression
 (factor, >= 2 levels)} \item{polr}{Proportional odds model
 (ordered, >=2 levels)} \item{lda}{Linear discriminant
 analysis (factor, >= 2 categories)}
-\item{cart}{Classification and regression tress (any)}
-\item{ri}{Random indicator method for nonignorable data
-(numeric)} \item{sample}{Random sample from the observed
-values (any)} }
+\item{cart}{Classification and regression trees (any)}
+\item{rf}{Random forest imputations (any)} \item{ri}{Random
+indicator method for nonignorable data (numeric)}
+\item{sample}{Random sample from the observed values (any)}
+\item{fastpmm}{Experimental: Fast predictive mean matching
+using C++ (any)} }
 
 These corresponding functions are coded in the \code{mice}
 library under names \code{mice.impute.method}, where
