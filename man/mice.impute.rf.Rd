@@ -2,7 +2,7 @@
 \alias{mice.impute.rf}
 \title{Imputation by random forests}
 \usage{
-mice.impute.rf(y, ry, x, ntree = 100, ...)
+mice.impute.rf(y, ry, x, ntree = 10, ...)
 }
 \arguments{
   \item{y}{Numeric vector with incomplete data}
@@ -14,7 +14,7 @@ mice.impute.rf(y, ry, x, ntree = 100, ...)
   \code{p} columns containing complete covariates.}
 
   \item{ntree}{The number of trees to grow. The default is
-  100.}
+  10.}
 
   \item{...}{Other named arguments passed down to
   \code{randomForest()} and
@@ -35,6 +35,10 @@ Appendix A.1 of Doove et al. (2014) for the definition of
 the algorithm used. An alternative implementation was
 independently developed by Shah et al (2014), and is
 available in the package \code{CALIBERrfimpute}.
+Simulations by Shah (Feb 13, 2014) suggested that the
+quality of the imputation for 10 and 100 trees was
+identical, so mice 2.22 changed the default number of trees
+from \code{ntree = 100} to \code{ntree = 10}.
 }
 \examples{
 library("lattice")

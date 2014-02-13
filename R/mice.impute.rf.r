@@ -9,7 +9,10 @@
 #'(2014) for the definition 
 #'of the algorithm used. An alternative implementation was independently 
 #'developed by Shah et al (2014), and is available in the package 
-#'\code{CALIBERrfimpute}.
+#'\code{CALIBERrfimpute}. Simulations by Shah (Feb 13, 2014) suggested that 
+#'the quality of the imputation for 10 and 100 trees was identical, 
+#'so mice 2.22 changed the default number of trees from \code{ntree = 100} to 
+#'\code{ntree = 10}.
 #'
 #'@aliases mice.impute.rf
 #'@param y Numeric vector with incomplete data
@@ -17,7 +20,7 @@
 #'\code{FALSE} = missing)
 #'@param x Design matrix with \code{length(y)} rows and \code{p} columns
 #'containing complete covariates.
-#'@param ntree The number of trees to grow. The default is 100.
+#'@param ntree The number of trees to grow. The default is 10.
 #'@param ... Other named arguments passed down to \code{randomForest()} and
 #'\code{randomForest:::randomForest.default()}.
 #'@return Numeric vector of length \code{sum(!ry)} with imputations
@@ -49,7 +52,7 @@
 #'
 #'@keywords datagen
 #'@export
-mice.impute.rf <- function(y, ry, x, ntree = 100, ...)
+mice.impute.rf <- function(y, ry, x, ntree = 10, ...)
 {
     ntree <- max(1, ntree)  # safety
     xobs <- x[ry, ]
