@@ -131,7 +131,7 @@ pool <- function (object, method = "smallsample")
     
     for (i in 1:m) {
         fit <- analyses[[i]]
-        if (class(fit)[1]=="mer" | inherits(fa,"merMod"))
+        if (class(fit)[1]=="mer" | inherits(fit,"merMod"))
         {
             qhat[i,] <- fixef(fit)
             ui <- as.matrix(vcov(fit))
