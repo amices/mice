@@ -97,7 +97,7 @@ pool <- function (object, method = "smallsample")
     analyses <- getfit(object)
     
     if (class(fa)[1]=="lme") require(nlme)  # fixed 13/1/2010
-    if (class(fa)[1]=="mer") require(lme4)  # fixed 13/1/2010
+    if (class(fa)[1]=="mer" | inherits(fa,"merMod")) require(lme4)  # fixed 13/1/2010
     if (class(fa)[1]=="survreg") require(survival)  # added 18/5/2012
     
     ###   Set up arrays for object.
@@ -107,7 +107,7 @@ pool <- function (object, method = "smallsample")
     mess <- try(vcov(fa), silent=TRUE)
     if (inherits(mess,"try-error")) stop("Object has no vcov() method.")
     
-    if (class(fa)[1]=="mer")               # fixed 13/1/2010
+    if (class(fa)[1]=="mer" | inherits(fa,"merMod"))               # fixed 13/1/2010
     { 
         k <- length(fixef(fa))
         names <- names(fixef(fa))
@@ -131,7 +131,7 @@ pool <- function (object, method = "smallsample")
     
     for (i in 1:m) {
         fit <- analyses[[i]]
-        if (class(fit)[1]=="mer")
+        if (class(fit)[1]=="mer" | inherits(fa,"merMod"))
         {
             qhat[i,] <- fixef(fit)
             ui <- as.matrix(vcov(fit))
