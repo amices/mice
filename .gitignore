@@ -9,3 +9,4 @@ NAMESPACE
 *.orig
 *.rej
 *.so
+/Rplots.pdf
