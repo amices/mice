@@ -10,3 +10,5 @@ NAMESPACE
 *.rej
 *.so
 /Rplots.pdf
+/src-i386/
+/src-x64/
