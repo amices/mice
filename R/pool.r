@@ -97,7 +97,8 @@ pool <- function (object, method = "smallsample")
     analyses <- getfit(object)
     
     if (class(fa)[1]=="lme") require(nlme)  # fixed 13/1/2010
-    if (class(fa)[1]=="mer") require(lme4)  # fixed 13/1/2010
+    if (class(fa)[1]=="mer") require(lme4)  # fixed 13/1/2010 (lme4 old version)
+    if (class(fa)[1]=="lmerMod") require(lme4)  # added 11jun2014
     if (class(fa)[1]=="survreg") require(survival)  # added 18/5/2012
     
     ###   Set up arrays for object.
@@ -107,7 +108,7 @@ pool <- function (object, method = "smallsample")
     mess <- try(vcov(fa), silent=TRUE)
     if (inherits(mess,"try-error")) stop("Object has no vcov() method.")
     
-    if (class(fa)[1]=="mer")               # fixed 13/1/2010
+    if (class(fa)[1]=="mer" | class(fa)[1] == "lmerMod")  # 14jun2014
     { 
         k <- length(fixef(fa))
         names <- names(fixef(fa))
@@ -131,28 +132,36 @@ pool <- function (object, method = "smallsample")
     
     for (i in 1:m) {
         fit <- analyses[[i]]
-        if (class(fit)[1]=="mer")
+        if (class(fit)[1] == "mer")
         {
             qhat[i,] <- fixef(fit)
             ui <- as.matrix(vcov(fit))
             if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: class mer, fixef(fit): ",ncol(qhat),", as.matrix(vcov(fit)): ", ncol(ui))
-            u[i , ,] <- ui
+            u[i, ,] <- array(ui, dim = c(1, dim(ui)))
         }
-        else if (class(fit)[1]=="lme")
+        else if (class(fit)[1] == "lmerMod")
+        {
+            qhat[i,] <- fixef(fit)
+            ui <- vcov(fit)
+            if (ncol(ui)!=ncol(qhat)) 
+                stop("Different number of parameters: class lmerMod, fixed(fit): ",ncol(qhat),", vcov(fit): ", ncol(ui))
+            u[i, ,] <- array(ui, dim = c(1, dim(ui)))
+        }
+        else if (class(fit)[1] == "lme")
         {
             qhat[i,] <- fit$coefficients$fixed
             ui <- vcov(fit)
             if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: class lme, fit$coefficients$fixef: ",ncol(qhat),", vcov(fit): ", ncol(ui))
-            u[i, , ] <- ui
+            u[i, ,] <- array(ui, dim = c(1, dim(ui)))
         }
-        else if (class(fit)[1]=="polr")
+        else if (class(fit)[1] == "polr")
         {
             qhat[i,] <- c(coef(fit),fit$zeta)
             ui <- vcov(fit)
             if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: class polr, c(coef(fit, fit$zeta): ",ncol(qhat),", vcov(fit): ", ncol(ui))
-            u[i, , ] <- ui
+            u[i, ,] <- array(ui, dim = c(1, dim(ui)))
         }
-        else if (class(fit)[1]=="survreg")
+        else if (class(fit)[1] == "survreg")
         {
             qhat[i,] <- coef(fit)
             ui <- vcov(fit)
@@ -160,7 +169,7 @@ pool <- function (object, method = "smallsample")
             select <- !(parnames %in% "Log(scale)")  ## do not pool Log(scale) columns SvB 18/3/12
             ui <- ui[select, select]
             if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: class survreg, coef(fit): ",ncol(qhat),", vcov(fit): ", ncol(ui))
-            u[i, , ] <- ui
+            u[i, ,] <- array(ui, dim = c(1, dim(ui)))
         }
         else
         {
@@ -169,7 +178,7 @@ pool <- function (object, method = "smallsample")
             ### add rows and columns to ui if qhat is missing
             ui <- expandvcov(qhat[i,], ui)
             if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: coef(fit): ",ncol(qhat),", vcov(fit): ", ncol(ui))
-            u[i, , ] <- ui
+            u[i, ,] <- array(ui, dim = c(1, dim(ui)))
         }
     }
     

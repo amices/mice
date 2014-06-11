@@ -54,10 +54,6 @@
 #'@export
 mice.impute.rf <- function(y, ry, x, ntree = 10, ...)
 {
-    ntree <- max(1, ntree)  # safety
-    xobs <- x[ry, ]
-    xmis <- x[!ry, ]
-    yobs <- y[ry]
     onetree <- function(xobs, xmis, yobs, ...)
     {
         fit <- randomForest(x = xobs, 
@@ -68,7 +64,14 @@ mice.impute.rf <- function(y, ry, x, ntree = 10, ...)
         donor <- lapply(nodes, function(s) yobs[leafnr == s])
         return(donor)
     }
+    ntree <- max(1, ntree)  # safety
+    nmis <- sum(!ry)
+    xobs <- x[ry, , drop = FALSE]
+    xmis <- x[!ry, , drop = FALSE]
+    yobs <- y[ry]
+
     forest <- sapply(1:ntree, FUN = function(s) onetree(xobs, xmis, yobs, ...))
+    if (nmis == 1) forest <- array(forest, dim = c(1, ntree))
     impute <- apply(forest, MARGIN = 1, FUN = function(s) sample(unlist(s), 1))
     return(impute)
 }

@@ -79,7 +79,7 @@
 #'@export
 mice.impute.2lonly.pmm <- function (y, ry, x, type , ...){
     imp <- .imputation.level2( y = y , ry = ry , x = x , type = type , 
-                               imputationMethod = "pmm" , ... )
+                               imputationMethod = "pmm" , ... )				   
 }
 
 #******************************************
@@ -91,12 +91,16 @@ mice.impute.2lonly.pmm <- function (y, ry, x, type , ...){
     }
     # extract cluster index
     clusterx <- x[,type == -2 ]
-    x <- cbind(1, as.matrix(x[,type %in% c(1,2)]))      # calculate aggregated values
+    x <- cbind(1, as.matrix(x[,type %in% c(1,2)]))      # calculate aggregated values	
     # change ARb 2013-02-12
     # a1 <- aggregate( (cbind(x,y)) , list( clusterx ) , mean , na.rm=F)
     a2 <- rowsum( cbind(x,y) , clusterx , na.rm=FALSE)
+	#~~~~~
+	# change ARb 2014-02-18
+	clusterx0 <- as.numeric(paste0(rownames(a2)))
     a2 <- a2 / rowsum( 1+0*y , clusterx , na.rm=FALSE )[,1] 
-    a1 <- cbind( clusterx  , a2 )
+    a1 <- cbind( clusterx0  , a2 )
+	#~~~~~
     #*****	
     N1 <- ncol(a1)
     cly2 <- unique( clusterx[  ry ] )  # clusters without missings on y

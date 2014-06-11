@@ -270,3 +270,5 @@ updateLog <- function(out = NULL, meth = NULL, frame = 2) {
     assign("loggedEvents", rec, pos = parent.frame(frame), inherits = TRUE)
     return()
 }
+
+sym <- function(x) {(x + t(x)) / 2}

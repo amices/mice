@@ -5,20 +5,27 @@
 #'Imputes univariate missing data using predictive mean matching
 #'
 #'Imputation of \code{y} by predictive mean matching, based on Rubin (1987, p.
-#'168, formulas a and b).  The procedure is as follows: \enumerate{ \item
-#'Estimate beta and sigma by linear regression \item Draw beta* and sigma* from
-#'the proper posterior \item Compute predicted values for \code{yobs}beta and
-#'\code{ymis}beta* \item For each \code{ymis}, find the observation with
-#'closest predicted value, and take its observed value in \code{y} as the
-#'imputation.  \item If there is more than one candidate, make a random draw
-#'among them.  Note: The matching is done on predicted \code{y}, NOT on
-#'observed \code{y}. } 
+#'168, formulas a and b).  The procedure is as follows: 
+#'\enumerate{ 
+#'\item
+#'Estimate beta and sigma by linear regression 
+#'\item Draw beta* and sigma* from
+#'the proper posterior 
+#'\item Compute predicted values for \code{yobs} \code{beta} and
+#'\code{ymis} \code{beta*} 
+#'\item For each \code{ymis}, find \code{donors} observations with
+#'closest predicted values, randomly sample one of these, 
+#'and take its observed value in \code{y} as the imputation.  
+#'\item Ties are broken by making a random draw
+#'among ties.  
+#'Note: The matching is done on predicted \code{y}, NOT on
+#'observed \code{y}.} 
 #'
-#'@note \code{mice.impute.pmm2()} was used in \code{mice 2.13} and 
-#'after a faster alternative to \code{mice.impute.pmm()}. 
-#'Starting with \code{mice 2.14}, \code{mice.impute.pmm()} has been 
-#'replaced by \code{mice.impute.pmm2()}. The \code{mice.impute.pmm2()}
-#'function will be depricated in future versions of \pkg{mice}.
+#'@note Since \code{mice 2.22} the standard \code{mice.impute.pmm()} calls
+#'the much faster \code{matcher()} function instead of \code{.pmm.match()}. Since
+#'\code{matcher()} uses its own random generator, results cannot be exactly 
+#'reproduced. In case where you want the old \code{.pmm.match()}, specify 
+#'\code{mice(..., version = "2.21")}.
 #'
 #'@aliases mice.impute.pmm pmm
 #'@param y Numeric vector with incomplete data
@@ -26,6 +33,14 @@
 #'\code{FALSE}=missing)
 #'@param x Design matrix with \code{length(y)} rows and \code{p} columns
 #'containing complete covariates.
+#'@param donors The size of the donor pool among which a draw is made. The default is 
+#'\code{donors = 5}. Setting \code{donors = 1} always selects the closest match. Values 
+#'between 3 and 10 provide the best results. Note: The default was changed from 
+#'3 to 5 in version 2.19, based on simulation work by Tim Morris.
+#'@param type Type of matching distance. The default choice \code{type = 1} calculates the distance between the predicted value of \code{yobs} and the drawn values of \code{ymis}. Other choices are \code{type = 0} (distance between predicted values) and \code{type = 2} (distance between drawn values). The current version supports only \code{type = 1}.
+#'@param ridge The ridge penalty applied in \code{.norm.draw()} to prevent problems with multicollinearity. The default is \code{ridge = 1e-05}, which means that 0.01 percent of the diagonal is added to the cross-product. Larger ridges may result in more biased estimates. For highly noisy data (e.g. many junk variables), set \code{ridge = 1e-06} or even lower to reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.
+#'@param version A character variable indicating the version to be used. Specifying \code{version = "2.21"} calls \code{.pmm.match()} instead of the default
+#'\code{matcher()} function.
 #'@param ... Other named arguments.
 #'@return Numeric vector of length \code{sum(!ry)} with imputations
 #'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2012
@@ -44,34 +59,23 @@
 #'Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 #'@keywords datagen
 #'@export
-mice.impute.pmm <- function(y, ry, x, ...) 
-    # Imputation of y by predictive mean matching, based on
-    # Rubin (p. 168, formulas a and b).
-    # The procedure is as follows:
-    # 1. Draw beta and sigma from the proper posterior
-    # 2. Compute predicted values for yobs and ymis
-    # 3. For each ymis, find the three observations with closest predicted value, 
-    #    sample one randomly, and take its observed y as the imputation.
-    # NOTE: The matching is on yhat, NOT on y, which deviates from formula b.
-    # ry=TRUE if y observed, ry=FALSE if y missing
-    #
-    # Authors: S. van Buuren and K. Groothuis-Oudshoorn
-# Version 10/2/2010: yhatobs is calculated using the estimated 
-#                    rather than the drawn regression weights
-#                    this creates between imputation variability 
-#                    for the one-predictor case
-# Version 06/12/2010 A random draw is made from the closest THREE donors.
-# Version 25/04/2012 Extended to work with factors
-# version 31/10/2012 Using faster pmm2
+mice.impute.pmm <- function(y, ry, x, donors = 5, type = 1, 
+                            ridge = 1e-05, version = "", ...) 
 {
     x <- cbind(1, as.matrix(x))
     ynum <- y
-    if (is.factor(y)) 
-        ynum <- as.integer(y)  ## added 25/04/2012
-    parm <- .norm.draw(ynum, ry, x, ...)  ## bug fix 10apr2013
+    if (is.factor(y)) ynum <- as.integer(y)  ## added 25/04/2012
+    parm <- .norm.draw(ynum, ry, x, ridge = ridge, ...)  ## bug fix 10apr2013
     yhatobs <- x[ry, ] %*% parm$coef
     yhatmis <- x[!ry, ] %*% parm$beta
-    return(apply(as.array(yhatmis), 1, .pmm.match, yhat = yhatobs, y = y[ry], ...))
+    if (version == "2.21") 
+        return(apply(as.array(yhatmis), 1, 
+                     .pmm.match, 
+                     yhat = yhatobs, 
+                     y = y[ry], 
+                     donors = donors, ...))
+    idx <- matcher(yhatobs, yhatmis, k = donors)
+    return(y[ry][idx])
 }
 
 # -------------------------.PMM.MATCH-------------------------------- 
@@ -81,6 +85,11 @@ mice.impute.pmm <- function(y, ry, x, ...)
 #' mean metric. It selects the \code{donors} closest matches, randomly 
 #' samples one of the donors, and returns the observed value of the
 #' match.
+#' 
+#' Not used after \code{mice 2.21}. The \code{mice.impute.pmm()} function 
+#' now calls the much faster \code{C} function \code{matcher} instead of 
+#' \code{.pmm.match()}. Use \code{mice(..., version = "2.21")} to call
+#' \code{.pmm.match()}
 #' 
 #'@aliases .pmm.match
 #'@param z A scalar containing the predicted value for the current case
@@ -110,6 +119,8 @@ mice.impute.pmm <- function(y, ry, x, ...)
     d <- d + runif(length(d), 0, a1/10^10)
     if (donors == 1) 
         return(y[which.min(d)])
+    donors <- min(donors, length(d))
+    donors <- max(donors, 1)
     ds <- sort.int(d, partial = donors)
     m <- sample(y[d <= ds[donors]], 1)
     return(m)

@@ -71,7 +71,7 @@ mice.impute.logreg <- function(y, ry, x, ...) {
     fit <- suppressWarnings(eval(expr))
     fit.sum <- summary.glm(fit)
     beta <- coef(fit)
-    rv <- t(chol(fit.sum$cov.unscaled))
+    rv <- t(chol(sym(fit.sum$cov.unscaled)))
     beta.star <- beta + rv %*% rnorm(ncol(rv))
     p <- 1/(1 + exp(-(x[!ry, ] %*% beta.star)))
     vec <- (runif(nrow(p)) <= p)

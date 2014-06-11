@@ -68,6 +68,7 @@ mice.impute.2l.norm <- function(y, ry, x, type, intercept = TRUE, ...) {
         repeat {
             lambda <- 0.1 * z
             XT <- x + diag(x = lambda, nrow = nrow(x))
+            XT <- (XT + t(XT))/2
             s <- try(expr = chol(XT), silent = TRUE)
             if (class(s) != "try-error") 
                 break
@@ -113,17 +114,20 @@ mice.impute.2l.norm <- function(y, ry, x, type, intercept = TRUE, ...) {
     for (iter in 1:n.iter) {
         ## Draw bees
         for (class in 1:n.class) {
-            bees.var <- chol2inv(chol(inv.sigma2[class] * X.SS[[class]] + inv.psi))
+            vv <- sym(inv.sigma2[class] * X.SS[[class]] + inv.psi)
+            bees.var <- chol2inv(chol(vv))
             bees[class, ] <- drop(bees.var %*% (crossprod(inv.sigma2[class] * XG[[class]], yg[[class]]) + inv.psi %*% mu)) + 
-                drop(rnorm(n = n.rc) %*% chol(bees.var))
+                drop(rnorm(n = n.rc) %*% chol(sym(bees.var)))
             ss[class] <- crossprod(yg[[class]] - XG[[class]] %*% bees[class, ])
         }
         
         ## Draw mu
-        mu <- colMeans(bees) + drop(rnorm(n = n.rc) %*% chol(chol2inv(chol(inv.psi))/n.class))
+        mu <- colMeans(bees) + drop(rnorm(n = n.rc) %*% 
+                                        chol(chol2inv(chol(sym(inv.psi)))/n.class))
         
         ## Draw psi
-        inv.psi <- rwishart(df = n.class - n.rc - 1, SqrtSigma = chol(chol2inv(chol(crossprod(t(t(bees) - mu))))))
+        inv.psi <- rwishart(df = n.class - n.rc - 1, 
+                            SqrtSigma = chol(chol2inv(chol(sym(crossprod(t(t(bees) - mu)))))))
         
         ## Draw sigma2
         inv.sigma2 <- rgamma(n.class, n.g/2 + 1/(2 * theta), scale = 2 * theta/(ss * theta + sigma2.0))
