@@ -50,7 +50,7 @@ summary.mipo <- function(object, ...) {
         2 * (1 - pt(abs(table[, 3]), x$df)) else NA
     table[, 6] <- table[, 1] - qt(0.975, x$df) * table[, 2]
     table[, 7] <- table[, 1] + qt(0.975, x$df) * table[, 2]
-    if (is.null(x$nmis)) 
+    if (is.null(x$nmis) | is.null(names(x$qbar)))
         table[, 8] <- NA else table[, 8] <- x$nmis[names(x$qbar)]
     table[, 9] <- x$fmi
     table[, 10] <- x$lambda

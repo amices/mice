@@ -47,7 +47,7 @@ mice.impute.norm <- function(y, ry, x, ...) {
 #' linear regression model as described in Rubin (1987, p. 167). This function
 #' can be called by user-specified imputation functions.
 #' 
-#'@aliases .norm.draw
+#'@aliases norm.draw .norm.draw
 #'@param y Incomplete data vector of length \code{n}
 #'@param ry Vector of missing data pattern (\code{FALSE}=missing,
 #'\code{TRUE}=observed)
@@ -64,6 +64,11 @@ mice.impute.norm <- function(y, ry, x, ...) {
 #'Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
 #'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
 #'@export
+norm.draw <- function(y, ry, x, ridge = 1e-05, ...) 
+    return(.norm.draw(y, ry, x, ridge = 1e-05, ...))
+
+###'@rdname norm.draw
+###'@export
 .norm.draw <- function(y, ry, x, ridge = 1e-05, ...) {
     xobs <- x[ry, ]
     yobs <- y[ry]
@@ -76,8 +81,9 @@ mice.impute.norm <- function(y, ry, x, ...) {
     residuals <- yobs - xobs %*% coef
     df <- max(sum(ry) - ncol(x), 1)  # SvB 31/10/2012
     sigma.star <- sqrt(sum((residuals)^2)/rchisq(1, df))  # SvB 01/02/2011
-    beta.star <- coef + (t(chol((v + t(v))/2)) %*% rnorm(ncol(x))) * sigma.star
+    beta.star <- coef + (t(chol(sym(v))) %*% rnorm(ncol(x))) * sigma.star
     parm <- list(coef, beta.star, sigma.star)  # SvB 10/2/2010
     names(parm) <- c("coef", "beta", "sigma")  # SvB 10/2/2010
     return(parm)
 }
+

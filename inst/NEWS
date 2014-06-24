@@ -8,11 +8,28 @@ Fully Conditional Specification (FCS).
 Question or suggestions about MICE can be send to
 
    stef.vanbuuren at tno.nl
+   gerko.vink at uu.nl
    c.g.m.oudshoorn at utwente.nl
 
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.22    11jun2014 SvB
+ADDED    about six times faster predictive mean matching
+ADDED    pool.scalar() now can do Barnard-Rubin adjustment
+ADDED    pool() now handles class 'lmerMod' from the 'lme4' package
+CHANGED  added automatic bounds on donors in .pmm.match() for safety
+CHANGED  added donors argument to mice.impute.pmm() for increased visibility
+CHANGED  default number of trees in mice.impute.rf() from 100 to 10 (thanks Anoop Shah) 
+DELETED  long2mids() deprecated. Use as.mids() instead
+FIXED    put lattice back into DEPENDS to find generic xyplot() and friends
+FIXED    error in 2lonly.pmm (thanks Alexander Robitzsch, Gerko Vink, Judith Godin)
+FIXED    number of imputations in as.mids() (thanks Tommy Nyberg, Gerko Vink)
+FIXED    colors to mdc() in example mice.impute.quadratic()
+FIXED    error in mice.impute.rf() if just one NA (thanks Anoop Shah)
+FIXED    error in summary.mipo() when names(x$qbar) equals NULL (thanks Aiko Kuhn)
+FIXED    improper testing in ncol() in mice.impute.2lonly.mean() 
+
 V2.21    02-05-2014 SvB
 FIXED    compilation problem in match.cpp on solaris CC 
 

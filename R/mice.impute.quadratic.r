@@ -71,8 +71,8 @@
 #'
 #'# Plot results
 #'stripplot(imp)
-#'plot(dat$x, dat$xx, col="blue", xlab="x", ylab="xx")
-#'points(complete(imp,1)$x[is.na(dat$x)], complete(imp,1)$xx[is.na(dat$x)], col="red")
+#'plot(dat$x, dat$xx, col=mdc(1), xlab="x", ylab="xx")
+#'points(complete(imp,1)$x[is.na(dat$x)], complete(imp,1)$xx[is.na(dat$x)], col=mdc(2))
 #'
 #'
 #'@export
