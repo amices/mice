@@ -99,7 +99,7 @@ pool <- function (object, method = "smallsample")
     if (class(fa)[1]=="lme") require(nlme)  # fixed 13/1/2010
     if (class(fa)[1]=="mer") require(lme4)  # fixed 13/1/2010 (lme4 old version)
     if (class(fa)[1]=="lmerMod") require(lme4)  # added 11jun2014
-    if (inherits(fa, "merMod") require(lme4)
+    if (inherits(fa, "merMod")) require(lme4)
     if (class(fa)[1]=="survreg") require(survival)  # added 18/5/2012
     
     ###   Set up arrays for object.
