@@ -5,7 +5,7 @@
 #'Compares two nested models after m repeated complete data analysis
 #'
 #'The function is based on the article of Meng and Rubin (1992). The
-#'Wald-method can be found in paragraph 2.2 and the likelihoodmethod can be
+#'Wald-method can be found in paragraph 2.2 and the likelihood method can be
 #'found in paragraph 3.  One could use the Wald method for comparison of linear
 #'models obtained with e.g. \code{lm} (in \code{with.mids()}).  The likelihood
 #'method should be used in case of logistic regression models obtaind with
@@ -126,8 +126,9 @@ pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
     est0 <- pool(fit0)
     dimQ1 <- length(est1$qbar)
     dimQ2 <- dimQ1 - length(est0$qbar)
-    formula1 <- formula(fit1$analyses[[1]]$terms)
-    formula0 <- formula(fit0$analyses[[1]]$terms)
+    # Check: Only need the lm or lmer object
+    formula1 <- formula(fit1$analyses[[1]])
+    formula0 <- formula(fit0$analyses[[1]])
     
     if (dimQ2 < 1) 
         stop("The larger model should be specified first and must be strictly larger than the smaller model.\n")
