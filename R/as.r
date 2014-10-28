@@ -13,7 +13,7 @@
 #'@param .id Optional column indicator for the row numbers. Default is \code{2}.
 #'@details If \code{.id} is specified, row names from the original data (if supplied) will be copied to the \code{mids} object.
 #'@return An object of class \code{mids}
-#'@author Gerko Vink, 2012
+#'@author Gerko Vink, 2014
 #'@examples 
 #'# nhanes example without .id
 #'imp <- mice(nhanes, print = FALSE)
@@ -33,22 +33,23 @@
 #'@export
 as.mids <- function(data, .imp = 1, .id = 2)
 {
-    ini <- mice(data[data[, .imp] == 0, -c(.imp, .id)], 
-                m = max(as.numeric(data[, .imp])),
-                maxit = 0)
-    names  <- names(ini$imp)
-    if (!is.null(.id)){
-        rownames(ini$data) <- data[data[, .imp] == 0, .id]
-    }
-    for (i in 1:length(names)){
-        for(m in 1:(max(as.numeric(data[, .imp])) - 1)){
-            if(!is.null(ini$imp[[i]])){
-                indic <- data[, .imp] == m & is.na(data[data[, .imp]==0, names[i]])
-                ini$imp[[names[i]]][m] <- data[indic, names[i]]
-            }
-        }
-    }
-    return(ini)
+  ini <- mice(data[data[, .imp] == 0, 
+              -c(.imp, .id)], 
+              m =   max(as.numeric(levels(data[,  .imp]))), 
+              maxit=0)
+  names  <- names(ini$imp)
+  if (!is.null(.id)){
+    rownames(ini$data) <- data[data[, .imp] == 0, .id]
+  }
+  for (i in 1:length(names)){
+    for(m in 1:(max(as.numeric(levels(data[,  .imp]))))){
+      if(!is.null(ini$imp[[i]])){
+        indic <- data[, .imp] == m &  is.na(data[data[, .imp]==0, names[i]])
+        ini$imp[[names[i]]][m] <- data[indic, names[i]]
+      }
+    } 
+  }
+  return(ini)
 }
 
 
