@@ -14,6 +14,11 @@ Question or suggestions about MICE can be send to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.23    28oct2014 SvB
+FIXED    as.mids() bug that gave incorrect m
+FIXED    pool.compare() error for lmer object (thanks Claudio Bustos)
+FIXED    error in mice.impute.2l.norm() if just one NA (thanks Jeroen Hoogland)
+
 V2.22    11jun2014 SvB
 ADDED    about six times faster predictive mean matching
 ADDED    pool.scalar() now can do Barnard-Rubin adjustment
