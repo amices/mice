@@ -143,7 +143,7 @@ mice.impute.2l.norm <- function(y, ry, x, type, intercept = TRUE, ...) {
     
     
     ## Generate imputations
-    imps <- rnorm(n = sum(nry), sd = sqrt(1/inv.sigma2[gf.full[nry]])) + rowSums(as.matrix(x[nry, type == 2]) * bees[gf.full[nry], 
+    imps <- rnorm(n = sum(nry), sd = sqrt(1/inv.sigma2[gf.full[nry]])) + rowSums(as.matrix(x[nry, type == 2, drop = FALSE]) * bees[gf.full[nry], 
                                                                                                                      ])
     return(imps)
 }
