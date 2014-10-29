@@ -76,20 +76,24 @@ mice.impute.polyreg <- function(y, ry, x, nnet.maxit = 100, nnet.trace = FALSE, 
     y <- aug$y
     ry <- aug$ry
     w <- aug$w
-    #
-    xy <- cbind.data.frame(y = y, x = x)  # fixed SvB 6/12/2010
-    fit <- multinom(formula(xy), data = xy[ry, ], weights = w[ry], maxit = nnet.maxit, trace = nnet.trace, maxNWts = nnet.maxNWts, 
-                    ...)
-    post <- predict(fit, xy[!ry, ], type = "probs")
-    if (sum(!ry) == 1) 
-        post <- matrix(post, nrow = 1, ncol = length(post))  # SvB 14 sept 2009
+    
     fy <- as.factor(y)
     nc <- length(levels(fy))
     un <- rep(runif(sum(!ry)), each = nc)
+    
+    #
+    xy <- cbind.data.frame(y = y, x = x)  # fixed SvB 6/12/2010
+    # 28/10/2014 fix, if there are no predictors append intercept
+    if (ncol(x) == 0L) xy <- data.frame(xy, int = 1)
+    fit <- multinom(formula(xy), data = xy[ry,,drop = FALSE ], 
+                    weights = w[ry], maxit = nnet.maxit, trace = nnet.trace, maxNWts = nnet.maxNWts, ...)
+    post <- predict(fit, xy[!ry, ], type = "probs")
+    if (sum(!ry) == 1) post <- matrix(post, nrow = 1, ncol = length(post))  # SvB 14 sept 2009
     
     if (is.vector(post)) 
         post <- matrix(c(1 - post, post), ncol = 2)
     draws <- un > apply(post, 1, cumsum)
     idx <- 1 + apply(draws, 2, sum)
+    
     return(levels(fy)[idx])
 }
