@@ -72,7 +72,7 @@ mice.impute.polr <- function (y, ry, x, nnet.maxit=100, nnet.trace=FALSE, nnet.m
     if (inherits(fit, "try-error")) {
         fit <- multinom(formula(xy), data=xy[ry,],
                         weights=w[ry],
-                        maxit=nnet.maxit, trace=nnet.trace, maxNWts=nnet.maxNWts, ...)
+                        maxit=nnet.maxit, trace=nnet.trace, MaxNWts=nnet.maxNWts, ...)
         updateLog(meth="multinom", frame=3)
     }
     post <- predict(fit, xy[!ry, ], type = "probs")

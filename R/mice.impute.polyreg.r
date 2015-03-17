@@ -78,7 +78,7 @@ mice.impute.polyreg <- function(y, ry, x, nnet.maxit = 100, nnet.trace = FALSE, 
     w <- aug$w
     #
     xy <- cbind.data.frame(y = y, x = x)  # fixed SvB 6/12/2010
-    fit <- multinom(formula(xy), data = xy[ry, ], weights = w[ry], maxit = nnet.maxit, trace = nnet.trace, maxNWts = nnet.maxNWts, 
+    fit <- multinom(formula(xy), data = xy[ry, ], weights = w[ry], maxit = nnet.maxit, trace = nnet.trace, MaxNWts = nnet.maxNWts,
                     ...)
     post <- predict(fit, xy[!ry, ], type = "probs")
     if (sum(!ry) == 1) 
