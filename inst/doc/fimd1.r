@@ -4,6 +4,7 @@
 ###		CRC/Chapman & Hall, Boca Raton, FL.
 ### (c) 2012 Stef van Buuren, www.multiple-imputation.com
 ### Version 1, 21mar2012
+### Version 2, 4nov2015
 ### Tested with Mac OS X 10.7.3, R2.14-2, mice 2.12
 
 ### Chapter 1 	Introduction
@@ -63,6 +64,7 @@ cov(airquality, use="pair")
 # install.packages("mice")
 
 library("mice")
+library("lattice")
 
 ### impute the mean
 imp <- mice(airquality, method="mean", m=1, maxit=1)

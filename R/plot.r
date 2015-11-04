@@ -22,16 +22,15 @@
 #'@author Stef van Buuren 2011
 #'@seealso \code{\link{mice}}, \code{\link[=mids-class]{mids}}, \code{\link{xyplot}}
 #'@method plot mids
-#'@S3method print mids
 #'@export
 plot.mids <- function(x, y = NULL, theme = mice.theme(), layout = c(2, 3), type = "l", col = 1:10, lty = 1, ...) {
     strip.combined <- function(which.given, which.panel, factor.levels, ...) {
         if (which.given == 1) {
-            panel.rect(0, 0, 1, 1, col = theme$strip.background$col, border = 1)
-            panel.text(x = 0, y = 0.5, pos = 4, lab = factor.levels[which.panel[which.given]])
+            lattice::panel.rect(0, 0, 1, 1, col = theme$strip.background$col, border = 1)
+            lattice::panel.text(x = 0, y = 0.5, pos = 4, lab = factor.levels[which.panel[which.given]])
         }
         if (which.given == 2) {
-            panel.text(x = 1, y = 0.5, pos = 2, lab = factor.levels[which.panel[which.given]])
+            lattice::panel.text(x = 1, y = 0.5, pos = 2, lab = factor.levels[which.panel[which.given]])
         }
     }
     

@@ -12,7 +12,7 @@
 #'@return \code{NULL}
 #'@seealso \code{\link[=mira-class]{mira}}
 #'@method summary mira
-#'@S3method summary mira
+#'@export
 summary.mira <- function(object, ...) {
     # This summary function is for a mira object.  Then the seperate analyses are of class lm (glm), it calls sequentially
     # summary.lm (summary.glm) for all analyses.  KO, 4/2/00
@@ -35,7 +35,7 @@ summary.mira <- function(object, ...) {
 #'@return A table containing summary statistis of the pooled analysis
 #'@seealso \code{\link[=mipo-class]{mipo}}
 #'@method summary mipo
-#'@S3method summary mipo
+#'@export
 summary.mipo <- function(object, ...) {
     # summary method for the pooled analysis results
     # 
@@ -69,7 +69,7 @@ summary.mipo <- function(object, ...) {
 #'@return \code{NULL}
 #'@seealso \code{\link[=mids-class]{mids}}
 #'@method summary mids
-#'@S3method summary mids
+#'@export
 summary.mids <- function(object, ...) {
     print(object, ...)
     invisible()

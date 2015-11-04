@@ -36,7 +36,6 @@
 #'fit2 <- with(data=imp,exp=glm(hyp~age+bmi+chl,family=binomial))
 #'anova.imp <- with(data=imp,exp=anova(lm(bmi~age+hyp+chl)))
 #'@method with mids
-#'@S3method with mids
 #'@export
 with.mids <- function(data, expr, ...) {
     # General function to do repeated analyses.

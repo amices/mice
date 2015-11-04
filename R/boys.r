@@ -22,8 +22,7 @@
 #'Beuker, R.J., Brugman, E., Roede, M.J., Verloove-Vanhorick, S.P., Wit, J.M.
 #'(2000) Continuing positive secular growth change in The Netherlands
 #'1955-1997.  \emph{Pediatric Research}, \bold{47}, 316-323.
-#'\url{http://www.stefvanbuuren.nl/publications/Continuing secular - Ped Res
-#'2000.pdf}
+#'\url{http://www.stefvanbuuren.nl/publications/Continuing secular - Ped Res 2000.pdf}
 #'
 #'Fredriks, A.M., van Buuren, S., Wit, J.M., Verloove-Vanhorick, S.P. (2000).
 #'Body index measurements in 1996-7 compared with 1980.  \emph{Archives of

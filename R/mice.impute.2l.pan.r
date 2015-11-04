@@ -118,7 +118,10 @@
 #'@export
 mice.impute.2l.pan <- function(y, ry, x, type, intercept=TRUE, paniter = 500 , 
                                groupcenter.slope = FALSE , ...){
-    require(pan)
+    if (!requireNamespace("pan", quietly = TRUE))
+        stop("Package 'pan' needed fo this function 
+             to work. Please install it.", 
+             call. = FALSE)
     ## append intercept
     if (intercept) {
         x <- cbind(1, as.matrix(x))
@@ -185,7 +188,7 @@ mice.impute.2l.pan <- function(y, ry, x, type, intercept=TRUE, paniter = 500 ,
     ii <- 0
     while (ii == 0){ 
         s1 <- round(runif(1, 1,10^7))
-        imput <-  pan(y1,subj,pred,xcol,zcol,prior,seed= s1 ,iter= paniter )
+        imput <-  pan::pan(y1,subj,pred,xcol,zcol,prior,seed= s1 ,iter= paniter )
         res <- imput$y
         ii <- 1 - any( is.na( res ) )	
         # check for invalid imputations: pan occasionally produces NaNs

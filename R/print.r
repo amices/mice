@@ -12,7 +12,7 @@
 #'@return \code{NULL}
 #'@seealso \code{\link[=mids-class]{mids}}
 #'@method print mids
-#'@S3method print mids
+#'@export
 print.mids <- function(x, ...) {
     if (is.mids(x)) {
         cat("Multiply imputed data set")
@@ -43,7 +43,7 @@ print.mids <- function(x, ...) {
 #'@return \code{NULL}
 #'@seealso \code{\link[=mira-class]{mira}}
 #'@method print mira
-#'@S3method print mira
+#'@export
 print.mira <- function(x, ...) {
     ## prints the mira object; A mira object is in fact a list, so it will be printed as such.  KO, 3/2/00
     
@@ -66,7 +66,7 @@ print.mira <- function(x, ...) {
 #'@return \code{NULL}
 #'@seealso \code{\link[=mipo-class]{mipo}}
 #'@method print mipo
-#'@S3method print mipo
+#'@export
 print.mipo <- function(x, ...) {
     if (!is.null(x$call)) {
         cat("Call: ")

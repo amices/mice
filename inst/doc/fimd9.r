@@ -4,6 +4,7 @@
 ###		CRC/Chapman & Hall, Boca Raton, FL.
 ### (c) 2012 Stef van Buuren, www.multiple-imputation.com
 ### Version 1, 21mar2012
+### Version 2, 4nov2015 tested with mice 2.23
 ### Tested with Mac OS X 10.7.3, R2.14-2, mice 2.12
 
 if (packageVersion("mice")<'2.12') stop("This code requires mice 2.12.")
@@ -13,6 +14,7 @@ if (packageVersion("mice")<'2.12') stop("This code requires mice 2.12.")
 ### Section 9.2.1 Intention to treat
 
 library("mice")
+library("lattice")
 
 ### Table 9.1
 

@@ -40,7 +40,6 @@
 #'
 #'@export
 nelsonaalen <- function(data, timevar, statusvar) {
-    require(survival)
     if (!is.data.frame(data)) 
         stop("Data must be a data frame")
     timevar <- as.character(substitute(timevar))

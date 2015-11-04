@@ -162,7 +162,6 @@
 #'          hor = FALSE, outer = TRUE, scales = "free", pch = c(1,19))
 #'
 #'@method stripplot mids
-#'@S3method stripplot mids
 #'@export
 stripplot.mids <- function(x,
                            data,
@@ -172,9 +171,9 @@ stripplot.mids <- function(x,
                            theme = mice.theme(),
                            allow.multiple = TRUE,
                            outer = TRUE,
-                           drop.unused.levels = lattice.getOption("drop.unused.levels"),
-                           panel = lattice.getOption("panel.stripplot"),
-                           default.prepanel = lattice.getOption("prepanel.default.stripplot"),
+                           drop.unused.levels = lattice::lattice.getOption("drop.unused.levels"),
+                           panel = lattice::lattice.getOption("panel.stripplot"),
+                           default.prepanel = lattice::lattice.getOption("prepanel.default.stripplot"),
                            jitter.data = TRUE,
                            horizontal = FALSE,
                            ...,
@@ -232,7 +231,7 @@ stripplot.mids <- function(x,
     }
     
     ## determine the y-variables
-    form  <- latticeParseFormula(model=formula, data=cd, subset = subset,
+    form  <- lattice::latticeParseFormula(model=formula, data=cd, subset = subset,
                                  groups = groups, multiple = allow.multiple,
                                  outer = outer, subscripts = TRUE,
                                  drop = drop.unused.levels)

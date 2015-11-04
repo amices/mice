@@ -14,7 +14,9 @@ Question or suggestions about MICE can be send to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
-V2.23    28oct2014 SvB
+V2.23    04nov2015 SvB
+FIXED    update of example code on /doc
+FIXED    remove lots of dependencies, general cleanup 
 FIXED    impute.polyreg() bug that bombed if there were no predictors (thanks Jan Graffelman)
 FIXED    as.mids() bug that gave incorrect m (several users)
 FIXED    pool.compare() error for lmer object (thanks Claudio Bustos)

@@ -4,6 +4,7 @@
 ###		CRC/Chapman & Hall, Boca Raton, FL.
 ### (c) 2012 Stef van Buuren, www.multiple-imputation.com
 ### Version 1, 22mar2012
+### Version 2, 4nov2015 tested with mice 2.23
 ### Tested with Mac OS X 10.7.3, R2.14-2, mice 2.12
 
 if (packageVersion("mice")<'2.12') stop("This code requires mice 2.12.")
@@ -11,13 +12,14 @@ if (packageVersion("mice")<'2.12') stop("This code requires mice 2.12.")
 ### Section 7.1 Too many columns
 
 library("mice")
+library("lattice")
 library("foreign")
 library("survival")
 
 ### Section 7.1.3 Data exploration
 
 data <- leiden85   ## Note: the leiden85 data is not yet avialable in V2.12
-if (!is.data.frame(data)) stop("The code for section 7.1/7.2 requires access to the LEIDEN85 data.")
+if (!is.data.frame(data)) warning("The code for section 7.1/7.2 requires access to the LEIDEN85 data.")
 
 ini <- mice(data, maxit=0)   # recommended 
 table(ini$nmis)
@@ -409,3 +411,4 @@ points(x=-0.4,y=0.497,pch=20)
 ## selfreport <- nl
 ## file <- file.path("~/Documents/Sync/Impute/mice/V2.12/mice/data/selfreport.rda")
 ## save(selfreport, file=file)
+

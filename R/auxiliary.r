@@ -69,7 +69,7 @@ appendbreak <- function(data, brk, warp.model = warp.model, id=NULL, typ="pred")
 #'@author Stef van Buuren, 2012
 #'@export
 extractBS <- function(fit) {
-  siz <- t(ranef(fit)[[1]]) + fixef(fit)
+  siz <- t(lme4::ranef(fit)[[1]]) + lme4::fixef(fit)
   bs <- matrix(siz, nrow=nrow(siz)*ncol(siz), ncol=1)
   return(bs)
 }

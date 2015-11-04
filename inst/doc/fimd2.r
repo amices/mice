@@ -4,11 +4,14 @@
 ###		CRC/Chapman & Hall, Boca Raton, FL.
 ### (c) 2012 Stef van Buuren, www.multiple-imputation.com
 ### Version 1, 7mar2012
+### Version 2, 4nov2015
 ### Tested with Mac OS X 10.7.3, R2.14-2, mice 2.11
 
 ### Chapter 2 Multiple imputation
 
 library("mice")
+library("lattice")
+library("MASS")
 
 ### Section 2.1.3 The expanding literature on multiple imputation
 ### Figure 2.1

@@ -1,3 +1,4 @@
+
 #'Multivariate Imputation by Chained Equations (MICE)
 #'
 #'Generates Multivariate Imputations by Chained Equations (MICE)
@@ -200,7 +201,6 @@
 #'@import methods
 #'@importFrom MASS eqscplot lda mvrnorm polr truehist
 #'@importFrom nnet multinom nnet
-#'@importFrom stats lm glm
 #'@importFrom utils packageDescription
 #'@importFrom graphics plot
 #'@importFrom rpart rpart rpart.control

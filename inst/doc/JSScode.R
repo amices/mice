@@ -9,6 +9,7 @@
 ## Requires R packages: mice (>2.9), VIM, mitools, Zelig (+dependencies)
 
 ## SvB 31AUG2011
+### Version 2, 4nov2015 tested with mice 2.23
 
 
 ###################################################
@@ -25,6 +26,7 @@ if (as.numeric(packageDescription("mice")$Version)<2.9) warning("mice 2.9 or hig
 ### chunk number 4: example1
 ###################################################
 library("mice")
+library("lattice")
 
 
 ###################################################

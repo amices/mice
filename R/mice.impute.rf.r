@@ -25,7 +25,6 @@
 #'\code{randomForest:::randomForest.default()}.
 #'@return Numeric vector of length \code{sum(!ry)} with imputations
 #'@author Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
-#'@importFrom randomForest randomForest
 #'@references 
 #'
 #' Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning 
@@ -54,9 +53,13 @@
 #'@export
 mice.impute.rf <- function(y, ry, x, ntree = 10, ...)
 {
+    if (!requireNamespace("randomForest", quietly = TRUE))
+        stop("Package 'randomForest' needed fo this function 
+             to work. Please install it.", 
+             call. = FALSE)
     onetree <- function(xobs, xmis, yobs, ...)
     {
-        fit <- randomForest(x = xobs, 
+        fit <- randomForest::randomForest(x = xobs, 
                             y = yobs, 
                             ntree = 1, ...)
         leafnr <- predict(object = fit, newdata = xobs, nodes = TRUE)

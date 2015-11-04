@@ -152,7 +152,6 @@
 #'
 #'
 #'@method densityplot mids
-#'@S3method densityplot mids
 #'@export
 densityplot.mids <- function(x,
              data,
@@ -165,9 +164,9 @@ densityplot.mids <- function(x,
              thicker = 2.5,
              allow.multiple = TRUE,
              outer = TRUE,
-             drop.unused.levels = lattice.getOption("drop.unused.levels"),
-             panel = lattice.getOption("panel.densityplot"),
-             default.prepanel = lattice.getOption("prepanel.default.densityplot"),
+             drop.unused.levels = lattice::lattice.getOption("drop.unused.levels"),
+             panel = lattice::lattice.getOption("panel.densityplot"),
+             default.prepanel = lattice::lattice.getOption("prepanel.default.densityplot"),
              ...,
              subscripts = TRUE,
              subset = TRUE)
@@ -213,7 +212,7 @@ densityplot.mids <- function(x,
   } else formula <- data
   
   ## determine the y-variables
-  form  <- latticeParseFormula(model=formula, data=cd, subset = subset,
+  form  <- lattice::latticeParseFormula(model=formula, data=cd, subset = subset,
                                groups = groups, multiple = allow.multiple,
                                outer = outer, subscripts = TRUE,
                                drop = drop.unused.levels)

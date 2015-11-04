@@ -4,12 +4,13 @@
 ###		CRC/Chapman & Hall, Boca Raton, FL.
 ### (c) 2012 Stef van Buuren, www.multiple-imputation.com
 ### Version 1, 22mar2012
+### Version 2, 4nov2015 tested with mice 2.23
 ### Tested with Mac OS X 10.7.3, R2.14-2, mice 2.12
 
 if (packageVersion("mice")<'2.12') stop("This code requires mice 2.12.")
 
 library("mice")
-
+library("lattice")
 
 ### Section 8.1 Correcting for selective drop-out
 

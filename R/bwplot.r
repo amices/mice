@@ -144,7 +144,6 @@
 #'
 #'
 #'@method bwplot mids
-#'@S3method bwplot mids
 #'@export
 bwplot.mids <- function(x,
                         data,
@@ -155,7 +154,7 @@ bwplot.mids <- function(x,
                         mayreplicate = TRUE,
                         allow.multiple = TRUE,
                         outer = TRUE,
-                        drop.unused.levels = lattice.getOption("drop.unused.levels"),
+                        drop.unused.levels = lattice::lattice.getOption("drop.unused.levels"),
                         ...,
                         subscripts = TRUE,
                         subset = TRUE)
@@ -207,7 +206,7 @@ bwplot.mids <- function(x,
     }
     
     ## determine the y-variables
-    form  <- latticeParseFormula(model=formula, data=cd, subset = subset,
+    form  <- lattice::latticeParseFormula(model=formula, data=cd, subset = subset,
                                  groups = groups, multiple = allow.multiple,
                                  outer = outer, subscripts = TRUE,
                                  drop = drop.unused.levels)

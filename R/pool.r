@@ -71,139 +71,141 @@
 #'@export
 pool <- function (object, method = "smallsample")
 {
-    ### General pooling function for multiple imputation parameters
-    ### object: an object of class mira (Multiple Imputed Repeated Analysis)
-    ### Based on Rubin's rules (Rubin, 1987);
-    #
-    ### Stef van Buuren, Karin Groothuis-Oudshoorn, July 1999.
-    ### Extended for mle (S3) and mer (S4) objects, KO 2009.
-    ### Updated V2.1 - Aug 31, 2009
-    ### Updated V2.2 - Jan 13, 2010
-    ### Updated V2.4 - Oct 12, 2010
-    ### Updated V2.6 - Jan 14, 2011
-    ### Updated V2.12 - Mar 19, 2012
-    
-    ### Check the arguments
-    
-    call <- match.call()
-    if (!is.mira(object))
-        stop("The object must have class 'mira'")
-    m <- length(object$analyses)
-    fa <- getfit(object, 1)
-    if (m == 1) {
-        warning("Number of multiple imputations m=1. No pooling done.")
-        return(fa)
-    }
-    analyses <- getfit(object)
-    
-    if (class(fa)[1]=="lme") require(nlme)  # fixed 13/1/2010
-    if (class(fa)[1]=="mer") require(lme4)  # fixed 13/1/2010 (lme4 old version)
-    if (class(fa)[1]=="lmerMod") require(lme4)  # added 11jun2014
-    if (class(fa)[1]=="survreg") require(survival)  # added 18/5/2012
-    
-    ###   Set up arrays for object.
-    
-    mess <- try(coef(fa), silent=TRUE)
-    if (inherits(mess,"try-error")) stop("Object has no coef() method.")
-    mess <- try(vcov(fa), silent=TRUE)
-    if (inherits(mess,"try-error")) stop("Object has no vcov() method.")
-    
-    if (class(fa)[1]=="mer" | class(fa)[1] == "lmerMod")  # 14jun2014
-    { 
-        k <- length(fixef(fa))
-        names <- names(fixef(fa))
-    }
-    else if (class(fa)[1]=="polr")          # fixed 17/10/2010
+  ### General pooling function for multiple imputation parameters
+  ### object: an object of class mira (Multiple Imputed Repeated Analysis)
+  ### Based on Rubin's rules (Rubin, 1987);
+  #
+  ### Stef van Buuren, Karin Groothuis-Oudshoorn, July 1999.
+  ### Extended for mle (S3) and mer (S4) objects, KO 2009.
+  ### Updated V2.1 - Aug 31, 2009
+  ### Updated V2.2 - Jan 13, 2010
+  ### Updated V2.4 - Oct 12, 2010
+  ### Updated V2.6 - Jan 14, 2011
+  ### Updated V2.12 - Mar 19, 2012
+  
+  ### Check the arguments
+  
+  call <- match.call()
+  if (!is.mira(object))
+    stop("The object must have class 'mira'")
+  m <- length(object$analyses)
+  fa <- getfit(object, 1)
+  if (m == 1) {
+    warning("Number of multiple imputations m=1. No pooling done.")
+    return(fa)
+  }
+  analyses <- getfit(object)
+  
+  if (class(fa)[1]=="lme" &  
+      !requireNamespace("nlme", quietly = TRUE))
+    stop("Package 'nlme' needed fo this function to work. Please install it.", call. = FALSE)
+  if ((class(fa)[1]=="mer" | class(fa)[1] == "lmerMod") &  
+      !requireNamespace("lme4", quietly = TRUE))
+    stop("Package 'lme4' needed fo this function to work. Please install it.", call. = FALSE)
+  
+  ###   Set up arrays for object.
+  
+  mess <- try(coef(fa), silent=TRUE)
+  if (inherits(mess,"try-error")) stop("Object has no coef() method.")
+  mess <- try(vcov(fa), silent=TRUE)
+  if (inherits(mess,"try-error")) stop("Object has no vcov() method.")
+  
+  if (class(fa)[1]=="mer" | class(fa)[1] == "lmerMod")  # 14jun2014
+  { 
+    k <- length(lme4::fixef(fa))
+    names <- names(lme4::fixef(fa))
+  }
+  else if (class(fa)[1]=="polr")          # fixed 17/10/2010
+  {
+    k <- length(coef(fa))+length(fa$zeta)
+    names <- c(names(coef(fa)),names(fa$zeta))
+  }
+  else
+  {
+    k <- length(coef(fa))
+    names <- names(coef(fa))
+  }
+  
+  qhat <- matrix(NA, nrow = m, ncol = k, dimnames = list(1:m, names))
+  u <- array(NA, dim = c(m, k, k), dimnames = list(1:m, names,
+                                                   names))
+  
+  ###   Fill arrays
+  
+  for (i in 1:m) {
+    fit <- analyses[[i]]
+    if (class(fit)[1] == "mer")
     {
-        k <- length(coef(fa))+length(fa$zeta)
-        names <- c(names(coef(fa)),names(fa$zeta))
+      qhat[i,] <- lme4::fixef(fit)
+      ui <- as.matrix(vcov(fit))
+      if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: class mer, fixef(fit): ",ncol(qhat),", as.matrix(vcov(fit)): ", ncol(ui))
+      u[i, ,] <- array(ui, dim = c(1, dim(ui)))
+    }
+    else if (class(fit)[1] == "lmerMod")
+    {
+      qhat[i,] <- lme4::fixef(fit)
+      ui <- vcov(fit)
+      if (ncol(ui)!=ncol(qhat)) 
+        stop("Different number of parameters: class lmerMod, fixed(fit): ",ncol(qhat),", vcov(fit): ", ncol(ui))
+      u[i, ,] <- array(ui, dim = c(1, dim(ui)))
+    }
+    else if (class(fit)[1] == "lme")
+    {
+      qhat[i,] <- fit$coefficients$fixed
+      ui <- vcov(fit)
+      if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: class lme, fit$coefficients$fixef: ",ncol(qhat),", vcov(fit): ", ncol(ui))
+      u[i, ,] <- array(ui, dim = c(1, dim(ui)))
+    }
+    else if (class(fit)[1] == "polr")
+    {
+      qhat[i,] <- c(coef(fit),fit$zeta)
+      ui <- vcov(fit)
+      if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: class polr, c(coef(fit, fit$zeta): ",ncol(qhat),", vcov(fit): ", ncol(ui))
+      u[i, ,] <- array(ui, dim = c(1, dim(ui)))
+    }
+    else if (class(fit)[1] == "survreg")
+    {
+      qhat[i,] <- coef(fit)
+      ui <- vcov(fit)
+      parnames <- dimnames(ui)[[1]]
+      select <- !(parnames %in% "Log(scale)")  ## do not pool Log(scale) columns SvB 18/3/12
+      ui <- ui[select, select]
+      if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: class survreg, coef(fit): ",ncol(qhat),", vcov(fit): ", ncol(ui))
+      u[i, ,] <- array(ui, dim = c(1, dim(ui)))
     }
     else
     {
-        k <- length(coef(fa))
-        names <- names(coef(fa))
+      qhat[i,] <- coef(fit)
+      ui <- vcov(fit)
+      ### add rows and columns to ui if qhat is missing
+      ui <- expandvcov(qhat[i,], ui)
+      if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: coef(fit): ",ncol(qhat),", vcov(fit): ", ncol(ui))
+      u[i, ,] <- array(ui, dim = c(1, dim(ui)))
     }
-    
-    qhat <- matrix(NA, nrow = m, ncol = k, dimnames = list(1:m, names))
-    u <- array(NA, dim = c(m, k, k), dimnames = list(1:m, names,
-                                                     names))
-    
-    ###   Fill arrays
-    
-    for (i in 1:m) {
-        fit <- analyses[[i]]
-        if (class(fit)[1] == "mer")
-        {
-            qhat[i,] <- fixef(fit)
-            ui <- as.matrix(vcov(fit))
-            if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: class mer, fixef(fit): ",ncol(qhat),", as.matrix(vcov(fit)): ", ncol(ui))
-            u[i, ,] <- array(ui, dim = c(1, dim(ui)))
-        }
-        else if (class(fit)[1] == "lmerMod")
-        {
-            qhat[i,] <- fixef(fit)
-            ui <- vcov(fit)
-            if (ncol(ui)!=ncol(qhat)) 
-                stop("Different number of parameters: class lmerMod, fixed(fit): ",ncol(qhat),", vcov(fit): ", ncol(ui))
-            u[i, ,] <- array(ui, dim = c(1, dim(ui)))
-        }
-        else if (class(fit)[1] == "lme")
-        {
-            qhat[i,] <- fit$coefficients$fixed
-            ui <- vcov(fit)
-            if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: class lme, fit$coefficients$fixef: ",ncol(qhat),", vcov(fit): ", ncol(ui))
-            u[i, ,] <- array(ui, dim = c(1, dim(ui)))
-        }
-        else if (class(fit)[1] == "polr")
-        {
-            qhat[i,] <- c(coef(fit),fit$zeta)
-            ui <- vcov(fit)
-            if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: class polr, c(coef(fit, fit$zeta): ",ncol(qhat),", vcov(fit): ", ncol(ui))
-            u[i, ,] <- array(ui, dim = c(1, dim(ui)))
-        }
-        else if (class(fit)[1] == "survreg")
-        {
-            qhat[i,] <- coef(fit)
-            ui <- vcov(fit)
-            parnames <- dimnames(ui)[[1]]
-            select <- !(parnames %in% "Log(scale)")  ## do not pool Log(scale) columns SvB 18/3/12
-            ui <- ui[select, select]
-            if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: class survreg, coef(fit): ",ncol(qhat),", vcov(fit): ", ncol(ui))
-            u[i, ,] <- array(ui, dim = c(1, dim(ui)))
-        }
-        else
-        {
-            qhat[i,] <- coef(fit)
-            ui <- vcov(fit)
-            ### add rows and columns to ui if qhat is missing
-            ui <- expandvcov(qhat[i,], ui)
-            if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: coef(fit): ",ncol(qhat),", vcov(fit): ", ncol(ui))
-            u[i, ,] <- array(ui, dim = c(1, dim(ui)))
-        }
-    }
-    
-    ###   Within, between and total variances
-    
-    qbar <- apply(qhat, 2, mean)                              # (3.1.2)
-    ubar <- apply(u, c(2, 3), mean)                           # (3.1.3)
-    e <- qhat - matrix(qbar, nrow = m, ncol = k, byrow = TRUE)
-    b <- (t(e) %*% e)/(m - 1)                                 # (3.1.4)
-    t <- ubar + (1 + 1/m) * b                                 # (3.1.5)
-    
-    ###   Scalar inference quantities
-    
-    r <- (1 + 1/m) * diag(b/ubar)                             # (3.1.7)
-    lambda <- (1 + 1/m) * diag(b/t)
-    dfcom <- df.residual(object)
-    df <- mice.df(m, lambda, dfcom, method)
-    fmi <- (r + 2/(df+3))/(r + 1)                             # fraction of missing information
-    
-    ###
-    names(r) <- names(df) <- names(fmi) <- names(lambda) <- names
-    fit <- list(call = call, call1 = object$call, call2 = object$call1,
-                nmis = object$nmis, m = m, qhat = qhat, u = u, qbar = qbar,
-                ubar = ubar, b = b, t = t, r = r, dfcom = dfcom, df = df,
-                fmi = fmi, lambda = lambda)
-    oldClass(fit) <- c("mipo", oldClass(object))              ## FEH
-    return(fit)
+  }
+  
+  ###   Within, between and total variances
+  
+  qbar <- apply(qhat, 2, mean)                              # (3.1.2)
+  ubar <- apply(u, c(2, 3), mean)                           # (3.1.3)
+  e <- qhat - matrix(qbar, nrow = m, ncol = k, byrow = TRUE)
+  b <- (t(e) %*% e)/(m - 1)                                 # (3.1.4)
+  t <- ubar + (1 + 1/m) * b                                 # (3.1.5)
+  
+  ###   Scalar inference quantities
+  
+  r <- (1 + 1/m) * diag(b/ubar)                             # (3.1.7)
+  lambda <- (1 + 1/m) * diag(b/t)
+  dfcom <- df.residual(object)
+  df <- mice.df(m, lambda, dfcom, method)
+  fmi <- (r + 2/(df+3))/(r + 1)                             # fraction of missing information
+  
+  ###
+  names(r) <- names(df) <- names(fmi) <- names(lambda) <- names
+  fit <- list(call = call, call1 = object$call, call2 = object$call1,
+              nmis = object$nmis, m = m, qhat = qhat, u = u, qbar = qbar,
+              ubar = ubar, b = b, t = t, r = r, dfcom = dfcom, df = df,
+              fmi = fmi, lambda = lambda)
+  oldClass(fit) <- c("mipo", oldClass(object))              ## FEH
+  return(fit)
 }

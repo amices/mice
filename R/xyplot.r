@@ -131,7 +131,6 @@
 #'xyplot(imp, hgt~age|.imp, na.group=wgt, pch=c(1,20),cex=c(1,1.5))
 #'
 #'@method xyplot mids
-#'@S3method xyplot mids
 #'@export
 xyplot.mids <- function(x,
                         data,
@@ -141,7 +140,7 @@ xyplot.mids <- function(x,
                         theme = mice.theme(),
                         allow.multiple = TRUE,
                         outer = TRUE,
-                        drop.unused.levels = lattice.getOption("drop.unused.levels"),
+                        drop.unused.levels = lattice::lattice.getOption("drop.unused.levels"),
                         ...,
                         subscripts = TRUE,
                         subset = TRUE)
@@ -178,7 +177,7 @@ xyplot.mids <- function(x,
                  as.table = as.table)
     
     ## determine the y-variables
-    form  <- latticeParseFormula(model=formula, data=cd, subset = subset,
+    form  <- lattice::latticeParseFormula(model=formula, data=cd, subset = subset,
                                  groups = groups, multiple = allow.multiple,
                                  outer = outer, subscripts = TRUE,
                                  drop = drop.unused.levels)

@@ -9,16 +9,12 @@ using namespace Rcpp;
 IntegerVector matcher(NumericVector obs, NumericVector mis, int k);
 RcppExport SEXP mice_matcher(SEXP obsSEXP, SEXP misSEXP, SEXP kSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< NumericVector >::type obs(obsSEXP );
-        Rcpp::traits::input_parameter< NumericVector >::type mis(misSEXP );
-        Rcpp::traits::input_parameter< int >::type k(kSEXP );
-        IntegerVector __result = matcher(obs, mis, k);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type obs(obsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mis(misSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    __result = Rcpp::wrap(matcher(obs, mis, k));
+    return __result;
 END_RCPP
 }

@@ -2,7 +2,7 @@ Package: mice
 Type: Package
 Version: 2.23
 Title: Multivariate Imputation by Chained Equations
-Date: 2014-10-28
+Date: 2015-11-04
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -17,23 +17,25 @@ Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "s.jolani@uu.nl"))
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
-    R (>= 2.10.0),
     methods,
-    Rcpp (>= 0.10.6),
-    lattice
+    R (>= 2.10.0),
+    Rcpp (>= 0.10.6)
 Imports:
+    lattice,
     MASS,
     nnet,
-    randomForest,
-    rpart
+    rpart,
+    splines,
+    survival
 Suggests:
     AGD,
+    CALIBERrfimpute,
     gamlss,
     lme4,
     mitools,
     nlme,
     pan,
-    survival,
+    randomForest,
     Zelig
 LinkingTo: Rcpp
 Description: Multiple imputation using Fully Conditional Specification (FCS)
