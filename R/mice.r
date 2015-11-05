@@ -393,25 +393,26 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
         isclassvar <- apply(pred == -2, 2, any)
         for (j in 1:nvar) {
             if (isclassvar[j] & is.factor(data[,j])) 
-            stop(paste("Class variable (column ",j,") cannot be factor. Convert to numeric by as.integer()",sep=""))        
+                stop("Class variable (column ", j,
+                     ") cannot be factor. Convert to numeric by as.integer()")        
         }
         ## remove constant variables but leave passive variables untouched
         for (j in 1:nvar) {
             if (!is.passive(meth[j])) {
-                v <- ifelse(is.character(data[,j]), NA, var(data[, j], na.rm = TRUE))
-                if (allow.na) {
-                  constant <- FALSE  # SvB 10/3/2011
-                  if (!is.na(v))
-                    constant <- (v < 1000 * .Machine$double.eps)  # SvB 10/3/2011
-                } else constant <- is.na(v) | v < 1000 * .Machine$double.eps
+                d.j <- data[,j]
+                v <- if(is.character(d.j)) NA else var(as.numeric(d.j), na.rm = TRUE)
+                constant <- if (allow.na) {
+                    if(is.na(v)) FALSE  # SvB 10/3/2011
+                    else (v < 1000 * .Machine$double.eps)  # SvB 10/3/2011
+                } else is.na(v) || v < 1000 * .Machine$double.eps
                 didlog <- FALSE
-                if (constant & any(pred[, j] != 0)) {
+                if (constant && any(pred[, j] != 0)) {
                   out <- varnames[j]
                   pred[, j] <- 0
                   updateLog(out = out, meth = "constant")
                   didlog <- TRUE
                 }
-                if (constant & meth[j] != "") {
+                if (constant && meth[j] != "") {
                   out <- varnames[j]
                   pred[j, ] <- 0
                   if (!didlog)
