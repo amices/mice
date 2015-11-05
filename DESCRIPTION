@@ -22,11 +22,15 @@ Depends:
     Rcpp (>= 0.10.6)
 Imports:
     lattice,
+    grDevices,
+    graphics,
     MASS,
     nnet,
     rpart,
     splines,
-    survival
+    stats,
+    survival,
+    utils
 Suggests:
     AGD,
     CALIBERrfimpute,

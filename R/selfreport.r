@@ -41,13 +41,11 @@
 #'Convenant Gezond Gewicht Nulmeting (determinanten van) beweeg- en eetgedrag
 #'van kinderen (4-11 jaar), jongeren (12-17 jaar) en volwassenen (18+ jaar)}.
 #'TNO/LS 2011.016. Leiden: TNO.
-#'\url{http://www.gezondeschool.info/object_binary/o11783_2011-016-monitor-convenant-gezond-gewicht-def.pdf}
 #'
 #'Van der Klauw, M., Van Keulen, H.M., Verheijden, M.W. (2011).  \emph{Monitor
 #'Convenant Gezond Gewicht Beweeg- en eetgedrag van kinderen (4-11 jaar),
 #'jongeren (12-17 jaar) en volwassenen (18+ jaar) in 2010 en 2011.} TNO/LS
 #'2011.055. Leiden: TNO. (in Dutch)
-#'\url{http://www.convenantgezondgewicht.nl/download/131/2011_055_monitor_convenant_gezond_gewicht.pdf}
 #'
 #'van Buuren, S. (2012). \emph{Flexible Imputation of Missing Data.} Boca
 #'Raton, FL: Chapman & Hall/CRC Press.
