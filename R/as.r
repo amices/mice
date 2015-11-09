@@ -13,39 +13,52 @@
 #'@param .id Optional column indicator for the row numbers. Default is \code{2}.
 #'@details If \code{.id} is specified, row names from the original data (if supplied) will be copied to the \code{mids} object.
 #'@return An object of class \code{mids}
-#'@author Gerko Vink, 2014
+#'@author Gerko Vink
 #'@examples 
-#'# nhanes example without .id
+#'# impute the nhanes dataset
 #'imp <- mice(nhanes, print = FALSE)
-#'X <- complete(imp, action = "long", include = TRUE)[, -2]
-#'test <- as.mids(X, .id = NULL)
-#'is.mids(test)
-#'test.dat <- complete(test, action = "long", include = TRUE)
-#'
-#'# Test on boys data
-#'imp <- mice(boys, print = FALSE, maxit = 1)
+#'# extract the data in long format
 #'X <- complete(imp, action = "long", include = TRUE)
-#'test <- as.mids(X)
-#'is.mids(test)
-#'test.dat <- complete(test, action = "long", include = TRUE)
-#'# original rownumbers are automatically copied from .id
+#'# create dataset with .imp variable that is not a factor
+#'X2 <- X
+#'X2$.imp <- as.numeric(levels(X$.imp))[X$.imp]
+#'# nhanes example without .id
+#'test1 <- as.mids(X[, -2], .id = NULL)
+#'is.mids(test1)
+#'all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
+#'# nhanes example without .id where .imp is not a factor
+#'test2 <- as.mids(X2[, -2], .id = NULL)
+#'is.mids(test2)
+#'all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
+#'# nhanes example with .id
+#'test3 <- as.mids(X, .id = 2)
+#'is.mids(test3)
+#'all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
+#'# nhanes example with .id where .imp is not a factor
+#'test4 <- as.mids(X2, .id = 2)
+#'is.mids(test4)
+#'all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
 #'@keywords mids
 #'@export
-as.mids <- function(data, .imp = 1, .id = 2)
-{
-  ini <- mice(data[data[, .imp] == 0, 
-              -c(.imp, .id)], 
-              m =   max(as.numeric(levels(data[,  .imp]))), 
-              maxit=0)
+as.mids <- function(data, .imp = 1, .id = 2){
+  #added GV 09 Nov 2015
+  imps <- data[, .imp]
+  if(is.factor(imps)){
+    m = max(as.numeric(levels(imps))[imps])
+  } else {
+    m = max(imps)
+  }
+  #end added
+  ini <- mice(data[imps == 0, -c(.imp, .id)], m = m, maxit = 0)
   names  <- names(ini$imp)
   if (!is.null(.id)){
-    rownames(ini$data) <- data[data[, .imp] == 0, .id]
+    rownames(ini$data) <- data[imps == 0, .id]
   }
   for (i in 1:length(names)){
-    for(m in 1:(max(as.numeric(levels(data[,  .imp]))))){
+    for(j in 1:m){
       if(!is.null(ini$imp[[i]])){
-        indic <- data[, .imp] == m &  is.na(data[data[, .imp]==0, names[i]])
-        ini$imp[[names[i]]][m] <- data[indic, names[i]]
+        indic <- imps == j & is.na(data[imps == 0, names[i]])
+        ini$imp[[names[i]]][j] <- data[indic, names[i]]
       }
     } 
   }

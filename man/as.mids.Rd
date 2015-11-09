@@ -27,23 +27,32 @@ from other software into the format used by \code{mice}.
 If \code{.id} is specified, row names from the original data (if supplied) will be copied to the \code{mids} object.
 }
 \examples{
-# nhanes example without .id
+# impute the nhanes dataset
 imp <- mice(nhanes, print = FALSE)
-X <- complete(imp, action = "long", include = TRUE)[, -2]
-test <- as.mids(X, .id = NULL)
-is.mids(test)
-test.dat <- complete(test, action = "long", include = TRUE)
-
-# Test on boys data
-imp <- mice(boys, print = FALSE, maxit = 1)
+# extract the data in long format
 X <- complete(imp, action = "long", include = TRUE)
-test <- as.mids(X)
-is.mids(test)
-test.dat <- complete(test, action = "long", include = TRUE)
-# original rownumbers are automatically copied from .id
+# create dataset with .imp variable that is not a factor
+X2 <- X
+X2$.imp <- as.numeric(levels(X$.imp))[X$.imp]
+# nhanes example without .id
+test1 <- as.mids(X[, -2], .id = NULL)
+is.mids(test1)
+all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
+# nhanes example without .id where .imp is not a factor
+test2 <- as.mids(X2[, -2], .id = NULL)
+is.mids(test2)
+all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
+# nhanes example with .id
+test3 <- as.mids(X, .id = 2)
+is.mids(test3)
+all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
+# nhanes example with .id where .imp is not a factor
+test4 <- as.mids(X2, .id = 2)
+is.mids(test4)
+all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
 }
 \author{
-Gerko Vink, 2014
+Gerko Vink
 }
 \keyword{mids}
 
