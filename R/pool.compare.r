@@ -127,6 +127,8 @@ pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
     dimQ1 <- length(est1$qbar)
     dimQ2 <- dimQ1 - length(est0$qbar)
     # Check: Only need the lm or lmer object
+    formula1 <- formula(fit1$analyses[[1]])
+    formula0 <- formula(fit0$analyses[[1]])
     vars1 = names(est1$qbar)
     vars0 = names(est0$qbar)
     
