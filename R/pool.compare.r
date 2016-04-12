@@ -132,6 +132,8 @@ pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
     vars1 = names(est1$qbar)
     vars0 = names(est0$qbar)
     
+    if (is.null(vars1) | is.null(vars0)) 
+      stop("coefficients do not have names")
     if (dimQ2 < 1) 
         stop("The larger model should be specified first and must be strictly larger than the smaller model.\n")
     if (!setequal(vars0, intersect(vars0, vars1))) 
