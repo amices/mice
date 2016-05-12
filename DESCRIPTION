@@ -1,8 +1,8 @@
 Package: mice
 Type: Package
-Version: 2.25
+Version: 2.26
 Title: Multivariate Imputation by Chained Equations
-Date: 2015-11-09
+Date: 2016-05-12
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -55,3 +55,4 @@ License: GPL-2 | GPL-3
 LazyLoad: yes
 LazyData: yes
 URL: http://www.stefvanbuuren.nl , http://www.multiple-imputation.com
+RoxygenNote: 5.0.1
