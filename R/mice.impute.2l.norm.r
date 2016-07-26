@@ -81,6 +81,15 @@ mice.impute.2l.norm <- function(y, ry, x, type, intercept = TRUE, ...) {
         
         return(s)
     }
+    
+    ## added SvB 21jul2016
+    symridge <- function(x, ridge = 0.0001, ...) {
+      x <- (x + t(x))/2
+      x + diag(diag(x) * ridge)
+    }
+    
+    
+    
     ## written by Roel de Jong
     
     ## append intercept
@@ -114,20 +123,20 @@ mice.impute.2l.norm <- function(y, ry, x, type, intercept = TRUE, ...) {
     for (iter in 1:n.iter) {
         ## Draw bees
         for (class in 1:n.class) {
-            vv <- sym(inv.sigma2[class] * X.SS[[class]] + inv.psi)
+            vv <- symridge(inv.sigma2[class] * X.SS[[class]] + inv.psi, ...)
             bees.var <- chol2inv(chol(vv))
             bees[class, ] <- drop(bees.var %*% (crossprod(inv.sigma2[class] * XG[[class]], yg[[class]]) + inv.psi %*% mu)) + 
-                drop(rnorm(n = n.rc) %*% chol(sym(bees.var)))
+                drop(rnorm(n = n.rc) %*% chol(symridge(bees.var, ...)))
             ss[class] <- crossprod(yg[[class]] - XG[[class]] %*% bees[class, ])
         }
         
         ## Draw mu
         mu <- colMeans(bees) + drop(rnorm(n = n.rc) %*% 
-                                        chol(chol2inv(chol(sym(inv.psi)))/n.class))
+                                        chol(chol2inv(chol(symridge(inv.psi, ...)))/n.class))
         
         ## Draw psi
         inv.psi <- rwishart(df = n.class - n.rc - 1, 
-                            SqrtSigma = chol(chol2inv(chol(sym(crossprod(t(t(bees) - mu)))))))
+                            SqrtSigma = chol(chol2inv(chol(symridge(crossprod(t(t(bees) - mu)), ...)))))
         
         ## Draw sigma2
         inv.sigma2 <- rgamma(n.class, n.g/2 + 1/(2 * theta), scale = 2 * theta/(ss * theta + sigma2.0))

@@ -6,6 +6,11 @@
 \usage{
 ifdo(cond, action)
 }
+\arguments{
+\item{cond}{a condition}
+
+\item{action}{the action to do}
+}
 \value{
 Currently returns an error message.
 }

@@ -6,6 +6,9 @@
 \usage{
 long2mids(x)
 }
+\arguments{
+\item{x}{argument}
+}
 \value{
 An object of class \code{mids}
 }

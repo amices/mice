@@ -10,3 +10,4 @@ NAMESPACE
 *.rej
 src/*.so
 man/*.Rd
+src/*.o

@@ -2,8 +2,8 @@
 #'
 #'Sorry, the \code{ifdo()} function is not yet implemented. 
 #'@aliases ifdo
-#'@param cond
-#'@param action
+#'@param cond a condition
+#'@param action the action to do
 #'@return Currently returns an error message.
 #'@author Stef van Buuren, 2012
 #'@keywords internal
