@@ -13,7 +13,7 @@
 #'@param prop A scalar specifying the proportion of missingness. Should be value 
 #'between 0 and 1 with 3 decimal places at most. Default is 0.5.
 #'@param type A vector of strings containing the type of MAR missingness for each 
-#'pattern. Either \code{"MARLEFT"}, \code{"MARMID"}, \code{MARTAIL"} or 
+#'pattern. Either \code{"MARLEFT"}, \code{"MARMID"}, \code{"MARTAIL"} or 
 #'\code{"MARRIGHT"}. If a single missingness type is entered, all patterns will 
 #'be created by the same type. If missingness types should differ over patterns, 
 #'a vector of missingness types should be entered. Default is MARRIGHT for all 

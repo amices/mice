@@ -16,7 +16,7 @@
 #'patterns. Each pattern is a combination of variables with and without missing 
 #'values (denoted by \code{0} and \code{1} respectively). For example, one might
 #'want to create two missingness patterns on a data set with four variables. The
-#'patterns would be something like: \code{0, 0, 1, 1} and #'\code{1, 0, 1, 0}. 
+#'patterns would be something like: \code{0, 0, 1, 1} and \code{1, 0, 1, 0}. 
 #'Each combination of zeros and ones may occur, except a pattern of merely ones 
 #'or zeros. 
 #'
@@ -59,8 +59,8 @@
 #'described by Van Buuren (2012). The user can specify the type of missingness, 
 #'which, again, may differ between patterns. 
 #'
-#'An extensive example is shown in a vignette titled "Multivariate Amputation using 
-#'Ampute". 
+#'An extensive example is shown in a vignette 
+#'titled "Multivariate Amputation using Ampute". 
 #'
 #'@param data A complete data matrix or dataframe. Values should be numeric. 
 #'Categorical variables should have been transformed into dummies.
@@ -89,17 +89,17 @@
 #'probabilities of being missing are based on a discrete distribution defined by 
 #'the \code{odds} argument. Default is TRUE.   
 #'@param type A vector of strings containing the type of MAR missingness for each 
-#'pattern. Either \code{"MARLEFT"}, \code{"MARMID"}, \code{MARTAIL"} or 
+#'pattern. Either \code{"MARLEFT"}, \code{"MARMID"}, \code{"MARTAIL"} or 
 #'\code{"MARRIGHT"}. If a single missingness type is entered, all patterns will 
 #'be created by the same type. If missingness types should differ over patterns, 
-#'a vector of missingness types should be entered. Default is MARRIGHT for all 
+#'a vector of missingness types should be entered. Default is \code{"MARRIGHT"} for all 
 #'patterns.   
-#'@param odds A matrix where #patterns defines the #rows. Each row should contain 
+#'@param odds A matrix where patterns defines the rows. Each row should contain 
 #'the odds of being missing for the concurrent pattern. The amount of odds values 
 #'defines in how many quantiles the sum scores will be divided. The values are 
 #'relative probabilities: a quantile with odds value 4 will have a probability of 
 #'being missing that is four times higher than a quantile with odds 1. The 
-#'#quantiles may differ between patterns, specify NA for cells remaining empty. 
+#'quantiles may differ between patterns, specify NA for cells remaining empty. 
 #'Default is 4 quantiles with odds values 1, 2, 3 and 4, for each pattern, 
 #'imitating a MARRIGHT type of missingness.
 #'@param bycases Logical. If TRUE, the proportion of missingness is defined in 
@@ -108,10 +108,10 @@
 #'@param run Logical. If TRUE, the amputations are implemented. If FALSE, the 
 #'return object will contain everything but the amputed data set. 
 #'
-#'@return Returns a S3 object of class \code{\link{mads}} (multivariately amputed 
+#'@return Returns a S3 object of class \code{\link{mads-class}} (multivariately amputed 
 #'data set)
-#'@authors Rianne Schouten, Gerko Vink, Peter Lugtig, 2016
-#'@seealso \code{\link{mads}} 
+#'@author Rianne Schouten, Gerko Vink, Peter Lugtig, 2016
+#'@seealso \code{\link{mads-class}} 
 #'@references Brand, J.P.L. (1999). \emph{Development, implementation and 
 #'evaluation of multiple imputation strategies for the statistical analysis of 
 #'incomplete data sets} (pp. 110-113). Dissertation. Rotterdam: Erasmus University. 
@@ -128,18 +128,19 @@
 #'
 #'@examples 
 #'# Simulate data set with \code{mvrnorm} from package \code{\pkg{MASS}}.
+#'require(MASS)
 #'sigma <- matrix(data = c(1, 0.2, 0.2, 0.2, 1, 0.2, 0.2, 0.2, 1), nrow = 3)
 #'complete.data <- mvrnorm(n = 100, mu = c(5, 5, 5), Sigma = sigma)
 #'# Perform quick amputation
 #'result1 <- ampute(data = complete.data)
 #'# Change default matrices as desired
-#'patterns <- result2$patterns
+#'patterns <- result1$patterns
 #'patterns[1:3, 2] <- 0
-#'odds <- result2$odds
+#'odds <- result1$odds
 #'odds[2,3:4] <- c(2, 4)
 #'odds[3,] <- c(3, 1, NA, NA)
 #'# Rerun amputation
-#'result3 <- ampute(data = complete.data, patterns = patterns, probs = 
+#'result3 <- ampute(data = complete.data, patterns = patterns, freq = 
 #'c(0.3, 0.3, 0.4), continuous = FALSE, odds = odds)
 #'# Run an amputation procedure with continuous probabilities
 #'result4 <- ampute(data = complete.data, type = c("MARRIGHT", "MARTAIL", 

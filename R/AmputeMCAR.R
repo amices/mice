@@ -2,7 +2,7 @@
 #'
 #'This function creates a missing data indicator for each pattern, based on MCAR 
 #'missingness. The function is used in the multivariate amputation function 
-#'\code{\link{ampute}).
+#'\code{\link{ampute}}.
 #'
 #'@param P A vector containing the values of the patterns the cases are candidate
 #'for. For each case, a value between 1 and #patterns 1 is given. For example, a 
@@ -17,7 +17,7 @@
 #'@return A list containing vectors with \code{0} if a case should be made missing 
 #'and \code{1} if a case should be kept complete. The first vector refers to the 
 #'first pattern, the second vector to the second pattern, etc. 
-#'@authors Rianne Schouten, 2016 
+#'@author Rianne Schouten, 2016 
 #'@seealso \code{\link{ampute}} 
 #'@export
 ampute.mcar <- function(P, patterns, prop) {

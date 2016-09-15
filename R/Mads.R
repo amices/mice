@@ -6,7 +6,7 @@
 #'\code{bwplot}and \code{xyplot}.
 #'
 #'@section Contents:
-#'describe{
+#'\describe{
 #'\item{\code{call}:}{The function call.}
 #'\item{\code{prop}:}{Proportion of cases with missing values. Note: even when
 #'the proportion is entered as the proportion of missing cells (when 
@@ -33,9 +33,9 @@
 #'\item{\code{mech}:}{A string specifying the missingness mechanism, either 
 #'\code{"MCAR"} or \code{"MAR"}.}
 #'\item{\code{type}:}{A vector of strings containing the type of MAR missingness 
-#'for each pattern. Either \code{"MARLEFT"}, \code{"MARMID"}, \code{MARTAIL"} or 
+#'for each pattern. Either \code{"MARLEFT"}, \code{"MARMID"}, \code{"MARTAIL"} or 
 #'\code{"MARRIGHT"}. The first type refers to the first pattern, the second type
-#'to the second pattern, etc. 
+#'to the second pattern, etc.} 
 #'\item{\code{cand}:}{A vector containing the values of the patterns the cases are 
 #'candidate for. For each case, a value between 1 and #patterns 1 is given. For 
 #'example, a case with value 2 is candidate for missing data pattern 2.}
@@ -45,6 +45,7 @@
 #'of the vectors differ because the number of candidates is different for each 
 #'pattern.}
 #'\item{\code{data}:}{The complete data set that was entered in \code{ampute}.}
+#'}
 #'@note Many of the functions of the \code{mice} package do not use the S4 class 
 #'definitions, and instead rely on the S3 list equivalent 
 #'\code{oldClass(obj) <- "mads"}.
