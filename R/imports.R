@@ -10,5 +10,5 @@
 #'                      rchisq rgamma rnorm runif summary.glm
 #'                      update var vcov
 #'                      quantile
-#'@importFrom utils     flush.console write.table
+#'@importFrom utils     flush.console write.table head
 NULL
