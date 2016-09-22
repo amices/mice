@@ -20,18 +20,15 @@
 #'@author Rianne Schouten, 2016 
 #'@seealso \code{\link{ampute}} 
 #'@export
-ampute.mcar <- function(P, patterns, prop) {
+ampute.mcar <- function(i, P, prop) {
   # MCAR Amputation
   #
   # This function creates a missing data indicator for each pattern, based on 
   # MCAR missingness. The function is used in the multivariate amputation 
   # function ampute().
-  R <- list()
-  for (i in 1:nrow(patterns)) { 
-    nf <- length(P[P == (i + 1)])
-    R.temp <- 1 - rbinom(n = nf, size = 1, prob = prop)
-    R[[i]] <- replace(P, P == (i + 1), R.temp)
-    R[[i]] <- replace(R[[i]], P != (i + 1), 1)
-  }
+  nf <- length(P[P == (i + 1)])
+  R.temp <- 1 - rbinom(n = nf, size = 1, prob = prop)
+  R <- replace(P, P == (i + 1), R.temp)
+  R <- replace(R, P != (i + 1), 1)
   return(R)
 }

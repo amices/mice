@@ -1,16 +1,20 @@
 #'Generate Missing Data for Simulation Purposes
 #' 
-#'This function amputes multivariate data in a MCAR or MAR manner. The details 
-#'section gives a concise explanation of the why and how of this function. 
-#'
+#'This function generates multivariate missing data in a MCAR or MAR manner. 
+#'Imputation of data sets containing missing values can be performed with \code{\link{mice}}. 
+#' 
 #'When new multiple imputation techniques are tested, values in simulated 
-#'data sets have to be made missing. Often, a univariate amputation procedure is 
-#'followed, and then repeated multiple times in case several variables should
-#'have missing values. However, this approach makes it difficult to relate the 
-#'missingness on one variable to the missingness on another variable. A 
-#'multivariate amputation procedure solves this issue and moreover, it does 
-#'justice to the multivariate nature of data sets. Hence, \code{ampute} is 
-#'created to perform the amputation according the researcher's desires. 
+#'data sets have to be made missing. For these simulation studies, \code{ampute}
+#'is developed. Imputation can be performed with \code{\link{mice}}. 
+#'
+#'Until recently, univariate amputation procedures were used to generate missing
+#'data in complete, simulated data sets. This univeriate approach was repeated in 
+#'case several variables should need to be made incomplete. However, with a univeriate
+#'approach, it is difficult to relate missingness on one variable to the missingness 
+#'on another variable. A multivariate amputation procedure solves this issue and 
+#'moreover, it does justice to the multivariate nature of data sets. Hence, 
+#'\code{ampute} is developed to perform the amputation according the researcher's 
+#'desires. 
 #'
 #'The idea behind the function is the specification of several missingness 
 #'patterns. Each pattern is a combination of variables with and without missing 
@@ -70,7 +74,8 @@
 #'should have missing values and 1 indicates a variable should remain complete. 
 #'The user may specify as many patterns as desired. One pattern (a vector) is 
 #'also possible. Default is a square matrix of size #variables where each pattern 
-#'has missingness on one variable only. 
+#'has missingness on one variable only. \code{\link{md.pattern}} can be used to 
+#'have an overview of the missing data patterns that are created. 
 #'@param freq A vector of length #patterns containing the relative frequency with 
 #'which the patterns should occur. For example, for three missing data patterns, 
 #'the vector could be \code{c(0.4, 0.4, 0.2)}, meaning that of all cases with 
@@ -148,7 +153,8 @@
 #'
 #'@export
 ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
-                   mechanism = "MAR", weights = NULL, continuous = TRUE, 
+                   mechanism = "MAR", weights = NULL, 
+                   continuous = TRUE, 
                    type = NULL, odds = NULL, 
                    bycases = TRUE, run = TRUE) {
   # Multivariate amputation of complete data sets
@@ -158,14 +164,12 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   #
   # ------------------------ sum.scores -----------------------------------
   #
-  sum.scores <- function(P, data, patterns, weights) {
-    scores <- list()
-    for (i in 1:nrow(patterns)) { 
-      candidates <- as.matrix(data[P == (i + 1), ])
-      # For each candidate in the pattern, a weighted sum score is calculated
-      scores[[i]] <- apply(candidates, 1, 
-                           function(x) (weights[i, ] *  patterns[i, ]) %*% x)
-    }
+  sum.scores <- function(i, P, data, patterns, weights) {
+    scores <- c()
+    candidates <- as.matrix(data[P == (i + 1), ])
+    # For each candidate in the pattern, a weighted sum score is calculated
+    scores <- apply(candidates, 1, 
+                    function(x) (weights[i, ] *  patterns[i, ]) %*% x)
     return(scores)
   }
   # ------------------------ recalculate.prop -----------------------------
@@ -186,6 +190,62 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     }
     return(prop)
   }
+  # --------------------------  recalculate.freq -----------------------------
+  #
+  recalculate.freq <- function(freq) {
+    s <- sum(freq)
+    for (p in 1:length(freq)) {
+      freq[p] <- freq[p] / s
+    }
+    return(freq)
+  }
+  # -------------------------  check.patterns ---------------------------------
+  #   
+  check.patterns <- function(patterns, freq, prop) {
+    for (h in 1:nrow(patterns)) {
+      print(h)
+      if (any(!patterns[h, ] %in% c(0, 1))) {
+        stop(paste("Argument patterns can only contain 0 and 1, pattern", h, 
+                   "contains another element"), call. = FALSE)
+      }
+      prop.one <- 0
+      row.one <- c()
+      if (all(patterns[h, ] %in% 1)) {
+        prop.one <- prop.one + freq[h]
+        row.one <- c(row.one, h)
+      }
+    }
+    if (prop.one != 0) {
+      prop <- prop.one
+      freq <- freq[-row.one]
+      s <- sum(freq)
+      for (p in 1:length(freq)) {
+        freq[p] <- freq[p] / s
+      }
+      patterns <- patterns[-row.one, ]
+    }
+    prop.zero <- 0
+    row.zero <- c()
+    for (h in 1:nrow(patterns)) {
+      print(h)
+      if (all(patterns[h, ] %in% 0)) {
+        prop.zero <- prop.zero + freq[h]
+        row.zero <- c(row.zero, h)
+      }
+      print(prop.zero)
+      print(row.zero)
+    }
+    if (prop.zero != 0) {
+      freq.min.zero <- freq[-row.zero]
+      s <- sum(freq.min.zero)
+      prop <- prop.zero / s
+    }
+    objects = list(patterns = patterns,
+                   prop = prop,
+                   freq = freq,
+                   row.zero = row.zero)
+    return(objects)
+  }
   # ------------------------ AMPUTE ---------------------------------------
   #
   if (is.null(data)) {
@@ -194,23 +254,27 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (!(is.matrix(data) | is.data.frame(data))) {
     stop("Data should be a matrix or data frame", call. = FALSE)
   }
+  if (any(sapply(data, is.na))) {
+    stop("Data cannot contain NAs", call. = FALSE)
+  }
   if (ncol(data) < 2) {
     stop("Data should contain at least two columns", call. = FALSE)
   } 
-  if (all(sapply(data, is.numeric))) {
-    if (any(apply(data, 2, function(x) length(unique(x)) < 7))) {
-      warning("Categorical variables are treated as continuous variables,
-              if desired otherwise, create dummies beforehand", call. = FALSE)
-    }
-    st.data <- data.frame(scale(data))
-  } else {
-    stop("Data should be numeric, create dummies for categorical variables", 
-         call. = FALSE)
+  if (any(sapply(data, is.numeric) == FALSE)) {
+    data <- as.data.frame(sapply(data, as.numeric))
   }
+  st.data <- data.frame(scale(data))
   #
   # Check objects and define defaults if necessary
   if (prop > 1) {
     stop("Proportion of missingness should be < 1", call. = FALSE)
+  }
+  # Recalculate prop if #cells is desired instead of #cases
+  if (bycases == FALSE) {
+    prop <- recalculate.prop(prop = prop, 
+                             freq = freq,
+                             patterns = patterns,
+                             n = ncol(data))
   }
   if (is.null(patterns)) {
     patterns <- ampute.default.patterns(n = ncol(data))
@@ -219,11 +283,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   } else if (is.vector(patterns)) {
     stop("Length of pattern vector does not match #variables", call. = FALSE)
   }  
-  for (h in 1:nrow(patterns)) {
-    if(any(!patterns[h, ] %in% c(0, 1))) {
-      stop("Argument patterns can only contain 0 and 1", call. = FALSE)
-    }
-  }
   if (is.null(freq)) {
     freq <- ampute.default.freq(patterns = patterns)
   }
@@ -232,42 +291,62 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
          call. = FALSE)
   }
   if (sum(freq) != 1) {
-    stop("Relative frequencies should sum to 1", call. = FALSE)
+    freq <- recalculate.freq(freq = freq)
   }
+  # Check whether patterns object contains specific patterns
+  objects <- check.patterns(patterns = patterns,
+                            freq = freq,
+                            prop = prop)
+  patterns <- objects[["patterns"]]
+  freq <- objects[["freq"]]
+  prop <- objects[["prop"]]
+  #
+  # Check other arguments
   if (any(!mechanism %in% c("MCAR","MAR"))) {
     stop("Mechanism should be either MCAR or MAR", call. = FALSE)
   }
-  if (mechanism == "MCAR" & !is.null(weights)) {
-    warning("Weights matrix is not used when mechanism is MCAR", call. = FALSE)
+  if (length(mechanism) == 1) {
+    mechanism <- rep(mechanism, nrow(patterns))
   }
-  if (mechanism == "MCAR" & !is.null(odds)) {
-    warning("Odds matrix is not used when mechanism is MCAR", call. = FALSE)
-  }
-  if (mechanism == "MAR" & !is.null(weights)) {
-    if (is.vector(weights) & (ncol(data) / length(weights))%%1 == 0) {
-      weights <- matrix(weights, ncol(data) / length(weights), byrow = TRUE)
+#  if (mechanism == "MCAR" & !is.null(weights)) {
+#    warning("Weights matrix is not used when mechanism is MCAR", call. = FALSE)
+#  }
+#  if (mechanism == "MCAR" & !is.null(odds)) {
+#    warning("Odds matrix is not used when mechanism is MCAR", call. = FALSE)
+#  }
+   if (any(mechanism == "MAR") & !is.null(weights)) {
+     if (is.vector(weights) & (ncol(data) / length(weights))%%1 == 0) {
+       weights <- matrix(weights, ncol(data) / length(weights), byrow = TRUE)
     } else if (is.vector(weights)) {
       stop("Length of weight vector does not match #variables", call. = FALSE)
     }  
   }
   if (is.null(weights)) {
-    weights <- ampute.default.weights(patterns = patterns)
+    weights <- ampute.default.weights(patterns = patterns,
+                                      mechanism = mechanism)
   }
   if (continuous == TRUE & !is.null(odds)) {
     warning("Odds matrix is not used when continuous probabilities are specified", 
             call. = FALSE)
   }
-  if (continuous == TRUE & is.null(type)) {
-    type <- ampute.default.type(patterns = patterns)
-  }
   if (continuous == FALSE & !is.null(type)) {
     warning("Type is not used when continuous probabilities are specified")
   }
+  if (length(type) == 1) {
+    type <- rep(type, length(mechanism[mechanism] == "MAR"))
+  }
+  if (continuous == TRUE & is.null(type)) {
+    type <- ampute.default.type(patterns = patterns,
+                                mechanism = mechanism)
+  }
   if (is.vector(odds)) {
-    odds <- matrix(odds, nrow(patterns), byrow = TRUE)
+    odds <- matrix(odds, 
+                   nrow = length(mechanism[mechanism == "MAR"]),
+                   byrow = TRUE)
   }
   if (is.null(odds)) {
-    odds <- ampute.default.odds(patterns = patterns)
+    odds <- ampute.default.odds(patterns = patterns,
+                                mechanism = mechanism)
   }
   if (continuous == FALSE) {
     for (h in 1:nrow(odds)) {
@@ -280,23 +359,21 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     stop("Type must contain MARLEFT, MARMID, MARTAIL or MARRIGHT", 
         call. = FALSE)
   }
-  if (!is.null(type) & (!length(type) %in% c(1, nrow(patterns)))) {
-    stop("Type should either have length 1 or length equal to #patterns", 
-        call. = FALSE)
+  if (!is.null(type) & (!length(type) %in% 
+                        c(1, length(mechanism[mechanism == "MAR"])))) {
+    stop(paste("Type should either have length 1 or length", 
+               length(mechanism[mechanism == "MAR"]), "which is the amount of MAR
+               specified in argument mechanism"), call. = FALSE)
   }
-  if (nrow(patterns) != nrow(weights)) {
-    stop("The objects patterns and weights are not matching", call. = FALSE)
+  if (nrow(weights) != length(mechanism[mechanism == "MAR"])) {
+    stop(paste("The weights object should have a number of rows of",
+               length(mechanism[mechanism == "MAR"]), "which is the amount of MAR
+               specified in argument mechanism"), call. = FALSE)
   }
-  if (nrow(patterns) != nrow(odds)) {
-    stop("The objects patterns and odds are not matching", call. = FALSE)
-  }
-  #
-  # Recalculate prop if #cells is desired instead of #cases
-  if (bycases == FALSE) {
-  prop <- recalculate.prop(prop = prop, 
-                           freq = freq,
-                           patterns = patterns,
-                           n = ncol(data))
+  if (nrow(odds) != length(mechanism[mechanism == "MAR"])) {
+    stop(paste("The odds object should have a number of rows of",
+               length(mechanism[mechanism == "MAR"]), "which is the amount of MAR
+               specified in argument mechanism"), call. = FALSE)
   }
   #
   # Create empty objects
@@ -312,27 +389,43 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                 replace = T, prob = freq) + 1
     # Calculate missingness according MCAR or calculate weighted sum scores
     # Standardized data is used to calculate weighted sum scores
-    if (mechanism == "MCAR") {
-      R <- ampute.mcar(P = P,
-                       patterns = patterns,
-                       prop = prop)
-    } else {
-      scores <- sum.scores(P = P,
-                           patterns = patterns,
-                           data = st.data,
-                           weights = weights)
-      if (!continuous) {
-        R <- ampute.mar.disc(P = P,
-                             scores = scores, 
-                             odds = odds, 
-                             prop = prop)
-      } else if (continuous) {
-        R <- ampute.mar.cont(P = P,
-                             scores = scores,
-                             prop = round(prop, 3),
-                             type = type)
+    R <- list()
+    scores <- list()
+    cont.time <- 0
+    disc.time <- 0
+    print(objects[["row.zero"]])
+    for (i in 1:nrow(patterns)) {
+      if (i %in% objects[["row.zero"]]) {
+        R[[i]] <- replace(P, P == (i + 1), 0)
+      } else if (mechanism[i] == "MCAR") {
+        R[[i]] <- ampute.mcar(i = i, 
+                              P = P, 
+                              prop = prop)
+      } else if (mechanism[i] == "MAR") {
+        scores[[i]] <- sum.scores(i = i,
+                                  P = P,
+                                  patterns = patterns,
+                                  data = st.data,
+                                  weights = weights)
+        if (continuous) {
+          cont.time <- cont.time + 1
+          R[[i]] <- ampute.mar.cont(i = i,
+                                    P = P,
+                                    scores = scores[[i]],
+                                    prop = round(prop, 3),
+                                    type = type[cont.time])
+        } else if (!continuous) {
+          disc.time <- disc.time + 1
+          R[[i]] <- ampute.mar.disc(i = i,
+                                    P = P,
+                                    scores = scores[[i]],
+                                    prop = prop,
+                                    odds = odds[disc.time, ])
+        }
       }
     }
+    print(R)
+    print(P)
     missing.data <- data
     for (i in 1:nrow(patterns)) {
        missing.data[R[[i]] == 0, patterns[i, ] == 0] <- NA

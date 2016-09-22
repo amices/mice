@@ -62,8 +62,10 @@ ampute.default.freq <- function(patterns) {
 #'@seealso \code{\link{ampute}}
 #'@author Rianne Schouten, 2016
 #'@export
-ampute.default.weights <- function(patterns) {
-  weights <- matrix(data = 1, nrow = nrow(patterns), ncol = ncol(patterns))
+ampute.default.weights <- function(patterns, mechanism) {
+  weights <- matrix(data = 1, 
+                    nrow = length(mechanism[mechanism == "MAR"]), 
+                    ncol = ncol(patterns))
   return(weights)
 }
 
@@ -84,8 +86,8 @@ ampute.default.weights <- function(patterns) {
 #'@seealso \code{\link{ampute}}
 #'@author Rianne Schouten, 2016
 #'@export
-ampute.default.type <- function(patterns) {
-  type <- rep("MARRIGHT", nrow(patterns))
+ampute.default.type <- function(patterns, mechanism) {
+  type <- rep("MARRIGHT", length(mechanism[mechanism == "MAR"]))
   return(type)
 }
 
@@ -106,8 +108,11 @@ ampute.default.type <- function(patterns) {
 #'@seealso \code{\link{ampute}}
 #'@author Rianne Schouten, 2016
 #'@export
-ampute.default.odds <- function(patterns) {
-  odds <- matrix(c(1, 2, 3, 4), nrow = nrow(patterns), ncol = 4, byrow = TRUE)
+ampute.default.odds <- function(patterns,
+                                mechanism) {
+  odds <- matrix(c(1, 2, 3, 4), 
+                 nrow = length(mechanism[mechanism == "MAR"]), 
+                 ncol = 4, byrow = TRUE)
   return(odds)
 }
 
