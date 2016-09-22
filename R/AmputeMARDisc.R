@@ -52,6 +52,7 @@ ampute.mar.disc <- function(i, P, scores, prop, odds) {
     R.temp <- replace(R.temp, scores >= quantiles[k] 
                       & scores <= quantiles[k + 1], k)
   }
+  print(R.temp)
   # For each candidate, a random value between 0 and 1 is compared with the 
   # odds probability of being missing. If random value <= prob, the candidate 
   # is made missing according the pattern; if random value > prob, the 
@@ -74,11 +75,15 @@ ampute.mar.disc <- function(i, P, scores, prop, odds) {
         Q[m] <- 1  # Candidate will be kept complete
       }
     }
+    print(Q)
     # Give the result to the right candidate
     R.temp <- replace(R.temp, R.temp == l, Q) 
+    print(R.temp)
   }
+  print(R.temp)
   # Give the result to the right cases in the data
   R <- replace(P, P == (i + 1), R.temp)
-  R <- replace(R[[i]], P != (i + 1), 1)
+  R <- replace(R, P != (i + 1), 1)
+  print(R)
   return(R)
-  }
+}

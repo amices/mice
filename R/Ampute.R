@@ -203,7 +203,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   #   
   check.patterns <- function(patterns, freq, prop) {
     for (h in 1:nrow(patterns)) {
-      print(h)
       if (any(!patterns[h, ] %in% c(0, 1))) {
         stop(paste("Argument patterns can only contain 0 and 1, pattern", h, 
                    "contains another element"), call. = FALSE)
@@ -227,13 +226,10 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     prop.zero <- 0
     row.zero <- c()
     for (h in 1:nrow(patterns)) {
-      print(h)
       if (all(patterns[h, ] %in% 0)) {
         prop.zero <- prop.zero + freq[h]
         row.zero <- c(row.zero, h)
       }
-      print(prop.zero)
-      print(row.zero)
     }
     if (prop.zero != 0) {
       freq.min.zero <- freq[-row.zero]
@@ -280,6 +276,14 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     patterns <- ampute.default.patterns(n = ncol(data))
   } else if (is.vector(patterns) & (length(patterns) / ncol(data)) %% 1 == 0) {
     patterns <- matrix(patterns, length(patterns) / ncol(data), byrow = TRUE)
+    if (nrow(patterns) == 1 & all(patterns[1, ] %in% 1)) {
+      stop("One pattern with merely ones results to no amputation at all, the 
+           procedure is therefore stopped", call. = FALSE)
+    }
+    if (nrow(patterns) == 1 & all(patterns[1, ] %in% 0)) {
+      stop("One pattern with merely zeros results to a complete empty data set,
+            the procedure is therefore stopped", call. = FALSE)
+    }
   } else if (is.vector(patterns)) {
     stop("Length of pattern vector does not match #variables", call. = FALSE)
   }  
@@ -299,7 +303,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                             prop = prop)
   patterns <- objects[["patterns"]]
   freq <- objects[["freq"]]
-  prop <- objects[["prop"]]
+  prop.new <- objects[["prop"]]
   #
   # Check other arguments
   if (any(!mechanism %in% c("MCAR","MAR"))) {
@@ -308,13 +312,16 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (length(mechanism) == 1) {
     mechanism <- rep(mechanism, nrow(patterns))
   }
-#  if (mechanism == "MCAR" & !is.null(weights)) {
-#    warning("Weights matrix is not used when mechanism is MCAR", call. = FALSE)
-#  }
-#  if (mechanism == "MCAR" & !is.null(odds)) {
-#    warning("Odds matrix is not used when mechanism is MCAR", call. = FALSE)
-#  }
-   if (any(mechanism == "MAR") & !is.null(weights)) {
+  if (all(mechanism == "MCAR") & !is.null(weights)) {
+    warning("Weights matrix is not used when all mechanisms are MCAR", call. = FALSE)
+  }
+  if (all(mechanism == "MCAR") & !is.null(odds)) {
+    warning("Odds matrix is not used when all mechanisms are MCAR", call. = FALSE)
+  }
+  if (all(mechanism == "MCAR") & !is.null(type)) {
+    warning("Type vector is not used when all mechanisms are MCAR", call. = FALSE)
+  }
+  if (any(mechanism == "MAR") & !is.null(weights)) {
      if (is.vector(weights) & (ncol(data) / length(weights))%%1 == 0) {
        weights <- matrix(weights, ncol(data) / length(weights), byrow = TRUE)
     } else if (is.vector(weights)) {
@@ -393,14 +400,13 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     scores <- list()
     cont.time <- 0
     disc.time <- 0
-    print(objects[["row.zero"]])
     for (i in 1:nrow(patterns)) {
       if (i %in% objects[["row.zero"]]) {
         R[[i]] <- replace(P, P == (i + 1), 0)
       } else if (mechanism[i] == "MCAR") {
         R[[i]] <- ampute.mcar(i = i, 
                               P = P, 
-                              prop = prop)
+                              prop = prop.new)
       } else if (mechanism[i] == "MAR") {
         scores[[i]] <- sum.scores(i = i,
                                   P = P,
@@ -412,20 +418,18 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
           R[[i]] <- ampute.mar.cont(i = i,
                                     P = P,
                                     scores = scores[[i]],
-                                    prop = round(prop, 3),
+                                    prop = round(prop.new, 3),
                                     type = type[cont.time])
         } else if (!continuous) {
           disc.time <- disc.time + 1
           R[[i]] <- ampute.mar.disc(i = i,
                                     P = P,
                                     scores = scores[[i]],
-                                    prop = prop,
+                                    prop = prop.new,
                                     odds = odds[disc.time, ])
         }
       }
     }
-    print(R)
-    print(P)
     missing.data <- data
     for (i in 1:nrow(patterns)) {
        missing.data[R[[i]] == 0, patterns[i, ] == 0] <- NA
@@ -452,3 +456,8 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   oldClass(result) <- "mads"
   return(result)
 }
+
+ampute(data, prop = 0.01, patterns = matrix(c(1, 1, 0, 1, 0, 1,
+                          0, 0, 0, 0, 1, 1), nrow = 2, byrow = TRUE), 
+mechanism = c("MCAR", "MAR"))
+
