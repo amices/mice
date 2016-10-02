@@ -154,12 +154,12 @@ ampute.mar.cont <- function(P, scores, prop, type) {
     } else {
       formula <- function(x, b) logit(-mean(x) + x[] + b)
     }
-    if (is.na(scores.temp)) {
+    if (is.na(scores.temp[[1]])) {
       R[[i]] <- 0
     } else {
       if (length(scores.temp) == 1) {
         probs <- 0.5 + shift
-        } else {
+      } else {
         probs <- formula(x = scores.temp, b = shift)
       }
       R.temp <- 1 - rbinom(n = length(scores.temp), size = 1, prob = probs)
