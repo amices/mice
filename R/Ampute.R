@@ -164,13 +164,18 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   #
   # ------------------------ sum.scores -----------------------------------
   #
-  sum.scores <- function(P, data, patterns, weights) {
+  sum.scores <- function(P, data, patterns, weights, mechanism) {
     scores <- list()
     for (i in 1:nrow(patterns)) { 
       candidates <- as.matrix(data[P == (i + 1), ])
       # For each candidate in the pattern, a weighted sum score is calculated
-      scores[[i]] <- apply(candidates, 1, 
-                           function(x) (weights[i, ] *  patterns[i, ]) %*% x)
+      if (mechanism == "MAR") {
+        scores[[i]] <- apply(candidates, 1, 
+                             function(x) (weights[i, ] *  patterns[i, ]) %*% x)
+      } else {
+        scores[[i]] <- apply(candidates, 1, 
+                             function(x) weights[i, ] %*% x)
+      }
     }
     return(scores)
   }
@@ -374,10 +379,17 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                        patterns = patterns,
                        prop = prop)
     } else {
-      scores <- sum.scores(P = P,
-                           patterns = patterns,
-                           data = st.data,
-                           weights = weights)
+      if (!is.null(objects[["row.zero"]]) & mechanism == "MAR") {
+        stop(paste("Pattern", objects[["row.zero"]], "contains merely zeroos and 
+                   this kind of pattern is not possible when mechanism is MAR"), 
+             .call = FALSE)
+      } else {
+        scores <- sum.scores(P = P,
+                             patterns = patterns,
+                             data = st.data,
+                             weights = weights,
+                             mechanism = mechanism)
+      }
       if (!continuous) {
         R <- ampute.mar.disc(P = P,
                              scores = scores, 
