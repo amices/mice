@@ -98,7 +98,7 @@ print.mads <- function(x, ...) {
     cat("\nCall: ")
     print(x$call)
     cat("\nClass:", class(x))
-    cat("Proportion of Missingness: ", x$prop)
+    cat("\nProportion of Missingness: ", x$prop)
     cat("\nFrequency of Patterns: ", x$freq)
     cat("\nPattern Matrix:\n")
     print(x$patterns)

@@ -213,27 +213,30 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   # -------------------------  check.patterns ---------------------------------
   #   
   check.patterns <- function(patterns, freq, prop) {
+    prop.one <- 0
+    row.one <- c()
     for (h in 1:nrow(patterns)) {
       if (any(!patterns[h, ] %in% c(0, 1))) {
         stop(paste("Argument patterns can only contain 0 and 1, pattern", h, 
                    "contains another element"), call. = FALSE)
       }
-      prop.one <- 0
-      row.one <- c()
       if (all(patterns[h, ] %in% 1)) {
+        print(h)
+        print(prop.one)
         prop.one <- prop.one + freq[h]
+        print(prop.one)
         row.one <- c(row.one, h)
       }
     }
     if (prop.one != 0) {
       warning(paste("Proportion of missingness has changed from", prop, "to", 
-                    prop.one, "because of a pattern with merely ones"), call. = FALSE)
+                    prop.one, "because of pattern(s) with merely ones"), call. = FALSE)
       prop <- prop.one
       freq <- freq[-row.one]
       freq <- recalculate.freq(freq)
       patterns <- patterns[-row.one, ]
-      warning("Frequency vector and patterns matrix have changed because of a 
-              pattern with merely ones", call. = FALSE)
+      warning("Frequency vector and patterns matrix have changed because of 
+              pattern(s) with merely ones", call. = FALSE)
     }
     if (is.vector(patterns)) {
       patterns <- matrix(patterns, 1)
@@ -363,7 +366,8 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
             call. = FALSE)
   }
   if (continuous == FALSE & !is.null(type)) {
-    warning("Type is not used when continuous probabilities are specified")
+    warning("Type is not used when continuous probabilities are specified",
+            call. = FALSE)
   }
   if (is.null(type)) {
     type <- ampute.default.type(patterns = patterns.new)
