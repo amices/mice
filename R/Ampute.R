@@ -1,16 +1,21 @@
 #'Generate Missing Data for Simulation Purposes
 #' 
-#'This function amputes multivariate data in a MCAR or MAR manner. The details 
-#'section gives a concise explanation of the why and how of this function. 
+#'This function generates multivariate missing data in a MCAR or MAR manner. 
+#'Imputation of data sets containing missing values can be performed with 
+#'\code{\link{mice}}. 
 #'
 #'When new multiple imputation techniques are tested, values in simulated 
-#'data sets have to be made missing. Often, a univariate amputation procedure is 
-#'followed, and then repeated multiple times in case several variables should
-#'have missing values. However, this approach makes it difficult to relate the 
-#'missingness on one variable to the missingness on another variable. A 
-#'multivariate amputation procedure solves this issue and moreover, it does 
-#'justice to the multivariate nature of data sets. Hence, \code{ampute} is 
-#'created to perform the amputation according the researcher's desires. 
+#'data sets have to be made missing. For these simulation studies, \code{ampute}
+#'is developed. Imputation can be performed with \code{\link{mice}}. 
+#'
+#'Until recently, univariate amputation procedures were used to generate missing
+#'data in complete, simulated data sets. This univeriate approach was repeated in 
+#'case several variables should need to be made incomplete. However, with a univeriate
+#'approach, it is difficult to relate missingness on one variable to the missingness 
+#'on another variable. A multivariate amputation procedure solves this issue and 
+#'moreover, it does justice to the multivariate nature of data sets. Hence, 
+#'\code{ampute} is developed to perform the amputation according the researcher's 
+#'desires. 
 #'
 #'The idea behind the function is the specification of several missingness 
 #'patterns. Each pattern is a combination of variables with and without missing 
@@ -70,7 +75,8 @@
 #'should have missing values and 1 indicates a variable should remain complete. 
 #'The user may specify as many patterns as desired. One pattern (a vector) is 
 #'also possible. Default is a square matrix of size #variables where each pattern 
-#'has missingness on one variable only. 
+#'has missingness on one variable only. \code{\link{md.pattern}} can be used to 
+#'have an overview of the missing data patterns that are created.  
 #'@param freq A vector of length #patterns containing the relative frequency with 
 #'which the patterns should occur. For example, for three missing data patterns, 
 #'the vector could be \code{c(0.4, 0.4, 0.2)}, meaning that of all cases with 
