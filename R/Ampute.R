@@ -224,10 +224,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     if (prop.one != 0) {
       prop <- prop.one
       freq <- freq[-row.one]
-      s <- sum(freq)
-      for (p in 1:length(freq)) {
-        freq[p] <- freq[p] / s
-      }
+      freq <- recalculate.freq(freq)
       patterns <- patterns[-row.one, ]
     }
     prop.zero <- 0
@@ -267,10 +264,11 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     data <- as.data.frame(sapply(data, as.numeric))
   }
   st.data <- data.frame(scale(data))
-  #
-  # Check objects and define defaults if necessary
-  if (prop > 1) {
-    stop("Proportion of missingness should be < 1", call. = FALSE)
+  if (prop < 0 | prop > 100) {
+    stop("Proportion of missingness should be a value between 0 and 1 
+         (for a proportion) or between 1 and 100 (for a percentage)", call. = FALSE)
+  } else if (prop > 1) {
+    prop <- prop / 100
   }
   # Recalculate prop if #cells is desired instead of #cases
   if (bycases == FALSE) {
@@ -283,6 +281,10 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     patterns <- ampute.default.patterns(n = ncol(data))
   } else if (is.vector(patterns) & (length(patterns) / ncol(data)) %% 1 == 0) {
     patterns <- matrix(patterns, length(patterns) / ncol(data), byrow = TRUE)
+    if (nrow(patterns) == 1 & all(patterns[1, ] %in% 1)) {
+      stop("One pattern with merely ones results to no amputation at all, the 
+           procedure is therefore stopped", call. = FALSE)
+    }
   } else if (is.vector(patterns)) {
     stop("Length of pattern vector does not match #variables", call. = FALSE)
   }  
