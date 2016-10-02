@@ -27,8 +27,6 @@ ampute.mcar <- function(i, P, prop) {
   # MCAR missingness. The function is used in the multivariate amputation 
   # function ampute().
   nf <- length(P[P == (i + 1)])
-  print(nf)
-  print(prop)
   R.temp <- 1 - rbinom(n = nf, size = 1, prob = prop)
   R <- replace(P, P == (i + 1), R.temp)
   R <- replace(R, P != (i + 1), 1)

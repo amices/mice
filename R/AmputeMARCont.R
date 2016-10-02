@@ -140,7 +140,7 @@ ampute.mar.cont <- function(i, P, scores, prop, type) {
     sum(logit(-mean(testset) + testset[] + shift)) / length(testset), 
     target = prop)$where
   R <- c()
-  scores.temp <- as.vector(scale(scores))
+  scores.temp <- scale(scores)
   if (type == "MARLEFT") { 
     formula <- function(x, b) logit(mean(x) - x[] + b)
   } else if (type == "MARMID") { 
@@ -150,11 +150,7 @@ ampute.mar.cont <- function(i, P, scores, prop, type) {
   } else {
     formula <- function(x, b) logit(-mean(x) + x[] + b)
   }
-  if (length(scores.temp) == 1) {
-    probs <- 0.5 + shift
-  } else {
   probs <- formula(x = scores.temp, b = shift)
-  }
   R.temp <- 1 - rbinom(n = length(scores.temp), size = 1, prob = probs)
   R <- replace(P, P == (i + 1), R.temp)
   R <- replace(R, P != (i + 1), 1)

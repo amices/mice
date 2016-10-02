@@ -202,30 +202,23 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   # -------------------------  check.patterns ---------------------------------
   #   
   check.patterns <- function(patterns, freq, prop) {
-    prop.one <- 0
-    row.one <- c()
     for (h in 1:nrow(patterns)) {
       if (any(!patterns[h, ] %in% c(0, 1))) {
         stop(paste("Argument patterns can only contain 0 and 1, pattern", h, 
                    "contains another element"), call. = FALSE)
       }
+      prop.one <- 0
+      row.one <- c()
       if (all(patterns[h, ] %in% 1)) {
         prop.one <- prop.one + freq[h]
         row.one <- c(row.one, h)
       }
     }
     if (prop.one != 0) {
-      warning(paste("Proportion of missingness has changed from", prop, "to", 
-                    prop.one, "because of a pattern with merely ones", .call = FALSE))
       prop <- prop.one
       freq <- freq[-row.one]
       freq <- recalculate.freq(freq)
       patterns <- patterns[-row.one, ]
-      warning("Frequency vector and patterns matrix have changed because of a 
-              pattern with merely ones", .call = FALSE)
-    }
-    if (is.vector(patterns)) {
-      patterns <- matrix(patterns, 1)
     }
     prop.zero <- 0
     row.zero <- c()
@@ -236,20 +229,11 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       }
     }
     if (prop.zero != 0) {
-      if (any(freq[row.zero] > prop)) {
-        warning("A missing data pattern with merely zeroos in combination with 
-the frequency vector is not possible. Too many cases will be made missing with 
-these specifications. Therefore, the proportion is increased to it's minimum", 
-prop.zero, "in this situation", .call = FALSE)
-        prop <- prop.zero
-      } else {
-        prop <- prop - prop.zero
-      }
+      prop <- prop - prop.zero
     }
     objects = list(patterns = patterns,
                    prop = prop,
                    freq = freq,
-                   row.one = row.one,
                    row.zero = row.zero)
     return(objects)
   }
@@ -311,6 +295,14 @@ prop.zero, "in this situation", .call = FALSE)
   if (sum(freq) != 1) {
     freq <- recalculate.freq(freq = freq)
   }
+  # Check whether patterns object contains specific patterns
+  objects <- check.patterns(patterns = patterns,
+                            freq = freq,
+                            prop = prop)
+  patterns <- objects[["patterns"]]
+  freq <- objects[["freq"]]
+  prop.new <- objects[["prop"]]
+  #
   # Check other arguments
   if (is.null(mechanism)) {
     mechanism <- ampute.default.mechanism(len = nrow(patterns))
@@ -318,7 +310,7 @@ prop.zero, "in this situation", .call = FALSE)
   if (any(!mechanism %in% c("MCAR", "MAR"))) {
     stop("Mechanism should contain MCAR or MAR", call. = FALSE)
   }
-  if (length(mechanism) != nrow(patterns)) {
+  if (length(mechanism) == nrow(patterns)) {
     if (length(mechanism) == 1) {
       warning("Length of mechanism vector does not match #patterns,
               contents of mechanism are repeated for every pattern", call. = FALSE)
@@ -334,19 +326,7 @@ prop.zero, "in this situation", .call = FALSE)
         warning("When all mechanisms are MCAR, weights, odds and type argument
                 are not used", call. = FALSE)
   }
-  # Check whether patterns object contains specific patterns
-  objects <- check.patterns(patterns = patterns,
-                            freq = freq,
-                            prop = prop)
-  patterns <- objects[["patterns"]]
-  freq <- objects[["freq"]]
-  prop.new <- objects[["prop"]]
-  if (!is.null(objects[["row.one"]])) {
-    mechanism <- mechanism[-objects[["row.one"]]]
-  }
-  print(prop.new)
-  #
-  if (any(mechanism == "MAR") & is.null(weights)) {
+  if (is.null(weights)) {
     weights <- ampute.default.weights(patterns = patterns,
                                       mechanism = mechanism)
   }
@@ -357,120 +337,94 @@ prop.zero, "in this situation", .call = FALSE)
       stop("Length of weight vector does not match #variables", call. = FALSE)
     }  
   }
-  if (!is.null(weights) & any(mechanism == "MAR")) {
-    if (any(!apply(weights, 1, is.numeric))) {
-      stop("Weights matrix should contain numeric values", call. = FALSE)
-    }
-    if (nrow(weights) != length(mechanism[mechanism == "MAR"])) {
-      if (nrow(weights) == length(mechanism)) {
-        weights <- weights[-which(mechanism == "MCAR"), ]
-      } else {
-        warning("#Rows in weights matrix does not match #MAR in mechanism vector, 
-                a default weights matrix is used with equal weights for all variables", 
-                call. = FALSE)
-        weights <- ampute.default.weights(patterns = patterns,
-                                          mechanism = mechanism)
-      }
+  if (any(!apply(weights, 1, is.numeric))) {
+    stop("Weights matrix should contain numeric values", call. = FALSE)
+  }
+  if (nrow(weights) != length(mechanism[mechanism == "MAR"])) {
+    if (nrow(weights) == length(mechanism)) {
+      weights <- weights[-which(mechanism == "MCAR"), ]
+    } else {
+      warning("#Rows in weights matrix does not match #MAR in mechanism vector, 
+              a default weights matrix is used with equal weights for all variables", 
+              call. = FALSE)
+      weights <- ampute.default.weights(patterns = patterns,
+                                        mechanism = mechanism)
     }
   }
-  if (any(mechanism == "MAR") & is.null(continuous)) {
+  if (is.null(continuous)) {
     continuous <- ampute.default.continuous(
       len = length(mechanism[mechanism == "MAR"]))
   }
-  if (!is.null(continuous)) {
-    if (!is.logical(continuous)) {
-      stop("Continuous vector should be logical", call. = FALSE)
-    }
-    if (length(continuous) != length(mechanism[mechanism == "MAR"])) {
-      if (length(continuous) == length(mechanism)) {
-        continuous <- continuous[-which(mechanism == "MCAR")]
-        warning("Continuous vector should have length equal to #MAR in mechanism,
-                specifications in continuous vector are removed for mechanism == MCAR", 
-                .call = FALSE)
-      } else {
-        warning("Continuous vector should have length equal to #MAR in mechanism
-                vector, default continuous vector is used with TRUE for all #MAR
-                mechanisms", .call = FALSE)
-        continuous <- ampute.default.continuous(
-          len = length(mechanism[mechanism == "MAR"]))
-      }
-    }
-    if (all(continuous == TRUE) & !is.null(odds)) {
-      warning("Odds matrix is not used when continuous probabilities are specified,
-              continuous vector contains merely TRUEs", call. = FALSE)
-    }
-    if (all(continuous == FALSE) & !is.null(type)) {
-      warning("Type is not used when continuous probabilities are specified,
-              continuous vector contains merely FALSEs", call. = FALSE)
+  if (!is.logical(continuous)) {
+    stop("Continuous vector should be logical", call. = FALSE)
+  }
+  if (length(continuous) != length(mechanism[mechanism == "MAR"])) {
+    if (length(continuous) == length(mechanism)) {
+      continuous <- continuous[-which(mechanism == "MCAR")]
+    } else {
+      warning("Continuous vector should have length equal to #MAR in mechanism
+              vector, default continuous vector is used with TRUE for all #MAR
+              mechanisms", .call = FALSE)
+      continuous <- ampute.default.continuous(
+        len = length(mechanism[mechanism == "MAR"]))
     }
   }
-  if (any(continuous == TRUE) & is.null(type)) {
+  if (all(continuous == TRUE) & !is.null(odds)) {
+    warning("Odds matrix is not used when continuous probabilities are specified,
+            continuous vector contains merely TRUEs", call. = FALSE)
+  }
+  if (all(continuous == FALSE) & !is.null(type)) {
+    warning("Type is not used when continuous probabilities are specified,
+            continuous vector contains merely FALSEs", call. = FALSE)
+  }
+  if (is.null(type)) {
     type <- ampute.default.type(len = length(continuous[continuous == TRUE]))
   }
-  if (!is.null(type)) {
-    if (any(!type %in% c("MARLEFT","MARMID","MARTAIL","MARRIGHT"))) {
-      stop("Type must contain MARLEFT, MARMID, MARTAIL or MARRIGHT", 
-           call. = FALSE)
-    }
-    if (length(type) != length(continuous[continuous == TRUE])) {
-      if (length(type) == 1) {
-        type <- rep(type, length(continuous[continuous == TRUE]))
-      } else if (length(type) == length(mechanism[mechanism == "MAR"])) {
-        type <- type[which(continuous == TRUE)]
-        warning("Length of type vector does not match #TRUE in continuous vector,
-                the type specifications for continuous == FALSE are removed", 
-                .call = FALSE)
-      } else if (length(type) == length(mechanism)) {
-        type <- type[which(continuous == TRUE)]
-        print(type)
-        warning("Length of type vector does not match #MAR in mechanism vector and
-                #TRUE in continuous vector, the type specifications for 
-                continuous == FALSE are removed", 
-                .call = FALSE)
-      } else {
-        warning("Length of type vector does not match #TRUE in 
-                continuous vector and #MAR in mechanism vector, 
-                default type setting is used for every pattern with mechanism == MAR
-                and continuous == TRUE", .call = FALSE)
-        type <- ampute.default.type(len = length(continuous[continuous == TRUE]))
-      }
+  if (any(!type %in% c("MARLEFT","MARMID","MARTAIL","MARRIGHT"))) {
+    stop("Type must contain MARLEFT, MARMID, MARTAIL or MARRIGHT", 
+         call. = FALSE)
+  }
+  if (length(type) != length(continuous[continuous == TRUE])) {
+    if (length(type) == 1) {
+      type <- rep(type, length(continuous[continuous == TRUE]))
+    } else if (length(type) == length(mechanism[mechanism == "MAR"])) {
+      type <- type[-which(continuous == FALSE)]
+    } else if (length(type) == length(mechanism)) {
+      type <- type[-which(continuous == FALSE)]
+    } else {
+      warning("Length of type vector does not match #continuous == TRUE in 
+              continuous vector and #mechanism == MAR in mechanism vector, 
+              default type setting is used for every pattern with mechanism == MAR
+              and continuous == TRUE", .call = FALSE)
+      type <- ampute.default.type(len = length(continuous[continuous == TRUE]))
     }
   }
-  if (any(continuous == FALSE)) {
-    if (is.null(odds)) {
+  if (is.null(odds)) {
     odds <- ampute.default.odds(
       len = length(continuous[continuous == FALSE]))
-    }
-    if( is.vector(odds)) {
+  }
+  if (is.vector(odds)) {
     odds <- matrix(odds, 
                    nrow = length(continuous[continuous == FALSE]),
                    byrow = TRUE)
-    }
-    if (nrow(odds) != length(continuous[continuous == FALSE])) {
-      if (nrow(odds) == 1) {
-        odds.temp <- odds
-        for (t in 1:length(continuous[continuous == FALSE])) {
-          odds.temp <- rbind(odds.temp, odds)
-        }
-        odds <- odds.temp
-      } else if (nrow(odds) == length(mechanism[mechanism == "MAR"])) {
-        odds <- odds[which(continuous == FALSE), ]
-        warning("#Rows in odds matrix does not match #FALSE in continuous vector,
-                the odds specifications for continuous == TRUE are removed", 
-                .call = FALSE)
-      } else if (nrow(odds) == length(mechanism)) {
-        odds <- odds[which(continuous == FALSE), ]
-        warning("#Rows in odds matrix does not match #MAR in mechanism vector and
-                #FALSE in continuous vector, the odds specifications for 
-                continuous == TRUE are removed", 
-                .call = FALSE)
-      } else {
-        warning("#Rows in odds matrix does not match #FALSE in 
-                continuous vector and #MAR in mechanism vector, 
-                default odds setting is used for every pattern with 
-                mechanism == MAR and continuous = FALSE", .call = FALSE)
-        type <- ampute.default.type(len = length(continuous[continuous == TRUE]))
+  }
+  if (nrow(odds) != length(continuous[continuous == FALSE])) {
+    if (nrow(odds) == 1) {
+      odds.temp <- odds
+      for (t in 1:length(continuous[continuous == FALSE])) {
+        odds.temp <- rbind(odds.temp, odds)
       }
+      odds <- odds.temp
+    } else if (nrow(odds) == length(mechanism[mechanism == "MAR"])) {
+      odds <- odds[-which(continuous == FALSE), ]
+    } else if (nrow(odds) == length(mechanism)) {
+      odds <- odds[-which(continuous == FALSE), ]
+    } else {
+      warning("#Rows odds matrix does not match #continuous == TRUE in 
+              continuous vector and #mechanism == MAR in mechanism vector, 
+              default odds setting is used for every pattern with mechanism == MAR
+              and continuous =- FALSE", .call = FALSE)
+      type <- ampute.default.type(len = length(continuous[continuous == TRUE]))
     }
   }
   if (any(continuous == FALSE)) {
@@ -492,73 +446,60 @@ prop.zero, "in this situation", .call = FALSE)
     # the numbering of the patterns will start from 2
     P <- sample(x = 1:nrow(patterns), size = nrow(data), 
                 replace = T, prob = freq) + 1
-    # Start a loop over the patterns
-    # If a patterns contains merely zeroos, all the candidates are made missing
-    # If a pattern is specified as MCAR, this is applied
-    # If a pattern is specified as MAR, weighted sum scores are calculated 
-    # If continuous == TRUE for that pattern, continuous probabilities are used
-    # If continuous == FALSE for that pattern, discrete probabilities are used
-    # For each pattern, a vector of zeroos(will be made missing) and 
-    # ones(remain complete) are stored in list R. 
+    # Calculate missingness according MCAR or calculate weighted sum scores
+    # Standardized data is used to calculate weighted sum scores
     R <- list()
     scores <- list()
     mar.time <- 0
     cont.time <- 0
     disc.time <- 0
     for (i in 1:nrow(patterns)) {
-      if (any(P == (i + 1))) {
-        if (i %in% objects[["row.zero"]]) {
-          R[[i]] <- replace(P, P == (i + 1), 0)
-        } else if (mechanism[i] == "MCAR") {
-          R[[i]] <- ampute.mcar(i = i, 
-                                P = P, 
-                                prop = prop.new)
-        } else if (mechanism[i] == "MAR") {
-          mar.time <- mar.time + 1
-          scores[[i]] <- sum.scores(pattern = patterns[i, ],
-                                    data = st.data[P == (i + 1), ],
-                                    weight = weights[mar.time, ])
-          if (continuous[mar.time]) {
-            cont.time <- cont.time + 1
-            print(type[cont.time])
-            R[[i]] <- ampute.mar.cont(i = i,
-                                      P = P,
-                                      scores = scores[[i]],
-                                      prop = round(prop.new, 3),
-                                      type = type[cont.time])
-          } else if (!continuous[mar.time]) {
-            disc.time <- disc.time + 1
-            R[[i]] <- ampute.mar.disc(i = i,
-                                      P = P,
-                                      scores = scores[[i]],
-                                      prop = prop.new,
-                                      odds = odds[disc.time, ])
-          }
+      if (i %in% objects[["row.zero"]]) {
+        R[[i]] <- replace(P, P == (i + 1), 0)
+      } else if (mechanism[i] == "MCAR") {
+        R[[i]] <- ampute.mcar(i = i, 
+                              P = P, 
+                              prop = prop.new)
+      } else if (mechanism[i] == "MAR") {
+        mar.time <- mar.time + 1
+        scores[[i]] <- sum.scores(pattern = patterns[i, ],
+                                  data = st.data[P == (i + 1), ],
+                                  weight = weights[mar.time, ])
+        if (continuous[mar.time]) {
+          cont.time <- cont.time + 1
+          R[[i]] <- ampute.mar.cont(i = i,
+                                    P = P,
+                                    scores = scores[[i]],
+                                    prop = round(prop.new, 3),
+                                    type = type[cont.time])
+        } else if (!continuous[mar.time]) {
+          disc.time <- disc.time + 1
+          R[[i]] <- ampute.mar.disc(i = i,
+                                    P = P,
+                                    scores = scores[[i]],
+                                    prop = prop.new,
+                                    odds = odds[disc.time, ])
         }
       }
     }
-    # Apply list R to the data
     missing.data <- data
     for (i in 1:nrow(patterns)) {
-      if (any(P == (i + 1))) {
-        missing.data[R[[i]] == 0, patterns[i, ] == 0] <- NA
-      }
+       missing.data[R[[i]] == 0, patterns[i, ] == 0] <- NA
     }
   }
   #
   # Create return object
   call <- match.call()
   missing.data <- as.data.frame(missing.data, col.names = names(data))
-  result <- list(call = call,
-                 prop = prop.new,
-                 freq = freq,
+  result <- list(call = call, 
+                 prop = prop, 
                  patterns = patterns,
-                 mech = mechanism,
+                 freq = freq,
                  weights = weights,
-                 cont = continuous,
-                 type = type,
                  odds = odds,
                  amp = missing.data,
+                 mech = mechanism,
+                 type = type,
                  cand = P - 1,
                  scores = scores, 
                  data = as.data.frame(data))
@@ -567,3 +508,8 @@ prop.zero, "in this situation", .call = FALSE)
   oldClass(result) <- "mads"
   return(result)
 }
+
+ampute(data, prop = 0.01, patterns = matrix(c(1, 1, 0, 1, 0, 1,
+                          0, 0, 0, 0, 1, 1), nrow = 2, byrow = TRUE), 
+mechanism = c("MCAR", "MAR"))
+
