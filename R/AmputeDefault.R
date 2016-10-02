@@ -45,17 +45,6 @@ ampute.default.freq <- function(patterns) {
 }
 
 #
-# --------------------------- ampute.default.mechanism -----------------------
-#
-
-#'
-#'@export
-ampute.default.mechanism <- function(len) {
-  mechanism <- rep("MAR", len)
-  return(mechanism)
-}
-
-#
 # --------------------------- ampute.default.weights -------------------------
 #
 
@@ -81,18 +70,6 @@ ampute.default.weights <- function(patterns, mechanism) {
 }
 
 #
-# -------------------------- ampute.default.continuous -----------------------
-#
-
-#'
-#'
-#'@export
-ampute.default.continuous <- function(len) {
-  continuous <- rep(TRUE, len)
-  return(continuous)
-}
-
-#
 # -------------------------- ampute.default.type -----------------------------
 #
 
@@ -109,8 +86,8 @@ ampute.default.continuous <- function(len) {
 #'@seealso \code{\link{ampute}}
 #'@author Rianne Schouten, 2016
 #'@export
-ampute.default.type <- function(len) {
-  type <- rep("MARRIGHT", len)
+ampute.default.type <- function(patterns, mechanism) {
+  type <- rep("MARRIGHT", length(mechanism[mechanism == "MAR"]))
   return(type)
 }
 
@@ -131,9 +108,11 @@ ampute.default.type <- function(len) {
 #'@seealso \code{\link{ampute}}
 #'@author Rianne Schouten, 2016
 #'@export
-ampute.default.odds <- function(len) {
+ampute.default.odds <- function(patterns,
+                                mechanism) {
   odds <- matrix(c(1, 2, 3, 4), 
-                 nrow = len, ncol = 4, byrow = TRUE)
+                 nrow = length(mechanism[mechanism == "MAR"]), 
+                 ncol = 4, byrow = TRUE)
   return(odds)
 }
 
