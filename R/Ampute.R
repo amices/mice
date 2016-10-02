@@ -201,6 +201,53 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     }
     return(freq)
   }
+  # -------------------------  check.patterns ---------------------------------
+  #   
+  check.patterns <- function(patterns, freq, prop) {
+    for (h in 1:nrow(patterns)) {
+      print(h)
+      if (any(!patterns[h, ] %in% c(0, 1))) {
+        stop(paste("Argument patterns can only contain 0 and 1, pattern", h, 
+                   "contains another element"), call. = FALSE)
+      }
+      prop.one <- 0
+      row.one <- c()
+      if (all(patterns[h, ] %in% 1)) {
+        prop.one <- prop.one + freq[h]
+        row.one <- c(row.one, h)
+      }
+    }
+    if (prop.one != 0) {
+      prop <- prop.one
+      freq <- freq[-row.one]
+      s <- sum(freq)
+      for (p in 1:length(freq)) {
+        freq[p] <- freq[p] / s
+      }
+      patterns <- patterns[-row.one, ]
+    }
+    prop.zero <- 0
+    row.zero <- c()
+    for (h in 1:nrow(patterns)) {
+      print(h)
+      if (all(patterns[h, ] %in% 0)) {
+        prop.zero <- prop.zero + freq[h]
+        row.zero <- c(row.zero, h)
+      }
+      print(prop.zero)
+      print(row.zero)
+    }
+    if (prop.zero != 0) {
+      freq.min.zero <- freq[-row.zero]
+      s <- sum(freq.min.zero)
+      prop <- prop.zero / s
+    }
+    objects = list(patterns = patterns,
+                   prop = prop,
+                   freq = freq,
+                   row.zero = row.zero)
+    return(objects)
+  }
   # ------------------------ AMPUTE ---------------------------------------
   #
   if (is.null(data)) {
@@ -224,6 +271,13 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (prop > 1) {
     stop("Proportion of missingness should be < 1", call. = FALSE)
   }
+  # Recalculate prop if #cells is desired instead of #cases
+  if (bycases == FALSE) {
+    prop <- recalculate.prop(prop = prop, 
+                             freq = freq,
+                             patterns = patterns,
+                             n = ncol(data))
+  }
   if (is.null(patterns)) {
     patterns <- ampute.default.patterns(n = ncol(data))
   } else if (is.vector(patterns) & (length(patterns) / ncol(data)) %% 1 == 0) {
@@ -231,11 +285,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   } else if (is.vector(patterns)) {
     stop("Length of pattern vector does not match #variables", call. = FALSE)
   }  
-  for (h in 1:nrow(patterns)) {
-    if(any(!patterns[h, ] %in% c(0, 1))) {
-      stop("Argument patterns can only contain 0 and 1", call. = FALSE)
-    }
-  }
   if (is.null(freq)) {
     freq <- ampute.default.freq(patterns = patterns)
   }
@@ -244,7 +293,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
          call. = FALSE)
   }
   if (sum(freq) != 1) {
-    stop("Relative frequencies should sum to 1", call. = FALSE)
+    freq <- recalculate.freq(freq = freq)
   }
   if (any(!mechanism %in% c("MCAR","MAR"))) {
     stop("Mechanism should be either MCAR or MAR", call. = FALSE)
@@ -301,14 +350,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   }
   if (nrow(patterns) != nrow(odds)) {
     stop("The objects patterns and odds are not matching", call. = FALSE)
-  }
-  #
-  # Recalculate prop if #cells is desired instead of #cases
-  if (bycases == FALSE) {
-  prop <- recalculate.prop(prop = prop, 
-                           freq = freq,
-                           patterns = patterns,
-                           n = ncol(data))
   }
   #
   # Create empty objects
