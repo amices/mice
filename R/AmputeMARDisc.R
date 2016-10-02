@@ -28,57 +28,59 @@
 #'evaluation of multiple imputation strategies for the statistical analysis of 
 #'incomplete data sets} (pp. 110-113). Dissertation. Rotterdam: Erasmus University. 
 #'@export
-ampute.mar.disc <- function(i, P, scores, prop, odds) {
+ampute.mar.disc <- function(P, scores, prop, odds) {
   # MAR Amputation based on a Discrete probability function
   #
   # This function creates a missing data indicator for each pattern. MAR missingness 
   # is induced by using odds probabilities as described by Brand, 1999. The function 
   # is used in the multivariate amputation function ampute().
-  R <- c()
-  # The scores are divided into quantiles
-  # Specify #quantiles by #odds values
-  ng <- length(odds[!is.na(odds)])  
-  quantiles <- quantile(scores, probs = seq(0, 1, by = 1 / ng))
-  if (any(duplicated(quantiles)) | any(is.na(quantiles))) {
-    stop("Division of sum scores into quantiles has not succeed. Possibly
-         the sum scores contain too few different observations (in case of
-         categorical or dummy variables). Try using more variables to 
-         calculate the sum scores or diminish the number of quantiles in the
-         odds matrix", call. = FALSE)
-  }
-  # For each candidate the quantile number is specified 
-  R.temp <- rep(NA, length(scores))
-  for (k in 1:ng) {
-    R.temp <- replace(R.temp, scores >= quantiles[k] 
-                      & scores <= quantiles[k + 1], k)
-  }
-  # For each candidate, a random value between 0 and 1 is compared with the 
-  # odds probability of being missing. If random value <= prob, the candidate 
-  # is made missing according the pattern; if random value > prob, the 
-  # candidate is kept complete 
-  for (l in 1:ng) {
-    prob <- (ng * prop * odds[l]) / sum(odds, na.rm = TRUE)
-    if (prob >= 1.0) {
-      warning("Combination of odds matrix and desired proportion of 
-              missingness results to small quantile groups, probably 
-              decreasing the obtained proportion of missingness",
-              call. = FALSE)
+  R <- list()
+  for (i in 1:nrow(odds)) {
+    # The scores are divided into quantiles
+    # Specify #quantiles by #odds values
+    ng <- length(odds[i, ][!is.na(odds[i, ])])  
+    quantiles <- quantile(scores[[i]], probs = seq(0, 1, by = 1 / ng))
+    if (any(duplicated(quantiles)) | any(is.na(quantiles))) {
+      stop("Division of sum scores into quantiles has not succeed. Possibly
+           the sum scores contain too few different observations (in case of
+           categorical or dummy variables). Try using more variables to 
+           calculate the sum scores or diminish the number of quantiles in the
+           odds matrix", call. = FALSE)
     }
-    gn <- length(R.temp[R.temp == l])
-    random <- runif(n = gn, min = 0, max = 1)
-    Q <- c()
-    for (m in 1:gn) {
-      if (random[m] <= prob) {
-        Q[m] <- 0  # Candidate will be made missing
-      } else {
-        Q[m] <- 1  # Candidate will be kept complete
+    # For each candidate the quantile number is specified 
+    Q <- rep(NA, length(scores[[i]]))
+    for (k in 1:ng) {
+      Q <- replace(Q, scores[[i]] >= quantiles[k] 
+                   & scores[[i]] <= quantiles[k + 1], k)
+    }
+    # For each candidate, a random value between 0 and 1 is compared with the 
+    # odds probability of being missing. If random value <= prob, the candidate 
+    # is made missing according the pattern; if random value > prob, the 
+    # candidate is kept complete 
+    for (l in 1:ng) {
+      prob <- (ng * prop * odds[i, l]) / sum(odds[i, ], na.rm = TRUE)
+      if (prob >= 1.0) {
+        warning("Combination of odds matrix and desired proportion of 
+                missingness results to small quantile groups, probably 
+                decreasing the obtained proportion of missingness",
+                  call. = FALSE)
+        }
+      gn <- length(Q[Q == l])
+      random <- runif(n = gn, min = 0, max = 1)
+      R.temp <- c()
+      for (m in 1:gn) {
+        if (random[m] <= prob) {
+          R.temp[m] <- 0  # Candidate will be made missing
+        } else {
+          R.temp[m] <- 1  # Candidate will be kept complete
+        }
       }
+      # Give the result to the right candidate
+      Q <- replace(Q, Q == l, R.temp) 
     }
-    # Give the result to the right candidate
-    R.temp <- replace(R.temp, R.temp == l, Q) 
+    # Give the result to the right cases in the data
+    R[[i]] <- replace(P, P == (i + 1), Q)
+    R[[i]] <- replace(R[[i]], P != (i + 1), 1)
   }
-  # Give the result to the right cases in the data
-  R <- replace(P, P == (i + 1), R.temp)
-  R <- replace(R[[i]], P != (i + 1), 1)
   return(R)
-  }
+}

@@ -26,7 +26,7 @@
 #'@references Van Buuren, S. (2012). \emph{Flexible imputation of missing data} 
 #'(pp. 63-64). Boca Raton, FL.: Chapman & Hall/CRC Press.
 #'@export
-ampute.mar.cont <- function(i, P, scores, prop, type) {
+ampute.mar.cont <- function(P, scores, prop, type) {
   # MAR Amputation based on a Continuous probability function
   #
   # This function creates a missing data indicator for each pattern. MAR missingness 
@@ -139,20 +139,25 @@ ampute.mar.cont <- function(i, P, scores, prop, type) {
   shift <- bin.search(fun = function(shift) 
     sum(logit(-mean(testset) + testset[] + shift)) / length(testset), 
     target = prop)$where
-  R <- c()
-  scores.temp <- scale(scores)
-  if (type == "MARLEFT") { 
-    formula <- function(x, b) logit(mean(x) - x[] + b)
-  } else if (type == "MARMID") { 
-    formula <- function(x, b) logit(-abs(x[] - mean(x)) + 0.75 + b)
-  } else if (type == "MARTAIL") { 
-    formula <- function(x, b) logit(abs(x[] - mean(x)) -0.75 + b)
-  } else {
-    formula <- function(x, b) logit(-mean(x) + x[] + b)
+  R <- list()
+  if (length(type) == 1) {
+    type <- rep(type[1], length(scores))
   }
-  probs <- formula(x = scores.temp, b = shift)
-  R.temp <- 1 - rbinom(n = length(scores.temp), size = 1, prob = probs)
-  R <- replace(P, P == (i + 1), R.temp)
-  R <- replace(R, P != (i + 1), 1)
+  for (i in 1:length(scores)) {
+    scores.temp <- scale(scores[[i]])
+    if (type[i] == "MARLEFT") { 
+      formula <- function(x, b) logit(mean(x) - x[] + b)
+    } else if (type[i] == "MARMID") { 
+      formula <- function(x, b) logit(-abs(x[] - mean(x)) + 0.75 + b)
+    } else if (type[i] == "MARTAIL") { 
+      formula <- function(x, b) logit(abs(x[] - mean(x)) -0.75 + b)
+    } else {
+      formula <- function(x, b) logit(-mean(x) + x[] + b)
+    }
+    probs <- formula(x = scores.temp, b = shift)
+    R.temp <- 1 - rbinom(n = length(scores.temp), size = 1, prob = probs)
+    R[[i]] <- replace(P, P == (i + 1), R.temp)
+    R[[i]] <- replace(R[[i]], P != (i + 1), 1)
+  }
   return(R)
 }
