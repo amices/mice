@@ -222,10 +222,17 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       }
     }
     if (prop.one != 0) {
+      warning(paste("Proportion of missingness has changed from", prop, "to", 
+                    prop.one, "because of a pattern with merely ones", .call = FALSE))
       prop <- prop.one
       freq <- freq[-row.one]
       freq <- recalculate.freq(freq)
       patterns <- patterns[-row.one, ]
+      warning("Frequency vector and patterns matrix have changed because of a 
+              pattern with merely ones", .call = FALSE)
+    }
+    if (is.vector(patterns)) {
+      patterns <- matrix(patterns, 1)
     }
     prop.zero <- 0
     row.zero <- c()
