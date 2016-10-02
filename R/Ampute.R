@@ -317,7 +317,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   check.pat <- check.patterns(patterns = patterns,
                               freq = freq,
                               prop = prop)
-  patterns <- check.pat[["patterns"]]
+  patterns.new <- check.pat[["patterns"]]
   freq <- check.pat[["freq"]]
   prop <- check.pat[["prop"]]
   if (any(!mechanism %in% c("MCAR", "MAR", "MNAR"))) {
@@ -345,7 +345,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     }  
   }
   if (is.null(weights)) {
-    weights <- ampute.default.weights(patterns = patterns)
+    weights <- ampute.default.weights(patterns = patterns.new)
   }
   if (!is.vector(continuous)) {
     continuous <- as.vector(continuous)
@@ -366,7 +366,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     warning("Type is not used when continuous probabilities are specified")
   }
   if (continuous == TRUE & is.null(type)) {
-    type <- ampute.default.type(patterns = patterns)
+    type <- ampute.default.type(patterns = patterns.new)
   }
   if (any(!type %in% c("MARLEFT","MARMID","MARTAIL","MARRIGHT"))) {
     stop("Type should contain MARLEFT, MARMID, MARTAIL or MARRIGHT", 
@@ -376,17 +376,17 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     if (!is.vector(type)) {
       type <- as.vector(type)
       warning("Type should be a vector of strings", call. = FALSE)
-    } else if (!length(type) %in% c(1, nrow(patterns))) {
+    } else if (!length(type) %in% c(1, nrow(patterns), nrow(patterns.new))) {
       type <- type[1]
       warning("Type should either have length 1 or length equal to #patterns, first
             element is used for all patterns", call. = FALSE)
     }
   }
   if (!is.null(odds) & !is.matrix(odds)) {
-    odds <- matrix(odds, nrow(patterns), byrow = TRUE)
+    odds <- matrix(odds, nrow(patterns.new), byrow = TRUE)
   }
   if (continuous == FALSE & is.null(odds)) {
-    odds <- ampute.default.odds(patterns = patterns)
+    odds <- ampute.default.odds(patterns = patterns.new)
   }
   if (continuous == FALSE) {
     for (h in 1:nrow(odds)) {
@@ -395,13 +395,14 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       }
     }
   }
-  if (nrow(patterns) != nrow(weights)) {
+  if (!nrow(weights) %in% c(nrow(patterns), nrow(patterns.new))) {
     stop("The objects patterns and weights are not matching", call. = FALSE)
   }
-  if (nrow(patterns) != nrow(odds)) {
+  if (!nrow(odds) %in% c(nrow(patterns), nrow(patterns.new))) {
     stop("The objects patterns and odds are not matching", call. = FALSE)
   }
   #
+  # Start using arguments
   # Create empty objects
   P <- NULL
   scores <- NULL
@@ -411,22 +412,23 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     # Assign cases to the patterns according probs
     # Because 0 and 1 will be used for missingness, 
     # the numbering of the patterns will start from 2
-    P <- sample(x = 1:nrow(patterns), size = nrow(data), 
+    P <- sample(x = 1:nrow(patterns.new), size = nrow(data), 
                 replace = T, prob = freq) + 1
     # Calculate missingness according MCAR or calculate weighted sum scores
     # Standardized data is used to calculate weighted sum scores
     if (mechanism == "MCAR") {
       R <- ampute.mcar(P = P,
-                       patterns = patterns,
+                       patterns = patterns.new,
                        prop = prop)
     } else {
+      # Check if there is a pattern with merely zeroos
       if (!is.null(check.pat[["row.zero"]]) & mechanism == "MAR") {
         stop(paste("Patterns object contains merely zeroos and this kind of pattern 
                    is not possible when mechanism is MAR"), 
              call. = FALSE)
       } else {
         scores <- sum.scores(P = P,
-                             patterns = patterns,
+                             patterns = patterns.new,
                              data = st.data,
                              weights = weights,
                              mechanism = mechanism)
@@ -444,9 +446,9 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       }
     }
     missing.data <- data
-    for (i in 1:nrow(patterns)) {
+    for (i in 1:nrow(patterns.new)) {
       if (any(P == (i + 1))) {
-        missing.data[R[[i]] == 0, patterns[i, ] == 0] <- NA
+        missing.data[R[[i]] == 0, patterns.new[i, ] == 0] <- NA
       }
     }
   }
@@ -456,13 +458,13 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   missing.data <- as.data.frame(missing.data, col.names = names(data))
   result <- list(call = call, 
                  prop = prop, 
-                 patterns = patterns,
+                 patterns = patterns.new,
                  freq = freq,
+                 mech = mechanism,
                  weights = weights,
+                 type = type,
                  odds = odds,
                  amp = missing.data,
-                 mech = mechanism,
-                 type = type,
                  cand = P - 1,
                  scores = scores, 
                  data = as.data.frame(data))
