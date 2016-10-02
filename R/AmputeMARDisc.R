@@ -48,9 +48,9 @@ ampute.mar.disc <- function(P, scores, prop, odds) {
            odds matrix", call. = FALSE)
     }
     # For each candidate the quantile number is specified 
-    Q <- rep(NA, length(scores[[i]]))
+    R.temp <- rep(NA, length(scores[[i]]))
     for (k in 1:ng) {
-      Q <- replace(Q, scores[[i]] >= quantiles[k] 
+      R.temp <- replace(R.temp, scores[[i]] >= quantiles[k] 
                    & scores[[i]] <= quantiles[k + 1], k)
     }
     # For each candidate, a random value between 0 and 1 is compared with the 
@@ -65,21 +65,21 @@ ampute.mar.disc <- function(P, scores, prop, odds) {
                 decreasing the obtained proportion of missingness",
                   call. = FALSE)
         }
-      gn <- length(Q[Q == l])
+      gn <- length(R.temp[R.temp == l])
       random <- runif(n = gn, min = 0, max = 1)
-      R.temp <- c()
+      Q <- c()
       for (m in 1:gn) {
         if (random[m] <= prob) {
-          R.temp[m] <- 0  # Candidate will be made missing
+          Q[m] <- 0  # Candidate will be made missing
         } else {
-          R.temp[m] <- 1  # Candidate will be kept complete
+          Q[m] <- 1  # Candidate will be kept complete
         }
       }
       # Give the result to the right candidate
-      Q <- replace(Q, Q == l, R.temp) 
+      R.temp <- replace(R.temp, R.temp == l, Q) 
     }
     # Give the result to the right cases in the data
-    R[[i]] <- replace(P, P == (i + 1), Q)
+    R[[i]] <- replace(P, P == (i + 1), R.temp)
     R[[i]] <- replace(R[[i]], P != (i + 1), 1)
   }
   return(R)
