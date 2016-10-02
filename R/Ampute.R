@@ -246,11 +246,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
         row.zero <- c(row.zero, h)
       }
     }
-    if (prop.zero != 0) {
-      freq.min.zero <- freq[-row.zero]
-      s <- sum(freq.min.zero)
-      prop <- prop.zero / s
-    }
     objects = list(patterns = patterns,
                    prop = prop,
                    freq = freq,
@@ -310,12 +305,12 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     freq <- recalculate.freq(freq = freq)
   }
   # Check whether patterns object contains specific patterns
-  objects <- check.patterns(patterns = patterns,
+  check.pat <- check.patterns(patterns = patterns,
                             freq = freq,
                             prop = prop)
-  patterns <- objects[["patterns"]]
-  freq <- objects[["freq"]]
-  prop <- objects[["prop"]]
+  patterns <- check.pat[["patterns"]]
+  freq <- check.pat[["freq"]]
+  prop <- check.pat[["prop"]]
   #
   if (any(!mechanism %in% c("MCAR","MAR"))) {
     stop("Mechanism should be either MCAR or MAR", call. = FALSE)
@@ -392,7 +387,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                        patterns = patterns,
                        prop = prop)
     } else {
-      if (!is.null(objects[["row.zero"]]) & mechanism == "MAR") {
+      if (!is.null(check.pat[["row.zero"]]) & mechanism == "MAR") {
         stop(paste("Pattern", objects[["row.zero"]], "contains merely zeroos and 
                    this kind of pattern is not possible when mechanism is MAR"), 
              .call = FALSE)
