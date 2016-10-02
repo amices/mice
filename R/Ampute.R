@@ -1,4 +1,4 @@
-#'Generate Missing Data for Simulation Purposes
+#'Multivariate Amputation
 #' 
 #'This function generates multivariate missing data in a MCAR or MAR manner. 
 #'Imputation of data sets containing missing values can be performed with \code{\link{mice}}. 
