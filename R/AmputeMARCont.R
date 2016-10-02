@@ -141,10 +141,10 @@ ampute.mar.cont <- function(P, scores, prop, type) {
     target = prop)$where
   R <- list()
   if (length(type) == 1) {
-    type <- rep(type[1], length(scores))
+    type <- rep(type, length(scores))
   }
   for (i in 1:length(scores)) {
-    scores.temp <- scale(scores[[i]])
+    scores.temp <- as.vector(scale(scores[[i]]))
     if (type[i] == "MARLEFT") { 
       formula <- function(x, b) logit(mean(x) - x[] + b)
     } else if (type[i] == "MARMID") { 
@@ -154,10 +154,18 @@ ampute.mar.cont <- function(P, scores, prop, type) {
     } else {
       formula <- function(x, b) logit(-mean(x) + x[] + b)
     }
-    probs <- formula(x = scores.temp, b = shift)
-    R.temp <- 1 - rbinom(n = length(scores.temp), size = 1, prob = probs)
-    R[[i]] <- replace(P, P == (i + 1), R.temp)
-    R[[i]] <- replace(R[[i]], P != (i + 1), 1)
+    if (is.na(scores.temp)) {
+      R[[i]] <- 0
+    } else {
+      if (length(scores.temp) == 1) {
+        probs <- 0.5 + shift
+        } else {
+        probs <- formula(x = scores.temp, b = shift)
+      }
+      R.temp <- 1 - rbinom(n = length(scores.temp), size = 1, prob = probs)
+      R[[i]] <- replace(P, P == (i + 1), R.temp)
+      R[[i]] <- replace(R[[i]], P != (i + 1), 1)
+    }
   }
   return(R)
 }

@@ -166,15 +166,19 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   #
   sum.scores <- function(P, data, patterns, weights, mechanism) {
     scores <- list()
-    for (i in 1:nrow(patterns)) { 
-      candidates <- as.matrix(data[P == (i + 1), ])
-      # For each candidate in the pattern, a weighted sum score is calculated
-      if (mechanism == "MAR") {
-        scores[[i]] <- apply(candidates, 1, 
-                             function(x) (weights[i, ] *  patterns[i, ]) %*% x)
+    for (i in 1:nrow(patterns)) {
+      if (length(P[P == (i + 1)]) == 0) {
+        scores[[i]] <- 0
       } else {
-        scores[[i]] <- apply(candidates, 1, 
-                             function(x) weights[i, ] %*% x)
+        candidates <- as.matrix(data[P == (i + 1), ])
+        # For each candidate in the pattern, a weighted sum score is calculated
+        if (mechanism == "MAR") {
+          scores[[i]] <- apply(candidates, 1, 
+                               function(x) (weights[i, ] *  patterns[i, ]) %*% x)
+        } else {
+          scores[[i]] <- apply(candidates, 1, 
+                               function(x) weights[i, ] %*% x)
+        }
       }
     }
     return(scores)
@@ -413,7 +417,9 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     }
     missing.data <- data
     for (i in 1:nrow(patterns)) {
-       missing.data[R[[i]] == 0, patterns[i, ] == 0] <- NA
+      if (any(P == (i + 1))) {
+        missing.data[R[[i]] == 0, patterns[i, ] == 0] <- NA
+      }
     }
   }
   #

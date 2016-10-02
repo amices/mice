@@ -27,11 +27,15 @@ ampute.mcar <- function(P, patterns, prop) {
   # MCAR missingness. The function is used in the multivariate amputation 
   # function ampute().
   R <- list()
-  for (i in 1:nrow(patterns)) { 
-    nf <- length(P[P == (i + 1)])
-    R.temp <- 1 - rbinom(n = nf, size = 1, prob = prop)
-    R[[i]] <- replace(P, P == (i + 1), R.temp)
-    R[[i]] <- replace(R[[i]], P != (i + 1), 1)
+  for (i in 1:nrow(patterns)) {
+    if (length(P[P == (i + 1)]) == 0) {
+      R[[i]] <- 0
+    } else {
+      nf <- length(P[P == (i + 1)])
+      R.temp <- 1 - rbinom(n = nf, size = 1, prob = prop)
+      R[[i]] <- replace(P, P == (i + 1), R.temp)
+      R[[i]] <- replace(R[[i]], P != (i + 1), 1)
+    }
   }
   return(R)
 }
