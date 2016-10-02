@@ -205,7 +205,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   #   
   check.patterns <- function(patterns, freq, prop) {
     for (h in 1:nrow(patterns)) {
-      print(h)
       if (any(!patterns[h, ] %in% c(0, 1))) {
         stop(paste("Argument patterns can only contain 0 and 1, pattern", h, 
                    "contains another element"), call. = FALSE)
@@ -229,13 +228,10 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     prop.zero <- 0
     row.zero <- c()
     for (h in 1:nrow(patterns)) {
-      print(h)
       if (all(patterns[h, ] %in% 0)) {
         prop.zero <- prop.zero + freq[h]
         row.zero <- c(row.zero, h)
       }
-      print(prop.zero)
-      print(row.zero)
     }
     if (prop.zero != 0) {
       freq.min.zero <- freq[-row.zero]
@@ -295,6 +291,14 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (sum(freq) != 1) {
     freq <- recalculate.freq(freq = freq)
   }
+  # Check whether patterns object contains specific patterns
+  objects <- check.patterns(patterns = patterns,
+                            freq = freq,
+                            prop = prop)
+  patterns <- objects[["patterns"]]
+  freq <- objects[["freq"]]
+  prop <- objects[["prop"]]
+  #
   if (any(!mechanism %in% c("MCAR","MAR"))) {
     stop("Mechanism should be either MCAR or MAR", call. = FALSE)
   }
