@@ -1,4 +1,4 @@
-#'Multivariate Amputation
+#'Generate Missing Data for Simulation Purposes
 #' 
 #'This function amputes multivariate data in a MCAR or MAR manner. The details 
 #'section gives a concise explanation of the why and how of this function. 
