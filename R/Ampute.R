@@ -192,6 +192,15 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     }
     return(prop)
   }
+  # --------------------------  recalculate.freq -----------------------------
+  #
+  recalculate.freq <- function(freq) {
+    s <- sum(freq)
+    for (p in 1:length(freq)) {
+      freq[p] <- freq[p] / s
+    }
+    return(freq)
+  }
   # ------------------------ AMPUTE ---------------------------------------
   #
   if (is.null(data)) {
@@ -200,19 +209,16 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (!(is.matrix(data) | is.data.frame(data))) {
     stop("Data should be a matrix or data frame", call. = FALSE)
   }
+  if (any(sapply(data, is.na))) {
+    stop("Data cannot contain NAs", call. = FALSE)
+  }
   if (ncol(data) < 2) {
     stop("Data should contain at least two columns", call. = FALSE)
   } 
-  if (all(sapply(data, is.numeric))) {
-    if (any(apply(data, 2, function(x) length(unique(x)) < 7))) {
-      warning("Categorical variables are treated as continuous variables,
-              if desired otherwise, create dummies beforehand", call. = FALSE)
-    }
-    st.data <- data.frame(scale(data))
-  } else {
-    stop("Data should be numeric, create dummies for categorical variables", 
-         call. = FALSE)
+  if (any(sapply(data, is.numeric) == FALSE)) {
+    data <- as.data.frame(sapply(data, as.numeric))
   }
+  st.data <- data.frame(scale(data))
   #
   # Check objects and define defaults if necessary
   if (prop > 1) {
