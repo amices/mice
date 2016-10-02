@@ -312,8 +312,8 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   freq <- check.pat[["freq"]]
   prop <- check.pat[["prop"]]
   #
-  if (any(!mechanism %in% c("MCAR","MAR"))) {
-    stop("Mechanism should be either MCAR or MAR", call. = FALSE)
+  if (any(!mechanism %in% c("MCAR", "MAR", "MNAR"))) {
+    stop("Mechanism should be either MCAR, MAR or MNAR", call. = FALSE)
   }
   if (mechanism == "MCAR" & !is.null(weights)) {
     warning("Weights matrix is not used when mechanism is MCAR", call. = FALSE)
