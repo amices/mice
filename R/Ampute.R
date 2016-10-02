@@ -365,27 +365,25 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (continuous == FALSE & !is.null(type)) {
     warning("Type is not used when continuous probabilities are specified")
   }
-  if (continuous == TRUE & is.null(type)) {
+  if (is.null(type)) {
     type <- ampute.default.type(patterns = patterns.new)
   }
   if (any(!type %in% c("MARLEFT","MARMID","MARTAIL","MARRIGHT"))) {
     stop("Type should contain MARLEFT, MARMID, MARTAIL or MARRIGHT", 
          call. = FALSE)
   }
-  if (!is.null(type)) {
-    if (!is.vector(type)) {
-      type <- as.vector(type)
-      warning("Type should be a vector of strings", call. = FALSE)
-    } else if (!length(type) %in% c(1, nrow(patterns), nrow(patterns.new))) {
-      type <- type[1]
-      warning("Type should either have length 1 or length equal to #patterns, first
+  if (!is.vector(type)) {
+    type <- as.vector(type)
+    warning("Type should be a vector of strings", call. = FALSE)
+  } else if (!length(type) %in% c(1, nrow(patterns), nrow(patterns.new))) {
+    type <- type[1]
+    warning("Type should either have length 1 or length equal to #patterns, first
             element is used for all patterns", call. = FALSE)
-    }
   }
   if (!is.null(odds) & !is.matrix(odds)) {
     odds <- matrix(odds, nrow(patterns.new), byrow = TRUE)
   }
-  if (continuous == FALSE & is.null(odds)) {
+  if (is.null(odds)) {
     odds <- ampute.default.odds(patterns = patterns.new)
   }
   if (continuous == FALSE) {
