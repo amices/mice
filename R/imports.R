@@ -9,5 +9,5 @@
 #'                      na.exclude pf predict pt qt rbinom
 #'                      rchisq rgamma rnorm runif summary.glm
 #'                      update var vcov
-#'@importFrom utils     flush.console write.table
+#'@importFrom utils     flush.console write.table head tail
 NULL
