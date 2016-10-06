@@ -221,10 +221,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                    "contains another element"), call. = FALSE)
       }
       if (all(patterns[h, ] %in% 1)) {
-        print(h)
-        print(prop.one)
         prop.one <- prop.one + freq[h]
-        print(prop.one)
         row.one <- c(row.one, h)
       }
     }
@@ -436,15 +433,15 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                              mechanism = mechanism)
       }
       if (!continuous) {
-        R <- ampute.mar.disc(P = P,
+        R <- ampute.discrete(P = P,
                              scores = scores, 
                              odds = odds, 
                              prop = prop)
       } else if (continuous) {
-        R <- ampute.mar.cont(P = P,
-                             scores = scores,
-                             prop = round(prop, 3),
-                             type = type)
+        R <- ampute.continuous(P = P,
+                               scores = scores,
+                               prop = round(prop, 3),
+                               type = type)
       }
     }
     missing.data <- data
