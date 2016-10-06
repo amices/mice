@@ -8,10 +8,10 @@
 #'amputation function \code{ampute()}. 
 #'
 #'@param n A scalar specifying the #variables in the data.
-#'@return A square matrix of size #variables where 0 indicates a variable 
-#  should have missing values and 1 indicates a variable should remain 
+#'@return A square matrix of size #variables where \code{0} indicates a variable 
+#  should have missing values and \code{1} indicates a variable should remain 
 #  complete. Each pattern has missingness on one variable only.
-#'@seealso \code{\link{ampute}}
+#'@seealso \code{\link{ampute}}, \code{\link{md.pattern}}
 #'@author Rianne Schouten, 2016
 #'@export
 ampute.default.patterns <- function(n) {
@@ -28,15 +28,15 @@ ampute.default.patterns <- function(n) {
 
 #'Default \code{freq} in \code{ampute}
 #'
-#'Defines the default relative frequencies vector for the multivariate 
+#'Defines the default relative frequency vector for the multivariate 
 #'amputation function \code{ampute}. 
 #'
-#'@param patterns A matrix of size #patterns by #variables where 0 indicates a 
-#'variable should have missing values and 1 indicates a variable should remain 
-#'complete.
-#'@return A vector of length #patterns containing the relative frequency with 
+#'@param patterns A matrix of size #patterns by #variables where \code{0} indicates 
+#'a variable should have missing values and \code{1} indicates a variable should 
+#'remain complete. Could be the result of \code{\link{ampute.default.patterns}}.
+#'@return A vector of length #patterns containing the relative frequencies with 
 #'which the patterns should occur. An equal probability is given to each pattern.
-#'@seealso \code{\link{ampute}}
+#'@seealso \code{\link{ampute}}, \code{\link{ampute.default.patterns}}
 #'@author Rianne Schouten, 2016
 #'@export
 ampute.default.freq <- function(patterns) {
@@ -53,17 +53,28 @@ ampute.default.freq <- function(patterns) {
 #'Defines the default weights matrix for the multivariate amputation function 
 #'\code{ampute}. 
 #'
-#'@param patterns A matrix of size #patterns by #variables where 0 indicates a 
-#'variable should have missing values and 1 indicates a variable should remain 
-#'complete.
+#'@param patterns A matrix of size #patterns by #variables where \code{0} indicates 
+#'a variable should have missing values and \code{1} indicates a variable should 
+#'remain complete. Could be the result of \code{\link{ampute.default.patterns}}.
+#'@param mechanism A string specifying the missingness mechanism.
 #'@return A matrix of size #patterns by #variables containing the weights that 
 #'will be used to calculate the weighted sum scores. Equal weights are given to 
-#'all variables. 
-#'@seealso \code{\link{ampute}}
+#'all variables. When mechanism is MAR, variables that will be amputed will be 
+#'weighted with \code{0}. If it is MNAR, variables that will be observed
+#'will be weighted with \code{0}. If mechanism is MCAR, the weights matrix will
+#'not be used. A default MAR matrix will be returned.  
+#'@seealso \code{\link{ampute}}, \code{\link{ampute.default.patterns}}
 #'@author Rianne Schouten, 2016
 #'@export
-ampute.default.weights <- function(patterns) {
+ampute.default.weights <- function(patterns, mechanism) {
   weights <- matrix(data = 1, nrow = nrow(patterns), ncol = ncol(patterns))
+  if (mechanism != "MNAR") {
+    weights <- matrix(data = 1, nrow = nrow(patterns), ncol = ncol(patterns))
+    weights[patterns == 0] <- 0
+  } else {
+    weights <- matrix(data = 0, nrow = nrow(patterns), ncol = ncol(patterns))
+    weights[patterns == 0] <- 1
+  }
   return(weights)
 }
 
@@ -78,14 +89,14 @@ ampute.default.weights <- function(patterns) {
 #'
 #'@param patterns A matrix of size #patterns by #variables where 0 indicates a 
 #'variable should have missing values and 1 indicates a variable should remain 
-#'complete.
+#'complete. Could be the result of \code{\link{ampute.default.patterns}}.
 #'@return A string vector of length #patterns containing the missingness types.  
-#'Each pattern will be amputed with "MARRIGHT" missingness. 
-#'@seealso \code{\link{ampute}}
+#'Each pattern will be amputed with a "RIGHT" missingness. 
+#'@seealso \code{\link{ampute}}, \code{\link{ampute.default.patterns}}
 #'@author Rianne Schouten, 2016
 #'@export
 ampute.default.type <- function(patterns) {
-  type <- rep("MARRIGHT", nrow(patterns))
+  type <- rep("RIGHT", nrow(patterns))
   return(type)
 }
 
@@ -100,10 +111,10 @@ ampute.default.type <- function(patterns) {
 #'
 #'@param patterns A matrix of size #patterns by #variables where 0 indicates a 
 #'variable should have missing values and 1 indicates a variable should remain 
-#'complete.
+#'complete. Could be the result of \code{\link{ampute.default.patterns}}.
 #'@return A matrix where #rows equals #patterns. Default is 4 quantiles with odds 
-#'values 1, 2, 3 and 4, for each pattern, imitating a MARRIGHT type of missingness.
-#'@seealso \code{\link{ampute}}
+#'values 1, 2, 3 and 4, for each pattern, imitating a RIGHT type of missingness.
+#'@seealso \code{\link{ampute}}, \code{\link{ampute.default.patterns}}
 #'@author Rianne Schouten, 2016
 #'@export
 ampute.default.odds <- function(patterns) {

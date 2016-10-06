@@ -1,37 +1,38 @@
-#'MAR or MNAR Amputation based on a Continuous probability function
+#'Multivariate Amputation Based On Continuous Probability Functions
 #'
-#'This function creates a missing data indicator for each pattern. MAR missingness 
-#'is induced by using the probability distributions as described by Van Buuren, 
-#'2012. The function is used in the multivariate amputation function 
+#'This function creates a missing data indicator for each pattern. The continuous
+#'probability distributions (Van Buuren, 2012, pp. 63, 64) will be induced on the 
+#'weighted sum scores, calculated earlier in the multivariate amputation function 
 #'\code{\link{ampute}}.
 #'
-#'@param P A vector containing the values of the patterns the cases are candidate
-#'for. For each case, a value between 1 and #patterns 1 is given. For example, a 
+#'@param P A vector containing the pattern numbers of the cases's candidacies. 
+#'For each case, a value between 1 and #patterns is given. For example, a 
 #'case with value 2 is candidate for missing data pattern 2. 
-#'@param scores A list containing vectors with weighted sum scores of the 
-#'candidates, the result of an underlying function in \code{\link{ampute}}.
-#'@param prop A scalar specifying the proportion of missingness. Should be value 
-#'between 0 and 1 with 3 decimal places at most. Default is 0.5.
-#'@param type A vector of strings containing the type of MAR missingness for each 
-#'pattern. Either \code{"MARLEFT"}, \code{"MARMID"}, \code{"MARTAIL"} or 
-#'\code{"MARRIGHT"}. If a single missingness type is entered, all patterns will 
-#'be created by the same type. If missingness types should differ over patterns, 
-#'a vector of missingness types should be entered. Default is MARRIGHT for all 
-#'patterns.   
+#'@param scores A list containing vectors with the candidates's weighted sum scores, 
+#'the result of an underlying function in \code{\link{ampute}}.
+#'@param prop A scalar specifying the proportion of missingness. Should be a value 
+#'between 0 and 1. Default is a missingness proportion of 0.5.
+#'@param type A vector of strings containing the type of missingness for each 
+#'pattern. Either \code{"LEFT"}, \code{"MID"}, \code{"TAIL"} or '\code{"RIGHT"}. 
+#'If a single missingness type is entered, all patterns will be created by the same 
+#'type. If missingness types should differ over patterns, a vector of missingness 
+#'types should be entered. Default is RIGHT for all patterns and is the result of
+#'\code{\link{ampute.default.type}}.   
 #'@return A list containing vectors with \code{0} if a case should be made missing 
-#'and \code{1} if a case should be kept complete. The first vector refers to the 
-#'first pattern, the second vector to the second pattern, etc. 
+#'and \code{1} if a case should remain complete. The first vector refers to the 
+#'first pattern, the second vector to the second pattern, etcetera.  
 #'@author Rianne Schouten, 2016
-#'@seealso \code{\link{ampute}}
-#'@references Van Buuren, S. (2012). \emph{Flexible imputation of missing data} 
-#'(pp. 63-64). Boca Raton, FL.: Chapman & Hall/CRC Press.
+#'@seealso \code{\link{ampute}}, \code{\link{ampute.default.type}}
+#'@references Van Buuren, S. (2012). \emph{Flexible imputation of missing data.} 
+#'Boca Raton, FL.: Chapman & Hall/CRC Press.
 #'@export
 ampute.continuous <- function(P, scores, prop, type) {
-  # MAR Amputation based on a Continuous probability function
+  # Multivariate Amputation Based On Continuous Probability Functions
   #
-  # This function creates a missing data indicator for each pattern. MAR missingness 
-  # is induced by using the probability distributions as described by Van Buuren, 
-  # 2012. The function is used in the multivariate amputation function ampute().
+  # This function creates a missing data indicator for each pattern. The continuous
+  # probability distributions (Van Buuren, 2012, pp. 63, 64) will be induced on the 
+  # weighted sum scores calculated earlier in the multivariate amputation function 
+  # ampute().
   #
   # ------------------------ bin.search --------------------------------------
   #
@@ -41,7 +42,7 @@ ampute.continuous <- function(P, scores, prop, type) {
                           maxiter = 100, showiter = FALSE) {
     # This is a custom adaptation of function binsearch from package gtools 
     # (version 3.5.0) that returns the adjustment of the probability curves used 
-    # in the function ampute.mar.cont in ampute, up to 3 decimal places. 
+    # in the function ampute.continuous in ampute.  
     nd <- min(which(target * 10 ^ (0:20) == floor(target * 10 ^ (0:20)))) - 1
     lo <- lower
     hi <- upper
@@ -131,37 +132,48 @@ ampute.continuous <- function(P, scores, prop, type) {
     }
     return(retval)
   }
-  
-  # ----------------------- ampute.mar.cont ----------------------------------
-  
+  #
+  # ----------------------- ampute.continuous --------------------------------  
+  #
+  # For a test data set, the shift of the logit function is calculated
+  # in order to obtain the right proportion of missingness (area beneath the curve)
   testset <- scale(rnorm(n = 10000, mean = 0, sd = 1))
   logit <- function(x) exp(x) / (1 + exp(x))
   shift <- bin.search(fun = function(shift) 
     sum(logit(-mean(testset) + testset[] + shift)) / length(testset), 
     target = prop)$where
+  # An empty list is created, type argument is given the right length
   R <- list()
   if (length(type) == 1) {
     type <- rep(type, length(scores))
   }
   for (i in 1:length(scores)) {
+    # The weighted sum scores of a certain pattern are scaled
     scores.temp <- as.vector(scale(scores[[i]]))
-    if (type[i] == "MARLEFT") { 
+    # The desired function is chosen
+    if (type[i] == "LEFT") { 
       formula <- function(x, b) logit(mean(x) - x[] + b)
-    } else if (type[i] == "MARMID") { 
+    } else if (type[i] == "MID") { 
       formula <- function(x, b) logit(-abs(x[] - mean(x)) + 0.75 + b)
-    } else if (type[i] == "MARTAIL") { 
+    } else if (type[i] == "TAIL") { 
       formula <- function(x, b) logit(abs(x[] - mean(x)) -0.75 + b)
     } else {
       formula <- function(x, b) logit(-mean(x) + x[] + b)
     }
+    # If there are no candidates for a certain pattern, the list will receive a 0
     if (is.na(scores.temp[[1]])) {
       R[[i]] <- 0
     } else {
+      # Otherwise, every candidate will receive a certain probability to be made
+      # missing, based on his weighted sum score and the probability function
       if (length(scores.temp) == 1) {
         probs <- 0.5 + shift
       } else {
         probs <- formula(x = scores.temp, b = shift)
       }
+      # Based on the probabilities, each candidate will receive a missing data 
+      # indicator 0, meaning he will be made missing or missing data indicator 1, 
+      # meaning the candidate will remain complete.
       R.temp <- 1 - rbinom(n = length(scores.temp), size = 1, prob = probs)
       R[[i]] <- replace(P, P == (i + 1), R.temp)
       R[[i]] <- replace(R[[i]], P != (i + 1), 1)

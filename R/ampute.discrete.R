@@ -1,39 +1,40 @@
-#'MAR or MNAR Amputation based on a Discrete probability function
+#'Multivariate Amputation Based On Discrete Probability Functions
 #'
-#'This function creates a missing data indicator for each pattern. MAR missingness 
-#'is induced by using odds probabilities as described by Brand, 1999. The function 
-#'is used in the multivariate amputation function \code{\link{ampute}}.
+#'This function creates a missing data indicator for each pattern. Odds probabilities 
+#'(Brand, 1999, pp. 110-113) will be induced on the weighted sum scores, calculated earlier 
+#'in the multivariate amputation function \code{\link{ampute}}.
 #'
-#'@param P A vector containing the values of the patterns the cases are candidate
-#'for. For each case, a value between 1 and #patterns 1 is given. For example, a 
+#'@param P A vector containing the pattern numbers of the cases's candidacies. 
+#'For each case, a value between 1 and #patterns is given. For example, a 
 #'case with value 2 is candidate for missing data pattern 2. 
-#'@param scores A list containing vectors with weighted sum scores of the 
-#'candidates, the result of an underlying function in \code{\link{ampute}}.
-#'@param prop A scalar specifying the proportion of missingness. Should be value 
-#'between 0 and 1 with 3 decimal places at most. Default is 0.5.
+#'@param scores A list containing vectors with the candidates's weighted sum scores, 
+#'the result of an underlying function in \code{\link{ampute}}.
+#'@param prop A scalar specifying the proportion of missingness. Should be a value 
+#'between 0 and 1. Default is a missingness proportion of 0.5.
 #'@param odds A matrix where #patterns defines the #rows. Each row should contain 
-#'the odds of being missing for the concurrent pattern. The amount of odds values 
+#'the odds of being missing for the corresponding pattern. The amount of odds values 
 #'defines in how many quantiles the sum scores will be divided. The values are 
 #'relative probabilities: a quantile with odds value 4 will have a probability of 
 #'being missing that is four times higher than a quantile with odds 1. The 
-#'#quantiles may differ between patterns, specify NA for cells remaining empty. 
-#'Default is 4 quantiles with odds values 1, 2, 3 and 4, for each pattern, 
-#'imitating a MARRIGHT type of missingness.
+#'#quantiles may differ between the patterns, specify NA for cells remaining empty. 
+#'Default is 4 quantiles with odds values 1, 2, 3 and 4, the result of 
+#'\code{\link{ampute.default.odds}}.
 #'@return A list containing vectors with \code{0} if a case should be made missing 
-#'and \code{1} if a case should be kept complete. The first vector refers to the 
-#'first pattern, the second vector to the second pattern, etc.
+#'and \code{1} if a case should remain complete. The first vector refers to the 
+#'first pattern, the second vector to the second pattern, etcetera.  
 #'@author Rianne Schouten, 2016
-#'@seealso \code{\link{ampute}}
+#'@seealso \code{\link{ampute}}, \code{\link{ampute.default.odds}
 #'@references Brand, J.P.L. (1999). \emph{Development, implementation and 
 #'evaluation of multiple imputation strategies for the statistical analysis of 
-#'incomplete data sets} (pp. 110-113). Dissertation. Rotterdam: Erasmus University. 
+#'incomplete data sets.} Dissertation. Rotterdam: Erasmus University. 
 #'@export
 ampute.discrete <- function(P, scores, prop, odds) {
-  # MAR Amputation based on a Discrete probability function
+  # Multivariate Amputation Based On Discrete Probability Functions
   #
-  # This function creates a missing data indicator for each pattern. MAR missingness 
-  # is induced by using odds probabilities as described by Brand, 1999. The function 
-  # is used in the multivariate amputation function ampute().
+  # This function creates a missing data indicator for each pattern. Odds probabilities 
+  # (Brand, 1999, pp. 110-113) will be induced on the weighted sum scores calculated 
+  # earlier in the multivariate amputation function ampute().
+  #
   R <- list()
   for (i in 1:nrow(odds)) {
     if (scores[[i]][[1]] == 0) {
@@ -58,8 +59,9 @@ ampute.discrete <- function(P, scores, prop, odds) {
       }
       # For each candidate, a random value between 0 and 1 is compared with the 
       # odds probability of being missing. If random value <= prob, the candidate 
-      # is made missing according the pattern; if random value > prob, the 
-      # candidate is kept complete 
+      # will receive missing data indicator 0, meaning he will be made missing 
+      # according the pattern; if random value > prob, the candidate will receive
+      # missing data indicator 1, meaning the candidate will remain complete. 
       for (l in 1:ng) {
         prob <- (ng * prop * odds[i, l]) / sum(odds[i, ], na.rm = TRUE)
         if (prob >= 1.0) {
