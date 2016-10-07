@@ -22,12 +22,6 @@
 #'that the scatterplots of six variables need to be placed on 3 rows and 2 columns. 
 #'There are several defaults for different #variables. Note that for more than 
 #'9 variables, multiple plots will be created automatically.
-#'@param theme A named list containing the graphical parameters. The default
-#'function \code{mice.theme} produces a short list of default colors, line
-#'width, and so on. The extensive list may be obtained from
-#'\code{trellis.par.get}.
-#'@param outer See \code{\link[lattice:bwplot]{bwplot}}.
-#'@param multiple See \code{\link[lattice:bwplot]{bwplot}}.
 #'@return A list containing the scatterplots. Note that a new pattern 
 #'will always be shown in a new plot. 
 #'@note The \code{mads} object contains all the information you need to 
@@ -38,9 +32,7 @@
 #'an overview of the package, \code{\link{mads-class}}
 #'@export
 xyplot.mads <- function(x, yvar = NULL, which.pat = NULL,
-                        standardized = TRUE, layout = NULL, theme = 
-                          mice.theme(transparent = FALSE), multiple = TRUE, 
-                        outer = TRUE) {
+                        standardized = TRUE, layout = NULL) {
   if (!is.mads(x)) {
     stop("Object is not of class mads")
   }
@@ -91,12 +83,17 @@ xyplot.mads <- function(x, yvar = NULL, which.pat = NULL,
       layout <- c(2, 1)
     }
   }
+  
+  theme <- list(superpose.symbol = list(col = mdc(1:2), pch = 1),
+                plot.symbol = list(col = mdc(1:2), pch = 1),
+                strip.background = list(col = "grey95"))
+ 
   p <- list()
   for (i in 1:pat) {
     p[[paste("Scatterplot Pattern", which.pat[i])]] <- 
       xyplot(x = formula, data = data[data$.pat == which.pat[i], ],
              groups = data$.amp, par.settings = theme,
-             layout = layout, multiple = multiple, outer = outer, 
+             layout = layout, 
              ylab = "Weighted sum scores", 
              xlab = paste("Standardized values pattern", which.pat[i]))
   }
