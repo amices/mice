@@ -19,9 +19,17 @@
 #'\code{c(0.4, 0.4, 0.2)}, this means that of all cases with missing values, 
 #'40 percent is candidate for pattern 1, 40 percent for pattern 2 and 20 
 #'percent for pattern 3. The vector sums to 1.}
+#'\item{\code{mech}:}{A string specifying the missingness mechanism, either 
+#'\code{"MCAR"} or \code{"MAR"}.}
 #'\item{\code{weights}:}{A matrix of size #patterns by #variables. It contains 
 #'the weights that were used to calculate the weighted sum scores. The weights 
 #'may differ between patterns and between variables.}
+#'\item{\code{cont}:}{Logical, whether probabilities are based on continuous logit
+#'functions or on discrete odds distributions.}
+#'\item{\code{type}:}{A vector of strings containing the type of MAR missingness 
+#'for each pattern. Either \code{"MARLEFT"}, \code{"MARMID"}, \code{"MARTAIL"} or 
+#'\code{"MARRIGHT"}. The first type refers to the first pattern, the second type
+#'to the second pattern, etc.} 
 #'\item{\code{odds}:}{A matrix where #patterns defines the #rows. Each row contains 
 #'the odds of being missing for the concurrent pattern. The amount of odds values 
 #'defines in how many quantiles the sum scores were divided. The values are 
@@ -30,12 +38,6 @@
 #'#quantiles may differ between patterns, NA is used for cells remaining empty.}
 #'\item{\code{amp}:}{A data frame containing the input data with NAs for the 
 #'amputed values.}
-#'\item{\code{mech}:}{A string specifying the missingness mechanism, either 
-#'\code{"MCAR"} or \code{"MAR"}.}
-#'\item{\code{type}:}{A vector of strings containing the type of MAR missingness 
-#'for each pattern. Either \code{"MARLEFT"}, \code{"MARMID"}, \code{"MARTAIL"} or 
-#'\code{"MARRIGHT"}. The first type refers to the first pattern, the second type
-#'to the second pattern, etc.} 
 #'\item{\code{cand}:}{A vector containing the values of the patterns the cases are 
 #'candidate for. For each case, a value between 1 and #patterns 1 is given. For 
 #'example, a case with value 2 is candidate for missing data pattern 2.}
@@ -59,11 +61,12 @@ setClass("mads",
            prop      = "numeric" ,
            patterns  = "matrix",
            freq      = "numeric",
+           mech      = "character",
            weights   = "matrix",
+           cont      = "logical",
+           type      = "character",
            odds      = "matrix",
            amp       = "data.frame",
-           mech      = "character",
-           type      = "character",
            cand      = "integer",
            scores    = "list",
            data      = "data.frame"),

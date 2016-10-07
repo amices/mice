@@ -23,12 +23,6 @@
 #'boxplots of six variables need to be placed on 3 rows and 2 columns. Default
 #'is 1 row and an amount of columns equal to #variables. Note that for more than 
 #'6 variables, multiple plots will be created automatically.
-#'@param theme A named list containing the graphical parameters. The default
-#'function \code{mice.theme} produces a short list of default colors, line
-#'width, and so on. The extensive list may be obtained from
-#'\code{trellis.par.get}.
-#'@param outer See \code{\link[lattice:bwplot]{bwplot}}.
-#'@param multiple See \code{\link[lattice:bwplot]{bwplot}}.
 #'@return A list containing the box-and-whisker plots. Note that a new pattern 
 #'will always be shown in a new plot. 
 #'@note The \code{mads} object contains all the information you need to 
@@ -39,8 +33,7 @@
 #'an overview of the package, \code{\link{mads-class}}
 #'@export
 bwplot.mads <- function(x, yvar = NULL, which.pat = NULL, standardized = TRUE,
-                        descriptives = TRUE, layout = NULL, theme = mice.theme(), 
-                        multiple = TRUE, outer = TRUE) {
+                        descriptives = TRUE, layout = NULL) {
   if (!is.mads(x)) {
     stop("Object is not of class mads")
   }
@@ -104,32 +97,47 @@ bwplot.mads <- function(x, yvar = NULL, which.pat = NULL, standardized = TRUE,
     for (i in 1:length(which.pat)) {
       wp <- which.pat[i]
       desc[(i*2) - 1, 2, ] <- 
-        round(unname(sapply(data[data$.pat == wp & data$.amp == "Amp", 
-                                 varlist], mean)), 5)
+        round(sapply(varlist, function(x)
+          mean(data[data$.pat == wp & data$.amp == "Amp", x])), 5)
       desc[(i*2), 2, ] <- 
-        round(unname(sapply(data[data$.pat == wp & data$.amp == "Non-Amp", 
-                                 varlist], mean)), 5)
+        round(sapply(varlist, function(x)
+          mean(data[data$.pat == wp & data$.amp == "Non-Amp", x])), 5)
       desc[(i*2) - 1, 3, ] <- 
-        round(unname(sapply(data[data$.pat == wp & data$.amp == "Amp", 
-                                 varlist], var)), 5)
+        round(sapply(varlist, function(x)
+          var(data[data$.pat == wp & data$.amp == "Amp", x])), 5)
       desc[(i*2), 3, ] <- 
-        round(unname(sapply(data[data$.pat == wp & data$.amp == "Non-Amp", 
-                                 varlist], var)), 5)
+        round(sapply(varlist, function(x)
+          var(data[data$.pat == wp & data$.amp == "Non-Amp", x])), 5)
       desc[(i*2) - 1, 4, ] <- 
-        unname(sapply(data[data$.pat == wp & data$.amp == "Amp", 
-                           varlist], length))
+        sapply(varlist, function(x)
+          length(data[data$.pat == wp & data$.amp == "Amp", x]))
       desc[(i*2), 4, ] <- 
-        unname(sapply(data[data$.pat == wp & data$.amp == "Non-Amp", 
-                           varlist], length))
+        sapply(varlist, function(x)
+          length(data[data$.pat == wp & data$.amp == "Non-Amp", x]))
     }
     p[["Descriptives"]] <- desc
   }
+  theme <- list(superpose.symbol = list(col = mdc(1:2), pch = 1),
+                superpose.line = list(col = mdc(4:5), lwd = 1),
+                box.dot = list(col = mdc(1:2)),
+                box.rectangle = list(col = mdc(4:5)),
+                box.symbol = list(col = mdc(1:2)),
+                plot.symbol = list(col = mdc(1:2), pch = 1),
+                plot.line = list(col = mdc(4:5)), 
+                strip.background = list(col = "grey95"))
+
+  
+  #theme$box.dot$col <- rep(theme$box.dot$col[1:2], c(1,x$m))
+  #theme$box.rectangle$col <- rep(theme$box.rectangle$col[1:2], c(1,x$m))
+  #theme$box.umbrella$col  <- rep(theme$box.rectangle$col[1:2], c(1,x$m))
+  #theme$plot.symbol$col <- mdc(3)
+  #theme$plot.symbol$pch <- 1
+  
   for (i in 1:pat) {
     p[[paste("Boxplot pattern", which.pat[i])]] <- 
       bwplot(x = formula, data = data[data$.pat == which.pat[i], ],
-             multiple = multiple, outer = outer, layout = layout, 
-             ylab = "", par.settings = list(strip.background = list(
-               col = "grey95")), 
+             multiple = TRUE, outer = TRUE, layout = layout, 
+             ylab = "", par.settings = theme,
              xlab = paste("Data distributions in pattern", which.pat[i]))
   }
   return(p)

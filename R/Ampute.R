@@ -105,7 +105,7 @@
 #'missing values, 40 percent should have pattern 1, 40 percent pattern 2 and 20 
 #'percent pattern 3. The vector should sum to 1. Default is an equal probability 
 #'for each pattern, created with \code{\link{ampute.default.freq}}.
-#'@param mechanism A string specifying the missingness mechanism, either MCAR 
+#'@param mech A string specifying the missingness mechanism, either MCAR 
 #'(Missing Complete At Random), MAR (Missing At Random) or MNAR (Missing Not At 
 #'Random). Default is a MAR missingness mechanism.    
 #'@param weights A matrix of size #patterns by #variables. The matrix contains the 
@@ -119,7 +119,8 @@
 #'be amputed will be weighted with \code{0}. If it is MNAR, variables that will 
 #'be observed will be weighted with \code{0}. If mechanism is MCAR, the weights 
 #'matrix will not be used.  
-#'@param continuous Logical. If TRUE, the probabilities of being missing are based 
+#'@param cont Logical. Whether the probabilities should be based on a continuous 
+#'or discrete distribution. If TRUE, the probabilities of being missing are based 
 #'on a continuous logit distribution. \code{\link{ampute.continuous}} will be used
 #'to calculate and assign the probabilities. These will be based on argument 
 #'\code{type}. If FALSE, the probabilities of being missing are based on a discrete 
@@ -181,13 +182,13 @@
 #'odds[3,] <- c(3, 1, NA, NA)
 #'# Rerun amputation
 #'result3 <- ampute(data = complete.data, patterns = patterns, freq = 
-#'c(0.3, 0.3, 0.4), continuous = FALSE, odds = odds)
+#'c(0.3, 0.3, 0.4), cont = FALSE, odds = odds)
 #'# Run an amputation procedure with continuous probabilities
 #'result4 <- ampute(data = complete.data, type = c("RIGHT", "TAIL", "LEFT"))
 #'
 #'@export
 ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
-                   mechanism = "MAR", weights = NULL, continuous = TRUE, 
+                   mech = "MAR", weights = NULL, cont = TRUE, 
                    type = NULL, odds = NULL, 
                    bycases = TRUE, run = TRUE) {
   # Generate Missing Data for Simulation Purposes
@@ -197,7 +198,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   #
   # ------------------------ sum.scores -----------------------------------
   #
-  sum.scores <- function(P, data, patterns, weights, mechanism) {
+  sum.scores <- function(P, data, patterns, weights, mech) {
     # This is an underlying function of multivariate amputation function ampute().
     # This function is used to calculate the weighted sum scores of the candidates.
     # Based on the data, the weights matrix and the kind of mechanism, each case
@@ -211,7 +212,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       } else {
         candidates <- as.matrix(data[P == (i + 1), ])
         # For each candidate in the pattern, a weighted sum score is calculated
-        if (mechanism == "MAR") {
+        if (mech == "MAR") {
           scores[[i]] <- apply(candidates, 1, 
                                function(x) (weights[i, ] *  patterns[i, ]) %*% x)
         } else {
@@ -319,9 +320,10 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (ncol(data) < 2) {
     stop("Data should contain at least two columns", call. = FALSE)
   } 
-  if (any(sapply(data, is.numeric) == FALSE) & mechanism != "MCAR") {
+  if (any(sapply(data, is.numeric) == FALSE) & mech != "MCAR") {
     data <- as.data.frame(sapply(data, as.numeric))
-    warning("Data is made numeric because the calculation of weights requires numeric data",
+    warning("Data is made numeric because the calculation of weights requires 
+            numeric data",
             call. = FALSE)
   }
   st.data <- data.frame(scale(data))
@@ -373,24 +375,24 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   patterns.new <- check.pat[["patterns"]]
   freq <- check.pat[["freq"]]
   prop <- check.pat[["prop"]]
-  if (any(!mechanism %in% c("MCAR", "MAR", "MNAR"))) {
+  if (any(!mech %in% c("MCAR", "MAR", "MNAR"))) {
     stop("Mechanism should be either MCAR, MAR or MNAR", call. = FALSE)
   }
-  if (!is.vector(mechanism)) {
-    mechanism <- as.vector(mechanism)
+  if (!is.vector(mech)) {
+    mech <- as.vector(mech)
     warning("Mechanism should contain merely MCAR, MAR or MNAR", call. = FALSE)
-  } else if (length(mechanism) > 1) {
-      mechanism <- mechanism[1]
+  } else if (length(mech) > 1) {
+      mech <- mech[1]
       warning("Mechanism should contain merely MCAR, MAR or MNAR. First element is used", 
               call. = FALSE)
   }
-  if (mechanism == "MCAR" & !is.null(weights)) {
+  if (mech == "MCAR" & !is.null(weights)) {
     warning("Weights matrix is not used when mechanism is MCAR", call. = FALSE)
   }
-  if (mechanism == "MCAR" & !is.null(odds)) {
+  if (mech == "MCAR" & !is.null(odds)) {
     warning("Odds matrix is not used when mechanism is MCAR", call. = FALSE)
   }
-  if (mechanism != "MCAR" & !is.null(weights)) {
+  if (mech != "MCAR" & !is.null(weights)) {
     if (is.vector(weights) & (ncol(data) / length(weights))%%1 == 0) {
       weights <- matrix(weights, ncol(data) / length(weights), byrow = TRUE)
     } else if (is.vector(weights)) {
@@ -399,24 +401,24 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   }
   if (is.null(weights)) {
     weights <- ampute.default.weights(patterns = patterns.new,
-                                      mechanism = mechanism)
+                                      mech = mech)
   }
-  if (!is.vector(continuous)) {
-    continuous <- as.vector(continuous)
+  if (!is.vector(cont)) {
+    cont <- as.vector(cont)
     warning("Continuous should contain merely TRUE or FALSE", call. = FALSE)
-  } else if (length(continuous) > 1) {
-    continuous <- continuous[1]
+  } else if (length(cont) > 1) {
+    cont <- cont[1]
     warning("Continuous should contain merely TRUE or FALSE. First element is used", 
             call. = FALSE)
   }
-  if (!is.logical(continuous)) {
+  if (!is.logical(cont)) {
     stop("Continuous should contain TRUE or FALSE", call. = FALSE)
   }
-  if (continuous == TRUE & !is.null(odds)) {
+  if (cont == TRUE & !is.null(odds)) {
     warning("Odds matrix is not used when continuous probabilities are specified", 
             call. = FALSE)
   }
-  if (continuous == FALSE & !is.null(type)) {
+  if (cont == FALSE & !is.null(type)) {
     warning("Type is not used when continuous probabilities are specified",
             call. = FALSE)
   }
@@ -441,7 +443,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (is.null(odds)) {
     odds <- ampute.default.odds(patterns = patterns.new)
   }
-  if (continuous == FALSE) {
+  if (cont == FALSE) {
     for (h in 1:nrow(odds)) {
       if(any(!is.na(odds[h, ]) & odds[h, ] < 0)) {
         stop("Odds matrix can only have positive values", call. = FALSE)
@@ -469,13 +471,13 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                 replace = T, prob = freq) + 1
     # Calculate missingness according MCAR or calculate weighted sum scores
     # Standardized data is used to calculate weighted sum scores
-    if (mechanism == "MCAR") {
+    if (mech == "MCAR") {
       R <- ampute.mcar(P = P,
                        patterns = patterns.new,
                        prop = prop)
     } else {
       # Check if there is a pattern with merely zeroos
-      if (!is.null(check.pat[["row.zero"]]) & mechanism == "MAR") {
+      if (!is.null(check.pat[["row.zero"]]) & mech == "MAR") {
         stop(paste("Patterns object contains merely zeroos and this kind of pattern 
                    is not possible when mechanism is MAR"), 
              call. = FALSE)
@@ -484,14 +486,14 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                              patterns = patterns.new,
                              data = st.data,
                              weights = weights,
-                             mechanism = mechanism)
+                             mech = mech)
       }
-      if (!continuous) {
+      if (!cont) {
         R <- ampute.discrete(P = P,
                              scores = scores, 
                              odds = odds, 
                              prop = prop)
-      } else if (continuous) {
+      } else if (cont) {
         R <- ampute.continuous(P = P,
                                scores = scores,
                                prop = round(prop, 3),
@@ -513,8 +515,9 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                  prop = prop, 
                  patterns = patterns.new,
                  freq = freq,
-                 mech = mechanism,
+                 mech = mech,
                  weights = weights,
+                 cont = cont,
                  type = type,
                  odds = odds,
                  amp = missing.data,

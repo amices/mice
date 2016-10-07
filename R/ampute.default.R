@@ -56,7 +56,7 @@ ampute.default.freq <- function(patterns) {
 #'@param patterns A matrix of size #patterns by #variables where \code{0} indicates 
 #'a variable should have missing values and \code{1} indicates a variable should 
 #'remain complete. Could be the result of \code{\link{ampute.default.patterns}}.
-#'@param mechanism A string specifying the missingness mechanism.
+#'@param mech A string specifying the missingness mechanism.
 #'@return A matrix of size #patterns by #variables containing the weights that 
 #'will be used to calculate the weighted sum scores. Equal weights are given to 
 #'all variables. When mechanism is MAR, variables that will be amputed will be 
@@ -66,9 +66,9 @@ ampute.default.freq <- function(patterns) {
 #'@seealso \code{\link{ampute}}, \code{\link{ampute.default.patterns}}
 #'@author Rianne Schouten, 2016
 #'@export
-ampute.default.weights <- function(patterns, mechanism) {
+ampute.default.weights <- function(patterns, mech) {
   weights <- matrix(data = 1, nrow = nrow(patterns), ncol = ncol(patterns))
-  if (mechanism != "MNAR") {
+  if (mech != "MNAR") {
     weights <- matrix(data = 1, nrow = nrow(patterns), ncol = ncol(patterns))
     weights[patterns == 0] <- 0
   } else {
