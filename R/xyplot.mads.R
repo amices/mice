@@ -1,14 +1,14 @@
-
 #
 # -------------------------- xyplot.mads -------------------------------------
 #
 
 #'Scatterplot of amputed and non-amputed data against weighted sum scores
 #'
-#'Plotting method for amputed data using \pkg{lattice}. \code{xyplot}
-#'produces scatterplots. The function plots the variables against the weighted 
-#'sum scores. This is useful in analyzing the missing data mechanisms. The function
-#'automatically separates the amputed and non-amputed data. 
+#'Plotting method to investigate relation between amputed data and the weighted sum 
+#'scores. Based on \code{\link{lattice}}. \code{xyplot} produces scatterplots. 
+#'The function plots the variables against the weighted sum scores. The function
+#'automatically separates the amputed and non-amputed data to see the relation between
+#'the amputatoin and the weighted sum scores.  
 #'
 #'@param x A \code{mads} object, typically created by \code{\link{ampute}}.
 #'@param yvar A string or vector of variable names that needs to be plotted. As 
@@ -25,8 +25,8 @@
 #'@return A list containing the scatterplots. Note that a new pattern 
 #'will always be shown in a new plot. 
 #'@note The \code{mads} object contains all the information you need to 
-#'make any desired plots. Check \code{\link{mads-class}} or the vignette titled "Multivariate 
-#'Amputation using Ampute" to understand the contents of class object \code{mads}. 
+#'make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate 
+#'Amputation using Ampute} to understand the contents of class object \code{mads}. 
 #'@author Rianne Schouten, 2016
 #'@seealso \code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for 
 #'an overview of the package, \code{\link{mads-class}}

@@ -47,12 +47,13 @@
 #'When the user sets the missingness mechanism to \code{"MCAR"}, the candidates 
 #'have an equal probability of having missing values. No other specifications 
 #'have to be made. For a \code{"MAR"} or \code{"MNAR"} mechanism, weighted sum 
-#'scores are calculated. 
+#'scores are calculated. These scores are a linear combination of the 
+#'variables. 
 #'
-#'In order to do this, the data is standardized. That is the reason the data
-#'has to be numeric. Second, for each case, the values in the data set are 
-#'multiplied with the weights, specified by argument \code{weights}. These weighted
-#'scores will be summed, resulting in a weighted sum score for each case. 
+#'In order to calculate the weighted sum scores, the data is standardized. That 
+#'is the reason the data has to be numeric. Second, for each case, the values in 
+#'the data set are multiplied with the weights, specified by argument \code{weights}. 
+#'These weighted scores will be summed, resulting in a weighted sum score for each case. 
 #'
 #'The weights may differ between patterns and they may be negative or zero as well.
 #'Naturally, in case of a \code{MAR} mechanism, the weights corresponding to the 

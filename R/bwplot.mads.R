@@ -4,11 +4,14 @@
 
 #'Box-and-whisker plot of amputed and non-amputed data
 #'
-#'Plotting method for amputed data using \pkg{lattice}. \code{bwplot}
-#'produces box-and-whisker plots. The function automatically separates the 
-#'amputed and non-amputed data. 
+#'Plotting method to investigate the result of function \code{\link{ampute}}. 
+#'Based on \code{\link{lattice}}. \code{bwplot} produces box-and-whisker plots of 
+#'the relation between the data variables and the amputed data. The function does 
+#'not show which data is amputed. It does show how the amputed values are related 
+#'to the variable values. 
 #'
-#'@param x A \code{mads} object, typically created by \code{\link{ampute}}.
+#'@param x A \code{mads} (\code{\link{mads-class}}) object, typically created by 
+#'\code{\link{ampute}}.
 #'@param yvar A string or vector of variable names that needs to be plotted. As 
 #'a default, all variables will be plotted. 
 #'@param which.pat A scalar or vector indicating which patterns need to be plotted. 
@@ -26,8 +29,8 @@
 #'@return A list containing the box-and-whisker plots. Note that a new pattern 
 #'will always be shown in a new plot. 
 #'@note The \code{mads} object contains all the information you need to 
-#'make any desired plots. Check \code{\link{mads-class}} or the vignette titled "Multivariate 
-#'Amputation using Ampute" to understand the contents of class object \code{mads}.
+#'make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate 
+#'Amputation using Ampute} to understand the contents of class object \code{mads}.
 #'@author Rianne Schouten, 2016
 #'@seealso \code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for 
 #'an overview of the package, \code{\link{mads-class}}
