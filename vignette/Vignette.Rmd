@@ -22,55 +22,31 @@ require("lattice")
 require("gridExtra")
 
 # Underlying functions
-source("../Ampute/AmputeMCAR.R")
-source("../Ampute/AmputeMARCont.R")
-source("../Ampute/AmputeMARDisc.R")
-source("../Ampute/AmputeDefault.R")
-source("../Ampute/Is.R")
-source("../Ampute/Print.R")
-source("../Ampute/Summary.R")
-source("../Ampute/Plot.R")
-source("../Ampute/Mads.R")
-source("../Ampute/MiceTheme.R")
+source("../R/ampute.mcar.R")
+source("../R/ampute.continuous.R")
+source("../R/ampute.discrete.R")
+source("../R/ampute.default.R")
+source("../R/is.R")
+source("../R/print.R")
+source("../R/summary.R")
+source("../R/bwplot.mads.R")
+source("../R/xyplot.mads.R")
+source("../R/mads.R")
+source("../R/mdc.R")
+source("../R/supports.transparent.R")
 
 # Main function
-source("../Ampute/Ampute.R")
+source("../R/ampute.R")
 
 set.seed(2016)
 ```
 
-\begin{figure}[h!]
-\begin{tikzpicture}
-\node [shape=rectangle, minimum width = 6em, text centered, rounded corners, draw=black, fill = red!20, minimum height = 3em] at (0,0) (start) {\small Start};
-\node [shape=rectangle, minimum width = 6em, text centered, rounded corners, draw=black, minimum height = 3em] at (0,-2) (data) {\small 1.Data};
-\node [shape=rectangle, minimum width = 6em, text centered, rounded corners, draw=black, minimum height = 3em] at (2.8,-2) (prop) {\small 2.Prop};
-\node [shape=rectangle, minimum width = 6em, text centered, rounded corners, draw=black, minimum height = 3em] at (2.8,0) (pat) {\small 3.Patterns};
-\node [shape=rectangle, minimum width = 6em, text centered, rounded corners, draw=black, minimum height = 3em] at (5.6,0) (freq) {\small 4.Freq};
-\node [shape=rectangle, text centered, rounded corners, draw=black, minimum height = 3em, minimum width = 6em] at (5.6,-2) (mech) {\footnotesize 5.Mechanism};
-\node [shape=rectangle, minimum width = 6em, text centered, rounded corners, draw=black, minimum height = 3em] at (8.6,-2) (weights) {\small 6.Weights};
-\node [shape=rectangle, text centered, rounded corners, draw=black, minimum height = 3em, minimum width = 6em] at (8.6,0) (cont) {\footnotesize 7.Continuous};
-\node [shape=rectangle, minimum width = 6em, text centered, rounded corners, draw=black, minimum height = 3em] at (11.6,0) (type) {\small 8.Type};
-\node [shape=rectangle, minimum width = 6em, text centered, rounded corners, draw=black, minimum height = 3em] at (11.6,-2) (odds) {\small 9.Odds};
-\node [shape=rectangle, minimum width = 6em, text centered, rounded corners, draw=black, minimum height = 3em, fill = red!20] at (14.4,-2) (finis1) {\small Finished};
-\node [shape=rectangle, minimum width = 6em, text centered, rounded corners, draw=black, minimum height = 3em, fill = red!20] at (14.4,0) (finis2) {\small Finished};
-\node [shape=rectangle, minimum width = 6em, text centered, rounded corners, draw=black, minimum height = 3em, fill = red!20] at (5.6,-4) (finis3) {\small Finished};
-\draw [->, line width = 0.8pt] (start) -- (data); 
-\draw [->, line width = 0.8pt] (data) -- (prop);
-\draw [->, line width = 0.8pt] (prop) -- (pat);
-\draw [->, line width = 0.8pt] (pat) -- (freq);
-\draw [->, line width = 0.8pt] (freq) -- (mech);
-\draw [->, line width = 0.8pt] (mech) -- (weights) node [midway, above, sloped] {\footnotesize MAR}; 
-\draw [->, line width = 0.8pt] (weights) -- (cont);
-\draw [->, line width = 0.8pt] (cont) -- (type)node [midway, above, sloped] {\footnotesize Yes};
-\draw [->, line width = 0.8pt] (cont) -- (odds) node [midway, above, sloped] {\footnotesize No};
-\draw [->, line width = 0.8pt] (type) -- (finis2); 
-\draw [->, line width = 0.8pt] (odds) -- (finis1);
-\draw [->, line width = 0.8pt] (mech) -- (finis3) node [midway, sloped, rotate = 90, xshift = 4ex] {\footnotesize MCAR};
-\end{tikzpicture}
-\captionsetup{justification=raggedright,
+\begin{figure}[t]
+  \includegraphics[width=\linewidth]{Flowchart.pdf}
+  \captionsetup{justification=raggedright,
 singlelinecheck=false}
-\caption{Step-by-step flowchart of R function ampute()}
-\label{fig1}
+  \caption{Step-by-Step flowchart of R-function ampute}
+  \label{fig1}
 \end{figure}
 
 Figure \ref{fig1} gives an overview of the options that can be used when choosing an amputation procedure. Obviously, a quick use of `ampute` is possible, but for a specific design, the steps in Figure 1 show a logical order in which the decisions can be made. This vignette will use these same steps. 
@@ -188,7 +164,7 @@ At this point, the total proportion of missingness is defined, the missing data 
 Whether a case will be made missing eventually, depends on the missingness mechanism. If each case should have an equal probability of having missing values, the argument `mechanism` should be changed to `"MCAR"` (Missing Completely At Random). Also, the arguments from 6 and further may be passed over.   
 ```{r}
 result <- ampute(testdata, prop = 0.3, patterns = mypatterns, 
-                 freq = c(0.7, 0.1, 0.1, 0.1), mechanism = "MCAR")
+                 freq = c(0.7, 0.1, 0.1, 0.1), mech = "MCAR")
 result$mech
 ```
 
@@ -280,11 +256,11 @@ The scatterplots show that there is a very small relation between V1 and the wei
 
 As a default, `ampute` creates continuous missingness. This means that logit probability functions are used to define a candidate's probability of having missing values. Thereafter, the type of amputation can be decided under `type`. A more thorough explanation of how the logit functions work will be given in part 8 of the vignette.
 
-Instead of using continuous formulas to specify the missingness probabilities, these can also be defined by hand. For this, the argument `continuous` should be set to `FALSE`. The `odds` argument can be used to define the probabilities (see part 9. 
+Instead of using continuous formulas to specify the missingness probabilities, these can also be defined by hand. For this, the argument `cont` should be set to `FALSE`. The `odds` argument can be used to define the probabilities (see part 9. 
 
 ### 8. Type
 
-The logit functions are more thoroughly explained by Van Buuren (2012, pp. 63, 64), but a quick overview will be given here. Four MAR missingness functions are known: MARRIGHT, MARMID, MARTAIL and MARLEFT missingness. Figure \ref{fig2} shows the course of the probabilities for standardized values. 
+The logit functions are more thoroughly explained by Van Buuren (2012, pp. 63, 64), but a quick overview will be given here. Four MAR missingness functions are known: RIGHT, MID, TAIL and LEFT missingness. Figure \ref{fig2} shows the course of the probabilities for standardized values. 
 
 ```{r, include = FALSE}
 
@@ -301,12 +277,12 @@ data2[1203:1803, "X1"] <- x1
 data2[1203:1803, "Y"] <- logistic(abs(x1[]-mean(x1))-0.75)
 data2[1804:2404, "X1"] <- x1
 data2[1804:2404, "Y"] <- logistic(mean(x1)-x1[])
-data2["Type"] <- c(rep("MARRIGHT", 601), rep("MARMID", 601), rep("MARTAIL", 601), rep("MARLEFT", 601))
+data2["Type"] <- c(rep("RIGHT", 601), rep("MID", 601), rep("TAIL", 601), rep("LEFT", 601))
 plot1 <- xyplot(Y ~ X1, data2, group = Type, t = 'l', 
        lty=c(1,2,3,4), 
        cex = 0.5, col = rep("black", 4),
        xlab = "Values", ylab = "Probability",
-       key=list(space="top", columns=4, lines = list(lty = c(1, 2, 3, 4)), text = list(c("MARLEFT", "MARMID", "MARRIGHT", "MARTAIL"), cex = 0.5)))
+       key=list(space="top", columns=4, lines = list(lty = c(1, 2, 3, 4)), text = list(c("LEFT", "MID", "RIGHT", "TAIL"), cex = 0.5)))
 
 png(filename="plot1.png", 
     type="cairo",
@@ -327,14 +303,14 @@ singlelinecheck=false}
   \label{fig2}
 \end{figure}
 
-In `ampute`, the logit functions will be performed on the weighted sum scores. Consequently, in the situation of MARRIGHT missingness, cases with high weighted sum scores will have a higher probability to have missing values, compared to cases with low weighted sum scores. For MARMID missingness, the high probabilities are given to the cases with weighted sum scores around the average.
+In `ampute`, the logit functions will be performed on the weighted sum scores. Consequently, in the situation of RIGHT missingness, cases with high weighted sum scores will have a higher probability to have missing values, compared to cases with low weighted sum scores. For MID missingness, the high probabilities are given to the cases with weighted sum scores around the average.
 
 For each pattern, a different missingness type can be chosen. In our example, we have four patterns, so four types are required. It is advised to inspect the result with `bwplot` (below is the result of this plot for pattern 2), although the scatterplots give insight as well (as an example, a plot for pattern 4 is shown). 
 
 ```{r}
 result <- ampute(testdata, prop = 0.3, patterns = mypatterns, 
                  freq = c(0.7, 0.1, 0.1, 0.1), weights = myweights,
-                 type = c("MARRIGHT", "MARTAIL", "MARMID", "MARLEFT"))
+                 type = c("RIGHT", "TAIL", "MID", "LEFT"))
 bwplot(result, which.pat = 2, descriptives = FALSE)
 ```
 
@@ -344,7 +320,7 @@ From the boxplots of pattern 2, it becomes visible that the interquartile range 
 xyplot(result, which.pat = 4)
 ```
 
-First, notice that there are much fewer dots in these scatterplots compared to the scatterplots we saw earlier. This is due to the `freq` setting: we specified that only 10 percent of the cases with missing values should have missingness pattern 4. Second, the scatterplots show that all the amputed data is at the left hand side of the weighted sum scores, due to the `"MARLEFT"` setting in the `type` argument. The last important aspect of these figures is the perfect relation between V2 and the weighted sum scores. Clearly, pattern 4 depends on variable V2 only. Do you remember the `weights` setting that was used?  
+First, notice that there are much fewer dots in these scatterplots compared to the scatterplots we saw earlier. This is due to the `freq` setting: we specified that only 10 percent of the cases with missing values should have missingness pattern 4. Second, the scatterplots show that all the amputed data is at the left hand side of the weighted sum scores, due to the `"LEFT"` setting in the `type` argument. The last important aspect of these figures is the perfect relation between V2 and the weighted sum scores. Clearly, pattern 4 depends on variable V2 only. Do you remember the `weights` setting that was used?  
 
 ```{r}
 result$weights
@@ -365,7 +341,8 @@ myodds <- result$odds
 myodds
 ```
 
-For pattern 1, the candidates will be divided into four groups. This is done based on quantiles, in order to obtain equally sized groups. The values `c(1, 2, 3, 4)` mean that a case with a weighted sum score in the highest quantile, will have a probability of having missing values that is four times higher than a candidate with a weighted sum score in the lowest quantile. In Figure \ref{fig3} the different probabilities that belong to this setting are shown for 100 cases.  
+For pattern 1, the candidates will be divided into four groups. This is done based on quantiles, in order to obtain equally sized groups. The values `c(1, 2, 3, 4)` mean that a case with a weighted sum score in the highest quantile, will have a probability of having missing values that is four times higher than a candidate with a weighted sum score in the lowest quantile. In Figure \ref{fig3} the different probabilities that belong to this setting are shown for 100 cases. 
+
 ```{r, include = FALSE}
 len <- length(result$scores[[1]])
 R <- sample(x = c(1, 0), size = len, 
@@ -470,7 +447,7 @@ The weighted sum scores of the fourth pattern will be divided into six groups. A
 ```{r}
 result <- ampute(testdata, prop = 0.3, patterns = mypatterns, 
                  freq = c(0.7, 0.1, 0.1, 0.1), weights = myweights,
-                 continuous = FALSE, odds = myodds)
+                 cont = FALSE, odds = myodds)
 bwplot(result, which.pat = c(3, 4), descriptives = FALSE)
 ```
 
@@ -522,5 +499,4 @@ incomplete data sets} (pp. 110-113). Dissertation. Rotterdam: Erasmus University
 Van Buuren, S. (2012). \emph{Flexible imputation of missing data} (pp. 63-64). 
 Boca Raton, FL.: Chapman & Hall/CRC Press.
 
-Vink, G. (2016). Towards a standardized evaluation of multiple imputation 
-routines. 
+Vink, G. (2016). Towards a standardized evaluation of multiple imputation routines. 
