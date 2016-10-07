@@ -87,8 +87,8 @@ bwplot.mads <- function(x, yvar = NULL, which.pat = NULL, standardized = TRUE,
   for (j in 1:length(varlist)) {
     vec3[j] <- paste("", varlist[j])
   }
+  var <- length(varlist)
   if (descriptives) {
-    var <- length(varlist)
     desc <- array(NA, dim = c(2 * length(which.pat), 4, var),
                   dimnames = list(Pattern = vec1, 
                                   Descriptives = c("Amp", "Mean", "Var", "N"), 
@@ -117,22 +117,17 @@ bwplot.mads <- function(x, yvar = NULL, which.pat = NULL, standardized = TRUE,
     }
     p[["Descriptives"]] <- desc
   }
-  theme <- list(superpose.symbol = list(col = mdc(1:2), pch = 1),
-                superpose.line = list(col = mdc(4:5), lwd = 1),
-                box.dot = list(col = mdc(1:2)),
-                box.rectangle = list(col = mdc(4:5)),
-                box.symbol = list(col = mdc(1:2)),
-                plot.symbol = list(col = mdc(1:2), pch = 1),
-                plot.line = list(col = mdc(4:5)), 
+  
+  theme <- list(superpose.symbol = list(col = "black", pch = 1),
+                superpose.line = list(col = "black", lwd = 1),
+                box.dot = list(col = "black"),
+                box.rectangle = list(col = "black"),
+                box.umbrella = list(col = "black"),
+                box.symbol = list(col = "black"),
+                plot.symbol = list(col = "black", pch = 1),
+                plot.line = list(col = "black"), 
                 strip.background = list(col = "grey95"))
 
-  
-  #theme$box.dot$col <- rep(theme$box.dot$col[1:2], c(1,x$m))
-  #theme$box.rectangle$col <- rep(theme$box.rectangle$col[1:2], c(1,x$m))
-  #theme$box.umbrella$col  <- rep(theme$box.rectangle$col[1:2], c(1,x$m))
-  #theme$plot.symbol$col <- mdc(3)
-  #theme$plot.symbol$pch <- 1
-  
   for (i in 1:pat) {
     p[[paste("Boxplot pattern", which.pat[i])]] <- 
       bwplot(x = formula, data = data[data$.pat == which.pat[i], ],
