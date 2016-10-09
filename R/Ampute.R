@@ -394,8 +394,8 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     warning("Odds matrix is not used when mechanism is MCAR", call. = FALSE)
   }
   if (mech != "MCAR" & !is.null(weights)) {
-    if (is.vector(weights) & (ncol(data) / length(weights))%%1 == 0) {
-      weights <- matrix(weights, ncol(data) / length(weights), byrow = TRUE)
+    if (is.vector(weights) & (length(weights) / ncol(data)) %% 1 == 0) {
+      weights <- matrix(weights, length(weights) / ncol(data), byrow = TRUE)
     } else if (is.vector(weights)) {
       stop("Length of weight vector does not match #variables", call. = FALSE)
     }  
