@@ -11,7 +11,7 @@
 #'\item{\code{prop}:}{Proportion of cases with missing values. Note: even when
 #'the proportion is entered as the proportion of missing cells (when 
 #'\code{bycases == TRUE}), this object contains the proportion of missing cases.}
-#'\item{\code{patterns}:}{A matrix of size #patterns by #variables where \code{0} 
+#'\item{\code{patterns}:}{A data frame of size #patterns by #variables where \code{0} 
 #'indicates a variable has missing values and \code{1} indicates a variable remains 
 #'complete.}
 #'\item{\code{freq}:}{A vector of length #patterns containing the relative 
@@ -21,7 +21,7 @@
 #'percent for pattern 3. The vector sums to 1.}
 #'\item{\code{mech}:}{A string specifying the missingness mechanism, either 
 #'\code{"MCAR"}, \code{"MAR"} or \code{"MNAR"}.}
-#'\item{\code{weights}:}{A matrix of size #patterns by #variables. It contains 
+#'\item{\code{weights}:}{A data frame of size #patterns by #variables. It contains 
 #'the weights that were used to calculate the weighted sum scores. The weights 
 #'may differ between patterns and between variables.}
 #'\item{\code{cont}:}{Logical, whether probabilities are based on continuous logit

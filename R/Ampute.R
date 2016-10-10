@@ -92,14 +92,14 @@
 #'Categorical variables should have been transformed into dummies.
 #'@param prop A scalar specifying the proportion of missingness. Should be a value 
 #'between 0 and 1. Default is a missingness proportion of 0.5.
-#'@param patterns A matrix of size #patterns by #variables where \code{0} indicates 
-#'a variable should have missing values and \code{1} indicates a variable should 
-#'remain complete. The user may specify as many patterns as desired. One pattern 
-#'(a vector) or double patterns are possible as well. Default is a square matrix 
-#'of size #variables where each pattern has missingness on one variable only 
-#'(created with \code{\link{ampute.default.patterns}}). After the amputation procedure, 
-#'\code{\link{md.pattern}} can be used to investigate the missing data patterns 
-#'in the data.   
+#'@param patterns A matrix or data frame of size #patterns by #variables where 
+#'\code{0} indicates a variable should have missing values and \code{1} indicates 
+#'a variable should remain complete. The user may specify as many patterns as 
+#'desired. One pattern (a vector) or double patterns are possible as well. Default 
+#'is a square matrix of size #variables where each pattern has missingness on one 
+#'variable only (created with \code{\link{ampute.default.patterns}}). After the 
+#'amputation procedure, \code{\link{md.pattern}} can be used to investigate the 
+#'missing data patterns in the data.   
 #'@param freq A vector of length #patterns containing the relative frequency with 
 #'which the patterns should occur. For example, for three missing data patterns, 
 #'the vector could be \code{c(0.4, 0.4, 0.2)}, meaning that of all cases with 
@@ -109,17 +109,17 @@
 #'@param mech A string specifying the missingness mechanism, either MCAR 
 #'(Missing Complete At Random), MAR (Missing At Random) or MNAR (Missing Not At 
 #'Random). Default is a MAR missingness mechanism.    
-#'@param weights A matrix of size #patterns by #variables. The matrix contains the 
-#'weights that will be used to calculate the weighted sum scores. For a MAR mechanism,
-#'weights of the variables that will be made incomplete, should be zero. For a MNAR
-#'mechanism, these weights might have any possible value. Furthermore, the weights 
-#'may differ between patterns and between variables. They may be negative as well. 
-#'Within each pattern, the relative size of the values are of importance. The default
-#'weights matrix is made with \code{\link{ampute.default.weights}} and returns a 
-#'matrix with equal weights for all variables. In case of MAR, variables that will 
-#'be amputed will be weighted with \code{0}. If it is MNAR, variables that will 
-#'be observed will be weighted with \code{0}. If mechanism is MCAR, the weights 
-#'matrix will not be used.  
+#'@param weights A matrix or data frame of size #patterns by #variables. The matrix 
+#'contains the weights that will be used to calculate the weighted sum scores. For 
+#'a MAR mechanism, weights of the variables that will be made incomplete, should be 
+#'zero. For a MNAR mechanism, these weights might have any possible value. Furthermore, 
+#'the weights may differ between patterns and between variables. They may be negative 
+#'as well. Within each pattern, the relative size of the values are of importance. 
+#'The default weights matrix is made with \code{\link{ampute.default.weights}} and 
+#'returns a matrix with equal weights for all variables. In case of MAR, variables 
+#'that will be amputed will be weighted with \code{0}. If it is MNAR, variables 
+#'that will be observed will be weighted with \code{0}. If mechanism is MCAR, the 
+#'weights matrix will not be used.  
 #'@param cont Logical. Whether the probabilities should be based on a continuous 
 #'or discrete distribution. If TRUE, the probabilities of being missing are based 
 #'on a continuous logit distribution. \code{\link{ampute.continuous}} will be used
@@ -206,6 +206,8 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     # will obtain a certain score that will define his probability to be made missing.
     # The calculation of the probabilities occur in the function ampute.mcar(), 
     # ampute.continuous() or ampute.discrete(), based on the kind of missingness. 
+    patterns <- as.matrix(patterns)
+    weights <- as.matrix(weights)
     scores <- list()
     for (i in 1:nrow(patterns)) {
       if (length(P[P == (i + 1)]) == 0) {
@@ -289,9 +291,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       warning("Frequency vector and patterns matrix have changed because of 
               pattern(s) with merely ones", call. = FALSE)
     }
-    if (is.vector(patterns)) {
-      patterns <- matrix(patterns, 1)
-    }
     prop.zero <- 0
     row.zero <- c()
     for (h in 1:nrow(patterns)) {
@@ -344,7 +343,11 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     }
   } else if (is.vector(patterns)) {
     stop("Length of pattern vector does not match #variables", call. = FALSE)
-  }  
+  }
+  if (!is.data.frame(patterns)) {
+    patterns <- data.frame(patterns)
+    names(patterns) <- names(data)
+  }
   if (is.null(freq)) {
     freq <- ampute.default.freq(patterns = patterns)
   }
@@ -404,6 +407,8 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     weights <- ampute.default.weights(patterns = patterns.new,
                                       mech = mech)
   }
+  weights <- data.frame(weights)
+  names(weights) <- names(data)
   if (!is.vector(cont)) {
     cont <- as.vector(cont)
     warning("Continuous should contain merely TRUE or FALSE", call. = FALSE)
@@ -511,7 +516,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   #
   # Create return object
   call <- match.call()
-  missing.data <- as.data.frame(missing.data, col.names = names(data))
+  missing.data <- data.frame(missing.data)
   result <- list(call = call, 
                  prop = prop, 
                  patterns = patterns.new,
