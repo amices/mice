@@ -79,7 +79,7 @@ cells. Default is TRUE.}
 return object will contain everything but the amputed data set.}
 }
 \value{
-Returns an S3 object of class \code{\link{mads-class}} (multivariately 
+Returns an S3 object of class \code{\link{mads-class}} (multivariate 
 amputed data set)
 }
 \description{

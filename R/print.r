@@ -94,7 +94,7 @@ print.mipo <- function(x, ...) {
 #'@export
 print.mads <- function(x, ...) {
   if (is.mads(x)) {
-    cat("Multivariately Amputed Data Set")
+    cat("Multivariate Amputed Data Set")
     cat("\nCall: ")
     print(x$call)
     cat("Class:", class(x))

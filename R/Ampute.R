@@ -147,7 +147,7 @@
 #'@param run Logical. If TRUE, the amputations are implemented. If FALSE, the 
 #'return object will contain everything but the amputed data set. 
 #'
-#'@return Returns an S3 object of class \code{\link{mads-class}} (multivariately 
+#'@return Returns an S3 object of class \code{\link{mads-class}} (multivariate 
 #'amputed data set)
 #'@author Rianne Schouten, Gerko Vink, Peter Lugtig, 2016
 #'@seealso \code{\link{mads-class}}, \code{\link{bwplot}}, \code{\link{xyplot}},
