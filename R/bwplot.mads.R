@@ -4,11 +4,14 @@
 
 #'Box-and-whisker plot of amputed and non-amputed data
 #'
-#'Plotting method for amputed data using \pkg{lattice}. \code{bwplot}
-#'produces box-and-whisker plots. The function automatically separates the 
-#'amputed and non-amputed data. 
+#'Plotting method to investigate the result of function \code{\link{ampute}}. 
+#'Based on \code{\link{lattice}}. \code{bwplot} produces box-and-whisker plots of 
+#'the relation between the data variables and the amputed data. The function does 
+#'not show which data is amputed. It does show how the amputed values are related 
+#'to the variable values. 
 #'
-#'@param x A \code{mads} object, typically created by \code{\link{ampute}}.
+#'@param x A \code{mads} (\code{\link{mads-class}}) object, typically created by 
+#'\code{\link{ampute}}.
 #'@param yvar A string or vector of variable names that needs to be plotted. As 
 #'a default, all variables will be plotted. 
 #'@param which.pat A scalar or vector indicating which patterns need to be plotted. 
@@ -23,24 +26,17 @@
 #'boxplots of six variables need to be placed on 3 rows and 2 columns. Default
 #'is 1 row and an amount of columns equal to #variables. Note that for more than 
 #'6 variables, multiple plots will be created automatically.
-#'@param theme A named list containing the graphical parameters. The default
-#'function \code{mice.theme} produces a short list of default colors, line
-#'width, and so on. The extensive list may be obtained from
-#'\code{trellis.par.get}.
-#'@param outer See \code{\link[lattice:bwplot]{bwplot}}.
-#'@param multiple See \code{\link[lattice:bwplot]{bwplot}}.
 #'@return A list containing the box-and-whisker plots. Note that a new pattern 
 #'will always be shown in a new plot. 
 #'@note The \code{mads} object contains all the information you need to 
-#'make any desired plots. Check \code{\link{mads-class}} or the vignette titled "Multivariate 
-#'Amputation using Ampute" to understand the contents of class object \code{mads}.
+#'make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate 
+#'Amputation using Ampute} to understand the contents of class object \code{mads}.
 #'@author Rianne Schouten, 2016
 #'@seealso \code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for 
 #'an overview of the package, \code{\link{mads-class}}
 #'@export
 bwplot.mads <- function(x, yvar = NULL, which.pat = NULL, standardized = TRUE,
-                        descriptives = TRUE, layout = NULL, theme = mice.theme(), 
-                        multiple = TRUE, outer = TRUE) {
+                        descriptives = TRUE, layout = NULL) {
   if (!is.mads(x)) {
     stop("Object is not of class mads")
   }
@@ -94,8 +90,8 @@ bwplot.mads <- function(x, yvar = NULL, which.pat = NULL, standardized = TRUE,
   for (j in 1:length(varlist)) {
     vec3[j] <- paste("", varlist[j])
   }
+  var <- length(varlist)
   if (descriptives) {
-    var <- length(varlist)
     desc <- array(NA, dim = c(2 * length(which.pat), 4, var),
                   dimnames = list(Pattern = vec1, 
                                   Descriptives = c("Amp", "Mean", "Var", "N"), 
@@ -104,32 +100,42 @@ bwplot.mads <- function(x, yvar = NULL, which.pat = NULL, standardized = TRUE,
     for (i in 1:length(which.pat)) {
       wp <- which.pat[i]
       desc[(i*2) - 1, 2, ] <- 
-        round(unname(sapply(data[data$.pat == wp & data$.amp == "Amp", 
-                                 varlist], mean)), 5)
+        round(sapply(varlist, function(x)
+          mean(data[data$.pat == wp & data$.amp == "Amp", x])), 5)
       desc[(i*2), 2, ] <- 
-        round(unname(sapply(data[data$.pat == wp & data$.amp == "Non-Amp", 
-                                 varlist], mean)), 5)
+        round(sapply(varlist, function(x)
+          mean(data[data$.pat == wp & data$.amp == "Non-Amp", x])), 5)
       desc[(i*2) - 1, 3, ] <- 
-        round(unname(sapply(data[data$.pat == wp & data$.amp == "Amp", 
-                                 varlist], var)), 5)
+        round(sapply(varlist, function(x)
+          var(data[data$.pat == wp & data$.amp == "Amp", x])), 5)
       desc[(i*2), 3, ] <- 
-        round(unname(sapply(data[data$.pat == wp & data$.amp == "Non-Amp", 
-                                 varlist], var)), 5)
+        round(sapply(varlist, function(x)
+          var(data[data$.pat == wp & data$.amp == "Non-Amp", x])), 5)
       desc[(i*2) - 1, 4, ] <- 
-        unname(sapply(data[data$.pat == wp & data$.amp == "Amp", 
-                           varlist], length))
+        sapply(varlist, function(x)
+          length(data[data$.pat == wp & data$.amp == "Amp", x]))
       desc[(i*2), 4, ] <- 
-        unname(sapply(data[data$.pat == wp & data$.amp == "Non-Amp", 
-                           varlist], length))
+        sapply(varlist, function(x)
+          length(data[data$.pat == wp & data$.amp == "Non-Amp", x]))
     }
     p[["Descriptives"]] <- desc
   }
+  
+  theme <- list(superpose.symbol = list(col = "black", pch = 1),
+                superpose.line = list(col = "black", lwd = 1),
+                box.dot = list(col = "black"),
+                box.rectangle = list(col = "black"),
+                box.umbrella = list(col = "black"),
+                box.symbol = list(col = "black"),
+                plot.symbol = list(col = "black", pch = 1),
+                plot.line = list(col = "black"), 
+                strip.background = list(col = "grey95"))
+
   for (i in 1:pat) {
     p[[paste("Boxplot pattern", which.pat[i])]] <- 
       bwplot(x = formula, data = data[data$.pat == which.pat[i], ],
-             multiple = multiple, outer = outer, layout = layout, 
-             ylab = "", par.settings = list(strip.background = list(
-               col = "grey95")), 
+             multiple = TRUE, outer = TRUE, layout = layout, 
+             ylab = "", par.settings = theme,
              xlab = paste("Data distributions in pattern", which.pat[i]))
   }
   return(p)

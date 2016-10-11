@@ -11,37 +11,39 @@
 #'\item{\code{prop}:}{Proportion of cases with missing values. Note: even when
 #'the proportion is entered as the proportion of missing cells (when 
 #'\code{bycases == TRUE}), this object contains the proportion of missing cases.}
-#'\item{\code{patterns}:}{A matrix of size #patterns by #variables where 0 
-#'indicates a variable has missing values and 1 indicates a variable remains 
+#'\item{\code{patterns}:}{A data frame of size #patterns by #variables where \code{0} 
+#'indicates a variable has missing values and \code{1} indicates a variable remains 
 #'complete.}
 #'\item{\code{freq}:}{A vector of length #patterns containing the relative 
 #'frequency with which the patterns occur. For example, if the vector is 
 #'\code{c(0.4, 0.4, 0.2)}, this means that of all cases with missing values, 
 #'40 percent is candidate for pattern 1, 40 percent for pattern 2 and 20 
 #'percent for pattern 3. The vector sums to 1.}
-#'\item{\code{weights}:}{A matrix of size #patterns by #variables. It contains 
+#'\item{\code{mech}:}{A string specifying the missingness mechanism, either 
+#'\code{"MCAR"}, \code{"MAR"} or \code{"MNAR"}.}
+#'\item{\code{weights}:}{A data frame of size #patterns by #variables. It contains 
 #'the weights that were used to calculate the weighted sum scores. The weights 
 #'may differ between patterns and between variables.}
+#'\item{\code{cont}:}{Logical, whether probabilities are based on continuous logit
+#'functions or on discrete odds distributions.}
+#'\item{\code{type}:}{A vector of strings containing the type of missingness 
+#'for each pattern. Either \code{"LEFT"}, \code{"MID"}, \code{"TAIL"} or 
+#'\code{"RIGHT"}. The first type refers to the first pattern, the second type
+#'to the second pattern, etc.} 
 #'\item{\code{odds}:}{A matrix where #patterns defines the #rows. Each row contains 
-#'the odds of being missing for the concurrent pattern. The amount of odds values 
+#'the odds of being missing for the corresponding pattern. The amount of odds values 
 #'defines in how many quantiles the sum scores were divided. The values are 
 #'relative probabilities: a quantile with odds value 4 will have a probability of 
 #'being missing that is four times higher than a quantile with odds 1. The 
 #'#quantiles may differ between patterns, NA is used for cells remaining empty.}
 #'\item{\code{amp}:}{A data frame containing the input data with NAs for the 
 #'amputed values.}
-#'\item{\code{mech}:}{A string specifying the missingness mechanism, either 
-#'\code{"MCAR"} or \code{"MAR"}.}
-#'\item{\code{type}:}{A vector of strings containing the type of MAR missingness 
-#'for each pattern. Either \code{"MARLEFT"}, \code{"MARMID"}, \code{"MARTAIL"} or 
-#'\code{"MARRIGHT"}. The first type refers to the first pattern, the second type
-#'to the second pattern, etc.} 
-#'\item{\code{cand}:}{A vector containing the values of the patterns the cases are 
-#'candidate for. For each case, a value between 1 and #patterns 1 is given. For 
-#'example, a case with value 2 is candidate for missing data pattern 2.}
+#'\item{\code{cand}:}{A vector that contains the pattern number for each case. 
+#'A value between 1 and #patterns is given. For example, a case with value 2 is 
+#'candidate for missing data pattern 2.}
 #'\item{\code{scores}:}{A list containing vectors with weighted sum scores of the 
-#'candidates. The first vector refers to the candidates for the first pattern, the
-#'second vector refers to the candidates for the second pattern, etc. The length
+#'candidates. The first vector refers to the candidates of the first pattern, the
+#'second vector refers to the candidates of the second pattern, etc. The length
 #'of the vectors differ because the number of candidates is different for each 
 #'pattern.}
 #'\item{\code{data}:}{The complete data set that was entered in \code{ampute}.}
@@ -59,11 +61,12 @@ setClass("mads",
            prop      = "numeric" ,
            patterns  = "matrix",
            freq      = "numeric",
+           mech      = "character",
            weights   = "matrix",
+           cont      = "logical",
+           type      = "character",
            odds      = "matrix",
            amp       = "data.frame",
-           mech      = "character",
-           type      = "character",
            cand      = "integer",
            scores    = "list",
            data      = "data.frame"),
