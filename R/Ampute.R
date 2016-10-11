@@ -199,14 +199,13 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   #
   # ------------------------ sum.scores -----------------------------------
   #
-  sum.scores <- function(P, data, patterns, weights, mech) {
+  sum.scores <- function(P, data, weights, mech) {
     # This is an underlying function of multivariate amputation function ampute().
     # This function is used to calculate the weighted sum scores of the candidates.
     # Based on the data, the weights matrix and the kind of mechanism, each case
     # will obtain a certain score that will define his probability to be made missing.
     # The calculation of the probabilities occur in the function ampute.mcar(), 
     # ampute.continuous() or ampute.discrete(), based on the kind of missingness. 
-    patterns <- as.matrix(patterns)
     weights <- as.matrix(weights)
     scores <- list()
     for (i in 1:nrow(patterns)) {
@@ -215,13 +214,8 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       } else {
         candidates <- as.matrix(data[P == (i + 1), ])
         # For each candidate in the pattern, a weighted sum score is calculated
-        if (mech == "MAR") {
-          scores[[i]] <- apply(candidates, 1, 
-                               function(x) (weights[i, ] *  patterns[i, ]) %*% x)
-        } else {
-          scores[[i]] <- apply(candidates, 1, 
-                               function(x) weights[i, ] %*% x)
-        }
+        scores[[i]] <- apply(candidates, 1, 
+                             function(x) weights[i, ] %*% x)
       }
     }
     return(scores)
@@ -326,6 +320,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
             numeric data",
             call. = FALSE)
   }
+  data <- data.frame(data)
   st.data <- data.frame(scale(data))
   if (prop < 0 | prop > 100) {
     stop("Proportion of missingness should be a value between 0 and 1 
@@ -489,7 +484,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
              call. = FALSE)
       } else {
         scores <- sum.scores(P = P,
-                             patterns = patterns.new,
                              data = st.data,
                              weights = weights,
                              mech = mech)
