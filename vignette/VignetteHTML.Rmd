@@ -2,7 +2,7 @@
 title: "Multivariate Amputation using Ampute"
 author: "Rianne Schouten"
 date: "Saturday, October 8th, 2016"
-output: pdf_document
+output: html_document
 header-includes:
 - \usepackage{blkarray}
 - \usepackage{tikz}
@@ -41,13 +41,7 @@ source("../R/ampute.R")
 set.seed(2016)
 ```
 
-\begin{figure}[h]
-  \includegraphics[width=\linewidth]{Flowchart.pdf}
-  \captionsetup{justification=raggedright,
-singlelinecheck=false}
-  \caption{Step-by-step flowchart of R-function ampute}
-  \label{fig1}
-\end{figure}
+![Figure 1. Step-by-step flowchart of R-function ampute](Flowchart.jpg)
 
 Function `ampute` has multiple options that can be specified. Figure \ref{fig1} gives an overview of all the possiblities and also in which order the decisions need to be taken. If a MCAR missingness mechanism is desired, for example, steps 6 to 9 do not need to be specified. 
 
@@ -246,45 +240,13 @@ First, there is the function `bwplot` that can be imposed on the `mads` object i
 
 In the function `bwplot`, the argument `which.pat` can be used to define the patterns you are interested in (default: all patterns). The argument `yvar` should contain the variables names (default: all variables). Besides, the function returns the mean, variance and n of the amputed and non-amputed data for each variable and each pattern requested. In the column `Amp`, a `1` refers to the amputed data and `0` to the non-amputed data. If the descriptives are not required, the argument `descriptives` can be set to `FALSE`. 
 
-```{r, eval = FALSE}
-bwplot(result, which.pat = c(1, 3), descriptives = FALSE)
+```{r}
+bwplot(result, which.pat = c(1, 3))
 ```
-
-```{r, include = FALSE}
-bwplot1 <- bwplot(result, which.pat = 1)
-png(filename="bwplot1.png", 
-    type="cairo",
-    units="in", 
-    width=4, 
-    height=3, 
-    pointsize=12, 
-    res=200)
-bwplot1
-dev.off()
-bwplot2 <- bwplot(result, which.pat = 3)
-png(filename="bwplot2.png", 
-    type="cairo",
-    units="in", 
-    width=4, 
-    height=3, 
-    pointsize=12, 
-    res=200)
-bwplot2
-dev.off()
-```
-
-\begin{figure}[h!]
-\begin{subfigure}{0.75\textwidth}
-\includegraphics[width=\linewidth]{bwplot1.png}
-\end{subfigure}
-\begin{subfigure}{0.75\textwidth}
-\includegraphics[width=\linewidth]{bwplot2.png}
-\end{subfigure}
-\end{figure}
 
 The medians and boundaries of the boxes show that in pattern 1, the amputed data is shifted to the right with respect to the non-amputed data. For variable V2, this effect is the biggest, due to the weight value that was specified. For V1, there is a very small difference between the boxplots of the amputed and non-amputed data. This makes sense, because variable V1 was amputed in the first pattern and therefore set to `0` in the `weights` matrix. The small difference that is visible is due to the positive correlation between V1 on the one side and V2 and V3 on the other side. These correlations were created during the simulation of the data. 
 
-If desired, one could use the function `tsum.test` from package `BSDA` to perform a t-test on the amputed and non-amputed data. The data returned in the descriptives table (not shown in this vignette) can be used for that. For example, to know whether the mean difference between the amputed and non-amputed data for variable V2 in pattern 1 is significant, one could run:
+If desired, one could use the function `tsum.test` from package `BSDA` to perform a t-test on the amputed and non-amputed data. The data returned in the descriptives table can be used for that. For example, to know whether the mean difference between the amputed and non-amputed data for variable V2 in pattern 1 is significant, one could run:
 
 ```{r, include = FALSE}
 require(BSDA)
@@ -305,26 +267,9 @@ For pattern 3, the difference between the distributions of the amputed and non-a
 
 Scatterplots might also help to investigate the effect of the specifications. The function `xyplot` can be directly imposed on the `mads` object and contains arguments comparable to `bwplot`. For example, the weighted sum scores of pattern 1 can be set against the three variables. 
 
-```{r, eval = FALSE}
+```{r}
 xyplot(result, which.pat = 1)
 ```
-
-```{r, include = FALSE}
-xyplot1 <- xyplot(result, which.pat = 1)
-png(filename="xyplot1.png", 
-    type="cairo",
-    units="in", 
-    width=5.5, 
-    height=4.5, 
-    pointsize=12, 
-    res=200)
-xyplot1
-dev.off()
-```
-
-\begin{figure}[h!]
-\includegraphics[width=\linewidth]{xyplot1.png}
-\end{figure}
 
 The scatterplots show that there is a very small relation between V1 and the weighted sum scores. Furthermore, the relation between V2 and the weighted sum scores is very strong, meaning that a case's value on V2 is very important in the creation of the weighted sum score. Actually, this is what causes the differences between the amputed and non-amputed data in the boxplots above. For V3 and the weighted sum scores, the relation is a bit weaker than for V2 but more present than for V1. 
 
@@ -336,15 +281,7 @@ Instead of using continuous formulas to specify the missingness probabilities, t
 
 ### 8. Type
 
-\begin{figure}[t!]
-  \includegraphics[width=\linewidth]{plot1.png}
-  \captionsetup{justification=raggedright,
-singlelinecheck=false}
-  \caption{Adaptations of continuous logit functions}
-  \label{fig2}
-\end{figure}
-
-The logit functions are more thoroughly explained by Van Buuren (2012, pp. 63, 64), but a quick overview will be given here. Four missingness functions are known: RIGHT, MID, TAIL and LEFT missingness. Figure \ref{fig2} shows the course of the probabilities for standardized values. 
+The logit functions are more thoroughly explained by Van Buuren (2012, pp. 63, 64), but a quick overview will be given here. Four missingness functions are known: RIGHT, MID, TAIL and LEFT missingness. Figure 2 shows the course of the probabilities for standardized values. 
 
 ```{r, include = FALSE}
 
@@ -380,6 +317,8 @@ plot1
 dev.off()
 ```
 
+![Figure 2. Adaptations of continuous logit functions](plot1.png)
+
 In `ampute`, the logit functions will be performed on the weighted sum scores. Consequently, in the situation of RIGHT missingness, cases with high weighted sum scores will have a higher probability to have missing values, compared to cases with low weighted sum scores. For MID missingness, the high probabilities are given to the cases with weighted sum scores around the average.
 
 For each pattern, a different missingness type can be chosen. In our example, we have four patterns, so four types are required. It is advised to inspect the result with `bwplot` (below is the result of this plot for pattern 2), although the scatterplots give insight as well (as an example, a plot for pattern 4 is shown). 
@@ -390,49 +329,15 @@ result <- ampute(testdata, prop = 0.3, patterns = mypatterns,
                  type = c("RIGHT", "TAIL", "MID", "LEFT"))
 ```
 
-```{r, eval = FALSE}
+```{r}
 bwplot(result, which.pat = 2, descriptives = FALSE)
 ```
 
-```{r, include = FALSE}
-bwplot3 <- bwplot(result, which.pat = 2)
-png(filename="bwplot3.png", 
-    type="cairo",
-    units="in", 
-    width=4, 
-    height=3, 
-    pointsize=12, 
-    res=200)
-bwplot3
-dev.off()
-```
-
-\begin{figure}[h!]
-\includegraphics[width=\linewidth]{bwplot3.png}
-\end{figure}
-
 From the boxplots of pattern 2, it becomes visible that the interquartile range (IQR) is much bigger for the amputed V3 values compared to the non-amputed data. This is due to the fact that in pattern 2, only V3 defines the missingness. Besides, we requested a TAIL missingness type, which means that all the cases with values at the tails of the distribution of the weighted sum scores (based on merely V3), will be made missing.
 
-```{r, eval = FALSE}
+```{r}
 xyplot(result, which.pat = 4)
 ```
-
-```{r, include = FALSE}
-xyplot2 <-xyplot(result, which.pat = 4)
-png(filename="xyplot2.png", 
-    type="cairo",
-    units="in", 
-    width=5.5, 
-    height=4.5, 
-    pointsize=12, 
-    res=200)
-xyplot2
-dev.off()
-```
-
-\begin{figure}[h!]
-\includegraphics[width=\linewidth]{xyplot2.png}
-\end{figure}
 
 First, notice that there are much fewer dots in these scatterplots compared to the scatterplots we saw earlier. This is due to the `freq` setting: we specified that only 10 percent of the cases with missing values should have missingness pattern 4. Secondly, the scatterplots show that all the amputed data is at the left hand side of the weighted sum scores due to the `"LEFT"` setting in the `type` argument. Thirdly, these figures show the perfect relation between variable V2 and the weighted sum scores. Clearly, pattern 4 depends on variable V2 only, which we remember from the `weights` setting that was used.   
 
@@ -450,15 +355,7 @@ myodds <- result$odds
 myodds
 ```
 
-This matrix means that for each pattern, the candidates will be divided into four groups. This division occurs based on quantiles, in order to obtain equally sized groups. The values `c(1, 2, 3, 4)` mean that a case with a weighted sum score in the highest quantile, will have a probability of having missing values that is four times higher than a candidate with a weighted sum score in the lowest quantile. In Figure \ref{fig3} the different probabilities that belong to this setting are shown for 100 candidates of pattern 1. 
-
-\begin{figure}[b!]
-  \includegraphics[width=\linewidth]{plot2.png}
-  \captionsetup{justification=raggedright,
-singlelinecheck=false}
-  \caption{Probabilities to have missing values for the four groups in pattern 1 and the relation between the groups and the weighted sum scores.}
-  \label{fig3}
-\end{figure}
+This matrix means that for each pattern, the candidates will be divided into four groups. This division occurs based on quantiles, in order to obtain equally sized groups. The values `c(1, 2, 3, 4)` mean that a case with a weighted sum score in the highest quantile, will have a probability of having missing values that is four times higher than a candidate with a weighted sum score in the lowest quantile. In Figure 3 the different probabilities that belong to this setting are shown for 100 candidates of pattern 1. 
 
 ```{r, include = FALSE}
 len <- length(result$scores[[1]])
@@ -521,19 +418,15 @@ plot3
 dev.off()
 ```
 
+![Figure 3. Probabilities to have missing values for the four groups in pattern 1 and the relation between the groups and the weighted sum scores.](plot2.png)
+
+![Figure 4. Division of odds groups over variables $V_2$ and $V_3$](plot3.png)
+
 As can be seen, there are indeed four groups in pattern 1. The groups have an approximately equal size, with each a certain probability to obtain missing values. The probability of group 4 is indeed four times as big as the probability of group 1.  
 
-The relation between the groups and the variable values is shown Figure \ref{fig4}. Because the relationship between variable V2 and the weighted sum scores is high (due to the `weights` setting), the groups can be distinguished very well. Besides, for higher values of V2, the weighted sum scores are higher. The cases with these values are in group 4 and therefore at the right hand side of the V2 scale. For variable V3, the relation between the values and the group allocation is small. This again is due to the `weights` setting. Still, because of the odds values, group 4 is much more to the right of the V3 scale than group 1, 2 and 3. 
+The relation between the groups and the variable values is shown Figure 4. Because the relationship between variable V2 and the weighted sum scores is high (due to the `weights` setting), the groups can be distinguished very well. Besides, for higher values of V2, the weighted sum scores are higher. The cases with these values are in group 4 and therefore at the right hand side of the V2 scale. For variable V3, the relation between the values and the group allocation is small. This again is due to the `weights` setting. Still, because of the odds values, group 4 is much more to the right of the V3 scale than group 1, 2 and 3. 
 
 Let us now go deeper into the contents of the `odds` matrix. The #rows of this matrix is equal to #patterns. The #columns can be defined by the user and depends on the desired amputation procedure. 
-
-\begin{figure}[t!]
-  \includegraphics[width=\linewidth]{plot3.png}
-  \captionsetup{justification=raggedright,
-singlelinecheck=false}
-  \caption{Division of odds groups over variables $V_2$ and $V_3$}
-  \label{fig4}
-\end{figure}
 
 The amount of values in each row defines the number of groups that will be created from the weighted sum scores in that specific pattern. This number can be different for the different patterns. The values themselves define the odds probabilities of having missing values. Note that the values are relative values. For instance, a setting of `c(2, 6)` is similar to `c(3, 9)`.
 
@@ -556,40 +449,9 @@ result <- ampute(testdata, prop = 0.3, patterns = mypatterns,
                  cont = FALSE, odds = myodds)
 ```
 
-```{r, eval = FALSE}
+```{r}
 bwplot(result, which.pat = c(3, 4), descriptives = FALSE)
 ```
-
-```{r, include = FALSE}
-bwplot4 <- bwplot(result, which.pat = 3)
-png(filename="bwplot4.png", 
-    type="cairo",
-    units="in", 
-    width=4, 
-    height=3, 
-    pointsize=12, 
-    res=200)
-bwplot4
-dev.off()
-bwplot5 <- bwplot(result, which.pat = 4)
-png(filename="bwplot5.png", 
-    type="cairo",
-    units="in", 
-    width=4, 
-    height=3, 
-    pointsize=12, 
-    res=200)
-bwplot5
-dev.off()
-```
-
-\begin{figure}[h!]
-\includegraphics[width=\linewidth]{bwplot4.png}
-\end{figure}
-
-\begin{figure}[h!]
-\includegraphics[width=\linewidth]{bwplot5.png}
-\end{figure}
 
 In the boxplots of pattern 3, it is visible that the IQR of the amputed data is bigger than the one of the non-amputed data. This is especially the case for variable V1, a bit less for variable V2 and almost not at hand for variable V3.
 
