@@ -22,6 +22,8 @@
 #'that the scatterplots of six variables need to be placed on 3 rows and 2 columns. 
 #'There are several defaults for different #variables. Note that for more than 
 #'9 variables, multiple plots will be created automatically.
+#'@param colors A vector of two RGB values defining the colors of the amputed and 
+#'non-amputed data respectively. RGB values can be obtained with \code{\link{hcl}}.
 #'@return A list containing the scatterplots. Note that a new pattern 
 #'will always be shown in a new plot. 
 #'@note The \code{mads} object contains all the information you need to 
