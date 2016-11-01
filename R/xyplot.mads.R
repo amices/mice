@@ -52,10 +52,10 @@ xyplot.mads <- function(x, yvar = NULL, which.pat = NULL,
   }
   if (standardized) {
     dat <- data.frame(scale(x$data))
-    xlab <- "Standardized values pattern"
+    xlab <- "Standardized values in pattern"
   } else {
     dat <- x$data
-    xlab <- "Values pattern"
+    xlab <- "Data values in pattern"
   }
   data <- NULL
   for (i in 1:pat){
@@ -100,7 +100,7 @@ xyplot.mads <- function(x, yvar = NULL, which.pat = NULL,
     p[[paste("Scatterplot Pattern", which.pat[i])]] <- 
       xyplot(x = formula, data = data[data$.pat == which.pat[i], ],
              groups = data$.amp, par.settings = theme,
-             layout = layout, key = key, 
+             multiple = TRUE, outer = TRUE, layout = layout, key = key, 
              ylab = "Weighted sum scores", 
              xlab = paste(xlab, which.pat[i]))
   }
