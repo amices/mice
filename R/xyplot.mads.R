@@ -32,7 +32,8 @@
 #'an overview of the package, \code{\link{mads-class}}
 #'@export
 xyplot.mads <- function(x, yvar = NULL, which.pat = NULL,
-                        standardized = TRUE, layout = NULL) {
+                        standardized = TRUE, layout = NULL,
+                        colors = c("#fc8d62", "#8da0cb")) {
   if (!is.mads(x)) {
     stop("Object is not of class mads")
   }
@@ -49,8 +50,10 @@ xyplot.mads <- function(x, yvar = NULL, which.pat = NULL,
   }
   if (standardized) {
     dat <- data.frame(scale(x$data))
+    xlab <- "Standardized values pattern"
   } else {
     dat <- x$data
+    xlab <- "Values pattern"
   }
   data <- NULL
   for (i in 1:pat){
@@ -84,18 +87,20 @@ xyplot.mads <- function(x, yvar = NULL, which.pat = NULL,
     }
   }
   
-  theme <- list(superpose.symbol = list(col = mdc(1:2), pch = 1),
-                plot.symbol = list(col = mdc(1:2), pch = 1),
+  theme <- list(superpose.symbol = list(col = colors, pch = 1),
+                plot.symbol = list(col = colors, pch = 1),
                 strip.background = list(col = "grey95"))
- 
+  key <- list(columns = 2, points = list(col = colors, pch = 1), 
+              text = list(c("Amputed Data", "Non-Amputed Data")))
+  
   p <- list()
   for (i in 1:pat) {
     p[[paste("Scatterplot Pattern", which.pat[i])]] <- 
       xyplot(x = formula, data = data[data$.pat == which.pat[i], ],
              groups = data$.amp, par.settings = theme,
-             layout = layout, 
+             layout = layout, key = key, 
              ylab = "Weighted sum scores", 
-             xlab = paste("Standardized values pattern", which.pat[i]))
+             xlab = paste(xlab, which.pat[i]))
   }
   return(p)
 }
