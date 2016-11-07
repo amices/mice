@@ -1,5 +1,5 @@
 ---
-title: "Multivariate amputation using `ampute()`"
+title: "Multivariate Amputation using Ampute"
 author: "Rianne Schouten"
 date: "Saturday, October 8th, 2016"
 output: pdf_document
@@ -9,9 +9,10 @@ header-includes:
 - \usetikzlibrary{shapes,arrows}
 - \usepackage{caption}
 - \usepackage{graphicx}
+- \usepackage{subcaption}
 ---
 
-When new multiple imputation techniques are tested, simulated data sets have to be made incomplete. Often, a univariate amputation procedure is followed, generating missing values one variable at a time. This procedure is repeated for every variable that should have missing values and Van Buuren (2012, pp. 63, 64) explains in detail how this can be done. However, there are a few drawbacks of this method. First, a univariate approach makes it difficult to relate the missingness on one variable to the missingness on any other variable. Second, both simulated and real data have a multivariate structure. Applying a univariate amputation procedure to multivariate data would not do justice to the complicated nature of data sets. Multivariate amputation is even more important because the multiple imputation is performed in a multivariate fashion. For all these reasons, the function `ampute()` is created to perform multivariate amputation according the user's desires. 
+When new multiple imputation techniques are tested, simulated data sets have to be made incomplete. Often, a univariate amputation procedure is followed, generating missing values one variable at a time. This procedure is repeated for every variable that should have missing values and Van Buuren (2012, pp. 63, 64) explains in detail how this can be done. However, there are a few drawbacks of this method. First, a univariate approach makes it difficult to relate the missingness on one variable to the missingness on any other variable. Second, both simulated and real data have a multivariate structure. Applying a univeriate amputation procedure to multivariate data would not do justice to the complicated nature of data sets. Multivariate amputation is even more important because the multiple imputation is performed multivariately. For all these reasons, the function `ampute` is created to perform multivariate amputation according the user's desires. 
 
 ```{r, include = FALSE}
 # Load packages
@@ -41,16 +42,16 @@ set.seed(2016)
 ```
 
 \begin{figure}[h]
-\includegraphics[width=\linewidth]{Flowchart.pdf}
-\captionsetup{justification=raggedright,
+  \includegraphics[width=\linewidth]{Flowchart.pdf}
+  \captionsetup{justification=raggedright,
 singlelinecheck=false}
-\caption{Step-by-step flowchart of R-function ampute}
-\label{fig1}
+  \caption{Step-by-step flowchart of R-function ampute}
+  \label{fig1}
 \end{figure}
 
-Function `ampute()` has multiple options that can be specified. Figure \ref{fig1} gives an overview of all the possiblities and also in which order the decisions need to be taken. If a MCAR missingness mechanism is desired, for example, steps 6 to 9 do not need to be specified. 
+Function `ampute` has multiple options that can be specified. Figure \ref{fig1} gives an overview of all the possiblities and also in which order the decisions need to be taken. If a MCAR missingness mechanism is desired, for example, steps 6 to 9 do not need to be specified. 
 
-The underlying method of `ampute()` is based on Brand's (1999) multivariate amputation procedure. An adaptation to this method is made to make continuous amputation possible. The possibility to create MNAR missingness is an extra feature as well. Figure \ref{fig1} not only shows the arguments of `ampute()`, but also functions as a guideline in understanding the underlying procedure of multivariate amputation.
+The underlying method of `ampute` is based on Brand's (1999) multivariate amputation procedure. An adaptation to this method is made to make continuous amputation possible. The possibility to create MNAR missingness is an extra feature as well. Nevertheless, Figure \ref{fig1} not only shows the arguments of `ampute`, it also functions as a guideline in understanding the underlying procedure of multivariate amputation.
 
 This vignette will discuss the multivariate amputation procedure with these same steps.
 
@@ -66,7 +67,7 @@ testdata <- as.data.frame(testdata)
 summary(testdata)
 ```
 
-The function `ampute()` immediately works when the data are entered into the function. Storing the result allows you to work with the amputed data. 
+The function `ampute` immediately works when the data are entered into the function. Storing the result allows you to work with the amputed data. 
 
 ```{r}
 result <- ampute(testdata)
@@ -75,7 +76,7 @@ result
 
 #### Class
 
-The return object is of class `mads` (Multivariate Amputed Data Set) and contains the information about the amputation. In total, the object contains the following:
+The return object is of class `mads` (Multivariately Amputed Data Set) and contains all the useful information about the amputation. In total, the object contains the following:
 
 ```{r}
 names(result)
@@ -106,7 +107,7 @@ result <- ampute(testdata, prop = 0.2, bycases = FALSE)
 md.pattern(result$amp)
 ``` 
 
-An inspection of the result shows that the proportion of missing cells is approximately 20%, as requested (the data set contains 10000 * 3 = 30000 cells, in total, 5975 cells are made missing). `ampute()` automatically calculates the proportion of missing cases that belongs to this setting. 
+An inspection of the result shows that the proportion of missing cells is approximately 20%, as requested (the data set contains 10000 * 3 = 30000 cells, in total, 5975 cells are made missing). `ampute` automatically calculates the proportion of missing cases that belongs to this setting. 
 
 ```{r}
 result$prop
@@ -114,7 +115,7 @@ result$prop
 
 ### 3. Patterns
 
-The basic idea of `ampute()` is the creation of missingness patterns. Each pattern is a combination of missingness on specific variables while other variables remain complete. For example, someone could have forgotten the last page of a questionnaire, resulting in missingness on a specific set of questions. Another missingness pattern could occur when someone is not willing to answer private questions. Or when a participant misses a wave in a longitudinal study. Consequently, each pattern is a specific combination of missing and complete variables. 
+The basic idea of `ampute` is the creation of missingness patterns. Each pattern is a combination of missingness on specific variables while other variables remain complete. For example, someone could have forgotten the last page of a questionnaire, resulting in missingness on a specific set of questions. Another missingness pattern could occur when someone is not willing to answer private questions. Or when a participant misses a wave in a longitudinal study. Consequently, each pattern is a specific combination of missing and complete variables. 
 
 The default missingness patterns can by obtained by:  
 
@@ -144,7 +145,7 @@ md.pattern(result$amp)
 
 ### 4. Relative frequency
 
-The function `ampute()` works by assigning cases to the different missing data patterns. Each case is assigned to one pattern only, and all cases are divided among the patterns. In other words, every case is \textit{candidate} for a certain missing data pattern. This does not automatically mean that each case will obtain missing values. That decision will be made later on. 
+The function `ampute` works by assigning cases to the different missing data patterns. Each case is assigned to one pattern only, and all cases are divided among the patterns. In other words, every case is \textit{candidate} for a certain missing data pattern. This does not automatically mean that each case will obtain missing values. That decision will be made later on. 
 
 The argument `freq` specifies with which frequency the cases should be divided over the patterns. As a default, equal frequencies are used for the patterns.  
 
@@ -178,7 +179,7 @@ Two other opties are `"MAR"` (Missing At Random), where the probability to be mi
 
 ### 6. Weights
 
-In case of `MAR` (default) or `MNAR` missingness, a weighted sum score will be calculated for each case. This is an important part in the process because the probability that a case will be made missing, depends on this score. The way in which the sum scores are used will be explained in step 8 and step 9. 
+In case of `MAR` (default) or `MNAR` missingness, a weighted sum score will be calculated for each case. This is an important part in the process because the probability that a case will be made missing, depends on this score. In what way the sum scores are used, will be explained in step 8 and step 9. 
 
 The weighted sum scores are built from the variable values and certain pre-specified weights. For each case, the value on a certain variable is multiplied with a weight. This is done for all variables and the resulting values are summed: a weighted sum score. The formula that describes the calculation is: 
 
@@ -245,22 +246,54 @@ First, there is the function `bwplot` that can be imposed on the `mads` object i
 
 In the function `bwplot`, the argument `which.pat` can be used to define the patterns you are interested in (default: all patterns). The argument `yvar` should contain the variables names (default: all variables). Besides, the function returns the mean, variance and n of the amputed and non-amputed data for each variable and each pattern requested. In the column `Amp`, a `1` refers to the amputed data and `0` to the non-amputed data. If the descriptives are not required, the argument `descriptives` can be set to `FALSE`. 
 
-```{r}
-bwplot(result, which.pat = c(1, 3))
+```{r, eval = FALSE}
+bwplot(result, which.pat = c(1, 3), descriptives = FALSE)
 ```
+
+```{r, include = FALSE}
+bwplot1 <- bwplot(result, which.pat = 1)
+png(filename="bwplot1.png", 
+    type="cairo",
+    units="in", 
+    width=4, 
+    height=3, 
+    pointsize=12, 
+    res=200)
+bwplot1
+dev.off()
+bwplot2 <- bwplot(result, which.pat = 3)
+png(filename="bwplot2.png", 
+    type="cairo",
+    units="in", 
+    width=4, 
+    height=3, 
+    pointsize=12, 
+    res=200)
+bwplot2
+dev.off()
+```
+
+\begin{figure}[h!]
+\begin{subfigure}{0.75\textwidth}
+\includegraphics[width=\linewidth]{bwplot1.png}
+\end{subfigure}
+\begin{subfigure}{0.75\textwidth}
+\includegraphics[width=\linewidth]{bwplot2.png}
+\end{subfigure}
+\end{figure}
 
 The medians and boundaries of the boxes show that in pattern 1, the amputed data is shifted to the right with respect to the non-amputed data. For variable V2, this effect is the biggest, due to the weight value that was specified. For V1, there is a very small difference between the boxplots of the amputed and non-amputed data. This makes sense, because variable V1 was amputed in the first pattern and therefore set to `0` in the `weights` matrix. The small difference that is visible is due to the positive correlation between V1 on the one side and V2 and V3 on the other side. These correlations were created during the simulation of the data. 
 
-If desired, one could use the function `tsum.test` from package `BSDA` to perform a t-test on the amputed and non-amputed data. For example, to know whether the mean difference between the amputed and non-amputed data for variable V2 in pattern 1 is significant, one could run:
+If desired, one could use the function `tsum.test` from package `BSDA` to perform a t-test on the amputed and non-amputed data. The data returned in the descriptives table (not shown in this vignette) can be used for that. For example, to know whether the mean difference between the amputed and non-amputed data for variable V2 in pattern 1 is significant, one could run:
 
 ```{r, include = FALSE}
 require(BSDA)
 ```
 
 ```{r}
-BSDA::tsum.test(mean.x = 0.52490, mean.y = -0.23120,
-                s.x = sqrt(0.85914), s.y = sqrt(0.89365),
-                n.x = 2119, n.y = 4876)
+tsum.test(mean.x = 0.52490, mean.y = -0.23120,
+          s.x = sqrt(0.85914), s.y = sqrt(0.89365),
+          n.x = 2119, n.y = 4876)
 ```
 
 As is visible, there is a significant difference between the amputed and non-amputed data of variable V2 in pattern 1. 
@@ -272,19 +305,44 @@ For pattern 3, the difference between the distributions of the amputed and non-a
 
 Scatterplots might also help to investigate the effect of the specifications. The function `xyplot` can be directly imposed on the `mads` object and contains arguments comparable to `bwplot`. For example, the weighted sum scores of pattern 1 can be set against the three variables. 
 
-```{r}
+```{r, eval = FALSE}
 xyplot(result, which.pat = 1)
 ```
+
+```{r, include = FALSE}
+xyplot1 <- xyplot(result, which.pat = 1)
+png(filename="xyplot1.png", 
+    type="cairo",
+    units="in", 
+    width=5.5, 
+    height=4.5, 
+    pointsize=12, 
+    res=200)
+xyplot1
+dev.off()
+```
+
+\begin{figure}[h!]
+\includegraphics[width=\linewidth]{xyplot1.png}
+\end{figure}
 
 The scatterplots show that there is a very small relation between V1 and the weighted sum scores. Furthermore, the relation between V2 and the weighted sum scores is very strong, meaning that a case's value on V2 is very important in the creation of the weighted sum score. Actually, this is what causes the differences between the amputed and non-amputed data in the boxplots above. For V3 and the weighted sum scores, the relation is a bit weaker than for V2 but more present than for V1. 
 
 ### 7. Continuous
 
-As a default, `ampute()` creates continuous missingness. This means that logit probability functions are used to define a candidate's probability of having missing values. The type of continuous amputation can be decided under `type`. A more thorough explanation of how the logit functions work will be given in part 8 of this vignette.
+As a default, `ampute` creates continuous missingness. This means that logit probability functions are used to define a candidate's probability of having missing values. The type of continuous amputation can be decided under `type`. A more thorough explanation of how the logit functions work will be given in part 8 of this vignette.
 
 Instead of using continuous formulas to specify the missingness probabilities, these can also be defined by hand. For this, the argument `cont` should be set to `FALSE`. The `odds` argument can be used to define the probabilities (see part 9). 
 
 ### 8. Type
+
+\begin{figure}[t!]
+  \includegraphics[width=\linewidth]{plot1.png}
+  \captionsetup{justification=raggedright,
+singlelinecheck=false}
+  \caption{Adaptations of continuous logit functions}
+  \label{fig2}
+\end{figure}
 
 The logit functions are more thoroughly explained by Van Buuren (2012, pp. 63, 64), but a quick overview will be given here. Four missingness functions are known: RIGHT, MID, TAIL and LEFT missingness. Figure \ref{fig2} shows the course of the probabilities for standardized values. 
 
@@ -305,11 +363,11 @@ data2[1804:2404, "X1"] <- x1
 data2[1804:2404, "Y"] <- logistic(mean(x1)-x1[])
 data2["Type"] <- c(rep("RIGHT", 601), rep("MID", 601), rep("TAIL", 601), rep("LEFT", 601))
 plot1 <- xyplot(Y ~ X1, data2, group = Type, t = 'l', 
-                lty=c(1,2,3,4), 
-                cex = 0.5, col = rep("black", 4),
-                xlab = "Standardized weighted sum scores", 
-                ylab = "Probability",
-                key=list(space="top", columns=4, lines = list(lty = c(1, 2, 3, 4)), text = list(c("LEFT", "MID", "RIGHT", "TAIL"), cex = 0.5)))
+       lty=c(1,2,3,4), 
+       cex = 0.5, col = rep("black", 4),
+       xlab = "Standardized weighted sum scores", 
+       ylab = "Probability",
+       key=list(space="top", columns=4, lines = list(lty = c(1, 2, 3, 4)), text = list(c("LEFT", "MID", "RIGHT", "TAIL"), cex = 0.5)))
 
 png(filename="plot1.png", 
     type="cairo",
@@ -322,15 +380,7 @@ plot1
 dev.off()
 ```
 
-\begin{figure}[h!]
-\includegraphics[width=\linewidth]{plot1.png}
-\captionsetup{justification=raggedright,
-singlelinecheck=false}
-\caption{Adaptations of continuous logit functions}
-\label{fig2}
-\end{figure}
-
-In `ampute()`, the logit functions will be performed on the weighted sum scores. Consequently, in the situation of RIGHT missingness, cases with high weighted sum scores will have a higher probability to have missing values, compared to cases with low weighted sum scores. For MID missingness, the high probabilities are given to the cases with weighted sum scores around the average.
+In `ampute`, the logit functions will be performed on the weighted sum scores. Consequently, in the situation of RIGHT missingness, cases with high weighted sum scores will have a higher probability to have missing values, compared to cases with low weighted sum scores. For MID missingness, the high probabilities are given to the cases with weighted sum scores around the average.
 
 For each pattern, a different missingness type can be chosen. In our example, we have four patterns, so four types are required. It is advised to inspect the result with `bwplot` (below is the result of this plot for pattern 2), although the scatterplots give insight as well (as an example, a plot for pattern 4 is shown). 
 
@@ -338,14 +388,51 @@ For each pattern, a different missingness type can be chosen. In our example, we
 result <- ampute(testdata, prop = 0.3, patterns = mypatterns, 
                  freq = c(0.7, 0.1, 0.1, 0.1), weights = myweights,
                  type = c("RIGHT", "TAIL", "MID", "LEFT"))
+```
+
+```{r, eval = FALSE}
 bwplot(result, which.pat = 2, descriptives = FALSE)
 ```
 
+```{r, include = FALSE}
+bwplot3 <- bwplot(result, which.pat = 2)
+png(filename="bwplot3.png", 
+    type="cairo",
+    units="in", 
+    width=4, 
+    height=3, 
+    pointsize=12, 
+    res=200)
+bwplot3
+dev.off()
+```
+
+\begin{figure}[h!]
+\includegraphics[width=\linewidth]{bwplot3.png}
+\end{figure}
+
 From the boxplots of pattern 2, it becomes visible that the interquartile range (IQR) is much bigger for the amputed V3 values compared to the non-amputed data. This is due to the fact that in pattern 2, only V3 defines the missingness. Besides, we requested a TAIL missingness type, which means that all the cases with values at the tails of the distribution of the weighted sum scores (based on merely V3), will be made missing.
 
-```{r}
+```{r, eval = FALSE}
 xyplot(result, which.pat = 4)
 ```
+
+```{r, include = FALSE}
+xyplot2 <-xyplot(result, which.pat = 4)
+png(filename="xyplot2.png", 
+    type="cairo",
+    units="in", 
+    width=5.5, 
+    height=4.5, 
+    pointsize=12, 
+    res=200)
+xyplot2
+dev.off()
+```
+
+\begin{figure}[h!]
+\includegraphics[width=\linewidth]{xyplot2.png}
+\end{figure}
 
 First, notice that there are much fewer dots in these scatterplots compared to the scatterplots we saw earlier. This is due to the `freq` setting: we specified that only 10 percent of the cases with missing values should have missingness pattern 4. Secondly, the scatterplots show that all the amputed data is at the left hand side of the weighted sum scores due to the `"LEFT"` setting in the `type` argument. Thirdly, these figures show the perfect relation between variable V2 and the weighted sum scores. Clearly, pattern 4 depends on variable V2 only, which we remember from the `weights` setting that was used.   
 
@@ -358,13 +445,20 @@ result$weights
 If the missingness probabilities should not depend on a continuous probability function, you will have to define the probabilities to be missing yourself. This method was first described by Brand (1999) and consists of two steps. First, one has to decide in how many groups the weighted sum scores should be divided. Secondly, for each group, an odds value defines the relative probability of having missing values. 
 
 In other words, each case that is candidate for a certain missing data pattern, will be assigned to a group based on his weighted sum score. Let us first have a look at the working of the odds values. The default `odds` matrix is as follows:  
-
 ```{r}
 myodds <- result$odds
 myodds
 ```
 
 This matrix means that for each pattern, the candidates will be divided into four groups. This division occurs based on quantiles, in order to obtain equally sized groups. The values `c(1, 2, 3, 4)` mean that a case with a weighted sum score in the highest quantile, will have a probability of having missing values that is four times higher than a candidate with a weighted sum score in the lowest quantile. In Figure \ref{fig3} the different probabilities that belong to this setting are shown for 100 candidates of pattern 1. 
+
+\begin{figure}[b!]
+  \includegraphics[width=\linewidth]{plot2.png}
+  \captionsetup{justification=raggedright,
+singlelinecheck=false}
+  \caption{Probabilities to have missing values for the four groups in pattern 1 and the relation between the groups and the weighted sum scores.}
+  \label{fig3}
+\end{figure}
 
 ```{r, include = FALSE}
 len <- length(result$scores[[1]])
@@ -381,8 +475,8 @@ for (k in 1:ng) {
 }
 data3[, 2] <- Q
 for (l in 1:ng) {
-  data3[data3[, 2] == l, 3] <- (ng * result$prop * result$odds[1, l]) / 
-    sum(result$odds[1, ], na.rm = TRUE)
+data3[data3[, 2] == l, 3] <- (ng * result$prop * result$odds[1, l]) / 
+  sum(result$odds[1, ], na.rm = TRUE)
 }
 data3 <- as.data.frame(data3)
 names(data3) <- c("scores", "group", "prob")
@@ -427,27 +521,19 @@ plot3
 dev.off()
 ```
 
-\begin{figure}[h!]
-\includegraphics[width=\linewidth]{plot2.png}
-\captionsetup{justification=raggedright,
-singlelinecheck=false}
-\caption{Probabilities to have missing values for the four groups in pattern 1 and the relation between the groups and the weighted sum scores.}
-\label{fig3}
-\end{figure}
-
 As can be seen, there are indeed four groups in pattern 1. The groups have an approximately equal size, with each a certain probability to obtain missing values. The probability of group 4 is indeed four times as big as the probability of group 1.  
 
 The relation between the groups and the variable values is shown Figure \ref{fig4}. Because the relationship between variable V2 and the weighted sum scores is high (due to the `weights` setting), the groups can be distinguished very well. Besides, for higher values of V2, the weighted sum scores are higher. The cases with these values are in group 4 and therefore at the right hand side of the V2 scale. For variable V3, the relation between the values and the group allocation is small. This again is due to the `weights` setting. Still, because of the odds values, group 4 is much more to the right of the V3 scale than group 1, 2 and 3. 
 
-\begin{figure}[h!]
-\includegraphics[width=\linewidth]{plot3.png}
-\captionsetup{justification=raggedright,
-singlelinecheck=false}
-\caption{Division of odds groups over variables $V_2$ and $V_3$}
-\label{fig4}
-\end{figure}
-
 Let us now go deeper into the contents of the `odds` matrix. The #rows of this matrix is equal to #patterns. The #columns can be defined by the user and depends on the desired amputation procedure. 
+
+\begin{figure}[t!]
+  \includegraphics[width=\linewidth]{plot3.png}
+  \captionsetup{justification=raggedright,
+singlelinecheck=false}
+  \caption{Division of odds groups over variables $V_2$ and $V_3$}
+  \label{fig4}
+\end{figure}
 
 The amount of values in each row defines the number of groups that will be created from the weighted sum scores in that specific pattern. This number can be different for the different patterns. The values themselves define the odds probabilities of having missing values. Note that the values are relative values. For instance, a setting of `c(2, 6)` is similar to `c(3, 9)`.
 
@@ -468,8 +554,42 @@ The weighted sum scores of the fourth pattern will be divided into six groups. A
 result <- ampute(testdata, prop = 0.3, patterns = mypatterns, 
                  freq = c(0.7, 0.1, 0.1, 0.1), weights = myweights,
                  cont = FALSE, odds = myodds)
+```
+
+```{r, eval = FALSE}
 bwplot(result, which.pat = c(3, 4), descriptives = FALSE)
 ```
+
+```{r, include = FALSE}
+bwplot4 <- bwplot(result, which.pat = 3)
+png(filename="bwplot4.png", 
+    type="cairo",
+    units="in", 
+    width=4, 
+    height=3, 
+    pointsize=12, 
+    res=200)
+bwplot4
+dev.off()
+bwplot5 <- bwplot(result, which.pat = 4)
+png(filename="bwplot5.png", 
+    type="cairo",
+    units="in", 
+    width=4, 
+    height=3, 
+    pointsize=12, 
+    res=200)
+bwplot5
+dev.off()
+```
+
+\begin{figure}[h!]
+\includegraphics[width=\linewidth]{bwplot4.png}
+\end{figure}
+
+\begin{figure}[h!]
+\includegraphics[width=\linewidth]{bwplot5.png}
+\end{figure}
 
 In the boxplots of pattern 3, it is visible that the IQR of the amputed data is bigger than the one of the non-amputed data. This is especially the case for variable V1, a bit less for variable V2 and almost not at hand for variable V3.
 
@@ -477,7 +597,7 @@ In pattern 4, the effect of the specifications is only visible for variable V2, 
 
 ### 10. Combining missingness mechanisms
 
-Function `ampute()` imposes a certain missingness mechanism on all the patterns. If `mech == "MAR"`, for instance, all patterns specified under `patterns` are created with a `MAR` mechanism. Besides, all these patterns should be made missing based on either continuous (`cont == TRUE`) or discrete (`cont == FALSE`) probability distributions. 
+Function `ampute` imposes a certain missingness mechanism on all the patterns. If `mech == "MAR"`, for instance, all patterns specified under `patterns` are created with a `MAR` mechanism. Besides, all these patterns should be made missing based on either continuous (`cont == TRUE`) or discrete (`cont == FALSE`) probability distributions. 
 
 In reality, you might want to generate multiple kinds of missingness mechanisms within the same data set. In order to do this, I advise to ampute one data set multiple times according the desired specifications. Thereafter, for each row of the original data set, a row can be sampled from the multiple amputed data sets. In case of three missingness mechanisms, 1/3 of the data set would be the result of amputation 1, 1/3 from amputation 2 and the last third from amputation 3. In total, all three amputation mechanisms will be generated in the data set. 
 
@@ -516,7 +636,7 @@ emptyresult$amp
 
 #### Other `mads` contents
 
-The return object from `ampute()` is of class `mads`. `mads` contains the amputed data set, the function specifications and some extra objects that might be useful. 
+The return object from `ampute` is of class `mads`. `mads` contains the amputed data set, the function specifications and some extra objects that might be useful. 
 
 The object `cand` is a vector that contains for every case the missing data pattern it was candidate for. 
 

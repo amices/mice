@@ -5,11 +5,11 @@
 \title{Box-and-whisker plot of amputed and non-amputed data}
 \usage{
 \method{bwplot}{mads}(x, yvar = NULL, which.pat = NULL,
-  standardized = TRUE, descriptives = TRUE, layout = NULL)
+  standardized = TRUE, descriptives = TRUE, layout = NULL,
+  theme = mice.theme(), multiple = TRUE, outer = TRUE)
 }
 \arguments{
-\item{x}{A \code{mads} (\code{\link{mads-class}}) object, typically created by 
-\code{\link{ampute}}.}
+\item{x}{A \code{mads} object, typically created by \code{\link{ampute}}.}
 
 \item{yvar}{A string or vector of variable names that needs to be plotted. As 
 a default, all variables will be plotted.}
@@ -29,22 +29,29 @@ should be divided over the plot. For example, \code{c(2, 3)} indicates that the
 boxplots of six variables need to be placed on 3 rows and 2 columns. Default
 is 1 row and an amount of columns equal to #variables. Note that for more than 
 6 variables, multiple plots will be created automatically.}
+
+\item{theme}{A named list containing the graphical parameters. The default
+function \code{mice.theme} produces a short list of default colors, line
+width, and so on. The extensive list may be obtained from
+\code{trellis.par.get}.}
+
+\item{multiple}{See \code{\link[lattice:bwplot]{bwplot}}.}
+
+\item{outer}{See \code{\link[lattice:bwplot]{bwplot}}.}
 }
 \value{
 A list containing the box-and-whisker plots. Note that a new pattern 
 will always be shown in a new plot.
 }
 \description{
-Plotting method to investigate the result of function \code{\link{ampute}}. 
-Based on \code{\link{lattice}}. \code{bwplot} produces box-and-whisker plots of 
-the relation between the data variables and the amputed data. The function does 
-not show which data is amputed. It does show how the amputed values are related 
-to the variable values.
+Plotting method for amputed data using \pkg{lattice}. \code{bwplot}
+produces box-and-whisker plots. The function automatically separates the 
+amputed and non-amputed data.
 }
 \note{
 The \code{mads} object contains all the information you need to 
-make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate 
-Amputation using Ampute} to understand the contents of class object \code{mads}.
+make any desired plots. Check \code{\link{mads-class}} or the vignette titled "Multivariate 
+Amputation using Ampute" to understand the contents of class object \code{mads}.
 }
 \author{
 Rianne Schouten, 2016
