@@ -37,8 +37,6 @@ source("../R/supports.transparent.R")
 
 # Main function
 source("../R/ampute.R")
-
-set.seed(2016)
 ```
 
 ![Figure 1. Step-by-step flowchart of R-function ampute](Flowchart.jpg)
@@ -54,6 +52,7 @@ This vignette will discuss the multivariate amputation procedure with these same
 First, a complete data set should be at hand. One could easily simulate such a data set using `mvrnorm()` from the package `MASS`. Be aware that the covariance matrix should be semi definite. 
 
 ```{r}
+set.seed(2016)
 testdata <- mvrnorm(n = 10000, mu = c(10, 5, 0), 
                     Sigma = matrix(data = c(1.0, 0.2, 0.2, 0.2, 1.0, 0.2, 
                                             0.2, 0.2, 1.0), nrow = 3, byrow = T))
