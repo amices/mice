@@ -43,12 +43,11 @@ ampute.continuous <- function(P, scores, prop, type) {
     # This is a custom adaptation of function binsearch from package gtools 
     # (version 3.5.0) that returns the adjustment of the probability curves used 
     # in the function ampute.continuous in ampute.  
-    nd <- min(which(target * 10 ^ (0:20) == floor(target * 10 ^ (0:20)))) - 1
     lo <- lower
     hi <- upper
     counter <- 0
-    val.lo <- round(fun(lo, ...), nd)
-    val.hi <- round(fun(hi, ...), nd)
+    val.lo <- round(fun(lo, ...), 3)
+    val.hi <- round(fun(hi, ...), 3)
     if (val.lo > val.hi) 
       sign <- -1
     else sign <- 1
@@ -59,10 +58,10 @@ ampute.continuous <- function(P, scores, prop, type) {
     else outside.range <- FALSE
     while (counter < maxiter && !outside.range) {
       counter <- counter + 1
-      if (hi - lo <= (1 / (10 ^ nd)) || lo < lower || hi > upper) 
+      if (hi - lo <= (1 / (10 ^ 3)) || lo < lower || hi > upper) 
         break
-      center <- round((hi - lo)/2 + lo, nd)
-      val <- round(fun(center, ...), nd)
+      center <- round((hi - lo)/2 + lo, 3)
+      val <- round(fun(center, ...), 3)
       if (showiter) {
         cat("--------------\n")
         cat("Iteration #", counter, "\n")
@@ -137,11 +136,10 @@ ampute.continuous <- function(P, scores, prop, type) {
   #
   # For a test data set, the shift of the logit function is calculated
   # in order to obtain the right proportion of missingness (area beneath the curve)
+  # The set-up for this is created in subsequent lines, it is executed within
+  # the for loop over i.
   testset <- scale(rnorm(n = 10000, mean = 0, sd = 1))
   logit <- function(x) exp(x) / (1 + exp(x))
-  shift <- bin.search(fun = function(shift) 
-    sum(logit(-mean(testset) + testset[] + shift)) / length(testset), 
-    target = prop)$where
   # An empty list is created, type argument is given the right length
   R <- list()
   if (length(type) == 1) {
@@ -156,9 +154,15 @@ ampute.continuous <- function(P, scores, prop, type) {
     } else if (type[i] == "MID") { 
       formula <- function(x, b) logit(-abs(x[] - mean(x)) + 0.75 + b)
     } else if (type[i] == "TAIL") { 
-      formula <- function(x, b) logit(abs(x[] - mean(x)) -0.75 + b)
+      formula <- function(x, b) logit(abs(x[] - mean(x)) - 0.75 + b)
     } else {
       formula <- function(x, b) logit(-mean(x) + x[] + b)
+    }
+    shift <- bin.search(fun = function(shift) 
+      sum(formula(x = testset, b = shift)) / length(testset), 
+      target = prop)$where
+    if (length(shift) > 1) {
+      shift <- shift[1]
     }
     # If there are no candidates for a certain pattern, the list will receive a 0
     if (is.na(scores.temp[[1]])) {
