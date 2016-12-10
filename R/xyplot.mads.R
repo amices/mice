@@ -22,6 +22,8 @@
 #'that the scatterplots of six variables need to be placed on 3 rows and 2 columns. 
 #'There are several defaults for different #variables. Note that for more than 
 #'9 variables, multiple plots will be created automatically.
+#'@param colors A vector of two RGB values defining the colors of the amputed and 
+#'non-amputed data respectively. RGB values can be obtained with \code{\link{hcl}}.
 #'@return A list containing the scatterplots. Note that a new pattern 
 #'will always be shown in a new plot. 
 #'@note The \code{mads} object contains all the information you need to 
@@ -32,7 +34,8 @@
 #'an overview of the package, \code{\link{mads-class}}
 #'@export
 xyplot.mads <- function(x, yvar = NULL, which.pat = NULL,
-                        standardized = TRUE, layout = NULL) {
+                        standardized = TRUE, layout = NULL,
+                        colors = c("#fc8d62", "#8da0cb")) {
   if (!is.mads(x)) {
     stop("Object is not of class mads")
   }
@@ -49,8 +52,10 @@ xyplot.mads <- function(x, yvar = NULL, which.pat = NULL,
   }
   if (standardized) {
     dat <- data.frame(scale(x$data))
+    xlab <- "Standardized values in pattern"
   } else {
     dat <- x$data
+    xlab <- "Data values in pattern"
   }
   data <- NULL
   for (i in 1:pat){
@@ -84,18 +89,20 @@ xyplot.mads <- function(x, yvar = NULL, which.pat = NULL,
     }
   }
   
-  theme <- list(superpose.symbol = list(col = mdc(1:2), pch = 1),
-                plot.symbol = list(col = mdc(1:2), pch = 1),
+  theme <- list(superpose.symbol = list(col = colors, pch = 1),
+                plot.symbol = list(col = colors, pch = 1),
                 strip.background = list(col = "grey95"))
- 
+  key <- list(columns = 2, points = list(col = colors, pch = 1), 
+              text = list(c("Amputed Data", "Non-Amputed Data")))
+  
   p <- list()
   for (i in 1:pat) {
     p[[paste("Scatterplot Pattern", which.pat[i])]] <- 
       xyplot(x = formula, data = data[data$.pat == which.pat[i], ],
              groups = data$.amp, par.settings = theme,
-             layout = layout, 
+             multiple = TRUE, outer = TRUE, layout = layout, key = key, 
              ylab = "Weighted sum scores", 
-             xlab = paste("Standardized values pattern", which.pat[i]))
+             xlab = paste(xlab, which.pat[i]))
   }
   return(p)
 }

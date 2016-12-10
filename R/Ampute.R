@@ -149,7 +149,7 @@
 #'
 #'@return Returns an S3 object of class \code{\link{mads-class}} (multivariate 
 #'amputed data set)
-#'@author Rianne Schouten, Gerko Vink, Peter Lugtig, 2016
+#'@author Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
 #'@seealso \code{\link{mads-class}}, \code{\link{bwplot}}, \code{\link{xyplot}},
 #'\code{\link{ampute.mcar}}, \code{\link{ampute.continuous}}, 
 #'\code{\link{ampute.discrete}}, \code{\link{mice}}
