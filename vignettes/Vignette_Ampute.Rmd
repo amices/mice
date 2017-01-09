@@ -1,6 +1,6 @@
 ---
 title: "Multivariate amputation using ampute"
-author: "Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb]"
+author: "Rianne Schouten [aut, cre], Peter Lugtig [ctb], Gerko Vink [aut]"
 date: "Saturday, October 8th, 2016"
 output: pdf_document
 header-includes:
