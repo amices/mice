@@ -59,4 +59,5 @@ License: GPL-2 | GPL-3
 LazyLoad: yes
 LazyData: yes
 URL: http://www.stefvanbuuren.nl , http://www.multiple-imputation.com
+BugReports: https://github.com/stefvanbuuren/mice/issues
 RoxygenNote: 5.0.1
