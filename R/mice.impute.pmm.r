@@ -104,6 +104,7 @@ mice.impute.pmm <- function(y, ry, x, donors = 5, type = 1,
 #'@param \dots Other parameters (not used).
 #'@return A scalar containing the observed value of the selected donor.
 #'@author Stef van Buuren
+#'@rdname pmm.match
 #'@references
 #'Schenker N \& Taylor JMG (1996) Partially parametric techniques 
 #'for multiple imputation. \emph{Computational Statistics and Data Analysis}, 22, 425-446.
