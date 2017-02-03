@@ -198,13 +198,6 @@
 #'multiple imputation strategies for the statistical analysis of incomplete
 #'data sets.} Dissertation. Rotterdam: Erasmus University.
 #'@keywords iteration
-#'@import methods
-#'@importFrom MASS eqscplot lda mvrnorm polr truehist
-#'@importFrom nnet multinom nnet
-#'@importFrom utils packageDescription
-#'@importFrom graphics plot
-#'@importFrom rpart rpart rpart.control
-#'@importFrom Rcpp sourceCpp
 #'@useDynLib mice
 #'@examples
 #'

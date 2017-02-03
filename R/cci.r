@@ -17,7 +17,6 @@
 #' cci(mice(nhanes, maxit = 0))
 #' f <- cci(nhanes[,c("bmi","hyp")]) # complete data for bmi and hyp
 #' nhanes[f,] # obtain all data from those with complete bmi and hyp
-#'@rdname cci-methods
 #'@export
 cci <- function (x) UseMethod("cci", x)
 
@@ -44,7 +43,6 @@ cci.default <- function(x) return(complete.cases(x))
 #'
 #'  ici(nhanes) # indicator for 12 rows with incomplete cases 
 #'
-#'@rdname ici-methods
 #'@export
 ici <- function(x) UseMethod("ici", x)
 

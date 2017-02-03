@@ -17,8 +17,6 @@
 #'
 #'# cc(nhanes)   # get the 13 complete cases
 #'# cc(nhanes$bmi) # extract complete bmi
-#'
-#'@rdname cc-methods
 #'@export
 cc <- function(x) UseMethod("cc", x)
 
@@ -53,7 +51,6 @@ cc.default <- function(x) return(x[cci(x)])
 #'ic(nhanes[1:10,])  # incomplete cases within the first ten rows
 #'ic(nhanes[, c("bmi", "hyp")])  # restrict extraction to variables bmi and hyp
 #'
-#'@rdname ic-methods
 #'@export
 ic <- function(x) UseMethod("ic", x)
 
