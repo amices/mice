@@ -1,0 +1,79 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+bibliography: refs.bibtex
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# MICE: Multivariate Imputation by Chained Equations
+
+The `mice` package implements a method to deal with missing data. The package 
+creates multiple imputations (replacement values) for multivariate missing data.
+The method is based on Fully Conditional Specification, where 
+each incomplete variable is imputed by a separate model. The `MICE` algorithm
+can impute mixes of continuous, binary, unordered categorical and ordered
+categorical data. In addition, MICE can impute continuous two-level data, and 
+maintain consistency between imputations by means of passive imputation. Many 
+diagnostic plots are implemented to inspect the quality of the imputations.
+
+## Installation
+
+The `mice` package can be installed from CRAN as follows:
+
+```{r eval = FALSE}
+install.packages("mice")
+```
+
+The latest version is can be installed from GitHub as follows: 
+
+```{r eval = FALSE}
+install.packages("devtools")
+devtools::install_github(repo = "stefvanbuuren/mice")
+```
+
+
+## Overview
+
+The `mice` package contains functions to
+
+- Inspect the missing data pattern
+- Impute the missing data $m$ times, resulting in $m$ completed data sets
+- Diagnose the quality of the imputed values
+- Analyze each completed data set
+_ Pool the results of the repeated analyses
+- Store and export the imputed data in various formats
+- Generate simulated incomplete data
+- Incorporate custom imputation methods
+
+## Main functions
+
+The main functions in the `mice` package are:
+
+Function name        | Description
+---------------------|---------------------------------
+`mice()`             | Impute the missing data $m$ times 
+`with()`             | Analyze completed data sets
+`pool()`             | Combine parameter estimates
+`complete()`         | Export imputed data
+`ampute()`           | Generate missing data
+
+## Further reading
+
+The `mice` software was published in the Journal of Statistical Software [@vanbuuren2011a]. 
+See <https://www.jstatsoft.org/article/view/v045i03>. 
+The first application of the method concerned missing blood pressure data [@vanbuuren1999]. 
+The term *Fully Conditional Specification* was introduced in 2006 to describe a general 
+class of methods that specify imputations model for multivariate data as a set of conditional distributions [@vanbuuren2006]. Further details and applications can be found in the book *Flexible Imputation of Missing Data* [@vanbuuren2012].
+
+## References
+
