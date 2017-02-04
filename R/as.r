@@ -56,7 +56,7 @@ as.mids <- function(data, .imp = 1, .id = 2){
   }
   for (i in 1:length(names)){
     for(j in 1:m){
-      if(!is.null(ini$imp[[i]])){
+      if(!is.null(ini$imp[[names[i]]])){
         indic <- imps == j & is.na(data[imps == 0, names[i]])
         ini$imp[[names[i]]][j] <- data[indic, names[i]]
       }
