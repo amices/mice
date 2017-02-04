@@ -67,8 +67,6 @@ Function name        | Description
 `complete()`         | Export imputed data
 `ampute()`           | Generate missing data
 
-## Tutorial
-
 ## Further reading
 
 The `mice` software was published in the Journal of Statistical Software [@vanbuuren2011a]. 
