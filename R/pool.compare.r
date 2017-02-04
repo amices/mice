@@ -129,19 +129,22 @@ pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
     # Check: Only need the lm or lmer object
     formula1 <- formula(fit1$analyses[[1]])
     formula0 <- formula(fit0$analyses[[1]])
+    vars1 = names(est1$qbar)
+    vars0 = names(est0$qbar)
     
+    if (is.null(vars1) | is.null(vars0)) 
+      stop("coefficients do not have names")
     if (dimQ2 < 1) 
         stop("The larger model should be specified first and must be strictly larger than the smaller model.\n")
-    if (!setequal(all.vars(formula0), intersect(all.vars(formula0), all.vars(formula1)))) 
+    if (!setequal(vars0, intersect(vars0, vars1))) 
         stop("The smaller model should be fully contained in the larger model. \n")
-    if (!all(charmatch(all.vars(formula0), all.vars(formula1)) == (1:length(all.vars(formula0))))) 
-        stop("The first variables of the larger model should be the variables of the smaller model in the same order.\n")
     
     if (meth == "wald") {
         # Reference: paragraph 2.2, Article Meng & Rubin, Biometrika, 1992.  When two objects are to be compared we need to
         # calculate the matrix Q.
         Q <- diag(rep(1, dimQ1), ncol = dimQ1)
-        Q <- matrix(Q[((dimQ1 - dimQ2 + 1):dimQ1), ], nrow = dimQ2, ncol = dimQ1)
+        where_new_vars = which(!(vars1 %in% vars0))
+        Q <- Q[where_new_vars, , drop = FALSE]
         qbar <- Q %*% est1$qbar
         Ubar <- Q %*% est1$ubar %*% (t(Q))
         Bm <- Q %*% est1$b %*% (t(Q))
