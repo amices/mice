@@ -1,21 +1,24 @@
--------------- MICE NEWS-------------------------------------------
-
 MICE: Multivariate Imputation by Chained Equations
 
 MICE is an R package implementing multiple imputation of
 incomplete multivariate data according the principle of
 Fully Conditional Specification (FCS).
-Question or suggestions about MICE can be send to
 
-   stef.vanbuuren at tno.nl
-   gerko.vink at uu.nl
-   c.g.m.oudshoorn at utwente.nl
+Questions and suggestions about MICE can be entered at 
+
+    https://github.com/stefvanbuuren/mice/issues
 
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.30    04feb2017 SvB
+ADDED    ampute functions and vignettes (thanks Rianne Schouten)
+CHANGED  Helpers cc(), ccn(), cci(), ic(), icn() and ici() use S3 dispatch
+CHANGED  Issues tracker now on Github
+FIXED    maxNWts --> MaxNWts typo (issue #8)
+
 V2.29    05oct2016 SvB
-ADDED    midastouch: predictive mean matching for small samples
+ADDED    midastouch: predictive mean matching for small samples (thanks Philip Gaffert, Florian Meinfelder)
 
 V2.28    05oct2016 SvB
 FIXED    repaired dots problem in rpart call
