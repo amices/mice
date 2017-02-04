@@ -199,7 +199,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   #
   # ------------------------ sum.scores -----------------------------------
   #
-  sum.scores <- function(P, data, weights, mech) {
+  sum.scores <- function(P, data, weights) {
     # This is an underlying function of multivariate amputation function ampute().
     # This function is used to calculate the weighted sum scores of the candidates.
     # Based on the data, the weights matrix and the kind of mechanism, each case
@@ -485,8 +485,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       } else {
         scores <- sum.scores(P = P,
                              data = st.data,
-                             weights = weights,
-                             mech = mech)
+                             weights = weights)
       }
       if (!cont) {
         R <- ampute.discrete(P = P,
