@@ -29,7 +29,7 @@
 #'@param x Matrix (\code{n} x \code{p}) of complete covariates.
 #'@param nnet.maxit Tuning parameter for \code{nnet()}.
 #'@param nnet.trace Tuning parameter for \code{nnet()}.
-#'@param nnet.maxNWts Tuning parameter for \code{nnet()}.
+#'@param nnet.MaxNWts Tuning parameter for \code{nnet()}.
 #'@param ... Other named arguments.
 #'@return A vector of length \code{nmis} with imputations.
 #'@author Stef van Buuren, Karin Groohuis-Oudshoorn, 2000-2010
@@ -56,7 +56,7 @@
 #'
 #--------------------MICE.IMPUTE.POLR-----------------------------
 
-mice.impute.polr <- function (y, ry, x, nnet.maxit=100, nnet.trace=FALSE, nnet.maxNWts=1500, ...)
+mice.impute.polr <- function (y, ry, x, nnet.maxit=100, nnet.trace=FALSE, nnet.MaxNWts=1500, ...)
 {
     ### added 08/12/2010
     x <- as.matrix(x)
@@ -72,7 +72,7 @@ mice.impute.polr <- function (y, ry, x, nnet.maxit=100, nnet.trace=FALSE, nnet.m
     if (inherits(fit, "try-error")) {
         fit <- multinom(formula(xy), data=xy[ry,],
                         weights=w[ry],
-                        maxit=nnet.maxit, trace=nnet.trace, maxNWts=nnet.maxNWts, ...)
+                        maxit=nnet.maxit, trace=nnet.trace, MaxNWts=nnet.MaxNWts, ...)
         updateLog(meth="multinom", frame=3)
     }
     post <- predict(fit, xy[!ry, ], type = "probs")

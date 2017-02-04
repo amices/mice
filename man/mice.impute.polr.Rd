@@ -5,7 +5,7 @@
 \title{Imputation by polytomous regression - ordered}
 \usage{
 mice.impute.polr(y, ry, x, nnet.maxit = 100, nnet.trace = FALSE,
-  nnet.maxNWts = 1500, ...)
+  nnet.MaxNWts = 1500, ...)
 }
 \arguments{
 \item{y}{Incomplete data vector of length \code{n}}
@@ -19,7 +19,7 @@ mice.impute.polr(y, ry, x, nnet.maxit = 100, nnet.trace = FALSE,
 
 \item{nnet.trace}{Tuning parameter for \code{nnet()}.}
 
-\item{nnet.maxNWts}{Tuning parameter for \code{nnet()}.}
+\item{nnet.MaxNWts}{Tuning parameter for \code{nnet()}.}
 
 \item{...}{Other named arguments.}
 }
