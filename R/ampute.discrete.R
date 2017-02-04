@@ -23,7 +23,7 @@
 #'and \code{1} if a case should remain complete. The first vector refers to the 
 #'first pattern, the second vector to the second pattern, etcetera.  
 #'@author Rianne Schouten, 2016
-#'@seealso \code{\link{ampute}}, \code{\link{ampute.default.odds}
+#'@seealso \code{\link{ampute}}, \code{\link{ampute.default.odds}}
 #'@references Brand, J.P.L. (1999). \emph{Development, implementation and 
 #'evaluation of multiple imputation strategies for the statistical analysis of 
 #'incomplete data sets.} Dissertation. Rotterdam: Erasmus University. 
