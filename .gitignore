@@ -10,3 +10,4 @@ NAMESPACE
 *.rej
 src/*.so
 src/*.o
+inst/doc

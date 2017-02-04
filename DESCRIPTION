@@ -46,7 +46,10 @@ Suggests:
     nlme,
     pan,
     randomForest,
-    Zelig
+    Zelig,
+    BSDA,
+    knitr,
+    rmarkdown
 LinkingTo: Rcpp
 Description: Multiple imputation using Fully Conditional Specification (FCS)
     implemented by the MICE algorithm. Each variable has its own imputation
@@ -60,6 +63,7 @@ Description: Multiple imputation using Fully Conditional Specification (FCS)
 License: GPL-2 | GPL-3
 LazyLoad: yes
 LazyData: yes
+VignetteBuilder: knitr
 URL: http://www.stefvanbuuren.nl , http://www.multiple-imputation.com
 BugReports: https://github.com/stefvanbuuren/mice/issues
 RoxygenNote: 5.0.1
