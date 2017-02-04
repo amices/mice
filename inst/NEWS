@@ -14,6 +14,12 @@ Question or suggestions about MICE can be send to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.29    05oct2016 SvB
+ADDED    midastouch: predictive mean matching for small samples
+
+V2.28    05oct2016 SvB
+FIXED    repaired dots problem in rpart call
+
 V2.23    04nov2015 SvB
 FIXED    update of example code on /doc
 FIXED    remove lots of dependencies, general cleanup 
