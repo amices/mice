@@ -74,3 +74,18 @@ summary.mids <- function(object, ...) {
     print(object, ...)
     invisible()
 }
+
+
+#
+# ------------------------------summary.mads-------------------------------
+#
+#'Summary of a \code{mads} object
+#'
+#'@rdname summary
+#'@return \code{NULL}
+#'@seealso \code{\link[=mads-class]{mads}}
+#'@export
+summary.mads <- function(object, ...) {
+  print(object, ...)
+  invisible()
+}

@@ -9,5 +9,4 @@ NAMESPACE
 *.orig
 *.rej
 src/*.so
-man/*.Rd
 src/*.o

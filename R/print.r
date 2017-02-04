@@ -79,3 +79,40 @@ print.mipo <- function(x, ...) {
     print(x$f)
     invisible(x)
 }
+
+
+#
+# --------------------------------PRINT.MADS--------------------------------------
+#
+#'Print a \code{mads} object
+#'
+#'@param x Object of class \code{mads}
+#'@param ... Other parameters passed down to \code{print.default()}
+#'@return \code{NULL}
+#'@seealso \code{\link[=mads-class]{mads}}
+#'@method print mads
+#'@export
+print.mads <- function(x, ...) {
+  if (is.mads(x)) {
+    cat("Multivariate Amputed Data Set")
+    cat("\nCall: ")
+    print(x$call)
+    cat("Class:", class(x))
+    cat("\nProportion of Missingness: ", x$prop)
+    cat("\nFrequency of Patterns: ", x$freq)
+    cat("\nPattern Matrix:\n")
+    print(x$patterns)
+    cat("Mechanism:")
+    print(x$mech)
+    cat("Weight Matrix:\n")
+    print(x$weights)
+    cat("Type Vector:\n")
+    print(x$type)
+    cat("Odds Matrix:\n")
+    print(x$odds)
+    cat("Head of Amputed Data Set\n")
+    print(head(x$amp))
+  } else print(x, ...)
+  invisible()
+}
+

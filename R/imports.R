@@ -9,6 +9,7 @@
 #'                      glm lm
 #'                      na.exclude pf predict pt qt rbinom
 #'                      rchisq rgamma rnorm runif summary.glm
+#'                      quantile
 #'                      update var vcov complete.cases
 #'@importFrom utils     flush.console write.table head tail
 #'                      packageDescription methods
