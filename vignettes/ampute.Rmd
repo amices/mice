@@ -1,7 +1,7 @@
 ---
 title: "Multivariate amputation using ampute"
 author: "Rianne Schouten [aut, cre], Peter Lugtig [ctb], Gerko Vink [aut]"
-date: "Saturday, October 8th, 2016"
+date: "`r Sys.Date()`"
 header-includes:
 - \usepackage{blkarray}
 - \usepackage{caption}
@@ -14,34 +14,25 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width = 5, fig.height = 5, 
+                      fig.align = "center", dev = "pdf")
+```
+
 When new multiple imputation techniques are tested, simulated data sets have to be made incomplete. Often, a univariate amputation procedure is followed, generating missing values one variable at a time. This procedure is repeated for every variable that should have missing values. Van Buuren (2012, pp. 63, 64) explains in detail how this can be done. However, there are some drawbacks of this approach. First, a univariate amputation procedure makes it difficult to relate the missingness on one variable to the missingness on any other variable. Second, both simulated and real data have a multivariate structure. Applying a univariate amputation procedure to multivariate data would not do justice to the complicated nature of data sets. For these reasons, function `ampute` is developed to perform multivariate amputation according the user's specific desires.
 
 ```{r, include = FALSE}
 # Load packages
 require("MASS")
-require("mice")
 require("lattice")
+require("mice")
 require("gridExtra")
-
-# Underlying functions
-source("../R/ampute.mcar.R")
-source("../R/ampute.continuous.R")
-source("../R/ampute.discrete.R")
-source("../R/ampute.default.R")
-source("../R/is.R")
-source("../R/print.R")
-source("../R/summary.R")
-source("../R/bwplot.mads.R")
-source("../R/xyplot.mads.R")
-source("../R/mads.R")
-source("../R/mdc.R")
-source("../R/supports.transparent.R")
-
-# Main function
-source("../R/ampute.R")
 ```
 
-![Figure 1. Step-by-step flowchart of R-function ampute](Figures/Flowchart.jpg)
+```{r, out.width = "600px", echo = FALSE, fig.cap="Figure 1: Step-by-step flowchart of R-function ampute()"}
+knitr::include_graphics("Figures/Flowchart.pdf")
+```
 
 Function `ampute()` enables the generation of missing values based on different underlying missingness mechanisms. To this end, `ampute()` has multiple arguments and the most important ones are displayed in Figure 1. Figure 1 also gives an overview of the order in which decisions need to be taken if you would like to generate a missingness mechanism that cannot easily be traced back. This is especially useful for the evaluation and comparison of missing data methods. Nevertheless, the default settings create genuine multivariate missingness as well. 
 
@@ -55,7 +46,7 @@ First, we need a complete data set. In simulation settings, multivariate data ca
 
 ```{r}
 set.seed(2016)
-testdata <- mvrnorm(n = 10000, mu = c(10, 5, 0), 
+testdata <- mvrnorm(n = 500, mu = c(10, 5, 0), 
                     Sigma = matrix(data = c(1.0, 0.2, 0.2, 0.2, 1.0, 0.2, 
                                             0.2, 0.2, 1.0), nrow = 3, byrow = T))
 testdata <- as.data.frame(testdata)
@@ -271,7 +262,7 @@ Scatterplots might also help to investigate the effect of the specifications. We
 For example, we can investigate the weighted sum scores of pattern 1 as follows:
 
 ```{r}
-xyplot(result, which.pat = 1)
+xyplot(result, which.pat = 1, colors = mdc(1:2))
 ```
 
 The scatterplots show that there is a very small relation between V1 and the weighted sum scores. Furthermore, the relation between V2 and the weighted sum scores is very strong, meaning that a case's value on V2 is very important in the generation of the weighted sum score. Actually, this is what causes the differences between the amputed and non-amputed data in the boxplots above. For V3 and the weighted sum scores, the relation is a bit weaker than for V2 but more present than for V1. 
@@ -284,8 +275,7 @@ Instead of using continuous formulas to specify the missingness probabilities, t
 
 ### 8. Type
 
-```{r, include = FALSE}
-
+```{r, fig.cap = "Figure 2: Adaptations of continuous logit functions", echo = FALSE}
 logistic <- function(x){
   exp(x)/(1+exp(x))
 } 
@@ -305,20 +295,10 @@ plot1 <- xyplot(Y ~ X1, data2, group = Type, t = 'l',
                 cex = 0.5, col = rep("black", 4),
                 xlab = "Standardized weighted sum scores", 
                 ylab = "Probability",
-                key=list(space="top", columns=4, lines = list(lty = c(1, 2, 3, 4)), text = list(c("LEFT", "MID", "RIGHT", "TAIL"), cex = 0.5)))
-
-png(filename="Figures/Figure2.png", 
-    type="cairo",
-    units="in", 
-    width=7, 
-    height=4, 
-    pointsize=12, 
-    res=200)
+                key=list(space="top", columns=4, lines = list(lty = c(1, 2, 3, 4)), text = list(c("LEFT", "MID", "RIGHT", "TAIL"), cex = 0.5),
+                colors = mdc(1:2)))
 plot1
-dev.off()
 ```
-
-![Figure 2. Adaptations of continuous logit functions](Figures/Figure2.png)
 
 The logit functions are more thoroughly explained by Van Buuren (2012, pp. 63, 64), but a quick overview will be given here. Four missingness functions are known: RIGHT, MID, TAIL and LEFT missingness. Figure 2 shows the course of the probabilities for standardized values. 
 
@@ -332,14 +312,14 @@ result <- ampute(testdata, prop = 0.3, patterns = mypatterns,
                  type = c("RIGHT", "TAIL", "MID", "LEFT"))
 ```
 
-```{r}
+```{r echo = FALSE}
 bwplot(result, which.pat = 2, descriptives = FALSE)
 ```
 
 From the boxplots of pattern 2, it becomes visible that the interquartile range (IQR) is much larger for the amputed V3 values compared to the non-amputed data. This is due to the fact that in pattern 2 only V3 defines the missingness. Besides, we requested a TAIL missingness type, which means that all the cases with values at the tails of the distribution of the weighted sum scores (based on merely V3), will be made missing.
 
-```{r}
-xyplot(result, which.pat = 4)
+```{r echo = FALSE}
+xyplot(result, which.pat = 4, colors = mdc(1:2))
 ```
 
 First, notice that there are much fewer dots in these scatterplots compared to the scatterplots we saw earlier. This is due to the `freq` setting: we specified that only 10 percent of the cases with missing values should have missingness pattern 4. Second, the scatterplots show that all the amputed data are at the left hand side of the weighted sum scores due to the `"LEFT"` setting in the `type` argument. Third, these figures show that there is a perfect relation between variable V2 and the weighted sum scores. Clearly, pattern 4 depends on variable V2 only, which we can remember from the `weights` matrix we used.   
@@ -401,36 +381,21 @@ plot3 <- xyplot(V3 ~ V2, data = data3, groups = group,
                          cex = 1, points = list(pch = c(1, 2, 3, 4)), 
                          text = list(c("Group1", "Group2", "Group3", "Group4"), 
                                      cex = 0.5)))
-
-png(filename="Figures/Figure3.png", 
-    type="cairo",
-    units="in", 
-    width=7, 
-    height=4, 
-    pointsize=12, 
-    res=200)
-plot2
-dev.off()
-png(filename="Figures/Figure4.png", 
-    type="cairo",
-    units="in", 
-    width=7, 
-    height=4, 
-    pointsize=12, 
-    res=300)
-plot3
-dev.off()
 ```
 
-![Figure 3. Probabilities to have missing values for the four groups in pattern 1 and the relation between the groups and the weighted sum scores](Figures/Figure3.png)
+```{r fig.cap = "Figure 3: Probabilities to have missing values for the four groups in pattern 1 and the relation between the groups and the weighted sum scores", echo = FALSE}
+plot2
+```
 
-As can be seen, there are indeed four groups in pattern 1. The groups have an approximately equal size, with each a certain probability to obtain missing values. The probability of group 4 is indeed four times as large as the probability of group 1.  
+As can be seen, there are indeed four groups in pattern 1. The groups have an approximately equal size, with each a certain probability to obtain missing values. The probability of group 4 is indeed four times as large as the probability of group 1.
+
+```{r fig.cap = "Figure 4: Division of odds groups over variables $V_2$ and $V_3$", echo = FALSE}
+plot3
+```
 
 The relation between the groups and the variable values is shown in Figure 4. Because the relationship between variable V2 and the weighted sum scores is high (due to the `weights` setting), the groups can be distinguished very well. Besides, for higher values of V2, the weighted sum scores are higher. These are the cases that are placed in group 4. Therefore, they are at the right hand side of the V2 scale. For variable V3, the relation between the values and the group allocation is small. This again is due to the `weights` setting. Still, because of the odds values, group 4 is much more to the right of the V3 scale than group 1, 2 and 3. 
 
 Let us now dig deeper into the contents of the `odds` matrix. The #rows of this matrix is equal to #patterns. The #columns can be defined by the user and depends on the desired amputation procedure. 
-
-![Figure 4. Division of odds groups over variables $V_2$ and $V_3$](Figures/Figure4.png)
 
 The amount of values in each row defines the number of groups that will be created from the weighted sum scores in that specific pattern. This number can be different for the different patterns. The values themselves define the odds probabilities of having missing values. Note that the values are relative values. For instance, a setting of `c(2, 6)` is similar to `c(3, 9)`.
 
@@ -526,9 +491,9 @@ head(result$data)
 
 ### References
 
-Brand, J.P.L. (1999). \emph{Development, implementation and 
-evaluation of multiple imputation strategies for the statistical analysis of incomplete data sets} (pp. 110-113). Dissertation. Rotterdam: Erasmus University.
+Brand, J.P.L. (1999). Development, implementation and 
+evaluation of multiple imputation strategies for the statistical analysis of incomplete data sets (pp. 110-113). Dissertation. Rotterdam: Erasmus University.
 
-Van Buuren, S. (2012). \emph{Flexible imputation of missing data.}
+Van Buuren, S. (2012). Flexible imputation of missing data.
 Boca Raton, FL.: Chapman & Hall/CRC Press.
 
