@@ -2,19 +2,13 @@
 knitr::opts_chunk$set(echo = TRUE, fig.width = 5, fig.height = 5, 
                       fig.align = "center", dev = "pdf")
 
-## ---- include = FALSE----------------------------------------------------
-# Load packages
-require("MASS")
-require("lattice")
-require("mice")
-require("gridExtra")
-
 ## ---- out.width = "600px", echo = FALSE, fig.cap="Figure 1: Step-by-step flowchart of R-function ampute()"----
 knitr::include_graphics("Figures/Flowchart.pdf")
 
 ## ------------------------------------------------------------------------
+require("mice")
 set.seed(2016)
-testdata <- mvrnorm(n = 500, mu = c(10, 5, 0), 
+testdata <- MASS::mvrnorm(n = 500, mu = c(10, 5, 0), 
                     Sigma = matrix(data = c(1.0, 0.2, 0.2, 0.2, 1.0, 0.2, 
                                             0.2, 0.2, 1.0), nrow = 3, byrow = T))
 testdata <- as.data.frame(testdata)
@@ -92,7 +86,7 @@ result <- ampute(testdata, prop = 0.3, patterns = mypatterns,
                  freq = c(0.7, 0.1, 0.1, 0.1), weights = myweights)
 
 ## ------------------------------------------------------------------------
-bwplot(result, which.pat = c(1, 3), descriptives = TRUE)
+lattice::bwplot(result, which.pat = c(1, 3), descriptives = TRUE)
 
 ## ---- include = FALSE----------------------------------------------------
 require(BSDA)
@@ -135,7 +129,7 @@ result <- ampute(testdata, prop = 0.3, patterns = mypatterns,
                  type = c("RIGHT", "TAIL", "MID", "LEFT"))
 
 ## ----echo = FALSE--------------------------------------------------------
-bwplot(result, which.pat = 2, descriptives = FALSE)
+lattice::bwplot(result, which.pat = 2, descriptives = FALSE)
 
 ## ----echo = FALSE--------------------------------------------------------
 xyplot(result, which.pat = 4, colors = mdc(1:2))
