@@ -198,7 +198,6 @@
 #'multiple imputation strategies for the statistical analysis of incomplete
 #'data sets.} Dissertation. Rotterdam: Erasmus University.
 #'@keywords iteration
-#'@useDynLib mice
 #'@examples
 #'
 #'

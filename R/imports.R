@@ -17,4 +17,5 @@
 #'@importFrom nnet      multinom nnet
 #'@importFrom rpart     rpart rpart.control
 #'@importFrom Rcpp      sourceCpp
+#'@useDynLib mice
 NULL
