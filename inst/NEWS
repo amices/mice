@@ -11,6 +11,9 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.31    23feb2017 SvB
+ADDED    link to miceVignettes on github (thanks Gerko Vink)
+
 V2.30    04feb2017 SvB
 ADDED    README for GitHub
 ADDED    new ampute functions and vignette (thanks Rianne Schouten)
