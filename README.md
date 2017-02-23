@@ -54,17 +54,17 @@ A detailed series of vignettes that walk you through solving realistic inference
 
 We suggest going through these vignettes in the following order
 
-1.  [Ad Hoc methods and the mice algorithm](https://gerkovink.github.io/miceVignettes/Ad_hoc_and_mice/Ad_hoc_methods.html)
+1.  [Ad hoc methods and the MICE algorithm](https://gerkovink.github.io/miceVignettes/Ad_hoc_and_mice/Ad_hoc_methods.html)
 2.  [Convergence and pooling](https://gerkovink.github.io/miceVignettes/Convergence_pooling/Convergence_and_pooling.html)
 3.  [Inspecting how the observed data and missingness are related](https://gerkovink.github.io/miceVignettes/Missingness_inspection/Missingness_inspection.html)
 4.  [Passive imputation and post-processing](https://gerkovink.github.io/miceVignettes/Passive_Post_processing/Passive_imputation_post_processing.html)
-5.  [Imputing multi-level data](https://gerkovink.github.io/miceVignettes/Multi_level/Multi_level_data.html)
-6.  [Sensitivity analysis with mice](https://gerkovink.github.io/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html)
+5.  [Imputing multilevel data](https://gerkovink.github.io/miceVignettes/Multi_level/Multi_level_data.html)
+6.  [Sensitivity analysis with `mice`](https://gerkovink.github.io/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html)
 
 Further reading
 ---------------
 
-The `mice` software was published in the Journal of Statistical Software (Buuren and Groothuis-Oudshoorn 2011) (<https://www.jstatsoft.org/article/view/v045i03>). The first application of the method concerned missing blood pressure data (Buuren, Boshuizen, and Knook 1999). The term *Fully Conditional Specification* was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Buuren et al. 2006). Further details and applications can be found in the book *Flexible Imputation of Missing Data* (Buuren 2012).
+The `mice` software was published in the [Journal of Statistical Software](https://www.jstatsoft.org/article/view/v045i03) (Buuren and Groothuis-Oudshoorn 2011). The first application of the method concerned missing blood pressure data (Buuren, Boshuizen, and Knook 1999). The term *Fully Conditional Specification* was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Buuren et al. 2006). Further details and applications can be found in the book *Flexible Imputation of Missing Data* (Buuren 2012).
 
 References
 ----------

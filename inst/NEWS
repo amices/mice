@@ -13,6 +13,7 @@ CHANGELOG MICE
 ~~~~~~~~~~~~~~
 V2.31    23feb2017 SvB
 ADDED    link to miceVignettes on github (thanks Gerko Vink)
+ADDED    package documentation
 
 V2.30    04feb2017 SvB
 ADDED    README for GitHub
