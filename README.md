@@ -47,13 +47,8 @@ The main functions in the `mice` package are:
 | `complete()`  | Export imputed data               |
 | `ampute()`    | Generate missing data             |
 
-Further reading
----------------
-
-The `mice` software was published in the Journal of Statistical Software (Buuren and Groothuis-Oudshoorn 2011). See <https://www.jstatsoft.org/article/view/v045i03>. The first application of the method concerned missing blood pressure data (Buuren, Boshuizen, and Knook 1999). The term *Fully Conditional Specification* was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Buuren et al. 2006). Further details and applications can be found in the book *Flexible Imputation of Missing Data* (Buuren 2012).
-
 miceVignettes
-=============
+-------------
 
 A detailed series of vignettes that walk you through solving realistic inference problems with mice.
 
@@ -65,6 +60,11 @@ We suggest going through these vignettes in the following order
 -   [4. Passive imputation and post-processing](https://gerkovink.github.io/miceVignettes/Passive_Post_processing/Passive_imputation_post_processing.html)
 -   [5. Imputing multi-level data](https://gerkovink.github.io/miceVignettes/Multi_level/Multi_level_data.html)
 -   [6. Sensitivity analysis with mice](https://gerkovink.github.io/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html)
+
+Further reading
+---------------
+
+The `mice` software was published in the Journal of Statistical Software (Buuren and Groothuis-Oudshoorn 2011) (<https://www.jstatsoft.org/article/view/v045i03>). The first application of the method concerned missing blood pressure data (Buuren, Boshuizen, and Knook 1999). The term *Fully Conditional Specification* was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Buuren et al. 2006). Further details and applications can be found in the book *Flexible Imputation of Missing Data* (Buuren 2012).
 
 References
 ----------
