@@ -51,8 +51,8 @@
 #'@export
 mice.impute.cart <- function(y, ry, x, minbucket = 5, cp = 1e-04, ...) {
     minbucket <- max(1, minbucket)  # safety
-    xobs <- x[ry, ]
-    xmis <- x[!ry, ]
+    xobs <- x[ry, , drop = FALSE]
+    xmis <- x[!ry, , drop = FALSE]
     yobs <- y[ry]
     if (!is.factor(yobs)) {
         fit <- rpart(yobs ~ ., data = cbind(yobs, xobs), method = "anova", 
