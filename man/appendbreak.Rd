@@ -30,4 +30,3 @@ the function assumes that columns \code{age}, \code{occ},
 \code{bmi.z} are available. This function is used on the \code{tbc} 
 data in FIMD chapter 9. Check that out to see it in action.
 }
-

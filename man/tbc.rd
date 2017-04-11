@@ -65,4 +65,3 @@ md.pattern(data)
 
 }
 \keyword{datasets}
-

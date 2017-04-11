@@ -22,11 +22,10 @@ dataset. If the number of imputations in \code{x} is \code{m(x)} and in
 \code{y} is \code{m(y)} then the combination of both objects contains
 \code{m(x)+m(y)} imputations.
 }
-\author{
-Karin Groothuis-Oudshoorn, Stef van Buuren, 2009
-}
 \seealso{
 \code{\link[=mids-class]{mids}}, \code{\link{rbind.mids}}, \code{\link{cbind.mids}}
 }
+\author{
+Karin Groothuis-Oudshoorn, Stef van Buuren, 2009
+}
 \keyword{manip}
-

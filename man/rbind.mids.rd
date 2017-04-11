@@ -4,7 +4,7 @@
 \alias{rbind.mids}
 \title{Rowwise combination of a \code{mids} object.}
 \usage{
-rbind.mids(x, y, ...)
+\method{rbind}{mids}(x, y, ...)
 }
 \arguments{
 \item{x}{A \code{mids} object.}
@@ -62,9 +62,6 @@ padded imputation model, i.e. the imputation model after creating dummy
 variables.
 Component \code{loggedEvents} is set to \code{x$loggedEvents}.
 }
-\author{
-Karin Groothuis-Oudshoorn, Stef van Buuren, 2009
-}
 \references{
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -74,5 +71,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 \seealso{
 \code{\link{cbind.mids}}, \code{\link{ibind}}, \code{\link[=mids-class]{mids}}
 }
+\author{
+Karin Groothuis-Oudshoorn, Stef van Buuren, 2009
+}
 \keyword{manip}
-

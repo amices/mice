@@ -63,9 +63,6 @@ pool.scalar(Q, U, method = "rubin")   # Rubin 1987
 pool.scalar(Q, U, n = nrow(nhanes), k = 1)  # Barnard-Rubin 1999
 
 }
-\author{
-Karin Groothuis-Oudshoorn and Stef van Buuren, 2009
-}
 \references{
 Rubin, D.B. (1987). Multiple Imputation for Nonresponse in
 Surveys.  New York: John Wiley and Sons.
@@ -73,5 +70,7 @@ Surveys.  New York: John Wiley and Sons.
 \seealso{
 \code{\link{pool}}
 }
+\author{
+Karin Groothuis-Oudshoorn and Stef van Buuren, 2009
+}
 \keyword{htest}
-

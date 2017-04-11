@@ -61,4 +61,3 @@ fluxplot(pattern2)
 
 }
 \keyword{datasets}
-

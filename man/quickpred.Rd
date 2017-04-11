@@ -92,9 +92,6 @@ pred
 imp <- mice(nhanes, pred=quickpred(nhanes, minpuc=0.25, include='age'))
 
 }
-\author{
-Stef van Buuren, Aug 2009
-}
 \references{
 van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple
 imputation of missing blood pressure covariates in survival analysis.
@@ -107,5 +104,7 @@ Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 \seealso{
 \code{\link{mice}}, \code{\link[=mids-class]{mids}}
 }
+\author{
+Stef van Buuren, Aug 2009
+}
 \keyword{misc}
-

@@ -15,11 +15,10 @@ An object of class \code{mids}
 \description{
 Deprecated. Use \code{as.mids()} instead.
 }
-\author{
-Stef van Buuren, 2012
-}
 \seealso{
 \code{\link{as.mids}}
 }
+\author{
+Stef van Buuren, 2012
+}
 \keyword{internal}
-

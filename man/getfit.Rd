@@ -35,11 +35,10 @@ getfit(fit)
 getfit(fit, 2)
 
 }
-\author{
-Stef van Buuren, March 2012.
-}
 \seealso{
 \code{\link[=mira-class]{mira}}, \code{\link{with.mids}}
 }
+\author{
+Stef van Buuren, March 2012.
+}
 \keyword{manip}
-

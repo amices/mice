@@ -22,10 +22,9 @@ Calculates the number of complete cases.
  ncc(nhanes) # 13 complete cases 
 
 }
-\author{
-Stef van Buuren, 2017
-}
 \seealso{
 \code{\link{nic}}, \code{\link{cci}}
 }
-
+\author{
+Stef van Buuren, 2017
+}

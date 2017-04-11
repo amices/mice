@@ -67,11 +67,10 @@ pooling is an extra option only available to those who licence the
 \code{MISSING VALUES} module. Without this licence, \code{SPSS} will still
 recognize the structure of the data, but not do any pooling.
 }
-\author{
-Stef van Buuren, dec 2010.
-}
 \seealso{
 \code{\link[=mids-class]{mids}}
 }
+\author{
+Stef van Buuren, dec 2010.
+}
 \keyword{manip}
-

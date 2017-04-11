@@ -86,9 +86,6 @@ fit1 <- with(imp, glm(gen>levels(gen)[1] ~ hgt+hc+reg,family=binomial))
 pool.compare(fit1, fit0, method='likelihood', data=imp)}
 
 }
-\author{
-Karin Groothuis-Oudshoorn and Stef van Buuren, 2009
-}
 \references{
 Li, K.H., Meng, X.L., Raghunathan, T.E. and Rubin, D. B. (1991).
 Significance levels from repeated p-values with multiply-imputed data.
@@ -104,5 +101,7 @@ Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 \seealso{
 \code{\link{lm.mids}}, \code{\link{glm.mids}}, \code{\link{vcov}},
 }
+\author{
+Karin Groothuis-Oudshoorn and Stef van Buuren, 2009
+}
 \keyword{htest}
-

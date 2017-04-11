@@ -70,6 +70,7 @@ The first application of the method
 concerned missing blood pressure data (Van Buuren et. al., 1999). 
 The term \emph{Fully Conditional Specification} was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Van Buuren et. al., 2006). Further details on mixes of variables and applications can be found in the book \href{https://www.crcpress.com/Flexible-Imputation-of-Missing-Data/van-Buuren/p/book/9781439868249}{\emph{Flexible Imputation of Missing Data}}.
 }
+
 \references{
 van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple
 imputation of missing blood pressure covariates in survival analysis.
@@ -89,4 +90,3 @@ van Buuren, S. (2012). \href{https://www.crcpress.com/Flexible-Imputation-of-Mis
 \code{\link{mice}}, \code{\link{with.mids}},
 \code{\link{pool}}, \code{\link{complete}}, \code{\link{ampute}}
 }
-

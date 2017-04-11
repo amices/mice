@@ -192,9 +192,6 @@ c(0.3, 0.3, 0.4), cont = FALSE, odds = odds)
 result4 <- ampute(data = complete.data, type = c("RIGHT", "TAIL", "LEFT"))
 
 }
-\author{
-Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
-}
 \references{
 Brand, J.P.L. (1999). \emph{Development, implementation and 
 evaluation of multiple imputation strategies for the statistical analysis of 
@@ -215,4 +212,6 @@ routines.
 \code{\link{ampute.mcar}}, \code{\link{ampute.continuous}}, 
 \code{\link{ampute.discrete}}, \code{\link{mice}}
 }
-
+\author{
+Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
+}

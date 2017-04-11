@@ -54,4 +54,3 @@ pops <- data(pops)
 
 }
 \keyword{datasets}
-

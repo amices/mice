@@ -23,10 +23,9 @@ Calculates the number of incomplete cases.
  nic(nhanes[,c("bmi","hyp")]) # number of cases with incomplete bmi and hyp
 
 }
-\author{
-Stef van Buuren, 2017
-}
 \seealso{
 \code{\link{ncc}}, \code{\link{cci}}
 }
-
+\author{
+Stef van Buuren, 2017
+}

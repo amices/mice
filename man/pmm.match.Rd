@@ -37,9 +37,6 @@ now calls the much faster \code{C} function \code{matcher} instead of
 \code{.pmm.match()}. Use \code{mice(..., version = "2.21")} to call
 \code{.pmm.match()}
 }
-\author{
-Stef van Buuren
-}
 \references{
 Schenker N \& Taylor JMG (1996) Partially parametric techniques 
 for multiple imputation. \emph{Computational Statistics and Data Analysis}, 22, 425-446.
@@ -47,4 +44,6 @@ for multiple imputation. \emph{Computational Statistics and Data Analysis}, 22, 
 Little RJA (1988) Missing-data adjustments in large surveys (with discussion). 
 \emph{Journal of Business Economics and Statistics}, 6, 287-301.
 }
-
+\author{
+Stef van Buuren
+}

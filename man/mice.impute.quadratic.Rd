@@ -79,9 +79,6 @@ points(complete(imp,1)$x[is.na(dat$x)], complete(imp,1)$xx[is.na(dat$x)], col=md
 
 
 }
-\author{
-Gerko Vink (University of Utrecht), \email{g.vink@uu.nl}
-}
 \references{
 van Buuren, S. (2012). \emph{Flexible Imputation of Missing
 Data.} Boca Raton, FL: Chapman & Hall/CRC Press.
@@ -92,5 +89,7 @@ Vink, G., Frank, L.E., van Buuren, S. (2012). Multiple Imputation of Squares.
 \seealso{
 \code{\link{mice.impute.pmm}}
 }
+\author{
+Gerko Vink (University of Utrecht), \email{g.vink@uu.nl}
+}
 \keyword{datagen}
-

@@ -28,14 +28,13 @@ This method estimates an offset between the distribution of the
 observed and missing data using an algorithm that iterates
 over the response model and the imputation model.
 }
-\author{
-Shahab Jolani (University of Utrecht) \email{s.jolani@uu.nl}
-}
 \references{
 Jolani, S. (2012). 
 \emph{Dual Imputation Strategies for Analyzing Incomplete Data}. 
 Disseration. University of Utrecht, Dec 7 2012.
 \url{http://dspace.library.uu.nl/handle/1874/257547}
 }
+\author{
+Shahab Jolani (University of Utrecht) \email{s.jolani@uu.nl}
+}
 \keyword{datagen}
-

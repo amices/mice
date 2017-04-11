@@ -2,8 +2,8 @@
 % Please edit documentation in R/mids.r
 \docType{class}
 \name{mids-class}
-\alias{mids}
 \alias{mids-class}
+\alias{mids}
 \title{Multiply imputed data set (\code{mids})}
 \description{
 The \code{mids} object contains a multiply imputed data set. The \code{mids} object is
@@ -70,9 +70,7 @@ is a (possibly long) character vector with the names of the altered or
 removed predictors.}
 }
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-}
+
 \references{
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -82,5 +80,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 \seealso{
 \code{\link{mice}}, \code{\link[=mira-class]{mira}}, \code{\link[=mipo-class]{mipo}}
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+}
 \keyword{classes}
-

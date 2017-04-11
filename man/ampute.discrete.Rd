@@ -36,9 +36,6 @@ This function creates a missing data indicator for each pattern. Odds probabilit
 (Brand, 1999, pp. 110-113) will be induced on the weighted sum scores, calculated earlier 
 in the multivariate amputation function \code{\link{ampute}}.
 }
-\author{
-Rianne Schouten, 2016
-}
 \references{
 Brand, J.P.L. (1999). \emph{Development, implementation and 
 evaluation of multiple imputation strategies for the statistical analysis of 
@@ -47,4 +44,6 @@ incomplete data sets.} Dissertation. Rotterdam: Erasmus University.
 \seealso{
 \code{\link{ampute}}, \code{\link{ampute.default.odds}}
 }
-
+\author{
+Rianne Schouten, 2016
+}

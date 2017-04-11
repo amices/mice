@@ -39,4 +39,3 @@ Fully conditional specification in multivariate imputation.  \emph{Journal of
 Statistical Computation and Simulation}, \bold{76}, 12, 1049--1064.
 }
 \keyword{datasets}
-

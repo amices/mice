@@ -60,11 +60,11 @@ pattern.}
 \item{\code{data}:}{The complete data set that was entered in \code{ampute}.}
 }
 }
-\author{
-Rianne Schouten, 2016
-}
+
 \seealso{
 \code{\link{ampute}}, Vignette titled "Multivariate Amputation using 
 Ampute".
 }
-
+\author{
+Rianne Schouten, 2016
+}

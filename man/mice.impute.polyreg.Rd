@@ -46,9 +46,6 @@ The algorithm of \code{mice.impute.polyreg} uses the function
 In order to avoid bias due to perfect prediction, the algorithm augment the
 data according to the method of White, Daniel and Royston (2010).
 }
-\author{
-Stef van Buuren, Karin Groohuis-Oudshoorn, 2000-2010
-}
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
@@ -69,5 +66,7 @@ S-Plus (4th ed)}. Springer, Berlin.
 \code{\link{mice}}, \code{\link[nnet]{multinom}},
 \code{\link[MASS]{polr}}
 }
+\author{
+Stef van Buuren, Karin Groohuis-Oudshoorn, 2000-2010
+}
 \keyword{datagen}
-

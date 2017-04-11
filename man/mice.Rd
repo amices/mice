@@ -55,7 +55,8 @@ formulae. Each string is parsed and executed within the \code{sampler()}
 function to create terms for the predictor.  The default is to do nothing,
 indicated by a vector of empty strings \code{''}.  The main value
 lies in the easy specification of interaction terms.  The user must
-ensure that the set of variables in the formula match those in \code{predictors}.}
+ensure that the set of variables in the formula match those in
+\code{predictors}.}
 
 \item{post}{A vector of strings with length \code{ncol(data)}, specifying
 expressions. Each string is parsed and executed within the \code{sampler()}
@@ -101,7 +102,8 @@ imputations.}
 functions.}
 }
 \value{
-Returns an S3 object of class \code{\link[=mids-class]{mids}} (multiply imputed data set)
+Returns an S3 object of class \code{\link[=mids-class]{mids}}
+       (multiply imputed data set)
 }
 \description{
 Generates Multivariate Imputations by Chained Equations (MICE)
@@ -141,7 +143,8 @@ Built-in elementary imputation methods are:
 \item{2l.norm}{Two-level normal imputation (numeric)}
 \item{2l.pan}{Two-level normal imputation using pan (numeric)}
 \item{2lonly.mean}{Imputation at level-2 of the class mean (numeric)}
-\item{2lonly.norm}{Imputation at level-2 by Bayesian linear regression (numeric)}
+\item{2lonly.norm}{Imputation at level-2 by Bayesian linear regression
+                  (numeric)}
 \item{2lonly.pmm}{Imputation at level-2 by Predictive mean matching (any)}
 \item{quadratic}{Imputation of quadratic terms (numeric)}
 \item{logreg}{Logistic regression (factor, 2 levels)}
@@ -217,13 +220,6 @@ complete(imp)
 mice(nhanes2, meth=c('sample','pmm','logreg','norm'))
 
 }
-\author{
-Stef van Buuren \email{stef.vanbuuren@tno.nl}, Karin
-Groothuis-Oudshoorn \email{c.g.m.oudshoorn@utwente.nl}, 2000-2010, with
-contributions of Alexander Robitzsch, Gerko Vink, Shahab Jolani, 
-Roel de Jong, Jason Turner, Lisa Doove, 
-John Fox, Frank E. Harrell, and Peter Malewski.
-}
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -253,5 +249,11 @@ data sets.} Dissertation. Rotterdam: Erasmus University.
 \code{\link[=mids-class]{mids}}, \code{\link{with.mids}},
 \code{\link{set.seed}}, \code{\link{complete}}
 }
+\author{
+Stef van Buuren \email{stef.vanbuuren@tno.nl}, Karin
+Groothuis-Oudshoorn \email{c.g.m.oudshoorn@utwente.nl}, 2000-2010, with
+contributions of Alexander Robitzsch, Gerko Vink, Shahab Jolani, 
+Roel de Jong, Jason Turner, Lisa Doove, 
+John Fox, Frank E. Harrell, and Peter Malewski.
+}
 \keyword{iteration}
-
