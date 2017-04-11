@@ -12,7 +12,8 @@ Questions and suggestions about MICE can be directed to
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
 V2.33    11apr2017 SvB
-CHANGED  Stylistic changes into mice function (thanks Ben Ogorek)
+CHANGED  Stylistic changes to mice function (thanks Ben Ogorek)
+CHANGED  calls to cbind.mids() replaced by calls to cbind()
 
 V2.31    23feb2017 SvB
 ADDED    link to miceVignettes on github (thanks Gerko Vink)
