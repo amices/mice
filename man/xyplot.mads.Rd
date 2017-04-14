@@ -5,8 +5,7 @@
 \title{Scatterplot of amputed and non-amputed data against weighted sum scores}
 \usage{
 \method{xyplot}{mads}(x, yvar = NULL, which.pat = NULL,
-  standardized = TRUE, layout = NULL, theme = mice.theme(transparent =
-  FALSE), multiple = TRUE, outer = TRUE)
+  standardized = TRUE, layout = NULL, colors = c("#fc8d62", "#8da0cb"))
 }
 \arguments{
 \item{x}{A \code{mads} object, typically created by \code{\link{ampute}}.}
@@ -26,29 +25,24 @@ that the scatterplots of six variables need to be placed on 3 rows and 2 columns
 There are several defaults for different #variables. Note that for more than 
 9 variables, multiple plots will be created automatically.}
 
-\item{theme}{A named list containing the graphical parameters. The default
-function \code{mice.theme} produces a short list of default colors, line
-width, and so on. The extensive list may be obtained from
-\code{trellis.par.get}.}
-
-\item{multiple}{See \code{\link[lattice:bwplot]{bwplot}}.}
-
-\item{outer}{See \code{\link[lattice:bwplot]{bwplot}}.}
+\item{colors}{A vector of two RGB values defining the colors of the amputed and 
+non-amputed data respectively. RGB values can be obtained with \code{\link{hcl}}.}
 }
 \value{
 A list containing the scatterplots. Note that a new pattern 
 will always be shown in a new plot.
 }
 \description{
-Plotting method for amputed data using \pkg{lattice}. \code{xyplot}
-produces scatterplots. The function plots the variables against the weighted 
-sum scores. This is useful in analyzing the missing data mechanisms. The function
-automatically separates the amputed and non-amputed data.
+Plotting method to investigate relation between amputed data and the weighted sum 
+scores. Based on \code{\link{lattice}}. \code{xyplot} produces scatterplots. 
+The function plots the variables against the weighted sum scores. The function
+automatically separates the amputed and non-amputed data to see the relation between
+the amputatoin and the weighted sum scores.
 }
 \note{
 The \code{mads} object contains all the information you need to 
-make any desired plots. Check \code{\link{mads-class}} or the vignette titled "Multivariate 
-Amputation using Ampute" to understand the contents of class object \code{mads}.
+make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate 
+Amputation using Ampute} to understand the contents of class object \code{mads}.
 }
 \author{
 Rianne Schouten, 2016

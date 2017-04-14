@@ -36,7 +36,7 @@ weighted sum scores, calculated earlier in the multivariate amputation function
 \code{\link{ampute}}.
 }
 \author{
-Rianne Schouten, 2016
+Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
 }
 \references{
 Van Buuren, S. (2012). \emph{Flexible imputation of missing data.} 
