@@ -8,7 +8,7 @@
 #'scores. Based on \code{\link{lattice}}. \code{xyplot} produces scatterplots. 
 #'The function plots the variables against the weighted sum scores. The function
 #'automatically separates the amputed and non-amputed data to see the relation between
-#'the amputatoin and the weighted sum scores.  
+#'the amputation and the weighted sum scores.  
 #'
 #'@param x A \code{mads} object, typically created by \code{\link{ampute}}.
 #'@param yvar A string or vector of variable names that needs to be plotted. As 

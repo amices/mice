@@ -107,7 +107,7 @@
 #'percent pattern 3. The vector should sum to 1. Default is an equal probability 
 #'for each pattern, created with \code{\link{ampute.default.freq}}.
 #'@param mech A string specifying the missingness mechanism, either MCAR 
-#'(Missing Complete At Random), MAR (Missing At Random) or MNAR (Missing Not At 
+#'(Missing Completely At Random), MAR (Missing At Random) or MNAR (Missing Not At 
 #'Random). Default is a MAR missingness mechanism.    
 #'@param weights A matrix or data frame of size #patterns by #variables. The matrix 
 #'contains the weights that will be used to calculate the weighted sum scores. For 
@@ -122,10 +122,11 @@
 #'weights matrix will not be used.  
 #'@param cont Logical. Whether the probabilities should be based on a continuous 
 #'or discrete distribution. If TRUE, the probabilities of being missing are based 
-#'on a continuous logit distribution. \code{\link{ampute.continuous}} will be used
-#'to calculate and assign the probabilities. These will be based on argument 
-#'\code{type}. If FALSE, the probabilities of being missing are based on a discrete 
-#'distribution (\code{\link{ampute.discrete}}) based on the \code{odds} argument. 
+#'on a continuous logistic distribution function. \code{\link{ampute.continuous}} 
+#'will be used to calculate and assign the probabilities. These will be based on 
+#'argument \code{type}. If FALSE, the probabilities of being missing are based on 
+#'a discrete distribution (\code{\link{ampute.discrete}}) based on the \code{odds} 
+#'argument. 
 #'Default is TRUE.   
 #'@param type A vector of strings containing the type of missingness for each 
 #'pattern. Either \code{"LEFT"}, \code{"MID"}, \code{"TAIL"} or '\code{"RIGHT"}. 
@@ -151,8 +152,7 @@
 #'amputed data set)
 #'@author Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
 #'@seealso \code{\link{mads-class}}, \code{\link{bwplot}}, \code{\link{xyplot}},
-#'\code{\link{ampute.mcar}}, \code{\link{ampute.continuous}}, 
-#'\code{\link{ampute.discrete}}, \code{\link{mice}}
+#'\code{\link{mice}}
 #' 
 #'@references Brand, J.P.L. (1999). \emph{Development, implementation and 
 #'evaluation of multiple imputation strategies for the statistical analysis of 
