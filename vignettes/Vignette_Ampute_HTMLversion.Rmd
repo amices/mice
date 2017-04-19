@@ -26,7 +26,7 @@ In this vignette we will:
 The multivariate amputation procedure of `ampute` is built upon an initial idea proposed by Brand (1999). Figure 1 shows a schematic overview of the resulting amputation procedure. The method requires a complete dataset of $n$ participants and $m$ variables. The result of the procedure consists of multiple subsets with either incomplete or complete data. These subsets are merged to obtain an incomplete version of the original dataset. 
 
 ```{r, out.width = "700px", echo = FALSE, fig.cap="Figure 1: Schematic overview of multivariate amputation procedure"}
-knitr::include_graphics("../../../Methodology and Statistics/Thesis/TikzPictures/Scheme.png")
+knitr::include_graphics("Figures/Scheme.png")
 ```
 
 The amputation procedure starts with the user deciding what kinds of missing data patterns he desires to establish. A missing data pattern is a particular combination of variables with missing values and variables remaining complete. Based on the number of missing data patterns $k$,the complete dataset is randomly divided into $k$ subsets. The size of these subsets may differ between the patterns. 
@@ -40,7 +40,7 @@ In the end, the allocated probabilities are effectuated. As a result, the candid
 Although all these steps are connected, `ampute` provides a way to vary the missing data generation procedure without influencing other parameters. Therefore we developed `ampute` such that each step of the procedure can be manipulated with one of the function's arguments. Figure 2 shows these arguments from the start of the procedure to the end product of an incomplete dataset. 
 
 ```{r, out.width = "700px", echo = FALSE, fig.cap="Figure 2: Flowchart of R-function ampute"}
-knitr::include_graphics("../../../Methodology and Statistics/Thesis/TikzPictures/Flowchart.png")
+knitr::include_graphics("Figures/Flowchart.png")
 ```
 
 We will now continue with a more thorough explanation of each of these arguments. 
