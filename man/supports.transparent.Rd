@@ -28,4 +28,3 @@ supports.transparent()
 \code{\link{mdc}} \code{\link{dev.capabilities}}
 }
 \keyword{hplot}
-

@@ -82,11 +82,10 @@ mat <- complete(imp, 'r')
 cor(mat)
 
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2009
-}
 \seealso{
 \code{\link{mice}}, \code{\link[=mids-class]{mids}}
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2009
+}
 \keyword{manip}
-

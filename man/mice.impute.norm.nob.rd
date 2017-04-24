@@ -38,9 +38,7 @@ many rows.
 regression weights, so it is not 'proper' in the sense of Rubin. For small
 samples, variability of the imputed data is therefore underestimated.
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-}
+
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -54,5 +52,7 @@ Ph.D. Thesis, TNO Prevention and Health/Erasmus University Rotterdam.
 \seealso{
 \code{\link{mice}}, \code{\link{mice.impute.norm}}
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+}
 \keyword{datagen}
-

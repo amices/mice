@@ -27,7 +27,7 @@
 #'@param x Matrix (\code{n} x \code{p}) of complete covariates.
 #'@param nnet.maxit Tuning parameter for \code{nnet()}.
 #'@param nnet.trace Tuning parameter for \code{nnet()}.
-#'@param nnet.maxNWts Tuning parameter for \code{nnet()}.
+#'@param nnet.MaxNWts Tuning parameter for \code{nnet()}.
 #'@param ... Other named arguments.
 #'@return A vector of length \code{nmis} with imputations.
 #'@author Stef van Buuren, Karin Groohuis-Oudshoorn, 2000-2010
@@ -51,7 +51,7 @@
 #'S-Plus (4th ed)}. Springer, Berlin.
 #'@keywords datagen
 #'@export
-mice.impute.polyreg <- function(y, ry, x, nnet.maxit = 100, nnet.trace = FALSE, nnet.maxNWts = 1500, ...) {
+mice.impute.polyreg <- function(y, ry, x, nnet.maxit = 100, nnet.trace = FALSE, nnet.MaxNWts = 1500, ...) {
     # mice.impute.polyreg
     #
     # Imputation for categorical response variables by the Bayesian
@@ -86,7 +86,7 @@ mice.impute.polyreg <- function(y, ry, x, nnet.maxit = 100, nnet.trace = FALSE, 
     # 28/10/2014 fix, if there are no predictors append intercept
     if (ncol(x) == 0L) xy <- data.frame(xy, int = 1)
     fit <- multinom(formula(xy), data = xy[ry,,drop = FALSE ], 
-                    weights = w[ry], maxit = nnet.maxit, trace = nnet.trace, maxNWts = nnet.maxNWts, ...)
+                    weights = w[ry], maxit = nnet.maxit, trace = nnet.trace, MaxNWts = nnet.MaxNWts, ...)
     post <- predict(fit, xy[!ry, ], type = "probs")
     if (sum(!ry) == 1) post <- matrix(post, nrow = 1, ncol = length(post))  # SvB 14 sept 2009
     

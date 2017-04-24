@@ -69,31 +69,31 @@
 #'# append 'forgotten' variable bmi to imp
 #'temp <- boys[,c(1:3,5:9)]
 #'imp  <- mice(temp,maxit=1,m=2)
-#'imp2 <- cbind.mids(imp, data.frame(bmi=boys$bmi))
+#'imp2 <- cbind(imp, data.frame(bmi=boys$bmi))
 #'
 #'# append maturation score to imp (numerical)
 #'mat  <- (as.integer(temp$gen) + as.integer(temp$phb)
 #' + as.integer(cut(temp$tv,breaks=c(0,3,6,10,15,20,25))))
-#'imp2 <- cbind.mids(imp, as.data.frame(mat))
+#'imp2 <- cbind(imp, as.data.frame(mat))
 #'
 #'# append maturation score to imp (factor)
 #'# known issue: new column name is 'y', not 'mat'
 #'mat  <- as.factor(mat)
-#'imp2 <- cbind.mids(imp, mat)
+#'imp2 <- cbind(imp, mat)
 #'
 #'# append data frame with two columns to imp
 #'temp2 <- data.frame(bmi=boys$bmi,mat=as.factor(mat))
-#'imp2  <- cbind.mids(imp, temp2)
+#'imp2  <- cbind(imp, temp2)
 #'
 #'# combine two mids objects
 #'impa <- mice(temp, maxit=1, m=2)
 #'impb <- mice(temp2, maxit=2, m=2)
 #'
 #'# first a then b
-#'impab <- cbind.mids(impa, impb)
+#'impab <- cbind(impa, impb)
 #'
 #'# first b then a
-#'impba <- cbind.mids(impb, impa)
+#'impba <- cbind(impb, impa)
 #'
 #'@export
 cbind.mids <- function(x, y, ...) {

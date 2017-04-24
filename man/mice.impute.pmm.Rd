@@ -62,9 +62,6 @@ the much faster \code{matcher()} function instead of \code{.pmm.match()}. Since
 reproduced. In case where you want the old \code{.pmm.match()}, specify 
 \code{mice(..., version = "2.21")}.
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2012
-}
 \references{
 Little, R.J.A. (1988), Missing data adjustments in large surveys
 (with discussion), Journal of Business Economics and Statistics, 6, 287--301.
@@ -80,5 +77,7 @@ Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2012
+}
 \keyword{datagen}
-

@@ -26,4 +26,3 @@ Trellis plots that are built into \pkg{mice}.
 \author{
 Stef van Buuren 2011
 }
-

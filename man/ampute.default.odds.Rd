@@ -19,10 +19,9 @@ values 1, 2, 3 and 4, for each pattern, imitating a RIGHT type of missingness.
 Defines the default odds matrix for the multivariate amputation function 
 \code{ampute}.
 }
-\author{
-Rianne Schouten, 2016
-}
 \seealso{
 \code{\link{ampute}}, \code{\link{ampute.default.patterns}}
 }
-
+\author{
+Rianne Schouten, 2016
+}

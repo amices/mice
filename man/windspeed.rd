@@ -34,9 +34,8 @@ Resource (with Discussion)}. Applied Statistics 38, 1-50.
 \url{http://lib.stat.cmu.edu/datasets/wind.desc} and
 \url{http://lib.stat.cmu.edu/datasets/wind.data}
 
-Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
+van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
 Fully conditional specification in multivariate imputation.  \emph{Journal of
 Statistical Computation and Simulation}, \bold{76}, 12, 1049--1064.
 }
 \keyword{datasets}
-

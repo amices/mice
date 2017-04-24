@@ -1,24 +1,49 @@
--------------- MICE NEWS-------------------------------------------
-
 MICE: Multivariate Imputation by Chained Equations
 
 MICE is an R package implementing multiple imputation of
 incomplete multivariate data according the principle of
 Fully Conditional Specification (FCS).
-Question or suggestions about MICE can be send to
 
-   stef.vanbuuren at tno.nl
-   gerko.vink at uu.nl
-   c.g.m.oudshoorn at utwente.nl
+Questions and suggestions about MICE can be directed to
+
+    https://github.com/stefvanbuuren/mice/issues
 
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.33    11apr2017 SvB
+CHANGED  Stylistic changes to mice function (thanks Ben Ogorek)
+CHANGED  calls to cbind.mids() replaced by calls to cbind()
+
+V2.31    23feb2017 SvB
+ADDED    link to miceVignettes on github (thanks Gerko Vink)
+ADDED    package documentation
+
+V2.30    04feb2017 SvB
+ADDED    README for GitHub
+ADDED    new ampute functions and vignette (thanks Rianne Schouten)
+CHANGED  rename ccn-->ncc, icn-->nic
+CHANGED  helpers cc(), ncc(), cci(), ic(), nic() and ici() use S3 dispatch
+CHANGED  issues tracker now on Github - add BugReports URL #21
+FIXED    multinom MaxNWts type fix in polyreg and polr #9
+FIXED    better checking of nested models in pool.compare #12
+FIXED    bug fix in as.mids if names not same as all columns #11
+FIXED    extension for glmer models #5
+
 V2.29    05oct2016 SvB
-ADDED    midastouch: predictive mean matching for small samples
+ADDED    midastouch: predictive mean matching for small samples (thanks Philip Gaffert, Florian Meinfelder)
 
 V2.28    05oct2016 SvB
 FIXED    repaired dots problem in rpart call
+
+V2.27    27jul2016 SvB
+FIXED    add ridge to 2l.norm()
+
+V2.26    12may2016 SvB
+FIXED    removed .o files
+
+V2.25    09nov2015 SvB
+FIXED    fix as.mids() bug that crashed miceadds::mice.1chain()
 
 V2.23    04nov2015 SvB
 FIXED    update of example code on /doc

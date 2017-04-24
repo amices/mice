@@ -806,7 +806,7 @@ fit <- with(mydata, expr=lm(chl~age + bmi))
 ### chunk number 104: zelig1
 ###################################################
 library("Zelig")
-imp <- cbind.mids(imp.idx,data.frame(r.hc=is.na(boys$hc)))
+imp <- cbind(imp.idx,data.frame(r.hc=is.na(boys$hc)))
 mydata2 <- mi(complete(imp,1), complete(imp,2), complete(imp,3), complete(imp,4),complete(imp,5))
 fit <- zelig(r.hc~age+wgt+hgt+bmi+gen+phb+tv+reg, model="logit", data=mydata2)
 summary(fit)

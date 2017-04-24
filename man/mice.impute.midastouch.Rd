@@ -58,9 +58,6 @@ complete(imp)
 # imputation on mixed data with a different method per column
 mice(nhanes2, method = c('sample','midastouch','logreg','norm'))
 }
-\author{
-Philipp Gaffert, Florian Meinfelder, Volker Bosch 2015
-}
 \references{
 Gaffert, P., Meinfelder, F., Bosch V. (2015) Towards an MI-proper Predictive Mean Matching, Discussion Paper. 
 \url{https://www.uni-bamberg.de/fileadmin/uni/fakultaeten/sowi_lehrstuehle/statistik/Personen/Dateien_Florian/properPMM.pdf}
@@ -77,5 +74,7 @@ Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006), F
 
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011), \code{mice}: Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical Software}, \bold{45}, 3, 1--67. \url{http://www.jstatsoft.org/v45/i03/}
 }
+\author{
+Philipp Gaffert, Florian Meinfelder, Volker Bosch 2015
+}
 \keyword{mice}
-

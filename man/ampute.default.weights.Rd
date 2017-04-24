@@ -25,10 +25,9 @@ not be used. A default MAR matrix will be returned.
 Defines the default weights matrix for the multivariate amputation function 
 \code{ampute}.
 }
-\author{
-Rianne Schouten, 2016
-}
 \seealso{
 \code{\link{ampute}}, \code{\link{ampute.default.patterns}}
 }
-
+\author{
+Rianne Schouten, 2016
+}

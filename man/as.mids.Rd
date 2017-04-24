@@ -55,4 +55,3 @@ all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
 Gerko Vink
 }
 \keyword{mids}
-

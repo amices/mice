@@ -2,8 +2,8 @@
 % Please edit documentation in R/print.r
 \name{print.mids}
 \alias{print.mids}
-\alias{print.mipo}
 \alias{print.mira}
+\alias{print.mipo}
 \title{Print a \code{mids} object}
 \usage{
 \method{print}{mids}(x, ...)
@@ -38,4 +38,3 @@ Print a \code{mipo} object
 
 \code{\link[=mipo-class]{mipo}}
 }
-

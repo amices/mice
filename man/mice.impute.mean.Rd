@@ -26,9 +26,7 @@ Imputes the arithmetic mean of the observed data
  Imputing the mean of a variable is almost never
 appropriate.  See Little and Rubin (1987).
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-}
+
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -41,5 +39,7 @@ Data.  New York: John Wiley and Sons.
 \seealso{
 \code{\link{mice}}, \code{\link{mean}}
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+}
 \keyword{datagen}
-

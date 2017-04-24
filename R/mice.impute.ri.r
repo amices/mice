@@ -19,7 +19,7 @@
 #'@references Jolani, S. (2012). 
 #'\emph{Dual Imputation Strategies for Analyzing Incomplete Data}. 
 #'Disseration. University of Utrecht, Dec 7 2012.
-#'\url{http://igitur-archive.library.uu.nl/dissertations/2012-1120-200602/Jolani.pdf}
+#'\url{http://dspace.library.uu.nl/handle/1874/257547}
 #'@keywords datagen
 #'@export
 mice.impute.ri <- function(y, ry, x, ri.maxit = 10, ...)

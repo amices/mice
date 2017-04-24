@@ -39,9 +39,6 @@ fit <- glm.mids((hyp==2)~bmi+chl, data=imp, family = binomial)
 fit
 
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-}
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, C.G.M. (2000)
 \emph{Multivariate Imputation by Chained Equations: MICE V1.0 User's manual.}
@@ -51,5 +48,7 @@ Leiden: TNO Quality of Life.
 \code{\link{with.mids}}, \code{\link{glm}}, \code{\link[=mids-class]{mids}},
 \code{\link[=mira-class]{mira}}
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+}
 \keyword{multivariate}
-

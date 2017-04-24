@@ -31,9 +31,6 @@ imputation of \code{y} given \code{x} according to Rubin p. 167.
 Using \code{mice.impute.norm} for all columns is similar to Schafer's
 NORM method (Schafer, 1997).
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-}
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -47,5 +44,7 @@ data sets.} Dissertation. Rotterdam: Erasmus University.
 Schafer, J.L. (1997). Analysis of incomplete multivariate data. London:
 Chapman & Hall.
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+}
 \keyword{datagen}
-

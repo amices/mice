@@ -49,9 +49,6 @@ pool.r.squared(fit,adjusted=TRUE)
 
 
 }
-\author{
-Karin Groothuis-Oudshoorn and Stef van Buuren, 2009
-}
 \references{
 Harel, O (2009). The estimation of R^2 and adjusted R^2 in
 incomplete data sets using multiple imputation, Journal of Applied Statistics,
@@ -67,5 +64,7 @@ Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 \seealso{
 \code{\link{pool}},\code{\link{pool.scalar}}
 }
+\author{
+Karin Groothuis-Oudshoorn and Stef van Buuren, 2009
+}
 \keyword{htest}
-

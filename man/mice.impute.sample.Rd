@@ -26,14 +26,13 @@ Imputes a random sample from the observed \code{y} data
 This function takes a simple random sample from the observed values in
 \code{y}, and returns these as imputations.
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-}
 \references{
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 Statistical Software}, \bold{45}(3), 1-67.
 \url{http://www.jstatsoft.org/v45/i03/}
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+}
 \keyword{datagen}
-

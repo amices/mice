@@ -25,11 +25,10 @@ ic(nhanes[1:10,])  # incomplete cases within the first ten rows
 ic(nhanes[, c("bmi", "hyp")])  # restrict extraction to variables bmi and hyp
 
 }
-\author{
-Stef van Buuren, 2017.
-}
 \seealso{
 \code{\link{cc}}, \code{\link{ici}}
 }
+\author{
+Stef van Buuren, 2017.
+}
 \keyword{univar}
-

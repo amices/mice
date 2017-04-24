@@ -40,9 +40,7 @@ discriminant weight, so it is not 'proper' in the sense of Rubin. For small
 samples and rare categories in the \code{y}, variability of the imputed data
 could therefore be somewhat underestimated.
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-}
+
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -61,5 +59,7 @@ Venables, W.N. & Ripley, B.D. (1997). Modern applied statistics with S-PLUS
 \code{\link{mice}}, \code{link{mice.impute.polyreg}},
 \code{\link[MASS]{lda}}
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+}
 \keyword{datagen}
-

@@ -36,9 +36,6 @@ fit <- lm.mids(bmi~hyp+chl, data = imp)
 fit
 
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-}
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -48,5 +45,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 \seealso{
 \code{\link{lm}}, \code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+}
 \keyword{multivariate}
-

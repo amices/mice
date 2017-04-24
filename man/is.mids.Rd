@@ -15,4 +15,3 @@ A logical indicating whether \code{x} is an object of class \code{mids}
 \description{
 Check for \code{mids} object
 }
-

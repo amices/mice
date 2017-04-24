@@ -39,4 +39,3 @@ Multiple imputation of this data set has been described in Boshuizen et al
 The data set is not available as part of \code{mice}.
 }
 \keyword{datasets}
-

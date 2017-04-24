@@ -26,9 +26,6 @@ The bootstrap method draws a simple bootstrap sample with replacement
 from the observed data \code{y[ry]} and \code{x[ry,]}.  
 Perfect prediction is handled by the data augmentation method.
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2011
-}
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -50,5 +47,7 @@ Computational Statistics and Data Analysis, 54:22672275.
 \seealso{
 \code{\link{mice}}, \code{\link{glm}}, \code{\link{glm.fit}}
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2011
+}
 \keyword{datagen}
-

@@ -46,9 +46,6 @@ imp <- mice(nhanes2, meth = "rf", ntree = 3)
 plot(imp)
 
 }
-\author{
-Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
-}
 \references{
 Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning 
 for missing data imputation in the presence of interaction Effects. 
@@ -68,5 +65,7 @@ Chapman & Hall/CRC.
 \code{\link[CALIBERrfimpute]{mice.impute.rfcat}}, 
 \code{\link[CALIBERrfimpute]{mice.impute.rfcont}}
 }
+\author{
+Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
+}
 \keyword{datagen}
-
