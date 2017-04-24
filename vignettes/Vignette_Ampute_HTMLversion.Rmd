@@ -1,10 +1,10 @@
 ---
-title: "Multivariate amputation using ampute"
+title: "Generate missing values with ampute"
 author: "Rianne Schouten [aut, cre], Peter Lugtig [ctb], Jaap Brand [ctb], Gerko Vink [aut]"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Multivariate amputation using ampute}
+  %\VignetteIndexEntry{Generate missing values}
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
 ---
