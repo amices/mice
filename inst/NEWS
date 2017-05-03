@@ -11,6 +11,12 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.35    03may2017 SvB
+FIXED    Fix timestamp problem by rebuilding vignette using R 3.4.0.
+
+V2.34    24apr2017 SvB
+UPDATE   Update to roxygen 6.0.1
+
 V2.33    11apr2017 SvB
 CHANGED  Stylistic changes to mice function (thanks Ben Ogorek)
 CHANGED  calls to cbind.mids() replaced by calls to cbind()
