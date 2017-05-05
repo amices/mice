@@ -45,3 +45,4 @@ Boca Raton, FL.: Chapman & Hall/CRC Press.
 \author{
 Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
 }
+\keyword{internal}

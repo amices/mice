@@ -8,8 +8,8 @@
 #'generated in simulated data sets. The generation of missing values is what
 #'we call: amputation. The function \code{ampute} is developed to perform any kind
 #'of amputation desired by the researcher. An extensive example and more explanation
-#'of the function can be found in the vignette \emph{Multivariate Amputation using
-#'Ampute}, available in \pkg{mice} as well. For imputation, the function 
+#'of the function can be found in the vignette \emph{Generate missing values with 
+#'ampute}, available in \pkg{mice} as well. For imputation, the function 
 #'\code{\link{mice}} is advised.  
 #'
 #'Until recently, univariate amputation procedures were used to generate missing
@@ -86,7 +86,7 @@
 #'which, again, may differ between patterns.
 #'
 #'For an extensive example of the working of the function, I gladly refer to the 
-#'vignette \emph{Multivariate Amputation using Ampute}. 
+#'vignette \emph{Generate missing values with ampute}. 
 #'
 #'@param data A complete data matrix or dataframe. Values should be numeric. 
 #'Categorical variables should have been transformed into dummies.

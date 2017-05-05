@@ -20,6 +20,7 @@
 #'first pattern, the second vector to the second pattern, etcetera. 
 #'@author Rianne Schouten, 2016 
 #'@seealso \code{\link{ampute}} 
+#'@keywords internal
 #'@export
 ampute.mcar <- function(P, patterns, prop) {
   # Multivariate Amputation In A MCAR Manner
