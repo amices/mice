@@ -24,14 +24,14 @@ result
 md.pattern(result$amp)
 
 ## ------------------------------------------------------------------------
-result$freq
+result$prop
 
 ## ------------------------------------------------------------------------
-myfreq <- c(0.5, 0.25, 0.25)
-
-## ------------------------------------------------------------------------
-result <- ampute(testdata, freq = myfreq)
+result <- ampute(testdata, prop = 0.2, bycases = FALSE)
 md.pattern(result$amp)
+
+## ------------------------------------------------------------------------
+result$prop
 
 ## ------------------------------------------------------------------------
 mypatterns <- result$patterns
@@ -43,7 +43,16 @@ mypatterns <- rbind(mypatterns, c(0, 1, 0))
 mypatterns
 
 ## ------------------------------------------------------------------------
+result <- ampute(testdata, patterns = mypatterns)
+md.pattern(result$amp)
+
+## ------------------------------------------------------------------------
+result$freq
+
+## ------------------------------------------------------------------------
 myfreq <- c(0.7, 0.1, 0.1, 0.1)
+
+## ------------------------------------------------------------------------
 result <- ampute(testdata, freq = myfreq, patterns = mypatterns)
 md.pattern(result$amp)
 
@@ -67,7 +76,7 @@ result$patterns
 result$weights
 
 ## ------------------------------------------------------------------------
-result <- ampute(testdata, freq = c(0.7, 0.1, 0.1, 0.1), patterns = mypatterns, weights = myweights)
+result <- ampute(testdata, freq = myfreq, patterns = mypatterns, weights = myweights)
 
 ## ---- fig.width = 7, fig.height = 5--------------------------------------
 lattice::bwplot(result, which.pat = c(1, 3), descriptives = TRUE)
@@ -178,17 +187,6 @@ result <- ampute(testdata, freq = c(0.7, 0.1, 0.1, 0.1), patterns = mypatterns,
 
 ## ---- fig.width = 7, fig.height = 5--------------------------------------
 bwplot(result, which.pat = c(3, 4), descriptives = FALSE)
-
-## ------------------------------------------------------------------------
-result$prop
-
-## ------------------------------------------------------------------------
-result <- ampute(testdata, freq = c(0.7, 0.1, 0.1, 0.1), patterns = mypatterns, 
-                 weights = myweights, prop = 0.2, bycases = FALSE)
-md.pattern(result$amp)
-
-## ------------------------------------------------------------------------
-result$prop
 
 ## ------------------------------------------------------------------------
 result <- ampute(testdata, freq = c(0.7, 0.3), patterns = c(0, 0, 1, 0, 1, 0), weights = c(0, 0, 1, 1, 0, 1))

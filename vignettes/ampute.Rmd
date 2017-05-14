@@ -15,6 +15,21 @@ knitr::opts_chunk$set(echo = TRUE, dev = "png", fig.align = "center")
 
 We present a method to accurately evaluate the effect of missing data on statistical inferences. R-function `ampute` is an easy-to-use implementation of a multivariate missing data generation procedure. With `ampute`, it is straightforward to generate missing values in multiple variables, with different missing data proportions and varying underlying missingness mechanisms. 
 
+`ampute` is especially useful for the evaluation of missing data methods, but can also be used for the creation of planned missing data designs, for examination of the effect of measurement error on statistical inferences and for research in the field of multiple source data. 
+
+In general, a missing data methodology is evaluated by means of simulations. Such simulation studies generally have four steps: 
+
+1) A multivariate, complete data set is simulated and considered the population of interest. 
+2) This data set is then made incomplete. 
+3) The incomplete data are estimated by means of the missing data method. 
+4) Statistical inferences are obtained for the original, complete data set and after dealing with the missing values. A comparison of these inferences gives an indication of the performance of the missing data method. 
+
+An important aspect of these studies is the generation of missing values in a simulated, complete data set: the amputation procedure.
+
+We demonstrate the performance of `ampute` and its improvement over the current amputation practice in our article *Generating missing values for simulation purposes: A multivariate amputation procedure*. In this article, we describe that the current amputation practice may not be appropriate for the generation of intuitive and reliable missing data problems. That is to say, important missing data characteristics such as the missingness percentage and the impact on statistical estimates influence each other. On the other hand, we demonstrate that the multivariate amputation procedure generates reliable amputations and allows for a proper regulation of missing data problems. The procedure has additional features to generate any missing data scenario precisely as intended. Hence, the multivariate amputation procedure is an efficient method to accurately evaluate missing data methodology.
+
+`ampute` is available in multiple imputation package **mice**. 
+
 In this vignette we will:
 
 1) give a concise summary of the missing data generation procedure
@@ -34,20 +49,24 @@ The amputation procedure starts with the user deciding what kinds of missing dat
 For MCAR missingnes, the next step involves the specification of the missingness proportion. For MAR and MNAR missingness, we calculate so-called weighted sum scores. A weighted sum score is simply the outcome of a linear regression equation where the coefficients are determined by the user. Based on the coefficients (i.e. weights) and a candidate's variable value, each candidate obtains a different weighted sum score. Every variable may or may not play a role in this calculation.
 
 The third step of the procedure comprehends the allocation of probabilities. For MCAR missingness, this probability is fixed and is determined by the missingness proportion. For MAR and MNAR missingness, a candidate obtains a probability of being missing based on his weighted sum score. The relation between the weighted sum scores and the probabilities are determined by one of four possible logistic distribution functions. For instance, cases with high weighted sum scores might have a higher probability of being missing than cases with low weighted sum scores. 
+In the end, the allocated probabilities are executed. As a result, the candidates are divided into two groups: one group will receive the missing data pattern of its candidacy while the other group remains complete. Logically, the number of candidates who will receive missing values depends on the desired missingness proportion.  
 
-In the end, the allocated probabilities are effectuated. As a result, the candidates are divided into two groups: one part of the candidates will receive the missing pattern of their candidacy while the other part will remain complete. Logically, the number of candidates who will receive missing values depends on the desired missingness proportion.  
-
-Although all these steps are connected, `ampute` provides a way to vary the missing data generation procedure without influencing other parameters. Therefore we developed `ampute` such that each step of the procedure can be manipulated with one of the function's arguments. Figure 2 shows these arguments from the start of the procedure to the end product of an incomplete dataset. 
+Although all these steps are connected, `ampute` provides a way to vary the missing data generation procedure without influencing other parameters. Therefore we developed `ampute` such that each step of the procedure can be manipulated with one of the function's arguments. Figure 2 shows the most important arguments. 
 
 ```{r, out.width = 700, echo = FALSE}
 knitr::include_graphics("Figures/Flowchart.png", auto_pdf = TRUE, dpi=600)
 ```
 
-We will now continue with a more thorough explanation of each of these arguments. 
-
 ### 2. `ampute`'s arguments
 
-`ampute` contains several arguments to manipulate the features of the generated missing dat problem. The function is available in R-package **mice**. 
+`ampute` contains several arguments to manipulate the features of the generated missing dat problem. We will now continue with a more thorough explanation of each of the arguments from Figure 2. In short, the arguments are used for the following: 
+1) data: feed function complete data 
+2) prop: define missingness proportion
+3) patterns: specify missing data patterns 
+4) freq: specify relative occurrence of these patterns
+5) mech: choose between MCAR, MAR and MNAR mechanisms
+6) weights: specify weights for calculation of weighted sum scores
+7) type: choose RIGHT, MID, TAIL or LEFT logistic distribution function
 
 ```{r, message = FALSE, warning = FALSE}
 require("mice")
@@ -79,30 +98,26 @@ md.pattern(result$amp)
 
 The rows of the table show the different missing data patterns with the number of cases accordingly. The first row always refers to the complete cases. The last column contains the number of variables with missing values in that specific pattern. Consequently, each column total describes the number of cells with missing values for that variable. A more thorough explanation of `md.pattern` can be found in its help file (`?md.pattern`). Note that because `md.pattern` sorts the columns in increasing amounts of missing information, the order of the variables is different from the order in the data. 
 
-#### 2.2 Freq
+#### 2.2 Prop
 
-The function `ampute` works by dividing the complete dataset into multiple subsets. The size of these subsets can be determined with argument `freq`. This argument is a vector with values between 0 and 1. The number of values determines the number of subsets. The values themselves are interpreted relatively from each other. 
-
-For example, 
+The first step in generating a missing data problem in complete data is always the specification of the missingness proportion. In `ampute`, we call this argument `prop`. As a default, the missingness proportion is 0.5: 
 
 ```{r}
-result$freq
+result$prop
 ```
 
-this frequency vector has three values of equal size. This means that three subsets with equal size are created. We can adapt the frequency vector such that subset one becomes twice as large as subset two and three. We would need the following frequency vector for this:
+This means that 50% of the cases will have missing values. It is easy to change this proportion by using the argument `prop`. One might also want to specify the percentage of missing cells. For this, the argument `bycases` should be `FALSE`. 
 
 ```{r}
-myfreq <- c(0.5, 0.25, 0.25)
-```
-
-Note that the sum of the frequency values should always be 1 in order to divide all the cases over the subsets. 
-
-```{r}
-result <- ampute(testdata, freq = myfreq)
+result <- ampute(testdata, prop = 0.2, bycases = FALSE)
 md.pattern(result$amp)
-```
+``` 
 
-With `md.pattern` we can check whether the frequency specifications are performed as we intended to. It turns out there are indeed three missing data patterns with the first pattern occuring twice as often as the other two patterns. But what are these patterns? 
+An inspection of the result shows that the proportion of missing cells is approximately 20%, as requested (the data set contains 10000 * 3 = 30000 cells, in total, 6425 cells are made missing). `ampute` automatically calculates how these 6000 missing cells are divided among the patterns. As a result, the proportion of missing cases is: 
+
+```{r}
+result$prop
+```
 
 #### 2.3 Patterns
 
@@ -117,7 +132,7 @@ mypatterns
 
 In the `patterns` matrix, each row refers to a missing data pattern and each column to a variable. `0` is used for variables that should have missing values in a particular pattern. `1` is used otherwise. Here, three missing data patterns are specified with missing values on one variable only. Note that as a result of this, none of the cases will have missingness on more than one variable. A case either has missingness on V1, V2 or V3 or remains complete.  
 
-As with the frequency vector, the default `patterns` matrix can be manipulated. For example, we can change the missingness patterns might as follows:
+It is possible to manipulate the matrix by changing the values or adding rows. For example, we can change the missingness patterns as follows:
 
 ```{r}
 mypatterns[2, 1] <- 0
@@ -127,17 +142,43 @@ mypatterns
 
 By doing this, we create a missingness pattern where cases will have missingness on V1 and V2 but not on V3 (pattern 2). Also, I have added a fourth missing data pattern to create a combinaton of missingness on V1 and V3. 
 
-Now, I can perform the ampution again with the desired `patterns` matrix as its third argument. Note that we also have to extend the frequency vector since we now have four patterns. I change it such that the first pattern will occur very often and the other three just a little. Again, inspect the result with the `md.pattern` function. 
+Now, I can perform the amputation again with the desired patterns matrix as its third argument. Inspect the result with the `md.pattern` function. 
+
+```{r}
+result <- ampute(testdata, patterns = mypatterns)
+md.pattern(result$amp)
+```
+
+#### 2.4 Freq
+
+The function `ampute` works by dividing the complete dataset into multiple subsets. The number of these subsets is determined by the number of patterns because all cases are divided over the subsets. As such, they become candidate for a certain missing data pattern. 
+
+The size of the subsets, and thereby the relative occurrence of the missing data pattern, can be determined with argument `freq`. This argument is a vector with values between 0 and 1. The number of values determines the number of subsets and must be equal to the number of patterns. The values themselves are interpreted relatively from each other. 
+
+For example, 
+
+```{r}
+result$freq
+```
+
+this frequency vector has four values of equal size. This means that four subsets with equal size are created. We can adapt the frequency vector such that subset one becomes much larger than the other subsets. For example:
 
 ```{r}
 myfreq <- c(0.7, 0.1, 0.1, 0.1)
+```
+
+Note that the sum of the frequency values should always be 1 in order to divide all the cases over the subsets. 
+
+```{r}
 result <- ampute(testdata, freq = myfreq, patterns = mypatterns)
 md.pattern(result$amp)
 ```
 
-#### 2.4 Mech
+With `md.pattern` we can check whether the frequency specifications are performed as intended. It turns out there are indeed four missing data patterns with the first pattern occuring seven times as often as the other three patterns. 
 
-At this point, we have to decide which kind of missingness mechanism we are going to implement. For more information about missingness mechanisms, I refer to Van Buuren (2012), but in short, we distinguish MCAR, MAR and MNAR missingness. With MCAR missingness, the missing values are implemented completely at random. With MAR  missingness, the missingness depends on the values of observed variables. With MNAR missingness, the missingness depends on the missing values themselves. 
+#### 2.5 Mech
+
+At this point, we have to decide which kind of missingness mechanism we are going to implement. For more information about missingness mechanisms, I refer to Van Buuren (2012), but in short, we distinguish MCAR, MAR and MNAR missingness. With MCAR missingness, the missing values are implemented completely at random. With MAR missingness, the missingness depends on the values of observed variables. With MNAR missingness, the missingness depends on the missing values themselves. 
 
 Now, `ampute`'s argument `mech` is a string which needs either `"MCAR"`, `"MAR"` or `"MNAR"`. For MCAR missingness, only the argument `prop` needs another specification (or you can leave it at the default). With MAR and MNAR missingness, the arguments `weights` and `type` can be used to manipulate the characteristics of the missing data problem. 
 
@@ -147,7 +188,7 @@ As a default `mech == "MAR"`:
 result$mech
 ```
 
-#### 2.5 Weights
+#### 2.6 Weights
 
 With this argument, we can determine how the values in the dataset are related to whether they become missing or not. After specifying the so-called `weights` matrix, we calculate a weighted sum score for each candidate. Before we explain how this calculation takes place, it is important to know that we will use the weighted sum scores to determine whether a case receives missing values or not. Namely, based on his weighted sum score, each candidate obtains a probability of being missing. For the allocation of these probabilities, we use logistic distribution functions. We will discuss these distributions function in part 2.6 of this vignette: `type`. Basically, the idea is that, for instance, cases with high weighted sum scores will have a higher probability of being missing than cases with low weighted sum scores. 
 
@@ -168,9 +209,7 @@ result$weights
 ```
 
 Since we have four patterns, the `weights` matrix also contains four rows. Each of these rows contains a weight for every variable. In this situation, only weight values of 0 and 1 are used. This means that some variables are non-weighted. The variables that are weighted, are of equal importance (since they all have value 1). 
-
 Of course, the idea of the `weights` matrix is to weight variables differently from each other. For instance, we can give variable V2 a higher weight than variable V3: 
-
 ```{r}
 myweights <- result$weights
 myweights[1, ] <- c(0, 0.8, 0.4)
@@ -198,7 +237,7 @@ In the `patterns` matrix, the variables that will be amputed are coded with `0`.
 We will now apply our `patterns` and `weights` matrices and inspect the results in two ways: boxplots and scatterplots.   
 
 ```{r}
-result <- ampute(testdata, freq = c(0.7, 0.1, 0.1, 0.1), patterns = mypatterns, weights = myweights)
+result <- ampute(testdata, freq = myfreq, patterns = mypatterns, weights = myweights)
 ```
 
 ##### Boxplots
@@ -235,7 +274,7 @@ lattice::xyplot(result, which.pat = 1)
 
 The scatterplots show that there is a very small relation between V1 and the weighted sum scores. Furthermore, the relation between V2 and the weighted sum scores is very strong, meaning that a case's value on V2 is very important in the generation of the weighted sum score. Actually, this is what causes the differences between the amputed and non-amputed data in the boxplots above. For V3 and the weighted sum scores, the relation is a bit weaker than for V2 but more present than for V1. 
 
-#### 2.6 Type
+#### 2.7 Type
 
 As said before, each candidate obtains a probability based on his weighted sum score. For the relation between the weighted sum scores and the probabilities we can take two approaches. First, we can use one or more of four logistic distribution functions as shown in Figure 3. Second, we can specify the probability distributions manually by means of so-called odds values. 
 
@@ -385,28 +424,6 @@ In the boxplots of pattern 3, it is visible that the IQR for the amputed data is
 
 In pattern 4, the effect of the specifications is only visible for variable V2, because the other variables are made missing. In contrast to pattern 3, the amputation is performed in the center of the weighted sum scores, resulting to a MID-like missingness pattern.
 
-#### 2.7 Prop
-
-Whether MCAR, MAR or MNAR missingness is generated, the proportion of cases with missing values can be specified with argument `prop`. As a default, the missingness proportion is 0.5: 
-
-```{r}
-result$prop
-```
-
-This means that 50% of the cases will have missing values. It is easy to change this proportion by using the argument `prop`. One might also want to specify the percentage of missing cells. For this, the argument `bycases` should be `FALSE`. 
-
-```{r}
-result <- ampute(testdata, freq = c(0.7, 0.1, 0.1, 0.1), patterns = mypatterns, 
-                 weights = myweights, prop = 0.2, bycases = FALSE)
-md.pattern(result$amp)
-``` 
-
-An inspection of the result shows that the proportion of missing cells is approximately 20%, as requested (the data set contains 10000 * 3 = 30000 cells, in total, 6425 cells are made missing). `ampute` automatically calculates how these 6000 missing cells are divided among the patterns with the specified frequency values taken into account as well. As a result, the proportion of missing cases is: 
-
-```{r}
-result$prop
-```
-
 ### 3. Additional features of `ampute` 
 
 `ampute` contains the functions `bwplot` and `xyplot` to investigate the behaviour of the missingness. As discussed, `ampute` can generate MCAR, MAR and MNAR missingness. A combination of MAR and MNAR missingness can be generated by changing the `weights` matrix. The following command, for instance, generates MAR missingness in pattern 1 and MNAR missingness in pattern 2. As a result, the incomplete dataset will contain both type of missingness mechanisms. 
@@ -470,9 +487,10 @@ emptyresult$amp
 
 ### References
 
-Brand, J.P.L. (1999). \emph{Development, implementation and 
-evaluation of multiple imputation strategies for the statistical analysis of incomplete data sets} (pp. 110-113). Dissertation. Rotterdam: Erasmus University.
+Brand, J.P.L. (1999). *Development, implementation and evaluation of multiple imputation strategies for the statistical analysis of incomplete data sets* (pp. 110-113). Dissertation. Rotterdam: Erasmus University.
 
-Van Buuren, S. (2012). \emph{Flexible imputation of missing data.}
+Van Buuren, S. (2012). *Flexible imputation of missing data*
 Boca Raton, FL.: Chapman & Hall/CRC Press.
+
+Schouten, R.M., Lugtig, P.L., and Vink, G. (2017) *Generating missing values for simulation purposes: A multivariate amputation procedure* Under review. Available from: https://github.com/RianneSchouten/Amputation_with_Ampute/blob/master/Manuscript.pdf
 
