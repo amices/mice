@@ -31,3 +31,4 @@ Defines the default weights matrix for the multivariate amputation function
 \author{
 Rianne Schouten, 2016
 }
+\keyword{internal}

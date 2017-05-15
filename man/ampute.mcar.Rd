@@ -37,3 +37,4 @@ missingness mechanism. The function is used in the multivariate amputation funct
 \author{
 Rianne Schouten, 2016
 }
+\keyword{internal}

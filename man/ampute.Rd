@@ -32,7 +32,7 @@ percent pattern 3. The vector should sum to 1. Default is an equal probability
 for each pattern, created with \code{\link{ampute.default.freq}}.}
 
 \item{mech}{A string specifying the missingness mechanism, either MCAR 
-(Missing Complete At Random), MAR (Missing At Random) or MNAR (Missing Not At 
+(Missing Completely At Random), MAR (Missing At Random) or MNAR (Missing Not At 
 Random). Default is a MAR missingness mechanism.}
 
 \item{weights}{A matrix or data frame of size #patterns by #variables. The matrix 
@@ -49,10 +49,11 @@ weights matrix will not be used.}
 
 \item{cont}{Logical. Whether the probabilities should be based on a continuous 
 or discrete distribution. If TRUE, the probabilities of being missing are based 
-on a continuous logit distribution. \code{\link{ampute.continuous}} will be used
-to calculate and assign the probabilities. These will be based on argument 
-\code{type}. If FALSE, the probabilities of being missing are based on a discrete 
-distribution (\code{\link{ampute.discrete}}) based on the \code{odds} argument. 
+on a continuous logistic distribution function. \code{\link{ampute.continuous}} 
+will be used to calculate and assign the probabilities. These will be based on 
+argument \code{type}. If FALSE, the probabilities of being missing are based on 
+a discrete distribution (\code{\link{ampute.discrete}}) based on the \code{odds} 
+argument. 
 Default is TRUE.}
 
 \item{type}{A vector of strings containing the type of missingness for each 
@@ -92,8 +93,8 @@ When new multiple imputation techniques are tested, missing values need to be
 generated in simulated data sets. The generation of missing values is what
 we call: amputation. The function \code{ampute} is developed to perform any kind
 of amputation desired by the researcher. An extensive example and more explanation
-of the function can be found in the vignette \emph{Multivariate Amputation using
-Ampute}, available in \pkg{mice} as well. For imputation, the function 
+of the function can be found in the vignette \emph{Generate missing values with 
+ampute}, available in \pkg{mice} as well. For imputation, the function 
 \code{\link{mice}} is advised.
 
 Until recently, univariate amputation procedures were used to generate missing
@@ -170,7 +171,7 @@ described by Van Buuren (2012). The user can specify the type of missingness,
 which, again, may differ between patterns.
 
 For an extensive example of the working of the function, I gladly refer to the 
-vignette \emph{Multivariate Amputation using Ampute}.
+vignette \emph{Generate missing values with ampute}.
 }
 \examples{
 # Simulate data set with \\code{mvrnorm} from package \\code{\\pkg{MASS}}.
@@ -209,8 +210,7 @@ routines.
 }
 \seealso{
 \code{\link{mads-class}}, \code{\link{bwplot}}, \code{\link{xyplot}},
-\code{\link{ampute.mcar}}, \code{\link{ampute.continuous}}, 
-\code{\link{ampute.discrete}}, \code{\link{mice}}
+\code{\link{mice}}
 }
 \author{
 Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016

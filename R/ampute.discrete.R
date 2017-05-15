@@ -26,7 +26,8 @@
 #'@seealso \code{\link{ampute}}, \code{\link{ampute.default.odds}}
 #'@references Brand, J.P.L. (1999). \emph{Development, implementation and 
 #'evaluation of multiple imputation strategies for the statistical analysis of 
-#'incomplete data sets.} Dissertation. Rotterdam: Erasmus University. 
+#'incomplete data sets.} Dissertation. Rotterdam: Erasmus University.
+#'@keywords internal 
 #'@export
 ampute.discrete <- function(P, scores, prop, odds) {
   # Multivariate Amputation Based On Discrete Probability Functions

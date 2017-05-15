@@ -25,3 +25,4 @@ Defines the default type vector for the multivariate amputation function
 \author{
 Rianne Schouten, 2016
 }
+\keyword{internal}

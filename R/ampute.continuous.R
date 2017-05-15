@@ -25,6 +25,7 @@
 #'@seealso \code{\link{ampute}}, \code{\link{ampute.default.type}}
 #'@references Van Buuren, S. (2012). \emph{Flexible imputation of missing data.} 
 #'Boca Raton, FL.: Chapman & Hall/CRC Press.
+#'@keywords internal
 #'@export
 ampute.continuous <- function(P, scores, prop, type) {
   # Multivariate Amputation Based On Continuous Probability Functions

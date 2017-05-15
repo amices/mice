@@ -13,6 +13,7 @@
 #  complete. Each pattern has missingness on one variable only.
 #'@seealso \code{\link{ampute}}, \code{\link{md.pattern}}
 #'@author Rianne Schouten, 2016
+#'@keywords internal
 #'@export
 ampute.default.patterns <- function(n) {
   patterns <- matrix(data = NA, nrow = n, ncol = n)
@@ -38,6 +39,7 @@ ampute.default.patterns <- function(n) {
 #'which the patterns should occur. An equal probability is given to each pattern.
 #'@seealso \code{\link{ampute}}, \code{\link{ampute.default.patterns}}
 #'@author Rianne Schouten, 2016
+#'@keywords internal
 #'@export
 ampute.default.freq <- function(patterns) {
   freq <- rep((1 / nrow(patterns)), nrow(patterns))
@@ -65,6 +67,7 @@ ampute.default.freq <- function(patterns) {
 #'not be used. A default MAR matrix will be returned.  
 #'@seealso \code{\link{ampute}}, \code{\link{ampute.default.patterns}}
 #'@author Rianne Schouten, 2016
+#'@keywords internal
 #'@export
 ampute.default.weights <- function(patterns, mech) {
   weights <- matrix(data = 1, nrow = nrow(patterns), ncol = ncol(patterns))
@@ -94,6 +97,7 @@ ampute.default.weights <- function(patterns, mech) {
 #'Each pattern will be amputed with a "RIGHT" missingness. 
 #'@seealso \code{\link{ampute}}, \code{\link{ampute.default.patterns}}
 #'@author Rianne Schouten, 2016
+#'@keywords internal
 #'@export
 ampute.default.type <- function(patterns) {
   type <- rep("RIGHT", nrow(patterns))
@@ -116,6 +120,7 @@ ampute.default.type <- function(patterns) {
 #'values 1, 2, 3 and 4, for each pattern, imitating a RIGHT type of missingness.
 #'@seealso \code{\link{ampute}}, \code{\link{ampute.default.patterns}}
 #'@author Rianne Schouten, 2016
+#'@keywords internal
 #'@export
 ampute.default.odds <- function(patterns) {
   odds <- matrix(c(1, 2, 3, 4), nrow = nrow(patterns), ncol = 4, byrow = TRUE)

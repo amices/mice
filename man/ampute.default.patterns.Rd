@@ -22,3 +22,4 @@ amputation function \code{ampute()}.
 \author{
 Rianne Schouten, 2016
 }
+\keyword{internal}
