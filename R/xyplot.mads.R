@@ -22,8 +22,8 @@
 #'that the scatterplots of six variables need to be placed on 3 rows and 2 columns. 
 #'There are several defaults for different #variables. Note that for more than 
 #'9 variables, multiple plots will be created automatically.
-#'@param colors A vector of two RGB values defining the colors of the amputed and 
-#'non-amputed data respectively. RGB values can be obtained with \code{\link{hcl}}.
+#'@param colors A vector of two RGB values defining the colors of the non-amputed and 
+#'amputed data respectively. RGB values can be obtained with \code{\link{hcl}}.
 #'@return A list containing the scatterplots. Note that a new pattern 
 #'will always be shown in a new plot. 
 #'@note The \code{mads} object contains all the information you need to 
@@ -35,7 +35,7 @@
 #'@export
 xyplot.mads <- function(x, yvar = NULL, which.pat = NULL,
                         standardized = TRUE, layout = NULL,
-                        colors = c("#fc8d62", "#8da0cb")) {
+                        colors = mdc(1:2)) {
   if (!is.mads(x)) {
     stop("Object is not of class mads")
   }
@@ -74,6 +74,7 @@ xyplot.mads <- function(x, yvar = NULL, which.pat = NULL,
     data <- rbind(data, cbind(mis, dat[can, ]))
   }
   colnames(data) <- c(".amp", ".pat", "scores", names(x$data))
+  data$.amp <- factor(data$.amp, levels = c(0, 1))
   formula = as.formula(paste("scores ~ ", 
                              paste(varlist, collapse = "+", sep = ""),
                              sep = ""))
@@ -93,7 +94,7 @@ xyplot.mads <- function(x, yvar = NULL, which.pat = NULL,
                 plot.symbol = list(col = colors, pch = 1),
                 strip.background = list(col = "grey95"))
   key <- list(columns = 2, points = list(col = colors, pch = 1), 
-              text = list(c("Amputed Data", "Non-Amputed Data")))
+              text = list(c("Non-Amputed Data", "Amputed Data")))
   
   p <- list()
   for (i in 1:pat) {
