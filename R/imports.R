@@ -10,7 +10,7 @@
 #'                      na.exclude pf predict pt qt rbinom
 #'                      rchisq rgamma rnorm runif summary.glm
 #'                      quantile
-#'                      update var vcov complete.cases
+#'                      update var vcov complete.cases na.omit
 #'@importFrom utils     flush.console write.table head tail
 #'                      packageDescription methods
 #'@importFrom MASS      eqscplot lda mvrnorm polr truehist

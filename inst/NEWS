@@ -11,6 +11,9 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.37    22may2017 SvB
+UPDATE   More robust version of as.mids()
+
 V2.36    15may2017 SvB
 UPDATE   Substantial update of ampute() by Rianne Schouten
 
