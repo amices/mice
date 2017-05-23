@@ -140,8 +140,7 @@ mice.impute.2lonly.pmm <- function (y, ry, x, type , ...){
     y2 <- unlist(lapply(splity, function(x) return(x[1])))
     
     # find donor values: use only the indices of second-levels donors
-    idx <- as.numeric(names(ximp2))
-    yimp2 <- y2[idx]
+    yimp2 <- y2[names(ximp2)]
     
     # expland to full matrix
     cly2 <- a1[ !ry2 , 1] 
