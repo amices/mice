@@ -69,12 +69,14 @@ We suggest going through these vignettes in the following order
 Further reading
 ---------------
 
-The `mice` software was published in the [Journal of Statistical Software](https://www.jstatsoft.org/article/view/v045i03) (Buuren and Groothuis-Oudshoorn 2011). The first application of the method concerned missing blood pressure data (Buuren, Boshuizen, and Knook 1999). The term *Fully Conditional Specification* was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Buuren et al. 2006). Further details and applications can be found in the book *Flexible Imputation of Missing Data* (Buuren 2012).
+The `mice` software was published in the Journal of Statistical Software (Buuren and Groothuis-Oudshoorn 2011)(<https://www.jstatsoft.org/v45/i03/paper>). The first application of the method concerned missing blood pressure data (Buuren, Boshuizen, and Knook 1999)(<http://www.stefvanbuuren.nl/publications/Multiple%20imputation%20-%20Stat%20Med%201999.pdf>). The term *Fully Conditional Specification* was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Buuren et al. 2006)(<http://www.stefvanbuuren.nl/publications/FCS%20in%20multivariate%20imputation%20-%20JSCS%202006.pdf>). Details about imputing mixes of numerical and categorical data can be found in (Buuren 2007)(<http://www.stefvanbuuren.nl/publications/MI%20by%20FCS%20-%20SMMR%202007.pdf>). Many more details and applications can be found in the book *Flexible Imputation of Missing Data* (Buuren 2012).
 
 References
 ----------
 
-Buuren, S. van. 2012. *Flexible Imputation of Missing Data*. Boca Raton, FL: Chapman & Hall/CRC Press.
+Buuren, S. van. 2007. “Multiple Imputation of Discrete and Continuous Data by Fully Conditional Specification.” *Statistical Methods in Medical Research* 16 (3): 219–42.
+
+———. 2012. *Flexible Imputation of Missing Data*. Boca Raton, FL: Chapman & Hall/CRC Press.
 
 Buuren, S. van, and K. Groothuis-Oudshoorn. 2011. “MICE: Multivariate Imputation by Chained Equations in R.” *Journal of Statistical Software* 45 (3): 1–67.
 
