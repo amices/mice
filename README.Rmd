@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# MICE: Multivariate Imputation by Chained Equations
+# [MICE: Multivariate Imputation by Chained Equations](http://stefvanbuuren.github.io/mice/)
 
 The [`mice`](https://cran.r-project.org/package=mice) package implements 
 a method to deal with missing data. The package 
