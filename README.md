@@ -47,10 +47,15 @@ The main functions in the `mice` package are:
 | `complete()`  | Export imputed data               |
 | `ampute()`    | Generate missing data             |
 
+One-day course in `mice`
+------------------------
+
+If you are new to `mice` consider studying the materials of our one-day course in Winnigpeg. The materials are at [https://stefvanbuuren.github.io/Winnipeg](https://stefvanbuuren.github.io/Winnipeg/).
+
 miceVignettes
 -------------
 
-A detailed series of vignettes that walk you through solving realistic inference problems with mice.
+A detailed series of vignettes that walk you through solving realistic inference problems with mice. These vignettes overlap with the one-day course.
 
 We suggest going through these vignettes in the following order
 
