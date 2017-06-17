@@ -2,7 +2,7 @@
 MICE: Multivariate Imputation by Chained Equations
 ==================================================
 
-The `mice` package implements a method to deal with missing data. The package creates multiple imputations (replacement values) for multivariate missing data. The method is based on Fully Conditional Specification, where each incomplete variable is imputed by a separate model. The `MICE` algorithm can impute mixes of continuous, binary, unordered categorical and ordered categorical data. In addition, MICE can impute continuous two-level data, and maintain consistency between imputations by means of passive imputation. Many diagnostic plots are implemented to inspect the quality of the imputations.
+The [`mice`](https://cran.r-project.org/package=mice) package implements a method to deal with missing data. The package creates multiple imputations (replacement values) for multivariate missing data. The method is based on Fully Conditional Specification, where each incomplete variable is imputed by a separate model. The `MICE` algorithm can impute mixes of continuous, binary, unordered categorical and ordered categorical data. In addition, MICE can impute continuous two-level data, and maintain consistency between imputations by means of passive imputation. Many diagnostic plots are implemented to inspect the quality of the imputations.
 
 Installation
 ------------
@@ -73,7 +73,7 @@ Some packages that extend the functionality of `mice` include:
 
 1.  [`ImputeRobust`: Multiple Imputation with `GAMLSS`](https://github.com/dsalfran/ImputeRobust)
 2.  [`countimp`: Incomplete count data](https://github.com/kkleinke/countimp)
-3.  [`miceadds`: Functions for multilevel imputation](https://cran.r-project.org/packages=miceadds)
+3.  [`miceadds`: Functions for multilevel imputation](https://cran.r-project.org/package=miceadds)
 4.  [`micemd`: Functions for multilevel imputation](https://cran.r-project.org/package=micemd)
 5.  [`CALIBERrfimpute`: Another random forest method](https://cran.r-project.org/package=CALIBERrfimpute)
 6.  [`parlMICE`: Parallel MICE imputation wrapper](https://gerkovink.github.io/parlMICE/Vignette_parlMICE.html)
