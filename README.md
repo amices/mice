@@ -66,6 +66,19 @@ We suggest going through these vignettes in the following order
 5.  [Imputing multilevel data](https://gerkovink.github.io/miceVignettes/Multi_level/Multi_level_data.html)
 6.  [Sensitivity analysis with `mice`](https://gerkovink.github.io/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html)
 
+Related packages
+----------------
+
+Some packages that extend the functionality of `mice` include:
+
+1.  [`ImputeRobust`: Multiple Imputation with `GAMLSS`](https://github.com/dsalfran/ImputeRobust)
+2.  [`countimp`: Incomplete count data](https://github.com/kkleinke/countimp)
+3.  [`miceadds`: Functions for multilevel imputation](https://cran.r-project.org/packages=miceadds)
+4.  [`micemd`: Functions for multilevel imputation](https://cran.r-project.org/package=micemd)
+5.  [`CALIBERrfimpute`: Another random forest method](https://cran.r-project.org/package=CALIBERrfimpute)
+6.  [`parlMICE`: Parallel MICE imputation wrapper](https://gerkovink.github.io/parlMICE/Vignette_parlMICE.html)
+7.  [`fancyimpyute`: MICE in Python for ordinal data](https://github.com/hammerlab/fancyimpute)
+
 Further reading
 ---------------
 
