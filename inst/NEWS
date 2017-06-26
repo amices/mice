@@ -11,15 +11,6 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
-V2.38    22may2017 SvB
-ADDED    Support for factors in mice.impute.2lonly.pmm()
-
-V2.37    22may2017 SvB
-UPDATE   More robust version of as.mids()
-
-V2.36    15may2017 SvB
-UPDATE   Substantial update of ampute() by Rianne Schouten
-
 V2.35    03may2017 SvB
 FIXED    Fix timestamp problem by rebuilding vignette using R 3.4.0.
 

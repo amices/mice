@@ -34,12 +34,6 @@ This function allows in combination with \code{\link{mice.impute.2l.pan}}
 switching regression imputation between level 1 and level 2 as described in
 Yucel (2008) or Gelman and Hill (2007, p. 541).
 }
-\note{
-The extension to categorical variables transform 
-a dependent factor variable by means of the \code{as.integer()}
-function. This may make sense for categories that are 
-approximately ordered, and less so for pure nominal measures.
-}
 \examples{
 
 ##################################################
@@ -77,16 +71,12 @@ predM1["y","x"] <- 1        # fixed x effects imputation
 impM1 <- impM
 impM1[c("y","w","v")] <- c("2l.pan" , "2lonly.norm" , "2lonly.pmm" )
 
-# turn v into a categorical variable
-dfr$v <- as.factor(dfr$v)
-levels(dfr$v) <- LETTERS[1:4]
-
 # y ... imputation using pan
 # w ... imputation at level 2 using norm
 # v ... imputation at level 2 using pmm
 
-imp <- mice(dfr, m = 1, predictorMatrix = predM1 , 
-           imputationMethod = impM1, maxit = 1, paniter = 500)
+imp1 <- mice( as.matrix( dfr ) , m = 1 , predictorMatrix = predM1 , 
+           imputationMethod = impM1 , maxit=1 , paniter=500)
    
 }
 \references{

@@ -4,15 +4,14 @@
 \alias{as.mids}
 \title{Converts an multiply imputed dataset (long format) into a \code{mids} object}
 \usage{
-as.mids(data, .imp = NA, .id = NA)
+as.mids(data, .imp=1, .id=2)
 }
 \arguments{
-\item{data}{A multiply imputed data set in long format, for example produced by a call to 
-\code{complete(..., action = 'long', include = TRUE)}.}
+\item{data}{A multiply imputed data set in long format}
 
-\item{.imp}{Optional column number in \code{data} that contains the imputation number. The number \code{0} indicates the original data (with missings) and \code{1} through \code{m} correspond to the \code{m} imputation number. If not specified, the function searches for a variable named \code{".imp"}.}
+\item{.imp}{Mandatory column indicator for the multiple imputation stream, where \code{0} indicates the incomplete data and \code{1} through \code{m} indicate the \code{m} multiple imputation streams. Default is \code{1}.}
 
-\item{.id}{Optional column number in \code{data} indicating the subject identification. If not specified, then the function searches for a variable named \code{.id} in \code{data}.}
+\item{.id}{Optional column indicator for the row numbers. Default is \code{2}.}
 }
 \value{
 An object of class \code{mids}
@@ -25,47 +24,34 @@ back in a \code{mids} object. It may also be used to store multiply imputed data
 from other software into the format used by \code{mice}.
 }
 \details{
-If .id variable is found, row names from the supplied data will be copied to the \code{data} elements of the returned \code{mids} object.
+If \code{.id} is specified, row names from the original data (if supplied) will be copied to the \code{mids} object.
 }
 \examples{
 # impute the nhanes dataset
 imp <- mice(nhanes, print = FALSE)
 # extract the data in long format
 X <- complete(imp, action = "long", include = TRUE)
-# create dataset with .imp variable as numeric
+# create dataset with .imp variable that is not a factor
 X2 <- X
 X2$.imp <- as.numeric(levels(X$.imp))[X$.imp]
-
 # nhanes example without .id
-test1 <- as.mids(X)
+test1 <- as.mids(X[, -2], .id = NULL)
 is.mids(test1)
 all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
-
-# nhanes example without .id where .imp is numeric
-test2 <- as.mids(X2)
+# nhanes example without .id where .imp is not a factor
+test2 <- as.mids(X2[, -2], .id = NULL)
 is.mids(test2)
-all(complete(test2, action = "long", include = TRUE) == X, na.rm = TRUE)
-
-# nhanes example, where we explicitly specify .id as column 2
+all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
+# nhanes example with .id
 test3 <- as.mids(X, .id = 2)
 is.mids(test3)
-all(complete(test3, action = "long", include = TRUE) == X, na.rm = TRUE)
-
-# nhanes example with .id where .imp is numeric
+all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
+# nhanes example with .id where .imp is not a factor
 test4 <- as.mids(X2, .id = 2)
 is.mids(test4)
-all(complete(test4, action = "long", include = TRUE) == X, na.rm = TRUE)
-
-# example without an .id variable
-# variable .id not preserved
-X3 <- X[, -2]
-test5 <- as.mids(X3)
-is.mids(test5)
-all(complete(test5, action = "long", include = TRUE)[, -2] == X[, -2], na.rm = TRUE)
-
-# 
+all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
 }
 \author{
-Gerko Vink, Stef van Buuren (edits in 2.37)
+Gerko Vink
 }
 \keyword{mids}

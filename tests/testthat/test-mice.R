@@ -1,6 +1,7 @@
-context("complete")
+context("Imputation")
 
-nhanes_mids <- mice(nhanes, m = 2, print = FALSE)
+
+nhanes_mids <- mice(nhanes)
 nhanes_complete <- complete(nhanes_mids)
 
 test_that("No missing values remain in imputed nhanes data set", {

@@ -494,8 +494,7 @@ check.method <- function(setup, data) {
     return(setup)
 }
 
-check.data <- function(setup, data, allow.na = FALSE, 
-                       remove_collinear = TRUE, ...) {
+check.data <- function(setup, data, allow.na = FALSE, ...) {
 
     pred <- setup$predictorMatrix
     nvar <- setup$nvar
@@ -546,7 +545,7 @@ check.data <- function(setup, data, allow.na = FALSE,
     } else {
       droplist <- NULL
     }
-    if (length(droplist) > 0 & remove_collinear) {
+    if (length(droplist) > 0) {
         for (k in 1:length(droplist)) {
             j <- which(varnames %in% droplist[k])
             didlog <- FALSE

@@ -32,10 +32,6 @@
 #'Yucel, RM (2008). Multiple imputation inference for multivariate multilevel
 #'continuous data with ignorable non-response.  \emph{Philosophical
 #'Transactions of the Royal Society A}, \bold{366}, 2389-2404.
-#'@note The extension to categorical variables transform 
-#'a dependent factor variable by means of the \code{as.integer()}
-#'function. This may make sense for categories that are 
-#'approximately ordered, and less so for pure nominal measures.
 #'@examples
 #'
 #'##################################################
@@ -73,80 +69,54 @@
 #'impM1 <- impM
 #'impM1[c("y","w","v")] <- c("2l.pan" , "2lonly.norm" , "2lonly.pmm" )
 #'
-#'# turn v into a categorical variable
-#'dfr$v <- as.factor(dfr$v)
-#'levels(dfr$v) <- LETTERS[1:4]
-#'
 #'# y ... imputation using pan
 #'# w ... imputation at level 2 using norm
 #'# v ... imputation at level 2 using pmm
 #'
-#'imp <- mice(dfr, m = 1, predictorMatrix = predM1 , 
-#'            imputationMethod = impM1, maxit = 1, paniter = 500)
+#'imp1 <- mice( as.matrix( dfr ) , m = 1 , predictorMatrix = predM1 , 
+#'            imputationMethod = impM1 , maxit=1 , paniter=500)
 #'    
 #'@export
 mice.impute.2lonly.pmm <- function (y, ry, x, type , ...){
-  imp <- .imputation.level2( y = y , ry = ry , x = x , type = type , 
-                             imputationMethod = "pmm" , ... )				   
+    imp <- .imputation.level2( y = y , ry = ry , x = x , type = type , 
+                               imputationMethod = "pmm" , ... )				   
 }
 
 #******************************************
 # imputation function at level 2
 # can be done with norm and pmm
 .imputation.level2 <- function( y , ry , x , type , imputationMethod , ... ){
-  if ( sum(type==-2 ) != 1 ){
-    stop( "No class variable")
-  }
-  
-  # handle categorical data
-  ynum <- y
-  if (is.factor(y)) ynum <- as.integer(y)
-  
-  # extract cluster index
-  clusterx <- x[, type == -2]
-  x <- cbind(1, as.matrix(x[,type %in% c(1,2)]))      # calculate aggregated values	
-  # change ARb 2013-02-12
-  # a1 <- aggregate( (cbind(x,y)) , list( clusterx ) , mean , na.rm=F)
-  a2 <- rowsum( cbind(x, ynum) , clusterx , na.rm=FALSE)
-  #~~~~~
-  # change ARb 2014-02-18
-  clusterx0 <- as.numeric(paste0(rownames(a2)))
-  a2 <- a2 / rowsum( 1+0*ynum , clusterx , na.rm=FALSE )[,1] 
-  a1 <- cbind( clusterx0  , a2 )
-  #~~~~~
-  #*****	
-  N1 <- ncol(a1)
-  cly2 <- unique( clusterx[  ry ] )  # clusters without missings on y
-  ry2 <- a1[,1] %in% cly2  
-  x1 <- as.matrix(a1[, -c(1,N1)])
-  
-  # norm imputation at level 2
-  if ( imputationMethod == "norm" ){ 
-    ximp2 <- mice.impute.norm( y= as.matrix(a1[,N1]), ry=ry2, x = x1[,-1] , ...) 
-    
+    if ( sum(type==-2 ) != 1 ){
+        stop( "No class variable")
+    }
+    # extract cluster index
+    clusterx <- x[,type == -2 ]
+    x <- cbind(1, as.matrix(x[,type %in% c(1,2)]))      # calculate aggregated values	
+    # change ARb 2013-02-12
+    # a1 <- aggregate( (cbind(x,y)) , list( clusterx ) , mean , na.rm=F)
+    a2 <- rowsum( cbind(x,y) , clusterx , na.rm=FALSE)
+	#~~~~~
+	# change ARb 2014-02-18
+	clusterx0 <- as.numeric(paste0(rownames(a2)))
+    a2 <- a2 / rowsum( 1+0*y , clusterx , na.rm=FALSE )[,1] 
+    a1 <- cbind( clusterx0  , a2 )
+	#~~~~~
+    #*****	
+    N1 <- ncol(a1)
+    cly2 <- unique( clusterx[  ry ] )  # clusters without missings on y
+    ry2 <- a1[,1] %in% cly2  
+    x1 <- as.matrix(a1[, -c(1,N1)])
+    # norm imputation at level 2
+    if ( imputationMethod == "norm" ){ 
+        ximp2 <- mice.impute.norm( y= as.matrix(a1[,N1]), ry=ry2, x = x1[,-1] , ...) 
+    }
+    # pmm imputation at level 2
+    if ( imputationMethod == "pmm" ){ 
+        ximp2 <- mice.impute.pmm( y= as.matrix(a1[,N1]), ry=ry2, x = x1[,-1] , ...) 
+    }
     # data postprocessing
     cly2 <- a1[ ! ry2 , 1] 
     i1 <- match( clusterx, cly2 )
     ximp <- ( ximp2[i1] )[ ! ry ]
     return(ximp)	
-  }
-  
-  # pmm imputation at level 2
-  if ( imputationMethod == "pmm" ){ 
-    ximp2 <- mice.impute.pmm(y = a1[, N1], ry = ry2, x = x1[, -1], ...) 
-    
-    # aggregate y to second level group
-    splity <- split(y, f = clusterx)
-    y2 <- unlist(lapply(splity, function(x) return(x[1])))
-    
-    # find donor values: use only the indices of second-levels donors
-    yimp2 <- y2[names(ximp2)]
-    
-    # expland to full matrix
-    cly2 <- a1[ !ry2 , 1] 
-    i1 <- match( clusterx, cly2 )
-    yimp <- (yimp2[ i1 ])[ !ry ]
-    
-    return(yimp)
-  }
 }
