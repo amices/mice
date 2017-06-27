@@ -5,7 +5,7 @@
 \title{Scatterplot of amputed and non-amputed data against weighted sum scores}
 \usage{
 \method{xyplot}{mads}(x, yvar = NULL, which.pat = NULL,
-  standardized = TRUE, layout = NULL, colors = c("#fc8d62", "#8da0cb"))
+  standardized = TRUE, layout = NULL, colors = mdc(1:2))
 }
 \arguments{
 \item{x}{A \code{mads} object, typically created by \code{\link{ampute}}.}
@@ -25,8 +25,8 @@ that the scatterplots of six variables need to be placed on 3 rows and 2 columns
 There are several defaults for different #variables. Note that for more than 
 9 variables, multiple plots will be created automatically.}
 
-\item{colors}{A vector of two RGB values defining the colors of the amputed and 
-non-amputed data respectively. RGB values can be obtained with \code{\link{hcl}}.}
+\item{colors}{A vector of two RGB values defining the colors of the non-amputed and 
+amputed data respectively. RGB values can be obtained with \code{\link{hcl}}.}
 }
 \value{
 A list containing the scatterplots. Note that a new pattern 

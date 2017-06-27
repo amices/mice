@@ -11,6 +11,9 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.39    27jun2017 SvB
+UPDATE   Colors in xyplot.mads
+
 V2.38    22may2017 SvB
 ADDED    Support for factors in mice.impute.2lonly.pmm()
 
