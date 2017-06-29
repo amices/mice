@@ -5,7 +5,7 @@
 \alias{2l.norm}
 \title{Imputation by a two-level normal model}
 \usage{
-mice.impute.2l.norm(y, ry, x, type, intercept = TRUE, ...)
+mice.impute.2l.norm(y, ry, x, type, wy = NULL, intercept = TRUE, ...)
 }
 \arguments{
 \item{y}{Incomplete data vector of length \code{n}}

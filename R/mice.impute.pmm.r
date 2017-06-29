@@ -1,5 +1,3 @@
-### -----------------------------MICE.IMPUTE.PMM-------------------------
-
 #'Imputation by predictive mean matching
 #'
 #'Imputes univariate missing data using predictive mean matching
@@ -9,8 +7,7 @@
 #'\enumerate{ 
 #'\item
 #'Estimate beta and sigma by linear regression 
-#'\item Draw beta* and sigma* from
-#'the proper posterior 
+#'\item Draw beta* and sigma* from the proper posterior 
 #'\item Compute predicted values for \code{yobs} \code{beta} and
 #'\code{ymis} \code{beta*} 
 #'\item For each \code{ymis}, find \code{donors} observations with
@@ -21,18 +18,13 @@
 #'Note: The matching is done on predicted \code{y}, NOT on
 #'observed \code{y}.} 
 #'
-#'@note Since \code{mice 2.22} the standard \code{mice.impute.pmm()} calls
-#'the much faster \code{matcher()} function instead of \code{.pmm.match()}. Since
-#'\code{matcher()} uses its own random generator, results cannot be exactly 
-#'reproduced. In case where you want the old \code{.pmm.match()}, specify 
-#'\code{mice(..., version = "2.21")}.
-#'
-#'@aliases mice.impute.pmm pmm
-#'@param y Numeric vector with incomplete data
+#'@param y Vector with incomplete data, numeric or factor
 #'@param ry Response pattern of \code{y} (\code{TRUE}=observed,
 #'\code{FALSE}=missing)
 #'@param x Design matrix with \code{length(y)} rows and \code{p} columns
 #'containing complete covariates.
+#'@param wy Logical vector of length \code{length(y)} elements indicating 
+#'observation for which imputations should be created
 #'@param donors The size of the donor pool among which a draw is made. The default is 
 #'\code{donors = 5}. Setting \code{donors = 1} always selects the closest match. Values 
 #'between 3 and 10 provide the best results. Note: The default was changed from 
@@ -59,23 +51,18 @@
 #'Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 #'@keywords datagen
 #'@export
-mice.impute.pmm <- function(y, ry, x, donors = 5, type = 1, 
-                            ridge = 1e-05, version = "", ...) 
+mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5, type = 1, 
+                            ridge = 1e-05, ...) 
 {
-    x <- cbind(1, as.matrix(x))
-    ynum <- y
-    if (is.factor(y)) ynum <- as.integer(y)  ## added 25/04/2012
-    parm <- .norm.draw(ynum, ry, x, ridge = ridge, ...)  ## bug fix 10apr2013
-    yhatobs <- x[ry, ] %*% parm$coef
-    yhatmis <- x[!ry, ] %*% parm$beta
-    if (version == "2.21") 
-        return(apply(as.array(yhatmis), 1, 
-                     .pmm.match, 
-                     yhat = yhatobs, 
-                     y = y[ry], 
-                     donors = donors, ...))
-    idx <- matcher(yhatobs, yhatmis, k = donors)
-    return(y[ry][idx])
+  if (is.null(wy)) wy <- !ry
+  x <- cbind(1, as.matrix(x))
+  ynum <- y
+  if (is.factor(y)) ynum <- as.integer(y)
+  parm <- .norm.draw(ynum, ry, x, ridge = ridge, ...)
+  yhatobs <- x[ry, ] %*% parm$coef
+  yhatmis <- x[wy, ] %*% parm$beta
+  idx <- matcher(yhatobs, yhatmis, k = donors)
+  return(y[ry][idx])
 }
 
 # -------------------------.PMM.MATCH-------------------------------- 
@@ -114,23 +101,15 @@ mice.impute.pmm <- function(y, ry, x, donors = 5, type = 1,
 #'
 #'@export
 .pmm.match <- function(z, yhat = yhat, y = y, donors = 5, ...) {
-    d <- abs(yhat - z)
-    f <- d > 0
-    a1 <- ifelse(any(f), min(d[f]), 1)
-    d <- d + runif(length(d), 0, a1/10^10)
-    if (donors == 1) 
-        return(y[which.min(d)])
-    donors <- min(donors, length(d))
-    donors <- max(donors, 1)
-    ds <- sort.int(d, partial = donors)
-    m <- sample(y[d <= ds[donors]], 1)
-    return(m)
+  d <- abs(yhat - z)
+  f <- d > 0
+  a1 <- ifelse(any(f), min(d[f]), 1)
+  d <- d + runif(length(d), 0, a1/10^10)
+  if (donors == 1) 
+    return(y[which.min(d)])
+  donors <- min(donors, length(d))
+  donors <- max(donors, 1)
+  ds <- sort.int(d, partial = donors)
+  m <- sample(y[d <= ds[donors]], 1)
+  return(m)
 }
-
-
-### -----------------------------MICE.IMPUTE.PMM2------------------------ A faster version of mice.impute.pmm()
-mice.impute.pmm2 <- function(y, ry, x, ...) {
-    mess <- "Method 'pmm2' is replaced by method 'pmm'"
-    stop(mess)
-}
-

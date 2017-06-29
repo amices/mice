@@ -50,7 +50,7 @@
 #'Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
 #'@keywords datagen
 #'@export
-mice.impute.2l.norm <- function(y, ry, x, type, intercept = TRUE, ...) {
+mice.impute.2l.norm <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...) {
     rwishart <- function(df, p = nrow(SqrtSigma), SqrtSigma = diag(p)) {
         ## rwishart, written by Bill Venables
         Z <- matrix(0, p, p)
@@ -88,9 +88,7 @@ mice.impute.2l.norm <- function(y, ry, x, type, intercept = TRUE, ...) {
       x + diag(diag(x) * ridge)
     }
     
-    
-    
-    ## written by Roel de Jong
+    # if (is.null(wy)) wy <- !ry
     
     ## append intercept
     if (intercept) {

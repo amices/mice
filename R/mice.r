@@ -214,7 +214,7 @@
 #'imp
 #'
 #'# list the actual imputations for BMI
-#'imp$imputations$bmi
+#'imp$imp$bmi
 #'
 #'# first completed data matrix
 #'complete(imp)
@@ -322,7 +322,7 @@ mice <- function(data, m = 5,
   # Iterate.
   from <- 1
   to <- from + maxit - 1
-  q <- sampler(p, data, m, imp, r, visitSequence, c(from, to), printFlag, ...)
+  q <- sampler(p, data, where, m, imp, r, visitSequence, c(from, to), printFlag, ...)
   
   ## restore the original NA's in the data
   for (j in p$visitSequence) {
@@ -342,7 +342,8 @@ mice <- function(data, m = 5,
     row.names(loggedEvents) <- 1:nrow(loggedEvents)
   
   ## save, and return
-  midsobj <- list(call = call, data = as.data.frame(p$data[, 1:nvar]), m = m,
+  midsobj <- list(call = call, data = as.data.frame(p$data[, 1:nvar]), 
+                  where = where, m = m,
                   nmis = nmis, imp = imp, method = method,
                   predictorMatrix = predictorMatrix,
                   visitSequence = visitSequence, form = form, post = post,

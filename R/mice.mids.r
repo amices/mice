@@ -90,7 +90,7 @@ mice.mids <- function(obj, maxit=1, diagnostics = TRUE, printFlag = TRUE, ...)
     assign(".Random.seed", obj$lastSeedValue, pos=1) ##pm 04/02
     
     ## OK. Iterate.
-    q <- sampler(p, obj$data, obj$m, imp, r, obj$visitSequence, c(from, to), printFlag, ...)
+    q <- sampler(p, obj$data, obj$where, obj$m, imp, r, obj$visitSequence, c(from, to), printFlag, ...)
     
     ## restore the original NA's in the data
     for(j in p$visitSequence) p$data[(!r[,j]),j] <- NA

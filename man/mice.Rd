@@ -214,7 +214,7 @@ imp <- mice(nhanes)
 imp
 
 # list the actual imputations for BMI
-imp$imputations$bmi
+imp$imp$bmi
 
 # first completed data matrix
 complete(imp)
