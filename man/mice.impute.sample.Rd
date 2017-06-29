@@ -4,20 +4,22 @@
 \alias{mice.impute.sample}
 \title{Imputation by simple random sampling}
 \usage{
-mice.impute.sample(y, ry, x = NULL, ...)
+mice.impute.sample(y, ry, x = NULL, wy = NULL, ...)
 }
 \arguments{
-\item{y}{Incomplete data vector of length \code{n}}
+\item{y}{Incomplete data vector}
 
-\item{ry}{Vector of missing data pattern (\code{FALSE}=missing,
-\code{TRUE}=observed)}
+\item{ry}{Vector of missing data pattern of \code{y}}
 
-\item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
+\item{x}{Matrix with \code{length(y)} rows with complete covariates. Not used.}
 
-\item{...}{Other named arguments.}
+\item{wy}{Logical vector of length \code{length(y)} elements indicating 
+observation for which imputations should be created}
+
+\item{...}{Other named arguments. Not used.}
 }
 \value{
-A vector of length \code{nmis} with imputations.
+A vector of length \code{sum(wy)} with imputations
 }
 \description{
 Imputes a random sample from the observed \code{y} data
@@ -33,6 +35,6 @@ Statistical Software}, \bold{45}(3), 1-67.
 \url{http://www.jstatsoft.org/v45/i03/}
 }
 \author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2017
 }
 \keyword{datagen}

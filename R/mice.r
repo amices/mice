@@ -236,122 +236,122 @@ mice <- function(data, m = 5,
                  maxit = 5, diagnostics = TRUE, printFlag = TRUE, seed = NA,
                  imputationMethod = NULL, defaultImputationMethod = NULL,
                  data.init = NULL, ...) {
-
-    # Start with some preliminary calculations and error checks
-    call <- match.call()
-    if (!is.na(seed)) 
-      set.seed(seed)
-    if (!(is.matrix(data) | is.data.frame(data)))
-        stop("Data should be a matrix or data frame")
-    nvar <- ncol(data)
-    if (nvar < 2)
-        stop("Data should contain at least two columns")
-    data <- as.data.frame(data)
-    nmis <- apply(is.na(data), 2, sum)
-    varnames <- colnames(data)
-    
-    if (!(is.matrix(where) | is.data.frame(where)))
-      stop("Argument `where` not a matrix or data frame")
-    if (!all(dim(data) == dim(where)))
-      stop("Arguments `data` and `where` not of same size")
-    nwhere <- apply(where, 2, sum)
-    if (sum(where) == 0)
-        stop("No locations to impute")
-
-    # list for storing current computational state
-    state <- list(it = 0, im = 0, co = 0, dep = "", meth = "", log = FALSE)
-
-    # data frame for storing the event log
-    loggedEvents <- data.frame(it = 0, im = 0, co = 0, dep = "", meth = "",
-                               out = "")
-
-    # Legacy handling
-    if (!is.null(imputationMethod))
-        method <- imputationMethod
-    if (!is.null(defaultImputationMethod))
-        defaultMethod <- defaultImputationMethod
-
-    # Perform various validity checks on the specified arguments
-    setup <- list(visitSequence = visitSequence, method = method,
-                  defaultMethod = defaultMethod,
-                  predictorMatrix = predictorMatrix,
-                  form = form, post = post, nvar = nvar,
-                  nmis = nmis, nwhere = nwhere,
-                  varnames = varnames)
-    setup <- check.visitSequence(setup, where)
-    setup <- check.method(setup, data)
-    setup <- check.predictorMatrix(setup)
-    setup <- check.data(setup, data, ...)
-
-    ## Pad the imputation model with dummy variables for the factors
-    method <- setup$method
-    predictorMatrix <- setup$predictorMatrix
-    visitSequence <- setup$visitSequence
-    post <- setup$post
-    p <- padModel(data, method, predictorMatrix, visitSequence, 
-                  form, post, nvar)
-    if (any(duplicated(names(p$data))))
-        stop("Column names of padded data not unique")
-
-    ## Initialize response matrix r, imputation array imp, etc. 
-    r <- (!is.na(p$data))
-    imp <- vector("list", ncol(p$data))
-    if (m > 0) {
-
-        ## Initializes the imputed values
-        for (j in visitSequence) {
-            imp[[j]] <- as.data.frame(matrix(NA, nrow = sum(!r[, j]), ncol = m))
-            dimnames(imp[[j]]) <- list(row.names(data)[r[, j] == FALSE], 1:m)
-            y <- data[, j]
-            ry <- r[, j]
-            if (method[j] != "") {
-                # for incomplete variables that are imputed
-                for (i in 1:m) {
-                  if (nmis[j] < nrow(data)) {
-                    if (is.null(data.init)) {
-                      imp[[j]][, i] <- mice.impute.sample(y, ry, ...)
-                    } else {
-                      imp[[j]][, i] <- data.init[!ry, j]
-                    }
-                  } else imp[[j]][, i] <- rnorm(nrow(data))
-                }
+  
+  # Start with some preliminary calculations and error checks
+  call <- match.call()
+  if (!is.na(seed)) 
+    set.seed(seed)
+  if (!(is.matrix(data) | is.data.frame(data)))
+    stop("Data should be a matrix or data frame")
+  nvar <- ncol(data)
+  if (nvar < 2)
+    stop("Data should contain at least two columns")
+  data <- as.data.frame(data)
+  nmis <- apply(is.na(data), 2, sum)
+  varnames <- colnames(data)
+  
+  if (!(is.matrix(where) | is.data.frame(where)))
+    stop("Argument `where` not a matrix or data frame")
+  if (!all(dim(data) == dim(where)))
+    stop("Arguments `data` and `where` not of same size")
+  nwhere <- apply(where, 2, sum)
+  if (sum(where) == 0)
+    stop("No locations to impute")
+  
+  # list for storing current computational state
+  state <- list(it = 0, im = 0, co = 0, dep = "", meth = "", log = FALSE)
+  
+  # data frame for storing the event log
+  loggedEvents <- data.frame(it = 0, im = 0, co = 0, dep = "", meth = "",
+                             out = "")
+  
+  # Legacy handling
+  if (!is.null(imputationMethod))
+    method <- imputationMethod
+  if (!is.null(defaultImputationMethod))
+    defaultMethod <- defaultImputationMethod
+  
+  # Perform various validity checks on the specified arguments
+  setup <- list(visitSequence = visitSequence, method = method,
+                defaultMethod = defaultMethod,
+                predictorMatrix = predictorMatrix,
+                form = form, post = post, nvar = nvar,
+                nmis = nmis, nwhere = nwhere,
+                varnames = varnames)
+  setup <- check.visitSequence(setup, where)
+  setup <- check.method(setup, data)
+  setup <- check.predictorMatrix(setup)
+  setup <- check.data(setup, data, ...)
+  
+  ## Pad the imputation model with dummy variables for the factors
+  method <- setup$method
+  predictorMatrix <- setup$predictorMatrix
+  visitSequence <- setup$visitSequence
+  post <- setup$post
+  p <- padModel(data, method, predictorMatrix, visitSequence, 
+                form, post, nvar)
+  if (any(duplicated(names(p$data))))
+    stop("Column names of padded data not unique")
+  
+  ## Initialize where matrix r, imputation array imp, etc. 
+  r <- (!is.na(p$data))
+  imp <- vector("list", ncol(p$data))
+  if (m > 0) {
+    ## Initializes the imputed values
+    for (j in visitSequence) {
+      y <- data[, j]
+      ry <- r[, j]
+      wy <- where[, j]
+      imp[[j]] <- as.data.frame(matrix(NA, nrow = sum(wy), ncol = m))
+      dimnames(imp[[j]]) <- list(row.names(data)[wy], 1:m)
+      if (method[j] != "") {
+        # for incomplete variables that are imputed
+        for (i in 1:m) {
+          if (nmis[j] < nrow(data)) {
+            if (is.null(data.init)) {
+              imp[[j]][, i] <- mice.impute.sample(y, ry, wy = wy, ...)
+            } else {
+              imp[[j]][, i] <- data.init[wy, j]
             }
+          } else imp[[j]][, i] <- rnorm(nrow(data))
         }
+      }
     }
-
-    # Iterate.
-    from <- 1
-    to <- from + maxit - 1
-    q <- sampler(p, data, m, imp, r, visitSequence, c(from, to), printFlag, ...)
-
-    ## restore the original NA's in the data
-    for (j in p$visitSequence) {
-      p$data[(!r[, j]), j] <- NA
-    }
-
-    ## delete data and imputations of automatic dummy variables
-    imp <- q$imp[1:nvar]
-    names(imp) <- varnames
-    names(method) <- varnames
-    names(form) <- varnames
-    names(post) <- varnames
-    names(visitSequence) <- varnames[visitSequence]
-    if (!state$log)
-        loggedEvents <- NULL
-    if (state$log)
-        row.names(loggedEvents) <- 1:nrow(loggedEvents)
-
-    ## save, and return
-    midsobj <- list(call = call, data = as.data.frame(p$data[, 1:nvar]), m = m,
-                    nmis = nmis, imp = imp, method = method,
-                    predictorMatrix = predictorMatrix,
-                    visitSequence = visitSequence, form = form, post = post,
-                    seed = seed, iteration = q$iteration,
-                    lastSeedValue = .Random.seed, chainMean = q$chainMean,
-                    chainVar = q$chainVar, loggedEvents = loggedEvents)
-    if (diagnostics)
-        midsobj <- c(midsobj, list(pad = p))
-    oldClass(midsobj) <- "mids"
-    return(midsobj)
+  }
+  
+  # Iterate.
+  from <- 1
+  to <- from + maxit - 1
+  q <- sampler(p, data, m, imp, r, visitSequence, c(from, to), printFlag, ...)
+  
+  ## restore the original NA's in the data
+  for (j in p$visitSequence) {
+    p$data[(!r[, j]), j] <- NA
+  }
+  
+  ## delete data and imputations of automatic dummy variables
+  imp <- q$imp[1:nvar]
+  names(imp) <- varnames
+  names(method) <- varnames
+  names(form) <- varnames
+  names(post) <- varnames
+  names(visitSequence) <- varnames[visitSequence]
+  if (!state$log)
+    loggedEvents <- NULL
+  if (state$log)
+    row.names(loggedEvents) <- 1:nrow(loggedEvents)
+  
+  ## save, and return
+  midsobj <- list(call = call, data = as.data.frame(p$data[, 1:nvar]), m = m,
+                  nmis = nmis, imp = imp, method = method,
+                  predictorMatrix = predictorMatrix,
+                  visitSequence = visitSequence, form = form, post = post,
+                  seed = seed, iteration = q$iteration,
+                  lastSeedValue = .Random.seed, chainMean = q$chainMean,
+                  chainVar = q$chainVar, loggedEvents = loggedEvents)
+  if (diagnostics)
+    midsobj <- c(midsobj, list(pad = p))
+  oldClass(midsobj) <- "mids"
+  return(midsobj)
 }
 

@@ -70,20 +70,21 @@ padModel <- function(data, method, predictorMatrix, visitSequence,
 }
 
 
-# ------------------------------sampler-------------------------------
-
 sampler <- function(p, data, m, imp, r, visitSequence, fromto, printFlag, ...)
-  # The sampler controls the actual Gibbs sampling iteration scheme This function is called by mice and mice.mids
-  #
-  # Authors: S van Buuren, K Groothuis-Oudshoorn Copyright (c) 1999-2008 TNO Quality of Life
+  # The sampler controls the actual Gibbs sampling iteration scheme.
+  # This function is called by mice and mice.mids
+  # Authors: S van Buuren, K Groothuis-Oudshoorn
 {
-  ## set up array for convergence checking
   from <- fromto[1]
   to <- fromto[2]
   maxit <- to - from + 1
+  
+  # set up array for convergence checking
+  chainVar <- chainMean <- NULL
   if (maxit > 0)
-    chainVar <- chainMean <- array(0, dim = c(length(visitSequence), maxit, m), dimnames = list(dimnames(data)[[2]][visitSequence],
-                                                                                                1:maxit, paste("Chain", 1:m))) else chainVar <- chainMean <- NULL
+    chainVar <- chainMean <- array(0, dim = c(length(visitSequence), maxit, m), 
+                                   dimnames = list(dimnames(data)[[2]][visitSequence], 
+                                                   1:maxit, paste("Chain", 1:m)))
   
   ## THE ITERATION MAIN LOOP: GIBBS SAMPLER
   if (maxit < 1)
@@ -104,8 +105,10 @@ sampler <- function(p, data, m, imp, r, visitSequence, fromto, printFlag, ...)
           ## augment the data with the actual dummy variables
           for (j in setdiff(p$visitSequence, visitSequence)) {
             cat.columns <- p$data[, p$categories[j, 4]]
-            p$data[, (j:(j + p$categories[p$categories[j, 4], 2] - 1))] <- matrix((model.matrix(~cat.columns - 1)[, -1]),
-                                                                                  ncol = p$categories[p$categories[j, 4], 2], nrow = nrow(p$data))
+            p$data[, (j:(j + p$categories[p$categories[j, 4], 2] - 1))] <- 
+              matrix((model.matrix(~cat.columns - 1)[, -1]),
+                     ncol = p$categories[p$categories[j, 4], 2], 
+                     nrow = nrow(p$data))
           }
           
           ## iterate once over the variables of the augmented model
@@ -163,18 +166,19 @@ sampler <- function(p, data, m, imp, r, visitSequence, fromto, printFlag, ...)
               }
               p$data[!r[, j], j] <- imp[[j]][, i]
             } else if (is.passive(theMethod)) {
-              imp[[j]][, i] <- model.frame(as.formula(theMethod), p$data[!r[, j], ])  #RJ - FIXED passive imputation: as.formula()
+              imp[[j]][, i] <- model.frame(as.formula(theMethod), p$data[!r[, j], ])
               p$data[!r[, j], j] <- imp[[j]][, i]
             } else if (theMethod == "dummy") {
-              ## FEH
               cat.columns <- p$data[, p$categories[j, 4]]
-              p$data[, (j:(j + p$categories[p$categories[j, 4], 2] - 1))] <- matrix((model.matrix(~cat.columns - 1)[,
-                                                                                                                    -1]), ncol = p$categories[p$categories[j, 4], 2], nrow = nrow(p$data))
+              p$data[, (j:(j + p$categories[p$categories[j, 4], 2] - 1))] <- 
+                matrix((model.matrix(~cat.columns - 1)[, -1]),
+                       ncol = p$categories[p$categories[j, 4], 2], 
+                       nrow = nrow(p$data))
               remove("cat.columns")
             }
             
             ## optional post-processing
-            cmd <- p$post[j]  # SvB Aug 2009
+            cmd <- p$post[j]
             if (cmd != "") {
               eval(parse(text = cmd))
               p$data[!r[, j], j] <- imp[[j]][, i]
@@ -186,7 +190,7 @@ sampler <- function(p, data, m, imp, r, visitSequence, fromto, printFlag, ...)
           jj <- visitSequence[j]
           if (!is.factor(data[, jj])) {
             chainVar[j, k2, ] <- apply(imp[[jj]], 2, var)
-            chainMean[j, k2, ] <- colMeans(as.matrix(imp[[jj]]))  ##pm 04/02
+            chainMean[j, k2, ] <- colMeans(as.matrix(imp[[jj]]))
           }
           if (is.factor(data[, jj])) {
             for (mm in 1:m) {
