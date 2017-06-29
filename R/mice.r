@@ -116,6 +116,11 @@
 #'\code{predictorMatrix} is that all other columns are used as predictors
 #'(sometimes called massive imputation). Note: For two-level imputation codes
 #''2' and '-2' are also allowed.
+#'@param where A data frame or matrix with logicals of the same dimensions 
+#'as \code{data} indicating where in the data the imputations should be 
+#'created. The default, \code{where = is.na(data)}, specifies that the
+#'missing data should be imputed. The \code{where} argument may be used to 
+#'overimpute observed data, or to skip imputations for selected missing values.
 #'@param visitSequence A vector of integers of arbitrary length, specifying the
 #'column indices of the visiting sequence. The visiting sequence is the column
 #'order that is used to impute the data during one pass through the data. A
@@ -220,9 +225,11 @@
 #'mice(nhanes2, meth=c('sample','pmm','logreg','norm'))
 #'
 #'@export
-mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
+mice <- function(data, m = 5, 
+                 method = vector("character", length = ncol(data)),
                  predictorMatrix = (1 - diag(1, ncol(data))),
-                 visitSequence = (1:ncol(data))[apply(is.na(data), 2, any)],
+                 where = is.na(data),
+                 visitSequence = NULL,
                  form = vector("character", length = ncol(data)),
                  post = vector("character", length = ncol(data)),
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -230,39 +237,48 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
                  imputationMethod = NULL, defaultImputationMethod = NULL,
                  data.init = NULL, ...) {
 
-    ## Start with some preliminary calculations and error checks
+    # Start with some preliminary calculations and error checks
     call <- match.call()
-    if (!is.na(seed))
-        set.seed(seed)
+    if (!is.na(seed)) 
+      set.seed(seed)
     if (!(is.matrix(data) | is.data.frame(data)))
         stop("Data should be a matrix or data frame")
-    if ((nvar <- ncol(data)) < 2)
+    nvar <- ncol(data)
+    if (nvar < 2)
         stop("Data should contain at least two columns")
     data <- as.data.frame(data)
     nmis <- apply(is.na(data), 2, sum)
-    if (sum(nmis) == 0)
-        stop("No missing values found")
-    varnames <- dimnames(data)[[2]]
+    varnames <- colnames(data)
+    
+    if (!(is.matrix(where) | is.data.frame(where)))
+      stop("Argument `where` not a matrix or data frame")
+    if (!all(dim(data) == dim(where)))
+      stop("Arguments `data` and `where` not of same size")
+    nwhere <- apply(where, 2, sum)
+    if (sum(where) == 0)
+        stop("No locations to impute")
 
-    ## list for storing current computational state
+    # list for storing current computational state
     state <- list(it = 0, im = 0, co = 0, dep = "", meth = "", log = FALSE)
 
-    ## data frame for storing the event log
+    # data frame for storing the event log
     loggedEvents <- data.frame(it = 0, im = 0, co = 0, dep = "", meth = "",
                                out = "")
 
-    ## Perform various validity checks on the specified arguments
+    # Legacy handling
     if (!is.null(imputationMethod))
         method <- imputationMethod
     if (!is.null(defaultImputationMethod))
         defaultMethod <- defaultImputationMethod
 
+    # Perform various validity checks on the specified arguments
     setup <- list(visitSequence = visitSequence, method = method,
                   defaultMethod = defaultMethod,
                   predictorMatrix = predictorMatrix,
                   form = form, post = post, nvar = nvar,
-                  nmis = nmis, varnames = varnames)
-    setup <- check.visitSequence(setup)
+                  nmis = nmis, nwhere = nwhere,
+                  varnames = varnames)
+    setup <- check.visitSequence(setup, where)
     setup <- check.method(setup, data)
     setup <- check.predictorMatrix(setup)
     setup <- check.data(setup, data, ...)
@@ -272,10 +288,10 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
     predictorMatrix <- setup$predictorMatrix
     visitSequence <- setup$visitSequence
     post <- setup$post
-    p <- padModel(data, method, predictorMatrix, visitSequence, form, post,
-                  nmis, nvar)
-    if (sum(duplicated(names(p$data))) > 0)
-        stop("Column names of padded data should be unique")
+    p <- padModel(data, method, predictorMatrix, visitSequence, 
+                  form, post, nvar)
+    if (any(duplicated(names(p$data))))
+        stop("Column names of padded data not unique")
 
     ## Initialize response matrix r, imputation array imp, etc. 
     r <- (!is.na(p$data))
@@ -339,239 +355,3 @@ mice <- function(data, m = 5, method = vector("character", length = ncol(data)),
     return(midsobj)
 }
 
-check.visitSequence <- function(setup) {
-    nmis <- setup$nmis
-    nvar <- setup$nvar
-    visitSequence <- setup$visitSequence
-    if (!is.numeric(visitSequence)) {
-        code <- pmatch(visitSequence, c("roman", "arabic", "monotone",
-                                        "revmonotone"))
-        if (!is.na(code) && code == 1)
-            visitSequence <- (1:nvar)[nmis > 0]
-        if (!is.na(code) && code == 2)
-            visitSequence <- rev((1:nvar)[nmis > 0])
-        if (!is.na(code) && code == 3)
-            visitSequence <- order(nmis)[(sum(nmis == 0) + 1):length(nmis)]
-        if (!is.na(code) && code == 4)
-            visitSequence <-
-              rev(order(nmis)[(sum(nmis == 0) + 1):length(nmis)])
-        if (is.na(code))
-            stop("Argument visitSequence not recognized.\n")
-    }
-    if (all(nmis[visitSequence] == 0))
-        stop(paste("No missing values found."))
-    flags <- nmis == 0 & is.element(1:nvar, visitSequence)
-    if (any(flags))
-        visitSequence <- visitSequence[!flags]
-    visitSequence <- visitSequence[visitSequence <= nvar]
-    visitSequence <- visitSequence[visitSequence >= 1]
-    if (length(visitSequence) == 0)
-        stop(paste("No missing values found."))
-    setup$visitSequence <- visitSequence
-    return(setup)
-}
-
-check.predictorMatrix <- function(setup) {
-    ## checks and makes consistency edits of the predictormatrix
-    pred <- setup$predictorMatrix
-    varnames <- setup$varnames
-    nmis <- setup$nmis
-    nvar <- setup$nvar
-    vis <- setup$visitSequence
-    method <- setup$method
-    post <- setup$post
-
-    if (!is.matrix(pred))
-        stop("Argument 'predictorMatrix' not a matrix.")
-    if (nvar != nrow(pred) | nvar != ncol(pred))
-        stop(paste("The predictorMatrix has", nrow(pred), "rows and",
-                   ncol(pred), "columns. Both should be", nvar, "."))
-    dimnames(pred) <- list(varnames, varnames)
-    diag(pred) <- 0
-    
-    ## stop if there is a class variable with missing data # SvB 25apr13
-    isclassvar <- apply(pred == -2, 2, any)
-    
-    for (j in 1:nvar) {
-        if (method[j] == "" & any(pred[, j] != 0) & nmis[j] > 0) {
-            out <- varnames[j]
-            updateLog(out = out)
-            pred[, j] <- 0
-            vis <- vis[vis != j]
-            post[j] <- ""
-            if (isclassvar[j]) stop("Removed an incomplete class variable.")
-        }
-        if (nmis[j] == 0 & any(pred[j, ] != 0))
-            pred[j, ] <- 0
-    }
-
-    setup$predictorMatrix <- pred
-    setup$visitSequence <- vis
-    setup$post <- post
-    return(setup)
-}
-
-check.method <- function(setup, data) {
-    ## check method, set defaults if appropriate
-    method <- setup$method
-    defaultMethod <- setup$defaultMethod
-    visitSequence <- setup$visitSequence
-    nmis <- setup$nmis
-    nvar <- setup$nvar
-
-    if (all(method == "")) { # the default argument
-      for (j in visitSequence) {
-        y <- data[, j]
-        if (is.numeric(y)) {
-          method[j] <- defaultMethod[1]
-        } else if (nlevels(y) == 2) {
-          method[j] <- defaultMethod[2]
-        } else if (is.ordered(y) & nlevels(y) > 2) {
-          method[j] <- defaultMethod[4]
-        } else if (nlevels(y) > 2) {
-          method[j] <- defaultMethod[3]
-        } else if (is.logical(y)) {
-          method[j] <- defaultMethod[2]
-        } else {
-          method[j] <- defaultMethod[1]
-        }
-      }
-    }
-    # expand user's imputation method to all visited columns
-    # single string supplied by user (implicit assumption of two columns)
-    if (length(method) == 1) {
-      if (is.passive(method))
-        stop("Cannot have a passive imputation method for every column.")
-        method <- rep(method, nvar)
-    }
-    # if user specifies multiple methods, check the length of the argument
-    if (length(method) != nvar) {
-      stop(paste("The length of method (", length(method),
-                 ") does not match the number of columns in the data (", nvar,
-                 ").", sep = ""))
-    }
-    ## check whether the elementary imputation methods are on the search path
-    active <- !is.passive(method) & nmis > 0 & !(method == "")
-    passive.check <- is.passive(method) & nmis > 0 & !(method == "")
-    check <- all(active == FALSE) & any(passive.check != FALSE)
-    if (check) {
-      fullNames <- rep("mice.impute.passive", length(method[passive.check]))
-    } else {
-      fullNames <- paste("mice.impute", method[active], sep = ".")
-    }
-    notFound <- !sapply(fullNames, exists, mode = "function", inherit = TRUE)
-    if (any(notFound)) {
-      stop(paste("The following functions were not found:",
-                 paste(fullNames[notFound], collapse = ", ")))
-    }
-    ## type checks on built-in imputation methods
-    for (j in visitSequence) {
-      y <- data[, j]
-      vname <- dimnames(data)[[2]][j]
-      mj <- method[j]
-      mlist <- list(m1 = c("logreg", "logreg.boot", "polyreg", "lda", "polr"), 
-                    m2 = c("norm", "norm.nob", "norm.predict", "norm.boot",
-                           "mean", "2l.norm", "2L.norm", "2l.pan", "2L.pan",
-                           "2lonly.pan", "quadratic", "ri"), 
-                    m3 = c("norm", "norm.nob", "norm.predict", "norm.boot",
-                           "mean", "2l.norm", "2L.norm", "2l.pan", "2L.pan",
-                           "2lonly.pan", "quadratic", "logreg", "logreg.boot"))
-      if (is.numeric(y) & (mj %in% mlist$m1)) {
-        warning("Type mismatch for variable ", vname, "\nImputation method ",
-                mj, " is for categorical data.",
-                "\nIf you want that, turn variable ", vname, " into a factor,",
-                "\nand store your data in a data frame.", call. = FALSE)
-      } else if (is.factor(y) & nlevels(y) == 2 & (mj %in% mlist$m2)) {
-        warning("Type mismatch for variable ", vname, "\nImputation method ",
-                mj, " is not for factors.", call. = FALSE)
-      } else if (is.factor(y) & nlevels(y) > 2 & (mj %in% mlist$m3)) {
-        warning("Type mismatch for variable ", vname, "\nImputation method ",
-                mj, " is not for factors with three or more levels.",
-                call. = FALSE)
-      }
-    }
-    setup$method <- method
-    return(setup)
-}
-
-check.data <- function(setup, data, allow.na = FALSE, 
-                       remove_collinear = TRUE, ...) {
-
-    pred <- setup$predictorMatrix
-    nvar <- setup$nvar
-    varnames <- setup$varnames
-    meth <- setup$method
-    vis <- setup$visitSequence
-    post <- setup$post
-    
-    ## stop if the class variable is a factor
-    isclassvar <- apply(pred == -2, 2, any)
-    for (j in 1:nvar) {
-        if (isclassvar[j] & is.factor(data[,j])) 
-            stop("Class variable (column ", j,
-                 ") cannot be factor. Convert to numeric by as.integer()")        
-    }
-    ## remove constant variables but leave passive variables untouched
-    for (j in 1:nvar) {
-        if (!is.passive(meth[j])) {
-            d.j <- data[, j]
-            v <- ifelse(is.character(d.j), NA,
-                        var(as.numeric(d.j), na.rm = TRUE))
-            constant <- ifelse(allow.na, 
-                ifelse(is.na(v), FALSE, v < 1000 * .Machine$double.eps),
-                is.na(v) || v < 1000 * .Machine$double.eps)
-            didlog <- FALSE
-            if (constant && any(pred[, j] != 0)) {
-              out <- varnames[j]
-              pred[, j] <- 0
-              updateLog(out = out, meth = "constant")
-              didlog <- TRUE
-            }
-            if (constant && meth[j] != "") {
-              out <- varnames[j]
-              pred[j, ] <- 0
-              if (!didlog)
-                updateLog(out = out, meth = "constant")
-              meth[j] <- ""
-              vis <- vis[vis != j]
-              post[j] <- ""
-            }
-        }
-    }
-
-    ## remove collinear variables
-    ispredictor <- apply(pred != 0, 2, any)
-    if (any(ispredictor)) {
-      droplist <- find.collinear(data[, ispredictor, drop = FALSE], ...)
-    } else {
-      droplist <- NULL
-    }
-    if (length(droplist) > 0 & remove_collinear) {
-        for (k in 1:length(droplist)) {
-            j <- which(varnames %in% droplist[k])
-            didlog <- FALSE
-            if (any(pred[, j] != 0)) {
-              # remove as predictor
-              out <- varnames[j]
-              pred[, j] <- 0
-              updateLog(out = out, meth = "collinear")
-              didlog <- TRUE
-            }
-            if (meth[j] != "") {
-              out <- varnames[j]
-              pred[j, ] <- 0
-              if (!didlog)
-                updateLog(out = out, meth = "collinear")
-              meth[j] <- ""
-              vis <- vis[vis != j]
-              post[j] <- ""
-            }
-        }
-    }
-
-    setup$predictorMatrix <- pred
-    setup$visitSequence <- vis
-    setup$post <- post
-    setup$meth <- meth
-    return(setup)
-}

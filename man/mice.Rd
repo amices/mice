@@ -5,9 +5,8 @@
 \title{Multivariate Imputation by Chained Equations (MICE)}
 \usage{
 mice(data, m = 5, method = vector("character", length = ncol(data)),
-  predictorMatrix = (1 - diag(1, ncol(data))),
-  visitSequence = (1:ncol(data))[apply(is.na(data), 2, any)],
-  form = vector("character", length = ncol(data)),
+  predictorMatrix = (1 - diag(1, ncol(data))), where = is.na(data),
+  visitSequence = NULL, form = vector("character", length = ncol(data)),
   post = vector("character", length = ncol(data)), defaultMethod = c("pmm",
   "logreg", "polyreg", "polr"), maxit = 5, diagnostics = TRUE,
   printFlag = TRUE, seed = NA, imputationMethod = NULL,
@@ -37,6 +36,12 @@ diagonal of \code{predictorMatrix} must be zero. The default for
 \code{predictorMatrix} is that all other columns are used as predictors
 (sometimes called massive imputation). Note: For two-level imputation codes
 '2' and '-2' are also allowed.}
+
+\item{where}{A data frame or matrix with logicals of the same dimensions 
+as \code{data} indicating where in the data the imputations should be 
+created. The default, \code{where = is.na(data)}, specifies that the
+missing data should be imputed. The \code{where} argument may be used to 
+overimpute observed data, or to skip imputations for selected missing values.}
 
 \item{visitSequence}{A vector of integers of arbitrary length, specifying the
 column indices of the visiting sequence. The visiting sequence is the column
