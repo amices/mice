@@ -75,8 +75,8 @@
 #'            imputationMethod = impM1 , maxit=1 , paniter=500)
 #'    
 #'@export
-mice.impute.2lonly.norm <- function (y, ry, x, wy = NULL, type , ...){
-    imp <- .imputation.level2( y = y , ry = ry , x = x, wy = wy, type = type , 
+mice.impute.2lonly.norm <- function (y, ry, x, type, wy = NULL, ...){
+    imp <- .imputation.level2( y = y , ry = ry , x = x, type = type, wy = wy, 
                                imputationMethod = "norm" , ... )
     return(imp)
 }

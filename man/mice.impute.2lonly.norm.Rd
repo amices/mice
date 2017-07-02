@@ -5,7 +5,7 @@
 \alias{2lonly.norm}
 \title{Imputation at level 2 by Bayesian linear regression}
 \usage{
-mice.impute.2lonly.norm(y, ry, x, wy = NULL, type, ...)
+mice.impute.2lonly.norm(y, ry, x, type, wy = NULL, ...)
 }
 \arguments{
 \item{y}{Vector to be imputed}
@@ -18,11 +18,11 @@ model is fitted. The \code{ry} generally distinguishes the observed
 \item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
 \code{y}. Matrix \code{x} may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
-indicates locations in \code{y} for which imputations are created.}
-
 \item{type}{Group identifier must be specified by '-2'. Predictors must be
 specified by '1'.}
+
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+indicates locations in \code{y} for which imputations are created.}
 
 \item{...}{Other named arguments.}
 }

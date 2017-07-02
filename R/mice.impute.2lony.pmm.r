@@ -82,15 +82,15 @@
 #'            imputationMethod = impM1, maxit = 1, paniter = 500)
 #'    
 #'@export
-mice.impute.2lonly.pmm <- function (y, ry, x, wy = NULL, type , ...){
-  imp <- .imputation.level2( y = y , ry = ry , x = x , wy = wy, type = type , 
+mice.impute.2lonly.pmm <- function (y, ry, x, type, wy = NULL, ...){
+  imp <- .imputation.level2( y = y , ry = ry , x = x , type = type, wy = wy, 
                              imputationMethod = "pmm" , ... )				   
 }
 
 #******************************************
 # imputation function at level 2
 # can be done with norm and pmm
-.imputation.level2 <- function( y , ry , x , wy, type , imputationMethod , ... ){
+.imputation.level2 <- function( y , ry , x , type, wy, imputationMethod , ... ){
   if ( sum(type==-2 ) != 1 ){
     stop( "No class variable")
   }
