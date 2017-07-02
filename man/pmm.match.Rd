@@ -34,7 +34,7 @@ match.
 \details{
 Not used after \code{mice 2.21}. The \code{mice.impute.pmm()} function 
 now calls the much faster \code{C} function \code{matcher} instead of 
-\code{.pmm.match()}. Use \code{mice(..., version = "2.21")} to call
+\code{.pmm.match()}. Use \code{mice(..., version = '2.21')} to call
 \code{.pmm.match()}
 }
 \references{

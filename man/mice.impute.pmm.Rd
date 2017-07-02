@@ -2,76 +2,126 @@
 % Please edit documentation in R/mice.impute.pmm.r
 \name{mice.impute.pmm}
 \alias{mice.impute.pmm}
-\title{Imputation by predictive mean matching}
+\alias{pmm}
+\title{Imputation by Predictive mean matching}
 \usage{
 mice.impute.pmm(y, ry, x, wy = NULL, donors = 5, type = 1,
   ridge = 1e-05, ...)
 }
 \arguments{
-\item{y}{Vector with incomplete data, numeric or factor}
+\item{y}{Vector to be imputed}
 
-\item{ry}{Response pattern of \code{y} (\code{TRUE}=observed,
-\code{FALSE}=missing)}
+\item{ry}{Logical vector of length \code{length(y)} indicating the 
+the subset \code{y[ry]} of elements in \code{y} to which the imputation 
+model is fitted. The \code{ry} generally distinguishes the observed 
+(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Design matrix with \code{length(y)} rows and \code{p} columns
-containing complete covariates.}
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\code{y}. Matrix \code{x} may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)} elements indicating 
-observation for which imputations should be created}
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+indicates locations in \code{y} for which imputations are created.}
 
-\item{donors}{The size of the donor pool among which a draw is made. The default is 
-\code{donors = 5}. Setting \code{donors = 1} always selects the closest match. Values 
-between 3 and 10 provide the best results. Note: The default was changed from 
-3 to 5 in version 2.19, based on simulation work by Tim Morris.}
+\item{donors}{The size of the donor pool among which a draw is made. 
+The default is \code{donors = 5}. Setting \code{donors = 1} always selects 
+the closest match. Values between 3 and 10 provide the best results in typical
+cases.}
 
-\item{type}{Type of matching distance. The default choice \code{type = 1} calculates the distance between the predicted value of \code{yobs} and the drawn values of \code{ymis}. Other choices are \code{type = 0} (distance between predicted values) and \code{type = 2} (distance between drawn values). The current version supports only \code{type = 1}.}
+\item{type}{Type of matching distance. The default choice \code{type = 1} 
+calculates the distance between the predicted value of \code{yobs} and 
+the drawn values of \code{ymis}. Other choices are \code{type = 0} 
+(distance between predicted values) and \code{type = 2} 
+(distance between drawn values). The current version supports only 
+\code{type = 1}.}
 
-\item{ridge}{The ridge penalty applied in \code{.norm.draw()} to prevent problems with multicollinearity. The default is \code{ridge = 1e-05}, which means that 0.01 percent of the diagonal is added to the cross-product. Larger ridges may result in more biased estimates. For highly noisy data (e.g. many junk variables), set \code{ridge = 1e-06} or even lower to reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
+\item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent 
+problems with multicollinearity. The default is \code{ridge = 1e-05}, 
+which means that 0.01 percent of the diagonal is added to the cross-product. 
+Larger ridges may result in more biased estimates. For highly noisy data 
+(e.g. many junk variables), set \code{ridge = 1e-06} or even lower to 
+reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
 
 \item{...}{Other named arguments.}
-
-\item{version}{A character variable indicating the version to be used. Specifying \code{version = "2.21"} calls \code{.pmm.match()} instead of the default
-\code{matcher()} function.}
 }
 \value{
-Numeric vector of length \code{sum(!ry)} with imputations
+Vector with imputed data, same type as \code{y}, and of length 
+\code{sum(wy)}
 }
 \description{
-Imputes univariate missing data using predictive mean matching
+Calculates imputations for univariate missing data by predictive mean matching.
 }
 \details{
-Imputation of \code{y} by predictive mean matching, based on Rubin (1987, p.
-168, formulas a and b).  The procedure is as follows: 
-\enumerate{ 
-\item
-Estimate beta and sigma by linear regression 
-\item Draw beta* and sigma* from the proper posterior 
-\item Compute predicted values for \code{yobs} \code{beta} and
-\code{ymis} \code{beta*} 
-\item For each \code{ymis}, find \code{donors} observations with
-closest predicted values, randomly sample one of these, 
-and take its observed value in \code{y} as the imputation.  
-\item Ties are broken by making a random draw
-among ties.  
-Note: The matching is done on predicted \code{y}, NOT on
-observed \code{y}.}
+Imputation of \code{y} by predictive mean matching, based on 
+van Buuren (2012, p. 73). The procedure is as follows:
+
+\enumerate{
+\item{Calculate the cross-product matrix \eqn{S=X_{obs}'X_{obs}}.}
+\item{Calculate \eqn{V = (S+{diag}(S)\kappa)^{-1}}, with some small ridge 
+parameter \eqn{\kappa}.}
+\item{Calculate regression weights \eqn{\hat\beta = VX_{obs}'y_{obs}.}}
+\item{Draw \eqn{q} independent \eqn{N(0,1)} variates in vector \eqn{\dot z_1}.}
+\item{Calculate \eqn{V^{1/2}} by Cholesky decomposition.}
+\item{Calculate \eqn{\dot\beta = \hat\beta + \dot\sigma\dot z_1 V^{1/2}}.}
+\item{Calculate \eqn{\dot\eta(i,j)=|X_{{obs},[i]|}\hat\beta-X_{{mis},[j]}\dot\beta} 
+with \eqn{i=1,\dots,n_1} and \eqn{j=1,\dots,n_0}.}
+\item{Construct \eqn{n_0} sets \eqn{Z_j}, each containing \eqn{d} candidate donors, from Y_{obs} such that \eqn{\sum_d\dot\eta(i,j)} is minimum for all \eqn{j=1,\dots,n_0}. Break ties randomly.}
+\item{Draw one donor \eqn{i_j} from \eqn{Z_j} randomly for \eqn{j=1,\dots,n_0}.}
+\item{Calculate imputations \eqn{\dot y_j = y_{i_j}} for \eqn{j=1,\dots,n_0}.}
+}
+
+The name \emph{predictive mean matching} was proposed by Little (1988).
+}
+\examples{
+# We normally call mice.impute.pmm() from within mice()
+# But we may call it directly as follows (not recommended)
+
+set.seed(53177)
+xname <- c('age', 'hgt', 'wgt')
+r <- stats::complete.cases(boys[, xname])
+x <- boys[r, xname]
+y <- boys[r, 'tv']
+ry <- !is.na(y)
+table(ry)
+
+# percentage of missing data in tv
+sum(!ry) / length(ry)
+
+# Impute missing tv data
+yimp <- mice.impute.pmm(y, ry, x)
+length(yimp)
+hist(yimp, xlab = 'Imputed missing tv')
+
+# Impute all tv data
+yimp <- mice.impute.pmm(y, ry, x, wy = rep(TRUE, length(y)))
+length(yimp)
+hist(yimp, xlab = 'Imputed missing and observed tv')
+plot(jitter(y), jitter(yimp), 
+    main = 'Predictive mean matching on age, height and weight', 
+    xlab = 'Observed tv (n = 224)',
+    ylab = 'Imputed tv (n = 224)')
+abline(0, 1)
+cor(y, yimp, use = 'pair')
 }
 \references{
 Little, R.J.A. (1988), Missing data adjustments in large surveys
 (with discussion), Journal of Business Economics and Statistics, 6, 287--301.
 
-Rubin, D.B. (1987). Multiple imputation for nonresponse in surveys. New York:
-Wiley.
+Morris TP, White IR, Royston P (2015). Tuning multiple imputation by predictive 
+mean matching and local residual draws. BMC Med Res Methodol. ;14:75.
 
-Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
-Fully conditional specification in multivariate imputation.  \emph{Journal of
-Statistical Computation and Simulation}, \bold{76}, 12, 1049--1064.
+Van Buuren, S. (2012). Flexible Imputation of Missing Data. 
+CRC/Chapman \& Hall, Boca Raton, FL.
 
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 }
+\seealso{
+Other univariate imputation functions: \code{\link{mice.impute.2lonly.norm}},
+  \code{\link{mice.impute.2lonly.pmm}},
+  \code{\link{mice.impute.norm}}
+}
 \author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2012
+Stef van Buuren, Karin Groothuis-Oudshoorn
 }
 \keyword{datagen}

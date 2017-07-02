@@ -5,16 +5,21 @@
 \alias{2lonly.pmm}
 \title{Imputation at level 2 by predictive mean matching}
 \usage{
-mice.impute.2lonly.pmm(y, ry, x, type, ...)
+mice.impute.2lonly.pmm(y, ry, x, wy = NULL, type, ...)
 }
 \arguments{
-\item{y}{Incomplete data vector of length \code{n}}
+\item{y}{Vector to be imputed}
 
-\item{ry}{Vector of missing data pattern (\code{FALSE}=missing,
-\code{TRUE}=observed)}
+\item{ry}{Logical vector of length \code{length(y)} indicating the 
+the subset \code{y[ry]} of elements in \code{y} to which the imputation 
+model is fitted. The \code{ry} generally distinguishes the observed 
+(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Matrix (\code{n} x \code{p}) of complete covariates. Only numeric
-variables are permitted for usage of this function.}
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\code{y}. Matrix \code{x} may have no missing values.}
+
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+indicates locations in \code{y} for which imputations are created.}
 
 \item{type}{Group identifier must be specified by '-2'. Predictors must be
 specified by '1'.}
@@ -101,6 +106,10 @@ Transactions of the Royal Society A}, \bold{366}, 2389-2404.
 \seealso{
 \code{\link{mice.impute.pmm}},
 \code{\link{mice.impute.2lonly.norm}}, \code{\link{mice.impute.2l.pan}}
+
+Other univariate imputation functions: \code{\link{mice.impute.2lonly.norm}},
+  \code{\link{mice.impute.norm}},
+  \code{\link{mice.impute.pmm}}
 }
 \author{
 Alexander Robitzsch (Federal Institute for Education Research,

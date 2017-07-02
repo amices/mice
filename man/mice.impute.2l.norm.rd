@@ -2,10 +2,9 @@
 % Please edit documentation in R/mice.impute.2l.norm.r
 \name{mice.impute.2l.norm}
 \alias{mice.impute.2l.norm}
-\alias{2l.norm}
 \title{Imputation by a two-level normal model}
 \usage{
-mice.impute.2l.norm(y, ry, x, type, wy = NULL, intercept = TRUE, ...)
+mice.impute.2l.norm(y, ry, x, type, intercept = TRUE, ...)
 }
 \arguments{
 \item{y}{Incomplete data vector of length \code{n}}

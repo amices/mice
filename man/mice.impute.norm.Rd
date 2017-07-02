@@ -5,46 +5,63 @@
 \alias{norm}
 \title{Imputation by Bayesian linear regression}
 \usage{
-mice.impute.norm(y, ry, x, ...)
+mice.impute.norm(y, ry, x, wy = NULL, ...)
 }
 \arguments{
-\item{y}{Incomplete data vector of length \code{n}}
+\item{y}{Vector to be imputed}
 
-\item{ry}{Vector of missing data pattern (\code{FALSE}=missing,
-\code{TRUE}=observed)}
+\item{ry}{Logical vector of length \code{length(y)} indicating the 
+the subset \code{y[ry]} of elements in \code{y} to which the imputation 
+model is fitted. The \code{ry} generally distinguishes the observed 
+(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\code{y}. Matrix \code{x} may have no missing values.}
+
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+indicates locations in \code{y} for which imputations are created.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-A vector of length \code{nmis} with imputations.
+Vector with imputed data, same type as \code{y}, and of length 
+\code{sum(wy)}
 }
 \description{
-Imputes univariate missing data using Bayesian linear regression analysis
+Calculates imputations for univariate missing data by Bayesian linear 
+regression, also known as the normal model.
 }
 \details{
-Draws values of \code{beta} and \code{sigma} for Bayesian linear regression
-imputation of \code{y} given \code{x} according to Rubin p. 167.
+Imputation of \code{y} by the normal model by the method defined by 
+Rubin (1987, p. 167). The procedure is as follows:
+
+\enumerate{
+\item{Calculate the cross-product matrix \eqn{S=X_{obs}'X_{obs}}.}
+\item{Calculate \eqn{V = (S+{diag}(S)\kappa)^{-1}}, with some small ridge 
+parameter \eqn{\kappa}.}
+\item{Calculate regression weights \eqn{\hat\beta = VX_{obs}'y_{obs}.}}
+\item{Draw a random variable \eqn{\dot g \sim \chi^2_\nu} with \eqn{\nu=n_1 - q}.}
+\item{Calculate \eqn{\dot\sigma^2 = (y_{obs} - X_{obs}\hat\beta)'(y_{obs} - X_{obs}\hat\beta)/\dot g$.}}
+\item{Draw \eqn{q} independent \eqn{N(0,1)} variates in vector \eqn{\dot z_1}.}
+\item{Calculate \eqn{V^{1/2}} by Cholesky decomposition.}
+\item{Calculate \eqn{\dot\beta = \hat\beta + \dot\sigma\dot z_1 V^{1/2}}.}
+\item{Draw \eqn{n_0} independent \eqn{N(0,1)} variates in vector \eqn{\dot z_2}.}
+\item{Calculate the \eqn{n_0} values \eqn{y_{imp} = X_{mis}\dot\beta + \dot z_2\dot\sigma}.}
 }
-\note{
-Using \code{mice.impute.norm} for all columns is similar to Schafer's
-NORM method (Schafer, 1997).
+
+Using \code{mice.impute.norm} for all columns emulates Schafer's NORM method (Schafer, 1997).
 }
 \references{
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
-Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
-\url{http://www.jstatsoft.org/v45/i03/}
+Rubin, D.B (1987). Multiple Imputation for Nonresponse in Surveys. New York: John Wiley & Sons.
 
-Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
-multiple imputation strategies for the statistical analysis of incomplete
-data sets.} Dissertation. Rotterdam: Erasmus University.
-
-Schafer, J.L. (1997). Analysis of incomplete multivariate data. London:
-Chapman & Hall.
+Schafer, J.L. (1997). Analysis of incomplete multivariate data. London: Chapman & Hall.
+}
+\seealso{
+Other univariate imputation functions: \code{\link{mice.impute.2lonly.norm}},
+  \code{\link{mice.impute.2lonly.pmm}},
+  \code{\link{mice.impute.pmm}}
 }
 \author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+Stef van Buuren, Karin Groothuis-Oudshoorn
 }
 \keyword{datagen}

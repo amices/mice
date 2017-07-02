@@ -13,7 +13,6 @@
 #'A model within a random intercept can be specified by \code{mice(...,
 #'intercept = FALSE)}.
 #'
-#'@aliases mice.impute.2l.norm 2l.norm
 #'@name mice.impute.2l.norm
 #'@param y Incomplete data vector of length \code{n}
 #'@param ry Vector of missing data pattern (\code{FALSE}=missing,
@@ -50,7 +49,7 @@
 #'Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
 #'@keywords datagen
 #'@export
-mice.impute.2l.norm <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...) {
+mice.impute.2l.norm <- function(y, ry, x, type, intercept = TRUE, ...) {
     rwishart <- function(df, p = nrow(SqrtSigma), SqrtSigma = diag(p)) {
         ## rwishart, written by Bill Venables
         Z <- matrix(0, p, p)

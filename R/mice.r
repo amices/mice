@@ -1,4 +1,3 @@
-
 #'Multivariate Imputation by Chained Equations (MICE)
 #'
 #'Generates Multivariate Imputations by Chained Equations (MICE)
@@ -257,6 +256,8 @@ mice <- function(data, m = 5,
   nwhere <- apply(where, 2, sum)
   if (sum(where) == 0)
     stop("No locations to impute")
+  if (any(is.na(data) & !where))
+    stop("Found where == FALSE for some missing values. Not supported. ")
   
   # list for storing current computational state
   state <- list(it = 0, im = 0, co = 0, dep = "", meth = "", log = FALSE)
