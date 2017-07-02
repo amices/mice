@@ -2,7 +2,7 @@
 % Please edit documentation in R/complete.r
 \name{complete}
 \alias{complete}
-\title{Creates imputed data sets from a \code{mids} object}
+\title{Extracts imputed data sets from a \code{mids} object}
 \usage{
 complete(x, action = 1, include = FALSE)
 }
@@ -18,8 +18,8 @@ also be one of the following strings: \code{'long'}, \code{'broad'},
 \code{'repeated'}.  See 'Details' for the interpretation.}
 
 \item{include}{Flag to indicate whether the orginal data with the missing
-values should be included. This requires that \code{action} is specified as
-\code{'long'}, \code{'broad'} or \code{'repeated'}.}
+values should be included. This is only relevant only if \code{action} is 
+specified as \code{"long"}, \code{"broad"} or \code{"repeated"}.}
 }
 \value{
 A data frame with the imputed values filled in. Optionally, the
@@ -30,30 +30,31 @@ Takes an object of class \code{mids}, fills in the missing data, and returns
 the completed data in a specified format.
 }
 \details{
-The argument \code{action} can also be a string, which is partially matched
-as follows: \describe{ \item{list('\'long\'')}{ produces a long data frame of
+The argument \code{action} can be a string, which is partially matched
+as follows: 
+\describe{ 
+\item{\code{"long"}}{ produces a long data frame of
 vertically stacked imputed data sets with \code{nrow(x$data)} * \code{x$m}
 rows and \code{ncol(x$data)+2} columns. The two additional columns are
 labeled \code{.id} containing the row names of \code{x$data}, and \code{.imp}
 containing the imputation number.  If \code{include=TRUE} then
 \code{nrow(x$data)} additional rows with the original data are appended with
-\code{.imp} set equal to \code{0}.  }
-
-\item{list('\'broad\'')}{ produces a broad data frame with
+\code{.imp} set equal to \code{0}.}
+\item{\code{"broad"}}{ produces a broad data frame with
 \code{nrow(x$data)} rows and \code{ncol(x$data)} * \code{x$m} columns.
 Columns are ordered such that the first \code{ncol(x$data)} columns
 corresponds to the first imputed data matrix. The imputation number is
 appended to each column name.  If \code{include=TRUE} then
 \code{ncol(x$data)} additional columns with the original data are appended.
 The number \code{.0} is appended to the column names.  }
-
-\item{list('\'repeated\'')}{ produces a broad data frame with
+\item{\code{"repeated"}}{ produces a broad data frame with
 \code{nrow(x$data)} rows and \code{ncol(x$data)} * \code{x$m} columns.
 Columns are ordered such that the first \code{x$m} columns correspond to the
 \code{x$m} imputed versions of the first column in \code{x$data}. The
 imputation number is appended to each column name.  If \code{include=TRUE}
 then \code{ncol(x$data)} additional columns with the original data are
-appended.  The number \code{.0} is appended to the column names.  } }
+appended.  The number \code{.0} is appended to the column names} 
+}
 }
 \examples{
 
@@ -86,6 +87,6 @@ cor(mat)
 \code{\link{mice}}, \code{\link[=mids-class]{mids}}
 }
 \author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2009
+Stef van Buuren, Karin Groothuis-Oudshoorn
 }
 \keyword{manip}
