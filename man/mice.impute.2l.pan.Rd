@@ -52,6 +52,11 @@ heterogeneous within-group variances see \code{\link{mice.impute.2l.norm}}. %
 The random intercept is automatically added in %
 \code{mice.impute.2l.norm()}.
 }
+\note{
+This function does not implement the \code{where} functionality. It 
+always produces \code{nmis} imputation, irrespective of the \code{where} 
+argument of the \code{mice} function.
+}
 \examples{
 
 ###################################

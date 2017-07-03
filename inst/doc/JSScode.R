@@ -16,7 +16,7 @@
 ### chunk number 1: init1
 ###################################################
 options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
-if (as.numeric(packageDescription("mice")$Version)<2.9) warning("mice 2.9 or higher needed")
+if (packageVersion("mice") < "2.9") warning("mice 2.9 or higher needed")
 
 ###
 ###   2.4 Simple example

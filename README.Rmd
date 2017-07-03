@@ -29,17 +29,12 @@ diagnostic plots are implemented to inspect the quality of the imputations.
 
 ## Installation
 
-The `mice` package can be installed from CRAN as follows:
-
-```{r eval = FALSE}
-install.packages("mice")
-```
-
-The latest version is can be installed from GitHub as follows: 
+This branch explores a new `where` argument for the `mice` function.
+The branch can be installed as follows: 
 
 ```{r eval = FALSE}
 install.packages("devtools")
-devtools::install_github(repo = "stefvanbuuren/mice")
+devtools::install_github(repo = "stefvanbuuren/mice", ref = "where")
 ```
 
 

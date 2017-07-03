@@ -7,17 +7,11 @@ The [`mice`](https://cran.r-project.org/package=mice) package implements a metho
 Installation
 ------------
 
-The `mice` package can be installed from CRAN as follows:
-
-``` r
-install.packages("mice")
-```
-
-The latest version is can be installed from GitHub as follows:
+This branch explores a new `where` argument for the `mice` function. The branch can be installed as follows:
 
 ``` r
 install.packages("devtools")
-devtools::install_github(repo = "stefvanbuuren/mice")
+devtools::install_github(repo = "stefvanbuuren/mice", ref = "where")
 ```
 
 Overview
