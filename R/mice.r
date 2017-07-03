@@ -24,41 +24,39 @@
 #'variable. The extended model containing the dummy variables is called the
 #'padded model. Its structure is stored in the list component \code{pad}.
 #'
-#'Built-in elementary imputation methods are:
+#'Built-in univariate imputation methods are:
 #'
-#'\describe{
-#'\item{pmm}{Predictive mean matching (any)}
-#'\item{norm}{Bayesian linear regression (numeric)}
-#'\item{norm.nob}{Linear regression ignoring model error (numeric)}
-#'\item{norm.boot}{Linear regression using bootstrap (numeric)}
-#'\item{norm.predict}{Linear regression, predicted values (numeric)}
-#'\item{mean}{Unconditional mean imputation (numeric)}
-#'\item{2l.norm}{Two-level normal imputation (numeric)}
-#'\item{2l.pan}{Two-level normal imputation using pan (numeric)}
-#'\item{2lonly.mean}{Imputation at level-2 of the class mean (numeric)}
-#'\item{2lonly.norm}{Imputation at level-2 by Bayesian linear regression
-#'                   (numeric)}
-#'\item{2lonly.pmm}{Imputation at level-2 by Predictive mean matching (any)}
-#'\item{quadratic}{Imputation of quadratic terms (numeric)}
-#'\item{logreg}{Logistic regression (factor, 2 levels)}
-#'\item{logreg.boot}{Logistic regression with bootstrap}
-#'\item{polyreg}{Polytomous logistic regression (factor, >= 2 levels)}
-#'\item{polr}{Proportional odds model (ordered, >=2 levels)}
-#'\item{lda}{Linear discriminant analysis (factor, >= 2 categories)}
-#'\item{cart}{Classification and regression trees (any)}
-#'\item{rf}{Random forest imputations (any)}
-#'\item{ri}{Random indicator method for nonignorable data (numeric)}
-#'\item{sample}{Random sample from the observed values (any)}
-#'\item{fastpmm}{Experimental: Fast predictive mean matching using C++ (any)}
+#'\tabular{lll}{
+#'\code{pmm}          \tab any     \tab Predictive mean matching\cr
+#'\code{midastouch}   \tab any     \tab Weighted predictive mean matching\cr
+#'\code{sample}       \tab any     \tab Random sample from observed values\cr
+#'\code{cart}         \tab any     \tab Classification and regression trees\cr
+#'\code{rf}           \tab any     \tab Random forest imputations\cr
+#'\code{mean}         \tab numeric \tab Unconditional mean imputation\cr
+#'\code{norm}         \tab numeric \tab Bayesian linear regression\cr
+#'\code{norm.nob}     \tab numeric \tab Linear regression ignoring model error\cr
+#'\code{norm.boot}    \tab numeric \tab Linear regression using bootstrap\cr
+#'\code{norm.predict} \tab numeric \tab Linear regression, predicted values\cr
+#'\code{quadratic}    \tab numeric \tab Imputation of quadratic terms\cr
+#'\code{ri}           \tab numeric \tab Random indicator for nonignorable data\cr
+#'\code{logreg}       \tab binary  \tab Logistic regression\cr
+#'\code{logreg.boot}  \tab binary  \tab Logistic regression with bootstrap\cr
+#'\code{polr}         \tab ordered \tab Proportional odds model\cr
+#'\code{polyreg}      \tab unordered\tab Polytomous logistic regression\cr
+#'\code{lda}          \tab unordered\tab Linear discriminant analysis\cr
+#'\code{2l.norm}      \tab numeric  \tab Level-1 normal, heteroskedastic\cr
+#'\code{2l.pan}       \tab numeric  \tab Level-1 normal, homoskedastic\cr
+#'\code{2lonly.mean}  \tab numeric  \tab Level-2 class mean\cr
+#'\code{2lonly.norm}  \tab numeric  \tab Level-2 class normal\cr
+#'\code{2lonly.pmm}   \tab any      \tab Level-2 class predictive mean matching
 #'}
-#'
 #'
 #'These corresponding functions are coded in the \code{mice} library under
 #'names \code{mice.impute.method}, where \code{method} is a string with the
-#'name of the elementary imputation method name, for example \code{norm}. The
+#'name of the univariate imputation method name, for example \code{norm}. The
 #'\code{method} argument specifies the methods to be used.  For the \code{j}'th
 #'column, \code{mice()} calls the first occurence of
-#'\code{paste('mice.impute.',method[j],sep='')} in the search path.  The
+#'\code{paste('mice.impute.', method[j], sep = '')} in the search path.  The
 #'mechanism allows uses to write customized imputation function,
 #'\code{mice.impute.myfunc}. To call it for all columns specify
 #'\code{method='myfunc'}.  To call it only for, say, column 2 specify
@@ -73,14 +71,14 @@
 #'
 #'Passive imputation maintains consistency among different transformations of
 #'the same data. Passive imputation is invoked if \code{~} is specified as the
-#'first character of the string that specifies the elementary method.
+#'first character of the string that specifies the univariate method.
 #'\code{mice()} interprets the entire string, including the \code{~} character,
 #'as the formula argument in a call to \code{model.frame(formula,
 #'data[!r[,j],])}. This provides a simple mechanism for specifying determinstic
 #'dependencies among the columns. For example, suppose that the missing entries
 #'in variables \code{data$height} and \code{data$weight} are imputed. The body
 #'mass index (BMI) can be calculated within \code{mice} by specifying the
-#'string \code{'~I(weight/height^2)'} as the elementary imputation method for
+#'string \code{'~I(weight/height^2)'} as the univariate imputation method for
 #'the target column \code{data$bmi}.  Note that the \code{~} mechanism works
 #'only on those entries which have missing values in the target column. You
 #'should make sure that the combined observed and imputed parts of the target
@@ -99,7 +97,7 @@
 #'values are coded as \code{NA}.
 #'@param m Number of multiple imputations. The default is \code{m=5}.
 #'@param method Can be either a single string, or a vector of strings with
-#'length \code{ncol(data)}, specifying the elementary imputation method to be
+#'length \code{ncol(data)}, specifying the univariate imputation method to be
 #'used for each column in data. If specified as a single string, the same
 #'method will be used for all columns.  The default imputation method (when no
 #'argument is specified) depends on the measurement level of the target column
@@ -169,7 +167,7 @@
 #'are created by a simple random draw from the data. Note that specification of
 #'\code{data.init} will start the \code{m} Gibbs sampling streams from the same
 #'imputations.
-#'@param ... Named arguments that are passed down to the elementary imputation
+#'@param ... Named arguments that are passed down to the univariate imputation
 #'functions.
 #'
 #'@return Returns an S3 object of class \code{\link[=mids-class]{mids}}

@@ -2,28 +2,25 @@
 #'
 #'Imputes univariate missing data using random forests.
 #'
+#'@aliases mice.impute.rf
+#'@inheritParams mice.impute.pmm
+#'@param ntree The number of trees to grow. The default is 10.
+#'@param \dots Other named arguments passed down to \code{randomForest()} and
+#'\code{randomForest:::randomForest.default()}.
+#'@return Vector with imputed data, same type as \code{y}, and of length 
+#'\code{sum(wy)}
+#'@details
 #'Imputation of \code{y} by random forests. The method 
 #'calls \code{randomForrest()} which implements Breiman's random forest 
 #'algorithm (based on Breiman and Cutler's original Fortran code) 
 #'for classification and regression. See Appendix A.1 of Doove et al. 
-#'(2014) for the definition 
-#'of the algorithm used. An alternative implementation was independently 
+#'(2014) for the definition of the algorithm used. 
+#'@note An alternative implementation was independently 
 #'developed by Shah et al (2014), and is available in the package 
 #'\code{CALIBERrfimpute}. Simulations by Shah (Feb 13, 2014) suggested that 
 #'the quality of the imputation for 10 and 100 trees was identical, 
 #'so mice 2.22 changed the default number of trees from \code{ntree = 100} to 
 #'\code{ntree = 10}.
-#'
-#'@aliases mice.impute.rf
-#'@param y Numeric vector with incomplete data
-#'@param ry Response pattern of \code{y} (\code{TRUE} = observed,
-#'\code{FALSE} = missing)
-#'@param x Design matrix with \code{length(y)} rows and \code{p} columns
-#'containing complete covariates.
-#'@param ntree The number of trees to grow. The default is 10.
-#'@param ... Other named arguments passed down to \code{randomForest()} and
-#'\code{randomForest:::randomForest.default()}.
-#'@return Numeric vector of length \code{sum(!ry)} with imputations
 #'@author Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
 #'@references 
 #'
@@ -37,44 +34,45 @@
 #' of Epidemiology, doi: 10.1093/aje/kwt312. 
 #'
 #' Van Buuren, S.(2012), Flexible imputation of missing data, Boca Raton, FL:
-#' Chapman & Hall/CRC.
-#'
+#' CRC/Chapman & Hall.
 #'@seealso \code{\link{mice}}, \code{\link{mice.impute.cart}}, 
 #'\code{\link[randomForest]{randomForest}},
 #'\code{\link[CALIBERrfimpute]{mice.impute.rfcat}}, 
 #'\code{\link[CALIBERrfimpute]{mice.impute.rfcont}}
+#'@family univariate imputation functions
+#'@keywords datagen
 #'@examples
 #'library("lattice")
 #'
 #'imp <- mice(nhanes2, meth = "rf", ntree = 3)
 #'plot(imp)
 #'
-#'@keywords datagen
 #'@export
-mice.impute.rf <- function(y, ry, x, ntree = 10, ...)
+mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10, ...)
 {
-    if (!requireNamespace("randomForest", quietly = TRUE))
-        stop("Package 'randomForest' needed fo this function 
+  if (is.null(wy)) wy <- !ry
+  if (!requireNamespace("randomForest", quietly = TRUE))
+    stop("Package 'randomForest' needed fo this function 
              to work. Please install it.", 
-             call. = FALSE)
-    onetree <- function(xobs, xmis, yobs, ...)
-    {
-        fit <- randomForest::randomForest(x = xobs, 
-                            y = yobs, 
-                            ntree = 1, ...)
-        leafnr <- predict(object = fit, newdata = xobs, nodes = TRUE)
-        nodes <- predict(object = fit, newdata = xmis, nodes = TRUE)
-        donor <- lapply(nodes, function(s) yobs[leafnr == s])
-        return(donor)
-    }
-    ntree <- max(1, ntree)  # safety
-    nmis <- sum(!ry)
-    xobs <- x[ry, , drop = FALSE]
-    xmis <- x[!ry, , drop = FALSE]
-    yobs <- y[ry]
-
-    forest <- sapply(1:ntree, FUN = function(s) onetree(xobs, xmis, yobs, ...))
-    if (nmis == 1) forest <- array(forest, dim = c(1, ntree))
-    impute <- apply(forest, MARGIN = 1, FUN = function(s) sample(unlist(s), 1))
-    return(impute)
+         call. = FALSE)
+  onetree <- function(xobs, xmis, yobs, ...)
+  {
+    fit <- randomForest::randomForest(x = xobs, 
+                                      y = yobs, 
+                                      ntree = 1, ...)
+    leafnr <- predict(object = fit, newdata = xobs, nodes = TRUE)
+    nodes <- predict(object = fit, newdata = xmis, nodes = TRUE)
+    donor <- lapply(nodes, function(s) yobs[leafnr == s])
+    return(donor)
+  }
+  ntree <- max(1, ntree)  # safety
+  nmis <- sum(wy)
+  xobs <- x[ry, , drop = FALSE]
+  xmis <- x[wy, , drop = FALSE]
+  yobs <- y[ry]
+  
+  forest <- sapply(1:ntree, FUN = function(s) onetree(xobs, xmis, yobs, ...))
+  if (nmis == 1) forest <- array(forest, dim = c(1, ntree))
+  impute <- apply(forest, MARGIN = 1, FUN = function(s) sample(unlist(s), 1))
+  return(impute)
 }

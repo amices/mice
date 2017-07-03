@@ -5,16 +5,21 @@
 \alias{cart}
 \title{Imputation by classification and regression trees}
 \usage{
-mice.impute.cart(y, ry, x, minbucket = 5, cp = 1e-04, ...)
+mice.impute.cart(y, ry, x, wy = NULL, minbucket = 5, cp = 1e-04, ...)
 }
 \arguments{
-\item{y}{Numeric vector with incomplete data}
+\item{y}{Vector to be imputed}
 
-\item{ry}{Response pattern of \code{y} (\code{TRUE} = observed,
-\code{FALSE} = missing)}
+\item{ry}{Logical vector of length \code{length(y)} indicating the 
+the subset \code{y[ry]} of elements in \code{y} to which the imputation 
+model is fitted. The \code{ry} generally distinguishes the observed 
+(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Design matrix with \code{length(y)} rows and \code{p} columns
-containing complete covariates.}
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\code{y}. Matrix \code{x} may have no missing values.}
+
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+indicates locations in \code{y} for which imputations are created.}
 
 \item{minbucket}{The minimum number of observations in any terminal node used.
 See \code{\link{rpart.control}} for details.}
@@ -26,6 +31,9 @@ for details.}
 \item{...}{Other named arguments passed down to \code{rpart()}.}
 }
 \value{
+Vector with imputed data, same type as \code{y}, and of length 
+\code{sum(wy)}
+
 Numeric vector of length \code{sum(!ry)} with imputations
 }
 \description{
@@ -45,7 +53,7 @@ draw as the imputation.
 require(rpart)
 require(lattice)
 
-imp <- mice(nhanes2, meth = "cart", minbucket = 4)
+imp <- mice(nhanes2, meth = 'cart', minbucket = 4)
 plot(imp)
 
 }
@@ -59,11 +67,27 @@ Breiman, L., Friedman, J. H., Olshen, R. A., and Stone, C. J.
 Brooks/Cole Advanced Books & Software.
 
 Van Buuren, S.(2012), Flexible imputation of missing data, Boca Raton, FL:
-Chapman & Hall/CRC.
+CRC/Chapman & Hall.
 }
 \seealso{
 \code{\link{mice}}, \code{\link{mice.impute.rf}}, 
 \code{\link[rpart]{rpart}}, \code{\link[rpart]{rpart.control}}
+
+Other univariate imputation functions: \code{\link{mice.impute.lda}},
+  \code{\link{mice.impute.logreg.boot}},
+  \code{\link{mice.impute.logreg}},
+  \code{\link{mice.impute.mean}},
+  \code{\link{mice.impute.midastouch}},
+  \code{\link{mice.impute.norm.boot}},
+  \code{\link{mice.impute.norm.nob}},
+  \code{\link{mice.impute.norm.predict}},
+  \code{\link{mice.impute.norm}},
+  \code{\link{mice.impute.pmm}},
+  \code{\link{mice.impute.polr}},
+  \code{\link{mice.impute.polyreg}},
+  \code{\link{mice.impute.quadratic}},
+  \code{\link{mice.impute.rf}},
+  \code{\link{mice.impute.ri}}
 }
 \author{
 Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012

@@ -98,9 +98,8 @@ Transactions of the Royal Society A}, \bold{366}, 2389-2404.
 \code{\link{mice.impute.norm}},
 \code{\link{mice.impute.2lonly.pmm}}, \code{\link{mice.impute.2l.pan}}
 
-Other univariate imputation functions: \code{\link{mice.impute.2lonly.pmm}},
-  \code{\link{mice.impute.norm}},
-  \code{\link{mice.impute.pmm}}
+Other univariate \code{2lonly} functions: \code{\link{mice.impute.2lonly.mean}},
+  \code{\link{mice.impute.2lonly.pmm}}
 }
 \author{
 Alexander Robitzsch (Federal Institute for Education Research,

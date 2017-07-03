@@ -4,27 +4,35 @@
 \alias{mice.impute.mean}
 \title{Imputation by the mean}
 \usage{
-mice.impute.mean(y, ry, x = NULL, ...)
+mice.impute.mean(y, ry, x = NULL, wy = NULL, ...)
 }
 \arguments{
-\item{y}{Incomplete data vector of length \code{n}}
+\item{y}{Vector to be imputed}
 
-\item{ry}{Vector of missing data pattern (\code{FALSE}=missing,
-\code{TRUE}=observed)}
+\item{ry}{Logical vector of length \code{length(y)} indicating the 
+the subset \code{y[ry]} of elements in \code{y} to which the imputation 
+model is fitted. The \code{ry} generally distinguishes the observed 
+(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\code{y}. Matrix \code{x} may have no missing values.}
+
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+indicates locations in \code{y} for which imputations are created.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-A vector of length \code{nmis} with imputations.
+Vector with imputed data, same type as \code{y}, and of length 
+\code{sum(wy)}
 }
 \description{
 Imputes the arithmetic mean of the observed data
 }
 \section{Warning}{
  Imputing the mean of a variable is almost never
-appropriate.  See Little and Rubin (1987).
+appropriate.  See Little and Rubin (2002, p. 61-62) or 
+Van Buuren (2012, p. 10-11)
 }
 
 \references{
@@ -33,13 +41,29 @@ Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 Statistical Software}, \bold{45}(3), 1-67.
 \url{http://www.jstatsoft.org/v45/i03/}
 
-Little, R.J.A. and Rubin, D.B. (1987). Statistical Analysis with Missing
+Little, R.J.A. and Rubin, D.B. (2002). Statistical Analysis with Missing
 Data.  New York: John Wiley and Sons.
+
+Van Buuren, S. (2012). Flexible Imputation of Missing Data. 
+CRC/Chapman & Hall, FL: Boca Raton.
 }
 \seealso{
 \code{\link{mice}}, \code{\link{mean}}
-}
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+
+Other univariate imputation functions: \code{\link{mice.impute.cart}},
+  \code{\link{mice.impute.lda}},
+  \code{\link{mice.impute.logreg.boot}},
+  \code{\link{mice.impute.logreg}},
+  \code{\link{mice.impute.midastouch}},
+  \code{\link{mice.impute.norm.boot}},
+  \code{\link{mice.impute.norm.nob}},
+  \code{\link{mice.impute.norm.predict}},
+  \code{\link{mice.impute.norm}},
+  \code{\link{mice.impute.pmm}},
+  \code{\link{mice.impute.polr}},
+  \code{\link{mice.impute.polyreg}},
+  \code{\link{mice.impute.quadratic}},
+  \code{\link{mice.impute.rf}},
+  \code{\link{mice.impute.ri}}
 }
 \keyword{datagen}

@@ -22,6 +22,7 @@ and instead rely on the S3 list equivalent \code{oldClass(obj) <- "mids"}.
    following slots:}
    \item{\code{call}:}{The call that created the object.}
    \item{\code{data}:}{A copy of the incomplete data set.}
+   \item{\code{where}:}{The \code{where} argument of the \code{mice()} function.}
    \item{\code{m}:}{The number of imputations.}
    \item{\code{nmis}:}{An array containing the number of missing observations per column.}
    \item{\code{imp}:}{A list of \code{ncol(data)} components with the generated multiple

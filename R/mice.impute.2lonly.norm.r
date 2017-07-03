@@ -29,7 +29,7 @@
 #'Yucel, RM (2008). Multiple imputation inference for multivariate multilevel
 #'continuous data with ignorable non-response.  \emph{Philosophical
 #'Transactions of the Royal Society A}, \bold{366}, 2389-2404.
-#'@family univariate imputation functions
+#'@family univariate \code{2lonly} functions
 #'@examples
 #'
 #'##################################################

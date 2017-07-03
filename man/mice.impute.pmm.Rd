@@ -3,9 +3,9 @@
 \name{mice.impute.pmm}
 \alias{mice.impute.pmm}
 \alias{pmm}
-\title{Imputation by Predictive mean matching}
+\title{Imputation by predictive mean matching}
 \usage{
-mice.impute.pmm(y, ry, x, wy = NULL, donors = 5, type = 1,
+mice.impute.pmm(y, ry, x, wy = NULL, donors = 5, matchtype = 1L,
   ridge = 1e-05, ...)
 }
 \arguments{
@@ -23,16 +23,17 @@ model is fitted. The \code{ry} generally distinguishes the observed
 indicates locations in \code{y} for which imputations are created.}
 
 \item{donors}{The size of the donor pool among which a draw is made. 
-The default is \code{donors = 5}. Setting \code{donors = 1} always selects 
-the closest match. Values between 3 and 10 provide the best results in typical
-cases.}
+The default is \code{donors = 5L}. Setting \code{donors = 1L} always selects 
+the closest match, but is not recommended. Values between 3L and 10L 
+provide the best results in most cases (Morris et al, 2015).}
 
-\item{type}{Type of matching distance. The default choice \code{type = 1} 
-calculates the distance between the predicted value of \code{yobs} and 
-the drawn values of \code{ymis}. Other choices are \code{type = 0} 
-(distance between predicted values) and \code{type = 2} 
-(distance between drawn values). The current version supports only 
-\code{type = 1}.}
+\item{matchtype}{Type of matching distance. The default choice 
+(\code{matchtype = 1L}) calculates the distance between 
+the \emph{predicted} value of \code{yobs} and 
+the \emph{drawn} values of \code{ymis} (called type-1 matching). 
+Other choices are \code{matchtype = 0L} 
+(distance between predicted values) and \code{matchtype = 2L} 
+(distance between drawn values).}
 
 \item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent 
 problems with multicollinearity. The default is \code{ridge = 1e-05}, 
@@ -41,7 +42,7 @@ Larger ridges may result in more biased estimates. For highly noisy data
 (e.g. many junk variables), set \code{ridge = 1e-06} or even lower to 
 reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
 
-\item{...}{Other named arguments.}
+\item{\dots}{Other named arguments.}
 }
 \value{
 Vector with imputed data, same type as \code{y}, and of length 
@@ -117,9 +118,21 @@ Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-Other univariate imputation functions: \code{\link{mice.impute.2lonly.norm}},
-  \code{\link{mice.impute.2lonly.pmm}},
-  \code{\link{mice.impute.norm}}
+Other univariate imputation functions: \code{\link{mice.impute.cart}},
+  \code{\link{mice.impute.lda}},
+  \code{\link{mice.impute.logreg.boot}},
+  \code{\link{mice.impute.logreg}},
+  \code{\link{mice.impute.mean}},
+  \code{\link{mice.impute.midastouch}},
+  \code{\link{mice.impute.norm.boot}},
+  \code{\link{mice.impute.norm.nob}},
+  \code{\link{mice.impute.norm.predict}},
+  \code{\link{mice.impute.norm}},
+  \code{\link{mice.impute.polr}},
+  \code{\link{mice.impute.polyreg}},
+  \code{\link{mice.impute.quadratic}},
+  \code{\link{mice.impute.rf}},
+  \code{\link{mice.impute.ri}}
 }
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn

@@ -2,18 +2,24 @@
 % Please edit documentation in R/mice.impute.polr.r
 \name{mice.impute.polr}
 \alias{mice.impute.polr}
-\title{Imputation by polytomous regression - ordered}
+\title{Imputation of ordered data by polytomous regression}
 \usage{
-mice.impute.polr(y, ry, x, nnet.maxit = 100, nnet.trace = FALSE,
-  nnet.MaxNWts = 1500, ...)
+mice.impute.polr(y, ry, x, wy = NULL, nnet.maxit = 100,
+  nnet.trace = FALSE, nnet.MaxNWts = 1500, ...)
 }
 \arguments{
-\item{y}{Incomplete data vector of length \code{n}}
+\item{y}{Vector to be imputed}
 
-\item{ry}{Vector of missing data pattern (\code{FALSE}=missing,
-\code{TRUE}=observed)}
+\item{ry}{Logical vector of length \code{length(y)} indicating the 
+the subset \code{y[ry]} of elements in \code{y} to which the imputation 
+model is fitted. The \code{ry} generally distinguishes the observed 
+(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\code{y}. Matrix \code{x} may have no missing values.}
+
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+indicates locations in \code{y} for which imputations are created.}
 
 \item{nnet.maxit}{Tuning parameter for \code{nnet()}.}
 
@@ -24,19 +30,20 @@ mice.impute.polr(y, ry, x, nnet.maxit = 100, nnet.trace = FALSE,
 \item{...}{Other named arguments.}
 }
 \value{
-A vector of length \code{nmis} with imputations.
+Vector with imputed data, same type as \code{y}, and of length 
+\code{sum(wy)}
 }
 \description{
 Imputes missing data in a categorical variable using polytomous regression
 }
 \details{
-By default, ordered factors with more than two levels are imputed by
-\code{mice.impute.polr}.
-
 The function \code{mice.impute.polr()} imputes for ordered categorical response
 variables by the proportional odds logistic regression (polr) model. The
 function repeatedly applies logistic regression on the successive splits. The
 model is also known as the cumulative link model.
+
+By default, ordered factors with more than two levels are imputed by
+\code{mice.impute.polr}.
 
 The algorithm of \code{mice.impute.polr} uses the function \code{polr()} from
 the \code{MASS} package.
@@ -46,7 +53,7 @@ data according to the method of White, Daniel and Royston (2010).
 
 The call to \code{polr} might fail, usually because the data are very sparse.
 In that case, \code{multinom} is tried as a fallback, and a record is written
-to the \code{loggedEvents} component of the \code{mids} object.
+to the \code{loggedEvents} component of the \code{\link{mids}} object.
 }
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
@@ -67,6 +74,22 @@ S-Plus (4th ed)}. Springer, Berlin.
 \seealso{
 \code{\link{mice}}, \code{\link[nnet]{multinom}},
 \code{\link[MASS]{polr}}
+
+Other univariate imputation functions: \code{\link{mice.impute.cart}},
+  \code{\link{mice.impute.lda}},
+  \code{\link{mice.impute.logreg.boot}},
+  \code{\link{mice.impute.logreg}},
+  \code{\link{mice.impute.mean}},
+  \code{\link{mice.impute.midastouch}},
+  \code{\link{mice.impute.norm.boot}},
+  \code{\link{mice.impute.norm.nob}},
+  \code{\link{mice.impute.norm.predict}},
+  \code{\link{mice.impute.norm}},
+  \code{\link{mice.impute.pmm}},
+  \code{\link{mice.impute.polyreg}},
+  \code{\link{mice.impute.quadratic}},
+  \code{\link{mice.impute.rf}},
+  \code{\link{mice.impute.ri}}
 }
 \author{
 Stef van Buuren, Karin Groohuis-Oudshoorn, 2000-2010
