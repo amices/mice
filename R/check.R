@@ -133,7 +133,6 @@ check.predictorMatrix <- function(setup) {
   nwhere <- setup$nwhere
   nvar <- setup$nvar
   vis <- setup$visitSequence
-  method <- setup$method
   post <- setup$post
   
   if (!is.matrix(pred))
@@ -143,19 +142,9 @@ check.predictorMatrix <- function(setup) {
                ncol(pred), "columns. Both should be", nvar, "."))
   dimnames(pred) <- list(varnames, varnames)
   diag(pred) <- 0
-  
-  ## stop if there is a class variable with missing data # SvB 25apr13
-  isclassvar <- apply(pred == -2, 2, any)
-  
+
+  # inactivate predictors of complete variables
   for (j in 1:nvar) {
-    if (method[j] == "" & any(pred[, j] != 0) & nwhere[j] > 0) {
-      out <- varnames[j]
-      updateLog(out = out)
-      pred[, j] <- 0
-      vis <- vis[vis != j]
-      post[j] <- ""
-      if (isclassvar[j]) stop("Removed an incomplete class variable.")
-    }
     if (nwhere[j] == 0 & any(pred[j, ] != 0))
       pred[j, ] <- 0
   }

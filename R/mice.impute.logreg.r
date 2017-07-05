@@ -163,17 +163,17 @@ augment <- function(y, ry, x, wy, maxcat = 50) {
     return(list(y = y, ry = ry, x = x, wy = wy, w = rep(1, length(y))))
   
   # calculate values to augment
-  mean <- apply(x, 2, mean)
-  sd <- sqrt(apply(x, 2, var))
-  minx <- apply(x, 2, min)
-  maxx <- apply(x, 2, max)
+  mean <- apply(x, 2, mean, na.rm = TRUE)
+  sd <- sqrt(apply(x, 2, var, na.rm = TRUE))
+  minx <- apply(x, 2, min, na.rm = TRUE)
+  maxx <- apply(x, 2, max, na.rm = TRUE)
   nr <- 2 * p * k
   a <- matrix(mean, nrow = nr, ncol = p, byrow = TRUE)
   b <- matrix(rep(c(rep(c(0.5, -0.5), k), rep(0, nr)), length = nr * p), nrow = nr, ncol = p, byrow = FALSE)
   c <- matrix(sd, nrow = nr, ncol = p, byrow = TRUE)
   d <- a + b * c
-  d <- pmax(matrix(minx, nrow = nr, ncol = p, byrow = TRUE), d)
-  d <- pmin(matrix(maxx, nrow = nr, ncol = p, byrow = TRUE), d)
+  d <- pmax(matrix(minx, nrow = nr, ncol = p, byrow = TRUE), d, na.rm = TRUE)
+  d <- pmin(matrix(maxx, nrow = nr, ncol = p, byrow = TRUE), d, na.rm = TRUE)
   e <- rep(rep(icod, each = 2), p)
   
   dimnames(d) <- list(paste("AUG", 1:nrow(d), sep = ""), dimnames(x)[[2]])
