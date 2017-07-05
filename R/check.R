@@ -23,15 +23,15 @@ check.visitSequence <- function(setup, where) {
     )
   }
   
-  if (all(nwhere[visitSequence] == 0))
-    stop("No locations to impute")
+  # if (all(nwhere[visitSequence] == 0))
+  #   stop("No locations to impute")
   flags <- nwhere == 0 & is.element(1:nvar, visitSequence)
   if (any(flags))
     visitSequence <- visitSequence[!flags]
   visitSequence <- visitSequence[visitSequence <= nvar]
   visitSequence <- visitSequence[visitSequence >= 1]
-  if (length(visitSequence) == 0)
-    stop("No locations to impute")
+  # if (length(visitSequence) == 0)
+  #   stop("No locations to impute")
   setup$visitSequence <- visitSequence
   return(setup)
 }
@@ -80,13 +80,14 @@ check.method <- function(setup, data) {
   }
   
   # check whether the elementary imputation methods are on the search path
-  active <- !is.passive(method) & nwhere > 0 & !(method == "")
-  passive.check <- is.passive(method) & nwhere > 0 & !(method == "")
-  check <- all(active == FALSE) & any(passive.check != FALSE)
+  active.check <- !is.passive(method) & nwhere > 0 & method != ""
+  passive.check <- is.passive(method) & nwhere > 0 & method != ""
+  check <- all(active.check) & any(passive.check)
   if (check) {
     fullNames <- rep("mice.impute.passive", length(method[passive.check]))
   } else {
-    fullNames <- paste("mice.impute", method[active], sep = ".")
+    fullNames <- paste("mice.impute", method[active.check], sep = ".")
+    if (length(method[active.check]) == 0) fullNames <- character(0)
   }
   notFound <- !sapply(fullNames, exists, mode = "function", inherit = TRUE)
   if (any(notFound)) {

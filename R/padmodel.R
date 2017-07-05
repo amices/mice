@@ -9,12 +9,19 @@ padModel <- function(data, method, predictorMatrix, visitSequence,
     number.of.dummies = rep(0, nvar), 
     yes.no.dummy = factor(rep(FALSE, nvar), levels = c("TRUE", "FALSE")), 
     corresponding.column.dummy = rep(0, nvar))
-
+  
+  # make explicit local copy
+  data <- data
+  
   for (j in 1:nvar) {
     if (is.factor(data[, j]) && any(predictorMatrix[, j] != 0)) {
       categories[j, 1] <- TRUE
       data[, j] <- C(data[, j], contr.treatment)
       n.dummy <- length(levels(data[, j])) - 1
+      
+      # add NA as extra level
+      # data[, j] <- addNA(data[, j])
+      
       categories[j, 2] <- n.dummy
       predictorMatrix <- rbind(predictorMatrix,
                                matrix(0, 

@@ -1,3 +1,8 @@
+keep.in.model <- function(y, ry, x, wy) 
+  (complete.cases(y, x) & ry) | (complete.cases(x) & wy)
+
+impute.with.na <- function(x, wy) !complete.cases(x) & wy
+
 check.df <- function(x, y, ry) {
   # if needed, writes the df warning message to the log
   df <- sum(ry) - ncol(x) - 1

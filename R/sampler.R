@@ -36,11 +36,10 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
         
         # refresh dummy variables
         for (j in setdiff(p$visitSequence, visitSequence)) {
+          # browser()
           cat.columns <- p$data[, p$categories[j, 4]]
-          p$data[, (j:(j + p$categories[p$categories[j, 4], 2] - 1))] <- 
-            matrix((model.matrix(~cat.columns - 1)[, -1]),
-                   ncol = p$categories[p$categories[j, 4], 2], 
-                   nrow = nrow(p$data))
+          mm <- model.matrix(~ cat.columns - 1, model.frame(~ cat.columns, na.action = na.pass))[, -1]
+          p$data[, (j:(j + p$categories[p$categories[j, 4], 2] - 1))] <- mm
         }
         
         # one iteration over augmented model
@@ -66,6 +65,7 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
           
           # flat file imputation
           if (flat) {
+            nam <- vname
             if (!is.null(p$form) && nchar(p$form[j]) > 0) {
               myform <- paste(p$form[j], "0", sep = "+")
               x <- model.matrix(formula(myform), p$data)
@@ -73,16 +73,20 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
               x <- p$data[, p$predictorMatrix[j, ] == 1, drop = FALSE]
             }
             y <- p$data[, j]
-            ry <- r[, j]
-            wy <- where[, j]
-            nam <- vname
+            ry <- complete.cases(x, y) & r[, j]
+            wy <- complete.cases(x) & where[, j]
+            cc <- wy[where[, j]]
             if (k == 1)
               check.df(x, y, ry)
-            f <- paste("mice.impute", theMethod, sep = ".")
             keep <- remove.lindep(x, y, ry, ...)
             x <- x[, keep, drop = FALSE]
-            imp[[j]][, i] <- do.call(f, args = list(y, ry, x, wy = wy, ...))
-            p$data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
+            f <- paste("mice.impute", theMethod, sep = ".")
+            browser()
+            imputes <- p$data[wy, j]
+            imputes[!cc] <- NA
+            imputes[cc] <- do.call(f, args = list(y, ry, x, wy = wy, ...))
+            imp[[j]][, i] <- imputes
+            p$data[(!r[, j]) & where[, j], j] <- imp[[j]][(!r[, j])[where[, j]], i]
           }
           
           # multilevel imputation
@@ -120,11 +124,10 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
           
           # dummy imputation
           if (dumm) {
+            # browser()
             cat.columns <- p$data[, p$categories[j, 4]]
-            p$data[, (j:(j + p$categories[p$categories[j, 4], 2] - 1))] <- 
-              matrix((model.matrix(~cat.columns - 1)[, -1]),
-                     ncol = p$categories[p$categories[j, 4], 2], 
-                     nrow = nrow(p$data))
+            mm <- model.matrix(~ cat.columns - 1, model.frame(~ cat.columns, na.action=na.pass))[, -1]
+            p$data[, (j:(j + p$categories[p$categories[j, 4], 2] - 1))] <- mm
             remove("cat.columns")
           }
           
@@ -139,17 +142,19 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
       
       # store means and sd of m imputes
       k2 <- k - from + 1
-      for (j in 1:length(visitSequence)) {
-        jj <- visitSequence[j]
-        if (!is.factor(data[, jj])) {
-          chainVar[j, k2, ] <- apply(imp[[jj]], 2, var)
-          chainMean[j, k2, ] <- colMeans(as.matrix(imp[[jj]]))
-        }
-        if (is.factor(data[, jj])) {
-          for (mm in 1:m) {
-            nc <- as.integer(factor(imp[[jj]][, mm], levels = levels(data[, jj])))
-            chainVar[j, k2, mm] <- var(nc)
-            chainMean[j, k2, mm] <- mean(nc)
+      if (length(visitSequence) > 0) {
+        for (j in 1:length(visitSequence)) {
+          jj <- visitSequence[j]
+          if (!is.factor(data[, jj])) {
+            chainVar[j, k2, ] <- apply(imp[[jj]], 2, var, na.rm = TRUE)
+            chainMean[j, k2, ] <- colMeans(as.matrix(imp[[jj]]), na.rm = TRUE)
+          }
+          if (is.factor(data[, jj])) {
+            for (mm in 1:m) {
+              nc <- as.integer(factor(imp[[jj]][, mm], levels = levels(data[, jj])))
+              chainVar[j, k2, mm] <- var(nc, na.rm = TRUE)
+              chainMean[j, k2, mm] <- mean(nc, na.rm = TRUE)
+            }
           }
         }
       }
