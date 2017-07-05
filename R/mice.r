@@ -289,8 +289,6 @@ mice <- function(data, m = 5,
   post <- setup$post
   p <- padModel(data, method, predictorMatrix, visitSequence, 
                 form, post, nvar)
-  if (any(duplicated(names(p$data))))
-    stop("Column names of padded data not unique")
   
   ## Initialize where matrix r, imputation array imp, etc. 
   r <- (!is.na(p$data))
@@ -327,7 +325,7 @@ mice <- function(data, m = 5,
   for (j in p$visitSequence) {
     p$data[(!r[, j]), j] <- NA
   }
-  
+
   ## delete data and imputations of automatic dummy variables
   imp <- q$imp[1:nvar]
   names(imp) <- varnames
@@ -348,9 +346,10 @@ mice <- function(data, m = 5,
                   visitSequence = visitSequence, form = form, post = post,
                   seed = seed, iteration = q$iteration,
                   lastSeedValue = .Random.seed, chainMean = q$chainMean,
-                  chainVar = q$chainVar, loggedEvents = loggedEvents)
-  if (diagnostics)
-    midsobj <- c(midsobj, list(pad = p))
+                  chainVar = q$chainVar, loggedEvents = loggedEvents,
+                  pad = p)
+  if (!diagnostics)
+    midsobj$pad <- NULL
   oldClass(midsobj) <- "mids"
   return(midsobj)
 }

@@ -69,6 +69,10 @@ padModel <- function(data, method, predictorMatrix, visitSequence,
   names(post) <- varnames
   names(visitSequence) <- varnames[visitSequence]
   dimnames(categories)[[1]] <- dimnames(data)[[2]]
+  
+  if (any(duplicated(names(data))))
+    stop("Column names of padded data not unique")
+  
   return(list(data = as.data.frame(data), 
               predictorMatrix = predictorMatrix, 
               method = method, 

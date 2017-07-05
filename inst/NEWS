@@ -11,6 +11,9 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+
+FIXED    Bug that made the pad element disappear from mids object
+
 V2.39    27jun2017 SvB
 UPDATE   Colors in xyplot.mads
 

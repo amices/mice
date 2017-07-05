@@ -81,7 +81,7 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
             keep <- remove.lindep(x, y, ry, ...)
             x <- x[, keep, drop = FALSE]
             f <- paste("mice.impute", theMethod, sep = ".")
-            browser()
+            # browser()
             imputes <- p$data[wy, j]
             imputes[!cc] <- NA
             imputes[cc] <- do.call(f, args = list(y, ry, x, wy = wy, ...))
