@@ -4,7 +4,7 @@
 \alias{cbind.mids}
 \title{Columnwise combination of a \code{mids} object.}
 \usage{
-\method{cbind}{mids}(x, y, ...)
+\method{cbind}{mids}(x, y = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{mids} object.}
@@ -19,96 +19,80 @@ These can be given as named arguments.}
 An S3 object of class \code{mids}
 }
 \description{
+Append \code{mids} objects by columns
+}
+\details{
 This function combines two \code{mids} objects columnwise into a single
-object of class \code{mids}, or combines a \code{mids} object with a \code{vector},
-\code{matrix}, \code{factor} or \code{data.frame} columnwise into an object of class \code{mids}.
-The number of rows in the (incomplete) data \code{x$data} and \code{y} (or
-\code{y$data} if \code{y} is a \code{mids} object) should be equal. If
-\code{y} is a \code{mids} object then the number of imputations in \code{x}
-and \code{y} should be equal. Note: If \code{y} is a vector or factor its
-original name is lost and it will be denoted with \code{y} in the \code{mids}
-object.
+object of class \code{mids}, or combines a \code{mids} object with 
+a \code{vector}, \code{matrix}, \code{factor} or \code{data.frame} 
+columnwise into a \code{mids} object.
+The rows in the (incomplete) data \code{x$data} and \code{y} (or
+\code{y$data} if \code{y} is a \code{mids} object) should match. If
+\code{y} is a \code{mids}, then \code{cbind} only works if the number 
+of imputations in \code{x} and \code{y} is equal.
 }
 \note{
-Component \code{call} is a vector, with first argument the \code{mice()} statement
-that created \code{x} and second argument the call to \code{cbind.mids()}.
-Component \code{data} is the code{cbind} of the (incomplete) data in \code{x$data}
-and \code{y$data}. Component \code{m} is the number of imputations. 
-Component \code{nmis} is an array containing the number of missing observations per
-column.
-Component \code{imp} is a list of \code{nvar} components with the generated multiple
-imputations.  Each part of the list is a \code{nmis[j]} by \code{m} matrix of
-imputed values for variable \code{j}. The original data of \code{y} will be
-copied into this list, including the missing values of \code{y} then \code{y}
-is not imputed.
-Component \code{method} is a vector of strings of \code{length(nvar)} specifying the
-elementary imputation method per column. If \code{y} is a \code{mids} object this
-vector is a combination of \code{x$method} and \code{y$method}, otherwise
-this vector is \code{x$method} and for the columns of \code{y} the method is
-set to \code{''}. 
-Component \code{predictorMatrix} is a square matrix of size \code{ncol(data)}
-containing integer data specifying the predictor set. If \code{x} and
-\code{y} are \code{mids} objects then the predictor matrices of \code{x} and
-\code{y} are combined with zero matrices on the off-diagonal blocks.
-Otherwise the variables in \code{y} are included in the predictor matrix of
-\code{x} such that \code{y} is not used as predictor(s) and not imputed as
-well.
-Component \code{visitSequence} is the sequence in which columns are visited. The same
-as \code{x$visitSequence}.
-Component \code{seed} is the seed value of the solution, \code{x$seed}.
-Component \code{iteration} is the last Gibbs sampling iteration number,
-\code{x$iteration}.
-Component \code{lastSeedValue} is the most recent seed value, \code{x$lastSeedValue}
-Component \code{chainMean} is the combination of \code{x$chainMean} and
-\code{y$chainMean}. If \code{y$chainMean} does not exist this element equals
-\code{x$chainMean}.
-Component \code{chainVar} is the combination of \code{x$chainVar} and \code{y$chainVar}.
-If \code{y$chainVar} does not exist this element equals \code{x$chainVar}.
-Component \code{pad} is a list containing various settings of the padded imputation
-model, i.e. the imputation model after creating dummy variables.  This list
-is defined by combining \code{x$pad} and \code{y$pad} if \code{y} is a
-\code{mids} object. Otherwise, it is defined by the settings of \code{x} and
-the combination of the data \code{x$data} and \code{y}.
-Component \code{loggedEvents} is set to \code{x$loggedEvents}.
+The function construct the elements of the new \code{mids} object as follows:
+\tabular{ll}{
+\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{cbind.mids}\cr
+\code{data}     \tab Columnwise combination of the (incomplete) data in \code{x} and \code{y}\cr
+\code{where}    \tab Columnwise combination of \code{where} arguments\cr
+\code{m}        \tab Equals \code{x$m}\cr
+\code{nmis}     \tab Equals c(x$nmis, y$nmis)\cr
+\code{imp}      \tab Appends \code{x$imp} and \code{y$imp} if \code{y} is \code{mids} object\cr
+\code{method}   \tab Combines \code{x$method} and \code{y$method}\cr
+\code{predictorMatrix} \tab Combines \code{x$predictorMatrix} and \code{y$predictMatrix} with zero matrices on the off-diagonal blocks\cr
+\code{visitSequence}   \tab Taken from \code{x$visitSequence}\cr
+\code{seed}            \tab Taken from \code{x$seed}\cr
+\code{iteration}       \tab Taken from \code{x$iteration}\cr
+\code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
+\code{chainMean}       \tab Combines \code{x$chainMean} and \code{y$chainMean}\cr
+\code{chainVar}        \tab Combines \code{x$chainVar} and \code{y$chainVar}\cr
+\code{pad}             \tab Combines \code{x$padModel} and \code{y$padModel}\cr
+\code{loggedEvents}    \tab Taken from \code{x$loggedEvents}
+}
+
 If a column of \code{y} is categorical this is ignored in the
 padded model since that column is not used as predictor for another column.
 }
 \examples{
 
-# append 'forgotten' variable bmi to imp
-temp <- boys[,c(1:3,5:9)]
-imp  <- mice(temp,maxit=1,m=2)
-imp2 <- cbind(imp, data.frame(bmi=boys$bmi))
+# impute four variables at once (default)
+imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE)
+imp$predictorMatrix
 
-# append maturation score to imp (numerical)
-mat  <- (as.integer(temp$gen) + as.integer(temp$phb)
-+ as.integer(cut(temp$tv,breaks=c(0,3,6,10,15,20,25))))
-imp2 <- cbind(imp, as.data.frame(mat))
+# impute two by two
+data1 <- nhanes[, c("age", "bmi")]
+data2 <- nhanes[, c("hyp", "chl")]
+imp1 <- mice(data1, m = 2, maxit = 1, print = FALSE)
+imp2 <- mice(data2, m = 2, maxit = 1, print = FALSE)
 
-# append maturation score to imp (factor)
-# known issue: new column name is 'y', not 'mat'
-mat  <- as.factor(mat)
-imp2 <- cbind(imp, mat)
+# Append two solutions
+imp12 <- cbind(imp1, imp2)
 
-# append data frame with two columns to imp
-temp2 <- data.frame(bmi=boys$bmi,mat=as.factor(mat))
-imp2  <- cbind(imp, temp2)
+# This is a different imputation model
+imp12$predictorMatrix
 
-# combine two mids objects
-impa <- mice(temp, maxit=1, m=2)
-impb <- mice(temp2, maxit=2, m=2)
+# Append the other way around
+imp21 <- cbind(imp2, imp1)
+imp21$predictorMatrix
 
-# first a then b
-impab <- cbind(impa, impb)
+# Append 'forgotten' variable chl
+data3 <- nhanes[, 1:3]
+imp3  <- mice(data3, maxit = 1,m = 2, print = FALSE)
+imp3a <- cbind(imp3, chl = nhanes$chl)
 
-# first b then a
-impba <- cbind(impb, impa)
+# Of course, chl was not imputed
+head(complete(imp3a))
 
+# Note: If one of the arguments is a data.frame 
+# we need to explicitly call mice:::cbind.mids()
+imp3b <- mice:::cbind.mids(imp3, data.frame(chl = nhanes$chl))
 }
 \seealso{
 \code{\link{rbind.mids}}, \code{\link{ibind}}, \code{\link[=mids-class]{mids}}
 }
 \author{
-Karin Groothuis-Oudshoorn, Stef van Buuren, 2009
+Karin Groothuis-Oudshoorn, Stef van Buuren
 }
 \keyword{manip}
