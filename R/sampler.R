@@ -59,39 +59,16 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
           empt <- theMethod == ""
           elem <- !empt & !is.passive(theMethod) & theMethod != "dummy"
           flat <- elem & substring(tolower(theMethod), 1, 2) != "2l"
-          mult <- elem & !flat
           pass <- !empt & is.passive(theMethod)
           dumm <- theMethod == "dummy"
           
-          # flat file imputation
-          if (flat) {
-            nam <- vname
-            if (!is.null(p$form) && nchar(p$form[j]) > 0) {
-              myform <- paste(p$form[j], "0", sep = "+")
-              x <- model.matrix(formula(myform), p$data)
+          # standard imputation
+          if (elem) {
+            if (flat) {
+              predictors <- p$predictorMatrix[j, ] == 1
             } else {
-              x <- p$data[, p$predictorMatrix[j, ] == 1, drop = FALSE]
+              predictors <- p$predictorMatrix[j, ] != 0
             }
-            y <- p$data[, j]
-            ry <- complete.cases(x, y) & r[, j]
-            wy <- complete.cases(x) & where[, j]
-            cc <- wy[where[, j]]
-            if (k == 1)
-              check.df(x, y, ry)
-            keep <- remove.lindep(x, y, ry, ...)
-            x <- x[, keep, drop = FALSE]
-            f <- paste("mice.impute", theMethod, sep = ".")
-            # browser()
-            imputes <- p$data[wy, j]
-            imputes[!cc] <- NA
-            imputes[cc] <- do.call(f, args = list(y, ry, x, wy = wy, ...))
-            imp[[j]][, i] <- imputes
-            p$data[(!r[, j]) & where[, j], j] <- imp[[j]][(!r[, j])[where[, j]], i]
-          }
-          
-          # multilevel imputation
-          if (mult) {
-            predictors <- p$predictorMatrix[j, ] != 0
             if (!is.null(p$form) && nchar(p$form[j]) > 0) {
               myform <- paste(p$form[j], "0", sep = "+")
               x <- model.matrix(formula(myform), p$data)
@@ -99,20 +76,21 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
               x <- p$data[, predictors, drop = FALSE]
             }
             y <- p$data[, j]
-            ry <- r[, j]
-            wy <- where[, j]
+            ry <- complete.cases(x, y) & r[, j]
+            wy <- complete.cases(x) & where[, j]
+            cc <- wy[where[, j]]
             type <- p$predictorMatrix[j, predictors]
-            nam <- vname
             if (k == 1)
               check.df(x, y, ry)
-            f <- paste("mice.impute", tolower(theMethod), sep = ".")
             keep <- remove.lindep(x, y, ry, ...)
             x <- x[, keep, drop = FALSE]
             type <- type[keep]
-            imp[[j]][, i] <- do.call(f, args = list(y, ry, x, type, wy = wy, 
-                                                    ...))
-            p$data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
-            
+            f <- paste("mice.impute", tolower(theMethod), sep = ".")
+            imputes <- p$data[wy, j]
+            imputes[!cc] <- NA
+            imputes[cc] <- do.call(f, args = list(y, ry, x, wy = wy, type = type, ...))
+            imp[[j]][, i] <- imputes
+            p$data[(!r[, j]) & where[, j], j] <- imp[[j]][(!r[, j])[where[, j]], i]
           }
           
           # passive imputation
@@ -124,9 +102,9 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
           
           # dummy imputation
           if (dumm) {
-            # browser()
             cat.columns <- p$data[, p$categories[j, 4]]
-            mm <- model.matrix(~ cat.columns - 1, model.frame(~ cat.columns, na.action=na.pass))[, -1]
+            mm <- model.matrix(~ cat.columns - 1, 
+                               model.frame(~ cat.columns, na.action = na.pass))[, -1]
             p$data[, (j:(j + p$categories[p$categories[j, 4], 2] - 1))] <- mm
             remove("cat.columns")
           }
