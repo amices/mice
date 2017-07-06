@@ -2,7 +2,7 @@
 % Please edit documentation in R/ibind.r
 \name{ibind}
 \alias{ibind}
-\title{Combine imputations fitted to the same data}
+\title{Enlarge number of imputations by combining \code{mids} objects}
 \usage{
 ibind(x, y)
 }
@@ -16,16 +16,32 @@ An S3 object of class \code{mids}
 }
 \description{
 This function combines two \code{mids} objects \code{x} and \code{y} into a
-single \code{mids} object. The two \code{mids} objects should have the same
-underlying multiple imputation model and should be fitted on exactly the same
-dataset. If the number of imputations in \code{x} is \code{m(x)} and in
-\code{y} is \code{m(y)} then the combination of both objects contains
+single \code{mids} object, with the objective of increasing the number of 
+imputed data sets. If the number of imputations in \code{x} and \code{y} are 
+\code{m(x)} and \code{m(y)}, then the combined object will have 
 \code{m(x)+m(y)} imputations.
+}
+\details{
+The two \code{mids} objects are required to 
+have the same underlying multiple imputation model and should 
+be fitted on the same data.
+}
+\examples{
+data(nhanes)
+imp1 <- mice(nhanes, m = 1, maxit = 2, print = FALSE)
+imp1$m
+
+imp2 <- mice(nhanes, m = 3, maxit = 3, print = FALSE)
+imp2$m
+
+imp12 <- ibind(imp1, imp2)
+imp12$m
+plot(imp12)
 }
 \seealso{
 \code{\link[=mids-class]{mids}}, \code{\link{rbind.mids}}, \code{\link{cbind.mids}}
 }
 \author{
-Karin Groothuis-Oudshoorn, Stef van Buuren, 2009
+Karin Groothuis-Oudshoorn, Stef van Buuren
 }
 \keyword{manip}
