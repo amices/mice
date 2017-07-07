@@ -11,7 +11,7 @@
 #'the amputation and the weighted sum scores.  
 #'
 #'@param x A \code{mads} object, typically created by \code{\link{ampute}}.
-#'@param yvar A string or vector of variable names that needs to be plotted. As 
+#'@param data A string or vector of variable names that needs to be plotted. As 
 #'a default, all variables will be plotted. 
 #'@param which.pat A scalar or vector indicating which patterns need to be plotted. 
 #'As a default, all patterns are plotted. 
@@ -24,6 +24,7 @@
 #'9 variables, multiple plots will be created automatically.
 #'@param colors A vector of two RGB values defining the colors of the non-amputed and 
 #'amputed data respectively. RGB values can be obtained with \code{\link{hcl}}.
+#'@param \dots Not used, but for consistency with generic
 #'@return A list containing the scatterplots. Note that a new pattern 
 #'will always be shown in a new plot. 
 #'@note The \code{mads} object contains all the information you need to 
@@ -33,12 +34,14 @@
 #'@seealso \code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for 
 #'an overview of the package, \code{\link{mads-class}}
 #'@export
-xyplot.mads <- function(x, yvar = NULL, which.pat = NULL,
+xyplot.mads <- function(x, data, which.pat = NULL,
                         standardized = TRUE, layout = NULL,
-                        colors = mdc(1:2)) {
+                        colors = mdc(1:2), ...) {
   if (!is.mads(x)) {
     stop("Object is not of class mads")
   }
+  if (missing(data)) data <- NULL
+  yvar <- data
   if (is.null(yvar)) {
     varlist <- colnames(x$amp)
   } else {

@@ -4,14 +4,14 @@
 \alias{bwplot.mads}
 \title{Box-and-whisker plot of amputed and non-amputed data}
 \usage{
-\method{bwplot}{mads}(x, yvar = NULL, which.pat = NULL,
-  standardized = TRUE, descriptives = TRUE, layout = NULL)
+\method{bwplot}{mads}(x, data, which.pat = NULL, standardized = TRUE,
+  descriptives = TRUE, layout = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{mads} (\code{\link{mads-class}}) object, typically created by 
 \code{\link{ampute}}.}
 
-\item{yvar}{A string or vector of variable names that needs to be plotted. As 
+\item{data}{A string or vector of variable names that needs to be plotted. As 
 a default, all variables will be plotted.}
 
 \item{which.pat}{A scalar or vector indicating which patterns need to be plotted. 
@@ -29,6 +29,8 @@ should be divided over the plot. For example, \code{c(2, 3)} indicates that the
 boxplots of six variables need to be placed on 3 rows and 2 columns. Default
 is 1 row and an amount of columns equal to #variables. Note that for more than 
 6 variables, multiple plots will be created automatically.}
+
+\item{\dots}{Not used, but for consistency with generic}
 }
 \value{
 A list containing the box-and-whisker plots. Note that a new pattern 
@@ -36,7 +38,6 @@ will always be shown in a new plot.
 }
 \description{
 Plotting method to investigate the result of function \code{\link{ampute}}. 
-Based on \code{\link{lattice}}. \code{bwplot} produces box-and-whisker plots of 
 the relation between the data variables and the amputed data. The function does 
 not show which data is amputed. It does show how the amputed values are related 
 to the variable values.

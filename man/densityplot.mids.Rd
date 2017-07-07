@@ -161,8 +161,6 @@ automatically}. There is yet no workaround for this problem. Use the more
 robust \code{bwplot} or \code{stripplot} as a replacement.
 }
 \examples{
-require(lattice)
-
 imp <- mice(boys, maxit=1)
 
 ### density plot of head circumference per imputation
@@ -184,7 +182,7 @@ Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
 \code{\link{mice}}, \code{\link{xyplot}}, \code{\link{stripplot}},
-\code{\link{bwplot}}, \code{\link{Lattice}} for an overview of the
+\code{\link{bwplot}}, \code{\link{lattice}} for an overview of the
 package, as well as \code{\link[lattice:densityplot]{densityplot}},
 \code{\link[lattice:panel.densityplot]{panel.densityplot}},
 \code{\link[lattice:print.trellis]{print.trellis}},

@@ -130,8 +130,6 @@ In \pkg{mice} the argument \code{data} is always a formula object, whereas in
 All other arguments have identical interpretation.
 }
 \examples{
-require(lattice)
-
 imp <- mice(boys, maxit=1)
 
 ### xyplot: scatterplot by imputation number
@@ -153,7 +151,7 @@ Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
 \code{\link{mice}}, \code{\link{stripplot}}, \code{\link{densityplot}},
-\code{\link{bwplot}}, \code{\link{Lattice}} for an overview of the
+\code{\link{bwplot}}, \code{\link{lattice}} for an overview of the
 package, as well as \code{\link[lattice:xyplot]{xyplot}},
 \code{\link[lattice:panel.xyplot]{panel.xyplot}},
 \code{\link[lattice:print.trellis]{print.trellis}},

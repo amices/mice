@@ -5,14 +5,13 @@
 #'Box-and-whisker plot of amputed and non-amputed data
 #'
 #'Plotting method to investigate the result of function \code{\link{ampute}}. 
-#'Based on \code{\link{lattice}}. \code{bwplot} produces box-and-whisker plots of 
 #'the relation between the data variables and the amputed data. The function does 
 #'not show which data is amputed. It does show how the amputed values are related 
 #'to the variable values. 
 #'
 #'@param x A \code{mads} (\code{\link{mads-class}}) object, typically created by 
 #'\code{\link{ampute}}.
-#'@param yvar A string or vector of variable names that needs to be plotted. As 
+#'@param data A string or vector of variable names that needs to be plotted. As 
 #'a default, all variables will be plotted. 
 #'@param which.pat A scalar or vector indicating which patterns need to be plotted. 
 #'As a default, all patterns are plotted. 
@@ -26,6 +25,7 @@
 #'boxplots of six variables need to be placed on 3 rows and 2 columns. Default
 #'is 1 row and an amount of columns equal to #variables. Note that for more than 
 #'6 variables, multiple plots will be created automatically.
+#'@param \dots Not used, but for consistency with generic
 #'@return A list containing the box-and-whisker plots. Note that a new pattern 
 #'will always be shown in a new plot. 
 #'@note The \code{mads} object contains all the information you need to 
@@ -35,11 +35,13 @@
 #'@seealso \code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for 
 #'an overview of the package, \code{\link{mads-class}}
 #'@export
-bwplot.mads <- function(x, yvar = NULL, which.pat = NULL, standardized = TRUE,
-                        descriptives = TRUE, layout = NULL) {
+bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
+                        descriptives = TRUE, layout = NULL, ...) {
   if (!is.mads(x)) {
     stop("Object is not of class mads")
   }
+  if (missing(data)) data <- NULL
+  yvar <- data
   if (is.null(yvar)) {
     varlist <- colnames(x$amp)
   } else {

@@ -114,7 +114,7 @@
 #'
 #'@author Stef van Buuren
 #'@seealso \code{\link{mice}}, \code{\link{xyplot}}, \code{\link{densityplot}},
-#'\code{\link{stripplot}}, \code{\link{Lattice}} for an overview of the
+#'\code{\link{stripplot}}, \code{\link{lattice}} for an overview of the
 #'package, as well as \code{\link[lattice:bwplot]{bwplot}},
 #'\code{\link[lattice:panel.bwplot]{panel.bwplot}},
 #'\code{\link[lattice:print.trellis]{print.trellis}},
@@ -126,9 +126,7 @@
 #'Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 #'Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 #'@keywords hplot
-#'@importFrom lattice bwplot
 #'@examples
-#'require(lattice)
 #'
 #'imp <- mice(boys, maxit=1)
 #'

@@ -141,7 +141,6 @@ In \pkg{mice} the argument \code{data} is always a formula object, whereas in
 All other arguments have identical interpretation.
 }
 \examples{
-require(lattice)
 
 imp <- mice(boys, maxit=1)
 
@@ -167,7 +166,7 @@ Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
 \code{\link{mice}}, \code{\link{xyplot}}, \code{\link{densityplot}},
-\code{\link{stripplot}}, \code{\link{Lattice}} for an overview of the
+\code{\link{stripplot}}, \code{\link{lattice}} for an overview of the
 package, as well as \code{\link[lattice:bwplot]{bwplot}},
 \code{\link[lattice:panel.bwplot]{panel.bwplot}},
 \code{\link[lattice:print.trellis]{print.trellis}},
