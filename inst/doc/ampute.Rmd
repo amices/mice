@@ -274,6 +274,8 @@ xyplot(result, which.pat = 1)
 
 The scatterplots show that there is a very small relation between V1 and the weighted sum scores. Furthermore, the relation between V2 and the weighted sum scores is very strong, meaning that a case's value on V2 is very important in the generation of the weighted sum score. Actually, this is what causes the differences between the amputed and non-amputed data in the boxplots above. For V3 and the weighted sum scores, the relation is a bit weaker than for V2 but more present than for V1. 
 
+Note that there are other R-packages with nice functions to visualize missing data patterns. An example is package **narnia** by Nicholas Tierney. 
+
 #### 2.7 Type
 
 As said before, each candidate obtains a probability based on his weighted sum score. For the relation between the weighted sum scores and the probabilities we can take two approaches. First, we can use one or more of four logistic distribution functions as shown in Figure 3. Second, we can specify the probability distributions manually by means of so-called odds values. 
@@ -492,5 +494,5 @@ Brand, J.P.L. (1999). *Development, implementation and evaluation of multiple im
 Van Buuren, S. (2012). *Flexible imputation of missing data*
 Boca Raton, FL.: Chapman & Hall/CRC Press.
 
-Schouten, R.M., Lugtig, P.L., and Vink, G. (2017) *Generating missing values for simulation purposes: A multivariate amputation procedure* Under review. Available from: https://github.com/RianneSchouten/Amputation_with_Ampute/blob/master/Manuscript.pdf
+Schouten, R.M., Lugtig, P.L., and Vink, G. (2017) *Generating missing values for simulation purposes: A multivariate amputation procedure* Under review. Available from: https://github.com/RianneSchouten/Amputation_with_Ampute/blob/master/Manuscript%20article/Manuscript.pdf
 
