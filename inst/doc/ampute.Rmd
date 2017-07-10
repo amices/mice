@@ -247,7 +247,7 @@ Within pacakge **mice**, we developed function `bwplot` to easily see the distri
 With function `bwplot`, argument `which.pat` can be used to specify the patterns you are interested in (default: all patterns). The argument `yvar` should contain the variables names (default: all variables). Besides, the function returns the mean, variance and $n$ of the amputed and non-amputed data for each variable and each pattern requested. In the column `Amp`, a `1` refers to the amputed data and `0` to the non-amputed data. If descriptives are not required, the argument `descriptives` can be set to `FALSE`. 
 
 ```{r, fig.width = 7, fig.height = 5}
-lattice::bwplot(result, which.pat = c(1, 3), descriptives = TRUE)
+bwplot(result, which.pat = c(1, 3), descriptives = TRUE)
 ```
 
 The medians and boundaries of the boxes show that in pattern 1, the amputed data are shifted to the right with respect to the non-amputed data. For variable V2, this effect is the largest, due to the weight value that was specified (0.8). For V1, there is a very small difference between the boxplots of the amputed and non-amputed data. This makes sense, because variable V1 was amputed in the first pattern and therefore set to `0` in the `weights` matrix. The small difference that is visible is due to the positive correlation between V1 on the one side and V2 and V3 on the other side. These correlations were created during the simulation of the data. 
@@ -269,10 +269,12 @@ As is visible, there is a significant difference between the amputed and non-amp
 Scatterplots also help to investigate the effect of the specifications. We can directly impose the function `xyplot` on the `mads` object. The function contains arguments comparable to `bwplot`. For example, we can investigate the weighted sum scores of pattern 1 as follows:
 
 ```{r, fig.width = 7, fig.height = 7}
-lattice::xyplot(result, which.pat = 1)
+xyplot(result, which.pat = 1)
 ```
 
 The scatterplots show that there is a very small relation between V1 and the weighted sum scores. Furthermore, the relation between V2 and the weighted sum scores is very strong, meaning that a case's value on V2 is very important in the generation of the weighted sum score. Actually, this is what causes the differences between the amputed and non-amputed data in the boxplots above. For V3 and the weighted sum scores, the relation is a bit weaker than for V2 but more present than for V1. 
+
+Note that there are other R-packages with nice functions to visualize missing data patterns. An example is package **narnia** by Nicholas Tierney. 
 
 #### 2.7 Type
 
@@ -492,5 +494,5 @@ Brand, J.P.L. (1999). *Development, implementation and evaluation of multiple im
 Van Buuren, S. (2012). *Flexible imputation of missing data*
 Boca Raton, FL.: Chapman & Hall/CRC Press.
 
-Schouten, R.M., Lugtig, P.L., and Vink, G. (2017) *Generating missing values for simulation purposes: A multivariate amputation procedure* Under review. Available from: https://github.com/RianneSchouten/Amputation_with_Ampute/blob/master/Manuscript.pdf
+Schouten, R.M., Lugtig, P.L., and Vink, G. (2017) *Generating missing values for simulation purposes: A multivariate amputation procedure* Under review. Available from: https://github.com/RianneSchouten/Amputation_with_Ampute/blob/master/Manuscript%20article/Manuscript.pdf
 

@@ -79,7 +79,7 @@ result$weights
 result <- ampute(testdata, freq = myfreq, patterns = mypatterns, weights = myweights)
 
 ## ---- fig.width = 7, fig.height = 5--------------------------------------
-lattice::bwplot(result, which.pat = c(1, 3), descriptives = TRUE)
+bwplot(result, which.pat = c(1, 3), descriptives = TRUE)
 
 ## ---- include = FALSE----------------------------------------------------
 require(BSDA)
@@ -88,7 +88,7 @@ require(BSDA)
 BSDA::tsum.test(mean.x = 0.39077, mean.y = -0.38992, s.x = sqrt(0.83774), s.y = sqrt(0.87721), n.x = 3473, n.y = 3493)
 
 ## ---- fig.width = 7, fig.height = 7--------------------------------------
-lattice::xyplot(result, which.pat = 1)
+xyplot(result, which.pat = 1)
 
 ## ---- include = FALSE----------------------------------------------------
 

@@ -17,5 +17,6 @@
 #'@importFrom nnet      multinom nnet
 #'@importFrom rpart     rpart rpart.control
 #'@importFrom Rcpp      sourceCpp
+#'@importFrom lattice   bwplot densityplot xyplot stripplot
 #'@useDynLib mice
 NULL

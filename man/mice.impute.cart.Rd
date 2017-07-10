@@ -51,7 +51,6 @@ draw as the imputation.
 }
 \examples{
 require(rpart)
-require(lattice)
 
 imp <- mice(nhanes2, meth = 'cart', minbucket = 4)
 plot(imp)

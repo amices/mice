@@ -14,6 +14,9 @@ CHANGELOG MICE
 
 FIXED    Bug that made the pad element disappear from mids object
 
+V2.40    07jul2017 SvB
+FIXED    Integration with lattice package
+
 V2.39    27jun2017 SvB
 UPDATE   Colors in xyplot.mads
 
