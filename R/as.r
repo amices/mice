@@ -1,20 +1,28 @@
 #'Converts an multiply imputed dataset (long format) into a \code{mids} object
 #'
-#'This function converts imputed data stored in long format into an object of class \code{mids}.
-#'The original incomplete data set needs to be available so that we know where the missing data are.
-#'The function is useful to convert back operations applied to the imputed data 
-#'back in a \code{mids} object. It may also be used to store multiply imputed data sets
-#'from other software into the format used by \code{mice}.
+#'This function converts imputed data stored in long format into 
+#'an object of class \code{mids}. The original incomplete dataset 
+#'needs to be available so that we know where the missing data are.
+#'The function is useful to convert back operations applied to 
+#'the imputed data back in a \code{mids} object. It may also be 
+#'used to store multiply imputed data sets from other software 
+#'into the format used by \code{mice}.
 #'
 #'@aliases as.mids
-#'@param data A multiply imputed data set in long format, for example produced by a call to 
-#'\code{complete(..., action = 'long', include = TRUE)}. 
-#'@param .imp Optional column number in \code{data} that contains the imputation number. The number \code{0} indicates the original data (with missings) and \code{1} through \code{m} correspond to the \code{m} imputation number. If not specified, the function searches for a variable named \code{".imp"}.
-#'@param .id Optional column number in \code{data} indicating the subject identification. If not specified, then the function searches for a variable named \code{.id} in \code{data}. 
-#'@details If .id variable is found, row names from the supplied data will be copied to the \code{data} elements of the returned \code{mids} object.
+#'@param data A multiply imputed data set in long format, for example 
+#'produced by a call to \code{complete(..., action = 'long', include = TRUE)}. 
+#'@param .imp Optional column number in \code{data} that contains the imputation 
+#'number. The number \code{0} indicates the original data (with missings) 
+#'and \code{1} through \code{m} correspond to the \code{m} imputation number. 
+#'If not specified, the function searches for a variable named \code{".imp"}.
+#'@param .id Optional column number in \code{data} indicating the subject 
+#'identification. If not specified, then the function searches for a variable 
+#'named \code{.id} in \code{data}. 
+#'@details If .id variable is found, row names from the supplied data will 
+#'be copied to the \code{data} elements of the returned \code{mids} object.
 #'@return An object of class \code{mids}
-#'@author Gerko Vink, Stef van Buuren (edits in 2.37)
-#'@examples 
+#'@author Gerko Vink
+#'@examples
 #'# impute the nhanes dataset
 #'imp <- mice(nhanes, print = FALSE)
 #'# extract the data in long format
@@ -72,7 +80,7 @@ as.mids <- function(data, .imp = NA, .id = NA) {
   m <- ifelse(is.factor(imps), 
               max(as.numeric(levels(imps))[imps]),
               max(imps))
-
+  
   # get original data part  
   vars_to_remove <- na.omit(c(imp_pos, id_pos))
   orig_data <- data[imps == 0, -vars_to_remove, drop = FALSE]
@@ -109,13 +117,12 @@ as.mids <- function(data, .imp = NA, .id = NA) {
 #' @param fitlist A list containing $m$ fitted analysis objects
 #' @return An S3 object of class \code{mira}.
 #' @seealso \code{\link[=mira-class]{mira}}
-#' @author Stef van Buuren, 2011
+#' @author Stef van Buuren
 #' @export
 as.mira <- function(fitlist) {
   call <- match.call()
   if (!is.list(fitlist)) 
     stop("Argument 'fitlist' is not a list")
-  m <- length(fitlist)
   object <- list(call = call, call1 = NULL, nmis = NULL, analyses = fitlist)
   oldClass(object) <- c("mira", "matrix")
   return(object)

@@ -11,6 +11,15 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+
+V2.41    10jul2017 SvB
+ADDED    New feature: `where`argument to mice
+ADDED    New `wy` argument to imputation functions
+ADDED    New mice.impute.2l.sys(), author Shahab Jolani
+UPDATE   Many simplifications and code enhancements
+FIXED    Broken cbind() function
+FIXED    Bug that made the pad element disappear from mids object
+
 V2.40    07jul2017 SvB
 FIXED    Integration with lattice package
 

@@ -20,7 +20,7 @@ imputed data are saved.  The default is \code{TRUE}.}
 during the Gibbs sampling iterations will be written to the command window.
 The default is \code{TRUE}.}
 
-\item{...}{Named arguments that are passed down to the elementary imputation
+\item{...}{Named arguments that are passed down to the univariate imputation
 functions.}
 }
 \description{
@@ -40,7 +40,6 @@ is specified in the \code{mice()} function and cannot be changed with
 }
 \examples{
 
-
 imp1 <- mice(nhanes,maxit=1)
 imp2 <- mice.mids(imp1)
 
@@ -56,7 +55,6 @@ imp <- mice(nhanes,maxit=2)
 #      1    2    3    4    5 
 # 1 30.1 35.3 33.2 35.3 27.5
 # 
-
 }
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
@@ -65,7 +63,8 @@ Statistical Software}, \bold{45}(3), 1-67.
 \url{http://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-\code{\link{complete}}, \code{\link{mice}}, \code{\link{set.seed}}, \code{\link[=mids-class]{mids}}
+\code{\link{complete}}, \code{\link{mice}}, \code{\link{set.seed}}, 
+\code{\link[=mids-class]{mids}}
 }
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn, 2000

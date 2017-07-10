@@ -3,39 +3,85 @@
 \name{mice.impute.norm.predict}
 \alias{mice.impute.norm.predict}
 \alias{norm.predict}
-\title{Imputation by linear regression, prediction method}
+\title{Imputation by linear regression through prediction}
 \usage{
-mice.impute.norm.predict(y, ry, x, ridge = 1e-05, ...)
+mice.impute.norm.predict(y, ry, x, wy = NULL, ridge = 1e-05, ...)
 }
 \arguments{
-\item{y}{Incomplete data vector of length \code{n}}
+\item{y}{Vector to be imputed}
 
-\item{ry}{Vector of missing data pattern (\code{FALSE}=missing,
-\code{TRUE}=observed)}
+\item{ry}{Logical vector of length \code{length(y)} indicating the 
+the subset \code{y[ry]} of elements in \code{y} to which the imputation 
+model is fitted. The \code{ry} generally distinguishes the observed 
+(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\code{y}. Matrix \code{x} may have no missing values.}
 
-\item{ridge}{Ridge parameter}
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+indicates locations in \code{y} for which imputations are created.}
+
+\item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent 
+problems with multicollinearity. The default is \code{ridge = 1e-05}, 
+which means that 0.01 percent of the diagonal is added to the cross-product. 
+Larger ridges may result in more biased estimates. For highly noisy data 
+(e.g. many junk variables), set \code{ridge = 1e-06} or even lower to 
+reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-A vector of length \code{nmis} with imputations.
+Vector with imputed data, same type as \code{y}, and of length 
+\code{sum(wy)}
 }
 \description{
-Imputes univariate missing data using the predicted value from a linear
-regression
+Imputes the "best value" according to the linear regression model, also 
+known as \emph{regression imputation}.
 }
 \details{
-Calculates regression weights from the observed data and and return predicted
+Calculates regression weights from the observed data and returns predicted
 values to as imputations. The \code{ridge} parameter adds a penalty term
-\code{ridge*diag(xtx)} to the variance-covariance matrix \code{xtx}.
+\code{ridge*diag(xtx)} to the variance-covariance matrix \code{xtx}. This
+method is known as \emph{regression imputation}.
 }
+\section{Warning}{
+ THIS METHOD SHOULD NOT BE USED FOR DATA ANALYSIS. 
+This method is seductive because it imputes the most 
+likely value according to the model. However, it ignores the uncertainty
+of the missing values and artificially 
+amplifies the relations between the columns of the data. Application of 
+richer models having more parameters does not help to evade these issues. 
+Stochastic regression methods, like \code{\link{mice.impute.pmm}} or 
+\code{\link{mice.impute.norm}}, are generally preferred. 
+
+At best, prediction can give reasonble estimates of the mean, especially 
+if normality assumptions are plausble. See Little and Rubin (2002, p. 62-64)
+or Van Buuren (2012, p. 11-13, p. 45-46) for a discussion of this method.
+}
+
 \references{
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
-Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
-\url{http://www.jstatsoft.org/v45/i03/}
+Little, R.J.A. and Rubin, D.B. (2002). Statistical Analysis with Missing 
+Data.  New York: John Wiley and Sons.
+
+Van Buuren, S. (2012). Flexible Imputation of Missing Data. 
+CRC/Chapman & Hall, FL: Boca Raton.
+}
+\seealso{
+Other univariate imputation functions: \code{\link{mice.impute.cart}},
+  \code{\link{mice.impute.lda}},
+  \code{\link{mice.impute.logreg.boot}},
+  \code{\link{mice.impute.logreg}},
+  \code{\link{mice.impute.mean}},
+  \code{\link{mice.impute.midastouch}},
+  \code{\link{mice.impute.norm.boot}},
+  \code{\link{mice.impute.norm.nob}},
+  \code{\link{mice.impute.norm}},
+  \code{\link{mice.impute.pmm}},
+  \code{\link{mice.impute.polr}},
+  \code{\link{mice.impute.polyreg}},
+  \code{\link{mice.impute.quadratic}},
+  \code{\link{mice.impute.rf}},
+  \code{\link{mice.impute.ri}}
 }
 \author{
 Stef van Buuren, 2011

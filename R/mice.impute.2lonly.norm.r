@@ -12,11 +12,7 @@
 #'Yucel (2008) or Gelman and Hill (2007, p. 541).
 #'
 #'@aliases mice.impute.2lonly.norm 2lonly.norm
-#'@param y Incomplete data vector of length \code{n}
-#'@param ry Vector of missing data pattern (\code{FALSE}=missing,
-#'\code{TRUE}=observed)
-#'@param x Matrix (\code{n} x \code{p}) of complete covariates. Only numeric
-#'variables are permitted for usage of this function.
+#'@inheritParams mice.impute.pmm
 #'@param type Group identifier must be specified by '-2'. Predictors must be
 #'specified by '1'.
 #'@param ... Other named arguments.
@@ -33,6 +29,7 @@
 #'Yucel, RM (2008). Multiple imputation inference for multivariate multilevel
 #'continuous data with ignorable non-response.  \emph{Philosophical
 #'Transactions of the Royal Society A}, \bold{366}, 2389-2404.
+#'@family univariate \code{2lonly} functions
 #'@examples
 #'
 #'##################################################
@@ -78,8 +75,8 @@
 #'            imputationMethod = impM1 , maxit=1 , paniter=500)
 #'    
 #'@export
-mice.impute.2lonly.norm <- function (y, ry, x, type , ...){
-    imp <- .imputation.level2( y = y , ry = ry , x = x , type = type , 
+mice.impute.2lonly.norm <- function (y, ry, x, type, wy = NULL, ...){
+    imp <- .imputation.level2( y = y , ry = ry , x = x, type = type, wy = wy, 
                                imputationMethod = "norm" , ... )
     return(imp)
 }

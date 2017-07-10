@@ -11,11 +11,7 @@
 #'Yucel (2008) or Gelman and Hill (2007, p. 541).
 #'
 #'@aliases mice.impute.2lonly.pmm 2lonly.pmm
-#'@param y Incomplete data vector of length \code{n}
-#'@param ry Vector of missing data pattern (\code{FALSE}=missing,
-#'\code{TRUE}=observed)
-#'@param x Matrix (\code{n} x \code{p}) of complete covariates. Only numeric
-#'variables are permitted for usage of this function.
+#'@inheritParams mice.impute.pmm
 #'@param type Group identifier must be specified by '-2'. Predictors must be
 #'specified by '1'.
 #'@param ... Other named arguments.
@@ -36,6 +32,7 @@
 #'a dependent factor variable by means of the \code{as.integer()}
 #'function. This may make sense for categories that are 
 #'approximately ordered, and less so for pure nominal measures.
+#'@family univariate \code{2lonly} functions
 #'@examples
 #'
 #'##################################################
@@ -85,19 +82,21 @@
 #'            imputationMethod = impM1, maxit = 1, paniter = 500)
 #'    
 #'@export
-mice.impute.2lonly.pmm <- function (y, ry, x, type , ...){
-  imp <- .imputation.level2( y = y , ry = ry , x = x , type = type , 
+mice.impute.2lonly.pmm <- function (y, ry, x, type, wy = NULL, ...){
+  imp <- .imputation.level2( y = y , ry = ry , x = x , type = type, wy = wy, 
                              imputationMethod = "pmm" , ... )				   
 }
 
 #******************************************
 # imputation function at level 2
 # can be done with norm and pmm
-.imputation.level2 <- function( y , ry , x , type , imputationMethod , ... ){
+.imputation.level2 <- function( y , ry , x , type, wy, imputationMethod , ... ){
   if ( sum(type==-2 ) != 1 ){
     stop( "No class variable")
   }
-  
+
+  if (is.null(wy)) wy <- !ry
+
   # handle categorical data
   ynum <- y
   if (is.factor(y)) ynum <- as.integer(y)
@@ -116,24 +115,28 @@ mice.impute.2lonly.pmm <- function (y, ry, x, type , ...){
   #~~~~~
   #*****	
   N1 <- ncol(a1)
-  cly2 <- unique( clusterx[  ry ] )  # clusters without missings on y
-  ry2 <- a1[,1] %in% cly2  
-  x1 <- as.matrix(a1[, -c(1,N1)])
+  cly2 <- unique( clusterx[ry ] )  # clusters without missings on y
+  ry2 <- a1[, 1] %in% cly2
+  wly2 <- unique( clusterx[wy ] )  # clusters without missings on y
+  wy2 <- a1[, 1] %in% wly2
+  x1 <- as.matrix(a1[, -c(1, N1)])
   
   # norm imputation at level 2
-  if ( imputationMethod == "norm" ){ 
-    ximp2 <- mice.impute.norm( y= as.matrix(a1[,N1]), ry=ry2, x = x1[,-1] , ...) 
+  if ( imputationMethod == "norm" ) { 
+    ximp2 <- mice.impute.norm( y= as.matrix(a1[,N1]), ry=ry2, x = x1[,-1] , 
+                               wy = wy2, ...)
     
     # data postprocessing
     cly2 <- a1[ ! ry2 , 1] 
     i1 <- match( clusterx, cly2 )
-    ximp <- ( ximp2[i1] )[ ! ry ]
-    return(ximp)	
+    ximp <- ( ximp2[i1] )[ wy ]
+    return(ximp)
   }
   
   # pmm imputation at level 2
   if ( imputationMethod == "pmm" ){ 
-    ximp2 <- mice.impute.pmm(y = a1[, N1], ry = ry2, x = x1[, -1], ...) 
+    ximp2 <- mice.impute.pmm(y = a1[, N1], ry = ry2, x = x1[, -1], 
+                             wy = wy2, ...) 
     
     # aggregate y to second level group
     splity <- split(y, f = clusterx)
@@ -145,7 +148,7 @@ mice.impute.2lonly.pmm <- function (y, ry, x, type , ...){
     # expland to full matrix
     cly2 <- a1[ !ry2 , 1] 
     i1 <- match( clusterx, cly2 )
-    yimp <- (yimp2[ i1 ])[ !ry ]
+    yimp <- (yimp2[ i1 ])[ wy ]
     
     return(yimp)
   }

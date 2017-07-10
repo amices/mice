@@ -4,24 +4,30 @@
 \alias{mice.impute.rf}
 \title{Imputation by random forests}
 \usage{
-mice.impute.rf(y, ry, x, ntree = 10, ...)
+mice.impute.rf(y, ry, x, wy = NULL, ntree = 10, ...)
 }
 \arguments{
-\item{y}{Numeric vector with incomplete data}
+\item{y}{Vector to be imputed}
 
-\item{ry}{Response pattern of \code{y} (\code{TRUE} = observed,
-\code{FALSE} = missing)}
+\item{ry}{Logical vector of length \code{length(y)} indicating the 
+the subset \code{y[ry]} of elements in \code{y} to which the imputation 
+model is fitted. The \code{ry} generally distinguishes the observed 
+(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Design matrix with \code{length(y)} rows and \code{p} columns
-containing complete covariates.}
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\code{y}. Matrix \code{x} may have no missing values.}
+
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+indicates locations in \code{y} for which imputations are created.}
 
 \item{ntree}{The number of trees to grow. The default is 10.}
 
-\item{...}{Other named arguments passed down to \code{randomForest()} and
+\item{\dots}{Other named arguments passed down to \code{randomForest()} and
 \code{randomForest:::randomForest.default()}.}
 }
 \value{
-Numeric vector of length \code{sum(!ry)} with imputations
+Vector with imputed data, same type as \code{y}, and of length 
+\code{sum(wy)}
 }
 \description{
 Imputes univariate missing data using random forests.
@@ -31,8 +37,10 @@ Imputation of \code{y} by random forests. The method
 calls \code{randomForrest()} which implements Breiman's random forest 
 algorithm (based on Breiman and Cutler's original Fortran code) 
 for classification and regression. See Appendix A.1 of Doove et al. 
-(2014) for the definition 
-of the algorithm used. An alternative implementation was independently 
+(2014) for the definition of the algorithm used.
+}
+\note{
+An alternative implementation was independently 
 developed by Shah et al (2014), and is available in the package 
 \code{CALIBERrfimpute}. Simulations by Shah (Feb 13, 2014) suggested that 
 the quality of the imputation for 10 and 100 trees was identical, 
@@ -57,13 +65,29 @@ imputing missing data using MICE: A CALIBER study. American Journal
 of Epidemiology, doi: 10.1093/aje/kwt312. 
 
 Van Buuren, S.(2012), Flexible imputation of missing data, Boca Raton, FL:
-Chapman & Hall/CRC.
+CRC/Chapman & Hall.
 }
 \seealso{
 \code{\link{mice}}, \code{\link{mice.impute.cart}}, 
 \code{\link[randomForest]{randomForest}},
 \code{\link[CALIBERrfimpute]{mice.impute.rfcat}}, 
 \code{\link[CALIBERrfimpute]{mice.impute.rfcont}}
+
+Other univariate imputation functions: \code{\link{mice.impute.cart}},
+  \code{\link{mice.impute.lda}},
+  \code{\link{mice.impute.logreg.boot}},
+  \code{\link{mice.impute.logreg}},
+  \code{\link{mice.impute.mean}},
+  \code{\link{mice.impute.midastouch}},
+  \code{\link{mice.impute.norm.boot}},
+  \code{\link{mice.impute.norm.nob}},
+  \code{\link{mice.impute.norm.predict}},
+  \code{\link{mice.impute.norm}},
+  \code{\link{mice.impute.pmm}},
+  \code{\link{mice.impute.polr}},
+  \code{\link{mice.impute.polyreg}},
+  \code{\link{mice.impute.quadratic}},
+  \code{\link{mice.impute.ri}}
 }
 \author{
 Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012

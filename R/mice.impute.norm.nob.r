@@ -1,23 +1,24 @@
-# ------------------------MICE.IMPUTE.NORM.NOB-----------------------
-
-#'Imputation by linear regression (non Bayesian)
+#'Imputation by linear regression without parameter uncertainty
 #'
-#'Imputes univariate missing data using linear regression analysis (non
-#'Bayesian version)
-#'
-#'This creates imputation using the spread around the fitted linear regression
-#'line of \code{y} given \code{x}, as fitted on the observed data.
+#'Imputes univariate missing data using linear regression analysis without 
+#'accounting for the uncertainty of the model parameters.
 #'
 #'@aliases mice.impute.norm.nob norm.nob
-#'@param y Incomplete data vector of length \code{n}
-#'@param ry Vector of missing data pattern (\code{FALSE}=missing,
-#'\code{TRUE}=observed)
-#'@param x Matrix (\code{n} x \code{p}) of complete covariates.
-#'@param ... Other named arguments.
-#'@return A vector of length \code{nmis} with imputations.
-#'@note This function is provided mainly to allow comparison between proper and
-#'improper norm methods. Also, it may be useful to impute large data containing
-#'many rows.
+#'@inheritParams mice.impute.pmm
+#'@return Vector with imputed data, same type as \code{y}, and of length 
+#'\code{sum(wy)}
+#'@details
+#'This function creates imputations using the spread around the 
+#'fitted linear regression line of \code{y} given \code{x}, as 
+#'fitted on the observed data.
+#'
+#'This function is provided mainly to allow comparison between proper (e.g., 
+#'as implemented in \code{mice.impute.norm} and improper (this function)
+#'normal imputation methods. 
+#'
+#'For large data, having many rows, differences between proper and improper 
+#'methods are small, and in those cases one may opt for speed by using 
+#'\code{mice.impute.norm.nob}.
 #'@section Warning: The function does not incorporate the variability of the
 #'regression weights, so it is not 'proper' in the sense of Rubin. For small
 #'samples, variability of the imputed data is therefore underestimated.
@@ -31,32 +32,28 @@
 #'Brand, J.P.L. (1999). Development, Implementation and Evaluation of Multiple
 #'Imputation Strategies for the Statistical Analysis of Incomplete Data Sets.
 #'Ph.D. Thesis, TNO Prevention and Health/Erasmus University Rotterdam.
+#'@family univariate imputation functions
 #'@keywords datagen
 #'@export
-mice.impute.norm.nob <- function(y, ry, x, ...) {
-    # Regression imputation of y given x, with a fixed regression line, and with random draws of the
-    # residuals around the line.  x is complete.
-    x <- cbind(1, as.matrix(x))
-    parm <- .norm.fix(y, ry, x, ...)
-    return(x[!ry, ] %*% parm$beta + rnorm(sum(!ry)) * parm$sigma)
+mice.impute.norm.nob <- function(y, ry, x, wy = NULL, ...) {
+  if (is.null(wy)) wy <- !ry
+  x <- cbind(1, as.matrix(x))
+  parm <- .norm.fix(y, ry, x, ...)
+  return(x[wy, ] %*% parm$beta + rnorm(sum(wy)) * parm$sigma)
 }
 
-# --------------------------------.NORM.FIX-----------------------------
 .norm.fix <- function(y, ry, x, ridge = 1e-05, ...) {
-    # .norm.fix Calculates regression coefficients + error estimate
-    # 
-    # TNO Quality of Life authors: S. van Buuren and K. Groothuis-Oudshoorn
-    xobs <- x[ry, ]
-    yobs <- y[ry]
-    xtx <- t(xobs) %*% xobs
-    pen <- ridge * diag(xtx)
-    if (length(pen) == 1) 
-        pen <- matrix(pen)
-    v <- solve(xtx + diag(pen))
-    coef <- t(yobs %*% xobs %*% v)
-    residuals <- yobs - xobs %*% coef
-    sigma <- sqrt((sum(residuals^2))/(sum(ry) - ncol(x) - 1))
-    parm <- list(coef, sigma)
-    names(parm) <- c("beta", "sigma")
-    return(parm)
+  xobs <- x[ry, ]
+  yobs <- y[ry]
+  xtx <- t(xobs) %*% xobs
+  pen <- ridge * diag(xtx)
+  if (length(pen) == 1) 
+    pen <- matrix(pen)
+  v <- solve(xtx + diag(pen))
+  coef <- t(yobs %*% xobs %*% v)
+  residuals <- yobs - xobs %*% coef
+  sigma <- sqrt((sum(residuals^2))/(sum(ry) - ncol(x) - 1))
+  parm <- list(coef, sigma)
+  names(parm) <- c("beta", "sigma")
+  return(parm)
 }

@@ -47,6 +47,9 @@
 #'@author Alexander Robitzsch (Federal Institute for Education Research,
 #'Innovation, and Development of the Austrian School System, Salzburg,
 #'Austria), \email{a.robitzsch@@bifie.at}
+#'@note This function does not implement the \code{where} functionality. It 
+#'always produces \code{nmis} imputation, irrespective of the \code{where} 
+#'argument of the \code{mice} function.
 #'@seealso \code{\link{mice.impute.2l.norm}}
 #'@references
 #'

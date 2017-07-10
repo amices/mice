@@ -1,32 +1,30 @@
-# -------------------MICE.IMPUTE.MEAN------------------------------
-
 #'Imputation by the mean
 #'
 #'Imputes the arithmetic mean of the observed data
 #'
-#'
-#'@param y Incomplete data vector of length \code{n}
-#'@param ry Vector of missing data pattern (\code{FALSE}=missing,
-#'\code{TRUE}=observed)
-#'@param x Matrix (\code{n} x \code{p}) of complete covariates.
-#'@param ... Other named arguments.
-#'@return A vector of length \code{nmis} with imputations.
+#'@inheritParams mice.impute.pmm
+#'@return Vector with imputed data, same type as \code{y}, and of length 
+#'\code{sum(wy)}
 #'@section Warning: Imputing the mean of a variable is almost never
-#'appropriate.  See Little and Rubin (1987).
-#'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+#'appropriate.  See Little and Rubin (2002, p. 61-62) or 
+#'Van Buuren (2012, p. 10-11) 
 #'@seealso \code{\link{mice}}, \code{\link{mean}}
 #'@references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 #'Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #'Statistical Software}, \bold{45}(3), 1-67.
 #'\url{http://www.jstatsoft.org/v45/i03/}
 #'
-#'Little, R.J.A. and Rubin, D.B. (1987). Statistical Analysis with Missing
+#'Little, R.J.A. and Rubin, D.B. (2002). Statistical Analysis with Missing
 #'Data.  New York: John Wiley and Sons.
+#'
+#'Van Buuren, S. (2012). Flexible Imputation of Missing Data. 
+#'CRC/Chapman & Hall, FL: Boca Raton.
+#'@family univariate imputation functions
 #'@keywords datagen
 #'@export
-mice.impute.mean <- function(y, ry, x = NULL, ...) # mice.impute.mean
-    # 
-    # Unconditional mean imputation
+mice.impute.mean <- function(y, ry, x = NULL, wy = NULL, ...)
 {
-    return(rep(mean(y[ry]), times = sum(!ry)))
+  if (is.null(wy))
+    wy <- !ry
+  return(rep(mean(y[ry]), times = sum(wy)))
 }

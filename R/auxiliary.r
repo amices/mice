@@ -12,6 +12,7 @@ ifdo <- function(cond, action){
   cat("Function ifdo() not yet implemented.\n")
 }
 
+#   
 #'Appends specified break to the data
 #'
 #'A custom function to insert rows in long data with new pseudo-observations 
@@ -36,9 +37,9 @@ appendbreak <- function(data, brk, warp.model = warp.model, id=NULL, typ="pred")
   if (!is.null(id)) {
     idx <- app$id %in% id
     app <- app[idx,]
-    }
+  }
   nap <- nrow(app)
-
+  
   ## update administrative variables 
   app$first <- FALSE
   app$typ <- typ
@@ -49,12 +50,12 @@ appendbreak <- function(data, brk, warp.model = warp.model, id=NULL, typ="pred")
   app$age <- rep(brk,each=nap)
   app$age2 <- predict(warp.model,newdata=app)
   X <- bs(app$age,
-        knots = brk,
-        Boundary.knots = c(brk[1],brk[k]+0.0001),
-        degree = 1)
+          knots = brk,
+          Boundary.knots = c(brk[1],brk[k]+0.0001),
+          degree = 1)
   X <- X[,-(k+1)]
   app[,paste("x",1:ncol(X),sep="")] <- X
-
+  
   ## update outcome variable (set to missing)
   app[,c("hgt.z","wgt.z","bmi.z")] <- NA
   app <- rbind(data, app)

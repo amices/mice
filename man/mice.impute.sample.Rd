@@ -4,20 +4,27 @@
 \alias{mice.impute.sample}
 \title{Imputation by simple random sampling}
 \usage{
-mice.impute.sample(y, ry, x = NULL, ...)
+mice.impute.sample(y, ry, x = NULL, wy = NULL, ...)
 }
 \arguments{
-\item{y}{Incomplete data vector of length \code{n}}
+\item{y}{Vector to be imputed}
 
-\item{ry}{Vector of missing data pattern (\code{FALSE}=missing,
-\code{TRUE}=observed)}
+\item{ry}{Logical vector of length \code{length(y)} indicating the 
+the subset \code{y[ry]} of elements in \code{y} to which the imputation 
+model is fitted. The \code{ry} generally distinguishes the observed 
+(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\code{y}. Matrix \code{x} may have no missing values.}
+
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+indicates locations in \code{y} for which imputations are created.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-A vector of length \code{nmis} with imputations.
+Vector with imputed data, same type as \code{y}, and of length 
+\code{sum(wy)}
 }
 \description{
 Imputes a random sample from the observed \code{y} data
@@ -33,6 +40,6 @@ Statistical Software}, \bold{45}(3), 1-67.
 \url{http://www.jstatsoft.org/v45/i03/}
 }
 \author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2017
 }
 \keyword{datagen}
