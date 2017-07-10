@@ -59,7 +59,7 @@
 #' The term \emph{Fully Conditional Specification} was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Van Buuren et. al., 2006). Further details on mixes of variables and applications can be found in the book \href{https://www.crcpress.com/Flexible-Imputation-of-Missing-Data/van-Buuren/p/book/9781439868249}{\emph{Flexible Imputation of Missing Data}}.
 #' 
 #' @docType package
-#' @name mice-pkg
+#' @name mice
 #' @seealso \code{\link{mice}}, \code{\link{with.mids}},
 #' \code{\link{pool}}, \code{\link{complete}}, \code{\link{ampute}}
 #'@references

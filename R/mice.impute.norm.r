@@ -18,7 +18,7 @@
 #'parameter \eqn{\kappa}.}
 #'\item{Calculate regression weights \eqn{\hat\beta = VX_{obs}'y_{obs}.}}
 #'\item{Draw a random variable \eqn{\dot g \sim \chi^2_\nu} with \eqn{\nu=n_1 - q}.}
-#'\item{Calculate \eqn{\dot\sigma^2 = (y_{obs} - X_{obs}\hat\beta)'(y_{obs} - X_{obs}\hat\beta)/\dot g$.}}
+#'\item{Calculate \eqn{\dot\sigma^2 = (y_{obs} - X_{obs}\hat\beta)'(y_{obs} - X_{obs}\hat\beta)/\dot g.}}
 #'\item{Draw \eqn{q} independent \eqn{N(0,1)} variates in vector \eqn{\dot z_1}.}
 #'\item{Calculate \eqn{V^{1/2}} by Cholesky decomposition.}
 #'\item{Calculate \eqn{\dot\beta = \hat\beta + \dot\sigma\dot z_1 V^{1/2}}.}
