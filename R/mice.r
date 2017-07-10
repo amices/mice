@@ -46,6 +46,7 @@
 #'\code{lda}          \tab unordered\tab Linear discriminant analysis\cr
 #'\code{2l.norm}      \tab numeric  \tab Level-1 normal, heteroskedastic\cr
 #'\code{2l.pan}       \tab numeric  \tab Level-1 normal, homoskedastic\cr
+#'\code{2l.sys}       \tab numeric  \tab Level-1 normal, systematic missing\cr
 #'\code{2lonly.mean}  \tab numeric  \tab Level-2 class mean\cr
 #'\code{2lonly.norm}  \tab numeric  \tab Level-2 class normal\cr
 #'\code{2lonly.pmm}   \tab any      \tab Level-2 class predictive mean matching

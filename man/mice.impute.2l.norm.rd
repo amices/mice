@@ -68,6 +68,9 @@ Van Buuren, S. (2011) Multiple imputation of multilevel data. In Hox, J.J.
 and and Roberts, J.K. (Eds.), \emph{The Handbook of Advanced Multilevel
 Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
 }
+\seealso{
+Other univariate \code{2l} functions: \code{\link{mice.impute.2l.sys}}
+}
 \author{
 Roel de Jong, 2008
 }
