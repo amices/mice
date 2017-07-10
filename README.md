@@ -7,11 +7,17 @@ The [`mice`](https://cran.r-project.org/package=mice) package implements a metho
 Installation
 ------------
 
-This branch explores a new `where` argument for the `mice` function. The branch can be installed as follows:
+The `mice` package can be installed from CRAN as follows:
+
+``` r
+install.packages("mice")
+```
+
+The latest version is can be installed from GitHub as follows:
 
 ``` r
 install.packages("devtools")
-devtools::install_github(repo = "stefvanbuuren/mice", ref = "where")
+devtools::install_github(repo = "stefvanbuuren/mice")
 ```
 
 Overview
@@ -27,6 +33,8 @@ The `mice` package contains functions to
 -   Store and export the imputed data in various formats
 -   Generate simulated incomplete data
 -   Incorporate custom imputation methods
+
+New feature in version 2.41: User may choose which cells to impute.
 
 Main functions
 --------------

@@ -29,14 +29,18 @@ diagnostic plots are implemented to inspect the quality of the imputations.
 
 ## Installation
 
-This branch explores a new `where` argument for the `mice` function.
-The branch can be installed as follows: 
+The `mice` package can be installed from CRAN as follows:
+
+```{r eval = FALSE}
+install.packages("mice")
+```
+
+The latest version is can be installed from GitHub as follows: 
 
 ```{r eval = FALSE}
 install.packages("devtools")
-devtools::install_github(repo = "stefvanbuuren/mice", ref = "where")
+devtools::install_github(repo = "stefvanbuuren/mice")
 ```
-
 
 ## Overview
 
@@ -50,6 +54,8 @@ The `mice` package contains functions to
 - Store and export the imputed data in various formats
 - Generate simulated incomplete data
 - Incorporate custom imputation methods
+
+New feature in version 2.41: User may choose which cells to impute.
 
 ## Main functions
 
