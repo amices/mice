@@ -36,7 +36,6 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
         
         # refresh dummy variables
         for (j in setdiff(p$visitSequence, visitSequence)) {
-          # browser()
           cat.columns <- p$data[, p$categories[j, 4]]
           mm <- model.matrix(~ cat.columns - 1, model.frame(~ cat.columns, na.action = na.pass))[, -1]
           p$data[, (j:(j + p$categories[p$categories[j, 4], 2] - 1))] <- mm
