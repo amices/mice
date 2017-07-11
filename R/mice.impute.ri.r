@@ -18,7 +18,6 @@
 #'@references Jolani, S. (2012). 
 #'\emph{Dual Imputation Strategies for Analyzing Incomplete Data}. 
 #'Disseration. University of Utrecht, Dec 7 2012.
-#'\url{http://dspace.library.uu.nl/handle/1874/257547}
 #'@family univariate imputation functions
 #'@keywords datagen
 #'@export

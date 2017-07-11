@@ -43,7 +43,6 @@ This routine assumes that the response model and imputation model
 Jolani, S. (2012). 
 \emph{Dual Imputation Strategies for Analyzing Incomplete Data}. 
 Disseration. University of Utrecht, Dec 7 2012.
-\url{http://dspace.library.uu.nl/handle/1874/257547}
 }
 \seealso{
 Other univariate imputation functions: \code{\link{mice.impute.cart}},
