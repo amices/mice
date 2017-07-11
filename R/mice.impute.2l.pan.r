@@ -50,7 +50,7 @@
 #'@note This function does not implement the \code{where} functionality. It 
 #'always produces \code{nmis} imputation, irrespective of the \code{where} 
 #'argument of the \code{mice} function.
-#'@seealso \code{\link{mice.impute.2l.norm}}
+#'@family univariate \code{2l} functions
 #'@references
 #'
 #'Schafer J L, Yucel RM (2002). Computational strategies for multivariate

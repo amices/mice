@@ -31,7 +31,8 @@ added.}
 \item{...}{Other named arguments.}
 }
 \value{
-A vector of length \code{nmis} with imputations.
+Vector with imputed data, same type as \code{y}, and of length 
+\code{sum(wy)}
 }
 \description{
 Imputes univariate missing data using a two-level normal model
@@ -69,7 +70,8 @@ and and Roberts, J.K. (Eds.), \emph{The Handbook of Advanced Multilevel
 Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
 }
 \seealso{
-Other univariate \code{2l} functions: \code{\link{mice.impute.2l.sys}}
+Other univariate \code{2l} functions: \code{\link{mice.impute.2l.lmer}},
+  \code{\link{mice.impute.2l.pan}}
 }
 \author{
 Roel de Jong, 2008

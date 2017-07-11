@@ -126,7 +126,8 @@ Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-\code{\link{mice.impute.2l.norm}}
+Other univariate \code{2l} functions: \code{\link{mice.impute.2l.lmer}},
+  \code{\link{mice.impute.2l.norm}}
 }
 \author{
 Alexander Robitzsch (Federal Institute for Education Research,

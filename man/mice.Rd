@@ -181,8 +181,9 @@ Built-in univariate imputation methods are:
 \code{polr}         \tab ordered \tab Proportional odds model\cr
 \code{polyreg}      \tab unordered\tab Polytomous logistic regression\cr
 \code{lda}          \tab unordered\tab Linear discriminant analysis\cr
-\code{2l.norm}      \tab numeric  \tab Level-1 normal, heteroskedastic\cr
-\code{2l.pan}       \tab numeric  \tab Level-1 normal, homoskedastic\cr
+\code{2l.norm}      \tab numeric  \tab Level-1 normal heteroskedastic\cr
+\code{2l.lmer}      \tab numeric  \tab Level-1 normal homoscedastic, lmer\cr
+\code{2l.pan}       \tab numeric  \tab Level-1 normal homoscedastic, pan\cr
 \code{2lonly.mean}  \tab numeric  \tab Level-2 class mean\cr
 \code{2lonly.norm}  \tab numeric  \tab Level-2 class normal\cr
 \code{2lonly.pmm}   \tab any      \tab Level-2 class predictive mean matching

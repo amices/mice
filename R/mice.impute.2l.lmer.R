@@ -1,12 +1,17 @@
-#'Imputation for systematically and sporadically missing data by a two-level normal model
+#'Imputation by a two-level normal model using \code{lmer}
 #'
-#'Imputes univariate systematically and sporadically missing data using a two-level normal model
+#'Imputes univariate systematically and sporadically missing data using a two-level normal model using \code{lme4::lmer()}
 #'
 #'Data are missing systematically if they have not been measured, e.g., in the 
 #'case where we combine data from different souces. Data are missing sporadically
 #'if they have been partially observed.
 #'
-#'@name mice.impute.2l.sys
+#'While the method is fully Bayesian, it may fix parameters of the 
+#'variance-covariance matrix or the random effects to their estimated
+#'value in cases where creating draws from the posterior is not 
+#'possible. The procedure throws a warning when this happens.
+#'
+#'@name mice.impute.2l.lmer
 #'@inheritParams mice.impute.pmm
 #'@param type Vector of length \code{ncol(x)} identifying random and class
 #'variables.  Random variables are identified by a '2'. The class variable
@@ -14,12 +19,14 @@
 #'a '1'.
 #'@param intercept Logical determining whether the intercept is automatically
 #'added.
-#'@return A vector of length \code{nmis} with imputations.
+#'@param \dots Arguments passed down to \code{lmer}
+#'@return Vector with imputed data, same type as \code{y}, and of length 
+#'\code{sum(wy)}
 #'@author Shahab Jolani, 2017
 #'@references
 #'Jolani S. (2017) Hierarchical imputation of systematically and 
 #'sporadically missing data: An approximate Bayesian approach using 
-#'chained equations. forthcoming.
+#'chained equations. Forthcoming.
 #'
 #'Jolani S., Debray T.P.A., Koffijberg H., van Buuren S., Moons K.G.M. (2015).
 #'Imputation of systematically missing predictors in an individual 
@@ -32,7 +39,7 @@
 #'@family univariate \code{2l} functions
 #'@keywords datagen
 #'@export
-mice.impute.2l.sys <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...) {
+mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...) {
   
   if (!requireNamespace("lme4", quietly = TRUE))
     stop("Please install package 'lme4'", call. = FALSE)
@@ -67,7 +74,8 @@ mice.impute.2l.sys <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...)
                      paste(rande[-1], collapse = "+"), "|", clust, ")")
   
   suppressWarnings(fit <- try(lme4::lmer(formula(randmodel), 
-                                   data = data.frame(yobs, xobs)), 
+                                   data = data.frame(yobs, xobs), 
+                                   ...),  
                               silent = TRUE))
   if(!is.null(attr(fit, "class"))) {
     if(attr(fit, "class") == "try-error") {
@@ -111,7 +119,7 @@ mice.impute.2l.sys <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...)
   temp <- MASS::ginv(lambda)
   ev <- eigen(temp)
   if (sum(ev$values > 0) == length(ev$values)) {
-    deco <- (ev$vectors) %*% diag(sqrt(ev$values))
+    deco <- ev$vectors %*% diag(sqrt(ev$values))
     psi.star <- MASS::ginv(deco %*% temp.psi.star %*% t(deco)) 
   } else {
     try(temp.svd <- svd(lambda))

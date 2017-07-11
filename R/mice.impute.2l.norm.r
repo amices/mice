@@ -20,7 +20,8 @@
 #'@param intercept Logical determining whether the intercept is automatically
 #'added.
 #'@param ... Other named arguments.
-#'@return A vector of length \code{nmis} with imputations.
+#'@return Vector with imputed data, same type as \code{y}, and of length 
+#'\code{sum(wy)}
 #'@note Added June 25, 2012: The currently implemented algorithm does not
 #'handle predictors that are specified as fixed effects (type=1). When using
 #'\code{mice.impute.2l.norm()}, the current advice is to specify all predictors

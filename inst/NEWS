@@ -12,6 +12,9 @@ Questions and suggestions about MICE can be directed to
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
 
+V2.42    11jul2017 SvB
+UPDATE   Rename mice.impute.2l.sys to mice.impute.2l.lmer
+
 V2.41    10jul2017 SvB
 ADDED    New feature: `where`argument to mice
 ADDED    New `wy` argument to imputation functions
