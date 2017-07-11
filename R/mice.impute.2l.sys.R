@@ -1,9 +1,10 @@
-#'Imputation for systematic missing data by a two-level normal model
+#'Imputation for systematically and sporadically missing data by a two-level normal model
 #'
-#'Imputes univariate systematically missing data using a two-level normal model
+#'Imputes univariate systematically and sporadically missing data using a two-level normal model
 #'
 #'Data are missing systematically if they have not been measured, e.g., in the 
-#'case where we combine data from different souces.
+#'case where we combine data from different souces. Data are missing sporadically
+#'if they have been partially observed.
 #'
 #'@name mice.impute.2l.sys
 #'@inheritParams mice.impute.pmm
@@ -16,7 +17,11 @@
 #'@return A vector of length \code{nmis} with imputations.
 #'@author Shahab Jolani, 2017
 #'@references
-#'Jolani S, Debray TPA, Koffijberg H, van Buuren S, Moons KGM (2015).
+#'Jolani S. (2017) Hierarchical imputation of systematically and 
+#'sporadically missing data: An approximate Bayesian approach using 
+#'chained equations. forthcoming.
+#'
+#'Jolani S., Debray T.P.A., Koffijberg H., van Buuren S., Moons K.G.M. (2015).
 #'Imputation of systematically missing predictors in an individual 
 #'participant data meta-analysis: a generalized approach using MICE. 
 #'\emph{Statistics in Medicine}, 34:1841-1863.
