@@ -3,35 +3,46 @@
 \name{mice.impute.norm.nob}
 \alias{mice.impute.norm.nob}
 \alias{norm.nob}
-\title{Imputation by linear regression (non Bayesian)}
+\title{Imputation by linear regression without parameter uncertainty}
 \usage{
-mice.impute.norm.nob(y, ry, x, ...)
+mice.impute.norm.nob(y, ry, x, wy = NULL, ...)
 }
 \arguments{
-\item{y}{Incomplete data vector of length \code{n}}
+\item{y}{Vector to be imputed}
 
-\item{ry}{Vector of missing data pattern (\code{FALSE}=missing,
-\code{TRUE}=observed)}
+\item{ry}{Logical vector of length \code{length(y)} indicating the 
+the subset \code{y[ry]} of elements in \code{y} to which the imputation 
+model is fitted. The \code{ry} generally distinguishes the observed 
+(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\code{y}. Matrix \code{x} may have no missing values.}
+
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+indicates locations in \code{y} for which imputations are created.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-A vector of length \code{nmis} with imputations.
+Vector with imputed data, same type as \code{y}, and of length 
+\code{sum(wy)}
 }
 \description{
-Imputes univariate missing data using linear regression analysis (non
-Bayesian version)
+Imputes univariate missing data using linear regression analysis without 
+accounting for the uncertainty of the model parameters.
 }
 \details{
-This creates imputation using the spread around the fitted linear regression
-line of \code{y} given \code{x}, as fitted on the observed data.
-}
-\note{
-This function is provided mainly to allow comparison between proper and
-improper norm methods. Also, it may be useful to impute large data containing
-many rows.
+This function creates imputations using the spread around the 
+fitted linear regression line of \code{y} given \code{x}, as 
+fitted on the observed data.
+
+This function is provided mainly to allow comparison between proper (e.g., 
+as implemented in \code{mice.impute.norm} and improper (this function)
+normal imputation methods. 
+
+For large data, having many rows, differences between proper and improper 
+methods are small, and in those cases one may opt for speed by using 
+\code{mice.impute.norm.nob}.
 }
 \section{Warning}{
  The function does not incorporate the variability of the
@@ -51,6 +62,22 @@ Ph.D. Thesis, TNO Prevention and Health/Erasmus University Rotterdam.
 }
 \seealso{
 \code{\link{mice}}, \code{\link{mice.impute.norm}}
+
+Other univariate imputation functions: \code{\link{mice.impute.cart}},
+  \code{\link{mice.impute.lda}},
+  \code{\link{mice.impute.logreg.boot}},
+  \code{\link{mice.impute.logreg}},
+  \code{\link{mice.impute.mean}},
+  \code{\link{mice.impute.midastouch}},
+  \code{\link{mice.impute.norm.boot}},
+  \code{\link{mice.impute.norm.predict}},
+  \code{\link{mice.impute.norm}},
+  \code{\link{mice.impute.pmm}},
+  \code{\link{mice.impute.polr}},
+  \code{\link{mice.impute.polyreg}},
+  \code{\link{mice.impute.quadratic}},
+  \code{\link{mice.impute.rf}},
+  \code{\link{mice.impute.ri}}
 }
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn, 2000

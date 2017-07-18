@@ -52,6 +52,11 @@ heterogeneous within-group variances see \code{\link{mice.impute.2l.norm}}. %
 The random intercept is automatically added in %
 \code{mice.impute.2l.norm()}.
 }
+\note{
+This function does not implement the \code{where} functionality. It 
+always produces \code{nmis} imputation, irrespective of the \code{where} 
+argument of the \code{mice} function.
+}
 \examples{
 
 ###################################
@@ -121,7 +126,8 @@ Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-\code{\link{mice.impute.2l.norm}}
+Other univariate \code{2l} functions: \code{\link{mice.impute.2l.lmer}},
+  \code{\link{mice.impute.2l.norm}}
 }
 \author{
 Alexander Robitzsch (Federal Institute for Education Research,

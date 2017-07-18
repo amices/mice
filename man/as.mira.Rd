@@ -23,5 +23,5 @@ available for fitted object.
 \code{\link[=mira-class]{mira}}
 }
 \author{
-Stef van Buuren, 2011
+Stef van Buuren
 }

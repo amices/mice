@@ -2,38 +2,67 @@
 % Please edit documentation in R/mice.impute.midastouch.R
 \name{mice.impute.midastouch}
 \alias{mice.impute.midastouch}
-\title{Predictive Mean Matching with distance aided selection of donors}
+\title{Imputation by predictive mean matching with distance aided donor selection}
 \usage{
-mice.impute.midastouch(y, ry, x, ridge = 1e-05, 
-midas.kappa = NULL, outout = TRUE, neff = NULL, debug = NULL, ...)
+mice.impute.midastouch(y, ry, x, wy = NULL, ridge = 1e-05,
+  midas.kappa = NULL, outout = TRUE, neff = NULL, debug = NULL, ...)
 }
 \arguments{
-\item{y}{Numeric vector with incomplete data}
+\item{y}{Vector to be imputed}
 
-\item{ry}{Response pattern of \code{y} (\code{TRUE}=observed, \code{FALSE}=missing)}
+\item{ry}{Logical vector of length \code{length(y)} indicating the 
+the subset \code{y[ry]} of elements in \code{y} to which the imputation 
+model is fitted. The \code{ry} generally distinguishes the observed 
+(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Design matrix with \code{length(y)} rows and \code{p} columns containing complete covariates.}
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\code{y}. Matrix \code{x} may have no missing values.}
 
-\item{ridge}{The ridge penalty applied to prevent problems with multicollinearity. The default is \code{ridge = 1e-05}, which means that 0.001 percent of the diagonal is added to the cross-product. Larger ridges may result in more biased estimates. For highly noisy data (e.g. many junk variables), set \code{ridge = 1e-06} or even lower to reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+indicates locations in \code{y} for which imputations are created.}
 
-\item{midas.kappa}{Scalar. If \code{NULL} (default) then the optimal \code{kappa} gets selected automatically. Alternatively, the user may specify a scalar. Siddique and Belin 2008 find \code{midas.kappa = 3} to be sensible.}
+\item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent 
+problems with multicollinearity. The default is \code{ridge = 1e-05}, 
+which means that 0.01 percent of the diagonal is added to the cross-product. 
+Larger ridges may result in more biased estimates. For highly noisy data 
+(e.g. many junk variables), set \code{ridge = 1e-06} or even lower to 
+reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
 
-\item{outout}{Logical. If \code{TRUE} (default) one model is estimated for each donor (leave-one-out principle). For speedup choose \code{outout = FALSE}, which estimates one model for all observations leading to in-sample predictions for the donors and out-of-sample predictions for the recipients. Mind the inappropriateness, though.}
+\item{midas.kappa}{Scalar. If \code{NULL} (default) then the 
+optimal \code{kappa} gets selected automatically. Alternatively, the user 
+may specify a scalar. Siddique and Belin 2008 find \code{midas.kappa = 3} 
+to be sensible.}
 
-\item{neff}{FOR EXPERTS. Null or character string. The name of an existing environment in which the effective sample size of the donors for each loop (CE iterations times multiple imputations) is supposed to be written. The effective sample size is necessary to compute the correction for the total variance as originally suggested by Parzen, Lipsitz and Fitzmaurice 2005. The objectname is \code{midastouch.neff}.}
+\item{outout}{Logical. If \code{TRUE} (default) one model is estimated 
+for each donor (leave-one-out principle). For speedup choose 
+\code{outout = FALSE}, which estimates one model for all observations 
+leading to in-sample predictions for the donors and out-of-sample 
+predictions for the recipients. Mind the inappropriateness, though.}
 
-\item{debug}{FOR EXPERTS. Null or character string. The name of an existing environment in which the input is supposed to be written. The objectname is \code{midastouch.inputlist}.}
+\item{neff}{FOR EXPERTS. Null or character string. The name of an existing 
+environment in which the effective sample size of the donors for each 
+loop (CE iterations times multiple imputations) is supposed to be written. 
+The effective sample size is necessary to compute the correction for the 
+total variance as originally suggested by Parzen, Lipsitz and 
+Fitzmaurice 2005. The objectname is \code{midastouch.neff}.}
 
-\item{\dots}{Other named arguments.}
+\item{debug}{FOR EXPERTS. Null or character string. The name of an existing 
+environment in which the input is supposed to be written. The objectname 
+is \code{midastouch.inputlist}.}
+
+\item{...}{Other named arguments.}
 }
 \value{
-Numeric vector of length \code{sum(!ry)} with imputations
+Vector with imputed data, same type as \code{y}, and of 
+length \code{sum(wy)}
 }
 \description{
 Imputes univariate missing data using predictive mean matching.
 }
 \details{
-Imputation of \code{y} by predictive mean matching, based on Rubin (1987, p. 168, formulas a and b) and Siddique and Belin 2008. The procedure is as follows:
+Imputation of \code{y} by predictive mean matching, based on 
+Rubin (1987, p. 168, formulas a and b) and Siddique and Belin 2008. 
+The procedure is as follows:
 \enumerate{
 \item Draw a bootstrap sample from the donor pool.
 \item Estimate a beta matrix on the bootstrap sample by the leave one out principle.
@@ -56,25 +85,54 @@ imp$imp$bmi
 complete(imp)
 
 # imputation on mixed data with a different method per column
-mice(nhanes2, method = c('sample','midastouch','logreg','norm'))
+mice(nhanes2, method = c('sample', 'midastouch', 'logreg', 'norm'))
 }
 \references{
-Gaffert, P., Meinfelder, F., Bosch V. (2015) Towards an MI-proper Predictive Mean Matching, Discussion Paper. 
+Gaffert, P., Meinfelder, F., Bosch V. (2015) Towards an MI-proper 
+Predictive Mean Matching, Discussion Paper. 
 \url{https://www.uni-bamberg.de/fileadmin/uni/fakultaeten/sowi_lehrstuehle/statistik/Personen/Dateien_Florian/properPMM.pdf}
 
-Little, R.J.A. (1988), Missing data adjustments in large surveys (with discussion), Journal of Business Economics and Statistics, 6, 287--301.
+Little, R.J.A. (1988), Missing data adjustments in large 
+surveys (with discussion), Journal of Business Economics and 
+Statistics, 6, 287--301.
 
-Parzen, M., Lipsitz, S. R., Fitzmaurice, G. M. (2005), A note on reducing the bias of the approximate bayesian bootstrap imputation variance estimator. Biometrika \bold{92}, 4, 971--974.
+Parzen, M., Lipsitz, S. R., Fitzmaurice, G. M. (2005), A note on reducing 
+the bias of the approximate bayesian bootstrap imputation variance estimator. 
+Biometrika \bold{92}, 4, 971--974.
 
 Rubin, D.B. (1987), Multiple imputation for nonresponse in surveys. New York: Wiley.
 
-Siddique, J., Belin, T.R. (2008), Multiple imputation using an iterative hot-deck with distance-based donor selection. Statistics in medicine, \bold{27}, 1, 83--102
+Siddique, J., Belin, T.R. (2008), Multiple imputation using an iterative 
+hot-deck with distance-based donor selection. Statistics in medicine, 
+\bold{27}, 1, 83--102
 
-Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006), Fully conditional specification in multivariate imputation.  \emph{Journal of Statistical Computation and Simulation}, \bold{76}, 12, 1049--1064.
+Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006), 
+Fully conditional specification in multivariate imputation.
+\emph{Journal of Statistical Computation and Simulation}, \bold{76}, 12, 
+1049--1064.
 
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011), \code{mice}: Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical Software}, \bold{45}, 3, 1--67. \url{http://www.jstatsoft.org/v45/i03/}
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011), \code{mice}: Multivariate 
+Imputation by Chained Equations in \code{R}. \emph{Journal of 
+Statistical Software}, \bold{45}, 3, 1--67. \url{http://www.jstatsoft.org/v45/i03/}
+}
+\seealso{
+Other univariate imputation functions: \code{\link{mice.impute.cart}},
+  \code{\link{mice.impute.lda}},
+  \code{\link{mice.impute.logreg.boot}},
+  \code{\link{mice.impute.logreg}},
+  \code{\link{mice.impute.mean}},
+  \code{\link{mice.impute.norm.boot}},
+  \code{\link{mice.impute.norm.nob}},
+  \code{\link{mice.impute.norm.predict}},
+  \code{\link{mice.impute.norm}},
+  \code{\link{mice.impute.pmm}},
+  \code{\link{mice.impute.polr}},
+  \code{\link{mice.impute.polyreg}},
+  \code{\link{mice.impute.quadratic}},
+  \code{\link{mice.impute.rf}},
+  \code{\link{mice.impute.ri}}
 }
 \author{
 Philipp Gaffert, Florian Meinfelder, Volker Bosch 2015
 }
-\keyword{mice}
+\keyword{datagen}

@@ -2,6 +2,19 @@
 #'
 #'Imputes univariate missing data using classification and regression trees.
 #'
+#'@aliases mice.impute.cart cart
+#'
+#'@inheritParams mice.impute.pmm
+#'@return Vector with imputed data, same type as \code{y}, and of length 
+#'\code{sum(wy)}
+#'@param minbucket The minimum number of observations in any terminal node used.  
+#'See \code{\link{rpart.control}} for details.
+#'@param cp Complexity parameter. Any split that does not decrease the overall
+#'lack of fit by a factor of cp is not attempted. See \code{\link{rpart.control}} 
+#'for details.
+#'@param ... Other named arguments passed down to \code{rpart()}.
+#'@return Numeric vector of length \code{sum(!ry)} with imputations
+#'@details
 #'Imputation of \code{y} by classification and regression trees. The procedure
 #'is as follows: 
 #'\enumerate{ 
@@ -10,20 +23,6 @@
 #'\item Make a random draw among the member in the node, and take the observed value from that 
 #'draw as the imputation.
 #'}
-#'
-#'@aliases mice.impute.cart cart
-#'@param y Numeric vector with incomplete data
-#'@param ry Response pattern of \code{y} (\code{TRUE} = observed,
-#'\code{FALSE} = missing)
-#'@param x Design matrix with \code{length(y)} rows and \code{p} columns
-#'containing complete covariates.
-#'@param minbucket The minimum number of observations in any terminal node used.  
-#'See \code{\link{rpart.control}} for details.
-#'@param cp Complexity parameter. Any split that does not decrease the overall
-#'lack of fit by a factor of cp is not attempted. See \code{\link{rpart.control}} 
-#'for details.
-#'@param ... Other named arguments passed down to \code{rpart()}.
-#'@return Numeric vector of length \code{sum(!ry)} with imputations
 #'@seealso \code{\link{mice}}, \code{\link{mice.impute.rf}}, 
 #'\code{\link[rpart]{rpart}}, \code{\link[rpart]{rpart.control}} 
 #'@author Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
@@ -38,34 +37,43 @@
 #'Brooks/Cole Advanced Books & Software.
 #'
 #'Van Buuren, S.(2012), Flexible imputation of missing data, Boca Raton, FL:
-#'Chapman & Hall/CRC.
+#'CRC/Chapman & Hall.
 #'
+#'@family univariate imputation functions
 #'@examples
 #'require(rpart)
 #'
-#'imp <- mice(nhanes2, meth = "cart", minbucket = 4)
+#'imp <- mice(nhanes2, meth = 'cart', minbucket = 4)
 #'plot(imp)
 #'
 #'@keywords datagen
 #'@export
-mice.impute.cart <- function(y, ry, x, minbucket = 5, cp = 1e-04, ...) {
-    minbucket <- max(1, minbucket)  # safety
-    xobs <- x[ry, , drop = FALSE]
-    xmis <- x[!ry, , drop = FALSE]
-    yobs <- y[ry]
-    if (!is.factor(yobs)) {
-        fit <- rpart(yobs ~ ., data = cbind(yobs, xobs), method = "anova", 
-                     control = rpart.control(minbucket = minbucket, cp = cp, ...))
-        leafnr <- floor(as.numeric(row.names(fit$frame[fit$where,])))
-        fit$frame$yval <- as.numeric(row.names(fit$frame))
-        nodes <- predict(object = fit, newdata = xmis)
-        donor <- lapply(nodes, function(s) yobs[leafnr == s])
-        impute <- sapply(1:length(donor), function(s) sample(donor[[s]], 1))
-    } else {
-        fit <- rpart(yobs ~ ., data = cbind(yobs, xobs), method = "class", 
-                     control = rpart.control(minbucket = minbucket, cp = cp, ...))
-        nodes <- predict(object = fit, newdata = xmis)
-        impute <- apply(nodes, MARGIN=1, FUN=function(s) sample(colnames(nodes),size=1, prob=s))
-    }
-    return(impute)
+mice.impute.cart <- function(y, ry, x, wy = NULL, minbucket = 5, cp = 1e-04, 
+                             ...)
+{
+  if (is.null(wy)) 
+    wy <- !ry
+  minbucket <- max(1, minbucket)
+  xobs <- x[ry, , drop = FALSE]
+  xmis <- x[wy, , drop = FALSE]
+  yobs <- y[ry]
+  if (!is.factor(yobs))
+  {
+    fit <- rpart(yobs ~ ., data = cbind(yobs, xobs), method = "anova", 
+                 control = rpart.control(minbucket = minbucket, cp = cp, ...))
+    leafnr <- floor(as.numeric(row.names(fit$frame[fit$where, ])))
+    fit$frame$yval <- as.numeric(row.names(fit$frame))
+    nodes <- predict(object = fit, newdata = xmis)
+    donor <- lapply(nodes, function(s) yobs[leafnr == s])
+    impute <- sapply(1:length(donor), function(s) sample(donor[[s]], 1))
+  } else
+  {
+    fit <- rpart(yobs ~ ., data = cbind(yobs, xobs), method = "class", 
+                 control = rpart.control(minbucket = minbucket, cp = cp, ...))
+    nodes <- predict(object = fit, newdata = xmis)
+    impute <- apply(nodes, MARGIN = 1, 
+                    FUN = function(s) sample(colnames(nodes), 
+                                             size = 1, prob = s))
+  }
+  return(impute)
 }

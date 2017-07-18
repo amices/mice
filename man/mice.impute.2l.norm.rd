@@ -2,23 +2,28 @@
 % Please edit documentation in R/mice.impute.2l.norm.r
 \name{mice.impute.2l.norm}
 \alias{mice.impute.2l.norm}
-\alias{2l.norm}
 \title{Imputation by a two-level normal model}
 \usage{
-mice.impute.2l.norm(y, ry, x, type, intercept = TRUE, ...)
+mice.impute.2l.norm(y, ry, x, type, wy = NULL, intercept = TRUE, ...)
 }
 \arguments{
-\item{y}{Incomplete data vector of length \code{n}}
+\item{y}{Vector to be imputed}
 
-\item{ry}{Vector of missing data pattern (\code{FALSE}=missing,
-\code{TRUE}=observed)}
+\item{ry}{Logical vector of length \code{length(y)} indicating the 
+the subset \code{y[ry]} of elements in \code{y} to which the imputation 
+model is fitted. The \code{ry} generally distinguishes the observed 
+(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\code{y}. Matrix \code{x} may have no missing values.}
 
 \item{type}{Vector of length \code{ncol(x)} identifying random and class
 variables.  Random variables are identified by a '2'. The class variable
 (only one is allowed) is coded as '-2'. Random variables also include the
 fixed effect.}
+
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+indicates locations in \code{y} for which imputations are created.}
 
 \item{intercept}{Logical determining whether the intercept is automatically
 added.}
@@ -26,7 +31,8 @@ added.}
 \item{...}{Other named arguments.}
 }
 \value{
-A vector of length \code{nmis} with imputations.
+Vector with imputed data, same type as \code{y}, and of length 
+\code{sum(wy)}
 }
 \description{
 Imputes univariate missing data using a two-level normal model
@@ -62,6 +68,10 @@ Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 Van Buuren, S. (2011) Multiple imputation of multilevel data. In Hox, J.J.
 and and Roberts, J.K. (Eds.), \emph{The Handbook of Advanced Multilevel
 Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
+}
+\seealso{
+Other univariate \code{2l} functions: \code{\link{mice.impute.2l.lmer}},
+  \code{\link{mice.impute.2l.pan}}
 }
 \author{
 Roel de Jong, 2008

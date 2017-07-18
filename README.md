@@ -34,6 +34,8 @@ The `mice` package contains functions to
 -   Generate simulated incomplete data
 -   Incorporate custom imputation methods
 
+New feature in version 2.41: User may choose which cells to impute.
+
 Main functions
 --------------
 

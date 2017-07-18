@@ -1,44 +1,44 @@
-# --------------------MICE.IMPUTE.NORM----------------------------------
-
 #'Imputation by Bayesian linear regression
 #'
-#'Imputes univariate missing data using Bayesian linear regression analysis
-#'
-#'Draws values of \code{beta} and \code{sigma} for Bayesian linear regression
-#'imputation of \code{y} given \code{x} according to Rubin p. 167.
+#'Calculates imputations for univariate missing data by Bayesian linear 
+#'regression, also known as the normal model.
 #'
 #'@aliases mice.impute.norm norm
-#'@param y Incomplete data vector of length \code{n}
-#'@param ry Vector of missing data pattern (\code{FALSE}=missing,
-#'\code{TRUE}=observed)
-#'@param x Matrix (\code{n} x \code{p}) of complete covariates.
-#'@param ... Other named arguments.
-#'@return A vector of length \code{nmis} with imputations.
-#'@note Using \code{mice.impute.norm} for all columns is similar to Schafer's
-#'NORM method (Schafer, 1997).
-#'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-#'@references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
-#'Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-#'Statistical Software}, \bold{45}(3), 1-67.
-#'\url{http://www.jstatsoft.org/v45/i03/}
+#'@inheritParams mice.impute.pmm
+#'@return Vector with imputed data, same type as \code{y}, and of length 
+#'\code{sum(wy)}
+#'@author Stef van Buuren, Karin Groothuis-Oudshoorn
+#'@details
+#' Imputation of \code{y} by the normal model by the method defined by 
+#' Rubin (1987, p. 167). The procedure is as follows:
 #'
-#'Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
-#'multiple imputation strategies for the statistical analysis of incomplete
-#'data sets.} Dissertation. Rotterdam: Erasmus University.
+#'\enumerate{
+#'\item{Calculate the cross-product matrix \eqn{S=X_{obs}'X_{obs}}.}
+#'\item{Calculate \eqn{V = (S+{diag}(S)\kappa)^{-1}}, with some small ridge 
+#'parameter \eqn{\kappa}.}
+#'\item{Calculate regression weights \eqn{\hat\beta = VX_{obs}'y_{obs}.}}
+#'\item{Draw a random variable \eqn{\dot g \sim \chi^2_\nu} with \eqn{\nu=n_1 - q}.}
+#'\item{Calculate \eqn{\dot\sigma^2 = (y_{obs} - X_{obs}\hat\beta)'(y_{obs} - X_{obs}\hat\beta)/\dot g.}}
+#'\item{Draw \eqn{q} independent \eqn{N(0,1)} variates in vector \eqn{\dot z_1}.}
+#'\item{Calculate \eqn{V^{1/2}} by Cholesky decomposition.}
+#'\item{Calculate \eqn{\dot\beta = \hat\beta + \dot\sigma\dot z_1 V^{1/2}}.}
+#'\item{Draw \eqn{n_0} independent \eqn{N(0,1)} variates in vector \eqn{\dot z_2}.}
+#'\item{Calculate the \eqn{n_0} values \eqn{y_{imp} = X_{mis}\dot\beta + \dot z_2\dot\sigma}.}
+#'}
 #'
-#'Schafer, J.L. (1997). Analysis of incomplete multivariate data. London:
-#'Chapman & Hall.
+#'Using \code{mice.impute.norm} for all columns emulates Schafer's NORM method (Schafer, 1997).
+#'@references 
+#'Rubin, D.B (1987). Multiple Imputation for Nonresponse in Surveys. New York: John Wiley & Sons.
+#'
+#'Schafer, J.L. (1997). Analysis of incomplete multivariate data. London: Chapman & Hall.
+#'@family univariate imputation functions
 #'@keywords datagen
 #'@export
-mice.impute.norm <- function(y, ry, x, ...) {
-    # Bayesian normal imputation of y given x according to Rubin p. 167
-    # x is complete.
-    #
-    # TNO Quality of Life
-    # authors: S. van Buuren and K. Groothuis-Oudshoorn
-    x <- cbind(1, as.matrix(x))
-    parm <- .norm.draw(y, ry, x, ...)
-    return(x[!ry, ] %*% parm$beta + rnorm(sum(!ry)) * parm$sigma)
+mice.impute.norm <- function(y, ry, x, wy = NULL, ...) {
+  if (is.null(wy)) wy <- !ry
+  x <- cbind(1, as.matrix(x))
+  parm <- .norm.draw(y, ry, x, ...)
+  return(x[wy, ] %*% parm$beta + rnorm(sum(wy)) * parm$sigma)
 }
 
 #' Draws values of beta and sigma by Bayesian linear regression
@@ -65,25 +65,25 @@ mice.impute.norm <- function(y, ry, x, ...) {
 #'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
 #'@export
 norm.draw <- function(y, ry, x, ridge = 1e-05, ...) 
-    return(.norm.draw(y, ry, x, ridge = 1e-05, ...))
+  return(.norm.draw(y, ry, x, ridge = 1e-05, ...))
 
 ###'@rdname norm.draw
 ###'@export
 .norm.draw <- function(y, ry, x, ridge = 1e-05, ...) {
-    xobs <- x[ry, ]
-    yobs <- y[ry]
-    xtx <- crossprod(xobs)  # SvB 21/01/2014
-    pen <- ridge * diag(xtx)
-    if (length(pen) == 1) 
-        pen <- matrix(pen)
-    v <- solve(xtx + diag(pen))
-    coef <- t(yobs %*% xobs %*% v)
-    residuals <- yobs - xobs %*% coef
-    df <- max(sum(ry) - ncol(x), 1)  # SvB 31/10/2012
-    sigma.star <- sqrt(sum((residuals)^2)/rchisq(1, df))  # SvB 01/02/2011
-    beta.star <- coef + (t(chol(sym(v))) %*% rnorm(ncol(x))) * sigma.star
-    parm <- list(coef, beta.star, sigma.star)  # SvB 10/2/2010
-    names(parm) <- c("coef", "beta", "sigma")  # SvB 10/2/2010
-    return(parm)
+  xobs <- x[ry, ]
+  yobs <- y[ry]
+  xtx <- crossprod(xobs)
+  pen <- ridge * diag(xtx)
+  if (length(pen) == 1)
+    pen <- matrix(pen)
+  v <- solve(xtx + diag(pen))
+  coef <- t(yobs %*% xobs %*% v)
+  residuals <- yobs - xobs %*% coef
+  df <- max(sum(ry) - ncol(x), 1)
+  sigma.star <- sqrt(sum((residuals)^2)/rchisq(1, df))
+  beta.star <- coef + (t(chol(sym(v))) %*% rnorm(ncol(x))) * sigma.star
+  parm <- list(coef, beta.star, sigma.star)
+  names(parm) <- c("coef", "beta", "sigma")
+  return(parm)
 }
 

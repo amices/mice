@@ -10,10 +10,10 @@
 #'                      na.exclude pf predict pt qt rbinom
 #'                      rchisq rgamma rnorm runif summary.glm
 #'                      quantile
-#'                      update var vcov complete.cases na.omit
+#'                      update var vcov complete.cases na.omit na.pass
 #'@importFrom utils     flush.console write.table head tail
 #'                      packageDescription methods
-#'@importFrom MASS      eqscplot lda mvrnorm polr truehist
+#'@importFrom MASS      eqscplot lda mvrnorm polr truehist ginv
 #'@importFrom nnet      multinom nnet
 #'@importFrom rpart     rpart rpart.control
 #'@importFrom Rcpp      sourceCpp

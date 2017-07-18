@@ -1,5 +1,3 @@
-# -------------------MICE.IMPUTE.2L.NORM----------------------------
-
 #'Imputation by a two-level normal model
 #'
 #'Imputes univariate missing data using a two-level normal model
@@ -13,12 +11,8 @@
 #'A model within a random intercept can be specified by \code{mice(...,
 #'intercept = FALSE)}.
 #'
-#'@aliases mice.impute.2l.norm 2l.norm
 #'@name mice.impute.2l.norm
-#'@param y Incomplete data vector of length \code{n}
-#'@param ry Vector of missing data pattern (\code{FALSE}=missing,
-#'\code{TRUE}=observed)
-#'@param x Matrix (\code{n} x \code{p}) of complete covariates.
+#'@inheritParams mice.impute.pmm
 #'@param type Vector of length \code{ncol(x)} identifying random and class
 #'variables.  Random variables are identified by a '2'. The class variable
 #'(only one is allowed) is coded as '-2'. Random variables also include the
@@ -26,7 +20,8 @@
 #'@param intercept Logical determining whether the intercept is automatically
 #'added.
 #'@param ... Other named arguments.
-#'@return A vector of length \code{nmis} with imputations.
+#'@return Vector with imputed data, same type as \code{y}, and of length 
+#'\code{sum(wy)}
 #'@note Added June 25, 2012: The currently implemented algorithm does not
 #'handle predictors that are specified as fixed effects (type=1). When using
 #'\code{mice.impute.2l.norm()}, the current advice is to specify all predictors
@@ -48,9 +43,10 @@
 #'Van Buuren, S. (2011) Multiple imputation of multilevel data. In Hox, J.J.
 #'and and Roberts, J.K. (Eds.), \emph{The Handbook of Advanced Multilevel
 #'Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
+#'@family univariate \code{2l} functions
 #'@keywords datagen
 #'@export
-mice.impute.2l.norm <- function(y, ry, x, type, intercept = TRUE, ...) {
+mice.impute.2l.norm <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...) {
     rwishart <- function(df, p = nrow(SqrtSigma), SqrtSigma = diag(p)) {
         ## rwishart, written by Bill Venables
         Z <- matrix(0, p, p)
@@ -82,15 +78,10 @@ mice.impute.2l.norm <- function(y, ry, x, type, intercept = TRUE, ...) {
         return(s)
     }
     
-    ## added SvB 21jul2016
     symridge <- function(x, ridge = 0.0001, ...) {
       x <- (x + t(x))/2
       x + diag(diag(x) * ridge)
     }
-    
-    
-    
-    ## written by Roel de Jong
     
     ## append intercept
     if (intercept) {
@@ -100,9 +91,9 @@ mice.impute.2l.norm <- function(y, ry, x, type, intercept = TRUE, ...) {
     
     ## Initialize
     n.iter <- 100
-    nry <- !ry
+    if (is.null(wy)) wy <- !ry
     n.class <- length(unique(x[, type == (-2)]))
-    if (n.class == 0) stop("No class variable")   ## SvB 27apr2013
+    if (n.class == 0) stop("No class variable")
     gf.full <- factor(x[, type == (-2)], labels = 1:n.class)
     gf <- gf.full[ry]
     XG <- split.data.frame(as.matrix(x[ry, type == 2]), gf)
@@ -150,9 +141,8 @@ mice.impute.2l.norm <- function(y, ry, x, type, intercept = TRUE, ...) {
         theta <- 1/rgamma(1, n.class/2 - 1, scale = 2/(n.class * (sigma2.0/H - log(sigma2.0) + log(G) - 1)))
     }
     
-    
     ## Generate imputations
-    imps <- rnorm(n = sum(nry), sd = sqrt(1/inv.sigma2[gf.full[nry]])) + rowSums(as.matrix(x[nry, type == 2, drop = FALSE]) * bees[gf.full[nry], 
+    imps <- rnorm(n = sum(wy), sd = sqrt(1/inv.sigma2[gf.full[wy]])) + rowSums(as.matrix(x[wy, type == 2, drop = FALSE]) * bees[gf.full[wy], 
                                                                                                                      ])
     return(imps)
 }

@@ -1,28 +1,29 @@
-# --------------------MICE.IMPUTE.LDA-----------------------------
-
 #'Imputation by linear discriminant analysis
 #'
 #'Imputes univariate missing data using linear discriminant analysis
 #'
-#'Imputation of categorical response variables by linear discriminant analysis.
+#'@inheritParams mice.impute.pmm
+#'@param ... Other named arguments. Not used.
+#'@return Vector with imputed data, of type factor, and of length 
+#'\code{sum(wy)}
+#'@details Imputation of categorical response variables by linear discriminant analysis.
 #'This function uses the Venables/Ripley functions \code{lda()} and
 #'\code{predict.lda()} to compute posterior probabilities for each incomplete
 #'case, and draws the imputations from this posterior.
 #'
-#'@param y Incomplete data vector of length \code{n}
-#'@param ry Vector of missing data pattern (\code{FALSE}=missing,
-#'\code{TRUE}=observed)
-#'@param x Matrix (\code{n} x \code{p}) of complete covariates.
-#'@param ... Other named arguments.
-#'@return A vector of length \code{nmis} with imputations.
-#'@note This function can be called from within the Gibbs sampler by specifying
-#''lda' in the \code{method} argument of \code{mice()}.  This method is usually
-#'faster and uses fewer resources than calling the function
+#'This function can be called from within the Gibbs sampler by specifying
+#'\code{"lda"} in the \code{method} argument of \code{mice()}. This method is usually
+#'faster and uses fewer resources than calling the function, but the statistical
+#'properties may not be as good (Brand, 1999).
 #'\code{\link{mice.impute.polyreg}}.
 #'@section Warning: The function does not incorporate the variability of the
 #'discriminant weight, so it is not 'proper' in the sense of Rubin. For small
 #'samples and rare categories in the \code{y}, variability of the imputed data
-#'could therefore be somewhat underestimated.
+#'could therefore be underestimated.
+#'
+#'Added: SvB June 2009 to include bootstrap - disabled since
+# bootstrapping it may easily to constant variables within groups.
+# which will be difficult to detect when bootstrapped.
 #'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
 #'@seealso \code{\link{mice}}, \code{link{mice.impute.polyreg}},
 #'\code{\link[MASS]{lda}}
@@ -38,34 +39,23 @@
 #'
 #'Venables, W.N. & Ripley, B.D. (1997). Modern applied statistics with S-PLUS
 #'(2nd ed). Springer, Berlin.
+#'@family univariate imputation functions
 #'@keywords datagen
 #'@export
-mice.impute.lda <- function(y, ry, x, ...) {
-    # mice.impute.lda
-    #
-    # Imputation of categorical response variables by linear discriminant
-    # analysis. This function uses the Venables/Ripley functions
-    # lda and predict.lda to compute posterior probabilities for
-    # each incomplete case, and draws the imputations from this
-    # posterior.
-    #
-    # Authors: Stef van Buuren, Karin Groothuis-Oudshoorn, 11 okt 1999
-    # V2: Adapted SvB June 2009 to include bootstrap - disabled since
-    # bootstrapping it may easily to constant variables within groups.
-    # which will be difficult to detect when bootstrapped
-    
-    fy <- as.factor(y)
-    nc <- length(levels(fy))
-    
-    #   SvB June 2009 - take bootstrap sample of training data
-    #   idx <- sample((1:length(y))[ry], size=sum(ry), replace=TRUE)
-    #   x[ry,] <- x[idx,]
-    #   y[ry] <- y[idx]
-    #   end bootstrap
-    
-    fit <- lda(x, fy, subset = ry)
-    post <- predict(fit, x[!ry, , drop = FALSE])$posterior
-    un <- rep(runif(sum(!ry)), each = nc)
-    idx <- 1 + apply(un > apply(post, 1, cumsum), 2, sum)
-    return(levels(fy)[idx])
+mice.impute.lda <- function(y, ry, x, wy = NULL, ...) {
+  if (is.null(wy)) wy <- !ry
+  fy <- as.factor(y)
+  nc <- length(levels(fy))
+  
+  #   SvB June 2009 - take bootstrap sample of training data
+  #   idx <- sample((1:length(y))[ry], size=sum(ry), replace=TRUE)
+  #   x[ry,] <- x[idx,]
+  #   y[ry] <- y[idx]
+  #   end bootstrap
+  
+  fit <- lda(x, fy, subset = ry)
+  post <- predict(fit, x[wy, , drop = FALSE])$posterior
+  un <- rep(runif(sum(wy)), each = nc)
+  idx <- 1 + apply(un > apply(post, 1, cumsum), 2, sum)
+  return(levels(fy)[idx])
 }

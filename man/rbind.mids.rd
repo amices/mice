@@ -4,12 +4,12 @@
 \alias{rbind.mids}
 \title{Rowwise combination of a \code{mids} object.}
 \usage{
-\method{rbind}{mids}(x, y, ...)
+\method{rbind}{mids}(x, y = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{mids} object.}
 
-\item{y}{A \code{mids} object or a \code{data.frame}, \code{matrix}, \code{factor} 
+\item{y}{A \code{mids} object, or a \code{data.frame}, \code{matrix}, \code{factor} 
 or \code{vector}.}
 
 \item{\dots}{Additional \code{data.frame}, \code{matrix}, \code{vector} or \code{factor}. 
@@ -23,44 +23,47 @@ Append \code{mids} objects by rows
 }
 \details{
 This function combines two \code{mids} objects rowwise into a single
-\code{mids} object or combines a \code{mids} object and a vector, matrix,
-factor or dataframe rowwise into a \code{mids} object. The number of columns
+\code{mids} object, or combines a \code{mids} object with a vector, matrix,
+factor or dataframe rowwise into a \code{mids} object. The columns
 in the (incomplete) data \code{x$data} and \code{y} (or \code{y$data} if
-\code{y} is a \code{mids} object) should be equal. If \code{y} is a
-\code{mids} object then the number of imputations in \code{x} and \code{y}
-should be equal.
+\code{y} is a \code{mids} object) should match. If \code{y} is a
+\code{mids} object, then \code{rbind} only works if the number of 
+multiple imputations in \code{x} and \code{y} is equal.
 }
 \note{
-Component \code{call} is a vector, with first argument the \code{mice()} statement
-that created \code{x} and second argument the call to \code{rbind.mids()}. Component 
-\code{data} is the rowwise combination of the (incomplete) data in \code{x}
-and \code{y}.
-Component \code{m} is equal to \code{x$m}. 
-Component \code{nmis} is an array containing the number of missing observations per
-column, defined as \code{x$nmis} + \code{y$nmis}. 
-Component \code{imp} is a list of \code{nvar} components with the generated multiple
-imputations.  Each part of the list is a \code{nmis[j]} by \code{m} matrix of
-imputed values for variable \code{j}. If \code{y} is a \code{mids} object
-then \code{imp[[j]]} equals \code{rbind(x$imp[[j]], y$imp[[j]])}; otherwise
-the original data of \code{y} will be copied into this list, including the
-missing values of \code{y} then \code{y} is not imputed.
-Component \code{method} is a vector of strings of \code{length(nvar)} specifying the
-elementary imputation method per column defined as \code{x$method}. 
-Component \code{predictorMatrix} is a square matrix of size \code{ncol(data)}
-containing the predictor set defined as
-\code{x$predictorMatrix}. 
-Component \code{visitSequence} is the sequence in which columns are visited, defined
-as \code{x$visitSequence}.
-Component \code{seed} is the seed value of the solution, \code{x$seed}.
-Component \code{iteration} is the last Gibbs sampling iteration number,
-\code{x$iteration}. 
-Component \code{lastSeedValue} is the most recent seed value, \code{x$lastSeedValue}
-Component \code{chainMean} is set to \code{NA}. 
-Component \code{chainVar} is set to \code{NA}.
-Component \code{pad} is set to \code{x$pad}, a list containing various settings of the
-padded imputation model, i.e. the imputation model after creating dummy
-variables.
-Component \code{loggedEvents} is set to \code{x$loggedEvents}.
+The function construct the elements of the new \code{mids} object as follows:
+\tabular{ll}{
+\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{rbind.mids}\cr
+\code{data}     \tab Rowwise combination of the (incomplete) data in \code{x} and \code{y}\cr
+\code{where}    \tab Rowwise combination of \code{where} arguments\cr
+\code{m}        \tab Equals \code{x$m}\cr
+\code{nmis}     \tab \code{x$nmis} + \code{y$nmis}\cr
+\code{imp}      \tab Equals \code{rbind(x$imp[[j]], y$imp[[j]])} if \code{y} is \code{mids} object; otherwise
+the data of \code{y} will be copied\cr
+\code{method}   \tab Taken from \code{x$method}\cr
+\code{predictorMatrix} \tab Taken from \code{x$predictorMatrix}\cr
+\code{visitSequence}   \tab Taken from \code{x$visitSequence}\cr
+\code{seed}            \tab Taken from \code{x$seed}\cr
+\code{iteration}       \tab Taken from \code{x$iteration}\cr
+\code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
+\code{chainMean}       \tab Set to \code{NA}\cr
+\code{chainVar}        \tab Set to \code{NA}\cr
+\code{pad}             \tab Recreated by \code{padModel()}\cr
+\code{loggedEvents}    \tab Taken from \code{x$loggedEvents}
+}
+}
+\examples{
+imp1 <- mice(nhanes[1:13, ], m = 2, maxit = 1, print = FALSE)
+imp5 <- mice(nhanes[1:13, ], m = 2, maxit = 2, print = FALSE)
+mylist <- list(age = NA, bmi = NA, hyp = NA, chl = NA)
+
+nrow(complete(rbind(imp1, imp5)))
+nrow(complete(rbind(imp1, mylist)))
+
+# Note: If one of the arguments is a data.frame 
+# we need to explicitly call mice:::rbind.mids()
+nrow(complete(mice:::rbind.mids(imp1, data.frame(mylist))))
+nrow(complete(mice:::rbind.mids(imp1, complete(imp5))))
 }
 \references{
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
@@ -72,6 +75,6 @@ Statistical Software}, \bold{45}(3), 1-67.
 \code{\link{cbind.mids}}, \code{\link{ibind}}, \code{\link[=mids-class]{mids}}
 }
 \author{
-Karin Groothuis-Oudshoorn, Stef van Buuren, 2009
+Karin Groothuis-Oudshoorn, Stef van Buuren
 }
 \keyword{manip}

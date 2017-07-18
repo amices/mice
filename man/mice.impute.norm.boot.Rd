@@ -5,22 +5,34 @@
 \alias{norm.boot}
 \title{Imputation by linear regression, bootstrap method}
 \usage{
-mice.impute.norm.boot(y, ry, x, ridge = 1e-05, ...)
+mice.impute.norm.boot(y, ry, x, wy = NULL, ridge = 1e-05, ...)
 }
 \arguments{
-\item{y}{Incomplete data vector of length \code{n}}
+\item{y}{Vector to be imputed}
 
-\item{ry}{Vector of missing data pattern (\code{FALSE}=missing,
-\code{TRUE}=observed)}
+\item{ry}{Logical vector of length \code{length(y)} indicating the 
+the subset \code{y[ry]} of elements in \code{y} to which the imputation 
+model is fitted. The \code{ry} generally distinguishes the observed 
+(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\code{y}. Matrix \code{x} may have no missing values.}
 
-\item{ridge}{Ridge parameter}
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+indicates locations in \code{y} for which imputations are created.}
+
+\item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent 
+problems with multicollinearity. The default is \code{ridge = 1e-05}, 
+which means that 0.01 percent of the diagonal is added to the cross-product. 
+Larger ridges may result in more biased estimates. For highly noisy data 
+(e.g. many junk variables), set \code{ridge = 1e-06} or even lower to 
+reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-A vector of length \code{nmis} with imputations.
+Vector with imputed data, same type as \code{y}, and of length 
+\code{sum(wy)}
 }
 \description{
 Imputes univariate missing data using linear regression with boostrap
@@ -37,7 +49,24 @@ Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 Statistical Software}, \bold{45}(3), 1-67.
 \url{http://www.jstatsoft.org/v45/i03/}
 }
+\seealso{
+Other univariate imputation functions: \code{\link{mice.impute.cart}},
+  \code{\link{mice.impute.lda}},
+  \code{\link{mice.impute.logreg.boot}},
+  \code{\link{mice.impute.logreg}},
+  \code{\link{mice.impute.mean}},
+  \code{\link{mice.impute.midastouch}},
+  \code{\link{mice.impute.norm.nob}},
+  \code{\link{mice.impute.norm.predict}},
+  \code{\link{mice.impute.norm}},
+  \code{\link{mice.impute.pmm}},
+  \code{\link{mice.impute.polr}},
+  \code{\link{mice.impute.polyreg}},
+  \code{\link{mice.impute.quadratic}},
+  \code{\link{mice.impute.rf}},
+  \code{\link{mice.impute.ri}}
+}
 \author{
-Stef van Buuren, 2011
+Stef van Buuren
 }
 \keyword{datagen}

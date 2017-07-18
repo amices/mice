@@ -7,25 +7,33 @@
 as.mids(data, .imp = NA, .id = NA)
 }
 \arguments{
-\item{data}{A multiply imputed data set in long format, for example produced by a call to 
-\code{complete(..., action = 'long', include = TRUE)}.}
+\item{data}{A multiply imputed data set in long format, for example 
+produced by a call to \code{complete(..., action = 'long', include = TRUE)}.}
 
-\item{.imp}{Optional column number in \code{data} that contains the imputation number. The number \code{0} indicates the original data (with missings) and \code{1} through \code{m} correspond to the \code{m} imputation number. If not specified, the function searches for a variable named \code{".imp"}.}
+\item{.imp}{Optional column number in \code{data} that contains the imputation 
+number. The number \code{0} indicates the original data (with missings) 
+and \code{1} through \code{m} correspond to the \code{m} imputation number. 
+If not specified, the function searches for a variable named \code{".imp"}.}
 
-\item{.id}{Optional column number in \code{data} indicating the subject identification. If not specified, then the function searches for a variable named \code{.id} in \code{data}.}
+\item{.id}{Optional column number in \code{data} indicating the subject 
+identification. If not specified, then the function searches for a variable 
+named \code{.id} in \code{data}.}
 }
 \value{
 An object of class \code{mids}
 }
 \description{
-This function converts imputed data stored in long format into an object of class \code{mids}.
-The original incomplete data set needs to be available so that we know where the missing data are.
-The function is useful to convert back operations applied to the imputed data 
-back in a \code{mids} object. It may also be used to store multiply imputed data sets
-from other software into the format used by \code{mice}.
+This function converts imputed data stored in long format into 
+an object of class \code{mids}. The original incomplete dataset 
+needs to be available so that we know where the missing data are.
+The function is useful to convert back operations applied to 
+the imputed data back in a \code{mids} object. It may also be 
+used to store multiply imputed data sets from other software 
+into the format used by \code{mice}.
 }
 \details{
-If .id variable is found, row names from the supplied data will be copied to the \code{data} elements of the returned \code{mids} object.
+If .id variable is found, row names from the supplied data will 
+be copied to the \code{data} elements of the returned \code{mids} object.
 }
 \examples{
 # impute the nhanes dataset
@@ -66,6 +74,6 @@ all(complete(test5, action = "long", include = TRUE)[, -2] == X[, -2], na.rm = T
 # 
 }
 \author{
-Gerko Vink, Stef van Buuren (edits in 2.37)
+Gerko Vink
 }
 \keyword{mids}
