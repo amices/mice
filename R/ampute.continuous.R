@@ -97,23 +97,24 @@ ampute.continuous <- function(P, scores, prop, type) {
     retval$numiter <- counter
     if (outside.range) {
       if (target * sign < val.lo * sign) {
-        warning("Reached lower boundary")
+        warning("The desired proportion of ", target, " is too small; ", 
+                val.lo, " is used instead.")
         retval$flag = "Lower Boundary"
         retval$where = lo
         retval$value = val.lo
       }
       else {
-        warning("Reached upper boundary")
+        warning("The desired proportion of ", target, " is too large; ", 
+                val.hi, " is used instead.")
         retval$flag = "Upper Boundary"
         retval$where = hi
         retval$value = val.hi
       }
     }
     else if (counter >= maxiter) {
-      warning("Maximum number of iterations reached")
       retval$flag = "Maximum number of iterations reached"
-      retval$where = c(lo, hi)
-      retval$value = c(val.lo, val.hi)
+      retval$where = (lo + hi) / 2
+      retval$value = (val.lo + val.hi) / 2
     }
     else if (val.lo == target) {
       retval$flag = "Found"
@@ -127,8 +128,8 @@ ampute.continuous <- function(P, scores, prop, type) {
     }
     else {
       retval$flag = "Between Elements"
-      retval$where = c(lo, hi)
-      retval$value = c(val.lo, val.hi)
+      retval$where = (lo + hi) / 2
+      retval$value = (val.lo + val.hi) / 2
     }
     return(retval)
   }
