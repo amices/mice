@@ -67,7 +67,7 @@ mdc(c('obs','mis'), 'lin')
 }
 \references{
 Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
-Visualization with R}, Springer.  \url{http://lmdvr.r-forge.r-project.org/}
+Visualization with R}, Springer.
 }
 \seealso{
 \code{\link{hcl}}, \code{\link{rgb}},

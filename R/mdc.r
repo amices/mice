@@ -39,7 +39,7 @@
 #'\code{\link[mice:xyplot]{xyplot.mids}}, \code{\link[lattice:xyplot]{xyplot}},
 #'\code{\link[lattice:trellis.par.set]{trellis.par.set}}
 #'@references Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
-#'Visualization with R}, Springer.  \url{http://lmdvr.r-forge.r-project.org/}
+#'Visualization with R}, Springer.
 #'@keywords hplot
 #'@examples
 #'

@@ -181,7 +181,7 @@ stripplot(imp, gen~.imp, na = wgt, factor = 2, cex = c(8.6),
 }
 \references{
 Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
-Visualization with R}, Springer.  \url{http://lmdvr.r-forge.r-project.org/}
+Visualization with R}, Springer.
 
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
