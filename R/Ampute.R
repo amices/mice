@@ -316,12 +316,12 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   } 
   if (any(sapply(data, is.numeric) == FALSE) & mech != "MCAR") {
     data <- as.data.frame(sapply(data, as.numeric))
-    st.data <- data.frame(scale(data))
     warning("Data is made numeric because the calculation of weights requires 
             numeric data",
             call. = FALSE)
   }
   data <- data.frame(data)
+  st.data <- data.frame(scale(data))
   if (prop < 0 | prop > 100) {
     stop("Proportion of missingness should be a value between 0 and 1 
          (for a proportion) or between 1 and 100 (for a percentage)", call. = FALSE)
