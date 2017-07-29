@@ -34,7 +34,6 @@ Imputes the arithmetic mean of the observed data
 appropriate.  See Little and Rubin (2002, p. 61-62) or 
 Van Buuren (2012, p. 10-11)
 }
-
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -67,3 +66,4 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.ri}}
 }
 \keyword{datagen}
+

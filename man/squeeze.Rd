@@ -26,3 +26,4 @@ than \code{bounds[2]} by \code{bounds[2]}.
 \author{
 Stef van Buuren, 2011.
 }
+

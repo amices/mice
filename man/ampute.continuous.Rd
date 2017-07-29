@@ -35,6 +35,9 @@ probability distributions (Van Buuren, 2012, pp. 63, 64) will be induced on the
 weighted sum scores, calculated earlier in the multivariate amputation function 
 \code{\link{ampute}}.
 }
+\author{
+Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
+}
 \references{
 Van Buuren, S. (2012). \emph{Flexible imputation of missing data.} 
 Boca Raton, FL.: Chapman & Hall/CRC Press.
@@ -42,7 +45,5 @@ Boca Raton, FL.: Chapman & Hall/CRC Press.
 \seealso{
 \code{\link{ampute}}, \code{\link{ampute.default.type}}
 }
-\author{
-Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
-}
 \keyword{internal}
+

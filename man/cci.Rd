@@ -24,10 +24,11 @@ cci(mice(nhanes, maxit = 0))
 f <- cci(nhanes[,c("bmi","hyp")]) # complete data for bmi and hyp
 nhanes[f,] # obtain all data from those with complete bmi and hyp
 }
-\seealso{
-\code{\link{complete.cases}}, \code{\link{ici}}, \code{\link{cc}}
-}
 \author{
 Stef van Buuren, 2017.
 }
+\seealso{
+\code{\link{complete.cases}}, \code{\link{ici}}, \code{\link{cc}}
+}
 \keyword{univar}
+

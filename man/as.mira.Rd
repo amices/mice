@@ -19,9 +19,10 @@ into a \code{mira} object that can be pooled. Pooling
 requires that \code{coef()} and \code{vcov()} methods are 
 available for fitted object.
 }
-\seealso{
-\code{\link[=mira-class]{mira}}
-}
 \author{
 Stef van Buuren
 }
+\seealso{
+\code{\link[=mira-class]{mira}}
+}
+

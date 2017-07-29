@@ -4,7 +4,6 @@
 \name{mice}
 \alias{mice}
 \alias{mice-package}
-\alias{mice}
 \title{\pkg{mice}: Multivariate Imputation by Chained Equations}
 \usage{
 mice(data, m = 5, method = vector("character", length = ncol(data)),
@@ -272,7 +271,6 @@ The first application of the method
 concerned missing blood pressure data (Van Buuren et. al., 1999). 
 The term \emph{Fully Conditional Specification} was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Van Buuren et. al., 2006). Further details on mixes of variables and applications can be found in the book \href{https://www.crcpress.com/Flexible-Imputation-of-Missing-Data/van-Buuren/p/book/9781439868249}{\emph{Flexible Imputation of Missing Data}}.
 }
-
 \examples{
 
 
@@ -291,6 +289,13 @@ complete(imp)
 
 mice(nhanes2, meth=c('sample','pmm','logreg','norm'))
 
+}
+\author{
+Stef van Buuren \email{stef.vanbuuren@tno.nl}, Karin
+Groothuis-Oudshoorn \email{c.g.m.oudshoorn@utwente.nl}, 2000-2010, with
+contributions of Alexander Robitzsch, Gerko Vink, Shahab Jolani, 
+Roel de Jong, Jason Turner, Lisa Doove, 
+John Fox, Frank E. Harrell, and Peter Malewski.
 }
 \references{
 van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple
@@ -338,11 +343,5 @@ data sets.} Dissertation. Rotterdam: Erasmus University.
 \code{\link[=mids-class]{mids}}, \code{\link{with.mids}},
 \code{\link{set.seed}}, \code{\link{complete}}
 }
-\author{
-Stef van Buuren \email{stef.vanbuuren@tno.nl}, Karin
-Groothuis-Oudshoorn \email{c.g.m.oudshoorn@utwente.nl}, 2000-2010, with
-contributions of Alexander Robitzsch, Gerko Vink, Shahab Jolani, 
-Roel de Jong, Jason Turner, Lisa Doove, 
-John Fox, Frank E. Harrell, and Peter Malewski.
-}
 \keyword{iteration}
+

@@ -31,6 +31,9 @@ fit1 <- with(data=imp,exp=lm(bmi~age+hyp+chl))
 fit2 <- with(data=imp,exp=glm(hyp~age+bmi+chl,family=binomial))
 anova.imp <- with(data=imp,exp=anova(lm(bmi~age+hyp+chl)))
 }
+\author{
+Karin Oudshoorn, Stef van Buuren 2009-2012
+}
 \references{
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -41,7 +44,5 @@ Statistical Software}, \bold{45}(3), 1-67.
 \code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}, \code{\link{pool}},
 \code{\link{pool.compare}}, \code{\link{pool.r.squared}}
 }
-\author{
-Karin Oudshoorn, Stef van Buuren 2009-2012
-}
 \keyword{multivariate}
+

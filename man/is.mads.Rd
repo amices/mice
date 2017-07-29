@@ -15,3 +15,4 @@ A logical indicating whether \code{x} is an object of class \code{mads}
 \description{
 Check for \code{mads} object
 }
+

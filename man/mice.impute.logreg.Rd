@@ -44,6 +44,9 @@ standard \code{glm.fit} function. Warnings from \code{glm.fit} are
 suppressed. Perfect prediction is handled by the data augmentation
 method.
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn
+}
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -81,7 +84,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.rf}},
   \code{\link{mice.impute.ri}}
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn
-}
 \keyword{datagen}
+

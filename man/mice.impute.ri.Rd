@@ -39,6 +39,9 @@ that iterates over the response and imputation models.
 
 This routine assumes that the response model and imputation model
 }
+\author{
+Shahab Jolani (University of Utrecht) \email{s.jolani@uu.nl}
+}
 \references{
 Jolani, S. (2012). 
 \emph{Dual Imputation Strategies for Analyzing Incomplete Data}. 
@@ -61,7 +64,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.quadratic}},
   \code{\link{mice.impute.rf}}
 }
-\author{
-Shahab Jolani (University of Utrecht) \email{s.jolani@uu.nl}
-}
 \keyword{datagen}
+

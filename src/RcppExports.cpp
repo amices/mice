@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // matcher
 IntegerVector matcher(NumericVector obs, NumericVector mis, int k);
-RcppExport SEXP mice_matcher(SEXP obsSEXP, SEXP misSEXP, SEXP kSEXP) {
+RcppExport SEXP _mice_matcher(SEXP obsSEXP, SEXP misSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;

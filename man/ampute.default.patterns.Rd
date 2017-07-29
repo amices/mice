@@ -16,10 +16,11 @@ A square matrix of size #variables where \code{0} indicates a variable
 This function creates a default pattern matrix for the multivariate 
 amputation function \code{ampute()}.
 }
-\seealso{
-\code{\link{ampute}}, \code{\link{md.pattern}}
-}
 \author{
 Rianne Schouten, 2016
 }
+\seealso{
+\code{\link{ampute}}, \code{\link{md.pattern}}
+}
 \keyword{internal}
+

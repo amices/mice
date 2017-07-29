@@ -89,6 +89,9 @@ plot(dat$x, dat$xx, col = mdc(1), xlab = "x", ylab = "xx")
 cmp <- complete(imp)
 points(cmp$x[is.na(dat$x)], cmp$xx[is.na(dat$x)], col = mdc(2))
 }
+\author{
+Gerko Vink (University of Utrecht), \email{g.vink@uu.nl}
+}
 \references{
 van Buuren, S. (2012). \emph{Flexible Imputation of Missing
 Data.} Boca Raton, FL: Chapman & Hall/CRC Press.
@@ -115,7 +118,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.rf}},
   \code{\link{mice.impute.ri}}
 }
-\author{
-Gerko Vink (University of Utrecht), \email{g.vink@uu.nl}
-}
 \keyword{datagen}
+

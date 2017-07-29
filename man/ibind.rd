@@ -38,10 +38,11 @@ imp12 <- ibind(imp1, imp2)
 imp12$m
 plot(imp12)
 }
-\seealso{
-\code{\link[=mids-class]{mids}}, \code{\link{rbind.mids}}, \code{\link{cbind.mids}}
-}
 \author{
 Karin Groothuis-Oudshoorn, Stef van Buuren
 }
+\seealso{
+\code{\link[=mids-class]{mids}}, \code{\link{rbind.mids}}, \code{\link{cbind.mids}}
+}
 \keyword{manip}
+

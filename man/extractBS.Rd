@@ -18,3 +18,4 @@ Extract broken stick estimates from a \code{lmer} object
 \author{
 Stef van Buuren, 2012
 }
+

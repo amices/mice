@@ -49,7 +49,9 @@ could therefore be underestimated.
 
 Added: SvB June 2009 to include bootstrap - disabled since
 }
-
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+}
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -84,7 +86,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.rf}},
   \code{\link{mice.impute.ri}}
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-}
 \keyword{datagen}
+

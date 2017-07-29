@@ -20,3 +20,4 @@ Print a \code{mads} object
 \seealso{
 \code{\link[=mads-class]{mads}}
 }
+
