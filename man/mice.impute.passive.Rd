@@ -27,6 +27,9 @@ example, to compute a cubic version of a variable, a transformation like
 places in the imputation model. The function allows to dynamically derive
 virtually any function of the imputed data at virtually any time.
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+}
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -36,7 +39,5 @@ Statistical Software}, \bold{45}(3), 1-67.
 \seealso{
 \code{\link{mice}}
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-}
 \keyword{datagen}
+

@@ -31,10 +31,11 @@ This function creates a missing data indicator for each pattern, based on a MCAR
 missingness mechanism. The function is used in the multivariate amputation function 
 \code{\link{ampute}}.
 }
-\seealso{
-\code{\link{ampute}}
-}
 \author{
 Rianne Schouten, 2016
 }
+\seealso{
+\code{\link{ampute}}
+}
 \keyword{internal}
+

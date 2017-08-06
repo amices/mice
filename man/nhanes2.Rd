@@ -33,3 +33,4 @@ complete(imp)           # print the first imputed data set
 \code{\link{nhanes}}
 }
 \keyword{datasets}
+

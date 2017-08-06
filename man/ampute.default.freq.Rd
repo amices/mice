@@ -19,10 +19,11 @@ which the patterns should occur. An equal probability is given to each pattern.
 Defines the default relative frequency vector for the multivariate 
 amputation function \code{ampute}.
 }
-\seealso{
-\code{\link{ampute}}, \code{\link{ampute.default.patterns}}
-}
 \author{
 Rianne Schouten, 2016
 }
+\seealso{
+\code{\link{ampute}}, \code{\link{ampute.default.patterns}}
+}
 \keyword{internal}
+

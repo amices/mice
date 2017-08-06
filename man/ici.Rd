@@ -25,10 +25,11 @@ The companion function  \code{cci()} selects the complete cases.
  ici(nhanes) # indicator for 12 rows with incomplete cases 
 
 }
-\seealso{
-\code{\link{cci}}, \code{\link{ic}}
-}
 \author{
 Stef van Buuren, 2017.
 }
+\seealso{
+\code{\link{cci}}, \code{\link{ic}}
+}
 \keyword{univar}
+

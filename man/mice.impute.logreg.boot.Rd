@@ -32,6 +32,9 @@ by a bootstrapped logistic regression model.
 The bootstrap method draws a simple bootstrap sample with replacement 
 from the observed data \code{y[ry]} and \code{x[ry, ]}.
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2011
+}
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -60,7 +63,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.rf}},
   \code{\link{mice.impute.ri}}
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2011
-}
 \keyword{datagen}
+

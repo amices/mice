@@ -77,3 +77,4 @@ all(complete(test5, action = "long", include = TRUE)[, -2] == X[, -2], na.rm = T
 Gerko Vink
 }
 \keyword{mids}
+

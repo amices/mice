@@ -39,11 +39,12 @@ class, all entries of the class are set to \code{NaN}.  This function is
 primarily useful for repairing incomplete data that are constant within the
 class, but that vary over the classes.
 }
+\author{
+Gerko Vink, Stef van Buuren, 2013
+}
 \seealso{
 Other univariate \code{2lonly} functions: \code{\link{mice.impute.2lonly.norm}},
   \code{\link{mice.impute.2lonly.pmm}}
 }
-\author{
-Gerko Vink, Stef van Buuren, 2013
-}
 \keyword{datagen}
+

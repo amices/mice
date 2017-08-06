@@ -15,3 +15,4 @@ A logical indicating whether \code{x} is an object of class \code{mipo}
 \description{
 Check for \code{mipo} object
 }
+

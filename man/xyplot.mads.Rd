@@ -46,10 +46,11 @@ The \code{mads} object contains all the information you need to
 make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate 
 Amputation using Ampute} to understand the contents of class object \code{mads}.
 }
+\author{
+Rianne Schouten, 2016
+}
 \seealso{
 \code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for 
 an overview of the package, \code{\link{mads-class}}
 }
-\author{
-Rianne Schouten, 2016
-}
+

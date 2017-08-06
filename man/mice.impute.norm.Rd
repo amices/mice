@@ -51,6 +51,9 @@ parameter \eqn{\kappa}.}
 
 Using \code{mice.impute.norm} for all columns emulates Schafer's NORM method (Schafer, 1997).
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn
+}
 \references{
 Rubin, D.B (1987). Multiple Imputation for Nonresponse in Surveys. New York: John Wiley & Sons.
 
@@ -73,7 +76,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.rf}},
   \code{\link{mice.impute.ri}}
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn
-}
 \keyword{datagen}
+

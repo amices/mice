@@ -17,6 +17,9 @@ A vector of length \code{ncol(data)} of FICO statistics.
 FICO is an outbound statistic defined by the fraction of incomplete cases
 among cases with \code{Yj} observed (White and Carlin, 2010).
 }
+\author{
+Stef van Buuren, 2012
+}
 \references{
 van Buuren, S. (2012). \emph{Flexible Imputation of Missing
 Data.} Boca Raton, FL: Chapman & Hall/CRC Press.
@@ -28,7 +31,5 @@ compared with complete-case analysis for missing covariate values.
 \seealso{
 \code{\link{fluxplot}}, \code{\link{flux}}, \code{\link{md.pattern}}
 }
-\author{
-Stef van Buuren, 2012
-}
 \keyword{misc}
+

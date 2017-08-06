@@ -49,7 +49,9 @@ methods are small, and in those cases one may opt for speed by using
 regression weights, so it is not 'proper' in the sense of Rubin. For small
 samples, variability of the imputed data is therefore underestimated.
 }
-
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+}
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -79,7 +81,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.rf}},
   \code{\link{mice.impute.ri}}
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-}
 \keyword{datagen}
+

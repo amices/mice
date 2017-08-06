@@ -4,7 +4,7 @@
 \alias{rbind.mids}
 \title{Rowwise combination of a \code{mids} object.}
 \usage{
-\method{rbind}{mids}(x, y = NULL, ...)
+rbind.mids(x, y = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{mids} object.}
@@ -65,6 +65,9 @@ nrow(complete(rbind(imp1, mylist)))
 nrow(complete(mice:::rbind.mids(imp1, data.frame(mylist))))
 nrow(complete(mice:::rbind.mids(imp1, complete(imp5))))
 }
+\author{
+Karin Groothuis-Oudshoorn, Stef van Buuren
+}
 \references{
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -74,7 +77,5 @@ Statistical Software}, \bold{45}(3), 1-67.
 \seealso{
 \code{\link{cbind.mids}}, \code{\link{ibind}}, \code{\link[=mids-class]{mids}}
 }
-\author{
-Karin Groothuis-Oudshoorn, Stef van Buuren
-}
 \keyword{manip}
+

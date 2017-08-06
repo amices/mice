@@ -64,6 +64,9 @@ pool(fit)
 # 
 
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2009
+}
 \references{
 Barnard, J. and Rubin, D.B. (1999). Small sample degrees of
 freedom with multiple imputation. \emph{Biometrika}, 86, 948-955.
@@ -81,7 +84,5 @@ S-PLUS}.  Berlin: Springer.
 \seealso{
 \code{\link{with.mids}}, \code{\link{as.mira}}, \code{\link{vcov}}
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2009
-}
 \keyword{htest}
+

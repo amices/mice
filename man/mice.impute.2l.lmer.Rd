@@ -28,6 +28,8 @@ indicates locations in \code{y} for which imputations are created.}
 \item{intercept}{Logical determining whether the intercept is automatically
 added.}
 
+\item{...}{Other named arguments.}
+
 \item{\dots}{Arguments passed down to \code{lmer}}
 }
 \value{
@@ -47,6 +49,9 @@ variance-covariance matrix or the random effects to their estimated
 value in cases where creating draws from the posterior is not 
 possible. The procedure throws a warning when this happens.
 }
+\author{
+Shahab Jolani, 2017
+}
 \references{
 Jolani S. (2017) Hierarchical imputation of systematically and 
 sporadically missing data: An approximate Bayesian approach using 
@@ -65,7 +70,5 @@ Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
 Other univariate \code{2l} functions: \code{\link{mice.impute.2l.norm}},
   \code{\link{mice.impute.2l.pan}}
 }
-\author{
-Shahab Jolani, 2017
-}
 \keyword{datagen}
+

@@ -22,6 +22,8 @@ indicates locations in \code{y} for which imputations are created.}
 
 \item{ntree}{The number of trees to grow. The default is 10.}
 
+\item{...}{Other named arguments.}
+
 \item{\dots}{Other named arguments passed down to \code{randomForest()} and
 \code{randomForest:::randomForest.default()}.}
 }
@@ -53,6 +55,9 @@ library("lattice")
 imp <- mice(nhanes2, meth = "rf", ntree = 3)
 plot(imp)
 
+}
+\author{
+Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
 }
 \references{
 Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning 
@@ -89,7 +94,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.quadratic}},
   \code{\link{mice.impute.ri}}
 }
-\author{
-Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
-}
 \keyword{datagen}
+

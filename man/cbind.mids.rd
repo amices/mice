@@ -4,7 +4,7 @@
 \alias{cbind.mids}
 \title{Columnwise combination of a \code{mids} object.}
 \usage{
-\method{cbind}{mids}(x, y = NULL, ...)
+cbind.mids(x, y = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{mids} object.}
@@ -89,10 +89,11 @@ head(complete(imp3a))
 # we need to explicitly call mice:::cbind.mids()
 imp3b <- mice:::cbind.mids(imp3, data.frame(chl = nhanes$chl))
 }
-\seealso{
-\code{\link{rbind.mids}}, \code{\link{ibind}}, \code{\link[=mids-class]{mids}}
-}
 \author{
 Karin Groothuis-Oudshoorn, Stef van Buuren
 }
+\seealso{
+\code{\link{rbind.mids}}, \code{\link{ibind}}, \code{\link[=mids-class]{mids}}
+}
 \keyword{manip}
+

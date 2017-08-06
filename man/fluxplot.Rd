@@ -73,6 +73,9 @@ having the same proportion of missing data, the variable with higher outflux
 is better connected to the missing data, and thus potentially more useful for
 imputing other variables.
 }
+\author{
+Stef van Buuren, 2012
+}
 \references{
 van Buuren, S. (2012). \emph{Flexible Imputation of Missing
 Data.} Boca Raton, FL: Chapman & Hall/CRC Press.
@@ -84,7 +87,5 @@ compared with complete-case analysis for missing covariate values.
 \seealso{
 \code{\link{flux}}, \code{\link{md.pattern}}, \code{\link{fico}}
 }
-\author{
-Stef van Buuren, 2012
-}
 \keyword{misc}
+

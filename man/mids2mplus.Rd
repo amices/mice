@@ -40,10 +40,11 @@ names, so in principle it should run and read the data without alteration.
 \code{Mplus} will recognize the data set as a multiply imputed data set, and
 do automatic pooling in procedures where that is supported.
 }
-\seealso{
-\code{\link[=mids-class]{mids}}, \code{\link{mids2spss}}
-}
 \author{
 Gerko Vink, 2011.
 }
+\seealso{
+\code{\link[=mids-class]{mids}}, \code{\link{mids2spss}}
+}
 \keyword{manip}
+

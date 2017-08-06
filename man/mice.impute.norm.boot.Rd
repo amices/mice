@@ -43,6 +43,9 @@ regression weights and imputes with normal residuals. The \code{ridge}
 parameter adds a penalty term \code{ridge*diag(xtx)} to the
 variance-covariance matrix \code{xtx}.
 }
+\author{
+Stef van Buuren
+}
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -66,7 +69,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.rf}},
   \code{\link{mice.impute.ri}}
 }
-\author{
-Stef van Buuren
-}
 \keyword{datagen}
+

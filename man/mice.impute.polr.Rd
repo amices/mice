@@ -55,6 +55,9 @@ The call to \code{polr} might fail, usually because the data are very sparse.
 In that case, \code{multinom} is tried as a fallback, and a record is written
 to the \code{loggedEvents} component of the \code{\link{mids}} object.
 }
+\author{
+Stef van Buuren, Karin Groohuis-Oudshoorn, 2000-2010
+}
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
@@ -91,7 +94,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.rf}},
   \code{\link{mice.impute.ri}}
 }
-\author{
-Stef van Buuren, Karin Groohuis-Oudshoorn, 2000-2010
-}
 \keyword{datagen}
+

@@ -2,8 +2,8 @@
 % Please edit documentation in R/selfreport.r
 \docType{data}
 \name{selfreport}
-\alias{selfreport}
 \alias{mgg}
+\alias{selfreport}
 \title{Self-reported and measured BMI}
 \format{A data frame with 2060 rows and 15 variables: 
 \describe{
@@ -94,3 +94,4 @@ box(lwd=1)
 
 }
 \keyword{datasets}
+

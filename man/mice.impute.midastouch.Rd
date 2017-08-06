@@ -87,6 +87,9 @@ complete(imp)
 # imputation on mixed data with a different method per column
 mice(nhanes2, method = c('sample', 'midastouch', 'logreg', 'norm'))
 }
+\author{
+Philipp Gaffert, Florian Meinfelder, Volker Bosch 2015
+}
 \references{
 Gaffert, P., Meinfelder, F., Bosch V. (2015) Towards an MI-proper 
 Predictive Mean Matching, Discussion Paper. 
@@ -132,7 +135,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.rf}},
   \code{\link{mice.impute.ri}}
 }
-\author{
-Philipp Gaffert, Florian Meinfelder, Volker Bosch 2015
-}
 \keyword{datagen}
+

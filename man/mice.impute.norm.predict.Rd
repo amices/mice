@@ -58,7 +58,9 @@ At best, prediction can give reasonble estimates of the mean, especially
 if normality assumptions are plausble. See Little and Rubin (2002, p. 62-64)
 or Van Buuren (2012, p. 11-13, p. 45-46) for a discussion of this method.
 }
-
+\author{
+Stef van Buuren, 2011
+}
 \references{
 Little, R.J.A. and Rubin, D.B. (2002). Statistical Analysis with Missing 
 Data.  New York: John Wiley and Sons.
@@ -83,7 +85,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.rf}},
   \code{\link{mice.impute.ri}}
 }
-\author{
-Stef van Buuren, 2011
-}
 \keyword{datagen}
+

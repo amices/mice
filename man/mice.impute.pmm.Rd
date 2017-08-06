@@ -103,6 +103,9 @@ plot(jitter(y), jitter(yimp),
 abline(0, 1)
 cor(y, yimp, use = 'pair')
 }
+\author{
+Stef van Buuren, Karin Groothuis-Oudshoorn
+}
 \references{
 Little, R.J.A. (1988), Missing data adjustments in large surveys
 (with discussion), Journal of Business Economics and Statistics, 6, 287--301.
@@ -134,7 +137,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.rf}},
   \code{\link{mice.impute.ri}}
 }
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn
-}
 \keyword{datagen}
+

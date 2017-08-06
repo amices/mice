@@ -26,10 +26,11 @@ incomplete cases, use \code{\link{ici}}.
 # cc(nhanes)   # get the 13 complete cases
 # cc(nhanes$bmi) # extract complete bmi
 }
-\seealso{
-\code{\link{na.omit}}, \code{\link{cci}}, \code{\link{ici}}
-}
 \author{
 Stef van Buuren, 2017.
 }
+\seealso{
+\code{\link{na.omit}}, \code{\link{cci}}, \code{\link{ici}}
+}
 \keyword{univar}
+

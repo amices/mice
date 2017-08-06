@@ -56,6 +56,9 @@ as random effects (type=2).
 Warning: The assumption of heterogeneous variances requires that in every
 class at least one observation has a response in \code{y}.
 }
+\author{
+Roel de Jong, 2008
+}
 \references{
 Kasim RM, Raudenbush SW. (1998). Application of Gibbs sampling to nested
 variance components models with heterogeneous within-group variance. Journal
@@ -73,7 +76,5 @@ Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
 Other univariate \code{2l} functions: \code{\link{mice.impute.2l.lmer}},
   \code{\link{mice.impute.2l.pan}}
 }
-\author{
-Roel de Jong, 2008
-}
 \keyword{datagen}
+
