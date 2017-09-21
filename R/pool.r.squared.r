@@ -82,7 +82,6 @@ pool.r.squared <- function(object, adjusted = FALSE) {
     # Make table with results.
     table <- array(((exp(2 * fit$qbar) - 1)/(1 + exp(2 * fit$qbar)))^2, dim = c(1, 4))
     
-    if (!adjusted) 
     dimnames(table) <- if (!adjusted) list("R^2", c("est", "lo 95", "hi 95", "fmi")) else list("adj R^2", c("est", "lo 95", "hi 95", "fmi"))
     
     table[, 2] <- ((exp(2 * (fit$qbar - 1.96 * sqrt(fit$t))) - 1)/(1 + exp(2 * (fit$qbar - 1.96 * sqrt(fit$t)))))^2
