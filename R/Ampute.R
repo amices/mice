@@ -230,10 +230,9 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     # #missing cells. 
     miss <- prop * n^2  # Desired #missing cells 
     # Calculate #cases according prop and #zeros in patterns
-    cases <- numeric(nrow(patterns))
-    for (i in seq_along(cases)) {
-      cases[i] <- (miss * freq[i]) / length(patterns[i,][patterns[i,] == 0]) 
-    }
+    cases <- vapply(seq_len(nrow(patterns)),
+                    function(i) (miss * freq[i]) / length(patterns[i,][patterns[i,] == 0]),
+                    numeric(1))
     if (sum(cases) > n) {
       stop("Proportion of missing cells is too large in combination with 
            the desired number of missing variables",
@@ -443,7 +442,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   }
   if (!cont) {
     for (h in seq_len(nrow(odds))) {
-      if(any(!is.na(odds[h, ]) && odds[h, ] < 0)) {
+      if(any(!is.na(odds[h, ]) & odds[h, ] < 0)) {
         stop("Odds matrix can only have positive values", call. = FALSE)
       }
     }

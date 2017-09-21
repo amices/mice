@@ -16,10 +16,9 @@
 #'@keywords internal
 #'@export
 ampute.default.patterns <- function(n) {
-  patterns <- vapply(seq_len(n),
-                     function(i) c(rep.int(1, i - 1), 0, rep.int(1, n - i)),
-                     numeric(n)
-  return(patterns)
+  patterns.list <- lapply(seq_len(n),
+                     function(i) c(rep.int(1, i - 1), 0, rep.int(1, n - i)))
+  return(do.call(rbind, patterns.list))
 }
 
 #

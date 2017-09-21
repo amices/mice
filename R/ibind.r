@@ -52,7 +52,11 @@ ibind <- function(x, y) {
     stop("Differences detected between `x$pad$categories` and `y$pad$categories`")
   
   visitSequence <- x$visitSequence
-  imp <- lapply(visitSequence, function(j) cbind(x$imp[[j]], y$imp[[j]]))
+  imp <- vector("list", ncol(x$data))
+  for (j in visitSequence) {
+    imp[[j]] <- cbind(x$imp[[j]], y$imp[[j]])
+  }
+  
   m <- (x$m + y$m)
   iteration <- max(x$iteration, y$iteration)
   

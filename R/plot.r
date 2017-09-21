@@ -44,19 +44,17 @@ plot.mids <- function(x, y = NULL, theme = mice.theme(), layout = c(2, 3), type 
     
     ## create formula if not given in y
     if (missing(y)) {
-        formula <- as.formula(paste(paste(varlist, collapse = "+", sep = ""), "~.it|.ms", sep = ""))
+        formula <- as.formula(paste0(paste0(varlist, collapse = "+"), "~.it|.ms"))
     } else {
         formula <- NULL
         if (is.null(y)) 
-            formula <- as.formula(paste(paste(varlist, collapse = "+", sep = ""), "~.it|.ms", sep = ""))
-        if (class(y) == "character") {
-            if (length(y) == 1) 
-                formula <- as.formula(paste(y, "~.it|.ms", sep = "")) else formula <- as.formula(paste(paste(y, collapse = "+", sep = ""), "~.it|.ms", sep = ""))
+            formula <- as.formula(paste0(paste0(varlist, collapse = "+"), "~.it|.ms"))
+        if (is.character(y)) {
+                formula <- if (length(y) == 1) as.formula(paste0(y, "~.it|.ms")) else as.formula(paste0(paste0(y, collapse = "+"), "~.it|.ms"))
         }
-        if (class(y) == "integer" | class(y) == "logical") {
+        if (is.integer(y) || is.logical(y)) {
             vars <- varlist[y]
-            if (length(vars) == 1) 
-                formula <- as.formula(paste(vars, "~.it|.ms", sep = "")) else formula <- as.formula(paste(paste(vars, collapse = "+", sep = ""), "~.it|.ms", sep = ""))
+                formula <- if (length(vars) == 1) as.formula(paste0(vars, "~.it|.ms")) else as.formula(paste0(paste0(vars, collapse = "+"), "~.it|.ms"))
         }
         if (is.null(formula)) 
             formula <- as.formula(y)
@@ -67,7 +65,7 @@ plot.mids <- function(x, y = NULL, theme = mice.theme(), layout = c(2, 3), type 
     mn <- matrix(aperm(mn, c(2, 3, 1)), nrow = m * it)
     sm <- matrix(aperm(sm, c(2, 3, 1)), nrow = m * it)
     
-    adm <- expand.grid(1:it, 1:m, c("mean", "sd"))
+    adm <- expand.grid(seq_len(it), seq_len(m), c("mean", "sd"))
     data <- cbind(adm, rbind(mn, sm))
     colnames(data) <- c(".it", ".m", ".ms", varlist)
     .m <- NULL

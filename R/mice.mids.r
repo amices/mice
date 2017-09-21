@@ -77,7 +77,8 @@ mice.mids <- function(obj, maxit = 1, diagnostics = TRUE, printFlag = TRUE,
     p <- padModel(obj$data, obj$method, obj$predictorMatrix, obj$visitSequence, 
                   obj$post, obj$nmis, nvar) else p <- obj$pad
   r <- (!is.na(p$data))
-  imp <- lapply(seq_len(ncol(p$data)), function(j) obj$imp[[j]])
+  imp <- vector("list", ncol(p$data))
+  for (j in obj$visitSequence) imp[[j]] <- obj$imp[[j]]
   assign(".Random.seed", obj$lastSeedValue, pos = 1)
   
   ## OK. Iterate.

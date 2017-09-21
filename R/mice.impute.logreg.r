@@ -177,7 +177,7 @@ augment <- function(y, ry, x, wy, maxcat = 50) {
   e <- rep(rep(icod, each = 2), p)
   
   dimnames(d) <- list(paste0("AUG", seq_len(nrow(d))), dimnames(x)[[2]])
-  xa <- rbind(x, d)
+  xa <- rbind.data.frame(x, d)
   # beware, concatenation of factors
   ya <- if (is.factor(y)) as.factor(levels(y)[c(y, e)]) else c(y, e)
   rya <- c(ry, rep.int(TRUE, nr))

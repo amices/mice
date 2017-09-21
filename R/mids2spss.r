@@ -66,7 +66,7 @@ mids2spss <- function(imp, filedat="midsdata.txt", filesps="readmids.sps",
         varlabels <- names(df)
         if (is.null(varnames)) {
             varnames <- abbreviate(names(df), 8L)
-            if (any(vapply(varnames, nchar, numeric(1)) > 8L)) 
+            if (any(nchar(varnames) > 8L)) 
                 stop("I cannot abbreviate the variable names to eight or fewer letters")
             if (any(varnames != varlabels)) 
                 warning("some variable names were abbreviated")

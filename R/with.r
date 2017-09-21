@@ -59,9 +59,7 @@ with.mids <- function(data, expr, ...) {
         res <- eval(expr = analyses[[i]], envir = data.i, enclos = parent.frame())
       res
     }
-    
     analyses <- lapply(seq_len(data$m), f)
-    
     # return the complete data analyses as a list of length nimp
     object <- list(call = call, call1 = data$call, nmis = data$nmis, analyses = analyses)
     # formula=formula(analyses[[1]]$terms))

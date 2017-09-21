@@ -82,9 +82,9 @@ cbind.mids <- function(x, y = NULL, ...) {
   if (!is.mids(y)) {
     # Combine y and dots into data.frame
     if (is.null(y)) {
-      y <- cbind(...) 
+      y <- cbind.data.frame(...) 
     } else {
-      y <- cbind(y, ...)
+      y <- cbind.data.frame(y, ...)
     }
     if (is.matrix(y) || is.vector(y) || is.factor(y))
       y <- as.data.frame(y)
@@ -123,7 +123,7 @@ cbind.mids <- function(x, y = NULL, ...) {
       m <- matrix(NA,
                   nrow = sum(!r[, j]),
                   ncol = x$m,
-                  dimnames = list(row.names(y)[r[, j] == FALSE], seq_len(m)))
+                  dimnames = list(row.names(y)[!r[, j]], seq_len(m)))
       as.data.frame(m)
     }
       
