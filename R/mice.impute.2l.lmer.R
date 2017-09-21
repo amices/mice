@@ -50,7 +50,7 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
   if (intercept) {
     x <- cbind(1, as.matrix(x))
     type <- c(2, type)
-    dimnames(x)[[2]] <- paste0("v", 1:ncol(x))
+    dimnames(x)[[2]] <- paste0("v", seq_len(ncol(x)))
   }
   
   # define cluster, random and fixed effects
@@ -59,7 +59,7 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
   fixe <- names(x)[type > 0]
   
   n.class <- length(unique(x[, clust]))
-  x[, clust] <- factor(x[, clust], labels = 1:n.class)
+  x[, clust] <- factor(x[, clust], labels = seq_len(n.class))
   lev <- levels(x[, clust])
   
   X <- x[, fixe, drop = FALSE]
@@ -161,7 +161,7 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
         bi.star <- myi + A %*% rnorm(length(myi))
       } else {
         bi.star <- myi
-        warning(paste0("b_", jj , " fixed to estimate"))
+        warning("b_", jj, " fixed to estimate")
       }
     }
     

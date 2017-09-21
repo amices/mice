@@ -201,8 +201,8 @@ densityplot.mids <- function(x,
                plot.points = plot.points)
 
   ## create formula if not given (in call$data !)
-  vnames <- names(cd)[-(1:2)]
-  allfactors <- unlist(lapply(cd,is.factor))[-(1:2)]
+  vnames <- names(cd)[-seq_len(2)]
+  allfactors <- vapply(cd, is.factor, logical(1))[-seq_len(2)]
   if (missing(data)) {
     vnames <- vnames[!allfactors & x$nmis>2 & x$nmis < nrow(x$data)-1]
     formula <- as.formula(paste("~",paste(vnames,collapse="+",sep=""),sep=""))
@@ -217,7 +217,7 @@ densityplot.mids <- function(x,
 
   ## calculate selection vector gp
   nona <- is.null(call$na.groups)
-  if (!is.null(call$groups) & nona) gp <- call$groups
+  if (!is.null(call$groups) && nona) gp <- call$groups
   else {
     if (nona) {
       ## na.df <- r[, xnames, drop=FALSE]
@@ -226,28 +226,28 @@ densityplot.mids <- function(x,
       ## gp <- unlist(lapply(na.df, rep, x$m+1))
       ## gp[imp0] <- !gp[imp0]
       ## call$subset <- ss & gp
-      for (i in 1:length(xnames)) {
+      for (i in seq_along(xnames)) {
         xvar <- xnames[i]
         select <- cd$.imp!=0 & !r[,xvar]
         cd[select, xvar] <- NA
       }
-      gp <- rep(cd$.imp, length(xnames))
+      gp <- rep.int(cd$.imp, length(xnames))
     } else {
-      for (i in 1:length(xnames)) {
+      for (i in seq_along(xnames)) {
         xvar <- xnames[i]
         select <- cd$.imp!=0 & !nagp
         cd[select, xvar] <- NA
       }
-      gp <- rep(cd$.imp, length(xnames))
+      gp <- rep.int(cd$.imp, length(xnames))
     }
   }
 
   ## replicate color 2 if group=.imp is part of xnames
-  mustreplicate <- !(!is.null(call$groups) & nona) & mayreplicate
+  mustreplicate <- !(!is.null(call$groups) && nona) && mayreplicate
   if (mustreplicate) {
-    theme$superpose.line$col <- rep(theme$superpose.line$col[1:2], c(1,x$m))
+    theme$superpose.line$col <- rep(theme$superpose.line$col[seq_len(2)], c(1,x$m))
     theme$superpose.line$lwd <- rep(c(theme$superpose.line$lwd[1]*thicker, theme$superpose.line$lwd[1]),c(1,x$m))
-    theme$superpose.symbol$col <- rep(theme$superpose.symbol$col[1:2], c(1,x$m))
+    theme$superpose.symbol$col <- rep(theme$superpose.symbol$col[seq_len(2)], c(1,x$m))
     theme$superpose.symbol$pch <- c(NA,49:(49+x$m-1))
   }
 

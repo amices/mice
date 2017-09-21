@@ -49,7 +49,7 @@ bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
   }
   if (is.null(which.pat)) {
     pat <- nrow(x$patterns)
-    which.pat <- c(1:pat)
+    which.pat <- seq_len(pat)
   } else {
     pat <- length(which.pat)
   }
@@ -68,7 +68,7 @@ bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
       layout <- c(length(varlist), 1)
     }
   }
-  for (i in 1:pat){
+  for (i in seq_len(pat)){
     can <- which(x$cand == which.pat[i])
     mis <- matrix(NA, nrow = length(can), ncol = 2)
     nc <- which(x$patterns[which.pat[i], ] == 0)

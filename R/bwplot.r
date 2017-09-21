@@ -187,8 +187,8 @@ bwplot.mids <- function(x,
                  as.table = as.table)
     
     ## create formula if not given (in call$data !)
-    vnames <- names(cd)[-(1:2)]
-    allfactors <- unlist(lapply(cd,is.factor))[-(1:2)]
+    vnames <- names(cd)[-seq_len(2)]
+    allfactors <- unlist(lapply(cd,is.factor))[-seq_len(2)]
     if (missing(data)) {
         vnames <- vnames[!allfactors]
         formula <- as.formula(paste(paste(vnames,collapse="+",sep=""),"~.imp",sep=""))
@@ -218,13 +218,13 @@ bwplot.mids <- function(x,
     if (!is.null(call$groups) & nona) gp <- call$groups
     else {
         if (nona) {
-            for (i in 1:length(ynames)) {
+            for (i in seq_along(ynames)) {
                 yvar <- ynames[i]
                 select <- cd$.imp!=0 & !r[,yvar]
                 cd[select, yvar] <- NA
             }
         } else {
-            for (i in 1:length(ynames)) {
+            for (i in seq_along(ynames)) {
                 yvar <- ynames[i]
                 select <- cd$.imp!=0 & !nagp
                 cd[select, yvar] <- NA
@@ -243,7 +243,7 @@ bwplot.mids <- function(x,
     }
     
     ## change axis defaults of extended formula interface
-    if (is.null(call$xlab) & !is.na(match(".imp",xnames))) {
+    if (is.null(call$xlab) && !is.na(match(".imp",xnames))) {
         dots$xlab <- ""
         if (length(xnames)==1) dots$xlab <- "Imputation number"
     }

@@ -5,15 +5,15 @@ padModel <- function(data, method, predictorMatrix, visitSequence,
   # visitSequence.  Returns a list whose components make up the padded model.
   
   categories <- data.frame(
-    is.factor = factor(rep(FALSE, nvar), levels = c("TRUE", "FALSE")), 
-    n.dummy   = rep(0, nvar), 
-    is.dummy  = factor(rep(FALSE, nvar), levels = c("TRUE", "FALSE")), 
-    father    = rep(0, nvar))
+    is.factor = factor(rep.int(FALSE, nvar), levels = c("TRUE", "FALSE")), 
+    n.dummy   = rep.int(0, nvar), 
+    is.dummy  = factor(rep.int(FALSE, nvar), levels = c("TRUE", "FALSE")), 
+    father    = rep.int(0, nvar))
   
   # make explicit local copy
   data <- data
   
-  for (j in 1:nvar) {
+  for (j in seq_len(nvar)) {
     if (is.factor(data[, j]) && any(predictorMatrix[, j] != 0)) {
       
       categories[j, 1] <- TRUE
@@ -32,19 +32,19 @@ padModel <- function(data, method, predictorMatrix, visitSequence,
                                       ncol = n.dummy))
       
       # remove j as predictor
-      predictorMatrix[1:nvar, j] <- rep(0, times = nvar)
-      form <- c(form, rep("", n.dummy))
+      predictorMatrix[seq_len(nvar), j] <- rep.int(0, times = nvar)
+      form <- c(form, rep.int("", n.dummy))
       
       if (any(visitSequence == j)) {
         # make column j a predictor for its dummies
         idx <- (ncol(predictorMatrix) - n.dummy + 1):ncol(predictorMatrix)
-        predictorMatrix[idx, j] <- rep(1, times = n.dummy)
+        predictorMatrix[idx, j] <- rep.int(1, times = n.dummy)
         
         # extend visitSequence
         newcol <- ncol(predictorMatrix) - n.dummy + 1
         nloops <- sum(visitSequence == j)
-        for (ii in 1:nloops) {
-          idx2 <- (1:length(visitSequence))[visitSequence == j][ii]
+        for (ii in seq_len(nloops)) {
+          idx2 <- seq_along(visitSequence)[visitSequence == j][ii]
           visitSequence <- append(visitSequence, newcol, idx2)
         }
       }
@@ -61,19 +61,19 @@ padModel <- function(data, method, predictorMatrix, visitSequence,
       data[!is.na(data[, j]), idx] <- model.matrix(~ cat.column - 1)[, -1]
       
       # name new columns
-      names(data)[idx] <- paste(attr(data, "names")[j], (1:n.dummy), sep = ".")
+      names(data)[idx] <- paste(attr(data, "names")[j], seq_len(n.dummy), sep = ".")
       
       # extend method and post arrays
-      method <- c(method, rep("dummy", n.dummy))
-      post <- c(post, rep("", n.dummy))
+      method <- c(method, rep.int("dummy", n.dummy))
+      post <- c(post, rep.int("", n.dummy))
       
       # append administrative info
       categories <- rbind(
         categories, 
-        data.frame(is.factor = rep(FALSE, n.dummy), 
-                   n.dummy   = rep(0, n.dummy), 
-                   is.dummy  = rep(TRUE, n.dummy), 
-                   father    = rep(j, n.dummy)))
+        data.frame(is.factor = rep.int(FALSE, n.dummy), 
+                   n.dummy   = rep.int(0, n.dummy), 
+                   is.dummy  = rep.int(TRUE, n.dummy), 
+                   father    = rep.int(j, n.dummy)))
     }
   }
   
@@ -85,7 +85,7 @@ padModel <- function(data, method, predictorMatrix, visitSequence,
   names(visitSequence) <- varnames[visitSequence]
   dimnames(categories)[[1]] <- dimnames(data)[[2]]
   
-  if (any(duplicated(names(data))))
+  if (anyDuplicated(names(data)))
     stop("Column names of padded data not unique")
   
   return(list(data = as.data.frame(data), 

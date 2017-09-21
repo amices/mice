@@ -65,7 +65,7 @@ mdc <- function(r = "observed", s = "symbol",
             cli <- hcl(0, 100, 40)
             clc <- "black"
         }
-    } else if (transparent == FALSE) {
+    } else if (!transparent) {
         cso <- hcl(240, 100, 40)
         csi <- hcl(0, 100, 40)
         csc <- "black"

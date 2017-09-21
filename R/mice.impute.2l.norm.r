@@ -52,7 +52,7 @@ mice.impute.2l.norm <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
         Z <- matrix(0, p, p)
         diag(Z) <- sqrt(rchisq(p, df:(df - p + 1)))
         if (p > 1) {
-            pseq <- 1:(p - 1)
+            pseq <- seq_len(p - 1)
             Z[rep(p * pseq, pseq) + unlist(lapply(pseq, seq))] <- rnorm(p * (p - 1)/2)
         }
         crossprod(Z %*% SqrtSigma)
@@ -92,9 +92,9 @@ mice.impute.2l.norm <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
     ## Initialize
     n.iter <- 100
     if (is.null(wy)) wy <- !ry
-    n.class <- length(unique(x[, type == (-2)]))
+    n.class <- length(unique(x[, type == -2]))
     if (n.class == 0) stop("No class variable")
-    gf.full <- factor(x[, type == (-2)], labels = 1:n.class)
+    gf.full <- factor(x[, type == -2], labels = seq_len(n.class))
     gf <- gf.full[ry]
     XG <- split.data.frame(as.matrix(x[ry, type == 2]), gf)
     X.SS <- lapply(XG, crossprod)
@@ -104,16 +104,16 @@ mice.impute.2l.norm <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
     
     bees <- matrix(0, nrow = n.class, ncol = n.rc)
     ss <- vector(mode = "numeric", length = n.class)
-    mu <- rep(0, n.rc)
+    mu <- rep.int(0, n.rc)
     inv.psi <- diag(1, n.rc, n.rc)
-    inv.sigma2 <- rep(1, n.class)
+    inv.sigma2 <- rep.int(1, n.class)
     sigma2.0 <- 1
     theta <- 1
     
     ## Execute Gibbs sampler
-    for (iter in 1:n.iter) {
+    for (iter in seq_len(n.iter)) {
         ## Draw bees
-        for (class in 1:n.class) {
+        for (class in seq_len(n.class)) {
             vv <- symridge(inv.sigma2[class] * X.SS[[class]] + inv.psi, ...)
             bees.var <- chol2inv(chol(vv))
             bees[class, ] <- drop(bees.var %*% (crossprod(inv.sigma2[class] * XG[[class]], yg[[class]]) + inv.psi %*% mu)) + 

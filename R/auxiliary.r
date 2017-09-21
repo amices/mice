@@ -44,7 +44,7 @@ appendbreak <- function(data, brk, warp.model = warp.model, id=NULL, typ="pred")
   app$first <- FALSE
   app$typ <- typ
   app$occ <- NA
-  app <- app[rep(1:nap,length(brk)),]
+  app <- app[rep.int(seq_len(nap),length(brk)),]
   
   ## update age variables
   app$age <- rep(brk,each=nap)
@@ -54,7 +54,7 @@ appendbreak <- function(data, brk, warp.model = warp.model, id=NULL, typ="pred")
           Boundary.knots = c(brk[1],brk[k]+0.0001),
           degree = 1)
   X <- X[,-(k+1)]
-  app[,paste("x",1:ncol(X),sep="")] <- X
+  app[,paste0("x",seq_len(ncol(X)))] <- X
   
   ## update outcome variable (set to missing)
   app[,c("hgt.z","wgt.z","bmi.z")] <- NA
@@ -78,8 +78,8 @@ extractBS <- function(fit) {
 
 ## used by mice.impute.midastouch
 bootfunc.plain <- function(n){
-  random <- sample(n,replace = TRUE)
-  weights <- as.numeric(table(factor(random,levels = c(1:n))))
+  random <- sample.int(n,replace = TRUE)
+  weights <- as.numeric(table(factor(random,levels = seq_len(n))))
   return(weights)
 }
 

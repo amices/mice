@@ -138,23 +138,23 @@ rbind.mids <- function(x, y = NULL, ...) {
       stop("Number of imputations differ")
     
     warned <- FALSE
-    if (!identical(x$method, y$method) & !warned) {
+    if (!identical(x$method, y$method) && !warned) {
       warning("`methods` not equal; ignores y$method")
       warned <- TRUE
     }
-    if (!identical(x$predictorMatrix, y$predictorMatrix) & !warned) {
+    if (!identical(x$predictorMatrix, y$predictorMatrix) && !warned) {
       warning("`predictorMatrix` not equal; ignores y$predictorMatrix")
       warned <- TRUE
     }
-    if (!identical(x$visitSequence, y$visitSequence) & !warned) {
+    if (!identical(x$visitSequence, y$visitSequence) && !warned) {
       warning("`visitSequence` not equal; ignores y$visitSequence")
       warned <- TRUE
     }
-    if (!identical(x$post, y$post) & !warned) {
+    if (!identical(x$post, y$post) && !warned) {
       warning("`post` not equal; ignores y$post")
       warned <- TRUE
     }
-    if (!identical(x$pad$categories, y$pad$categories) & !warned) {
+    if (!identical(x$pad$categories, y$pad$categories) && !warned) {
       warning("`pad$categories` not equal; ignores y$pad")
       warned <- TRUE
     }
@@ -185,8 +185,8 @@ rbind.mids <- function(x, y = NULL, ...) {
     
     # The original data of y will be binded into the multiple imputed dataset, including the imputed values of y.
     imp <- vector("list", ncol(x$data))
-    for (j in 1:ncol(x$data)) {
-      if(!is.null(x$imp[[j]]) | !is.null(y$imp[[j]])) {
+    for (j in seq_len(ncol(x$data))) {
+      if(!is.null(x$imp[[j]]) || !is.null(y$imp[[j]])) {
         imp[[j]] <- rbind(x$imp[[j]], y$imp[[j]])
       }
     }

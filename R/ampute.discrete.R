@@ -36,16 +36,16 @@ ampute.discrete <- function(P, scores, prop, odds) {
   # (Brand, 1999, pp. 110-113) will be induced on the weighted sum scores calculated 
   # earlier in the multivariate amputation function ampute().
   #
-  R <- list()
-  for (i in 1:nrow(odds)) {
+  R <- vector(mode = "list", length = nrow(odds))
+  for (i in seq_len(nrow(odds))) {
     if (scores[[i]][[1]] == 0) {
       R[[i]] <- 0
     } else {
       # The scores are divided into quantiles
       # Specify #quantiles by #odds values
       ng <- length(odds[i, ][!is.na(odds[i, ])])  
-      quantiles <- quantile(scores[[i]], probs = seq(0, 1, by = 1 / ng))
-      if (any(duplicated(quantiles)) | any(is.na(quantiles))) {
+      quantiles <- quantile(scores[[i]], probs = seq.int(0, 1, by = 1 / ng))
+      if (anyDuplicated(quantiles) || anyNA(quantiles)) {
         stop("Division of sum scores into quantiles did not succeed. Possibly
              the sum scores contain too few different observations (in case of
              categorical or dummy variables). Try using more variables to 
@@ -53,8 +53,8 @@ ampute.discrete <- function(P, scores, prop, odds) {
              odds matrix", call. = FALSE)
       }
       # For each candidate the quantile number is specified 
-      R.temp <- rep(NA, length(scores[[i]]))
-      for (k in 1:ng) {
+      R.temp <- rep.int(NA, length(scores[[i]]))
+      for (k in seq_len(ng)) {
         R.temp <- replace(R.temp, scores[[i]] >= quantiles[k] 
                           & scores[[i]] <= quantiles[k + 1], k)
       }
@@ -63,7 +63,7 @@ ampute.discrete <- function(P, scores, prop, odds) {
       # will receive missing data indicator 0, meaning he will be made missing 
       # according the pattern; if random value > prob, the candidate will receive
       # missing data indicator 1, meaning the candidate will remain complete. 
-      for (l in 1:ng) {
+      for (l in seq_len(ng)) {
         prob <- (ng * prop * odds[i, l]) / sum(odds[i, ], na.rm = TRUE)
         if (prob >= 1.0) {
           warning("Combination of odds matrix and desired proportion of 
@@ -75,7 +75,7 @@ ampute.discrete <- function(P, scores, prop, odds) {
         if (gn != 0) {
           random <- runif(n = gn, min = 0, max = 1)
           Q <- c()
-          for (m in 1:gn) {
+          for (m in seq_len(gn)) {
             if (random[m] <= prob) {
               Q[m] <- 0  # Candidate will be made missing
             } else {

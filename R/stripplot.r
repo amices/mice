@@ -211,14 +211,14 @@ stripplot.mids <- function(x,
                  horizontal = horizontal)
     
     ## create formula if not given (in call$data !)
-    vnames <- names(cd)[-(1:2)]
-    allfactors <- unlist(lapply(cd,is.factor))[-(1:2)]
+    vnames <- names(cd)[-seq_len(2)]
+    allfactors <- unlist(lapply(cd,is.factor))[-seq_len(2)]
     if (missing(data)) {
         vnames <- vnames[!allfactors]
-        formula <- as.formula(paste(paste(vnames,collapse="+",sep=""),"~.imp",sep=""))
+        formula <- as.formula(paste0(paste0(vnames,collapse="+"),"~.imp"))
     } else {
         ## pad abbreviated formula
-        abbrev <- length(grep("~", call$data))==0
+        abbrev <- ! any(grepl("~", call$data))
         if (abbrev) {
             if (length(call$data)>1) stop("Cannot pad extended formula.")
             else formula <- as.formula(paste(call$data,"~.imp",sep=""))
@@ -237,7 +237,7 @@ stripplot.mids <- function(x,
     
     ## calculate selection vector gp
     nona <- is.null(call$na.groups)
-    if (!is.null(call$groups) & nona) gp <- call$groups
+    if (!is.null(call$groups) && nona) gp <- call$groups
     else {
         if (nona) {
             na.df <- r[, ynames, drop=FALSE]
@@ -248,7 +248,7 @@ stripplot.mids <- function(x,
     }
     
     ## change axis defaults of extended formula interface
-    if (is.null(call$xlab) & !is.na(match(".imp",xnames))) {
+    if (is.null(call$xlab) && !is.na(match(".imp",xnames))) {
         dots$xlab <- ""
         if (length(xnames)==1) dots$xlab <- "Imputation number"
     }

@@ -33,7 +33,7 @@ mice.impute.2lonly.mean <- function(y, ry, x, type, wy = NULL, ...) {
   # deal with empty classes (will be NaN)
   empty.classes <- class[!class %in% classobs]
   classobs <- c(classobs, empty.classes)
-  yobs <- c(yobs, rep(NA, length(empty.classes)))
+  yobs <- c(yobs, rep.int(NA, length(empty.classes)))
   
   # return the means per class
   ymean <- aggregate(yobs, list(classobs), mean, na.rm = TRUE)

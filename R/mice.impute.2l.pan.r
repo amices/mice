@@ -132,13 +132,13 @@ mice.impute.2l.pan <- function(y, ry, x, type, intercept=TRUE, paniter = 500 ,
     }
         
     # add groupmeans in the regression model
-    if ( sum( type %in% c(3,4)) > 0 ){ 
+    if (any(type %in% c(3,4))) { 
         x0 <- as.matrix(cbind( x[ , type == -2  ]  , x[ , type %in% c(3,4) ]  ))
         colnames(x0) <- c( colnames(x)[ type==-2] , colnames(x)[ type %in% c(3,4) ] )
-        type0 <- c( -2 , rep(1 , ncol(x0)-1) )
+        type0 <- c( -2 , rep.int(1 , ncol(x0)-1) )
         x0.aggr <- as.matrix( .mice.impute.2l.groupmean(y = y , ry=ry , x = x0 , 
                                                         type = type0  , grmeanwarning=FALSE , ...)   )
-        colnames(x0.aggr) <- paste( "M." , colnames(x0)[-1] , sep="")
+        colnames(x0.aggr) <- paste0( "M." , colnames(x0)[-1])
         # groupcentering
         if ( groupcenter.slope ){ 
             x0.aggr1 <- as.matrix(x0.aggr)
@@ -149,7 +149,7 @@ mice.impute.2l.pan <- function(y, ry, x, type, intercept=TRUE, paniter = 500 ,
         # combine covariate matrix
         x <- cbind( x , x0.aggr )
         # add type
-        type1 <- c( type , rep(1 , ncol(x0.aggr) ) )
+        type1 <- c( type , rep.int(1 , ncol(x0.aggr) ) )
         names(type1) <- c( names(type) , colnames(x0.aggr) )   
         type1[ type1 == 3 ] <- 1
         type1[ type1 == 4 ] <- 2
@@ -211,7 +211,7 @@ mice.impute.2l.pan <- function(y, ry, x, type, intercept=TRUE, paniter = 500 ,
 .mice.impute.2l.groupmean <- function (y, ry, x, type , grmeanwarning=TRUE, ...){  
     if ( ( ncol(x) > 2 ) & grmeanwarning )   warning("\nMore than one variable is requested to be aggregated.\n")    
     # calculate aggregated values
-    a1 <- aggregate( x[, type %in% c(1,2) ] , list( x[,type == -2] ) , mean , na.rm=T)
+    a1 <- aggregate( x[, type %in% c(1,2) ] , list( x[,type == -2] ) , mean , na.rm=TRUE)
     i1 <- match( x[,type == -2] , a1[,1] )
     ximp <- as.matrix(a1[i1,-1])
     colnames(ximp) <- paste( names(type)[ type %in% c(1,2) ] , names(type)[ type == -2 ] , sep="." )

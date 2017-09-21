@@ -34,12 +34,7 @@ lm.mids <- function(formula, data, ...) {
     call <- match.call()
     if (!is.mids(data)) 
         stop("The data must have class mids")
-    analyses <- as.list(1:data$m)  #
-    # do the repated analysis, store the result
-    for (i in 1:data$m) {
-        data.i <- complete(data, i)
-        analyses[[i]] <- lm(formula, data = data.i, ...)
-    }
+    analyses <- lapply(seq_len(data$m), function(i) lm(formula, data = complete(data, i), ...))
     # return the complete data analyses as a list of length nimp
     object <- list(call = call, call1 = data$call, nmis = data$nmis, analyses = analyses)
     oldClass(object) <- c("mira", "lm")  ## FEH
@@ -89,12 +84,8 @@ glm.mids <- function(formula, family = gaussian, data, ...) {
     call <- match.call()
     if (!is.mids(data)) 
         stop("The data must have class mids")
-    analyses <- as.list(1:data$m)  #
-    # do the repated analysis, store the result
-    for (i in 1:data$m) {
-        data.i <- complete(data, i)
-        analyses[[i]] <- glm(formula, family = family, data = data.i, ...)  ## SvB 22jan13
-    }
+    analyses <- lapply(seq_len(data$m),
+                       function(i) glm(formula, family = family, data = complete(data, i), ...))
     # return the complete data analyses as a list of length nimp
     object <- list(call = call, call1 = data$call, nmis = data$nmis, analyses = analyses)
     oldClass(object) <- c("mira", "glm", "lm")  ## FEH

@@ -32,7 +32,7 @@ ibind <- function(x, y) {
   call <- match.call()
   call <- c(x$call, call)
   
-  if (!is.mids(y) & !is.mids(x)) 
+  if (!is.mids(y) && !is.mids(x)) 
     stop("Arguments `x` and `y` not of class `mids`")
   if (!identical(is.na(x$data), is.na(y$data)))
     stop("Differences detected in the missing data pattern")
@@ -52,24 +52,20 @@ ibind <- function(x, y) {
     stop("Differences detected between `x$pad$categories` and `y$pad$categories`")
   
   visitSequence <- x$visitSequence
-  imp <- vector("list", ncol(x$data))
-  for (j in visitSequence) {
-    imp[[j]] <- cbind(x$imp[[j]], y$imp[[j]])
-  }
-  
+  imp <- lapply(visitSequence, function(j) cbind(x$imp[[j]], y$imp[[j]]))
   m <- (x$m + y$m)
   iteration <- max(x$iteration, y$iteration)
   
   chainMean <- chainVar <- array(NA, dim = c(length(visitSequence), iteration, m), 
                                  dimnames = list(names(visitSequence), 
-                                                 1:iteration, paste("Chain", 1:m)))
-  for (j in 1:x$m) {
-    chainMean[, 1:x$iteration, j] <- x$chainMean[, , j]
-    chainVar[, 1:x$iteration, j] <- x$chainVar[, , j]
+                                                 seq_len(iteration), paste("Chain", seq_len(m))))
+  for (j in seq_len(x$m)) {
+    chainMean[, seq_len(x$iteration), j] <- x$chainMean[, , j]
+    chainVar[, seq_len(x$iteration), j] <- x$chainVar[, , j]
   }
-  for (j in 1:y$m) {
-    chainMean[, 1:y$iteration, j + x$m] <- y$chainMean[, , j]
-    chainVar[, 1:y$iteration, j + x$m] <- y$chainVar[, , j]
+  for (j in seq_len(y$m)) {
+    chainMean[, seq_len(y$iteration), j + x$m] <- y$chainMean[, , j]
+    chainVar[, seq_len(y$iteration), j + x$m] <- y$chainVar[, , j]
   }
   
   z <- list(call = call, data = x$data, where = x$where, 

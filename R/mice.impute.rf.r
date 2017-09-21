@@ -71,7 +71,7 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10, ...)
   xmis <- x[wy, , drop = FALSE]
   yobs <- y[ry]
   
-  forest <- sapply(1:ntree, FUN = function(s) onetree(xobs, xmis, yobs, ...))
+  forest <- sapply(seq_len(ntree), FUN = function(s) onetree(xobs, xmis, yobs, ...))
   if (nmis == 1) forest <- array(forest, dim = c(1, ntree))
   impute <- apply(forest, MARGIN = 1, FUN = function(s) sample(unlist(s), 1))
   return(impute)

@@ -19,9 +19,9 @@ df.residual.default <- function(object, q = 1.3, ...) {
     
     mk <- try(c <- coef(object), silent = TRUE)
     mn <- try(f <- fitted(object), silent = TRUE)
-    if (inherits(mk, "try-error") | inherits(mn, "try-error")) 
+    if (inherits(mk, "try-error") || inherits(mn, "try-error")) 
         return(NULL)
-    n <- ifelse(is.data.frame(f) | is.matrix(f), nrow(f), length(f))
+    n <- if (is.data.frame(f) || is.matrix(f)) nrow(f) else length(f)
     k <- length(c)
     if (k == 0 | n == 0) 
         return(NULL)

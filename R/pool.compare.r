@@ -112,7 +112,7 @@ pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
     call <- match.call()
     meth <- match.arg(tolower(method), c("wald", "likelihood"))
     
-    if (!is.mira(fit1) | !is.mira(fit0)) 
+    if (!is.mira(fit1) || !is.mira(fit0)) 
         stop("fit1 and fit0 should both have class 'mira'.\n")
     m1 <- length(fit1$analyses)
     m0 <- length(fit0$analyses)
@@ -132,7 +132,7 @@ pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
     vars1 = names(est1$qbar)
     vars0 = names(est0$qbar)
     
-    if (is.null(vars1) | is.null(vars0)) 
+    if (is.null(vars1) || is.null(vars0)) 
       stop("coefficients do not have names")
     if (dimQ2 < 1) 
         stop("The larger model should be specified first and must be strictly larger than the smaller model.\n")
@@ -142,7 +142,7 @@ pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
     if (meth == "wald") {
         # Reference: paragraph 2.2, Article Meng & Rubin, Biometrika, 1992.  When two objects are to be compared we need to
         # calculate the matrix Q.
-        Q <- diag(rep(1, dimQ1), ncol = dimQ1)
+        Q <- diag(rep.int(1, dimQ1), ncol = dimQ1)
         where_new_vars = which(!(vars1 %in% vars0))
         Q <- Q[where_new_vars, , drop = FALSE]
         qbar <- Q %*% est1$qbar
@@ -157,7 +157,7 @@ pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
             stop("For method=likelihood the imputed data set (a mids object) should be included.\n")
         
         devM <- devL <- 0
-        for (i in (1:m)) {
+        for (i in seq_len(m)) {
             # Calculate for each imputed dataset the deviance between the two models with the pooled coefficients.
             devL <- devL + LLlogistic(formula1, complete(data, i), est1$qbar) - LLlogistic(formula0, complete(data, i), est0$qbar)
             # Calculate for each imputed dataset the deviance between the two models with its estimated coefficients.

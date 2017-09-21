@@ -182,13 +182,13 @@ xyplot.mids <- function(x,
     
     ## calculate selection vector gp
     nona <- is.null(call$na.groups)
-    if (!is.null(call$groups) & nona) gp <- call$groups
+    if (!is.null(call$groups) && nona) gp <- call$groups
     else {
         if (nona) {
             na.df <- r[, ynames, drop=FALSE]
-            gp <- unlist(lapply(na.df, rep, x$m+1))
+            gp <- unlist(lapply(na.df, rep.int, x$m+1))
         } else {
-            gp <- rep(nagp, length(ynames)*(x$m+1))
+            gp <- rep.int(nagp, length(ynames)*(x$m+1))
         }
     }
     

@@ -8,24 +8,24 @@ check.visitSequence <- function(setup, where) {
 
   # set default visit sequence, left to right
   if (is.null(visitSequence))
-    visitSequence <- (1:ncol(where))[apply(where, 2, any)]
+    visitSequence <- seq_len(ncol(where))[apply(where, 2, any)]
   
   if (!is.numeric(visitSequence)) {
     code <- match.arg(visitSequence, c("roman", "arabic", "monotone",
                                        "revmonotone"))
     visitSequence <- switch(
       code, 
-      roman = (1:nvar)[nwhere > 0],
-      arabic = rev((1:nvar)[nwhere > 0]),
+      roman = seq_len(nvar)[nwhere > 0],
+      arabic = rev(seq_len(nvar)[nwhere > 0]),
       monotone = order(nwhere)[(sum(nwhere == 0) + 1):length(nwhere)],
       revmonotone = rev(order(nwhere)[(sum(nwhere == 0) + 1):length(nwhere)]),
-      (1:nvar)[nwhere > 0]
+      seq_len(nvar)[nwhere > 0]
     )
   }
   
   # if (all(nwhere[visitSequence] == 0))
   #   stop("No locations to impute")
-  flags <- nwhere == 0 & is.element(1:nvar, visitSequence)
+  flags <- nwhere == 0 & is.element(seq_len(nvar), visitSequence)
   if (any(flags))
     visitSequence <- visitSequence[!flags]
   visitSequence <- visitSequence[visitSequence <= nvar]
@@ -52,7 +52,7 @@ check.method <- function(setup, data) {
         method[j] <- defaultMethod[1]
       } else if (nlevels(y) == 2) {
         method[j] <- defaultMethod[2]
-      } else if (is.ordered(y) & nlevels(y) > 2) {
+      } else if (is.ordered(y) && nlevels(y) > 2) {
         method[j] <- defaultMethod[4]
       } else if (nlevels(y) > 2) {
         method[j] <- defaultMethod[3]
@@ -74,9 +74,9 @@ check.method <- function(setup, data) {
   
   # if user specifies multiple methods, check the length of the argument
   if (length(method) != nvar) {
-    stop(paste("The length of method (", length(method),
+    stop(paste0("The length of method (", length(method),
                ") does not match the number of columns in the data (", nvar,
-               ").", sep = ""))
+               ")."))
   }
   
   # check whether the elementary imputation methods are on the search path
@@ -84,12 +84,12 @@ check.method <- function(setup, data) {
   passive.check <- is.passive(method) & nwhere > 0 & method != ""
   check <- all(active.check) & any(passive.check)
   if (check) {
-    fullNames <- rep("mice.impute.passive", length(method[passive.check]))
+    fullNames <- rep.int("mice.impute.passive", length(method[passive.check]))
   } else {
     fullNames <- paste("mice.impute", method[active.check], sep = ".")
     if (length(method[active.check]) == 0) fullNames <- character(0)
   }
-  notFound <- !sapply(fullNames, exists, mode = "function", inherit = TRUE)
+  notFound <- !vapply(fullNames, exists, logical(1), mode = "function", inherits = TRUE)
   if (any(notFound)) {
     stop(paste("The following functions were not found:",
                paste(fullNames[notFound], collapse = ", ")))
@@ -107,15 +107,15 @@ check.method <- function(setup, data) {
                   m3 = c("norm", "norm.nob", "norm.predict", "norm.boot",
                          "mean", "2l.norm", "2l.pan", 
                          "2lonly.pan", "quadratic", "logreg", "logreg.boot"))
-    if (is.numeric(y) & (mj %in% mlist$m1)) {
+    if (is.numeric(y) && (mj %in% mlist$m1)) {
       warning("Type mismatch for variable ", vname, "\nImputation method ",
               mj, " is for categorical data.",
               "\nIf you want that, turn variable ", vname, " into a factor,",
               "\nand store your data in a data frame.", call. = FALSE)
-    } else if (is.factor(y) & nlevels(y) == 2 & (mj %in% mlist$m2)) {
+    } else if (is.factor(y) && nlevels(y) == 2 && (mj %in% mlist$m2)) {
       warning("Type mismatch for variable ", vname, "\nImputation method ",
               mj, " is not for factors.", call. = FALSE)
-    } else if (is.factor(y) & nlevels(y) > 2 & (mj %in% mlist$m3)) {
+    } else if (is.factor(y) && nlevels(y) > 2 && (mj %in% mlist$m3)) {
       warning("Type mismatch for variable ", vname, "\nImputation method ",
               mj, " is not for factors with three or more levels.",
               call. = FALSE)
@@ -137,15 +137,15 @@ check.predictorMatrix <- function(setup) {
   
   if (!is.matrix(pred))
     stop("Argument 'predictorMatrix' not a matrix.")
-  if (nvar != nrow(pred) | nvar != ncol(pred))
+  if (nvar != nrow(pred) || nvar != ncol(pred))
     stop(paste("The predictorMatrix has", nrow(pred), "rows and",
                ncol(pred), "columns. Both should be", nvar, "."))
   dimnames(pred) <- list(varnames, varnames)
   diag(pred) <- 0
 
   # inactivate predictors of complete variables
-  for (j in 1:nvar) {
-    if (nwhere[j] == 0 & any(pred[j, ] != 0))
+  for (j in seq_len(nvar)) {
+    if (nwhere[j] == 0 && any(pred[j, ] != 0))
       pred[j, ] <- 0
   }
   
@@ -168,21 +168,22 @@ check.data <- function(setup, data, allow.na = FALSE,
   
   # stop if the class variable is a factor
   isclassvar <- apply(pred == -2, 2, any)
-  for (j in 1:nvar) {
-    if (isclassvar[j] & is.factor(data[,j])) 
+  for (j in seq_len(nvar)) {
+    if (isclassvar[j] && is.factor(data[,j])) 
       stop("Class variable (column ", j,
            ") cannot be factor. Convert to numeric by as.integer()")        
   }
   
   # remove constant variables but leave passive variables untouched
-  for (j in 1:nvar) {
+  for (j in seq_len(nvar)) {
     if (!is.passive(meth[j])) {
       d.j <- data[, j]
-      v <- ifelse(is.character(d.j), NA,
-                  var(as.numeric(d.j), na.rm = TRUE))
-      constant <- ifelse(allow.na, 
-                         ifelse(is.na(v), FALSE, v < 1000 * .Machine$double.eps),
-                         is.na(v) || v < 1000 * .Machine$double.eps)
+      v <- if (is.character(d.j)) NA else var(as.numeric(d.j), na.rm = TRUE)
+      constant <- if (allow.na) {
+                    if (is.na(v)) FALSE else v < 1000 * .Machine$double.eps
+                  } else {
+                    is.na(v) || v < 1000 * .Machine$double.eps
+                  }
       didlog <- FALSE
       if (constant && any(pred[, j] != 0)) {
         out <- varnames[j]
@@ -209,8 +210,8 @@ check.data <- function(setup, data, allow.na = FALSE,
   } else {
     droplist <- NULL
   }
-  if (length(droplist) > 0 & remove_collinear) {
-    for (k in 1:length(droplist)) {
+  if (length(droplist) > 0 && remove_collinear) {
+    for (k in seq_along(droplist)) {
       j <- which(varnames %in% droplist[k])
       didlog <- FALSE
       if (any(pred[, j] != 0)) {

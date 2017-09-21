@@ -175,5 +175,5 @@ f <- flux(data, local)
 #'@export
 fico <- function(data){
   ic <- ici(data)
-  unlist(lapply(data, FUN <- function(x) sum((!is.na(x)) & ic)/sum(!is.na(x))))
+  unlist(lapply(data, FUN = function(x) sum((!is.na(x)) & ic)/sum(!is.na(x))))
 }

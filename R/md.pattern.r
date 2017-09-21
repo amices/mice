@@ -48,7 +48,7 @@ md.pattern <- function(x) {
     # SvB, 13-7-99
     # SvB, 32 columns bug removed - 8mar2012
     #
-    if (!(is.matrix(x) | is.data.frame(x))) 
+    if (!(is.matrix(x) || is.data.frame(x))) 
         stop("Data should be a matrix or dataframe")
     if (ncol(x) < 2) 
         stop("Data should have at least two columns")
@@ -61,7 +61,7 @@ md.pattern <- function(x) {
     r <- 1 * is.na(x)
     nmis <- as.integer(apply(r, 2, sum))
     names(nmis) <- dimnames(x)[[2]]  # index the missing data patterns
-    mdp <- (r %*% (2^((1:ncol(x)) - 1))) + 1  # do row sort  SvB 8mar2012
+    mdp <- (r %*% (2^((seq_len(ncol(x))) - 1))) + 1  # do row sort  SvB 8mar2012
     ro <- order(mdp)
     x <- matrix(x[ro, ], n, p)  ##pm 04/02
     mdp <- mdp[ro]
