@@ -12,8 +12,8 @@ wy4 <- rep(c(TRUE, FALSE), times = c(1, length(y) - 1))
 type <- c(1, -2, 1)
 
 test_that("Returns requested length", {
-  expect_true(length(mice.impute.2lonly.mean(y, ry, x, type, wy1)) == sum(wy1))
-  expect_true(length(mice.impute.2lonly.mean(y, ry, x, type, wy2)) == sum(wy2))
-  expect_true(length(mice.impute.2lonly.mean(y, ry, x, type, wy3)) == sum(wy3))
-  expect_true(length(mice.impute.2lonly.mean(y, ry, x, type, wy4)) == sum(wy4))
+  expect_equal(length(mice.impute.2lonly.mean(y, ry, x, type, wy1)), sum(wy1))
+  expect_equal(length(mice.impute.2lonly.mean(y, ry, x, type, wy2)), sum(wy2))
+  expect_equal(length(mice.impute.2lonly.mean(y, ry, x, type, wy3)), sum(wy3))
+  expect_equal(length(mice.impute.2lonly.mean(y, ry, x, type, wy4)), sum(wy4))
 })
