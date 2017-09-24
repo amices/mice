@@ -97,7 +97,7 @@ xyplot.mads <- function(x, data, which.pat = NULL,
   key <- list(columns = 2, points = list(col = colors, pch = 1), 
               text = list(c("Non-Amputed Data", "Amputed Data")))
   
-  p <- setNames(vector(mode = "list", length = pat), paste("Scatterplot Pattern", which.pat))
+  p <- stats::setNames(vector(mode = "list", length = pat), paste("Scatterplot Pattern", which.pat))
   for (i in seq_len(pat)) {
     p[[paste("Scatterplot Pattern", which.pat[i])]] <- 
       xyplot(x = formula, data = data[data$.pat == which.pat[i], ],

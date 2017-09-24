@@ -464,7 +464,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     # Assign cases to the patterns according probs
     # Because 0 and 1 will be used for missingness, 
     # the numbering of the patterns will start from 2
-    P <- sample.int(x = nrow(patterns.new), size = nrow(data), 
+    P <- sample.int(n = nrow(patterns.new), size = nrow(data), 
                 replace = TRUE, prob = freq) + 1
     # Calculate missingness according MCAR or calculate weighted sum scores
     # Standardized data is used to calculate weighted sum scores

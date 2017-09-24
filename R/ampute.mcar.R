@@ -41,7 +41,7 @@ ampute.mcar <- function(P, patterns, prop) {
       # indicator 0, meaning he will be made missing or missing data indicator 1, 
       # meaning the candidate will remain complete.
       R.temp <- replace(P, P == (i + 1), R.temp)
-      R.temp <- replace(R[[i]], P != (i + 1), 1)
+      R.temp <- replace(R.temp, P != (i + 1), 1)
       return(R.temp)
     }
   }
