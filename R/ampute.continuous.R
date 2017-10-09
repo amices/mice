@@ -49,9 +49,7 @@ ampute.continuous <- function(P, scores, prop, type) {
     counter <- 0
     val.lo <- round(fun(lo, ...), 3)
     val.hi <- round(fun(hi, ...), 3)
-    if (val.lo > val.hi) 
-      sign <- -1
-    else sign <- 1
+    sign <- if (val.lo > val.hi) -1 else 1
     if (target * sign < val.lo * sign) 
       outside.range <- TRUE
     else if (target * sign > val.hi * sign) 
@@ -92,9 +90,7 @@ ampute.continuous <- function(P, scores, prop, type) {
         cat("--------------\n")
       }
     }
-    retval <- list()
-    retval$call <- match.call()
-    retval$numiter <- counter
+    retval <- list(call = match.call(), numiter = counter)
     if (outside.range) {
       if (target * sign < val.lo * sign) {
         warning("Reached lower boundary")
@@ -142,23 +138,19 @@ ampute.continuous <- function(P, scores, prop, type) {
   testset <- scale(rnorm(n = 10000, mean = 0, sd = 1))
   logit <- function(x) exp(x) / (1 + exp(x))
   # An empty list is created, type argument is given the right length
-  R <- list()
+  R <- vector(mode = "list", length = length(scores))
   if (length(type) == 1) {
-    type <- rep(type, length(scores))
+    type <- rep.int(type, length(scores))
   }
-  for (i in 1:length(scores)) {
+  for (i in seq_along(scores)) {
     # The weighted sum scores of a certain pattern are scaled
     scores.temp <- as.vector(scale(scores[[i]]))
     # The desired function is chosen
-    if (type[i] == "LEFT") { 
-      formula <- function(x, b) logit(mean(x) - x[] + b)
-    } else if (type[i] == "MID") { 
-      formula <- function(x, b) logit(-abs(x[] - mean(x)) + 0.75 + b)
-    } else if (type[i] == "TAIL") { 
-      formula <- function(x, b) logit(abs(x[] - mean(x)) - 0.75 + b)
-    } else {
-      formula <- function(x, b) logit(-mean(x) + x[] + b)
-    }
+    formula <- switch(type[i],
+                      LEFT = function(x, b) logit(mean(x) - x + b),
+                      MID = function(x, b) logit(-abs(x - mean(x)) + 0.75 + b),
+                      TAIL = function(x, b) logit(abs(x - mean(x)) - 0.75 + b),
+                      function(x, b) logit(-mean(x) + x + b))
     shift <- bin.search(fun = function(shift) 
       sum(formula(x = testset, b = shift)) / length(testset), 
       target = prop)$where

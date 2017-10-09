@@ -49,7 +49,7 @@ xyplot.mads <- function(x, data, which.pat = NULL,
   }
   if (is.null(which.pat)) {
     pat <- nrow(x$patterns)
-    which.pat <- c(1:pat)
+    which.pat <- seq_len(pat)
   } else {
     pat <- length(which.pat)
   }
@@ -61,7 +61,7 @@ xyplot.mads <- function(x, data, which.pat = NULL,
     xlab <- "Data values in pattern"
   }
   data <- NULL
-  for (i in 1:pat){
+  for (i in seq_len(pat)){
     can <- which(x$cand == which.pat[i])
     mis <- matrix(NA, nrow = length(can), ncol = 3)
     nc <- which(x$patterns[which.pat[i], ] == 0)
@@ -72,15 +72,13 @@ xyplot.mads <- function(x, data, which.pat = NULL,
       mis[is.na(x$amp[can, nc]), 1] <- 1
       mis[is.na(mis[, 1]), 1] <- 0
     }
-    mis[, 2] <- rep(which.pat[i], length(can))
+    mis[, 2] <- rep.int(which.pat[i], length(can))
     mis[, 3] <- unname(x$scores[[which.pat[i]]])
     data <- rbind(data, cbind(mis, dat[can, ]))
   }
   colnames(data) <- c(".amp", ".pat", "scores", names(x$data))
   data$.amp <- factor(data$.amp, levels = c(0, 1))
-  formula = as.formula(paste("scores ~ ", 
-                             paste(varlist, collapse = "+", sep = ""),
-                             sep = ""))
+  formula = as.formula(paste0("scores ~ ", paste0(varlist, collapse = "+")))
   if (is.null(layout)) {
     if (length(varlist) > 6) {
       layout <- c(3, 3)
@@ -99,8 +97,8 @@ xyplot.mads <- function(x, data, which.pat = NULL,
   key <- list(columns = 2, points = list(col = colors, pch = 1), 
               text = list(c("Non-Amputed Data", "Amputed Data")))
   
-  p <- list()
-  for (i in 1:pat) {
+  p <- stats::setNames(vector(mode = "list", length = pat), paste("Scatterplot Pattern", which.pat))
+  for (i in seq_len(pat)) {
     p[[paste("Scatterplot Pattern", which.pat[i])]] <- 
       xyplot(x = formula, data = data[data$.pat == which.pat[i], ],
              groups = data$.amp, par.settings = theme,

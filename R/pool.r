@@ -96,10 +96,10 @@ pool <- function (object, method = "smallsample")
   }
   analyses <- getfit(object)
   
-  if (class(fa)[1]=="lme" &  
+  if (class(fa)[1]=="lme" &&
       !requireNamespace("nlme", quietly = TRUE))
     stop("Package 'nlme' needed fo this function to work. Please install it.", call. = FALSE)
-  if ((class(fa)[1]=="mer" | class(fa)[1] == "lmerMod" | inherits(fa,"merMod")) &  
+  if ((class(fa)[1]=="mer" || class(fa)[1] == "lmerMod" || inherits(fa,"merMod")) &&  
       !requireNamespace("lme4", quietly = TRUE))
     stop("Package 'lme4' needed fo this function to work. Please install it.", call. = FALSE)
   
@@ -110,7 +110,7 @@ pool <- function (object, method = "smallsample")
   mess <- try(vcov(fa), silent=TRUE)
   if (inherits(mess,"try-error")) stop("Object has no vcov() method.")
   
-  if (class(fa)[1]=="mer" | class(fa)[1] == "lmerMod" | inherits(fa,"merMod"))  # 14jun2014
+  if (class(fa)[1]=="mer" || class(fa)[1] == "lmerMod" || inherits(fa,"merMod"))  # 14jun2014
   { 
     k <- length(lme4::fixef(fa))
     names <- names(lme4::fixef(fa))
@@ -126,13 +126,13 @@ pool <- function (object, method = "smallsample")
     names <- names(coef(fa))
   }
   
-  qhat <- matrix(NA, nrow = m, ncol = k, dimnames = list(1:m, names))
-  u <- array(NA, dim = c(m, k, k), dimnames = list(1:m, names,
+  qhat <- matrix(NA, nrow = m, ncol = k, dimnames = list(seq_len(m), names))
+  u <- array(NA, dim = c(m, k, k), dimnames = list(seq_len(m), names,
                                                    names))
   
   ###   Fill arrays
   
-  for (i in 1:m) {
+  for (i in seq_len(m)) {
     fit <- analyses[[i]]
     if (class(fit)[1] == "mer")
     {
@@ -141,7 +141,7 @@ pool <- function (object, method = "smallsample")
       if (ncol(ui)!=ncol(qhat)) stop("Different number of parameters: class mer, fixef(fit): ",ncol(qhat),", as.matrix(vcov(fit)): ", ncol(ui))
       u[i, ,] <- array(ui, dim = c(1, dim(ui)))
     }
-    else if (class(fit)[1] == "lmerMod" | inherits(fa,"merMod"))
+    else if (class(fit)[1] == "lmerMod" || inherits(fa,"merMod"))
     {
       qhat[i,] <- lme4::fixef(fit)
       ui <- vcov(fit)

@@ -104,8 +104,8 @@ mice.impute.midastouch <- function(y, ry, x, wy = NULL, ridge = 1e-05,
   nobs <- sum(ry)
   nmis <- sum(wy)
   n <- length(ry)
-  obsind <- which(ry)
-  misind <- which(wy)
+  obsind <- ry
+  misind <- wy
   m <- ncol(X)
   yobs <- y[obsind]
   Xobs <- X[obsind, , drop = FALSE]
@@ -130,8 +130,8 @@ mice.impute.midastouch <- function(y, ry, x, wy = NULL, ridge = 1e-05,
   }
   
   # = check if any diagonal element is exactly zero ===========#
-  diag0 <- which(diag(XCX) == 0)  #==#
-  if (length(diag0) > 0) 
+  diag0 <- diag(XCX) == 0  #==#
+  if (any(diag0)) 
   {
     diag(XCX)[diag0] <- max(sminx, ridge)
   }  #==#
@@ -175,8 +175,8 @@ mice.impute.midastouch <- function(y, ry, x, wy = NULL, ridge = 1e-05,
     
     # = check if any diagonal element is exactly zero
     # =======================#
-    diag0 <- which(XXarray[ridgeind, ] == 0)  #==#
-    if (length(diag0) > 0) 
+    diag0 <- XXarray[ridgeind, ] == 0  #==#
+    if (any(diag0)) 
     {
       XXarray[ridgeind, ][diag0] <- max(sminx, ridge)
     }  #==#

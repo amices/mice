@@ -68,12 +68,11 @@ pool.r.squared <- function(object, adjusted = FALSE) {
     # Set up array r2 to store R2 values, Fisher z-transformations of R2 values and its variance.
     analyses <- object$analyses
     m <- length(analyses)
-    r2 <- matrix(NA, nrow = m, ncol = 3, dimnames = list(1:m, c("R^2", "Fisher trans F^2", "se()")))
+    r2 <- matrix(NA, nrow = m, ncol = 3, dimnames = list(seq_len(m), c("R^2", "Fisher trans F^2", "se()")))
     # Fill arrays
-    for (i in 1:m) {
+    for (i in seq_len(m)) {
         fit <- analyses[[i]]
-        if (adjusted == FALSE) 
-            r2[i, 1] <- sqrt(summary(fit)$r.squared) else r2[i, 1] <- sqrt(summary(fit)$adj.r.squared)
+        r2[i, 1] <- if (!adjusted) sqrt(summary(fit)$r.squared) else sqrt(summary(fit)$adj.r.squared)
         r2[i, 2] <- 0.5 * log((r2[i, 1] + 1)/(1 - r2[i, 1]))
         r2[i, 3] <- 1/(length(summary(fit)$residuals) - 3)
     }
@@ -83,8 +82,7 @@ pool.r.squared <- function(object, adjusted = FALSE) {
     # Make table with results.
     table <- array(((exp(2 * fit$qbar) - 1)/(1 + exp(2 * fit$qbar)))^2, dim = c(1, 4))
     
-    if (adjusted == FALSE) 
-        dimnames(table) <- list("R^2", c("est", "lo 95", "hi 95", "fmi")) else dimnames(table) <- list("adj R^2", c("est", "lo 95", "hi 95", "fmi"))
+    dimnames(table) <- if (!adjusted) list("R^2", c("est", "lo 95", "hi 95", "fmi")) else list("adj R^2", c("est", "lo 95", "hi 95", "fmi"))
     
     table[, 2] <- ((exp(2 * (fit$qbar - 1.96 * sqrt(fit$t))) - 1)/(1 + exp(2 * (fit$qbar - 1.96 * sqrt(fit$t)))))^2
     table[, 3] <- ((exp(2 * (fit$qbar + 1.96 * sqrt(fit$t))) - 1)/(1 + exp(2 * (fit$qbar + 1.96 * sqrt(fit$t)))))^2

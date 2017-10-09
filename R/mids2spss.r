@@ -58,26 +58,26 @@ mids2spss <- function(imp, filedat="midsdata.txt", filesps="readmids.sps",
     miceWriteForeignSPSS <- function (df, datafile, codefile, varnames = NULL, dec=".", sep="\t") 
     {
         ##adapted version of writeForeignSPSS from foreign package to write mids-objects
-        adQuote <- function (x) paste("\"", x, "\"", sep = "")
+        adQuote <- function (x) paste0("\"", x, "\"")
         dfn <- lapply(df, function(x) if (is.factor(x)) as.numeric(x) else x)
-        eol <- paste(sep,"\n",sep="")
+        eol <- paste0(sep,"\n")
         write.table(dfn, file = datafile, row.names = FALSE, col.names = FALSE, 
                     sep = sep, dec = dec, quote = FALSE, na = "", eol=eol)
         varlabels <- names(df)
         if (is.null(varnames)) {
             varnames <- abbreviate(names(df), 8L)
-            if (any(sapply(varnames, nchar) > 8L)) 
+            if (any(nchar(varnames) > 8L)) 
                 stop("I cannot abbreviate the variable names to eight or fewer letters")
             if (any(varnames != varlabels)) 
                 warning("some variable names were abbreviated")
         }
         varnames <- gsub("[^[:alnum:]_\\$@#]", "\\.", varnames)
         dl.varnames <- varnames
-        if (any(chv <- sapply(df, is.character))) {
-            lengths <- sapply(df[chv], function(v) max(nchar(v)))
+        if (any(chv <- vapply(df, is.character, logical(1)))) {
+            lengths <- vapply(df[chv], function(v) max(nchar(v)), numeric(1))
             if (any(lengths > 255L)) 
                 stop("Cannot handle character variables longer than 255")
-            lengths <- paste("(A", lengths, ")", sep = "")
+            lengths <- paste0("(A", lengths, ")")
             star <- ifelse(c(FALSE, diff(which(chv) > 1L)), " *", 
                            " ")
             dl.varnames[chv] <- paste(star, dl.varnames[chv], lengths)
@@ -90,13 +90,13 @@ mids2spss <- function(imp, filedat="midsdata.txt", filesps="readmids.sps",
         cat("VARIABLE LABELS\n", file = codefile, append = TRUE)
         cat(" ",paste(varnames, adQuote(varlabels), "\n"), ".\n", file = codefile, 
             append = TRUE)
-        factors <- sapply(df, is.factor)
+        factors <- vapply(df, is.factor, logical(1))
         if (any(factors)) {
             cat("\nVALUE LABELS\n", file = codefile, append = TRUE)
             for (v in which(factors)) {
                 cat(" /", varnames[v], "\n", file = codefile, append = TRUE)
                 levs <- levels(df[[v]])
-                for (u in 1:length(levs)) 
+                for (u in seq_along(levs)) 
                     cat(paste("  ",seq_along(levs)[u], adQuote(levs)[u], sep = " "), 
                         file = codefile, append = TRUE, fill=60)
             }

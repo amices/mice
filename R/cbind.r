@@ -86,12 +86,12 @@ cbind.mids <- function(x, y = NULL, ...) {
     } else {
       y <- cbind.data.frame(y, ...)
     }
-    if (is.matrix(y) | is.vector(y) | is.factor(y))
+    if (is.matrix(y) || is.vector(y) || is.factor(y))
       y <- as.data.frame(y)
     
     # Replicate rows of y
     if (nrow(y) == 1) {
-      y <- y[rep(row.names(y), nrow(x$data)), 1:length(y)]
+      y <- y[rep(row.names(y), nrow(x$data)), seq_along(y)]
       row.names(y) <- row.names(x$data)
     }
     
@@ -118,16 +118,21 @@ cbind.mids <- function(x, y = NULL, ...) {
     # The original data of y will be copied into the multiple imputed dataset, 
     # including the missing values of y.
     r <- (!is.na(y))
-    imp <- vector("list", ncol(y))
-    for (j in 1:ncol(y)) {
-      imp[[j]] <- as.data.frame(matrix(NA, nrow = sum(!r[, j]), ncol = x$m))
-      dimnames(imp[[j]]) <- list(row.names(y)[r[, j] == FALSE], 1:m)
+    
+    f <- function(j) {
+      m <- matrix(NA,
+                  nrow = sum(!r[, j]),
+                  ncol = x$m,
+                  dimnames = list(row.names(y)[!r[, j]], seq_len(m)))
+      as.data.frame(m)
     }
+      
+    imp <- lapply(seq_len(ncol(y)), f)
     imp <- c(x$imp, imp)
     names(imp) <- varnames
     
     # The imputation method for (columns in) y will be set to ''.
-    method <- c(x$method, rep("", ncol(y)))
+    method <- c(x$method, rep.int("", ncol(y)))
     names(method) <- c(names(x$method), colnames(y))
     
     # The variable(s) in y are included in the predictorMatrix.  y is not used as predictor as well as not imputed.
@@ -139,7 +144,7 @@ cbind.mids <- function(x, y = NULL, ...) {
     visitSequence <- x$visitSequence
     
     # The post vector for (columns in) y will be set to ''.
-    post <- c(x$post, rep("", ncol(y)))
+    post <- c(x$post, rep.int("", ncol(y)))
     names(post) <- c(names(x$post), colnames(y))
     
     # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
@@ -235,12 +240,12 @@ cbind.mids <- function(x, y = NULL, ...) {
                                          dimnames(y$chainMean)[[1]]), 
                                        dimnames(x$chainMean)[[2]], 
                                        dimnames(x$chainMean)[[3]]))
-    chainMean[1:dim(x$chainMean)[1], , ] <- x$chainMean
+    chainMean[seq_len(dim(x$chainMean)[1]), , ] <- x$chainMean
     
     if (iteration <= dim(y$chainMean)[2]) {
-      chainMean[(dim(x$chainMean)[1] + 1):dim(chainMean)[1], , ] <- y$chainMean[, 1:iteration, ] 
+      chainMean[(dim(x$chainMean)[1] + 1):dim(chainMean)[1], , ] <- y$chainMean[, seq_len(iteration), ] 
     } else { 
-      chainMean[(dim(x$chainMean)[1] + 1):dim(chainMean)[1], 1:dim(y$chainMean)[2], ] <- y$chainMean
+      chainMean[(dim(x$chainMean)[1] + 1):dim(chainMean)[1], seq_len(dim(y$chainMean)[2]), ] <- y$chainMean
     }
     
     chainVar <- array(data = NA, dim = c(dim(x$chainVar)[1] + dim(y$chainVar)[1], iteration, m), 
@@ -248,12 +253,12 @@ cbind.mids <- function(x, y = NULL, ...) {
                                         dimnames(y$chainVar)[[1]]), 
                                       dimnames(x$chainVar)[[2]], 
                                       dimnames(x$chainVar)[[3]]))
-    chainVar[1:dim(x$chainVar)[1], , ] <- x$chainVar
+    chainVar[seq_len(dim(x$chainVar)[1]), , ] <- x$chainVar
     
     if (iteration <= dim(y$chainVar)[2]) {
-      chainVar[(dim(x$chainVar)[1] + 1):dim(chainVar)[1], , ] <- y$chainVar[, 1:iteration, ] 
+      chainVar[(dim(x$chainVar)[1] + 1):dim(chainVar)[1], , ] <- y$chainVar[, seq_len(iteration), ] 
     } else { 
-      chainVar[(dim(x$chainVar)[1] + 1):dim(chainVar)[1], 1:dim(y$chainVar)[2], ] <- y$chainVar
+      chainVar[(dim(x$chainVar)[1] + 1):dim(chainVar)[1], seq_len(dim(y$chainVar)[2]), ] <- y$chainVar
     }
     
     loggedEvents <- x$loggedEvents

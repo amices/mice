@@ -239,7 +239,7 @@ mice <- function(data, m = 5,
   call <- match.call()
   if (!is.na(seed)) 
     set.seed(seed)
-  if (!(is.matrix(data) | is.data.frame(data)))
+  if (!(is.matrix(data) || is.data.frame(data)))
     stop("Data should be a matrix or data frame")
   nvar <- ncol(data)
   if (nvar < 2)
@@ -248,7 +248,7 @@ mice <- function(data, m = 5,
   nmis <- apply(is.na(data), 2, sum)
   varnames <- colnames(data)
   
-  if (!(is.matrix(where) | is.data.frame(where)))
+  if (!(is.matrix(where) || is.data.frame(where)))
     stop("Argument `where` not a matrix or data frame")
   if (!all(dim(data) == dim(where)))
     stop("Arguments `data` and `where` not of same size")
@@ -304,7 +304,7 @@ mice <- function(data, m = 5,
       dimnames(imp[[j]]) <- list(row.names(data)[wy], 1:m)
       if (method[j] != "") {
         # for incomplete variables that are imputed
-        for (i in 1:m) {
+        for (i in seq_len(m)) {
           if (nmis[j] < nrow(data)) {
             if (is.null(data.init)) {
               imp[[j]][, i] <- mice.impute.sample(y, ry, wy = wy, ...)
@@ -324,11 +324,11 @@ mice <- function(data, m = 5,
   
   ## restore the original NA's in the data
   for (j in p$visitSequence) {
-    p$data[(!r[, j]), j] <- NA
+    p$data[!r[, j], j] <- NA
   }
 
   ## delete data and imputations of automatic dummy variables
-  imp <- q$imp[1:nvar]
+  imp <- q$imp[seq_len(nvar)]
   names(imp) <- varnames
   names(method) <- varnames
   names(form) <- varnames
@@ -337,10 +337,10 @@ mice <- function(data, m = 5,
   if (!state$log)
     loggedEvents <- NULL
   if (state$log)
-    row.names(loggedEvents) <- 1:nrow(loggedEvents)
+    row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
   
   ## save, and return
-  midsobj <- list(call = call, data = as.data.frame(p$data[, 1:nvar]), 
+  midsobj <- list(call = call, data = as.data.frame(p$data[, seq_len(nvar)]), 
                   where = where, m = m,
                   nmis = nmis, imp = imp, method = method,
                   predictorMatrix = predictorMatrix,

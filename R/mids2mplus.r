@@ -31,21 +31,21 @@ mids2mplus <- function(imp, file.prefix="imp", path=getwd(), sep="\t", dec=".", 
 	m <- imp$m
 	file.list <- matrix(0,m,1)
 	script 	  <- matrix(0,3,1)
-	for (i in 1:m){
-		write.table(complete(imp,i), paste(path,"/",file.prefix,i,".dat", sep=""), sep=sep, dec=dec, col.names=F, row.names=F)
-		file.list[i,] <- paste(file.prefix,i,".dat", sep="")
+	for (i in seq_len(m)){
+		write.table(complete(imp,i), file.path(path, paste0(file.prefix, i, ".dat")), sep=sep, dec=dec, col.names=FALSE, row.names=FALSE)
+		file.list[i,] <- paste0(file.prefix,i,".dat")
 	}
-	write.table(file.list, paste(path,"/",file.prefix,"list.dat", sep=""), sep=sep, dec=dec, col.names=F, row.names=F, quote=F)
+	write.table(file.list, file.path(path, paste0(file.prefix,"list.dat")), sep=sep, dec=dec, col.names=FALSE, row.names=FALSE, quote=FALSE)
 	names <- paste(colnames(complete(imp, 1)), collapse=" ")
-	script[1,] <- paste("DATA: FILE IS ",file.prefix,"list.dat;", sep="")
+	script[1,] <- paste0("DATA: FILE IS ",file.prefix,"list.dat;")
 	script[2,] <- "TYPE = IMPUTATION;"
-	script[3,] <- paste("VARIABLE: NAMES ARE ",names,";", sep="")
-	write.table(script, paste(path,"/",file.prefix,"list.inp", sep=""), sep=sep, dec=dec, col.names=F, row.names=F, quote=F)
+	script[3,] <- paste0("VARIABLE: NAMES ARE ",names,";")
+	write.table(script, file.path(path,paste0(file.prefix,"list.inp")), sep=sep, dec=dec, col.names=FALSE, row.names=FALSE, quote=FALSE)
 
 	if (!silent) {
-    	cat("Data values written to", paste(path,"/",file.prefix,1,".dat", sep=""),"through", paste(file.prefix,m,".dat", sep=""), "\n")
-    	cat("Data  names written to", paste(path,"/",file.prefix,"list.dat", sep=""), "\n")
-    	cat("Mplus  code written to", paste(path,"/",file.prefix,"list.inp", sep=""), "\n")
+    	cat("Data values written to", file.path(path,paste0(file.prefix,1,".dat")),"through", paste0(file.prefix,m,".dat"), "\n")
+    	cat("Data  names written to", file.path(path,paste0(file.prefix,"list.dat")), "\n")
+    	cat("Mplus  code written to", file.path(path,paste0(file.prefix,"list.inp")), "\n")
     }
 }
 

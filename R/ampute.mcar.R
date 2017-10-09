@@ -28,11 +28,10 @@ ampute.mcar <- function(P, patterns, prop) {
   # This function creates a missing data indicator for each pattern, based on 
   # a MCAR missingness mechanism. The function is used in the multivariate 
   # amputation function ampute().
-  R <- list()
-  for (i in 1:nrow(patterns)) {
+  f <- function(i) {
     # If there are no candidates in a certain pattern, the list will receive a 0
     if (length(P[P == (i + 1)]) == 0) {
-      R[[i]] <- 0
+      return(0)
     } else {
       # Otherwise, for all candidates in the pattern, the total proportion of 
       # missingness is used to define the probabilities to be missing. 
@@ -41,9 +40,12 @@ ampute.mcar <- function(P, patterns, prop) {
       # Based on the probabilities, each candidate will receive a missing data 
       # indicator 0, meaning he will be made missing or missing data indicator 1, 
       # meaning the candidate will remain complete.
-      R[[i]] <- replace(P, P == (i + 1), R.temp)
-      R[[i]] <- replace(R[[i]], P != (i + 1), 1)
+      R.temp <- replace(P, P == (i + 1), R.temp)
+      R.temp <- replace(R.temp, P != (i + 1), 1)
+      return(R.temp)
     }
   }
+  
+  R <- lapply(seq_len(nrow(patterns)), f)
   return(R)
 }

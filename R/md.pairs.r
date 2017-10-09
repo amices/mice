@@ -41,7 +41,7 @@ md.pairs <- function(data) {
     # rm:  response-missing pairs
     # mr:  missing-response pairs
     # mm:  missing-missing pairs
-    if (!(is.matrix(data) | is.data.frame(data))) 
+    if (!(is.matrix(data) || is.data.frame(data))) 
         stop("Data should be a matrix or dataframe")
     if (ncol(data) < 2) 
         stop("Data should have at least two columns")

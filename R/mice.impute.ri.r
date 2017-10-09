@@ -30,7 +30,7 @@ mice.impute.ri <- function(y, ry, x, wy = NULL, ri.maxit = 10, ...)
   xr <- xy
   y.dot <- y
   y.dot[wy] <- mice.impute.sample(y, ry, wy = wy)
-  for (k in 1:ri.maxit) {
+  for (k in seq_len(ri.maxit)) {
     r.dot <- .r.draw(y.dot, ry, xr, ...)
     y.dot <- .y.draw(y, ry, r.dot, xy, wy, ...)
   }
@@ -51,7 +51,7 @@ mice.impute.ri <- function(y, ry, x, wy = NULL, ri.maxit = 10, ...)
   p <- 1/(1 + exp(-(xr %*% psi.star)))
   vec <- (runif(nrow(p)) <= p)
   vec[vec] <- 1
-  rdot <- vec[1:n]
+  rdot <- vec[seq_len(n)]
   return(rdot)
 }
 
@@ -59,7 +59,7 @@ mice.impute.ri <- function(y, ry, x, wy = NULL, ri.maxit = 10, ...)
 .y.draw <- function(y, ry, rdot, xy, wy, ...)
 {
   parm <- .norm.draw(y, ry, cbind(xy, rdot), ...)
-  if (all(rdot[ry] == 1) | all(rdot[ry] == 0)) parm$coef[length(parm$coef)] <- 0
+  if (all(rdot[ry] == 1) || all(rdot[ry] == 0)) parm$coef[length(parm$coef)] <- 0
   ydot <- y
   rydot <- as.logical(rdot)
   ydot[wy] <- xy[wy, , drop = FALSE] %*% parm$beta[-length(parm$coef),] + 

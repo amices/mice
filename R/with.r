@@ -51,14 +51,14 @@ with.mids <- function(data, expr, ...) {
     call <- match.call()
     if (!is.mids(data)) 
         stop("The data must have class mids")
-    analyses <- as.list(1:data$m)
+    analyses <- as.list(seq_len(data$m))
     
     # do the repeated analysis, store the result.
-    for (i in 1:data$m) {
-        data.i <- complete(data, i)
-        analyses[[i]] <- eval(expr = substitute(expr), envir = data.i, enclos = parent.frame())
-        if (is.expression(analyses[[i]])) 
-            analyses[[i]] <- eval(expr = analyses[[i]], envir = data.i, enclos = parent.frame())
+    for (i in seq_along(analyses)) {
+      data.i <- complete(data, i)
+      analyses[[i]] <- eval(expr = substitute(expr), envir = data.i, enclos = parent.frame())
+      if (is.expression(analyses[[i]])) 
+        analyses[[i]] <- eval(expr = analyses[[i]], envir = data.i, enclos = parent.frame())
     }
     # return the complete data analyses as a list of length nimp
     object <- list(call = call, call1 = data$call, nmis = data$nmis, analyses = analyses)

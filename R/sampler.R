@@ -12,7 +12,7 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
   if (maxit > 0)
     chainVar <- chainMean <- array(0, dim = c(length(visitSequence), maxit, m), 
                                    dimnames = list(dimnames(data)[[2]][visitSequence], 
-                                                   1:maxit, paste("Chain", 1:m)))
+                                                   seq_len(maxit), paste("Chain", seq_len(m))))
   
   ## THE ITERATION MAIN LOOP: GIBBS SAMPLER
   if (maxit < 1) iteration <- 0 
@@ -22,7 +22,7 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
     for (k in from:to) {
       # begin k loop : main iteration loop
       iteration <- k
-      for (i in 1:m) {
+      for (i in seq_len(m)) {
         # begin i loop: repeated imputation loop
         if (printFlag)
           cat("\n ", iteration, " ", i)
@@ -51,14 +51,14 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
           newstate <- list(it = k, im = i, co = j, dep = vname, meth = theMethod, log = oldstate$log)
           assign("state", newstate, pos = parent.frame(), inherits = TRUE)
           
-          if (printFlag & theMethod != "dummy")
+          if (printFlag && theMethod != "dummy")
             cat(" ", vname)
           
           # switching logic: flat, mult, pass, dumm
           empt <- theMethod == ""
-          elem <- !empt & !is.passive(theMethod) & theMethod != "dummy"
-          flat <- elem & substring(tolower(theMethod), 1, 2) != "2l"
-          pass <- !empt & is.passive(theMethod)
+          elem <- !empt && !is.passive(theMethod) && theMethod != "dummy"
+          flat <- elem && substring(tolower(theMethod), 1, 2) != "2l"
+          pass <- !empt && is.passive(theMethod)
           dumm <- theMethod == "dummy"
           
           # standard imputation
@@ -120,14 +120,14 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
       # store means and sd of m imputes
       k2 <- k - from + 1
       if (length(visitSequence) > 0) {
-        for (j in 1:length(visitSequence)) {
+        for (j in seq_along(visitSequence)) {
           jj <- visitSequence[j]
           if (!is.factor(data[, jj])) {
             chainVar[j, k2, ] <- apply(imp[[jj]], 2, var, na.rm = TRUE)
             chainMean[j, k2, ] <- colMeans(as.matrix(imp[[jj]]), na.rm = TRUE)
           }
           if (is.factor(data[, jj])) {
-            for (mm in 1:m) {
+            for (mm in seq_len(m)) {
               nc <- as.integer(factor(imp[[jj]][, mm], levels = levels(data[, jj])))
               chainVar[j, k2, mm] <- var(nc, na.rm = TRUE)
               chainMean[j, k2, mm] <- mean(nc, na.rm = TRUE)

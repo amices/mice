@@ -25,11 +25,11 @@ rev <- ncol(X):1
 test6 <- as.mids(X[, rev])
 
 test_that("as.mids() produces a `mids` object", {
-  expect_true(is.mids(test1))
-  expect_true(is.mids(test2))
-  expect_true(is.mids(test3))
-  expect_true(is.mids(test4))
-  expect_true(is.mids(test5))
+  expect_is(test1, "mids")
+  expect_is(test2, "mids")
+  expect_is(test3, "mids")
+  expect_is(test4, "mids")
+  expect_is(test5, "mids")
 })
 
 test_that("complete() reproduces the original data", {

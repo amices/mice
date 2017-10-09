@@ -89,22 +89,22 @@ mice.mids <- function(obj, maxit = 1, diagnostics = TRUE, printFlag = TRUE,
   for (j in p$visitSequence) p$data[(!r[, j]), j] <- NA
   
   ## delete data and imputations of automatic dummy variables
-  data <- p$data[, 1:nvar]
-  imp <- q$imp[1:nvar]
+  data <- p$data[, seq_len(nvar)]
+  imp <- q$imp[seq_len(nvar)]
   names(imp) <- varnames
   
   ## combine with previous chainMean and chainVar
   nvis <- length(obj$visitSequence)
   vnames <- varnames[obj$visitSequence]
   chainMean <- chainVar <- array(0, dim = c(nvis, to, obj$m), dimnames = list(vnames, 
-                                                                              1:to, paste("Chain", 1:obj$m)))
-  for (j in 1:nvis) {
+                                                                              seq_len(to), paste("Chain", seq_len(obj$m))))
+  for (j in seq_len(nvis)) {
     if (obj$iteration == 0) {
       chainMean[j, , ] <- q$chainMean[j, , ]
       chainVar[j, , ] <- q$chainVar[j, , ]
     } else {
-      chainMean[j, 1:obj$iteration, ] <- obj$chainMean[j, , ]
-      chainVar[j, 1:obj$iteration, ] <- obj$chainVar[j, , ]
+      chainMean[j, seq_len(obj$iteration), ] <- obj$chainMean[j, , ]
+      chainVar[j, seq_len(obj$iteration), ] <- obj$chainVar[j, , ]
       chainMean[j, from:to, ] <- q$chainMean[j, , ]
       chainVar[j, from:to, ] <- q$chainVar[j, , ]
     }
@@ -113,7 +113,7 @@ mice.mids <- function(obj, maxit = 1, diagnostics = TRUE, printFlag = TRUE,
   if (!state$log) 
     loggedEvents <- NULL
   if (state$log) 
-    row.names(loggedEvents) <- 1:nrow(loggedEvents)
+    row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
   
   ## save, and return
   midsobj <- list(call = call, data = as.data.frame(data), where = obj$where, 

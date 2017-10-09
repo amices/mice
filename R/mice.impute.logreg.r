@@ -150,7 +150,7 @@ augment <- function(y, ry, x, wy, maxcat = 50) {
   icod <- sort(unique(unclass(y)))
   k <- length(icod)
   if (k > maxcat) 
-    stop(paste("Maximum number of categories (", maxcat, ") exceeded", sep = ""))
+    stop("Maximum number of categories (", maxcat, ") exceeded")
   p <- ncol(x)
   
   # skip augmentation if there are no predictors
@@ -169,21 +169,20 @@ augment <- function(y, ry, x, wy, maxcat = 50) {
   maxx <- apply(x, 2, max, na.rm = TRUE)
   nr <- 2 * p * k
   a <- matrix(mean, nrow = nr, ncol = p, byrow = TRUE)
-  b <- matrix(rep(c(rep(c(0.5, -0.5), k), rep(0, nr)), length = nr * p), nrow = nr, ncol = p, byrow = FALSE)
+  b <- matrix(rep(c(rep.int(c(0.5, -0.5), k), rep.int(0, nr)), length = nr * p), nrow = nr, ncol = p, byrow = FALSE)
   c <- matrix(sd, nrow = nr, ncol = p, byrow = TRUE)
   d <- a + b * c
   d <- pmax(matrix(minx, nrow = nr, ncol = p, byrow = TRUE), d, na.rm = TRUE)
   d <- pmin(matrix(maxx, nrow = nr, ncol = p, byrow = TRUE), d, na.rm = TRUE)
   e <- rep(rep(icod, each = 2), p)
   
-  dimnames(d) <- list(paste("AUG", 1:nrow(d), sep = ""), dimnames(x)[[2]])
+  dimnames(d) <- list(paste0("AUG", seq_len(nrow(d))), dimnames(x)[[2]])
   xa <- rbind.data.frame(x, d)
   # beware, concatenation of factors
-  if (is.factor(y)) 
-    ya <- as.factor(levels(y)[c(y, e)]) else ya <- c(y, e)
-  rya <- c(ry, rep(TRUE, nr))
-  wya <- c(wy, rep(FALSE, nr))
-  wa <- c(rep(1, length(y)), rep((p + 1)/nr, nr))
+  ya <- if (is.factor(y)) as.factor(levels(y)[c(y, e)]) else c(y, e)
+  rya <- c(ry, rep.int(TRUE, nr))
+  wya <- c(wy, rep.int(FALSE, nr))
+  wa <- c(rep.int(1, length(y)), rep.int((p + 1)/nr, nr))
   
   return(list(y = ya, ry = rya, x = xa, w = wa, wy = wya))
 }

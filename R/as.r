@@ -74,12 +74,10 @@ as.mids <- function(data, .imp = NA, .id = NA) {
   
   # no missings allowed in .imp
   imps <- data[, imp_pos]
-  if (any(is.na(imps))) stop("Values `NA` in column `.imp` are not permitted.")
+  if (anyNA(imps)) stop("Values `NA` in column `.imp` are not permitted.")
   
   # determine m
-  m <- ifelse(is.factor(imps), 
-              max(as.numeric(levels(imps))[imps]),
-              max(imps))
+  m <- if (is.factor(imps)) max(as.numeric(levels(imps))[imps]) else max(imps)
   
   # get original data part  
   vars_to_remove <- na.omit(c(imp_pos, id_pos))
@@ -95,10 +93,10 @@ as.mids <- function(data, .imp = NA, .id = NA) {
   
   # copy imputations from data into proper ini$imp elements
   names  <- names(ini$imp)
-  for (i in 1:length(names)) {
+  for (i in seq_along(names)) {
     varname <- names[i]
     if(!is.null(ini$imp[[varname]])) {
-      for(j in 1:m) {
+      for(j in seq_len(m)) {
         idx <- imps == j & is.na(data[imps == 0, varname])
         ini$imp[[varname]][j] <- data[idx, varname]
       }

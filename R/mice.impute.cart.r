@@ -65,7 +65,7 @@ mice.impute.cart <- function(y, ry, x, wy = NULL, minbucket = 5, cp = 1e-04,
     fit$frame$yval <- as.numeric(row.names(fit$frame))
     nodes <- predict(object = fit, newdata = xmis)
     donor <- lapply(nodes, function(s) yobs[leafnr == s])
-    impute <- sapply(1:length(donor), function(s) sample(donor[[s]], 1))
+    impute <- vapply(seq_along(donor), function(s) sample(donor[[s]], 1), numeric(1))
   } else
   {
     fit <- rpart(yobs ~ ., data = cbind(yobs, xobs), method = "class", 

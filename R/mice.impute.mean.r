@@ -26,5 +26,5 @@ mice.impute.mean <- function(y, ry, x = NULL, wy = NULL, ...)
 {
   if (is.null(wy))
     wy <- !ry
-  return(rep(mean(y[ry]), times = sum(wy)))
+  return(rep.int(mean(y[ry]), times = sum(wy)))
 }

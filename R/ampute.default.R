@@ -16,11 +16,9 @@
 #'@keywords internal
 #'@export
 ampute.default.patterns <- function(n) {
-  patterns <- matrix(data = NA, nrow = n, ncol = n)
-  for (i in 1:n) {
-    patterns[i, ] <- c(rep(1, i - 1), 0, rep(1, n - i))
-  }
-  return(patterns)
+  patterns.list <- lapply(seq_len(n),
+                     function(i) c(rep.int(1, i - 1), 0, rep.int(1, n - i)))
+  return(do.call(rbind, patterns.list))
 }
 
 #
@@ -42,7 +40,7 @@ ampute.default.patterns <- function(n) {
 #'@keywords internal
 #'@export
 ampute.default.freq <- function(patterns) {
-  freq <- rep((1 / nrow(patterns)), nrow(patterns))
+  freq <- rep.int(1 / nrow(patterns), nrow(patterns))
   return(freq)
 }
 
@@ -100,7 +98,7 @@ ampute.default.weights <- function(patterns, mech) {
 #'@keywords internal
 #'@export
 ampute.default.type <- function(patterns) {
-  type <- rep("RIGHT", nrow(patterns))
+  type <- rep.int("RIGHT", nrow(patterns))
   return(type)
 }
 
@@ -123,7 +121,7 @@ ampute.default.type <- function(patterns) {
 #'@keywords internal
 #'@export
 ampute.default.odds <- function(patterns) {
-  odds <- matrix(c(1, 2, 3, 4), nrow = nrow(patterns), ncol = 4, byrow = TRUE)
+  odds <- matrix(seq_len(4), nrow = nrow(patterns), ncol = 4, byrow = TRUE)
   return(odds)
 }
 

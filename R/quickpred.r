@@ -90,7 +90,7 @@ quickpred <- function(data, mincor = 0.1, minpuc = 0, include = "", exclude = ""
     # automatic predictor selection according to Van Buuren et al (1999)
     
     # argument checking
-    if (!(is.matrix(data) | is.data.frame(data))) 
+    if (!(is.matrix(data) || is.data.frame(data))) 
         stop("Data should be a matrix or data frame")
     if ((nvar <- ncol(data)) < 2) 
         stop("Data should contain at least two columns")

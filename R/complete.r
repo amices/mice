@@ -84,7 +84,7 @@ complete <- function(x, action = 1, include = FALSE) {
     where <- x$where
     if (is.null(where))
       where <- is.na(data)
-    ind <- (1:ncol(data))[colSums(where) > 0]
+    ind <- seq_len(ncol(data))[colSums(where) > 0]
     for (j in ind) {
       if (is.null(x$imp[[j]]))
         data[where[, j], j] <- NA
@@ -97,28 +97,28 @@ complete <- function(x, action = 1, include = FALSE) {
     m <- x$m
     nr <- nrow(x$data)
     nc <- ncol(x$data)
-    add <- ifelse(include, 1, 0)
+    add <- as.numeric(include)
     mylist <- vector("list", length = m + add)
     # recursive call
-    for (j in 1:length(mylist)) mylist[[j]] <- Recall(x, j - add)
+    for (j in seq_along(mylist)) mylist[[j]] <- Recall(x, j - add)
     if (code == 1) {
       # long
       data <- do.call(rbind, mylist)
       data <- data.frame(.imp = as.factor(rep((1 - add):m, each = nr)), 
-                         .id = rep(row.names(x$data), m + add), 
+                         .id = rep.int(row.names(x$data), m + add), 
                          data)
-      row.names(data) <- 1:nrow(data)
+      row.names(data) <- seq_len(nrow(data))
     }
     if (code >= 2 && code <= 3) {
       # broad or repeated
       data <- do.call(cbind, mylist)
-      names(data) <- paste(rep(names(x$data), m), 
-                           rep((1 - add):m, rep(nc, m + add)), 
+      names(data) <- paste(rep.int(names(x$data), m), 
+                           rep.int((1 - add):m, rep.int(nc, m + add)), 
                            sep = ".")
     }
     if (code == 3) {
       # repeated
-      data <- data[, order(rep(1:nc, m + add))]
+      data <- data[, order(rep.int(seq_len(nc), m + add))]
     }
     return(data)
   }
