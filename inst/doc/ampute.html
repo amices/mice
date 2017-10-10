@@ -12,7 +12,7 @@
 
 <meta name="author" content="Rianne Schouten [aut, cre], Peter Lugtig [ctb], Jaap Brand [ctb], Gerko Vink [aut]" />
 
-<meta name="date" content="2017-10-09" />
+<meta name="date" content="2017-10-10" />
 
 <title>Generate missing values with ampute</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Generate missing values with ampute</h1>
 <h4 class="author"><em>Rianne Schouten [aut, cre], Peter Lugtig [ctb], Jaap Brand [ctb], Gerko Vink [aut]</em></h4>
-<h4 class="date"><em>2017-10-09</em></h4>
+<h4 class="date"><em>2017-10-10</em></h4>
 
 
 
@@ -113,13 +113,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 testdata &lt;-<span class="st"> </span>MASS::<span class="kw">mvrnorm</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">mu =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">0</span>), <span class="dt">Sigma =</span> <span class="kw">matrix</span>(<span class="dt">data =</span> <span class="kw">c</span>(<span class="fl">1.0</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">1.0</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">1.0</span>), <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> T))
 testdata &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(testdata)
 <span class="kw">summary</span>(testdata)</code></pre></div>
-<pre><code>##        V1             V2            V3      
-##  Min.   : 6.3   Min.   :1.0   Min.   :-3.8  
-##  1st Qu.: 9.3   1st Qu.:4.3   1st Qu.:-0.7  
-##  Median :10.0   Median :5.0   Median : 0.0  
-##  Mean   :10.0   Mean   :5.0   Mean   : 0.0  
-##  3rd Qu.:10.7   3rd Qu.:5.7   3rd Qu.: 0.7  
-##  Max.   :13.8   Max.   :8.7   Max.   : 3.8</code></pre>
+<pre><code>##        V1               V2               V3           
+##  Min.   : 6.346   Min.   :0.9789   Min.   :-3.799124  
+##  1st Qu.: 9.317   1st Qu.:4.3199   1st Qu.:-0.690542  
+##  Median :10.003   Median :4.9963   Median :-0.009941  
+##  Mean   : 9.998   Mean   :4.9973   Mean   : 0.000759  
+##  3rd Qu.:10.677   3rd Qu.:5.6759   3rd Qu.: 0.673069  
+##  Max.   :13.770   Max.   :8.6579   Max.   : 3.810729</code></pre>
 <p>The amputation procedure can immediately be executed when this dataset is entered into the function. Storing the result allows you to work with the amputed data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">result &lt;-<span class="st"> </span><span class="kw">ampute</span>(testdata)
 result</code></pre></div>
@@ -127,7 +127,7 @@ result</code></pre></div>
 ## Call: ampute(data = testdata)
 ## Class: mads
 ## Proportion of Missingness:  0.5
-## Frequency of Patterns:  0.33 0.33 0.33
+## Frequency of Patterns:  0.3333333 0.3333333 0.3333333
 ## Pattern Matrix:
 ##   V1 V2 V3
 ## 1  0  1  1
@@ -147,13 +147,13 @@ result</code></pre></div>
 ## [2,]    1    2    3    4
 ## [3,]    1    2    3    4
 ## Head of Amputed Data Set
-##     V1  V2    V3
-## 1   NA 6.0  0.37
-## 2  9.7 4.4 -1.11
-## 3 10.3 4.7  0.18
-## 4 10.1 4.1    NA
-## 5   NA 7.2  1.71
-## 6 10.8 5.0    NA</code></pre>
+##          V1       V2         V3
+## 1        NA 6.018999  0.3681981
+## 2  9.668991 4.391821 -1.1127595
+## 3 10.273415 4.662521  0.1796964
+## 4 10.124800 4.055544         NA
+## 5        NA 7.171578  1.7141378
+## 6 10.803311 5.038649         NA</code></pre>
 <p>The incomplete dataset is stored under <code>amp</code>. To see whether the amputation has gone according plan, a quick investigation can be done by using function <code>md.pattern</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">md.pattern</span>(result$amp)</code></pre></div>
 <pre><code>##        V3   V2   V1     
@@ -297,29 +297,29 @@ result$patterns</code></pre></div>
 ## , , Variable =  V1
 ## 
 ##        Descriptives
-## Pattern Amp  Mean  Var    N
-##       1   1  0.12 0.96 3553
-##       1   0 -0.12 1.00 3494
-##       3   1  0.44 0.83  496
-##       3   0 -0.45 0.91  488
+## Pattern Amp     Mean     Var    N
+##       1   1  0.11743 0.96079 3553
+##       1   0 -0.12491 0.99918 3494
+##       3   1  0.44272 0.82890  496
+##       3   0 -0.45347 0.91124  488
 ## 
 ## , , Variable =  V2
 ## 
 ##        Descriptives
-## Pattern Amp  Mean  Var    N
-##       1   1  0.37 0.84 3553
-##       1   0 -0.40 0.85 3494
-##       3   1  0.31 1.02  496
-##       3   0 -0.16 1.03  488
+## Pattern Amp     Mean     Var    N
+##       1   1  0.36613 0.84005 3553
+##       1   0 -0.39569 0.85434 3494
+##       3   1  0.30720 1.02448  496
+##       3   0 -0.15719 1.02524  488
 ## 
 ## , , Variable =  V3
 ## 
 ##        Descriptives
-## Pattern Amp   Mean  Var    N
-##       1   1  0.226 0.96 3553
-##       1   0 -0.260 0.91 3494
-##       3   1  0.225 1.05  496
-##       3   0 -0.092 1.00  488
+## Pattern Amp     Mean     Var    N
+##       1   1  0.22557 0.96483 3553
+##       1   0 -0.25996 0.90813 3494
+##       3   1  0.22467 1.05373  496
+##       3   0 -0.09248 0.99571  488
 ## 
 ## 
 ## $`Boxplot pattern 1`</code></pre>
@@ -334,13 +334,13 @@ result$patterns</code></pre></div>
 ##  Welch Modified Two-Sample t-Test
 ## 
 ## data:  Summarized x and y
-## t = 40, df = 7000, p-value &lt;2e-16
+## t = 35.184, df = 6961.9, p-value &lt; 2.2e-16
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  0.74 0.82
+##  0.7371929 0.8241871
 ## sample estimates:
 ## mean of x mean of y 
-##      0.39     -0.39</code></pre>
+##   0.39077  -0.38992</code></pre>
 <p>As is visible, there is a significant difference between the amputed and non-amputed data of variable V2 in pattern 1. For pattern 3, the difference between the distributions of the amputed and non-amputed data is largest for variable V1, as can be expected due to the weight values in pattern 3.</p>
 </div>
 <div id="scatterplots" class="section level5">
@@ -453,17 +453,19 @@ ampdata[indices ==<span class="st"> </span><span class="dv">2</span>, ] &lt;-<sp
 <pre><code>##  [1] 1 2 1 1 2 1 1 1 1 2 1 1 1 1 1 1 1 1 2 1 2 1 1 1 1 2 1 1 2 1</code></pre>
 <p>The object <code>scores</code> is a list with, for each pattern, the weighted sum scores of the candidates.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">result$scores[[<span class="dv">1</span>]][<span class="dv">1</span>:<span class="dv">10</span>]</code></pre></div>
-<pre><code>##     1     3     4     6     7     8     9    11    12    13 
-##  0.36  0.18  0.21 -0.26  1.43  0.69 -1.05  0.84  0.13 -0.42</code></pre>
+<pre><code>##          1          3          4          6          7          8 
+##  0.3642853  0.1774016  0.2091449 -0.2610135  1.4343838  0.6914479 
+##          9         11         12         13 
+## -1.0476095  0.8364393  0.1252278 -0.4240388</code></pre>
 <p>Furthermore, the object <code>data</code> contains the original data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(result$data)</code></pre></div>
-<pre><code>##     V1  V2    V3
-## 1 10.5 6.0  0.37
-## 2  9.7 4.4 -1.11
-## 3 10.3 4.7  0.18
-## 4 10.1 4.1  0.21
-## 5 11.8 7.2  1.71
-## 6 10.8 5.0 -0.26</code></pre>
+<pre><code>##          V1       V2         V3
+## 1 10.487466 6.018999  0.3681981
+## 2  9.668991 4.391821 -1.1127595
+## 3 10.273415 4.662521  0.1796964
+## 4 10.124800 4.055544  0.2117145
+## 5 11.835097 7.171578  1.7141378
+## 6 10.803311 5.038649 -0.2625144</code></pre>
 </div>
 <div id="argument-run" class="section level5">
 <h5>Argument <code>run</code></h5>
