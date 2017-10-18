@@ -12,6 +12,12 @@ Questions and suggestions about MICE can be directed to
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
 
+V2.44    18oct2017 SvB
+UPDATE   Code changes for robustness, style and efficiency (Bernie Gray)
+
+V2.43    20jul2017 SvB
+UPDATE   Updates to ampute function and vignettes (Rianne Schouten)
+
 V2.42    11jul2017 SvB
 UPDATE   Rename mice.impute.2l.sys to mice.impute.2l.lmer
 
