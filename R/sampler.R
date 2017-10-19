@@ -95,7 +95,8 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
           # passive imputation
           if (pass) {
             wy <- where[, j]
-            imp[[j]][, i] <- model.frame(as.formula(theMethod), p$data[wy, ])
+            imp[[j]][, i] <- model.frame(as.formula(theMethod), p$data[wy, ], 
+                                         na.action = na.pass)
             p$data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
           }
           
