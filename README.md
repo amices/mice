@@ -67,6 +67,7 @@ We suggest going through these vignettes in the following order
 4.  [Passive imputation and post-processing](https://gerkovink.github.io/miceVignettes/Passive_Post_processing/Passive_imputation_post_processing.html)
 5.  [Imputing multilevel data](https://gerkovink.github.io/miceVignettes/Multi_level/Multi_level_data.html)
 6.  [Sensitivity analysis with `mice`](https://gerkovink.github.io/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html)
+7.  [Generate missing values with `ampute`](https://stefvanbuuren.github.io/mice/ampute.html)
 
 Related packages
 ----------------
