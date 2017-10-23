@@ -1,10 +1,9 @@
 ---
-title: "MICE online resources"
-date: "`r Sys.Date()`"
+title: "Online resources"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Online resources}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Online resources}
   %\VignetteEncoding{UTF-8}
 ---
 

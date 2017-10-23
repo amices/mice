@@ -11,6 +11,11 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.46    22oct2017 SvB
+FIXED    Allow for capitals in imputation methods
+
+V2.45    21oct2017 SvB
+UPDATE   Reorganized vignettes to land on GitHUB pages
 
 V2.44    18oct2017 SvB
 UPDATE   Code changes for robustness, style and efficiency (Bernie Gray)

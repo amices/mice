@@ -57,7 +57,7 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
           # switching logic: flat, mult, pass, dumm
           empt <- theMethod == ""
           elem <- !empt && !is.passive(theMethod) && theMethod != "dummy"
-          flat <- elem && substring(tolower(theMethod), 1, 2) != "2l"
+          flat <- elem && substring(theMethod, 1, 2) != "2l"
           pass <- !empt && is.passive(theMethod)
           dumm <- theMethod == "dummy"
           
@@ -84,7 +84,7 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
             keep <- remove.lindep(x, y, ry, ...)
             x <- x[, keep, drop = FALSE]
             type <- type[keep]
-            f <- paste("mice.impute", tolower(theMethod), sep = ".")
+            f <- paste("mice.impute", theMethod, sep = ".")
             imputes <- p$data[wy, j]
             imputes[!cc] <- NA
             imputes[cc] <- do.call(f, args = list(y, ry, x, wy = wy, type = type, ...))

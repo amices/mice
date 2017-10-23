@@ -5,3 +5,4 @@ mice.Rproj
 .Rproj.user
 inst/doc
 *_cache
+/revdep/.cache.rds
