@@ -11,6 +11,9 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.46.0  23oct2017 SvB
+UPDATE   Switch to 3-digit versioning
+
 V2.46    22oct2017 SvB
 FIXED    Allow for capitals in imputation methods
 
