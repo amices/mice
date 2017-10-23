@@ -6,3 +6,4 @@ _config.yml
 _cache$
 ^revdep$
 cran-comments.md
+cran-comments.Rmd
