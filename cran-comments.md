@@ -1,7 +1,15 @@
 cran-comments
 ================
 
-`mice 2.46`
+Package built by
+
+``` r
+library("devtools")
+build_vignettes()
+build()
+```
+
+`"/Users/buurensv/Package/mice/mice_2.46.0.tar.gz"`
 
 Test environments
 -----------------
@@ -16,7 +24,7 @@ There were no ERRORs or WARNINGs.
 
 There was 1 NOTE:
 
--   Version jumps in minor (submitted: 2.46, existing: 2.30)
+-   Version jumps in minor (submitted: 2.46.0, existing: 2.30)
 
 Downstream dependencies
 -----------------------
@@ -24,8 +32,6 @@ Downstream dependencies
 I have run
 
 ``` r
-library("devtools")
-
 revdep_check()
 revdep_check_save_summary()
 revdep_check_print_problems()
