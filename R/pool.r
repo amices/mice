@@ -86,8 +86,10 @@ pool <- function (object, method = "smallsample")
   ### Check the arguments
   
   call <- match.call()
-  if (!is.mira(object))
-    stop("The object must have class 'mira'")
+  if (!is.mira(object)) {
+    if (is.list(object)) object <- as.mira(object)
+    else stop("Argument `object` not a list")
+  }
   m <- length(object$analyses)
   fa <- getfit(object, 1)
   if (m == 1) {
