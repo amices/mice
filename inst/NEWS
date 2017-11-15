@@ -11,7 +11,8 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
-V2.46.0.9000
+V2.46.1  14nov2017 SvB
+ADDED    Generalize pool() to list of models
 
 V2.46.0  23oct2017 SvB
 UPDATE   Switch to 3-digit versioning
