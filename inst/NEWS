@@ -11,6 +11,9 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.46.2  27nov2017 SvB
+FIXED    resolve cart not accepting a matrix (thanks Joerg Drechsler)
+
 V2.46.1  14nov2017 SvB
 ADDED    Generalize pool() to list of models
 

@@ -54,8 +54,8 @@ mice.impute.cart <- function(y, ry, x, wy = NULL, minbucket = 5, cp = 1e-04,
   if (is.null(wy)) 
     wy <- !ry
   minbucket <- max(1, minbucket)
-  xobs <- x[ry, , drop = FALSE]
-  xmis <- x[wy, , drop = FALSE]
+  xobs <- data.frame(x[ry, , drop = FALSE])
+  xmis <- data.frame(x[wy, , drop = FALSE])
   yobs <- y[ry]
   if (!is.factor(yobs))
   {
