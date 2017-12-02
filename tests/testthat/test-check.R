@@ -1,0 +1,72 @@
+context("check")
+
+data <- nhanes
+where <- is.na(data)
+
+vertical <- list("bmi", "age", "chl")
+setup <- list(vertical = vertical, 
+              visitSequence = NULL, 
+              defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+              predictorMatrix = (1 - diag(1, length(vertical))),
+              nmis = apply(is.na(data), 2, sum), 
+              nwhere = apply(where, 2, sum))
+z1 <- check.visitSequence(setup, where)
+
+vertical <- list(c("bmi", "chl"), "age")
+setup <- list(vertical = vertical, 
+              visitSequence = NULL, 
+              defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+              predictorMatrix = (1 - diag(1, length(vertical))),
+              nmis = apply(is.na(data), 2, sum), 
+              nwhere = apply(where, 2, sum))
+z2 <- check.visitSequence(setup, where)
+
+vertical <- list(c("bmi", "chl"), "age", "chl")
+setup <- list(vertical = vertical, 
+              visitSequence = NULL, 
+              defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+              predictorMatrix = (1 - diag(1, length(vertical))),
+              nmis = apply(is.na(data), 2, sum), 
+              nwhere = apply(where, 2, sum))
+z3 <- check.visitSequence(setup, where)
+
+vertical <- list("bmi", "chl", "age", "hyp")
+setup <- list(vertical = vertical, 
+              visitSequence = "roman", 
+              defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+              predictorMatrix = (1 - diag(1, length(vertical))),
+              nmis = apply(is.na(data), 2, sum), 
+              nwhere = apply(where, 2, sum))
+z4 <- check.visitSequence(setup, where)
+setup <- list(vertical = vertical, 
+              visitSequence = "arab", 
+              defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+              predictorMatrix = (1 - diag(1, length(vertical))),
+              nmis = apply(is.na(data), 2, sum), 
+              nwhere = apply(where, 2, sum))
+z5 <- check.visitSequence(setup, where)
+setup <- list(vertical = vertical, 
+              visitSequence = "mon", 
+              defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+              predictorMatrix = (1 - diag(1, length(vertical))),
+              nmis = apply(is.na(data), 2, sum), 
+              nwhere = apply(where, 2, sum))
+z6 <- check.visitSequence(setup, where)
+setup <- list(vertical = vertical, 
+              visitSequence = "rev", 
+              defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+              predictorMatrix = (1 - diag(1, length(vertical))),
+              nmis = apply(is.na(data), 2, sum), 
+              nwhere = apply(where, 2, sum))
+z7 <- check.visitSequence(setup, where)
+
+
+test_that("check.visitSequence has proper entries", {
+  expect_equal(z1$visitSequence, c(1, 3))
+  expect_equal(z2$visitSequence, 1)
+  expect_equal(z3$visitSequence, c(1, 3))
+  expect_equal(z4$visitSequence, c(1, 2, 4))
+  expect_equal(z5$visitSequence, c(4, 2, 1))
+  expect_equal(z6$visitSequence, c(4, 1, 2))
+  expect_equal(z7$visitSequence, c(2, 1, 4))
+})

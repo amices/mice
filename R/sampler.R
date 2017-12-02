@@ -27,6 +27,10 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
         if (printFlag)
           cat("\n ", iteration, " ", i)
         
+        ### vertical: adapt to block, length visitSequence = length(vertical)
+        ### ncol(where) should remain ncol(data)
+        ### new function: get me all column names from this vertical block
+        
         # complete data, but do not overwrite any observed data
         for (j in visitSequence) {
           wy <- where[, j]
@@ -44,6 +48,8 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
         # one iteration over augmented model
         for (j in p$visitSequence) {
           theMethod <- p$method[j]
+          
+          ### vertical, get vblock_names instead
           vname <- dimnames(p$data)[[2]][j]
           
           ## store current state

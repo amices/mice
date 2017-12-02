@@ -5,30 +5,34 @@ check.visitSequence <- function(setup, where) {
   nwhere <- setup$nwhere
   nvar <- setup$nvar
   visitSequence <- setup$visitSequence
-
+  vertical <- setup$vertical
+  
+  nvert <- vector("integer", length(vertical))
+  for (i in seq_along(vertical)) nvert[i] <- sum(nwhere[vertical[[i]]])
+  
   # set default visit sequence, left to right
   if (is.null(visitSequence))
-    visitSequence <- seq_len(ncol(where))[apply(where, 2, any)]
+    visitSequence <- seq_along(vertical)
   
   if (!is.numeric(visitSequence)) {
     code <- match.arg(visitSequence, c("roman", "arabic", "monotone",
                                        "revmonotone"))
     visitSequence <- switch(
       code, 
-      roman = seq_len(nvar)[nwhere > 0],
-      arabic = rev(seq_len(nvar)[nwhere > 0]),
-      monotone = order(nwhere)[(sum(nwhere == 0) + 1):length(nwhere)],
-      revmonotone = rev(order(nwhere)[(sum(nwhere == 0) + 1):length(nwhere)]),
-      seq_len(nvar)[nwhere > 0]
+      roman = seq_along(vertical)[nvert > 0],
+      arabic = rev(seq_along(vertical)[nvert > 0]),
+      monotone = order(nvert)[(sum(nvert == 0) + 1):length(nvert)],
+      revmonotone = rev(order(nvert)[(sum(nvert == 0) + 1):length(nvert)]),
+      seq_len(nvert)[nvert > 0]
     )
   }
   
   # if (all(nwhere[visitSequence] == 0))
   #   stop("No locations to impute")
-  flags <- nwhere == 0 & is.element(seq_len(nvar), visitSequence)
+  flags <- (nvert == 0) & is.element(seq_along(vertical), visitSequence)
   if (any(flags))
     visitSequence <- visitSequence[!flags]
-  visitSequence <- visitSequence[visitSequence <= nvar]
+  visitSequence <- visitSequence[visitSequence <= length(vertical)]
   visitSequence <- visitSequence[visitSequence >= 1]
   # if (length(visitSequence) == 0)
   #   stop("No locations to impute")
@@ -75,8 +79,8 @@ check.method <- function(setup, data) {
   # if user specifies multiple methods, check the length of the argument
   if (length(method) != nvar) {
     stop(paste0("The length of method (", length(method),
-               ") does not match the number of columns in the data (", nvar,
-               ")."))
+                ") does not match the number of columns in the data (", nvar,
+                ")."))
   }
   
   # check whether the elementary imputation methods are on the search path
@@ -142,7 +146,7 @@ check.predictorMatrix <- function(setup) {
                ncol(pred), "columns. Both should be", nvar, "."))
   dimnames(pred) <- list(varnames, varnames)
   diag(pred) <- 0
-
+  
   # inactivate predictors of complete variables
   for (j in seq_len(nvar)) {
     if (nwhere[j] == 0 && any(pred[j, ] != 0))
@@ -180,10 +184,10 @@ check.data <- function(setup, data, allow.na = FALSE,
       d.j <- data[, j]
       v <- if (is.character(d.j)) NA else var(as.numeric(d.j), na.rm = TRUE)
       constant <- if (allow.na) {
-                    if (is.na(v)) FALSE else v < 1000 * .Machine$double.eps
-                  } else {
-                    is.na(v) || v < 1000 * .Machine$double.eps
-                  }
+        if (is.na(v)) FALSE else v < 1000 * .Machine$double.eps
+      } else {
+        is.na(v) || v < 1000 * .Machine$double.eps
+      }
       didlog <- FALSE
       if (constant && any(pred[, j] != 0)) {
         out <- varnames[j]

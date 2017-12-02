@@ -224,12 +224,13 @@
 #'
 #'@export
 mice <- function(data, m = 5, 
-                 method = vector("character", length = ncol(data)),
-                 predictorMatrix = (1 - diag(1, ncol(data))),
                  where = is.na(data),
+                 vertical = init.vertical(data),
+                 method = vector("character", length(vertical)),
+                 predictorMatrix = (1 - diag(1, length(vertical))),
                  visitSequence = NULL,
-                 form = vector("character", length = ncol(data)),
-                 post = vector("character", length = ncol(data)),
+                 form = vector("character", length(vertical)),
+                 post = vector("character", length(vertical)),
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
                  maxit = 5, diagnostics = TRUE, printFlag = TRUE, seed = NA,
                  imputationMethod = NULL, defaultImputationMethod = NULL,
@@ -272,7 +273,8 @@ mice <- function(data, m = 5,
     defaultMethod <- defaultImputationMethod
   
   # Perform various validity checks on the specified arguments
-  setup <- list(visitSequence = visitSequence, method = method,
+  setup <- list(vertical = vertical, 
+                visitSequence = visitSequence, method = method,
                 defaultMethod = defaultMethod,
                 predictorMatrix = predictorMatrix,
                 form = form, post = post, nvar = nvar,
@@ -355,3 +357,8 @@ mice <- function(data, m = 5,
   return(midsobj)
 }
 
+init.vertical <- function(data) {
+  v <- as.list(names(data))
+  names(v) <- names(data)
+  v
+}
