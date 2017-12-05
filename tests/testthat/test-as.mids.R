@@ -24,13 +24,11 @@ test5 <- as.mids(X[, -2])
 rev <- ncol(X):1
 test6 <- as.mids(X[, rev])
 
-# as() syntax
+# as() syntax has fewer options
 test7 <- as(X, "mids")
 test8 <- as(X2, "mids")
 test9 <- as(X2[, -2], "mids")
 test10 <- as(X[, rev], "mids")
-
-# test11 <- as(X[-(1:10), ], "mids")
 
 test_that("as.mids() produces a `mids` object", {
   expect_is(test1, "mids")
@@ -42,6 +40,10 @@ test_that("as.mids() produces a `mids` object", {
   expect_is(test8, "mids")
   expect_is(test9, "mids")
   expect_is(test10, "mids")
+  expect_error(as(X[-(1:10), ], "mids"), 
+               "Unequal group sizes in imputation index `.imp`")
+  expect_error(as(X[, -(1:2)], "mids"), 
+               "Imputation index `.imp` not found")
 })
 
 test_that("complete() reproduces the original data", {

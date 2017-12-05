@@ -4,20 +4,31 @@
 \alias{as.mids}
 \title{Converts an multiply imputed dataset (long format) into a \code{mids} object}
 \usage{
-as.mids(data, .imp = NA, .id = NA)
+as.mids(long, where = NULL, .imp = ".imp", .id = ".id")
 }
 \arguments{
-\item{data}{A multiply imputed data set in long format, for example 
-produced by a call to \code{complete(..., action = 'long', include = TRUE)}.}
+\item{long}{A multiply imputed data set in long format, for example 
+produced by a call to \code{complete(..., action = 'long', include = TRUE)}, 
+or by other software.}
 
-\item{.imp}{Optional column number in \code{data} that contains the imputation 
-number. The number \code{0} indicates the original data (with missings) 
-and \code{1} through \code{m} correspond to the \code{m} imputation number. 
-If not specified, the function searches for a variable named \code{".imp"}.}
+\item{where}{A data frame or matrix with logicals of the same dimensions 
+as \code{data} indicating where in the data the imputations should be 
+created. The default, \code{where = is.na(data)}, specifies that the
+missing data should be imputed. The \code{where} argument may be used to 
+overimpute observed data, or to skip imputations for selected missing values.}
 
-\item{.id}{Optional column number in \code{data} indicating the subject 
-identification. If not specified, then the function searches for a variable 
-named \code{.id} in \code{data}.}
+\item{.imp}{An optional column number or column name in \code{long}, 
+indicating the imputation index. The values are assumed to be consecutive 
+integers between 0 and \code{m}. Values \code{1} through \code{m} 
+correspond to the imputation index, value \code{0} indicates 
+the original data (with missings). 
+By default, the procedure will search for a variable named \code{".imp"}.}
+
+\item{.id}{An optional column number or column name in \code{long}, 
+indicating the subject identification. If not specified, then the 
+function searches for a variable named \code{".id"}. If this variable 
+is found, the values in the column will define the row names in 
+the \code{data} element of the resulting \code{mids} object.}
 }
 \value{
 An object of class \code{mids}
@@ -31,10 +42,6 @@ the imputed data back in a \code{mids} object. It may also be
 used to store multiply imputed data sets from other software 
 into the format used by \code{mice}.
 }
-\details{
-If .id variable is found, row names from the supplied data will 
-be copied to the \code{data} elements of the returned \code{mids} object.
-}
 \examples{
 # impute the nhanes dataset
 imp <- mice(nhanes, print = FALSE)
@@ -47,31 +54,42 @@ X2$.imp <- as.numeric(levels(X$.imp))[X$.imp]
 # nhanes example without .id
 test1 <- as.mids(X)
 is.mids(test1)
-all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
+identical(complete(test1, action = "long", include = TRUE), X)
 
 # nhanes example without .id where .imp is numeric
 test2 <- as.mids(X2)
 is.mids(test2)
-all(complete(test2, action = "long", include = TRUE) == X, na.rm = TRUE)
+identical(complete(test2, action = "long", include = TRUE), X)
 
 # nhanes example, where we explicitly specify .id as column 2
-test3 <- as.mids(X, .id = 2)
+test3 <- as.mids(X, .id = ".id")
 is.mids(test3)
-all(complete(test3, action = "long", include = TRUE) == X, na.rm = TRUE)
+identical(complete(test3, action = "long", include = TRUE), X)
 
 # nhanes example with .id where .imp is numeric
 test4 <- as.mids(X2, .id = 2)
 is.mids(test4)
-all(complete(test4, action = "long", include = TRUE) == X, na.rm = TRUE)
+identical(complete(test4, action = "long", include = TRUE), X)
 
 # example without an .id variable
 # variable .id not preserved
 X3 <- X[, -2]
 test5 <- as.mids(X3)
 is.mids(test5)
-all(complete(test5, action = "long", include = TRUE)[, -2] == X[, -2], na.rm = TRUE)
+identical(complete(test5, action = "long", include = TRUE)[, -2], X[, -2])
 
-# 
+# as() syntax has fewer options
+test7 <- as(X, "mids")
+test8 <- as(X2, "mids")
+test9 <- as(X2[, -2], "mids")
+rev <- ncol(X):1
+test10 <- as(X[, rev], "mids")
+
+# where argument copies also observed data into $imp element
+where <- matrix(TRUE, nrow = nrow(nhanes), ncol = ncol(nhanes))
+colnames(where) <- colnames(nhanes)
+test11 <- as.mids(X, where = where)
+identical(complete(test11, action = "long", include = TRUE), X)
 }
 \author{
 Gerko Vink

@@ -8,18 +8,21 @@
 #'used to store multiply imputed data sets from other software 
 #'into the format used by \code{mice}.
 #'
-#'@aliases as.mids
-#'@param data A multiply imputed data set in long format, for example 
-#'produced by a call to \code{complete(..., action = 'long', include = TRUE)}. 
-#'@param .imp Optional column number in \code{data} that contains the imputation 
-#'number. The number \code{0} indicates the original data (with missings) 
-#'and \code{1} through \code{m} correspond to the \code{m} imputation number. 
-#'If not specified, the function searches for a variable named \code{".imp"}.
-#'@param .id Optional column number in \code{data} indicating the subject 
-#'identification. If not specified, then the function searches for a variable 
-#'named \code{.id} in \code{data}. 
-#'@details If .id variable is found, row names from the supplied data will 
-#'be copied to the \code{data} elements of the returned \code{mids} object.
+#'@param long A multiply imputed data set in long format, for example 
+#'produced by a call to \code{complete(..., action = 'long', include = TRUE)}, 
+#'or by other software. 
+#'@param .imp An optional column number or column name in \code{long}, 
+#'indicating the imputation index. The values are assumed to be consecutive 
+#'integers between 0 and \code{m}. Values \code{1} through \code{m} 
+#'correspond to the imputation index, value \code{0} indicates 
+#'the original data (with missings). 
+#'By default, the procedure will search for a variable named \code{".imp"}.
+#'@param .id An optional column number or column name in \code{long}, 
+#'indicating the subject identification. If not specified, then the 
+#'function searches for a variable named \code{".id"}. If this variable 
+#'is found, the values in the column will define the row names in 
+#'the \code{data} element of the resulting \code{mids} object.
+#'@inheritParams mice
 #'@return An object of class \code{mids}
 #'@author Gerko Vink
 #'@examples
@@ -34,75 +37,90 @@
 #'# nhanes example without .id
 #'test1 <- as.mids(X)
 #'is.mids(test1)
-#'all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE)
+#'identical(complete(test1, action = "long", include = TRUE), X)
 #'
 #'# nhanes example without .id where .imp is numeric
 #'test2 <- as.mids(X2)
 #'is.mids(test2)
-#'all(complete(test2, action = "long", include = TRUE) == X, na.rm = TRUE)
+#'identical(complete(test2, action = "long", include = TRUE), X)
 #'
 #'# nhanes example, where we explicitly specify .id as column 2
-#'test3 <- as.mids(X, .id = 2)
+#'test3 <- as.mids(X, .id = ".id")
 #'is.mids(test3)
-#'all(complete(test3, action = "long", include = TRUE) == X, na.rm = TRUE)
+#'identical(complete(test3, action = "long", include = TRUE), X)
 #'
 #'# nhanes example with .id where .imp is numeric
 #'test4 <- as.mids(X2, .id = 2)
 #'is.mids(test4)
-#'all(complete(test4, action = "long", include = TRUE) == X, na.rm = TRUE)
+#'identical(complete(test4, action = "long", include = TRUE), X)
 #'
 #'# example without an .id variable
 #'# variable .id not preserved
 #'X3 <- X[, -2]
 #'test5 <- as.mids(X3)
 #'is.mids(test5)
-#'all(complete(test5, action = "long", include = TRUE)[, -2] == X[, -2], na.rm = TRUE)
+#'identical(complete(test5, action = "long", include = TRUE)[, -2], X[, -2])
 #'
-#'# 
+#'# as() syntax has fewer options
+#'test7 <- as(X, "mids")
+#'test8 <- as(X2, "mids")
+#'test9 <- as(X2[, -2], "mids")
+#'rev <- ncol(X):1
+#'test10 <- as(X[, rev], "mids")
+#'
+#'# where argument copies also observed data into $imp element
+#'where <- matrix(TRUE, nrow = nrow(nhanes), ncol = ncol(nhanes))
+#'colnames(where) <- colnames(nhanes)
+#'test11 <- as.mids(X, where = where)
+#'identical(complete(test11, action = "long", include = TRUE), X)
 #'@keywords mids
 #'@export
-as.mids <- function(data, .imp = NA, .id = NA) {
+as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id") {
   
-  # locate first found column name .imp
-  if (!is.na(.imp)) imp_pos = .imp
-  else imp_pos <- which(".imp" == names(data))[1]
-  if (is.na(imp_pos)) stop("No column named `.imp` found.")
-  
-  # locate first found column name .id
-  if (!is.na(.id)) id_pos = .id
-  else id_pos <- which(".id" == names(data))[1]
+  if (is.numeric(.imp)) .imp <- names(long)[.imp]
+  if (is.numeric(.id)) .id <- names(long)[.id]
+  if (!.imp %in% names(long)) stop("Imputation index `.imp` not found")
   
   # no missings allowed in .imp
-  imps <- data[, imp_pos]
-  if (anyNA(imps)) stop("Values `NA` in column `.imp` are not permitted.")
+  imps <- long[, .imp]
+  if (anyNA(imps)) stop("Missing values in imputation index `.imp`")
+  
+  # number of records within .imp should be the same
+  if (any(diff(table(imps))) != 0)
+    stop("Unequal group sizes in imputation index `.imp`")
+  
+  # get original data part
+  keep <- setdiff(names(long), na.omit(c(.imp, .id)))
+  data <- long[imps == 0, keep, drop = FALSE]
+  n <- nrow(data)
+  if (n == 0)
+    stop("Original data not found.\n Use `complete(..., action = 'long', include = TRUE)` to save original data.")
   
   # determine m
-  m <- if (is.factor(imps)) max(as.numeric(levels(imps))[imps]) else max(imps)
-  
-  # get original data part  
-  vars_to_remove <- na.omit(c(imp_pos, id_pos))
-  orig_data <- data[imps == 0, -vars_to_remove, drop = FALSE]
-  n <- nrow(orig_data) 
-  if (n == 0) stop("Original data table not found. Use complete(..., action = 'long', include = TRUE) to include original data.")
+  m <- ifelse(is.factor(imps), 
+              nlevels(imps) - 1,
+              length(unique(imps)) - 1)
   
   # use mice to get info on data
-  ini <- mice(orig_data, m = m, maxit = 0, remove_collinear = FALSE)
+  if (is.null(where)) where <- is.na(data)
+  ini <- mice(data, m = m, where = where, maxit = 0, 
+              remove_collinear = FALSE)
   
   # store any .id as row names
-  if (!is.na(id_pos)) rownames(ini$data) <- data[imps == 0, id_pos]
+  if (!is.na(.id)) rownames(ini$data) <- long[imps == 0, .id]
   
-  # copy imputations from data into proper ini$imp elements
+  # copy imputations from long into proper ini$imp elements
   names  <- names(ini$imp)
   for (i in seq_along(names)) {
     varname <- names[i]
     if(!is.null(ini$imp[[varname]])) {
       for(j in seq_len(m)) {
-        idx <- imps == j & is.na(data[imps == 0, varname])
-        ini$imp[[varname]][j] <- data[idx, varname]
+        idx <- imps == j & where[, varname]
+        ini$imp[[varname]][j] <- long[idx, varname]
       }
     }
   }
-  return(ini)
+  ini
 }
 
 #' Create a \code{mira} object from repeated analyses
