@@ -1,4 +1,4 @@
-### contributed by Alexander Robitzsch (a.robitzsch@bifie.at)
+### contributed by Alexander Robitzsch (robitzsch@ipn.uni-kiel.de)
 
 #-------------------MICE.IMPUTE.2L.PAN----------------------------
 # Usage is an extension of 2l.norm
@@ -44,9 +44,8 @@
 #'doing imputations. Default is \code{FALSE}.
 #'@param ... Other named arguments.
 #'@return A vector of length \code{nmis} with imputations.
-#'@author Alexander Robitzsch (Federal Institute for Education Research,
-#'Innovation, and Development of the Austrian School System, Salzburg,
-#'Austria), \email{a.robitzsch@@bifie.at}
+#'@author Alexander Robitzsch (IPN - Leibniz Institute for Science and 
+#'Mathematics Education, Kiel, Germany), \email{robitzsch@@ipn.uni-kiel.de}.
 #'@note This function does not implement the \code{where} functionality. It 
 #'always produces \code{nmis} imputation, irrespective of the \code{where} 
 #'argument of the \code{mice} function.
