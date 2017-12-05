@@ -24,12 +24,24 @@ test5 <- as.mids(X[, -2])
 rev <- ncol(X):1
 test6 <- as.mids(X[, rev])
 
+# as() syntax
+test7 <- as(X, "mids")
+test8 <- as(X2, "mids")
+test9 <- as(X2[, -2], "mids")
+test10 <- as(X[, rev], "mids")
+
+# test11 <- as(X[-(1:10), ], "mids")
+
 test_that("as.mids() produces a `mids` object", {
   expect_is(test1, "mids")
   expect_is(test2, "mids")
   expect_is(test3, "mids")
   expect_is(test4, "mids")
   expect_is(test5, "mids")
+  expect_is(test7, "mids")
+  expect_is(test8, "mids")
+  expect_is(test9, "mids")
+  expect_is(test10, "mids")
 })
 
 test_that("complete() reproduces the original data", {

@@ -125,3 +125,18 @@ as.mira <- function(fitlist) {
   oldClass(object) <- c("mira", "matrix")
   return(object)
 }
+
+
+setOldClass(c("mids", "mira"))
+setAs(from = "data.frame", to = "mids", 
+      def = function(from) {
+        as.mids(from)
+      }
+)
+
+setAs(from = "list", to = "mira", 
+      def = function(from) {
+        as.mira(from)
+      }
+)
+
