@@ -11,6 +11,11 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.46.5  05dec2017 SvB
+ADDED    new arguments to as.mids()
+ADDED    as() syntax
+UPDATE   contact info
+
 V2.46.2  27nov2017 SvB
 FIXED    resolve cart not accepting a matrix (thanks Joerg Drechsler)
 
