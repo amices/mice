@@ -7,29 +7,31 @@ check.visitSequence <- function(setup, where) {
   visitSequence <- setup$visitSequence
   blocks <- setup$blocks
   
-  nvert <- vector("integer", length(blocks))
-  for (i in seq_along(blocks)) nvert[i] <- sum(nwhere[blocks[[i]]])
+  nbk <- vector("integer", length(blocks))
+  for (i in seq_along(blocks)) nbk[i] <- sum(nwhere[blocks[[i]]])
   
   # set default visit sequence, left to right
   if (is.null(visitSequence))
     visitSequence <- seq_along(blocks)
+  
+  if (length(nbk) == 0) visitSequence <- nbk
   
   if (!is.numeric(visitSequence)) {
     code <- match.arg(visitSequence, c("roman", "arabic", "monotone",
                                        "revmonotone"))
     visitSequence <- switch(
       code, 
-      roman = seq_along(blocks)[nvert > 0],
-      arabic = rev(seq_along(blocks)[nvert > 0]),
-      monotone = order(nvert)[(sum(nvert == 0) + 1):length(nvert)],
-      revmonotone = rev(order(nvert)[(sum(nvert == 0) + 1):length(nvert)]),
-      seq_len(nvert)[nvert > 0]
+      roman = seq_along(blocks)[nbk > 0],
+      arabic = rev(seq_along(blocks)[nbk > 0]),
+      monotone = order(nbk)[(sum(nbk == 0) + 1):length(nbk)],
+      revmonotone = rev(order(nbk)[(sum(nbk == 0) + 1):length(nbk)]),
+      seq_len(nbk)[nbk > 0]
     )
   }
   
   # if (all(nwhere[visitSequence] == 0))
   #   stop("No locations to impute")
-  flags <- (nvert == 0) & is.element(seq_along(blocks), visitSequence)
+  flags <- (nbk == 0) & is.element(seq_along(blocks), visitSequence)
   if (any(flags))
     visitSequence <- visitSequence[!flags]
   visitSequence <- visitSequence[visitSequence <= length(blocks)]
@@ -175,7 +177,7 @@ check.data <- function(setup, data, allow.na = FALSE,
   for (j in seq_len(nvar)) {
     if (isclassvar[j] && is.factor(data[,j])) 
       stop("Class variable (column ", j,
-           ") cannot be factor. Convert to numeric by as.integer()")        
+           ") cannot be factor. Convert to numeric by as.integer()")
   }
   
   # remove constant variables but leave passive variables untouched
