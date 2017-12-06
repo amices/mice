@@ -69,37 +69,32 @@
 #'@examples
 #'
 #'### To compare two linear models:
-#'imp <- mice(nhanes2)
-#'mi1 <- with(data=imp, expr=lm(bmi~age+hyp+chl))
-#'mi0 <- with(data=imp, expr=lm(bmi~age+hyp))
-#'pc  <- pool.compare(mi1, mi0, method='Wald')
-#'pc$spvalue
-#'#            [,1]
-#'#[1,] 0.000293631
-#'#
+#'imp <- mice(nhanes2, seed = 51009, print = FALSE)
+#'mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
+#'mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
+#'pc  <- pool.compare(mi1, mi0, method = 'Wald')
+#'pc$pvalue
 #'
 #'### Comparison of two general linear models (logistic regression).
 #'\dontrun{
-#'imp  <- mice(boys, maxit=2)
-#'fit0 <- with(imp, glm(gen>levels(gen)[1] ~ hgt+hc,family=binomial))
-#'fit1 <- with(imp, glm(gen>levels(gen)[1] ~ hgt+hc+reg,family=binomial))
-#'pool.compare(fit1, fit0, method='likelihood', data=imp)}
+#'imp  <- mice(boys, maxit = 2, print = FALSE)
+#'fit1 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc + reg, family = binomial))
+#'fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
+#'pool.compare(fit1, fit0, method = 'likelihood', data = imp)$pvalue
 #'
+#'# using factors
+#'fit1 <- with(imp, glm(as.factor(gen > levels(gen)[1]) ~ hgt + hc + reg, family = binomial))
+#'fit0 <- with(imp, glm(as.factor(gen > levels(gen)[1]) ~ hgt + hc, family = binomial))
+#'pool.compare(fit1, fit0, method = 'likelihood', data = imp)$pvalue
+#'}
 #'@export
 pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
-    # It is assumed that fit1 contains the larger model
-    # and the model in fit0 is nested within fit1.
-    # In case of method=Wald the null hypothesis is tested that the extra parameters are all zero.                                                                       
-    # Usage of this function: pool.compare(fit1, fit0).
-    # The case of method=likelihood refers to the method of Meng & Rubin (1992), based 
-    # on complete data log likelihood ratios to combine likelihood ratio tests. So far only the 
-    # likelihood function of logistic regression is implemented.
-    # For the likelihood method, data should refer to the original mids-object.    
     LLlogistic <- function(formula, data, coefs) {
         ### Calculates -2 loglikelihood of a model.
         logistic <- function(mu) exp(mu)/(1 + exp(mu))
         Xb <- model.matrix(formula, data) %*% coefs
         y <- model.frame(formula, data)[1][, 1]
+        if (is.factor(y)) y <- (0:1)[y]
         p <- logistic(Xb)
         y <- (y - min(y))/(max(y) - min(y))  ## in case values of categorical var are other than 0 and 1.
         term1 <- term2 <- rep(0, length(y))
