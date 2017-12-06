@@ -7,12 +7,12 @@
 \alias{mice}
 \title{\pkg{mice}: Multivariate Imputation by Chained Equations}
 \usage{
-mice(data, m = 5, where = is.na(data), vertical = init.vertical(data),
-  method = vector("character", length(vertical)), predictorMatrix = (1 -
-  diag(1, length(vertical))), visitSequence = NULL,
-  form = vector("character", length(vertical)), post = vector("character",
-  length(vertical)), defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-  maxit = 5, diagnostics = TRUE, printFlag = TRUE, seed = NA,
+mice(data, m = 5, where = is.na(data), blocks = make.blocks(data),
+  method = vector("character", length(blocks)), predictorMatrix = (1 -
+  diag(1, length(blocks))), visitSequence = NULL, form = vector("character",
+  length(blocks)), post = vector("character", length(blocks)),
+  defaultMethod = c("pmm", "logreg", "polyreg", "polr"), maxit = 5,
+  diagnostics = TRUE, printFlag = TRUE, seed = NA,
   imputationMethod = NULL, defaultImputationMethod = NULL,
   data.init = NULL, ...)
 }
@@ -27,6 +27,16 @@ as \code{data} indicating where in the data the imputations should be
 created. The default, \code{where = is.na(data)}, specifies that the
 missing data should be imputed. The \code{where} argument may be used to 
 overimpute observed data, or to skip imputations for selected missing values.}
+
+\item{blocks}{A list of character vectors with column names. A vector contains 
+the names of all columns that appear in the same block. List elements 
+names of are used to name the blocks. Blocks identify 
+variables that are imputed simultaneously by a joint imputation method
+(see \code{method} argument). The default 
+\code{[=make.blocks]{make.block(data)}} assigns 
+each column in \code{data} to its own block, which is effectively
+fully conditional specification (FCS). Any variable not listed in \code{block} 
+will not be imputed. A variable may be a member of multiple blocks.}
 
 \item{method}{Can be either a single string, or a vector of strings with
 length \code{ncol(data)}, specifying the univariate imputation method to be

@@ -3,59 +3,59 @@ context("check")
 data <- nhanes
 where <- is.na(data)
 
-vertical <- list("bmi", "age", "chl")
-setup <- list(vertical = vertical, 
+blocks <- list("bmi", "age", "chl")
+setup <- list(blocks = blocks, 
               visitSequence = NULL, 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-              predictorMatrix = (1 - diag(1, length(vertical))),
+              predictorMatrix = (1 - diag(1, length(blocks))),
               nmis = apply(is.na(data), 2, sum), 
               nwhere = apply(where, 2, sum))
 z1 <- check.visitSequence(setup, where)
 
-vertical <- list(c("bmi", "chl"), "age")
-setup <- list(vertical = vertical, 
+blocks <- list(c("bmi", "chl"), "age")
+setup <- list(blocks = blocks, 
               visitSequence = NULL, 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-              predictorMatrix = (1 - diag(1, length(vertical))),
+              predictorMatrix = (1 - diag(1, length(blocks))),
               nmis = apply(is.na(data), 2, sum), 
               nwhere = apply(where, 2, sum))
 z2 <- check.visitSequence(setup, where)
 
-vertical <- list(c("bmi", "chl"), "age", "chl")
-setup <- list(vertical = vertical, 
+blocks <- list(c("bmi", "chl"), "age", "chl")
+setup <- list(blocks = blocks, 
               visitSequence = NULL, 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-              predictorMatrix = (1 - diag(1, length(vertical))),
+              predictorMatrix = (1 - diag(1, length(blocks))),
               nmis = apply(is.na(data), 2, sum), 
               nwhere = apply(where, 2, sum))
 z3 <- check.visitSequence(setup, where)
 
-vertical <- list("bmi", "chl", "age", "hyp")
-setup <- list(vertical = vertical, 
+blocks <- list("bmi", "chl", "age", "hyp")
+setup <- list(blocks = blocks, 
               visitSequence = "roman", 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-              predictorMatrix = (1 - diag(1, length(vertical))),
+              predictorMatrix = (1 - diag(1, length(blocks))),
               nmis = apply(is.na(data), 2, sum), 
               nwhere = apply(where, 2, sum))
 z4 <- check.visitSequence(setup, where)
-setup <- list(vertical = vertical, 
+setup <- list(blocks = blocks, 
               visitSequence = "arab", 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-              predictorMatrix = (1 - diag(1, length(vertical))),
+              predictorMatrix = (1 - diag(1, length(blocks))),
               nmis = apply(is.na(data), 2, sum), 
               nwhere = apply(where, 2, sum))
 z5 <- check.visitSequence(setup, where)
-setup <- list(vertical = vertical, 
+setup <- list(blocks = blocks, 
               visitSequence = "mon", 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-              predictorMatrix = (1 - diag(1, length(vertical))),
+              predictorMatrix = (1 - diag(1, length(blocks))),
               nmis = apply(is.na(data), 2, sum), 
               nwhere = apply(where, 2, sum))
 z6 <- check.visitSequence(setup, where)
-setup <- list(vertical = vertical, 
+setup <- list(blocks = blocks, 
               visitSequence = "rev", 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-              predictorMatrix = (1 - diag(1, length(vertical))),
+              predictorMatrix = (1 - diag(1, length(blocks))),
               nmis = apply(is.na(data), 2, sum), 
               nwhere = apply(where, 2, sum))
 z7 <- check.visitSequence(setup, where)

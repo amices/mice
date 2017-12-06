@@ -97,6 +97,20 @@
 #'@param data A data frame or a matrix containing the incomplete data.  Missing
 #'values are coded as \code{NA}.
 #'@param m Number of multiple imputations. The default is \code{m=5}.
+#'@param where A data frame or matrix with logicals of the same dimensions 
+#'as \code{data} indicating where in the data the imputations should be 
+#'created. The default, \code{where = is.na(data)}, specifies that the
+#'missing data should be imputed. The \code{where} argument may be used to 
+#'overimpute observed data, or to skip imputations for selected missing values.
+#'@param blocks A list of character vectors with column names. A vector contains 
+#'the names of all columns that appear in the same block. List elements 
+#'names of are used to name the blocks. Blocks identify 
+#'variables that are imputed simultaneously by a joint imputation method
+#'(see \code{method} argument). The default 
+#'\code{[=make.blocks]{make.block(data)}} assigns 
+#'each column in \code{data} to its own block, which is effectively
+#'fully conditional specification (FCS). Any variable not listed in \code{block} 
+#'will not be imputed. A variable may be a member of multiple blocks.
 #'@param method Can be either a single string, or a vector of strings with
 #'length \code{ncol(data)}, specifying the univariate imputation method to be
 #'used for each column in data. If specified as a single string, the same
@@ -114,11 +128,6 @@
 #'\code{predictorMatrix} is that all other columns are used as predictors
 #'(sometimes called massive imputation). Note: For two-level imputation codes
 #''2' and '-2' are also allowed.
-#'@param where A data frame or matrix with logicals of the same dimensions 
-#'as \code{data} indicating where in the data the imputations should be 
-#'created. The default, \code{where = is.na(data)}, specifies that the
-#'missing data should be imputed. The \code{where} argument may be used to 
-#'overimpute observed data, or to skip imputations for selected missing values.
 #'@param visitSequence A vector of integers of arbitrary length, specifying the
 #'column indices of the visiting sequence. The visiting sequence is the column
 #'order that is used to impute the data during one pass through the data. A
@@ -225,12 +234,12 @@
 #'@export
 mice <- function(data, m = 5, 
                  where = is.na(data),
-                 vertical = init.vertical(data),
-                 method = vector("character", length(vertical)),
-                 predictorMatrix = (1 - diag(1, length(vertical))),
+                 blocks = make.blocks(data),
+                 method = vector("character", length(blocks)),
+                 predictorMatrix = (1 - diag(1, length(blocks))),
                  visitSequence = NULL,
-                 form = vector("character", length(vertical)),
-                 post = vector("character", length(vertical)),
+                 form = vector("character", length(blocks)),
+                 post = vector("character", length(blocks)),
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
                  maxit = 5, diagnostics = TRUE, printFlag = TRUE, seed = NA,
                  imputationMethod = NULL, defaultImputationMethod = NULL,
@@ -273,7 +282,7 @@ mice <- function(data, m = 5,
     defaultMethod <- defaultImputationMethod
   
   # Perform various validity checks on the specified arguments
-  setup <- list(vertical = vertical, 
+  setup <- list(blocks = blocks, 
                 visitSequence = visitSequence, method = method,
                 defaultMethod = defaultMethod,
                 predictorMatrix = predictorMatrix,
@@ -328,7 +337,7 @@ mice <- function(data, m = 5,
   for (j in p$visitSequence) {
     p$data[!r[, j], j] <- NA
   }
-
+  
   ## delete data and imputations of automatic dummy variables
   imp <- q$imp[seq_len(nvar)]
   names(imp) <- varnames
@@ -355,10 +364,4 @@ mice <- function(data, m = 5,
     midsobj$pad <- NULL
   oldClass(midsobj) <- "mids"
   return(midsobj)
-}
-
-init.vertical <- function(data) {
-  v <- as.list(names(data))
-  names(v) <- names(data)
-  v
 }

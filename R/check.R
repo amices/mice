@@ -5,22 +5,22 @@ check.visitSequence <- function(setup, where) {
   nwhere <- setup$nwhere
   nvar <- setup$nvar
   visitSequence <- setup$visitSequence
-  vertical <- setup$vertical
+  blocks <- setup$blocks
   
-  nvert <- vector("integer", length(vertical))
-  for (i in seq_along(vertical)) nvert[i] <- sum(nwhere[vertical[[i]]])
+  nvert <- vector("integer", length(blocks))
+  for (i in seq_along(blocks)) nvert[i] <- sum(nwhere[blocks[[i]]])
   
   # set default visit sequence, left to right
   if (is.null(visitSequence))
-    visitSequence <- seq_along(vertical)
+    visitSequence <- seq_along(blocks)
   
   if (!is.numeric(visitSequence)) {
     code <- match.arg(visitSequence, c("roman", "arabic", "monotone",
                                        "revmonotone"))
     visitSequence <- switch(
       code, 
-      roman = seq_along(vertical)[nvert > 0],
-      arabic = rev(seq_along(vertical)[nvert > 0]),
+      roman = seq_along(blocks)[nvert > 0],
+      arabic = rev(seq_along(blocks)[nvert > 0]),
       monotone = order(nvert)[(sum(nvert == 0) + 1):length(nvert)],
       revmonotone = rev(order(nvert)[(sum(nvert == 0) + 1):length(nvert)]),
       seq_len(nvert)[nvert > 0]
@@ -29,10 +29,10 @@ check.visitSequence <- function(setup, where) {
   
   # if (all(nwhere[visitSequence] == 0))
   #   stop("No locations to impute")
-  flags <- (nvert == 0) & is.element(seq_along(vertical), visitSequence)
+  flags <- (nvert == 0) & is.element(seq_along(blocks), visitSequence)
   if (any(flags))
     visitSequence <- visitSequence[!flags]
-  visitSequence <- visitSequence[visitSequence <= length(vertical)]
+  visitSequence <- visitSequence[visitSequence <= length(blocks)]
   visitSequence <- visitSequence[visitSequence >= 1]
   # if (length(visitSequence) == 0)
   #   stop("No locations to impute")
