@@ -29,44 +29,41 @@ check.visitSequence <- function(setup, where) {
     )
   }
   
-  # if (all(nwhere[visitSequence] == 0))
-  #   stop("No locations to impute")
   flags <- (nbk == 0) & is.element(seq_along(blocks), visitSequence)
-  if (any(flags))
-    visitSequence <- visitSequence[!flags]
+  if (any(flags)) visitSequence <- visitSequence[!flags]
   visitSequence <- visitSequence[visitSequence <= length(blocks)]
   visitSequence <- visitSequence[visitSequence >= 1]
-  # if (length(visitSequence) == 0)
-  #   stop("No locations to impute")
   setup$visitSequence <- visitSequence
   return(setup)
 }
 
 check.method <- function(setup, data) {
   # check method, set defaults if appropriate
+  blocks <- setup$blocks
   method <- setup$method
   defaultMethod <- setup$defaultMethod
   visitSequence <- setup$visitSequence
   nwhere <- setup$nwhere
   nvar <- setup$nvar
   
-  # handle default
-  if (all(method == "")) { 
+  assign.method <- function(y) {
+    if (is.numeric(y)) return(1)
+    if (nlevels(y) == 2) return(2)
+    if (is.ordered(y) && nlevels(y) > 2) return(4)
+    if (nlevels(y) > 2) return(3)
+    if (is.logical(y)) return(2)
+    return(1)
+  }
+  
+  # handle default, use method 1 if there is no single method 
+  # within the block
+  if (all(method == "")) {
     for (j in visitSequence) {
-      y <- data[, j]
-      if (is.numeric(y)) {
-        method[j] <- defaultMethod[1]
-      } else if (nlevels(y) == 2) {
-        method[j] <- defaultMethod[2]
-      } else if (is.ordered(y) && nlevels(y) > 2) {
-        method[j] <- defaultMethod[4]
-      } else if (nlevels(y) > 2) {
-        method[j] <- defaultMethod[3]
-      } else if (is.logical(y)) {
-        method[j] <- defaultMethod[2]
-      } else {
-        method[j] <- defaultMethod[1]
-      }
+      yvar <- blocks[[j]]
+      y <- data[, yvar]
+      def <- sapply(y, assign.method)
+      k <- ifelse(all(diff(def) == 0), k <- def[1], 1)
+      method[j] <- defaultMethod[k]
     }
   }
   
