@@ -317,7 +317,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
             call. = FALSE)
   }
   data <- data.frame(data)
-  st.data <- data.frame(scale(data))
   if (prop < 0 || prop > 100) {
     stop("Proportion of missingness should be a value between 0 and 1 
          (for a proportion) or between 1 and 100 (for a percentage)", call. = FALSE)
@@ -479,6 +478,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                    is not possible when mechanism is MAR"), 
              call. = FALSE)
       } else {
+        st.data <- data.frame(scale(data))
         scores <- sum.scores(P = P,
                              data = st.data,
                              weights = weights)
