@@ -24,11 +24,20 @@ Append \code{mids} objects by rows
 \details{
 This function combines two \code{mids} objects rowwise into a single
 \code{mids} object, or combines a \code{mids} object with a vector, matrix,
-factor or dataframe rowwise into a \code{mids} object. The columns
-in the (incomplete) data \code{x$data} and \code{y} (or \code{y$data} if
-\code{y} is a \code{mids} object) should match. If \code{y} is a
-\code{mids} object, then \code{rbind} only works if the number of 
-multiple imputations in \code{x} and \code{y} is equal.
+factor or dataframe rowwise into a \code{mids} object.
+
+If \code{y} is a
+\code{mids} object, then \code{rbind} requires that the number of 
+multiple imputations in \code{x} and \code{y} is identical. Also, 
+columns of \code{x$data} and \code{y$data} should match.
+
+If \code{y} is not a \code{mids} object, the columns of \code{x$data} 
+and \code{y} should match. The \code{where} matrix for \code{y} is set 
+to \code{FALSE}, signalling that any missing values 
+in \code{y} were not imputed.
+
+If \code{y} is not a \code{mids} object, the function should be called as
+\code{mice:::rbind.mids(x, y, ...)}.
 }
 \note{
 The function construct the elements of the new \code{mids} object as follows:

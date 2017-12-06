@@ -4,11 +4,20 @@
 #'
 #'This function combines two \code{mids} objects rowwise into a single
 #'\code{mids} object, or combines a \code{mids} object with a vector, matrix,
-#'factor or dataframe rowwise into a \code{mids} object. The columns
-#'in the (incomplete) data \code{x$data} and \code{y} (or \code{y$data} if
-#'\code{y} is a \code{mids} object) should match. If \code{y} is a
-#'\code{mids} object, then \code{rbind} only works if the number of 
-#'multiple imputations in \code{x} and \code{y} is equal.
+#'factor or dataframe rowwise into a \code{mids} object. 
+#'
+#'If \code{y} is a
+#'\code{mids} object, then \code{rbind} requires that the number of 
+#'multiple imputations in \code{x} and \code{y} is identical. Also, 
+#'columns of \code{x$data} and \code{y$data} should match.
+#'
+#'If \code{y} is not a \code{mids} object, the columns of \code{x$data} 
+#'and \code{y} should match. The \code{where} matrix for \code{y} is set 
+#'to \code{FALSE}, signalling that any missing values 
+#'in \code{y} were not imputed. 
+#'
+#'If \code{y} is not a \code{mids} object, the function should be called as
+#'\code{mice:::rbind.mids(x, y, ...)}.
 #'
 #'@param x A \code{mids} object.
 #'@param y A \code{mids} object, or a \code{data.frame}, \code{matrix}, \code{factor} 
@@ -65,7 +74,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     } else {
       y <- rbind.data.frame(y, ...)
     }
-
+    
     # Then y is matrix, y is converted into a dataframe.
     # if (is.matrix(y)) 
     #   y <- as.data.frame(y)
@@ -83,8 +92,9 @@ rbind.mids <- function(x, y = NULL, ...) {
     # The data in x (x$data) and y are combined together.
     data <- rbind(x$data, y)
     
-    # where argument
-    where <- x$where
+    # where argument: code all values as observed, including NA
+    wy <- matrix(FALSE, nrow = nrow(y), ncol = ncol(y))
+    where <- rbind(x$where, wy)
     
     # The number of imputations in the new midsobject is equal to that in x.
     m <- x$m
@@ -99,7 +109,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     visitSequence <- x$visitSequence
     
     # The original data of y will be copied into the multiple imputed dataset, including the missing values of y.
-    r <- (!is.na(y))
+    r <- !wy
     imp <- vector("list", ncol(y))
     for (j in visitSequence) {
       imp[[j]] <- 
