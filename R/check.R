@@ -141,6 +141,7 @@ check.method <- function(setup, data) {
 check.predictorMatrix <- function(setup) {
   ## checks and makes consistency edits of the predictormatrix
   blocks <- setup$blocks
+  nimp <- setup$nimp
   pred <- setup$predictorMatrix
   varnames <- setup$varnames
   nwhere <- setup$nwhere
@@ -155,15 +156,14 @@ check.predictorMatrix <- function(setup) {
     stop(paste0("The predictorMatrix has ", nrow(pred), 
                 " rows. This should be ", nblo, "."))
   if (nvar != ncol(pred))
-    stop(paste("The predictorMatrix has ", ncol(pred), 
+    stop(paste0("The predictorMatrix has ", ncol(pred), 
                " columns. This should be ", nvar, "."))
   dimnames(pred) <- list(names(blocks), varnames)
   
-  # inactivate predictors of complete (or not imputed) variables
-  # for (j in seq_along(blocks)) {
-  #   if (nwhere[j] == 0 && any(pred[j, ] != 0))
-  #     pred[j, ] <- 0
-  # }
+  # inactivate predictors of complete (or not imputed) block
+  for (j in seq_along(blocks)) {
+    if (nimp[j] == 0) pred[j, ] <- 0
+  }
   
   setup$predictorMatrix <- pred
   setup$post <- post
