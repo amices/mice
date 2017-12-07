@@ -102,15 +102,16 @@
 #'created. The default, \code{where = is.na(data)}, specifies that the
 #'missing data should be imputed. The \code{where} argument may be used to 
 #'overimpute observed data, or to skip imputations for selected missing values.
-#'@param blocks A list of character vectors with column names. A vector contains 
-#'the names of all columns that appear in the same block. List elements 
-#'names of are used to name the blocks. Blocks identify 
-#'variables that are imputed simultaneously by a joint imputation method
+#'@param blocks List of vectors with variable names per block. List elements 
+#'may be named to identify blocks. Variables within a block are 
+#'imputed simultaneously by a joint imputation method
 #'(see \code{method} argument). The default 
-#'\code{[=make.blocks]{make.block(data)}} assigns 
-#'each column in \code{data} to its own block, which is effectively
-#'fully conditional specification (FCS). Any variable not listed in \code{block} 
-#'will not be imputed. A variable may be a member of multiple blocks.
+#'\code{[=make.blocks]{make.block}} assigns 
+#'each variable in \code{data} to its own block, which is effectively
+#'fully conditional specification (FCS). A variable that is not listed 
+#'in \code{blocks} will not be imputed. A variable may be a member 
+#'of multiple blocks. In that case, it is re-imputed in every block in which 
+#'it appears.
 #'@param method Can be either a single string, or a vector of strings with
 #'length \code{ncol(data)}, specifying the univariate imputation method to be
 #'used for each column in data. If specified as a single string, the same
@@ -262,7 +263,7 @@ mice <- function(data, m = 5,
     stop("Argument `where` not a matrix or data frame")
   if (!all(dim(data) == dim(where)))
     stop("Arguments `data` and `where` not of same size")
-  nwhere <- apply(where, 2, sum)
+  
   #if (sum(where) == 0)
   #  stop("No locations to impute")
   #if (any(is.na(data) & !where))
@@ -282,13 +283,15 @@ mice <- function(data, m = 5,
     defaultMethod <- defaultImputationMethod
   
   # Perform various validity checks on the specified arguments
+  nwhere <- apply(where, 2, sum)
   setup <- list(blocks = blocks, 
+                nwhere = nwhere,
+                nimp = nimp(where, blocks),
                 visitSequence = visitSequence, method = method,
                 defaultMethod = defaultMethod,
                 predictorMatrix = predictorMatrix,
-                form = form, post = post, nvar = nvar,
-                nmis = nmis, nwhere = nwhere,
-                varnames = varnames)
+                form = form, post = post, 
+                nvar = nvar, nmis = nmis, varnames = varnames)
   setup <- check.visitSequence(setup, where)
   setup <- check.method(setup, data)
   setup <- check.predictorMatrix(setup)

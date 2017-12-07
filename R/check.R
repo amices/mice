@@ -3,33 +3,31 @@
 check.visitSequence <- function(setup, where) {
   
   nwhere <- setup$nwhere
+  nimp <- setup$nimp
   nvar <- setup$nvar
   visitSequence <- setup$visitSequence
   blocks <- setup$blocks
-  
-  nbk <- vector("integer", length(blocks))
-  for (i in seq_along(blocks)) nbk[i] <- sum(nwhere[blocks[[i]]])
   
   # set default visit sequence, left to right
   if (is.null(visitSequence))
     visitSequence <- seq_along(blocks)
   
-  if (length(nbk) == 0) visitSequence <- nbk
+  if (length(nimp) == 0) visitSequence <- nimp
   
   if (!is.numeric(visitSequence)) {
     code <- match.arg(visitSequence, c("roman", "arabic", "monotone",
                                        "revmonotone"))
     visitSequence <- switch(
       code, 
-      roman = seq_along(blocks)[nbk > 0],
-      arabic = rev(seq_along(blocks)[nbk > 0]),
-      monotone = order(nbk)[(sum(nbk == 0) + 1):length(nbk)],
-      revmonotone = rev(order(nbk)[(sum(nbk == 0) + 1):length(nbk)]),
-      seq_len(nbk)[nbk > 0]
+      roman = seq_along(blocks)[nimp > 0],
+      arabic = rev(seq_along(blocks)[nimp > 0]),
+      monotone = order(nimp)[(sum(nimp == 0) + 1):length(nimp)],
+      revmonotone = rev(order(nimp)[(sum(nimp == 0) + 1):length(nimp)]),
+      seq_len(nimp)[nimp > 0]
     )
   }
   
-  flags <- (nbk == 0) & is.element(seq_along(blocks), visitSequence)
+  flags <- (nimp == 0) & is.element(seq_along(blocks), visitSequence)
   if (any(flags)) visitSequence <- visitSequence[!flags]
   visitSequence <- visitSequence[visitSequence <= length(blocks)]
   visitSequence <- visitSequence[visitSequence >= 1]
@@ -37,14 +35,17 @@ check.visitSequence <- function(setup, where) {
   return(setup)
 }
 
+
+
 check.method <- function(setup, data) {
   # check method, set defaults if appropriate
   blocks <- setup$blocks
+  nwhere <- setup$nwhere
+  nimp <- setup$nimp
   method <- setup$method
   defaultMethod <- setup$defaultMethod
   visitSequence <- setup$visitSequence
-  nwhere <- setup$nwhere
-  nvar <- setup$nvar
+  nblo <- length(blocks)
   
   assign.method <- function(y) {
     if (is.numeric(y)) return(1)
@@ -72,19 +73,19 @@ check.method <- function(setup, data) {
   if (length(method) == 1) {
     if (is.passive(method))
       stop("Cannot have a passive imputation method for every column.")
-    method <- rep(method, nvar)
+    method <- rep(method, nblo)
   }
   
   # if user specifies multiple methods, check the length of the argument
-  if (length(method) != nvar) {
+  if (length(method) != nblo) {
     stop(paste0("The length of method (", length(method),
-                ") does not match the number of columns in the data (", nvar,
+                ") does not match the number of blocks (", nblo,
                 ")."))
   }
   
-  # check whether the elementary imputation methods are on the search path
-  active.check <- !is.passive(method) & nwhere > 0 & method != ""
-  passive.check <- is.passive(method) & nwhere > 0 & method != ""
+  # check whether the requested imputation methods are on the search path
+  active.check <- !is.passive(method) & nimp > 0 & method != ""
+  passive.check <- is.passive(method) & nimp > 0 & method != ""
   check <- all(active.check) & any(passive.check)
   if (check) {
     fullNames <- rep.int("mice.impute.passive", length(method[passive.check]))
@@ -92,7 +93,8 @@ check.method <- function(setup, data) {
     fullNames <- paste("mice.impute", method[active.check], sep = ".")
     if (length(method[active.check]) == 0) fullNames <- character(0)
   }
-  notFound <- !vapply(fullNames, exists, logical(1), mode = "function", inherits = TRUE)
+  notFound <- !vapply(fullNames, exists, logical(1), 
+                      mode = "function", inherits = TRUE)
   if (any(notFound)) {
     stop(paste("The following functions were not found:",
                paste(fullNames[notFound], collapse = ", ")))
@@ -100,8 +102,8 @@ check.method <- function(setup, data) {
   
   # type checks on built-in imputation methods
   for (j in visitSequence) {
-    y <- data[, j]
-    vname <- dimnames(data)[[2]][j]
+    vname <- blocks[[j]]
+    y <- data[, vname, drop = FALSE]
     mj <- method[j]
     mlist <- list(m1 = c("logreg", "logreg.boot", "polyreg", "lda", "polr"), 
                   m2 = c("norm", "norm.nob", "norm.predict", "norm.boot",
@@ -110,50 +112,55 @@ check.method <- function(setup, data) {
                   m3 = c("norm", "norm.nob", "norm.predict", "norm.boot",
                          "mean", "2l.norm", "2l.pan", 
                          "2lonly.pan", "quadratic", "logreg", "logreg.boot"))
-    if (is.numeric(y) && (mj %in% mlist$m1)) {
-      warning("Type mismatch for variable ", vname, "\nImputation method ",
-              mj, " is for categorical data.",
-              "\nIf you want that, turn variable ", vname, " into a factor,",
-              "\nand store your data in a data frame.", call. = FALSE)
-    } else if (is.factor(y) && nlevels(y) == 2 && (mj %in% mlist$m2)) {
-      warning("Type mismatch for variable ", vname, "\nImputation method ",
-              mj, " is not for factors.", call. = FALSE)
-    } else if (is.factor(y) && nlevels(y) > 2 && (mj %in% mlist$m3)) {
-      warning("Type mismatch for variable ", vname, "\nImputation method ",
-              mj, " is not for factors with three or more levels.",
+    cond1 <- sapply(y, is.numeric)
+    cond2 <- sapply(y, is.factor) & sapply(y, nlevels) == 2 
+    cond3 <- sapply(y, is.factor) & sapply(y, nlevels) > 2
+    if (any(cond1) && mj %in% mlist$m1)
+      warning("Type mismatch for variable(s): ", vname[cond1],
+              "\nImputation method ", mj, " is for categorical data.",
               call. = FALSE)
-    }
+    if (any(cond2) && mj %in% mlist$m2)
+      warning("Type mismatch for variable(s): ", vname[cond2],
+              "\nImputation method ", mj, " is not for factors.", 
+              call. = FALSE)
+    if (any(cond3) && mj %in% mlist$m3)
+      warning("Type mismatch for variable(s): ", vname[cond3], 
+              "\nImputation method ", mj, " is not for factors with >2 levels.",
+              call. = FALSE)
   }
   setup$method <- method
-  return(setup)
+  setup
 }
 
 
 check.predictorMatrix <- function(setup) {
   ## checks and makes consistency edits of the predictormatrix
+  blocks <- setup$blocks
   pred <- setup$predictorMatrix
   varnames <- setup$varnames
   nwhere <- setup$nwhere
   nvar <- setup$nvar
   vis <- setup$visitSequence
   post <- setup$post
+  nblo <- length(blocks)
   
   if (!is.matrix(pred))
     stop("Argument 'predictorMatrix' not a matrix.")
-  if (nvar != nrow(pred) || nvar != ncol(pred))
-    stop(paste("The predictorMatrix has", nrow(pred), "rows and",
-               ncol(pred), "columns. Both should be", nvar, "."))
-  dimnames(pred) <- list(varnames, varnames)
-  diag(pred) <- 0
+  if (nblo != nrow(pred))
+    stop(paste0("The predictorMatrix has ", nrow(pred), 
+                " rows. This should be ", nblo, "."))
+  if (nvar != ncol(pred))
+    stop(paste("The predictorMatrix has ", ncol(pred), 
+               " columns. This should be ", nvar, "."))
+  dimnames(pred) <- list(names(blocks), varnames)
   
-  # inactivate predictors of complete variables
-  for (j in seq_len(nvar)) {
-    if (nwhere[j] == 0 && any(pred[j, ] != 0))
-      pred[j, ] <- 0
-  }
+  # inactivate predictors of complete (or not imputed) variables
+  # for (j in seq_along(blocks)) {
+  #   if (nwhere[j] == 0 && any(pred[j, ] != 0))
+  #     pred[j, ] <- 0
+  # }
   
   setup$predictorMatrix <- pred
-  setup$visitSequence <- vis
   setup$post <- post
   return(setup)
 }

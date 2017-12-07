@@ -6,11 +6,13 @@ where <- is.na(data)
 blocks <- list("bmi", "age", "chl")
 setup <- list(blocks = blocks, 
               visitSequence = NULL, 
+              method = vector("character", length(blocks)),
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
               predictorMatrix = (1 - diag(1, length(blocks))),
               nmis = apply(is.na(data), 2, sum), 
               nwhere = apply(where, 2, sum))
 z1 <- mice:::check.visitSequence(setup, where)
+y1 <- mice:::check.method(setup, data)
 
 blocks <- list(c("bmi", "chl"), "age")
 setup <- list(blocks = blocks, 
