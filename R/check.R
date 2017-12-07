@@ -66,6 +66,7 @@ check.method <- function(setup, data) {
       k <- ifelse(all(diff(def) == 0), k <- def[1], 1)
       method[j] <- defaultMethod[k]
     }
+    method[nimp == 0] <- ""
   }
   
   # expand user's imputation method to all visited columns
@@ -74,6 +75,7 @@ check.method <- function(setup, data) {
     if (is.passive(method))
       stop("Cannot have a passive imputation method for every column.")
     method <- rep(method, nblo)
+    method[nimp == 0] <- ""
   }
   
   # if user specifies multiple methods, check the length of the argument
