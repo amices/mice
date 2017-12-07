@@ -283,11 +283,13 @@ mice <- function(data, m = 5,
     defaultMethod <- defaultImputationMethod
   
   # Perform various validity checks on the specified arguments
+  
   nwhere <- apply(where, 2, sum)
   setup <- list(blocks = blocks, 
                 nwhere = nwhere,
                 nimp = nimp(where, blocks),
-                visitSequence = visitSequence, method = method,
+                visitSequence = visitSequence, 
+                method = method,
                 defaultMethod = defaultMethod,
                 predictorMatrix = predictorMatrix,
                 form = form, post = post, 

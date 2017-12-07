@@ -5,17 +5,19 @@ where <- is.na(data)
 
 blocks <- list("bmi", "age", "chl")
 setup <- list(blocks = blocks, 
+              nimp = nimp(where, blocks),
               visitSequence = NULL, 
-              method = vector("character", length(blocks)),
+              # method = vector("character", length(blocks)),
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
               predictorMatrix = (1 - diag(1, length(blocks))),
               nmis = apply(is.na(data), 2, sum), 
               nwhere = apply(where, 2, sum))
 z1 <- mice:::check.visitSequence(setup, where)
-y1 <- mice:::check.method(setup, data)
+# y1 <- mice:::check.method(setup, data)
 
 blocks <- list(c("bmi", "chl"), "age")
 setup <- list(blocks = blocks, 
+              nimp = nimp(where, blocks),
               visitSequence = NULL, 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
               predictorMatrix = (1 - diag(1, length(blocks))),
@@ -25,6 +27,7 @@ z2 <- mice:::check.visitSequence(setup, where)
 
 blocks <- list(c("bmi", "chl"), "age", "chl")
 setup <- list(blocks = blocks, 
+              nimp = nimp(where, blocks),
               visitSequence = NULL, 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
               predictorMatrix = (1 - diag(1, length(blocks))),
@@ -34,6 +37,7 @@ z3 <- mice:::check.visitSequence(setup, where)
 
 blocks <- list("bmi", "chl", "age", "hyp")
 setup <- list(blocks = blocks, 
+              nimp = nimp(where, blocks),
               visitSequence = "roman", 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
               predictorMatrix = (1 - diag(1, length(blocks))),
@@ -42,6 +46,7 @@ setup <- list(blocks = blocks,
 z4 <- mice:::check.visitSequence(setup, where)
 
 setup <- list(blocks = blocks, 
+              nimp = nimp(where, blocks),
               visitSequence = "arab", 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
               predictorMatrix = (1 - diag(1, length(blocks))),
@@ -50,6 +55,7 @@ setup <- list(blocks = blocks,
 z5 <- mice:::check.visitSequence(setup, where)
 
 setup <- list(blocks = blocks, 
+              nimp = nimp(where, blocks),
               visitSequence = "mon", 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
               predictorMatrix = (1 - diag(1, length(blocks))),
@@ -58,6 +64,7 @@ setup <- list(blocks = blocks,
 z6 <- mice:::check.visitSequence(setup, where)
 
 setup <- list(blocks = blocks, 
+              nimp = nimp(where, blocks),
               visitSequence = "rev", 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
               predictorMatrix = (1 - diag(1, length(blocks))),
@@ -67,6 +74,7 @@ z7 <- mice:::check.visitSequence(setup, where)
 
 blocks <- make.blocks(data, "void")
 setup <- list(blocks = blocks, 
+              nimp = nimp(where, blocks),
               visitSequence = "rev", 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
               predictorMatrix = (1 - diag(1, length(blocks))),
