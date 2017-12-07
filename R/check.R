@@ -147,8 +147,9 @@ check.predictorMatrix <- function(setup) {
   nwhere <- setup$nwhere
   nvar <- setup$nvar
   vis <- setup$visitSequence
-  post <- setup$post
+  
   nblo <- length(blocks)
+  blocknames <- names(blocks)
   
   if (!is.matrix(pred))
     stop("Argument 'predictorMatrix' not a matrix.")
@@ -158,15 +159,17 @@ check.predictorMatrix <- function(setup) {
   if (nvar != ncol(pred))
     stop(paste0("The predictorMatrix has ", ncol(pred), 
                " columns. This should be ", nvar, "."))
-  dimnames(pred) <- list(names(blocks), varnames)
+  dimnames(pred) <- list(blocknames, varnames)
   
   # inactivate predictors of complete (or not imputed) block
   for (j in seq_along(blocks)) {
     if (nimp[j] == 0) pred[j, ] <- 0
   }
   
+  # variable cannot be its own predictor
+  for (i in seq_along(blocks)) pred[i, grep(blocknames[i], varnames)] <- 0
+  
   setup$predictorMatrix <- pred
-  setup$post <- post
   return(setup)
 }
 
