@@ -116,15 +116,18 @@ check.method <- function(setup, data) {
     cond2 <- sapply(y, is.factor) & sapply(y, nlevels) == 2 
     cond3 <- sapply(y, is.factor) & sapply(y, nlevels) > 2
     if (any(cond1) && mj %in% mlist$m1)
-      warning("Type mismatch for variable(s): ", vname[cond1],
+      warning("Type mismatch for variable(s): ", 
+              paste(vname[cond1], collapse = ", "),
               "\nImputation method ", mj, " is for categorical data.",
               call. = FALSE)
     if (any(cond2) && mj %in% mlist$m2)
-      warning("Type mismatch for variable(s): ", vname[cond2],
+      warning("Type mismatch for variable(s): ", 
+              paste(vname[cond2], collapse = ", "),
               "\nImputation method ", mj, " is not for factors.", 
               call. = FALSE)
     if (any(cond3) && mj %in% mlist$m3)
-      warning("Type mismatch for variable(s): ", vname[cond3], 
+      warning("Type mismatch for variable(s): ", 
+              paste(vname[cond3], collapse = ", "),
               "\nImputation method ", mj, " is not for factors with >2 levels.",
               call. = FALSE)
   }
