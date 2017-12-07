@@ -137,3 +137,11 @@ test_that("check.method produces proper results", {
   expect_equal(y8$method, character(0))
 })
 
+test_that("check.predictorMatrix produces proper results", {
+  expect_equal(dim(x1$predictorMatrix), c(3, 4))
+  expect_equal(dim(x2$predictorMatrix), c(2, 4))
+  expect_equal(dim(x3$predictorMatrix), c(3, 4))
+  expect_equal(dim(x4$predictorMatrix), c(4, 4))
+  expect_equal(dim(x8$predictorMatrix), c(0, 4))
+})
+
