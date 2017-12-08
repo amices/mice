@@ -11,6 +11,9 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.46.9  08dec2017 SvB
+UPDATE   simplify code for mids object in mice (thanks stephematician) (#61)
+
 V2.46.8  08dec2017 SvB
 UPDATE   simplify code in rbind.mids (thanks stephematician) (#59)
 
