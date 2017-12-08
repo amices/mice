@@ -8,6 +8,10 @@ test_that("No missing values remain in imputed nhanes data set", {
   expect_equal(sum(is.na(nhanes_complete)), 0)
 })
 
+test_that("Data set in returned mids object is identical to nhanes data set", {
+  expect_identical(nhanes_mids$data, nhanes)
+})
+
 # where
 
 # # all TRUE
