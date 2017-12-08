@@ -158,7 +158,7 @@ check.predictorMatrix <- function(setup) {
                 " rows. This should be ", nblo, "."))
   if (nvar != ncol(pred))
     stop(paste0("The predictorMatrix has ", ncol(pred), 
-               " columns. This should be ", nvar, "."))
+                " columns. This should be ", nvar, "."))
   dimnames(pred) <- list(blocknames, varnames)
   
   # inactivate predictors of complete (or not imputed) block
@@ -176,48 +176,41 @@ check.predictorMatrix <- function(setup) {
 
 check.data <- function(setup, data, allow.na = FALSE, 
                        remove_collinear = TRUE, ...) {
-  
+  blocks <- setup$blocks
+  nimp <- setup$nimp
   pred <- setup$predictorMatrix
   nvar <- setup$nvar
   varnames <- setup$varnames
   meth <- setup$method
   vis <- setup$visitSequence
   post <- setup$post
+  nblo <- length(blocks)
   
   # stop if the class variable is a factor
   isclassvar <- apply(pred == -2, 2, any)
   for (j in seq_len(nvar)) {
-    if (isclassvar[j] && is.factor(data[,j])) 
+    if (isclassvar[j] && is.factor(data[, j])) 
       stop("Class variable (column ", j,
            ") cannot be factor. Convert to numeric by as.integer()")
   }
   
   # remove constant variables but leave passive variables untouched
   for (j in seq_len(nvar)) {
-    if (!is.passive(meth[j])) {
-      d.j <- data[, j]
-      v <- if (is.character(d.j)) NA else var(as.numeric(d.j), na.rm = TRUE)
-      constant <- if (allow.na) {
-        if (is.na(v)) FALSE else v < 1000 * .Machine$double.eps
-      } else {
-        is.na(v) || v < 1000 * .Machine$double.eps
-      }
-      didlog <- FALSE
-      if (constant && any(pred[, j] != 0)) {
-        out <- varnames[j]
-        pred[, j] <- 0
-        updateLog(out = out, meth = "constant")
-        didlog <- TRUE
-      }
-      if (constant && meth[j] != "") {
-        out <- varnames[j]
-        pred[j, ] <- 0
-        if (!didlog)
-          updateLog(out = out, meth = "constant")
-        meth[j] <- ""
-        vis <- vis[vis != j]
-        post[j] <- ""
-      }
+    d.j <- data[, j]
+    v <- ifelse(is.character(d.j), NA, var(as.numeric(d.j), na.rm = TRUE))
+    constant <- if (allow.na) {
+      if (is.na(v)) FALSE else v < 1000 * .Machine$double.eps
+    } else {
+      is.na(v) || v < 1000 * .Machine$double.eps
+    }
+    if (constant) {
+      pred[, j] <- 0
+      i <- grep(varnames[j], rownames(pred))[1]
+      pred[i, ] <- 0
+      meth[i] <- ""
+      post[i] <- ""
+      vis <- vis[vis != i]
+      updateLog(out = varnames[j], meth = "constant")
     }
   }
   
@@ -230,24 +223,14 @@ check.data <- function(setup, data, allow.na = FALSE,
   }
   if (length(droplist) > 0 && remove_collinear) {
     for (k in seq_along(droplist)) {
-      j <- which(varnames %in% droplist[k])
-      didlog <- FALSE
-      if (any(pred[, j] != 0)) {
-        # remove as predictor
-        out <- varnames[j]
-        pred[, j] <- 0
-        updateLog(out = out, meth = "collinear")
-        didlog <- TRUE
-      }
-      if (meth[j] != "") {
-        out <- varnames[j]
-        pred[j, ] <- 0
-        if (!didlog)
-          updateLog(out = out, meth = "collinear")
-        meth[j] <- ""
-        vis <- vis[vis != j]
-        post[j] <- ""
-      }
+      j <- grep(droplist[k], varnames)[1]
+      pred[, j] <- 0
+      i <- grep(varnames[j], rownames(pred))[1]
+      pred[i, ] <- 0
+      meth[i] <- ""
+      vis <- vis[vis != i]
+      post[i] <- ""
+      updateLog(out = varnames[j], meth = "collinear")
     }
   }
   
