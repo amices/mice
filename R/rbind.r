@@ -108,17 +108,9 @@ rbind.mids <- function(x, y = NULL, ...) {
     predictorMatrix <- x$predictorMatrix
     visitSequence <- x$visitSequence
     
-    # The original data of y will be copied into the multiple imputed dataset, including the missing values of y.
-    r <- !wy
-    imp <- vector("list", ncol(y))
-    for (j in visitSequence) {
-      imp[[j]] <- 
-        rbind(x$imp[[j]], 
-              as.data.frame(matrix(NA, nrow = sum(!r[, j]), ncol = x$m, 
-                                   dimnames = list(row.names(y)[r[, j] == FALSE], 1:m))))
-    }
-    names(imp) <- varnames
-    
+    # Only x contributes imputations
+    imp <- x$imp
+ 
     # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
     seed <- x$seed
     lastSeedvalue <- x$lastSeedvalue

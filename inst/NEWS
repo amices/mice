@@ -11,6 +11,9 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V2.46.8  08dec2017 SvB
+UPDATE   simplify code in rbind.mids (thanks stephematician) (#59)
+
 V2.46.7  06dec2017 SvB
 FIXED    bug in pool.compare in handling factors (#60)
 
