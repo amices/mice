@@ -340,7 +340,7 @@ mice <- function(data, m = 5,
     row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
   
   ## save, and return
-  midsobj <- list(call = call, data = as.data.frame(p$data[, seq_len(nvar)]), 
+  midsobj <- list(call = call, data = data, 
                   where = where, m = m,
                   nmis = nmis, imp = imp, method = method,
                   predictorMatrix = predictorMatrix,
