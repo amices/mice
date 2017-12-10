@@ -4,7 +4,6 @@ check.visitSequence <- function(setup, where) {
   
   nwhere <- setup$nwhere
   nimp <- setup$nimp
-  nvar <- setup$nvar
   visitSequence <- setup$visitSequence
   blocks <- setup$blocks
   
@@ -167,7 +166,8 @@ check.predictorMatrix <- function(setup) {
   }
   
   # variable cannot be its own predictor
-  for (i in seq_along(blocks)) pred[i, grep(blocknames[i], varnames)] <- 0
+  for (i in seq_along(blocks)) 
+    if (!is.null(blocknames[i])) pred[i, grep(blocknames[i], varnames)] <- 0
   
   setup$predictorMatrix <- pred
   return(setup)
