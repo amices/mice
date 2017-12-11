@@ -12,9 +12,8 @@ mice(data, m = 5, method = vector("character", length(blocks)),
   where = is.na(data), blocks = make.blocks(data), visitSequence = NULL,
   form = vector("character", length(blocks)), post = vector("character",
   length(blocks)), defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-  maxit = 5, diagnostics = TRUE, printFlag = TRUE, seed = NA,
-  imputationMethod = NULL, defaultImputationMethod = NULL,
-  data.init = NULL, ...)
+  maxit = 5, printFlag = TRUE, seed = NA, imputationMethod = NULL,
+  defaultImputationMethod = NULL, data.init = NULL, ...)
 }
 \arguments{
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing
@@ -95,10 +94,6 @@ polytomous regression imputation for unordered categorical data (factor > 2
 levels) \code{polr}, proportional odds model for (ordered, > 2 levels).}
 
 \item{maxit}{A scalar giving the number of iterations. The default is 5.}
-
-\item{diagnostics}{A Boolean flag. If \code{TRUE}, diagnostic information
-will be appended to the value of the function. If \code{FALSE}, only the
-imputed data are saved. The default is \code{TRUE}.}
 
 \item{printFlag}{If \code{TRUE}, \code{mice} will print history on console.
 Use \code{print=FALSE} for silent computation.}

@@ -16,9 +16,6 @@
 #'@param obj An object of class \code{mids}, typically produces by a previous
 #'call to \code{mice()} or \code{mice.mids()}
 #'@param maxit The number of additional Gibbs sampling iterations.
-#'@param diagnostics A Boolean flag. If \code{TRUE}, diagnostic information
-#'will be appended to the value of the function. If \code{FALSE}, only the
-#'imputed data are saved.  The default is \code{TRUE}.
 #'@param printFlag A Boolean flag. If \code{TRUE}, diagnostic information
 #'during the Gibbs sampling iterations will be written to the command window.
 #'The default is \code{TRUE}.
@@ -50,8 +47,7 @@
 #'# 1 30.1 35.3 33.2 35.3 27.5
 #'# 
 #'@export
-mice.mids <- function(obj, maxit = 1, diagnostics = TRUE, printFlag = TRUE, 
-                      ...) {
+mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
   if (!is.mids(obj)) 
     stop("Object should be of type mids.")
   if (maxit < 1) 
