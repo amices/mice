@@ -154,19 +154,13 @@ cbind.mids <- function(x, y = NULL, ...) {
     chainMean = x$chainMean
     chainVar = x$chainVar
     
-    # padModel for the data to be binded with x.  Remark, if a column of y is categorical this is ignored in padModel since
-    # that column is not used as predictor for another column.
-    
-    pad <- padModel(data, method, predictorMatrix, visitSequence, 
-                    post, nmis, nvar = ncol(data))
-    
     loggedEvents <- x$loggedEvents
     
     x <- list(call = call, data = data, where = where, m = m, nmis = nmis, 
               imp = imp, method = method, predictorMatrix = predictorMatrix, 
               visitSequence = visitSequence, post = post, seed = seed, 
               iteration = iteration, lastSeedvalue = lastSeedvalue, 
-              chainMean = chainMean, chainVar = chainVar, pad = pad, 
+              chainMean = chainMean, chainVar = chainVar, 
               loggedEvents = loggedEvents)
     oldClass(x) <- "mids"
   }
@@ -211,28 +205,6 @@ cbind.mids <- function(x, y = NULL, ...) {
     lastSeedvalue <- x$lastSeedvalue
     iteration <- x$iteration
     
-    # The padModel is defined by just combining both padModels as defined above.
-    padData <- cbind(x$pad$data, y$pad$data)
-    varnamesPad <- c(row.names(x$pad$predictorMatrix), row.names(y$pad$predictorMatrix))
-    padPredictorMatrix <- rbind(x$pad$predictorMatrix, 
-                                matrix(0, 
-                                       ncol = ncol(x$pad$predictorMatrix), 
-                                       nrow = nrow(y$pad$predictorMatrix)))
-    padPredictorMatrix <- cbind(padPredictorMatrix, 
-                                rbind(matrix(0, 
-                                             ncol = ncol(y$pad$predictorMatrix), 
-                                             nrow = nrow(x$pad$predictorMatrix)), 
-                                      y$pad$predictorMatrix))
-    dimnames(padPredictorMatrix) <- list(varnamesPad, varnamesPad)
-    
-    padMethod <- c(x$pad$method, y$pad$method)
-    padVisitSequence <- c(x$pad$visitSequence, y$pad$visitSequence + max(x$pad$visitSequence))
-    padPost <- c(x$pad$post, y$pad$post)
-    padCategories <- rbind(x$pad$categories, y$pad$categories)
-    pad <- list(data = padData, predictorMatrix = padPredictorMatrix, 
-                method = padMethod, visitSequence = padVisitSequence, 
-                post = padPost, categories = padCategories)
-    
     # the chainMean and chainVar vectors for x and y are combined.
     chainMean <- array(data = NA, 
                        dim = c(dim(x$chainMean)[1] + dim(y$chainMean)[1], iteration, m), 
@@ -265,9 +237,9 @@ cbind.mids <- function(x, y = NULL, ...) {
     
     x <- list(call = call, data = data, where = where, m = m, nmis = nmis, 
               imp = imp, method = method, predictorMatrix = predictorMatrix, 
-              visitSequence = visitSequence, post = post, seed = seed, 
-              iteration = iteration, lastSeedvalue = lastSeedvalue, 
-              chainMean = chainMean, chainVar = chainVar, pad = pad, 
+              visitSequence = visitSequence, post = post, seed = seed,
+              iteration = iteration, lastSeedvalue = lastSeedvalue,
+              chainMean = chainMean, chainVar = chainVar,
               loggedEvents = loggedEvents)
     oldClass(x) <- "mids"
   }

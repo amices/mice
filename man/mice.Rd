@@ -8,11 +8,11 @@
 \title{\pkg{mice}: Multivariate Imputation by Chained Equations}
 \usage{
 mice(data, m = 5, where = is.na(data), blocks = make.blocks(data),
-  method = vector("character", length(blocks)), predictorMatrix = (1 -
-  diag(1, length(blocks))), visitSequence = NULL, form = vector("character",
-  length(blocks)), post = vector("character", length(blocks)),
-  defaultMethod = c("pmm", "logreg", "polyreg", "polr"), maxit = 5,
-  diagnostics = TRUE, printFlag = TRUE, seed = NA,
+  method = vector("character", length(blocks)), predictorMatrix = matrix(1,
+  nrow = length(blocks), ncol = ncol(data)), visitSequence = NULL,
+  form = vector("character", length(blocks)), post = vector("character",
+  length(blocks)), defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+  maxit = 5, diagnostics = TRUE, printFlag = TRUE, seed = NA,
   imputationMethod = NULL, defaultImputationMethod = NULL,
   data.init = NULL, ...)
 }

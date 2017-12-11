@@ -80,11 +80,11 @@
 #'
 #'imp <- mice(dfr, m = 1, predictorMatrix = predM1 , 
 #'            imputationMethod = impM1, maxit = 1, paniter = 500)
-#'    
+#'
 #'@export
 mice.impute.2lonly.pmm <- function (y, ry, x, type, wy = NULL, ...){
   imp <- .imputation.level2( y = y , ry = ry , x = x , type = type, wy = wy, 
-                             imputationMethod = "pmm" , ... )				   
+                             imputationMethod = "pmm" , ... )
 }
 
 #******************************************

@@ -33,13 +33,14 @@ multiple imputations in \code{x} and \code{y} is equal.
 \note{
 The function construct the elements of the new \code{mids} object as follows:
 \tabular{ll}{
-\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{rbind.mids}\cr
 \code{data}     \tab Rowwise combination of the (incomplete) data in \code{x} and \code{y}\cr
-\code{where}    \tab Rowwise combination of \code{where} arguments\cr
-\code{m}        \tab Equals \code{x$m}\cr
-\code{nmis}     \tab \code{x$nmis} + \code{y$nmis}\cr
 \code{imp}      \tab Equals \code{rbind(x$imp[[j]], y$imp[[j]])} if \code{y} is \code{mids} object; otherwise
 the data of \code{y} will be copied\cr
+\code{m}        \tab Equals \code{x$m}\cr
+\code{where}    \tab Rowwise combination of \code{where} arguments\cr
+\code{blocks}   \tab Equals \code{x$blocks}\cr
+\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{rbind.mids}\cr
+\code{nmis}     \tab \code{x$nmis} + \code{y$nmis}\cr
 \code{method}   \tab Taken from \code{x$method}\cr
 \code{predictorMatrix} \tab Taken from \code{x$predictorMatrix}\cr
 \code{visitSequence}   \tab Taken from \code{x$visitSequence}\cr
@@ -48,7 +49,6 @@ the data of \code{y} will be copied\cr
 \code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
 \code{chainMean}       \tab Set to \code{NA}\cr
 \code{chainVar}        \tab Set to \code{NA}\cr
-\code{pad}             \tab Recreated by \code{padModel()}\cr
 \code{loggedEvents}    \tab Taken from \code{x$loggedEvents}
 }
 }

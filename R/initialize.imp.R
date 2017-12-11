@@ -1,18 +1,17 @@
-initialize.imp <- function(data, m, nmis, where, blocks, method, visitSequence, 
-                           data.init) {
+initialize.imp <- function(data, m, where, setup, data.init) {
   imp <- vector("list", ncol(data))
   names(imp) <- names(data)
   r <- !is.na(data)
-  for (h in visitSequence) {
-    for (j in blocks[[h]]) {
+  for (h in setup$visitSequence) {
+    for (j in setup$blocks[[h]]) {
       y <- data[, j]
       ry <- r[, j]
       wy <- where[, j]
       imp[[j]] <- as.data.frame(matrix(NA, nrow = sum(wy), ncol = m))
       dimnames(imp[[j]]) <- list(row.names(data)[wy], 1:m)
-      if (method[h] != "") {
+      if (setup$method[h] != "") {
         for (i in seq_len(m)) {
-          if (nmis[j] < nrow(data)) {
+          if (setup$nmis[j] < nrow(data)) {
             if (is.null(data.init)) {
               imp[[j]][, i] <- mice.impute.sample(y, ry, wy = wy)
             } else {

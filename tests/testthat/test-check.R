@@ -132,14 +132,14 @@ test_that("check.visitSequence produces proper results", {
 })
 
 test_that("check.method produces proper results", {
-  expect_equal(y1$method, c("pmm", "", "pmm"))
-  expect_equal(y2$method, c("pmm", ""))
-  expect_equal(y3$method, c("pmm", "", "pmm"))
-  expect_equal(y4$method, c("pmm", "pmm", "", "pmm"))
+  expect_equal(unname(y1$method), c("pmm", "", "pmm"))
+  expect_equal(unname(y2$method), c("pmm", ""))
+  expect_equal(unname(y3$method), c("pmm", "", "pmm"))
+  expect_equal(unname(y4$method), c("pmm", "pmm", "", "pmm"))
   expect_warning(mice:::check.method(z5, data))
   expect_error(mice:::check.method(z6, data))
   expect_error(mice:::check.method(z7, data))
-  expect_equal(y8$method, character(0))
+  expect_length(y8$method, 0)
 })
 
 test_that("check.predictorMatrix produces proper results", {

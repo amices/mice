@@ -237,7 +237,7 @@ mice <- function(data, m = 5,
                  where = is.na(data),
                  blocks = make.blocks(data),
                  method = vector("character", length(blocks)),
-                 predictorMatrix = (1 - diag(1, length(blocks))),
+                 predictorMatrix = matrix(1, nrow = length(blocks), ncol = ncol(data)),
                  visitSequence = NULL,
                  form = vector("character", length(blocks)),
                  post = vector("character", length(blocks)),
@@ -246,35 +246,21 @@ mice <- function(data, m = 5,
                  imputationMethod = NULL, defaultImputationMethod = NULL,
                  data.init = NULL, ...) {
   
-  # Start with some preliminary calculations and error checks
-  call <- match.call()
-  if (!is.na(seed)) 
-    set.seed(seed)
+  # Error checks
   if (!(is.matrix(data) || is.data.frame(data)))
     stop("Data should be a matrix or data frame")
-  nvar <- ncol(data)
-  if (nvar < 2)
+  if (ncol(data) < 2)
     stop("Data should contain at least two columns")
-  data <- as.data.frame(data)
-  nmis <- apply(is.na(data), 2, sum)
-  varnames <- colnames(data)
-  
   if (!(is.matrix(where) || is.data.frame(where)))
     stop("Argument `where` not a matrix or data frame")
   if (!all(dim(data) == dim(where)))
     stop("Arguments `data` and `where` not of same size")
-  
-  #if (sum(where) == 0)
-  #  stop("No locations to impute")
-  #if (any(is.na(data) & !where))
-  #  stop("Found where == FALSE for some missing values. Not supported. ")
-  
+
   # list for storing current computational state
-  state <- list(it = 0, im = 0, co = 0, dep = "", meth = "", log = FALSE)
+  state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
   
   # data frame for storing the event log
-  loggedEvents <- data.frame(it = 0, im = 0, co = 0, dep = "", meth = "",
-                             out = "")
+  loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
   
   # Legacy handling
   if (!is.null(imputationMethod))
@@ -282,91 +268,54 @@ mice <- function(data, m = 5,
   if (!is.null(defaultImputationMethod))
     defaultMethod <- defaultImputationMethod
   
-  # Perform various validity checks on the specified arguments
-  
-  nwhere <- apply(where, 2, sum)
+  # Initialize local variables
+  call <- match.call()
+  if (!is.na(seed)) set.seed(seed)
+  data <- as.data.frame(data)
   setup <- list(blocks = blocks, 
-                nwhere = nwhere,
+                nwhere = apply(where, 2, sum),
                 nimp = nimp(where, blocks),
+                nmis = apply(is.na(data), 2, sum),
                 visitSequence = visitSequence, 
                 method = method,
                 defaultMethod = defaultMethod,
                 predictorMatrix = predictorMatrix,
                 form = form, post = post, 
-                nvar = nvar, nmis = nmis, varnames = varnames)
+                nvar = ncol(data), 
+                varnames = colnames(data))
+
+  # Checks and edits on the arguments
   setup <- check.visitSequence(setup, where)
   setup <- check.method(setup, data)
   setup <- check.predictorMatrix(setup)
   setup <- check.data(setup, data, ...)
+  setup <- check.form(setup)
+  setup <- check.post(setup)
   
-  ## Pad the imputation model with dummy variables for the factors
-  method <- setup$method
-  predictorMatrix <- setup$predictorMatrix
-  visitSequence <- setup$visitSequence
-  post <- setup$post
-  p <- padModel(data, method, predictorMatrix, visitSequence, 
-                form, post, nvar)
+  ## Initialize imputation array imp, etc.
+  imp <- initialize.imp(data, m, where, setup, data.init)
   
-  ## Initialize where matrix r, imputation array imp, etc. 
-  r <- (!is.na(p$data))
-  imp <- vector("list", ncol(p$data))
-  if (m > 0) {
-    ## Initializes the imputed values
-    for (j in visitSequence) {
-      y <- data[, j]
-      ry <- r[, j]
-      wy <- where[, j]
-      imp[[j]] <- as.data.frame(matrix(NA, nrow = sum(wy), ncol = m))
-      dimnames(imp[[j]]) <- list(row.names(data)[wy], 1:m)
-      if (method[j] != "") {
-        # for incomplete variables that are imputed
-        for (i in seq_len(m)) {
-          if (nmis[j] < nrow(data)) {
-            if (is.null(data.init)) {
-              imp[[j]][, i] <- mice.impute.sample(y, ry, wy = wy, ...)
-            } else {
-              imp[[j]][, i] <- data.init[wy, j]
-            }
-          } else imp[[j]][, i] <- rnorm(nrow(data))
-        }
-      }
-    }
-  }
-  
-  # Iterate.
+  # Iterate
   from <- 1
   to <- from + maxit - 1
-  q <- sampler(p, data, where, m, imp, r, visitSequence, c(from, to), printFlag, ...)
+  q <- sampler(data, m, where, imp, setup, c(from, to), printFlag, ...)
   
-  ## restore the original NA's in the data
-  for (j in p$visitSequence) {
-    p$data[!r[, j], j] <- NA
-  }
-  
-  ## delete data and imputations of automatic dummy variables
-  imp <- q$imp[seq_len(nvar)]
-  names(imp) <- varnames
-  names(method) <- varnames
-  names(form) <- varnames
-  names(post) <- varnames
-  names(visitSequence) <- varnames[visitSequence]
-  if (!state$log)
-    loggedEvents <- NULL
-  if (state$log)
-    row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
+  if (!state$log) loggedEvents <- NULL
+  if (state$log) row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
   
   ## save, and return
-  midsobj <- list(call = call, data = as.data.frame(p$data[, seq_len(nvar)]), 
-                  where = where, m = m,
-                  nmis = nmis, imp = imp, method = method,
-                  predictorMatrix = predictorMatrix,
-                  visitSequence = visitSequence, form = form, post = post,
-                  seed = seed, iteration = q$iteration,
-                  lastSeedValue = .Random.seed, chainMean = q$chainMean,
-                  chainVar = q$chainVar, loggedEvents = loggedEvents,
-                  pad = p)
-  if (!diagnostics)
-    midsobj$pad <- NULL
+  midsobj <- list(data = data, imp = q$imp, m = m,
+                  where = where, blocks = setup$blocks, 
+                  call = call, nmis = setup$nmis, 
+                  method = setup$method,
+                  predictorMatrix = setup$predictorMatrix,
+                  visitSequence = setup$visitSequence, 
+                  form = setup$form, post = setup$post, seed = seed, 
+                  iteration = q$iteration,
+                  lastSeedValue = .Random.seed, 
+                  chainMean = q$chainMean,
+                  chainVar = q$chainVar, 
+                  loggedEvents = loggedEvents)
   oldClass(midsobj) <- "mids"
   return(midsobj)
 }

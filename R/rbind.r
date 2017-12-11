@@ -18,13 +18,14 @@
 #'@return An S3 object of class \code{mids}
 #'@note The function construct the elements of the new \code{mids} object as follows:
 #'\tabular{ll}{
-#'\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{rbind.mids}\cr
 #'\code{data}     \tab Rowwise combination of the (incomplete) data in \code{x} and \code{y}\cr
-#'\code{where}    \tab Rowwise combination of \code{where} arguments\cr
-#'\code{m}        \tab Equals \code{x$m}\cr
-#'\code{nmis}     \tab \code{x$nmis} + \code{y$nmis}\cr
 #'\code{imp}      \tab Equals \code{rbind(x$imp[[j]], y$imp[[j]])} if \code{y} is \code{mids} object; otherwise
 #'the data of \code{y} will be copied\cr
+#'\code{m}        \tab Equals \code{x$m}\cr
+#'\code{where}    \tab Rowwise combination of \code{where} arguments\cr
+#'\code{blocks}   \tab Equals \code{x$blocks}\cr
+#'\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{rbind.mids}\cr
+#'\code{nmis}     \tab \code{x$nmis} + \code{y$nmis}\cr
 #'\code{method}   \tab Taken from \code{x$method}\cr
 #'\code{predictorMatrix} \tab Taken from \code{x$predictorMatrix}\cr
 #'\code{visitSequence}   \tab Taken from \code{x$visitSequence}\cr
@@ -33,7 +34,6 @@
 #'\code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
 #'\code{chainMean}       \tab Set to \code{NA}\cr
 #'\code{chainVar}        \tab Set to \code{NA}\cr
-#'\code{pad}             \tab Recreated by \code{padModel()}\cr
 #'\code{loggedEvents}    \tab Taken from \code{x$loggedEvents}
 #'}
 #'@author Karin Groothuis-Oudshoorn, Stef van Buuren
@@ -62,13 +62,10 @@ rbind.mids <- function(x, y = NULL, ...) {
     # Combine y and dots into data.frame
     if (is.null(y)) {
       y <- rbind.data.frame(...) 
-    } else {
+    } 
+    else {
       y <- rbind.data.frame(y, ...)
     }
-
-    # Then y is matrix, y is converted into a dataframe.
-    # if (is.matrix(y)) 
-    #   y <- as.data.frame(y)
     
     if (is.data.frame(y)) {
       if (ncol(y) != ncol(x$data)) 
@@ -84,6 +81,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     data <- rbind(x$data, y)
     
     # where argument
+    blocks <- x$blocks
     where <- x$where
     
     # The number of imputations in the new midsobject is equal to that in x.
@@ -95,6 +93,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     # The listelements method, post, predictorMatrix, visitSequence will be copied from x.
     method <- x$method
     post <- x$post
+    form <- x$form
     predictorMatrix <- x$predictorMatrix
     visitSequence <- x$visitSequence
     
@@ -113,18 +112,24 @@ rbind.mids <- function(x, y = NULL, ...) {
     seed <- x$seed
     lastSeedvalue <- x$lastSeedvalue
     iteration <- x$iteration
-    chainMean = x$chainMean
-    chainVar = x$chainVar
-    
-    # padModel for the data rbind(x$data,y).
-    
-    pad <- padModel(data, method, predictorMatrix, visitSequence, post, nmis, nvar = ncol(data))
-    
+    chainMean <- x$chainMean
+    chainVar <- x$chainVar
     loggedEvents <- x$loggedEvents
     
-    x <- list(call = call, data = data, where = where, m = m, nmis = nmis, imp = imp, method = method, predictorMatrix = predictorMatrix, 
-              visitSequence = visitSequence, post = post, seed = seed, iteration = iteration, lastSeedvalue = lastSeedvalue, 
-              chainMean = chainMean, chainVar = chainVar, pad = pad, loggedEvents = loggedEvents)
+    midsobj <- list(data = data, imp = imp, m = m,
+                    where = where, blocks = blocks, 
+                    call = call, nmis = nmis, 
+                    method = method,
+                    predictorMatrix = predictorMatrix,
+                    visitSequence = visitSequence, 
+                    form = form, post = post, seed = seed, 
+                    iteration = iteration,
+                    lastSeedValue = lastSeedvalue, 
+                    chainMean = chainMean,
+                    chainVar = chainVar, 
+                    loggedEvents = loggedEvents)
+    oldClass(midsobj) <- "mids"
+    return(midsobj)
   }
   
   if (is.mids(y)) {
@@ -138,6 +143,10 @@ rbind.mids <- function(x, y = NULL, ...) {
       stop("Number of imputations differ")
     
     warned <- FALSE
+    if (!identical(x$blocks, y$blocks) && !warned) {
+      warning("`blocks` not equal; ignores y$blocks")
+      warned <- TRUE
+    }
     if (!identical(x$method, y$method) && !warned) {
       warning("`methods` not equal; ignores y$method")
       warned <- TRUE
@@ -154,8 +163,8 @@ rbind.mids <- function(x, y = NULL, ...) {
       warning("`post` not equal; ignores y$post")
       warned <- TRUE
     }
-    if (!identical(x$pad$categories, y$pad$categories) && !warned) {
-      warning("`pad$categories` not equal; ignores y$pad")
+    if (!identical(x$form, y$form) && !warned) {
+      warning("`form` not equal; ignores y$form")
       warned <- TRUE
     }
     
@@ -178,8 +187,10 @@ rbind.mids <- function(x, y = NULL, ...) {
     nmis <- x$nmis + y$nmis
     
     # The listelements method, post, predictorMatrix, visitSequence will be copied from x.
+    blocks <- x$blocks
     method <- x$method
     post <- x$post
+    form <- x$form
     predictorMatrix <- x$predictorMatrix
     visitSequence <- x$visitSequence
     
@@ -199,20 +210,21 @@ rbind.mids <- function(x, y = NULL, ...) {
     chainMean = NA
     chainVar = NA
     
-    # padModel for the data rbind(x$data,y).
-    
-    pad <- padModel(data, method, predictorMatrix, visitSequence, post, nmis, nvar = ncol(data))
-    
     loggedEvents <- x$loggedEvents
     
-    x <- list(call = call, data = data, where = where, m = m, nmis = nmis, 
-              imp = imp, method = method, predictorMatrix = predictorMatrix, 
-              visitSequence = visitSequence, post = post, seed = seed, 
-              iteration = iteration, lastSeedvalue = lastSeedvalue, 
-              chainMean = chainMean, chainVar = chainVar, pad = pad, 
-              loggedEvents = loggedEvents)
+    midsobj <- list(data = data, imp = imp, m = m,
+                    where = where, blocks = blocks, 
+                    call = call, nmis = nmis, 
+                    method = method,
+                    predictorMatrix = predictorMatrix,
+                    visitSequence = visitSequence, 
+                    form = form, post = post, seed = seed, 
+                    iteration = iteration,
+                    lastSeedValue = lastSeedvalue, 
+                    chainMean = chainMean,
+                    chainVar = chainVar, 
+                    loggedEvents = loggedEvents)
+    oldClass(midsobj) <- "mids"
+    return(midsobj)
   }
-  
-  oldClass(x) <- "mids"
-  return(x)
 }

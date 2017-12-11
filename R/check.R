@@ -84,6 +84,9 @@ check.method <- function(setup, data) {
                 ")."))
   }
   
+  # add names to method
+  names(method) <- names(blocks)
+  
   # check whether the requested imputation methods are on the search path
   active.check <- !is.passive(method) & nimp > 0 & method != ""
   passive.check <- is.passive(method) & nimp > 0 & method != ""
@@ -240,3 +243,35 @@ check.data <- function(setup, data, allow.na = FALSE,
   setup$meth <- meth
   return(setup)
 }
+
+
+check.form <- function(setup) {
+  blocks <- setup$blocks
+  form <- setup$form
+  
+  # check
+  if (length(form) != length(blocks))
+    stop("`length(form)` does not match `length(blocks)`.")
+  
+  # change
+  if (is.null(names(form))) names(form) <- names(blocks)
+  
+  setup$form <- form
+  return(setup)
+}
+
+check.post <- function(setup) {
+  blocks <- setup$blocks
+  post <- setup$post
+  
+  # check
+  if (length(post) != length(blocks))
+    stop("`length(post)` does not match `length(blocks)`.")
+  
+  # change
+  if (is.null(names(post))) names(post) <- names(blocks)
+  
+  setup$post <- post
+  return(setup)
+}
+
