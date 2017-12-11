@@ -36,7 +36,8 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
         # begin i loop: repeated imputation loop
         if (printFlag)
           cat("\n ", iteration, " ", i)
-        # load imputations for i from iteration k-1
+        
+        # prepare the i'th imputation
         # do not overwrite any observed data
         for (h in visitSequence) {
           for (j in blocks[[h]]) {
@@ -78,10 +79,12 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
                 predictors <- predictorMatrix[j, ] != 0
               }
               if (!is.null(form) && nchar(form[j]) > 0) {
+                # form: reconstruct entire model.matrix
                 myform <- paste(form[j], "0", sep = "+")
                 x <- model.matrix(formula(myform), data)
                 type <- NULL
               } else {
+                # predictormatrix: select columns from entire design
                 idx <- attr(design, "assign") %in% which(predictors)
                 x <- design[, idx, drop = FALSE]
                 type <- predictorMatrix[j, attr(design, "assign")[idx]]

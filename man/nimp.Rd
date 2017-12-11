@@ -16,13 +16,12 @@ overimpute observed data, or to skip imputations for selected missing values.}
 \item{blocks}{List of vectors with variable names per block. List elements 
 may be named to identify blocks. Variables within a block are 
 imputed simultaneously by a joint imputation method
-(see \code{method} argument). The default 
-\code{[=make.blocks]{make.block}} assigns 
-each variable in \code{data} to its own block, which is effectively
-fully conditional specification (FCS). A variable that is not listed 
-in \code{blocks} will not be imputed. A variable may be a member 
-of multiple blocks. In that case, it is re-imputed in every block in which 
-it appears.}
+(see \code{method} argument). By default each variable has its 
+own blocks, which is effectively
+fully conditional specification (FCS) by univariate models 
+(variable-by-variable imputation). Only variables whose names appear in 
+\code{blocks} are imputed. A variable may appear in multiple blocks, 
+so it is effectively re-imputed within the iteration.}
 }
 \value{
 A numeric vector of length \code{length(blocks)} containing 

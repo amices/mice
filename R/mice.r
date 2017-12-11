@@ -105,30 +105,29 @@
 #'@param blocks List of vectors with variable names per block. List elements 
 #'may be named to identify blocks. Variables within a block are 
 #'imputed simultaneously by a joint imputation method
-#'(see \code{method} argument). The default 
-#'\code{[=make.blocks]{make.block}} assigns 
-#'each variable in \code{data} to its own block, which is effectively
-#'fully conditional specification (FCS). A variable that is not listed 
-#'in \code{blocks} will not be imputed. A variable may be a member 
-#'of multiple blocks. In that case, it is re-imputed in every block in which 
-#'it appears.
+#'(see \code{method} argument). By default each variable has its 
+#'own blocks, which is effectively
+#'fully conditional specification (FCS) by univariate models 
+#'(variable-by-variable imputation). Only variables whose names appear in 
+#'\code{blocks} are imputed. A variable may appear in multiple blocks, 
+#'so it is effectively re-imputed within the iteration.
 #'@param method Can be either a single string, or a vector of strings with
-#'length \code{ncol(data)}, specifying the univariate imputation method to be
+#'length \code{length(blocks)}, specifying the imputation method to be
 #'used for each column in data. If specified as a single string, the same
-#'method will be used for all columns.  The default imputation method (when no
-#'argument is specified) depends on the measurement level of the target column
-#'and are specified by the \code{defaultMethod} argument.  Columns that need
-#'not be imputed have the empty method \code{''}.  See details for more
-#'information.
-#'@param predictorMatrix A square matrix of size \code{ncol(data)} containing
-#'0/1 data specifying the set of predictors to be used for each target column.
-#'Rows correspond to target variables (i.e. variables to be imputed), in the
-#'sequence as they appear in data. A value of '1' means that the column
-#'variable is used as a predictor for the target variable (in the rows). The
-#'diagonal of \code{predictorMatrix} must be zero. The default for
-#'\code{predictorMatrix} is that all other columns are used as predictors
-#'(sometimes called massive imputation). Note: For two-level imputation codes
-#''2' and '-2' are also allowed.
+#'method will be used for all blocks. The default imputation method (when no
+#'argument is specified) depends on the measurement level of the target column,
+#'as regulated by the \code{defaultMethod} argument. Columns that need
+#'not be imputed have the empty method \code{""}. See details.
+#'@param predictorMatrix A numeric matrix of \code{length(blocks)} rows 
+#'and \code{ncol(data)} columns, containing 0/1 data specifying 
+#'the set of predictors to be used for each target column.
+#'Each row corresponds to a variable block, i.e., a set of variables 
+#'to be imputed. A value of \code{1} means that the column
+#'variable is used as a predictor for the target block (in the rows). 
+#'By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
+#'rows and columns with all 1's, except for the diagonal. 
+#'Note: For two-level imputation models (which have \code{"2l"} in their names)
+#'other codes (e.g, \code{2} or \code{-2}) are also allowed.
 #'@param visitSequence A vector of integers of arbitrary length, specifying the
 #'column indices of the visiting sequence. The visiting sequence is the column
 #'order that is used to impute the data during one pass through the data. A
@@ -140,25 +139,28 @@
 #'\code{'monotone'} (sorted in increasing amount of missingness) and
 #'\code{'revmonotone'} (reverse of monotone). The keyword should be supplied as
 #'a string and may be abbreviated.
-#'@param post A vector of strings with length \code{ncol(data)}, specifying
+#'@param post A vector of strings with length \code{length(blocks)}, specifying
 #'expressions. Each string is parsed and executed within the \code{sampler()}
-#'function to postprocess imputed values.  The default is to do nothing,
-#'indicated by a vector of empty strings \code{''}.
-#'@param form A vector of strings with length \code{ncol(data)}, specifying
-#'formulae. Each string is parsed and executed within the \code{sampler()}
-#'function to create terms for the predictor.  The default is to do nothing,
-#'indicated by a vector of empty strings \code{''}.  The main value
-#'lies in the easy specification of interaction terms.  The user must
-#'ensure that the set of variables in the formula match those in
-#'\code{predictors}.
-#'@param defaultMethod A vector of three strings containing the default
-#'imputation methods for numerical columns, factor columns with 2 levels, and
-#'columns with (unordered or ordered) factors with more than two levels,
-#'respectively. If nothing is specified, the following defaults will be used:
+#'function to postprocess imputed values during the iterations. 
+#'The default is a vector of empty strings 
+#'(\code{vector("character", length(blocks))}), indicating no post-processing.
+#'@param form A vector of strings with length \code{length(blocks)}, specifying
+#'formulae. The \code{form} argument is an alternative to the 
+#'\code{predictorMatrix} argument that allows for more flexibility in 
+#'specifying imputation models, e.g., for specifying interaction terms. 
+#'Each string is parsed and executed within the \code{sampler()}
+#'function to create terms for the predictor. The default is to do nothing. 
+#'When specified, the \code{form} argument takes precedence over the 
+#'\code{predictMatrix} argument. Terms in the formulae should 
+#'match variables names of the \code{data} argument.
+#'@param defaultMethod A vector of length 4 containing the default
+#'imputation methods for 1) numeric data, 2) factor data with 2 levels, 3) 
+#'factor data with > 2 unordered levels, and 4) factor data with > 2 
+#'ordered levels. By default, the method uses 
 #'\code{pmm}, predictive mean matching (numeric data) \code{logreg}, logistic
 #'regression imputation (binary data, factor with 2 levels) \code{polyreg},
-#'polytomous regression imputation for unordered categorical data (factor >= 2
-#'levels) \code{polr}, proportional odds model for (ordered, >= 2 levels)
+#'polytomous regression imputation for unordered categorical data (factor > 2
+#'levels) \code{polr}, proportional odds model for (ordered, > 2 levels).
 #'@param maxit A scalar giving the number of iterations. The default is 5.
 #'@param diagnostics A Boolean flag. If \code{TRUE}, diagnostic information
 #'will be appended to the value of the function. If \code{FALSE}, only the
@@ -169,15 +171,15 @@
 #'offsetting the random number generator. Default is to leave the random number
 #'generator alone.
 #'@param imputationMethod Same as \code{method} argument. Included for
-#'backwards compatibility.
+#'backwards compatibility. Deprecated.
 #'@param defaultImputationMethod Same as \code{defaultMethod} argument.
-#'Included for backwards compatibility.
+#'Included for backwards compatibility. Deprecated.
 #'@param data.init A data frame of the same size and type as \code{data},
 #'without missing data, used to initialize imputations before the start of the
 #'iterative process.  The default \code{NULL} implies that starting imputation
 #'are created by a simple random draw from the data. Note that specification of
-#'\code{data.init} will start the \code{m} Gibbs sampling streams from the same
-#'imputations.
+#'\code{data.init} will start all \code{m} Gibbs sampling streams from the same
+#'imputation.
 #'@param ... Named arguments that are passed down to the univariate imputation
 #'functions.
 #'
@@ -234,10 +236,10 @@
 #'
 #'@export
 mice <- function(data, m = 5, 
-                 where = is.na(data),
-                 blocks = make.blocks(data),
                  method = vector("character", length(blocks)),
                  predictorMatrix = matrix(1, nrow = length(blocks), ncol = ncol(data)),
+                 where = is.na(data),
+                 blocks = make.blocks(data),
                  visitSequence = NULL,
                  form = vector("character", length(blocks)),
                  post = vector("character", length(blocks)),
