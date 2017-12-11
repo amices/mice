@@ -160,8 +160,7 @@ algorithm.
 The data may contain categorical variables that are used in a regressions on
 other variables. The algorithm creates dummy variables for the categories of
 these variables, and imputes these from the corresponding categorical
-variable. The extended model containing the dummy variables is called the
-padded model. Its structure is stored in the list component \code{pad}.
+variable.
 
 Built-in univariate imputation methods are:
 

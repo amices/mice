@@ -24,7 +24,7 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
     chainVar <- chainMean
   }
   
-  ## THE ITERATION MAIN LOOP: GIBBS SAMPLER
+  ## THE MAIN LOOP: GIBBS SAMPLER ##
   if (maxit < 1) iteration <- 0
   if (maxit >= 1) {
     if (printFlag)
@@ -61,15 +61,13 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
                              log = oldstate$log)
             assign("state", newstate, pos = parent.frame(), inherits = TRUE)
             
-            if (printFlag && theMethod != "dummy")
-              cat(" ", j)
+            if (printFlag) cat(" ", j)
             
             # switching logic: flat, mult, pass, dumm
             empt <- theMethod == ""
-            elem <- !empt && !is.passive(theMethod) && theMethod != "dummy"
+            elem <- !empt && !is.passive(theMethod)
             flat <- elem && substring(theMethod, 1, 2) != "2l"
             pass <- !empt && is.passive(theMethod)
-            dumm <- theMethod == "dummy"
             
             # standard imputation
             if (elem) {
