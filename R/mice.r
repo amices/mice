@@ -167,10 +167,6 @@
 #'@param seed An integer that is used as argument by the \code{set.seed()} for
 #'offsetting the random number generator. Default is to leave the random number
 #'generator alone.
-#'@param imputationMethod Same as \code{method} argument. Included for
-#'backwards compatibility. Deprecated.
-#'@param defaultImputationMethod Same as \code{defaultMethod} argument.
-#'Included for backwards compatibility. Deprecated.
 #'@param data.init A data frame of the same size and type as \code{data},
 #'without missing data, used to initialize imputations before the start of the
 #'iterative process.  The default \code{NULL} implies that starting imputation
@@ -242,7 +238,6 @@ mice <- function(data, m = 5,
                  post = vector("character", length(blocks)),
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
                  maxit = 5, printFlag = TRUE, seed = NA,
-                 imputationMethod = NULL, defaultImputationMethod = NULL,
                  data.init = NULL, ...) {
   
   # Error checks
@@ -260,12 +255,6 @@ mice <- function(data, m = 5,
   
   # data frame for storing the event log
   loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
-  
-  # Legacy handling
-  if (!is.null(imputationMethod))
-    method <- imputationMethod
-  if (!is.null(defaultImputationMethod))
-    defaultMethod <- defaultImputationMethod
   
   # Initialize local variables
   call <- match.call()
