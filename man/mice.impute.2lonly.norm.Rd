@@ -102,7 +102,6 @@ Other univariate \code{2lonly} functions: \code{\link{mice.impute.2lonly.mean}},
   \code{\link{mice.impute.2lonly.pmm}}
 }
 \author{
-Alexander Robitzsch (Federal Institute for Education Research,
-Innovation, and Development of the Austrian School System, Salzburg,
-Austria), \email{a.robitzsch@bifie.at}
+Alexander Robitzsch (IPN - Leibniz Institute for Science and 
+Mathematics Education, Kiel, Germany), \email{robitzsch@ipn.uni-kiel.de}.
 }

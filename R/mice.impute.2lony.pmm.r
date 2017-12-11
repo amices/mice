@@ -1,4 +1,4 @@
-### contributed by Alexander Robitzsch (a.robitzsch@bifie.at)
+### contributed by Alexander Robitzsch (robitzsch@ipn.uni-kiel.de)
 
 #'Imputation at level 2 by predictive mean matching
 #'
@@ -16,9 +16,8 @@
 #'specified by '1'.
 #'@param ... Other named arguments.
 #'@return A vector of length \code{nmis} with imputations.
-#'@author Alexander Robitzsch (Federal Institute for Education Research,
-#'Innovation, and Development of the Austrian School System, Salzburg,
-#'Austria), \email{a.robitzsch@@bifie.at}
+#'@author Alexander Robitzsch (IPN - Leibniz Institute for Science and 
+#'Mathematics Education, Kiel, Germany), \email{robitzsch@@ipn.uni-kiel.de}.
 #'@seealso \code{\link{mice.impute.pmm}},
 #'\code{\link{mice.impute.2lonly.norm}}, \code{\link{mice.impute.2l.pan}}
 #'@references Gelman, A. and Hill, J. (2007). \emph{Data analysis using

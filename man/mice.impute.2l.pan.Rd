@@ -130,7 +130,6 @@ Other univariate \code{2l} functions: \code{\link{mice.impute.2l.lmer}},
   \code{\link{mice.impute.2l.norm}}
 }
 \author{
-Alexander Robitzsch (Federal Institute for Education Research,
-Innovation, and Development of the Austrian School System, Salzburg,
-Austria), \email{a.robitzsch@bifie.at}
+Alexander Robitzsch (IPN - Leibniz Institute for Science and 
+Mathematics Education, Kiel, Germany), \email{robitzsch@ipn.uni-kiel.de}.
 }
