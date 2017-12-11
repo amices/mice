@@ -23,6 +23,7 @@
 #'\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{cbind.mids}\cr
 #'\code{data}     \tab Columnwise combination of the (incomplete) data in \code{x} and \code{y}\cr
 #'\code{where}    \tab Columnwise combination of \code{where} arguments\cr
+#'\code{blocks}   \tab Appends \code{x$blocks} and \code{y$blocks}\cr
 #'\code{m}        \tab Equals \code{x$m}\cr
 #'\code{nmis}     \tab Equals c(x$nmis, y$nmis)\cr
 #'\code{imp}      \tab Appends \code{x$imp} and \code{y$imp} if \code{y} is \code{mids} object\cr
@@ -107,7 +108,8 @@ cbind.mids <- function(x, y = NULL, ...) {
     data <- cbind(x$data, y)
     
     # where argument
-    where <- cbind(x$where, is.na(y))
+    where <- cbind(x$where, matrix(FALSE, nrow = nrow(y), ncol = ncol(y)))
+    blocks <- x$blocks
     
     # The number of imputations in the new midsobject is equal to that in x.
     m <- x$m
@@ -126,7 +128,7 @@ cbind.mids <- function(x, y = NULL, ...) {
                   dimnames = list(row.names(y)[!r[, j]], seq_len(m)))
       as.data.frame(m)
     }
-      
+    
     imp <- lapply(seq_len(ncol(y)), f)
     imp <- c(x$imp, imp)
     names(imp) <- varnames
@@ -156,13 +158,23 @@ cbind.mids <- function(x, y = NULL, ...) {
     
     loggedEvents <- x$loggedEvents
     
-    x <- list(call = call, data = data, where = where, m = m, nmis = nmis, 
-              imp = imp, method = method, predictorMatrix = predictorMatrix, 
-              visitSequence = visitSequence, post = post, seed = seed, 
-              iteration = iteration, lastSeedvalue = lastSeedvalue, 
-              chainMean = chainMean, chainVar = chainVar, 
-              loggedEvents = loggedEvents)
-    oldClass(x) <- "mids"
+    ## save, and return
+    midsobj <- list(data = data, imp = imp, m = m,
+                    where = where, blocks = blocks, 
+                    call = call, nmis = nmis, 
+                    method = method,
+                    predictorMatrix = predictorMatrix,
+                    visitSequence = visitSequence, 
+                    form = form, post = post, seed = seed, 
+                    iteration = iteration,
+                    lastSeedValue = .Random.seed, 
+                    chainMean = chainMean,
+                    chainVar = chainVar, 
+                    loggedEvents = loggedEvents, 
+                    version = packageVersion("mice"),
+                    date = Sys.Date())
+    oldClass(midsobj) <- "mids"
+    return(midsobj)
   }
   
   if (is.mids(y)) {
@@ -180,6 +192,7 @@ cbind.mids <- function(x, y = NULL, ...) {
     varnames <- c(colnames(x$data), colnames(y$data))
     
     where <- cbind(x$where, y$where)
+    blocks <- c(x$blocks, y$blocks)
     
     m <- x$m
     nmis <- c(x$nmis, y$nmis)
@@ -235,13 +248,21 @@ cbind.mids <- function(x, y = NULL, ...) {
     
     loggedEvents <- x$loggedEvents
     
-    x <- list(call = call, data = data, where = where, m = m, nmis = nmis, 
-              imp = imp, method = method, predictorMatrix = predictorMatrix, 
-              visitSequence = visitSequence, post = post, seed = seed,
-              iteration = iteration, lastSeedvalue = lastSeedvalue,
-              chainMean = chainMean, chainVar = chainVar,
-              loggedEvents = loggedEvents)
-    oldClass(x) <- "mids"
+    midsobj <- list(data = data, imp = imp, m = m,
+                    where = where, blocks = blocks, 
+                    call = call, nmis = nmis, 
+                    method = method,
+                    predictorMatrix = predictorMatrix,
+                    visitSequence = visitSequence, 
+                    form = form, post = post, seed = seed, 
+                    iteration = iteration,
+                    lastSeedValue = .Random.seed, 
+                    chainMean = chainMean,
+                    chainVar = chainVar, 
+                    loggedEvents = loggedEvents, 
+                    version = packageVersion("mice"),
+                    date = Sys.Date())
+    oldClass(midsobj) <- "mids"
+    return(midsobj)
   }
-  x
 }
