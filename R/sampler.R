@@ -7,7 +7,7 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
   to <- fromto[2]
   maxit <- to - from + 1
   r <- !is.na(data)
-  
+
   # set up array for convergence checking
   chainVar <- chainMean <- NULL
   if (maxit > 0) {
@@ -96,7 +96,7 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
               imputes[cc] <- do.call(f, args = list(y, ry, x, wy = wy, type = type, ...))
               imp[[j]][, i] <- imputes
               data[(!r[, j]) & where[, j], j] <- imp[[j]][(!r[, j])[where[, j]], i]
-              # FIXME: if j is factor, update design[, j]
+              design <- update.design(design, data, varname = j)
             }
             
             # passive imputation
