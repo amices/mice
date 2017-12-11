@@ -37,6 +37,7 @@ The function construct the elements of the new \code{mids} object as follows:
 \code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{cbind.mids}\cr
 \code{data}     \tab Columnwise combination of the (incomplete) data in \code{x} and \code{y}\cr
 \code{where}    \tab Columnwise combination of \code{where} arguments\cr
+\code{blocks}   \tab Appends \code{x$blocks} and \code{y$blocks}\cr
 \code{m}        \tab Equals \code{x$m}\cr
 \code{nmis}     \tab Equals c(x$nmis, y$nmis)\cr
 \code{imp}      \tab Appends \code{x$imp} and \code{y$imp} if \code{y} is \code{mids} object\cr
@@ -48,12 +49,8 @@ The function construct the elements of the new \code{mids} object as follows:
 \code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
 \code{chainMean}       \tab Combines \code{x$chainMean} and \code{y$chainMean}\cr
 \code{chainVar}        \tab Combines \code{x$chainVar} and \code{y$chainVar}\cr
-\code{pad}             \tab Combines \code{x$padModel} and \code{y$padModel}\cr
 \code{loggedEvents}    \tab Taken from \code{x$loggedEvents}
 }
-
-If a column of \code{y} is categorical this is ignored in the
-padded model since that column is not used as predictor for another column.
 }
 \examples{
 

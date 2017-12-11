@@ -12,7 +12,7 @@
 #'                      quantile
 #'                      update var vcov complete.cases na.omit na.pass
 #'@importFrom utils     flush.console write.table head tail
-#'                      packageDescription methods
+#'                      packageDescription methods packageVersion
 #'@importFrom MASS      eqscplot lda mvrnorm polr truehist ginv
 #'@importFrom nnet      multinom nnet
 #'@importFrom rpart     rpart rpart.control

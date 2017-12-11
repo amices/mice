@@ -127,7 +127,9 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
                   lastSeedValue = .Random.seed, 
                   chainMean = chainMean,
                   chainVar = chainVar, 
-                  loggedEvents = loggedEvents)
+                  loggedEvents = loggedEvents,
+                  version = packageVersion("mice"),
+                  date = Sys.Date())
   oldClass(midsobj) <- "mids"
   return(midsobj)
 }

@@ -12,8 +12,7 @@ mice(data, m = 5, method = vector("character", length(blocks)),
   where = is.na(data), blocks = make.blocks(data), visitSequence = NULL,
   form = vector("character", length(blocks)), post = vector("character",
   length(blocks)), defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-  maxit = 5, printFlag = TRUE, seed = NA, imputationMethod = NULL,
-  defaultImputationMethod = NULL, data.init = NULL, ...)
+  maxit = 5, printFlag = TRUE, seed = NA, data.init = NULL, ...)
 }
 \arguments{
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing
@@ -101,12 +100,6 @@ Use \code{print=FALSE} for silent computation.}
 \item{seed}{An integer that is used as argument by the \code{set.seed()} for
 offsetting the random number generator. Default is to leave the random number
 generator alone.}
-
-\item{imputationMethod}{Same as \code{method} argument. Included for
-backwards compatibility. Deprecated.}
-
-\item{defaultImputationMethod}{Same as \code{defaultMethod} argument.
-Included for backwards compatibility. Deprecated.}
 
 \item{data.init}{A data frame of the same size and type as \code{data},
 without missing data, used to initialize imputations before the start of the

@@ -40,6 +40,8 @@ ibind <- function(x, y) {
     stop("Differences detected in the observed data")
   if (!identical(x$where, y$where)) 
     stop("Differences detected between `x$where` and `y$where`")
+  if (!identical(x$blocks, y$blocks)) 
+    stop("Differences detected between `x$blocks` and `y$blocks`")
   if (!identical(x$method, y$method)) 
     stop("Differences detected between `x$method` and `y$method`")
   if (!identical(x$predictorMatrix, y$predictorMatrix))
@@ -48,9 +50,7 @@ ibind <- function(x, y) {
     stop("Differences detected between `x$visitSequence` and `y$visitSequence`")
   if (!identical(x$post, y$post))
     stop("Differences detected between `x$post` and `y$post`")
-  if (!identical(x$pad$categories, y$pad$categories)) 
-    stop("Differences detected between `x$pad$categories` and `y$pad$categories`")
-  
+
   visitSequence <- x$visitSequence
   imp <- vector("list", ncol(x$data))
   for (j in visitSequence) {
@@ -72,13 +72,20 @@ ibind <- function(x, y) {
     chainVar[, seq_len(y$iteration), j + x$m] <- y$chainVar[, , j]
   }
   
-  z <- list(call = call, data = x$data, where = x$where, 
-            m = m, nmis = x$nmis, imp = imp, 
-            method = x$method, predictorMatrix = x$predictorMatrix, 
-            visitSequence = visitSequence, post = x$post, seed = x$seed, 
-            iteration = iteration, lastSeedvalue = x$lastSeedvalue, 
-            chainMean = chainMean, chainVar = chainVar, pad = x$pad)
-  
-  oldClass(z) <- "mids"
-  return(z)
+  midsobj <- list(data = x$data, imp = imp, m = m,
+                  where = x$where, blocks = x$blocks, 
+                  call = call, nmis = x$nmis, 
+                  method = x$method,
+                  predictorMatrix = x$predictorMatrix,
+                  visitSequence = visitSequence, 
+                  form = x$form, post = x$post, seed = x$seed, 
+                  iteration = iteration,
+                  lastSeedValue = .Random.seed, 
+                  chainMean = chainMean,
+                  chainVar = chainVar, 
+                  loggedEvents = x$loggedEvents, 
+                  version = packageVersion("mice"),
+                  date = Sys.Date())
+  oldClass(midsobj) <- "mids"
+  return(midsobj)
 }

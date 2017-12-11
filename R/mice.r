@@ -21,8 +21,7 @@
 #'The data may contain categorical variables that are used in a regressions on
 #'other variables. The algorithm creates dummy variables for the categories of
 #'these variables, and imputes these from the corresponding categorical
-#'variable. The extended model containing the dummy variables is called the
-#'padded model. Its structure is stored in the list component \code{pad}.
+#'variable. 
 #'
 #'Built-in univariate imputation methods are:
 #'
@@ -297,13 +296,16 @@ mice <- function(data, m = 5,
                   call = call, nmis = setup$nmis, 
                   method = setup$method,
                   predictorMatrix = setup$predictorMatrix,
-                  visitSequence = setup$visitSequence, 
-                  form = setup$form, post = setup$post, seed = seed, 
+                  visitSequence = setup$visitSequence,
+                  form = setup$form, post = setup$post, 
+                  seed = seed, 
                   iteration = q$iteration,
                   lastSeedValue = .Random.seed, 
                   chainMean = q$chainMean,
                   chainVar = q$chainVar, 
-                  loggedEvents = loggedEvents)
+                  loggedEvents = loggedEvents,
+                  version = packageVersion("mice"),
+                  date = Sys.Date())
   oldClass(midsobj) <- "mids"
   return(midsobj)
 }

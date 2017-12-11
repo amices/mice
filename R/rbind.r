@@ -75,7 +75,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     else {
       y <- rbind.data.frame(y, ...)
     }
-
+    
     if (is.data.frame(y)) {
       if (ncol(y) != ncol(x$data)) 
         stop("Datasets have different number of columns")
@@ -93,7 +93,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     # where argument: code all values as observed, including NA
     wy <- matrix(FALSE, nrow = nrow(y), ncol = ncol(y))
     where <- rbind(x$where, wy)
-
+    
     # The number of imputations in the new midsobject is equal to that in x.
     m <- x$m
     
@@ -109,7 +109,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     
     # Only x contributes imputations
     imp <- x$imp
- 
+    
     # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
     seed <- x$seed
     lastSeedvalue <- x$lastSeedvalue
@@ -129,7 +129,9 @@ rbind.mids <- function(x, y = NULL, ...) {
                     lastSeedValue = lastSeedvalue, 
                     chainMean = chainMean,
                     chainVar = chainVar, 
-                    loggedEvents = loggedEvents)
+                    loggedEvents = loggedEvents, 
+                    version = packageVersion("mice"),
+                    date = Sys.Date())
     oldClass(midsobj) <- "mids"
     return(midsobj)
   }
@@ -213,7 +215,6 @@ rbind.mids <- function(x, y = NULL, ...) {
     chainVar = NA
     
     loggedEvents <- x$loggedEvents
-    
     midsobj <- list(data = data, imp = imp, m = m,
                     where = where, blocks = blocks, 
                     call = call, nmis = nmis, 
@@ -222,10 +223,12 @@ rbind.mids <- function(x, y = NULL, ...) {
                     visitSequence = visitSequence, 
                     form = form, post = post, seed = seed, 
                     iteration = iteration,
-                    lastSeedValue = lastSeedvalue, 
+                    lastSeedValue = .Random.seed, 
                     chainMean = chainMean,
                     chainVar = chainVar, 
-                    loggedEvents = loggedEvents)
+                    loggedEvents = loggedEvents, 
+                    version = packageVersion("mice"),
+                    date = Sys.Date())
     oldClass(midsobj) <- "mids"
     return(midsobj)
   }
