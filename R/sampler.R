@@ -3,6 +3,13 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
   # This function is called by mice and mice.mids
   # Authors: S van Buuren, K Groothuis-Oudshoorn
 {
+  blocks <- setup$blocks
+  method <- setup$method
+  visitSequence <- setup$visitSequence
+  predictorMatrix <- setup$predictorMatrix
+  form <- setup$form
+  post <- setup$post
+  
   from <- fromto[1]
   to <- fromto[2]
   maxit <- to - from + 1
@@ -11,8 +18,8 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
   # set up array for convergence checking
   chainVar <- chainMean <- NULL
   if (maxit > 0) {
-    chainMean <- array(0, dim = c(length(setup$visitSequence), maxit, m))
-    dimnames(chainMean) <- list(dimnames(data)[[2]][setup$visitSequence], 
+    chainMean <- array(0, dim = c(length(visitSequence), maxit, m))
+    dimnames(chainMean) <- list(dimnames(data)[[2]][visitSequence], 
                                 seq_len(maxit), paste("Chain", seq_len(m)))
     chainVar <- chainMean
   }
@@ -31,8 +38,8 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
           cat("\n ", iteration, " ", i)
         # load imputations for i from iteration k-1
         # do not overwrite any observed data
-        for (h in setup$visitSequence) {
-          for (j in setup$blocks[[h]]) {
+        for (h in visitSequence) {
+          for (j in blocks[[h]]) {
             y <- data[, j]
             ry <- r[, j]
             wy <- where[, j]
@@ -42,10 +49,10 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
         design <- initialize.design(data)
         
         # impute block-by-block
-        for (h in setup$visitSequence) {
-          theMethod <- setup$method[h]
+        for (h in visitSequence) {
+          theMethod <- method[h]
           # impute variable-by-variable
-          for (j in setup$blocks[[h]]) {
+          for (j in blocks[[h]]) {
             
             ## store current state
             oldstate <- get("state", pos = parent.frame())
@@ -66,30 +73,30 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
             # standard imputation
             if (elem) {
               if (flat) {
-                predictors <- setup$predictorMatrix[j, ] == 1
+                predictors <- predictorMatrix[j, ] == 1
               } else {
-                predictors <- setup$predictorMatrix[j, ] != 0
+                predictors <- predictorMatrix[j, ] != 0
               }
-              if (!is.null(setup$form) && nchar(setup$form[j]) > 0) {
-                myform <- paste(setup$form[j], "0", sep = "+")
+              if (!is.null(form) && nchar(form[j]) > 0) {
+                myform <- paste(form[j], "0", sep = "+")
                 x <- model.matrix(formula(myform), data)
+                type <- NULL
               } else {
                 idx <- attr(design, "assign") %in% which(predictors)
                 x <- design[, idx, drop = FALSE]
+                type <- predictorMatrix[j, attr(design, "assign")[idx]]
+                names(type) <- names(x)
               }
               y <- data[, j]
               ry <- complete.cases(x, y) & r[, j]
               wy <- complete.cases(x) & where[, j]
               cc <- wy[where[, j]]
-              # type <- setup$predictorMatrix[j, predictors]
-              # note: statement below only works in non-form specification
-              type <- setup$predictorMatrix[j, attr(design, "assign")[idx]]
-              names(type) <- names(x)
-              if (k == 1)
-                check.df(x, y, ry)
+              if (k == 1) check.df(x, y, ry)
+              
               keep <- remove.lindep(x, y, ry, ...)
               x <- x[, keep, drop = FALSE]
               type <- type[keep]
+              
               f <- paste("mice.impute", theMethod, sep = ".")
               imputes <- data[wy, j]
               imputes[!cc] <- NA
@@ -108,7 +115,7 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
             }
             
             # optional post-processing
-            cmd <- setup$post[j]
+            cmd <- post[j]
             if (cmd != "") {
               eval(parse(text = cmd))
               data[where[, j], j] <- imp[[j]][, i]
@@ -119,9 +126,9 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
       
       # store means and sd of m imputes
       k2 <- k - from + 1
-      if (length(setup$visitSequence) > 0) {
-        for (j in seq_along(setup$visitSequence)) {
-          jj <- setup$visitSequence[j]
+      if (length(visitSequence) > 0) {
+        for (j in seq_along(visitSequence)) {
+          jj <- visitSequence[j]
           if (!is.factor(data[, jj])) {
             chainVar[j, k2, ] <- apply(imp[[jj]], 2, var, na.rm = TRUE)
             chainMean[j, k2, ] <- colMeans(as.matrix(imp[[jj]]), na.rm = TRUE)
