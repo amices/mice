@@ -47,11 +47,20 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
             data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
           }
         }
-
-        # impute block-by-block
+        
+        # impute block-by-block - type
         for (h in visitSequence) {
+          
+          type <- predictorMatrix[h, ]
+          predictors <- names(type)[type != 0]
+          ff <- create.formula(form = ~ 0, predictors = predictors, ...)
+          
           theMethod <- method[h]
-          # impute variable-by-variable
+          empt <- theMethod == ""
+          elem <- !empt && !is.passive(theMethod)
+          pass <- !empt && is.passive(theMethod)
+          
+          # assume variable-by-variable
           for (j in blocks[[h]]) {
             
             ## store current state
@@ -62,19 +71,8 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
             
             if (printFlag) cat(" ", j)
             
-            # switching logic: flat, mult, pass, dumm
-            empt <- theMethod == ""
-            elem <- !empt && !is.passive(theMethod)
-            flat <- elem && substring(theMethod, 1, 2) != "2l"
-            pass <- !empt && is.passive(theMethod)
-            
-            # standard imputation
+            # standard univariate imputation - type method
             if (elem) {
-              type <- predictorMatrix[j, ]
-              predictors <- names(type)[type != 0]
-              ff <- create.formula(form = form[j],
-                                   predictors = predictors,
-                                   ...)
               x <- obtain.design(data, ff)
               y <- data[, j]
               ry <- complete.cases(x, y) & r[, j]
@@ -86,10 +84,12 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
               x <- x[, keep, drop = FALSE]
               type <- type[keep]
               
+              # here we go (classic call)
               f <- paste("mice.impute", theMethod, sep = ".")
               imputes <- data[wy, j]
               imputes[!cc] <- NA
-              imputes[cc] <- do.call(f, args = list(y, ry, x, wy = wy, type = type, ...))
+              imputes[cc] <- do.call(f, args = list(y, ry, x, wy = wy, 
+                                                    type = type, ...))
               imp[[j]][, i] <- imputes
               data[(!r[, j]) & where[, j], j] <- imp[[j]][(!r[, j])[where[, j]], i]
             }
