@@ -120,6 +120,9 @@
 #'that will be amputed will be weighted with \code{0}. If it is MNAR, variables 
 #'that will be observed will be weighted with \code{0}. If mechanism is MCAR, the 
 #'weights matrix will not be used.  
+#'@param std Logical. Whether the weighted sum scores should be calculated with 
+#'standardized data or with non-standardized data. The latter is advised when 
+#'making use of train and testsets in order to prevent leakage. 
 #'@param cont Logical. Whether the probabilities should be based on a continuous 
 #'or discrete distribution. If TRUE, the probabilities of being missing are based 
 #'on a continuous logistic distribution function. \code{\link{ampute.continuous}} 
@@ -182,14 +185,14 @@
 #'odds[2,3:4] <- c(2, 4)
 #'odds[3,] <- c(3, 1, NA, NA)
 #'# Rerun amputation
-#'result3 <- ampute(data = complete.data, patterns = patterns, freq = 
+#'result2 <- ampute(data = complete.data, patterns = patterns, freq = 
 #'c(0.3, 0.3, 0.4), cont = FALSE, odds = odds)
 #'# Run an amputation procedure with continuous probabilities
-#'result4 <- ampute(data = complete.data, type = c("RIGHT", "TAIL", "LEFT"))
+#'result3 <- ampute(data = complete.data, type = c("RIGHT", "TAIL", "LEFT"))
 #'
 #'@export
 ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
-                   mech = "MAR", weights = NULL, cont = TRUE, 
+                   mech = "MAR", weights = NULL, std = TRUE, cont = TRUE, 
                    type = NULL, odds = NULL, 
                    bycases = TRUE, run = TRUE) {
   # Generate Missing Data for Simulation Purposes
@@ -478,9 +481,13 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                    is not possible when mechanism is MAR"), 
              call. = FALSE)
       } else {
-        st.data <- data.frame(scale(data))
+        if (std) {
+          data_for_sumscores <- data.frame(scale(data))
+        } else {
+          data_for_sumscores <- data
+        }
         scores <- sum.scores(P = P,
-                             data = st.data,
+                             data = data_for_sumscores,
                              weights = weights)
       }
       if (!cont) {
@@ -513,6 +520,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                  mech = mech,
                  weights = weights,
                  cont = cont,
+                 std = std,
                  type = type,
                  odds = odds,
                  amp = missing.data,
