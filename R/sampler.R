@@ -57,8 +57,9 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
           
           theMethod <- method[h]
           empt <- theMethod == ""
-          elem <- !empt && !is.passive(theMethod)
-          pass <- !empt && is.passive(theMethod)
+          univ <- !empt && !is.passive(theMethod) && length(blocks[[h]]) == 1
+          mult <- !empt && !is.passive(theMethod) && length(blocks[[h]]) > 1
+          pass <- !empt && is.passive(theMethod) && length(blocks[[h]]) == 1
           
           # assume variable-by-variable
           for (j in blocks[[h]]) {
@@ -72,7 +73,7 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
             if (printFlag) cat(" ", j)
             
             # standard univariate imputation - type method
-            if (elem) {
+            if (univ) {
               x <- obtain.design(data, ff)
               y <- data[, j]
               ry <- complete.cases(x, y) & r[, j]
@@ -84,12 +85,12 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
               x <- x[, keep, drop = FALSE]
               type <- type[keep]
               
-              # here we go (classic call)
+              # here we go
               f <- paste("mice.impute", theMethod, sep = ".")
               imputes <- data[wy, j]
               imputes[!cc] <- NA
-              imputes[cc] <- do.call(f, args = list(y, ry, x, wy = wy, 
-                                                    type = type, ...))
+              imputes[cc] <- do.call(f, args = list(y, ry, x, 
+                                                    wy = wy, type = type, ...))
               imp[[j]][, i] <- imputes
               data[(!r[, j]) & where[, j], j] <- imp[[j]][(!r[, j])[where[, j]], i]
             }

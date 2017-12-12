@@ -244,7 +244,6 @@ check.data <- function(setup, data, allow.na = FALSE,
   return(setup)
 }
 
-
 check.form <- function(setup) {
   blocks <- setup$blocks
   form <- setup$form
