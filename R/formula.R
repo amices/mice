@@ -16,8 +16,7 @@ create.formula <- function(form = ~ 0,
                            include.predictors = TRUE,
                            include.intercept = FALSE, ...) {
   if (!is.formula(form)) form = ~ 0
-  p <- c(".", predictors)
-  f <- as.formula(paste("~", paste(p, collapse = " + ")))
+  f <- reformulate(c(".", predictors))
   if (include.predictors) form <- update(form, f, ...)
   if (include.intercept) form <- update(form, ~ . + 1, ...)
   form
