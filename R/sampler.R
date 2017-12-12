@@ -14,7 +14,7 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
   to <- fromto[2]
   maxit <- to - from + 1
   r <- !is.na(data)
-
+  
   # set up array for convergence checking
   chainVar <- chainMean <- NULL
   if (maxit > 0) {
@@ -47,8 +47,7 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
             data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
           }
         }
-        design <- initialize.design(data)
-        
+
         # impute block-by-block
         for (h in visitSequence) {
           theMethod <- method[h]
@@ -71,23 +70,12 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
             
             # standard imputation
             if (elem) {
-              if (flat) {
-                predictors <- predictorMatrix[j, ] == 1
-              } else {
-                predictors <- predictorMatrix[j, ] != 0
-              }
-              if (!is.null(form) && nchar(form[j]) > 0) {
-                # form: reconstruct entire model.matrix
-                myform <- paste(form[j], "0", sep = "+")
-                x <- model.matrix(formula(myform), data)
-                type <- NULL
-              } else {
-                # predictormatrix: select columns from entire design
-                idx <- attr(design, "assign") %in% which(predictors)
-                x <- design[, idx, drop = FALSE]
-                type <- predictorMatrix[j, attr(design, "assign")[idx]]
-                names(type) <- names(x)
-              }
+              type <- predictorMatrix[j, ]
+              predictors <- names(type)[type != 0]
+              ff <- create.formula(form = form[j],
+                                   predictors = predictors,
+                                   ...)
+              x <- obtain.design(data, ff)
               y <- data[, j]
               ry <- complete.cases(x, y) & r[, j]
               wy <- complete.cases(x) & where[, j]
@@ -104,7 +92,6 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
               imputes[cc] <- do.call(f, args = list(y, ry, x, wy = wy, type = type, ...))
               imp[[j]][, i] <- imputes
               data[(!r[, j]) & where[, j], j] <- imp[[j]][(!r[, j])[where[, j]], i]
-              design <- update.design(design, data, varname = j)
             }
             
             # passive imputation

@@ -1,7 +1,7 @@
 context("update.design")
 
 data <- nhanes2
-design <- mice:::initialize.design(data)
+design <- mice:::obtain.design(data)
 d1 <- mice:::update.design(design, data, varname = "age")
 d2 <- mice:::update.design(design, data, varname = "bmi")
 d3 <- mice:::update.design(design, data, varname = "hyp")
@@ -21,7 +21,7 @@ test_that("updates itself", {
 })
 
 data <- nhanes2
-design <- mice:::initialize.design(data)
+design <- mice:::obtain.design(data)
 data$age[1:4] <- data$age[4:1]
 data$bmi[1:4] <- data$bmi[4:1]
 data$hyp[1:4] <- data$hyp[4:1]
