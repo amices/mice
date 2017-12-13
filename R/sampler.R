@@ -16,13 +16,7 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
   r <- !is.na(data)
   
   # set up array for convergence checking
-  chainVar <- chainMean <- NULL
-  if (maxit > 0) {
-    chainMean <- array(0, dim = c(length(visitSequence), maxit, m))
-    dimnames(chainMean) <- list(dimnames(data)[[2]][visitSequence], 
-                                seq_len(maxit), paste("Chain", seq_len(m)))
-    chainVar <- chainMean
-  }
+  chainMean <- chainVar <- initialize.chain(blocks, maxit, m)
   
   ## THE MAIN LOOP: GIBBS SAMPLER ##
   if (maxit < 1) iteration <- 0
@@ -143,17 +137,18 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
       # store means and sd of m imputes
       k2 <- k - from + 1
       if (length(visitSequence) > 0) {
-        for (j in seq_along(visitSequence)) {
-          jj <- visitSequence[j]
-          if (!is.factor(data[, jj])) {
-            chainVar[j, k2, ] <- apply(imp[[jj]], 2, var, na.rm = TRUE)
-            chainMean[j, k2, ] <- colMeans(as.matrix(imp[[jj]]), na.rm = TRUE)
-          }
-          if (is.factor(data[, jj])) {
-            for (mm in seq_len(m)) {
-              nc <- as.integer(factor(imp[[jj]][, mm], levels = levels(data[, jj])))
-              chainVar[j, k2, mm] <- var(nc, na.rm = TRUE)
-              chainMean[j, k2, mm] <- mean(nc, na.rm = TRUE)
+        for (h in visitSequence) {
+          for (j in blocks[[h]]) {
+            if (!is.factor(data[, j])) {
+              chainVar[j, k2, ] <- apply(imp[[j]], 2, var, na.rm = TRUE)
+              chainMean[j, k2, ] <- colMeans(as.matrix(imp[[j]]), na.rm = TRUE)
+            }
+            if (is.factor(data[, j])) {
+              for (mm in seq_len(m)) {
+                nc <- as.integer(factor(imp[[j]][, mm], levels = levels(data[, j])))
+                chainVar[j, k2, mm] <- var(nc, na.rm = TRUE)
+                chainMean[j, k2, mm] <- mean(nc, na.rm = TRUE)
+              }
             }
           }
         }

@@ -50,7 +50,7 @@ ibind <- function(x, y) {
     stop("Differences detected between `x$visitSequence` and `y$visitSequence`")
   if (!identical(x$post, y$post))
     stop("Differences detected between `x$post` and `y$post`")
-
+  
   visitSequence <- x$visitSequence
   imp <- vector("list", ncol(x$data))
   for (j in visitSequence) {
@@ -60,9 +60,7 @@ ibind <- function(x, y) {
   m <- (x$m + y$m)
   iteration <- max(x$iteration, y$iteration)
   
-  chainMean <- chainVar <- array(NA, dim = c(length(visitSequence), iteration, m), 
-                                 dimnames = list(names(visitSequence), 
-                                                 seq_len(iteration), paste("Chain", seq_len(m))))
+  chainMean <- chainVar <- initialize.chain(x$blocks, iteration, m)
   for (j in seq_len(x$m)) {
     chainMean[, seq_len(x$iteration), j] <- x$chainMean[, , j]
     chainVar[, seq_len(x$iteration), j] <- x$chainVar[, , j]
