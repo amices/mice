@@ -57,8 +57,10 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
           
           theMethod <- method[h]
           empt <- theMethod == ""
-          univ <- !empt && !is.passive(theMethod) && length(blocks[[h]]) == 1
-          mult <- !empt && !is.passive(theMethod) && length(blocks[[h]]) > 1
+          univ <- !empt && !is.passive(theMethod) && 
+            !handles.format(paste0("mice.impute.", theMethod))
+          mult <- !empt && !is.passive(theMethod) && 
+            handles.format(paste0("mice.impute.", theMethod))
           pass <- !empt && is.passive(theMethod) && length(blocks[[h]]) == 1
           
           j <- blocks[[h]]
@@ -71,14 +73,18 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
           
           if (printFlag) cat(" ", j)
           
-          # univariate imputation - type method
+          # (repeated) univariate imputation - type method
           if (univ) {
-            imp[[j]][, i] <- sampler.univ(data = data, r = r, where = where, 
-                                          type = type, formula = ff, 
-                                          method = theMethod, 
-                                          yname = blocks[[h]][1], 
-                                          k = k, ...)
-            data[(!r[, j]) & where[, j], j] <- imp[[j]][(!r[, j])[where[, j]], i]
+            for (jj in j) {
+              imp[[jj]][, i] <- 
+                sampler.univ(data = data, r = r, where = where, 
+                             type = type, formula = ff, 
+                             method = theMethod, 
+                             yname = jj, 
+                             k = k, ...)
+              data[(!r[, jj]) & where[, jj], jj] <- 
+                imp[[jj]][(!r[, jj])[where[, jj]], i]
+            }
           }
           
           # multivariate imputation - type method
