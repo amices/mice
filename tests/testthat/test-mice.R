@@ -1,4 +1,4 @@
-context("complete")
+context("mice")
 
 nhanes_mids <- mice(nhanes, m = 2, print = FALSE)
 nhanes_complete <- complete(nhanes_mids)
@@ -11,6 +11,10 @@ test_that("No missing values remain in imputed nhanes data set", {
 test_that("Data set in returned mids object is identical to nhanes data set", {
   expect_identical(nhanes_mids$data, nhanes)
 })
+
+# blocks
+
+# imp <- mice(nhanes, blocks = list(B1 = c("age", "bmi", "hyp"), chl = "chl"))
 
 # where
 

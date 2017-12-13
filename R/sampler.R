@@ -63,27 +63,38 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
             handles.format(paste0("mice.impute.", theMethod))
           pass <- !empt && is.passive(theMethod) && length(blocks[[h]]) == 1
           
-          j <- blocks[[h]]
+          b <- blocks[[h]]
+          bname <- names(blocks)[h]
           
           ## store current state
           oldstate <- get("state", pos = parent.frame())
-          newstate <- list(it = k, im = i, dep = j, meth = theMethod, 
+          newstate <- list(it = k, im = i, 
+                           dep = bname, 
+                           meth = theMethod, 
                            log = oldstate$log)
           assign("state", newstate, pos = parent.frame(), inherits = TRUE)
           
-          if (printFlag) cat(" ", j)
+          if (printFlag) cat(" ", b)
           
           # (repeated) univariate imputation - type method
           if (univ) {
-            for (jj in j) {
-              imp[[jj]][, i] <- 
+            for (j in b) {
+              imp[[j]][, i] <- 
                 sampler.univ(data = data, r = r, where = where, 
                              type = type, formula = ff, 
                              method = theMethod, 
-                             yname = jj, 
+                             yname = j, 
                              k = k, ...)
-              data[(!r[, jj]) & where[, jj], jj] <- 
-                imp[[jj]][(!r[, jj])[where[, jj]], i]
+              
+              data[(!r[, j]) & where[, j], j] <- 
+                imp[[j]][(!r[, j])[where[, j]], i]
+              
+              # optional post-processing
+              cmd <- post[bname]
+              if (cmd != "") {
+                eval(parse(text = cmd))
+                data[where[, j], j] <- imp[[j]][, i]
+              }
             }
           }
           
@@ -119,17 +130,12 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
           
           # passive imputation
           if (pass) {
-            wy <- where[, j]
-            imp[[j]][, i] <- model.frame(as.formula(theMethod), data[wy, ], 
-                                         na.action = na.pass)
-            data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
-          }
-          
-          # optional post-processing
-          cmd <- post[j]
-          if (cmd != "") {
-            eval(parse(text = cmd))
-            data[where[, j], j] <- imp[[j]][, i]
+            for (j in b) {
+              wy <- where[, j]
+              imp[[j]][, i] <- model.frame(as.formula(theMethod), data[wy, ], 
+                                           na.action = na.pass)
+              data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
+            }
           }
         } # end h loop (blocks)
       }  # end i loop (imputation number)
