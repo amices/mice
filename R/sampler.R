@@ -61,55 +61,70 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
           mult <- !empt && !is.passive(theMethod) && length(blocks[[h]]) > 1
           pass <- !empt && is.passive(theMethod) && length(blocks[[h]]) == 1
           
-          # assume variable-by-variable
-          for (j in blocks[[h]]) {
+          j <- blocks[[h]]
+          
+          ## store current state
+          oldstate <- get("state", pos = parent.frame())
+          newstate <- list(it = k, im = i, dep = j, meth = theMethod, 
+                           log = oldstate$log)
+          assign("state", newstate, pos = parent.frame(), inherits = TRUE)
+          
+          if (printFlag) cat(" ", j)
+          
+          # univariate imputation - type method
+          if (univ) {
+            imp[[j]][, i] <- sampler.univ(data = data, r = r, where = where, 
+                                          type = type, formula = ff, 
+                                          method = theMethod, 
+                                          yname = blocks[[h]][1], 
+                                          k = k, ...)
+            data[(!r[, j]) & where[, j], j] <- imp[[j]][(!r[, j])[where[, j]], i]
+          }
+          
+          # multivariate imputation - type method
+          if (mult) {
+            x <- obtain.design(data, ff)
+            y <- data[, j]
+            ry <- complete.cases(x, y) & r[, j]
+            wy <- complete.cases(x) & where[, j]
+            cc <- vector("list", length(j))
+            names(cc) <- j
+            for (jj in j) cc[[jj]] <- wy[where[, jj], jj]
+            if (k == 1) check.df(x, y, ry)
             
-            ## store current state
-            oldstate <- get("state", pos = parent.frame())
-            newstate <- list(it = k, im = i, dep = j, meth = theMethod, 
-                             log = oldstate$log)
-            assign("state", newstate, pos = parent.frame(), inherits = TRUE)
+            #keep <- remove.lindep(x, y, ry, ...)
+            #x <- x[, keep, drop = FALSE]
+            #type <- type[keep]
             
-            if (printFlag) cat(" ", j)
+            # here we go
+            fm <- paste("mice.impute", theMethod, sep = ".")
+            z <- do.call(fm, args = list(y, ry, x, wy = wy, 
+                                         type = type, format = "list", ...))
+            if (!identical(names(z), j)) stop("Mismatch ", names(z), " and ", j)
             
-            # standard univariate imputation - type method
-            if (univ) {
-              x <- obtain.design(data, ff)
-              y <- data[, j]
-              ry <- complete.cases(x, y) & r[, j]
-              wy <- complete.cases(x) & where[, j]
-              cc <- wy[where[, j]]
-              if (k == 1) check.df(x, y, ry)
-              
-              keep <- remove.lindep(x, y, ry, ...)
-              x <- x[, keep, drop = FALSE]
-              type <- type[keep]
-              
-              # here we go
-              f <- paste("mice.impute", theMethod, sep = ".")
-              imputes <- data[wy, j]
-              imputes[!cc] <- NA
-              imputes[cc] <- do.call(f, args = list(y, ry, x, 
-                                                    wy = wy, type = type, ...))
-              imp[[j]][, i] <- imputes
-              data[(!r[, j]) & where[, j], j] <- imp[[j]][(!r[, j])[where[, j]], i]
+            imputes <- data[wy, j]
+            imputes[!cc] <- NA
+            imputes[cc] <- z
+            for (k in j) {
+              imp[[k]][, i] <- imputes
+              data[(!r[, k]) & where[, k], j] <- imp[[k]][(!r[, k])[where[, k]], i]
             }
-            
-            # passive imputation
-            if (pass) {
-              wy <- where[, j]
-              imp[[j]][, i] <- model.frame(as.formula(theMethod), data[wy, ], 
-                                           na.action = na.pass)
-              data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
-            }
-            
-            # optional post-processing
-            cmd <- post[j]
-            if (cmd != "") {
-              eval(parse(text = cmd))
-              data[where[, j], j] <- imp[[j]][, i]
-            }
-          } # end j loop (variables)
+          }
+          
+          # passive imputation
+          if (pass) {
+            wy <- where[, j]
+            imp[[j]][, i] <- model.frame(as.formula(theMethod), data[wy, ], 
+                                         na.action = na.pass)
+            data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
+          }
+          
+          # optional post-processing
+          cmd <- post[j]
+          if (cmd != "") {
+            eval(parse(text = cmd))
+            data[where[, j], j] <- imp[[j]][, i]
+          }
         } # end h loop (blocks)
       }  # end i loop (imputation number)
       
@@ -137,4 +152,27 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
       cat("\n")
   }
   return(list(iteration = maxit, imp = imp, chainMean = chainMean, chainVar = chainVar))
+}
+
+
+sampler.univ <- function(data, r, where, type, formula, method, yname, k, ...) {
+  j <- yname[1]
+  x <- obtain.design(data, formula)
+  y <- data[, j]
+  ry <- complete.cases(x, y) & r[, j]
+  wy <- complete.cases(x) & where[, j]
+  cc <- wy[where[, j]]
+  if (k == 1) check.df(x, y, ry)
+  
+  keep <- remove.lindep(x, y, ry, ...)
+  x <- x[, keep, drop = FALSE]
+  type <- type[keep]
+  
+  # here we go
+  f <- paste("mice.impute", method, sep = ".")
+  imputes <- data[wy, j]
+  imputes[!cc] <- NA
+  imputes[cc] <- do.call(f, args = list(y, ry, x, 
+                                        wy = wy, type = type, ...))
+  imputes
 }

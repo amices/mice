@@ -8,7 +8,7 @@ check.df <- function(x, y, ry) {
   df <- sum(ry) - ncol(x) - 1
   mess <- paste("df set to 1. # observed cases:", sum(ry), " # predictors:", ncol(x) + 1)
   if (df < 1)
-    updateLog(out = mess, frame = 3)
+    updateLog(out = mess, frame = 4)
 }
 
 remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99, allow.na = FALSE, ...) {
@@ -19,7 +19,7 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99, allow.na = FALSE
   
   # Keep all predictors if we allow imputation of fully missing variable
   if (allow.na && sum(ry) == 0) {
-    updateLog(out = "No observed outcomes, keep all predictors", frame = 3)
+    updateLog(out = "No observed outcomes, keep all predictors", frame = 4)
     return(rep.int(TRUE, ncol(x)))
   }
   
@@ -30,7 +30,7 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99, allow.na = FALSE
   highcor <- suppressWarnings(unlist(apply(xobs, 2, cor, yobs) < maxcor))
   keep <- keep & highcor
   if (all(!keep))
-    updateLog(out = "All predictors are constant or have too high correlation.", frame = 3)
+    updateLog(out = "All predictors are constant or have too high correlation.", frame = 4)
   if (length(keep) == 1) keep[1] <- TRUE
   k <- sum(keep)
   cx <- cor(xobs[, keep, drop = FALSE], use = "all.obs")
@@ -45,7 +45,7 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99, allow.na = FALSE
   }
   if (!all(keep)) {
     out <- paste(dimnames(x)[[2]][!keep], collapse = ", ")
-    updateLog(out = out, frame = 3)
+    updateLog(out = out, frame = 4)
   }
   return(keep)
 }
