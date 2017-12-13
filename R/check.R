@@ -1,9 +1,18 @@
 # internal function for checking input to main mice() function
 
-check.blocks <- function(setup) {
+check.blocks <- function(setup, data) {
   blocks <- setup$blocks
-  
+  varnames <- setup$varnames
+
+  # for proper workings, name all blocks  
   blocks <- name.blocks(blocks)
+  
+  # check that all names exists
+  bv <- unique(unlist(blocks))
+  notFound <- !bv %in% varnames
+  if (any(notFound)) 
+    stop(paste("The following names were not found in `data`:",
+               paste(bv[notFound], collapse = ", ")))
   
   setup$blocks <- blocks
   setup
