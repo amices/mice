@@ -1,5 +1,14 @@
 # internal function for checking input to main mice() function
 
+check.blocks <- function(setup) {
+  blocks <- setup$blocks
+  
+  blocks <- name.blocks(blocks)
+  
+  setup$blocks <- blocks
+  setup
+}
+
 check.visitSequence <- function(setup, where) {
   
   nwhere <- setup$nwhere
@@ -31,7 +40,7 @@ check.visitSequence <- function(setup, where) {
   visitSequence <- visitSequence[visitSequence <= length(blocks)]
   visitSequence <- visitSequence[visitSequence >= 1]
   setup$visitSequence <- visitSequence
-  return(setup)
+  setup
 }
 
 
@@ -173,7 +182,7 @@ check.predictorMatrix <- function(setup) {
     if (!is.null(blocknames[i])) pred[i, grep(blocknames[i], varnames)] <- 0
   
   setup$predictorMatrix <- pred
-  return(setup)
+  setup
 }
 
 
@@ -241,7 +250,7 @@ check.data <- function(setup, data, allow.na = FALSE,
   setup$visitSequence <- vis
   setup$post <- post
   setup$meth <- meth
-  return(setup)
+  setup
 }
 
 check.form <- function(setup) {
@@ -256,7 +265,7 @@ check.form <- function(setup) {
   if (is.null(names(form))) names(form) <- names(blocks)
   
   setup$form <- form
-  return(setup)
+  setup
 }
 
 check.post <- function(setup) {
@@ -271,6 +280,6 @@ check.post <- function(setup) {
   if (is.null(names(post))) names(post) <- names(blocks)
   
   setup$post <- post
-  return(setup)
+  setup
 }
 

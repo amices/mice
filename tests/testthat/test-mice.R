@@ -14,7 +14,7 @@ test_that("Data set in returned mids object is identical to nhanes data set", {
 
 # blocks
 
-# imp <- mice(nhanes, blocks = list(B1 = c("age", "bmi", "hyp"), chl = "chl"))
+imp <- mice(nhanes, blocks = list(B1 = c("age", "hyp"), chl = "chl"), print = FALSE)
 
 # where
 

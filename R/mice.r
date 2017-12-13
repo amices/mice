@@ -272,6 +272,7 @@ mice <- function(data, m = 5,
                 varnames = colnames(data))
 
   # Checks and edits on the arguments
+  setup <- check.blocks(setup)
   setup <- check.visitSequence(setup, where)
   setup <- check.method(setup, data)
   setup <- check.predictorMatrix(setup)
