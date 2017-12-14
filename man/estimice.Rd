@@ -18,6 +18,8 @@ default parameters are drawn by means of QR decomposition.}
 The default value \code{ridge = 1e-05} represents a compromise between stability
 and unbiasedness. Decrease \code{ridge} if the data contain many junk variables.
 Increase \code{ridge} for highly collinear data.}
+
+\item{...}{Other named arguments.}
 }
 \value{
 A \code{list} containing components \code{c} (least squares estimate),

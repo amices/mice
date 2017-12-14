@@ -19,11 +19,6 @@ norm.draw(y, ry, x, ...)
 \item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
 
 \item{...}{Other named arguments.}
-
-\item{ridge}{A small numerical value specifying the size of the ridge used. 
-The default value \code{ridge = 1e-05} represents a compromise between stability
-and unbiasedness. Decrease \code{ridge} if the data contain many junk variables.
-Increase \code{ridge} for highly collinear data.}
 }
 \value{
 A \code{list} containing components \code{coef} (least squares estimate),
