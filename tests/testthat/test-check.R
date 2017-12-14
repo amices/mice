@@ -3,8 +3,8 @@ context("check")
 data <- nhanes
 where <- is.na(data)
 
-blocks <- list("bmi", "age", "chl")
-setup <- list(blocks = name.blocks(blocks), 
+blocks <- name.blocks(list("bmi", "age", "chl"))
+setup <- list(blocks = blocks, 
               nimp = nimp(where, blocks),
               visitSequence = NULL, 
               method = vector("character", length(blocks)),
@@ -19,8 +19,8 @@ y1 <- mice:::check.method(z1, data)
 x1 <- mice:::check.predictorMatrix(y1)
 w1 <- mice:::check.data(x1, data)
 
-blocks <- list(c("bmi", "chl"), "age")
-setup <- list(blocks = name.blocks(blocks), 
+blocks <- name.blocks(list(c("bmi", "chl"), "age"))
+setup <- list(blocks = blocks, 
               nimp = nimp(where, blocks),
               visitSequence = NULL, 
               method = rep("", 2),
@@ -35,8 +35,8 @@ y2 <- mice:::check.method(z2, data)
 x2 <- mice:::check.predictorMatrix(y2)
 w2 <- mice:::check.data(x2, data)
 
-blocks <- list(c("bmi", "chl"), "age", "chl")
-setup <- list(blocks = name.blocks(blocks), 
+blocks <- name.blocks(list(c("bmi", "chl"), "age", "chl"))
+setup <- list(blocks = blocks, 
               nimp = nimp(where, blocks),
               visitSequence = NULL, 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -50,8 +50,8 @@ y3 <- mice:::check.method(z3, data)
 x3 <- mice:::check.predictorMatrix(y3)
 w3 <- mice:::check.data(x3, data)
 
-blocks <- list("bmi", "chl", "age", "hyp")
-setup <- list(blocks = name.blocks(blocks), 
+blocks <- name.blocks(list("bmi", "chl", "age", "hyp"))
+setup <- list(blocks = blocks, 
               nimp = nimp(where, blocks),
               visitSequence = "roman", 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -65,7 +65,7 @@ y4 <- mice:::check.method(z4, data)
 x4 <- mice:::check.predictorMatrix(y4)
 w4 <- mice:::check.data(x4, data)
 
-setup <- list(blocks = name.blocks(blocks), 
+setup <- list(blocks = blocks, 
               nimp = nimp(where, blocks),
               visitSequence = "arab", 
               method = c("logreg", "", "", ""),
@@ -79,7 +79,7 @@ z5 <- mice:::check.visitSequence(setup, where)
 #y5 <- mice:::check.method(z5, data)
 #x5 <- mice:::check.predictorMatrix(y5)
 
-setup <- list(blocks = name.blocks(blocks), 
+setup <- list(blocks = blocks, 
               nimp = nimp(where, blocks),
               visitSequence = "mon",
               method = "unknown",
@@ -92,7 +92,7 @@ setup <- list(blocks = name.blocks(blocks),
 z6 <- mice:::check.visitSequence(setup, where)
 # y6 <- mice:::check.method(z6, data)
 
-setup <- list(blocks = name.blocks(blocks), 
+setup <- list(blocks = blocks, 
               nimp = nimp(where, blocks),
               visitSequence = "rev", 
               method = c("pmm", "pmm"),
@@ -106,7 +106,7 @@ z7 <- mice:::check.visitSequence(setup, where)
 # y7 <- mice:::check.method(z7, data)
 
 blocks <- make.blocks(data, "void")
-setup <- list(blocks = name.blocks(blocks), 
+setup <- list(blocks = blocks, 
               nimp = nimp(where, blocks),
               visitSequence = "rev", 
               defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -150,3 +150,11 @@ test_that("check.predictorMatrix produces proper results", {
   expect_equal(dim(x8$predictorMatrix), c(0, 4))
 })
 
+
+context("check.blocks")
+
+test_that("Unknown variables in blocks not accepted", {
+  expect_error(
+    mice(nhanes, blocks = list(c("bmi", "chl", "hey"), "weird"), 
+         print = FALSE, m = 1, maxit = 1))
+})

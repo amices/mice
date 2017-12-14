@@ -1,4 +1,4 @@
-context("mice complete")
+context("mice: complete")
 
 nhanes_mids <- mice(nhanes, m = 2, print = FALSE)
 nhanes_complete <- complete(nhanes_mids)
@@ -12,12 +12,12 @@ test_that("Data set in returned mids object is identical to nhanes data set", {
   expect_identical(nhanes_mids$data, nhanes)
 })
 
-context("mice blocks")
+context("mice: blocks")
 
 imp1 <- mice(nhanes, blocks = list(c("age", "hyp"), chl = "chl", "bmi"), 
-            print = FALSE, m = 1, maxit = 1)
+             print = FALSE, m = 1, maxit = 1)
 imp2 <- mice(nhanes2, blocks = list(c("age", "hyp", "bmi"), "chl", "bmi"), 
-            print = FALSE, m = 1, maxit = 1)
+             print = FALSE, m = 1, maxit = 1)
 imp3 <- mice(nhanes2, blocks = list(c("hyp", "hyp", "hyp"), "chl", "bmi"), 
              print = FALSE, m = 1, maxit = 1)
 imp4 <- mice(boys, blocks = list(c("gen", "phb"), "tv"), 
@@ -42,34 +42,70 @@ test_that("Method `polr` works with one block", {
 })
 
 
-test_that("Unknown names not accepted", {
-  expect_error(
-    mice(nhanes, blocks = list(c("bmi", "chl", "hey"), "weird"), 
-         print = FALSE, m = 1, maxit = 1))
+# check for equality of `scatter` and `collect` for univariate models
+# we need to select smaller data because even including a complete 
+# predictor (age) changes the flow of calculations. For speed, 
+# imp1 will simply bypass imputation of age. However, imp2 will apply
+# pmm to age, and thus kicks the random generator.
+nhanes_small <- nhanes[, 2:4]
+imp1 <- mice(nhanes_small, blocks = make.blocks(nhanes_small, "scatter"), 
+             print = FALSE, m = 1, maxit = 1, seed = 123)
+imp2 <- mice(nhanes_small, blocks = make.blocks(nhanes_small, "collect"), 
+             print = FALSE, m = 1, maxit = 1, seed = 123)
+
+# isolate age in its own block, result does not depend on location
+# of complete covariates. Results are different from imp1 and imp2 
+# because age is included. Exercise: specify predictorMatrix 
+# such that imp1 and imp2 become identical to imp3 and imp4
+imp3 <- mice(nhanes, blocks = list("age", c("bmi", "hyp", "chl")), 
+             print = FALSE, m = 1, maxit = 1, seed = 123)
+imp4 <- mice(nhanes, blocks = list(c("bmi", "hyp", "chl"), "age"), 
+             print = FALSE, m = 1, maxit = 1, seed = 123)
+imp5 <- mice(nhanes, blocks =  make.blocks(nhanes, "scatter"), 
+             print = FALSE, m = 1, maxit = 1, seed = 123)
+imp6 <- mice(nhanes, blocks =  make.blocks(nhanes, "scatter"), 
+             method = rep("pmm", 4),
+             print = FALSE, m = 1, maxit = 1, seed = 123)
+
+# potentially, we may also change the visitSequence, but mice 
+# is quite persistent in overwriting a user-specified
+# visitSequence for complete columns, so this not 
+# currently not an option. Defer optimizing this to later.
+
+# another trick is to specify where for age by hand, so it forces 
+# mice to impute age by pmm, but then, this would need to be 
+# done in both imp1 and imp2 models.
+
+test_that("Univariate methods produce same for `scatter` and `collect`", {
+  expect_identical(complete(imp1), complete(imp2))
+  expect_identical(complete(imp3), complete(imp4))
+  expect_identical(complete(imp3), complete(imp5))
+  expect_identical(complete(imp3), complete(imp6))
 })
 
 
-# where
+context("mice: where")
 
 # # all TRUE
-# imp <- mice(nhanes, where = matrix(TRUE, nrow = 25, ncol = 4), maxit = 1)
-# 
+imp1 <- mice(nhanes, where = matrix(TRUE, nrow = 25, ncol = 4), maxit = 1, 
+             m = 1, print = FALSE)
+ 
 # # all FALSE
-# imp <- mice(nhanes, where = matrix(FALSE, nrow = 25, ncol = 4), maxit = 1)
-# 
+imp2 <- mice(nhanes, where = matrix(FALSE, nrow = 25, ncol = 4), maxit = 1, 
+             m = 1, print = FALSE)
+
 # # alternate
-# imp <- mice(nhanes, where = matrix(c(FALSE, TRUE), nrow = 25, ncol = 4), maxit = 1)
-# 
-# 
-# # nhanes2
-# # all TRUE
-# imp <- mice(nhanes2, where = matrix(TRUE, nrow = 25, ncol = 4), maxit = 1)
-# 
-# # all FALSE
-# imp <- mice(nhanes2, where = matrix(FALSE, nrow = 25, ncol = 4), maxit = 1)
-# 
-# # alternate
-# imp <- mice(nhanes2, where = matrix(c(FALSE, TRUE), nrow = 25, ncol = 4), maxit = 1)
-# 
-# # error on complete.cases
-# imp <- mice(nhanes2, where = matrix(TRUE, nrow = 25, ncol = 4), maxit = 1, meth = c("pmm", "", "", ""))
+imp3 <- mice(nhanes, where = matrix(c(FALSE, TRUE), nrow = 25, ncol = 4), 
+             maxit = 1, m = 1, print = FALSE)
+ 
+# # whacky situation where we expect no imputes for the incomplete cases
+imp4 <- mice(nhanes2, where = matrix(TRUE, nrow = 25, ncol = 4), 
+             maxit = 1, 
+             meth = c("pmm", "", "", ""), m = 1, print = FALSE)
+
+test_that("`where` produces correct number of imputes", {
+  expect_identical(nrow(imp1$imp$age), 25L)
+  expect_identical(imp2$imp$age, NULL)
+  expect_identical(nrow(imp3$imp$age), 12L)
+  expect_identical(sum(is.na(imp4$imp$age)), nrow(nhanes2) - sum(complete.cases(nhanes2)))
+})

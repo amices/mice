@@ -259,6 +259,7 @@ mice <- function(data, m = 5,
   call <- match.call()
   if (!is.na(seed)) set.seed(seed)
   data <- as.data.frame(data)
+  dimnames(where) <- dimnames(data)
   setup <- list(blocks = blocks, 
                 nwhere = apply(where, 2, sum),
                 nimp = nimp(where, blocks),
@@ -272,7 +273,7 @@ mice <- function(data, m = 5,
                 varnames = colnames(data))
 
   # Checks and edits on the arguments
-  setup <- check.blocks(setup)
+  setup <- check.blocks(setup, data)
   setup <- check.visitSequence(setup, where)
   setup <- check.method(setup, data)
   setup <- check.predictorMatrix(setup)
