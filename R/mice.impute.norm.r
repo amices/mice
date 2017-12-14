@@ -78,4 +78,56 @@ norm.draw <- function(y, ry, x, ridge = 1e-05, ...)
   return(parm)
 }
 
+#' Computes squares parameters
+#' 
+#' This function computes least squares estimates, variance/covariance matrices, 
+#' residuals and degrees of freedom according to ridge regression, QR decomposition 
+#' or Singular Value Decomposition. This function is internally called by .norm.draw(), 
+#' but can be called by any user-sprecified imputation funciton.
+#' 
+#'@aliases estimice
+#'@param x Matrix (\code{n} x \code{p}) of complete covariates.
+#'@param y Incomplete data vector of length \code{n}
+#'@param ls.meth the method to use for obtaining the least squares estimates. By 
+#'default parameters are drawn by means of QR decomposition. 
+#'@param ridge A small numerical value specifying the size of the ridge used. 
+#' The default value \code{ridge = 1e-05} represents a compromise between stability
+#' and unbiasedness. Decrease \code{ridge} if the data contain many junk variables.
+#' Increase \code{ridge} for highly collinear data. 
+#'@return A \code{list} containing components \code{c} (least squares estimate),
+#'\code{r} (residuals), \code{v} (variance/covariance matrix) and \code{df} 
+#'(degrees of freedom).
+#'@references
+#'Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
+#'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+#'@export
+estimice <- function(x, y, ls.meth, ridge = 1e-05){
+  df <- max(length(y) - ncol(x), 1)
+  if (ls.meth == "qr"){
+    qr <- lm.fit(x = x, y = y)
+    c <- t(qr$coef)
+    f <- qr$fitted.values
+    r <- qr$residuals
+    v <- as.matrix(crossprod(qr.R(qr$qr)))
+    return(list(c=t(c), r=r, v=v, df=df))
+  } 
+  if (ls.meth == "ridge"){
+    xtx <- crossprod(x)
+    pen <- ridge * diag(xtx)
+    if (length(pen) == 1) 
+      pen <- matrix(pen)
+    v <- solve(xtx + diag(pen))
+    c <- t(y) %*% x %*% v
+    r <- y - x %*% t(c)
+    return(list(c=t(c), r=r, v=v, df=df))
+  }  
+  if (ls.meth == "svd"){
+    s <- svd(x)
+    c <- s$v %*% ((t(s$u) %*% y) / s$d)
+    f <- x %*% c
+    r <- f - y
+    v <- s$v %*% diag(s$d)^2 %*% t(s$v)
+    return(list(c=c, r=r, v=v, df=df))
+  }
+}
 
