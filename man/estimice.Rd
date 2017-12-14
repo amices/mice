@@ -4,7 +4,7 @@
 \alias{estimice}
 \title{Computes least squares parameters}
 \usage{
-estimice(x, y, ls.meth, ridge = 1e-05)
+estimice(x, y, ls.meth = "qr", ridge = 1e-05, ...)
 }
 \arguments{
 \item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
