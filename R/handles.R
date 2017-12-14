@@ -1,10 +1,11 @@
-handles.arg <- function(x, a = "data") {
-  # determine whether function x handles argument a
-  if (!is.function(x)) return(FALSE)
-  !is.null(formals(x)[[a]])
+handles.arg <- function(f, a = "data") {
+  # determine whether function f handles argument a
+  if (!is.function(f)) return(FALSE)
+  a %in% names(formals(f))
 }
 
-handles.format <- function(x) {
-  # determine whether function x handles the `format` argument
-  handles.arg(x, "format")
+handles.format <- function(fn) {
+  # determine whether function fn handles the `format` argument
+  f <- get(fn)
+  handles.arg(f, "format")
 }
