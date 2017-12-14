@@ -52,10 +52,6 @@ mice.impute.norm <- function(y, ry, x, wy = NULL, ...) {
 #'@param ry Vector of missing data pattern (\code{FALSE}=missing,
 #'\code{TRUE}=observed)
 #'@param x Matrix (\code{n} x \code{p}) of complete covariates.
-#'@param ridge A small numerical value specifying the size of the ridge used. 
-#' The default value \code{ridge = 1e-05} represents a compromise between stability
-#' and unbiasedness. Decrease \code{ridge} if the data contain many junk variables.
-#' Increase \code{ridge} for highly collinear data. 
 #'@param ... Other named arguments.
 #'@return A \code{list} containing components \code{coef} (least squares estimate),
 #'\code{beta} (drawn regression weights) and \code{sigma} (drawn value of the 
@@ -94,6 +90,7 @@ norm.draw <- function(y, ry, x, ...)
 #' The default value \code{ridge = 1e-05} represents a compromise between stability
 #' and unbiasedness. Decrease \code{ridge} if the data contain many junk variables.
 #' Increase \code{ridge} for highly collinear data. 
+#'@param ... Other named arguments.
 #'@return A \code{list} containing components \code{c} (least squares estimate),
 #'\code{r} (residuals), \code{v} (variance/covariance matrix) and \code{df} 
 #'(degrees of freedom).
