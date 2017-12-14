@@ -61,7 +61,7 @@ mice.impute.norm <- function(y, ry, x, wy = NULL, ...) {
 #'residual standard deviation).
 #'@references
 #'Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
-#'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+#'@author Stef van Buuren, Karin Groothuis-Oudshoorn, Gerko Vink, 2017
 #'@export
 norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...) 
   return(.norm.draw(y, ry, x, rank.adjust = TRUE, ...))
@@ -101,9 +101,7 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...)
 #'@return A \code{list} containing components \code{c} (least squares estimate),
 #'\code{r} (residuals), \code{v} (variance/covariance matrix) and \code{df} 
 #'(degrees of freedom).
-#'@references
-#'Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
-#'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+#'@author Gerko Vink, 2017
 #'@export
 estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
   df <- max(length(y) - ncol(x), 1)
