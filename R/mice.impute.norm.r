@@ -69,8 +69,8 @@ norm.draw <- function(y, ry, x, ridge = 1e-05, ...)
 
 ###'@rdname norm.draw
 ###'@export
-.norm.draw <- function (y, ry, x, ls.meth = "qr", ...){
-  p <- estimice(x[ry,], y[ry], ls.meth)
+.norm.draw <- function (y, ry, x, ...){
+  p <- estimice(x[ry,], y[ry], ...)
   sigma.star <- sqrt(sum((p$r)^2)/rchisq(1, p$df))
   beta.star <- p$c + (t(chol(p$v, pivot = TRUE)) %*% rnorm(ncol(x))) * sigma.star
   parm <- list(p$c, beta.star, sigma.star, ls.meth)
@@ -101,7 +101,7 @@ norm.draw <- function(y, ry, x, ridge = 1e-05, ...)
 #'Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
 #'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
 #'@export
-estimice <- function(x, y, ls.meth, ridge = 1e-05){
+estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05){
   df <- max(length(y) - ncol(x), 1)
   if (ls.meth == "qr"){
     qr <- lm.fit(x = x, y = y)
