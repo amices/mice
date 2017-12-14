@@ -8,7 +8,7 @@
 \usage{
 norm.draw(y, ry, x, ridge = 1e-05, ...)
 
-.norm.draw(y, ry, x, ridge = 1e-05, ...)
+.norm.draw(y, ry, x, ls.meth = "qr", ...)
 }
 \arguments{
 \item{y}{Incomplete data vector of length \code{n}}
