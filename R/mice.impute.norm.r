@@ -75,8 +75,8 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...)
   parm <- list(p$c, beta.star, sigma.star, p$ls.meth)
   names(parm) <- c("coef", "beta", "sigma", "estimation")
   if(any(is.na(parm$coef)) & rank.adjust){
-    parm$coef[is.na(A$coef)] <- 0
-    parm$beta[is.na(A$coef)] <- 0
+    parm$coef[is.na(parm$coef)] <- 0
+    parm$beta[is.na(parm$coef)] <- 0
   }
   return(parm)
 }
