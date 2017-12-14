@@ -32,9 +32,6 @@ residuals and degrees of freedom according to ridge regression, QR decomposition
 or Singular Value Decomposition. This function is internally called by .norm.draw(), 
 but can be called by any user-sprecified imputation funciton.
 }
-\references{
-Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
-}
 \author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+Gerko Vink, 2017
 }

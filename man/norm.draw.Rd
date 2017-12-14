@@ -6,9 +6,9 @@
 \alias{.norm.draw}
 \title{Draws values of beta and sigma by Bayesian linear regression}
 \usage{
-norm.draw(y, ry, x, ...)
+norm.draw(y, ry, x, rank.adjust = TRUE, ...)
 
-.norm.draw(y, ry, x, ...)
+.norm.draw(y, ry, x, rank.adjust = TRUE, ...)
 }
 \arguments{
 \item{y}{Incomplete data vector of length \code{n}}
@@ -17,6 +17,10 @@ norm.draw(y, ry, x, ...)
 \code{TRUE}=observed)}
 
 \item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
+
+\item{rank.adjust}{Argument that specifies whether \code{NA}'s in the 
+coefficients need to be set to zero. Only relevant when \code{ls.meth = "qr"} 
+AND the predictor matrix is rank-deficient.}
 
 \item{...}{Other named arguments.}
 }
@@ -34,5 +38,5 @@ can be called by user-specified imputation functions.
 Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
 }
 \author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+Stef van Buuren, Karin Groothuis-Oudshoorn, Gerko Vink, 2017
 }
