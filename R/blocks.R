@@ -4,32 +4,37 @@
 #' \code{blocks} argument in the \code{[=mice]{mice}} function.
 #' @inheritParams mice
 #' @param partition A character vector of length 1. Value 
-#' \code{"fcs"} (default) will assign each column to it own 
-#' block (fully conditional specification). Value 
-#' \code{"joint"} assigns all variables to on block
-#' called \code{"joint"} (joint model), whereas \code{"void"}
-#' produces an empty list.
+#' \code{"scatter"} (default) will assign each column to it own 
+#' block. Value \code{"collect"} assigns all variables to one block, 
+#' whereas \code{"void"} produces an empty list.
 #' @return A named list of character vectors with variables names.
-#' @details The \code{"fcs"} and \code{"joint"} represent to two 
-#' extreme scenarios for assigning variables to imputation block. 
-#' In practice, the user may specify hybrid imputation models that 
-#' combine aspects of joint and fully conditionally specified models.
+#' @details Choices \code{"scatter"} and \code{"collect"} represent to two 
+#' extreme scenarios for assigning variables to imputation blocks. 
+#' Use \code{"scatter"} to create an imputation model based on 
+#' \emph{fully conditionally specification} (FCS). Use \code{"collect"} to 
+#' gather all variables to be imputed by a \emph{joint model} (JM). 
+#' Scenario's in-between these two extremes respresent 
+#' \emph{crossbred} imputation models that combine FCS and JM.
 #' 
 #' Any variable not listed in will not be imputed. 
 #' Specification \code{"void"} reprsents the extreme scenario that 
 #' skips imputation of all variables. 
 #' 
-#' A variable may be a member of multiple blocks. This may be useful 
-#' in scenario's where the same (complete) background factors appear in 
-#' multiple imputation blocks, but beware that such might introduce 
-#' inconsistencies as the same variable is re-imputed in several 
-#' different blocks.
+#' A variable may be a member of multiple blocks. The variable will be 
+#' re-imputed in each block, so the final imputations for variable 
+#' will come from the last block that was executed. This scenario 
+#' may be useful where the same complete background factors appear in 
+#' multiple imputation blocks.
+#' 
+#' A variable may appear multiple times within a given block. If a univariate 
+#' imputation model is applied to such a block, then the variable is 
+#' re-imputed each time as it appears in the block.
 #' @examples
 #' make.blocks(nhanes)
 #' make.blocks(c("age", "sex", "edu"))
 #' @export
 make.blocks <- function(data, 
-                        partition = c("fcs", "joint", "void")) {
+                        partition = c("scatter", "collect", "void")) {
   if (is.vector(data)) {
     v <- as.list(as.character(data))
     names(v) <- as.character(data)
@@ -38,11 +43,11 @@ make.blocks <- function(data,
   data <- as.data.frame(data)
   partition <- match.arg(partition)
   switch(partition, 
-         fcs = {
+         scatter = {
            v <- as.list(names(data))
            names(v) <- names(data)
          },
-         joint = {
+         collect = {
            v <- list(names(data))
            names(v) <- "joint"
          },
