@@ -69,21 +69,13 @@ norm.draw <- function(y, ry, x, ridge = 1e-05, ...)
 
 ###'@rdname norm.draw
 ###'@export
-.norm.draw <- function(y, ry, x, ridge = 1e-05, ...) {
-  xobs <- x[ry, ]
-  yobs <- y[ry]
-  xtx <- crossprod(xobs)
-  pen <- ridge * diag(xtx)
-  if (length(pen) == 1)
-    pen <- matrix(pen)
-  v <- solve(xtx + diag(pen))
-  coef <- t(yobs %*% xobs %*% v)
-  residuals <- yobs - xobs %*% coef
-  df <- max(sum(ry) - ncol(x), 1)
-  sigma.star <- sqrt(sum((residuals)^2)/rchisq(1, df))
-  beta.star <- coef + (t(chol(sym(v))) %*% rnorm(ncol(x))) * sigma.star
-  parm <- list(coef, beta.star, sigma.star)
-  names(parm) <- c("coef", "beta", "sigma")
+.norm.draw <- function (y, ry, x, ls.meth = "qr", ...){
+  p <- estimice(x[ry,], y[ry], ls.meth)
+  sigma.star <- sqrt(sum((p$r)^2)/rchisq(1, p$df))
+  beta.star <- p$c + (t(chol(p$v, pivot = TRUE)) %*% rnorm(ncol(x))) * sigma.star
+  parm <- list(p$c, beta.star, sigma.star, ls.meth)
+  names(parm) <- c("coef", "beta", "sigma", "estimation")
   return(parm)
 }
+
 
