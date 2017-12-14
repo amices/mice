@@ -52,6 +52,9 @@ mice.impute.norm <- function(y, ry, x, wy = NULL, ...) {
 #'@param ry Vector of missing data pattern (\code{FALSE}=missing,
 #'\code{TRUE}=observed)
 #'@param x Matrix (\code{n} x \code{p}) of complete covariates.
+#'@param rank.adjust Argument that specifies whether \code{NA}'s in the 
+#'coefficients need to be set to zero. Only relevant when \code{ls.meth = "qr"} 
+#'AND the predictor matrix is rank-deficient.
 #'@param ... Other named arguments.
 #'@return A \code{list} containing components \code{coef} (least squares estimate),
 #'\code{beta} (drawn regression weights) and \code{sigma} (drawn value of the 
@@ -60,17 +63,21 @@ mice.impute.norm <- function(y, ry, x, wy = NULL, ...) {
 #'Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
 #'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
 #'@export
-norm.draw <- function(y, ry, x, ...) 
-  return(.norm.draw(y, ry, x, ...))
+norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...) 
+  return(.norm.draw(y, ry, x, rank.adjust = TRUE, ...))
 
 ###'@rdname norm.draw
 ###'@export
-.norm.draw <- function (y, ry, x, ...){
+.norm.draw <- function (y, ry, x, rank.adjust = TRUE, ...){
   p <- estimice(x[ry,], y[ry], ...)
   sigma.star <- sqrt(sum((p$r)^2)/rchisq(1, p$df))
   beta.star <- p$c + (t(chol(p$v, pivot = TRUE)) %*% rnorm(ncol(x))) * sigma.star
   parm <- list(p$c, beta.star, sigma.star, p$ls.meth)
   names(parm) <- c("coef", "beta", "sigma", "estimation")
+  if(any(is.na(parm$coef)) & rank.adjust){
+    parm$coef[is.na(A$coef)] <- 0
+    parm$beta[is.na(A$coef)] <- 0
+  }
   return(parm)
 }
 
@@ -106,7 +113,7 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
     f <- qr$fitted.values
     r <- qr$residuals
     v <- as.matrix(crossprod(qr.R(qr$qr)))
-    return(list(c=t(c), r=r, v=v, df=df, ls.meth))
+    return(list(c=t(c), r=r, v=v, df=df, ls.meth=ls.meth))
   } 
   if (ls.meth == "ridge"){
     xtx <- crossprod(x)
@@ -116,7 +123,7 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
     v <- solve(xtx + diag(pen))
     c <- t(y) %*% x %*% v
     r <- y - x %*% t(c)
-    return(list(c=t(c), r=r, v=v, df=df, ls.meth))
+    return(list(c=t(c), r=r, v=v, df=df, ls.meth=ls.meth))
   }  
   if (ls.meth == "svd"){
     s <- svd(x)
@@ -124,7 +131,6 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
     f <- x %*% c
     r <- f - y
     v <- s$v %*% diag(s$d)^2 %*% t(s$v)
-    return(list(c=c, r=r, v=v, df=df, ls.meth))
+    return(list(c=c, r=r, v=v, df=df, ls.meth=ls.meth))
   }
 }
-
