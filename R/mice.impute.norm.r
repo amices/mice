@@ -78,7 +78,7 @@ norm.draw <- function(y, ry, x, ridge = 1e-05, ...)
   return(parm)
 }
 
-#' Computes squares parameters
+#' Computes least squares parameters
 #' 
 #' This function computes least squares estimates, variance/covariance matrices, 
 #' residuals and degrees of freedom according to ridge regression, QR decomposition 
