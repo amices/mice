@@ -71,7 +71,8 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...)
 .norm.draw <- function (y, ry, x, rank.adjust = TRUE, ...){
   p <- estimice(x[ry,], y[ry], ...)
   sigma.star <- sqrt(sum((p$r)^2)/rchisq(1, p$df))
-  beta.star <- p$c + (t(chol(p$v, pivot = TRUE)) %*% rnorm(ncol(x))) * sigma.star
+  #beta.star <- p$c + (t(chol(sym(p$v), pivot = TRUE)) %*% rnorm(ncol(x))) * sigma.star
+  beta.star <- p$c + (t(chol(sym(p$v))) %*% rnorm(ncol(x))) * sigma.star
   parm <- list(p$c, beta.star, sigma.star, p$ls.meth)
   names(parm) <- c("coef", "beta", "sigma", "estimation")
   if(any(is.na(parm$coef)) & rank.adjust){
@@ -109,9 +110,9 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
     qr <- lm.fit(x = x, y = y)
     c <- t(qr$coef)
     f <- qr$fitted.values
-    r <- qr$residuals
-    v <- as.matrix(crossprod(qr.R(qr$qr)))
-    return(list(c=t(c), r=r, v=v, df=df, ls.meth=ls.meth))
+    r <- t(qr$residuals)
+    v <- solve(as.matrix(crossprod(qr.R(qr$qr))))
+    return(list(c=t(c), r=t(r), v=v, df=df, ls.meth=ls.meth))
   } 
   if (ls.meth == "ridge"){
     xtx <- crossprod(x)
@@ -128,7 +129,7 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
     c <- s$v %*% ((t(s$u) %*% y) / s$d)
     f <- x %*% c
     r <- f - y
-    v <- s$v %*% diag(s$d)^2 %*% t(s$v)
+    v <- solve(s$v %*% diag(s$d)^2 %*% t(s$v))
     return(list(c=c, r=r, v=v, df=df, ls.meth=ls.meth))
   }
 }
