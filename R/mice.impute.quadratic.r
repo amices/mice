@@ -84,7 +84,7 @@ mice.impute.quadratic <-function (y, ry, x, wy = NULL, ...) {
 	zobs <- cbind(y, y2) %*% parm$coef[-1]  
 	
 	#impute z
-	zmis <- mice.impute.pmm(zobs, ry, x)
+	zmis <- mice.impute.pmm(zobs, ry, x[, -1])
 	zstar <- zobs
 	zstar[!ry] <- zmis
 	# Otherwise the predict function crashes (nmatrix.1 error)
