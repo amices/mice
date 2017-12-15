@@ -91,3 +91,11 @@ minmax <- function(x,domin=TRUE,domax=TRUE){
   return(x)
 }
 
+single2imputes <- function(single, mis) {
+  nmis <- colSums(mis)
+  vars <- names(single)[nmis > 0]
+  z <- vector("list", length(vars))
+  names(z) <- vars
+  for (j in vars) z[[j]] <- single[mis[, j], j]
+  z
+}

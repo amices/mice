@@ -37,16 +37,36 @@
 #'Alexander Robitzsch and Oliver Luedtke (authors of \code{mitml} package) 
 #'and Joe Schafer (author of \code{pan} package).
 #'@references
-#' Simon Grund, Oliver Luedtke, Alexander Robitzsch (2016). Multiple 
+#' Grund S, Luedtke O, Robitzsch A (2016). Multiple 
 #' Imputation of Multilevel Missing Data: An Introduction to the R 
 #' Package \code{pan}. SAGE Open.
 #'
-#'Schafer JL. Analysis of Incomplete Multivariate Data. London: 
-#'Chapman & Hall, 1997.
+#'Schafer JL (1997). Analysis of Incomplete Multivariate Data. London: 
+#'Chapman & Hall.
+#'
+#'Schafer JL, and Yucel RM (2002). Computational strategies for 
+#'multivariate linear mixed-effects models with missing values. 
+#'Journal of Computational and Graphical Statistics, 11, 437-457.
 #'@family multivariate \code{2l} functions
 #'@keywords datagen
+#'@examples
+#'blocks <-  list(c("bmi", "chl", "hyp"), "age")
+#'method <- c("panImpute", "pmm")
+#'ini <- mice(nhanes, blocks = blocks, method = method, maxit = 0)
+#'pred <- ini$pred
+#'pred["B1", "hyp"] <- -2
+#'imp <- mice(nhanes, blocks = blocks, method = method, pred = pred, maxit = 1)
+#'
 #'@export
 mice.impute.panImpute <- function(data, formula, type, 
-                                  format = "list", ...) {
+                                  format = "imputes", ...) {
+  
+  obj <- mitml::panImpute(data = data, formula = formula, type = type, 
+                   m = 1, silent = TRUE, ...)
+  
+  if (format == "native") return(obj)
+  cmp <- mitml::mitmlComplete(obj, print = 1)[, names(data)]
+  if (format == "complete") return(cmp)
+  if (format == "imputes") return(single2imputes(cmp, is.na(data)))
   NULL
 }

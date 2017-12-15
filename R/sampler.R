@@ -94,31 +94,16 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
           
           # multivariate imputation - type method
           if (mult) {
-            x <- obtain.design(data, ff)
-            y <- data[, j]
-            ry <- complete.cases(x, y) & r[, j]
-            wy <- complete.cases(x) & where[, j]
-            cc <- vector("list", length(j))
-            names(cc) <- j
-            for (jj in j) cc[[jj]] <- wy[where[, jj], jj]
-            if (k == 1) check.df(x, y, ry)
+            mis <- !r
+            mis[, setdiff(b, colnames(data))] <- FALSE
+            data[mis] <- NA
             
-            #keep <- remove.lindep(x, y, ry, ...)
-            #x <- x[, keep, drop = FALSE]
-            #type <- type[keep]
-            
-            # here we go
             fm <- paste("mice.impute", theMethod, sep = ".")
-            z <- do.call(fm, args = list(y, ry, x, wy = wy, 
-                                         type = type, format = "list", ...))
-            if (!identical(names(z), j)) stop("Mismatch ", names(z), " and ", j)
-            
-            imputes <- data[wy, j]
-            imputes[!cc] <- NA
-            imputes[cc] <- z
-            for (k in j) {
-              imp[[k]][, i] <- imputes
-              data[(!r[, k]) & where[, k], j] <- imp[[k]][(!r[, k])[where[, k]], i]
+            imputes <- do.call(fm, args = list(data = data, type = type, ...))
+            if (is.null(imputes)) stop("No imputations from ", theMethod)
+            for (j in names(imputes)) {
+              imp[[j]][, i] <- imputes[[j]]
+              data[!r[, j], j] <- imp[[j]][, i]
             }
           }
           

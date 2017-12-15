@@ -18,8 +18,8 @@ listed in \code{predictors} should be added to the result. The default
 is \code{TRUE}}
 
 \item{include.intercept}{A logical that indicated whether the intercept 
-should be included in the result. The default (\code{FALSE}) is likely 
-to change in the future to remove some overhead.}
+should be included in the result. The default (\code{FALSE}) may change 
+in future versions.}
 }
 \value{
 A formula

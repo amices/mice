@@ -4,7 +4,7 @@
 \alias{mice.impute.panImpute}
 \title{Impute multilevel missing data using \code{pan}}
 \usage{
-mice.impute.panImpute(data, formula, type, format = "list", ...)
+mice.impute.panImpute(data, formula, type, format = "imputes", ...)
 }
 \arguments{
 \item{data}{A data frame containing incomplete and auxiliary variables, 
@@ -48,13 +48,26 @@ iteration scheme.
 
 This is a multivatiate imputation function using a joint model.
 }
+\examples{
+blocks <-  list(c("bmi", "chl", "hyp"), "age")
+method <- c("panImpute", "pmm")
+ini <- mice(nhanes, blocks = blocks, method = method, maxit = 0)
+pred <- ini$pred
+pred["B1", "hyp"] <- -2
+imp <- mice(nhanes, blocks = blocks, method = method, pred = pred, maxit = 1)
+
+}
 \references{
-Simon Grund, Oliver Luedtke, Alexander Robitzsch (2016). Multiple 
+Grund S, Luedtke O, Robitzsch A (2016). Multiple 
 Imputation of Multilevel Missing Data: An Introduction to the R 
 Package \code{pan}. SAGE Open.
 
-Schafer JL. Analysis of Incomplete Multivariate Data. London: 
-Chapman & Hall, 1997.
+Schafer JL (1997). Analysis of Incomplete Multivariate Data. London: 
+Chapman & Hall.
+
+Schafer JL, and Yucel RM (2002). Computational strategies for 
+multivariate linear mixed-effects models with missing values. 
+Journal of Computational and Graphical Statistics, 11, 437-457.
 }
 \seealso{
 \code{\link[mitml]{panImpute}}
