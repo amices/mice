@@ -97,7 +97,7 @@ mice.impute.quadratic <-function (y, ry, x, wy = NULL, ...) {
 	y.up  <-  (1/(2 * b2)) * (sqrt(4 * b2 * zstar + b1^2) - b1)
 
 	#calculate the abscissa at the parabolic minimum/maximum
-	y.min <- -b1 / 2 * b2
+	y.min <- -b1 / (2 * b2)
 	
 	#calculate regression parameters for 
 	q <- x[, 2]
