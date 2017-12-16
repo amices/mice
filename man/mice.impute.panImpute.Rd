@@ -4,7 +4,8 @@
 \alias{mice.impute.panImpute}
 \title{Impute multilevel missing data using \code{pan}}
 \usage{
-mice.impute.panImpute(data, formula, type, format = "imputes", ...)
+mice.impute.panImpute(data, formula, type, m = 1, silent = TRUE,
+  format = "mice$imp", ...)
 }
 \arguments{
 \item{data}{A data frame containing incomplete and auxiliary variables, 
@@ -19,6 +20,10 @@ in the imputation model using \code{I()}. See
 
 \item{type}{An integer vector specifying the role of each variable 
 in the imputation model (see \code{\link[mitml]{panImpute}})}
+
+\item{m}{The number of imputed data sets to generate.}
+
+\item{silent}{(optional) Logical flag indicating if console output should be suppressed. Default is to \code{FALSE}.}
 
 \item{format}{A character vector specifying the type of object that should 
 be returned. The default is \code{format = "list"}. No other formats are

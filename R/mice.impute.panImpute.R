@@ -9,6 +9,7 @@
 #'which offer different options for model specification.
 #'
 #'@name mice.impute.panImpute
+#'@inheritParams mitml::panImpute
 #'@param data A data frame containing incomplete and auxiliary variables, 
 #'the cluster indicator variable, and any other variables that should be 
 #'present in the imputed datasets.
@@ -58,15 +59,15 @@
 #'imp <- mice(nhanes, blocks = blocks, method = method, pred = pred, maxit = 1)
 #'
 #'@export
-mice.impute.panImpute <- function(data, formula, type, 
-                                  format = "imputes", ...) {
+mice.impute.panImpute <- function(data, formula, type, m = 1, silent = TRUE,
+                                  format = "mice$imp", ...) {
   
-  obj <- mitml::panImpute(data = data, formula = formula, type = type, 
-                   m = 1, silent = TRUE, ...)
+  nat <- mitml::panImpute(data = data, formula = formula, type = type, 
+                   m = m, silent = silent, ...)
   
-  if (format == "native") return(obj)
-  cmp <- mitml::mitmlComplete(obj, print = 1)[, names(data)]
+  if (format == "native") return(nat)
+  cmp <- mitml::mitmlComplete(nat, print = 1)[, names(data)]
   if (format == "complete") return(cmp)
-  if (format == "imputes") return(single2imputes(cmp, is.na(data)))
+  if (format == "mice$imp") return(single2imputes(cmp, is.na(data)))
   NULL
 }
