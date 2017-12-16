@@ -7,7 +7,7 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
   method <- setup$method
   visitSequence <- setup$visitSequence
   predictorMatrix <- setup$predictorMatrix
-  form <- setup$form
+  formula <- setup$formula
   post <- setup$post
   
   from <- fromto[1]
@@ -47,7 +47,7 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
           
           type <- predictorMatrix[h, ]
           predictors <- names(type)[type != 0]
-          ff <- create.formula(form = ~ 0, predictors = predictors, ...)
+          ff <- extend.formula(formula = ~ 0, predictors = predictors, ...)
           
           theMethod <- method[h]
           empt <- theMethod == ""
@@ -106,6 +106,21 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
               data[!r[, j], j] <- imp[[j]][, i]
             }
           }
+          
+          # # multivariate imputation - formula method
+          # if (mult.formula) {
+          #   mis <- !r
+          #   mis[, setdiff(b, colnames(data))] <- FALSE
+          #   data[mis] <- NA
+          #   
+          #   fm <- paste("mice.impute", theMethod, sep = ".")
+          #   imputes <- do.call(fm, args = list(data = data, type = type, ...))
+          #   if (is.null(imputes)) stop("No imputations from ", theMethod)
+          #   for (j in names(imputes)) {
+          #     imp[[j]][, i] <- imputes[[j]]
+          #     data[!r[, j], j] <- imp[[j]][, i]
+          #   }
+          # }
           
           # passive imputation
           if (pass) {

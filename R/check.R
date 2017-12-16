@@ -262,21 +262,6 @@ check.data <- function(setup, data, allow.na = FALSE,
   setup
 }
 
-check.form <- function(setup) {
-  blocks <- setup$blocks
-  form <- setup$form
-  
-  # check
-  if (length(form) != length(blocks))
-    stop("`length(form)` does not match `length(blocks)`.")
-  
-  # change
-  if (is.null(names(form))) names(form) <- names(blocks)
-  
-  setup$form <- form
-  setup
-}
-
 check.post <- function(setup) {
   blocks <- setup$blocks
   post <- setup$post

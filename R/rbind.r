@@ -103,7 +103,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     # The listelements method, post, predictorMatrix, visitSequence will be copied from x.
     method <- x$method
     post <- x$post
-    form <- x$form
+    formula <- x$formula
     predictorMatrix <- x$predictorMatrix
     visitSequence <- x$visitSequence
     
@@ -124,7 +124,7 @@ rbind.mids <- function(x, y = NULL, ...) {
                     method = method,
                     predictorMatrix = predictorMatrix,
                     visitSequence = visitSequence, 
-                    form = form, post = post, seed = seed, 
+                    formula = formula, post = post, seed = seed, 
                     iteration = iteration,
                     lastSeedValue = lastSeedvalue, 
                     chainMean = chainMean,
@@ -167,8 +167,8 @@ rbind.mids <- function(x, y = NULL, ...) {
       warning("`post` not equal; ignores y$post")
       warned <- TRUE
     }
-    if (!identical(x$form, y$form) && !warned) {
-      warning("`form` not equal; ignores y$form")
+    if (!identical(x$formula, y$formula) && !warned) {
+      warning("`formula` not equal; ignores y$formula")
       warned <- TRUE
     }
     
@@ -194,7 +194,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     blocks <- x$blocks
     method <- x$method
     post <- x$post
-    form <- x$form
+    formula <- x$formula
     predictorMatrix <- x$predictorMatrix
     visitSequence <- x$visitSequence
     
@@ -221,7 +221,7 @@ rbind.mids <- function(x, y = NULL, ...) {
                     method = method,
                     predictorMatrix = predictorMatrix,
                     visitSequence = visitSequence, 
-                    form = form, post = post, seed = seed, 
+                    formula = formula, post = post, seed = seed, 
                     iteration = iteration,
                     lastSeedValue = .Random.seed, 
                     chainMean = chainMean,

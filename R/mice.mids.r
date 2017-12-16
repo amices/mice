@@ -76,7 +76,7 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
                 method = obj$method,
                 defaultMethod = obj$defaultMethod,
                 predictorMatrix = obj$predictorMatrix,
-                form = obj$form, post = obj$post, 
+                formula = obj$formula, post = obj$post, 
                 nvar = ncol(obj$data), 
                 varnames = colnames(obj$data))
   
@@ -121,7 +121,7 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
                   method = setup$method,
                   predictorMatrix = setup$predictorMatrix,
                   visitSequence = setup$visitSequence,
-                  form = setup$form, post = setup$post, 
+                  formula = setup$formula, post = setup$post, 
                   seed = obj$seed, 
                   iteration = sumIt,
                   lastSeedValue = .Random.seed, 

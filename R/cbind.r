@@ -146,10 +146,9 @@ cbind.mids <- function(x, y = NULL, ...) {
     post <- c(x$post, rep.int("", ncol(y)))
     names(post) <- c(names(x$post), colnames(y))
 
-    # The form vector for (columns in) y will be set to ''.
-    form <- c(x$form, rep.int("", ncol(y)))
-    names(form) <- c(names(x$post), colnames(y))
-    
+    # No formula vector will be created
+    formula <- x$formula
+
     # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
     seed <- x$seed
     lastSeedvalue <- x$lastSeedvalue
@@ -166,7 +165,7 @@ cbind.mids <- function(x, y = NULL, ...) {
                     method = method,
                     predictorMatrix = predictorMatrix,
                     visitSequence = visitSequence, 
-                    form = form, post = post, seed = seed, 
+                    formula = formula, post = post, seed = seed, 
                     iteration = iteration,
                     lastSeedValue = .Random.seed, 
                     chainMean = chainMean,
@@ -214,7 +213,7 @@ cbind.mids <- function(x, y = NULL, ...) {
     visitSequence <- c(x$visitSequence, y$visitSequence + max(x$visitSequence))
     
     post <- c(x$post, y$post)
-    form <- c(x$form, y$form)
+    formula <- c(x$formula, y$formula)
     
     # For the elements seed, lastSeedvalue and iteration the values from midsobject x are copied.
     seed <- x$seed
@@ -257,7 +256,7 @@ cbind.mids <- function(x, y = NULL, ...) {
                     method = method,
                     predictorMatrix = predictorMatrix,
                     visitSequence = visitSequence, 
-                    form = form, post = post, seed = seed, 
+                    formula = formula, post = post, seed = seed, 
                     iteration = iteration,
                     lastSeedValue = .Random.seed, 
                     chainMean = chainMean,

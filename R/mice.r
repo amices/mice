@@ -93,6 +93,19 @@
 #'visited. In that way, deterministic relation between columns will always be
 #'synchronized.
 #'
+#'
+#'\emph{Auxiliary predictors in formula specification: }
+#'For a given block, the \code{formula} specification takes precedence over 
+#'the corresponding row in the \code{predictMatrix} argument. This 
+#'precedence is, however, restricted to the subset of variables
+#'specified in the terms of the block formula. Any 
+#'variables not specified by \code{formula} are imputed
+#'according to the \code{predictMatrix} specification. Variables with 
+#'non-zero \code{type} values in the \code{predictMatrix} will 
+#'internally be added as main effects to the \code{formula}, and hence 
+#'act as supplementary covariates. It is possible to suppress this behavior 
+#'by setting \code{include.auxiliary = FALSE}.
+#'
 #'@param data A data frame or a matrix containing the incomplete data.  Missing
 #'values are coded as \code{NA}.
 #'@param m Number of multiple imputations. The default is \code{m=5}.
@@ -143,15 +156,13 @@
 #'function to postprocess imputed values during the iterations. 
 #'The default is a vector of empty strings 
 #'(\code{vector("character", length(blocks))}), indicating no post-processing.
-#'@param form A vector of strings with length \code{length(blocks)}, specifying
-#'formulae. The \code{form} argument is an alternative to the 
+#'@param formula A named list of formula's, or expressions that
+#'    can be converted into formula's by \code{as.formula}. List elements
+#'    correspond to blocks. The block to which the list element applies is 
+#'    identied by its name, so list names must correspond to block names.
+#'    The \code{formula} argument is an alternative to the 
 #'\code{predictorMatrix} argument that allows for more flexibility in 
 #'specifying imputation models, e.g., for specifying interaction terms. 
-#'Each string is parsed and executed within the \code{sampler()}
-#'function to create terms for the predictor. The default is to do nothing. 
-#'When specified, the \code{form} argument takes precedence over the 
-#'\code{predictMatrix} argument. Terms in the formulae should 
-#'match variables names of the \code{data} argument.
 #'@param defaultMethod A vector of length 4 containing the default
 #'imputation methods for 1) numeric data, 2) factor data with 2 levels, 3) 
 #'factor data with > 2 unordered levels, and 4) factor data with > 2 
@@ -233,7 +244,7 @@ mice <- function(data, m = 5,
                  where = is.na(data),
                  blocks = make.blocks(data),
                  visitSequence = NULL,
-                 form = vector("character", length(blocks)),
+                 formula = NULL,
                  post = vector("character", length(blocks)),
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
                  maxit = 5, printFlag = TRUE, seed = NA,
@@ -268,7 +279,7 @@ mice <- function(data, m = 5,
                 method = method,
                 defaultMethod = defaultMethod,
                 predictorMatrix = predictorMatrix,
-                form = form, post = post, 
+                formula = formula, post = post, 
                 nvar = ncol(data), 
                 varnames = colnames(data))
 
@@ -278,7 +289,7 @@ mice <- function(data, m = 5,
   setup <- check.method(setup, data)
   setup <- check.predictorMatrix(setup)
   setup <- check.data(setup, data, ...)
-  setup <- check.form(setup)
+  setup <- check.formula(setup)
   setup <- check.post(setup)
   
   ## Initialize imputation array imp, etc.
@@ -299,7 +310,7 @@ mice <- function(data, m = 5,
                   method = setup$method,
                   predictorMatrix = setup$predictorMatrix,
                   visitSequence = setup$visitSequence,
-                  form = setup$form, post = setup$post, 
+                  formula = setup$formula, post = setup$post, 
                   seed = seed, 
                   iteration = q$iteration,
                   lastSeedValue = .Random.seed, 

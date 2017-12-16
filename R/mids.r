@@ -30,8 +30,10 @@
 #'    \item{\code{predictorMatrix}:}{A numerical matrix of containing 
 #'    integers specifying the predictor set.}
 #'    \item{\code{visitSequence}:}{The sequence in which columns are visited.}
-#'    \item{\code{form}:}{A vector of strings of length \code{length(blocks)} 
-#'    with a formala per block.}
+#'    \item{\code{formula}:}{A named list of formula's, or expressions that
+#'    can be converted into formula's by \code{as.formula}. List elements
+#'    correspond to blocks. The block to which the list element applies is 
+#'    identied by its name, so list names must correspond to block names.}
 #'    \item{\code{post}:}{A vector of strings of length \code{length(blocks)} 
 #'    with commands for post-processing.}
 #'    \item{\code{seed}:}{The seed value of the solution.}

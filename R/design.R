@@ -1,7 +1,7 @@
-obtain.design <- function(data, form = ~ .) {
+obtain.design <- function(data, formula = ~ .) {
   
-  mf <- model.frame (form , data = data, na.action = na.pass)
-  model.matrix(form , data = mf)
+  mf <- model.frame (formula , data = data, na.action = na.pass)
+  model.matrix(formula , data = mf)
 }
 
 create.design <- function(data, varname = ".") {

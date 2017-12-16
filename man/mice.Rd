@@ -10,9 +10,9 @@
 mice(data, m = 5, method = vector("character", length(blocks)),
   predictorMatrix = matrix(1, nrow = length(blocks), ncol = ncol(data)),
   where = is.na(data), blocks = make.blocks(data), visitSequence = NULL,
-  form = vector("character", length(blocks)), post = vector("character",
-  length(blocks)), defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-  maxit = 5, printFlag = TRUE, seed = NA, data.init = NULL, ...)
+  formula = NULL, post = vector("character", length(blocks)),
+  defaultMethod = c("pmm", "logreg", "polyreg", "polr"), maxit = 5,
+  printFlag = TRUE, seed = NA, data.init = NULL, ...)
 }
 \arguments{
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing
@@ -67,15 +67,13 @@ from left to right. It is possible to specify one of the keywords
 \code{'revmonotone'} (reverse of monotone). The keyword should be supplied as
 a string and may be abbreviated.}
 
-\item{form}{A vector of strings with length \code{length(blocks)}, specifying
-formulae. The \code{form} argument is an alternative to the 
+\item{formula}{A named list of formula's, or expressions that
+   can be converted into formula's by \code{as.formula}. List elements
+   correspond to blocks. The block to which the list element applies is 
+   identied by its name, so list names must correspond to block names.
+   The \code{formula} argument is an alternative to the 
 \code{predictorMatrix} argument that allows for more flexibility in 
-specifying imputation models, e.g., for specifying interaction terms. 
-Each string is parsed and executed within the \code{sampler()}
-function to create terms for the predictor. The default is to do nothing. 
-When specified, the \code{form} argument takes precedence over the 
-\code{predictMatrix} argument. Terms in the formulae should 
-match variables names of the \code{data} argument.}
+specifying imputation models, e.g., for specifying interaction terms.}
 
 \item{post}{A vector of strings with length \code{length(blocks)}, specifying
 expressions. Each string is parsed and executed within the \code{sampler()}
@@ -231,6 +229,18 @@ to specify \code{visitSequence} such that the column that is imputed by the
 \code{~} mechanism is visited each time after one of its predictors was
 visited. In that way, deterministic relation between columns will always be
 synchronized.
+
+\emph{Auxiliary predictors in formula specification: }
+For a given block, the \code{formula} specification takes precedence over 
+the corresponding row in the \code{predictMatrix} argument. This 
+precedence is, however, restricted to the subset of variables
+specified in the terms of the block formula. Any 
+variables not specified by \code{formula} are imputed
+according to the \code{predictMatrix} specification. Variables with 
+non-zero \code{type} values in the \code{predictMatrix} will 
+internally be added as main effects to the \code{formula}, and hence 
+act as supplementary covariates. It is possible to suppress this behavior 
+by setting \code{include.auxiliary = FALSE}.
 }
 \section{Functions}{
 
