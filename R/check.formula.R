@@ -37,7 +37,9 @@ check.formula <- function(setup, data, ...) {
   formula <- lapply(formula, as.formula)
   
   # determine blocks with no specified formula
-  attr(formula, "has.formula") <- !sapply(formula, is.empty.model)
+  attr(formula, "has.formula") <- !sapply(formula, 
+                                          is.empty.model.data, 
+                                          data = data)
   
   # extend formula with predictorMatrix
   for (h in seq_along(blocks)) {
@@ -51,4 +53,10 @@ check.formula <- function(setup, data, ...) {
   setup$formula.arg <- setup$formula
   setup$formula <- formula
   setup
+}
+
+is.empty.model.data <- function (x, data) 
+{
+  tt <- terms(x, data = data)
+  (length(attr(tt, "factors")) == 0L) & (attr(tt, "intercept") == 0L)
 }

@@ -289,7 +289,7 @@ mice <- function(data, m = 5,
   setup <- check.method(setup, data)
   setup <- check.predictorMatrix(setup)
   setup <- check.data(setup, data, ...)
-  setup <- check.formula(setup)
+  setup <- check.formula(setup, data, ...)
   setup <- check.post(setup)
   
   ## Initialize imputation array imp, etc.

@@ -1,6 +1,6 @@
 #'@import methods
-#'@importFrom splines bs
-#'@importFrom survival basehaz coxph Surv
+#'@importFrom splines   bs
+#'@importFrom survival  basehaz coxph Surv
 #'@importFrom grDevices dev.capabilities hcl palette
 #'@importFrom graphics  abline points text plot
 #'@importFrom stats     C aggregate as.formula binomial coef
@@ -11,7 +11,7 @@
 #'                      rchisq rgamma rnorm runif summary.glm
 #'                      quantile
 #'                      update var vcov complete.cases na.omit na.pass
-#'                      reformulate is.empty.model
+#'                      reformulate is.empty.model terms
 #'@importFrom utils     flush.console write.table head tail
 #'                      packageDescription methods packageVersion
 #'@importFrom MASS      eqscplot lda mvrnorm polr truehist ginv
