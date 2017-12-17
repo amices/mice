@@ -5,17 +5,24 @@ imp2 <- mice(nhanes[14:25, ], m = 2, maxit = 1, print = FALSE)
 imp3 <- mice(nhanes2, m = 2, maxit = 1, print = FALSE)
 imp4 <- mice(nhanes2, m = 1, maxit = 1, print = FALSE)
 imp5 <- mice(nhanes[1:13, ], m = 2, maxit = 2, print = FALSE)
+imp6 <- mice(nhanes[1:13, 2:3], m = 2, maxit = 2, print = FALSE)
+nh3 <- nhanes
+colnames(nh3) <- c("AGE", "bmi", "hyp", "chl")
+imp7 <- mice(nh3[14:25, ], m = 2, maxit = 2, print = FALSE)
 
 mylist <- list(age = NA, bmi = NA, hyp = NA, chl = NA)
 nhalf <- nhanes[13:25, ]
 
-test_that("Throws warning", {
-  expect_warning(rbind(imp1, imp2))
+test_that("Expands number of rows and imputes", {
+  expect_equal(nrow(complete(rbind(imp1, imp2))), 25L)
+  expect_equal(nrow(rbind(imp1, imp2)$imp$bmi), 9L)
 })
 
-test_that("Stops on impossible task", {
+test_that("Throws errors", {
   expect_error(rbind(imp1, imp3), "Datasets have different factor variables")
   expect_error(rbind(imp3, imp4), "Number of imputations differ")
+  expect_error(rbind(imp1, imp6), "Datasets have different number of columns")
+  expect_error(rbind(imp1, imp7), "Datasets have different variable names")
 })
 
 test_that("Produces longer imputed data", {

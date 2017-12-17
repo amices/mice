@@ -145,33 +145,6 @@ rbind.mids <- function(x, y = NULL, ...) {
       stop("Datasets have different factor variables")
     if (x$m != y$m)
       stop("Number of imputations differ")
-    
-    warned <- FALSE
-    if (!identical(x$blocks, y$blocks) && !warned) {
-      warning("`blocks` not equal; ignores y$blocks")
-      warned <- TRUE
-    }
-    if (!identical(x$method, y$method) && !warned) {
-      warning("`methods` not equal; ignores y$method")
-      warned <- TRUE
-    }
-    if (!identical(x$predictorMatrix, y$predictorMatrix) && !warned) {
-      warning("`predictorMatrix` not equal; ignores y$predictorMatrix")
-      warned <- TRUE
-    }
-    if (!identical(x$visitSequence, y$visitSequence) && !warned) {
-      warning("`visitSequence` not equal; ignores y$visitSequence")
-      warned <- TRUE
-    }
-    if (!identical(x$post, y$post) && !warned) {
-      warning("`post` not equal; ignores y$post")
-      warned <- TRUE
-    }
-    if (!identical(x$formula, y$formula) && !warned) {
-      warning("`formula` not equal; ignores y$formula")
-      warned <- TRUE
-    }
-    
     varnames <- colnames(x$data)
     
     # Call is a vector, with first argument the mice statement and second argument the call to cbind.mids.
