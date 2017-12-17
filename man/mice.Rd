@@ -10,7 +10,7 @@
 mice(data, m = 5, method = vector("character", length(blocks)),
   predictorMatrix = matrix(1, nrow = length(blocks), ncol = ncol(data)),
   where = is.na(data), blocks = make.blocks(data), visitSequence = NULL,
-  formula = NULL, post = vector("character", length(blocks)),
+  formulas = NULL, post = vector("character", length(blocks)),
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"), maxit = 5,
   printFlag = TRUE, seed = NA, data.init = NULL, ...)
 }
@@ -67,11 +67,11 @@ from left to right. It is possible to specify one of the keywords
 \code{'revmonotone'} (reverse of monotone). The keyword should be supplied as
 a string and may be abbreviated.}
 
-\item{formula}{A named list of formula's, or expressions that
+\item{formulas}{A named list of formula's, or expressions that
    can be converted into formula's by \code{as.formula}. List elements
    correspond to blocks. The block to which the list element applies is 
    identied by its name, so list names must correspond to block names.
-   The \code{formula} argument is an alternative to the 
+   The \code{formulas} argument is an alternative to the 
 \code{predictorMatrix} argument that allows for more flexibility in 
 specifying imputation models, e.g., for specifying interaction terms.}
 
@@ -230,17 +230,17 @@ to specify \code{visitSequence} such that the column that is imputed by the
 visited. In that way, deterministic relation between columns will always be
 synchronized.
 
-\emph{Auxiliary predictors in formula specification: }
-For a given block, the \code{formula} specification takes precedence over 
+\emph{Auxiliary predictors in formulas specification: }
+For a given block, the \code{formulas} specification takes precedence over 
 the corresponding row in the \code{predictMatrix} argument. This 
 precedence is, however, restricted to the subset of variables
 specified in the terms of the block formula. Any 
-variables not specified by \code{formula} are imputed
+variables not specified by \code{formulas} are imputed
 according to the \code{predictMatrix} specification. Variables with 
 non-zero \code{type} values in the \code{predictMatrix} will 
-internally be added as main effects to the \code{formula}, and hence 
-act as supplementary covariates. It is possible to suppress this behavior 
-by setting \code{include.auxiliary = FALSE}.
+not be be added as main effects to the \code{formulas}. It is possible
+to turn variables from the \code{predictorMatrix} into supplementary 
+covariates by specifyding the argument \code{auxiliary = TRUE}.
 }
 \section{Functions}{
 

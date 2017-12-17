@@ -7,7 +7,7 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
   method <- setup$method
   visitSequence <- setup$visitSequence
   predictorMatrix <- setup$predictorMatrix
-  formula <- setup$formula
+  formulas <- setup$formulas
   post <- setup$post
   
   from <- fromto[1]
@@ -46,9 +46,9 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
         for (h in visitSequence) {
           b <- blocks[[h]]
           bname <- names(blocks)[h]
-          ff <- formula[[h]]
+          ff <- formulas[[h]]
           type <- predictorMatrix[h, ]
-          hasForm <- attr(formula, "has.formula")[h]
+          hasForm <- attr(formulas, "has.formula")[h]
           
           # univariate/multivariate logic
           theMethod <- method[h]

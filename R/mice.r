@@ -94,17 +94,17 @@
 #'synchronized.
 #'
 #'
-#'\emph{Auxiliary predictors in formula specification: }
-#'For a given block, the \code{formula} specification takes precedence over 
+#'\emph{Auxiliary predictors in formulas specification: }
+#'For a given block, the \code{formulas} specification takes precedence over 
 #'the corresponding row in the \code{predictMatrix} argument. This 
 #'precedence is, however, restricted to the subset of variables
 #'specified in the terms of the block formula. Any 
-#'variables not specified by \code{formula} are imputed
+#'variables not specified by \code{formulas} are imputed
 #'according to the \code{predictMatrix} specification. Variables with 
 #'non-zero \code{type} values in the \code{predictMatrix} will 
-#'internally be added as main effects to the \code{formula}, and hence 
-#'act as supplementary covariates. It is possible to suppress this behavior 
-#'by setting \code{include.auxiliary = FALSE}.
+#'not be be added as main effects to the \code{formulas}. It is possible
+#'to turn variables from the \code{predictorMatrix} into supplementary 
+#'covariates by specifyding the argument \code{auxiliary = TRUE}.
 #'
 #'@param data A data frame or a matrix containing the incomplete data.  Missing
 #'values are coded as \code{NA}.
@@ -156,11 +156,11 @@
 #'function to postprocess imputed values during the iterations. 
 #'The default is a vector of empty strings 
 #'(\code{vector("character", length(blocks))}), indicating no post-processing.
-#'@param formula A named list of formula's, or expressions that
+#'@param formulas A named list of formula's, or expressions that
 #'    can be converted into formula's by \code{as.formula}. List elements
 #'    correspond to blocks. The block to which the list element applies is 
 #'    identied by its name, so list names must correspond to block names.
-#'    The \code{formula} argument is an alternative to the 
+#'    The \code{formulas} argument is an alternative to the 
 #'\code{predictorMatrix} argument that allows for more flexibility in 
 #'specifying imputation models, e.g., for specifying interaction terms. 
 #'@param defaultMethod A vector of length 4 containing the default
@@ -244,7 +244,7 @@ mice <- function(data, m = 5,
                  where = is.na(data),
                  blocks = make.blocks(data),
                  visitSequence = NULL,
-                 formula = NULL,
+                 formulas = NULL,
                  post = vector("character", length(blocks)),
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
                  maxit = 5, printFlag = TRUE, seed = NA,
@@ -279,7 +279,7 @@ mice <- function(data, m = 5,
                 method = method,
                 defaultMethod = defaultMethod,
                 predictorMatrix = predictorMatrix,
-                formula = formula, post = post, 
+                formulas = formulas, post = post, 
                 nvar = ncol(data), 
                 varnames = colnames(data))
 
@@ -289,7 +289,7 @@ mice <- function(data, m = 5,
   setup <- check.method(setup, data)
   setup <- check.predictorMatrix(setup)
   setup <- check.data(setup, data, ...)
-  setup <- check.formula(setup, data, ...)
+  setup <- check.formulas(setup, data, ...)
   setup <- check.post(setup)
   
   ## Initialize imputation array imp, etc.
@@ -310,7 +310,7 @@ mice <- function(data, m = 5,
                   method = setup$method,
                   predictorMatrix = setup$predictorMatrix,
                   visitSequence = setup$visitSequence,
-                  formula = setup$formula, post = setup$post, 
+                  formulas = setup$formulas, post = setup$post, 
                   seed = seed, 
                   iteration = q$iteration,
                   lastSeedValue = .Random.seed, 

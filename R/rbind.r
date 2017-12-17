@@ -103,7 +103,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     # The listelements method, post, predictorMatrix, visitSequence will be copied from x.
     method <- x$method
     post <- x$post
-    formula <- x$formula
+    formulas <- x$formulas
     predictorMatrix <- x$predictorMatrix
     visitSequence <- x$visitSequence
     
@@ -124,7 +124,7 @@ rbind.mids <- function(x, y = NULL, ...) {
                     method = method,
                     predictorMatrix = predictorMatrix,
                     visitSequence = visitSequence, 
-                    formula = formula, post = post, seed = seed, 
+                    formulas = formulas, post = post, seed = seed, 
                     iteration = iteration,
                     lastSeedValue = lastSeedvalue, 
                     chainMean = chainMean,
@@ -167,7 +167,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     blocks <- x$blocks
     method <- x$method
     post <- x$post
-    formula <- x$formula
+    formulas <- x$formulas
     predictorMatrix <- x$predictorMatrix
     visitSequence <- x$visitSequence
     
@@ -194,7 +194,7 @@ rbind.mids <- function(x, y = NULL, ...) {
                     method = method,
                     predictorMatrix = predictorMatrix,
                     visitSequence = visitSequence, 
-                    formula = formula, post = post, seed = seed, 
+                    formulas = formulas, post = post, seed = seed, 
                     iteration = iteration,
                     lastSeedValue = .Random.seed, 
                     chainMean = chainMean,

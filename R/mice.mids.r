@@ -76,7 +76,7 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
                 method = obj$method,
                 defaultMethod = obj$defaultMethod,
                 predictorMatrix = obj$predictorMatrix,
-                formula = obj$formula, post = obj$post, 
+                formulas = obj$formulas, post = obj$post, 
                 nvar = ncol(obj$data), 
                 varnames = colnames(obj$data))
   
@@ -114,14 +114,13 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
     row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
   
   ## save, and return
-  ## save, and return
   midsobj <- list(data = obj$data, imp = imp, m = obj$m,
                   where = where, blocks = setup$blocks, 
                   call = call, nmis = setup$nmis, 
                   method = setup$method,
                   predictorMatrix = setup$predictorMatrix,
                   visitSequence = setup$visitSequence,
-                  formula = setup$formula, post = setup$post, 
+                  formulas = setup$formulas, post = setup$post, 
                   seed = obj$seed, 
                   iteration = sumIt,
                   lastSeedValue = .Random.seed, 

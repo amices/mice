@@ -4,7 +4,7 @@
 \alias{extend.formula}
 \title{Extends a formula with predictors}
 \usage{
-extend.formula(formula = ~0, predictors = NULL, include.auxiliary = TRUE,
+extend.formula(formula = ~0, predictors = NULL, auxiliary = FALSE,
   include.intercept = FALSE, ...)
 }
 \arguments{
@@ -13,13 +13,12 @@ not a formula, the formula is internally reset to \code{~0}.}
 
 \item{predictors}{A character vector of variable names.}
 
-\item{include.auxiliary}{A logical that indicates whether the variables
+\item{auxiliary}{A logical that indicates whether the variables
 listed in \code{predictors} should be added to the formula as main 
-effects. The default is \code{TRUE}.}
+effects. The default is \code{FALSE}.}
 
 \item{include.intercept}{A logical that indicated whether the intercept 
-should be included in the result. The default (\code{FALSE}) may change 
-in future versions.}
+should be included in the result.}
 }
 \value{
 A formula

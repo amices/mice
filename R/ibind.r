@@ -76,7 +76,7 @@ ibind <- function(x, y) {
                   method = x$method,
                   predictorMatrix = x$predictorMatrix,
                   visitSequence = visitSequence, 
-                  formula = x$formula, post = x$post, seed = x$seed, 
+                  formulas = x$formulas, post = x$post, seed = x$seed, 
                   iteration = iteration,
                   lastSeedValue = .Random.seed, 
                   chainMean = chainMean,
