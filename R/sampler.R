@@ -42,13 +42,15 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
           }
         }
         
-        # impute block-by-block - type
+        # impute block-by-block
         for (h in visitSequence) {
-          
+          b <- blocks[[h]]
+          bname <- names(blocks)[h]
+          ff <- formula[[h]]
           type <- predictorMatrix[h, ]
-          predictors <- names(type)[type != 0]
-          ff <- extend.formula(formula = ~ 0, predictors = predictors, ...)
+          hasForm <- attr(formula, "has.formula")[h]
           
+          # univariate/multivariate logic
           theMethod <- method[h]
           empt <- theMethod == ""
           univ <- !empt && !is.passive(theMethod) && 
@@ -56,9 +58,6 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
           mult <- !empt && !is.passive(theMethod) && 
             handles.format(paste0("mice.impute.", theMethod))
           pass <- !empt && is.passive(theMethod) && length(blocks[[h]]) == 1
-          
-          b <- blocks[[h]]
-          bname <- names(blocks)[h]
           
           ## store current state
           oldstate <- get("state", pos = parent.frame())
@@ -92,35 +91,26 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
             }
           }
           
-          # multivariate imputation - type method
+          # multivariate imputation - type and formula
           if (mult) {
             mis <- !r
             mis[, setdiff(b, colnames(data))] <- FALSE
             data[mis] <- NA
             
             fm <- paste("mice.impute", theMethod, sep = ".")
-            imputes <- do.call(fm, args = list(data = data, type = type, ...))
-            if (is.null(imputes)) stop("No imputations from ", theMethod)
+            if (hasForm) 
+              imputes <- do.call(fm, args = list(data = data, 
+                                                 formula = ff, ...))
+            else 
+              imputes <- do.call(fm, args = list(data = data, 
+                                                 type = type, ...))
+            if (is.null(imputes)) stop("No imputations from ", theMethod, 
+                                       bname)
             for (j in names(imputes)) {
               imp[[j]][, i] <- imputes[[j]]
               data[!r[, j], j] <- imp[[j]][, i]
             }
           }
-          
-          # # multivariate imputation - formula method
-          # if (mult.formula) {
-          #   mis <- !r
-          #   mis[, setdiff(b, colnames(data))] <- FALSE
-          #   data[mis] <- NA
-          #   
-          #   fm <- paste("mice.impute", theMethod, sep = ".")
-          #   imputes <- do.call(fm, args = list(data = data, type = type, ...))
-          #   if (is.null(imputes)) stop("No imputations from ", theMethod)
-          #   for (j in names(imputes)) {
-          #     imp[[j]][, i] <- imputes[[j]]
-          #     data[!r[, j], j] <- imp[[j]][, i]
-          #   }
-          # }
           
           # passive imputation
           if (pass) {
