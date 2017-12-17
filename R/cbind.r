@@ -106,7 +106,9 @@ cbind.mids <- function(x, y = NULL, ...) {
     
     # where argument
     where <- cbind(x$where, matrix(FALSE, nrow = nrow(y), ncol = ncol(y)))
-    blocks <- x$blocks
+    colnames(where) <- varnames
+    blocks <- c(x$blocks, colnames(y))
+    blocks <- name.blocks(blocks)
     
     # The number of imputations in the new midsobject is equal to that in x.
     m <- x$m
@@ -137,7 +139,7 @@ cbind.mids <- function(x, y = NULL, ...) {
     # The variable(s) in y are included in the predictorMatrix.  y is not used as predictor as well as not imputed.
     predictorMatrix <- rbind(x$predictorMatrix, matrix(0, ncol = ncol(x$predictorMatrix), nrow = ncol(y)))
     predictorMatrix <- cbind(predictorMatrix, matrix(0, ncol = ncol(y), nrow = nrow(x$predictorMatrix) + ncol(y)))
-    dimnames(predictorMatrix) <- list(varnames, varnames)
+    dimnames(predictorMatrix) <- list(names(blocks), varnames)
     
     # The visitSequence is taken as in x$visitSequence.
     visitSequence <- x$visitSequence
