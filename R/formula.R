@@ -15,13 +15,29 @@ extend.formula <- function(formula = ~ 0,
                            predictors = NULL,
                            include.auxiliary = TRUE,
                            include.intercept = FALSE, ...) {
-  if (!is.formula(formula)) formula = ~ 0
-  f <- reformulate(c(".", predictors))
-  if (include.auxiliary) formula <- update(formula, f, ...)
+  if (!is.formula(formula)) formula <- ~ 0
+  
+  # handle dot in RHS
+  if (hasdot(formula)) {
+    if (length(predictors) > 1)
+      fr <- as.formula(c("~", paste(predictors, collapse = "+")))
+    else 
+      fr <- ~ 0
+  } else 
+    fr <- reformulate(c(".", predictors))
+  
+  if (include.auxiliary) formula <- update(formula, fr, ...)
   if (include.intercept) formula <- update(formula, ~ . + 1, ...)
   formula
 }
 
 is.formula <- function(x){
   inherits(x, "formula")
+}
+
+hasdot <- function(f) {
+  if(is.recursive(f)) {
+    return(any(sapply(as.list(f), hasdot)))
+  } else {
+    f == as.symbol(".")}
 }
