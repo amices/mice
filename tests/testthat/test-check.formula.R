@@ -21,13 +21,13 @@ v2 <- mice:::check.formulas(setup, data)
 v2$formulas
 
 test_that("updates `has.formula` attribute", {
-  expect_false(identical(v2$formulas, v2$formulas.arg))
+  # expect_false(identical(v2$formulas, v2$formulas.arg))
   expect_identical(v2$formulas[[1]], v2$formulas.arg[[1]])
 })
 
 # try dot in formula
 formulas <- list(bmi ~ ., age ~ ., chl ~ .)
-formulas <- name.formulas(formulas)
+formulas <- name.formulas(formulas, data = nhanes)
 setup <- list(blocks = blocks, 
               predictorMatrix = ini$predictorMatrix,
               formulas = formulas)
@@ -49,10 +49,10 @@ test_that("predictorMatrix and formula yield same imputations", {
 })
 
 # formula specification
-form <- name.blocks(list(bmi ~ ., hyp ~., chl ~ .))
-imp3 <- mice(nhanes, formulas = form, seed = 51212, print = FALSE, m = 1)
-cmp3 <- complete(imp3)
-
+#form <- name.blocks(list(bmi ~ ., hyp ~., chl ~ .))
+#imp3 <- mice(nhanes, formulas = form, seed = 51212, print = FALSE, m = 1)
+#cmp3 <- complete(imp3)
+#z
 
 # old.form <- c("", "bmi ~ chl + hyp", "hyp ~ bmi + chl", "chl ~ bmi + hyp")
 # imp <- mice(nhanes, formula = old.form, m = 1, maxit = 2, print = FALSE)

@@ -2,7 +2,7 @@ check.formulas <- function(setup, data, ...) {
   blocks <- setup$blocks
   predictorMatrix <- setup$predictorMatrix
   formulas <- setup$formulas
-
+  
   # initialize if user specified no formulas
   if (is.null(formulas)) {
     formulas <- as.list(rep("~ 0", length(blocks)))
@@ -13,15 +13,7 @@ check.formulas <- function(setup, data, ...) {
   if (is.null(names(formulas)) && length(formulas) == length(blocks))
     names(formulas) <- names(blocks)
   
-  # lecacy handling: character vector to list
-  if (length(formulas) == length(blocks) && is.vector(formulas) 
-      && is.character(formulas))
-  {
-    formulas[formulas != ""] <- "~ 0"
-    fl <- as.list(formulas)
-    names(fl) <- names(formulas)
-    formulas <- fl
-  }
+  formulas <- handle.oldstyle.formulas(formulas, data)
   
   # add formula for any missing blocks
   # noFormula <- !names(blocks) %in% names(formulas)
@@ -40,13 +32,18 @@ check.formulas <- function(setup, data, ...) {
   
   # determine blocks with no specified formula
   attr(formulas, "has.formula") <- !sapply(formulas, 
-                                          is.empty.model.data, 
-                                          data = data)
+                                           is.empty.model.data, 
+                                           data = data)
   
   # extend formulas with predictorMatrix
-  for (h in seq_along(blocks)) {
-    type <- predictorMatrix[h, ]
-    predictors <- names(type)[type != 0]
+  for (h in names(blocks)) {
+    if (is.null(predictorMatrix)) {
+      if (length(blocks[[h]]) == 1) predictors <- setdiff(colnames(data), h)
+      else predictors <- setdiff(colnames(data), blocks[[h]])
+    } else {
+      type <- predictorMatrix[h, ]
+      predictors <- names(type)[type != 0]
+    }
     ff <- extend.formula(formula = formulas[[h]], predictors = predictors, ...)
     formulas[[h]] <- ff
   }
@@ -61,4 +58,15 @@ is.empty.model.data <- function (x, data)
 {
   tt <- terms(x, data = data)
   (length(attr(tt, "factors")) == 0L) & (attr(tt, "intercept") == 0L)
+}
+
+handle.oldstyle.formulas <- function(formulas, data) {
+  # converts old-style character vector to formula list
+  oldstyle <- length(formulas) == ncol(data) && is.vector(formulas) && 
+    is.character(formulas)
+  if (!oldstyle) return(formulas)
+  formulas[formulas != ""] <- "~ 0"
+  fl <- as.list(formulas)
+  names(fl) <- names(formulas)
+  fl
 }

@@ -102,9 +102,10 @@
 #'variables not specified by \code{formulas} are imputed
 #'according to the \code{predictMatrix} specification. Variables with 
 #'non-zero \code{type} values in the \code{predictMatrix} will 
-#'not be be added as main effects to the \code{formulas}. It is possible
-#'to turn variables from the \code{predictorMatrix} into supplementary 
-#'covariates by specifyding the argument \code{auxiliary = TRUE}.
+#'be added as main effects to the \code{formulas}, which will 
+#'act as supplementary covariates in the imputation model. It is possible
+#'to turn off this behaviour by specifying the 
+#'argument \code{auxiliary = FALSE}.
 #'
 #'@param data A data frame or a matrix containing the incomplete data.  Missing
 #'values are coded as \code{NA}.
@@ -239,27 +240,92 @@
 #'
 #'@export
 mice <- function(data, m = 5, 
-                 method = vector("character", length(blocks)),
-                 predictorMatrix = matrix(1, nrow = length(blocks), ncol = ncol(data)),
+                 method = NULL,
+                 predictorMatrix,
                  where = is.na(data),
-                 blocks = make.blocks(data),
+                 blocks,
                  visitSequence = NULL,
-                 formulas = NULL,
-                 post = vector("character", length(blocks)),
+                 formulas,
+                 post = vector("character", length = ncol(data)),
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
                  maxit = 5, printFlag = TRUE, seed = NA,
                  data.init = NULL, ...) {
-  
   # Error checks
   if (!(is.matrix(data) || is.data.frame(data)))
-    stop("Data should be a matrix or data frame")
+    stop("Data should be a matrix or data frame", call. = FALSE)
   if (ncol(data) < 2)
-    stop("Data should contain at least two columns")
+    stop("Data should contain at least two columns", call. = FALSE)
   if (!(is.matrix(where) || is.data.frame(where)))
-    stop("Argument `where` not a matrix or data frame")
+    stop("Argument `where` not a matrix or data frame", call. = FALSE)
   if (!all(dim(data) == dim(where)))
-    stop("Arguments `data` and `where` not of same size")
-
+    stop("Arguments `data` and `where` not of same size", call. = FALSE)
+  
+  # determine input combination: predictorMatrix, blocks, formulas
+  mp <- missing(predictorMatrix)
+  mb <- missing(blocks)
+  mf <- missing(formulas)
+  
+  # case A
+  if (mp & mb & mf) {
+    # blocks lead
+    blocks <- make.blocks(data)
+    predictorMatrix <- 1 - diag(1, length(blocks))
+    dimnames(predictorMatrix) <- list(names(blocks), names(blocks))
+    formulas <- as.list(rep("~ 0", length(blocks)))
+    names(formulas) <- names(blocks)
+  }
+  # case B
+  if (!mp & mb & mf) {
+    # predictorMatrix leads
+    if (!is.matrix(predictorMatrix))
+      stop("`predictorMatrix` not a matrix.", call. = FALSE)
+    if (nrow(predictorMatrix) != ncol(predictorMatrix))
+      stop(paste("`predictorMatrix` must have same number of rows and columns", 
+                 "if `blocks` and `formulas` are not specified."), 
+           call. = FALSE)
+    if (is.null(dimnames(predictorMatrix))) {
+      if (ncol(predictorMatrix) == ncol(data)) 
+        dimnames(predictorMatrix) <- list(colnames(data), colnames(data))
+      else
+        stop("Missing row/column names in `predictorMatrix`.", call. = FALSE)
+    }
+    diag(predictorMatrix) <- 0
+    
+    blocks <- make.blocks(colnames(predictorMatrix), partition = "scatter")
+    formulas <- as.list(rep("~ 0", length(blocks)))
+    names(formulas) <- names(blocks)
+  }
+  
+  # case C
+  if (mp & !mb & mf) {
+    # blocks leads
+    blocks <- check.blocks(blocks, data)
+    
+    predictorMatrix <- matrix(1, nrow = length(blocks), ncol = ncol(data))
+    dimnames(predictorMatrix) <- list(names(blocks), colnames(data))
+    for (i in row.names(predictorMatrix)) 
+      predictorMatrix[i, grep(i, colnames(predictorMatrix))] <- 0
+    
+    formulas <- as.list(rep("~ 0", length(blocks)))
+    names(formulas) <- names(blocks)
+  }
+  
+  # case D
+  if (mp & mb & !mf) {
+    # formulas leads
+    formulas <- name.formulas(formulas)
+    formulas <- handle.oldstyle.formulas(formulas, data = data)
+    
+    blocks <- extract.blocks(formulas)
+    
+    predictorMatrix <- matrix(1, nrow = length(blocks), ncol = ncol(data))
+    dimnames(predictorMatrix) <- list(names(blocks), colnames(data))
+    for (i in row.names(predictorMatrix)) 
+      predictorMatrix[i, grep(i, colnames(predictorMatrix))] <- 0
+  }
+  
+  # 
+  
   # list for storing current computational state
   state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
   
@@ -282,13 +348,13 @@ mice <- function(data, m = 5,
                 formulas = formulas, post = post, 
                 nvar = ncol(data), 
                 varnames = colnames(data))
-
+  
   # Checks and edits on the arguments
-  setup <- check.blocks(setup, data)
+  # setup <- check.blocks(setup, data)
   setup <- check.visitSequence(setup, where)
   setup <- check.method(setup, data)
   setup <- check.predictorMatrix(setup)
-  setup <- check.data(setup, data, ...)
+  # setup <- check.data(setup, data, ...)
   setup <- check.formulas(setup, data, ...)
   setup <- check.post(setup)
   

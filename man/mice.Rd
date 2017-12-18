@@ -7,12 +7,10 @@
 \alias{mice}
 \title{\pkg{mice}: Multivariate Imputation by Chained Equations}
 \usage{
-mice(data, m = 5, method = vector("character", length(blocks)),
-  predictorMatrix = matrix(1, nrow = length(blocks), ncol = ncol(data)),
-  where = is.na(data), blocks = make.blocks(data), visitSequence = NULL,
-  formulas = NULL, post = vector("character", length(blocks)),
-  defaultMethod = c("pmm", "logreg", "polyreg", "polr"), maxit = 5,
-  printFlag = TRUE, seed = NA, data.init = NULL, ...)
+mice(data, m = 5, method = NULL, predictorMatrix, where = is.na(data),
+  blocks, visitSequence = NULL, formulas, post = vector("character", length
+  = ncol(data)), defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+  maxit = 5, printFlag = TRUE, seed = NA, data.init = NULL, ...)
 }
 \arguments{
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing
@@ -238,9 +236,10 @@ specified in the terms of the block formula. Any
 variables not specified by \code{formulas} are imputed
 according to the \code{predictMatrix} specification. Variables with 
 non-zero \code{type} values in the \code{predictMatrix} will 
-not be be added as main effects to the \code{formulas}. It is possible
-to turn variables from the \code{predictorMatrix} into supplementary 
-covariates by specifyding the argument \code{auxiliary = TRUE}.
+be added as main effects to the \code{formulas}, which will 
+act as supplementary covariates in the imputation model. It is possible
+to turn off this behaviour by specifying the 
+argument \code{auxiliary = FALSE}.
 }
 \section{Functions}{
 

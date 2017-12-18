@@ -1,23 +1,5 @@
 # internal function for checking input to main mice() function
 
-check.blocks <- function(setup, data) {
-  blocks <- setup$blocks
-  varnames <- setup$varnames
-
-  # for proper workings, name all blocks  
-  blocks <- name.blocks(blocks)
-  
-  # check that all names exists
-  bv <- unique(unlist(blocks))
-  notFound <- !bv %in% varnames
-  if (any(notFound)) 
-    stop(paste("The following names were not found in `data`:",
-               paste(bv[notFound], collapse = ", ")))
-  
-  setup$blocks <- blocks
-  setup
-}
-
 check.visitSequence <- function(setup, where) {
   
   nwhere <- setup$nwhere
@@ -158,41 +140,6 @@ check.method <- function(setup, data) {
 }
 
 
-check.predictorMatrix <- function(setup) {
-  ## checks and makes consistency edits of the predictormatrix
-  blocks <- setup$blocks
-  nimp <- setup$nimp
-  pred <- setup$predictorMatrix
-  varnames <- setup$varnames
-  nwhere <- setup$nwhere
-  nvar <- setup$nvar
-  vis <- setup$visitSequence
-  
-  nblo <- length(blocks)
-  blocknames <- names(blocks)
-  
-  if (!is.matrix(pred))
-    stop("Argument 'predictorMatrix' not a matrix.")
-  if (nblo != nrow(pred))
-    stop(paste0("The predictorMatrix has ", nrow(pred), 
-                " rows. This should be ", nblo, "."))
-  if (nvar != ncol(pred))
-    stop(paste0("The predictorMatrix has ", ncol(pred), 
-                " columns. This should be ", nvar, "."))
-  dimnames(pred) <- list(blocknames, varnames)
-  
-  # inactivate predictors of complete (or not imputed) block
-  for (j in seq_along(blocks)) {
-    if (nimp[j] == 0) pred[j, ] <- 0
-  }
-  
-  # variable cannot be its own predictor
-  for (i in seq_along(blocks)) 
-    if (!is.null(blocknames[i])) pred[i, grep(blocknames[i], varnames)] <- 0
-  
-  setup$predictorMatrix <- pred
-  setup
-}
 
 
 check.data <- function(setup, data, allow.na = FALSE, 
@@ -208,52 +155,54 @@ check.data <- function(setup, data, allow.na = FALSE,
   nblo <- length(blocks)
   
   # stop if the class variable is a factor
-  isclassvar <- apply(pred == -2, 2, any)
-  for (j in seq_len(nvar)) {
-    if (isclassvar[j] && is.factor(data[, j])) 
-      stop("Class variable (column ", j,
-           ") cannot be factor. Convert to numeric by as.integer()")
-  }
-  
-  # remove constant variables but leave passive variables untouched
-  for (j in seq_len(nvar)) {
-    d.j <- data[, j]
-    v <- ifelse(is.character(d.j), NA, var(as.numeric(d.j), na.rm = TRUE))
-    constant <- if (allow.na) {
-      if (is.na(v)) FALSE else v < 1000 * .Machine$double.eps
-    } else {
-      is.na(v) || v < 1000 * .Machine$double.eps
-    }
-    if (constant) {
-      pred[, j] <- 0
-      i <- grep(varnames[j], rownames(pred))[1]
-      pred[i, ] <- 0
-      meth[i] <- ""
-      post[i] <- ""
-      vis <- vis[vis != i]
-      updateLog(out = varnames[j], meth = "constant")
+  if (!is.null(pred)) {
+    isclassvar <- apply(pred == -2, 2, any)
+    for (j in seq_len(nvar)) {
+      if (isclassvar[j] && is.factor(data[, j])) 
+        stop("Class variable (column ", j,
+             ") cannot be factor. Convert to numeric by as.integer()")
     }
   }
   
-  ## remove collinear variables
-  ispredictor <- apply(pred != 0, 2, any)
-  if (any(ispredictor)) {
-    droplist <- find.collinear(data[, ispredictor, drop = FALSE], ...)
-  } else {
-    droplist <- NULL
-  }
-  if (length(droplist) > 0 && remove_collinear) {
-    for (k in seq_along(droplist)) {
-      j <- grep(droplist[k], varnames)[1]
-      pred[, j] <- 0
-      i <- grep(varnames[j], rownames(pred))[1]
-      pred[i, ] <- 0
-      meth[i] <- ""
-      vis <- vis[vis != i]
-      post[i] <- ""
-      updateLog(out = varnames[j], meth = "collinear")
-    }
-  }
+  # # remove constant variables but leave passive variables untouched
+  # for (j in seq_len(nvar)) {
+  #   d.j <- data[, j]
+  #   v <- ifelse(is.character(d.j), NA, var(as.numeric(d.j), na.rm = TRUE))
+  #   constant <- if (allow.na) {
+  #     if (is.na(v)) FALSE else v < 1000 * .Machine$double.eps
+  #   } else {
+  #     is.na(v) || v < 1000 * .Machine$double.eps
+  #   }
+  #   if (constant) {
+  #     pred[, j] <- 0
+  #     i <- grep(varnames[j], rownames(pred))[1]
+  #     pred[i, ] <- 0
+  #     meth[i] <- ""
+  #     post[i] <- ""
+  #     vis <- vis[vis != i]
+  #     updateLog(out = varnames[j], meth = "constant")
+  #   }
+  # }
+  # 
+  # ## remove collinear variables
+  # ispredictor <- apply(pred != 0, 2, any)
+  # if (any(ispredictor)) {
+  #   droplist <- find.collinear(data[, ispredictor, drop = FALSE], ...)
+  # } else {
+  #   droplist <- NULL
+  # }
+  # if (length(droplist) > 0 && remove_collinear) {
+  #   for (k in seq_along(droplist)) {
+  #     j <- grep(droplist[k], varnames)[1]
+  #     pred[, j] <- 0
+  #     i <- grep(varnames[j], rownames(pred))[1]
+  #     pred[i, ] <- 0
+  #     meth[i] <- ""
+  #     vis <- vis[vis != i]
+  #     post[i] <- ""
+  #     updateLog(out = varnames[j], meth = "collinear")
+  #   }
+  # }
   
   setup$predictorMatrix <- pred
   setup$visitSequence <- vis
@@ -267,11 +216,11 @@ check.post <- function(setup) {
   post <- setup$post
   
   # check
-  if (length(post) != length(blocks))
-    stop("`length(post)` does not match `length(blocks)`.")
+  #if (length(post) != length(blocks))
+  #  stop("`length(post)` does not match `length(blocks)`.")
   
   # change
-  if (is.null(names(post))) names(post) <- names(blocks)
+  #if (is.null(names(post))) names(post) <- names(blocks)
   
   setup$post <- post
   setup

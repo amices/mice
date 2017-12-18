@@ -5,14 +5,14 @@
 #' @param predictors A character vector of variable names.
 #' @param auxiliary A logical that indicates whether the variables
 #' listed in \code{predictors} should be added to the formula as main 
-#' effects. The default is \code{FALSE}.
+#' effects. The default is \code{TRUE}.
 #' @param include.intercept A logical that indicated whether the intercept 
 #' should be included in the result.
 #' @return A formula
 #' @keywords internal
 extend.formula <- function(formula = ~ 0,
                            predictors = NULL,
-                           auxiliary = FALSE,
+                           auxiliary = TRUE,
                            include.intercept = FALSE, ...) {
   if (!is.formula(formula)) formula <- ~ 0
   
@@ -28,17 +28,6 @@ extend.formula <- function(formula = ~ 0,
   if (auxiliary) formula <- update(formula, fr, ...)
   if (include.intercept) formula <- update(formula, ~ . + 1, ...)
   formula
-}
-
-is.formula <- function(x){
-  inherits(x, "formula")
-}
-
-hasdot <- function(f) {
-  if(is.recursive(f)) {
-    return(any(sapply(as.list(f), hasdot)))
-  } else {
-    f == as.symbol(".")}
 }
 
 #' Name formula list elements
@@ -89,9 +78,9 @@ name.formulas <- function(formulas, data = NULL, prefix = "F") {
   inc <- 1
   for (i in seq_along(formulas)) {
     if (names(formulas)[i] != "") next
-    if (hasdot(formulas[[i]]) && is.null(data)) 
-      stop("Formula with dot requires `data` argument", call. = FALSE)
-    y <- lhs(formulas[[i]], data = data)
+    #if (hasdot(formulas[[i]]) && is.null(data)) 
+    #  stop("Formula with dot requires `data` argument", call. = FALSE)
+    y <- lhs(formulas[[i]])
     if (length(y) == 1) names(formulas)[i] <- y
     else {
       names(formulas)[i] <- paste0(prefix, inc)
@@ -101,15 +90,33 @@ name.formulas <- function(formulas, data = NULL, prefix = "F") {
   formulas
 }
 
-lhs <- function(formula, data) {
-  # taken from mitml
-  ft <- terms(formula, data = data)
-  tl <- attr(ft,"term.labels")
-  vrs <- attr(ft,"variables")[-1]
+# lhs <- function(formula, data) {
+#   # taken from mitml
+#   ft <- terms(formula, data = data)
+#   tl <- attr(ft,"term.labels")
+#   vrs <- attr(ft,"variables")[-1]
+# 
+#   yvrs <- as.character(vrs)[attr(ft,"response")]
+#   yvrs <- gsub("[\r\n]","",yvrs)
+#   y.fml <- as.formula(paste0("~",yvrs))
+#   yvrs <- attr(terms(y.fml), "term.labels")
+#   yvrs
+# }
 
-  yvrs <- as.character(vrs)[attr(ft,"response")]
-  yvrs <- gsub("[\r\n]","",yvrs)
-  y.fml <- as.formula(paste0("~",yvrs))
-  yvrs <- attr(terms(y.fml), "term.labels")
-  yvrs
+lhs <- function(x) all.vars(update(x, . ~ 1))
+
+extract.blocks <- function(formulas) {
+  if (!all(sapply(formulas, is.formula))) return(NULL)
+  name.blocks(lapply(formulas, lhs))
+}
+
+is.formula <- function(x){
+  inherits(x, "formula")
+}
+
+hasdot <- function(f) {
+  if(is.recursive(f)) {
+    return(any(sapply(as.list(f), hasdot)))
+  } else {
+    f == as.symbol(".")}
 }

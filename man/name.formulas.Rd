@@ -46,14 +46,18 @@ imp1 <- mice(nhanes, formulas = form1, print = FALSE, m = 1, seed = 12199)
 
 # same model using dot notation
 form2 <- list(bmi ~ ., hyp ~ ., chl ~ .)
-# name.formulas(form2)
 form2 <- name.formulas(form2, data = nhanes)
 imp2 <- mice(nhanes, formulas = form2, print = FALSE, m = 1, seed = 12199)
+identical(complete(imp1), complete(imp2))
+
+# same model using predictorMatrix
+imp3 <- mice(nhanes, print = FALSE, m = 1, seed = 12199, auxiliary = TRUE)
+identical(complete(imp1), complete(imp3))
 
 # multivariate imputation for chl and bmi
-form3 <- list(chl + bmi ~ ., hyp ~ bmi + age)
-form3 <- name.formulas(form3, data = nhanes)
-imp3 <- mice(nhanes, formulas = form3, print = FALSE, m = 1, seed = 71712)
+form4 <- list(chl + bmi ~ ., hyp ~ bmi + age)
+form4 <- name.formulas(form3, data = nhanes)
+imp4 <- mice(nhanes, formulas = form3, print = FALSE, m = 1, seed = 71712)
 }
 \seealso{
 \code{\link{mice}}
