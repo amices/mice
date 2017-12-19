@@ -270,27 +270,14 @@ mice <- function(data, m = 5,
     # blocks lead
     blocks <- make.blocks(colnames(data))
     predictorMatrix <- make.predictorMatrix(data, blocks)
-    formulas <- make.formulas(blocks, data)
+    formulas <- make.formulas(data, blocks, full = FALSE)
   }
   # case B
   if (!mp & mb & mf) {
     # predictorMatrix leads
-    if (!is.matrix(predictorMatrix))
-      stop("predictorMatrix not a matrix.", call. = FALSE)
-    if (nrow(predictorMatrix) != ncol(predictorMatrix))
-      stop(paste("predictorMatrix must have same number of rows and columns", 
-                 "if blocks and formulas are not specified"), 
-           call. = FALSE)
-    if (is.null(dimnames(predictorMatrix))) {
-      if (ncol(predictorMatrix) == ncol(data)) 
-        dimnames(predictorMatrix) <- list(colnames(data), colnames(data))
-      else
-        stop("Missing row/column names in predictorMatrix", call. = FALSE)
-    }
-    diag(predictorMatrix) <- 0
-    
+    predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
     blocks <- make.blocks(colnames(predictorMatrix), partition = "scatter")
-    formulas <- make.formulas(blocks, data)
+    formulas <- make.formulas(data, blocks, full = FALSE)
   }
   
   # case C
@@ -298,7 +285,7 @@ mice <- function(data, m = 5,
     # blocks leads
     blocks <- check.blocks(blocks, data)
     predictorMatrix <- make.predictorMatrix(data, blocks)
-    formulas <- make.formulas(blocks, data)
+    formulas <- make.formulas(data, blocks, full = FALSE)
   }
   
   # case D
@@ -314,57 +301,29 @@ mice <- function(data, m = 5,
   if (!mp & !mb & mf) {
     # predictor leads
     blocks <- check.blocks(blocks, data)
-    
-    if (!is.matrix(predictorMatrix))
-      stop("predictorMatrix not a matrix", call. = FALSE)
-    
-    if (any(dim(predictorMatrix) == 0L)) 
-      stop("predictorMatrix has no rows or columns", call. = FALSE)
-    
-    # check conforming arguments
-    if (nrow(predictorMatrix) > length(blocks))
-      stop(paste0("predictorMatrix has more rows (", nrow(predictorMatrix), 
-                  ") than blocks (", length(blocks), ")"),
-           call. = FALSE)
-    
-    # borrow rownames from blocks if needed
-    if (is.null(rownames(predictorMatrix)) && 
-        nrow(predictorMatrix) == length(blocks)) 
-      rownames(predictorMatrix) <- names(blocks)
-    if (is.null(rownames(predictorMatrix)))
-      stop("Unable to set row names of predictorMatrix", call. = FALSE)
-    
-    # borrow blocknames from predictorMatrix if needed
-    if (is.null(names(blocks)) && 
-        nrow(predictorMatrix) == length(blocks))
-      names(blocks) <- rownames(predictorMatrix)
-    if (is.null(names(blocks)))
-      stop("Unable to set names of blocks", call. = FALSE)
-    
-    # check existence of row names in blocks
-    found <- rownames(predictorMatrix) %in% names(blocks)
-    if (!all(found))
-      stop("Names not found in blocks: ", 
-           paste(rownames(predictorMatrix)[!found], collapse = ", "), 
-           call. = FALSE)
-    
-    # borrow colnames from data if needed
-    if (is.null(colnames(predictorMatrix)) && 
-        ncol(predictorMatrix) == ncol(data)) 
-      colnames(predictorMatrix) <- names(data)
-    if (is.null(colnames(predictorMatrix))) 
-      stop("Unable to set column names of predictorMatrix", call. = FALSE)
-    
-    # check existence of variable names on data
-    found <- colnames(predictorMatrix) %in% names(data) 
-    if (!all(found))
-      stop("Names not found in data: ", 
-           paste(colnames(predictorMatrix)[!found], collapse = ", "), 
-           call. = FALSE)
-    
-    formulas <- make.formulas(blocks, data)
+    z <- check.predictorMatrix(predictorMatrix, data, blocks)
+    predictorMatrix <- z$predictorMatrix
+    blocks <- z$blocks
+    formulas <- make.formulas(data, blocks, full = FALSE)
   }
   
+  # case F
+  if (!mp & mb & !mf) {
+    # formulas lead
+    formulas <- name.formulas(formulas)
+    formulas <- handle.oldstyle.formulas(formulas, data)
+    blocks <- extract.blocks(formulas)
+    predictorMatrix <- check.predictorMatrix(predictorMatrix, data, blocks)
+  }
+  
+  # case G
+  if (mp & !mb & !mf) {
+    # blocks lead
+    blocks <- check.blocks(blocks, data)
+    formulas <- check.formulas(formulas, blocks)
+    
+    
+  }
   
   # list for storing current computational state
   state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)

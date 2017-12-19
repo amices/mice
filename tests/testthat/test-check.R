@@ -16,7 +16,7 @@ setup <- list(blocks = blocks,
               varnames = names(data))
 z1 <- mice:::check.visitSequence(setup, where)
 y1 <- mice:::check.method(z1, data)
-x1 <- mice:::check.predictorMatrix(y1)
+x1 <- y1
 w1 <- mice:::check.data(x1, data)
 
 blocks <- name.blocks(list(c("bmi", "chl"), "age"))
@@ -32,7 +32,7 @@ setup <- list(blocks = blocks,
               varnames = names(data))
 z2 <- mice:::check.visitSequence(setup, where)
 y2 <- mice:::check.method(z2, data)
-x2 <- mice:::check.predictorMatrix(y2)
+x2 <- y2
 w2 <- mice:::check.data(x2, data)
 
 blocks <- name.blocks(list(c("bmi", "chl"), "age", "chl"))
@@ -47,7 +47,7 @@ setup <- list(blocks = blocks,
               varnames = names(data))
 z3 <- mice:::check.visitSequence(setup, where)
 y3 <- mice:::check.method(z3, data)
-x3 <- mice:::check.predictorMatrix(y3)
+x3 <- y3
 w3 <- mice:::check.data(x3, data)
 
 blocks <- name.blocks(list("bmi", "chl", "age", "hyp"))
@@ -62,7 +62,7 @@ setup <- list(blocks = blocks,
               varnames = names(data))
 z4 <- mice:::check.visitSequence(setup, where)
 y4 <- mice:::check.method(z4, data)
-x4 <- mice:::check.predictorMatrix(y4)
+x4 <- y4
 w4 <- mice:::check.data(x4, data)
 
 setup <- list(blocks = blocks, 
@@ -117,7 +117,7 @@ setup <- list(blocks = blocks,
               varnames = names(data))
 z8 <- mice:::check.visitSequence(setup, where)
 y8 <- mice:::check.method(z8, data)
-x8 <- mice:::check.predictorMatrix(y8)
+x8 <- y8
 w8 <- mice:::check.data(x8, data)
 
 test_that("check.visitSequence produces proper results", {

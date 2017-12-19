@@ -113,3 +113,8 @@ check.blocks <- function(blocks, data) {
                paste(bv[notFound], collapse = ", ")))
   blocks
 }
+
+extract.blocks <- function(formulas) {
+  if (!all(sapply(formulas, is.formula))) return(NULL)
+  name.blocks(lapply(formulas, lhs))
+}

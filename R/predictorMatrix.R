@@ -1,8 +1,8 @@
 #' Creates a \code{predictorMatrix}
 #'
 #' This helper function creates a valid \code{predictMatrix}. The 
-#' \code{predictorMatrix} is an argument to the \code{mice} function 
-#' that specifies the target variable or block in the rows, and the 
+#' \code{predictorMatrix} is an argument to the \code{mice} function. 
+#' It specifies the target variable or block in the rows, and the 
 #' predictor variables on the columns. An entry of \code{0} means that 
 #' the column variable is NOT used to impute the row variable or block.
 #' A nonzero value indicates that it is used.
@@ -23,34 +23,105 @@ make.predictorMatrix <- function(data, blocks = make.blocks(data)) {
   predictorMatrix
 }
 
-check.predictorMatrix <- function(setup) {
-  ## checks and makes consistency edits of the predictormatrix
-  blocks <- setup$blocks
-  nimp <- setup$nimp
-  pred <- setup$predictorMatrix
-  varnames <- setup$varnames
-  nwhere <- setup$nwhere
-  nvar <- setup$nvar
-  vis <- setup$visitSequence
+# check.predictorMatrix <- function(setup) {
+#   ## checks and makes consistency edits of the predictormatrix
+#   blocks <- setup$blocks
+#   nimp <- setup$nimp
+#   pred <- setup$predictorMatrix
+#   varnames <- setup$varnames
+#   nwhere <- setup$nwhere
+#   nvar <- setup$nvar
+#   vis <- setup$visitSequence
+#   
+#   nblo <- length(blocks)
+#   blocknames <- names(blocks)
+#   
+#   if (!is.matrix(pred))
+#     stop("Argument 'predictorMatrix' not a matrix.")
+#   if (nblo != nrow(pred))
+#     stop(paste0("The predictorMatrix has ", nrow(pred), 
+#                 " rows. This should be ", nblo, "."))
+#   
+#   # inactivate predictors of complete (or not imputed) block
+#   for (j in seq_along(blocks)) {
+#     if (nimp[j] == 0) pred[j, ] <- 0
+#   }
+#   
+#   # variable cannot be its own predictor
+#   for (i in names(blocks))
+#     if (!is.null(i)) pred[i, grep(i, colnames(pred))] <- 0
+#   
+#   setup$predictorMatrix <- pred
+#   setup
+# }
+
+check.predictorMatrix <- function(predictorMatrix, 
+                                  data,
+                                  blocks = NULL) {
   
-  nblo <- length(blocks)
-  blocknames <- names(blocks)
+  if (!is.matrix(predictorMatrix))
+    stop("predictorMatrix not a matrix", call. = FALSE)
   
-  if (!is.matrix(pred))
-    stop("Argument 'predictorMatrix' not a matrix.")
-  if (nblo != nrow(pred))
-    stop(paste0("The predictorMatrix has ", nrow(pred), 
-                " rows. This should be ", nblo, "."))
+  if (any(dim(predictorMatrix) == 0L))
+    stop("predictorMatrix has no rows or columns", call. = FALSE)
   
-  # inactivate predictors of complete (or not imputed) block
-  for (j in seq_along(blocks)) {
-    if (nimp[j] == 0) pred[j, ] <- 0
+  # if we have no blocks, restrict to square predictorMatrix
+  if (is.null(blocks)) {
+    if (nrow(predictorMatrix) != ncol(predictorMatrix))
+      stop(paste("predictorMatrix must have same number of rows and columns", 
+                 "if blocks and formulas are not specified"), 
+           call. = FALSE)
+    if (is.null(dimnames(predictorMatrix))) {
+      if (ncol(predictorMatrix) == ncol(data)) 
+        dimnames(predictorMatrix) <- list(colnames(data), colnames(data))
+      else
+        stop("Missing row/column names in predictorMatrix", call. = FALSE)
+    }
+    diag(predictorMatrix) <- 0
+    return(predictorMatrix)  
   }
   
-  # variable cannot be its own predictor
-  for (i in names(blocks))
-    if (!is.null(i)) pred[i, grep(i, colnames(pred))] <- 0
+  # check conforming arguments
+  if (nrow(predictorMatrix) > length(blocks))
+    stop(paste0("predictorMatrix has more rows (", nrow(predictorMatrix), 
+                ") than blocks (", length(blocks), ")"),
+         call. = FALSE)
   
-  setup$predictorMatrix <- pred
-  setup
+  # borrow rownames from blocks if needed
+  if (is.null(rownames(predictorMatrix)) && 
+      nrow(predictorMatrix) == length(blocks))
+    rownames(predictorMatrix) <- names(blocks)
+  if (is.null(rownames(predictorMatrix)))
+    stop("Unable to set row names of predictorMatrix", call. = FALSE)
+  
+  # borrow blocknames from predictorMatrix if needed
+  if (is.null(names(blocks)) &&
+      nrow(predictorMatrix) == length(blocks))
+    names(blocks) <- rownames(predictorMatrix)
+  if (is.null(names(blocks)))
+    stop("Unable to set names of blocks", call. = FALSE)
+  
+  # check existence of row names in blocks
+  found <- rownames(predictorMatrix) %in% names(blocks)
+  if (!all(found))
+    stop("Names not found in blocks: ", 
+         paste(rownames(predictorMatrix)[!found], collapse = ", "), 
+         call. = FALSE)
+  
+  # borrow colnames from data if needed
+  if (is.null(colnames(predictorMatrix)) && 
+      ncol(predictorMatrix) == ncol(data)) 
+    colnames(predictorMatrix) <- names(data)
+  if (is.null(colnames(predictorMatrix))) 
+    stop("Unable to set column names of predictorMatrix", call. = FALSE)
+  
+  # check existence of variable names on data
+  found <- colnames(predictorMatrix) %in% names(data) 
+  if (!all(found))
+    stop("Names not found in data: ", 
+         paste(colnames(predictorMatrix)[!found], collapse = ", "), 
+         call. = FALSE)
+  
+  list(predictorMatrix = predictorMatrix,
+       blocks = blocks)
 }
