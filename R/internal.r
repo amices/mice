@@ -25,6 +25,8 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99, allow.na = FALSE
   
   xobs <- x[ry, , drop = FALSE]
   yobs <- as.numeric(y[ry])
+  if (var(yobs) < eps) return(rep(FALSE, ncol(xobs)))
+  
   keep <- unlist(apply(xobs, 2, var) > eps)
   keep[is.na(keep)] <- FALSE
   highcor <- suppressWarnings(unlist(apply(xobs, 2, cor, yobs) < maxcor))
