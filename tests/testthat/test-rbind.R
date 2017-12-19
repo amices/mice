@@ -26,9 +26,10 @@ test_that("Throws errors", {
 })
 
 test_that("Produces longer imputed data", {
-  expect_equal(nrow(complete(rbind(imp1, imp5))), 26)
-  expect_equal(nrow(complete(rbind(imp1, mylist))), 14)
-  expect_equal(sum(is.na(complete(mice:::rbind.mids(imp1, nhalf)))), 15)
+  expect_identical(nrow(complete(rbind(imp1, imp5))), 26L)
+  expect_identical(nrow(complete(rbind(imp1, mylist))), 14L)
+  expect_equal(sum(is.na(complete(mice:::rbind.mids(imp1, nhalf)))), 
+               sum(is.na(nhalf)))
 })
 
 # issue #59

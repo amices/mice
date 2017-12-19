@@ -49,10 +49,9 @@ test_that("predictorMatrix and formula yield same imputations", {
 })
 
 # formula specification
-#form <- name.blocks(list(bmi ~ ., hyp ~., chl ~ .))
-#imp3 <- mice(nhanes, formulas = form, seed = 51212, print = FALSE, m = 1)
-#cmp3 <- complete(imp3)
-#z
+form <- name.blocks(list(bmi ~ ., hyp ~., chl ~ .))
+imp3 <- mice(nhanes, formulas = form, seed = 51212, print = FALSE, m = 1)
+cmp3 <- complete(imp3)
 
 # old.form <- c("", "bmi ~ chl + hyp", "hyp ~ bmi + chl", "chl ~ bmi + hyp")
 # imp <- mice(nhanes, formula = old.form, m = 1, maxit = 2, print = FALSE)

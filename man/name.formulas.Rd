@@ -50,14 +50,20 @@ form2 <- name.formulas(form2, data = nhanes)
 imp2 <- mice(nhanes, formulas = form2, print = FALSE, m = 1, seed = 12199)
 identical(complete(imp1), complete(imp2))
 
-# same model using predictorMatrix
-imp3 <- mice(nhanes, print = FALSE, m = 1, seed = 12199, auxiliary = TRUE)
+# same model using repeated multivariate imputation
+form3 <- name.blocks(list(all = bmi + hyp + chl ~ .))
+imp3 <- mice(nhanes, formulas = form3, print = FALSE, m = 1, seed = 12199)
+cmp3 <- complete(imp3)
 identical(complete(imp1), complete(imp3))
 
-# multivariate imputation for chl and bmi
-form4 <- list(chl + bmi ~ ., hyp ~ bmi + age)
-form4 <- name.formulas(form3, data = nhanes)
-imp4 <- mice(nhanes, formulas = form3, print = FALSE, m = 1, seed = 71712)
+# same model using predictorMatrix
+imp4 <- mice(nhanes, print = FALSE, m = 1, seed = 12199, auxiliary = TRUE)
+identical(complete(imp1), complete(imp4))
+
+# different model: multivariate imputation for chl and bmi
+form5 <- list(chl + bmi ~ ., hyp ~ bmi + age)
+form5 <- name.formulas(form5, data = nhanes)
+imp5 <- mice(nhanes, formulas = form5, print = FALSE, m = 1, seed = 71712)
 }
 \seealso{
 \code{\link{mice}}
