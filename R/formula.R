@@ -120,3 +120,16 @@ hasdot <- function(f) {
   } else {
     f == as.symbol(".")}
 }
+
+make.formulas <- function(blocks, data) {
+  formulas <- as.list(rep("~ 0", length(blocks)))
+  names(formulas) <- names(blocks)
+  
+  formulas <- lapply(formulas, as.formula)
+  
+  # determine blocks with no specified formula
+  attr(formulas, "has.formula") <- !sapply(formulas, 
+                                           is.empty.model.data, 
+                                           data = data)
+  formulas
+}

@@ -106,3 +106,52 @@ test_that("Case D yields same imputations for FCS and multivariate", {
 })
 
 
+# Case E: predictMatrix and blocks
+blocks1 <- make.blocks(c("bmi", "chl", "hyp", "age"))
+blocks2 <- make.blocks(list(c("bmi", "chl"), "hyp"))
+blocks3 <- make.blocks(list(all = c("bmi", "chl", "hyp")))
+
+pred1 <- make.predictorMatrix(data, blocks = blocks1)
+pred2 <- make.predictorMatrix(data, blocks = blocks2)
+pred3 <- make.predictorMatrix(data, blocks = blocks3)
+
+imp1 <- mice(data, blocks = blocks1, pred = pred1, m = 1, maxit = 1, print = FALSE)
+imp1a <- mice(data, blocks = blocks1, pred = matrix(1, nr=4, nc=4), m = 1, maxit = 1, print = FALSE)
+imp2 <- mice(data, blocks = blocks2, pred = pred2, m = 1, maxit = 1, print = FALSE)
+imp2a <- mice(data, blocks = blocks2, pred = matrix(1, nr=2, nc=4), m = 1, maxit = 1, print = FALSE)
+imp3 <- mice(data, blocks = blocks3, pred = pred3, m = 1, maxit = 1, print = FALSE)
+imp3a <- mice(data, blocks = blocks3, pred = matrix(1, nr=1, nc=4), m = 1, maxit = 1, print = FALSE)
+
+test_that("Case E borrows rownames from blocks", {
+  expect_identical(rownames(imp1a$predictorMatrix), names(blocks1))
+  expect_identical(rownames(imp2a$predictorMatrix), names(blocks2))
+  expect_identical(rownames(imp3a$predictorMatrix), names(blocks3))
+})
+
+test_that("Case E borrows colnames from data", {
+  expect_identical(colnames(imp1a$predictorMatrix), names(data))
+  expect_identical(colnames(imp2a$predictorMatrix), names(data))
+  expect_identical(colnames(imp3a$predictorMatrix), names(data))
+})
+
+test_that("Case E namesetting fails on incompatible sizes", {
+  expect_error(mice(data, blocks = blocks2, pred = matrix(1, nr=2, nc=2)),
+               "Unable to set column names of predictorMatrix")
+  expect_error(mice(data, blocks = blocks2, pred = matrix(1, nr=1, nc=4)),
+               "Unable to set row names of predictorMatrix")
+  expect_error(mice(data, blocks = blocks2, pred = matrix(1, nr=4, nc=4)))
+})
+
+colnames(pred1) <- c("A", "B", "chl", "bmi")
+pred2a <- pred2[, -(1:4), drop = FALSE]
+test_that("Case E detects incompatible arguments", {
+  expect_error(mice(data, blocks = blocks1, pred = pred1),
+               "Names not found in data: A, B")
+  expect_error(mice(data, blocks = blocks1, pred = pred2),
+               "Names not found in blocks: B1")
+  expect_error(mice(data, blocks = blocks2, pred = matrix(1, nr=1, nc=4)),
+               "Unable to set row names of predictorMatrix")
+  expect_error(mice(data, blocks = blocks2, pred = matrix(1, nr=4, nc=4)))
+  expect_error(mice(data, blocks = blocks2, pred = pred2a),
+               "predictorMatrix has no rows or columns")
+})

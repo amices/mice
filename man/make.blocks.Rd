@@ -7,10 +7,11 @@
 make.blocks(data, partition = c("scatter", "collect", "void"))
 }
 \arguments{
-\item{data}{A data frame or a matrix containing the incomplete data.  Missing
-values are coded as \code{NA}.}
+\item{data}{A \code{data.frame}, character vector with
+variable names, or \code{list} with variable names.}
 
-\item{partition}{A character vector of length 1. Value 
+\item{partition}{A character vector of length 1 used to assign 
+variables to blocks when \code{data} is a \code{data.frame}. Value 
 \code{"scatter"} (default) will assign each column to it own 
 block. Value \code{"collect"} assigns all variables to one block, 
 whereas \code{"void"} produces an empty list.}
@@ -29,7 +30,7 @@ Use \code{"scatter"} to create an imputation model based on
 \emph{fully conditionally specification} (FCS). Use \code{"collect"} to 
 gather all variables to be imputed by a \emph{joint model} (JM). 
 Scenario's in-between these two extremes respresent 
-\emph{crossbred} imputation models that combine FCS and JM.
+\emph{hybrid} imputation models that combine FCS and JM.
 
 Any variable not listed in will not be imputed. 
 Specification \code{"void"} reprsents the extreme scenario that 

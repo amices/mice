@@ -2,8 +2,10 @@
 #'
 #' This helper function generates a list of the type needed for 
 #' \code{blocks} argument in the \code{[=mice]{mice}} function.
-#' @inheritParams mice
-#' @param partition A character vector of length 1. Value 
+#' @param data A \code{data.frame}, character vector with
+#' variable names, or \code{list} with variable names.
+#' @param partition A character vector of length 1 used to assign 
+#' variables to blocks when \code{data} is a \code{data.frame}. Value 
 #' \code{"scatter"} (default) will assign each column to it own 
 #' block. Value \code{"collect"} assigns all variables to one block, 
 #' whereas \code{"void"} produces an empty list.
@@ -14,7 +16,7 @@
 #' \emph{fully conditionally specification} (FCS). Use \code{"collect"} to 
 #' gather all variables to be imputed by a \emph{joint model} (JM). 
 #' Scenario's in-between these two extremes respresent 
-#' \emph{crossbred} imputation models that combine FCS and JM.
+#' \emph{hybrid} imputation models that combine FCS and JM.
 #' 
 #' Any variable not listed in will not be imputed. 
 #' Specification \code{"void"} reprsents the extreme scenario that 
@@ -35,11 +37,13 @@
 #' @export
 make.blocks <- function(data, 
                         partition = c("scatter", "collect", "void")) {
-  if (is.vector(data)) {
+  if (is.vector(data) && !is.list(data)) {
     v <- as.list(as.character(data))
     names(v) <- as.character(data)
     return(v)
   }
+  if (is.list(data) && !is.data.frame(data))
+    return(name.blocks(data))
   data <- as.data.frame(data)
   partition <- match.arg(partition)
   switch(partition, 
@@ -49,7 +53,7 @@ make.blocks <- function(data,
          },
          collect = {
            v <- list(names(data))
-           names(v) <- "joint"
+           names(v) <- "collect"
          },
          void = {
            v <- list()
@@ -93,5 +97,19 @@ name.blocks <- function(blocks, prefix = "B") {
       inc <- inc + 1
     }
   }
+  blocks
+}
+
+check.blocks <- function(blocks, data) {
+  
+  # for proper workings, name all blocks  
+  blocks <- name.blocks(blocks)
+  
+  # check that all variable names exists in data
+  bv <- unique(unlist(blocks))
+  notFound <- !bv %in% colnames(data)
+  if (any(notFound)) 
+    stop(paste("The following names were not found in `data`:",
+               paste(bv[notFound], collapse = ", ")))
   blocks
 }
