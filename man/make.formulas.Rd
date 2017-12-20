@@ -4,8 +4,7 @@
 \alias{make.formulas}
 \title{Creates a \code{formulas} object}
 \usage{
-make.formulas(data, blocks = make.blocks(data), predictorMatrix = NULL,
-  mode = "formula")
+make.formulas(data, blocks = make.blocks(data), predictorMatrix = NULL)
 }
 \arguments{
 \item{data}{A \code{data.frame} with the source data}
@@ -14,10 +13,6 @@ make.formulas(data, blocks = make.blocks(data), predictorMatrix = NULL,
 the rows. The default assigns each variable in its own block.}
 
 \item{predictorMatrix}{A \code{predictorMatrix} specified by the user.}
-
-\item{mode}{A character vector of length 1, either \code{"formula"} or
-\code{"type"}, signalling whether the underlying imputation functions 
-should be call with argument \code{"type"} or \code{"formula"}.}
 }
 \value{
 A list of formula's.

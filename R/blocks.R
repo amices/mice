@@ -9,6 +9,21 @@
 #' \code{"scatter"} (default) will assign each column to it own 
 #' block. Value \code{"collect"} assigns all variables to one block, 
 #' whereas \code{"void"} produces an empty list.
+#' @param calltype A character vector of \code{length(block)} elements 
+#' that indicates how the imputation model is specified. If 
+#' \code{calltype = "type"} (the default), the underlying imputation 
+#' model is called by means of the \code{type} argument. The 
+#' \code{type} argument for block \code{h} is equivalent to  
+#' row \code{h} in the \code{predictorMatrix}.
+#' The alternative is \code{calltype = "formula"}. This will pass 
+#' \code{formulas[[h]]} to the underlying imputation 
+#' function for block \code{h}, together with the current data.
+#' The \code{calltype} of a block is set automatically during 
+#' initialization. Where a choice is possible, calltype 
+#' \code{"formula"} is preferred over \code{"type"} since this is 
+#' more flexible and extendable. However, what precisely happens
+#' depends also on the capabilities of the imputation 
+#' function that is called.
 #' @return A named list of character vectors with variables names.
 #' @details Choices \code{"scatter"} and \code{"collect"} represent to two 
 #' extreme scenarios for assigning variables to imputation blocks. 
@@ -36,14 +51,19 @@
 #' make.blocks(c("age", "sex", "edu"))
 #' @export
 make.blocks <- function(data, 
-                        partition = c("scatter", "collect", "void")) {
+                        partition = c("scatter", "collect", "void"),
+                        calltype = "type") {
   if (is.vector(data) && !is.list(data)) {
     v <- as.list(as.character(data))
     names(v) <- as.character(data)
+    attr(v, "calltype") <- calltype
     return(v)
   }
-  if (is.list(data) && !is.data.frame(data))
-    return(name.blocks(data))
+  if (is.list(data) && !is.data.frame(data)) {
+    v <- name.blocks(data)
+    attr(v, "calltype") <- calltype
+    return(v)
+  }
   data <- as.data.frame(data)
   partition <- match.arg(partition)
   switch(partition, 
@@ -62,6 +82,7 @@ make.blocks <- function(data,
            v <- as.list(names(data))
            names(v) <- names(data)
          })
+  attr(v, "calltype") <- calltype
   v
 }
 
@@ -100,7 +121,7 @@ name.blocks <- function(blocks, prefix = "B") {
   blocks
 }
 
-check.blocks <- function(blocks, data) {
+check.blocks <- function(blocks, data, calltype = "type") {
   
   # for proper workings, name all blocks  
   blocks <- name.blocks(blocks)
@@ -111,6 +132,8 @@ check.blocks <- function(blocks, data) {
   if (any(notFound)) 
     stop(paste("The following names were not found in `data`:",
                paste(bv[notFound], collapse = ", ")))
+  
+  attr(blocks, "calltype") <- calltype
   blocks
 }
 
@@ -140,7 +163,9 @@ extract.blocks <- function(formulas = NULL, predictorMatrix = NULL) {
   if (!is.null(formulas)) {
     if (!all(sapply(formulas, is.formula))) return(NULL)
     blocks.f <- name.blocks(lapply(name.formulas(formulas), lhs))
-    attr(blocks.f, "model") <- rep("form", length(blocks.f))
+    ct <- rep("formula", length(blocks.f))
+    names(ct) <- names(blocks.f)
+    attr(blocks.f, "calltype") <- ct
     if (is.null(predictorMatrix)) return(blocks.f)
   }
   
@@ -148,15 +173,20 @@ extract.blocks <- function(formulas = NULL, predictorMatrix = NULL) {
     if (is.null(row.names(predictorMatrix)))
       stop("No row names in predictorMatrix", call. = FALSE)
     blocks.p <- name.blocks(row.names(predictorMatrix))
-    attr(blocks.p, "model") <- rep("pred", length(blocks.p))
+    ct <- rep("type", length(blocks.p))
+    names(ct) <- names(blocks.p)
+    attr(blocks.p, "calltype") <- ct
     if (is.null(formulas)) return(blocks.p)
   }
   
+  # combine into unique blocks
   blocknames <- unique(c(names(blocks.f), names(blocks.p)))
   keep <- setdiff(blocknames, names(blocks.f))
   blocks <- c(blocks.f, blocks.p[keep])
-  attr(blocks, "model") <- c(rep("form", length(formulas)), 
-                             rep("pred", length(keep)))
+  ct <- c(rep("formula", length(formulas)), 
+          rep("type", length(keep)))
+  names(ct) <- names(blocks)
+  attr(blocks, "calltype") <- ct
   blocks
 }
 

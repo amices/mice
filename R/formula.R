@@ -8,9 +8,6 @@
 #' @param blocks An optional specification for blocks of variables in 
 #' the rows. The default assigns each variable in its own block.
 #' @param predictorMatrix A \code{predictorMatrix} specified by the user.
-#' @param mode A character vector of length 1, either \code{"formula"} or
-#' \code{"type"}, signalling whether the underlying imputation functions 
-#' should be call with argument \code{"type"} or \code{"formula"}.
 #' @return A list of formula's.
 #' @seealso \code{\link{make.blocks}}, \code{\link{make.predictorMatrix}}
 #' @examples
@@ -29,7 +26,7 @@
 #' 
 #' @export
 make.formulas <- function(data, blocks = make.blocks(data), 
-                          predictorMatrix = NULL, mode = "formula") {
+                          predictorMatrix = NULL) {
   formulas <- as.list(rep("~ 0", length(blocks)))
   names(formulas) <- names(blocks)
   
@@ -47,10 +44,6 @@ make.formulas <- function(data, blocks = make.blocks(data),
   }
   
   formulas <- lapply(formulas, as.formula)
-  
-  # determine blocks with no specified formula
-  attr(formulas, "mode.formula") <- sapply(formulas, 
-                                           function(x) mode == "formula")
   formulas
 }
 
@@ -121,61 +114,14 @@ name.formulas <- function(formulas, data = NULL, prefix = "F") {
 }
 
 
-check.formulas <- function(setup, data, ...) {
-  blocks <- setup$blocks
-  predictorMatrix <- setup$predictorMatrix
-  formulas <- setup$formulas
-  
-  # initialize if user specified no formulas
-  if (is.null(formulas)) {
-    formulas <- as.list(rep("~ 0", length(blocks)))
-  }
-  
-  # if no names were specified AND if the length matchs, assume that 
-  # formula names are same as block names (convenience function)
-  if (is.null(names(formulas)) && length(formulas) == length(blocks))
-    names(formulas) <- names(blocks)
-  
+check.formulas <- function(formulas, data) {
+  formulas <- name.formulas(formulas, data)
   formulas <- handle.oldstyle.formulas(formulas, data)
-  
-  # add formula for any missing blocks
-  # noFormula <- !names(blocks) %in% names(formulas)
-  # fl <- c(formulas, as.list(rep("~ 0", sum(noFormula))))
-  # names(fl) <- c(names(formulas), names(blocks)[noFormula])
-  # formulas <- fl
-  
-  # check whether formula names are also block names
-  # found <- names(formulas) %in% names(blocks)
-  # if (any(!found)) stop("Missing block names: ", 
-  #                       paste(names(formulas)[!found], collapse = ", "),
-  #                       call. = FALSE)
-  
-  # convert to formula
+  formulas <- lapply(formulas, expand.dots, data)
   formulas <- lapply(formulas, as.formula)
-  
-  # determine blocks with no specified formula
-  attr(formulas, "mode.formula") <- !sapply(formulas, 
-                                            is.empty.model.data, 
-                                            data = data)
-  
-  # extend formulas with predictorMatrix
-  for (h in names(blocks)) {
-    if (is.null(predictorMatrix)) {
-      if (length(blocks[[h]]) == 1) predictors <- setdiff(colnames(data), h)
-      else predictors <- setdiff(colnames(data), blocks[[h]])
-    } else {
-      type <- predictorMatrix[h, ]
-      predictors <- names(type)[type != 0]
-    }
-    ff <- extend.formula(formula = formulas[[h]], predictors = predictors, ...)
-    formulas[[h]] <- ff
-  }
-  
-  # store
-  setup$formulas.arg <- setup$formulas
-  setup$formulas <- formulas
-  setup
+  formulas
 }
+
 
 #' Extends formula's with predictor matrix settings
 #' 

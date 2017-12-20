@@ -4,7 +4,8 @@
 \alias{make.blocks}
 \title{Partition variables into imputation blocks}
 \usage{
-make.blocks(data, partition = c("scatter", "collect", "void"))
+make.blocks(data, partition = c("scatter", "collect", "void"),
+  calltype = "type")
 }
 \arguments{
 \item{data}{A \code{data.frame}, character vector with
@@ -15,6 +16,22 @@ variables to blocks when \code{data} is a \code{data.frame}. Value
 \code{"scatter"} (default) will assign each column to it own 
 block. Value \code{"collect"} assigns all variables to one block, 
 whereas \code{"void"} produces an empty list.}
+
+\item{calltype}{A character vector of \code{length(block)} elements 
+that indicates how the imputation model is specified. If 
+\code{calltype = "type"} (the default), the underlying imputation 
+model is called by means of the \code{type} argument. The 
+\code{type} argument for block \code{h} is equivalent to  
+row \code{h} in the \code{predictorMatrix}.
+The alternative is \code{calltype = "formula"}. This will pass 
+\code{formulas[[h]]} to the underlying imputation 
+function for block \code{h}, together with the current data.
+The \code{calltype} of a block is set automatically during 
+initialization. Where a choice is possible, calltype 
+\code{"formula"} is preferred over \code{"type"} since this is 
+more flexible and extendable. However, what precisely happens
+depends also on the capabilities of the imputation 
+function that is called.}
 }
 \value{
 A named list of character vectors with variables names.

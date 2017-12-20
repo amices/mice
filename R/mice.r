@@ -270,15 +270,14 @@ mice <- function(data, m = 5,
     # blocks lead
     blocks <- make.blocks(colnames(data))
     predictorMatrix <- make.predictorMatrix(data, blocks)
-    formulas <- make.formulas(data, blocks, mode = "type")
+    formulas <- make.formulas(data, blocks)
   }
   # case B
   if (!mp & mb & mf) {
     # predictorMatrix leads
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
     blocks <- make.blocks(colnames(predictorMatrix), partition = "scatter")
-    formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix, 
-                              mode = "type")
+    formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix)
   }
   
   # case C
@@ -286,7 +285,7 @@ mice <- function(data, m = 5,
     # blocks leads
     blocks <- check.blocks(blocks, data)
     predictorMatrix <- make.predictorMatrix(data, blocks)
-    formulas <- make.formulas(data, blocks, mode = "type")
+    formulas <- make.formulas(data, blocks)
   }
   
   # case D
@@ -306,8 +305,7 @@ mice <- function(data, m = 5,
     z <- check.predictorMatrix(predictorMatrix, data, blocks)
     predictorMatrix <- z$predictorMatrix
     blocks <- z$blocks
-    formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix,
-                              mode = "type")
+    formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix)
   }
   
   # case F
@@ -315,14 +313,15 @@ mice <- function(data, m = 5,
     # formulas lead
     formulas <- name.formulas(formulas)
     formulas <- handle.oldstyle.formulas(formulas, data)
-    blocks <- extract.blocks(formulas)
+    formulas <- lapply(formulas, expand.dots, data)
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data, blocks)
+    blocks <- extract.blocks(formulas, predictorMatrix)
   }
   
   # case G
   if (mp & !mb & !mf) {
     # blocks lead
-    blocks <- check.blocks(blocks, data)
+    blocks <- check.blocks(blocks, data, calltype = "formula")
     formulas <- check.formulas(formulas, blocks)
     predictorMatrix <- make.predictorMatrix(data, blocks)
   }

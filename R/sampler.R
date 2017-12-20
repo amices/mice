@@ -48,7 +48,8 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
           bname <- names(blocks)[h]
           ff <- formulas[[h]]
           type <- predictorMatrix[h, ]
-          modeForm <- attr(formulas, "mode.formula")[h]
+          ct <- attr(blocks, "calltype")
+          calltype <- ifelse(length(ct) == 1, ct[1], ct[h])
           
           # univariate/multivariate logic
           theMethod <- method[h]
@@ -76,8 +77,8 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
                 sampler.univ(data = data, r = r, where = where, 
                              type = type, formula = ff, 
                              method = theMethod, 
-                             yname = j, 
-                             k = k, ...)
+                             yname = j, k = k, 
+                             calltype = calltype, ...)
               
               data[(!r[, j]) & where[, j], j] <- 
                 imp[[j]][(!r[, j])[where[, j]], i]
@@ -98,14 +99,16 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
             data[mis] <- NA
             
             fm <- paste("mice.impute", theMethod, sep = ".")
-            if (modeForm) 
+            if (calltype == "formula")
               imputes <- do.call(fm, args = list(data = data, 
                                                  formula = ff, ...))
-            else 
+            else if (calltype == "type")
               imputes <- do.call(fm, args = list(data = data, 
                                                  type = type, ...))
+            else stop("Cannot call function of type ", calltype, 
+                      call. = FALSE)
             if (is.null(imputes)) stop("No imputations from ", theMethod, 
-                                       bname)
+                                       bname, call. = FALSE)
             for (j in names(imputes)) {
               imp[[j]][, i] <- imputes[[j]]
               data[!r[, j], j] <- imp[[j]][, i]
@@ -152,7 +155,8 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
 }
 
 
-sampler.univ <- function(data, r, where, type, formula, method, yname, k, ...) {
+sampler.univ <- function(data, r, where, type, formula, method, yname, k, 
+                         calltype = "design0", ...) {
   j <- yname[1]
   formula <- reformulate(sort(setdiff(all.vars(formula), j)), response = j)
   x <- obtain.design(data, formula)
