@@ -36,8 +36,8 @@ check.predictorMatrix <- function(predictorMatrix,
   # if we have no blocks, restrict to square predictorMatrix
   if (is.null(blocks)) {
     if (nrow(predictorMatrix) != ncol(predictorMatrix))
-      stop(paste("predictorMatrix must have same number of rows and columns", 
-                 "if blocks and formulas are not specified"), 
+      stop(paste("If no blocks are specified, predictorMatrix must", 
+                 "have same number of rows and columns"), 
            call. = FALSE)
     if (is.null(dimnames(predictorMatrix))) {
       if (ncol(predictorMatrix) == ncol(data)) 

@@ -169,11 +169,9 @@ test_that("Case E detects incompatible arguments", {
 
 blocks1 <- make.blocks(c("bmi", "chl", "hyp", "age"))
 blocks2 <- make.blocks(list(c("bmi", "hyp"), "hyp"))
-blocks3 <- make.blocks(list(all = c("bmi", "chl", "hyp")))
 
 pred1 <- make.predictorMatrix(data, blocks = blocks1)
 pred2 <- make.predictorMatrix(data, blocks = blocks2)
-pred3 <- make.predictorMatrix(data, blocks = blocks3)
 
 form1 <- list(bmi ~ age + hyp + chl,
               hyp ~ age + bmi + chl,
@@ -184,45 +182,20 @@ form3 <- list(bmi + hyp ~ age + chl,
 form4 <- list(bmi + hyp ~ ., chl ~ .)
 
 # blocks1 and form1 are compatible
-
-imp1 <- mice(data, blocks = blocks1, pred = pred1, m = 1, maxit = 1, print = FALSE)
-imp1a <- mice(data, blocks = blocks1, pred = matrix(1, nr=4, nc=4), m = 1, maxit = 1, print = FALSE)
-imp2 <- mice(data, blocks = blocks2, pred = pred2, m = 1, maxit = 1, print = FALSE)
-imp2a <- mice(data, blocks = blocks2, pred = matrix(1, nr=2, nc=4), m = 1, maxit = 1, print = FALSE)
-imp3 <- mice(data, blocks = blocks3, pred = pred3, m = 1, maxit = 1, print = FALSE)
-imp3a <- mice(data, blocks = blocks3, pred = matrix(1, nr=1, nc=4), m = 1, maxit = 1, print = FALSE)
-
-test_that("Case E borrows rownames from blocks", {
-  expect_identical(rownames(imp1a$predictorMatrix), names(blocks1))
-  expect_identical(rownames(imp2a$predictorMatrix), names(blocks2))
-  expect_identical(rownames(imp3a$predictorMatrix), names(blocks3))
+imp1 <- mice(data, formulas = form1, pred = matrix(1, nr = 4, nc = 4), m = 1, maxit = 1, print = FALSE, seed = 3)
+test_that("Case F combines forms and pred in blocks", {
+  expect_identical(unname(attr(imp1$blocks, "calltype")), c(rep("formula", 3), "type"))
 })
 
-test_that("Case E borrows colnames from data", {
-  expect_identical(colnames(imp1a$predictorMatrix), names(data))
-  expect_identical(colnames(imp2a$predictorMatrix), names(data))
-  expect_identical(colnames(imp3a$predictorMatrix), names(data))
+# dots and unnamed predictorMatrix
+imp2 <- mice(data, formulas = form2, pred = matrix(1, nr = 4, nc = 4), m = 1, maxit = 1, print = FALSE, seed = 3)
+test_that("Case F dots and specified form produce same imputes", {
+  expect_identical(complete(imp1), complete(imp2))
 })
 
-test_that("Case E name setting fails on incompatible sizes", {
-  expect_error(mice(data, blocks = blocks2, pred = matrix(1, nr=2, nc=2)),
-               "Unable to set column names of predictorMatrix")
-  expect_error(mice(data, blocks = blocks2, pred = matrix(1, nr=1, nc=4)),
-               "Unable to set row names of predictorMatrix")
-  expect_error(mice(data, blocks = blocks2, pred = matrix(1, nr=4, nc=4)))
-})
-
-colnames(pred1) <- c("A", "B", "chl", "bmi")
-pred2a <- pred2[, -(1:4), drop = FALSE]
-test_that("Case E detects incompatible arguments", {
-  expect_error(mice(data, blocks = blocks1, pred = pred1),
-               "Names not found in data: A, B")
-  expect_error(mice(data, blocks = blocks1, pred = pred2),
-               "Names not found in blocks: B1")
-  expect_error(mice(data, blocks = blocks2, pred = matrix(1, nr=1, nc=4)),
-               "Unable to set row names of predictorMatrix")
-  expect_error(mice(data, blocks = blocks2, pred = matrix(1, nr=4, nc=4)))
-  expect_error(mice(data, blocks = blocks2, pred = pred2a),
-               "predictorMatrix has no rows or columns")
+# error
+test_that("Case F generates error if it cannot handle non-square predictor", {
+  expect_error(mice(data, formulas = form2, pred = pred2), 
+               "If no blocks are specified, predictorMatrix must have same number of rows and columns")
 })
 
