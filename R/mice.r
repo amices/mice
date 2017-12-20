@@ -291,9 +291,7 @@ mice <- function(data, m = 5,
   # case D
   if (mp & mb & !mf) {
     # formulas leads
-    formulas <- name.formulas(formulas)
-    formulas <- handle.oldstyle.formulas(formulas, data)
-    formulas <- lapply(formulas, expand.dots, data)
+    formulas <- check.formulas(formulas, data)
     blocks <- extract.blocks(formulas)
     predictorMatrix <- make.predictorMatrix(data, blocks)
   }
@@ -311,10 +309,8 @@ mice <- function(data, m = 5,
   # case F
   if (!mp & mb & !mf) {
     # formulas lead
-    formulas <- name.formulas(formulas)
-    formulas <- handle.oldstyle.formulas(formulas, data)
-    formulas <- lapply(formulas, expand.dots, data)
-    predictorMatrix <- check.predictorMatrix(predictorMatrix, data, blocks)
+    formulas <- check.formulas(formulas, data)
+    predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
     blocks <- extract.blocks(formulas, predictorMatrix)
   }
   
@@ -330,7 +326,7 @@ mice <- function(data, m = 5,
   if (!mp & !mb & !mf) {
     # blocks lead
     blocks <- check.blocks(blocks, data)
-    formulas <- check.formulas(formulas, blocks)
+    formulas <- check.formulas(formulas, data)
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data, blocks)
   }
 
