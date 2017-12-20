@@ -45,8 +45,9 @@ check.predictorMatrix <- function(predictorMatrix,
       else
         stop("Missing row/column names in predictorMatrix", call. = FALSE)
     }
-    diag(predictorMatrix) <- 0
-    return(predictorMatrix)  
+    for (i in row.names(predictorMatrix))
+      predictorMatrix[i, grep(i, colnames(predictorMatrix))] <- 0
+    return(predictorMatrix)
   }
   
   # check conforming arguments
