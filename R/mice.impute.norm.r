@@ -77,7 +77,7 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...)
   names(parm) <- c("coef", "beta", "sigma", "estimation")
   if(any(is.na(parm$coef)) & rank.adjust){
     parm$coef[is.na(parm$coef)] <- 0
-    parm$beta[is.na(parm$coef)] <- 0
+    parm$beta[is.na(parm$beta)] <- 0
   }
   return(parm)
 }
@@ -111,7 +111,13 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
     c <- t(qr$coef)
     f <- qr$fitted.values
     r <- t(qr$residuals)
-    v <- solve(as.matrix(crossprod(qr.R(qr$qr))))
+    if(qr$rank %in% dim(x)){
+      v <- solve(as.matrix(crossprod(qr.R(qr$qr))))
+    } else { #only if computationally singular system
+      xtx <- as.matrix(crossprod(qr.R(qr$qr)))
+      pen <- diag(xtx) * ridge #calculate ridge penalty
+      v <- solve(xtx + diag(pen)) #add ridge penalty to allow inverse of vcov
+    }
     return(list(c=t(c), r=t(r), v=v, df=df, ls.meth=ls.meth))
   } 
   if (ls.meth == "ridge"){
@@ -129,7 +135,13 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
     c <- s$v %*% ((t(s$u) %*% y) / s$d)
     f <- x %*% c
     r <- f - y
-    v <- solve(s$v %*% diag(s$d)^2 %*% t(s$v))
+    if(sum(s$d > 1e-8) == length(s$d)){
+      v <- solve(s$v %*% diag(s$d)^2 %*% t(s$v))
+    } else { #only if computationally singular system
+      xtx <- s$v %*% diag(s$d)^2 %*% t(s$v)
+      pen <- diag(xtx) * ridge #calculate ridge penalty
+      v <- solve(xtx + diag(pen)) #add ridge penalty to allow inverse of vcov
+    }
     return(list(c=c, r=r, v=v, df=df, ls.meth=ls.meth))
   }
 }
