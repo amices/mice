@@ -222,6 +222,6 @@ expand.dots <- function(formula, data) {
   
   y <- lhs(formula)
   x <- setdiff(colnames(data), y)
-  fs <- paste(paste(y, collapse = "+"), "~", paste(c("0", x), collapse = "+"))
+  fs <- paste(paste(y, collapse = "+"), "~", paste(x, collapse = "+"))
   as.formula(fs)
 }
