@@ -20,7 +20,7 @@ setup <- list(blocks = blocks,
 v2 <- mice:::check.formulas(setup, data)
 v2$formulas
 
-test_that("updates `has.formula` attribute", {
+test_that("updates `mode.formula` attribute", {
   # expect_false(identical(v2$formulas, v2$formulas.arg))
   expect_identical(v2$formulas[[1]], v2$formulas.arg[[1]])
 })

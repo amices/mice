@@ -10,11 +10,9 @@ test_that("panImpute returns native class", {
   expect_is(z1, "mitml")
 })
 
-blocks <-  list(c("bmi", "chl", "hyp"), "age")
+blocks <-  make.blocks(list(c("bmi", "chl", "hyp"), "age"))
 method <- c("panImpute", "pmm")
-ini <- mice(nhanes, blocks = blocks, method = method, maxit = 0)
-# pred <- make.predictorMatrix(nhanes, blocks)
-pred <- ini$predictorMatrix
+pred <- make.predictorMatrix(nhanes, blocks)
 pred["B1", "hyp"] <- -2
 imp <- mice(nhanes, blocks = blocks, method = method, pred = pred, 
             maxit = 1, seed = 1, print = FALSE)

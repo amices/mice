@@ -270,14 +270,15 @@ mice <- function(data, m = 5,
     # blocks lead
     blocks <- make.blocks(colnames(data))
     predictorMatrix <- make.predictorMatrix(data, blocks)
-    formulas <- make.formulas(data, blocks, full = FALSE)
+    formulas <- make.formulas(data, blocks, mode = "type")
   }
   # case B
   if (!mp & mb & mf) {
     # predictorMatrix leads
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
     blocks <- make.blocks(colnames(predictorMatrix), partition = "scatter")
-    formulas <- make.formulas(data, blocks, full = FALSE)
+    formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix, 
+                              mode = "type")
   }
   
   # case C
@@ -285,7 +286,7 @@ mice <- function(data, m = 5,
     # blocks leads
     blocks <- check.blocks(blocks, data)
     predictorMatrix <- make.predictorMatrix(data, blocks)
-    formulas <- make.formulas(data, blocks, full = FALSE)
+    formulas <- make.formulas(data, blocks, mode = "type")
   }
   
   # case D
@@ -293,6 +294,7 @@ mice <- function(data, m = 5,
     # formulas leads
     formulas <- name.formulas(formulas)
     formulas <- handle.oldstyle.formulas(formulas, data)
+    formulas <- lapply(formulas, expand.dots, data)
     blocks <- extract.blocks(formulas)
     predictorMatrix <- make.predictorMatrix(data, blocks)
   }
@@ -304,7 +306,8 @@ mice <- function(data, m = 5,
     z <- check.predictorMatrix(predictorMatrix, data, blocks)
     predictorMatrix <- z$predictorMatrix
     blocks <- z$blocks
-    formulas <- make.formulas(data, blocks, full = FALSE)
+    formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix,
+                              mode = "type")
   }
   
   # case F
@@ -321,10 +324,17 @@ mice <- function(data, m = 5,
     # blocks lead
     blocks <- check.blocks(blocks, data)
     formulas <- check.formulas(formulas, blocks)
-    
-    
+    predictorMatrix <- make.predictorMatrix(data, blocks)
   }
   
+  # case H
+  if (!mp & !mb & !mf) {
+    # blocks lead
+    blocks <- check.blocks(blocks, data)
+    formulas <- check.formulas(formulas, blocks)
+    predictorMatrix <- check.predictorMatrix(predictorMatrix, data, blocks)
+  }
+
   # list for storing current computational state
   state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
   
@@ -354,7 +364,7 @@ mice <- function(data, m = 5,
   setup <- check.method(setup, data)
   # setup <- check.predictorMatrix(setup)
   # setup <- check.data(setup, data, ...)
-  setup <- check.formulas(setup, data, ...)
+  # setup <- check.formulas(setup, data, ...)
   setup <- check.post(setup)
   
   ## Initialize imputation array imp, etc.

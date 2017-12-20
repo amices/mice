@@ -35,6 +35,7 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99, allow.na = FALSE
     updateLog(out = "All predictors are constant or have too high correlation.", frame = 4)
   if (length(keep) == 1) keep[1] <- TRUE
   k <- sum(keep)
+  if (k == 0) return(keep)
   cx <- cor(xobs[, keep, drop = FALSE], use = "all.obs")
   eig <- eigen(cx, symmetric = TRUE)
   ncx <- cx

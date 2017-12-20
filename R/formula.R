@@ -7,34 +7,50 @@
 #' @param data A \code{data.frame} with the source data
 #' @param blocks An optional specification for blocks of variables in 
 #' the rows. The default assigns each variable in its own block.
-#' @param full A logical indicating whether the full model (default) should be 
-#' produced. The full model imputes each variable conditional 
-#' on all other variables. Setting \code{full = FALSE} yields the empty 
-#' model.
-#' @return A list of formula's. If \code{format == "character"} then it os
+#' @param predictorMatrix A \code{predictorMatrix} specified by the user.
+#' @param mode A character vector of length 1, either \code{"formula"} or
+#' \code{"type"}, signalling whether the underlying imputation functions 
+#' should be call with argument \code{"type"} or \code{"formula"}.
+#' @return A list of formula's.
 #' @seealso \code{\link{make.blocks}}, \code{\link{make.predictorMatrix}}
 #' @examples
-#' make.formulas(nhanes)
-#' make.formulas(nhanes, blocks = make.blocks(nhanes, "collect"))
+#' f1 <- make.formulas(nhanes)
+#' f1
+#' f2 <- make.formulas(nhanes, blocks = make.blocks(nhanes, "collect"))
+#' f2
+#' 
+#' # for editing, it may be easier to work with the character vector
+#' c1 <- as.character(f1)
+#' c1
+#' 
+#' # fold it back into a formula list
+#' f3 <- name.formulas(lapply(c1, as.formula))
+#' f3
+#' 
 #' @export
-make.formulas <- function(data, blocks = make.blocks(data), full = TRUE) {
+make.formulas <- function(data, blocks = make.blocks(data), 
+                          predictorMatrix = NULL, mode = "formula") {
   formulas <- as.list(rep("~ 0", length(blocks)))
   names(formulas) <- names(blocks)
   
-  if (full) {
-    for (h in names(blocks)) {
-      y <- blocks[[h]]
-      x <- setdiff(colnames(data), y)
-      formulas[[h]] <- paste(paste(y, collapse = "+"), "~", 
-                             paste(c("0", x), collapse = "+"))
+  for (h in names(blocks)) {
+    y <- blocks[[h]]
+    if (is.null(predictorMatrix)) {
+      predictors <- colnames(data)
+    } else {
+      type <- predictorMatrix[h, ]
+      predictors <- names(type)[type != 0]
     }
+    x <- setdiff(predictors, y)
+    formulas[[h]] <- paste(paste(y, collapse = "+"), "~", 
+                           paste(c("0", x), collapse = "+"))
   }
+  
   formulas <- lapply(formulas, as.formula)
   
   # determine blocks with no specified formula
-  attr(formulas, "has.formula") <- !sapply(formulas, 
-                                           is.empty.model.data, 
-                                           data = data)
+  attr(formulas, "mode.formula") <- sapply(formulas, 
+                                           function(x) mode == "formula")
   formulas
 }
 
@@ -138,9 +154,9 @@ check.formulas <- function(setup, data, ...) {
   formulas <- lapply(formulas, as.formula)
   
   # determine blocks with no specified formula
-  attr(formulas, "has.formula") <- !sapply(formulas, 
-                                           is.empty.model.data, 
-                                           data = data)
+  attr(formulas, "mode.formula") <- !sapply(formulas, 
+                                            is.empty.model.data, 
+                                            data = data)
   
   # extend formulas with predictorMatrix
   for (h in names(blocks)) {
@@ -161,6 +177,33 @@ check.formulas <- function(setup, data, ...) {
   setup
 }
 
+#' Extends formula's with predictor matrix settings
+#' 
+#' @inheritParams mice
+#' @return A list of formula's
+#' @param auxiliary A logical that indicates whether the variables
+#' listed in \code{predictors} should be added to the formula as main 
+#' effects. The default is \code{TRUE}.
+#' @param include.intercept A logical that indicated whether the intercept 
+#' should be included in the result.
+#' @keywords internal
+extend.formulas <- function(formulas, data, blocks, predictorMatrix = NULL, 
+                            auxiliary = TRUE,
+                            include.intercept = FALSE, 
+                            ...) {
+  # Extend formulas with predictorMatrix
+  if (is.null(predictorMatrix)) return(formulas)
+  for (h in names(blocks)) {
+    type <- predictorMatrix[h, ]
+    predictors <- names(type)[type != 0]
+    ff <- extend.formula(formula = formulas[[h]], 
+                         predictors = predictors, 
+                         auxiliary = auxiliary, 
+                         include.intercept = include.intercept)
+    formulas[[h]] <- ff
+  }
+  formulas
+}
 
 #' Extends a formula with predictors
 #' 
@@ -227,3 +270,12 @@ hasdot <- function(f) {
     f == as.symbol(".")}
 }
 
+expand.dots <- function(formula, data) {
+  if (!is.formula(formula)) return(formula)
+  if (!hasdot(formula)) return(formula)
+  
+  y <- lhs(formula)
+  x <- setdiff(colnames(data), y)
+  fs <- paste(paste(y, collapse = "+"), "~", paste(c("0", x), collapse = "+"))
+  as.formula(fs)
+}

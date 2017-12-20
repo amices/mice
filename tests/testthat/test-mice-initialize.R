@@ -48,6 +48,15 @@ test_that("Case B finds formulas", {
 
 # Case C: Only blocks argument
 
+imp1.0 <- mice(data, blocks = list("bmi", "chl", "hyp"), m = 1, maxit = 0, seed = 11)
+imp2.0 <- mice(data, blocks = list(c("bmi", "chl"), "hyp"), m = 1, maxit = 0, seed = 11)
+imp3.0 <- mice(data, blocks = list(all = c("bmi", "chl", "hyp")), m = 1, maxit = 0, seed = 11)
+
+test_that("Case C imputations are identical after initialization", {
+  expect_identical(complete(imp1.0), complete(imp2.0))
+  expect_identical(complete(imp1.0), complete(imp3.0))
+})
+
 imp1 <- mice(data, blocks = list("bmi", "chl", "hyp"), print = FALSE, m = 1, maxit = 1, seed = 11)
 imp2 <- mice(data, blocks = list(c("bmi", "chl"), "hyp"), print = FALSE, m = 1, maxit = 1, seed = 11)
 imp3 <- mice(data, blocks = list(all = c("bmi", "chl", "hyp")), print = FALSE, m = 1, maxit = 1, seed = 11)
@@ -63,8 +72,7 @@ test_that("Case C finds predictorMatrix", {
 })
 
 test_that("Case C finds formulas", {
-  expect_identical(attr(terms(imp2$formulas[["B1"]]), "term.labels"),
-                   colnames(data))
+  expect_identical(sort(all.vars(imp2$formulas[["B1"]])), sort(colnames(data)))
 })
 
 test_that("Case C yields same imputations for FCS and multivariate", {
@@ -97,11 +105,11 @@ imp4 <- mice(data, formulas = form4, print = FALSE, m = 1, maxit = 1, seed = 121
 
 test_that("Case D yields same imputations for dot notation", {
   expect_identical(complete(imp1), complete(imp2))
-  # expect_identical(complete(imp3), complete(imp4))   FIXME
+  expect_identical(complete(imp3), complete(imp4))
 })
 
 test_that("Case D yields same imputations for FCS and multivariate", {
-  # expect_identical(complete(imp1), complete(imp3))   FIXME
+  expect_identical(complete(imp1), complete(imp3))
   expect_identical(complete(imp2), complete(imp4))
 })
 
@@ -134,7 +142,7 @@ test_that("Case E borrows colnames from data", {
   expect_identical(colnames(imp3a$predictorMatrix), names(data))
 })
 
-test_that("Case E namesetting fails on incompatible sizes", {
+test_that("Case E name setting fails on incompatible sizes", {
   expect_error(mice(data, blocks = blocks2, pred = matrix(1, nr=2, nc=2)),
                "Unable to set column names of predictorMatrix")
   expect_error(mice(data, blocks = blocks2, pred = matrix(1, nr=1, nc=4)),
@@ -155,3 +163,4 @@ test_that("Case E detects incompatible arguments", {
   expect_error(mice(data, blocks = blocks2, pred = pred2a),
                "predictorMatrix has no rows or columns")
 })
+

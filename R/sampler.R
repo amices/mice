@@ -48,7 +48,7 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
           bname <- names(blocks)[h]
           ff <- formulas[[h]]
           type <- predictorMatrix[h, ]
-          hasForm <- attr(formulas, "has.formula")[h]
+          modeForm <- attr(formulas, "mode.formula")[h]
           
           # univariate/multivariate logic
           theMethod <- method[h]
@@ -98,7 +98,7 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
             data[mis] <- NA
             
             fm <- paste("mice.impute", theMethod, sep = ".")
-            if (hasForm) 
+            if (modeForm) 
               imputes <- do.call(fm, args = list(data = data, 
                                                  formula = ff, ...))
             else 
@@ -154,7 +154,7 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
 
 sampler.univ <- function(data, r, where, type, formula, method, yname, k, ...) {
   j <- yname[1]
-  formula <- update(formula, paste("~ . -", j))
+  formula <- reformulate(sort(setdiff(all.vars(formula), j)), response = j)
   x <- obtain.design(data, formula)
   y <- data[, j]
   ry <- complete.cases(x, y) & r[, j]
