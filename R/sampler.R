@@ -44,12 +44,13 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
         
         # impute block-by-block
         for (h in visitSequence) {
-          b <- blocks[[h]]
-          bname <- names(blocks)[h]
-          ff <- formulas[[h]]
-          type <- predictorMatrix[h, ]
           ct <- attr(blocks, "calltype")
           calltype <- ifelse(length(ct) == 1, ct[1], ct[h])
+          
+          b <- blocks[[h]]
+          bname <- names(blocks)[h]
+          if (calltype == "formula") ff <- formulas[[h]] else ff <- NULL
+          if (calltype == "type") type <- predictorMatrix[h, ] else type <- NULL
           
           # univariate/multivariate logic
           theMethod <- method[h]
@@ -156,9 +157,11 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
 
 
 sampler.univ <- function(data, r, where, type, formula, method, yname, k, 
-                         calltype = "design0", ...) {
+                         calltype = "type", ...) {
   j <- yname[1]
-  formula <- reformulate(sort(setdiff(all.vars(formula), j)), response = j)
+  if (calltype == "formula") vars <- all.vars(formula)
+  if (calltype == "type") vars <- colnames(data)[type != 0]
+  formula <- reformulate(sort(setdiff(vars, j)), response = j)
   x <- obtain.design(data, formula)
   y <- data[, j]
   ry <- complete.cases(x, y) & r[, j]

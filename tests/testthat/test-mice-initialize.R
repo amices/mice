@@ -199,3 +199,6 @@ test_that("Case F generates error if it cannot handle non-square predictor", {
                "If no blocks are specified, predictorMatrix must have same number of rows and columns")
 })
 
+## Error in formulas[[h]] : subscript out of bounds
+imp3 <- mice(data, formulas = form3, pred = pred1, m = 1, maxit = 0, print = FALSE, seed = 3)
+imp3a <- mice(data, formulas = form3, pred = pred1, m = 1, maxit = 1, print = FALSE, seed = 3)
