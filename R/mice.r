@@ -341,6 +341,9 @@ mice <- function(data, m = 5,
   if (!is.na(seed)) set.seed(seed)
   data <- as.data.frame(data)
   dimnames(where) <- dimnames(data)
+  
+  visitSequence <- check.visitSequence(visitSequence, blocks)
+  
   setup <- list(blocks = blocks, 
                 nwhere = apply(where, 2, sum),
                 nimp = nimp(where, blocks),
@@ -353,13 +356,8 @@ mice <- function(data, m = 5,
                 nvar = ncol(data), 
                 varnames = colnames(data))
   
-  # Checks and edits on the arguments
-  # setup <- check.blocks(setup, data)
-  setup <- check.visitSequence(setup, where)
+  
   setup <- check.method(setup, data)
-  # setup <- check.predictorMatrix(setup)
-  # setup <- check.data(setup, data, ...)
-  # setup <- check.formulas(setup, data, ...)
   setup <- check.post(setup)
   
   ## Initialize imputation array imp, etc.

@@ -38,7 +38,7 @@ where <- is.na(nhanes)
 nimp(where)
 
 # user-defined blocks
-nimp(where, blocks = list(bmi.age = c("bmi", "age"), "chl"))
+nimp(where, blocks = name.blocks(list(c("bmi", "hyp"), "age", "chl")))
 }
 \seealso{
 \code{\link{mice}}

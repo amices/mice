@@ -1,38 +1,5 @@
 # internal function for checking input to main mice() function
 
-check.visitSequence <- function(setup, where) {
-  
-  nwhere <- setup$nwhere
-  nimp <- setup$nimp
-  visitSequence <- setup$visitSequence
-  blocks <- setup$blocks
-  
-  # set default visit sequence, left to right
-  if (is.null(visitSequence))
-    visitSequence <- seq_along(blocks)
-  
-  if (length(nimp) == 0) visitSequence <- nimp
-  
-  if (!is.numeric(visitSequence)) {
-    code <- match.arg(visitSequence, c("roman", "arabic", "monotone",
-                                       "revmonotone"))
-    visitSequence <- switch(
-      code, 
-      roman = seq_along(blocks)[nimp > 0],
-      arabic = rev(seq_along(blocks)[nimp > 0]),
-      monotone = order(nimp)[(sum(nimp == 0) + 1):length(nimp)],
-      revmonotone = rev(order(nimp)[(sum(nimp == 0) + 1):length(nimp)]),
-      seq_len(nimp)[nimp > 0]
-    )
-  }
-  
-  flags <- (nimp == 0) & is.element(seq_along(blocks), visitSequence)
-  if (any(flags)) visitSequence <- visitSequence[!flags]
-  visitSequence <- visitSequence[visitSequence <= length(blocks)]
-  visitSequence <- visitSequence[visitSequence >= 1]
-  setup$visitSequence <- visitSequence
-  setup
-}
 
 
 

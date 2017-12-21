@@ -212,7 +212,7 @@ cbind.mids <- function(x, y = NULL, ...) {
     dimnames(predictorMatrix) <- list(varnames, varnames)
     
     # As visitSequence is taken first the order for x and after that from y.
-    visitSequence <- c(x$visitSequence, y$visitSequence + max(x$visitSequence))
+    visitSequence <- c(x$visitSequence, y$visitSequence)
     
     post <- c(x$post, y$post)
     formulas <- c(x$formulas, y$formulas)

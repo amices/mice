@@ -91,7 +91,7 @@ imp4 <- mice(nhanes2, where = matrix(TRUE, nrow = 25, ncol = 4),
 
 test_that("`where` produces correct number of imputes", {
   expect_identical(nrow(imp1$imp$age), 25L)
-  expect_identical(imp2$imp$age, NULL)
+  expect_identical(nrow(imp2$imp$age), 0L)
   expect_identical(nrow(imp3$imp$age), 12L)
   expect_identical(sum(is.na(imp4$imp$age)), nrow(nhanes2) - sum(complete.cases(nhanes2)))
 })
