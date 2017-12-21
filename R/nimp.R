@@ -14,7 +14,7 @@
 #' nimp(where)
 #' 
 #' # user-defined blocks
-#' nimp(where, blocks = list(bmi.age = c("bmi", "age"), "chl"))
+#' nimp(where, blocks = name.blocks(list(c("bmi", "hyp"), "age", "chl")))
 nimp <- function(where, blocks = make.blocks(where)) {
   #if (length(blocks) > 0 && is.null(names(blocks))) 
   #  stop("Blocks have no names. Use name.blocks(...)")
