@@ -162,6 +162,7 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   if (calltype == "type") {
     vars <- colnames(data)[type != 0]
     formula <- reformulate(setdiff(vars, j), response = j)
+    formula <- update(formula, ". ~ . -1")
   }
   if (calltype == "formula") {
     # move terms other than j from lhs to rhs, remove intercept
@@ -174,6 +175,10 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   y <- data[, j]
   ry <- complete.cases(x, y) & r[, j]
   wy <- complete.cases(x) & where[, j]
+  
+  # nothing to impute
+  if (all(!wy)) return(numeric(0))
+  
   cc <- wy[where[, j]]
   if (k == 1) check.df(x, y, ry)
   
