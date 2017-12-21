@@ -159,9 +159,17 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
 sampler.univ <- function(data, r, where, type, formula, method, yname, k, 
                          calltype = "type", ...) {
   j <- yname[1]
-  if (calltype == "formula") vars <- all.vars(formula)
-  if (calltype == "type") vars <- colnames(data)[type != 0]
-  formula <- reformulate(sort(setdiff(vars, j)), response = j)
+  if (calltype == "type") {
+    vars <- colnames(data)[type != 0]
+    formula <- reformulate(setdiff(vars, j), response = j)
+  }
+  if (calltype == "formula") {
+    # move terms other than j from lhs to rhs, remove intercept
+    ymove <- setdiff(lhs(formula), j)
+    formula <- update(formula, paste(j, " ~ . -1"))
+    if (length(ymove) > 0L) 
+      formula <- update(formula, paste("~ . + ", paste(ymove, collapse = "+")))
+  }
   x <- obtain.design(data, formula)
   y <- data[, j]
   ry <- complete.cases(x, y) & r[, j]

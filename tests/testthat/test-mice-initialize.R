@@ -88,20 +88,24 @@ test_that("Case C yields same imputations for FCS and multivariate", {
 form1 <- list(bmi ~ age + hyp + chl,
               hyp ~ age + bmi + chl,
               chl ~ age + bmi + hyp)
-imp1 <- mice(data, formulas = form1, print = FALSE, m = 1, maxit = 1, seed = 12199)
+imp1 <- mice(data, formulas = form1, method = "norm.nob", 
+             print = FALSE, m = 1, maxit = 1, seed = 12199)
 
 # same model using dot notation
 form2 <- list(bmi ~ ., hyp ~ ., chl ~ .)
-imp2 <- mice(data, formulas = form2, print = FALSE, m = 1, maxit = 1, seed = 12199)
+imp2 <- mice(data, formulas = form2, method = "norm.nob", 
+             print = FALSE, m = 1, maxit = 1, seed = 12199)
 
 # multivariate models (= repeated univariate)
 form3 <- list(bmi + hyp ~ age + chl,
               chl ~ age + bmi + hyp)
-imp3 <- mice(data, formulas = form3, print = FALSE, m = 1, maxit = 1, seed = 12199)
+imp3 <- mice(data, formulas = form3, method = "norm.nob", 
+             print = FALSE, m = 1, maxit = 1, seed = 12199)
 
 # same model using dot notation
 form4 <- list(bmi + hyp ~ ., chl ~ .)
-imp4 <- mice(data, formulas = form4, print = FALSE, m = 1, maxit = 1, seed = 12199)
+imp4 <- mice(data, formulas = form4, method = "norm.nob", 
+             print = FALSE, m = 1, maxit = 1, seed = 12199)
 
 test_that("Case D yields same imputations for dot notation", {
   expect_identical(complete(imp1), complete(imp2))
@@ -109,8 +113,8 @@ test_that("Case D yields same imputations for dot notation", {
 })
 
 test_that("Case D yields same imputations for FCS and multivariate", {
-  expect_identical(complete(imp1), complete(imp3))
-  expect_identical(complete(imp2), complete(imp4))
+  expect_equal(complete(imp1), complete(imp3))
+  expect_equal(complete(imp2), complete(imp4))
 })
 
 
