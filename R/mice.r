@@ -141,17 +141,17 @@
 #'rows and columns with all 1's, except for the diagonal. 
 #'Note: For two-level imputation models (which have \code{"2l"} in their names)
 #'other codes (e.g, \code{2} or \code{-2}) are also allowed.
-#'@param visitSequence A vector of integers of arbitrary length, specifying the
-#'column indices of the visiting sequence. The visiting sequence is the column
-#'order that is used to impute the data during one pass through the data. A
-#'column may be visited more than once. All incomplete columns that are used as
-#'predictors should be visited, or else the function will stop with an error.
-#'The default sequence \code{1:ncol(data)} implies that columns are imputed
-#'from left to right. It is possible to specify one of the keywords
-#'\code{'roman'} (left to right), \code{'arabic'} (right to left),
-#'\code{'monotone'} (sorted in increasing amount of missingness) and
-#'\code{'revmonotone'} (reverse of monotone). The keyword should be supplied as
-#'a string and may be abbreviated.
+#'@param visitSequence A vector of block names of arbitrary length, specifying the
+#'sequence of blocks that are imputed during one iteration of the Gibbs 
+#'sampler. A block is a collection of variables. All variables that are 
+#'members of the same block are imputed 
+#'when the block is visited. A variable that is a member of multiple blocks 
+#'is re-imputed within the same iteration. 
+#'The default \code{visitSequence = "roman"} visits the blocks (first to last)
+#'in the order in which they appear in \code{blocks}. 
+#'One may also use one of the following keywords: \code{"arabic"} 
+#'(last to first), \code{"monotone"} (ordered low to high proportion 
+#'of missing data) and \code{"revmonotone"} (reverse of monotone). 
 #'@param post A vector of strings with length \code{length(blocks)}, specifying
 #'expressions. Each string is parsed and executed within the \code{sampler()}
 #'function to postprocess imputed values during the iterations. 
