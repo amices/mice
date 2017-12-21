@@ -27,7 +27,7 @@ where <- is.na(data)
 # 
 # # try dot in formula
 # formulas <- list(bmi ~ ., age ~ ., chl ~ .)
-# formulas <- name.formulas(formulas, data = nhanes)
+# formulas <- name.formulas(formulas)
 # setup <- list(blocks = blocks, 
 #               predictorMatrix = ini$predictorMatrix,
 #               formulas = formulas)

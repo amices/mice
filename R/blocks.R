@@ -123,6 +123,9 @@ name.blocks <- function(blocks, prefix = "B") {
 
 check.blocks <- function(blocks, data, calltype = "type") {
   
+  if (!(is.matrix(data) || is.data.frame(data)))
+    stop("Data should be a matrix or data frame", call. = FALSE)
+  
   # for proper workings, name all blocks  
   blocks <- name.blocks(blocks)
   

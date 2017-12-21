@@ -27,6 +27,9 @@
 #' @export
 make.formulas <- function(data, blocks = make.blocks(data), 
                           predictorMatrix = NULL) {
+  if (!(is.matrix(data) || is.data.frame(data)))
+    stop("Data should be a matrix or data frame", call. = FALSE)
+  
   formulas <- as.list(rep("~ 0", length(blocks)))
   names(formulas) <- names(blocks)
   
@@ -73,7 +76,7 @@ make.formulas <- function(data, blocks = make.blocks(data),
 #' 
 #' # same model using dot notation
 #' form2 <- list(bmi ~ ., hyp ~ ., chl ~ .)
-#' form2 <- name.formulas(form2, data = nhanes)
+#' form2 <- name.formulas(form2)
 #' imp2 <- mice(nhanes, formulas = form2, print = FALSE, m = 1, seed = 12199)
 #' identical(complete(imp1), complete(imp2))
 #' 
@@ -89,10 +92,10 @@ make.formulas <- function(data, blocks = make.blocks(data),
 #' 
 #' # different model: multivariate imputation for chl and bmi
 #' form5 <- list(chl + bmi ~ ., hyp ~ bmi + age)
-#' form5 <- name.formulas(form5, data = nhanes)
+#' form5 <- name.formulas(form5)
 #' imp5 <- mice(nhanes, formulas = form5, print = FALSE, m = 1, seed = 71712)
 #' @export
-name.formulas <- function(formulas, data = NULL, prefix = "F") {
+name.formulas <- function(formulas, prefix = "F") {
   if (!is.list(formulas))
     stop("Argument `formulas` not a list", call. = FALSE)
   if (!all(sapply(formulas, is.formula)))
@@ -115,7 +118,7 @@ name.formulas <- function(formulas, data = NULL, prefix = "F") {
 
 
 check.formulas <- function(formulas, data) {
-  formulas <- name.formulas(formulas, data)
+  formulas <- name.formulas(formulas)
   formulas <- handle.oldstyle.formulas(formulas, data)
   formulas <- lapply(formulas, expand.dots, data)
   formulas <- lapply(formulas, as.formula)

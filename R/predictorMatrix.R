@@ -16,6 +16,8 @@
 #' make.predictorMatrix(nhanes, blocks = make.blocks(nhanes, "collect"))
 #' @export
 make.predictorMatrix <- function(data, blocks = make.blocks(data)) {
+  if (!(is.matrix(data) || is.data.frame(data)))
+    stop("Data should be a matrix or data frame", call. = FALSE)
   predictorMatrix <- matrix(1, nrow = length(blocks), ncol = ncol(data))
   dimnames(predictorMatrix) <- list(names(blocks), colnames(data))
   for (i in row.names(predictorMatrix)) 
@@ -26,6 +28,8 @@ make.predictorMatrix <- function(data, blocks = make.blocks(data)) {
 check.predictorMatrix <- function(predictorMatrix, 
                                   data,
                                   blocks = NULL) {
+  if (!(is.matrix(data) || is.data.frame(data)))
+    stop("Data should be a matrix or data frame", call. = FALSE)
   
   if (!is.matrix(predictorMatrix))
     stop("predictorMatrix not a matrix", call. = FALSE)

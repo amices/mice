@@ -4,7 +4,7 @@
 \alias{name.formulas}
 \title{Name formula list elements}
 \usage{
-name.formulas(formulas, data = NULL, prefix = "F")
+name.formulas(formulas, prefix = "F")
 }
 \arguments{
 \item{formulas}{A named list of formula's, or expressions that
@@ -14,9 +14,6 @@ name.formulas(formulas, data = NULL, prefix = "F")
    The \code{formulas} argument is an alternative to the 
 \code{predictorMatrix} argument that allows for more flexibility in 
 specifying imputation models, e.g., for specifying interaction terms.}
-
-\item{data}{A data frame or a matrix containing the incomplete data.  Missing
-values are coded as \code{NA}.}
 
 \item{prefix}{A character vector of length 1 with the prefix to
 be using for naming any unnamed blocks with two or more variables.}
@@ -46,7 +43,7 @@ imp1 <- mice(nhanes, formulas = form1, print = FALSE, m = 1, seed = 12199)
 
 # same model using dot notation
 form2 <- list(bmi ~ ., hyp ~ ., chl ~ .)
-form2 <- name.formulas(form2, data = nhanes)
+form2 <- name.formulas(form2)
 imp2 <- mice(nhanes, formulas = form2, print = FALSE, m = 1, seed = 12199)
 identical(complete(imp1), complete(imp2))
 
@@ -62,7 +59,7 @@ identical(complete(imp1), complete(imp4))
 
 # different model: multivariate imputation for chl and bmi
 form5 <- list(chl + bmi ~ ., hyp ~ bmi + age)
-form5 <- name.formulas(form5, data = nhanes)
+form5 <- name.formulas(form5)
 imp5 <- mice(nhanes, formulas = form5, print = FALSE, m = 1, seed = 71712)
 }
 \seealso{
