@@ -60,7 +60,7 @@
 #'
 #'@export
 mice.impute.panImpute <- function(data, formula, type, m = 1, silent = TRUE,
-                                  format = "mice$imp", ...) {
+                                  format = "imputes", ...) {
   
   nat <- mitml::panImpute(data = data, formula = formula, type = type, 
                    m = m, silent = silent, ...)
@@ -68,6 +68,6 @@ mice.impute.panImpute <- function(data, formula, type, m = 1, silent = TRUE,
   if (format == "native") return(nat)
   cmp <- mitml::mitmlComplete(nat, print = 1)[, names(data)]
   if (format == "complete") return(cmp)
-  if (format == "mice$imp") return(single2imputes(cmp, is.na(data)))
+  if (format == "imputes") return(single2imputes(cmp, is.na(data)))
   NULL
 }

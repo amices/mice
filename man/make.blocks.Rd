@@ -2,7 +2,7 @@
 % Please edit documentation in R/blocks.R
 \name{make.blocks}
 \alias{make.blocks}
-\title{Partition variables into imputation blocks}
+\title{Creates a \code{blocks} argument}
 \usage{
 make.blocks(data, partition = c("scatter", "collect", "void"),
   calltype = "type")

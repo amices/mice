@@ -2,7 +2,7 @@
 % Please edit documentation in R/predictorMatrix.R
 \name{make.predictorMatrix}
 \alias{make.predictorMatrix}
-\title{Creates a \code{predictorMatrix}}
+\title{Creates a \code{predictorMatrix} argument}
 \usage{
 make.predictorMatrix(data, blocks = make.blocks(data))
 }

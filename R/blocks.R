@@ -1,4 +1,4 @@
-#' Partition variables into imputation blocks
+#' Creates a \code{blocks} argument
 #'
 #' This helper function generates a list of the type needed for 
 #' \code{blocks} argument in the \code{[=mice]{mice}} function.

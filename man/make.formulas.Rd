@@ -2,7 +2,7 @@
 % Please edit documentation in R/formula.R
 \name{make.formulas}
 \alias{make.formulas}
-\title{Creates a \code{formulas} object}
+\title{Creates a \code{formulas} argument}
 \usage{
 make.formulas(data, blocks = make.blocks(data), predictorMatrix = NULL)
 }

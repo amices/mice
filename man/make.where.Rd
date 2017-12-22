@@ -2,7 +2,7 @@
 % Please edit documentation in R/where.R
 \name{make.where}
 \alias{make.where}
-\title{Creates a \code{where} matrix}
+\title{Creates a \code{where} argument}
 \usage{
 make.where(data, keyword = c("missing", "all", "none", "observed"))
 }

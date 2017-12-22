@@ -1,4 +1,4 @@
-#' Creates a \code{where} matrix
+#' Creates a \code{where} argument
 #'
 #' This helper function creates a valid \code{where} matrix. The 
 #' \code{where} matrix is an argument to the \code{mice} function. 

@@ -1,4 +1,4 @@
-#' Creates a \code{formulas} object
+#' Creates a \code{formulas} argument
 #'
 #' This helper function creates a valid \code{formulas} object. The 
 #' \code{formulas} object is an argument to the \code{mice} function. 

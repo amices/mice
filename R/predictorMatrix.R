@@ -1,4 +1,4 @@
-#' Creates a \code{predictorMatrix}
+#' Creates a \code{predictorMatrix} argument
 #'
 #' This helper function creates a valid \code{predictMatrix}. The 
 #' \code{predictorMatrix} is an argument to the \code{mice} function. 
