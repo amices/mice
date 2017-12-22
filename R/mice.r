@@ -339,6 +339,8 @@ mice <- function(data, m = 5,
   where <- check.where(where, data)
   visitSequence <- check.visitSequence(visitSequence, blocks = blocks, 
                                        data = data, where = where)
+  method <- check.method(method = method, data = data, where = where, 
+                         blocks = blocks, defaultMethod = defaultMethod)
   
   setup <- list(blocks = blocks, 
                 nwhere = apply(where, 2, sum),
@@ -352,7 +354,6 @@ mice <- function(data, m = 5,
                 nvar = ncol(data), 
                 varnames = colnames(data))
   
-  setup <- check.method(setup, data)
   setup <- check.post(setup)
   
   ## Initialize imputation array imp, etc.

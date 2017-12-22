@@ -5,7 +5,7 @@
 \title{Impute multilevel missing data using \code{pan}}
 \usage{
 mice.impute.panImpute(data, formula, type, m = 1, silent = TRUE,
-  format = "mice$imp", ...)
+  format = "imputes", ...)
 }
 \arguments{
 \item{data}{A data frame containing incomplete and auxiliary variables, 
