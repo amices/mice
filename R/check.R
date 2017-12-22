@@ -13,16 +13,6 @@ check.data <- function(setup, data, allow.na = FALSE,
   post <- setup$post
   nblo <- length(blocks)
   
-  # stop if the class variable is a factor
-  if (!is.null(pred)) {
-    isclassvar <- apply(pred == -2, 2, any)
-    for (j in seq_len(nvar)) {
-      if (isclassvar[j] && is.factor(data[, j])) 
-        stop("Class variable (column ", j,
-             ") cannot be factor. Convert to numeric by as.integer()")
-    }
-  }
-  
   # # remove constant variables but leave passive variables untouched
   # for (j in seq_len(nvar)) {
   #   d.j <- data[, j]
