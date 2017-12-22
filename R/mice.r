@@ -250,11 +250,9 @@ mice <- function(data, m = 5,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
                  maxit = 5, printFlag = TRUE, seed = NA,
                  data.init = NULL, ...) {
-  # Error checks
-  if (!(is.matrix(data) || is.data.frame(data)))
-    stop("Data should be a matrix or data frame", call. = FALSE)
-  if (ncol(data) < 2)
-    stop("Data should contain at least two columns", call. = FALSE)
+  call <- match.call()
+  if (!is.na(seed)) set.seed(seed)
+  data <- check.data(data)
   
   # determine input combination: predictorMatrix, blocks, formulas
   mp <- missing(predictorMatrix)
@@ -327,15 +325,11 @@ mice <- function(data, m = 5,
   }
 
   # list for storing current computational state
-  state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
-  
   # data frame for storing the event log
+  state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
   loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
   
   # Initialize local variables
-  call <- match.call()
-  if (!is.na(seed)) set.seed(seed)
-  data <- as.data.frame(data)
   where <- check.where(where, data)
   visitSequence <- check.visitSequence(visitSequence, blocks = blocks, 
                                        data = data, where = where)

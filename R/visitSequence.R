@@ -16,10 +16,7 @@ make.visitSequence <- function(data = NULL, blocks = NULL) {
     return(names(blocks))
   }
   
-  if (!(is.matrix(data) || is.data.frame(data)))
-    stop("Data should be a matrix or data frame", call. = FALSE)
-  if (ncol(data) < 2)
-    stop("Data should contain at least two columns", call. = FALSE)
+  data <- check.data(data)
   blocks <- make.blocks(data)
   names(blocks)
 }

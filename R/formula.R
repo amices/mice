@@ -27,9 +27,7 @@
 #' @export
 make.formulas <- function(data, blocks = make.blocks(data), 
                           predictorMatrix = NULL) {
-  if (!(is.matrix(data) || is.data.frame(data)))
-    stop("Data should be a matrix or data frame", call. = FALSE)
-  
+  data <- check.data(data)
   formulas <- as.list(rep("~ 0", length(blocks)))
   names(formulas) <- names(blocks)
   
