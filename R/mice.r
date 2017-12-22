@@ -324,12 +324,6 @@ mice <- function(data, m = 5,
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data, blocks)
   }
 
-  # list for storing current computational state
-  # data frame for storing the event log
-  state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
-  loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
-  
-  # Initialize local variables
   where <- check.where(where, data)
   visitSequence <- check.visitSequence(visitSequence, blocks = blocks, 
                                        data = data, where = where)
@@ -350,8 +344,11 @@ mice <- function(data, m = 5,
   
   setup <- check.post(setup)
   
-  ## Initialize imputation array imp, etc.
   imp <- initialize.imp(data, m, where, setup, data.init)
+
+  # data frame for storing the event log
+  state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
+  loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
   
   # Iterate
   from <- 1
