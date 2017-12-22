@@ -85,11 +85,11 @@ sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
                 imp[[j]][(!r[, j])[where[, j]], i]
               
               # optional post-processing
-              # cmd <- post[bname]
-              # if (cmd != "") {
-              #   eval(parse(text = cmd))
-              #   data[where[, j], j] <- imp[[j]][, i]
-              # }
+              cmd <- post[j]
+              if (cmd != "") {
+                eval(parse(text = cmd))
+                data[where[, j], j] <- imp[[j]][, i]
+              }
             }
           }
           

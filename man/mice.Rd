@@ -8,9 +8,9 @@
 \title{\pkg{mice}: Multivariate Imputation by Chained Equations}
 \usage{
 mice(data, m = 5, method = NULL, predictorMatrix, where = NULL, blocks,
-  visitSequence = NULL, formulas, post = vector("character", length =
-  ncol(data)), defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-  maxit = 5, printFlag = TRUE, seed = NA, data.init = NULL, ...)
+  visitSequence = NULL, formulas, post = NULL, defaultMethod = c("pmm",
+  "logreg", "polyreg", "polr"), maxit = 5, printFlag = TRUE, seed = NA,
+  data.init = NULL, ...)
 }
 \arguments{
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing
@@ -66,18 +66,18 @@ One may also use one of the following keywords: \code{"arabic"}
 of missing data) and \code{"revmonotone"} (reverse of monotone).}
 
 \item{formulas}{A named list of formula's, or expressions that
-   can be converted into formula's by \code{as.formula}. List elements
-   correspond to blocks. The block to which the list element applies is 
-   identied by its name, so list names must correspond to block names.
-   The \code{formulas} argument is an alternative to the 
+can be converted into formula's by \code{as.formula}. List elements
+correspond to blocks. The block to which the list element applies is 
+identied by its name, so list names must correspond to block names.
+The \code{formulas} argument is an alternative to the 
 \code{predictorMatrix} argument that allows for more flexibility in 
 specifying imputation models, e.g., for specifying interaction terms.}
 
-\item{post}{A vector of strings with length \code{length(blocks)}, specifying
-expressions. Each string is parsed and executed within the \code{sampler()}
-function to postprocess imputed values during the iterations. 
-The default is a vector of empty strings 
-(\code{vector("character", length(blocks))}), indicating no post-processing.}
+\item{post}{A vector of strings with length \code{ncol(data)} specifying
+expressions as strings. Each string is parsed and 
+executed within the \code{sampler()} function to postprocess 
+imputed values during the iterations. 
+The default is a vector of empty strings, indicating no post-processing.}
 
 \item{defaultMethod}{A vector of length 4 containing the default
 imputation methods for 1) numeric data, 2) factor data with 2 levels, 3) 
