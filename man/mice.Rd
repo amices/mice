@@ -7,9 +7,9 @@
 \alias{mice}
 \title{\pkg{mice}: Multivariate Imputation by Chained Equations}
 \usage{
-mice(data, m = 5, method = NULL, predictorMatrix, where = is.na(data),
-  blocks, visitSequence = NULL, formulas, post = vector("character", length
-  = ncol(data)), defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+mice(data, m = 5, method = NULL, predictorMatrix, where = NULL, blocks,
+  visitSequence = NULL, formulas, post = vector("character", length =
+  ncol(data)), defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
   maxit = 5, printFlag = TRUE, seed = NA, data.init = NULL, ...)
 }
 \arguments{
@@ -59,10 +59,10 @@ sampler. A block is a collection of variables. All variables that are
 members of the same block are imputed 
 when the block is visited. A variable that is a member of multiple blocks 
 is re-imputed within the same iteration. 
-The default \code{visitSequence = "roman"} visits the blocks (first to last)
+The default \code{visitSequence = "roman"} visits the blocks (left to right)
 in the order in which they appear in \code{blocks}. 
 One may also use one of the following keywords: \code{"arabic"} 
-(last to first), \code{"monotone"} (ordered low to high proportion 
+(right to left), \code{"monotone"} (ordered low to high proportion 
 of missing data) and \code{"revmonotone"} (reverse of monotone).}
 
 \item{formulas}{A named list of formula's, or expressions that

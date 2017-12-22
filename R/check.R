@@ -1,8 +1,5 @@
 # internal function for checking input to main mice() function
 
-
-
-
 check.method <- function(setup, data) {
   # check method, set defaults if appropriate
   blocks <- setup$blocks

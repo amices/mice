@@ -147,10 +147,10 @@
 #'members of the same block are imputed 
 #'when the block is visited. A variable that is a member of multiple blocks 
 #'is re-imputed within the same iteration. 
-#'The default \code{visitSequence = "roman"} visits the blocks (first to last)
+#'The default \code{visitSequence = "roman"} visits the blocks (left to right)
 #'in the order in which they appear in \code{blocks}. 
 #'One may also use one of the following keywords: \code{"arabic"} 
-#'(last to first), \code{"monotone"} (ordered low to high proportion 
+#'(right to left), \code{"monotone"} (ordered low to high proportion 
 #'of missing data) and \code{"revmonotone"} (reverse of monotone). 
 #'@param post A vector of strings with length \code{length(blocks)}, specifying
 #'expressions. Each string is parsed and executed within the \code{sampler()}
@@ -242,7 +242,7 @@
 mice <- function(data, m = 5, 
                  method = NULL,
                  predictorMatrix,
-                 where = is.na(data),
+                 where = NULL,
                  blocks,
                  visitSequence = NULL,
                  formulas,
@@ -255,10 +255,6 @@ mice <- function(data, m = 5,
     stop("Data should be a matrix or data frame", call. = FALSE)
   if (ncol(data) < 2)
     stop("Data should contain at least two columns", call. = FALSE)
-  if (!(is.matrix(where) || is.data.frame(where)))
-    stop("Argument `where` not a matrix or data frame", call. = FALSE)
-  if (!all(dim(data) == dim(where)))
-    stop("Arguments `data` and `where` not of same size", call. = FALSE)
   
   # determine input combination: predictorMatrix, blocks, formulas
   mp <- missing(predictorMatrix)
@@ -340,9 +336,9 @@ mice <- function(data, m = 5,
   call <- match.call()
   if (!is.na(seed)) set.seed(seed)
   data <- as.data.frame(data)
-  dimnames(where) <- dimnames(data)
-  
-  visitSequence <- check.visitSequence(visitSequence, blocks)
+  where <- check.where(where, data)
+  visitSequence <- check.visitSequence(visitSequence, blocks = blocks, 
+                                       data = data, where = where)
   
   setup <- list(blocks = blocks, 
                 nwhere = apply(where, 2, sum),
@@ -355,7 +351,6 @@ mice <- function(data, m = 5,
                 formulas = formulas, post = post, 
                 nvar = ncol(data), 
                 varnames = colnames(data))
-  
   
   setup <- check.method(setup, data)
   setup <- check.post(setup)
