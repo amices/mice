@@ -325,46 +325,38 @@ mice <- function(data, m = 5,
   }
   
   where <- check.where(where, data)
-  visitSequence <- check.visitSequence(visitSequence, blocks = blocks, 
-                                       data = data, where = where)
+  visitSequence <- check.visitSequence(visitSequence, data = data, 
+                                       where = where, blocks = blocks)
   method <- check.method(method = method, data = data, where = where, 
                          blocks = blocks, defaultMethod = defaultMethod)
   post <- check.post(post, data)
-  
-  setup <- list(blocks = blocks, 
-                nwhere = apply(where, 2, sum),
-                nimp = nimp(where, blocks),
-                nmis = apply(is.na(data), 2, sum),
-                visitSequence = visitSequence, 
-                method = method,
-                defaultMethod = defaultMethod,
-                predictorMatrix = predictorMatrix,
-                formulas = formulas, post = post, 
-                nvar = ncol(data), 
-                varnames = colnames(data))
-  
-  imp <- initialize.imp(data, m, where, setup, data.init)
   
   # data frame for storing the event log
   state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
   loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
   
-  # Iterate
+  # initialize imputations
+  nmis <- apply(is.na(data), 2, sum)
+  imp <- initialize.imp(data, m, where, blocks, visitSequence, 
+                        method, nmis, data.init)
+  
+  # and iterate...
   from <- 1
   to <- from + maxit - 1
-  q <- sampler(data, m, where, imp, setup, c(from, to), printFlag, ...)
+  q <- sampler(data, m, where, imp, blocks, method, visitSequence, 
+               predictorMatrix, formulas, post, c(from, to), printFlag, ...)
   
   if (!state$log) loggedEvents <- NULL
   if (state$log) row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
   
   ## save, and return
   midsobj <- list(data = data, imp = q$imp, m = m,
-                  where = where, blocks = setup$blocks, 
-                  call = call, nmis = setup$nmis, 
-                  method = setup$method,
-                  predictorMatrix = setup$predictorMatrix,
-                  visitSequence = setup$visitSequence,
-                  formulas = setup$formulas, post = setup$post, 
+                  where = where, blocks = blocks, 
+                  call = call, nmis = nmis, 
+                  method = method,
+                  predictorMatrix = predictorMatrix,
+                  visitSequence = visitSequence,
+                  formulas = formulas, post = post, 
                   seed = seed, 
                   iteration = q$iteration,
                   lastSeedValue = .Random.seed, 

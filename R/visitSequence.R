@@ -21,8 +21,8 @@ make.visitSequence <- function(data = NULL, blocks = NULL) {
   names(blocks)
 }
 
-check.visitSequence <- function(visitSequence = NULL, blocks, 
-                                data, where = NULL) {
+check.visitSequence <- function(visitSequence = NULL, 
+                                data, where = NULL, blocks) {
   
   if (is.null(names(blocks)) || any(is.na(names(blocks))))
     stop("Missing blocks names.", call. = FALSE)

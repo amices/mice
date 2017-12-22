@@ -68,26 +68,16 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
   blocks <- obj$blocks
   if (is.null(blocks)) blocks <- make.blocks(obj$data)
 
-  setup <- list(blocks = obj$blocks,
-                nwhere = apply(where, 2, sum),
-                nimp = nimp(where, blocks),
-                nmis = apply(is.na(obj$data), 2, sum),
-                visitSequence = obj$visitSequence, 
-                method = obj$method,
-                defaultMethod = obj$defaultMethod,
-                predictorMatrix = obj$predictorMatrix,
-                formulas = obj$formulas, post = obj$post, 
-                nvar = ncol(obj$data), 
-                varnames = colnames(obj$data))
-  
   assign(".Random.seed", obj$lastSeedValue, pos = 1)
   
   ## OK. Iterate.
   sumIt <- obj$iteration + maxit
   from <- obj$iteration + 1
   to <- from + maxit - 1
-  q <- sampler(obj$data, obj$m, where, imp, setup, c(from, to), printFlag, ...)
-
+  q <- sampler(obj$data, obj$m, where, imp, obj$blocks, obj$method, 
+               obj$visitSequence, obj$predictorMatrix, 
+               obj$formulas, obj$post, c(from, to), printFlag, ...)
+  
   imp <- q$imp
 
   ## combine with previous chainMean and chainVar
@@ -115,12 +105,12 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
   
   ## save, and return
   midsobj <- list(data = obj$data, imp = imp, m = obj$m,
-                  where = where, blocks = setup$blocks, 
-                  call = call, nmis = setup$nmis, 
-                  method = setup$method,
-                  predictorMatrix = setup$predictorMatrix,
-                  visitSequence = setup$visitSequence,
-                  formulas = setup$formulas, post = setup$post, 
+                  where = where, blocks = obj$blocks, 
+                  call = call, nmis = obj$nmis, 
+                  method = obj$method,
+                  predictorMatrix = obj$predictorMatrix,
+                  visitSequence = obj$visitSequence,
+                  formulas = obj$formulas, post = obj$post, 
                   seed = obj$seed, 
                   iteration = sumIt,
                   lastSeedValue = .Random.seed, 

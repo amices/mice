@@ -1,15 +1,9 @@
-sampler <- function(data, m, where, imp, setup, fromto, printFlag, ...)
+sampler <- function(data, m, where, imp, blocks, method, visitSequence, 
+                    predictorMatrix, formulas, post, fromto, printFlag, ...)
   # The sampler controls the actual Gibbs sampling iteration scheme.
   # This function is called by mice and mice.mids
   # Authors: S van Buuren, K Groothuis-Oudshoorn
 {
-  blocks <- setup$blocks
-  method <- setup$method
-  visitSequence <- setup$visitSequence
-  predictorMatrix <- setup$predictorMatrix
-  formulas <- setup$formulas
-  post <- setup$post
-  
   from <- fromto[1]
   to <- fromto[2]
   maxit <- to - from + 1
