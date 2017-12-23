@@ -81,235 +81,227 @@
 #'@export
 cbind.mids <- function(x, y = NULL, ...) {
   call <- match.call()
-  if (!is.mids(y)) {
-    # Combine y and dots into data.frame
-    if (is.null(y)) {
-      y <- cbind.data.frame(...) 
-    } else {
-      y <- cbind.data.frame(y, ...)
-    }
-    if (is.matrix(y) || is.vector(y) || is.factor(y))
-      y <- as.data.frame(y)
-    
-    # Replicate rows of y
-    if (nrow(y) == 1) {
-      y <- y[rep(row.names(y), nrow(x$data)), seq_along(y)]
-      row.names(y) <- row.names(x$data)
-    }
-    
-    if (nrow(y) != nrow(x$data)) 
-      stop("Datasets have different number of rows")
-    
-    varnames <- c(colnames(x$data), colnames(y))
-    
-    # Call is a vector, with first argument the mice statement and second argument the call to cbind.mids.
-    call <- c(x$call, call)
-    
-    # The data in x (x$data) and y are combined together.
-    data <- cbind(x$data, y)
-    
-    # where argument
-    where <- cbind(x$where, matrix(FALSE, nrow = nrow(y), ncol = ncol(y)))
-    colnames(where) <- varnames
-    blocks <- c(x$blocks, colnames(y))
-    blocks <- name.blocks(blocks)
-    attr(blocks, "calltype") <- c(attr(x$blocks, "calltype"), 
-                                  rep("type", ncol(y)))
-    
-    # The number of imputations in the new midsobject is equal to that in x.
-    m <- x$m
-    
-    # count the number of missing data in y
-    nmis <- c(x$nmis, colSums(is.na(y)))
-    
-    # The original data of y will be copied into the multiple imputed dataset, 
-    # including the missing values of y.
-    r <- (!is.na(y))
-    
-    f <- function(j) {
-      m <- matrix(NA,
-                  nrow = sum(!r[, j]),
-                  ncol = x$m,
-                  dimnames = list(row.names(y)[!r[, j]], seq_len(m)))
-      as.data.frame(m)
-    }
-    
-    imp <- lapply(seq_len(ncol(y)), f)
-    imp <- c(x$imp, imp)
-    names(imp) <- varnames
-    
-    # The imputation method for (columns in) y will be set to ''.
-    method <- c(x$method, rep.int("", ncol(y)))
-    names(method) <- c(names(x$method), colnames(y))
-    
-    # The variable(s) in y are included in the predictorMatrix.  y is not used as predictor as well as not imputed.
-    predictorMatrix <- rbind(x$predictorMatrix, matrix(0, ncol = ncol(x$predictorMatrix), nrow = ncol(y)))
-    predictorMatrix <- cbind(predictorMatrix, matrix(0, ncol = ncol(y), nrow = nrow(x$predictorMatrix) + ncol(y)))
-    dimnames(predictorMatrix) <- list(names(blocks), varnames)
-    
-    # The visitSequence is taken as in x$visitSequence.
-    visitSequence <- x$visitSequence
-    
-    # The post vector for (columns in) y will be set to ''.
-    post <- c(x$post, rep.int("", ncol(y)))
-    names(post) <- c(names(x$post), colnames(y))
-    
-    # No new formula list will be created
-    formulas <- x$formulas
-    blots <- x$blots
-    
-    # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
-    seed <- x$seed
-    lastSeedvalue <- x$lastSeedvalue
-    iteration <- x$iteration
-    chainMean = x$chainMean
-    chainVar = x$chainVar
-    
-    loggedEvents <- x$loggedEvents
-    
-    ## save, and return
-    midsobj <- list(data = data, imp = imp, m = m,
-                    where = where, blocks = blocks, 
-                    call = call, nmis = nmis, 
-                    method = method,
-                    predictorMatrix = predictorMatrix,
-                    visitSequence = visitSequence, 
-                    formulas = formulas, post = post, seed = seed, 
-                    iteration = iteration,
-                    lastSeedValue = .Random.seed, 
-                    chainMean = chainMean,
-                    chainVar = chainVar, 
-                    loggedEvents = loggedEvents, 
-                    version = packageVersion("mice"),
-                    date = Sys.Date())
-    oldClass(midsobj) <- "mids"
-    return(midsobj)
+  dots <- list(...)
+  if (is.mids(y)) return(cbind.mids.mids(x, y))
+  
+  if ((is.null(y) || length(y) == 0L) && length(dots) == 0L) return(x)
+  n <- nrow(x$data)
+  if (length(y) == 1L) y <- rep(y, n)
+  if (length(y) == 0L && length(dots) > 0L) y <- cbind.data.frame(dots)
+  else if (length(y) > 0L && length(dots) == 0L) y <- cbind.data.frame(y)
+  else y <- cbind.data.frame(y, dots)
+  
+  varnames <- c(colnames(x$data), colnames(y))
+  
+  # Call is a vector, with first argument the mice statement and second argument the call to cbind.mids.
+  call <- c(x$call, call)
+  
+  # The data in x (x$data) and y are combined together.
+  data <- cbind(x$data, y)
+  
+  # where argument
+  where <- cbind(x$where, matrix(FALSE, nrow = nrow(y), ncol = ncol(y)))
+  colnames(where) <- varnames
+  blocks <- c(x$blocks, colnames(y))
+  blocks <- name.blocks(blocks)
+  attr(blocks, "calltype") <- c(attr(x$blocks, "calltype"), 
+                                rep("type", ncol(y)))
+  
+  # The number of imputations in the new midsobject is equal to that in x.
+  m <- x$m
+  
+  # count the number of missing data in y
+  nmis <- c(x$nmis, colSums(is.na(y)))
+  
+  # The original data of y will be copied into the multiple imputed dataset, 
+  # including the missing values of y.
+  r <- (!is.na(y))
+  
+  f <- function(j) {
+    m <- matrix(NA,
+                nrow = sum(!r[, j]),
+                ncol = x$m,
+                dimnames = list(row.names(y)[!r[, j]], seq_len(m)))
+    as.data.frame(m)
   }
   
-  if (is.mids(y)) {
-    
-    if (nrow(y$data) != nrow(x$data)) 
-      stop("The two datasets do not have the same length\n")
-    if (x$m != y$m) 
-      stop("The two mids objects should have the same number of imputations\n")
-    
-    # Call is a vector, with first argument the mice statement and second argument the call to cbind.mids.
-    call <- c(x$call, call)
-    
-    # The data in x$data and y$data are combined together.
-    # make variable names unique
-    data <- cbind(x$data, y$data)
-    xynames <- c(colnames(x$data), colnames(y$data))
-    varnames <- make.unique(xynames)
-    names(varnames) <- xynames
-    names(data) <- varnames
-    
-    where <- cbind(x$where, y$where)
-    colnames(where) <- varnames
-    
-    # rename variable names within each x$blocks and y$blocks
-    xnew <- varnames[1:ncol(x$data)]
-    ynew <- varnames[-(1:ncol(x$data))]
-    xblocks <- x$blocks
-    yblocks <- y$blocks
-    for (i in names(xblocks)) xblocks[[i]] <- unname(xnew[xblocks[[i]]])
-    for (i in names(yblocks)) yblocks[[i]] <- unname(ynew[yblocks[[i]]])
-    blocks <- c(xblocks, yblocks)
-    xynames <- c(names(xblocks), names(yblocks))
-    blocknames <- make.unique(xynames)
-    names(blocknames) <- xynames
-    names(blocks) <- blocknames
-    ct <- c(attr(xblocks, "calltype"), attr(yblocks, "calltype"))
-    names(ct) <- blocknames
-    attr(blocks, "calltype") <- ct
-    
-    
-    m <- x$m
-    nmis <- c(x$nmis, y$nmis)
-    names(nmis) <- varnames
-    imp <- c(x$imp, y$imp)
-    names(imp) <- varnames
-    method <- c(x$method, y$method)
-    names(method) <- blocknames
-    
-    # The predictorMatrices of x and y are combined with zero matrices 
-    # on the off diagonal blocks.
-    predictorMatrix <- rbind(x$predictorMatrix, 
-                             matrix(0, 
-                                    ncol = ncol(x$predictorMatrix), 
-                                    nrow = nrow(y$predictorMatrix)))
-    predictorMatrix <- cbind(predictorMatrix, 
-                             rbind(matrix(0, 
-                                          ncol = ncol(y$predictorMatrix), 
-                                          nrow = nrow(x$predictorMatrix)), 
-                                   y$predictorMatrix))
-    rownames(predictorMatrix) <- blocknames
-    colnames(predictorMatrix) <- varnames
-    
-    # As visitSequence is taken first the order for x and after that from y.
-    # take care that duplicate names need to be renamed
-    xnew <- blocknames[1:length(x$blocks)]
-    ynew <- blocknames[-(1:length(x$blocks))]
-    visitSequence <- unname(c(xnew[x$visitSequence], ynew[y$visitSequence]))
-    
-    formulas <- c(x$formulas, y$formulas)
-    names(formulas) <- blocknames
-    post <- c(x$post, y$post)
-    names(post) <- varnames
-    blots <- c(x$blots, y$blots)
-    names(blots) <- blocknames
-    
-    # For the elements seed, lastSeedvalue and iteration the values from midsobject x are copied.
-    seed <- x$seed
-    lastSeedvalue <- x$lastSeedvalue
-    iteration <- x$iteration
-    
-    # the chainMean and chainVar vectors for x and y are combined.
-    chainMean <- array(data = NA, 
-                       dim = c(dim(x$chainMean)[1] + dim(y$chainMean)[1], iteration, m), 
-                       dimnames = list(c(dimnames(x$chainMean)[[1]], 
-                                         dimnames(y$chainMean)[[1]]), 
-                                       dimnames(x$chainMean)[[2]], 
-                                       dimnames(x$chainMean)[[3]]))
-    chainMean[seq_len(dim(x$chainMean)[1]), , ] <- x$chainMean
-    
-    if (iteration <= dim(y$chainMean)[2]) {
-      chainMean[(dim(x$chainMean)[1] + 1):dim(chainMean)[1], , ] <- y$chainMean[, seq_len(iteration), ] 
-    } else { 
-      chainMean[(dim(x$chainMean)[1] + 1):dim(chainMean)[1], seq_len(dim(y$chainMean)[2]), ] <- y$chainMean
-    }
-    
-    chainVar <- array(data = NA, dim = c(dim(x$chainVar)[1] + dim(y$chainVar)[1], iteration, m), 
-                      dimnames = list(c(dimnames(x$chainVar)[[1]], 
-                                        dimnames(y$chainVar)[[1]]), 
-                                      dimnames(x$chainVar)[[2]], 
-                                      dimnames(x$chainVar)[[3]]))
-    chainVar[seq_len(dim(x$chainVar)[1]), , ] <- x$chainVar
-    
-    if (iteration <= dim(y$chainVar)[2]) {
-      chainVar[(dim(x$chainVar)[1] + 1):dim(chainVar)[1], , ] <- y$chainVar[, seq_len(iteration), ] 
-    } else { 
-      chainVar[(dim(x$chainVar)[1] + 1):dim(chainVar)[1], seq_len(dim(y$chainVar)[2]), ] <- y$chainVar
-    }
-    
-    loggedEvents <- x$loggedEvents
-    
-    midsobj <- list(data = data, imp = imp, m = m,
-                    where = where, blocks = blocks, 
-                    call = call, nmis = nmis, 
-                    method = method,
-                    predictorMatrix = predictorMatrix,
-                    visitSequence = visitSequence, 
-                    formulas = formulas, post = post, 
-                    blots = blots, seed = seed, 
-                    iteration = iteration,
-                    lastSeedValue = .Random.seed, 
-                    chainMean = chainMean,
-                    chainVar = chainVar, 
-                    loggedEvents = loggedEvents, 
-                    version = packageVersion("mice"),
-                    date = Sys.Date())
-    oldClass(midsobj) <- "mids"
-    return(midsobj)
+  imp <- lapply(seq_len(ncol(y)), f)
+  imp <- c(x$imp, imp)
+  names(imp) <- varnames
+  
+  # The imputation method for (columns in) y will be set to ''.
+  method <- c(x$method, rep.int("", ncol(y)))
+  names(method) <- c(names(x$method), colnames(y))
+  
+  # The variable(s) in y are included in the predictorMatrix.  y is not used as predictor as well as not imputed.
+  predictorMatrix <- rbind(x$predictorMatrix, matrix(0, ncol = ncol(x$predictorMatrix), nrow = ncol(y)))
+  predictorMatrix <- cbind(predictorMatrix, matrix(0, ncol = ncol(y), nrow = nrow(x$predictorMatrix) + ncol(y)))
+  dimnames(predictorMatrix) <- list(names(blocks), varnames)
+  
+  # The visitSequence is taken as in x$visitSequence.
+  visitSequence <- x$visitSequence
+  
+  # The post vector for (columns in) y will be set to ''.
+  post <- c(x$post, rep.int("", ncol(y)))
+  names(post) <- c(names(x$post), colnames(y))
+  
+  # No new formula list will be created
+  formulas <- x$formulas
+  blots <- x$blots
+  
+  # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
+  seed <- x$seed
+  lastSeedvalue <- x$lastSeedvalue
+  iteration <- x$iteration
+  chainMean = x$chainMean
+  chainVar = x$chainVar
+  
+  loggedEvents <- x$loggedEvents
+  
+  ## save, and return
+  midsobj <- list(data = data, imp = imp, m = m,
+                  where = where, blocks = blocks, 
+                  call = call, nmis = nmis, 
+                  method = method,
+                  predictorMatrix = predictorMatrix,
+                  visitSequence = visitSequence, 
+                  formulas = formulas, post = post, seed = seed, 
+                  iteration = iteration,
+                  lastSeedValue = .Random.seed, 
+                  chainMean = chainMean,
+                  chainVar = chainVar, 
+                  loggedEvents = loggedEvents, 
+                  version = packageVersion("mice"),
+                  date = Sys.Date())
+  oldClass(midsobj) <- "mids"
+  return(midsobj)
+}
+
+
+cbind.mids.mids <- function(x, y) {
+  if (!is.mids(y)) stop("Argument `y` not a mids object")
+  
+  if (nrow(y$data) != nrow(x$data)) 
+    stop("The two datasets do not have the same length\n")
+  if (x$m != y$m) 
+    stop("The two mids objects should have the same number of imputations\n")
+  
+  # Call is a vector, with first argument the mice statement and second argument the call to cbind.mids.
+  call <- c(x$call, call)
+  
+  # The data in x$data and y$data are combined together.
+  # make variable names unique
+  data <- cbind(x$data, y$data)
+  xynames <- c(colnames(x$data), colnames(y$data))
+  varnames <- make.unique(xynames)
+  names(varnames) <- xynames
+  names(data) <- varnames
+  
+  where <- cbind(x$where, y$where)
+  colnames(where) <- varnames
+  
+  # rename variable names within each x$blocks and y$blocks
+  xnew <- varnames[1:ncol(x$data)]
+  ynew <- varnames[-(1:ncol(x$data))]
+  xblocks <- x$blocks
+  yblocks <- y$blocks
+  for (i in names(xblocks)) xblocks[[i]] <- unname(xnew[xblocks[[i]]])
+  for (i in names(yblocks)) yblocks[[i]] <- unname(ynew[yblocks[[i]]])
+  blocks <- c(xblocks, yblocks)
+  xynames <- c(names(xblocks), names(yblocks))
+  blocknames <- make.unique(xynames)
+  names(blocknames) <- xynames
+  names(blocks) <- blocknames
+  ct <- c(attr(xblocks, "calltype"), attr(yblocks, "calltype"))
+  names(ct) <- blocknames
+  attr(blocks, "calltype") <- ct
+  
+  
+  m <- x$m
+  nmis <- c(x$nmis, y$nmis)
+  names(nmis) <- varnames
+  imp <- c(x$imp, y$imp)
+  names(imp) <- varnames
+  method <- c(x$method, y$method)
+  names(method) <- blocknames
+  
+  # The predictorMatrices of x and y are combined with zero matrices 
+  # on the off diagonal blocks.
+  predictorMatrix <- rbind(x$predictorMatrix, 
+                           matrix(0, 
+                                  ncol = ncol(x$predictorMatrix), 
+                                  nrow = nrow(y$predictorMatrix)))
+  predictorMatrix <- cbind(predictorMatrix, 
+                           rbind(matrix(0, 
+                                        ncol = ncol(y$predictorMatrix), 
+                                        nrow = nrow(x$predictorMatrix)), 
+                                 y$predictorMatrix))
+  rownames(predictorMatrix) <- blocknames
+  colnames(predictorMatrix) <- varnames
+  
+  # As visitSequence is taken first the order for x and after that from y.
+  # take care that duplicate names need to be renamed
+  xnew <- blocknames[1:length(x$blocks)]
+  ynew <- blocknames[-(1:length(x$blocks))]
+  visitSequence <- unname(c(xnew[x$visitSequence], ynew[y$visitSequence]))
+  
+  formulas <- c(x$formulas, y$formulas)
+  names(formulas) <- blocknames
+  post <- c(x$post, y$post)
+  names(post) <- varnames
+  blots <- c(x$blots, y$blots)
+  names(blots) <- blocknames
+  
+  # For the elements seed, lastSeedvalue and iteration the values from midsobject x are copied.
+  seed <- x$seed
+  lastSeedvalue <- x$lastSeedvalue
+  iteration <- x$iteration
+  
+  # the chainMean and chainVar vectors for x and y are combined.
+  chainMean <- array(data = NA, 
+                     dim = c(dim(x$chainMean)[1] + dim(y$chainMean)[1], iteration, m), 
+                     dimnames = list(c(dimnames(x$chainMean)[[1]], 
+                                       dimnames(y$chainMean)[[1]]), 
+                                     dimnames(x$chainMean)[[2]], 
+                                     dimnames(x$chainMean)[[3]]))
+  chainMean[seq_len(dim(x$chainMean)[1]), , ] <- x$chainMean
+  
+  if (iteration <= dim(y$chainMean)[2]) {
+    chainMean[(dim(x$chainMean)[1] + 1):dim(chainMean)[1], , ] <- y$chainMean[, seq_len(iteration), ] 
+  } else { 
+    chainMean[(dim(x$chainMean)[1] + 1):dim(chainMean)[1], seq_len(dim(y$chainMean)[2]), ] <- y$chainMean
   }
+  
+  chainVar <- array(data = NA, dim = c(dim(x$chainVar)[1] + dim(y$chainVar)[1], iteration, m), 
+                    dimnames = list(c(dimnames(x$chainVar)[[1]], 
+                                      dimnames(y$chainVar)[[1]]), 
+                                    dimnames(x$chainVar)[[2]], 
+                                    dimnames(x$chainVar)[[3]]))
+  chainVar[seq_len(dim(x$chainVar)[1]), , ] <- x$chainVar
+  
+  if (iteration <= dim(y$chainVar)[2]) {
+    chainVar[(dim(x$chainVar)[1] + 1):dim(chainVar)[1], , ] <- y$chainVar[, seq_len(iteration), ] 
+  } else { 
+    chainVar[(dim(x$chainVar)[1] + 1):dim(chainVar)[1], seq_len(dim(y$chainVar)[2]), ] <- y$chainVar
+  }
+  
+  loggedEvents <- x$loggedEvents
+  
+  midsobj <- list(data = data, imp = imp, m = m,
+                  where = where, blocks = blocks, 
+                  call = call, nmis = nmis, 
+                  method = method,
+                  predictorMatrix = predictorMatrix,
+                  visitSequence = visitSequence, 
+                  formulas = formulas, post = post, 
+                  blots = blots, seed = seed, 
+                  iteration = iteration,
+                  lastSeedValue = .Random.seed, 
+                  chainMean = chainMean,
+                  chainVar = chainVar, 
+                  loggedEvents = loggedEvents, 
+                  version = packageVersion("mice"),
+                  date = Sys.Date())
+  oldClass(midsobj) <- "mids"
+  return(midsobj)
 }
