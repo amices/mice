@@ -56,12 +56,23 @@ make.blocks <- function(data,
   if (is.vector(data) && !is.list(data)) {
     v <- as.list(as.character(data))
     names(v) <- as.character(data)
-    attr(v, "calltype") <- calltype
+    ct <- rep(calltype, length(v))
+    names(ct) <- names(v)
+    attr(v, "calltype") <- ct
     return(v)
   }
   if (is.list(data) && !is.data.frame(data)) {
     v <- name.blocks(data)
-    attr(v, "calltype") <- calltype
+    if (length(calltype) == 1L) {
+      ct <- rep(calltype, length(v))
+      names(ct) <- names(v)
+      attr(v, "calltype") <- ct
+    }
+    else {
+      ct <- calltype
+      names(ct) <- names(v)
+      attr(v, "calltype") <- ct
+    }
     return(v)
   }
   data <- as.data.frame(data)
@@ -82,7 +93,16 @@ make.blocks <- function(data,
            v <- as.list(names(data))
            names(v) <- names(data)
          })
-  attr(v, "calltype") <- calltype
+  if (length(calltype) == 1L) {
+    ct <- rep(calltype, length(v))
+    names(ct) <- names(v)
+    attr(v, "calltype") <- ct
+  }
+  else {
+    ct <- calltype
+    names(ct) <- names(v)
+    attr(v, "calltype") <- ct
+  }
   v
 }
 
@@ -133,7 +153,17 @@ check.blocks <- function(blocks, data, calltype = "type") {
     stop(paste("The following names were not found in `data`:",
                paste(bv[notFound], collapse = ", ")))
   
-  attr(blocks, "calltype") <- calltype
+  if (length(calltype) == 1L) {
+    ct <- rep(calltype, length(blocks))
+    names(ct) <- names(blocks)
+    attr(blocks, "calltype") <- ct
+  }
+  else {
+    ct <- calltype
+    names(ct) <- names(blocks)
+    attr(blocks, "calltype") <- ct
+  }
+  
   blocks
 }
 
