@@ -2,14 +2,14 @@
 % Please edit documentation in R/cbind.r
 \name{cbind.mids}
 \alias{cbind.mids}
-\title{Columnwise combination of a \code{mids} object.}
+\title{Combine \code{mids} Objects by Columns}
 \usage{
 \method{cbind}{mids}(x, y = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{mids} object.}
 
-\item{y}{A \code{mids} object or a \code{data.frame}, \code{matrix}, 
+\item{y}{A \code{mids} object, or a \code{data.frame}, \code{matrix}, 
 \code{factor} or \code{vector}.}
 
 \item{\dots}{Additional \code{data.frame}, \code{matrix}, \code{vector} or \code{factor}. 
@@ -19,17 +19,16 @@ These can be given as named arguments.}
 An S3 object of class \code{mids}
 }
 \description{
-Append \code{mids} objects by columns
-}
-\details{
 This function combines two \code{mids} objects columnwise into a single
-object of class \code{mids}, or combines a \code{mids} object with 
+object of class \code{mids}, or combines a single \code{mids} object with 
 a \code{vector}, \code{matrix}, \code{factor} or \code{data.frame} 
 columnwise into a \code{mids} object.
-The rows in the (incomplete) data \code{x$data} and \code{y} (or
-\code{y$data} if \code{y} is a \code{mids} object) should match. If
-\code{y} is a \code{mids}, then \code{cbind} only works if the number 
-of imputations in \code{x} and \code{y} is equal.
+}
+\details{
+\emph{Pre-requisites:} If \code{y} is a \code{mids}-object, the rows 
+of \code{x$data} and \code{y$data} should match, as well as the number 
+of imputations (\code{m}). Other \code{y} are transformed into a 
+\code{data.frame} whose rows should match with \code{x$data}.
 }
 \note{
 The function construct the elements of the new \code{mids} object as follows:

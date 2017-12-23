@@ -1,18 +1,17 @@
-#'Columnwise combination of a \code{mids} object.
-#'
-#'Append \code{mids} objects by columns 
+#'Combine \code{mids} Objects by Columns
 #'
 #'This function combines two \code{mids} objects columnwise into a single
-#'object of class \code{mids}, or combines a \code{mids} object with 
+#'object of class \code{mids}, or combines a single \code{mids} object with 
 #'a \code{vector}, \code{matrix}, \code{factor} or \code{data.frame} 
 #'columnwise into a \code{mids} object.
-#'The rows in the (incomplete) data \code{x$data} and \code{y} (or
-#'\code{y$data} if \code{y} is a \code{mids} object) should match. If
-#'\code{y} is a \code{mids}, then \code{cbind} only works if the number 
-#'of imputations in \code{x} and \code{y} is equal. 
+#'
+#'\emph{Pre-requisites:} If \code{y} is a \code{mids}-object, the rows 
+#'of \code{x$data} and \code{y$data} should match, as well as the number 
+#'of imputations (\code{m}). Other \code{y} are transformed into a 
+#'\code{data.frame} whose rows should match with \code{x$data}.
 #'
 #'@param x A \code{mids} object.
-#'@param y A \code{mids} object or a \code{data.frame}, \code{matrix}, 
+#'@param y A \code{mids} object, or a \code{data.frame}, \code{matrix}, 
 #'\code{factor} or \code{vector}.
 #'@param \dots Additional \code{data.frame}, \code{matrix}, \code{vector} or \code{factor}. 
 #'These can be given as named arguments.
@@ -114,6 +113,8 @@ cbind.mids <- function(x, y = NULL, ...) {
     colnames(where) <- varnames
     blocks <- c(x$blocks, colnames(y))
     blocks <- name.blocks(blocks)
+    attr(blocks, "calltype") <- c(attr(x$blocks, "calltype"), 
+                                  rep("type", ncol(y)))
     
     # The number of imputations in the new midsobject is equal to that in x.
     m <- x$m
@@ -152,11 +153,11 @@ cbind.mids <- function(x, y = NULL, ...) {
     # The post vector for (columns in) y will be set to ''.
     post <- c(x$post, rep.int("", ncol(y)))
     names(post) <- c(names(x$post), colnames(y))
-
+    
     # No new formula list will be created
     formulas <- x$formulas
     blots <- x$blots
-
+    
     # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
     seed <- x$seed
     lastSeedvalue <- x$lastSeedvalue
@@ -196,33 +197,67 @@ cbind.mids <- function(x, y = NULL, ...) {
     call <- c(x$call, call)
     
     # The data in x$data and y$data are combined together.
+    # make variable names unique
     data <- cbind(x$data, y$data)
-    varnames <- c(colnames(x$data), colnames(y$data))
+    xynames <- c(colnames(x$data), colnames(y$data))
+    varnames <- make.unique(xynames)
+    names(varnames) <- xynames
+    names(data) <- varnames
     
     where <- cbind(x$where, y$where)
-    blocks <- c(x$blocks, y$blocks)
+    colnames(where) <- varnames
+    
+    # rename variable names within each x$blocks and y$blocks
+    xnew <- varnames[1:ncol(x$data)]
+    ynew <- varnames[-(1:ncol(x$data))]
+    xblocks <- x$blocks
+    yblocks <- y$blocks
+    for (i in names(xblocks)) xblocks[[i]] <- unname(xnew[xblocks[[i]]])
+    for (i in names(yblocks)) yblocks[[i]] <- unname(ynew[yblocks[[i]]])
+    blocks <- c(xblocks, yblocks)
+    xynames <- c(names(xblocks), names(yblocks))
+    blocknames <- make.unique(xynames)
+    names(blocknames) <- xynames
+    names(blocks) <- blocknames
+    ct <- c(attr(xblocks, "calltype"), attr(yblocks, "calltype"))
+    names(ct) <- blocknames
+    attr(blocks, "calltype") <- ct
+    
     
     m <- x$m
     nmis <- c(x$nmis, y$nmis)
+    names(nmis) <- varnames
     imp <- c(x$imp, y$imp)
+    names(imp) <- varnames
     method <- c(x$method, y$method)
+    names(method) <- blocknames
     
-    # The predictorMatrices of x and y are combined with zero matrices on the off diagonal blocks.
+    # The predictorMatrices of x and y are combined with zero matrices 
+    # on the off diagonal blocks.
     predictorMatrix <- rbind(x$predictorMatrix, 
-                             matrix(0, ncol = ncol(x$predictorMatrix), nrow = nrow(y$predictorMatrix)))
+                             matrix(0, 
+                                    ncol = ncol(x$predictorMatrix), 
+                                    nrow = nrow(y$predictorMatrix)))
     predictorMatrix <- cbind(predictorMatrix, 
                              rbind(matrix(0, 
                                           ncol = ncol(y$predictorMatrix), 
                                           nrow = nrow(x$predictorMatrix)), 
                                    y$predictorMatrix))
-    dimnames(predictorMatrix) <- list(varnames, varnames)
+    rownames(predictorMatrix) <- blocknames
+    colnames(predictorMatrix) <- varnames
     
     # As visitSequence is taken first the order for x and after that from y.
-    visitSequence <- c(x$visitSequence, y$visitSequence)
+    # take care that duplicate names need to be renamed
+    xnew <- blocknames[1:length(x$blocks)]
+    ynew <- blocknames[-(1:length(x$blocks))]
+    visitSequence <- unname(c(xnew[x$visitSequence], ynew[y$visitSequence]))
     
     formulas <- c(x$formulas, y$formulas)
+    names(formulas) <- blocknames
     post <- c(x$post, y$post)
+    names(post) <- varnames
     blots <- c(x$blots, y$blots)
+    names(blots) <- blocknames
     
     # For the elements seed, lastSeedvalue and iteration the values from midsobject x are copied.
     seed <- x$seed
