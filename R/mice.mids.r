@@ -74,9 +74,9 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
   sumIt <- obj$iteration + maxit
   from <- obj$iteration + 1
   to <- from + maxit - 1
-  q <- sampler(obj$data, obj$m, where, imp, obj$blocks, obj$method, 
+  q <- sampler(obj$data, obj$m, where, imp, blocks, obj$method, 
                obj$visitSequence, obj$predictorMatrix, 
-               obj$formulas, obj$post, c(from, to), printFlag, ...)
+               obj$formulas, obj$blots, obj$post, c(from, to), printFlag, ...)
   
   imp <- q$imp
 
@@ -110,7 +110,8 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
                   method = obj$method,
                   predictorMatrix = obj$predictorMatrix,
                   visitSequence = obj$visitSequence,
-                  formulas = obj$formulas, post = obj$post, 
+                  formulas = obj$formulas, post = obj$post,
+                  blots = obj$blots,
                   seed = obj$seed, 
                   iteration = sumIt,
                   lastSeedValue = .Random.seed, 

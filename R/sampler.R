@@ -1,8 +1,8 @@
 sampler <- function(data, m, where, imp, blocks, method, visitSequence, 
-                    predictorMatrix, formulas, post, fromto, printFlag, ...)
+                    predictorMatrix, formulas, blots, post, 
+                    fromto, printFlag, ...)
   # The sampler controls the actual Gibbs sampling iteration scheme.
   # This function is called by mice and mice.mids
-  # Authors: S van Buuren, K Groothuis-Oudshoorn
 {
   from <- fromto[1]
   to <- fromto[2]
@@ -45,6 +45,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           bname <- names(blocks)[h]
           if (calltype == "formula") ff <- formulas[[h]] else ff <- NULL
           if (calltype == "type") type <- predictorMatrix[h, ] else type <- NULL
+          user <- blots[[h]]
           
           # univariate/multivariate logic
           theMethod <- method[h]
@@ -73,7 +74,8 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
                              type = type, formula = ff, 
                              method = theMethod, 
                              yname = j, k = k, 
-                             calltype = calltype, ...)
+                             calltype = calltype, 
+                             user = user, ...)
               
               data[(!r[, j]) & where[, j], j] <- 
                 imp[[j]][(!r[, j])[where[, j]], i]
@@ -151,7 +153,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
 
 
 sampler.univ <- function(data, r, where, type, formula, method, yname, k, 
-                         calltype = "type", ...) {
+                         calltype = "type", user, ...) {
   j <- yname[1]
   if (calltype == "type") {
     vars <- colnames(data)[type != 0]
@@ -184,7 +186,8 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   f <- paste("mice.impute", method, sep = ".")
   imputes <- data[wy, j]
   imputes[!cc] <- NA
-  imputes[cc] <- do.call(f, args = list(y, ry, x, 
-                                        wy = wy, type = type, ...))
+  ## ready
+  args <- c(list(y, ry, x, wy = wy, type = type), user, list(...))
+  imputes[cc] <- do.call(f, args = args)
   imputes
 }

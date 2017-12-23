@@ -50,6 +50,8 @@ ibind <- function(x, y) {
     stop("Differences detected between `x$visitSequence` and `y$visitSequence`")
   if (!identical(x$post, y$post))
     stop("Differences detected between `x$post` and `y$post`")
+  if (!identical(x$blots, y$blots))
+    stop("Differences detected between `x$blots` and `y$blots`")
   
   visitSequence <- x$visitSequence
   imp <- vector("list", ncol(x$data))
@@ -76,7 +78,9 @@ ibind <- function(x, y) {
                   method = x$method,
                   predictorMatrix = x$predictorMatrix,
                   visitSequence = visitSequence, 
-                  formulas = x$formulas, post = x$post, seed = x$seed, 
+                  formulas = x$formulas, post = x$post,
+                  blots = x$blots,
+                  seed = x$seed, 
                   iteration = iteration,
                   lastSeedValue = .Random.seed, 
                   chainMean = chainMean,

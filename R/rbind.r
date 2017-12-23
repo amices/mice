@@ -38,12 +38,17 @@
 #'\code{method}   \tab Taken from \code{x$method}\cr
 #'\code{predictorMatrix} \tab Taken from \code{x$predictorMatrix}\cr
 #'\code{visitSequence}   \tab Taken from \code{x$visitSequence}\cr
+#'\code{formulas}  \tab Taken from \code{x$formulas}\cr
+#'\code{post}      \tab Taken from \code{x$post}\cr
+#'\code{blots}     \tab Taken from \code{x$blots}\cr
 #'\code{seed}            \tab Taken from \code{x$seed}\cr
 #'\code{iteration}       \tab Taken from \code{x$iteration}\cr
 #'\code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
 #'\code{chainMean}       \tab Set to \code{NA}\cr
 #'\code{chainVar}        \tab Set to \code{NA}\cr
-#'\code{loggedEvents}    \tab Taken from \code{x$loggedEvents}
+#'\code{loggedEvents}    \tab Taken from \code{x$loggedEvents}\cr
+#'\code{version}    \tab Taken from \code{x$version}\cr
+#'\code{date}       \tab Taken from \code{x$date}
 #'}
 #'@author Karin Groothuis-Oudshoorn, Stef van Buuren
 #'@seealso \code{\link{cbind.mids}}, \code{\link{ibind}}, \code{\link[=mids-class]{mids}}
@@ -104,6 +109,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     method <- x$method
     post <- x$post
     formulas <- x$formulas
+    blots <- x$blots
     predictorMatrix <- x$predictorMatrix
     visitSequence <- x$visitSequence
     
@@ -124,7 +130,8 @@ rbind.mids <- function(x, y = NULL, ...) {
                     method = method,
                     predictorMatrix = predictorMatrix,
                     visitSequence = visitSequence, 
-                    formulas = formulas, post = post, seed = seed, 
+                    formulas = formulas, post = post, 
+                    blots = blots, seed = seed, 
                     iteration = iteration,
                     lastSeedValue = lastSeedvalue, 
                     chainMean = chainMean,
@@ -168,6 +175,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     method <- x$method
     post <- x$post
     formulas <- x$formulas
+    blots <- x$blots
     predictorMatrix <- x$predictorMatrix
     visitSequence <- x$visitSequence
     
@@ -194,7 +202,9 @@ rbind.mids <- function(x, y = NULL, ...) {
                     method = method,
                     predictorMatrix = predictorMatrix,
                     visitSequence = visitSequence, 
-                    formulas = formulas, post = post, seed = seed, 
+                    formulas = formulas, post = post, 
+                    blots = blots, 
+                    seed = seed, 
                     iteration = iteration,
                     lastSeedValue = .Random.seed, 
                     chainMean = chainMean,

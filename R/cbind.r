@@ -20,22 +20,27 @@
 #'@note
 #'The function construct the elements of the new \code{mids} object as follows:
 #'\tabular{ll}{
-#'\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{cbind.mids}\cr
 #'\code{data}     \tab Columnwise combination of the (incomplete) data in \code{x} and \code{y}\cr
+#'\code{imp}      \tab Appends \code{x$imp} and \code{y$imp} if \code{y} is \code{mids} object\cr
+#'\code{m}        \tab Equals \code{x$m}\cr
 #'\code{where}    \tab Columnwise combination of \code{where} arguments\cr
 #'\code{blocks}   \tab Appends \code{x$blocks} and \code{y$blocks}\cr
-#'\code{m}        \tab Equals \code{x$m}\cr
+#'\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{cbind.mids}\cr
 #'\code{nmis}     \tab Equals c(x$nmis, y$nmis)\cr
-#'\code{imp}      \tab Appends \code{x$imp} and \code{y$imp} if \code{y} is \code{mids} object\cr
 #'\code{method}   \tab Combines \code{x$method} and \code{y$method}\cr
 #'\code{predictorMatrix} \tab Combines \code{x$predictorMatrix} and \code{y$predictMatrix} with zero matrices on the off-diagonal blocks\cr
 #'\code{visitSequence}   \tab Taken from \code{x$visitSequence}\cr
+#'\code{formulas}  \tab Taken from \code{x$formulas}\cr
+#'\code{post}      \tab Taken from \code{x$post}\cr
+#'\code{blots}     \tab Taken from \code{x$blots}\cr
 #'\code{seed}            \tab Taken from \code{x$seed}\cr
 #'\code{iteration}       \tab Taken from \code{x$iteration}\cr
 #'\code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
 #'\code{chainMean}       \tab Combines \code{x$chainMean} and \code{y$chainMean}\cr
 #'\code{chainVar}        \tab Combines \code{x$chainVar} and \code{y$chainVar}\cr
-#'\code{loggedEvents}    \tab Taken from \code{x$loggedEvents}
+#'\code{loggedEvents}    \tab Taken from \code{x$loggedEvents}\cr
+#'\code{version}    \tab Taken from \code{x$version}\cr
+#'\code{date}       \tab Taken from \code{x$date}
 #'}
 #'
 #'@author Karin Groothuis-Oudshoorn, Stef van Buuren
@@ -150,6 +155,7 @@ cbind.mids <- function(x, y = NULL, ...) {
 
     # No new formula list will be created
     formulas <- x$formulas
+    blots <- x$blots
 
     # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
     seed <- x$seed
@@ -214,8 +220,9 @@ cbind.mids <- function(x, y = NULL, ...) {
     # As visitSequence is taken first the order for x and after that from y.
     visitSequence <- c(x$visitSequence, y$visitSequence)
     
-    post <- c(x$post, y$post)
     formulas <- c(x$formulas, y$formulas)
+    post <- c(x$post, y$post)
+    blots <- c(x$blots, y$blots)
     
     # For the elements seed, lastSeedvalue and iteration the values from midsobject x are copied.
     seed <- x$seed
@@ -258,7 +265,8 @@ cbind.mids <- function(x, y = NULL, ...) {
                     method = method,
                     predictorMatrix = predictorMatrix,
                     visitSequence = visitSequence, 
-                    formulas = formulas, post = post, seed = seed, 
+                    formulas = formulas, post = post, 
+                    blots = blots, seed = seed, 
                     iteration = iteration,
                     lastSeedValue = .Random.seed, 
                     chainMean = chainMean,

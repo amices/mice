@@ -8,9 +8,9 @@
 \title{\pkg{mice}: Multivariate Imputation by Chained Equations}
 \usage{
 mice(data, m = 5, method = NULL, predictorMatrix, where = NULL, blocks,
-  visitSequence = NULL, formulas, post = NULL, defaultMethod = c("pmm",
-  "logreg", "polyreg", "polr"), maxit = 5, printFlag = TRUE, seed = NA,
-  data.init = NULL, ...)
+  visitSequence = NULL, formulas, blots = NULL, post = NULL,
+  defaultMethod = c("pmm", "logreg", "polyreg", "polr"), maxit = 5,
+  printFlag = TRUE, seed = NA, data.init = NULL, ...)
 }
 \arguments{
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing
@@ -72,6 +72,11 @@ identied by its name, so list names must correspond to block names.
 The \code{formulas} argument is an alternative to the 
 \code{predictorMatrix} argument that allows for more flexibility in 
 specifying imputation models, e.g., for specifying interaction terms.}
+
+\item{blots}{A named \code{list} of \code{alist}'s that can be used 
+to pass down arguments to lower level imputation function. The entries
+of element \code{blots[[blockname]]} are passed down to the function
+called for block \code{blockname}.}
 
 \item{post}{A vector of strings with length \code{ncol(data)} specifying
 expressions as strings. Each string is parsed and 

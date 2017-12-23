@@ -152,11 +152,6 @@
 #'One may also use one of the following keywords: \code{"arabic"} 
 #'(right to left), \code{"monotone"} (ordered low to high proportion 
 #'of missing data) and \code{"revmonotone"} (reverse of monotone). 
-#'@param post A vector of strings with length \code{ncol(data)} specifying
-#'expressions as strings. Each string is parsed and 
-#'executed within the \code{sampler()} function to postprocess 
-#'imputed values during the iterations. 
-#'The default is a vector of empty strings, indicating no post-processing.
 #'@param formulas A named list of formula's, or expressions that
 #'can be converted into formula's by \code{as.formula}. List elements
 #'correspond to blocks. The block to which the list element applies is 
@@ -164,6 +159,15 @@
 #'The \code{formulas} argument is an alternative to the 
 #'\code{predictorMatrix} argument that allows for more flexibility in 
 #'specifying imputation models, e.g., for specifying interaction terms. 
+#'@param blots A named \code{list} of \code{alist}'s that can be used 
+#'to pass down arguments to lower level imputation function. The entries
+#'of element \code{blots[[blockname]]} are passed down to the function
+#'called for block \code{blockname}.
+#'@param post A vector of strings with length \code{ncol(data)} specifying
+#'expressions as strings. Each string is parsed and 
+#'executed within the \code{sampler()} function to postprocess 
+#'imputed values during the iterations. 
+#'The default is a vector of empty strings, indicating no post-processing.
 #'@param defaultMethod A vector of length 4 containing the default
 #'imputation methods for 1) numeric data, 2) factor data with 2 levels, 3) 
 #'factor data with > 2 unordered levels, and 4) factor data with > 2 
@@ -246,6 +250,7 @@ mice <- function(data, m = 5,
                  blocks,
                  visitSequence = NULL,
                  formulas,
+                 blots = NULL,
                  post = NULL,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
                  maxit = 5, printFlag = TRUE, seed = NA,
@@ -330,6 +335,7 @@ mice <- function(data, m = 5,
   method <- check.method(method = method, data = data, where = where, 
                          blocks = blocks, defaultMethod = defaultMethod)
   post <- check.post(post, data)
+  blots <- check.blots(blots, data, blocks)
   
   # data frame for storing the event log
   state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
@@ -344,7 +350,8 @@ mice <- function(data, m = 5,
   from <- 1
   to <- from + maxit - 1
   q <- sampler(data, m, where, imp, blocks, method, visitSequence, 
-               predictorMatrix, formulas, post, c(from, to), printFlag, ...)
+               predictorMatrix, formulas, blots, post, c(from, to), 
+               printFlag, ...)
   
   if (!state$log) loggedEvents <- NULL
   if (state$log) row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
@@ -357,6 +364,7 @@ mice <- function(data, m = 5,
                   predictorMatrix = predictorMatrix,
                   visitSequence = visitSequence,
                   formulas = formulas, post = post, 
+                  blots = blots,
                   seed = seed, 
                   iteration = q$iteration,
                   lastSeedValue = .Random.seed, 
