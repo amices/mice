@@ -190,7 +190,7 @@ rbind.mids.mids <- function(x, y, call) {
   iteration <- x$iteration
 
   if (x$iteration != y$iteration) {
-    warning("iterations differ, so no convergence statistics calculated", 
+    warning("iterations differ, so no convergence diagnostics calculated", 
             call. = FALSE)
     chainMean = NULL
     chainVar = NULL

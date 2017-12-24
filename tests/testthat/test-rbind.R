@@ -26,8 +26,8 @@ test_that("throws error", {
   expect_error(rbind(imp1, imp7), "datasets have different variable names")
 })
 test_that("throws warning", {
-  expect_warning(r1 <- rbind(imp1, imp5), 
-                 "iterations differ, so no convergence statistics calculated")
+  expect_warning(rbind(imp1, imp5), 
+                 "iterations differ, so no convergence diagnostics calculated")
 })
 
 r1 <- rbind(imp8, imp5)
@@ -40,8 +40,11 @@ test_that("Produces longer imputed data", {
   expect_equal(sum(is.na(complete(r3))), sum(is.na(nhalf)))
 })
 
-r11 <- mice.mids(rbind(imp1, imp5), print = FALSE)
-# plot(r11)
+# r11 <- mice.mids(rbind(imp1, imp5), print = FALSE)
+# test_that("plot throws error on convergence diagnostics", {
+#   expect_error(plot(r11), "no convergence diagnostics found")
+#   })
+
 r21 <- mice.mids(r2, print = FALSE)
 r31 <- mice.mids(r3, print = FALSE)
 

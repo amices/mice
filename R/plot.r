@@ -36,7 +36,9 @@ plot.mids <- function(x, y = NULL, theme = mice.theme(), layout = c(2, 3), type 
     
     call <- match.call()
     if (!is.mids(x)) 
-        stop("Argument 'x' must be a 'mids' object")
+      stop("argument 'x' must be a 'mids' object", call. = FALSE)
+    if (is.null(x$chainMean))
+      stop("no convergence diagnostics found", call. = FALSE)
     
     mn <- x$chainMean
     sm <- sqrt(x$chainVar)
