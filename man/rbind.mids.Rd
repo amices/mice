@@ -2,9 +2,9 @@
 % Please edit documentation in R/rbind.r
 \name{rbind.mids}
 \alias{rbind.mids}
-\title{Rowwise combination of a \code{mids} object.}
+\title{Combine \code{mids} objects by rows}
 \usage{
-\method{rbind}{mids}(x, y = NULL, ...)
+rbind.mids(x, y = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{mids} object.}
@@ -19,13 +19,11 @@ These can be given as named arguments.}
 An S3 object of class \code{mids}
 }
 \description{
-Append \code{mids} objects by rows
-}
-\details{
 This function combines two \code{mids} objects rowwise into a single
 \code{mids} object, or combines a \code{mids} object with a vector, matrix,
 factor or dataframe rowwise into a \code{mids} object.
-
+}
+\details{
 If \code{y} is a
 \code{mids} object, then \code{rbind} requires that the number of 
 multiple imputations in \code{x} and \code{y} is identical. Also, 
@@ -35,9 +33,6 @@ If \code{y} is not a \code{mids} object, the columns of \code{x$data}
 and \code{y} should match. The \code{where} matrix for \code{y} is set 
 to \code{FALSE}, signalling that any missing values 
 in \code{y} were not imputed.
-
-If \code{y} is not a \code{mids} object, the function should be called as
-\code{mice:::rbind.mids(x, y, ...)}.
 }
 \note{
 The function construct the elements of the new \code{mids} object as follows:
@@ -74,10 +69,8 @@ mylist <- list(age = NA, bmi = NA, hyp = NA, chl = NA)
 nrow(complete(rbind(imp1, imp5)))
 nrow(complete(rbind(imp1, mylist)))
 
-# Note: If one of the arguments is a data.frame 
-# we need to explicitly call mice:::rbind.mids()
-nrow(complete(mice:::rbind.mids(imp1, data.frame(mylist))))
-nrow(complete(mice:::rbind.mids(imp1, complete(imp5))))
+nrow(complete(rbind(imp1, data.frame(mylist))))
+nrow(complete(rbind(imp1, complete(imp5))))
 }
 \references{
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:

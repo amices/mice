@@ -10,40 +10,45 @@
 #'of imputations (\code{m}). Other \code{y} are transformed into a 
 #'\code{data.frame} whose rows should match with \code{x$data}.
 #'
+#'The function renames any duplicated variable or block names by 
+#'appending \code{".1"}, \code{".2"} to duplicated names.
+#'
 #'@param x A \code{mids} object.
 #'@param y A \code{mids} object, or a \code{data.frame}, \code{matrix}, 
 #'\code{factor} or \code{vector}.
-#'@param \dots Additional \code{data.frame}, \code{matrix}, \code{vector} or \code{factor}. 
-#'These can be given as named arguments.
+#'@param \dots Additional \code{data.frame}, \code{matrix}, \code{vector} 
+#'or \code{factor}. These can be given as named arguments.
 #'@return An S3 object of class \code{mids}
 #'@note
-#'The function construct the elements of the new \code{mids} object as follows:
+#'The function constructs the elements of the new \code{mids} object as follows:
 #'\tabular{ll}{
-#'\code{data}     \tab Columnwise combination of the (incomplete) data in \code{x} and \code{y}\cr
-#'\code{imp}      \tab Appends \code{x$imp} and \code{y$imp} if \code{y} is \code{mids} object\cr
-#'\code{m}        \tab Equals \code{x$m}\cr
-#'\code{where}    \tab Columnwise combination of \code{where} arguments\cr
-#'\code{blocks}   \tab Appends \code{x$blocks} and \code{y$blocks}\cr
-#'\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{cbind.mids}\cr
-#'\code{nmis}     \tab Equals c(x$nmis, y$nmis)\cr
+#'\code{data}     \tab Columnwise combination of the data in \code{x} and \code{y}\cr
+#'\code{imp}      \tab Combines the imputed values from \code{x} and \code{y}\cr
+#'\code{m}        \tab Taken from \code{x$m}\cr
+#'\code{where}    \tab Columnwise combination of \code{x$where} and \code{y$where}\cr
+#'\code{blocks}   \tab Combines \code{x$blocks} and \code{y$blocks}\cr
+#'\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} 
+#'is call to \code{cbind.mids}\cr
+#'\code{nmis}     \tab Equals \code{c(x$nmis, y$nmis)}\cr
 #'\code{method}   \tab Combines \code{x$method} and \code{y$method}\cr
-#'\code{predictorMatrix} \tab Combines \code{x$predictorMatrix} and \code{y$predictMatrix} with zero matrices on the off-diagonal blocks\cr
-#'\code{visitSequence}   \tab Taken from \code{x$visitSequence}\cr
-#'\code{formulas}  \tab Taken from \code{x$formulas}\cr
-#'\code{post}      \tab Taken from \code{x$post}\cr
-#'\code{blots}     \tab Taken from \code{x$blots}\cr
+#'\code{predictorMatrix} \tab Combination with zeroes on the off-diagonal blocks\cr
+#'\code{visitSequence}   \tab Combined as \code{c(x$visitSequence, y$visitSequence)}\cr
+#'\code{formulas}  \tab Combined as \code{c(x$formulas, y$formulas)}\cr
+#'\code{post}      \tab Combined as \code{c(x$post, y$post)}\cr
+#'\code{blots}     \tab Combined as \code{c(x$blots, y$blots)}\cr
 #'\code{seed}            \tab Taken from \code{x$seed}\cr
 #'\code{iteration}       \tab Taken from \code{x$iteration}\cr
 #'\code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
-#'\code{chainMean}       \tab Combines \code{x$chainMean} and \code{y$chainMean}\cr
-#'\code{chainVar}        \tab Combines \code{x$chainVar} and \code{y$chainVar}\cr
+#'\code{chainMean}       \tab Combined from \code{x$chainMean} and \code{y$chainMean}\cr
+#'\code{chainVar}        \tab Combined from \code{x$chainVar} and \code{y$chainVar}\cr
 #'\code{loggedEvents}    \tab Taken from \code{x$loggedEvents}\cr
-#'\code{version}    \tab Taken from \code{x$version}\cr
-#'\code{date}       \tab Taken from \code{x$date}
+#'\code{version}    \tab Current package version\cr
+#'\code{date}       \tab Current date\cr
 #'}
 #'
 #'@author Karin Groothuis-Oudshoorn, Stef van Buuren
-#'@seealso \code{\link{rbind.mids}}, \code{\link{ibind}}, \code{\link[=mids-class]{mids}}
+#'@seealso \code{\link{cbind}}, \code{\link{rbind.mids}}, \code{\link{ibind}}, 
+#'\code{\link[=mids-class]{mids}}
 #'@keywords manip
 #'@examples
 #'
@@ -70,18 +75,18 @@
 #'# Append 'forgotten' variable chl
 #'data3 <- nhanes[, 1:3]
 #'imp3  <- mice(data3, maxit = 1,m = 2, print = FALSE)
-#'imp3a <- cbind(imp3, chl = nhanes$chl)
+#'imp4 <- cbind(imp3, chl = nhanes$chl)
 #'
 #'# Of course, chl was not imputed
-#'head(complete(imp3a))
+#'head(complete(imp4))
 #'
-#'# Note: If one of the arguments is a data.frame 
-#'# we need to explicitly call mice:::cbind.mids()
-#'imp3b <- mice:::cbind.mids(imp3, data.frame(chl = nhanes$chl))
+#'# Combine mids object with data frame
+#'imp5 <- cbind(imp3, nhanes2)
+#'head(complete(imp5))
 cbind.mids <- function(x, y = NULL, ...) {
   call <- match.call()
   dots <- list(...)
-  if (is.mids(y)) return(cbind.mids.mids(x, y))
+  if (is.mids(y)) return(cbind.mids.mids(x, y, call = call))
   
   if ((is.null(y) || length(y) == 0L) && length(dots) == 0L) return(x)
   n <- nrow(x$data)
@@ -189,7 +194,7 @@ cbind.mids <- function(x, y = NULL, ...) {
 }
 
 
-cbind.mids.mids <- function(x, y) {
+cbind.mids.mids <- function(x, y, call) {
   if (!is.mids(y)) stop("Argument `y` not a mids object")
   
   if (nrow(y$data) != nrow(x$data)) 
@@ -227,7 +232,6 @@ cbind.mids.mids <- function(x, y) {
   ct <- c(attr(xblocks, "calltype"), attr(yblocks, "calltype"))
   names(ct) <- blocknames
   attr(blocks, "calltype") <- ct
-  
   
   m <- x$m
   nmis <- c(x$nmis, y$nmis)
@@ -319,16 +323,3 @@ cbind.mids.mids <- function(x, y) {
   return(midsobj)
 }
 
-#'Combine objects by columns
-#'
-#' Overwrite the base::cbind function to enable proper dispatch for data.frames
-#' https://stackoverflow.com/questions/34024585/s3-dispatching-of-rbind-and-cbind
-#'
-#' @inheritParams base::cbind
-#' @keywords internal
-#' @export
-cbind <- function (...) {
-  if (is.null(attr(list(...)[[1]], "class"))) return(base::cbind(...))
-  if (attr(list(...)[[1]], "class") == "mids") return(cbind.mids(...))
-  else return(base::cbind(...))
-}

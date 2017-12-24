@@ -90,7 +90,7 @@ imp8 <- mice:::cbind.mids(imp1,
 test_that("appends matrix, factor and data.frame", {
   expect_identical(ncol(complete(imp8)), 9L)
 })
-impc <- mice.mids(imp8, max = 2, print = FALSE)
+# impc <- mice.mids(imp8, max = 2, print = FALSE)
 
 
 # NOTE: now using own version of cbind()
@@ -103,6 +103,10 @@ test_that("appends matrix, factor and data.frame", {
 })
 
 impc <- mice.mids(imp9, max = 2, print = FALSE)
+test_that("combined object works as input to mice.mids", {
+  expect_true(is.mids(impc))
+})
+
 
 
 # # cbind data.frame (rename to age.1)

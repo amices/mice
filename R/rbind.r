@@ -1,6 +1,4 @@
-#'Rowwise combination of a \code{mids} object.
-#'
-#'Append \code{mids} objects by rows
+#'Combine \code{mids} objects by rows
 #'
 #'This function combines two \code{mids} objects rowwise into a single
 #'\code{mids} object, or combines a \code{mids} object with a vector, matrix,
@@ -15,9 +13,6 @@
 #'and \code{y} should match. The \code{where} matrix for \code{y} is set 
 #'to \code{FALSE}, signalling that any missing values 
 #'in \code{y} were not imputed. 
-#'
-#'If \code{y} is not a \code{mids} object, the function should be called as
-#'\code{mice:::rbind.mids(x, y, ...)}.
 #'
 #'@param x A \code{mids} object.
 #'@param y A \code{mids} object, or a \code{data.frame}, \code{matrix}, \code{factor} 
@@ -65,154 +60,153 @@
 #'nrow(complete(rbind(imp1, imp5)))
 #'nrow(complete(rbind(imp1, mylist)))
 #'
-#'# Note: If one of the arguments is a data.frame 
-#'# we need to explicitly call mice:::rbind.mids()
-#'nrow(complete(mice:::rbind.mids(imp1, data.frame(mylist))))
-#'nrow(complete(mice:::rbind.mids(imp1, complete(imp5))))
-#'@export
+#'nrow(complete(rbind(imp1, data.frame(mylist))))
+#'nrow(complete(rbind(imp1, complete(imp5))))
 rbind.mids <- function(x, y = NULL, ...) {
   call <- match.call()
-  if (!is.mids(y)) {
-    # Combine y and dots into data.frame
-    if (is.null(y)) {
-      y <- rbind.data.frame(...) 
-    } 
-    else {
-      y <- rbind.data.frame(y, ...)
-    }
-    
-    if (is.data.frame(y)) {
-      if (ncol(y) != ncol(x$data)) 
-        stop("Datasets have different number of columns")
-    }
-    
-    varnames <- colnames(x$data)
-    
-    # Call is a vector, with first argument the mice statement and second argument the call to cbind.mids.
-    call <- c(x$call, call)
-    
-    # The data in x (x$data) and y are combined together.
-    data <- rbind(x$data, y)
-    blocks <- x$blocks
-    
-    # where argument: code all values as observed, including NA
-    wy <- matrix(FALSE, nrow = nrow(y), ncol = ncol(y))
-    where <- rbind(x$where, wy)
-    
-    # The number of imputations in the new midsobject is equal to that in x.
-    m <- x$m
-    
-    # count the number of missing data in y and add them to x$nmis.
-    nmis <- x$nmis + colSums(is.na(y))
-    
-    # The listelements method, post, predictorMatrix, visitSequence will be copied from x.
-    method <- x$method
-    post <- x$post
-    formulas <- x$formulas
-    blots <- x$blots
-    predictorMatrix <- x$predictorMatrix
-    visitSequence <- x$visitSequence
-    
-    # Only x contributes imputations
-    imp <- x$imp
-    
-    # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
-    seed <- x$seed
-    lastSeedvalue <- x$lastSeedvalue
-    iteration <- x$iteration
-    chainMean <- x$chainMean
-    chainVar <- x$chainVar
-    loggedEvents <- x$loggedEvents
-    
-    midsobj <- list(data = data, imp = imp, m = m,
-                    where = where, blocks = blocks, 
-                    call = call, nmis = nmis, 
-                    method = method,
-                    predictorMatrix = predictorMatrix,
-                    visitSequence = visitSequence, 
-                    formulas = formulas, post = post, 
-                    blots = blots, seed = seed, 
-                    iteration = iteration,
-                    lastSeedValue = lastSeedvalue, 
-                    chainMean = chainMean,
-                    chainVar = chainVar, 
-                    loggedEvents = loggedEvents, 
-                    version = packageVersion("mice"),
-                    date = Sys.Date())
-    oldClass(midsobj) <- "mids"
-    return(midsobj)
+  if (is.mids(y)) return(rbind.mids.mids(x, y, call = call))
+  
+  # Combine y and dots into data.frame
+  if (is.null(y)) {
+    y <- rbind.data.frame(...) 
+  } 
+  else {
+    y <- rbind.data.frame(y, ...)
   }
   
-  if (is.mids(y)) {
-    if (ncol(y$data) != ncol(x$data))
+  if (is.data.frame(y)) {
+    if (ncol(y) != ncol(x$data)) 
       stop("Datasets have different number of columns")
-    if (!identical(colnames(x$data),  colnames(y$data)))
-      stop("Datasets have different variable names")
-    if (!identical(sapply(x$data, is.factor),  sapply(y$data, is.factor)))
-      stop("Datasets have different factor variables")
-    if (x$m != y$m)
-      stop("Number of imputations differ")
-    varnames <- colnames(x$data)
-    
-    # Call is a vector, with first argument the mice statement and second argument the call to cbind.mids.
-    call <- match.call()
-    call <- c(x$call, call)
-    
-    # The data in x (x$data) and y are combined together.
-    data <- rbind(x$data, y$data)
-    
-    # Where argument
-    where <- rbind(x$where, y$where)
-    
-    # The number of imputations in the new midsobject is equal to that in x.
-    m <- x$m
-    
-    # count the number of missing data in y and add them to x$nmis.
-    nmis <- x$nmis + y$nmis
-    
-    # The listelements method, post, predictorMatrix, visitSequence will be copied from x.
-    blocks <- x$blocks
-    method <- x$method
-    post <- x$post
-    formulas <- x$formulas
-    blots <- x$blots
-    predictorMatrix <- x$predictorMatrix
-    visitSequence <- x$visitSequence
-    
-    # The original data of y will be binded into the multiple imputed dataset, including the imputed values of y.
-    imp <- vector("list", ncol(x$data))
-    for (j in seq_len(ncol(x$data))) {
-      if(!is.null(x$imp[[j]]) || !is.null(y$imp[[j]])) {
-        imp[[j]] <- rbind(x$imp[[j]], y$imp[[j]])
-      }
-    }
-    names(imp) <- varnames
-    
-    # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
-    seed <- x$seed
-    lastSeedvalue <- x$lastSeedvalue
-    iteration <- x$iteration
-    chainMean = NA
-    chainVar = NA
-    
-    loggedEvents <- x$loggedEvents
-    midsobj <- list(data = data, imp = imp, m = m,
-                    where = where, blocks = blocks, 
-                    call = call, nmis = nmis, 
-                    method = method,
-                    predictorMatrix = predictorMatrix,
-                    visitSequence = visitSequence, 
-                    formulas = formulas, post = post, 
-                    blots = blots, 
-                    seed = seed, 
-                    iteration = iteration,
-                    lastSeedValue = .Random.seed, 
-                    chainMean = chainMean,
-                    chainVar = chainVar, 
-                    loggedEvents = loggedEvents, 
-                    version = packageVersion("mice"),
-                    date = Sys.Date())
-    oldClass(midsobj) <- "mids"
-    return(midsobj)
   }
+  
+  varnames <- colnames(x$data)
+  
+  # Call is a vector, with first argument the mice statement and second argument the call to cbind.mids.
+  call <- c(x$call, call)
+  
+  # The data in x (x$data) and y are combined together.
+  data <- rbind(x$data, y)
+  blocks <- x$blocks
+  
+  # where argument: code all values as observed, including NA
+  wy <- matrix(FALSE, nrow = nrow(y), ncol = ncol(y))
+  where <- rbind(x$where, wy)
+  
+  # The number of imputations in the new midsobject is equal to that in x.
+  m <- x$m
+  
+  # count the number of missing data in y and add them to x$nmis.
+  nmis <- x$nmis + colSums(is.na(y))
+  
+  # The listelements method, post, predictorMatrix, visitSequence will be copied from x.
+  method <- x$method
+  post <- x$post
+  formulas <- x$formulas
+  blots <- x$blots
+  predictorMatrix <- x$predictorMatrix
+  visitSequence <- x$visitSequence
+  
+  # Only x contributes imputations
+  imp <- x$imp
+  
+  # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
+  seed <- x$seed
+  lastSeedvalue <- x$lastSeedvalue
+  iteration <- x$iteration
+  chainMean <- x$chainMean
+  chainVar <- x$chainVar
+  loggedEvents <- x$loggedEvents
+  
+  midsobj <- list(data = data, imp = imp, m = m,
+                  where = where, blocks = blocks, 
+                  call = call, nmis = nmis, 
+                  method = method,
+                  predictorMatrix = predictorMatrix,
+                  visitSequence = visitSequence, 
+                  formulas = formulas, post = post, 
+                  blots = blots, seed = seed, 
+                  iteration = iteration,
+                  lastSeedValue = lastSeedvalue, 
+                  chainMean = chainMean,
+                  chainVar = chainVar, 
+                  loggedEvents = loggedEvents, 
+                  version = packageVersion("mice"),
+                  date = Sys.Date())
+  oldClass(midsobj) <- "mids"
+  return(midsobj)
+}
+
+rbind.mids.mids <- function(x, y, call) {
+  if (!is.mids(y)) stop("Argument `y` not a mids object")
+  
+  if (ncol(y$data) != ncol(x$data))
+    stop("Datasets have different number of columns")
+  if (!identical(colnames(x$data),  colnames(y$data)))
+    stop("Datasets have different variable names")
+  if (!identical(sapply(x$data, is.factor),  sapply(y$data, is.factor)))
+    stop("Datasets have different factor variables")
+  if (x$m != y$m)
+    stop("Number of imputations differ")
+  varnames <- colnames(x$data)
+  
+  # Call is a vector, with first argument the mice statement and second argument the call to cbind.mids.
+  call <- match.call()
+  call <- c(x$call, call)
+  
+  # The data in x (x$data) and y are combined together.
+  data <- rbind(x$data, y$data)
+  
+  # Where argument
+  where <- rbind(x$where, y$where)
+  
+  # The number of imputations in the new midsobject is equal to that in x.
+  m <- x$m
+  
+  # count the number of missing data in y and add them to x$nmis.
+  nmis <- x$nmis + y$nmis
+  
+  # The listelements method, post, predictorMatrix, visitSequence will be copied from x.
+  blocks <- x$blocks
+  method <- x$method
+  post <- x$post
+  formulas <- x$formulas
+  blots <- x$blots
+  predictorMatrix <- x$predictorMatrix
+  visitSequence <- x$visitSequence
+  
+  # The original data of y will be binded into the multiple imputed dataset, including the imputed values of y.
+  imp <- vector("list", ncol(x$data))
+  for (j in seq_len(ncol(x$data))) {
+    if(!is.null(x$imp[[j]]) || !is.null(y$imp[[j]])) {
+      imp[[j]] <- rbind(x$imp[[j]], y$imp[[j]])
+    }
+  }
+  names(imp) <- varnames
+  
+  # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
+  seed <- x$seed
+  lastSeedvalue <- x$lastSeedvalue
+  iteration <- x$iteration
+  chainMean = NA
+  chainVar = NA
+  
+  loggedEvents <- x$loggedEvents
+  midsobj <- list(data = data, imp = imp, m = m,
+                  where = where, blocks = blocks, 
+                  call = call, nmis = nmis, 
+                  method = method,
+                  predictorMatrix = predictorMatrix,
+                  visitSequence = visitSequence, 
+                  formulas = formulas, post = post, 
+                  blots = blots, 
+                  seed = seed, 
+                  iteration = iteration,
+                  lastSeedValue = .Random.seed, 
+                  chainMean = chainMean,
+                  chainVar = chainVar, 
+                  loggedEvents = loggedEvents, 
+                  version = packageVersion("mice"),
+                  date = Sys.Date())
+  oldClass(midsobj) <- "mids"
+  return(midsobj)
 }
