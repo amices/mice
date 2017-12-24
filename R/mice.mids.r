@@ -81,8 +81,8 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
   imp <- q$imp
   
   ## combine with previous chainMean and chainVar
-  nvis <- length(obj$visitSequence)
-  vnames <- colnames(obj$data)[obj$visitSequence]
+  vnames <- unique(unlist(obj$blocks))
+  nvis <- length(vnames)
   if (!is.null(obj$chainMean)) {
     chainMean <- chainVar <- array(0, dim = c(nvis, to, obj$m), 
                                    dimnames = list(vnames, 
