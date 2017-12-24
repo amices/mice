@@ -111,7 +111,7 @@ rbind.mids <- function(x, y = NULL, ...) {
   
   # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
   seed <- x$seed
-  lastSeedvalue <- x$lastSeedvalue
+  lastSeedValue <- x$lastSeedValue
   iteration <- x$iteration
   chainMean <- x$chainMean
   chainVar <- x$chainVar
@@ -126,7 +126,7 @@ rbind.mids <- function(x, y = NULL, ...) {
                   formulas = formulas, post = post, 
                   blots = blots, seed = seed, 
                   iteration = iteration,
-                  lastSeedValue = lastSeedvalue, 
+                  lastSeedValue = lastSeedValue, 
                   chainMean = chainMean,
                   chainVar = chainVar, 
                   loggedEvents = loggedEvents, 
@@ -186,7 +186,7 @@ rbind.mids.mids <- function(x, y, call) {
   
   # seed, lastSeedvalue, number of iterations
   seed <- x$seed
-  lastSeedvalue <- x$lastSeedvalue
+  lastSeedValue <- x$lastSeedValue
   iteration <- x$iteration
 
   if (x$iteration != y$iteration) {
@@ -211,7 +211,7 @@ rbind.mids.mids <- function(x, y, call) {
                   blots = blots, 
                   seed = seed, 
                   iteration = iteration,
-                  lastSeedValue = .Random.seed, 
+                  lastSeedValue = lastSeedValue, 
                   chainMean = chainMean,
                   chainVar = chainVar, 
                   loggedEvents = loggedEvents, 

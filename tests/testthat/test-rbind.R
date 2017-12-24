@@ -40,10 +40,10 @@ test_that("Produces longer imputed data", {
   expect_equal(sum(is.na(complete(r3))), sum(is.na(nhalf)))
 })
 
-r11 <- mice.mids(rbind(imp1, imp5))
-plot(r11)
-#r21 <- mice.mids(r2)
-#r31 <- mice.mids(r3)
+r11 <- mice.mids(rbind(imp1, imp5), print = FALSE)
+# plot(r11)
+r21 <- mice.mids(r2, print = FALSE)
+r31 <- mice.mids(r3, print = FALSE)
 
 # issue #59
 set.seed <- 818
