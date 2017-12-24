@@ -76,7 +76,7 @@ rbind.mids <- function(x, y = NULL, ...) {
   
   if (is.data.frame(y)) {
     if (ncol(y) != ncol(x$data)) 
-      stop("Datasets have different number of columns")
+      stop("datasets have different number of columns")
   }
   
   varnames <- colnames(x$data)
@@ -137,16 +137,16 @@ rbind.mids <- function(x, y = NULL, ...) {
 }
 
 rbind.mids.mids <- function(x, y, call) {
-  if (!is.mids(y)) stop("Argument `y` not a mids object")
+  if (!is.mids(y)) stop("argument `y` not a mids object")
   
   if (ncol(y$data) != ncol(x$data))
-    stop("Datasets have different number of columns")
+    stop("datasets have different number of columns")
   if (!identical(colnames(x$data),  colnames(y$data)))
-    stop("Datasets have different variable names")
+    stop("datasets have different variable names")
   if (!identical(sapply(x$data, is.factor),  sapply(y$data, is.factor)))
-    stop("Datasets have different factor variables")
+    stop("datasets have different factor variables")
   if (x$m != y$m)
-    stop("Number of imputations differ")
+    stop("number of imputations differ")
   varnames <- colnames(x$data)
   
   # Call is a vector, with first argument the mice statement and second argument the call to cbind.mids.
@@ -174,7 +174,8 @@ rbind.mids.mids <- function(x, y, call) {
   predictorMatrix <- x$predictorMatrix
   visitSequence <- x$visitSequence
   
-  # The original data of y will be binded into the multiple imputed dataset, including the imputed values of y.
+  # The original data of y will be binded into the multiple imputed dataset
+  # including the imputed values of y.
   imp <- vector("list", ncol(x$data))
   for (j in seq_len(ncol(x$data))) {
     if(!is.null(x$imp[[j]]) || !is.null(y$imp[[j]])) {
@@ -183,12 +184,21 @@ rbind.mids.mids <- function(x, y, call) {
   }
   names(imp) <- varnames
   
-  # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
+  # seed, lastSeedvalue, number of iterations
   seed <- x$seed
   lastSeedvalue <- x$lastSeedvalue
   iteration <- x$iteration
-  chainMean = NA
-  chainVar = NA
+
+  if (x$iteration != y$iteration) {
+    warning("iterations differ, so no convergence statistics calculated", 
+            call. = FALSE)
+    chainMean = NULL
+    chainVar = NULL
+  } else {
+    w <- colSums(x$where) / colSums(where)
+    chainMean <- x$chainMean * w + y$chainMean * (1 - w)
+    chainVar <- x$chainVar * w + y$chainVar * (1 - w)
+  }
   
   loggedEvents <- x$loggedEvents
   midsobj <- list(data = data, imp = imp, m = m,
