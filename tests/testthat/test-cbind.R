@@ -90,7 +90,20 @@ imp8 <- mice:::cbind.mids(imp1,
 test_that("appends matrix, factor and data.frame", {
   expect_identical(ncol(complete(imp8)), 9L)
 })
-impc <- mice.mids(imp6, max = 2, print = FALSE)
+impc <- mice.mids(imp8, max = 2, print = FALSE)
+
+
+# NOTE: now using own version of cbind()
+imp9 <- cbind(imp1, 
+              ma = matrix(1:50, nrow = 25, ncol = 2), 
+              age = nhanes2$age, 
+              df = nhanes2[, c("hyp", "chl")])
+test_that("appends matrix, factor and data.frame", {
+  expect_identical(ncol(complete(imp9)), 9L)
+})
+
+impc <- mice.mids(imp9, max = 2, print = FALSE)
+
 
 # # cbind data.frame (rename to age.1)
 # imp1 <- mice(nhanes, blocks = list(c("bmi", "chl"), "hyp"), print = FALSE, maxit = 1, m = 1)

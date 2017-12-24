@@ -78,7 +78,6 @@
 #'# Note: If one of the arguments is a data.frame 
 #'# we need to explicitly call mice:::cbind.mids()
 #'imp3b <- mice:::cbind.mids(imp3, data.frame(chl = nhanes$chl))
-#'@export
 cbind.mids <- function(x, y = NULL, ...) {
   call <- match.call()
   dots <- list(...)
@@ -320,15 +319,16 @@ cbind.mids.mids <- function(x, y) {
   return(midsobj)
 }
 
-# #'Combine objects by columns
-# #'
-# #' Overwrite the base::cbind function to enable proper dispatch for data.frames
-# #' https://stackoverflow.com/questions/34024585/s3-dispatching-of-rbind-and-cbind
-# #' 
-# #' @inheritParams base cbind
-# #' @keywords internal
-# #' @export
-# cbind <- function (...) {
-#   if (attr(list(...)[[1]], "class") == "mids") return(mice::cbind.mids(...))
-#   else return(base::cbind(...))
-# }
+#'Combine objects by columns
+#'
+#' Overwrite the base::cbind function to enable proper dispatch for data.frames
+#' https://stackoverflow.com/questions/34024585/s3-dispatching-of-rbind-and-cbind
+#'
+#' @inheritParams base::cbind
+#' @keywords internal
+#' @export
+cbind <- function (...) {
+  if (is.null(attr(list(...)[[1]], "class"))) return(base::cbind(...))
+  if (attr(list(...)[[1]], "class") == "mids") return(cbind.mids(...))
+  else return(base::cbind(...))
+}

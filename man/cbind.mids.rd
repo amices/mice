@@ -4,7 +4,7 @@
 \alias{cbind.mids}
 \title{Combine \code{mids} objects by columns}
 \usage{
-\method{cbind}{mids}(x, y = NULL, ...)
+cbind.mids(x, y = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{mids} object.}
