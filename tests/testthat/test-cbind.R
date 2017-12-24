@@ -81,11 +81,12 @@ test_that("appends names vectors and constants", {
 })
 
 # matrix, factor, data.frame
-# NOTE: cbind() dispatches to wrong function so use cbind.mids()
-imp8 <- cbind.mids(imp1, 
-                   ma = matrix(1:50, nrow = 25, ncol = 2), 
-                   age = nhanes2$age, 
-                   df = nhanes2[, c("hyp", "chl")])
+# NOTE: cbind() dispatches to wrong function if there is a data.frame 
+# so use cbind.mids()
+imp8 <- mice:::cbind.mids(imp1, 
+                          ma = matrix(1:50, nrow = 25, ncol = 2), 
+                          age = nhanes2$age, 
+                          df = nhanes2[, c("hyp", "chl")])
 test_that("appends matrix, factor and data.frame", {
   expect_identical(ncol(complete(imp8)), 9L)
 })

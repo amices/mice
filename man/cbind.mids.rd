@@ -2,7 +2,7 @@
 % Please edit documentation in R/cbind.r
 \name{cbind.mids}
 \alias{cbind.mids}
-\title{Combine \code{mids} Objects by Columns}
+\title{Combine \code{mids} objects by columns}
 \usage{
 \method{cbind}{mids}(x, y = NULL, ...)
 }

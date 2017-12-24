@@ -1,4 +1,4 @@
-#'Combine \code{mids} Objects by Columns
+#'Combine \code{mids} objects by columns
 #'
 #'This function combines two \code{mids} objects columnwise into a single
 #'object of class \code{mids}, or combines a single \code{mids} object with 
@@ -91,32 +91,40 @@ cbind.mids <- function(x, y = NULL, ...) {
   else if (length(y) > 0L && length(dots) == 0L) y <- cbind.data.frame(y)
   else y <- cbind.data.frame(y, dots)
   
-  varnames <- c(colnames(x$data), colnames(y))
-  
-  # Call is a vector, with first argument the mice statement and second argument the call to cbind.mids.
+  # Call is a vector, with first argument the mice statement 
+  # and second argument the call to cbind.mids.
   call <- c(x$call, call)
   
-  # The data in x (x$data) and y are combined together.
   data <- cbind(x$data, y)
+  varnames <- make.unique(colnames(data))
+  colnames(data) <- varnames
   
   # where argument
   where <- cbind(x$where, matrix(FALSE, nrow = nrow(y), ncol = ncol(y)))
   colnames(where) <- varnames
-  blocks <- c(x$blocks, colnames(y))
-  blocks <- name.blocks(blocks)
-  attr(blocks, "calltype") <- c(attr(x$blocks, "calltype"), 
-                                rep("type", ncol(y)))
   
-  # The number of imputations in the new midsobject is equal to that in x.
+  # blocks: no renaming needed because all block definition will 
+  # refer to varnames[1:ncol(x$data)] only, and are hence unique
+  # but we do need to rename duplicate block names
+  yblocks <- vector("list", length = ncol(y))
+  blocks <- c(x$blocks, yblocks)
+  xynames <- c(names(x$blocks), colnames(y))
+  blocknames <- make.unique(xynames)
+  names(blocknames) <- xynames
+  names(blocks) <- blocknames
+  ct <- c(attr(x$blocks, "calltype"), rep("type", ncol(y)))
+  names(ct) <- blocknames
+  attr(blocks, "calltype") <- ct
+  
   m <- x$m
   
   # count the number of missing data in y
   nmis <- c(x$nmis, colSums(is.na(y)))
+  names(nmis) <- varnames
   
-  # The original data of y will be copied into the multiple imputed dataset, 
+  # imp: original data of y will be copied into the multiple imputed dataset, 
   # including the missing values of y.
   r <- (!is.na(y))
-  
   f <- function(j) {
     m <- matrix(NA,
                 nrow = sum(!r[, j]),
@@ -124,37 +132,40 @@ cbind.mids <- function(x, y = NULL, ...) {
                 dimnames = list(row.names(y)[!r[, j]], seq_len(m)))
     as.data.frame(m)
   }
-  
   imp <- lapply(seq_len(ncol(y)), f)
   imp <- c(x$imp, imp)
   names(imp) <- varnames
   
   # The imputation method for (columns in) y will be set to ''.
   method <- c(x$method, rep.int("", ncol(y)))
-  names(method) <- c(names(x$method), colnames(y))
+  names(method) <- blocknames
   
-  # The variable(s) in y are included in the predictorMatrix.  y is not used as predictor as well as not imputed.
-  predictorMatrix <- rbind(x$predictorMatrix, matrix(0, ncol = ncol(x$predictorMatrix), nrow = ncol(y)))
-  predictorMatrix <- cbind(predictorMatrix, matrix(0, ncol = ncol(y), nrow = nrow(x$predictorMatrix) + ncol(y)))
-  dimnames(predictorMatrix) <- list(names(blocks), varnames)
+  # The variable(s) in y are included in the predictorMatrix. 
+  # y is not used as predictor as well as not imputed.
+  predictorMatrix <- rbind(x$predictorMatrix, 
+                           matrix(0, 
+                                  ncol = ncol(x$predictorMatrix), 
+                                  nrow = ncol(y)))
+  predictorMatrix <- cbind(predictorMatrix, 
+                           matrix(0, 
+                                  ncol = ncol(y), 
+                                  nrow = nrow(x$predictorMatrix) + ncol(y)))
+  rownames(predictorMatrix) <- blocknames
+  colnames(predictorMatrix) <- varnames
   
-  # The visitSequence is taken as in x$visitSequence.
   visitSequence <- x$visitSequence
-  
-  # The post vector for (columns in) y will be set to ''.
-  post <- c(x$post, rep.int("", ncol(y)))
-  names(post) <- c(names(x$post), colnames(y))
-  
-  # No new formula list will be created
   formulas <- x$formulas
+  post <- c(x$post, rep.int("", ncol(y)))
+  names(post) <- varnames
   blots <- x$blots
   
-  # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
+  # seed, lastSeedvalue, number of iterations, chainMean and chainVar 
+  # is taken as in mids object x.
   seed <- x$seed
   lastSeedvalue <- x$lastSeedvalue
   iteration <- x$iteration
-  chainMean = x$chainMean
-  chainVar = x$chainVar
+  chainMean <- x$chainMean
+  chainVar <- x$chainVar
   
   loggedEvents <- x$loggedEvents
   
@@ -165,7 +176,8 @@ cbind.mids <- function(x, y = NULL, ...) {
                   method = method,
                   predictorMatrix = predictorMatrix,
                   visitSequence = visitSequence, 
-                  formulas = formulas, post = post, seed = seed, 
+                  formulas = formulas, post = post, 
+                  blots = blots, seed = seed, 
                   iteration = iteration,
                   lastSeedValue = .Random.seed, 
                   chainMean = chainMean,
@@ -186,7 +198,8 @@ cbind.mids.mids <- function(x, y) {
   if (x$m != y$m) 
     stop("The two mids objects should have the same number of imputations\n")
   
-  # Call is a vector, with first argument the mice statement and second argument the call to cbind.mids.
+  # Call is a vector, with first argument the mice statement 
+  # and second argument the call to cbind.mids.
   call <- c(x$call, call)
   
   # The data in x$data and y$data are combined together.
@@ -252,7 +265,8 @@ cbind.mids.mids <- function(x, y) {
   blots <- c(x$blots, y$blots)
   names(blots) <- blocknames
   
-  # For the elements seed, lastSeedvalue and iteration the values from midsobject x are copied.
+  # For the elements seed, lastSeedvalue and iteration the values 
+  # from midsobject x are copied.
   seed <- x$seed
   lastSeedvalue <- x$lastSeedvalue
   iteration <- x$iteration
@@ -305,3 +319,16 @@ cbind.mids.mids <- function(x, y) {
   oldClass(midsobj) <- "mids"
   return(midsobj)
 }
+
+# #'Combine objects by columns
+# #'
+# #' Overwrite the base::cbind function to enable proper dispatch for data.frames
+# #' https://stackoverflow.com/questions/34024585/s3-dispatching-of-rbind-and-cbind
+# #' 
+# #' @inheritParams base cbind
+# #' @keywords internal
+# #' @export
+# cbind <- function (...) {
+#   if (attr(list(...)[[1]], "class") == "mids") return(mice::cbind.mids(...))
+#   else return(base::cbind(...))
+# }
