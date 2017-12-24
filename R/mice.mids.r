@@ -52,7 +52,7 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
     stop("Object should be of type mids.")
   if (maxit < 1) 
     return(obj)
-
+  
   loggedEvents <- obj$loggedEvents
   state <- list(it = 0, im = 0, co = 0, dep = "", meth = "", 
                 log = !is.null(loggedEvents))
@@ -67,7 +67,7 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
   if (is.null(where)) where <- is.na(obj$data)
   blocks <- obj$blocks
   if (is.null(blocks)) blocks <- make.blocks(obj$data)
-
+  
   assign(".Random.seed", obj$lastSeedValue, pos = 1)
   
   ## OK. Iterate.
@@ -79,23 +79,27 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
                obj$formulas, obj$blots, obj$post, c(from, to), printFlag, ...)
   
   imp <- q$imp
-
+  
   ## combine with previous chainMean and chainVar
   nvis <- length(obj$visitSequence)
   vnames <- colnames(obj$data)[obj$visitSequence]
-  chainMean <- chainVar <- array(0, dim = c(nvis, to, obj$m), 
-                                 dimnames = list(vnames, 
-                                                 seq_len(to), paste("Chain", seq_len(obj$m))))
-  for (j in seq_len(nvis)) {
-    if (obj$iteration == 0) {
-      chainMean[j, , ] <- q$chainMean[j, , ]
-      chainVar[j, , ] <- q$chainVar[j, , ]
-    } else {
-      chainMean[j, seq_len(obj$iteration), ] <- obj$chainMean[j, , ]
-      chainVar[j, seq_len(obj$iteration), ] <- obj$chainVar[j, , ]
-      chainMean[j, from:to, ] <- q$chainMean[j, , ]
-      chainVar[j, from:to, ] <- q$chainVar[j, , ]
+  if (!is.null(obj$chainMean)) {
+    chainMean <- chainVar <- array(0, dim = c(nvis, to, obj$m), 
+                                   dimnames = list(vnames, 
+                                                   seq_len(to), paste("Chain", seq_len(obj$m))))
+    for (j in seq_len(nvis)) {
+      if (obj$iteration == 0) {
+        chainMean[j, , ] <- q$chainMean[j, , ]
+        chainVar[j, , ] <- q$chainVar[j, , ]
+      } else {
+        chainMean[j, seq_len(obj$iteration), ] <- obj$chainMean[j, , ]
+        chainVar[j, seq_len(obj$iteration), ] <- obj$chainVar[j, , ]
+        chainMean[j, from:to, ] <- q$chainMean[j, , ]
+        chainVar[j, from:to, ] <- q$chainVar[j, , ]
+      }
     }
+  } else {
+    chainMean <- chainVar <- NULL
   }
   
   if (!state$log) 
