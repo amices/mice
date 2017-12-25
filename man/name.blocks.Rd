@@ -9,13 +9,15 @@ name.blocks(blocks, prefix = "B")
 \arguments{
 \item{blocks}{List of vectors with variable names per block. List elements 
 may be named to identify blocks. Variables within a block are 
-imputed simultaneously by a joint imputation method
-(see \code{method} argument). By default each variable has its 
-own blocks, which is effectively
+imputed by a multivariate imputation method
+(see \code{method} argument). By default each variable is placed 
+into its own block, which is effectively
 fully conditional specification (FCS) by univariate models 
 (variable-by-variable imputation). Only variables whose names appear in 
-\code{blocks} are imputed. A variable may appear in multiple blocks, 
-so it is effectively re-imputed within the iteration.}
+\code{blocks} are imputed. The relevant columns in the \code{where} 
+matrix are set to \code{FALSE} of variables that are not block members. 
+A variable may appear in multiple blocks. In that case, it is 
+effectively re-imputed each time that it is visited.}
 
 \item{prefix}{A character vector of length 1 with the prefix to
 be using for naming any unnamed blocks with two or more variables.}

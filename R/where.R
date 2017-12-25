@@ -30,8 +30,9 @@ make.where <- function(data,
 }
 
 
-check.where <- function(where, data) {
-  if (is.null(where)) return(make.where(data, keyword = "missing"))
+check.where <- function(where, data, blocks) {
+  if (is.null(where)) 
+    where <- make.where(data, keyword = "missing")
   
   if (!(is.matrix(where) || is.data.frame(where)))
     if (is.character(where)) return(make.where(data, keyword = where))
@@ -46,5 +47,6 @@ check.where <- function(where, data) {
   
   where <- matrix(where, nrow = nrow(data), ncol = ncol(data))
   dimnames(where) <- dimnames(data)
+  where[, !colnames(where) %in% unlist(blocks)] <- FALSE
   where
 }
