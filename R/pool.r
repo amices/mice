@@ -15,7 +15,8 @@
 #'part of the model.
 #'
 #'@aliases pool
-#'@param object An object of class \code{mira}, produced by \code{with.mids()} or \code{as.mira()}
+#'@param object An object of class \code{mira} (produced by \code{with.mids()} 
+#'or \code{as.mira()}), or a \code{list} with model fits.
 #'@param method A string describing the method to compute the degrees of
 #'freedom.  The default value is "smallsample", which specifies the is
 #'Barnard-Rubin adjusted degrees of freedom (Barnard and Rubin, 1999) for small
@@ -23,7 +24,6 @@
 #'freedom as in Rubin (1987).
 #'@return An object of class \code{mipo}, which stands for 'multiple imputation
 #'pooled outcome'. 
-#'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2009
 #'@seealso \code{\link{with.mids}}, \code{\link{as.mira}}, \code{\link{vcov}}
 #'@references Barnard, J. and Rubin, D.B. (1999). Small sample degrees of
 #'freedom with multiple imputation. \emph{Biometrika}, 86, 948-955.
@@ -69,31 +69,16 @@
 #'# 
 #'
 #'@export
-pool <- function (object, method = "smallsample")
-{
-  ### General pooling function for multiple imputation parameters
-  ### object: an object of class mira (Multiple Imputed Repeated Analysis)
-  ### Based on Rubin's rules (Rubin, 1987);
-  #
-  ### Stef van Buuren, Karin Groothuis-Oudshoorn, July 1999.
-  ### Extended for mle (S3) and mer (S4) objects, KO 2009.
-  ### Updated V2.1 - Aug 31, 2009
-  ### Updated V2.2 - Jan 13, 2010
-  ### Updated V2.4 - Oct 12, 2010
-  ### Updated V2.6 - Jan 14, 2011
-  ### Updated V2.12 - Mar 19, 2012
-  
-  ### Check the arguments
-  
+pool <- function (object, method = "smallsample") {
   call <- match.call()
-  if (!is.mira(object)) {
-    if (is.list(object)) object <- as.mira(object)
-    else stop("Argument `object` not a list")
-  }
+  if (!is.list(object)) stop("Argument 'object' not a list", call. = FALSE)
+  object <- as.mira(object)
   m <- length(object$analyses)
+  
+  # deal with m = 1
   fa <- getfit(object, 1)
   if (m == 1) {
-    warning("Number of multiple imputations m=1. No pooling done.")
+    warning("Number of multiple imputations m = 1. No pooling done.")
     return(fa)
   }
   analyses <- getfit(object)
@@ -186,6 +171,15 @@ pool <- function (object, method = "smallsample")
     }
   }
   
+  rr <- rubins.rules(qhat, u, m, k, object, method, names)
+  
+  fit <- c(list(call = call, call1 = object$call, call2 = object$call1,
+              nmis = object$nmis, m = m), rr)
+  oldClass(fit) <- c("mipo", oldClass(object))              ## FEH
+  return(fit)
+}
+
+rubins.rules <- function(qhat, u, m, k, object, method, names) {
   ###   Within, between and total variances
   
   qbar <- apply(qhat, 2, mean)                              # (3.1.2)
@@ -204,10 +198,10 @@ pool <- function (object, method = "smallsample")
   
   ###
   names(r) <- names(df) <- names(fmi) <- names(lambda) <- names
-  fit <- list(call = call, call1 = object$call, call2 = object$call1,
-              nmis = object$nmis, m = m, qhat = qhat, u = u, qbar = qbar,
-              ubar = ubar, b = b, t = t, r = r, dfcom = dfcom, df = df,
-              fmi = fmi, lambda = lambda)
-  oldClass(fit) <- c("mipo", oldClass(object))              ## FEH
-  return(fit)
+  
+  z <- list(qhat = qhat, u = u, qbar = qbar,
+            ubar = ubar, b = b, t = t, r = r, dfcom = dfcom, df = df,
+            fmi = fmi, lambda = lambda)
+  
+  return(z)
 }

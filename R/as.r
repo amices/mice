@@ -127,15 +127,14 @@ as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id") {
 #' 
 #' The \code{as.mira()} function takes the results of repeated 
 #' complete-data analysis stored as a list, and turns it 
-#' into a \code{mira} object that can be pooled. Pooling 
-#' requires that \code{coef()} and \code{vcov()} methods are 
-#' available for fitted object. 
+#' into a \code{mira} object that can be pooled.
 #' @param fitlist A list containing $m$ fitted analysis objects
 #' @return An S3 object of class \code{mira}.
 #' @seealso \code{\link[=mira-class]{mira}}
 #' @author Stef van Buuren
 #' @export
 as.mira <- function(fitlist) {
+  if (is.mira(fitlist)) return(fitlist)
   call <- match.call()
   if (!is.list(fitlist)) 
     stop("Argument 'fitlist' is not a list")

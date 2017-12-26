@@ -7,7 +7,8 @@
 pool(object, method = "smallsample")
 }
 \arguments{
-\item{object}{An object of class \code{mira}, produced by \code{with.mids()} or \code{as.mira()}}
+\item{object}{An object of class \code{mira} (produced by \code{with.mids()} 
+or \code{as.mira()}), or a \code{list} with model fits.}
 
 \item{method}{A string describing the method to compute the degrees of
 freedom.  The default value is "smallsample", which specifies the is
@@ -80,8 +81,5 @@ S-PLUS}.  Berlin: Springer.
 }
 \seealso{
 \code{\link{with.mids}}, \code{\link{as.mira}}, \code{\link{vcov}}
-}
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2009
 }
 \keyword{htest}
