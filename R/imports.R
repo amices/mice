@@ -20,5 +20,6 @@
 #'@importFrom Rcpp      sourceCpp
 #'@importFrom lattice   bwplot densityplot xyplot stripplot
 #'@importFrom mitml     panImpute mitmlComplete
+#'@importFrom tidyr     complete
 #'@useDynLib mice
 NULL

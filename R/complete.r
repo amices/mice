@@ -3,7 +3,7 @@
 #'Takes an object of class \code{mids}, fills in the missing data, and returns
 #'the completed data in a specified format.
 #'
-#'@param x An object of class \code{mids} as created by the function
+#'@param data An object of class \code{mids} as created by the function
 #'\code{mice()}.
 #'@param action If action is a scalar between 1 and \code{x$m}, the function
 #'returns the data with imputation number \code{action} filled in. Thus,
@@ -14,6 +14,7 @@
 #'@param include Flag to indicate whether the orginal data with the missing
 #'values should be included. This is only relevant only if \code{action} is 
 #'specified as \code{"long"}, \code{"broad"} or \code{"repeated"}.
+#'@param \dots Additional arguments
 #'@return A data frame with the imputed values filled in. Optionally, the
 #'original data are appended.
 #'@author Stef van Buuren, Karin Groothuis-Oudshoorn
@@ -70,9 +71,9 @@
 #'# each block contains of the same variable pair over different
 #'# multiple imputations.
 #'cor(mat)
-#'
 #'@export
-complete <- function(x, action = 1, include = FALSE) {
+complete.mids <- function(data, action = 1, include = FALSE, ...) {
+  x <- data
   if (!is.mids(x)) 
     stop("Input data must have class 'mids'.")
   if (!is.logical(include)) 

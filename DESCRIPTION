@@ -27,7 +27,8 @@ Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
     methods,
     R (>= 2.10.0),
-    lattice
+    lattice,
+    tidyr
 Imports:
     grDevices,
     graphics,
