@@ -167,7 +167,7 @@ check.blocks <- function(blocks, data, calltype = "type") {
   blocks
 }
 
-#' Extract blocks from \code{formulas} and \code{predictorMatrix} 
+#' Construct blocks from \code{formulas} and \code{predictorMatrix} 
 #'
 #' This helper function attempts to find blocks of variables in the
 #' specification of the \code{formulas} and/or \code{predictorMatrix}
@@ -185,9 +185,9 @@ check.blocks <- function(blocks, data, calltype = "type") {
 #' @examples
 #' form <- name.formulas(list(bmi + hyp ~ chl + age, chl ~ bmi))
 #' pred <- make.predictorMatrix(nhanes[, c("age", "chl")])
-#' extract.blocks(formulas = form, pred = pred)
+#' construct.blocks(formulas = form, pred = pred)
 #' @export
-extract.blocks <- function(formulas = NULL, predictorMatrix = NULL) {
+construct.blocks <- function(formulas = NULL, predictorMatrix = NULL) {
   
   blocks.f <- blocks.p <- NULL
   if (!is.null(formulas)) {
