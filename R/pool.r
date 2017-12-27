@@ -90,27 +90,6 @@ pool <- function (object, method = "smallsample") {
   return(fit)
 }
 
-rubins.rules.matrix <- function(qhat, u, dfcom, method) {
-  
-  ###   Within, between and total variances
-  m <- nrow(qhat)
-  qbar <- apply(qhat, 2, mean)                              # (3.1.2)
-  ubar <- apply(u, c(2, 3), mean)                           # (3.1.3)
-  e <- qhat - matrix(qbar, nrow = m, ncol = ncol(qhat), byrow = TRUE)
-  b <- crossprod(e) / (m - 1)                               # (3.1.4)
-  t <- ubar + (1 + 1 / m) * b                               # (3.1.5)
-  
-  ###   Scalar inference quantities
-  r <- (1 + 1 / m) * diag(b / ubar)                         # (3.1.7)
-  lambda <- (1 + 1 / m) * diag(b / t)
-  df <- mice.df(m, lambda, dfcom, method)
-  fmi <- (r + 2 / (df + 3)) / (r + 1)
-  
-  list(qhat = qhat, u = u, qbar = qbar,
-       ubar = ubar, b = b, t = t, r = r, dfcom = dfcom, df = df,
-       fmi = fmi, lambda = lambda)
-}
-
 pool.fitlist <- function (fitlist) {
   # call broom to do the hard work
   v <- lapply(fitlist, glance) %>% bind_rows()
