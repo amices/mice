@@ -18,5 +18,13 @@
 #'@importFrom rpart     rpart rpart.control
 #'@importFrom Rcpp      sourceCpp
 #'@importFrom lattice   bwplot densityplot xyplot stripplot
+#'@importFrom dplyr     summarize bind_rows group_by %>% n select
+#'@importFrom broom     tidy glance
+#'@importFrom rlang     .data
 #'@useDynLib mice
 NULL
+
+## quiets concerns of R CMD check re: the .'s that appear in pipelines
+if(getRversion() >= "2.15.1")  
+  utils::globalVariables(c("ubar", "f", "b", "m", "lambda", "dfold", "dfobs",
+                           "r", "df"))

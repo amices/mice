@@ -82,7 +82,6 @@ pool <- function (object, method = "smallsample") {
     return(fa)
   }
   analyses <- getfit(object)
-  
   if (class(fa)[1]=="lme" &&
       !requireNamespace("nlme", quietly = TRUE))
     stop("Package 'nlme' needed fo this function to work. Please install it.", call. = FALSE)
@@ -171,37 +170,59 @@ pool <- function (object, method = "smallsample") {
     }
   }
   
-  rr <- rubins.rules(qhat, u, m, k, object, method, names)
+  dfcom <- df.residual(object)
+  rr <- rubins.rules.matrix(qhat, u, dfcom, method)
   
   fit <- c(list(call = call, call1 = object$call, call2 = object$call1,
-              nmis = object$nmis, m = m), rr)
-  oldClass(fit) <- c("mipo", oldClass(object))              ## FEH
+                nmis = object$nmis, m = m), rr)
+  oldClass(fit) <- c("mipo", oldClass(object))
   return(fit)
 }
 
-rubins.rules <- function(qhat, u, m, k, object, method, names) {
-  ###   Within, between and total variances
+rubins.rules.matrix <- function(qhat, u, dfcom, method) {
   
+  ###   Within, between and total variances
+  m <- nrow(qhat)
   qbar <- apply(qhat, 2, mean)                              # (3.1.2)
   ubar <- apply(u, c(2, 3), mean)                           # (3.1.3)
-  e <- qhat - matrix(qbar, nrow = m, ncol = k, byrow = TRUE)
-  b <- (t(e) %*% e)/(m - 1)                                 # (3.1.4)
-  t <- ubar + (1 + 1/m) * b                                 # (3.1.5)
+  e <- qhat - matrix(qbar, nrow = m, ncol = ncol(qhat), byrow = TRUE)
+  b <- crossprod(e) / (m - 1)                               # (3.1.4)
+  t <- ubar + (1 + 1 / m) * b                               # (3.1.5)
   
   ###   Scalar inference quantities
-  
-  r <- (1 + 1/m) * diag(b/ubar)                             # (3.1.7)
-  lambda <- (1 + 1/m) * diag(b/t)
-  dfcom <- df.residual(object)
+  r <- (1 + 1 / m) * diag(b / ubar)                         # (3.1.7)
+  lambda <- (1 + 1 / m) * diag(b / t)
   df <- mice.df(m, lambda, dfcom, method)
-  fmi <- (r + 2/(df+3))/(r + 1)                             # fraction of missing information
+  fmi <- (r + 2 / (df + 3)) / (r + 1)
   
-  ###
-  names(r) <- names(df) <- names(fmi) <- names(lambda) <- names
-  
-  z <- list(qhat = qhat, u = u, qbar = qbar,
-            ubar = ubar, b = b, t = t, r = r, dfcom = dfcom, df = df,
-            fmi = fmi, lambda = lambda)
-  
-  return(z)
+  list(qhat = qhat, u = u, qbar = qbar,
+       ubar = ubar, b = b, t = t, r = r, dfcom = dfcom, df = df,
+       fmi = fmi, lambda = lambda)
 }
+
+pool.fitlist <- function (fitlist) {
+  # call broom to do the hard work
+  v <- lapply(fitlist, glance) %>% bind_rows()
+  w <- lapply(fitlist, tidy) %>% bind_rows()
+  
+  # residual degrees of freedom for hypothetically complete data
+  dfcom <- v$df.residual[1]
+  if (is.null(dfcom)) dfcom <- df.residual(fitlist[[1]])
+  if (is.null(dfcom)) dfcom <- 99999
+  
+  # Rubin's rules
+  group_by(w, .data$term) %>%
+    summarize(m = n(),
+              qbar = mean(.data$estimate),
+              ubar = mean(.data$std.error ^ 2),
+              b = var(.data$estimate),
+              t = ubar + (1 + 1 / m) * b,
+              r = (1 + 1 / m) * b / ubar,
+              lambda = (1 + 1 / m) * b / t,
+              dfcom = dfcom,
+              dfold = (m - 1) / lambda ^ 2,
+              dfobs = (dfcom + 1) / (dfcom + 3) * dfcom * (1 - lambda),
+              df = dfold * dfobs / (dfold + dfobs),
+              fmi = (r + 2 / (df + 3)) / (r + 1))
+}
+
