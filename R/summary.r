@@ -43,7 +43,7 @@ summary.mipo <- function(object, ...) {
     x <- object
     table <- array(x$qbar, dim = c(length(x$qbar), 10))
     dimnames(table) <- list(labels(x$qbar), c("est", "se", "t", "df", "Pr(>|t|)", "lo 95", "hi 95", "nmis", "fmi", "lambda"))
-    table[, 2] <- sqrt(diag(x$t))
+    table[, 2] <- sqrt(x$t)
     table[, 3] <- table[, 1]/table[, 2]
     table[, 4] <- x$df
     table[, 5] <- if (all(x$df > 0)) 

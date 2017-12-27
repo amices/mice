@@ -124,25 +124,25 @@ pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
     # Check: Only need the lm or lmer object
     formula1 <- formula(fit1$analyses[[1]])
     formula0 <- formula(fit0$analyses[[1]])
-    vars1 = names(est1$qbar)
-    vars0 = names(est0$qbar)
+    vars1 <- est1$term
+    vars0 <- est0$term
     
     if (is.null(vars1) || is.null(vars0)) 
-      stop("coefficients do not have names")
+      stop("coefficients do not have names", call. = FALSE)
     if (dimQ2 < 1) 
-        stop("The larger model should be specified first and must be strictly larger than the smaller model.\n")
+        stop("First model not larger than second", call. = FALSE)
     if (!setequal(vars0, intersect(vars0, vars1))) 
-        stop("The smaller model should be fully contained in the larger model. \n")
+        stop("Second model not contained in first", call. = FALSE)
     
     if (meth == "wald") {
         # Reference: paragraph 2.2, Article Meng & Rubin, Biometrika, 1992.  When two objects are to be compared we need to
         # calculate the matrix Q.
-        Q <- diag(rep.int(1, dimQ1), ncol = dimQ1)
+        Q <- diag(dimQ1)
         where_new_vars = which(!(vars1 %in% vars0))
         Q <- Q[where_new_vars, , drop = FALSE]
         qbar <- Q %*% est1$qbar
-        Ubar <- Q %*% est1$ubar %*% (t(Q))
-        Bm <- Q %*% est1$b %*% (t(Q))
+        Ubar <- Q %*% diag(est1$ubar) %*% (t(Q))
+        Bm <- Q %*% diag(est1$b) %*% (t(Q))
         rm <- (1 + 1/m) * sum(diag(Bm %*% (solve(Ubar))))/dimQ2
         Dm <- (t(qbar)) %*% (solve(Ubar)) %*% qbar/(dimQ2 * (1 + rm))
     }
