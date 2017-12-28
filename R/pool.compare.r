@@ -89,90 +89,119 @@
 #'}
 #'@export
 pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
-    LLlogistic <- function(formula, data, coefs) {
-        ### Calculates -2 loglikelihood of a model.
-        logistic <- function(mu) exp(mu)/(1 + exp(mu))
-        Xb <- model.matrix(formula, data) %*% coefs
-        y <- model.frame(formula, data)[1][, 1]
-        if (is.factor(y)) y <- (0:1)[y]
-        p <- logistic(Xb)
-        y <- (y - min(y))/(max(y) - min(y))  ## in case values of categorical var are other than 0 and 1.
-        term1 <- term2 <- rep(0, length(y))
-        term1[y != 0] <- y[y != 0] * log(y[y != 0]/p[y != 0])
-        term2[y == 0] <- (1 - y[y == 0]) * log((1 - y[y == 0])/(1 - p[y == 0]))
-        return(-(2 * sum(term1 + term2)))
-    }
+  # LLlogistic <- function(formula, data, coefs) {
+  #   ### Calculates -2 loglikelihood of a model.
+  #   logistic <- function(mu) exp(mu)/(1 + exp(mu))
+  #   Xb <- model.matrix(formula, data) %*% coefs
+  #   y <- model.frame(formula, data)[1][, 1]
+  #   if (is.factor(y)) y <- (0:1)[y]
+  #   p <- logistic(Xb)
+  #   ## in case values of categorical var are other than 0 and 1.
+  #   y <- (y - min(y))/(max(y) - min(y)) 
+  #   term1 <- term2 <- rep(0, length(y))
+  #   term1[y != 0] <- y[y != 0] * log(y[y != 0]/p[y != 0])
+  #   term2[y == 0] <- (1 - y[y == 0]) * log((1 - y[y == 0])/(1 - p[y == 0]))
+  #   -2 * sum(term1 + term2)
+  # }
+  
+  # Check the arguments
+  call <- match.call()
+  meth <- match.arg(tolower(method), c("wald", "likelihood"))
+  
+  if (!is.mira(fit1) || !is.mira(fit0)) 
+    stop("'fit1' and 'fit0' not of class 'mira'", call. = FALSE)
+  m1 <- length(fit1$analyses)
+  m0 <- length(fit0$analyses)
+  if (m1 != m0)
+    stop("Number of imputations differs between fit1 and fit0", call. = FALSE)
+  if (m1 < 2) 
+    stop("At least two imputations are needed", call. = FALSE)
+  
+  m <- m1
+  est1 <- pool(fit1)
+  est0 <- pool(fit0)
+  dimQ1 <- length(est1$qbar)
+  dimQ2 <- dimQ1 - length(est0$qbar)
+  # Check: Only need the lm or lmer object
+  formula1 <- formula(fit1$analyses[[1]])
+  formula0 <- formula(fit0$analyses[[1]])
+  vars1 <- est1$term
+  vars0 <- est0$term
+  
+  if (is.null(vars1) || is.null(vars0)) 
+    stop("coefficients do not have names", call. = FALSE)
+  if (dimQ2 < 1) 
+    stop("Model fit1 not larger than fit0", call. = FALSE)
+  if (!setequal(vars0, intersect(vars0, vars1))) 
+    stop("Model fit0 not contained in fit1", call. = FALSE)
+  
+  if (meth == "wald") {
+    # Reference: paragraph 2.2, Article Meng & Rubin, 
+    # Biometrika, 1992.  When two objects are to be compared 
+    # we need to calculate matrix Q
+    Q <- diag(dimQ1)
+    where_new_vars = which(!(vars1 %in% vars0))
+    Q <- Q[where_new_vars, , drop = FALSE]
+    qbar <- Q %*% est1$qbar
+    Ubar <- Q %*% diag(est1$ubar) %*% (t(Q))
+    Bm <- Q %*% diag(est1$b) %*% (t(Q))
+    rm <- (1 + 1/m) * sum(diag(Bm %*% (solve(Ubar))))/dimQ2
+    Dm <- (t(qbar)) %*% (solve(Ubar)) %*% qbar/(dimQ2 * (1 + rm))
+  }
+  
+  if (meth == "likelihood") {
+    # Calculate for each imputed dataset the deviance between the two 
+    # models with its estimated coefficients
+    devM1 <- lapply(getfit(fit1), glance) %>% bind_rows() %>% pull(.data$deviance)
+    devM0 <- lapply(getfit(fit0), glance) %>% bind_rows() %>% pull(.data$deviance)
+    devM <- mean(devM1 - devM0)
     
-    # Check the arguments
-    call <- match.call()
-    meth <- match.arg(tolower(method), c("wald", "likelihood"))
+    # Calculate for each imputed dataset the deviance between the two 
+    # models with the pooled coefficients
+    # FIXME: does not yet seem to update deviance
+    qbar1 <- pool(getfit(fit1))$qbar
+    mds1 <- lapply(getfit(fit1), fix.coef, beta = qbar1)
+    devL1 <- lapply(mds1, glance) %>% bind_rows() %>% pull(.data$deviance)
+    qbar0 <- pool(getfit(fit0))$qbar
+    mds0 <- lapply(getfit(fit0), fix.coef, beta = qbar0)
+    devL0 <- lapply(mds0, glance) %>% bind_rows() %>% pull(.data$deviance)
+    devL <- mean(devL1 - devL0)
     
-    if (!is.mira(fit1) || !is.mira(fit0)) 
-        stop("fit1 and fit0 should both have class 'mira'.\n")
-    m1 <- length(fit1$analyses)
-    m0 <- length(fit0$analyses)
-    if (m1 != m0) 
-        stop("Number of imputations differs between fit1 and fit0.\n")
-    if (m1 < 2) 
-        stop("At least two imputations are needed for pooling.\n")
-    
-    m <- m1
-    est1 <- pool(fit1)
-    est0 <- pool(fit0)
-    dimQ1 <- length(est1$qbar)
-    dimQ2 <- dimQ1 - length(est0$qbar)
-    # Check: Only need the lm or lmer object
-    formula1 <- formula(fit1$analyses[[1]])
-    formula0 <- formula(fit0$analyses[[1]])
-    vars1 <- est1$term
-    vars0 <- est0$term
-    
-    if (is.null(vars1) || is.null(vars0)) 
-      stop("coefficients do not have names", call. = FALSE)
-    if (dimQ2 < 1) 
-        stop("First model not larger than second", call. = FALSE)
-    if (!setequal(vars0, intersect(vars0, vars1))) 
-        stop("Second model not contained in first", call. = FALSE)
-    
-    if (meth == "wald") {
-        # Reference: paragraph 2.2, Article Meng & Rubin, Biometrika, 1992.  When two objects are to be compared we need to
-        # calculate the matrix Q.
-        Q <- diag(dimQ1)
-        where_new_vars = which(!(vars1 %in% vars0))
-        Q <- Q[where_new_vars, , drop = FALSE]
-        qbar <- Q %*% est1$qbar
-        Ubar <- Q %*% diag(est1$ubar) %*% (t(Q))
-        Bm <- Q %*% diag(est1$b) %*% (t(Q))
-        rm <- (1 + 1/m) * sum(diag(Bm %*% (solve(Ubar))))/dimQ2
-        Dm <- (t(qbar)) %*% (solve(Ubar)) %*% qbar/(dimQ2 * (1 + rm))
-    }
-    
-    if (meth == "likelihood") {
-        if (is.null(data)) 
-            stop("For method=likelihood the imputed data set (a mids object) should be included.\n")
-        
-        devM <- devL <- 0
-        for (i in seq_len(m)) {
-            # Calculate for each imputed dataset the deviance between the two models with the pooled coefficients.
-            devL <- devL + LLlogistic(formula1, complete(data, i), est1$qbar) - LLlogistic(formula0, complete(data, i), est0$qbar)
-            # Calculate for each imputed dataset the deviance between the two models with its estimated coefficients.
-            devM <- devM + LLlogistic(formula1, complete(data, i), est1$qhat[i, ]) - LLlogistic(formula0, complete(data, i), 
-                                                                                                est0$qhat[i, ])
-        }
-        devL <- devL/m
-        devM <- devM/m
-        rm <- ((m + 1)/(dimQ2 * (m - 1))) * (devM - devL)  # SvB 17jan2011
-        Dm <- devL/(dimQ2 * (1 + rm))
-    }
-    
-    # Calculation of degrees of freedom for F distribution; the same for both methods.
-    v <- dimQ2 * (m - 1)
-    if (v > 4) 
-        w <- 4 + (v - 4) * ((1 + (1 - 2/v) * (1/rm))^2)  ## SvB 21mar13 - according to Li 1991
-    else w <- v * (1 + 1/dimQ2) * ((1 + 1/rm)^2)/2
-    
-    statistic <- list(call = call, call11 = fit1$call, call12 = fit1$call1, call01 = fit0$call, call02 = fit0$call1, method = method, 
-                      nmis = fit1$nmis, m = m, qhat1 = est1$qhat, qhat0 = est0$qhat, qbar1 = est1$qbar, qbar0 = est0$qbar, ubar1 = est1$ubar, 
-                      ubar0 = est0$ubar, Dm = Dm, rm = rm, df1 = dimQ2, df2 = w, pvalue = 1 - pf(Dm, dimQ2, w))
-    return(statistic)
+    rm <- ((m + 1)/(dimQ2 * (m - 1))) * (devM - devL)
+    Dm <- devL / (dimQ2 * (1 + rm))
+  }
+  
+  # Degrees of freedom for F distribution, same for both methods
+  v <- dimQ2 * (m - 1)
+  if (v > 4) 
+    # according to Li 1991
+    w <- 4 + (v - 4) * ((1 + (1 - 2 / v) * (1 / rm))^2)  
+  else 
+    w <- v * (1 + 1 / dimQ2) * ((1 + 1 / rm)^2) / 2
+  
+  statistic <- list(call = call, call11 = fit1$call, call12 = fit1$call1, 
+                    call01 = fit0$call, call02 = fit0$call1, 
+                    method = method, nmis = fit1$nmis, m = m, 
+                    qbar1 = est1$qbar, qbar0 = est0$qbar, 
+                    ubar1 = est1$ubar, ubar0 = est0$ubar, 
+                    Dm = Dm, rm = rm, df1 = dimQ2, df2 = w, 
+                    pvalue = 1 - pf(Dm, dimQ2, w))
+  statistic
+}
+
+fix.coef <- function(model, beta = NULL) {
+  coefm <- coef(model)
+  if (is.null(beta)) beta <- coefm
+  if (length(coefm) != length(beta)) 
+    stop("incorrect length of 'beta'", call. = FALSE)
+  if (is.null(names(beta))) names(beta) <- names(coefm)
+  beta <- beta[!names(beta) %in% "(Intercept)"]
+  if (length(beta) > 0)
+    ff <- as.formula(paste0(". ~ I(", 
+                            paste0(paste0(as.character(beta), 
+                                          " * ", names(beta)), 
+                                   collapse = " + "), ")"))
+  else ff <- . ~ 1
+  upd <- update(model, formula = ff)
+  upd
 }

@@ -92,7 +92,8 @@ pool.fitlist <- function (fitlist) {
   v <- lapply(fitlist, glance) %>% bind_rows()
   w <- lapply(fitlist, tidy) %>% bind_rows()
   
-  # residual degrees of freedom for hypothetically complete data
+  # residual degrees of freedom of model fitted on hypothetically complete data
+  # assumed to be the same across imputations
   dfcom <- v$df.residual[1]
   if (is.null(dfcom)) dfcom <- df.residual(fitlist[[1]])
   if (is.null(dfcom)) dfcom <- 99999
