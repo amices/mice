@@ -2,84 +2,83 @@
 % Please edit documentation in R/pool.r
 \name{pool}
 \alias{pool}
-\title{Multiple imputation pooling}
+\title{Combine estimates by Rubin's rules}
 \usage{
-pool(object, method = "smallsample")
+pool(object)
 }
 \arguments{
 \item{object}{An object of class \code{mira} (produced by \code{with.mids()} 
 or \code{as.mira()}), or a \code{list} with model fits.}
-
-\item{method}{A string describing the method to compute the degrees of
-freedom.  The default value is "smallsample", which specifies the is
-Barnard-Rubin adjusted degrees of freedom (Barnard and Rubin, 1999) for small
-samples. Specifying a different string produces the conventional degrees of
-freedom as in Rubin (1987).}
 }
 \value{
 An object of class \code{mipo}, which stands for 'multiple imputation
 pooled outcome'.
 }
 \description{
-Pools the results of m repeated complete data analysis
+The \code{pool()} function combines the estimates from \code{m} 
+repeated complete data analyses. The typical sequence of steps to 
+do a multiple imputation analysis is:
+\enumerate{
+\item Impute the missing data by the \code{mice} function, resulting in 
+a multiple imputed data set (class \code{mids});
+\item Fit the model of interest (scientific model) on each imputed data set 
+by the \code{with()} function, resulting an object of class \code{mira};
+\item Pool the estimates from each model into a single set of estimates 
+and standard errors, resulting is an object of class \code{mipo};
+\item Optionally, compare pooled estimates from different scientific models 
+by the \code{pool.compare()} function.
+}
+A common error is to reverse steps 2 and 3, i.e., to pool the 
+multiply-imputed data instead of the estimates. Doing so may severely bias 
+the estimates of scientific interest and yield incorrect statistical 
+intervals and p-values. The \code{pool()} function will detect 
+this case.
 }
 \details{
-The function averages the estimates of the complete data model, computes the
-total variance over the repeated analyses, and computes the relative increase
-in variance due to nonresponse and the fraction of missing information. The
-function relies on the availability of \enumerate{ \item the estimates of the
-model, typically present as 'coefficients' in the fit object \item an
-appropriate estimate of the variance-covariance matrix of the estimates per
-analyses (estimated by \code{\link{vcov}}.  } The function pools also
-estimates obtained with \code{lme()} and \code{lmer()}, BUT only the fixed
-part of the model.
+The \code{pool()} function averages the estimates of the complete 
+data model, computes the
+total variance over the repeated analyses by Rubin's rules 
+(Rubin, 1987, p. 76), 
+and computes the following diagnostic statistics per estimate:
+\enumerate{
+\item Relative increase in variance due to nonresponse {\code{r}};
+\item Residual degrees of freedom for hypothesis testing {\code{df}};
+\item Proportion of total variance due to missingness {\code{lambda}};
+\item Fraction of missing information {\code{fmi}}.
+}
+
+The function requires the following input from each fitted model:
+\enumerate{ 
+\item the estimates of the model, usually obtainable by \code{coef()}
+\item the standard error of each estimate;
+\item the residual degrees of freedom of the model.
+}
+The \code{pool()} function relies on the \code{broom::tidy} and 
+\code{broom::glance} function for extracting this information from a 
+list of fitted models.
+
+The degrees of freedom calculation uses the Barnard-Rubin adjustment 
+for small samples (Barnard and Rubin, 1999).
 }
 \examples{
-
-# which vcov methods can R find
-methods(vcov)
-
-# 
-imp <- mice(nhanes)
-fit <- with(data=imp,exp=lm(bmi~hyp+chl))
-pool(fit)
-
-#Call: pool(object = fit)
-#
-#Pooled coefficients:
-#(Intercept)         hyp         chl 
-#  22.01313    -1.45578     0.03459 
-#
-#Fraction of information about the coefficients missing due to nonresponse: 
-#(Intercept)         hyp         chl 
-#    0.29571     0.05639     0.38759 
-#> summary(pool(fit))
-#                 est      se       t     df Pr(>|t|)    lo 95    hi 95 missing
-#(Intercept) 22.01313 4.94086  4.4553 12.016 0.000783 11.24954 32.77673      NA
-#hyp         -1.45578 2.26789 -0.6419 20.613 0.528006 -6.17752  3.26596       8
-#chl          0.03459 0.02829  1.2228  9.347 0.251332 -0.02904  0.09822      10
-#               fmi
-#(Intercept) 0.29571
-#hyp         0.05639
-#chl         0.38759
-# 
-
+# pool using the classic MICE workflow
+imp <- mice(nhanes, maxit = 2, m = 2)
+fit <- with(data = imp, exp = lm(bmi ~ hyp + chl))
+round(summary(pool(fit)), 3)
 }
 \references{
 Barnard, J. and Rubin, D.B. (1999). Small sample degrees of
 freedom with multiple imputation. \emph{Biometrika}, 86, 948-955.
 
-Rubin, D.B. (1987).  \emph{Multiple Imputation for Nonresponse in Surveys}.
+Rubin, D.B. (1987). \emph{Multiple Imputation for Nonresponse in Surveys}.
 New York: John Wiley and Sons.
 
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
-
-Pinheiro, J.C. and Bates, D.M. (2000).  \emph{Mixed-Effects Models in S and
-S-PLUS}.  Berlin: Springer.
 }
 \seealso{
-\code{\link{with.mids}}, \code{\link{as.mira}}, \code{\link{vcov}}
+\code{\link{with.mids}}, \code{\link{as.mira}}, 
+\code{\link[broom]{glance}}, \code{\link[broom]{tidy}}
 }
 \keyword{htest}

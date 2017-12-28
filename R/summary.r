@@ -54,7 +54,8 @@ summary.mipo <- function(object, ...) {
         table[, 8] <- NA else table[, 8] <- x$nmis[names(x$qbar)]
     table[, 9] <- x$fmi
     table[, 10] <- x$lambda
-    return(table)
+    rownames(table) <- x$term
+    table
 }
 
 
