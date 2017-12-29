@@ -5,7 +5,7 @@
 #'@param model An R model, e.g., produced by \code{lm} or \code{glm}
 #'@param beta A numeric vector with \code{length(coef)} regression weights
 #'@return An updated R model object
-#'@author Stef van Buuren
+#'@author Stef van Buuren, 2018
 #'@examples
 #'fit0 <- lm(Volume ~ Girth + Height, data = trees)
 #'formula(fit0)
@@ -33,9 +33,8 @@
 #'cor(predict(fit2), predict(fit2) + residuals(fit2))^2
 #'
 #'# extract offset from constrained model
-#'hist(fit2$model$offset)
+#'summary(fit2$model$offset)
 #'
-#'offset <- fit2$model$offset
 #'# it also works with factors and missing data
 #'fit0 <- lm(bmi ~ age + hyp + chl, data = nhanes2)
 #'fit1 <- fix.coef(fit0)

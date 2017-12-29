@@ -44,14 +44,13 @@ cor(predict(fit1), predict(fit1) + residuals(fit1))^2
 cor(predict(fit2), predict(fit2) + residuals(fit2))^2
 
 # extract offset from constrained model
-hist(fit2$model$offset)
+summary(fit2$model$offset)
 
-offset <- fit2$model$offset
 # it also works with factors and missing data
 fit0 <- lm(bmi ~ age + hyp + chl, data = nhanes2)
 fit1 <- fix.coef(fit0)
 fit2 <- fix.coef(fit0, beta = c(15, -8, -8, 2, 0.2))
 }
 \author{
-Stef van Buuren
+Stef van Buuren, 2018
 }
