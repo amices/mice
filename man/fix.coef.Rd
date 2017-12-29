@@ -9,7 +9,7 @@ fix.coef(model, beta = NULL)
 \arguments{
 \item{model}{An R model, e.g., produced by \code{lm} or \code{glm}}
 
-\item{beta}{A numeric vector with \code{length(coef)} regression weights. 
+\item{beta}{A numeric vector with \code{length(coef)} model coefficients. 
 If the vector is not named, the coefficients should be
 given in the same order as in \code{coef(model)}. If the vector is named,
 the procedure attempts to match on names.}
@@ -19,6 +19,14 @@ An updated R model object
 }
 \description{
 Refits a model with a specified set of coefficients.
+}
+\details{
+The function calculates the linear predictor using the new coefficients, 
+and reformulates the model using the \code{offset} 
+argument. The linear predictor is called 
+\code{offset}, and its coefficient will be \code{1} by definition. 
+The new model only fits the intercept, which should be \code{0} 
+if we set \code{beta = coef(model)}.
 }
 \examples{
 fit0 <- lm(Volume ~ Girth + Height, data = trees)
