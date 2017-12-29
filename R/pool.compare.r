@@ -1,5 +1,3 @@
-# --------------------------pool.compare----------------------------
-
 #'Compare two nested models fitted to imputed data
 #'
 #'Compares two nested models after m repeated complete data analysis
@@ -158,15 +156,15 @@ pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
     
     # Calculate for each imputed dataset the deviance between the two 
     # models with the pooled coefficients
-    # FIXME: does not yet seem to update deviance
     qbar1 <- pool(getfit(fit1))$qbar
     mds1 <- lapply(getfit(fit1), fix.coef, beta = qbar1)
     devL1 <- lapply(mds1, glance) %>% bind_rows() %>% pull(.data$deviance)
+    
     qbar0 <- pool(getfit(fit0))$qbar
     mds0 <- lapply(getfit(fit0), fix.coef, beta = qbar0)
     devL0 <- lapply(mds0, glance) %>% bind_rows() %>% pull(.data$deviance)
-    devL <- mean(devL1 - devL0)
     
+    devL <- mean(devL1 - devL0)
     rm <- ((m + 1)/(dimQ2 * (m - 1))) * (devM - devL)
     Dm <- devL / (dimQ2 * (1 + rm))
   }
@@ -189,19 +187,3 @@ pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
   statistic
 }
 
-fix.coef <- function(model, beta = NULL) {
-  coefm <- coef(model)
-  if (is.null(beta)) beta <- coefm
-  if (length(coefm) != length(beta)) 
-    stop("incorrect length of 'beta'", call. = FALSE)
-  if (is.null(names(beta))) names(beta) <- names(coefm)
-  beta <- beta[!names(beta) %in% "(Intercept)"]
-  if (length(beta) > 0)
-    ff <- as.formula(paste0(". ~ I(", 
-                            paste0(paste0(as.character(beta), 
-                                          " * ", names(beta)), 
-                                   collapse = " + "), ")"))
-  else ff <- . ~ 1
-  upd <- update(model, formula = ff)
-  upd
-}

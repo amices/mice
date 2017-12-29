@@ -17,13 +17,13 @@ test_that("retains same numerical result", {
 
 imp <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
 fit0 <- with(data = imp, expr = glm(hyp == "yes" ~ 1, family = binomial))
-fit1 <- with(data = imp, expr = glm(hyp == "yes" ~ chl, family = binomial))
+fit1 <- with(data = imp, expr = glm(hyp == "yes" ~ chl + bmi, family = binomial))
 stat1 <- pool.compare(fit1, fit0, method = "Wald")
-stat2 <- pool.compare(fit1, fit0, method = "likelihood", data = imp)
+stat2 <- pool.compare(fit1, fit0, method = "likelihood")
 
 # test_that("retains same numerical result", {
-#   expect_equal(stat1$pvalue, 0.008446226)
-#   expect_equal(stat2$pvalue, 0)
+#    expect_equal(round(as.vector(stat1$pvalue), 3), 0.188)
+#    expect_equal(stat2$pvalue, 0)
 # })
 # 
 
@@ -40,7 +40,7 @@ bwt <- with(birthwt,
               ht = ht > 0,
               ui = ui > 0,
               ftv = factor(ftv)))
-levels(bwt$ftv)[-(1:2)] <- "2+"
+levels(bwt$ftv)[-(1:2)] <- "2"
 birthwt.glm <- glm(low ~ ., family = binomial, data = bwt)
 summary(birthwt.glm)
 birthwt.step <- step(birthwt.glm, trace = FALSE)
@@ -67,6 +67,16 @@ ll1 <- LLlogistic(formula = formula(model1), data = bwt, coefs = coef(model1))
 ll0 <- LLlogistic(formula = formula(model0), data = bwt, coefs = coef(model0))
 llnull <- LLlogistic(formula = formula(model.null), data = bwt, coefs = coef(model.null))
 
+set.seed(123)
+bwt.mis <- bwt
+bwt.mis$smoke[runif(nrow(bwt)) < 0.3] <- NA
+bwt.mis$lwt[runif(nrow(bwt)) < 0.3] <- NA
+
+imp <- mice(bwt.mis, print = FALSE, m = 10)
+fit1 <- with(data = imp, expr = glm(low ~ age + lwt + race + smoke + ptd + ht + ui + ftv, family = binomial))
+fit0 <- with(data = imp, glm(low ~ lwt + race + smoke + ptd + ht + ui, family = binomial))
+stat1 <- pool.compare(fit1, fit0, method = "Wald")
+stat2 <- pool.compare(fit1, fit0, method = "likelihood")
 
 # --- test restriction of parameters
 
