@@ -9,7 +9,10 @@ fix.coef(model, beta = NULL)
 \arguments{
 \item{model}{An R model, e.g., produced by \code{lm} or \code{glm}}
 
-\item{beta}{A numeric vector with \code{length(coef)} regression weights}
+\item{beta}{A numeric vector with \code{length(coef)} regression weights. 
+If the vector is not named, the coefficients should be
+given in the same order as in \code{coef(model)}. If the vector is named,
+the procedure attempts to match on names.}
 }
 \value{
 An updated R model object

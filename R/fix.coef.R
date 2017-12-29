@@ -3,7 +3,10 @@
 #'Refits a model with a specified set of coefficients.
 #'
 #'@param model An R model, e.g., produced by \code{lm} or \code{glm}
-#'@param beta A numeric vector with \code{length(coef)} regression weights
+#'@param beta A numeric vector with \code{length(coef)} regression weights. 
+#'If the vector is not named, the coefficients should be
+#'given in the same order as in \code{coef(model)}. If the vector is named,
+#'the procedure attempts to match on names.
 #'@return An updated R model object
 #'@author Stef van Buuren, 2018
 #'@examples
@@ -45,10 +48,22 @@ fix.coef <- function(model, beta = NULL) {
   if (is.null(beta)) beta <- oldcoef
   if (length(oldcoef) != length(beta)) 
     stop("incorrect length of 'beta'", call. = FALSE)
+  
+  # handle naming
+  if (is.null(names(oldcoef)))
+    names(oldcoef) <- make.names(seq_along(oldcoef))
   if (is.null(names(beta))) names(beta) <- names(oldcoef)
+  else {
+    diff <- setdiff(names(oldcoef), names(beta))
+    if (length(diff) > 0)
+      stop("names not found in 'beta': ", diff, call. = FALSE)
+    diff <- setdiff(names(beta), names(oldcoef))
+    if (length(diff) > 0)
+      stop("names not found in 'coef(model)': ", diff, call. = FALSE)
+  }
+  beta <- beta[names(oldcoef)]
   
   # re-calculate model for new beta's
-  beta <- beta[names(oldcoef)]
   mm <- model.matrix(formula(model), data = model$model)
   offset <- as.vector(mm %*% beta)
   update(model, formula. = . ~ 1, 
