@@ -53,12 +53,3 @@ fix.coef <- function(model, beta = NULL) {
   update(model, formula. = . ~ offset(offset), 
          data = cbind(model$model, offset = offset))
 }
-
-#' function loading results in global environment
-#' @inheritParams base::assign
-#' @keywords internal
-#' @note This function will silence R CMD CHECK 
-#' "Found the following assignments to the global environment:"
-assign.to.global <- function(x, value, pos = 1) {
-  assign(x, value, envir = as.environment(pos))
-}
