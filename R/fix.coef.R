@@ -45,10 +45,13 @@ fix.coef <- function(model, beta = NULL) {
   if (is.null(beta)) beta <- oldcoef
   if (length(oldcoef) != length(beta)) 
     stop("incorrect length of 'beta'", call. = FALSE)
+  if (is.null(names(beta))) names(beta) <- names(oldcoef)
   
   # re-calculate model for new beta's
+  beta <- beta[names(oldcoef)]
   mm <- model.matrix(formula(model), data = model$model)
   offset <- as.vector(mm %*% beta)
-  update(model, formula. = . ~ offset(offset), 
-         data = cbind(model$model, offset = offset))
+  update(model, formula. = . ~ 1, 
+         data = cbind(model$model, offset = offset),
+         offset = offset)
 }

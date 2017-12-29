@@ -18,7 +18,7 @@ test_that("retains same numerical result", {
 imp <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
 fit0 <- with(data = imp, expr = glm(hyp == "yes" ~ 1, family = binomial))
 fit1 <- with(data = imp, expr = glm(hyp == "yes" ~ chl + bmi, family = binomial))
-stat1 <- pool.compare(fit1, fit0, method = "Wald")
+stat1 <- pool.compare(fit1, fit0, method = "wald")
 stat2 <- pool.compare(fit1, fit0, method = "likelihood")
 
 # test_that("retains same numerical result", {
@@ -41,6 +41,7 @@ bwt <- with(birthwt,
               ui = ui > 0,
               ftv = factor(ftv)))
 levels(bwt$ftv)[-(1:2)] <- "2"
+
 birthwt.glm <- glm(low ~ ., family = binomial, data = bwt)
 summary(birthwt.glm)
 birthwt.step <- step(birthwt.glm, trace = FALSE)
@@ -57,7 +58,7 @@ LLlogistic <- function(formula, data, coefs) {
   term1 <- term2 <- rep(0, length(y))
   term1[y != 0] <- y[y != 0] * log(y[y != 0]/p[y != 0])
   term2[y == 0] <- (1 - y[y == 0]) * log((1 - y[y == 0])/(1 - p[y == 0]))
-  -2 * sum(term1 + term2)
+  2 * sum(term1 + term2)
 }
 model1 <- glm(low ~ ., family = binomial, data = bwt)
 model0 <- update(model1, formula = . ~ . -age - ftv)
@@ -67,15 +68,33 @@ ll1 <- LLlogistic(formula = formula(model1), data = bwt, coefs = coef(model1))
 ll0 <- LLlogistic(formula = formula(model0), data = bwt, coefs = coef(model0))
 llnull <- LLlogistic(formula = formula(model.null), data = bwt, coefs = coef(model.null))
 
+identical(deviance(model1), ll1, num.eq = FALSE)
+identical(deviance(model0), ll0, num.eq = FALSE)
+identical(deviance(model.null), llnull, num.eq = FALSE)
+
+
+# try out coef.fix for binary data
+
+f1 <- fix.coef(model1, beta = coef(model1))
+broom::glance(model1)
+broom::glance(f1)
+identical(broom::glance(f1)$deviance, broom::glance(model1)$deviance)
+
+beta <- coef(model1)
+beta["age"] <- 0
+beta["smokeTRUE"] <- 0
+f2 <- fix.coef(model1, beta)
+broom::glance(f2)$deviance
+
 set.seed(123)
 bwt.mis <- bwt
-bwt.mis$smoke[runif(nrow(bwt)) < 0.3] <- NA
-bwt.mis$lwt[runif(nrow(bwt)) < 0.3] <- NA
+bwt.mis$smoke[runif(nrow(bwt)) < 0.001] <- NA
+bwt.mis$lwt[runif(nrow(bwt)) < 0.01] <- NA
 
 imp <- mice(bwt.mis, print = FALSE, m = 10)
 fit1 <- with(data = imp, expr = glm(low ~ age + lwt + race + smoke + ptd + ht + ui + ftv, family = binomial))
 fit0 <- with(data = imp, glm(low ~ lwt + race + smoke + ptd + ht + ui, family = binomial))
-stat1 <- pool.compare(fit1, fit0, method = "Wald")
+stat1 <- pool.compare(fit1, fit0, method = "wald")
 stat2 <- pool.compare(fit1, fit0, method = "likelihood")
 
 # --- test restriction of parameters

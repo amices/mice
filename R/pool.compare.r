@@ -7,23 +7,21 @@
 #'found in paragraph 3.  One could use the Wald method for comparison of linear
 #'models obtained with e.g. \code{lm} (in \code{with.mids()}).  The likelihood
 #'method should be used in case of logistic regression models obtaind with
-#'\code{glm()} in \code{with.mids()}.  It is assumed that fit1 contains the
-#'larger model and the model in \code{fit0} is fully contained in \code{fit1}.
-#'In case of \code{method='Wald'}, the null hypothesis is tested that the extra
+#'\code{glm()} in \code{with.mids()}. 
+#'
+#'The function assumes that \code{fit1} is the 
+#'larger model, and that model \code{fit0} is fully contained in \code{fit1}.
+#'In case of \code{method='wald'}, the null hypothesis is tested that the extra
 #'parameters are all zero.
 #'
 #'@param fit1 An object of class 'mira', produced by \code{with.mids()}.
 #'@param fit0 An object of class 'mira', produced by \code{with.mids()}. The
-#'model in \code{fit0} should be a submodel of \code{fit1}. Moreover, the
-#'variables of the submodel should be the first variables of the larger model
-#'and in the same order as in the submodel.
-#'@param data In case of method 'likelihood' it is necessary to pass also the
-#'original \code{mids} object to the \code{data} argument. Default value is
-#'\code{NULL}, in case of method='Wald'.
-#'@param method A string describing the method to compare the two models.  Two
-#'kind of comparisons are included so far: 'Wald' and 'likelihood'.
+#'model in \code{fit0} is a nested fit0 of \code{fit1}.
+#'@param method Either \code{"wald"} or \code{"likelihood"} specifying 
+#'the type of comparison. The default is \code{"wald"}.
+#'@param data No longer used.
 #'@return A list containing several components. Component \code{call} is
-#'that call to the \code{pool.compare} function. Component \code{call11} is
+#'the call to the \code{pool.compare} function. Component \code{call11} is
 #'the call that created \code{fit1}. Component \code{call12} is the 
 #'call that created the imputations. Component \code{call01} is the 
 #'call that created \code{fit0}. Compenent \code{call02} is the 
@@ -49,10 +47,10 @@
 #'Component \code{df1}: df1 = under the null hypothesis it is assumed that \code{Dm} has an F
 #'distribution with (df1,df2) degrees of freedom.
 #'Component \code{df2}: df2. 
-#'Component \code{pvalue} is the P-value of testing whether the larger model is
-#'statistically different from the smaller submodel.
+#'Component \code{pvalue} is the P-value of testing whether the model \code{fit1} is
+#'statistically different from the smaller \code{fit0}.
 #'@author Karin Groothuis-Oudshoorn and Stef van Buuren, 2009
-#'@seealso \code{\link{lm.mids}}, \code{\link{glm.mids}}, \code{\link{vcov}},
+#'@seealso \code{\link{lm.mids}}, \code{\link{glm.mids}}
 #'@references Li, K.H., Meng, X.L., Raghunathan, T.E. and Rubin, D. B. (1991).
 #'Significance levels from repeated p-values with multiply-imputed data.
 #'Statistica Sinica, 1, 65-92.
@@ -70,7 +68,7 @@
 #'imp <- mice(nhanes2, seed = 51009, print = FALSE)
 #'mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
 #'mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
-#'pc  <- pool.compare(mi1, mi0, method = 'Wald')
+#'pc  <- pool.compare(mi1, mi0)
 #'pc$pvalue
 #'
 #'### Comparison of two general linear models (logistic regression).
@@ -78,36 +76,24 @@
 #'imp  <- mice(boys, maxit = 2, print = FALSE)
 #'fit1 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc + reg, family = binomial))
 #'fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
-#'pool.compare(fit1, fit0, method = 'likelihood', data = imp)$pvalue
+#'pool.compare(fit1, fit0, method = 'likelihood')$pvalue
 #'
 #'# using factors
 #'fit1 <- with(imp, glm(as.factor(gen > levels(gen)[1]) ~ hgt + hc + reg, family = binomial))
 #'fit0 <- with(imp, glm(as.factor(gen > levels(gen)[1]) ~ hgt + hc, family = binomial))
-#'pool.compare(fit1, fit0, method = 'likelihood', data = imp)$pvalue
+#'pool.compare(fit1, fit0, method = 'likelihood')$pvalue
 #'}
 #'@export
-pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
-  # LLlogistic <- function(formula, data, coefs) {
-  #   ### Calculates -2 loglikelihood of a model.
-  #   logistic <- function(mu) exp(mu)/(1 + exp(mu))
-  #   Xb <- model.matrix(formula, data) %*% coefs
-  #   y <- model.frame(formula, data)[1][, 1]
-  #   if (is.factor(y)) y <- (0:1)[y]
-  #   p <- logistic(Xb)
-  #   ## in case values of categorical var are other than 0 and 1.
-  #   y <- (y - min(y))/(max(y) - min(y)) 
-  #   term1 <- term2 <- rep(0, length(y))
-  #   term1[y != 0] <- y[y != 0] * log(y[y != 0]/p[y != 0])
-  #   term2[y == 0] <- (1 - y[y == 0]) * log((1 - y[y == 0])/(1 - p[y == 0]))
-  #   -2 * sum(term1 + term2)
-  # }
-  
+pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"), 
+                         data = NULL) {
   # Check the arguments
   call <- match.call()
-  meth <- match.arg(tolower(method), c("wald", "likelihood"))
+  method <- match.arg(method)
   
   if (!is.mira(fit1) || !is.mira(fit0)) 
     stop("'fit1' and 'fit0' not of class 'mira'", call. = FALSE)
+  if(!is.null(data))
+    warning("pool.compare() no longer needs the 'data' argument")
   m1 <- length(fit1$analyses)
   m0 <- length(fit0$analyses)
   if (m1 != m0)
@@ -133,7 +119,7 @@ pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
   if (!setequal(vars0, intersect(vars0, vars1))) 
     stop("Model fit0 not contained in fit1", call. = FALSE)
   
-  if (meth == "wald") {
+  if (method == "wald") {
     # Reference: paragraph 2.2, Article Meng & Rubin, 
     # Biometrika, 1992.  When two objects are to be compared 
     # we need to calculate matrix Q
@@ -145,28 +131,36 @@ pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
     Bm <- Q %*% diag(est1$b) %*% (t(Q))
     rm <- (1 + 1/m) * sum(diag(Bm %*% (solve(Ubar))))/dimQ2
     Dm <- (t(qbar)) %*% (solve(Ubar)) %*% qbar/(dimQ2 * (1 + rm))
+    deviances <- NULL
   }
   
-  if (meth == "likelihood") {
+  if (method == "likelihood") {
     # Calculate for each imputed dataset the deviance between the two 
     # models with its estimated coefficients
-    devM1 <- lapply(getfit(fit1), glance) %>% bind_rows() %>% pull(.data$deviance)
-    devM0 <- lapply(getfit(fit0), glance) %>% bind_rows() %>% pull(.data$deviance)
-    devM <- mean(devM1 - devM0)
+    dev1.M <- lapply(getfit(fit1), glance) %>% 
+      bind_rows() %>% 
+      pull(.data$deviance)
+    dev0.M <- lapply(getfit(fit0), glance) %>% 
+      bind_rows() %>% 
+      pull(.data$deviance)
     
     # Calculate for each imputed dataset the deviance between the two 
     # models with the pooled coefficients
     qbar1 <- pool(getfit(fit1))$qbar
     mds1 <- lapply(getfit(fit1), fix.coef, beta = qbar1)
-    devL1 <- lapply(mds1, glance) %>% bind_rows() %>% pull(.data$deviance)
+    dev1.L <- lapply(mds1, glance) %>% bind_rows() %>% pull(.data$deviance)
     
     qbar0 <- pool(getfit(fit0))$qbar
     mds0 <- lapply(getfit(fit0), fix.coef, beta = qbar0)
-    devL0 <- lapply(mds0, glance) %>% bind_rows() %>% pull(.data$deviance)
+    dev0.L <- lapply(mds0, glance) %>% bind_rows() %>% pull(.data$deviance)
     
-    devL <- mean(devL1 - devL0)
-    rm <- ((m + 1)/(dimQ2 * (m - 1))) * (devM - devL)
-    Dm <- devL / (dimQ2 * (1 + rm))
+    deviances <- list(dev1.M = dev1.M, dev0.M = dev0.M, 
+                      dev1.L = dev1.L, dev0.L = dev0.L)
+    
+    dev.M <- mean(dev0.M - dev1.M)
+    dev.L <- mean(dev0.L - dev1.L)
+    rm <- ((m + 1)/(dimQ2 * (m - 1))) * (dev.M - dev.L)
+    Dm <- dev.L / (dimQ2 * (1 + rm))
   }
   
   # Degrees of freedom for F distribution, same for both methods
@@ -182,6 +176,7 @@ pool.compare <- function(fit1, fit0, data = NULL, method = "Wald") {
                     method = method, nmis = fit1$nmis, m = m, 
                     qbar1 = est1$qbar, qbar0 = est0$qbar, 
                     ubar1 = est1$ubar, ubar0 = est0$ubar, 
+                    deviances = deviances,
                     Dm = Dm, rm = rm, df1 = dimQ2, df2 = w, 
                     pvalue = 1 - pf(Dm, dimQ2, w))
   statistic
