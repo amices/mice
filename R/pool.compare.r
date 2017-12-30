@@ -90,34 +90,31 @@ pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"),
   call <- match.call()
   method <- match.arg(method)
   
-  if (!is.mira(fit1) || !is.mira(fit0)) 
-    stop("'fit1' and 'fit0' not of class 'mira'", call. = FALSE)
-  if(!is.null(data))
-    warning("pool.compare() no longer needs the 'data' argument")
-  m1 <- length(fit1$analyses)
-  m0 <- length(fit0$analyses)
-  if (m1 != m0)
-    stop("Number of imputations differs between fit1 and fit0", call. = FALSE)
-  if (m1 < 2) 
-    stop("At least two imputations are needed", call. = FALSE)
+  fits1 <- getfit(fit1)
+  fits0 <- getfit(fit0)
   
-  m <- m1
+  if (length(fits1) != length(fits0))
+    stop("unequal number of imputations for 'fit1' and 'fit0'", call. = FALSE)
+  if (length(fits1) < 2L) 
+    stop("at least two imputations are needed", call. = FALSE)
+  
+  m <- length(fits1)
   est1 <- pool(fit1)
   est0 <- pool(fit0)
   dimQ1 <- length(est1$qbar)
   dimQ2 <- dimQ1 - length(est0$qbar)
   # Check: Only need the lm or lmer object
-  formula1 <- formula(fit1$analyses[[1]])
-  formula0 <- formula(fit0$analyses[[1]])
+  formula1 <- formula(getfit(fit1, 1L))
+  formula0 <- formula(getfit(fit0, 1L))
   vars1 <- est1$term
   vars0 <- est0$term
   
   if (is.null(vars1) || is.null(vars0)) 
     stop("coefficients do not have names", call. = FALSE)
-  if (dimQ2 < 1) 
-    stop("Model fit1 not larger than fit0", call. = FALSE)
+  if (dimQ2 < 1L) 
+    stop("Model 'fit1' not larger than 'fit0'", call. = FALSE)
   if (!setequal(vars0, intersect(vars0, vars1))) 
-    stop("Model fit0 not contained in fit1", call. = FALSE)
+    stop("Model 'fit0' not contained in 'fit1'", call. = FALSE)
   
   if (method == "wald") {
     # Reference: paragraph 2.2, Article Meng & Rubin, 

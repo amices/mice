@@ -2,16 +2,16 @@
 % Please edit documentation in R/getfit.r
 \name{getfit}
 \alias{getfit}
-\title{Extracts fit objects from \code{mira} object}
+\title{Extract fits from \code{mira} object}
 \usage{
-getfit(x, i = -1, simplify = FALSE)
+getfit(x, i = -1L, simplify = FALSE)
 }
 \arguments{
 \item{x}{An object of class \code{mira}, typically produced by a call to
 \code{with()}.}
 
 \item{i}{An integer between 1 and \code{x$m} signalling the number of the
-repeated analysis.  The default \code{i= -1} return a list with all analyses.}
+repeated analysis. The default \code{i= -1} return a list with all analyses.}
 
 \item{simplify}{Should the return value be unlisted?}
 }
