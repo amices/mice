@@ -134,21 +134,21 @@ pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"),
   if (method == "likelihood") {
     # Calculate for each imputed dataset the deviance between the two 
     # models with its estimated coefficients
-    dev1.M <- lapply(getfit(fit1), glance) %>% 
+    dev1.M <- lapply(fits1, glance) %>% 
       bind_rows() %>% 
       pull(.data$deviance)
-    dev0.M <- lapply(getfit(fit0), glance) %>% 
+    dev0.M <- lapply(fits0, glance) %>% 
       bind_rows() %>% 
       pull(.data$deviance)
     
     # Calculate for each imputed dataset the deviance between the two 
     # models with the pooled coefficients
-    qbar1 <- pool(getfit(fit1))$qbar
-    mds1 <- lapply(getfit(fit1), fix.coef, beta = qbar1)
+    qbar1 <- pool(fits1)$qbar
+    mds1 <- lapply(fits1, fix.coef, beta = qbar1)
     dev1.L <- lapply(mds1, glance) %>% bind_rows() %>% pull(.data$deviance)
     
-    qbar0 <- pool(getfit(fit0))$qbar
-    mds0 <- lapply(getfit(fit0), fix.coef, beta = qbar0)
+    qbar0 <- pool(fits0)$qbar
+    mds0 <- lapply(fits0, fix.coef, beta = qbar0)
     dev0.L <- lapply(mds0, glance) %>% bind_rows() %>% pull(.data$deviance)
     
     deviances <- list(dev1.M = dev1.M, dev0.M = dev0.M, 

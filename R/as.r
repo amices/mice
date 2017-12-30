@@ -138,6 +138,7 @@ as.mira <- function(fitlist) {
   call <- match.call()
   if (!is.list(fitlist)) 
     stop("Argument 'fitlist' is not a list")
+  class(fitlist) <- "list"
   object <- list(call = call, call1 = NULL, nmis = NULL, analyses = fitlist)
   oldClass(object) <- c("mira", "matrix")
   return(object)

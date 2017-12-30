@@ -93,7 +93,7 @@ pool <- function (object) {
 pool.fitlist <- function (fitlist) {
   # call broom to do the hard work
   v <- lapply(fitlist, glance) %>% bind_rows()
-  w <- lapply(fitlist, tidy) %>% bind_rows()
+  w <- lapply(fitlist, tidy, effects = "fixed") %>% bind_rows()
   
   # residual degrees of freedom of model fitted on hypothetically complete data
   # assumed to be the same across imputations

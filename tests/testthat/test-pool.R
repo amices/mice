@@ -117,3 +117,28 @@ coef(fit3)
 summary(fit3)
 cor(predict(fit3), predict(fit3) + residuals(fit3))^2
 
+# compare to mitml::anova.mitml.result
+suppressPackageStartupMessages(library(mitml, quietly = TRUE))
+library(lme4, quietly = TRUE)
+data(studentratings)
+fml <- ReadDis + SES ~ ReadAchiev + (1|ID)
+imp <- panImpute(studentratings, formula=fml, n.burn=1000, n.iter=100, m=5,
+                 silent = TRUE)
+implist <- mitmlComplete(imp, print=1:5)
+
+# * Example 1: multiparameter hypothesis test for 'ReadDis' and 'SES'
+# This tests the hypothesis that both effects are zero.
+fit0 <- with(implist, lmer(ReadAchiev ~ (1|ID), REML=FALSE))
+fit1 <- with(implist, lmer(ReadAchiev ~ ReadDis + (1|ID), REML=FALSE))
+# apply Rubin's rules
+testEstimates(fit1)
+
+# Wald test
+# multiparameter hypothesis test using D1 (default)
+testModels(fit1, fit0)
+stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "wald")
+
+# likelihood test
+testModels(fit1, fit0, method = "D3")
+stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "likelihood")
+

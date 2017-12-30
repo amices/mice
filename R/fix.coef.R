@@ -51,7 +51,7 @@
 #'fit2 <- fix.coef(fit0, beta = c(15, -8, -8, 2, 0.2))
 #'@export
 fix.coef <- function(model, beta = NULL) {
-  oldcoef <- coef(model)
+  oldcoef <- tidy.coef(model)
   if (is.null(beta)) beta <- oldcoef
   if (length(oldcoef) != length(beta)) 
     stop("incorrect length of 'beta'", call. = FALSE)
@@ -71,9 +71,19 @@ fix.coef <- function(model, beta = NULL) {
   beta <- beta[names(oldcoef)]
   
   # re-calculate model for new beta's
-  mm <- model.matrix(formula(model), data = model$model)
+  data <- model.frame(formula = formula(model), data = model.frame(model))
+  mm <- model.matrix(formula(model, fixed.only = TRUE), data = data)
   offset <- as.vector(mm %*% beta)
-  update(model, formula. = . ~ 1, 
-         data = cbind(model$model, offset = offset),
+  uf <- . ~ 1
+  if (inherits(model, "merMod")) uf <- formula(model, random.only = TRUE)
+  update(model, formula. = uf, 
+         data = cbind(data, offset = offset),
          offset = offset)
+}
+
+tidy.coef <- function(model) {
+  est <- tidy(model, effects = "fixed")
+  coef <- est$estimate
+  names(coef) <- est$term
+  coef
 }
