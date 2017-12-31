@@ -97,11 +97,11 @@ pool.fitlist <- function (fitlist) {
   
   # residual degrees of freedom of model fitted on hypothetically complete data
   # assumed to be the same across imputations
-  dfcom <- v$df.residual[1]
-  if (is.null(dfcom)) dfcom <- df.residual(fitlist[[1]])
+  dfcom <- v$df.residual[1L]
+  if (is.null(dfcom)) dfcom <- df.residual(fitlist[[1L]])
   if (is.null(dfcom)) dfcom <- 99999
   
-  # Rubin's rules
+  # Rubin's rules for scalar estimates
   group_by(w, .data$term) %>%
     summarize(m = n(),
               qbar = mean(.data$estimate),
