@@ -21,6 +21,7 @@
 #'@importFrom dplyr     summarize bind_rows group_by %>% n select pull
 #'@importFrom broom     tidy glance
 #'@importFrom rlang     .data
+#'@importFrom mitml     testModels
 #'@useDynLib mice
 NULL
 

@@ -179,3 +179,4 @@ pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"),
   statistic
 }
 
+

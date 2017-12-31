@@ -29,38 +29,38 @@ The new model only fits the intercept, which should be \code{0}
 if we set \code{beta = coef(model)}.
 }
 \examples{
-fit0 <- lm(Volume ~ Girth + Height, data = trees)
-formula(fit0)
-coef(fit0)
-deviance(fit0)
+model0 <- lm(Volume ~ Girth + Height, data = trees)
+formula(model0)
+coef(model0)
+deviance(model0)
 
 # refit same model
-fit1 <- fix.coef(fit0)
-formula(fit1)
-coef(fit1)
-deviance(fit1)
+model1 <- fix.coef(model0)
+formula(model1)
+coef(model1)
+deviance(model1)
 
 # change the beta's
-fit2 <- fix.coef(fit0, beta = c(-50, 5, 1))
-coef(fit2)
-deviance(fit2)
+model2 <- fix.coef(model0, beta = c(-50, 5, 1))
+coef(model2)
+deviance(model2)
 
 # compare predictions
-plot(predict(fit0), predict(fit1)); abline(0,1)
-plot(predict(fit0), predict(fit2)); abline(0,1)
+plot(predict(model0), predict(model1)); abline(0,1)
+plot(predict(model0), predict(model2)); abline(0,1)
 
 # compare proportion explained variance
-cor(predict(fit0), predict(fit0) + residuals(fit0))^2
-cor(predict(fit1), predict(fit1) + residuals(fit1))^2
-cor(predict(fit2), predict(fit2) + residuals(fit2))^2
+cor(predict(model0), predict(model0) + residuals(model0))^2
+cor(predict(model1), predict(model1) + residuals(model1))^2
+cor(predict(model2), predict(model2) + residuals(model2))^2
 
 # extract offset from constrained model
-summary(fit2$model$offset)
+summary(model2$model$offset)
 
 # it also works with factors and missing data
-fit0 <- lm(bmi ~ age + hyp + chl, data = nhanes2)
-fit1 <- fix.coef(fit0)
-fit2 <- fix.coef(fit0, beta = c(15, -8, -8, 2, 0.2))
+model0 <- lm(bmi ~ age + hyp + chl, data = nhanes2)
+model1 <- fix.coef(model0)
+model2 <- fix.coef(model0, beta = c(15, -8, -8, 2, 0.2))
 }
 \author{
 Stef van Buuren, 2018

@@ -144,6 +144,26 @@ as.mira <- function(fitlist) {
   return(object)
 }
 
+#' Converts into a \code{mitml.result} object
+#' 
+#' The \code{as.mitml.result()} function takes the results of repeated 
+#' complete-data analysis stored as a list, and turns it 
+#' into an object of class \code{mitml.result}.
+#' @param x An object of class \code{mira}
+#' @return An S3 object of class \code{mitml.result}, a list 
+#' containing $m$ fitted analysis objects.
+#' @seealso \code{\link[mitml]{with.mitml.list}}
+#' @author Stef van Buuren
+#' @export
+as.mitml.result <- function(x) {
+  if (inherits(x, "mitml.result")) return(x)
+  z <- NULL
+  if (is.mira(x)) z <- getfit(x)
+  else if (is.list(x)) z <- x
+  class(z) <- c("mitml.result", "list")
+  z
+}
+
 
 setOldClass(c("mids", "mira"))
 setAs(from = "data.frame", to = "mids", 

@@ -38,6 +38,17 @@ is.mipo <- function(x) {
     inherits(x, "mipo")
 }
 
+#' Check for \code{mitml.result} object
+#' 
+#' @aliases is.mitml.result
+#' @param x An object
+#' @return A logical indicating whether \code{x} is an object of class \code{mitml.result}
+#' @export
+is.mitml.result <- function(x) {
+  inherits(x, "mitml.result")
+}
+
+
 # ------------------------------is.passive------------------------------------
 
 is.passive <- function(string) {
