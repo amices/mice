@@ -139,7 +139,8 @@ testModels(fit1, fit0)
 stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "wald")
 # Is the same, but probably consequence of single parameter differerence
 
-# Wald test - multiparameter difference
+# Wald test - multiparameter difference - incorrect because now our 
+# ubar is vector, not a matrix anymore
 fit0 <- with(implist, lmer(ReadAchiev ~ (1|ID), REML=FALSE))
 fit1 <- with(implist, lmer(ReadAchiev ~ ReadDis + SES + (1|ID), REML=FALSE))
 testModels(fit1, fit0)
