@@ -4,7 +4,7 @@
 \alias{D1}
 \title{Compare two nested models using D1-statistic}
 \usage{
-D1(fit1, fit0 = NULL, ...)
+D1(fit1, fit0 = NULL, df.com = NULL, ...)
 }
 \arguments{
 \item{fit1}{An object of class \code{mira}, produced by \code{with()}.}
@@ -13,7 +13,11 @@ D1(fit1, fit0 = NULL, ...)
 model in \code{fit0} is a nested within \code{fit1}. The default null 
 model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.}
 
-\item{\dots}{Passed down to \code{\link[mitml]{testModels}}}
+\item{df.com}{A single number or a numeric vector denoting the 
+complete-data degrees of freedom for the hypothesis test. If not specified,
+it is set equal to \code{df.residual} of model \code{fit1}.}
+
+\item{\dots}{Not used.}
 }
 \description{
 Compare two nested models using D1-statistic

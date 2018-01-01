@@ -11,7 +11,7 @@ empty <- with(data = imp, expr = glm(hyp == "yes" ~ 0, family = binomial))
 
 # three new ways to compare fit1 to the intercept-only model
 z1 <- D1(fit1, fit0)
-z2 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0))
+z2 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), df.com = 21)
 z3 <- D1(fit1)
 
 test_that("compares fit1 to the intercept-only model", {
@@ -21,7 +21,7 @@ test_that("compares fit1 to the intercept-only model", {
 
 # two ways to compare fit1 to the empty model
 z4 <- D1(fit1, empty)
-z5 <- mitml::testModels(as.mitml.result(fit1), NULL)
+z5 <- mitml::testModels(as.mitml.result(fit1), NULL, df.com = 21)
 
 test_that("compares fit1 to empty model", {
   expect_identical(z4$test, z5$test)

@@ -59,10 +59,15 @@ D3 <- function(fit1, fit0 = NULL, ...) {
   pvalue = 1 - pf(Dm, k, w)
 
   statistic <- list(m = m, 
+                    formula = 
+                      list(formula(getfit(fit1, 1)),
+                           formula(getfit(fit0, 1))),
+                    method = "D3",
                     qbar1 = est1$qbar, qbar0 = est0$qbar, 
                     ubar1 = est1$ubar, ubar0 = est0$ubar, 
                     deviances = deviances,
                     Dm = Dm, rm = rm, df1 = k, df2 = w, 
                     pvalue = pvalue)
+  class(statistic) <- c("mice.anova", "list")
   statistic
 }

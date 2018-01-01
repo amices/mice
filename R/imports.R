@@ -18,7 +18,7 @@
 #'@importFrom rpart     rpart rpart.control
 #'@importFrom Rcpp      sourceCpp
 #'@importFrom lattice   bwplot densityplot xyplot stripplot
-#'@importFrom dplyr     summarize bind_rows group_by %>% n select pull
+#'@importFrom dplyr     summarize bind_rows group_by %>% n select pull lead
 #'@importFrom broom     tidy glance
 #'@importFrom rlang     .data
 #'@importFrom mitml     testModels

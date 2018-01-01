@@ -13,7 +13,7 @@ D2(fit1, fit0 = NULL, ...)
 model in \code{fit0} is a nested within \code{fit1}. The default null 
 model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.}
 
-\item{...}{Passed down to \code{\link[mitml]{testModels}}}
+\item{...}{Not used.}
 }
 \description{
 Compare two nested models using D2-statistic
