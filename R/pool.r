@@ -98,7 +98,7 @@ pool.fitlist <- function (fitlist) {
   # residual degrees of freedom of model fitted on hypothetically complete data
   # assumed to be the same across imputations
   dfcom <- v$df.residual[1L]
-  if (is.null(dfcom)) dfcom <- df.residual(fitlist[[1L]])
+  if (is.null(dfcom)) dfcom <- df.residual(getfit(fitlist, 1L))
   if (is.null(dfcom)) dfcom <- 99999
   
   # Rubin's rules for scalar estimates
@@ -108,12 +108,7 @@ pool.fitlist <- function (fitlist) {
               ubar = mean(.data$std.error ^ 2),
               b = var(.data$estimate),
               t = ubar + (1 + 1 / m) * b,
+              df = barnard.rubin(m, b, t, dfcom),
               r = (1 + 1 / m) * b / ubar,
-              lambda = (1 + 1 / m) * b / t,
-              dfcom = dfcom,
-              dfold = (m - 1) / lambda ^ 2,
-              dfobs = (dfcom + 1) / (dfcom + 3) * dfcom * (1 - lambda),
-              df = dfold * dfobs / (dfold + dfobs),
               fmi = (r + 2 / (df + 3)) / (r + 1))
 }
-

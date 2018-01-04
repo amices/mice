@@ -41,8 +41,8 @@ summary.mipo <- function(object, ...) {
     # 
     # object: object of class mipo
     x <- object
-    table <- array(x$qbar, dim = c(length(x$qbar), 10))
-    dimnames(table) <- list(labels(x$qbar), c("est", "se", "t", "df", "Pr(>|t|)", "lo 95", "hi 95", "nmis", "fmi", "lambda"))
+    table <- array(x$qbar, dim = c(length(x$qbar), 9))
+    dimnames(table) <- list(labels(x$qbar), c("est", "se", "t", "df", "Pr(>|t|)", "lo 95", "hi 95", "nmis", "fmi"))
     table[, 2] <- sqrt(x$t)
     table[, 3] <- table[, 1]/table[, 2]
     table[, 4] <- x$df
@@ -53,7 +53,6 @@ summary.mipo <- function(object, ...) {
     if (is.null(x$nmis) || is.null(names(x$qbar)))
         table[, 8] <- NA else table[, 8] <- x$nmis[names(x$qbar)]
     table[, 9] <- x$fmi
-    table[, 10] <- x$lambda
     rownames(table) <- x$term
     table
 }
