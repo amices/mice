@@ -99,7 +99,7 @@ pool.fitlist <- function (fitlist) {
   # assumed to be the same across imputations
   dfcom <- v$df.residual[1L]
   if (is.null(dfcom)) dfcom <- df.residual(getfit(fitlist, 1L))
-  if (is.null(dfcom)) dfcom <- 99999
+  if (is.null(dfcom)) dfcom <- Inf
   
   # Rubin's rules for scalar estimates
   group_by(w, .data$term) %>%

@@ -13,7 +13,7 @@
 #'analyses.
 #'@param U A vector containing the corresponding \code{m} variances of the univariate
 #'estimates.
-#'@param n A number providing the sample size. If nothing is specified, a large sample \code{n = 99999} is assumed.
+#'@param n A number providing the sample size. If nothing is specified, an infinite sample \code{n = Inf} is assumed.
 #'@param k A number indicating the number of parameters to be estimated. By default, \code{k = 1} is assumed.
 #'@return Returns a list with components. Component \code{m} is the 
 #'number of imputations. Component \code{qhat} contains the \code{m} 
@@ -50,7 +50,7 @@
 #'pool.scalar(Q, U, n = nrow(nhanes), k = 1)  # Barnard-Rubin 1999
 #'
 #'@export
-pool.scalar <- function(Q, U, n = 99999, k = 1) {
+pool.scalar <- function(Q, U, n = Inf, k = 1) {
     # Simple pooling function for univariate parameter
     # 
     # Based on Rubin's rules (Rubin, 1987) with Barnard-Rubin adjustment

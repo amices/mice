@@ -1,4 +1,4 @@
-barnard.rubin <- function(m, b, t, dfcom = 99999) {
+barnard.rubin <- function(m, b, t, dfcom = Inf) {
   lambda <- (1 + 1 / m) * b / t
   lambda[lambda < 1e-04] <- 1e-04
   dfold <- (m - 1) / lambda ^ 2

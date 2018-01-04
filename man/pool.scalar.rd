@@ -4,7 +4,7 @@
 \alias{pool.scalar}
 \title{Multiple imputation pooling: univariate version}
 \usage{
-pool.scalar(Q, U, n = 99999, k = 1)
+pool.scalar(Q, U, n = Inf, k = 1)
 }
 \arguments{
 \item{Q}{A vector of univariate estimates of \code{m} repeated complete data
@@ -13,7 +13,7 @@ analyses.}
 \item{U}{A vector containing the corresponding \code{m} variances of the univariate
 estimates.}
 
-\item{n}{A number providing the sample size. If nothing is specified, a large sample \code{n = 99999} is assumed.}
+\item{n}{A number providing the sample size. If nothing is specified, an infinite sample \code{n = Inf} is assumed.}
 
 \item{k}{A number indicating the number of parameters to be estimated. By default, \code{k = 1} is assumed.}
 }
