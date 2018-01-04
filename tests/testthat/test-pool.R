@@ -11,7 +11,7 @@ se <- c(3.50493691, 1.94113281, 2.67898025, 0.01927275, 1.74985196)
 
 test_that("retains same numerical result", {
   expect_equal(unname(est$qbar), mn)
-  expect_equal(unname(summary(est)[, "se"]), se)
+  expect_equal(unname(summary(est)[, "std.error"]), se)
 })
 
 

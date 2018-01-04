@@ -11,6 +11,7 @@
 #'                      rchisq rgamma rnorm runif summary.glm
 #'                      quantile
 #'                      update var vcov complete.cases na.omit na.pass
+#'                      confint
 #'@importFrom utils     flush.console write.table head tail
 #'                      packageDescription methods
 #'@importFrom MASS      eqscplot lda mvrnorm polr truehist ginv

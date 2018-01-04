@@ -9,7 +9,8 @@
 \usage{
 \method{summary}{mira}(object, ...)
 
-\method{summary}{mipo}(object, ...)
+\method{summary}{mipo}(object, conf.int = FALSE, conf.level = 0.95,
+  exponentiate = FALSE, ...)
 
 \method{summary}{mids}(object, ...)
 
@@ -19,6 +20,14 @@
 \item{object}{A \code{mira} object}
 
 \item{...}{Other parameters passed down to \code{print()} and \code{summary()}}
+
+\item{conf.int}{whether to include a confidence interval}
+
+\item{conf.level}{confidence level of the interval, used only if
+\code{conf.int=TRUE}}
+
+\item{exponentiate}{whether to exponentiate the coefficient estimates
+and confidence intervals (typical for logistic regression)}
 }
 \value{
 \code{NULL}

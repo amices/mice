@@ -64,7 +64,7 @@
 #'# pool using the classic MICE workflow
 #'imp <- mice(nhanes, maxit = 2, m = 2)
 #'fit <- with(data = imp, exp = lm(bmi ~ hyp + chl))
-#'round(summary(pool(fit)), 3)
+#'summary(pool(fit))
 #'@export
 pool <- function (object) {
   call <- match.call()
