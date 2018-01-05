@@ -4,15 +4,21 @@
 \alias{D3}
 \title{Compare two nested models using D3-statistic}
 \usage{
-D3(fit1, fit0 = NULL, ...)
+D3(fit1, fit0 = NULL, df.com = NULL, ...)
 }
 \arguments{
-\item{fit1}{An object of class 'mira', produced by \code{with.mids()}.}
+\item{fit1}{An object of class \code{mira}, produced by \code{with()}.}
 
-\item{fit0}{An object of class 'mira', produced by \code{with.mids()}. The
-model in \code{fit0} is a nested fit0 of \code{fit1}.}
+\item{fit0}{An object of class \code{mira}, produced by \code{with()}. The
+model in \code{fit0} is a nested within \code{fit1}. The default null 
+model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.}
 
-\item{\dots}{Not used}
+\item{df.com}{A single number or a numeric vector denoting the 
+complete-data degrees of freedom for the hypothesis test. If not specified,
+it is set equal to \code{df.residual} of model \code{fit1}. Not used 
+for method \code{D2()}.}
+
+\item{...}{Not used.}
 }
 \description{
 Compare two nested models using D3-statistic

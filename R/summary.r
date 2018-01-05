@@ -14,13 +14,13 @@
 #'@method summary mira
 #'@export
 summary.mira <- function(object, ...) {
-    # This summary function is for a mira object.  Then the seperate analyses are of class lm (glm), it calls sequentially
-    # summary.lm (summary.glm) for all analyses.  KO, 4/2/00
-    
-    for (i in seq_along(object$analyses)) {
-        cat("\n", "## summary of imputation", i, ":\n")
-        print(summary(object$analyses[[i]], ...), ...)
-    }
+  # This summary function is for a mira object.  Then the seperate analyses are of class lm (glm), it calls sequentially
+  # summary.lm (summary.glm) for all analyses.  KO, 4/2/00
+  
+  for (i in seq_along(object$analyses)) {
+    cat("\n", "## summary of imputation", i, ":\n")
+    print(summary(object$analyses[[i]], ...), ...)
+  }
 }
 
 # # ------------------------------summary.mipo-------------------------------
@@ -75,7 +75,7 @@ summary.mipo <- function(object, conf.int = FALSE, conf.level = .95,
     stringsAsFactors = FALSE,
     row.names = NULL)
   process_mipo(ret, x, conf.int = conf.int, conf.level = conf.level,
-             exponentiate = exponentiate)
+               exponentiate = exponentiate)
 }
 
 
@@ -92,8 +92,8 @@ summary.mipo <- function(object, conf.int = FALSE, conf.level = .95,
 #'@method summary mids
 #'@export
 summary.mids <- function(object, ...) {
-    print(object, ...)
-    invisible()
+  print(object, ...)
+  invisible()
 }
 
 
@@ -124,7 +124,7 @@ summary.mads <- function(object, ...) {
 #' @param exponentiate whether to exponentiate the coefficient estimates
 #' and confidence intervals (typical for logistic regression)
 process_mipo <- function(ret, x, conf.int = FALSE, conf.level = .95,
-                       exponentiate = FALSE) {
+                         exponentiate = FALSE) {
   if (exponentiate) {
     # save transformation function for use on confidence interval
     if (is.null(x$family) ||
@@ -193,3 +193,32 @@ unrowname <- function (x)
 format.perc <- function (probs, digits) 
   paste(format(100 * probs, trim = TRUE, scientific = FALSE, digits = digits), 
         "%")
+
+#'Print a \code{mice.anova} object
+#'
+#'@rdname summary
+#'@return \code{NULL}
+#'@seealso \code{\link[=mipo-class]{mipo}}
+#'@method summary mice.anova
+#'@export
+summary.mice.anova <- function(object,...) {
+  rl <- object$result
+  rf <- data.frame(test = names(rl),
+                   statistic = vapply(rl, function(x) x$test[1], numeric(length(rl))),
+                   df1 = sapply(rl, function(x) x$test[2]),
+                   df2 = sapply(rl, function(x) x$test[3]),
+                   df.com = sapply(rl, function(x) x$df.com),
+                   p.value = sapply(rl, function(x) x$test[4]),
+                   riv = sapply(rl, function(x) x$test[5]),
+                   row.names = NULL)
+  
+  formulas <- object$formulas
+  ff <- data.frame(model = names(formulas),
+                   formula = as.character(formulas))
+  
+  structure(list(models = ff, comparisons = rf,
+                 m = object$m, method = object$method, use = object$use),
+            class = c("mice.anova.summary", class(object)))
+}
+
+

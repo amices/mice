@@ -5,6 +5,7 @@
 \alias{summary.mipo}
 \alias{summary.mids}
 \alias{summary.mads}
+\alias{summary.mice.anova}
 \title{Summary of a \code{mira} object}
 \usage{
 \method{summary}{mira}(object, ...)
@@ -15,6 +16,8 @@
 \method{summary}{mids}(object, ...)
 
 \method{summary}{mads}(object, ...)
+
+\method{summary}{mice.anova}(object, ...)
 }
 \arguments{
 \item{object}{A \code{mira} object}
@@ -37,6 +40,8 @@ A table containing summary statistis of the pooled analysis
 \code{NULL}
 
 \code{NULL}
+
+\code{NULL}
 }
 \description{
 Summary of a \code{mira} object
@@ -46,6 +51,8 @@ Summary of a \code{mipo} object
 Summary of a \code{mids} object
 
 Summary of a \code{mads} object
+
+Print a \code{mice.anova} object
 }
 \seealso{
 \code{\link[=mira-class]{mira}}
@@ -55,4 +62,6 @@ Summary of a \code{mads} object
 \code{\link[=mids-class]{mids}}
 
 \code{\link[=mads-class]{mads}}
+
+\code{\link[=mipo-class]{mipo}}
 }

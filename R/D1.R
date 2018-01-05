@@ -6,7 +6,8 @@
 #'model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.
 #'@param df.com A single number or a numeric vector denoting the 
 #'complete-data degrees of freedom for the hypothesis test. If not specified,
-#'it is set equal to \code{df.residual} of model \code{fit1}.
+#'it is set equal to \code{df.residual} of model \code{fit1}. Not used 
+#'for method \code{D2()}.
 #'@param \dots Not used.
 #'@export
 D1 <- function(fit1, fit0 = NULL, df.com = NULL, ...) {

@@ -4,7 +4,7 @@
 \alias{D2}
 \title{Compare two nested models using D2-statistic}
 \usage{
-D2(fit1, fit0 = NULL, ...)
+D2(fit1, fit0 = NULL, df.com = NULL, ...)
 }
 \arguments{
 \item{fit1}{An object of class \code{mira}, produced by \code{with()}.}
@@ -13,8 +13,20 @@ D2(fit1, fit0 = NULL, ...)
 model in \code{fit0} is a nested within \code{fit1}. The default null 
 model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.}
 
+\item{df.com}{A single number or a numeric vector denoting the 
+complete-data degrees of freedom for the hypothesis test. If not specified,
+it is set equal to \code{df.residual} of model \code{fit1}. Not used 
+for method \code{D2()}.}
+
 \item{...}{Not used.}
 }
 \description{
 Compare two nested models using D2-statistic
+}
+\details{
+The \code{D2} method does not use the \code{df.com} parameter, so
+it does not pass it down to \code{testModels}.
+This prevents the following warning thrown by \code{testModels}: 
+\code{Complete-data degrees of freedom are not available 
+for use with 'D2', and thus were ignored.}
 }

@@ -4,6 +4,8 @@
 \alias{print.mids}
 \alias{print.mira}
 \alias{print.mipo}
+\alias{print.mice.anova}
+\alias{print.mice.anova.summary}
 \title{Print a \code{mids} object}
 \usage{
 \method{print}{mids}(x, ...)
@@ -11,6 +13,10 @@
 \method{print}{mira}(x, ...)
 
 \method{print}{mipo}(x, ...)
+
+\method{print}{mice.anova}(x, ...)
+
+\method{print}{mice.anova.summary}(x, ...)
 }
 \arguments{
 \item{x}{Object of class \code{mids}, \code{mira} or \code{mipo}}
@@ -23,6 +29,10 @@
 \code{NULL}
 
 \code{NULL}
+
+\code{NULL}
+
+\code{NULL}
 }
 \description{
 Print a \code{mids} object
@@ -30,11 +40,19 @@ Print a \code{mids} object
 Print a \code{mira} object
 
 Print a \code{mipo} object
+
+Print a \code{mice.anova} object
+
+Print a \code{summary.mice.anova} object
 }
 \seealso{
 \code{\link[=mids-class]{mids}}
 
 \code{\link[=mira-class]{mira}}
+
+\code{\link[=mipo-class]{mipo}}
+
+\code{\link[=mipo-class]{mipo}}
 
 \code{\link[=mipo-class]{mipo}}
 }

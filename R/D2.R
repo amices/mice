@@ -1,8 +1,14 @@
 #'Compare two nested models using D2-statistic
 #'
 #'@inheritParams D1
+#'@details
+#'The \code{D2} method does not use the \code{df.com} parameter, so
+#'it does not pass it down to \code{testModels}.
+#'This prevents the following warning thrown by \code{testModels}: 
+#'\code{Complete-data degrees of freedom are not available 
+#'for use with 'D2', and thus were ignored.}
 #'@export
-D2 <- function(fit1, fit0 = NULL, ...) {
+D2 <- function(fit1, fit0 = NULL, df.com = NULL, ...) {
   # fit1: a fitlist or mira-object
   # fit0: named numerical vector, character vector, or list
   fit1 <- as.mitml.result(fit1)

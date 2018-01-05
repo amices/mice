@@ -2,16 +2,19 @@
 #'
 #'@rdname anova
 #'@param object Two or more objects of class \code{mira}
+#'@param method Either \code{"D1"}, \code{"D2"} or \code{"D3"}
+#'@param use An character indicating the test statistic
 #'@param ... Other parameters passed down to \code{D1()}, \code{D2()}, 
 #'\code{D3()} and \code{mitml::testModels}.
 #'@return Object of class \code{mice.anova}
 #'@export
-anova.mira <- function(object, ...) {
-
+anova.mira <- function(object, ..., method = "D1", use = NULL) {
+  
   modlist <- list(object, ...)
   first <- lapply(modlist, getfit, 1L) %>% sapply(glance)
-  if (is.null(names(modlist))) colnames(first) <- 1L:length(modlist)
-  else colnames(first) <- names(modlist)
+  if (is.null(names(modlist))) 
+    names(modlist) <- names(first) <- 1L:length(modlist)
+  else names(first) <- names(modlist)
   
   # order by model complexity
   idx <- order(unlist(first["df.residual", ]), decreasing = FALSE)
@@ -22,10 +25,6 @@ anova.mira <- function(object, ...) {
   # get model formulas
   formulas <- lapply(modlist, getfit, 1L) %>% lapply(formula)
   names(formulas) <- names(modlist)
-
-  # obtain the method
-  method <- getOption("anova.method")
-  if (is.null(method)) method <- "D1"
   
   # test successive models
   nm <- length(modlist)
@@ -33,20 +32,20 @@ anova.mira <- function(object, ...) {
   names(result) <- paste(names(modlist), lead(names(modlist)), sep = " = ")[-nm]
   for(j in seq_along(result)) {
     args <- alist(fit1 = modlist[[j]], fit0 = modlist[[j + 1L]], 
-                  df.com = c(df.com[j], df.com[j + 1]))
+                  df.com = as.numeric(unlist(df.com[j])))
     result[[j]] <- do.call(method, args = args)
   }
-
+  
   out <- list(
     call = match.call(),
-    test = result,
-    formula = formulas,
+    result = result,
+    formulas = formulas,
+    m = length(getfit(modlist[[1L]])),
     method = method,
-    use = "likelihood",
-    df.com = df.com,
-    reml = NULL
+    use = use,
+    df.com = df.com
   )
-
+  
   class(out) <- "mice.anova"
   out
 }

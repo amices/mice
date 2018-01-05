@@ -4,13 +4,17 @@
 \alias{anova.mira}
 \title{Compare several nested models}
 \usage{
-\method{anova}{mira}(object, ...)
+\method{anova}{mira}(object, ..., method = "D1", use = NULL)
 }
 \arguments{
 \item{object}{Two or more objects of class \code{mira}}
 
 \item{...}{Other parameters passed down to \code{D1()}, \code{D2()}, 
 \code{D3()} and \code{mitml::testModels}.}
+
+\item{method}{Either \code{"D1"}, \code{"D2"} or \code{"D3"}}
+
+\item{use}{An character indicating the test statistic}
 }
 \value{
 Object of class \code{mice.anova}

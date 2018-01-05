@@ -1,12 +1,9 @@
 #'Compare two nested models using D3-statistic
 #'
-#'@param fit1 An object of class 'mira', produced by \code{with.mids()}.
-#'@param fit0 An object of class 'mira', produced by \code{with.mids()}. The
-#'model in \code{fit0} is a nested fit0 of \code{fit1}.
-#'@param \dots Not used
-#'@author Stef van Buuren, 2018
+#'@inheritParams D1
 #'@export
-D3 <- function(fit1, fit0 = NULL, ...) {
+D3 <- function(fit1, fit0 = NULL, df.com = NULL, ...) {
+  call <- match.call()
   fit1 <- getfit(fit1)
   m <- length(fit1)
   est1 <- pool(fit1)
@@ -58,16 +55,18 @@ D3 <- function(fit1, fit0 = NULL, ...) {
     w <- v * (1 + 1 / k) * ((1 + 1 / rm)^2) / 2
   pvalue = 1 - pf(Dm, k, w)
 
-  statistic <- list(m = m, 
-                    formula = 
+  statistic <- list(call = call,
+                    m = m, 
+                    formulas = 
                       list(formula(getfit(fit1, 1)),
                            formula(getfit(fit0, 1))),
                     method = "D3",
                     qbar1 = est1$qbar, qbar0 = est0$qbar, 
                     ubar1 = est1$ubar, ubar0 = est0$ubar, 
                     deviances = deviances,
-                    Dm = Dm, rm = rm, df1 = k, df2 = w, 
-                    pvalue = pvalue)
+                    statistic = Dm, df1 = k, df2 = w, 
+                    df.com = Inf,
+                    pvalue = pvalue, riv = rm)
   class(statistic) <- c("mice.anova", "list")
   statistic
 }
