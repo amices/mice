@@ -29,7 +29,7 @@ anova.mira <- function(object, ..., method = "D1", use = "wald") {
   # test successive models
   nm <- length(modlist)
   out <- vector("list", nm - 1L)
-  names(out) <- paste(names(modlist), lead(names(modlist)), sep = " = ")[-nm]
+  names(out) <- paste(names(modlist), lead(names(modlist)), sep = " ~~ ")[-nm]
   for(j in seq_along(out)) {
     args <- alist(fit1 = modlist[[j]], fit0 = modlist[[j + 1L]], 
                   df.com = as.numeric(unlist(df.com[j])), use = use)

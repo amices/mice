@@ -203,7 +203,13 @@ format.perc <- function (probs, digits)
 #'@export
 summary.mice.anova <- function(object,...) {
   
+  # handle objects from anova
   out <- object$out
+  # handle objects from D1, D2 and D3
+  if (is.null(out))
+    out <- list(`1 ~~ 2` = list(result = object$result, 
+                               df.com = object$df.com))
+  
   test <- names(out)
   df.com <- vapply(out, function(x) x$df.com, numeric(1))
   results <- t(vapply(out, function(x) x$result, numeric(5)))
