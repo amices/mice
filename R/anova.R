@@ -8,7 +8,7 @@
 #'\code{D3()} and \code{mitml::testModels}.
 #'@return Object of class \code{mice.anova}
 #'@export
-anova.mira <- function(object, ..., method = "D1", use = NULL) {
+anova.mira <- function(object, ..., method = "D1", use = "wald") {
   
   modlist <- list(object, ...)
   first <- lapply(modlist, getfit, 1L) %>% sapply(glance)
@@ -28,25 +28,22 @@ anova.mira <- function(object, ..., method = "D1", use = NULL) {
   
   # test successive models
   nm <- length(modlist)
-  result <- vector("list", nm - 1L)
-  names(result) <- paste(names(modlist), lead(names(modlist)), sep = " = ")[-nm]
-  for(j in seq_along(result)) {
+  out <- vector("list", nm - 1L)
+  names(out) <- paste(names(modlist), lead(names(modlist)), sep = " = ")[-nm]
+  for(j in seq_along(out)) {
     args <- alist(fit1 = modlist[[j]], fit0 = modlist[[j + 1L]], 
-                  df.com = as.numeric(unlist(df.com[j])))
-    result[[j]] <- do.call(method, args = args)
+                  df.com = as.numeric(unlist(df.com[j])), use = use)
+    out[[j]] <- do.call(method, args = args)
   }
   
-  out <- list(
+  obj <- list(
     call = match.call(),
-    result = result,
+    out = out,
     formulas = formulas,
     m = length(getfit(modlist[[1L]])),
     method = method,
-    use = use,
-    df.com = df.com
-  )
-  
-  class(out) <- "mice.anova"
-  out
+    use = use)
+  class(obj) <- c("mice.anova", class(first))
+  obj
 }
 

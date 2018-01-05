@@ -15,7 +15,7 @@ z2 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), df.com = 2
 z3 <- D1(fit1)
 
 test_that("compares fit1 to the intercept-only model", {
-   expect_identical(z1$test, z2$test)
+   expect_identical(z1$result, z2$test)
    expect_identical(z1$test, z3$test)
 })
 
@@ -24,7 +24,7 @@ z4 <- D1(fit1, empty)
 z5 <- mitml::testModels(as.mitml.result(fit1), NULL, df.com = 21)
 
 test_that("compares fit1 to empty model", {
-  expect_identical(z4$test, z5$test)
+  expect_identical(z4$result, z5$test)
 })
 
 
@@ -35,7 +35,7 @@ z2 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), method = "
 z3 <- D2(fit1)
 
 test_that("compares fit1 to the intercept-only model", {
-  expect_identical(z1$test, z2$test)
+  expect_identical(z1$result, z2$test)
   expect_identical(z1$test, z3$test)
 })
 
@@ -44,5 +44,5 @@ z4 <- D2(fit1, empty)
 z5 <- mitml::testModels(as.mitml.result(fit1), NULL, method = "D2")
 
 test_that("compares fit1 to empty model", {
-  expect_identical(z4$test, z5$test)
+  expect_identical(z4$result, z5$test)
 })

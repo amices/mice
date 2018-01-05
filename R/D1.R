@@ -37,5 +37,17 @@ D1 <- function(fit1, fit0 = NULL, df.com = NULL, ...) {
   }
   
   tmr <- testModels(fit1, fit0, method = "D1", df.com = df.com)
-  tmr
+  
+  out <- list(
+    call = match.call(),
+    result = tmr$test,
+    formulas = list(`1` = formula(fit1[[1L]]),
+                    `2` = formula(fit0[[1L]])),
+    m = tmr$m,
+    method = "D1",
+    use = NULL,
+    df.com = tmr$df.com
+  )
+  class(out) <- c("mice.anova", class(fit1))
+  out
 }

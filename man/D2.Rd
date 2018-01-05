@@ -4,7 +4,7 @@
 \alias{D2}
 \title{Compare two nested models using D2-statistic}
 \usage{
-D2(fit1, fit0 = NULL, df.com = NULL, ...)
+D2(fit1, fit0 = NULL, df.com = NULL, use = "wald", ...)
 }
 \arguments{
 \item{fit1}{An object of class \code{mira}, produced by \code{with()}.}
@@ -17,6 +17,8 @@ model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.}
 complete-data degrees of freedom for the hypothesis test. If not specified,
 it is set equal to \code{df.residual} of model \code{fit1}. Not used 
 for method \code{D2()}.}
+
+\item{use}{A character string denoting Wald- or likelihood-based based tests. Can be either \code{"wald"} or \code{"likelihood"}. Only used if \code{method="D2"}.}
 
 \item{...}{Not used.}
 }

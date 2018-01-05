@@ -202,14 +202,18 @@ format.perc <- function (probs, digits)
 #'@method summary mice.anova
 #'@export
 summary.mice.anova <- function(object,...) {
-  rl <- object$result
-  rf <- data.frame(test = names(rl),
-                   statistic = vapply(rl, function(x) x$test[1], numeric(length(rl))),
-                   df1 = sapply(rl, function(x) x$test[2]),
-                   df2 = sapply(rl, function(x) x$test[3]),
-                   df.com = sapply(rl, function(x) x$df.com),
-                   p.value = sapply(rl, function(x) x$test[4]),
-                   riv = sapply(rl, function(x) x$test[5]),
+  
+  out <- object$out
+  test <- names(out)
+  df.com <- vapply(out, function(x) x$df.com, numeric(1))
+  results <- t(vapply(out, function(x) x$result, numeric(5)))
+  rf <- data.frame(test = test, 
+                   statistic = results[, 1],
+                   df1 = results[, 2], 
+                   df2 = results[, 3],
+                   df.com = df.com, 
+                   p.value = results[, 4],
+                   riv = results[, 5],
                    row.names = NULL)
   
   formulas <- object$formulas

@@ -23,6 +23,3 @@ for method \code{D2()}.}
 \description{
 Compare two nested models using D3-statistic
 }
-\author{
-Stef van Buuren, 2018
-}

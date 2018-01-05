@@ -55,18 +55,17 @@ D3 <- function(fit1, fit0 = NULL, df.com = NULL, ...) {
     w <- v * (1 + 1 / k) * ((1 + 1 / rm)^2) / 2
   pvalue = 1 - pf(Dm, k, w)
 
-  statistic <- list(call = call,
-                    m = m, 
-                    formulas = 
-                      list(formula(getfit(fit1, 1)),
-                           formula(getfit(fit0, 1))),
-                    method = "D3",
-                    qbar1 = est1$qbar, qbar0 = est0$qbar, 
-                    ubar1 = est1$ubar, ubar0 = est0$ubar, 
-                    deviances = deviances,
-                    statistic = Dm, df1 = k, df2 = w, 
-                    df.com = Inf,
-                    pvalue = pvalue, riv = rm)
-  class(statistic) <- c("mice.anova", "list")
-  statistic
+  test <- 
+  out <- list(
+    call = match.call(),
+    result = c(Dm, k, w, pvalue, rm),
+    formulas = list(`1` = formula(getfit(fit1, 1L)),
+                    `2` = formula(getfit(fit0, 1L))),
+    m = m,
+    method = "D3",
+    use = NULL,
+    df.com = df.com,
+    deviances = deviances)
+  class(out) <- c("mice.anova", class(fit1))
+  out
 }

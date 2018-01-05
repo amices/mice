@@ -4,7 +4,7 @@
 \alias{anova.mira}
 \title{Compare several nested models}
 \usage{
-\method{anova}{mira}(object, ..., method = "D1", use = NULL)
+\method{anova}{mira}(object, ..., method = "D1", use = "wald")
 }
 \arguments{
 \item{object}{Two or more objects of class \code{mira}}
