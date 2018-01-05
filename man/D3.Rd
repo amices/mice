@@ -4,7 +4,7 @@
 \alias{D3}
 \title{Compare two nested models using D3-statistic}
 \usage{
-D3(fit1, fit0 = NULL, df.com = NULL, ...)
+D3(fit1, fit0 = NULL, df.com = Inf, ...)
 }
 \arguments{
 \item{fit1}{An object of class \code{mira}, produced by \code{with()}.}

@@ -2,7 +2,7 @@
 #'
 #'@inheritParams D1
 #'@export
-D3 <- function(fit1, fit0 = NULL, df.com = NULL, ...) {
+D3 <- function(fit1, fit0 = NULL, df.com = Inf, ...) {
   call <- match.call()
   fit1 <- getfit(fit1)
   m <- length(fit1)
