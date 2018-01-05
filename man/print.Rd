@@ -4,6 +4,7 @@
 \alias{print.mids}
 \alias{print.mira}
 \alias{print.mipo}
+\alias{print.mipo.summary}
 \alias{print.mice.anova}
 \alias{print.mice.anova.summary}
 \title{Print a \code{mids} object}
@@ -13,6 +14,8 @@
 \method{print}{mira}(x, ...)
 
 \method{print}{mipo}(x, ...)
+
+\method{print}{mipo.summary}(x, ...)
 
 \method{print}{mice.anova}(x, ...)
 
@@ -33,6 +36,8 @@
 \code{NULL}
 
 \code{NULL}
+
+\code{NULL}
 }
 \description{
 Print a \code{mids} object
@@ -40,6 +45,8 @@ Print a \code{mids} object
 Print a \code{mira} object
 
 Print a \code{mipo} object
+
+Print a \code{summary.mipo} object
 
 Print a \code{mice.anova} object
 
@@ -49,6 +56,8 @@ Print a \code{summary.mice.anova} object
 \code{\link[=mids-class]{mids}}
 
 \code{\link[=mira-class]{mira}}
+
+\code{\link[=mipo-class]{mipo}}
 
 \code{\link[=mipo-class]{mipo}}
 

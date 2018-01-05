@@ -74,8 +74,10 @@ summary.mipo <- function(object, conf.int = FALSE, conf.level = .95,
     fmi       = x$fmi,
     stringsAsFactors = FALSE,
     row.names = NULL)
-  process_mipo(ret, x, conf.int = conf.int, conf.level = conf.level,
-               exponentiate = exponentiate)
+  ret <- process_mipo(ret, x, conf.int = conf.int, conf.level = conf.level,
+                      exponentiate = exponentiate)
+  class(ret) <- c("mipo.summary", "data.frame")
+  ret
 }
 
 
@@ -208,7 +210,7 @@ summary.mice.anova <- function(object,...) {
   # handle objects from D1, D2 and D3
   if (is.null(out))
     out <- list(`1 ~~ 2` = list(result = object$result, 
-                               df.com = object$df.com))
+                                df.com = object$df.com))
   
   test <- names(out)
   df.com <- vapply(out, function(x) x$df.com, numeric(1))
