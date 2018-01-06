@@ -5,25 +5,39 @@
 \alias{summary.mipo}
 \alias{summary.mids}
 \alias{summary.mads}
+\alias{summary.mice.anova}
 \title{Summary of a \code{mira} object}
 \usage{
 \method{summary}{mira}(object, ...)
 
-\method{summary}{mipo}(object, ...)
+\method{summary}{mipo}(object, conf.int = FALSE, conf.level = 0.95,
+  exponentiate = FALSE, ...)
 
 \method{summary}{mids}(object, ...)
 
 \method{summary}{mads}(object, ...)
+
+\method{summary}{mice.anova}(object, ...)
 }
 \arguments{
 \item{object}{A \code{mira} object}
 
 \item{...}{Other parameters passed down to \code{print()} and \code{summary()}}
+
+\item{conf.int}{whether to include a confidence interval}
+
+\item{conf.level}{confidence level of the interval, used only if
+\code{conf.int=TRUE}}
+
+\item{exponentiate}{whether to exponentiate the coefficient estimates
+and confidence intervals (typical for logistic regression)}
 }
 \value{
 \code{NULL}
 
 A table containing summary statistis of the pooled analysis
+
+\code{NULL}
 
 \code{NULL}
 
@@ -37,6 +51,8 @@ Summary of a \code{mipo} object
 Summary of a \code{mids} object
 
 Summary of a \code{mads} object
+
+Print a \code{mice.anova} object
 }
 \seealso{
 \code{\link[=mira-class]{mira}}
@@ -46,4 +62,6 @@ Summary of a \code{mads} object
 \code{\link[=mids-class]{mids}}
 
 \code{\link[=mads-class]{mads}}
+
+\code{\link[=mipo-class]{mipo}}
 }

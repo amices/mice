@@ -29,12 +29,15 @@ Depends:
     R (>= 2.10.0),
     lattice
 Imports:
+    broom,
+    dplyr,
     grDevices,
     graphics,
     MASS,
     mitml,
     nnet,
     Rcpp,
+    rlang,
     rpart,
     splines,
     stats,
@@ -73,3 +76,4 @@ VignetteBuilder: knitr
 URL: http://stefvanbuuren.github.io/mice/ , http://www.stefvanbuuren.nl , http://www.multiple-imputation.com
 BugReports: https://github.com/stefvanbuuren/mice/issues
 RoxygenNote: 6.0.1
+LinkingTo: Rcpp

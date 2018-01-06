@@ -127,21 +127,41 @@ as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id") {
 #' 
 #' The \code{as.mira()} function takes the results of repeated 
 #' complete-data analysis stored as a list, and turns it 
-#' into a \code{mira} object that can be pooled. Pooling 
-#' requires that \code{coef()} and \code{vcov()} methods are 
-#' available for fitted object. 
+#' into a \code{mira} object that can be pooled.
 #' @param fitlist A list containing $m$ fitted analysis objects
 #' @return An S3 object of class \code{mira}.
 #' @seealso \code{\link[=mira-class]{mira}}
 #' @author Stef van Buuren
 #' @export
 as.mira <- function(fitlist) {
+  if (is.mira(fitlist)) return(fitlist)
   call <- match.call()
   if (!is.list(fitlist)) 
     stop("Argument 'fitlist' is not a list")
+  class(fitlist) <- "list"
   object <- list(call = call, call1 = NULL, nmis = NULL, analyses = fitlist)
   oldClass(object) <- c("mira", "matrix")
   return(object)
+}
+
+#' Converts into a \code{mitml.result} object
+#' 
+#' The \code{as.mitml.result()} function takes the results of repeated 
+#' complete-data analysis stored as a list, and turns it 
+#' into an object of class \code{mitml.result}.
+#' @param x An object of class \code{mira}
+#' @return An S3 object of class \code{mitml.result}, a list 
+#' containing $m$ fitted analysis objects.
+#' @seealso \code{\link[mitml]{with.mitml.list}}
+#' @author Stef van Buuren
+#' @export
+as.mitml.result <- function(x) {
+  if (inherits(x, "mitml.result")) return(x)
+  z <- NULL
+  if (is.mira(x)) z <- getfit(x)
+  else if (is.list(x)) z <- x
+  class(z) <- c("mitml.result", "list")
+  z
 }
 
 

@@ -68,16 +68,56 @@ print.mira <- function(x, ...) {
 #'@method print mipo
 #'@export
 print.mipo <- function(x, ...) {
-    if (!is.null(x$call)) {
-        cat("Call: ")
-        dput(x$call)
-    }
-    cat("\nPooled coefficients:\n")
-    print(x$qbar, ...)
-    # cat('Relative increase in variance due to nonresponse per parameter:', '\n') print(x$r)
-    cat("\nFraction of information about the coefficients missing due to nonresponse:", "\n")
-    print(x$f)
-    invisible(x)
+  print(summary(x), ...)
+  invisible(x)
+}
+
+#'Print a \code{summary.mipo} object
+#'
+#'@rdname print
+#'@return \code{NULL}
+#'@seealso \code{\link[=mipo-class]{mipo}}
+#'@method print mipo.summary
+#'@export
+print.mipo.summary <- function(x, ...) {
+  from <- c("term", "estimate", "std.error", "statistic", "p.value")
+  to <- c("", "est", "se", "t", "Pr(>|t|)")
+  names(x)[names(x) %in% from] <- to
+  print.data.frame(x, row.names = FALSE, ...)
+  invisible(x)
+}
+
+
+#'Print a \code{mice.anova} object
+#'
+#'@rdname print
+#'@return \code{NULL}
+#'@seealso \code{\link[=mipo-class]{mipo}}
+#'@method print mice.anova
+#'@export
+print.mice.anova <- function(x, ...) {
+  z <- summary(x, ...)
+  print(z$comparisons, row.names = FALSE)
+  invisible(x)
+}
+
+#'Print a \code{summary.mice.anova} object
+#'
+#'@rdname print
+#'@return \code{NULL}
+#'@seealso \code{\link[=mipo-class]{mipo}}
+#'@method print mice.anova.summary
+#'@export
+print.mice.anova.summary <- function(x, ...) {
+  cat("\nModels:\n")
+  print(x$models, row.names = FALSE)
+  cat("\nComparisons:\n")
+  print(x$comparisons, row.names = FALSE)
+  cat("\nNumber of imputations: ", x$m, 
+      "  Method", x$method)
+  if (x$method == "D2") cat(" (", x$use, ")", sep = "")
+  cat("\n")
+  invisible(x)
 }
 
 
