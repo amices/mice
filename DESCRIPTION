@@ -76,4 +76,3 @@ VignetteBuilder: knitr
 URL: http://stefvanbuuren.github.io/mice/ , http://www.stefvanbuuren.nl , http://www.multiple-imputation.com
 BugReports: https://github.com/stefvanbuuren/mice/issues
 RoxygenNote: 6.0.1
-LinkingTo: Rcpp

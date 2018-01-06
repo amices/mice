@@ -6,12 +6,12 @@ est <- pool(fit)
 #fitlist <- fit$analyses
 #est <- mice:::pool.fitlist(fitlist)
 
-mn <- c(19.06956625, -5.73559483, -7.56527376, 0.05537215, 2.36656173)
-se <- c(3.50493691, 1.94113281, 2.67898025, 0.01927275, 1.74985196)
+mn <- c(18.76175, -4.573652, -6.635969, 0.05359003, 2.163629)
+se <- c(4.002796, 2.033986, 2.459769, 0.02235067, 2.02898)
 
 test_that("retains same numerical result", {
-  expect_equal(unname(est$qbar), mn)
-  expect_equal(unname(summary(est)[, "std.error"]), se)
+  expect_equal(unname(est$qbar), mn, tolerance = 0.00001)
+  expect_equal(unname(summary(est)[, "std.error"]), se, tolerance = 0.00001)
 })
 
 
@@ -154,3 +154,4 @@ stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "likelihood")
 # ---
 
 fit1 <- with(implist, lmer(ReadAchiev ~ ReadDis + SES + (1|ID), REML=FALSE))
+
