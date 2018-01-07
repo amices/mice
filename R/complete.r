@@ -78,21 +78,12 @@ complete.mids <- function(data, action = 1, include = FALSE, ...) {
     stop("Input data must have class 'mids'.")
   if (!is.logical(include)) 
     stop("Argument 'include' should be either TRUE or FALSE.")
+  
   if (is.numeric(action) && action == 0) 
     return(x$data)
-  if (is.numeric(action) && action >= 1 && action <= x$m) {
-    data <- x$data
-    where <- x$where
-    if (is.null(where))
-      where <- is.na(data)
-    ind <- seq_len(ncol(data))[colSums(where) > 0]
-    for (j in ind) {
-      if (is.null(x$imp[[j]]))
-        data[where[, j], j] <- NA
-      else data[where[, j], j] <- x$imp[[j]][, action]
-    }
-    return(data)
-  }
+  if (is.numeric(action) && action >= 1 && action <= x$m) 
+    return(complete.one(x$data, x$where, x$imp, action))
+  
   code <- pmatch(action, c("long", "broad", "repeated"))
   if (!is.na(code) && code >= 1 && code <= 3) {
     m <- x$m
@@ -124,4 +115,16 @@ complete.mids <- function(data, action = 1, include = FALSE, ...) {
     return(data)
   }
   stop("Argument action not recognized. \n")
+}
+
+
+complete.one <- function(data, where, imp, ell) { 
+  if (is.null(where))
+    where <- is.na(data)
+  ind <- seq_len(ncol(data))[colSums(where) > 0]
+  for (j in ind) {
+    if (is.null(imp[[j]])) data[where[, j], j] <- NA
+    else data[where[, j], j] <- imp[[j]][, ell]
+  }
+  data
 }
