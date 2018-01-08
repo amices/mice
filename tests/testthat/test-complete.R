@@ -13,18 +13,22 @@ c1 <- complete(imp)
 # library(profvis)
 # profvis(complete(imp, "long"))
 
-# library(microbenchmark)
-# recall <- TRUE
-# z1 <- microbenchmark(mice:::complete.mids(imp, include = TRUE, recall = recall),
-#                      mice:::complete.mids(imp, include = FALSE, recall = recall),
-#                      mice:::complete.mids(imp, "long", recall = recall),
-#                      mice:::complete.mids(imp, "broad", recall = recall),
-#                      mice:::complete.mids(imp, "rep", recall = recall),
-#                     times = 100)
-# recall <- FALSE
-# z2 <- microbenchmark(mice:::complete.mids(imp, baseR = FALSE, include = TRUE, recall = recall),
-#                      mice:::complete.mids(imp, baseR = FALSE, recall = recall),
-#                      mice:::complete.mids(imp, "long", baseR = FALSE, recall = recall),
-#                      mice:::complete.mids(imp, "broad", baseR = FALSE, recall = recall),
-#                      mice:::complete.mids(imp, "rep", baseR = FALSE, recall = recall),
-#                     times = 100)
+library(microbenchmark)
+milc <- FALSE
+z1 <- microbenchmark(mice:::complete.mids(imp, include = TRUE, milc = milc),
+                     mice:::complete.mids(imp, include = FALSE, milc = milc),
+                     mice:::complete.mids(imp, "all", milc = milc),
+                     mice:::complete.mids(imp, "long", milc = milc),
+                     mice:::complete.mids(imp, "broad", milc = milc),
+                     mice:::complete.mids(imp, "stacked", milc = milc),
+                     mice:::complete.mids(imp, "rep", milc = milc),
+                    times = 100)
+milc <- TRUE
+z2 <- microbenchmark(mice:::complete.mids(imp, include = TRUE, milc = milc),
+                     mice:::complete.mids(imp, include = FALSE, milc = milc),
+                     mice:::complete.mids(imp, "all", milc = milc),
+                     mice:::complete.mids(imp, "long", milc = milc),
+                     mice:::complete.mids(imp, "broad", milc = milc),
+                     mice:::complete.mids(imp, "stacked", milc = milc),
+                     mice:::complete.mids(imp, "rep", milc = milc),
+                     times = 100)

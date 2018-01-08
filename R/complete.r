@@ -123,13 +123,12 @@ complete.mids <- function(data, action = 1L, include = FALSE,
   else return(cmp[, order(rep.int(seq_len(ncol(data$data)), length(idx)))])
 }
 
-
 complete.one <- function(data, where, imp, ell) {
   if (ell == 0L) return(data)
   if (is.null(where))
     where <- is.na(data)
-  ind <- seq_len(ncol(data))[colSums(where) > 0L]
-  for (j in ind) {
+  idx <- seq_len(ncol(data))[apply(where, 2, any)]
+  for (j in idx) {
     if (is.null(imp[[j]])) data[where[, j], j] <- NA
     else data[where[, j], j] <- imp[[j]][, ell]
   }
