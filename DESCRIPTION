@@ -30,6 +30,7 @@ Depends:
     lattice,
     tidyr
 Imports:
+    dplyr,
     grDevices,
     graphics,
     MASS,
