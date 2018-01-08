@@ -81,11 +81,12 @@
 #'
 #'@export
 complete.mids <- function(data, action = 1L, include = FALSE, 
-                          mild = FALSE, ...) {
+                           mild = FALSE, ...) {
   if (!is.mids(data)) stop("'data' not of class 'mids'")
 
   m <- as.integer(data$m)
   if (is.numeric(action)) {
+    action <- as.integer(action)
     idx <- action[action >= 0L & action <= m]
     if (include && all(idx != 0L)) idx <- c(0L, idx) 
     shape <- ifelse(mild, "mild", "stacked")
@@ -110,9 +111,10 @@ complete.mids <- function(data, action = 1L, include = FALSE,
   }
   if (shape == "long") {
     cmp <- bind_rows(mylist)
-    cmp <- data.frame(.imp = as.factor(rep(idx, each = nrow(data$data))), 
+    cmp <- data.frame(.imp = rep(idx, each = nrow(data$data)), 
                       .id = rep.int(row.names(data$data), length(idx)), 
-                      cmp)
+                      cmp, 
+                      stringsAsFactors = FALSE)
     row.names(cmp) <- seq_len(nrow(cmp))
     return(cmp)
   }

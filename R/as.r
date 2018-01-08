@@ -32,7 +32,6 @@
 #'X <- complete(imp, action = "long", include = TRUE)
 #'# create dataset with .imp variable as numeric
 #'X2 <- X
-#'X2$.imp <- as.numeric(levels(X$.imp))[X$.imp]
 #'
 #'# nhanes example without .id
 #'test1 <- as.mids(X)
