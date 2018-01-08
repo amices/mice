@@ -2,7 +2,7 @@
 % Please edit documentation in R/complete.r
 \name{complete.mids}
 \alias{complete.mids}
-\title{Extracts imputed data sets from a \code{mids} object}
+\title{Extracts the completed data from a \code{mids} object}
 \usage{
 \method{complete}{mids}(data, action = 1L, include = FALSE, mild = FALSE,
   ...)
@@ -11,14 +11,14 @@
 \item{data}{An object of class \code{mids} as created by the function
 \code{mice()}.}
 
-\item{action}{A numeric vector or a length-1 character vector. Numeric 
+\item{action}{A numeric vector or a keyword. Numeric 
 values between 1 and \code{data$m} return the data with 
 imputation number \code{action} filled in. The value of \code{action = 0} 
 return the original data, with missing values. \code{action} can
 also be one of the following keywords: \code{"all"}, \code{"long"}, 
-\code{"broad"} and \code{"repeated"}. See 'Details' for the interpretation.
-The default (\code{action = "all"}) returns an object of class \code{mild}.
-a list of \code{m} completed data sets.}
+\code{"broad"} and \code{"repeated"}. See the Details section 
+for the interpretation.
+The default is \code{action = 1L} returns the first imputed data set.}
 
 \item{include}{A logical to indicate whether the orginal data with the missing
 values should be included.}
@@ -31,41 +31,31 @@ and \code{"repeated"}. The default is \code{FALSE}.}
 \item{\dots}{Additional arguments. Not used.}
 }
 \value{
-Either a \code{data.frame} with the imputed values filled in,
-or a list of data frames with the imputed values filled in.
+Complete data set with missing values replaced by imputations. 
+A \code{data.frame}, or a list of data frames of class \code{mild}.
 }
 \description{
 Takes an object of class \code{mids}, fills in the missing data, and returns
 the completed data in a specified format.
 }
 \details{
-The argument \code{action} can be a string, which is partially matched
-as follows: 
+The argument \code{action} can be length-1 character, which is 
+matched to one of the following keywords:
 \describe{ 
 \item{\code{"all"}}{produces a \code{mild} object of imputed data sets. When 
 \code{include = TRUE}, then the original data are appended as the first list 
-element.}
-\item{\code{"long"}}{ produces a long data frame of
-vertically stacked imputed data sets with \code{nrow(data$data)} * \code{data$m}
-rows and \code{ncol(data$data)+2} columns. The two additional columns are
-labeled \code{.id} containing the row names of \code{data$data}, and \code{.imp}
-containing the imputation number.  If \code{include=TRUE} then
-\code{nrow(data$data)} additional rows with the original data are appended with
-\code{.imp} set equal to \code{0}.}
-\item{\code{"broad"}}{ produces a broad data frame with
-\code{nrow(data$data)} rows and \code{ncol(data$data)} * \code{data$m} columns.
-Columns are ordered such that the first \code{ncol(data$data)} columns
-corresponds to the first imputed data frame. The imputation number is
-appended to each column name.  If \code{include=TRUE} then
-\code{ncol(x$data)} additional columns with the original data are appended.
-The number \code{.0} is appended to the column names.  }
-\item{\code{"repeated"}}{ produces a broad data frame with
-\code{nrow(x$data)} rows and \code{ncol(data$data)} * \code{data$m} columns.
-Columns are ordered such that the first \code{data$m} columns correspond to the
-\code{data$m} imputed versions of the first column in \code{data$data}. The
-imputation number is appended to each column name.  If \code{include=TRUE}
-then \code{ncol(data$data)} additional columns with the original data are
-appended.  The number \code{.0} is appended to the column names} 
+element;}
+\item{\code{"long"}}{ produces a data set where imputed data sets 
+are stacked vertically. The columns are added: 1) \code{.imp}, integer,
+referring the imputation number, and 2) \code{.id}, character, the row 
+names of \code{data$data};}
+\item{\code{"stacked"}}{ same as \code{"long"} but without the two 
+additional columns;}
+\item{\code{"broad"}}{ produces a data set with where imputed data sets 
+are stacked horizontally. Columns are ordered as in the original data. 
+The imputation number is appended to each column name;}
+\item{\code{"repeated"}}{ same as \code{"broad"}, but with 
+columns in a different order.}
 }
 }
 \examples{
