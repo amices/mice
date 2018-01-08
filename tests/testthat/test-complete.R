@@ -14,21 +14,21 @@ c1 <- complete(imp)
 # profvis(complete(imp, "long"))
 
 library(microbenchmark)
-milc <- FALSE
-z1 <- microbenchmark(mice:::complete.mids(imp, include = TRUE, milc = milc),
-                     mice:::complete.mids(imp, include = FALSE, milc = milc),
-                     mice:::complete.mids(imp, "all", milc = milc),
-                     mice:::complete.mids(imp, "long", milc = milc),
-                     mice:::complete.mids(imp, "broad", milc = milc),
-                     mice:::complete.mids(imp, "stacked", milc = milc),
-                     mice:::complete.mids(imp, "rep", milc = milc),
+mild <- FALSE
+z1 <- microbenchmark(mice:::complete.mids(imp, include = TRUE, mild = mild),
+                     mice:::complete.mids(imp, include = FALSE, mild = mild),
+                     mice:::complete.mids(imp, "all", mild = mild),
+                     mice:::complete.mids(imp, "long", mild = mild),
+                     mice:::complete.mids(imp, "broad", mild = mild),
+                     mice:::complete.mids(imp, "stacked", mild = mild),
+                     mice:::complete.mids(imp, "rep", mild = mild),
                     times = 100)
-milc <- TRUE
-z2 <- microbenchmark(mice:::complete.mids(imp, include = TRUE, milc = milc),
-                     mice:::complete.mids(imp, include = FALSE, milc = milc),
-                     mice:::complete.mids(imp, "all", milc = milc),
-                     mice:::complete.mids(imp, "long", milc = milc),
-                     mice:::complete.mids(imp, "broad", milc = milc),
-                     mice:::complete.mids(imp, "stacked", milc = milc),
-                     mice:::complete.mids(imp, "rep", milc = milc),
+mild <- TRUE
+z2 <- microbenchmark(mice:::complete.mids(imp, include = TRUE, mild = mild),
+                     mice:::complete.mids(imp, include = FALSE, mild = mild),
+                     mice:::complete.mids(imp, "all", mild = mild),
+                     mice:::complete.mids(imp, "long", mild = mild),
+                     mice:::complete.mids(imp, "broad", mild = mild),
+                     mice:::complete.mids(imp, "stacked", mild = mild),
+                     mice:::complete.mids(imp, "rep", mild = mild),
                      times = 100)

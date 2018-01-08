@@ -11,12 +11,12 @@
 #'return the original data, with missing values. \code{action} can
 #'also be one of the following keywords: \code{"all"}, \code{"long"}, 
 #'\code{"broad"} and \code{"repeated"}. See 'Details' for the interpretation.
-#'The default (\code{action = "all"}) returns an object of class \code{milc}.
+#'The default (\code{action = "all"}) returns an object of class \code{mild}.
 #'a list of \code{m} completed data sets.
 #'@param include A logical to indicate whether the orginal data with the missing
 #'values should be included.
-#'@param milc A logical indicating whether the return value should 
-#'always be an object of class \code{milc}. Setting \code{milc = TRUE} 
+#'@param mild A logical indicating whether the return value should 
+#'always be an object of class \code{mild}. Setting \code{mild = TRUE} 
 #'overrides \code{action} keywords \code{"long"}, \code{"broad"} 
 #'and \code{"repeated"}. The default is \code{FALSE}.
 #'@param \dots Additional arguments. Not used.
@@ -26,7 +26,7 @@
 #'The argument \code{action} can be a string, which is partially matched
 #'as follows: 
 #'\describe{ 
-#'\item{\code{"all"}}{produces a \code{milc} object of imputed data sets. When 
+#'\item{\code{"all"}}{produces a \code{mild} object of imputed data sets. When 
 #'\code{include = TRUE}, then the original data are appended as the first list 
 #'element.}
 #'\item{\code{"long"}}{ produces a long data frame of
@@ -55,44 +55,45 @@
 #'@keywords manip
 #'@examples
 #'
+#'# obtain first imputed data set
+#'sum(is.na(nhanes2))
+#'imp <- mice(nhanes2, print = FALSE, maxit = 1)
+#'dat <- complete(imp)
+#'sum(is.na(dat))
 #'
-#'# do default multiple imputation on a numeric matrix
-#'imp <- mice(nhanes)
+#'# obtain stacked third and fifth imputation
+#'dat <- complete(imp, c(3, 5))
 #'
-#'# obtain first imputated matrix
-#'mat <- complete(imp)
+#'# obtain all datasets, with additional identifiers
+#'head(complete(imp, "long"))
 #'
-#'# fill in the third imputation
-#'mat <- complete(imp, 3)
+#'# same, but now as list, mild object
+#'dslist <- complete(imp, "all")
+#'length(dslist)
 #'
-#'# long matrix with stacked complete data
-#'mat <- complete(imp, 'long')
+#'# same, but also include the original data
+#'dslist <- complete(imp, "all", include = TRUE)
+#'length(dslist)
 #'
-#'# long matrix with stacked complete data, including the original data
-#'mat <- complete(imp, 'long', inc=TRUE)
+#'# select original + 3 + 5, store as mild
+#'dslist <- complete(imp, c(0, 3, 5), mild = TRUE)
+#'names(dslist)
 #'
-#'# repeated matrix with complete data
-#'mat <- complete(imp, 'r')
-#'
-#'# for numeric data, produces a blocked correlation matrix, where
-#'# each block contains of the same variable pair over different
-#'# multiple imputations.
-#'cor(mat)
 #'@export
 complete.mids <- function(data, action = 1L, include = FALSE, 
-                          milc = FALSE, ...) {
+                          mild = FALSE, ...) {
   if (!is.mids(data)) stop("'data' not of class 'mids'")
 
   m <- as.integer(data$m)
   if (is.numeric(action)) {
     idx <- action[action >= 0L & action <= m]
     if (include && all(idx != 0L)) idx <- c(0L, idx) 
-    shape <- ifelse(milc, "milc", "stacked")
+    shape <- ifelse(mild, "mild", "stacked")
   }
   else if (is.character(action)) {
     if (include) idx <- 0L:m else idx <- 1L:m
     shape <- match.arg(action, c("all", "long", "broad", "repeated", "stacked"))
-    shape <- ifelse(shape == "all" || milc, "milc", shape)
+    shape <- ifelse(shape == "all" || mild, "mild", shape)
   }
   else stop("'action' not recognized")
   
@@ -102,8 +103,9 @@ complete.mids <- function(data, action = 1L, include = FALSE,
   
   if (shape == "stacked")
     return(bind_rows(mylist))
-  if (shape == "milc") {
-    class(mylist) <- c("milc", "list")
+  if (shape == "mild") {
+    names(mylist) <- as.character(idx)
+    class(mylist) <- c("mild", "list")
     return(mylist)
   }
   if (shape == "long") {
