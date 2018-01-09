@@ -293,7 +293,7 @@ mice <- function(data, m = 5,
   if (mp & mb & !mf) {
     # formulas leads
     formulas <- check.formulas(formulas, data)
-    blocks <- extract.blocks(formulas)
+    blocks <- construct.blocks(formulas)
     predictorMatrix <- make.predictorMatrix(data, blocks)
   }
   
@@ -312,7 +312,7 @@ mice <- function(data, m = 5,
     # formulas lead
     formulas <- check.formulas(formulas, data)
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
-    blocks <- extract.blocks(formulas, predictorMatrix)
+    blocks <- construct.blocks(formulas, predictorMatrix)
   }
   
   # case G
