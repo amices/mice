@@ -102,10 +102,12 @@ complete.mids <- function(data, action = 1L, include = FALSE,
   if (shape == "long") {
     cmp <- bind_rows(mylist)
     cmp <- data.frame(.imp = rep(idx, each = nrow(data$data)), 
-                      .id = rep.int(row.names(data$data), length(idx)), 
-                      cmp, 
-                      stringsAsFactors = FALSE)
-    row.names(cmp) <- as.character(seq_len(nrow(cmp)))
+                      .id = rep.int(1L:nrow(data$data), length(idx)), 
+                      cmp)
+    if (is.integer(attr(data$data, "row.names"))) 
+      row.names(cmp) <- seq_len(nrow(cmp))
+    else 
+      row.names(cmp) <- as.character(seq_len(nrow(cmp)))
     return(cmp)
   }
   # must be broad or repeated

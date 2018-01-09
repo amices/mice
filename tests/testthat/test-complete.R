@@ -9,6 +9,32 @@ test_that("long and all produce same data", {
   expect_equal(lng, all)
 })
 
+
+# mids workflow using saved objects
+imp <- mice(nhanes, seed = 123, print = FALSE)
+fit <- with(imp, lm(chl ~ age + bmi + hyp))
+est <- pool(fit)
+est.mice <- est
+
+# mild workflow using saved objects and base::lapply
+idl <- complete(imp, "all")
+fit <- lapply(idl, lm, formula = chl ~ age + bmi + hyp)
+est <- pool(fit)
+est.mild <- est
+
+# long workflow using base::by
+cmp <- complete(imp, "long")
+fit <- by(cmp, as.factor(cmp$.imp), lm, formula = chl ~ age + bmi + hyp)
+est <- pool(fit)
+est.long <- est
+
+test_that("workflow mids, mild and long produce same estimates", {
+  identical(est.mice$qbar, est.mild$qbar)
+  identical(est.mice$qbar, est.long$qbar)
+})
+
+
+
 #library(miceadds)
 #data("data.allison.gssexp")
 # library(mice)
