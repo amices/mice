@@ -69,22 +69,24 @@ parameters are all zero.
 \examples{
 
 ### To compare two linear models:
-imp <- mice(nhanes2)
-mi1 <- with(data=imp, expr=lm(bmi~age+hyp+chl))
-mi0 <- with(data=imp, expr=lm(bmi~age+hyp))
-pc  <- pool.compare(mi1, mi0, method='Wald')
-pc$spvalue
-#            [,1]
-#[1,] 0.000293631
-#
+imp <- mice(nhanes2, seed = 51009, print = FALSE)
+mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
+mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
+pc  <- pool.compare(mi1, mi0, method = 'Wald')
+pc$pvalue
 
 ### Comparison of two general linear models (logistic regression).
 \dontrun{
-imp  <- mice(boys, maxit=2)
-fit0 <- with(imp, glm(gen>levels(gen)[1] ~ hgt+hc,family=binomial))
-fit1 <- with(imp, glm(gen>levels(gen)[1] ~ hgt+hc+reg,family=binomial))
-pool.compare(fit1, fit0, method='likelihood', data=imp)}
+imp  <- mice(boys, maxit = 2, print = FALSE)
+fit1 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc + reg, family = binomial))
+fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
+pool.compare(fit1, fit0, method = 'likelihood', data = imp)$pvalue
 
+# using factors
+fit1 <- with(imp, glm(as.factor(gen > levels(gen)[1]) ~ hgt + hc + reg, family = binomial))
+fit0 <- with(imp, glm(as.factor(gen > levels(gen)[1]) ~ hgt + hc, family = binomial))
+pool.compare(fit1, fit0, method = 'likelihood', data = imp)$pvalue
+}
 }
 \references{
 Li, K.H., Meng, X.L., Raghunathan, T.E. and Rubin, D. B. (1991).
