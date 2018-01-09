@@ -105,7 +105,7 @@ complete.mids <- function(data, action = 1L, include = FALSE,
                       .id = rep.int(row.names(data$data), length(idx)), 
                       cmp, 
                       stringsAsFactors = FALSE)
-    row.names(cmp) <- seq_len(nrow(cmp))
+    row.names(cmp) <- as.character(seq_len(nrow(cmp)))
     return(cmp)
   }
   # must be broad or repeated
