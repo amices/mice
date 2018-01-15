@@ -1,9 +1,3 @@
-
-# --------------------------------PRINT.MIDS--------------------------------------
-# setMethod("print", "mids", function(x, ...) {
-#     print.mids(x, ...)
-# })
-
 #'Print a \code{mids} object
 #'
 #'@rdname print
@@ -14,28 +8,14 @@
 #'@method print mids
 #'@export
 print.mids <- function(x, ...) {
-    if (is.mids(x)) {
-        cat("Multiply imputed data set")
-        cat("\nCall:\n")
-        print(x$call, ...)
-        cat("Number of multiple imputations: ", x$m)
-        cat("\nMissing cells per column:\n")
-        print(x$nmis, ...)
-        cat("Imputation methods:\n")
-        print(x$method, ...)
-        cat("VisitSequence:\n")
-        print(x$visitSequence, ...)
-        cat("PredictorMatrix:\n")
-        print(x$predictorMatrix, ...)
-        cat("Random generator seed value: ", x$seed, "\n")
-    } else print(x, ...)
-    invisible()
+  cat("Class: mids\n")
+  cat("Number of multiple imputations: ", x$m, "\n")
+  cat("Imputation methods:\n")
+  print(x$method, ...)
+  cat("PredictorMatrix:\n")
+  print(head(x$predictorMatrix), ...)
+  invisible(x)
 }
-# ------------------------------print.mira-------------------------------
-
-# setMethod("print", signature(x = "mira"), function(x) {
-#     print.mira(x)
-# })
 
 #'Print a \code{mira} object
 #'
@@ -45,20 +25,12 @@ print.mids <- function(x, ...) {
 #'@method print mira
 #'@export
 print.mira <- function(x, ...) {
-    ## prints the mira object; A mira object is in fact a list, so it will be printed as such.  KO, 3/2/00
-    
-    if (is.mira(x)) 
-        print.listof(x, ...)  ##PM 4/02
-    else print(x, ...)
-    invisible()
-    
+  m <- ifelse(is.null(x$analyses), length(x), length(x$analyses))
+  cat("Class: mira       m:", m, "\n")
+  cc <- as.character(getCall(getfit(x, 1)))
+  cat("Complete-data model:", cc[1], "    formula:", cc[2])
+  invisible(x)
 } 
-
-
-# # ------------------------------print.mipo-------------------------------
-# setMethod("print", signature(x = "mipo"), function(x, ...) {
-#     print.mipo(x, ...)
-# })
 
 #'Print a \code{mipo} object
 #'
@@ -68,7 +40,12 @@ print.mira <- function(x, ...) {
 #'@method print mipo
 #'@export
 print.mipo <- function(x, ...) {
-  print(summary(x), ...)
+  cat("Class: mipo\n")
+  z <- summary(x, ...)
+  class(z) <- "data.frame"
+  names <- c("estimate", "std.error", "statistic", "p.value")
+  z <- z[, names]
+  print(z, ...)
   invisible(x)
 }
 
@@ -80,9 +57,6 @@ print.mipo <- function(x, ...) {
 #'@method print mipo.summary
 #'@export
 print.mipo.summary <- function(x, ...) {
-  from <- c("term", "estimate", "std.error", "statistic", "p.value")
-  to <- c("", "est", "se", "t", "Pr(>|t|)")
-  names(x)[names(x) %in% from] <- to
   print.data.frame(x, ...)
   invisible(x)
 }
