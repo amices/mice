@@ -52,7 +52,7 @@ print.mira <- function(x, ...) {
     else print(x, ...)
     invisible()
     
-}
+} 
 
 
 # # ------------------------------print.mipo-------------------------------
@@ -83,7 +83,7 @@ print.mipo.summary <- function(x, ...) {
   from <- c("term", "estimate", "std.error", "statistic", "p.value")
   to <- c("", "est", "se", "t", "Pr(>|t|)")
   names(x)[names(x) %in% from] <- to
-  print.data.frame(x, row.names = FALSE, ...)
+  print.data.frame(x, ...)
   invisible(x)
 }
 

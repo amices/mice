@@ -65,16 +65,16 @@ summary.mipo <- function(object, conf.int = FALSE, conf.level = .95,
   # object: object of class mipo
   x <- object
   ret <- data.frame(
-    term      = x$term,
     estimate  = x$qbar,
     std.error = sqrt(x$t),
     statistic = x$qbar / sqrt(x$t),
     p.value   = if (all(x$df > 0)) 
       2 * (1 - pt(abs(x$qbar / sqrt(x$t)), x$df)) else NA,
     riv       = x$r,
+    lambda    = x$lambda,
     fmi       = x$fmi,
     stringsAsFactors = FALSE,
-    row.names = NULL)
+    row.names = x$term)
   ret <- process_mipo(ret, x, conf.int = conf.int, conf.level = conf.level,
                       exponentiate = exponentiate)
   class(ret) <- c("mipo.summary", "data.frame")

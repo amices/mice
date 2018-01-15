@@ -109,5 +109,6 @@ pool.fitlist <- function (fitlist) {
               t = ubar + (1 + 1 / m) * b,
               df = barnard.rubin(m, b, t, dfcom),
               r = (1 + 1 / m) * b / ubar,
+              lambda = (1 + 1 / m) * b / t,
               fmi = (r + 2 / (df + 3)) / (r + 1))
 }

@@ -5,7 +5,7 @@
 #'of objects has methods for
 #'the following generic functions: \code{print}, \code{summary}.
 #'
-#'@section An object class \code{mipo} is a \code{list} containing the 
+#'@details An object class \code{mipo} is a \code{list} containing the 
 #'    following elements:
 #'\describe{
 #'    \item{\code{call}:}{The call that created the \code{mipo} object.}
@@ -26,7 +26,7 @@
 #'complete data estimates.}
 #'    \item{\code{b}:}{The between imputation variance-covariance matrix for the estimates.}
 #'    \item{\code{t}:}{The total variance-covariance matrix for the estimates.}
-#'    \item{\code{r}:}{Relative increases in variance due to missing data.}
+#'    \item{\code{riv}:}{Relative increases in variance due to missing data.}
 #'    \item{\code{dfcom}:}{Degrees of freedom in the hypothetically complete data: the
 #'sample size minus the number of free parameters.}
 #'    \item{\code{df}:}{Degrees of freedom associated with the t-statistics.}
