@@ -8,7 +8,7 @@
 \alias{summary.mice.anova}
 \title{Summary of a \code{mira} object}
 \usage{
-\method{summary}{mira}(object, ...)
+\method{summary}{mira}(object, type = c("tidy", "glance", "summary"), ...)
 
 \method{summary}{mipo}(object, conf.int = FALSE, conf.level = 0.95,
   exponentiate = FALSE, ...)

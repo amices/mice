@@ -13,14 +13,18 @@
 #'@seealso \code{\link[=mira-class]{mira}}
 #'@method summary mira
 #'@export
-summary.mira <- function(object, ...) {
-  # This summary function is for a mira object.  Then the seperate analyses are of class lm (glm), it calls sequentially
-  # summary.lm (summary.glm) for all analyses.  KO, 4/2/00
-  
-  for (i in seq_along(object$analyses)) {
-    cat("\n", "## summary of imputation", i, ":\n")
-    print(summary(object$analyses[[i]], ...), ...)
-  }
+summary.mira <- function(object, 
+                         type = c("tidy", "glance", "summary"), 
+                         ...) {
+  type <- match.arg(type)
+  fitlist <- getfit(object)
+  if (type == "tidy")
+    v <- lapply(fitlist, tidy, effects = "fixed", ...) %>% bind_rows()
+  if (type == "glance")
+    v <- lapply(fitlist, glance, ...) %>% bind_rows()
+  if (type == "summary")
+    v <- lapply(fitlist, summary, ...)
+  v
 }
 
 # # ------------------------------summary.mipo-------------------------------
@@ -60,32 +64,23 @@ summary.mira <- function(object, ...) {
 
 summary.mipo <- function(object, conf.int = FALSE, conf.level = .95,
                          exponentiate = FALSE, ...) {
-  # summary method for the pooled analysis results
-  # 
-  # object: object of class mipo
-  x <- object
-  ret <- data.frame(
-    estimate  = x$qbar,
-    std.error = sqrt(x$t),
-    statistic = x$qbar / sqrt(x$t),
-    p.value   = if (all(x$df > 0)) 
-      2 * (1 - pt(abs(x$qbar / sqrt(x$t)), x$df)) else NA,
-    riv       = x$r,
-    lambda    = x$lambda,
-    fmi       = x$fmi,
+  z <- data.frame(
+    estimate  = object$qbar,
+    std.error = sqrt(object$t),
+    statistic = object$qbar / sqrt(object$t),
+    p.value   = if (all(object$df > 0)) 
+      2 * (1 - pt(abs(object$qbar / sqrt(object$t)), object$df)) else NA,
+    riv       = object$r,
+    lambda    = object$lambda,
+    fmi       = object$fmi,
     stringsAsFactors = FALSE,
-    row.names = x$term)
-  ret <- process_mipo(ret, x, conf.int = conf.int, conf.level = conf.level,
-                      exponentiate = exponentiate)
-  class(ret) <- c("mipo.summary", "data.frame")
-  ret
+    row.names = object$term)
+  z <- process_mipo(z, object, conf.int = conf.int, conf.level = conf.level,
+                    exponentiate = exponentiate)
+  class(z) <- c("mipo.summary", "data.frame")
+  z
 }
 
-
-# # --------------------------------SUMMARY.MIDS--------------------------------------
-# setMethod("summary", signature(object = "mids"), function(object, ...) {
-#     summary.mids(object, ...)
-# })
 
 #'Summary of a \code{mids} object
 #'
