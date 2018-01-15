@@ -84,8 +84,7 @@ pool <- function (object) {
   names(qbar) <- rr$term
 
   fit <- c(list(call = call, call1 = object$call, call2 = object$call1,
-                nmis = object$nmis, m = m, qbar = qbar), 
-           rr)
+                nmis = object$nmis), rr)
   oldClass(fit) <- c("mipo", oldClass(object))
   return(fit)
 }
