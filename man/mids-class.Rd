@@ -103,7 +103,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 }
 \seealso{
 \code{\link{mice}}, \code{\link[=mira-class]{mira}}, 
-\code{\link[=mipo-class]{mipo}}
+\code{\link{mipo}}
 }
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn, 2000

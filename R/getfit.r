@@ -23,11 +23,12 @@
 #'
 #'@export
 getfit <- function(x, i = -1L, simplify = FALSE) {
-  ra <- NULL
-  if (is.mira(x)) ra <- x$analyses
-  if (is.mitml.result(x)) ra <- x
+  if (is.null(x$analyses)) 
+    ra <- x
+  else
+    ra <- x$analyses
   if (i != -1L) return(ra[[i]])
   if (simplify) ra <- unlist(ra)
-  class(ra) <- c("mitml.result", "list")
+  class(ra) <- c("mira", "list")
   ra
 }

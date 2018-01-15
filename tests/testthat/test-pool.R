@@ -10,7 +10,7 @@ mn <- c(18.76175, -4.573652, -6.635969, 0.05359003, 2.163629)
 se <- c(4.002796, 2.033986, 2.459769, 0.02235067, 2.02898)
 
 test_that("retains same numerical result", {
-  expect_equal(unname(est$qbar), mn, tolerance = 0.00001)
+  expect_equal(unname(est$pooled$qbar), mn, tolerance = 0.00001)
   expect_equal(unname(summary(est)[, "std.error"]), se, tolerance = 0.00001)
 })
 

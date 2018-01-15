@@ -15,7 +15,7 @@ D1 <- function(fit1, fit0 = NULL, df.com = NULL, ...) {
   # fit0: named numerical vector, character vector, or list
   fit1 <- as.mitml.result(fit1)
   est1 <- pool(fit1)
-  qbar1 <- est1$qbar
+  qbar1 <- est1$pooled$qbar
   
   if (is.null(fit0)) {
     # test all estimates equal to zero, except intercept

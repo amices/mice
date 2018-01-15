@@ -32,41 +32,12 @@ print.mira <- function(x, ...) {
   invisible(x)
 } 
 
-#'Print a \code{mipo} object
-#'
-#'@rdname print
-#'@return \code{NULL}
-#'@seealso \code{\link[=mipo-class]{mipo}}
-#'@method print mipo
-#'@export
-print.mipo <- function(x, ...) {
-  cat("Class: mipo\n")
-  z <- summary(x, ...)
-  class(z) <- "data.frame"
-  names <- c("estimate", "std.error", "statistic", "p.value")
-  z <- z[, names]
-  print(z, ...)
-  invisible(x)
-}
-
-#'Print a \code{summary.mipo} object
-#'
-#'@rdname print
-#'@return \code{NULL}
-#'@seealso \code{\link[=mipo-class]{mipo}}
-#'@method print mipo.summary
-#'@export
-print.mipo.summary <- function(x, ...) {
-  print.data.frame(x, ...)
-  invisible(x)
-}
-
 
 #'Print a \code{mice.anova} object
 #'
 #'@rdname print
 #'@return \code{NULL}
-#'@seealso \code{\link[=mipo-class]{mipo}}
+#'@seealso \code{\link{mipo}}
 #'@method print mice.anova
 #'@export
 print.mice.anova <- function(x, ...) {
@@ -79,7 +50,7 @@ print.mice.anova <- function(x, ...) {
 #'
 #'@rdname print
 #'@return \code{NULL}
-#'@seealso \code{\link[=mipo-class]{mipo}}
+#'@seealso \code{\link{mipo}}
 #'@method print mice.anova.summary
 #'@export
 print.mice.anova.summary <- function(x, ...) {

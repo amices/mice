@@ -80,20 +80,17 @@ pool <- function (object) {
   }
   
   rr <- pool.fitlist(getfit(object))
-  qbar <- rr$qbar
-  names(qbar) <- rr$term
-
-  fit <- c(list(call = call, call1 = object$call, call2 = object$call1,
-                nmis = object$nmis), rr)
-  oldClass(fit) <- c("mipo", oldClass(object))
-  return(fit)
+  rr <- data.frame(rr[, -(1:2)], 
+                   row.names = rr$term)
+  rr <- list(call = call, m = m, pooled = rr)
+  class(rr) <- c("mipo", "data.frame")
+  rr
 }
 
 pool.fitlist <- function (fitlist) {
-  # call broom to do the hard work
-  v <- lapply(fitlist, glance) %>% bind_rows()
-  w <- lapply(fitlist, tidy, effects = "fixed") %>% bind_rows()
-  
+  v <- summary(fitlist, type = "glance")
+  w <- summary(fitlist, type = "tidy")
+
   # residual degrees of freedom of model fitted on hypothetically complete data
   # assumed to be the same across imputations
   dfcom <- v$df.residual[1L]
@@ -107,8 +104,5 @@ pool.fitlist <- function (fitlist) {
               ubar = mean(.data$std.error ^ 2),
               b = var(.data$estimate),
               t = ubar + (1 + 1 / m) * b,
-              df = barnard.rubin(m, b, t, dfcom),
-              r = (1 + 1 / m) * b / ubar,
-              lambda = (1 + 1 / m) * b / t,
-              fmi = (r + 2 / (df + 3)) / (r + 1))
+              df = barnard.rubin(m, b, t, dfcom))
 }
