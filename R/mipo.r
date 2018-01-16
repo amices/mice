@@ -59,20 +59,18 @@ mipo <- function(mira.obj, ...) {
 summary.mipo <- function(object, conf.int = FALSE, conf.level = .95,
                          exponentiate = FALSE, ...) {
   m <- object$m
-  z <- with(object$pooled, data.frame(
-    estimate  = qbar,
-    std.error = sqrt(t),
-    statistic = qbar / sqrt(t),
-    df        = df,
-    p.value   = if (all(df > 0)) 
-      2 * (1 - pt(abs(qbar / sqrt(t)), df)) else NA,
-    riv       = (1 + 1 / m) * b / ubar,
-    lambda    = (1 + 1 / m) * b / t,
-    stringsAsFactors = FALSE,
-    row.names = row.names(object$pooled)))
-  z$fmi <- (z$riv + 2 / (z$df + 3)) / (z$riv + 1)
-  
-  z <- process_mipo(z, object, conf.int = conf.int, conf.level = conf.level,
+  x <- object$pooled
+  std.error <- sqrt(x$t)
+  statistic <- x$qbar / std.error
+  p.value <- 2 * (1 - pt(abs(statistic), max(x$df, 0.001)))
+
+  z <- data.frame(x,
+                  std.error = std.error,
+                  statistic = statistic,
+                  p.value = p.value)
+  z <- process_mipo(z, object, 
+                    conf.int = conf.int, 
+                    conf.level = conf.level,
                     exponentiate = exponentiate)
   class(z) <- c("mipo.summary", "data.frame")
   z
@@ -109,6 +107,7 @@ process_mipo <- function(z, x, conf.int = FALSE, conf.level = .95,
     trans <- identity
   }
   
+  CI <- NULL
   if (conf.int) {
     # avoid "Waiting for profiling to be done..." message
     CI <- suppressMessages(confint(x, level = conf.level))
@@ -118,10 +117,15 @@ process_mipo <- function(z, x, conf.int = FALSE, conf.level = .95,
       piv <- x$qr$pivot[seq_len(p)]
       CI <- CI[piv, , drop = FALSE]
     }
-    z <- cbind(z[, 1:5], trans(unrowname(CI)), z[, 6:8])
   }
-  z$estimate <- trans(z$estimate)
-  
+  z$qbar <- trans(z$qbar)
+  if (!is.null(CI))
+  z <- cbind(z[, c("qbar", "std.error", "statistic", "df", "p.value")], 
+             trans(unrowname(CI)),
+             z[, c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")])
+  else 
+    z <- cbind(z[, c("qbar", "std.error", "statistic", "df", "p.value")], 
+               z[, c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")])
   z
 }
 
