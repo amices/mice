@@ -41,7 +41,7 @@ getfit <- function(x, i = -1L, simplify = FALSE) {
 #'@export
 getqbar <- function(x) {
   if (!is.mipo(x)) stop("Not a mipo object")
-  qbar <- x$pooled$qbar
+  qbar <- x$pooled$estimate
   names(qbar) <- row.names(x$pooled)
   qbar
 }

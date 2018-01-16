@@ -21,10 +21,10 @@
 #' 
 #' The \code{pooled} elements is a data frame with columns:
 #' \tabular{ll}{
-#' \code{qbar}    \tab Pooled complete data estimate\cr
-#' \code{ubar}    \tab Within-imputation variance of \code{qbar}\cr
-#' \code{b}       \tab Between-imputation variance of \code{qbar}\cr
-#' \code{t}       \tab Total variance, of \code{qbar}\cr
+#' \code{estimate}\tab Pooled complete data estimate\cr
+#' \code{ubar}    \tab Within-imputation variance of \code{estimate}\cr
+#' \code{b}       \tab Between-imputation variance of \code{estimate}\cr
+#' \code{t}       \tab Total variance, of \code{estimate}\cr
 #' \code{dfcom}   \tab Degrees of freedom in complete data\cr
 #' \code{df}      \tab Degrees of freedom of $t$-statistic\cr
 #' \code{riv}     \tab Relative increase in variance\cr
@@ -61,7 +61,7 @@ summary.mipo <- function(object, conf.int = FALSE, conf.level = .95,
   m <- object$m
   x <- object$pooled
   std.error <- sqrt(x$t)
-  statistic <- x$qbar / std.error
+  statistic <- x$estimate / std.error
   p.value <- 2 * (1 - pt(abs(statistic), max(x$df, 0.001)))
 
   z <- data.frame(x,
@@ -118,13 +118,13 @@ process_mipo <- function(z, x, conf.int = FALSE, conf.level = .95,
       CI <- CI[piv, , drop = FALSE]
     }
   }
-  z$qbar <- trans(z$qbar)
+  z$estimate <- trans(z$estimate)
   if (!is.null(CI))
-  z <- cbind(z[, c("qbar", "std.error", "statistic", "df", "p.value")], 
+  z <- cbind(z[, c("estimate", "std.error", "statistic", "df", "p.value")], 
              trans(unrowname(CI)),
              z[, c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")])
   else 
-    z <- cbind(z[, c("qbar", "std.error", "statistic", "df", "p.value")], 
+    z <- cbind(z[, c("estimate", "std.error", "statistic", "df", "p.value")], 
                z[, c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")])
   z
 }

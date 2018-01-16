@@ -90,7 +90,7 @@ pool <- function (object) {
 pool.fitlist <- function (fitlist) {
   v <- summary(fitlist, type = "glance")
   w <- summary(fitlist, type = "tidy")
-
+  
   # residual degrees of freedom of model fitted on hypothetically complete data
   # assumed to be the same across imputations
   dfcom <- v$df.residual[1L]
@@ -98,7 +98,7 @@ pool.fitlist <- function (fitlist) {
   if (is.null(dfcom)) dfcom <- Inf
   
   # Rubin's rules for scalar estimates
-  group_by(w, .data$term) %>%
+  pooled <- group_by(w, .data$term) %>%
     summarize(m = n(),
               qbar = mean(.data$estimate),
               ubar = mean(.data$std.error ^ 2),
@@ -109,5 +109,7 @@ pool.fitlist <- function (fitlist) {
               riv = (1 + 1 / m) * b / ubar,
               lambda = (1 + 1 / m) * b / t,
               fmi = (riv + 2 / (df + 3)) / (riv + 1))
+  names(pooled)[3] <- "estimate"
+  pooled
 }
 

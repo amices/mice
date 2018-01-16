@@ -55,10 +55,10 @@ elements: \code{call}, \code{m} and \code{pooled}.
 
 The \code{pooled} elements is a data frame with columns:
 \tabular{ll}{
-\code{qbar}    \tab Pooled complete data estimate\cr
-\code{ubar}    \tab Within-imputation variance of \code{qbar}\cr
-\code{b}       \tab Between-imputation variance of \code{qbar}\cr
-\code{t}       \tab Total variance, of \code{qbar}\cr
+\code{estimate}\tab Pooled complete data estimate\cr
+\code{ubar}    \tab Within-imputation variance of \code{estimate}\cr
+\code{b}       \tab Between-imputation variance of \code{estimate}\cr
+\code{t}       \tab Total variance, of \code{estimate}\cr
 \code{dfcom}   \tab Degrees of freedom in complete data\cr
 \code{df}      \tab Degrees of freedom of $t$-statistic\cr
 \code{riv}     \tab Relative increase in variance\cr
