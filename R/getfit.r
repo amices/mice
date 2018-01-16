@@ -32,3 +32,18 @@ getfit <- function(x, i = -1L, simplify = FALSE) {
   class(ra) <- c("mira", "list")
   ra
 }
+
+#'Extract estimate from \code{mipo} object
+#'
+#'\code{getqbar} returns a named vector of pooled estimates.
+#'
+#'@param x An object of class \code{mipo}
+#'@export
+getqbar <- function(x, i = -1L, simplify = FALSE) {
+  if (!is.mipo(x)) stop("Not a mipo object")
+  qbar <- x$pooled$qbar
+  names(qbar) <- row.names(x$pooled)
+  qbar
+}
+
+
