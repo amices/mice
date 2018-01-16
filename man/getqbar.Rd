@@ -4,7 +4,7 @@
 \alias{getqbar}
 \title{Extract estimate from \code{mipo} object}
 \usage{
-getqbar(x, i = -1L, simplify = FALSE)
+getqbar(x)
 }
 \arguments{
 \item{x}{An object of class \code{mipo}}

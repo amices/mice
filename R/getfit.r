@@ -39,7 +39,7 @@ getfit <- function(x, i = -1L, simplify = FALSE) {
 #'
 #'@param x An object of class \code{mipo}
 #'@export
-getqbar <- function(x, i = -1L, simplify = FALSE) {
+getqbar <- function(x) {
   if (!is.mipo(x)) stop("Not a mipo object")
   qbar <- x$pooled$qbar
   names(qbar) <- row.names(x$pooled)

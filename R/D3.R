@@ -7,7 +7,7 @@ D3 <- function(fit1, fit0 = NULL, df.com = Inf, ...) {
   fit1 <- getfit(fit1)
   m <- length(fit1)
   est1 <- pool(fit1)
-  qbar1 <- est1$qbar
+  qbar1 <- getqbar(est1)
   
   if (is.null(fit0)) {
     # test all estimates equal to zero
@@ -18,7 +18,8 @@ D3 <- function(fit1, fit0 = NULL, df.com = Inf, ...) {
   else fit0 <- getfit(fit0)
   
   est0 <- pool(fit0)
-  k <- length(est1$qbar) - length(est0$qbar)
+  qbar0 <- getqbar(est0)
+  k <- length(qbar1) - length(qbar0)
   
   # For each imputed dataset, calculate the deviance between the two 
   # models as fitted
@@ -31,11 +32,9 @@ D3 <- function(fit1, fit0 = NULL, df.com = Inf, ...) {
   
   # For each imputed dataset, calculate the deviance between the two 
   # models with coefficients restricted to qbar
-  qbar1 <- pool(fit1)$qbar
   mds1 <- lapply(fit1, fix.coef, beta = qbar1)
   dev1.L <- lapply(mds1, glance) %>% bind_rows() %>% pull(.data$deviance)
   
-  qbar0 <- pool(fit0)$qbar
   mds0 <- lapply(fit0, fix.coef, beta = qbar0)
   dev0.L <- lapply(mds0, glance) %>% bind_rows() %>% pull(.data$deviance)
   

@@ -137,7 +137,7 @@ vcov.mipo <- function(object, ...) {
 
 confint.mipo <- function(object, parm, level = 0.95, ...) {
   pooled <- object$pooled
-  cf <- pooled$qbar
+  cf <- getqbar(object)
   df <- pooled$df
   se <- sqrt(pooled$t)
   pnames <- names(df) <- names(se) <- names(cf) <- row.names(pooled)

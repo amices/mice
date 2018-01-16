@@ -101,8 +101,8 @@ pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"),
   m <- length(fits1)
   est1 <- pool(fit1)
   est0 <- pool(fit0)
-  dimQ1 <- length(est1$pooled$qbar)
-  dimQ2 <- dimQ1 - length(est0$pooled$qbar)
+  dimQ1 <- length(getqbar(est1))
+  dimQ2 <- dimQ1 - length(getqbar(est0))
   # Check: Only need the lm or lmer object
   formula1 <- formula(getfit(fit1, 1L))
   formula0 <- formula(getfit(fit0, 1L))
@@ -123,7 +123,7 @@ pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"),
     Q <- diag(dimQ1)
     where_new_vars = which(!(vars1 %in% vars0))
     Q <- Q[where_new_vars, , drop = FALSE]
-    qbar <- Q %*% est1$pooled$qbar
+    qbar <- Q %*% getqbar(est1)
     Ubar <- Q %*% diag(est1$pooled$ubar) %*% (t(Q))
     Bm <- Q %*% diag(est1$pooled$b) %*% (t(Q))
     rm <- (1 + 1/m) * sum(diag(Bm %*% (solve(Ubar))))/dimQ2
@@ -143,11 +143,11 @@ pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"),
     
     # Calculate for each imputed dataset the deviance between the two 
     # models with the pooled coefficients
-    qbar1 <- pool(fits1)$pooled$qbar
+    qbar1 <- getqbar(pool(fits1))
     mds1 <- lapply(fits1, fix.coef, beta = qbar1)
     dev1.L <- lapply(mds1, glance) %>% bind_rows() %>% pull(.data$deviance)
     
-    qbar0 <- pool(fits0)$pooled$qbar
+    qbar0 <- getqbar(pool(fits0))
     mds0 <- lapply(fits0, fix.coef, beta = qbar0)
     dev0.L <- lapply(mds0, glance) %>% bind_rows() %>% pull(.data$deviance)
     
@@ -171,7 +171,7 @@ pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"),
   statistic <- list(call = call, call11 = fit1$call, call12 = fit1$call1, 
                     call01 = fit0$call, call02 = fit0$call1, 
                     method = method, nmis = fit1$nmis, m = m, 
-                    qbar1 = est1$pooled$qbar, qbar0 = est0$pooled$qbar, 
+                    qbar1 = getqbar(est1), qbar0 = getqbar(est0), 
                     ubar1 = est1$pooled$ubar, ubar0 = est0$pooled$ubar, 
                     deviances = deviances,
                     Dm = Dm, rm = rm, df1 = dimQ2, df2 = w, 
