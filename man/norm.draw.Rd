@@ -38,5 +38,6 @@ can be called by user-specified imputation functions.
 Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
 }
 \author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, Gerko Vink, 2017
+Gerko Vink, 2018, for this version, based on earlier versions written 
+by Stef van Buuren, Karin Groothuis-Oudshoorn, 2017
 }
