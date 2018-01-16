@@ -79,10 +79,8 @@ pool <- function (object) {
     return(fa)
   }
   
-  rr <- pool.fitlist(getfit(object))
-  rr <- data.frame(rr[, -(1:2)], 
-                   row.names = rr$term)
-  rr <- list(call = call, m = m, pooled = rr)
+  pooled <- pool.fitlist(getfit(object))
+  rr <- list(call = call, m = m, pooled = pooled)
   class(rr) <- c("mipo", "data.frame")
   rr
 }
@@ -98,8 +96,11 @@ pool.fitlist <- function (fitlist) {
   if (is.null(dfcom)) dfcom <- Inf
   
   # Rubin's rules for scalar estimates
-  pooled <- group_by(w, .data$term) %>%
+  pooled <- w %>%
+    mutate(par = rep_len(1L:length(unique(term)), length.out = n())) %>%
+    group_by(par) %>%
     summarize(m = n(),
+              term = .data$term[1L],
               qbar = mean(.data$estimate),
               ubar = mean(.data$std.error ^ 2),
               b = var(.data$estimate),
@@ -108,8 +109,11 @@ pool.fitlist <- function (fitlist) {
               df = barnard.rubin(m, b, t, dfcom),
               riv = (1 + 1 / m) * b / ubar,
               lambda = (1 + 1 / m) * b / t,
-              fmi = (riv + 2 / (df + 3)) / (riv + 1))
-  names(pooled)[3] <- "estimate"
+              fmi = (riv + 2 / (df + 3)) / (riv + 1)) %>%
+    select(-m, -par)
+  pooled <- data.frame(pooled[, -1L], 
+                       row.names = pooled$term)
+  names(pooled)[1L] <- "estimate"
   pooled
 }
 
