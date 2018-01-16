@@ -61,7 +61,8 @@ mice.impute.norm <- function(y, ry, x, wy = NULL, ...) {
 #'residual standard deviation).
 #'@references
 #'Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
-#'@author Stef van Buuren, Karin Groothuis-Oudshoorn, Gerko Vink, 2017
+#'@author Gerko Vink, 2018, for this version, based on earlier versions written 
+#'by Stef van Buuren, Karin Groothuis-Oudshoorn, 2017
 #'@export
 norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...) 
   return(.norm.draw(y, ry, x, rank.adjust = TRUE, ...))
@@ -87,7 +88,14 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...)
 #' This function computes least squares estimates, variance/covariance matrices, 
 #' residuals and degrees of freedom according to ridge regression, QR decomposition 
 #' or Singular Value Decomposition. This function is internally called by .norm.draw(), 
-#' but can be called by any user-sprecified imputation funciton.
+#' but can be called by any user-sprecified imputation function.
+#' 
+#' When calculating the inverse of the crossproduct of the predictor matrix, 
+#' problems may arise. For example, taking the inverse is not possible when the 
+#' predictor matrix is rank deficient, or when the estimation problem is 
+#' computationally singular. This function detects such error cases and 
+#' automatically falls back to adding a ridge penalty to the diagonal of the 
+#' crossproduct to allow for proper calculation of the inverse. 
 #' 
 #'@aliases estimice
 #'@param x Matrix (\code{n} x \code{p}) of complete covariates.
@@ -102,7 +110,7 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...)
 #'@return A \code{list} containing components \code{c} (least squares estimate),
 #'\code{r} (residuals), \code{v} (variance/covariance matrix) and \code{df} 
 #'(degrees of freedom).
-#'@author Gerko Vink, 2017
+#'@author Gerko Vink, 2018
 #'@export
 estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
   df <- max(length(y) - ncol(x), 1)
@@ -111,12 +119,16 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
     c <- t(qr$coef)
     f <- qr$fitted.values
     r <- t(qr$residuals)
-    if(qr$rank %in% dim(x)){
-      v <- solve(as.matrix(crossprod(qr.R(qr$qr))))
-    } else { #only if computationally singular system
+    v <- try(solve(as.matrix(crossprod(qr.R(qr$qr)))), silent = TRUE)
+    if(inherits(v, "try-error")){ 
       xtx <- as.matrix(crossprod(qr.R(qr$qr)))
       pen <- diag(xtx) * ridge #calculate ridge penalty
-      v <- solve(xtx + diag(pen)) #add ridge penalty to allow inverse of vcov
+      v <- solve(xtx + diag(pen)) #add ridge penalty to allow inverse of v
+      message(cat("A ridge penalty had to be used to calculate the inverse crossproduct \n
+      of the predictor matrix. Please remove duplicate variables or unique \n
+      respondent names/numbers from the imputation model. It may be advisable to \n
+      check the fraction of missing information (fmi) to evaluate the validity \n
+      of the imputation model"))
     }
     return(list(c=t(c), r=t(r), v=v, df=df, ls.meth=ls.meth))
   } 
@@ -135,12 +147,16 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
     c <- s$v %*% ((t(s$u) %*% y) / s$d)
     f <- x %*% c
     r <- f - y
-    if(sum(s$d > 1e-8) == length(s$d)){
-      v <- solve(s$v %*% diag(s$d)^2 %*% t(s$v))
-    } else { #only if computationally singular system
+    v <- try(solve(s$v %*% diag(s$d)^2 %*% t(s$v)), silent = TRUE)
+    if(inherits(v, "try-error")){
       xtx <- s$v %*% diag(s$d)^2 %*% t(s$v)
       pen <- diag(xtx) * ridge #calculate ridge penalty
-      v <- solve(xtx + diag(pen)) #add ridge penalty to allow inverse of vcov
+      v <- solve(xtx + diag(pen)) #add ridge penalty to allow inverse of v
+      message(cat("A ridge penalty had to be used to calculate the inverse crossproduct \n
+      of the predictor matrix. Please remove duplicate variables or unique \n
+      respondent names/numbers from the imputation model. It may be advisable to \n
+      check the fraction of missing information (fmi) to evaluate the validity \n
+      of the imputation model"))
     }
     return(list(c=c, r=r, v=v, df=df, ls.meth=ls.meth))
   }
