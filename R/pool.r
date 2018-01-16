@@ -104,5 +104,10 @@ pool.fitlist <- function (fitlist) {
               ubar = mean(.data$std.error ^ 2),
               b = var(.data$estimate),
               t = ubar + (1 + 1 / m) * b,
-              df = barnard.rubin(m, b, t, dfcom))
+              dfcom = dfcom,
+              df = barnard.rubin(m, b, t, dfcom),
+              riv = (1 + 1 / m) * b / ubar,
+              lambda = (1 + 1 / m) * b / t,
+              fmi = (riv + 2 / (df + 3)) / (riv + 1))
 }
+
