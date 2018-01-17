@@ -56,8 +56,10 @@ mipo <- function(mira.obj, ...) {
 #'@return The \code{summary} method returns a data frame with summary statistis of the pooled analysis.
 #'@rdname mipo
 #'@export
-summary.mipo <- function(object, conf.int = FALSE, conf.level = .95,
+summary.mipo <- function(object, type = c("tests", "all"),
+                         conf.int = FALSE, conf.level = .95,
                          exponentiate = FALSE, ...) {
+  type <- match.arg(type)
   m <- object$m
   x <- object$pooled
   std.error <- sqrt(x$t)
@@ -72,6 +74,11 @@ summary.mipo <- function(object, conf.int = FALSE, conf.level = .95,
                     conf.int = conf.int, 
                     conf.level = conf.level,
                     exponentiate = exponentiate)
+  if (type == "tests") {
+    out <- c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")
+    keep <- base::setdiff(names(z), out)
+    z <- z[, keep]
+  }
   class(z) <- c("mipo.summary", "data.frame")
   z
 }

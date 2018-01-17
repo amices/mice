@@ -11,8 +11,8 @@
 \usage{
 mipo(mira.obj, ...)
 
-\method{summary}{mipo}(object, conf.int = FALSE, conf.level = 0.95,
-  exponentiate = FALSE, ...)
+\method{summary}{mipo}(object, type = c("tests", "all"), conf.int = FALSE,
+  conf.level = 0.95, exponentiate = FALSE, ...)
 
 \method{print}{mipo}(x, ...)
 
