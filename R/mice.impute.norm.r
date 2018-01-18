@@ -124,11 +124,9 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
       xtx <- as.matrix(crossprod(qr.R(qr$qr)))
       pen <- diag(xtx) * ridge #calculate ridge penalty
       v <- solve(xtx + diag(pen)) #add ridge penalty to allow inverse of v
-      message(cat("A ridge penalty had to be used to calculate the inverse crossproduct \n
-      of the predictor matrix. Please remove duplicate variables or unique \n
-      respondent names/numbers from the imputation model. It may be advisable to \n
-      check the fraction of missing information (fmi) to evaluate the validity \n
-      of the imputation model"))
+      cat("*") #indicator of added ridge penalty to the printed iteration history
+      mess <- "* A ridge penalty had to be used to calculate the inverse crossproduct of the predictor matrix. Please remove duplicate variables or unique respondent names/numbers from the imputation model. It may be advisable to check the fraction of missing information (fmi) to evaluate the validity of the imputation model"
+      updateLog(out = mess, frame = 5)
     }
     return(list(c=t(c), r=t(r), v=v, df=df, ls.meth=ls.meth))
   } 
@@ -152,13 +150,10 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
       xtx <- s$v %*% diag(s$d)^2 %*% t(s$v)
       pen <- diag(xtx) * ridge #calculate ridge penalty
       v <- solve(xtx + diag(pen)) #add ridge penalty to allow inverse of v
-      message(cat("A ridge penalty had to be used to calculate the inverse crossproduct \n
-      of the predictor matrix. Please remove duplicate variables or unique \n
-      respondent names/numbers from the imputation model. It may be advisable to \n
-      check the fraction of missing information (fmi) to evaluate the validity \n
-      of the imputation model"))
+      cat("*") #indicator of added ridge penalty in the printed iteration history
+      mess <- "* A ridge penalty had to be used to calculate the inverse crossproduct of the predictor matrix. Please remove duplicate variables or unique respondent names/numbers from the imputation model. It may be advisable to check the fraction of missing information (fmi) to evaluate the validity of the imputation model"
+      updateLog(out = mess, frame = 5)
     }
     return(list(c=c, r=r, v=v, df=df, ls.meth=ls.meth))
   }
 }
- 
