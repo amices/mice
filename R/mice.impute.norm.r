@@ -161,3 +161,4 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
     return(list(c=c, r=r, v=v, df=df, ls.meth=ls.meth))
   }
 }
+ 
