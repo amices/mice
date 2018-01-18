@@ -138,8 +138,15 @@ sampler <- function(p, data, where, m, imp, r, visitSequence, fromto, printFlag,
       }
     }  # end main iteration
     
-    if (printFlag)
-      cat("\n")
+    if (printFlag) {
+      r <- get("loggedEvents", parent.frame(1))
+      ridge.used <- any(grepl("A ridge penalty", r$out)) 
+      if (ridge.used) {
+        cat("\n * Please inspect the loggedEvents \n")
+      } else {
+        cat("\n")
+      }
+    }
   }
   return(list(iteration = maxit, imp = imp, chainMean = chainMean, chainVar = chainVar))
 }
