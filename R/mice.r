@@ -93,6 +93,12 @@
 #'visited. In that way, deterministic relation between columns will always be
 #'synchronized.
 #'
+#'A new argument \code{ls.meth} can be parsed to the lower level 
+#'\code{.norm.draw} to specify the method for generating the least squares 
+#'estimates and any subsequently derived estimates. Argument \code{ls.meth} 
+#'takes one of three inputs: \code{"qr"} for QR-decomposition, \code{"svd"} for 
+#'singular value decomposition and \code{"ridge"} for ridge regression. 
+#'\code{ls.meth} defaults to \code{ls.meth = "qr"}. 
 #'
 #'\emph{Auxiliary predictors in formulas specification: }
 #'For a given block, the \code{formulas} specification takes precedence over 
