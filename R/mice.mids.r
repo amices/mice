@@ -31,15 +31,21 @@
 #'@keywords iteration
 #'@examples
 #'
-#'imp1 <- mice(nhanes, maxit=1, seed = 123)
+#'imp1 <- mice(nhanes,maxit=1)
 #'imp2 <- mice.mids(imp1)
 #'
 #'# yields the same result as
-#'imp <- mice(nhanes, maxit=2, seed = 123)
+#'imp <- mice(nhanes,maxit=2)
 #'
-#'# verification
-#'identical(imp$imp, imp2$imp)
-#
+#'# for example:
+#'# 
+#'# > imp$imp$bmi[1,]
+#'#      1    2    3    4    5 
+#'# 1 30.1 35.3 33.2 35.3 27.5
+#'# > imp2$imp$bmi[1,]
+#'#      1    2    3    4    5 
+#'# 1 30.1 35.3 33.2 35.3 27.5
+#'# 
 #'@export
 mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
   if (!is.mids(obj)) 
