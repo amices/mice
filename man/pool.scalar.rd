@@ -4,7 +4,7 @@
 \alias{pool.scalar}
 \title{Multiple imputation pooling: univariate version}
 \usage{
-pool.scalar(Q, U, n = Inf, k = 1)
+pool.scalar(Q, U, n = 99999, k = 1, method = "smallsample")
 }
 \arguments{
 \item{Q}{A vector of univariate estimates of \code{m} repeated complete data
@@ -13,9 +13,11 @@ analyses.}
 \item{U}{A vector containing the corresponding \code{m} variances of the univariate
 estimates.}
 
-\item{n}{A number providing the sample size. If nothing is specified, an infinite sample \code{n = Inf} is assumed.}
+\item{n}{A number providing the sample size. If nothing is specified, a large sample \code{n = 99999} is assumed.}
 
 \item{k}{A number indicating the number of parameters to be estimated. By default, \code{k = 1} is assumed.}
+
+\item{method}{A string indicatint the method to calculate the degrees of freedom. If \code{method = "smallsample"} (the default) then the Barnard-Rubin adjustment for small degrees of freedom is used. Otherwise, the method from Rubin (1987) is used.}
 }
 \value{
 Returns a list with components. Component \code{m} is the 
@@ -34,6 +36,8 @@ Component \code{df} is the degrees of freedom for t reference distribution, form
 (3.1.6) Rubin (1987) or method of Barnard-Rubin (1999) (if \code{method = "smallsample"}).
 Component \code{fmi} is the fraction missing information due to nonresponse, formula
 (3.1.10) Rubin (1987).
+Component \code{lambda} is the proportion of variation due to nonresponse, formula
+(2.24) Van Buuren (2012).
 }
 \description{
 Pools univariate estimates of m repeated complete data analysis
@@ -55,6 +59,7 @@ for (i in 1:m) {
    Q[i] <- mean(complete(imp, i)$bmi)
    U[i] <- var(complete(imp, i)$bmi) / nrow(nhanes)  # (standard error of estimate)^2
 }
+pool.scalar(Q, U, method = "rubin")   # Rubin 1987
 pool.scalar(Q, U, n = nrow(nhanes), k = 1)  # Barnard-Rubin 1999
 
 }

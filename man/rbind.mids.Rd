@@ -2,9 +2,9 @@
 % Please edit documentation in R/rbind.r
 \name{rbind.mids}
 \alias{rbind.mids}
-\title{Combine \code{mids} objects by rows}
+\title{Rowwise combination of a \code{mids} object.}
 \usage{
-rbind.mids(x, y = NULL, ...)
+\method{rbind}{mids}(x, y = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{mids} object.}
@@ -19,11 +19,13 @@ These can be given as named arguments.}
 An S3 object of class \code{mids}
 }
 \description{
+Append \code{mids} objects by rows
+}
+\details{
 This function combines two \code{mids} objects rowwise into a single
 \code{mids} object, or combines a \code{mids} object with a vector, matrix,
 factor or dataframe rowwise into a \code{mids} object.
-}
-\details{
+
 If \code{y} is a
 \code{mids} object, then \code{rbind} requires that the number of 
 multiple imputations in \code{x} and \code{y} is identical. Also, 
@@ -33,32 +35,30 @@ If \code{y} is not a \code{mids} object, the columns of \code{x$data}
 and \code{y} should match. The \code{where} matrix for \code{y} is set 
 to \code{FALSE}, signalling that any missing values 
 in \code{y} were not imputed.
+
+If \code{y} is not a \code{mids} object, the function should be called as
+\code{mice:::rbind.mids(x, y, ...)}.
 }
 \note{
 The function construct the elements of the new \code{mids} object as follows:
 \tabular{ll}{
+\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{rbind.mids}\cr
 \code{data}     \tab Rowwise combination of the (incomplete) data in \code{x} and \code{y}\cr
+\code{where}    \tab Rowwise combination of \code{where} arguments\cr
+\code{m}        \tab Equals \code{x$m}\cr
+\code{nmis}     \tab \code{x$nmis} + \code{y$nmis}\cr
 \code{imp}      \tab Equals \code{rbind(x$imp[[j]], y$imp[[j]])} if \code{y} is \code{mids} object; otherwise
 the data of \code{y} will be copied\cr
-\code{m}        \tab Equals \code{x$m}\cr
-\code{where}    \tab Rowwise combination of \code{where} arguments\cr
-\code{blocks}   \tab Equals \code{x$blocks}\cr
-\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{rbind.mids}\cr
-\code{nmis}     \tab \code{x$nmis} + \code{y$nmis}\cr
 \code{method}   \tab Taken from \code{x$method}\cr
 \code{predictorMatrix} \tab Taken from \code{x$predictorMatrix}\cr
 \code{visitSequence}   \tab Taken from \code{x$visitSequence}\cr
-\code{formulas}  \tab Taken from \code{x$formulas}\cr
-\code{post}      \tab Taken from \code{x$post}\cr
-\code{blots}     \tab Taken from \code{x$blots}\cr
 \code{seed}            \tab Taken from \code{x$seed}\cr
 \code{iteration}       \tab Taken from \code{x$iteration}\cr
 \code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
 \code{chainMean}       \tab Set to \code{NA}\cr
 \code{chainVar}        \tab Set to \code{NA}\cr
-\code{loggedEvents}    \tab Taken from \code{x$loggedEvents}\cr
-\code{version}    \tab Taken from \code{x$version}\cr
-\code{date}       \tab Taken from \code{x$date}
+\code{pad}             \tab Recreated by \code{padModel()}\cr
+\code{loggedEvents}    \tab Taken from \code{x$loggedEvents}
 }
 }
 \examples{
@@ -69,8 +69,10 @@ mylist <- list(age = NA, bmi = NA, hyp = NA, chl = NA)
 nrow(complete(rbind(imp1, imp5)))
 nrow(complete(rbind(imp1, mylist)))
 
-nrow(complete(rbind(imp1, data.frame(mylist))))
-nrow(complete(rbind(imp1, complete(imp5))))
+# Note: If one of the arguments is a data.frame 
+# we need to explicitly call mice:::rbind.mids()
+nrow(complete(mice:::rbind.mids(imp1, data.frame(mylist))))
+nrow(complete(mice:::rbind.mids(imp1, complete(imp5))))
 }
 \references{
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:

@@ -18,7 +18,7 @@
 #'Data.} London: Chapman & Hall. Table 6.14.
 #'@keywords datasets
 #'@examples
-#'  
+#'
 #'
 #'imp <- mice(nhanes)     # create 5 imputed data sets
 #'complete(imp)           # print the first imputed data set

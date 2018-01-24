@@ -11,3 +11,19 @@ df.residual.lme <- function(object, ...) {
 df.residual.mer <- function(object, ...) {
     return(sum(object@dims[2:4] * c(1, -1, -1)) + 1)
 }
+
+df.residual.default <- function(object, q = 1.3, ...) {
+    df <- object$df.residual
+    if (!is.null(df)) 
+        return(df)
+    
+    mk <- try(c <- coef(object), silent = TRUE)
+    mn <- try(f <- fitted(object), silent = TRUE)
+    if (inherits(mk, "try-error") || inherits(mn, "try-error")) 
+        return(NULL)
+    n <- if (is.data.frame(f) || is.matrix(f)) nrow(f) else length(f)
+    k <- length(c)
+    if (k == 0 | n == 0) 
+        return(NULL)
+    return(max(1, n - q * k))
+}

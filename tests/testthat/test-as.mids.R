@@ -2,11 +2,12 @@ context("as.mids")
 
 nhanes3 <- nhanes
 rownames(nhanes3) <- LETTERS[1:nrow(nhanes3)]
-imp <- mice(nhanes3, m = 2, maxit = 1, print = FALSE)
+imp <- mice(nhanes3, m = 2, print = FALSE)
 
 X <- complete(imp, action = "long", include = TRUE)
 # create dataset with .imp variable as numeric
 X2 <- X
+X2$.imp <- as.numeric(levels(X$.imp))[X$.imp]
 
 # nhanes example
 test1 <- as.mids(X)

@@ -1,6 +1,6 @@
 #'Plot the trace lines of the MICE algorithm
 #'
-#'Trace line plots portray the value of an estimate
+#'Trace line plots, also called stream plots or history plots, portray the value of an estimate
 #'against the iteration number. The estimate can be anything that you can calculate, but
 #'typically are chosen as parameter of scientific interest. The \code{plot} method for
 #'a \code{mids} object plots the mean and standard deviation of the imputed (not observed) 
@@ -20,55 +20,41 @@
 #'@param ... Extra arguments for \code{\link{xyplot}}. 
 #'@return An object of class \code{"trellis"}.
 #'@author Stef van Buuren 2011
-#'@seealso \code{\link{mice}}, \code{\link[=mids-class]{mids}}, 
-#'\code{\link{xyplot}}
+#'@seealso \code{\link{mice}}, \code{\link[=mids-class]{mids}}, \code{\link{xyplot}}
 #'@method plot mids
 #'@export
-plot.mids <- function(x, y = NULL, theme = mice.theme(), layout = c(2, 3), 
-                      type = "l", col = 1:10, lty = 1, ...) {
+plot.mids <- function(x, y = NULL, theme = mice.theme(), layout = c(2, 3), type = "l", col = 1:10, lty = 1, ...) {
     strip.combined <- function(which.given, which.panel, factor.levels, ...) {
         if (which.given == 1) {
-            lattice::panel.rect(0, 0, 1, 1, 
-                                col = theme$strip.background$col, border = 1)
-            lattice::panel.text(x = 0, y = 0.5, pos = 4, 
-                                lab = factor.levels[which.panel[which.given]])
+            lattice::panel.rect(0, 0, 1, 1, col = theme$strip.background$col, border = 1)
+            lattice::panel.text(x = 0, y = 0.5, pos = 4, lab = factor.levels[which.panel[which.given]])
         }
         if (which.given == 2) {
-            lattice::panel.text(x = 1, y = 0.5, pos = 2, 
-                                lab = factor.levels[which.panel[which.given]])
+            lattice::panel.text(x = 1, y = 0.5, pos = 2, lab = factor.levels[which.panel[which.given]])
         }
     }
     
     call <- match.call()
     if (!is.mids(x)) 
-      stop("argument 'x' must be a 'mids' object", call. = FALSE)
-    if (is.null(x$chainMean))
-      stop("no convergence diagnostics found", call. = FALSE)
+        stop("Argument 'x' must be a 'mids' object")
     
     mn <- x$chainMean
     sm <- sqrt(x$chainVar)
-    
-    # select subset of nonmissing entries
-    obs <- apply(!(is.nan(mn) | is.na(mn)), 1, all)
-    varlist <- names(obs)[obs]
+    varlist <- dimnames(mn[, , 1, drop = FALSE])[[1]]  # SvB 25jun2012
     
     ## create formula if not given in y
     if (missing(y)) {
-        formula <- as.formula(paste0(paste0(varlist, collapse = "+"), 
-                                     "~.it|.ms"))
+        formula <- as.formula(paste0(paste0(varlist, collapse = "+"), "~.it|.ms"))
     } else {
         formula <- NULL
         if (is.null(y)) 
-            formula <- as.formula(paste0(paste0(varlist, collapse = "+"), 
-                                         "~.it|.ms"))
+            formula <- as.formula(paste0(paste0(varlist, collapse = "+"), "~.it|.ms"))
         if (is.character(y)) {
-                formula <- if (length(y) == 1) as.formula(paste0(y, "~.it|.ms")) 
-                else as.formula(paste0(paste0(y, collapse = "+"), "~.it|.ms"))
+                formula <- if (length(y) == 1) as.formula(paste0(y, "~.it|.ms")) else as.formula(paste0(paste0(y, collapse = "+"), "~.it|.ms"))
         }
         if (is.integer(y) || is.logical(y)) {
             vars <- varlist[y]
-                formula <- if (length(vars) == 1) as.formula(paste0(vars, "~.it|.ms")) 
-                else as.formula(paste0(paste0(vars, collapse = "+"), "~.it|.ms"))
+                formula <- if (length(vars) == 1) as.formula(paste0(vars, "~.it|.ms")) else as.formula(paste0(paste0(vars, collapse = "+"), "~.it|.ms"))
         }
         if (is.null(formula)) 
             formula <- as.formula(y)
@@ -76,8 +62,8 @@ plot.mids <- function(x, y = NULL, theme = mice.theme(), layout = c(2, 3),
     
     m <- x$m
     it <- x$iteration
-    mn <- matrix(aperm(mn[varlist, , , drop = FALSE], c(2, 3, 1)), nrow = m * it)
-    sm <- matrix(aperm(sm[varlist, , , drop = FALSE], c(2, 3, 1)), nrow = m * it)
+    mn <- matrix(aperm(mn, c(2, 3, 1)), nrow = m * it)
+    sm <- matrix(aperm(sm, c(2, 3, 1)), nrow = m * it)
     
     adm <- expand.grid(seq_len(it), seq_len(m), c("mean", "sd"))
     data <- cbind(adm, rbind(mn, sm))

@@ -80,14 +80,12 @@ pool.r.squared <- function(object, adjusted = FALSE) {
     fit <- pool.scalar(r2[, 2], r2[, 3])
     
     # Make table with results.
-    qbar <- fit$qbar
-    table <- array(((exp(2 * qbar) - 1)/(1 + exp(2 * qbar)))^2, 
-                   dim = c(1, 4))
+    table <- array(((exp(2 * fit$qbar) - 1)/(1 + exp(2 * fit$qbar)))^2, dim = c(1, 4))
     
     dimnames(table) <- if (!adjusted) list("R^2", c("est", "lo 95", "hi 95", "fmi")) else list("adj R^2", c("est", "lo 95", "hi 95", "fmi"))
     
-    table[, 2] <- ((exp(2 * (qbar - 1.96 * sqrt(fit$t))) - 1)/(1 + exp(2 * (qbar - 1.96 * sqrt(fit$t)))))^2
-    table[, 3] <- ((exp(2 * (qbar + 1.96 * sqrt(fit$t))) - 1)/(1 + exp(2 * (qbar + 1.96 * sqrt(fit$t)))))^2
+    table[, 2] <- ((exp(2 * (fit$qbar - 1.96 * sqrt(fit$t))) - 1)/(1 + exp(2 * (fit$qbar - 1.96 * sqrt(fit$t)))))^2
+    table[, 3] <- ((exp(2 * (fit$qbar + 1.96 * sqrt(fit$t))) - 1)/(1 + exp(2 * (fit$qbar + 1.96 * sqrt(fit$t)))))^2
     table[, 4] <- fit$f
     return(table)
 }

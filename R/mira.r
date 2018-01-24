@@ -28,7 +28,7 @@
 #'@rdname mira-class
 #'@aliases mira-class mira
 #'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-#'@seealso \code{\link{with.mids}}, \code{\link[=mids-class]{mids}}, \code{\link{mipo}} 
+#'@seealso \code{\link{with.mids}}, \code{\link[=mids-class]{mids}}, \code{\link[=mipo-class]{mipo}}
 #'@references van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 #'Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #'Statistical Software}, \bold{45}(3), 1-67.

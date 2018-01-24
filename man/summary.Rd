@@ -2,36 +2,28 @@
 % Please edit documentation in R/summary.r
 \name{summary.mira}
 \alias{summary.mira}
+\alias{summary.mipo}
 \alias{summary.mids}
 \alias{summary.mads}
-\alias{summary.mice.anova}
 \title{Summary of a \code{mira} object}
 \usage{
-\method{summary}{mira}(object, type = c("tidy", "glance", "summary"), ...)
+\method{summary}{mira}(object, ...)
+
+\method{summary}{mipo}(object, ...)
 
 \method{summary}{mids}(object, ...)
 
 \method{summary}{mads}(object, ...)
-
-\method{summary}{mice.anova}(object, ...)
 }
 \arguments{
 \item{object}{A \code{mira} object}
-
-\item{type}{A length-1 character vector indicating the 
-type of summary. There are three choices: \code{type = "tidy"}
-return the parameters estimates of each analyses as a data frame.
-\code{type = "glance"} return the fit statistics of each analysis
-as a data frame. \code{type = "summary"} returns a list of
-length \code{m} with the analysis results. The default is 
-\code{"tidy"}.}
 
 \item{...}{Other parameters passed down to \code{print()} and \code{summary()}}
 }
 \value{
 \code{NULL}
 
-\code{NULL}
+A table containing summary statistis of the pooled analysis
 
 \code{NULL}
 
@@ -40,18 +32,18 @@ length \code{m} with the analysis results. The default is
 \description{
 Summary of a \code{mira} object
 
+Summary of a \code{mipo} object
+
 Summary of a \code{mids} object
 
 Summary of a \code{mads} object
-
-Print a \code{mice.anova} object
 }
 \seealso{
 \code{\link[=mira-class]{mira}}
 
+\code{\link[=mipo-class]{mipo}}
+
 \code{\link[=mids-class]{mids}}
 
 \code{\link[=mads-class]{mads}}
-
-\code{\link{mipo}}
 }

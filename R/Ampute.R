@@ -301,10 +301,15 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (is.null(data)) {
     stop("Argument data is missing, with no default", call. = FALSE)
   }
-  data <- check.data(data)
+  if (!(is.matrix(data) || is.data.frame(data))) {
+    stop("Data should be a matrix or data frame", call. = FALSE)
+  }
   if (anyNA(data)) {
     stop("Data cannot contain NAs", call. = FALSE)
   }
+  if (ncol(data) < 2) {
+    stop("Data should contain at least two columns", call. = FALSE)
+  } 
   if (any(vapply(data, Negate(is.numeric), logical(1))) && mech != "MCAR") {
     data <- as.data.frame(sapply(data, as.numeric))
     warning("Data is made numeric because the calculation of weights requires 

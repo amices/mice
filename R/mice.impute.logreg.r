@@ -58,9 +58,9 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL, ...) {
   x <- cbind(1, as.matrix(x))
   expr <- expression(glm.fit(x = x[ry, , drop = FALSE], 
                              y = y[ry], 
-                             family = quasibinomial(link = logit), 
+                             family = binomial(link = logit), 
                              weights = w[ry]))
-  fit <- eval(expr)
+  fit <- suppressWarnings(eval(expr))
   fit.sum <- summary.glm(fit)
   beta <- coef(fit)
   rv <- t(chol(sym(fit.sum$cov.unscaled)))

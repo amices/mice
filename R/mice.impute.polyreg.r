@@ -74,11 +74,6 @@ mice.impute.polyreg <- function(y, ry, x, wy = NULL, nnet.maxit = 100,
   
   if (ncol(x) == 0L) 
     xy <- data.frame(xy, int = 1)
-  
-  # escape with same impute if the dependent does not vary
-  cat.has.all.obs <- table(y[ry]) == sum(ry)
-  if (any(cat.has.all.obs)) return(rep(levels(fy)[cat.has.all.obs], sum(wy)))
-  
   fit <- multinom(formula(xy), data = xy[ry, , drop = FALSE], weights = w[ry], 
                   maxit = nnet.maxit, trace = nnet.trace, MaxNWts = nnet.MaxNWts, 
                   ...)

@@ -99,7 +99,7 @@
 #'abline(0, 1)
 #'cor(y, yimp, use = 'pair')
 #'@export
-mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L, 
+mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5, 
                             matchtype = 1L, ridge = 1e-05, ...)
 {
   if (is.null(wy)) 

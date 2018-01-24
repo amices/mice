@@ -1,3 +1,9 @@
+
+# --------------------------------PRINT.MIDS--------------------------------------
+# setMethod("print", "mids", function(x, ...) {
+#     print.mids(x, ...)
+# })
+
 #'Print a \code{mids} object
 #'
 #'@rdname print
@@ -8,14 +14,28 @@
 #'@method print mids
 #'@export
 print.mids <- function(x, ...) {
-  cat("Class: mids\n")
-  cat("Number of multiple imputations: ", x$m, "\n")
-  cat("Imputation methods:\n")
-  print(x$method, ...)
-  cat("PredictorMatrix:\n")
-  print(head(x$predictorMatrix), ...)
-  invisible(x)
+    if (is.mids(x)) {
+        cat("Multiply imputed data set")
+        cat("\nCall:\n")
+        print(x$call, ...)
+        cat("Number of multiple imputations: ", x$m)
+        cat("\nMissing cells per column:\n")
+        print(x$nmis, ...)
+        cat("Imputation methods:\n")
+        print(x$method, ...)
+        cat("VisitSequence:\n")
+        print(x$visitSequence, ...)
+        cat("PredictorMatrix:\n")
+        print(x$predictorMatrix, ...)
+        cat("Random generator seed value: ", x$seed, "\n")
+    } else print(x, ...)
+    invisible()
 }
+# ------------------------------print.mira-------------------------------
+
+# setMethod("print", signature(x = "mira"), function(x) {
+#     print.mira(x)
+# })
 
 #'Print a \code{mira} object
 #'
@@ -25,44 +45,39 @@ print.mids <- function(x, ...) {
 #'@method print mira
 #'@export
 print.mira <- function(x, ...) {
-  m <- ifelse(is.null(x$analyses), length(x), length(x$analyses))
-  cat("Class: mira       m:", m, "\n")
-  cc <- as.character(getCall(getfit(x, 1)))
-  cat("Complete-data model:", cc[1], "    formula:", cc[2])
-  invisible(x)
-} 
-
-
-#'Print a \code{mice.anova} object
-#'
-#'@rdname print
-#'@return \code{NULL}
-#'@seealso \code{\link{mipo}}
-#'@method print mice.anova
-#'@export
-print.mice.anova <- function(x, ...) {
-  z <- summary(x, ...)
-  print(z$comparisons, row.names = FALSE)
-  invisible(x)
+    ## prints the mira object; A mira object is in fact a list, so it will be printed as such.  KO, 3/2/00
+    
+    if (is.mira(x)) 
+        print.listof(x, ...)  ##PM 4/02
+    else print(x, ...)
+    invisible()
+    
 }
 
-#'Print a \code{summary.mice.anova} object
+
+# # ------------------------------print.mipo-------------------------------
+# setMethod("print", signature(x = "mipo"), function(x, ...) {
+#     print.mipo(x, ...)
+# })
+
+#'Print a \code{mipo} object
 #'
 #'@rdname print
 #'@return \code{NULL}
-#'@seealso \code{\link{mipo}}
-#'@method print mice.anova.summary
+#'@seealso \code{\link[=mipo-class]{mipo}}
+#'@method print mipo
 #'@export
-print.mice.anova.summary <- function(x, ...) {
-  cat("\nModels:\n")
-  print(x$models, row.names = FALSE)
-  cat("\nComparisons:\n")
-  print(x$comparisons, row.names = FALSE)
-  cat("\nNumber of imputations: ", x$m, 
-      "  Method", x$method)
-  if (x$method == "D2") cat(" (", x$use, ")", sep = "")
-  cat("\n")
-  invisible(x)
+print.mipo <- function(x, ...) {
+    if (!is.null(x$call)) {
+        cat("Call: ")
+        dput(x$call)
+    }
+    cat("\nPooled coefficients:\n")
+    print(x$qbar, ...)
+    # cat('Relative increase in variance due to nonresponse per parameter:', '\n') print(x$r)
+    cat("\nFraction of information about the coefficients missing due to nonresponse:", "\n")
+    print(x$f)
+    invisible(x)
 }
 
 

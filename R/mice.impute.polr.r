@@ -74,7 +74,7 @@ mice.impute.polr <- function(y, ry, x, wy = NULL, nnet.maxit = 100,
                     weights = w[ry], 
                     maxit = nnet.maxit, trace = nnet.trace, 
                     MaxNWts = nnet.MaxNWts, ...)
-    updateLog(meth = "multinom", frame = 4)
+    updateLog(meth = "multinom", frame = 3)
   }
   post <- predict(fit, xy[wy, , drop = FALSE], type = "probs")
   if (sum(wy) == 1) 

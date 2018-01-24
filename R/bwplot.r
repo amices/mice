@@ -162,7 +162,6 @@ bwplot.mids <- function(x,
     
     ## unpack data and response indicator
     cd <- data.frame(complete(x, "long", include=TRUE))
-    cd$.imp <- as.factor(cd$.imp)
     r <- as.data.frame(is.na(x$data))
     
     ## evaluate na.group in response indicator 
