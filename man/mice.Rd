@@ -230,6 +230,13 @@ to specify \code{visitSequence} such that the column that is imputed by the
 \code{~} mechanism is visited each time after one of its predictors was
 visited. In that way, deterministic relation between columns will always be
 synchronized.
+
+A new argument \code{ls.meth} can be parsed to the lower level 
+\code{.norm.draw} to specify the method for generating the least squares 
+estimates and any subsequently derived estimates. Argument \code{ls.meth} 
+takes one of three inputs: \code{"qr"} for QR-decomposition, \code{"svd"} for 
+singular value decomposition and \code{"ridge"} for ridge regression. 
+\code{ls.meth} defaults to \code{ls.meth = "qr"}.
 }
 \section{Functions}{
 

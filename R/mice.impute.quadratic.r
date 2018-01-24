@@ -74,44 +74,44 @@
 #'@export
 mice.impute.quadratic <-function (y, ry, x, wy = NULL, ...) {
   if (is.null(wy)) wy <- !ry
-	x <- cbind(1, as.matrix(x))
-	
-	#create the square of y
-	y2 <- y^2
-	
-	#create z based on B1 * y + B2 * y^2
- 	parm  <- .norm.draw(x[,2], ry, cbind(1, y, y2))	
-	zobs <- cbind(y, y2) %*% parm$coef[-1]  
-	
-	#impute z
-	zmis <- mice.impute.pmm(zobs, ry, x)
-	zstar <- zobs
-	zstar[!ry] <- zmis
-	# Otherwise the predict function crashes (nmatrix.1 error)
-	zstar <- as.vector(zstar) 
-	
-	#decompositions of z into roots
-	b1 <- parm$coef[2]
-	b2 <- parm$coef[3]
-	y.low <- -(1/(2 * b2)) * (sqrt(4 * b2 * zstar + b1^2) + b1)
-	y.up  <-  (1/(2 * b2)) * (sqrt(4 * b2 * zstar + b1^2) - b1)
-
-	#calculate the abscissa at the parabolic minimum/maximum
-	y.min <- -b1 / 2 * b2
-	
-	#calculate regression parameters for 
-	q <- x[, 2]
-	vobs  <- glm(y > y.min ~ q + zstar + q * zstar, subset = ry, family = binomial)
-	
-	#impute Vmis
-	newdata <- data.frame(q = x[wy, 2], zstar = zstar[wy])
-	prob    <- predict(vobs, newdata = newdata, type = "response", 
-	                   na.action = na.exclude)
-	idy 	<- rbinom(sum(wy), 1, prob = prob)
-	
-	#create final imputation
-	ystar 	<- y.low[wy]
-	ystar[idy == 1] <- y.up[wy][idy == 1]
-	
-	return(ystar)
+  x <- cbind(1, as.matrix(x))
+  
+  #create the square of y
+  y2 <- y^2
+  
+  #create z based on B1 * y + B2 * y^2
+  parm  <- .norm.draw(x[,2], ry, cbind(1, y, y2))	
+  zobs <- cbind(y, y2) %*% parm$coef[-1]  
+  
+  #impute z
+  zmis <- mice.impute.pmm(zobs, ry, x[, -1])
+  zstar <- zobs
+  zstar[!ry] <- zmis
+  # Otherwise the predict function crashes (nmatrix.1 error)
+  zstar <- as.vector(zstar) 
+  
+  #decompositions of z into roots
+  b1 <- parm$coef[2]
+  b2 <- parm$coef[3]
+  y.low <- -(1/(2 * b2)) * (sqrt(4 * b2 * zstar + b1^2) + b1)
+  y.up  <-  (1/(2 * b2)) * (sqrt(4 * b2 * zstar + b1^2) - b1)
+  
+  #calculate the abscissa at the parabolic minimum/maximum
+  y.min <- -b1 / (2 * b2)
+  
+  #calculate regression parameters for 
+  q <- x[, 2]
+  vobs  <- glm(y > y.min ~ q + zstar + q * zstar, subset = ry, family = binomial)
+  
+  #impute Vmis
+  newdata <- data.frame(q = x[wy, 2], zstar = zstar[wy])
+  prob    <- predict(vobs, newdata = newdata, type = "response", 
+                     na.action = na.exclude)
+  idy 	<- rbinom(sum(wy), 1, prob = prob)
+  
+  #create final imputation
+  ystar 	<- y.low[wy]
+  ystar[idy == 1] <- y.up[wy][idy == 1]
+  
+  return(ystar)
 }
