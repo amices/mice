@@ -6,9 +6,9 @@
 \alias{.norm.draw}
 \title{Draws values of beta and sigma by Bayesian linear regression}
 \usage{
-norm.draw(y, ry, x, rank.adjust = TRUE, ...)
+norm.draw(y, ry, x, ridge = 1e-05, ...)
 
-.norm.draw(y, ry, x, rank.adjust = TRUE, ...)
+.norm.draw(y, ry, x, ridge = 1e-05, ...)
 }
 \arguments{
 \item{y}{Incomplete data vector of length \code{n}}
@@ -18,9 +18,10 @@ norm.draw(y, ry, x, rank.adjust = TRUE, ...)
 
 \item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
 
-\item{rank.adjust}{Argument that specifies whether \code{NA}'s in the 
-coefficients need to be set to zero. Only relevant when \code{ls.meth = "qr"} 
-AND the predictor matrix is rank-deficient.}
+\item{ridge}{A small numerical value specifying the size of the ridge used. 
+The default value \code{ridge = 1e-05} represents a compromise between stability
+and unbiasedness. Decrease \code{ridge} if the data contain many junk variables.
+Increase \code{ridge} for highly collinear data.}
 
 \item{...}{Other named arguments.}
 }
@@ -38,6 +39,5 @@ can be called by user-specified imputation functions.
 Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
 }
 \author{
-Gerko Vink, 2018, for this version, based on earlier versions written 
-by Stef van Buuren, Karin Groothuis-Oudshoorn, 2017
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
 }

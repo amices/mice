@@ -6,7 +6,7 @@
 #'@importFrom stats     C aggregate as.formula binomial coef
 #'                      contr.treatment cor df.residual fitted
 #'                      formula gaussian model.frame model.matrix
-#'                      glm lm lm.fit
+#'                      glm lm
 #'                      na.exclude pf predict pt qt rbinom
 #'                      rchisq rgamma rnorm runif summary.glm
 #'                      quantile
