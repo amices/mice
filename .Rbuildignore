@@ -7,3 +7,4 @@ _cache$
 ^revdep$
 cran-comments.md
 cran-comments.Rmd
+^data-raw$

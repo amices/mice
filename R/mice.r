@@ -21,8 +21,7 @@
 #'The data may contain categorical variables that are used in a regressions on
 #'other variables. The algorithm creates dummy variables for the categories of
 #'these variables, and imputes these from the corresponding categorical
-#'variable. The extended model containing the dummy variables is called the
-#'padded model. Its structure is stored in the list component \code{pad}.
+#'variable. 
 #'
 #'Built-in univariate imputation methods are:
 #'
@@ -101,80 +100,102 @@
 #'singular value decomposition and \code{"ridge"} for ridge regression. 
 #'\code{ls.meth} defaults to \code{ls.meth = "qr"}. 
 #'
+#'\emph{Auxiliary predictors in formulas specification: }
+#'For a given block, the \code{formulas} specification takes precedence over 
+#'the corresponding row in the \code{predictMatrix} argument. This 
+#'precedence is, however, restricted to the subset of variables
+#'specified in the terms of the block formula. Any 
+#'variables not specified by \code{formulas} are imputed
+#'according to the \code{predictMatrix} specification. Variables with 
+#'non-zero \code{type} values in the \code{predictMatrix} will 
+#'be added as main effects to the \code{formulas}, which will 
+#'act as supplementary covariates in the imputation model. It is possible
+#'to turn off this behaviour by specifying the 
+#'argument \code{auxiliary = FALSE}.
+#'
 #'@param data A data frame or a matrix containing the incomplete data.  Missing
 #'values are coded as \code{NA}.
 #'@param m Number of multiple imputations. The default is \code{m=5}.
-#'@param method Can be either a single string, or a vector of strings with
-#'length \code{ncol(data)}, specifying the univariate imputation method to be
-#'used for each column in data. If specified as a single string, the same
-#'method will be used for all columns.  The default imputation method (when no
-#'argument is specified) depends on the measurement level of the target column
-#'and are specified by the \code{defaultMethod} argument.  Columns that need
-#'not be imputed have the empty method \code{''}.  See details for more
-#'information.
-#'@param predictorMatrix A square matrix of size \code{ncol(data)} containing
-#'0/1 data specifying the set of predictors to be used for each target column.
-#'Rows correspond to target variables (i.e. variables to be imputed), in the
-#'sequence as they appear in data. A value of '1' means that the column
-#'variable is used as a predictor for the target variable (in the rows). The
-#'diagonal of \code{predictorMatrix} must be zero. The default for
-#'\code{predictorMatrix} is that all other columns are used as predictors
-#'(sometimes called massive imputation). Note: For two-level imputation codes
-#''2' and '-2' are also allowed.
 #'@param where A data frame or matrix with logicals of the same dimensions 
 #'as \code{data} indicating where in the data the imputations should be 
 #'created. The default, \code{where = is.na(data)}, specifies that the
 #'missing data should be imputed. The \code{where} argument may be used to 
 #'overimpute observed data, or to skip imputations for selected missing values.
-#'@param visitSequence A vector of integers of arbitrary length, specifying the
-#'column indices of the visiting sequence. The visiting sequence is the column
-#'order that is used to impute the data during one pass through the data. A
-#'column may be visited more than once. All incomplete columns that are used as
-#'predictors should be visited, or else the function will stop with an error.
-#'The default sequence \code{1:ncol(data)} implies that columns are imputed
-#'from left to right. It is possible to specify one of the keywords
-#'\code{'roman'} (left to right), \code{'arabic'} (right to left),
-#'\code{'monotone'} (sorted in increasing amount of missingness) and
-#'\code{'revmonotone'} (reverse of monotone). The keyword should be supplied as
-#'a string and may be abbreviated.
-#'@param post A vector of strings with length \code{ncol(data)}, specifying
-#'expressions. Each string is parsed and executed within the \code{sampler()}
-#'function to postprocess imputed values.  The default is to do nothing,
-#'indicated by a vector of empty strings \code{''}.
-#'@param form A vector of strings with length \code{ncol(data)}, specifying
-#'formulae. Each string is parsed and executed within the \code{sampler()}
-#'function to create terms for the predictor.  The default is to do nothing,
-#'indicated by a vector of empty strings \code{''}.  The main value
-#'lies in the easy specification of interaction terms.  The user must
-#'ensure that the set of variables in the formula match those in
-#'\code{predictors}.
-#'@param defaultMethod A vector of three strings containing the default
-#'imputation methods for numerical columns, factor columns with 2 levels, and
-#'columns with (unordered or ordered) factors with more than two levels,
-#'respectively. If nothing is specified, the following defaults will be used:
+#'@param blocks List of vectors with variable names per block. List elements 
+#'may be named to identify blocks. Variables within a block are 
+#'imputed by a multivariate imputation method
+#'(see \code{method} argument). By default each variable is placed 
+#'into its own block, which is effectively
+#'fully conditional specification (FCS) by univariate models 
+#'(variable-by-variable imputation). Only variables whose names appear in 
+#'\code{blocks} are imputed. The relevant columns in the \code{where} 
+#'matrix are set to \code{FALSE} of variables that are not block members. 
+#'A variable may appear in multiple blocks. In that case, it is 
+#'effectively re-imputed each time that it is visited.
+#'@param method Can be either a single string, or a vector of strings with
+#'length \code{length(blocks)}, specifying the imputation method to be
+#'used for each column in data. If specified as a single string, the same
+#'method will be used for all blocks. The default imputation method (when no
+#'argument is specified) depends on the measurement level of the target column,
+#'as regulated by the \code{defaultMethod} argument. Columns that need
+#'not be imputed have the empty method \code{""}. See details.
+#'@param predictorMatrix A numeric matrix of \code{length(blocks)} rows 
+#'and \code{ncol(data)} columns, containing 0/1 data specifying 
+#'the set of predictors to be used for each target column.
+#'Each row corresponds to a variable block, i.e., a set of variables 
+#'to be imputed. A value of \code{1} means that the column
+#'variable is used as a predictor for the target block (in the rows). 
+#'By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
+#'rows and columns with all 1's, except for the diagonal. 
+#'Note: For two-level imputation models (which have \code{"2l"} in their names)
+#'other codes (e.g, \code{2} or \code{-2}) are also allowed.
+#'@param visitSequence A vector of block names of arbitrary length, specifying the
+#'sequence of blocks that are imputed during one iteration of the Gibbs 
+#'sampler. A block is a collection of variables. All variables that are 
+#'members of the same block are imputed 
+#'when the block is visited. A variable that is a member of multiple blocks 
+#'is re-imputed within the same iteration. 
+#'The default \code{visitSequence = "roman"} visits the blocks (left to right)
+#'in the order in which they appear in \code{blocks}. 
+#'One may also use one of the following keywords: \code{"arabic"} 
+#'(right to left), \code{"monotone"} (ordered low to high proportion 
+#'of missing data) and \code{"revmonotone"} (reverse of monotone). 
+#'@param formulas A named list of formula's, or expressions that
+#'can be converted into formula's by \code{as.formula}. List elements
+#'correspond to blocks. The block to which the list element applies is 
+#'identied by its name, so list names must correspond to block names.
+#'The \code{formulas} argument is an alternative to the 
+#'\code{predictorMatrix} argument that allows for more flexibility in 
+#'specifying imputation models, e.g., for specifying interaction terms. 
+#'@param blots A named \code{list} of \code{alist}'s that can be used 
+#'to pass down arguments to lower level imputation function. The entries
+#'of element \code{blots[[blockname]]} are passed down to the function
+#'called for block \code{blockname}.
+#'@param post A vector of strings with length \code{ncol(data)} specifying
+#'expressions as strings. Each string is parsed and 
+#'executed within the \code{sampler()} function to postprocess 
+#'imputed values during the iterations. 
+#'The default is a vector of empty strings, indicating no post-processing.
+#'@param defaultMethod A vector of length 4 containing the default
+#'imputation methods for 1) numeric data, 2) factor data with 2 levels, 3) 
+#'factor data with > 2 unordered levels, and 4) factor data with > 2 
+#'ordered levels. By default, the method uses 
 #'\code{pmm}, predictive mean matching (numeric data) \code{logreg}, logistic
 #'regression imputation (binary data, factor with 2 levels) \code{polyreg},
-#'polytomous regression imputation for unordered categorical data (factor >= 2
-#'levels) \code{polr}, proportional odds model for (ordered, >= 2 levels)
+#'polytomous regression imputation for unordered categorical data (factor > 2
+#'levels) \code{polr}, proportional odds model for (ordered, > 2 levels).
 #'@param maxit A scalar giving the number of iterations. The default is 5.
-#'@param diagnostics A Boolean flag. If \code{TRUE}, diagnostic information
-#'will be appended to the value of the function. If \code{FALSE}, only the
-#'imputed data are saved. The default is \code{TRUE}.
 #'@param printFlag If \code{TRUE}, \code{mice} will print history on console.
 #'Use \code{print=FALSE} for silent computation.
 #'@param seed An integer that is used as argument by the \code{set.seed()} for
 #'offsetting the random number generator. Default is to leave the random number
 #'generator alone.
-#'@param imputationMethod Same as \code{method} argument. Included for
-#'backwards compatibility.
-#'@param defaultImputationMethod Same as \code{defaultMethod} argument.
-#'Included for backwards compatibility.
 #'@param data.init A data frame of the same size and type as \code{data},
 #'without missing data, used to initialize imputations before the start of the
 #'iterative process.  The default \code{NULL} implies that starting imputation
 #'are created by a simple random draw from the data. Note that specification of
-#'\code{data.init} will start the \code{m} Gibbs sampling streams from the same
-#'imputations.
+#'\code{data.init} will start all \code{m} Gibbs sampling streams from the same
+#'imputation.
 #'@param ... Named arguments that are passed down to the univariate imputation
 #'functions.
 #'
@@ -231,134 +252,135 @@
 #'
 #'@export
 mice <- function(data, m = 5, 
-                 method = vector("character", length = ncol(data)),
-                 predictorMatrix = (1 - diag(1, ncol(data))),
-                 where = is.na(data),
+                 method = NULL,
+                 predictorMatrix,
+                 where = NULL,
+                 blocks,
                  visitSequence = NULL,
-                 form = vector("character", length = ncol(data)),
-                 post = vector("character", length = ncol(data)),
+                 formulas,
+                 blots = NULL,
+                 post = NULL,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-                 maxit = 5, diagnostics = TRUE, printFlag = TRUE, seed = NA,
-                 imputationMethod = NULL, defaultImputationMethod = NULL,
+                 maxit = 5, printFlag = TRUE, seed = NA,
                  data.init = NULL, ...) {
-  
-  # Start with some preliminary calculations and error checks
   call <- match.call()
-  if (!is.na(seed)) 
-    set.seed(seed)
-  if (!(is.matrix(data) || is.data.frame(data)))
-    stop("Data should be a matrix or data frame")
-  nvar <- ncol(data)
-  if (nvar < 2)
-    stop("Data should contain at least two columns")
-  data <- as.data.frame(data)
-  nmis <- apply(is.na(data), 2, sum)
-  varnames <- colnames(data)
+  if (!is.na(seed)) set.seed(seed)
+  data <- check.data(data)
   
-  if (!(is.matrix(where) || is.data.frame(where)))
-    stop("Argument `where` not a matrix or data frame")
-  if (!all(dim(data) == dim(where)))
-    stop("Arguments `data` and `where` not of same size")
-  nwhere <- apply(where, 2, sum)
-  #if (sum(where) == 0)
-  #  stop("No locations to impute")
-  #if (any(is.na(data) & !where))
-  #  stop("Found where == FALSE for some missing values. Not supported. ")
+  # determine input combination: predictorMatrix, blocks, formulas
+  mp <- missing(predictorMatrix)
+  mb <- missing(blocks)
+  mf <- missing(formulas)
   
-  # list for storing current computational state
-  state <- list(it = 0, im = 0, co = 0, dep = "", meth = "", log = FALSE)
+  # case A
+  if (mp & mb & mf) {
+    # blocks lead
+    blocks <- make.blocks(colnames(data))
+    predictorMatrix <- make.predictorMatrix(data, blocks)
+    formulas <- make.formulas(data, blocks)
+  }
+  # case B
+  if (!mp & mb & mf) {
+    # predictorMatrix leads
+    predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
+    blocks <- make.blocks(colnames(predictorMatrix), partition = "scatter")
+    formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix)
+  }
+  
+  # case C
+  if (mp & !mb & mf) {
+    # blocks leads
+    blocks <- check.blocks(blocks, data)
+    predictorMatrix <- make.predictorMatrix(data, blocks)
+    formulas <- make.formulas(data, blocks)
+  }
+  
+  # case D
+  if (mp & mb & !mf) {
+    # formulas leads
+    formulas <- check.formulas(formulas, data)
+    blocks <- construct.blocks(formulas)
+    predictorMatrix <- make.predictorMatrix(data, blocks)
+  }
+  
+  # case E
+  if (!mp & !mb & mf) {
+    # predictor leads
+    blocks <- check.blocks(blocks, data)
+    z <- check.predictorMatrix(predictorMatrix, data, blocks)
+    predictorMatrix <- z$predictorMatrix
+    blocks <- z$blocks
+    formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix)
+  }
+  
+  # case F
+  if (!mp & mb & !mf) {
+    # formulas lead
+    formulas <- check.formulas(formulas, data)
+    predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
+    blocks <- construct.blocks(formulas, predictorMatrix)
+  }
+  
+  # case G
+  if (mp & !mb & !mf) {
+    # blocks lead
+    blocks <- check.blocks(blocks, data, calltype = "formula")
+    formulas <- check.formulas(formulas, blocks)
+    predictorMatrix <- make.predictorMatrix(data, blocks)
+  }
+  
+  # case H
+  if (!mp & !mb & !mf) {
+    # blocks lead
+    blocks <- check.blocks(blocks, data)
+    formulas <- check.formulas(formulas, data)
+    predictorMatrix <- check.predictorMatrix(predictorMatrix, data, blocks)
+  }
+  
+  where <- check.where(where, data, blocks)
+  visitSequence <- check.visitSequence(visitSequence, data = data, 
+                                       where = where, blocks = blocks)
+  method <- check.method(method = method, data = data, where = where, 
+                         blocks = blocks, defaultMethod = defaultMethod)
+  post <- check.post(post, data)
+  blots <- check.blots(blots, data, blocks)
   
   # data frame for storing the event log
-  loggedEvents <- data.frame(it = 0, im = 0, co = 0, dep = "", meth = "",
-                             out = "")
+  state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
+  loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
   
-  # Legacy handling
-  if (!is.null(imputationMethod))
-    method <- imputationMethod
-  if (!is.null(defaultImputationMethod))
-    defaultMethod <- defaultImputationMethod
+  # initialize imputations
+  nmis <- apply(is.na(data), 2, sum)
+  imp <- initialize.imp(data, m, where, blocks, visitSequence, 
+                        method, nmis, data.init)
   
-  # Perform various validity checks on the specified arguments
-  setup <- list(visitSequence = visitSequence, method = method,
-                defaultMethod = defaultMethod,
-                predictorMatrix = predictorMatrix,
-                form = form, post = post, nvar = nvar,
-                nmis = nmis, nwhere = nwhere,
-                varnames = varnames)
-  setup <- check.visitSequence(setup, where)
-  setup <- check.method(setup, data)
-  setup <- check.predictorMatrix(setup)
-  setup <- check.data(setup, data, ...)
-  
-  ## Pad the imputation model with dummy variables for the factors
-  method <- setup$method
-  predictorMatrix <- setup$predictorMatrix
-  visitSequence <- setup$visitSequence
-  post <- setup$post
-  p <- padModel(data, method, predictorMatrix, visitSequence, 
-                form, post, nvar)
-  
-  ## Initialize where matrix r, imputation array imp, etc. 
-  r <- (!is.na(p$data))
-  imp <- vector("list", ncol(p$data))
-  if (m > 0) {
-    ## Initializes the imputed values
-    for (j in visitSequence) {
-      y <- data[, j]
-      ry <- r[, j]
-      wy <- where[, j]
-      imp[[j]] <- as.data.frame(matrix(NA, nrow = sum(wy), ncol = m))
-      dimnames(imp[[j]]) <- list(row.names(data)[wy], 1:m)
-      if (method[j] != "") {
-        # for incomplete variables that are imputed
-        for (i in seq_len(m)) {
-          if (nmis[j] < nrow(data)) {
-            if (is.null(data.init)) {
-              imp[[j]][, i] <- mice.impute.sample(y, ry, wy = wy, ...)
-            } else {
-              imp[[j]][, i] <- data.init[wy, j]
-            }
-          } else imp[[j]][, i] <- rnorm(nrow(data))
-        }
-      }
-    }
-  }
-  
-  # Iterate.
+  # and iterate...
   from <- 1
   to <- from + maxit - 1
-  q <- sampler(p, data, where, m, imp, r, visitSequence, c(from, to), printFlag, ...)
+  q <- sampler(data, m, where, imp, blocks, method, visitSequence, 
+               predictorMatrix, formulas, blots, post, c(from, to), 
+               printFlag, ...)
   
-  ## restore the original NA's in the data
-  for (j in p$visitSequence) {
-    p$data[!r[, j], j] <- NA
-  }
-
-  ## delete data and imputations of automatic dummy variables
-  imp <- q$imp[seq_len(nvar)]
-  names(imp) <- varnames
-  names(method) <- varnames
-  names(form) <- varnames
-  names(post) <- varnames
-  names(visitSequence) <- varnames[visitSequence]
-  if (!state$log)
-    loggedEvents <- NULL
-  if (state$log)
-    row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
+  if (!state$log) loggedEvents <- NULL
+  if (state$log) row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
   
   ## save, and return
-  midsobj <- list(call = call, data = data, 
-                  where = where, m = m,
-                  nmis = nmis, imp = imp, method = method,
+  midsobj <- list(data = data, imp = q$imp, m = m,
+                  where = where, blocks = blocks, 
+                  call = call, nmis = nmis, 
+                  method = method,
                   predictorMatrix = predictorMatrix,
-                  visitSequence = visitSequence, form = form, post = post,
-                  seed = seed, iteration = q$iteration,
-                  lastSeedValue = .Random.seed, chainMean = q$chainMean,
-                  chainVar = q$chainVar, loggedEvents = loggedEvents,
-                  pad = p)
-  if (!diagnostics)
-    midsobj$pad <- NULL
+                  visitSequence = visitSequence,
+                  formulas = formulas, post = post, 
+                  blots = blots,
+                  seed = seed, 
+                  iteration = q$iteration,
+                  lastSeedValue = .Random.seed, 
+                  chainMean = q$chainMean,
+                  chainVar = q$chainVar, 
+                  loggedEvents = loggedEvents,
+                  version = packageVersion("mice"),
+                  date = Sys.Date())
   oldClass(midsobj) <- "mids"
   return(midsobj)
 }
-

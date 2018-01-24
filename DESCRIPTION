@@ -1,8 +1,8 @@
 Package: mice
 Type: Package
-Version: 2.46.9
+Version: 2.46.9.9000
 Title: Multivariate Imputation by Chained Equations
-Date: 2017-12-08
+Date: 2017-12-11
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -27,18 +27,23 @@ Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
     methods,
     R (>= 2.10.0),
-    lattice
+    lattice,
+    tidyr
 Imports:
+    broom,
+    dplyr,
     grDevices,
     graphics,
     MASS,
+    mitml,
     nnet,
+    Rcpp,
+    rlang,
     rpart,
     splines,
     stats,
     survival,
-    utils,
-    Rcpp
+    utils
 Suggests:
     AGD,
     CALIBERrfimpute,

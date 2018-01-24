@@ -92,7 +92,7 @@ levels(dfr$v) <- LETTERS[1:4]
 
 imp <- mice(dfr, m = 1, predictorMatrix = predM1 , 
            imputationMethod = impM1, maxit = 1, paniter = 500)
-   
+
 }
 \references{
 Gelman, A. and Hill, J. (2007). \emph{Data analysis using

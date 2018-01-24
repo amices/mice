@@ -2,30 +2,27 @@
 % Please edit documentation in R/getfit.r
 \name{getfit}
 \alias{getfit}
-\title{Extracts fit objects from \code{mira} object}
+\title{Extract list of fitted model}
 \usage{
-getfit(x, i = -1, simplify = FALSE)
+getfit(x, i = -1L, simplify = FALSE)
 }
 \arguments{
-\item{x}{An object of class \code{mira}, typically produced by a call to
-\code{with()}.}
+\item{x}{An object of class \code{mira} or \code{mitml.result}, 
+typically produced by a call to \code{with()}.}
 
 \item{i}{An integer between 1 and \code{x$m} signalling the number of the
-repeated analysis.  The default \code{i= -1} return a list with all analyses.}
+repeated analysis. The default \code{i= -1} return a list with all analyses.}
 
 \item{simplify}{Should the return value be unlisted?}
 }
 \value{
-If \code{i = -1} an object containing all analyses, otherwise it
-returns the fittd object of the i'th repeated analysis.
+If \code{i = -1} an object of class \code{mitml.result} containing 
+all analyses, otherwise it returns the fitted object of 
+the i'th repeated analysis.
 }
 \description{
 \code{getfit} returns the list of objects containing the repeated analysis
 results, or optionally, one of these fit objects.
-}
-\details{
-This function is shorthand notation for \code{x$analyses} and
-\code{x$analyses[[i]].}
 }
 \examples{
 

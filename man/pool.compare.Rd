@@ -4,26 +4,22 @@
 \alias{pool.compare}
 \title{Compare two nested models fitted to imputed data}
 \usage{
-pool.compare(fit1, fit0, data = NULL, method = "Wald")
+pool.compare(fit1, fit0, method = c("wald", "likelihood"), data = NULL)
 }
 \arguments{
 \item{fit1}{An object of class 'mira', produced by \code{with.mids()}.}
 
 \item{fit0}{An object of class 'mira', produced by \code{with.mids()}. The
-model in \code{fit0} should be a submodel of \code{fit1}. Moreover, the
-variables of the submodel should be the first variables of the larger model
-and in the same order as in the submodel.}
+model in \code{fit0} is a nested fit0 of \code{fit1}.}
 
-\item{data}{In case of method 'likelihood' it is necessary to pass also the
-original \code{mids} object to the \code{data} argument. Default value is
-\code{NULL}, in case of method='Wald'.}
+\item{method}{Either \code{"wald"} or \code{"likelihood"} specifying 
+the type of comparison. The default is \code{"wald"}.}
 
-\item{method}{A string describing the method to compare the two models.  Two
-kind of comparisons are included so far: 'Wald' and 'likelihood'.}
+\item{data}{No longer used.}
 }
 \value{
 A list containing several components. Component \code{call} is
-that call to the \code{pool.compare} function. Component \code{call11} is
+the call to the \code{pool.compare} function. Component \code{call11} is
 the call that created \code{fit1}. Component \code{call12} is the 
 call that created the imputations. Component \code{call01} is the 
 call that created \code{fit0}. Compenent \code{call02} is the 
@@ -49,8 +45,8 @@ Component \code{rm} is the relative increase in variance due to nonresponse, for
 Component \code{df1}: df1 = under the null hypothesis it is assumed that \code{Dm} has an F
 distribution with (df1,df2) degrees of freedom.
 Component \code{df2}: df2. 
-Component \code{pvalue} is the P-value of testing whether the larger model is
-statistically different from the smaller submodel.
+Component \code{pvalue} is the P-value of testing whether the model \code{fit1} is
+statistically different from the smaller \code{fit0}.
 }
 \description{
 Compares two nested models after m repeated complete data analysis
@@ -61,9 +57,11 @@ Wald-method can be found in paragraph 2.2 and the likelihood method can be
 found in paragraph 3.  One could use the Wald method for comparison of linear
 models obtained with e.g. \code{lm} (in \code{with.mids()}).  The likelihood
 method should be used in case of logistic regression models obtaind with
-\code{glm()} in \code{with.mids()}.  It is assumed that fit1 contains the
-larger model and the model in \code{fit0} is fully contained in \code{fit1}.
-In case of \code{method='Wald'}, the null hypothesis is tested that the extra
+\code{glm()} in \code{with.mids()}.
+
+The function assumes that \code{fit1} is the 
+larger model, and that model \code{fit0} is fully contained in \code{fit1}.
+In case of \code{method='wald'}, the null hypothesis is tested that the extra
 parameters are all zero.
 }
 \examples{
@@ -72,7 +70,7 @@ parameters are all zero.
 imp <- mice(nhanes2, seed = 51009, print = FALSE)
 mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
 mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
-pc  <- pool.compare(mi1, mi0, method = 'Wald')
+pc  <- pool.compare(mi1, mi0)
 pc$pvalue
 
 ### Comparison of two general linear models (logistic regression).
@@ -80,12 +78,12 @@ pc$pvalue
 imp  <- mice(boys, maxit = 2, print = FALSE)
 fit1 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc + reg, family = binomial))
 fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
-pool.compare(fit1, fit0, method = 'likelihood', data = imp)$pvalue
+pool.compare(fit1, fit0, method = 'likelihood')$pvalue
 
 # using factors
 fit1 <- with(imp, glm(as.factor(gen > levels(gen)[1]) ~ hgt + hc + reg, family = binomial))
 fit0 <- with(imp, glm(as.factor(gen > levels(gen)[1]) ~ hgt + hc, family = binomial))
-pool.compare(fit1, fit0, method = 'likelihood', data = imp)$pvalue
+pool.compare(fit1, fit0, method = 'likelihood')$pvalue
 }
 }
 \references{
@@ -101,7 +99,7 @@ Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-\code{\link{lm.mids}}, \code{\link{glm.mids}}, \code{\link{vcov}},
+\code{\link{lm.mids}}, \code{\link{glm.mids}}
 }
 \author{
 Karin Groothuis-Oudshoorn and Stef van Buuren, 2009

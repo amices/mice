@@ -1,20 +1,16 @@
-# ----------------------------getfit-------------------------------
-
-#'Extracts fit objects from \code{mira} object
+#'Extract list of fitted model
 #'
 #'\code{getfit} returns the list of objects containing the repeated analysis
 #'results, or optionally, one of these fit objects.
 #'
-#'This function is shorthand notation for \code{x$analyses} and
-#'\code{x$analyses[[i]].}
-#'
-#'@param x An object of class \code{mira}, typically produced by a call to
-#'\code{with()}.
+#'@param x An object of class \code{mira} or \code{mitml.result}, 
+#'typically produced by a call to \code{with()}.
 #'@param i An integer between 1 and \code{x$m} signalling the number of the
-#'repeated analysis.  The default \code{i= -1} return a list with all analyses.
+#'repeated analysis. The default \code{i= -1} return a list with all analyses.
 #'@param simplify Should the return value be unlisted?
-#'@return If \code{i = -1} an object containing all analyses, otherwise it
-#'returns the fittd object of the i'th repeated analysis.
+#'@return If \code{i = -1} an object of class \code{mitml.result} containing 
+#'all analyses, otherwise it returns the fitted object of 
+#'the i'th repeated analysis.
 #'@author Stef van Buuren, March 2012.
 #'@seealso \code{\link[=mira-class]{mira}}, \code{\link{with.mids}}
 #'@keywords manip
@@ -26,13 +22,28 @@
 #'getfit(fit, 2)
 #'
 #'@export
-getfit <- function(x, i = -1, simplify = FALSE) {
-    if (!is.mira(x)) 
-        return(NULL)
+getfit <- function(x, i = -1L, simplify = FALSE) {
+  if (is.null(x$analyses)) 
+    ra <- x
+  else
     ra <- x$analyses
-    if (i != -1) 
-        return(ra[[i]])
-    if (simplify) 
-        ra <- unlist(ra)
-    return(ra)
+  if (i != -1L) return(ra[[i]])
+  if (simplify) ra <- unlist(ra)
+  class(ra) <- c("mira", "list")
+  ra
 }
+
+#'Extract estimate from \code{mipo} object
+#'
+#'\code{getqbar} returns a named vector of pooled estimates.
+#'
+#'@param x An object of class \code{mipo}
+#'@export
+getqbar <- function(x) {
+  if (!is.mipo(x)) stop("Not a mipo object")
+  qbar <- x$pooled$estimate
+  names(qbar) <- row.names(x$pooled)
+  qbar
+}
+
+

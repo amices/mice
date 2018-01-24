@@ -1,6 +1,6 @@
 #'@import methods
-#'@importFrom splines bs
-#'@importFrom survival basehaz coxph Surv
+#'@importFrom splines   bs
+#'@importFrom survival  basehaz coxph Surv
 #'@importFrom grDevices dev.capabilities hcl palette
 #'@importFrom graphics  abline points text plot
 #'@importFrom stats     C aggregate as.formula binomial coef
@@ -11,12 +11,25 @@
 #'                      rchisq rgamma rnorm runif summary.glm
 #'                      quantile
 #'                      update var vcov complete.cases na.omit na.pass
+#'                      reformulate is.empty.model terms
+#'                      confint getCall
 #'@importFrom utils     flush.console write.table head tail
-#'                      packageDescription methods
+#'                      packageDescription methods packageVersion
 #'@importFrom MASS      eqscplot lda mvrnorm polr truehist ginv
 #'@importFrom nnet      multinom nnet
 #'@importFrom rpart     rpart rpart.control
 #'@importFrom Rcpp      sourceCpp
 #'@importFrom lattice   bwplot densityplot xyplot stripplot
+#'@importFrom broom     tidy glance
+#'@importFrom rlang     .data
+#'@importFrom mitml     panImpute mitmlComplete testModels
+#'@importFrom dplyr     summarize bind_rows group_by %>% n select pull lead
+#'                      bind_cols mutate
+#'@importFrom tidyr     complete
 #'@useDynLib mice
 NULL
+
+## quiets concerns of R CMD check re: the .'s that appear in pipelines
+if(getRversion() >= "2.15.1")  
+  utils::globalVariables(c("ubar", "f", "b", "m", "lambda", "dfold", "dfobs",
+                           "r", "df", "riv"))
