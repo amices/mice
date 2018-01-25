@@ -84,7 +84,7 @@ mice.impute.quadratic <-function (y, ry, x, wy = NULL, ...) {
 	zobs <- cbind(y, y2) %*% parm$coef[-1]  
 	
 	#impute z
-	zmis <- mice.impute.pmm(zobs, ry, x)
+	zmis <- mice.impute.pmm(zobs, ry, x[, -1])
 	zstar <- zobs
 	zstar[!ry] <- zmis
 	# Otherwise the predict function crashes (nmatrix.1 error)
@@ -97,7 +97,7 @@ mice.impute.quadratic <-function (y, ry, x, wy = NULL, ...) {
 	y.up  <-  (1/(2 * b2)) * (sqrt(4 * b2 * zstar + b1^2) - b1)
 
 	#calculate the abscissa at the parabolic minimum/maximum
-	y.min <- -b1 / 2 * b2
+	y.min <- -b1 / (2 * b2)
 	
 	#calculate regression parameters for 
 	q <- x[, 2]
