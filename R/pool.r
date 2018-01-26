@@ -97,8 +97,8 @@ pool.fitlist <- function (fitlist) {
   
   # Rubin's rules for scalar estimates
   pooled <- w %>%
-    mutate(par = rep_len(1L:length(unique(term)), length.out = n())) %>%
-    group_by(par) %>%
+    mutate(param = rep_len(1L:length(unique(term)), length.out = n())) %>%
+    group_by(param) %>%
     summarize(m = n(),
               term = .data$term[1L],
               qbar = mean(.data$estimate),
@@ -110,7 +110,7 @@ pool.fitlist <- function (fitlist) {
               riv = (1 + 1 / m) * b / ubar,
               lambda = (1 + 1 / m) * b / t,
               fmi = (riv + 2 / (df + 3)) / (riv + 1)) %>%
-    select(-m, -par)
+    select(-m, -param)
   pooled <- data.frame(pooled[, -1L], 
                        row.names = pooled$term)
   names(pooled)[1L] <- "estimate"
