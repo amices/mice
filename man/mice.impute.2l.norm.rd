@@ -70,7 +70,8 @@ and and Roberts, J.K. (Eds.), \emph{The Handbook of Advanced Multilevel
 Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
 }
 \seealso{
-Other univariate \code{2l} functions: \code{\link{mice.impute.2l.lmer}},
+Other univariate \code{2l} functions: \code{\link{mice.impute.2l.bin}},
+  \code{\link{mice.impute.2l.lmer}},
   \code{\link{mice.impute.2l.pan}}
 }
 \author{
