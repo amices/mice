@@ -43,12 +43,12 @@ mice.impute.2l.bin <- function(y, ry, x, type,
   if (is.null(wy)) wy <- !ry
 
   x <- cbind(1, as.matrix(x))
-  colnames(x) <- paste("V", 1L:ncol(x), sep = "")
   type <- c(2, type)
+  names(type)[1] <- colnames(x)[1] <- "(Intercept)"
   
-  clust <- colnames(x)[type == -2]
-  rande <- colnames(x)[type == 2]
-  fixe <- colnames(x)[type > 0]
+  clust <- names(type[type == -2])
+  rande <- names(type[type == 2])
+  fixe  <- names(type[type > 0])
   
   n.class <- length(unique(x[, clust]))
   x[, clust] <- factor(x[, clust], labels = seq_len(n.class))
