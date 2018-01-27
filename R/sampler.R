@@ -124,12 +124,12 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
       }  # end i loop (imputation number)
       
       # store means and sd of m imputes
-      k2 <- k - from + 1
-      if (length(visitSequence) > 0) {
+      k2 <- k - from + 1L
+      if (length(visitSequence) > 0L) {
         for (h in visitSequence) {
           for (j in blocks[[h]]) {
             if (!is.factor(data[, j])) {
-              chainVar[j, k2, ] <- apply(imp[[j]], 2, var, na.rm = TRUE)
+              chainVar[j, k2, ] <- apply(imp[[j]], 2L, var, na.rm = TRUE)
               chainMean[j, k2, ] <- colMeans(as.matrix(imp[[j]]), na.rm = TRUE)
             }
             if (is.factor(data[, j])) {
@@ -153,7 +153,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
 
 sampler.univ <- function(data, r, where, type, formula, method, yname, k, 
                          calltype = "type", user, ...) {
-  j <- yname[1]
+  j <- yname[1L]
   if (calltype == "type") {
     vars <- colnames(data)[type != 0]
     formula <- reformulate(setdiff(vars, j), response = j)
@@ -175,7 +175,7 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   if (all(!wy)) return(numeric(0))
   
   cc <- wy[where[, j]]
-  if (k == 1) check.df(x, y, ry)
+  if (k == 1L) check.df(x, y, ry)
   
   keep <- remove.lindep(x, y, ry, ...)
   x <- x[, keep, drop = FALSE]
