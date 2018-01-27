@@ -46,33 +46,33 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
   
   if (is.null(wy)) wy <- !ry
   
-  ## append intercept
   if (intercept) {
     x <- cbind(1, as.matrix(x))
     type <- c(2, type)
-    dimnames(x)[[2]] <- paste0("v", seq_len(ncol(x)))
+    names(type)[1] <- colnames(x)[1] <- "(Intercept)"
   }
   
-  # define cluster, random and fixed effects
-  clust <- names(x)[type == -2]
-  rande <- names(x)[type == 2]
-  fixe <- names(x)[type > 0]
+  clust <- names(type[type == -2])
+  rande <- names(type[type == 2])
+  fixe  <- names(type[type > 0])
   
   n.class <- length(unique(x[, clust]))
   x[, clust] <- factor(x[, clust], labels = seq_len(n.class))
   lev <- levels(x[, clust])
-  
+
   X <- x[, fixe, drop = FALSE]
   Z <- x[, rande, drop = FALSE]
   xobs <- x[ry, , drop = FALSE]
   yobs <- y[ry]
   Xobs <- X[ry, , drop = FALSE]
   Zobs <- Z[ry, , drop = FALSE]
-  
-  # create formula, use [-1] to remove intercept
-  randmodel <- paste("yobs ~ ", paste(fixe[-1], collapse = "+"), "+ ( 1 +", 
-                     paste(rande[-1], collapse = "+"), "|", clust, ")")
-  
+
+  # create formula
+  fr <- ifelse(length(rande) > 1, 
+               paste("+ ( 1 +", paste(rande[-1L], collapse = "+")), 
+               "+ ( 1 ")
+  randmodel <- paste("yobs ~ ", paste(fixe[-1L],  collapse = "+"), 
+                     fr, "|", clust, ")")
   suppressWarnings(fit <- try(lme4::lmer(formula(randmodel), 
                                    data = data.frame(yobs, xobs), 
                                    ...),  

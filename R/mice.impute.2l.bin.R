@@ -41,10 +41,12 @@ mice.impute.2l.bin <- function(y, ry, x, type,
     stop("Please install package 'lme4'", call. = FALSE)
   
   if (is.null(wy)) wy <- !ry
-
-  x <- cbind(1, as.matrix(x))
-  type <- c(2, type)
-  names(type)[1] <- colnames(x)[1] <- "(Intercept)"
+  
+  if (intercept) {
+    x <- cbind(1, as.matrix(x))
+    type <- c(2, type)
+    names(type)[1] <- colnames(x)[1] <- "(Intercept)"
+  }
   
   clust <- names(type[type == -2])
   rande <- names(type[type == 2])
@@ -64,7 +66,7 @@ mice.impute.2l.bin <- function(y, ry, x, type,
   # create formula, use [-1] to remove intercept
   fr <- ifelse(length(rande) > 1, 
                paste("+ ( 1 +", paste(rande[-1L], collapse = "+")), 
-                     "+ ( 1 ")
+               "+ ( 1 ")
   randmodel <- paste("yobs ~ ", paste(fixe[-1L],  collapse = "+"), 
                      fr, "|", clust, ")")
   
