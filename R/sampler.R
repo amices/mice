@@ -186,7 +186,7 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   imputes <- data[wy, j]
   imputes[!cc] <- NA
   ## ready
-  args <- c(list(y, ry, x, wy = wy, type = type), user, list(...))
+  args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type), user, list(...))
   imputes[cc] <- do.call(f, args = args)
   imputes
 }
