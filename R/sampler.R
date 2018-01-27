@@ -55,6 +55,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           mult <- !empt && !is.passive(theMethod) && 
             handles.format(paste0("mice.impute.", theMethod))
           pass <- !empt && is.passive(theMethod) && length(blocks[[h]]) == 1
+          if (printFlag & !empt) cat(" ", b)
           
           ## store current state
           oldstate <- get("state", pos = parent.frame())
@@ -63,8 +64,6 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
                            meth = theMethod, 
                            log = oldstate$log)
           assign("state", newstate, pos = parent.frame(), inherits = TRUE)
-          
-          if (printFlag) cat(" ", b)
           
           # (repeated) univariate imputation - type method
           if (univ) {
