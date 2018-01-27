@@ -188,6 +188,7 @@ Built-in univariate imputation methods are:
 \code{2l.norm}      \tab numeric  \tab Level-1 normal heteroskedastic\cr
 \code{2l.lmer}      \tab numeric  \tab Level-1 normal homoscedastic, lmer\cr
 \code{2l.pan}       \tab numeric  \tab Level-1 normal homoscedastic, pan\cr
+\code{2l.bin}       \tab binary   \tab Level-1 logistic, glmer\cr
 \code{2lonly.mean}  \tab numeric  \tab Level-2 class mean\cr
 \code{2lonly.norm}  \tab numeric  \tab Level-2 class normal\cr
 \code{2lonly.pmm}   \tab any      \tab Level-2 class predictive mean matching
