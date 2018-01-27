@@ -56,9 +56,7 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
   rande <- names(type[type == 2])
   fixe  <- names(type[type > 0])
   
-  n.class <- length(unique(x[, clust]))
-  x[, clust] <- factor(x[, clust], labels = seq_len(n.class))
-  lev <- levels(x[, clust])
+  lev <- unique(x[, clust])
 
   X <- x[, fixe, drop = FALSE]
   Z <- x[, rande, drop = FALSE]

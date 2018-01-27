@@ -52,17 +52,11 @@ mice.impute.2l.bin <- function(y, ry, x, type,
   rande <- names(type[type == 2])
   fixe  <- names(type[type > 0])
   
-  n.class <- length(unique(x[, clust]))
-  x[, clust] <- factor(x[, clust], labels = seq_len(n.class))
-  lev <- levels(x[, clust])
-  
   X <- x[, fixe, drop = FALSE]
   Z <- x[, rande, drop = FALSE]
   xobs <- x[ry, , drop = FALSE]
   yobs <- y[ry]
-  Xobs <- X[ry, , drop = FALSE]
-  Zobs <- Z[ry, , drop = FALSE]
-  
+
   # create formula, use [-1] to remove intercept
   fr <- ifelse(length(rande) > 1, 
                paste("+ ( 1 +", paste(rande[-1L], collapse = "+")), 
