@@ -122,16 +122,17 @@ mice.impute.2l.bin <- function(y, ry, x, type,
     psi.star <- valprop$vectors %*% diag(valprop$values) %*% t(valprop$vectors)
   }
   
+  # find clusters for which we need imputes
+  clmis <- x[wy, clust]
+  
   # the main imputation task
-  misindicator <- which((unique(x[, clust]) %in% unique(xobs[, clust])) == FALSE)
-  for (i in misindicator) {
-    suppressWarnings(bi.star <- 
-                       t(MASS::mvrnorm(n = 1L, mu = rep(0, nrow(psi.star)), 
-                                       Sigma = psi.star))) # draw bi
-    logit <- X[wy & x[, clust] == i, ] %*% beta.star + 
-      Z[wy & x[,clust] == i, ] %*% matrix(bi.star, ncol = 1)
-    y[wy & x[, clust] == i] <- rbinom(nrow(logit), 1, 
-                                      as.vector(1/(1 + exp(-logit))))
+  for (i in clmis) {
+    bi.star <- t(MASS::mvrnorm(n = 1L, mu = rep(0, nrow(psi.star)), 
+                                       Sigma = psi.star))
+    idx <- wy & (x[, clust] == i)
+    logit <- X[idx, , drop = FALSE] %*% beta.star + 
+      Z[idx, , drop = FALSE] %*% matrix(bi.star, ncol = 1)
+    y[idx] <- rbinom(nrow(logit), 1, as.vector(1/(1 + exp(-logit))))
   }
   return(y[wy])
 }
