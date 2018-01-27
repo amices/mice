@@ -46,14 +46,14 @@ if they have been partially observed.
 \examples{
 library(tidyr)
 library(dplyr)
-data(toenail, package = "DPpackage")
-data <- tidyr::complete(toenail, ID, visit) \%>\% 
+data("toenail", package = "HSAUR3")
+data <- tidyr::complete(toenail, patientID, visit) \%>\% 
  tidyr::fill(treatment) \%>\% 
- dplyr::select(-month)
+ dplyr::select(-time)
 
 \dontrun{
 pred <- mice(data, print = FALSE, maxit = 0, seed = 1)$pred
-pred["outcome", "ID"] <- -2
+pred["outcome", "patientID"] <- -2
 imp <- mice(data, method = "2l.bin", pred = pred, maxit = 1)
 }
 }
