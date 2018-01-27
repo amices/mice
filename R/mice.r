@@ -332,6 +332,7 @@ mice <- function(data, m = 5,
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data, blocks)
   }
   
+  chk <- check.cluster(data, predictorMatrix)  
   where <- check.where(where, data, blocks)
   visitSequence <- check.visitSequence(visitSequence, data = data, 
                                        where = where, blocks = blocks)

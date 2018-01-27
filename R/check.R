@@ -5,3 +5,13 @@ check.data <- function(data) {
     stop("Data should contain at least two columns", call. = FALSE)
   as.data.frame(data)
 }
+
+check.cluster <- function(data, predictorMatrix) {
+  # stop if the cluster variable is a factor
+  isclassvar <- apply(predictorMatrix == -2, 2, any)
+  for (j in colnames(predictorMatrix)) {
+    if (isclassvar[j] && lapply(data, is.factor)[[j]]) 
+      stop("Convert cluster variable ", j, " to integer by as.integer()")
+  }
+  TRUE
+}
