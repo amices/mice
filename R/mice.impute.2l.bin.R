@@ -27,7 +27,8 @@
 #'data("toenail", package = "HSAUR3")
 #'data <- tidyr::complete(toenail, patientID, visit) %>% 
 #'  tidyr::fill(treatment) %>% 
-#'  dplyr::select(-time)
+#'  dplyr::select(-time) %>%
+#'  dplyr::mutate(patientID = as.integer(patientID))
 #'
 #'\dontrun{
 #'pred <- mice(data, print = FALSE, maxit = 0, seed = 1)$pred
