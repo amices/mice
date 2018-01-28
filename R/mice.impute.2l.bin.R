@@ -33,7 +33,7 @@
 #'\dontrun{
 #'pred <- mice(data, print = FALSE, maxit = 0, seed = 1)$pred
 #'pred["outcome", "patientID"] <- -2
-#'imp <- mice(data, method = "2l.bin", pred = pred, maxit = 1)
+#'imp <- mice(data, method = "2l.bin", pred = pred, maxit = 1, m = 1, seed = 1)
 #'}
 #'@export
 mice.impute.2l.bin <- function(y, ry, x, type, 
@@ -127,7 +127,11 @@ mice.impute.2l.bin <- function(y, ry, x, type,
     idx <- wy & (x[, clust] == i)
     logit <- X[idx, , drop = FALSE] %*% beta.star + 
       Z[idx, , drop = FALSE] %*% matrix(bi.star, ncol = 1)
-    y[idx] <- rbinom(nrow(logit), 1, as.vector(1/(1 + exp(-logit))))
+    vec <- rbinom(nrow(logit), 1, as.vector(1/(1 + exp(-logit))))
+    if (is.factor(y)) {
+      vec <- factor(vec, c(0, 1), levels(y))
+    }
+    y[idx] <- vec
   }
   return(y[wy])
 }
