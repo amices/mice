@@ -45,6 +45,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           bname <- names(blocks)[h]
           if (calltype == "formula") ff <- formulas[[h]] else ff <- NULL
           if (calltype == "type") type <- predictorMatrix[h, ] else type <- NULL
+          
           user <- blots[[h]]
           
           # univariate/multivariate logic
@@ -176,10 +177,12 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   
   cc <- wy[where[, j]]
   if (k == 1L) check.df(x, y, ry)
-  
+
   keep <- remove.lindep(x, y, ry, ...)
   x <- x[, keep, drop = FALSE]
-  type <- type[keep]
+  type <- type[keep]   ## FIXME : properly expand type vector
+  #if (ncol(x) != length(type))
+  #  stop("Internal error: length(type) != number of predictors")
   
   # here we go
   f <- paste("mice.impute", method, sep = ".")
