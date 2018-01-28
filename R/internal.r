@@ -13,12 +13,14 @@ check.df <- function(x, y, ry) {
 
 remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99, 
                           allow.na = FALSE, frame = 4, ...) {
+  # returns a logical vector of length ncol(x)
+  
   if (ncol(x) == 0)
     return(NULL)
   if (eps <= 0)
     stop("\n Argument 'eps' must be positive.")
   
-  # Keep all predictors if we allow imputation of fully missing variable
+  # Keep all predictors if we allow imputation of fully missing y
   if (allow.na && sum(ry) == 0) {
     updateLog(out = "No observed outcomes, keep all predictors", frame = frame)
     return(rep.int(TRUE, ncol(x)))
@@ -35,9 +37,12 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99,
   if (all(!keep))
     updateLog(out = "All predictors are constant or have too high correlation.", 
               frame = frame)
-  if (length(keep) == 1) keep[1] <- TRUE
+  
+  # no need to calculate correlations, so return
   k <- sum(keep)
-  if (k == 0) return(keep)
+  if (k <= 1L) return(keep)  # at most one TRUE
+  
+  # correlation between x's
   cx <- cor(xobs[, keep, drop = FALSE], use = "all.obs")
   eig <- eigen(cx, symmetric = TRUE)
   ncx <- cx
