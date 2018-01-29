@@ -58,7 +58,9 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    HSAUR3
+    HSAUR3,
+    micemd,
+    miceadds
 LinkingTo: Rcpp
 Description: Multiple imputation using Fully Conditional Specification (FCS)
     implemented by the MICE algorithm as described in Van Buuren and
