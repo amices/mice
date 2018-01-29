@@ -55,7 +55,7 @@ data <- tidyr::complete(toenail, patientID, visit) \%>\%
 \dontrun{
 pred <- mice(data, print = FALSE, maxit = 0, seed = 1)$pred
 pred["outcome", "patientID"] <- -2
-imp <- mice(data, method = "2l.bin", pred = pred, maxit = 1)
+imp <- mice(data, method = "2l.bin", pred = pred, maxit = 1, m = 1, seed = 1)
 }
 }
 \references{
