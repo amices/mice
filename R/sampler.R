@@ -155,11 +155,13 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
 sampler.univ <- function(data, r, where, type, formula, method, yname, k, 
                          calltype = "type", user, ...) {
   j <- yname[1L]
+  
   if (calltype == "type") {
     vars <- colnames(data)[type != 0]
     formula <- reformulate(setdiff(vars, j), response = j)
     formula <- update(formula, ". ~ . -1")
   }
+  
   if (calltype == "formula") {
     # move terms other than j from lhs to rhs, remove intercept
     ymove <- setdiff(lhs(formula), j)
@@ -167,7 +169,21 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
     if (length(ymove) > 0L) 
       formula <- update(formula, paste("~ . + ", paste(ymove, collapse = "+")))
   }
+  
+  # get the model matrix
   x <- obtain.design(data, formula)
+
+  # expand type vector to model matrix
+  if (calltype == "type") {
+    type <- type[labels(terms(formula))][attr(x, "assign")]
+    names(type) <- colnames(x)
+  }
+  if (calltype == "formula") {
+    type <- rep(1L, length = ncol(x))
+    names(type) <- colnames(x)
+  }
+  
+  # define y, ry and wy
   y <- data[, j]
   ry <- complete.cases(x, y) & r[, j]
   wy <- complete.cases(x) & where[, j]
@@ -178,17 +194,18 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   cc <- wy[where[, j]]
   if (k == 1L) check.df(x, y, ry)
 
+  # remove linear dependencies
   keep <- remove.lindep(x, y, ry, ...)
   x <- x[, keep, drop = FALSE]
-  type <- type[keep]   ## FIXME : properly expand type vector
-  #if (ncol(x) != length(type))
-  #  stop("Internal error: length(type) != number of predictors")
+  type <- type[keep]
+  if (ncol(x) != length(type))
+    stop("Internal error: length(type) != number of predictors")
   
   # here we go
   f <- paste("mice.impute", method, sep = ".")
   imputes <- data[wy, j]
   imputes[!cc] <- NA
-  ## ready
+
   args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type), user, list(...))
   imputes[cc] <- do.call(f, args = args)
   imputes
