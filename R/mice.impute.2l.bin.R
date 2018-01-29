@@ -42,7 +42,6 @@ mice.impute.2l.bin <- function(y, ry, x, type,
     stop("Please install package 'lme4'", call. = FALSE)
   
   if (is.null(wy)) wy <- !ry
-  
   if (intercept) {
     x <- cbind(1, as.matrix(x))
     type <- c(2, type)
@@ -52,7 +51,7 @@ mice.impute.2l.bin <- function(y, ry, x, type,
   clust <- names(type[type == -2])
   rande <- names(type[type == 2])
   fixe  <- names(type[type > 0])
-  
+
   X <- x[, fixe, drop = FALSE]
   Z <- x[, rande, drop = FALSE]
   xobs <- x[ry, , drop = FALSE]
