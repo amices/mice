@@ -50,9 +50,10 @@ check.visitSequence <- function(visitSequence = NULL,
     visitSequence <- colnames(data)[visitSequence]
 
   # check against names(blocks)
-  remove <- (nimp == 0) & is.element(names(blocks), visitSequence)
-  remove <- remove | !is.element(names(blocks), visitSequence)
-  visitSequence <- visitSequence[!remove]
+  visitSequence <- visitSequence[is.element(visitSequence, names(blocks))]
+  
+  # remove any blocks without missing data
+  visitSequence <- names((nimp > 0L)[visitSequence])
   visitSequence
 }
 
