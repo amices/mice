@@ -191,6 +191,10 @@
 #'are created by a simple random draw from the data. Note that specification of
 #'\code{data.init} will start all \code{m} Gibbs sampling streams from the same
 #'imputation.
+#'@param imputationMethod Same as \code{method} argument. Included for
+#'backwards compatibility.
+#'@param defaultImputationMethod Same as \code{defaultMethod} argument.
+#'Included for backwards compatibility.
 #'@param ... Named arguments that are passed down to the univariate imputation
 #'functions.
 #'
@@ -257,9 +261,19 @@ mice <- function(data, m = 5,
                  post = NULL,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
                  maxit = 5, printFlag = TRUE, seed = NA,
-                 data.init = NULL, ...) {
+                 data.init = NULL, 
+                 imputationMethod = NULL, 
+                 defaultImputationMethod = NULL,
+                 ...) {
   call <- match.call()
   if (!is.na(seed)) set.seed(seed)
+  
+  # Legacy handling
+  if (!is.null(imputationMethod))
+    method <- imputationMethod
+  if (!is.null(defaultImputationMethod))
+    defaultMethod <- defaultImputationMethod
+  
   data <- check.data(data)
   
   # determine input combination: predictorMatrix, blocks, formulas
