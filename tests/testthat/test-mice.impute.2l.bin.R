@@ -1,9 +1,9 @@
 context("mice.impute.2l.bin")
 
-suppressPackageStartupMessages(library(miceadds, warn.conflicts = FALSE, quietly = TRUE))
-packageVersion(c("miceadds"))
-suppressPackageStartupMessages(library(micemd, warn.conflicts = FALSE, quietly = TRUE))
-packageVersion(c("micemd"))
+# suppressPackageStartupMessages(library(miceadds, warn.conflicts = FALSE, quietly = TRUE))
+# packageVersion(c("miceadds"))
+# suppressPackageStartupMessages(library(micemd, warn.conflicts = FALSE, quietly = TRUE))
+# packageVersion(c("micemd"))
 
 # toenail: outcome is factor
 data("toenail", package = "HSAUR3")
@@ -54,17 +54,17 @@ test_that("mice::mice.impute.2l.bin() accepts 0/1 outcome", {
   expect_false(anyNA(complete(imp)))
 })
 
-test_that("miceadds::mice.impute.2l.binary() accepts 0/1 outcome", {
-  expect_silent(imp <- mice(data, method = "2l.binary", pred = pred, seed = 1, maxit = 1, m = 1, print = FALSE))
-  expect_false(anyNA(complete(imp)))
-})
+# test_that("miceadds::mice.impute.2l.binary() accepts 0/1 outcome", {
+#   expect_silent(imp <- mice(data, method = "2l.binary", pred = pred, seed = 1, maxit = 1, m = 1, print = FALSE))
+#   expect_false(anyNA(complete(imp)))
+# })
 
 # test_that("micemd::mice.impute.2l.2stage.bin() accepts 0/1 outcome", {
 #   expect_silent(imp <- mice(data, method = "2l.2stage.bin", pred = pred, seed = 1, maxit = 1, m = 1, print = FALSE))
 #   expect_false(anyNA(complete(imp)))
 # })
 
-test_that("micemd::mice.impute.2l.glm.bin() accepts 0/1 outcome", {
-  expect_silent(imp <- mice(data, method = "2l.glm.bin", pred = pred, seed = 1, maxit = 1, m = 1, print = FALSE))
-  expect_false(anyNA(complete(imp)))
-})
+# test_that("micemd::mice.impute.2l.glm.bin() accepts 0/1 outcome", {
+#   expect_silent(imp <- mice(data, method = "2l.glm.bin", pred = pred, seed = 1, maxit = 1, m = 1, print = FALSE))
+#   expect_false(anyNA(complete(imp)))
+# })
