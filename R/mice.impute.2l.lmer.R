@@ -165,8 +165,8 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
     
     # imputation
     y[wy & x[, clust] == jj] <- as.vector(
-      as.matrix(X[wy & x[, clust] == jj, ]) %*% beta.star + 
-        as.matrix(Z[wy & x[, clust] == jj,]) %*% as.matrix(bi.star) + 
+      as.matrix(X[wy & x[, clust] == jj,, drop = FALSE]) %*% beta.star + 
+        as.matrix(Z[wy & x[, clust] == jj,, drop = FALSE]) %*% as.matrix(bi.star) + 
         rnorm(sum(wy & x[, clust] == jj)) * sqrt(sigma2star))
   }
   return(y[wy])
