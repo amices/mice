@@ -67,6 +67,6 @@ schools <- transmute(mlbook2,
   aritpost = aritPOST,
   denomina = as.integer(denomina),
   schoolses = schoolSES)
-schools <- as.data.frame(schools)
+brandsma <- as.data.frame(schools)
 
-devtools::use_data(schools, overwrite = TRUE)
+devtools::use_data(brandsma, overwrite = TRUE)
