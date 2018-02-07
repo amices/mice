@@ -55,10 +55,10 @@ apply(mlbook2,2,count.na)
 schools <- transmute(mlbook2, 
   school = as.integer(schoolnr),
   pupil = as.integer(pupilNR_new),
-  iqv = IQ_verb,
-  iqp = IQ_perf,
+  iqv = scale(IQ_verb, scale = FALSE),
+  iqp = scale(IQ_perf, scale = FALSE),
   sex = as.integer(sex),
-  ses = ses,
+  ses = scale(ses, scale = FALSE),
   minority = as.integer(Minority),
   repeatgr = as.integer(repeatgr),
   langpret = langPRET,
@@ -67,6 +67,7 @@ schools <- transmute(mlbook2,
   aritpost = aritPOST,
   denomina = as.integer(denomina),
   schoolses = schoolSES)
+
 brandsma <- as.data.frame(schools)
 
 devtools::use_data(brandsma, overwrite = TRUE)
