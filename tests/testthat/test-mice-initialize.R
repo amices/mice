@@ -206,3 +206,14 @@ test_that("Case F generates error if it cannot handle non-square predictor", {
 ## Error in formulas[[h]] : subscript out of bounds
 imp3 <- mice(data, formulas = form3, pred = pred1, m = 1, maxit = 0, print = FALSE, seed = 3)
 imp3a <- mice(data, formulas = form3, pred = pred1, m = 1, maxit = 1, print = FALSE, seed = 3)
+
+# err on matrix columns 
+nh <- nhanes
+nh$hyp <- as.matrix(nh$hyp)
+test_that("MICE does not accept data.frames with embedded matrix ", {
+  expect_error(mice(nh), 
+               "Cannot handle columns with class matrix: hyp")
+})
+
+
+  

@@ -27,8 +27,7 @@ Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
     methods,
     R (>= 2.10.0),
-    lattice,
-    tidyr
+    lattice
 Imports:
     broom,
     dplyr,
@@ -60,7 +59,8 @@ Suggests:
     testthat,
     HSAUR3,
     micemd,
-    miceadds
+    miceadds,
+    tidyr
 LinkingTo: Rcpp
 Description: Multiple imputation using Fully Conditional Specification (FCS)
     implemented by the MICE algorithm as described in Van Buuren and

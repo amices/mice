@@ -3,7 +3,11 @@ check.data <- function(data) {
     stop("Data should be a matrix or data frame", call. = FALSE)
   if (ncol(data) < 2)
     stop("Data should contain at least two columns", call. = FALSE)
-  as.data.frame(data)
+  data <- as.data.frame(data)
+  mat <- sapply(data, is.matrix)
+  if (any(mat)) stop("Cannot handle columns with class matrix: ", 
+                     colnames(data)[mat])
+  data
 }
 
 check.cluster <- function(data, predictorMatrix) {
