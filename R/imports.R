@@ -25,7 +25,6 @@
 #'@importFrom mitml     panImpute mitmlComplete testModels
 #'@importFrom dplyr     summarize bind_rows group_by %>% n select pull lead
 #'                      bind_cols mutate
-#'@importFrom tidyr     complete
 #'@useDynLib mice
 NULL
 
