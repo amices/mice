@@ -12,7 +12,7 @@ check.df <- function(x, y, ry) {
 }
 
 remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99, 
-                          allow.na = FALSE, frame = 4, ...) {
+                          allow.na = TRUE, frame = 4, ...) {
   # returns a logical vector of length ncol(x)
   
   if (ncol(x) == 0)
@@ -21,10 +21,7 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99,
     stop("\n Argument 'eps' must be positive.")
   
   # Keep all predictors if we allow imputation of fully missing y
-  if (allow.na && sum(ry) == 0) {
-    updateLog(out = "No observed outcomes, keep all predictors", frame = frame)
-    return(rep.int(TRUE, ncol(x)))
-  }
+  if (allow.na && sum(ry) == 0) return(rep.int(TRUE, ncol(x)))
   
   xobs <- x[ry, , drop = FALSE]
   yobs <- as.numeric(y[ry])
