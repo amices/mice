@@ -6,20 +6,20 @@
 \title{Brandsma school data used Snijders and Bosker (2012)}
 \format{\code{brandsma} is a data frame with 4106 rows and 14 columns: 
 \describe{
-\item{\code{school}}{School number}
-\item{\code{pupil}}{Pupil ID}
+\item{\code{sch}}{School number}
+\item{\code{pup}}{Pupil ID}
 \item{\code{iqv}}{IQ verbal}
 \item{\code{iqp}}{IQ performal}
 \item{\code{sex}}{Sex of pupil}
 \item{\code{ses}}{SES score of pupil}
-\item{\code{minority}}{Minority member 0/1}
-\item{\code{repeatgr}}{Number of repeated classes, 0, 1, 2}
-\item{\code{langpret}}{language score before}
-\item{\code{langpost}}{language score after}
-\item{\code{aritpret}}{Arithmatic score before} 
-\item{\code{aritpost}}{Arithmatic score after} 
-\item{\code{denomina}}{Denomination classification 1-4 - at school level}
-\item{\code{schoolses}}{SES indicator - at school level}
+\item{\code{min}}{Minority member 0/1}
+\item{\code{rpg}}{Number of repeated groups, 0, 1, 2}
+\item{\code{lpr}}{language score PRE}
+\item{\code{lpo}}{language score POST}
+\item{\code{apr}}{Arithmatic score PRE} 
+\item{\code{apo}}{Arithmatic score POST} 
+\item{\code{den}}{Denomination classification 1-4 - at school level}
+\item{\code{ssi}}{School SES indicator - at school level}
 }}
 \source{
 Constructed from \code{MLbook_2nded_total_4106-99.sav} from

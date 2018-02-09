@@ -53,20 +53,20 @@ mlbook2$denomina <- makemis(mlbook2$denomina)  # leave as missing
 apply(mlbook2,2,count.na)
 
 schools <- transmute(mlbook2, 
-  school = as.integer(schoolnr),
-  pupil = as.integer(pupilNR_new),
+  sch = as.integer(schoolnr),
+  pup = as.integer(pupilNR_new),
   iqv = as.vector(scale(IQ_verb, scale = FALSE)),
   iqp = as.vector(scale(IQ_perf, scale = FALSE)),
   sex = as.integer(sex),
   ses = as.vector(scale(ses, scale = FALSE)),
-  minority = as.integer(Minority),
-  repeatgr = as.integer(repeatgr),
-  langpret = langPRET,
-  langpost = langPOST,
-  aritpret = aritPRET,
-  aritpost = aritPOST,
-  denomina = as.integer(denomina),
-  schoolses = schoolSES)
+  min = as.integer(Minority),
+  rpg = as.integer(repeatgr),
+  lpr = langPRET,
+  lpo = langPOST,
+  apr = aritPRET,
+  apo = aritPOST,
+  den = as.integer(denomina),
+  ssi = schoolSES)
 
 brandsma <- as.data.frame(schools)
 
