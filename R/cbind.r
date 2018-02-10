@@ -99,12 +99,15 @@ cbind.mids <- function(x, y = NULL, ...) {
   # and second argument the call to cbind.mids.
   call <- c(x$call, call)
   
+  if (nrow(y) != nrow(x$data)) 
+    stop("arguments imply differing number of rows: ", 
+         c(nrow(x$data), ", ", nrow(y)))
   data <- cbind(x$data, y)
   varnames <- make.unique(colnames(data))
   colnames(data) <- varnames
   
   # where argument
-  where <- cbind(x$where, matrix(FALSE, nrow = nrow(y), ncol = ncol(y)))
+  where <- cbind(x$where, matrix(FALSE, nrow = nrow(x$where), ncol = ncol(y)))
   colnames(where) <- varnames
   
   # blocks: no renaming needed because all block definition will 
