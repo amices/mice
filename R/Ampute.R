@@ -199,7 +199,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   # 
   # This function generates multivariate missing data in a MCAR, MAR or MNAR manner. 
   # The details section gives a concise explanation of the why and how of this function.  
-  #
   # ------------------------ sum.scores -----------------------------------
   #
   sum.scores <- function(P, data, weights) {
@@ -237,8 +236,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                     function(i) (miss * freq[i]) / length(patterns[i,][patterns[i,] == 0]),
                     numeric(1))
     if (sum(cases) > n) {
-      stop("Proportion of missing cells is too large in combination with 
-           the desired number of missing variables",
+      stop("Proportion of missing cells is too large in combination with the desired number of missing variables",
            call. = FALSE)
     } else {
       prop <- sum(cases) / n
@@ -266,8 +264,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     row.one <- c()
     for (h in seq_len(nrow(patterns))) {
       if (any(!patterns[h, ] %in% c(0, 1))) {
-        stop(paste("Argument patterns can only contain 0 and 1, pattern", h, 
-                   "contains another element"), call. = FALSE)
+        stop(paste("Argument patterns can only contain 0 and 1, pattern", h, "contains another element"), call. = FALSE)
       }
       if (all(patterns[h, ] %in% 1)) {
         prop.one <- prop.one + freq[h]
@@ -281,8 +278,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       freq <- freq[-row.one]
       freq <- recalculate.freq(freq)
       patterns <- patterns[-row.one, ]
-      warning("Frequency vector and patterns matrix have changed because of 
-              pattern(s) with merely ones", call. = FALSE)
+      warning("Frequency vector and patterns matrix have changed because of pattern(s) with merely ones", call. = FALSE)
     }
     prop.zero <- 0
     row.zero <- c()
@@ -313,16 +309,15 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (ncol(data) < 2) {
     stop("Data should contain at least two columns", call. = FALSE)
   } 
+  data <- data.frame(data)
   if (any(vapply(data, Negate(is.numeric), logical(1))) && mech != "MCAR") {
     data <- as.data.frame(sapply(data, as.numeric))
-    warning("Data is made numeric because the calculation of weights requires 
-            numeric data",
+    warning("Data is made numeric because the calculation of weights requires numeric data",
             call. = FALSE)
   }
-  data <- data.frame(data)
   if (prop < 0 || prop > 100) {
-    stop("Proportion of missingness should be a value between 0 and 1 
-         (for a proportion) or between 1 and 100 (for a percentage)", call. = FALSE)
+    stop("Proportion of missingness should be a value between 0 and 1 (for a proportion) or between 1 and 100 (for a percentage)", 
+         call. = FALSE)
   } else if (prop > 1) {
     prop <- prop / 100
   }
@@ -331,16 +326,12 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   } else if (is.vector(patterns) && (length(patterns) / ncol(data)) %% 1 == 0) {
     patterns <- matrix(patterns, length(patterns) / ncol(data), byrow = TRUE)
     if (nrow(patterns) == 1 && all(patterns[1, ] %in% 1)) {
-      stop("One pattern with merely ones results to no amputation at all, the 
-           procedure is therefore stopped", call. = FALSE)
+      stop("One pattern with merely ones results to no amputation at all, the procedure is therefore stopped", call. = FALSE)
     }
   } else if (is.vector(patterns)) {
     stop("Length of pattern vector does not match #variables", call. = FALSE)
   }
-  if (!is.data.frame(patterns)) {
-    patterns <- data.frame(patterns)
-    names(patterns) <- names(data)
-  }
+  patterns <- data.frame(patterns)
   if (is.null(freq)) {
     freq <- ampute.default.freq(patterns = patterns)
   }
@@ -354,8 +345,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     } else {
       freq <- c(freq, rep.int(0.2, nrow(patterns) - length(freq)))
     }
-      warning(paste("Length of vector with relative frequencies does not match 
-      #patterns and is therefore changed to", freq), call. = FALSE)
+      warning(paste("Length of vector with relative frequencies does not match #patterns and is therefore changed to", freq), call. = FALSE)
   }
   if (sum(freq) != 1) {
     freq <- recalculate.freq(freq = freq)
@@ -384,24 +374,27 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
               call. = FALSE)
   }
   if (mech == "MCAR" && !is.null(weights)) {
+    weights = NULL
     warning("Weights matrix is not used when mechanism is MCAR", call. = FALSE)
   }
   if (mech == "MCAR" && !is.null(odds)) {
+    odds = NULL
     warning("Odds matrix is not used when mechanism is MCAR", call. = FALSE)
   }
   if (mech != "MCAR" && !is.null(weights)) {
-    if (is.vector(weights) & (length(weights) / ncol(data)) %% 1 == 0) {
+    if (is.vector(weights) && (length(weights) / ncol(data)) %% 1 == 0) {
       weights <- matrix(weights, length(weights) / ncol(data), byrow = TRUE)
     } else if (is.vector(weights)) {
       stop("Length of weight vector does not match #variables", call. = FALSE)
-    }  
+    } else if (!is.matrix(weights) && !is.data.frame(weights)) {
+      stop("Weights matrix should be a matrix", call. = FALSE)
+    }
   }
   if (is.null(weights)) {
     weights <- ampute.default.weights(patterns = patterns.new,
                                       mech = mech)
   }
-  weights <- data.frame(weights)
-  names(weights) <- names(data)
+  weights <- as.data.frame(weights)
   if (!is.vector(cont)) {
     cont <- as.vector(cont)
     warning("Continuous should contain merely TRUE or FALSE", call. = FALSE)
@@ -414,11 +407,13 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     stop("Continuous should contain TRUE or FALSE", call. = FALSE)
   }
   if (cont && !is.null(odds)) {
-    warning("Odds matrix is not used when continuous probabilities are specified", 
+    odds = NULL
+    warning("Odds matrix is not used when continuous probabilities (cont == TRUE) are specified", 
             call. = FALSE)
   }
   if (!cont && !is.null(type)) {
-    warning("Type is not used when continuous probabilities are specified",
+    type = NULL
+    warning("Type is not used when discrete probabilities (cont == FALSE) are specified",
             call. = FALSE)
   }
   if (is.null(type)) {
@@ -433,11 +428,10 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     warning("Type should be a vector of strings", call. = FALSE)
   } else if (!length(type) %in% c(1, nrow(patterns), nrow(patterns.new))) {
     type <- type[1]
-    warning("Type should either have length 1 or length equal to #patterns, first
-            element is used for all patterns", call. = FALSE)
+    warning("Type should either have length 1 or length equal to #patterns, first element is used for all patterns", call. = FALSE)
   }
-  if (!is.null(odds) && !is.matrix(odds)) {
-    odds <- matrix(odds, nrow(patterns.new), byrow = TRUE)
+  if (mech != "MCAR" && !is.null(odds) && !is.matrix(odds)) {
+    stop("Odds matrix should be a matrix", call. = FALSE)
   }
   if (is.null(odds)) {
     odds <- ampute.default.odds(patterns = patterns.new)
@@ -477,8 +471,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     } else {
       # Check if there is a pattern with merely zeroos
       if (!is.null(check.pat[["row.zero"]]) && mech == "MAR") {
-        stop(paste("Patterns object contains merely zeros and this kind of pattern 
-                   is not possible when mechanism is MAR"), 
+        stop(paste("Patterns object contains merely zeros and this kind of pattern is not possible when mechanism is MAR"), 
              call. = FALSE)
       } else {
         if (std) {
@@ -511,6 +504,8 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   }
   #
   # Create return object
+  names(patterns.new) <- names(data)
+  names(weights) <- names(data)
   call <- match.call()
   missing.data <- data.frame(missing.data)
   result <- list(call = call, 
