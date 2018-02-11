@@ -395,6 +395,9 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                                       mech = mech)
   }
   weights <- as.data.frame(weights)
+  if (!nrow(weights) %in% c(nrow(patterns), nrow(patterns.new))) {
+    stop("The objects patterns and weights are not matching", call. = FALSE)
+  }
   if (!is.vector(cont)) {
     cont <- as.vector(cont)
     warning("Continuous should contain merely TRUE or FALSE", call. = FALSE)
@@ -431,7 +434,11 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     warning("Type should either have length 1 or length equal to #patterns, first element is used for all patterns", call. = FALSE)
   }
   if (mech != "MCAR" && !is.null(odds) && !is.matrix(odds)) {
+    if (nrow(patterns.new) == 1 && is.vector(odds)) {
+      odds <- matrix(odds, nrow = 1)
+    } else {
     stop("Odds matrix should be a matrix", call. = FALSE)
+    }
   }
   if (is.null(odds)) {
     odds <- ampute.default.odds(patterns = patterns.new)
@@ -442,9 +449,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
         stop("Odds matrix can only have positive values", call. = FALSE)
       }
     }
-  }
-  if (!nrow(weights) %in% c(nrow(patterns), nrow(patterns.new))) {
-    stop("The objects patterns and weights are not matching", call. = FALSE)
   }
   if (!nrow(odds) %in% c(nrow(patterns), nrow(patterns.new))) {
     stop("The objects patterns and odds are not matching", call. = FALSE)
