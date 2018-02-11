@@ -373,6 +373,11 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       warning("Mechanism should contain merely MCAR, MAR or MNAR. First element is used", 
               call. = FALSE)
   }
+  # Check if there is a pattern with merely zeroos
+  if (!is.null(check.pat[["row.zero"]]) && mech == "MAR") {
+    stop(paste("Patterns object contains merely zeros and this kind of pattern is not possible when mechanism is MAR"), 
+         call. = FALSE)
+  }
   if (mech == "MCAR" && !is.null(weights)) {
     weights = NULL
     warning("Weights matrix is not used when mechanism is MCAR", call. = FALSE)
@@ -473,30 +478,24 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                        patterns = patterns.new,
                        prop = prop)
     } else {
-      # Check if there is a pattern with merely zeroos
-      if (!is.null(check.pat[["row.zero"]]) && mech == "MAR") {
-        stop(paste("Patterns object contains merely zeros and this kind of pattern is not possible when mechanism is MAR"), 
-             call. = FALSE)
+      if (std) {
+        data_for_sumscores <- data.frame(scale(data))
       } else {
-        if (std) {
-          data_for_sumscores <- data.frame(scale(data))
-        } else {
-          data_for_sumscores <- data
-        }
-        scores <- sum.scores(P = P,
-                             data = data_for_sumscores,
-                             weights = weights)
+        data_for_sumscores <- data
       }
+      scores <- sum.scores(P = P,
+                           data = data_for_sumscores,
+                           weights = weights)
       if (!cont) {
-        R <- ampute.discrete(P = P,
-                             scores = scores, 
-                             odds = odds, 
-                             prop = prop)
+      R <- ampute.discrete(P = P,
+                           scores = scores, 
+                           odds = odds, 
+                           prop = prop)
       } else if (cont) {
-        R <- ampute.continuous(P = P,
-                               scores = scores,
-                               prop = round(prop, 3),
-                               type = type)
+      R <- ampute.continuous(P = P,
+                             scores = scores,
+                             prop = round(prop, 3),
+                             type = type)
       }
     }
     missing.data <- data

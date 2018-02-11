@@ -51,6 +51,9 @@ test_that("all arguments work", {
   expect_error(ampute(data = complete.data, patterns = c(1, 0, 1, 1, 0, 0), 
                       cont = TRUE, weights = c(1, 4, -2, 0, 1, 2),
                       type = c("LEFT","TAIL")), NA)
+  # one pattern with odds vector
+  expect_error(ampute(data = complete.data, patterns = c(1, 0, 1), 
+                      weights = c(4, 1, 0), odds = c(2, 1), cont = FALSE), NA)
   # argument standardized
   expect_error(ampute(data = complete.data, std = FALSE), NA)
 })
@@ -66,6 +69,7 @@ test_that("function works around unusual arguments", {
   
   # patterns
   expect_error(ampute(data = complete.data, patterns = c(0, 0, 0), mech = "MCAR"), NA)
+  expect_error(ampute(data = complete.data, patterns = c(0, 0, 1, 0, 0, 0), mech = "MNAR"), NA)
   expect_warning(ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0)))
   
   # freq
@@ -78,6 +82,8 @@ test_that("function works around unusual arguments", {
   # mech, type and weights
   expect_warning(ampute(data = complete.data, mech = c("MCAR", "MAR")), 
                  "Mechanism should contain merely MCAR, MAR or MNAR. First element is used")
+  expect_warning(ampute(data = complete.data, type = c("LEFT", "RIGHT")),
+                 "Type should either have length 1 or length equal to #patterns, first element is used for all patterns")
   expect_warning(ampute(data = complete.data, mech = "MCAR", 
                         odds = matrix(data = c(1, 4, NA, NA,
                                                0, 3, 3, NA,
@@ -122,6 +128,9 @@ test_that("error messages work properly", {
                "Length of pattern vector does not match #variables")
   expect_error(ampute(data = complete.data, patterns = c(1, 0, 2)),
                "Argument patterns can only contain 0 and 1, pattern 1 contains another element")
+  expect_error(ampute(data = complete.data, mech = "MAR", 
+                      patterns = c(0, 0, 1, 0, 0, 0)),
+               "Patterns object contains merely zeros and this kind of pattern is not possible when mechanism is MAR")
   
   # mech, type, weights and odds
   expect_error(ampute(data = complete.data, mech = "MAAR"),
