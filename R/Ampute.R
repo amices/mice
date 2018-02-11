@@ -201,7 +201,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   # The details section gives a concise explanation of the why and how of this function.  
   # ------------------------ sum.scores -----------------------------------
   #
-  sum.scores <- function(P, data, weights) {
+  sum.scores <- function(P, data, std, weights) {
     # This is an underlying function of multivariate amputation function ampute().
     # This function is used to calculate the weighted sum scores of the candidates.
     # Based on the data, the weights matrix and the kind of mechanism, each case
@@ -209,13 +209,15 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     # The calculation of the probabilities occur in the function ampute.mcar(), 
     # ampute.continuous() or ampute.discrete(), based on the kind of missingness. 
     weights <- as.matrix(weights)
-    
     f <- function(i) {
       if (length(P[P == (i + 1)]) == 0) {
         return(0)
       } else {
         candidates <- as.matrix(data[P == (i + 1), ])
         # For each candidate in the pattern, a weighted sum score is calculated
+        if (std) {
+          candidates <- scale(candidates)
+        } 
         return(apply(candidates, 1, function(x) weights[i, ] %*% x))
       }
     }
@@ -478,13 +480,9 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                        patterns = patterns.new,
                        prop = prop)
     } else {
-      if (std) {
-        data_for_sumscores <- data.frame(scale(data))
-      } else {
-        data_for_sumscores <- data
-      }
       scores <- sum.scores(P = P,
-                           data = data_for_sumscores,
+                           data = data,
+                           std = std,
                            weights = weights)
       if (!cont) {
       R <- ampute.discrete(P = P,
