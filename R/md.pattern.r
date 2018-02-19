@@ -98,7 +98,7 @@ md.pattern <- function(x, plot = TRUE) {
       par(mar=rep(0, 4))
       plot.window(xlim=c(-1, ncol(R) + 1), ylim=c(-1, nrow(R) + 1), asp=1)
       o <- cbind(c(row(R)), c(col(R))) - 1
-      shade <- ifelse(R[nrow(R):1, ], "blue", "red")
+      shade <- ifelse(R[nrow(R):1, ], mdc(1), mdc(2))
       rect(o[, 2], o[, 1], o[, 2] + 1, o[, 1] + 1, col=shade)
       for(i in 1:ncol(R)){
         text(i - .5, nrow(R) + .3, colnames(r)[i])
