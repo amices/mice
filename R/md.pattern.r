@@ -17,6 +17,8 @@
 #'@param convert.char Should character variables be converted to factors 
 #'beforehand? This may have a great impact on the number of missing data patterns. 
 #'Default is `convert.char = FALSE`.
+#'@param use.empty Should completely unobserved columns count towards the missing 
+#'data patterns? Default is `use.empty = TRUE`.
 #'@return A matrix with \code{ncol(x)+1} columns, in which each row corresponds
 #'to a missing data pattern (1=observed, 0=missing).  Rows and columns are
 #'sorted in increasing amounts of missing information. The last column and row
@@ -44,7 +46,7 @@
 #'
 #'
 #'@export
-md.pattern <- function(x, plot = TRUE, convert.char = FALSE) {
+md.pattern <- function(x, plot = TRUE, convert.char = FALSE, use.empty = TRUE) {
     # md.pattern
     # 
     # computes the missing data pattern in the data
@@ -59,17 +61,23 @@ md.pattern <- function(x, plot = TRUE, convert.char = FALSE) {
     if (ncol(x) < 2) 
         stop("Data should have at least two columns")
     # if(is.data.frame(x)) x <- data.frame.to.matrix(x)
-    if (convert.char){
-      if (is.data.frame(x)) {
+    if (is.data.frame(x)){
+      if (convert.char){
         if(!all(sapply(x, is.numeric))){
           x[!sapply(x, is.numeric)] <- lapply(x[!sapply(x, is.numeric)], factor)
           warning('Columns of class `character` transformed into `factor`')
         }
         x <- data.matrix(x)
-      } 
-    } else {
-      if (is.data.frame(x)) 
-        x <- data.matrix(x)  # SvB use standard R function > V2.5
+      } else {
+        x <- suppressWarnings(data.matrix(x))
+      }
+    }
+    if(nrow(x) %in% apply(is.na(x), 2, sum) & use.empty){
+    warning('Some columns are completely unobserved and/or are of type `character`. Setting `use.empty = FALSE` and/or `convert.char = TRUE` may make the missing data pattern easier to interpret.', )
+    }
+    if (!use.empty){
+      x <- x[, !apply(is.na(x), 2, sum) %in% nrow(x)]
+      warning('Completely unobserved columns are set to be ignored.')
     }
     n <- nrow(x)
     p <- ncol(x)
