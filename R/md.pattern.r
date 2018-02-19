@@ -12,11 +12,14 @@
 #'
 #'@param x A data frame or a matrix containing the incomplete data.  Missing
 #'values are coded as NA's.
+#'@param plot Should the missing data pattern be made into a plot. Defaults is 
+#'`plot = TRUE`.
 #'@return A matrix with \code{ncol(x)+1} columns, in which each row corresponds
 #'to a missing data pattern (1=observed, 0=missing).  Rows and columns are
 #'sorted in increasing amounts of missing information. The last column and row
 #'contain row and column counts, respectively.
-#'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+#'@author Gerko Vink, 2018, based on an earlier version of the same function by
+#'Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
 #'@references Schafer, J.L. (1997), Analysis of multivariate incomplete data.
 #'London: Chapman&Hall.
 #'
@@ -38,7 +41,7 @@
 #'
 #'
 #'@export
-md.pattern <- function(x) {
+md.pattern <- function(x, plot = TRUE) {
     # md.pattern
     # 
     # computes the missing data pattern in the data
@@ -53,8 +56,13 @@ md.pattern <- function(x) {
     if (ncol(x) < 2) 
         stop("Data should have at least two columns")
     # if(is.data.frame(x)) x <- data.frame.to.matrix(x)
-    if (is.data.frame(x)) 
-        x <- data.matrix(x)  # SvB use standard R function > V2.5
+    if (is.data.frame(x)) {
+      if(!all(sapply(x, is.numeric))){
+        x[!sapply(x, is.numeric)] <- lapply(x[!sapply(x, is.numeric)], factor)
+        warning('Columns of class `character` transformed into `factor`')
+      }
+      x <- data.matrix(x)
+    }
     n <- nrow(x)
     p <- ncol(x)
     mode(x) <- "single"  # find missingness patterns
@@ -88,5 +96,25 @@ md.pattern <- function(x) {
     ro2 <- order(nmis.row <- p - as.integer(apply(r, 1, sum)))
     r <- rbind(r[ro2, co], nmis[co])
     r <- cbind(r, c(nmis.row[ro2], sum(nmis)))
-    r
+    if (plot){ #add plot
+      plot.new()
+      R <- r[1:nrow(r)-1, 1:ncol(r)-1]
+      par(mar=rep(0, 4))
+      plot.window(xlim=c(-1, ncol(R) + 1), ylim=c(-1, nrow(R) + 1), asp=1)
+      o <- cbind(c(row(R)), c(col(R))) - 1
+      shade <- ifelse(R[nrow(R):1, ], mdc(1), mdc(2))
+      rect(o[, 2], o[, 1], o[, 2] + 1, o[, 1] + 1, col=shade)
+      for(i in 1:ncol(R)){
+        text(i - .5, nrow(R) + .3, colnames(r)[i])
+        text(i - .5, -.3, nmis[co][i])
+      }
+      for(i in 1:nrow(R)){
+        text(ncol(R) + .3, i - .5, r[(nrow(r)-1):1, ncol(r)][i])
+        text(-.3, i - .5, rownames(r)[(nrow(r)-1):1][i])
+      }
+      text(ncol(R) + .3,  -.3, r[nrow(r), ncol(r)])
+      return(r)
+    } else {
+      return(r)
+    }
 }
