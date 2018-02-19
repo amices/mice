@@ -12,8 +12,11 @@
 #'
 #'@param x A data frame or a matrix containing the incomplete data.  Missing
 #'values are coded as NA's.
-#'@param plot Should the missing data pattern be made into a plot. Defaults is 
+#'@param plot Should the missing data pattern be made into a plot. Default is 
 #'`plot = TRUE`.
+#'@param convert.char Should character variables be converted to factors 
+#'beforehand? This may have a great impact on the number of missing data patterns. 
+#'Default is `convert.char = FALSE`.
 #'@return A matrix with \code{ncol(x)+1} columns, in which each row corresponds
 #'to a missing data pattern (1=observed, 0=missing).  Rows and columns are
 #'sorted in increasing amounts of missing information. The last column and row
@@ -41,7 +44,7 @@
 #'
 #'
 #'@export
-md.pattern <- function(x, plot = TRUE) {
+md.pattern <- function(x, plot = TRUE, convert.char = FALSE) {
     # md.pattern
     # 
     # computes the missing data pattern in the data
@@ -56,12 +59,17 @@ md.pattern <- function(x, plot = TRUE) {
     if (ncol(x) < 2) 
         stop("Data should have at least two columns")
     # if(is.data.frame(x)) x <- data.frame.to.matrix(x)
-    if (is.data.frame(x)) {
-      if(!all(sapply(x, is.numeric))){
-        x[!sapply(x, is.numeric)] <- lapply(x[!sapply(x, is.numeric)], factor)
-        warning('Columns of class `character` transformed into `factor`')
-      }
-      x <- data.matrix(x)
+    if (convert.char){
+      if (is.data.frame(x)) {
+        if(!all(sapply(x, is.numeric))){
+          x[!sapply(x, is.numeric)] <- lapply(x[!sapply(x, is.numeric)], factor)
+          warning('Columns of class `character` transformed into `factor`')
+        }
+        x <- data.matrix(x)
+      } 
+    } else {
+      if (is.data.frame(x)) 
+        x <- data.matrix(x)  # SvB use standard R function > V2.5
     }
     n <- nrow(x)
     p <- ncol(x)
