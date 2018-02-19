@@ -56,9 +56,13 @@ md.pattern <- function(x, plot = TRUE) {
     if (ncol(x) < 2) 
         stop("Data should have at least two columns")
     # if(is.data.frame(x)) x <- data.frame.to.matrix(x)
-    if (is.data.frame(x)) 
-        x <- data.matrix(x)  # SvB use standard R function > V2.5
-    
+    if (is.data.frame(x)) {
+      if(!all(sapply(x, is.numeric))){
+        x[!sapply(x, is.numeric)] <- lapply(x[!sapply(x, is.numeric)], factor)
+        warning('Columns of class `character` transformed into `factor`')
+      }
+      x <- data.matrix(x)
+    }
     n <- nrow(x)
     p <- ncol(x)
     mode(x) <- "single"  # find missingness patterns
