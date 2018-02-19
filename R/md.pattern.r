@@ -61,6 +61,26 @@ md.pattern <- function(x, plot = TRUE, convert.char = FALSE, use.empty = TRUE) {
     if (ncol(x) < 2) 
         stop("Data should have at least two columns")
     # if(is.data.frame(x)) x <- data.frame.to.matrix(x)
+    if (!use.empty){
+      if (any(sapply(x, is.character)) & !convert.char){
+        x <- x[, !apply(is.na(x), 2, sum) %in% nrow(x)]
+        warning('Completely unobserved columns are set to be ignored. Some of the ignored columns are of type `character`.')
+      } else {
+        x <- x[, !apply(is.na(x), 2, sum) %in% nrow(x)]
+        warning('Completely unobserved columns are set to be ignored.')
+      }
+    }
+    if(nrow(x) %in% apply(is.na(x), 2, sum) & use.empty){
+      if(!convert.char){
+        if (any(sapply(x[, apply(is.na(x), 2, sum) %in% nrow(x)], is.logical))){
+          warning('Some columns are completely unobserved and some of those columns are of type `character`. Setting `use.empty = FALSE` and `convert.char = TRUE` may make the missing data pattern easier to interpret.')
+        } else {
+          warning('Some columns are completely unobserved and are of type `character`. Setting `convert.char = TRUE` may make the missing data pattern easier to interpret.')
+        }
+      } else {
+        warning('Some columns are completely unobserved. Setting `use.empty = FALSE` may make the missing data pattern easier to interpret.')
+      }
+    }
     if (is.data.frame(x)){
       if (convert.char){
         if(!all(sapply(x, is.numeric))){
@@ -71,13 +91,6 @@ md.pattern <- function(x, plot = TRUE, convert.char = FALSE, use.empty = TRUE) {
       } else {
         x <- suppressWarnings(data.matrix(x))
       }
-    }
-    if(nrow(x) %in% apply(is.na(x), 2, sum) & use.empty){
-    warning('Some columns are completely unobserved and/or are of type `character`. Setting `use.empty = FALSE` and/or `convert.char = TRUE` may make the missing data pattern easier to interpret.', )
-    }
-    if (!use.empty){
-      x <- x[, !apply(is.na(x), 2, sum) %in% nrow(x)]
-      warning('Completely unobserved columns are set to be ignored.')
     }
     n <- nrow(x)
     p <- ncol(x)
