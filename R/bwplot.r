@@ -141,7 +141,6 @@
 #'
 #'
 #'
-#'@method bwplot mids
 #'@export
 bwplot.mids <- function(x,
                         data,

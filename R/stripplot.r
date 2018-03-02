@@ -158,7 +158,6 @@
 #'stripplot(imp, gen~.imp, na = wgt, factor = 2, cex = c(8.6), 
 #'          hor = FALSE, outer = TRUE, scales = "free", pch = c(1,19))
 #'
-#'@method stripplot mids
 #'@export
 stripplot.mids <- function(x,
                            data,

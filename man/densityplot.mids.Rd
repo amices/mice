@@ -170,7 +170,6 @@ densityplot(imp, ~hc|.imp)
 ### All combined in one panel.
 densityplot(imp, ~hc)
 
-
 }
 \references{
 Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
