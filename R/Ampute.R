@@ -216,12 +216,20 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
         candidates <- as.matrix(data[P == (i + 1), ])
         # For each candidate in the pattern, a weighted sum score is calculated
         if (std) {
-          candidates <- scale(candidates)
-        } 
-        return(apply(candidates, 1, function(x) weights[i, ] %*% x))
+          length_unique <- function(x) {
+            return(length(unique(x)) == 1)
+          }
+          if (!(nrow(candidates) > 1 && any(apply(candidates, 2, length_unique)))) { 
+            candidates <- scale(candidates)
+          }
+        }
+        scores <- apply(candidates, 1, function(x) weights[i, ] %*% x)
+        if (length(scores) > 1 && length(unique(scores)) != 1) {
+            scores <- scale(scores)
+        }
+        return(scores)
       }
     }
-    
     scores <- lapply(seq_len(nrow(patterns)), f)
     return(scores)
   }

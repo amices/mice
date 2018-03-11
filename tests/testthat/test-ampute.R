@@ -56,6 +56,13 @@ test_that("all arguments work", {
                       weights = c(4, 1, 0), odds = c(2, 1), cont = FALSE), NA)
   # argument standardized
   expect_error(ampute(data = complete.data, std = FALSE), NA)
+  
+  # sum scores cannot be NaN
+  dich.data <- matrix(c(0, 0, 0, 1, 0, 0, 0, 0, 0,
+                        1, 0, 0, 0, 0, 0, 0, 0, 0), ncol = 2, byrow = FALSE)
+  wss <- ampute(data = dich.data, mech = "MNAR")$scores
+  check_na <- function(x){return(any(is.na(x)))}
+  expect_false(any(lapply(wss, check_na)))
 })
 
 test_that("function works around unusual arguments", {
