@@ -46,104 +46,40 @@
 #'
 #'
 #'@export
-md.pattern <- function(x, plot = TRUE, convert.char = FALSE, use.empty = TRUE) {
-    # md.pattern
-    # 
-    # computes the missing data pattern in the data
-    # x can be a vector, matrix or data frame
-    # NA's indicate missing data
-    # based on Schafer's prelim.norm function
-    # SvB, 13-7-99
-    # SvB, 32 columns bug removed - 8mar2012
-    #
-    if (!(is.matrix(x) || is.data.frame(x))) 
-        stop("Data should be a matrix or dataframe")
-    if (ncol(x) < 2) 
-        stop("Data should have at least two columns")
-    # if(is.data.frame(x)) x <- data.frame.to.matrix(x)
-    if (!use.empty){
-      if (any(sapply(x, is.character)) & !convert.char){
-        x <- x[, !apply(is.na(x), 2, sum) %in% nrow(x)]
-        warning('Completely unobserved columns are set to be ignored. Some of the ignored columns are of type `character`.')
-      } else {
-        x <- x[, !apply(is.na(x), 2, sum) %in% nrow(x)]
-        warning('Completely unobserved columns are set to be ignored.')
-      }
+md.pattern <- function(x, plot = TRUE){
+  if (!(is.matrix(x) || is.data.frame(x))) 
+    stop("Data should be a matrix or dataframe")
+  if (ncol(x) < 2) 
+    stop("Data should have at least two columns")
+  R <- is.na(x)
+  nmis <- colSums(R)
+  R <- R[, order(nmis)] #sort columnwise
+  pat <- apply(R, 1, function(x) paste(as.numeric(x), collapse=''))
+  sortR <- R[order(pat), ] #sort rowwise
+  mpat <- sortR[!duplicated(sortR), ]
+  #update row and column margins
+  rownames(mpat) <- table(pat)
+  r <- cbind(abs(mpat - 1), rowSums(mpat))
+  r <- rbind(r, c(nmis[order(nmis)], sum(nmis)))
+  if (plot){ #add plot
+    plot.new()
+    R <- r[1:nrow(r)-1, 1:ncol(r)-1]
+    par(mar=rep(0, 4))
+    plot.window(xlim=c(-1, ncol(R) + 1), ylim=c(-1, nrow(R) + 1), asp=1)
+    M <- cbind(c(row(R)), c(col(R))) - 1
+    shade <- ifelse(R[nrow(R):1, ], mdc(1), mdc(2))
+    rect(M[, 2], M[, 1], M[, 2] + 1, M[, 1] + 1, col=shade)
+    for(i in 1:ncol(R)){
+      text(i - .5, nrow(R) + .3, colnames(r)[i])
+      text(i - .5, -.3, nmis[order(nmis)][i])
     }
-    if(nrow(x) %in% apply(is.na(x), 2, sum) & use.empty){
-      if(!convert.char){
-        if (any(sapply(x[, apply(is.na(x), 2, sum) %in% nrow(x)], is.logical))){
-          warning('Some columns are completely unobserved and some of those columns are of type `character`. Setting `use.empty = FALSE` and `convert.char = TRUE` may make the missing data pattern easier to interpret.')
-        } else {
-          warning('Some columns are completely unobserved and are of type `character`. Setting `convert.char = TRUE` may make the missing data pattern easier to interpret.')
-        }
-      } else {
-        warning('Some columns are completely unobserved. Setting `use.empty = FALSE` may make the missing data pattern easier to interpret.')
-      }
+    for(i in 1:nrow(R)){
+      text(ncol(R) + .3, i - .5, r[(nrow(r)-1):1, ncol(r)][i], adj = 0)
+      text(-.3, i - .5, rownames(r)[(nrow(r)-1):1][i], adj = 1)
     }
-    if (is.data.frame(x)){
-      if (convert.char){
-        if(!all(sapply(x, is.numeric))){
-          x[!sapply(x, is.numeric)] <- lapply(x[!sapply(x, is.numeric)], factor)
-          warning('Columns of class `character` transformed into `factor`')
-        }
-        x <- data.matrix(x)
-      } else {
-        x <- suppressWarnings(data.matrix(x))
-      }
-    }
-    n <- nrow(x)
-    p <- ncol(x)
-    mode(x) <- "single"  # find missingness patterns
-    r <- 1 * is.na(x)
-    nmis <- as.integer(apply(r, 2, sum))
-    names(nmis) <- dimnames(x)[[2]]  # index the missing data patterns
-    mdp <- (r %*% (2^((seq_len(ncol(x))) - 1))) + 1  # do row sort  SvB 8mar2012
-    ro <- order(mdp)
-    x <- matrix(x[ro, ], n, p)  ##pm 04/02
-    mdp <- mdp[ro]
-    r <- matrix(r[ro, ], n, p)  ##pm 04/02
-    ro <- order(ro)  # compress missing data patterns
-    mdpst <- as.integer(seq(along = mdp)[!duplicated(mdp)])
-    mdp <- unique(mdp)
-    npatt <- length(mdpst)  # create r-matrix for display purposes
-    r <- 1 - r
-    r <- matrix(r[mdpst, ], npatt, p)
-    if (npatt == 1) 
-        tmp <- format(n)
-    if (npatt > 1) 
-        tmp <- format(c(mdpst[2:npatt], n + 1) - mdpst)
-    dimnames(r) <- list(tmp, dimnames(x)[[2]])
-    storage.mode(r) <- "integer"  # center and scale the columns of x
-    #
-    if (npatt > 1) 
-        nmdp <- as.integer(c(mdpst[-1], n + 1) - mdpst)
-    if (npatt == 1) 
-        nmdp <- n  #
-    # sort the rows and columns according to the marginals
-    co <- order(nmis)
-    ro2 <- order(nmis.row <- p - as.integer(apply(r, 1, sum)))
-    r <- rbind(r[ro2, co], nmis[co])
-    r <- cbind(r, c(nmis.row[ro2], sum(nmis)))
-    if (plot){ #add plot
-      plot.new()
-      R <- r[1:nrow(r)-1, 1:ncol(r)-1]
-      par(mar=rep(0, 4))
-      plot.window(xlim=c(-1, ncol(R) + 1), ylim=c(-1, nrow(R) + 1), asp=1)
-      o <- cbind(c(row(R)), c(col(R))) - 1
-      shade <- ifelse(R[nrow(R):1, ], mdc(1), mdc(2))
-      rect(o[, 2], o[, 1], o[, 2] + 1, o[, 1] + 1, col=shade)
-      for(i in 1:ncol(R)){
-        text(i - .5, nrow(R) + .3, colnames(r)[i])
-        text(i - .5, -.3, nmis[co][i])
-      }
-      for(i in 1:nrow(R)){
-        text(ncol(R) + .3, i - .5, r[(nrow(r)-1):1, ncol(r)][i])
-        text(-.3, i - .5, rownames(r)[(nrow(r)-1):1][i])
-      }
-      text(ncol(R) + .3,  -.3, r[nrow(r), ncol(r)])
-      return(r)
-    } else {
-      return(r)
-    }
+    text(ncol(R) + .3,  -.3, r[nrow(r), ncol(r)])
+    return(r)
+  } else {
+    return(r)
+  }
 }
