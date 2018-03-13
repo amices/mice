@@ -31,13 +31,13 @@ test_that("Block names are generated automatically", {
 test_that("Method `pmm` is used for mixed variable types", {
   expect_identical(unname(imp2$method[1]), "pmm")
 })
-test_that("Method `logreg` if all are binary", {
-  expect_identical(unname(imp3$method[1]), "logreg")
+test_that("Method `cart` if all are binary", {
+  expect_identical(unname(imp3$method[1]), "cart")
 })
-test_that("Method `polr` if all are ordered", {
-  expect_identical(unname(imp4$method[1]), "polr")
+test_that("Method `cart` if all are ordered", {
+  expect_identical(unname(imp4$method[1]), "cart")
 })
-test_that("Method `polr` works with one block", {
+test_that("Method `pmm` works with one block", {
   expect_identical(unname(imp5$method[1]), "pmm")
 })
 

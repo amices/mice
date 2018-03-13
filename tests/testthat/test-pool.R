@@ -6,12 +6,12 @@ est <- pool(fit)
 #fitlist <- fit$analyses
 #est <- mice:::pool.fitlist(fitlist)
 
-mn <- c(18.76175, 0.05359003, -4.573652, -6.635969, 2.163629)
-se <- c(4.002796, 0.02235067, 2.033986, 2.459769, 2.02898)
+mn <- c(17.7588, 0.0603, -5.1938, -7.0474, 1.2290)
+se <- c(3.1848, 0.0174, 1.6841, 2.0593, 2.6061)
 
 test_that("retains same numerical result", {
-  expect_equal(unname(getqbar(est)), mn, tolerance = 0.00001)
-  expect_equal(unname(summary(est)[, "std.error"]), se, tolerance = 0.00001)
+  expect_equal(unname(getqbar(est)), mn, tolerance = 0.001)
+  expect_equal(unname(summary(est)[, "std.error"]), se, tolerance = 0.001)
 })
 
 
