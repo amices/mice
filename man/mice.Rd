@@ -9,7 +9,7 @@
 \usage{
 mice(data, m = 5, method = NULL, predictorMatrix, where = NULL, blocks,
   visitSequence = NULL, formulas, blots = NULL, post = NULL,
-  defaultMethod = c("pmm", "cart", "cart", "cart"), maxit = 5,
+  defaultMethod = c("pmm", "logreg", "polyreg", "polr"), maxit = 5,
   printFlag = TRUE, seed = NA, data.init = NULL,
   imputationMethod = NULL, defaultImputationMethod = NULL, ...)
 }
