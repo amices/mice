@@ -16,7 +16,7 @@
 #' make.blots(nhanes, blocks = name.blocks(c("age", "hyp"), "xxx"))
 #' @export
 make.blots <- function(data, blocks = make.blocks(data)) {
-  data <- check.data(data)
+  data <- check.dataform(data)
   blots <- vector("list", length(blocks))
   for (i in seq_along(blots)) blots[[i]] <- alist()
   names(blots) <- names(blocks)
@@ -24,7 +24,7 @@ make.blots <- function(data, blocks = make.blocks(data)) {
 }
 
 check.blots <- function(blots, data, blocks = NULL) {
-  data <- check.data(data)
+  data <- check.dataform(data)
 
   if (is.null(blots)) return(make.blots(data, blocks))
   
