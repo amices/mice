@@ -1,4 +1,8 @@
 check.data <- function(data) {
+  check.dataform(data)
+}
+
+check.dataform <- function(data) {
   if (!(is.matrix(data) || is.data.frame(data)))
     stop("Data should be a matrix or data frame", call. = FALSE)
   if (ncol(data) < 2)
