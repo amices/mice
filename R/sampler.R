@@ -42,7 +42,6 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           calltype <- ifelse(length(ct) == 1, ct[1], ct[h])
           
           b <- blocks[[h]]
-          bname <- names(blocks)[h]
           if (calltype == "formula") ff <- formulas[[h]] else ff <- NULL
           if (calltype == "type") type <- predictorMatrix[h, ] else type <- NULL
           
@@ -61,7 +60,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           ## store current state
           oldstate <- get("state", pos = parent.frame())
           newstate <- list(it = k, im = i, 
-                           dep = bname, 
+                           dep = h, 
                            meth = theMethod, 
                            log = oldstate$log)
           assign("state", newstate, pos = parent.frame(), inherits = TRUE)
@@ -105,7 +104,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
             else stop("Cannot call function of type ", calltype, 
                       call. = FALSE)
             if (is.null(imputes)) stop("No imputations from ", theMethod, 
-                                       bname, call. = FALSE)
+                                       h, call. = FALSE)
             for (j in names(imputes)) {
               imp[[j]][, i] <- imputes[[j]]
               data[!r[, j], j] <- imp[[j]][, i]
