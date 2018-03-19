@@ -392,5 +392,9 @@ mice <- function(data, m = 5,
                   version = packageVersion("mice"),
                   date = Sys.Date())
   oldClass(midsobj) <- "mids"
+  
+  if (!is.null(midsobj$loggedEvents)) 
+    warning("Number of logged events: ", nrow(midsobj$loggedEvents),
+            call. = FALSE)
   return(midsobj)
 }
