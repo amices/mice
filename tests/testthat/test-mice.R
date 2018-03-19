@@ -24,7 +24,7 @@ test_that("blocks run as expected", {
   expect_silent(imp3b <<- mice(nhanes2, 
                               blocks = list(c("hyp", "hyp", "hyp"), "chl", "bmi"), 
                               print = FALSE, m = 1, maxit = 1, seed = 1))
-  expect_warning(imp4b <<- mice(boys, 
+  expect_silent(imp4b <<- mice(boys, 
                                blocks = list(c("gen", "phb"), "tv"),
                                print = FALSE, m = 1, maxit = 1, seed = 1))
   expect_silent(imp5b <<- mice(nhanes, 
@@ -93,7 +93,7 @@ test_that("formulas run as expected", {
                                                chl ~ hyp + hyp + hyp + bmi,
                                                bmi ~ hyp + hyp + hyp + chl), 
                               print = FALSE, m = 1, maxit = 1, seed = 1))
-  expect_warning(imp4f <<- mice(boys, 
+  expect_silent(imp4f <<- mice(boys, 
                                formulas = list(gen + phb ~ tv,
                                                tv ~ gen + phb), 
                                print = FALSE, m = 1, maxit = 1, seed = 1))
