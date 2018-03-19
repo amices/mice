@@ -274,7 +274,7 @@ mice <- function(data, m = 5,
   if (!is.null(defaultImputationMethod))
     defaultMethod <- defaultImputationMethod
   
-  data <- check.data(data)
+  data <- check.dataform(data)
   
   # determine input combination: predictorMatrix, blocks, formulas
   mp <- missing(predictorMatrix)
@@ -392,5 +392,9 @@ mice <- function(data, m = 5,
                   version = packageVersion("mice"),
                   date = Sys.Date())
   oldClass(midsobj) <- "mids"
+  
+  if (!is.null(midsobj$loggedEvents)) 
+    warning("Number of logged events: ", nrow(midsobj$loggedEvents),
+            call. = FALSE)
   return(midsobj)
 }

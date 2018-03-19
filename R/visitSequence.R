@@ -16,7 +16,7 @@ make.visitSequence <- function(data = NULL, blocks = NULL) {
     return(names(blocks))
   }
   
-  data <- check.data(data)
+  data <- check.dataform(data)
   blocks <- make.blocks(data)
   names(blocks)
 }

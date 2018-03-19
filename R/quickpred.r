@@ -90,7 +90,7 @@ quickpred <- function(data, mincor = 0.1, minpuc = 0, include = "", exclude = ""
   # automatic predictor selection according to Van Buuren et al (1999)
   
   # argument checking
-  data <- check.data(data)
+  data <- check.dataform(data)
   
   # initialize
   nvar <- ncol(data)

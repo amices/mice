@@ -42,7 +42,6 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           calltype <- ifelse(length(ct) == 1, ct[1], ct[h])
           
           b <- blocks[[h]]
-          bname <- names(blocks)[h]
           if (calltype == "formula") ff <- formulas[[h]] else ff <- NULL
           if (calltype == "type") type <- predictorMatrix[h, ] else type <- NULL
           
@@ -61,7 +60,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           ## store current state
           oldstate <- get("state", pos = parent.frame())
           newstate <- list(it = k, im = i, 
-                           dep = bname, 
+                           dep = h, 
                            meth = theMethod, 
                            log = oldstate$log)
           assign("state", newstate, pos = parent.frame(), inherits = TRUE)
@@ -105,7 +104,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
             else stop("Cannot call function of type ", calltype, 
                       call. = FALSE)
             if (is.null(imputes)) stop("No imputations from ", theMethod, 
-                                       bname, call. = FALSE)
+                                       h, call. = FALSE)
             for (j in names(imputes)) {
               imp[[j]][, i] <- imputes[[j]]
               data[!r[, j], j] <- imp[[j]][, i]
@@ -159,13 +158,13 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   if (calltype == "type") {
     vars <- colnames(data)[type != 0]
     formula <- reformulate(setdiff(vars, j), response = j)
-    formula <- update(formula, ". ~ . -1")
+    formula <- update(formula, ". ~ . ")
   }
   
   if (calltype == "formula") {
-    # move terms other than j from lhs to rhs, remove intercept
+    # move terms other than j from lhs to rhs
     ymove <- setdiff(lhs(formula), j)
-    formula <- update(formula, paste(j, " ~ . -1"))
+    formula <- update(formula, paste(j, " ~ . "))
     if (length(ymove) > 0L) 
       formula <- update(formula, paste("~ . + ", paste(ymove, collapse = "+")))
   }
@@ -173,12 +172,14 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   # get the model matrix
   x <- obtain.design(data, formula)
 
-  # expand type vector to model matrix
+  # expand type vector to model matrix, remove intercept
   if (calltype == "type") {
     type <- type[labels(terms(formula))][attr(x, "assign")]
+    x <- x[, -1L, drop = FALSE]
     names(type) <- colnames(x)
   }
   if (calltype == "formula") {
+    x <- x[, -1L, drop = FALSE]
     type <- rep(1L, length = ncol(x))
     names(type) <- colnames(x)
   }

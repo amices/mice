@@ -77,8 +77,12 @@ find.collinear <- function(x, threshold = 0.999, ...) {
 updateLog <- function(out = NULL, meth = NULL, frame = 2) {
   s <- get("state", parent.frame(frame))
   r <- get("loggedEvents", parent.frame(frame))
-  
-  rec <- data.frame(it = s$it, im = s$im, dep = s$dep, meth = if(is.null(meth)) s$meth else meth, out = if (is.null(out)) "" else out)
+
+  rec <- data.frame(it = s$it, 
+                    im = s$im, 
+                    dep = s$dep, 
+                    meth = if(is.null(meth)) s$meth else meth, 
+                    out = if (is.null(out)) "" else out)
   
   if (s$log)
     rec <- rbind(r, rec)
