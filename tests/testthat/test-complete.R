@@ -29,8 +29,8 @@ est <- pool(fit)
 est.long <- est
 
 test_that("workflow mids, mild and long produce same estimates", {
-  identical(getqbar(est.mice), getqbar(est.mild))
-  identical(getqbar(est.mice), getqbar(est.long))
+  expect_identical(getqbar(est.mice), getqbar(est.mild))
+  expect_identical(getqbar(est.mice), getqbar(est.long))
 })
 
 
@@ -68,3 +68,4 @@ test_that("workflow mids, mild and long produce same estimates", {
 #                      mice:::complete.mids(imp, "stacked", mild = mild),
 #                      mice:::complete.mids(imp, "rep", mild = mild),
 #                      times = 100)
+

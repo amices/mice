@@ -158,13 +158,13 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   if (calltype == "type") {
     vars <- colnames(data)[type != 0]
     formula <- reformulate(setdiff(vars, j), response = j)
-    formula <- update(formula, ". ~ . -1")
+    formula <- update(formula, ". ~ . ")
   }
   
   if (calltype == "formula") {
-    # move terms other than j from lhs to rhs, remove intercept
+    # move terms other than j from lhs to rhs
     ymove <- setdiff(lhs(formula), j)
-    formula <- update(formula, paste(j, " ~ . -1"))
+    formula <- update(formula, paste(j, " ~ . "))
     if (length(ymove) > 0L) 
       formula <- update(formula, paste("~ . + ", paste(ymove, collapse = "+")))
   }
@@ -172,12 +172,14 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   # get the model matrix
   x <- obtain.design(data, formula)
 
-  # expand type vector to model matrix
+  # expand type vector to model matrix, remove intercept
   if (calltype == "type") {
     type <- type[labels(terms(formula))][attr(x, "assign")]
+    x <- x[, -1L, drop = FALSE]
     names(type) <- colnames(x)
   }
   if (calltype == "formula") {
+    x <- x[, -1L, drop = FALSE]
     type <- rep(1L, length = ncol(x))
     names(type) <- colnames(x)
   }

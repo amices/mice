@@ -20,7 +20,7 @@ pred <- make.predictorMatrix(data)
 pred["outcome", "patientID"] <- -2
 
 test_that("mice::mice.impute.2l.bin() accepts factor outcome", {
-  expect_warning(imp <- mice(data, method = "2l.bin", print = FALSE, pred = pred, m = 1, maxit = 1))
+  expect_silent(imp <- mice(data, method = "2l.bin", print = FALSE, pred = pred, m = 1, maxit = 1))
   expect_false(anyNA(complete(imp)))
 })
 
