@@ -7,7 +7,7 @@ check.df <- function(x, y, ry) {
   # if needed, writes the df warning message to the log
   df <- sum(ry) - ncol(x) - 1
   mess <- paste("df set to 1. # observed cases:", sum(ry), " # predictors:", ncol(x) + 1)
-  if (df < 1)
+  if (df < 1 && sum(ry) > 0)
     updateLog(out = mess, frame = 4)
 }
 
