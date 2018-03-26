@@ -360,6 +360,12 @@ mice <- function(data, m = 5,
   state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
   loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
   
+  # edit imputation model
+  model <- list(method = method, predictorMatrix = predictorMatrix)
+  model <- edit.model(data, model)
+  method <- model$method
+  predictorMatrix <- model$predictorMatrix
+  
   # initialize imputations
   nmis <- apply(is.na(data), 2, sum)
   imp <- initialize.imp(data, m, where, blocks, visitSequence, 
