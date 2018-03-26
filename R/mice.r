@@ -274,6 +274,7 @@ mice <- function(data, m = 5,
   if (!is.null(defaultImputationMethod))
     defaultMethod <- defaultImputationMethod
   
+  # check form of data 
   data <- check.dataform(data)
   
   # determine input combination: predictorMatrix, blocks, formulas

@@ -1,5 +1,6 @@
 check.data <- function(data, method) {
   check.dataform(data)
+  
 }
 
 check.dataform <- function(data) {
@@ -11,6 +12,11 @@ check.dataform <- function(data) {
   mat <- sapply(data, is.matrix)
   if (any(mat)) stop("Cannot handle columns with class matrix: ", 
                      colnames(data)[mat])
+  
+  dup <- duplicated(colnames(data))
+  if (any(dup)) stop("Duplicate names found: ", 
+                     paste(colnames(data)[dup], collapse = ", "))
+  
   data
 }
 
