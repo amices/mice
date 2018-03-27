@@ -1,8 +1,8 @@
 Package: mice
 Type: Package
-Version: 2.47.0.9000
+Version: 2.47.1.9000
 Title: Multivariate Imputation by Chained Equations
-Date: 2018-01-26
+Date: 2018-01-29
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -27,8 +27,7 @@ Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
     methods,
     R (>= 2.10.0),
-    lattice,
-    tidyr
+    lattice
 Imports:
     broom,
     dplyr,
@@ -58,7 +57,10 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    HSAUR3
+    HSAUR3,
+    micemd,
+    miceadds,
+    tidyr
 LinkingTo: Rcpp
 Description: Multiple imputation using Fully Conditional Specification (FCS)
     implemented by the MICE algorithm as described in Van Buuren and

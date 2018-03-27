@@ -42,7 +42,6 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           calltype <- ifelse(length(ct) == 1, ct[1], ct[h])
           
           b <- blocks[[h]]
-          bname <- names(blocks)[h]
           if (calltype == "formula") ff <- formulas[[h]] else ff <- NULL
           if (calltype == "type") type <- predictorMatrix[h, ] else type <- NULL
           
@@ -61,7 +60,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           ## store current state
           oldstate <- get("state", pos = parent.frame())
           newstate <- list(it = k, im = i, 
-                           dep = bname, 
+                           dep = h, 
                            meth = theMethod, 
                            log = oldstate$log)
           assign("state", newstate, pos = parent.frame(), inherits = TRUE)
@@ -105,7 +104,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
             else stop("Cannot call function of type ", calltype, 
                       call. = FALSE)
             if (is.null(imputes)) stop("No imputations from ", theMethod, 
-                                       bname, call. = FALSE)
+                                       h, call. = FALSE)
             for (j in names(imputes)) {
               imp[[j]][, i] <- imputes[[j]]
               data[!r[, j], j] <- imp[[j]][, i]
@@ -162,19 +161,37 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
 sampler.univ <- function(data, r, where, type, formula, method, yname, k, 
                          calltype = "type", user, ...) {
   j <- yname[1L]
+  
   if (calltype == "type") {
     vars <- colnames(data)[type != 0]
     formula <- reformulate(setdiff(vars, j), response = j)
-    formula <- update(formula, ". ~ . -1")
+    formula <- update(formula, ". ~ . ")
   }
+  
   if (calltype == "formula") {
-    # move terms other than j from lhs to rhs, remove intercept
+    # move terms other than j from lhs to rhs
     ymove <- setdiff(lhs(formula), j)
-    formula <- update(formula, paste(j, " ~ . -1"))
+    formula <- update(formula, paste(j, " ~ . "))
     if (length(ymove) > 0L) 
       formula <- update(formula, paste("~ . + ", paste(ymove, collapse = "+")))
   }
+  
+  # get the model matrix
   x <- obtain.design(data, formula)
+
+  # expand type vector to model matrix, remove intercept
+  if (calltype == "type") {
+    type <- type[labels(terms(formula))][attr(x, "assign")]
+    x <- x[, -1L, drop = FALSE]
+    names(type) <- colnames(x)
+  }
+  if (calltype == "formula") {
+    x <- x[, -1L, drop = FALSE]
+    type <- rep(1L, length = ncol(x))
+    names(type) <- colnames(x)
+  }
+  
+  # define y, ry and wy
   y <- data[, j]
   ry <- complete.cases(x, y) & r[, j]
   wy <- complete.cases(x) & where[, j]
@@ -185,17 +202,18 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   cc <- wy[where[, j]]
   if (k == 1L) check.df(x, y, ry)
 
+  # remove linear dependencies
   keep <- remove.lindep(x, y, ry, ...)
   x <- x[, keep, drop = FALSE]
-  type <- type[keep]   ## FIXME : properly expand type vector
-  #if (ncol(x) != length(type))
-  #  stop("Internal error: length(type) != number of predictors")
+  type <- type[keep]
+  if (ncol(x) != length(type))
+    stop("Internal error: length(type) != number of predictors")
   
   # here we go
   f <- paste("mice.impute", method, sep = ".")
   imputes <- data[wy, j]
   imputes[!cc] <- NA
-  ## ready
+
   args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type), user, list(...))
   imputes[cc] <- do.call(f, args = args)
   imputes

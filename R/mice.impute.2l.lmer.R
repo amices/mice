@@ -117,12 +117,12 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
   temp <- MASS::ginv(lambda)
   ev <- eigen(temp)
   if (sum(ev$values > 0) == length(ev$values)) {
-    deco <- ev$vectors %*% diag(sqrt(ev$values))
+    deco <- ev$vectors %*% diag(sqrt(ev$values), nrow = length(ev$values))
     psi.star <- MASS::ginv(deco %*% temp.psi.star %*% t(deco)) 
   } else {
     try(temp.svd <- svd(lambda))
     if (class(temp.svd) != "try-error") { 
-      deco <- temp.svd$u %*% diag(sqrt(temp.svd$d))
+      deco <- temp.svd$u %*% diag(sqrt(temp.svd$d), nrow = length(temp.svd$d))
       psi.star <- MASS::ginv(deco %*% temp.psi.star %*% t(deco))
     } else {
       psi.star <- temp
@@ -149,13 +149,13 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
     # generating bi.star using eigenvalues 
     deco1 <- eigen(vyi)
     if (sum(deco1$values > 0) == length(deco1$values)){
-      A <- deco1$vectors %*% sqrt(diag(deco1$values))
+      A <- deco1$vectors %*% sqrt(diag(deco1$values, nrow = length(deco1$values)))
       bi.star <- myi + A %*% rnorm(length(myi))
     } else {
       # generating bi.star using svd
       try(deco1 <- svd(vyi)) 
       if (class(deco1) != "try-error"){
-        A <- deco1$u %*% sqrt(diag(deco1$d))
+        A <- deco1$u %*% sqrt(diag(deco1$d, nrow = length(deco1$d)))
         bi.star <- myi + A %*% rnorm(length(myi))
       } else {
         bi.star <- myi
@@ -165,8 +165,8 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
     
     # imputation
     y[wy & x[, clust] == jj] <- as.vector(
-      as.matrix(X[wy & x[, clust] == jj, ]) %*% beta.star + 
-        as.matrix(Z[wy & x[, clust] == jj,]) %*% as.matrix(bi.star) + 
+      as.matrix(X[wy & x[, clust] == jj,, drop = FALSE]) %*% beta.star + 
+        as.matrix(Z[wy & x[, clust] == jj,, drop = FALSE]) %*% as.matrix(bi.star) + 
         rnorm(sum(wy & x[, clust] == jj)) * sqrt(sigma2star))
   }
   return(y[wy])

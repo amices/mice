@@ -7,12 +7,12 @@ check.df <- function(x, y, ry) {
   # if needed, writes the df warning message to the log
   df <- sum(ry) - ncol(x) - 1
   mess <- paste("df set to 1. # observed cases:", sum(ry), " # predictors:", ncol(x) + 1)
-  if (df < 1)
+  if (df < 1 && sum(ry) > 0)
     updateLog(out = mess, frame = 4)
 }
 
 remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99, 
-                          allow.na = FALSE, frame = 4, ...) {
+                          allow.na = TRUE, frame = 4, ...) {
   # returns a logical vector of length ncol(x)
   
   if (ncol(x) == 0)
@@ -21,10 +21,7 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99,
     stop("\n Argument 'eps' must be positive.")
   
   # Keep all predictors if we allow imputation of fully missing y
-  if (allow.na && sum(ry) == 0) {
-    updateLog(out = "No observed outcomes, keep all predictors", frame = frame)
-    return(rep.int(TRUE, ncol(x)))
-  }
+  if (allow.na && sum(ry) == 0) return(rep.int(TRUE, ncol(x)))
   
   xobs <- x[ry, , drop = FALSE]
   yobs <- as.numeric(y[ry])
@@ -80,8 +77,12 @@ find.collinear <- function(x, threshold = 0.999, ...) {
 updateLog <- function(out = NULL, meth = NULL, frame = 2) {
   s <- get("state", parent.frame(frame))
   r <- get("loggedEvents", parent.frame(frame))
-  
-  rec <- data.frame(it = s$it, im = s$im, dep = s$dep, meth = if(is.null(meth)) s$meth else meth, out = if (is.null(out)) "" else out)
+
+  rec <- data.frame(it = s$it, 
+                    im = s$im, 
+                    dep = s$dep, 
+                    meth = if(is.null(meth)) s$meth else meth, 
+                    out = if (is.null(out)) "" else out)
   
   if (s$log)
     rec <- rbind(r, rec)

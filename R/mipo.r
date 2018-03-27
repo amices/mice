@@ -158,8 +158,8 @@ confint.mipo <- function(object, parm, level = 0.95, ...) {
   pct <- format.perc(a, 3)
   ci <- array(NA, dim = c(length(parm), 2L), 
               dimnames = list(parm, pct))
-  ci[, 1] <- cf[parm] + qt(1 - a, df[parm]) * se[parm]
-  ci[, 2] <- cf[parm] + qt(a, df[parm]) * se[parm]
+  ci[, 1] <- cf[parm] + qt(a[1], df[parm]) * se[parm]
+  ci[, 2] <- cf[parm] + qt(a[2], df[parm]) * se[parm]
   ci
 }
 

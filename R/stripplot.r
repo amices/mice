@@ -158,7 +158,6 @@
 #'stripplot(imp, gen~.imp, na = wgt, factor = 2, cex = c(8.6), 
 #'          hor = FALSE, outer = TRUE, scales = "free", pch = c(1,19))
 #'
-#'@method stripplot mids
 #'@export
 stripplot.mids <- function(x,
                            data,
@@ -215,13 +214,13 @@ stripplot.mids <- function(x,
     allfactors <- unlist(lapply(cd,is.factor))[-seq_len(2)]
     if (missing(data)) {
         vnames <- vnames[!allfactors]
-        formula <- as.formula(paste0(paste0(vnames,collapse="+"),"~.imp"))
+        formula <- as.formula(paste0(paste0(vnames,collapse="+"),"~ as.factor(.imp)"))
     } else {
         ## pad abbreviated formula
         abbrev <- ! any(grepl("~", call$data))
         if (abbrev) {
             if (length(call$data)>1) stop("Cannot pad extended formula.")
-            else formula <- as.formula(paste(call$data,"~.imp",sep=""))
+            else formula <- as.formula(paste(call$data,"~ as.factor(.imp)",sep=""))
         } else {
             formula <- data
         }

@@ -14,6 +14,10 @@ print.mids <- function(x, ...) {
   print(x$method, ...)
   cat("PredictorMatrix:\n")
   print(head(x$predictorMatrix), ...)
+  if (!is.null(x$loggedEvents)) {
+    cat("Number of logged events: ", nrow(x$loggedEvents), "\n")
+    print(head(x$loggedEvents), ...)
+  }
   invisible(x)
 }
 

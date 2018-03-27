@@ -27,7 +27,7 @@
 #' @export
 make.formulas <- function(data, blocks = make.blocks(data), 
                           predictorMatrix = NULL) {
-  data <- check.data(data)
+  data <- check.dataform(data)
   formulas <- as.list(rep("~ 0", length(blocks)))
   names(formulas) <- names(blocks)
   
@@ -96,8 +96,8 @@ make.formulas <- function(data, blocks = make.blocks(data),
 name.formulas <- function(formulas, prefix = "F") {
   if (!is.list(formulas))
     stop("Argument `formulas` not a list", call. = FALSE)
-  if (!all(sapply(formulas, is.formula)))
-    stop("Not all elements in `formulas` are a formula")
+  if (!all(sapply(formulas, is.formula) | sapply(formulas, is.list)))
+    stop("Not all elements in `formulas` are a formula or a list")
   if (is.null(names(formulas))) names(formulas) <- rep("", length(formulas))
   inc <- 1
   for (i in seq_along(formulas)) {
@@ -119,6 +119,8 @@ check.formulas <- function(formulas, data) {
   formulas <- name.formulas(formulas)
   formulas <- handle.oldstyle.formulas(formulas, data)
   formulas <- lapply(formulas, expand.dots, data)
+  # escape if formula is list of two formula's
+  if (any(sapply(formulas, is.list))) return(formulas)
   formulas <- lapply(formulas, as.formula)
   formulas
 }

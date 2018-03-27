@@ -108,6 +108,7 @@ flux <- function(data, local=names(data)){
 #'@param main See \code{par}.
 #'@param eqscplot Should a square plot be produced?
 #'@param pty See \code{par}.
+#'@param lwd See \code{par}. Controls axis line thickness and diagonal
 #'@param \dots Further arguments passed to \code{plot()} or \code{eqscplot()}.
 #'@return An invisible data frame with \code{ncol(data)} rows and six columns: 
 #'pobs = Proportion observed, 
@@ -132,24 +133,28 @@ fluxplot <- function(data, local=names(data),
                  xlab="Influx", ylab="Outflux",
                  main=paste("Influx-outflux pattern for",deparse(substitute(data))),
                  eqscplot = TRUE, pty="s",
+                 lwd = 1,
                  ...) {
 f <- flux(data, local)
-  if (plot){
+  if (plot) {
     if (eqscplot)
       eqscplot(x=f$influx, y=f$outflux, type='n',
           main=main,
           xlab=xlab, ylab=ylab,
           xlim=xlim, ylim=ylim,
-          las=las, pty=pty, ...)
+          pty=pty, lwd = lwd, axes = FALSE, ...)
     else
       plot(x=f$influx, y=f$outflux, type='n',
           main=main,
           xlab=xlab, ylab=ylab,
           xlim=xlim, ylim=ylim,
-          las=las, pty=pty, ...)
-    abline(1,-1,lty=2)
-    if (labels) text(x=f$influx, y=f$outflux, label=names(data), ...)
-    else points(x=f$influx, y=f$outflux, ...)
+          pty=pty, lwd = lwd, axes = FALSE, ...)
+    axis(1, lwd = lwd, las = las)
+    axis(2, lwd = lwd, las = las)
+    abline(1, -1, lty = 2, lwd = lwd)
+    if (labels) text(x = f$influx, y = f$outflux, label = names(data), ...)
+    else points(x = f$influx, y = f$outflux, ...)
+    box(lwd = lwd)
   }
   invisible(data.frame(f))
 }

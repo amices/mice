@@ -33,7 +33,7 @@
 #'\dontrun{
 #'pred <- mice(data, print = FALSE, maxit = 0, seed = 1)$pred
 #'pred["outcome", "patientID"] <- -2
-#'imp <- mice(data, method = "2l.bin", pred = pred, maxit = 1)
+#'imp <- mice(data, method = "2l.bin", pred = pred, maxit = 1, m = 1, seed = 1)
 #'}
 #'@export
 mice.impute.2l.bin <- function(y, ry, x, type, 
@@ -42,7 +42,6 @@ mice.impute.2l.bin <- function(y, ry, x, type,
     stop("Please install package 'lme4'", call. = FALSE)
   
   if (is.null(wy)) wy <- !ry
-  
   if (intercept) {
     x <- cbind(1, as.matrix(x))
     type <- c(2, type)
@@ -52,7 +51,7 @@ mice.impute.2l.bin <- function(y, ry, x, type,
   clust <- names(type[type == -2])
   rande <- names(type[type == 2])
   fixe  <- names(type[type > 0])
-  
+
   X <- x[, fixe, drop = FALSE]
   Z <- x[, rande, drop = FALSE]
   xobs <- x[ry, , drop = FALSE]
@@ -127,7 +126,11 @@ mice.impute.2l.bin <- function(y, ry, x, type,
     idx <- wy & (x[, clust] == i)
     logit <- X[idx, , drop = FALSE] %*% beta.star + 
       Z[idx, , drop = FALSE] %*% matrix(bi.star, ncol = 1)
-    y[idx] <- rbinom(nrow(logit), 1, as.vector(1/(1 + exp(-logit))))
+    vec <- rbinom(nrow(logit), 1, as.vector(1/(1 + exp(-logit))))
+    if (is.factor(y)) {
+      vec <- factor(vec, c(0, 1), levels(y))
+    }
+    y[idx] <- vec
   }
   return(y[wy])
 }

@@ -197,6 +197,10 @@
 #'are created by a simple random draw from the data. Note that specification of
 #'\code{data.init} will start all \code{m} Gibbs sampling streams from the same
 #'imputation.
+#'@param imputationMethod Same as \code{method} argument. Included for
+#'backwards compatibility.
+#'@param defaultImputationMethod Same as \code{defaultMethod} argument.
+#'Included for backwards compatibility.
 #'@param ... Named arguments that are passed down to the univariate imputation
 #'functions.
 #'
@@ -263,10 +267,21 @@ mice <- function(data, m = 5,
                  post = NULL,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
                  maxit = 5, printFlag = TRUE, seed = NA,
-                 data.init = NULL, ...) {
+                 data.init = NULL, 
+                 imputationMethod = NULL, 
+                 defaultImputationMethod = NULL,
+                 ...) {
   call <- match.call()
   if (!is.na(seed)) set.seed(seed)
-  data <- check.data(data)
+  
+  # Legacy handling
+  if (!is.null(imputationMethod))
+    method <- imputationMethod
+  if (!is.null(defaultImputationMethod))
+    defaultMethod <- defaultImputationMethod
+  
+  # check form of data 
+  data <- check.dataform(data)
   
   # determine input combination: predictorMatrix, blocks, formulas
   mp <- missing(predictorMatrix)
@@ -351,6 +366,17 @@ mice <- function(data, m = 5,
   state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
   loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
   
+  # edit imputation setup
+  setup <- list(method = method,
+                predictorMatrix = predictorMatrix,
+                visitSequence = visitSequence, 
+                post = post)
+  setup <- edit.setup(data, setup, ...)
+  method <- setup$method
+  predictorMatrix <- setup$predictorMatrix
+  visitSequence <- setup$visitSequence
+  post <- setup$post
+
   # initialize imputations
   nmis <- apply(is.na(data), 2, sum)
   imp <- initialize.imp(data, m, where, blocks, visitSequence, 
@@ -384,5 +410,9 @@ mice <- function(data, m = 5,
                   version = packageVersion("mice"),
                   date = Sys.Date())
   oldClass(midsobj) <- "mids"
+  
+  if (!is.null(midsobj$loggedEvents)) 
+    warning("Number of logged events: ", nrow(midsobj$loggedEvents),
+            call. = FALSE)
   return(midsobj)
 }

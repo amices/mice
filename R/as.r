@@ -81,7 +81,7 @@ as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id") {
   if (!.imp %in% names(long)) stop("Imputation index `.imp` not found")
   
   # no missings allowed in .imp
-  imps <- long[, .imp]
+  imps <- unlist(long[, .imp], use.names = FALSE)
   if (anyNA(imps)) stop("Missing values in imputation index `.imp`")
   
   # number of records within .imp should be the same
@@ -96,17 +96,16 @@ as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id") {
     stop("Original data not found.\n Use `complete(..., action = 'long', include = TRUE)` to save original data.")
   
   # determine m
-  m <- ifelse(is.factor(imps), 
-              nlevels(imps) - 1,
-              length(unique(imps)) - 1)
-  
+  m <- length(unique(imps)) - 1
+
   # use mice to get info on data
   if (is.null(where)) where <- is.na(data)
   ini <- mice(data, m = m, where = where, maxit = 0, 
               remove_collinear = FALSE)
   
   # store any .id as row names
-  if (!is.na(.id)) rownames(ini$data) <- long[imps == 0, .id]
+  if (!is.na(.id)) 
+    rownames(ini$data) <- unlist(long[imps == 0, .id], use.names = FALSE)
   
   # copy imputations from long into proper ini$imp elements
   names  <- names(ini$imp)

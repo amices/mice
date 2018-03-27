@@ -127,7 +127,6 @@
 #'### same, but label with missingness of wgt (four cases)
 #'xyplot(imp, hgt~age|.imp, na.group=wgt, pch=c(1,20),cex=c(1,1.5))
 #'
-#'@method xyplot mids
 #'@export
 xyplot.mids <- function(x,
                         data,

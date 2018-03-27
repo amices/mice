@@ -147,8 +147,6 @@
 #'### All combined in one panel.
 #'densityplot(imp, ~hc)
 #'
-#'
-#'@method densityplot mids
 #'@export
 densityplot.mids <- function(x,
              data,

@@ -70,7 +70,7 @@
 #'names(dslist)
 #'
 #'@export
-complete.mids <- function(data, action = 1L, include = FALSE, 
+complete <- function(data, action = 1L, include = FALSE, 
                            mild = FALSE, ...) {
   if (!is.mids(data)) stop("'data' not of class 'mids'")
 
