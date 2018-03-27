@@ -70,7 +70,7 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...)
 ###'@rdname norm.draw
 ###'@export
 .norm.draw <- function (y, ry, x, rank.adjust = TRUE, ...){
-  p <- estimice(x[ry,], y[ry], ...)
+  p <- estimice(x[ry, , drop = FALSE], y[ry], ...)
   sigma.star <- sqrt(sum((p$r)^2)/rchisq(1, p$df))
   #beta.star <- p$c + (t(chol(sym(p$v), pivot = TRUE)) %*% rnorm(ncol(x))) * sigma.star
   beta.star <- p$c + (t(chol(sym(p$v))) %*% rnorm(ncol(x))) * sigma.star
