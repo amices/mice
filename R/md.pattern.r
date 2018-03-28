@@ -70,7 +70,7 @@ md.pattern <- function(x, plot = TRUE){
     shade <- ifelse(R[nrow(R):1, ], mdc(1), mdc(2))
     rect(M[, 2], M[, 1], M[, 2] + 1, M[, 1] + 1, col=shade)
     for(i in 1:ncol(R)){
-      text(i - .5, nrow(R) + .3, colnames(r)[i])
+      text(i - .5, nrow(R) + .3, colnames(r)[i], adj = c(0.5,0))
       text(i - .5, -.3, nmis[order(nmis)][i])
     }
     for(i in 1:nrow(R)){
