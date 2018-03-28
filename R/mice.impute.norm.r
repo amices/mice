@@ -52,38 +52,110 @@ mice.impute.norm <- function(y, ry, x, wy = NULL, ...) {
 #'@param ry Vector of missing data pattern (\code{FALSE}=missing,
 #'\code{TRUE}=observed)
 #'@param x Matrix (\code{n} x \code{p}) of complete covariates.
-#'@param ridge A small numerical value specifying the size of the ridge used. 
-#' The default value \code{ridge = 1e-05} represents a compromise between stability
-#' and unbiasedness. Decrease \code{ridge} if the data contain many junk variables.
-#' Increase \code{ridge} for highly collinear data. 
+#'@param rank.adjust Argument that specifies whether \code{NA}'s in the 
+#'coefficients need to be set to zero. Only relevant when \code{ls.meth = "qr"} 
+#'AND the predictor matrix is rank-deficient.
 #'@param ... Other named arguments.
 #'@return A \code{list} containing components \code{coef} (least squares estimate),
 #'\code{beta} (drawn regression weights) and \code{sigma} (drawn value of the 
 #'residual standard deviation).
 #'@references
 #'Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
-#'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+#'@author Gerko Vink, 2018, for this version, based on earlier versions written 
+#'by Stef van Buuren, Karin Groothuis-Oudshoorn, 2017
 #'@export
-norm.draw <- function(y, ry, x, ridge = 1e-05, ...) 
-  return(.norm.draw(y, ry, x, ridge = 1e-05, ...))
+norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...) 
+  return(.norm.draw(y, ry, x, rank.adjust = TRUE, ...))
 
 ###'@rdname norm.draw
 ###'@export
-.norm.draw <- function(y, ry, x, ridge = 1e-05, ...) {
-  xobs <- x[ry, ]
-  yobs <- y[ry]
-  xtx <- crossprod(xobs)
-  pen <- ridge * diag(xtx)
-  if (length(pen) == 1)
-    pen <- matrix(pen)
-  v <- solve(xtx + diag(pen))
-  coef <- t(yobs %*% xobs %*% v)
-  residuals <- yobs - xobs %*% coef
-  df <- max(sum(ry) - ncol(x), 1)
-  sigma.star <- sqrt(sum((residuals)^2)/rchisq(1, df))
-  beta.star <- coef + (t(chol(sym(v))) %*% rnorm(ncol(x))) * sigma.star
-  parm <- list(coef, beta.star, sigma.star)
-  names(parm) <- c("coef", "beta", "sigma")
+.norm.draw <- function (y, ry, x, rank.adjust = TRUE, ...){
+  p <- estimice(x[ry, , drop = FALSE], y[ry], ...)
+  sigma.star <- sqrt(sum((p$r)^2)/rchisq(1, p$df))
+  #beta.star <- p$c + (t(chol(sym(p$v), pivot = TRUE)) %*% rnorm(ncol(x))) * sigma.star
+  beta.star <- p$c + (t(chol(sym(p$v))) %*% rnorm(ncol(x))) * sigma.star
+  parm <- list(p$c, beta.star, sigma.star, p$ls.meth)
+  names(parm) <- c("coef", "beta", "sigma", "estimation")
+  if(any(is.na(parm$coef)) & rank.adjust){
+    parm$coef[is.na(parm$coef)] <- 0
+    parm$beta[is.na(parm$beta)] <- 0
+  }
   return(parm)
 }
 
+#' Computes least squares parameters
+#' 
+#' This function computes least squares estimates, variance/covariance matrices, 
+#' residuals and degrees of freedom according to ridge regression, QR decomposition 
+#' or Singular Value Decomposition. This function is internally called by .norm.draw(), 
+#' but can be called by any user-sprecified imputation function.
+#' 
+#' When calculating the inverse of the crossproduct of the predictor matrix, 
+#' problems may arise. For example, taking the inverse is not possible when the 
+#' predictor matrix is rank deficient, or when the estimation problem is 
+#' computationally singular. This function detects such error cases and 
+#' automatically falls back to adding a ridge penalty to the diagonal of the 
+#' crossproduct to allow for proper calculation of the inverse. 
+#' 
+#'@aliases estimice
+#'@param x Matrix (\code{n} x \code{p}) of complete covariates.
+#'@param y Incomplete data vector of length \code{n}
+#'@param ls.meth the method to use for obtaining the least squares estimates. By 
+#'default parameters are drawn by means of QR decomposition. 
+#'@param ridge A small numerical value specifying the size of the ridge used. 
+#' The default value \code{ridge = 1e-05} represents a compromise between stability
+#' and unbiasedness. Decrease \code{ridge} if the data contain many junk variables.
+#' Increase \code{ridge} for highly collinear data. 
+#'@param ... Other named arguments.
+#'@return A \code{list} containing components \code{c} (least squares estimate),
+#'\code{r} (residuals), \code{v} (variance/covariance matrix) and \code{df} 
+#'(degrees of freedom).
+#'@author Gerko Vink, 2018
+#'@export
+estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
+  df <- max(length(y) - ncol(x), 1)
+  if (ls.meth == "qr"){
+    qr <- lm.fit(x = x, y = y)
+    c <- t(qr$coef)
+    f <- qr$fitted.values
+    r <- t(qr$residuals)
+    v <- try(solve(as.matrix(crossprod(qr.R(qr$qr)))), silent = TRUE)
+    if(inherits(v, "try-error")){ 
+      xtx <- as.matrix(crossprod(qr.R(qr$qr)))
+      pen <- diag(xtx) * ridge #calculate ridge penalty
+      v <- solve(xtx + diag(pen)) #add ridge penalty to allow inverse of v
+      mess <- "* A ridge penalty had to be used to calculate the inverse crossproduct of the predictor matrix. Please remove duplicate variables or unique respondent names/numbers from the imputation model. It may be advisable to check the fraction of missing information (fmi) to evaluate the validity of the imputation model"
+      updateLog(out = mess, frame = 6)
+      if (get("printFlag", parent.frame(4)))
+        cat("*") #indicator of added ridge penalty in the printed iteration history
+    }
+    return(list(c=t(c), r=t(r), v=v, df=df, ls.meth=ls.meth))
+  } 
+  if (ls.meth == "ridge"){
+    xtx <- crossprod(x)
+    pen <- ridge * diag(xtx)
+    if (length(pen) == 1) 
+      pen <- matrix(pen)
+    v <- solve(xtx + diag(pen))
+    c <- t(y) %*% x %*% v
+    r <- y - x %*% t(c)
+    return(list(c=t(c), r=r, v=v, df=df, ls.meth=ls.meth))
+  }  
+  if (ls.meth == "svd"){
+    s <- svd(x)
+    c <- s$v %*% ((t(s$u) %*% y) / s$d)
+    f <- x %*% c
+    r <- f - y
+    v <- try(solve(s$v %*% diag(s$d)^2 %*% t(s$v)), silent = TRUE)
+    if(inherits(v, "try-error")){
+      xtx <- s$v %*% diag(s$d)^2 %*% t(s$v)
+      pen <- diag(xtx) * ridge #calculate ridge penalty
+      v <- solve(xtx + diag(pen)) #add ridge penalty to allow inverse of v
+      mess <- "* A ridge penalty had to be used to calculate the inverse crossproduct of the predictor matrix. Please remove duplicate variables or unique respondent names/numbers from the imputation model. It may be advisable to check the fraction of missing information (fmi) to evaluate the validity of the imputation model"
+      updateLog(out = mess, frame = 6)
+      if (get("printFlag", parent.frame(4)))
+        cat("*") #indicator of added ridge penalty in the printed iteration history
+    }
+    return(list(c=c, r=r, v=v, df=df, ls.meth=ls.meth))
+  }
+}

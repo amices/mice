@@ -101,7 +101,7 @@ as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id") {
   # use mice to get info on data
   if (is.null(where)) where <- is.na(data)
   ini <- mice(data, m = m, where = where, maxit = 0, 
-              remove_collinear = FALSE)
+              remove.collinear = FALSE, allow.na = TRUE)
   
   # store any .id as row names
   if (!is.na(.id)) 
