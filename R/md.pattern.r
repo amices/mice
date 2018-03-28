@@ -14,11 +14,6 @@
 #'values are coded as NA's.
 #'@param plot Should the missing data pattern be made into a plot. Default is 
 #'`plot = TRUE`.
-#'@param convert.char Should character variables be converted to factors 
-#'beforehand? This may have a great impact on the number of missing data patterns. 
-#'Default is `convert.char = FALSE`.
-#'@param use.empty Should completely unobserved columns count towards the missing 
-#'data patterns? Default is `use.empty = TRUE`.
 #'@return A matrix with \code{ncol(x)+1} columns, in which each row corresponds
 #'to a missing data pattern (1=observed, 0=missing).  Rows and columns are
 #'sorted in increasing amounts of missing information. The last column and row
