@@ -282,8 +282,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       }
     }
     if (prop.one != 0) {
-      warning(paste("Proportion of missingness has changed from", prop, "to", 
-                    prop.one, "because of pattern(s) with merely ones"), call. = FALSE)
+      warning(paste("Proportion of missingness has changed from", prop, "to", prop.one, "because of pattern(s) with merely ones"), call. = FALSE)
       prop <- prop.one
       freq <- freq[-row.one]
       freq <- recalculate.freq(freq)

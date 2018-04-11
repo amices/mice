@@ -1,5 +1,6 @@
 context("ampute")
 
+# make objects for testfunctions
 require(MASS)
 sigma <- matrix(data = c(1, 0.2, 0.2, 0.2, 1, 0.2, 0.2, 0.2, 1), nrow = 3)
 complete.data <- mvrnorm(n = 100, mu = c(5, 5, 5), Sigma = sigma)
@@ -62,7 +63,7 @@ test_that("all arguments work", {
                         1, 0, 0, 0, 0, 0, 0, 0, 0), ncol = 2, byrow = FALSE)
   wss <- ampute(data = dich.data, mech = "MNAR")$scores
   check_na <- function(x){return(any(is.na(x)))}
-  expect_false(any(lapply(wss, check_na)))
+  expect_false(any(unlist(lapply(wss, check_na))))
 })
 
 test_that("function works around unusual arguments", {
@@ -70,8 +71,10 @@ test_that("function works around unusual arguments", {
   # data
   nasty.data <- complete.data
   nasty.data[, 1] <- rep(c("one", "two"), 50)
+  # when data is categorical and mech != mcar, warning is expected
   expect_warning(ampute(data = nasty.data), 
                  "Data is made numeric because the calculation of weights requires numeric data")
+  # when data is categorical and mech = mcar, function can continue
   expect_warning(ampute(data = nasty.data, mech = "MCAR"), NA) 
   
   # patterns
@@ -80,10 +83,10 @@ test_that("function works around unusual arguments", {
   expect_warning(ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0)))
   
   # freq
-  expect_error(ampute(data = complete.data, freq = c(0.8, 0.4)), NA)
+  expect_warning(ampute(data = complete.data, freq = c(0.8, 0.4)))
   
   # prop
-  expect_error(ampute(data = complete.data, prop = 1), NA)
+  expect_warning(ampute(data = complete.data, prop = 1))
   expect_error(ampute(data = complete.data, prop = 48.5), NA)
 
   # mech, type and weights
@@ -135,8 +138,7 @@ test_that("error messages work properly", {
                "Length of pattern vector does not match #variables")
   expect_error(ampute(data = complete.data, patterns = c(1, 0, 2)),
                "Argument patterns can only contain 0 and 1, pattern 1 contains another element")
-  expect_error(ampute(data = complete.data, mech = "MAR", 
-                      patterns = c(0, 0, 1, 0, 0, 0)),
+  expect_error(ampute(data = complete.data, mech = "MAR", patterns = c(0, 0, 1, 0, 0, 0)),
                "Patterns object contains merely zeros and this kind of pattern is not possible when mechanism is MAR")
   
   # mech, type, weights and odds
@@ -146,9 +148,8 @@ test_that("error messages work properly", {
                "Type should contain LEFT, MID, TAIL or RIGHT")
   expect_error(ampute(data = complete.data, weights = c(1, 2, 1, 4)), 
                "Length of weight vector does not match #variables")
-  expect_error(ampute(data = complete.data, odds = matrix(c(1, 4, 
-                                                            -3, 2, 
-                                                            1, 1), nrow = 3), 
+  expect_error(ampute(data = complete.data, 
+                      odds = matrix(c(1, 4, -3, 2, 1, 1), nrow = 3), 
                       cont = FALSE), "Odds matrix can only have positive values")
   expect_error(ampute(data = complete.data, 
                       patterns = matrix(data = c(1, 0, 1, 
