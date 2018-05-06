@@ -1,5 +1,5 @@
 # ------------------------------MD.PATTERN-------------------------------
-
+ 
 #'Missing data pattern
 #'
 #'Display missing-data patterns.
