@@ -1,5 +1,5 @@
 # ------------------------------MD.PATTERN-------------------------------
- 
+
 #'Missing data pattern
 #'
 #'Display missing-data patterns.
@@ -53,12 +53,24 @@ md.pattern <- function(x, plot = TRUE){
   sortR <- R[order(pat), ] #sort rowwise
   mpat <- sortR[!duplicated(sortR), ]
   #update row and column margins
-  rownames(mpat) <- table(pat)
+  if (all(!is.na(x))){
+    cat(" /\\     /\\\n{  `---'  }\n{  O   O  }\n==>  V <==") 
+    cat("  No need for mice. This data set is completely observed.\n")
+    cat(" \\  \\|/  /\n  `-----'\n\n")
+    mpat <- t(as.matrix(mpat, byrow = TRUE))
+    rownames(mpat) <- table(pat)
+  } else {
+    rownames(mpat) <- table(pat)
+  }
   r <- cbind(abs(mpat - 1), rowSums(mpat))
   r <- rbind(r, c(nmis[order(nmis)], sum(nmis)))
   if (plot){ #add plot
     plot.new()
-    R <- r[1:nrow(r)-1, 1:ncol(r)-1]
+    if (all(!is.na(x))){
+      R <- t(as.matrix(r[1:nrow(r)-1, 1:ncol(r)-1]))
+    } else {
+      R <- r[1:nrow(r)-1, 1:ncol(r)-1]
+    }
     par(mar=rep(0, 4))
     plot.window(xlim=c(-1, ncol(R) + 1), ylim=c(-1, nrow(R) + 1), asp=1)
     M <- cbind(c(row(R)), c(col(R))) - 1
