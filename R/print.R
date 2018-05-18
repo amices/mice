@@ -29,13 +29,13 @@ print.mids <- function(x, ...) {
 #'@method print mira
 #'@export
 print.mira <- function(x, ...) {
-  m <- ifelse(is.null(x$analyses), length(x), length(x$analyses))
-  cat("Class: mira       m:", m, "\n")
-  cc <- as.character(getCall(getfit(x, 1)))
-  cat("Complete-data model:", cc[1], "    formula:", cc[2])
-  invisible(x)
-} 
 
+  if (is.mira(x)) 
+    print.listof(x, ...)
+  else print(x, ...)
+  invisible()
+  
+}
 
 #'Print a \code{mice.anova} object
 #'
