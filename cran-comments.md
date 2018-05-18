@@ -82,7 +82,7 @@ Check results
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="left"><a href="https://github.com/rubenarslan/codebook/issues/20" class="uri">https://github.com/rubenarslan/codebook/issues/20</a></td>
+<td align="left">solved by change in md.pattern()</td>
 </tr>
 <tr class="even">
 <td align="left">dlookr</td>

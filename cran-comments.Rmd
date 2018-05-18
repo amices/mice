@@ -47,7 +47,7 @@ There were 48 reverse dependencies.
 |:---------------|:--------|------:|--------:|-----:|:---------------------------------
 |brms            |2.3.0    |      1|        0|     2| no error in brms 2.3.1
 |CALIBERrfimpute |0.1-6    |      0|        1|     1| showtable() in simstudy_survival defunct - author noted
-|codebook        |0.5.8    |      1|        0|     1| https://github.com/rubenarslan/codebook/issues/20
+|codebook        |0.5.8    |      1|        0|     1| solved by change in md.pattern()
 |dlookr          |0.3.0    |      1|        0|     0| author noted
 |dynr            |0.1.12-5 |      1|        0|     0| author noted, needs additional local installs, not further checked
 |HardyWeinberg   |1.5.9    |      0|        1|     0| asked author whether error could be correct
