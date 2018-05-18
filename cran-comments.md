@@ -56,7 +56,7 @@ Check results
 <th align="right">errors</th>
 <th align="right">warnings</th>
 <th align="right">notes</th>
-<th align="left">Actions</th>
+<th align="left">My actions</th>
 </tr>
 </thead>
 <tbody>
@@ -150,11 +150,11 @@ Check results
 </tr>
 <tr class="even">
 <td align="left">miceadds</td>
-<td align="left">2.10-14</td>
+<td align="left">2.11-80</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="left"><a href="https://github.com/alexanderrobitzsch/miceadds/issues/2" class="uri">https://github.com/alexanderrobitzsch/miceadds/issues/2</a></td>
+<td align="left"><a href="https://github.com/alexanderrobitzsch/miceadds/issues/6" class="uri">https://github.com/alexanderrobitzsch/miceadds/issues/6</a></td>
 </tr>
 <tr class="odd">
 <td align="left">miceFast</td>

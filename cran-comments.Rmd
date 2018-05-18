@@ -56,7 +56,7 @@ There were 48 reverse dependencies.
 |HSAUR3          |1.0-8    |      0|        1|     0| solved by reverting print.mira
 |JointAI         |0.1.0    |      1|        0|     0| depends on external JAGS, not further checked
 |logistf         |1.22     |      1|        0|     1| pooling code not compatible - author noted
-|miceadds        |2.10-14  |      1|        0|     0| https://github.com/alexanderrobitzsch/miceadds/issues/2
+|miceadds        |2.11-80  |      1|        0|     0| https://github.com/alexanderrobitzsch/miceadds/issues/6
 |miceFast        |0.2.3    |      1|        0|     0| C compilation errors
 |miceMNAR        |1.0      |      1|        0|     0| incompatible mice.impute.hecknorm(), author noted
 |MissingDataGUI  |0.2-5    |      1|        0|     0| 'gWidgetsRGtk2', 'cairoDevice' not available
