@@ -98,7 +98,7 @@ Check results
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="left">author noted</td>
+<td align="left">author noted, needs additional local installs, not further checked</td>
 </tr>
 <tr class="even">
 <td align="left">HardyWeinberg</td>

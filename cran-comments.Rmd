@@ -49,7 +49,7 @@ There were 48 reverse dependencies.
 |CALIBERrfimpute |0.1-6    |      0|        1|     1| showtable() in simstudy_survival defunct - author noted
 |codebook        |0.5.8    |      1|        0|     1| https://github.com/rubenarslan/codebook/issues/20
 |dlookr          |0.3.0    |      1|        0|     0| author noted
-|dynr            |0.1.12-5 |      1|        0|     0| author noted
+|dynr            |0.1.12-5 |      1|        0|     0| author noted, needs additional local installs, not further checked
 |HardyWeinberg   |1.5.9    |      0|        1|     0| asked author whether error could be correct
 |Hmisc           |4.1-1    |      1|        0|     0| installed by hand
 |hot.deck        |1.1      |      0|        1|     0| warning unrelated to mice
