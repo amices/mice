@@ -64,7 +64,8 @@ van Buuren, S., Eyres, S., Tennant, A., Hopman-Rock, M. (2005).
 Improving comparability of existing data by Response Conversion.
 \emph{Journal of Official Statistics}, \bold{21}(1), 53-72.
 
-van Buuren, S. (2012). \emph{Flexible Imputation of Missing Data.} Boca
-Raton, FL: Chapman & Hall/CRC.
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-codingsystems.html#sec:impbridge}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 }
 \keyword{datasets}

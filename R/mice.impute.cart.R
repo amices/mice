@@ -36,8 +36,9 @@
 #'(1984), Classification and regression trees, Monterey, CA: Wadsworth &
 #'Brooks/Cole Advanced Books & Software.
 #'
-#'Van Buuren, S.(2012), Flexible imputation of missing data, Boca Raton, FL:
-#'CRC/Chapman & Hall.
+#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/sec-cart.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #'@family univariate imputation functions
 #'@examples

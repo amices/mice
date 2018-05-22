@@ -218,8 +218,9 @@
 #'Statistical Software}, \bold{45}(3), 1-67.
 #'\url{http://www.jstatsoft.org/v45/i03/}
 #'
-#'van Buuren, S. (2012). \emph{Flexible Imputation of Missing Data.} Boca
-#'Raton, FL: Chapman & Hall/CRC Press.
+#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #'Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
 #'Fully conditional specification in multivariate imputation.  \emph{Journal of

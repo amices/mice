@@ -48,8 +48,9 @@ White, I. R., Royston, P. (2009). Imputing missing covariate
 values for the Cox model.  \emph{Statistics in Medicine}, \emph{28}(15),
 1982-1998.
 
-van Buuren, S. (2012). \emph{Flexible Imputation of Missing Data.} Boca
-Raton, FL: Chapman \& Hall/CRC Press.
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-toomany.html#a-further-improvement-survival-as-predictor-variable}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 }
 \author{
 Stef van Buuren, 2012

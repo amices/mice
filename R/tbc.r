@@ -49,8 +49,9 @@
 #'Disseration, Vrije Universiteit, Amsterdam.
 #'\url{http://dare.ubvu.vu.nl/handle/1871/23806}
 #'
-#'Van Buuren, S. (2012). \emph{Flexible Imputation of Missing Data.} Boca
-#'Raton, FL: Chapman \& Hall/CRC Press.
+#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/sec-rastering.html#terneuzen-birth-cohort}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'@keywords datasets
 #'@examples
 #'

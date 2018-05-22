@@ -21,8 +21,9 @@ Functional outcomes and participation in young adulthood for very preterm and
 very low birth weight infants: The Dutch project on preterm and small for
 gestational age infants at 19 years of age. Pediatrics, 120(3):587595.
 
-van Buuren, S. (2012). \emph{Flexible Imputation of Missing Data.} Boca
-Raton, FL: Chapman & Hall/CRC Press.
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-selective.html#pops-study-19-years-follow-up}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 }
 \description{
 Subset of data from the POPS study, a national, prospective study on preterm

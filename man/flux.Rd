@@ -52,8 +52,9 @@ FICO is an outbound statistic defined by the fraction of incomplete cases
 among cases with \code{Yj} observed (White and Carlin, 2010).
 }
 \references{
-van Buuren, S. (2012). \emph{Flexible Imputation of Missing
-Data.} Boca Raton, FL: Chapman & Hall/CRC Press.
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 
 White, I.R., Carlin, J.B. (2010). Bias and efficiency of multiple imputation
 compared with complete-case analysis for missing covariate values.

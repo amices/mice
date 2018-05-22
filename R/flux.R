@@ -41,8 +41,10 @@
 #'fico = Fraction of incomplete cases among cases with \code{Yj} observed
 #'@seealso \code{\link{fluxplot}}, \code{\link{md.pattern}}, \code{\link{fico}}
 #'@author Stef van Buuren, 2012
-#'@references van Buuren, S. (2012). \emph{Flexible Imputation of Missing
-#'Data.} Boca Raton, FL: Chapman & Hall/CRC Press.
+#'@references 
+#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #'White, I.R., Carlin, J.B. (2010). Bias and efficiency of multiple imputation
 #'compared with complete-case analysis for missing covariate values.
@@ -119,8 +121,10 @@ flux <- function(data, local=names(data)){
 #'fico = Fraction of incomplete cases among cases with \code{Yj} observed
 #'@seealso \code{\link{flux}}, \code{\link{md.pattern}}, \code{\link{fico}}
 #'@author Stef van Buuren, 2012
-#'@references van Buuren, S. (2012). \emph{Flexible Imputation of Missing
-#'Data.} Boca Raton, FL: Chapman & Hall/CRC Press.
+#'@references 
+#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #'White, I.R., Carlin, J.B. (2010). Bias and efficiency of multiple imputation
 #'compared with complete-case analysis for missing covariate values.
@@ -170,8 +174,10 @@ f <- flux(data, local)
 #'@return A vector of length \code{ncol(data)} of FICO statistics.
 #'@seealso \code{\link{fluxplot}}, \code{\link{flux}}, \code{\link{md.pattern}}
 #'@author Stef van Buuren, 2012
-#'@references van Buuren, S. (2012). \emph{Flexible Imputation of Missing
-#'Data.} Boca Raton, FL: Chapman & Hall/CRC Press.
+#'@references 
+#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #'White, I.R., Carlin, J.B. (2010). Bias and efficiency of multiple imputation
 #'compared with complete-case analysis for missing covariate values.

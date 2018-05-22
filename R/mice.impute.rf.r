@@ -33,8 +33,9 @@
 #' imputing missing data using MICE: A CALIBER study. American Journal 
 #' of Epidemiology, doi: 10.1093/aje/kwt312. 
 #'
-#' Van Buuren, S.(2012), Flexible imputation of missing data, Boca Raton, FL:
-#' CRC/Chapman & Hall.
+#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/sec-cart.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'@seealso \code{\link{mice}}, \code{\link{mice.impute.cart}}, 
 #'\code{\link[randomForest]{randomForest}},
 #'\code{\link[CALIBERrfimpute]{mice.impute.rfcat}}, 

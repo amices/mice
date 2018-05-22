@@ -292,8 +292,11 @@ We suggest going through these vignettes in the following order
 \item \href{https://gerkovink.github.io/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html}{Sensitivity analysis with \pkg{mice}}
 }
 
-The book \emph{Flexible Imputation of Missing Data} contains a lot 
-of \href{http://www.stefvanbuuren.nl/mi/FIMD.html}{example code}.
+#'Van Buuren, S. (2018). 
+Boca Raton, FL.: Chapman & Hall/CRC Press.
+The book 
+\href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+contains a lot of \href{http://www.stefvanbuuren.nl/mi/FIMD.html}{example code}.
 }
 
 \section{Methodology}{
@@ -302,7 +305,9 @@ of \href{http://www.stefvanbuuren.nl/mi/FIMD.html}{example code}.
 The \pkg{mice} software was published in the \href{https://www.jstatsoft.org/article/view/v045i03}{Journal of Statistical Software} (Van Buuren and Groothuis-Oudshoorn, 2011). 
 The first application of the method 
 concerned missing blood pressure data (Van Buuren et. al., 1999). 
-The term \emph{Fully Conditional Specification} was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Van Buuren et. al., 2006). Further details on mixes of variables and applications can be found in the book \href{https://www.crcpress.com/Flexible-Imputation-of-Missing-Data/van-Buuren/p/book/9781439868249}{\emph{Flexible Imputation of Missing Data}}.
+The term \emph{Fully Conditional Specification} was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Van Buuren et. al., 2006). Further details on mixes of variables and applications can be found in the book 
+\href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 }
 
 \examples{
@@ -337,15 +342,18 @@ van Buuren, S., Groothuis-Oudshoorn, K. (2011). \href{http://www.jstatsoft.org/v
 Multivariate Imputation by Chained Equations in \code{R}}. \emph{Journal of
 Statistical Software}, \bold{45}(3), 1--67.
 
-van Buuren, S. (2012). \href{https://www.crcpress.com/Flexible-Imputation-of-Missing-Data/van-Buuren/p/book/9781439868249}{\emph{Flexible Imputation of Missing Data}}. Chapman & Hall/CRC.
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 Statistical Software}, \bold{45}(3), 1-67.
 \url{http://www.jstatsoft.org/v45/i03/}
 
-van Buuren, S. (2012). \emph{Flexible Imputation of Missing Data.} Boca
-Raton, FL: Chapman & Hall/CRC Press.
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 
 Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
 Fully conditional specification in multivariate imputation.  \emph{Journal of

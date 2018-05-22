@@ -60,8 +60,9 @@
 #'Morris TP, White IR, Royston P (2015). Tuning multiple imputation by predictive 
 #'mean matching and local residual draws. BMC Med Res Methodol. ;14:75.
 #'
-#'Van Buuren, S. (2012). Flexible Imputation of Missing Data. 
-#'CRC/Chapman \& Hall, Boca Raton, FL.
+#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/sec-pmm.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #'Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 #'Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
