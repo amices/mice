@@ -1,5 +1,5 @@
 ---
-output: rmarkdown::html_vignette
+output: github_document
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Changes in mice 3}
@@ -54,7 +54,20 @@ Argument `visitSequence` may still be specified as `integer`
 or `numeric`, but it will internally be converted into `character` 
 using the column names in `data`.
 
-The function attempts to recognize the old `form` argument, and
-automatically converts it into the new `formulas` specification.
+An existing function call to `mice` using the old `form` argument
+may result in an error `Argument "formulas" not a list`. The advice
+is to specify the formula as a list, e.g.,
+
+```{r}
+library(mice, warn.conflicts = FALSE)
+imp <- mice(nhanes, 
+            formulas = list(hyp ~ bmi, 
+                            chl ~ age + hyp + bmi,
+                            bmi ~ age + hyp + chl),
+            print = FALSE, m = 1, maxit = 1, seed = 1)
+imp$formulas
+```
+
+
 
 
