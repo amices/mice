@@ -7,4 +7,5 @@ _cache$
 ^revdep$
 cran-comments.md
 cran-comments.Rmd
+README-*
 ^data-raw$

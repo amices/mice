@@ -51,13 +51,15 @@
 #'@family multivariate \code{2l} functions
 #'@keywords datagen
 #'@examples
+#'\donttest{
+#'# Note: Requires mitml 0.3-5.7
 #'blocks <-  list(c("bmi", "chl", "hyp"), "age")
 #'method <- c("jomoImpute", "pmm")
 #'ini <- mice(nhanes, blocks = blocks, method = method, maxit = 0)
 #'pred <- ini$pred
 #'pred["B1", "hyp"] <- -2
 #'imp <- mice(nhanes, blocks = blocks, method = method, pred = pred, maxit = 1)
-#'
+#'}
 #'@export
 mice.impute.jomoImpute <- function(data, formula, type, m = 1, silent = TRUE,
                                   format = "imputes", ...) {

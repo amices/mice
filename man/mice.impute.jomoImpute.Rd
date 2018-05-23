@@ -55,13 +55,15 @@ iteration scheme.
 This is a multivatiate imputation function using a joint model.
 }
 \examples{
+\donttest{
+# Note: Requires mitml 0.3-5.7
 blocks <-  list(c("bmi", "chl", "hyp"), "age")
 method <- c("jomoImpute", "pmm")
 ini <- mice(nhanes, blocks = blocks, method = method, maxit = 0)
 pred <- ini$pred
 pred["B1", "hyp"] <- -2
 imp <- mice(nhanes, blocks = blocks, method = method, pred = pred, maxit = 1)
-
+}
 }
 \references{
 Grund S, Luedtke O, Robitzsch A (2016). Multiple 
