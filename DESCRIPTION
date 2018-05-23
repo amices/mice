@@ -46,6 +46,7 @@ Imports:
 Suggests:
     AGD,
     CALIBERrfimpute,
+    DPpackage,
     gamlss,
     lme4,
     mitools,
