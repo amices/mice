@@ -11,3 +11,7 @@ df.residual.lme <- function(object, ...) {
 df.residual.mer <- function(object, ...) {
     return(sum(object@dims[2:4] * c(1, -1, -1)) + 1)
 }
+
+df.residual.multinom <- function(object, ...) {
+  return(nrow(object$residuals) - object$edf)
+}

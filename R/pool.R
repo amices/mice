@@ -87,13 +87,16 @@ pool <- function (object) {
 
 pool.fitlist <- function (fitlist) {
   v <- summary(fitlist, type = "glance")
-  w <- summary(fitlist, type = "tidy")
+  w <- summary(fitlist, type = "tidy", exponentiate = FALSE)
   
   # residual degrees of freedom of model fitted on hypothetically complete data
   # assumed to be the same across imputations
   dfcom <- v$df.residual[1L]
   if (is.null(dfcom)) dfcom <- df.residual(getfit(fitlist, 1L))
   if (is.null(dfcom)) dfcom <- Inf
+  
+  # combine y.level and term into term (for multinom)
+  if ("y.level" %in% names(w)) w$term <- paste(w$y.level, w$term, sep = ":")
   
   # Rubin's rules for scalar estimates
   pooled <- w %>%
