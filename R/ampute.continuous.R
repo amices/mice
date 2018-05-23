@@ -23,8 +23,10 @@
 #'first pattern, the second vector to the second pattern, etcetera.  
 #'@author Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
 #'@seealso \code{\link{ampute}}, \code{\link{ampute.default.type}}
-#'@references Van Buuren, S. (2012). \emph{Flexible imputation of missing data.} 
-#'Boca Raton, FL.: Chapman & Hall/CRC Press.
+#'@references 
+#'#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'@keywords internal
 #'@export
 ampute.continuous <- function(P, scores, prop, type) {
