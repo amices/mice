@@ -25,10 +25,10 @@ check.visitSequence <- function(visitSequence = NULL,
                                 data, where = NULL, blocks) {
   
   if (is.null(names(blocks)) || any(is.na(names(blocks))))
-    stop("Missing blocks names.", call. = FALSE)
+    stop("Missing names in `blocks`.")
   
   if (is.null(visitSequence)) return(make.visitSequence(data, blocks))
-
+  
   if (is.null(where)) where <- is.na(data)
   nimp <- nimp(where, blocks)
   if (length(nimp) == 0) visitSequence <- nimp
