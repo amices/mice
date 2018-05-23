@@ -20,17 +20,12 @@ install.packages("devtools")
 devtools::install_github(repo = "stefvanbuuren/mice")
 ```
 
-Example
--------
+Minimal example
+---------------
 
 ``` r
-library(mice)
+library(mice, warn.conflicts = FALSE)
 #> Loading required package: lattice
-#> 
-#> Attaching package: 'mice'
-#> The following objects are masked from 'package:base':
-#> 
-#>     cbind, rbind
 
 # show the missing data pattern
 md.pattern(nhanes)
@@ -45,6 +40,8 @@ md.pattern(nhanes)
     #> 1    1   0   0   1  2
     #> 7    1   0   0   0  3
     #>      0   8   9  10 27
+
+The table and the graph summarize where the missing data occur in the `nhanes` dataset.
 
 ``` r
 # multiple impute the missing values
@@ -62,6 +59,8 @@ stripplot(imp, chl, pch = 19, xlab = "Imputation number")
 
 ![Distribution of `chl` per imputed data set.](README-stripplot-1.png)
 
+In general, we would like the imputations to be plausible, i.e., values that could have been observed if they had not been missing.
+
 ``` r
 # fit complete-data model
 fit <- with(imp, lm(chl ~ age + bmi))
@@ -73,6 +72,8 @@ summary(pool(fit))
 #> age            33.70     12.09     2.788  2.29 0.011629
 #> bmi             6.86      1.65     4.170 19.26 0.000506
 ```
+
+The complete-data is fit to each imputed dataset, and the results are combined to arrive at estimates that properly account for the missing data.
 
 `mice 3.0`
 ----------
