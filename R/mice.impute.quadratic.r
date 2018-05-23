@@ -32,8 +32,9 @@
 #'variables in the multivariate incomplete data that we might wish to impute.
 #'@author Gerko Vink (University of Utrecht), \email{g.vink@@uu.nl}
 #'@seealso \code{\link{mice.impute.pmm}}
-#'@references van Buuren, S. (2012). \emph{Flexible Imputation of Missing
-#'Data.} Boca Raton, FL: Chapman & Hall/CRC Press.
+#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #'Vink, G., van Buuren, S. (2013). Multiple Imputation of Squared Terms. 
 #'\emph{Sociological Methods & Research}, 42:598-607.

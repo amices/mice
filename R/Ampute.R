@@ -165,7 +165,8 @@
 #'Fully conditional specification in multivariate imputation. \emph{Journal of 
 #'Statistical Computation and Simulation}, 76\emph{(12)}, Appendix B.
 #'
-#'Van Buuren, S. (2012). \emph{Flexible imputation of missing data.} 
+#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 #'Boca Raton, FL.: Chapman & Hall/CRC Press.
 #'
 #'Vink, G. (2016). Towards a standardized evaluation of multiple imputation 
@@ -309,9 +310,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (is.null(data)) {
     stop("Argument data is missing, with no default", call. = FALSE)
   }
-  if (!(is.matrix(data) || is.data.frame(data))) {
-    stop("Data should be a matrix or data frame", call. = FALSE)
-  }
+  data <- check.dataform(data)
   if (anyNA(data)) {
     stop("Data cannot contain NAs", call. = FALSE)
   }

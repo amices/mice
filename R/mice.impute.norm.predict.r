@@ -29,8 +29,9 @@
 #'Little, R.J.A. and Rubin, D.B. (2002). Statistical Analysis with Missing 
 #'Data.  New York: John Wiley and Sons.
 #'
-#'Van Buuren, S. (2012). Flexible Imputation of Missing Data. 
-#'CRC/Chapman & Hall, FL: Boca Raton.
+#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/sec-linearnormal.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'@family univariate imputation functions
 #'@keywords datagen
 #'@export

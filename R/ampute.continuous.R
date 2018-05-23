@@ -177,4 +177,3 @@ ampute.continuous <- function(P, scores, prop, type) {
   }
   return(R)
 }
-

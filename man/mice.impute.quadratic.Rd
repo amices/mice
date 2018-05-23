@@ -89,15 +89,14 @@ plot(dat$x, dat$xx, col = mdc(1), xlab = "x", ylab = "xx")
 cmp <- complete(imp)
 points(cmp$x[is.na(dat$x)], cmp$xx[is.na(dat$x)], col = mdc(2))
 }
-\references{
-van Buuren, S. (2012). \emph{Flexible Imputation of Missing
-Data.} Boca Raton, FL: Chapman & Hall/CRC Press.
+\seealso{
+\code{\link{mice.impute.pmm}}
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 
 Vink, G., van Buuren, S. (2013). Multiple Imputation of Squared Terms. 
 \emph{Sociological Methods & Research}, 42:598-607.
-}
-\seealso{
-\code{\link{mice.impute.pmm}}
 
 Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.lda}},

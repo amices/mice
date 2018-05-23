@@ -206,7 +206,8 @@ Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn, C.G.M., Rubin, D.B. (2006).
 Fully conditional specification in multivariate imputation. \emph{Journal of 
 Statistical Computation and Simulation}, 76\emph{(12)}, Appendix B.
 
-Van Buuren, S. (2012). \emph{Flexible imputation of missing data.} 
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Boca Raton, FL.: Chapman & Hall/CRC Press.
 
 Vink, G. (2016). Towards a standardized evaluation of multiple imputation 

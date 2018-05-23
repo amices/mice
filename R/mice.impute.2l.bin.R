@@ -24,15 +24,16 @@
 #'@examples
 #'library(tidyr)
 #'library(dplyr)
-#'data(toenail, package = "DPpackage")
-#'data <- tidyr::complete(toenail, ID, visit) %>% 
+#'data("toenail", package = "HSAUR3")
+#'data <- tidyr::complete(toenail, patientID, visit) %>% 
 #'  tidyr::fill(treatment) %>% 
-#'  dplyr::select(-month)
+#'  dplyr::select(-time) %>%
+#'  dplyr::mutate(patientID = as.integer(patientID))
 #'
 #'\dontrun{
 #'pred <- mice(data, print = FALSE, maxit = 0, seed = 1)$pred
-#'pred["outcome", "ID"] <- -2
-#'imp <- mice(data, method = "2l.bin", pred = pred, maxit = 1)
+#'pred["outcome", "patientID"] <- -2
+#'imp <- mice(data, method = "2l.bin", pred = pred, maxit = 1, m = 1, seed = 1)
 #'}
 #'@export
 mice.impute.2l.bin <- function(y, ry, x, type, 
@@ -41,30 +42,25 @@ mice.impute.2l.bin <- function(y, ry, x, type,
     stop("Please install package 'lme4'", call. = FALSE)
   
   if (is.null(wy)) wy <- !ry
-
-  x <- cbind(1, as.matrix(x))
-  type <- c(2, type)
-  names(type)[1] <- colnames(x)[1] <- "(Intercept)"
+  if (intercept) {
+    x <- cbind(1, as.matrix(x))
+    type <- c(2, type)
+    names(type)[1] <- colnames(x)[1] <- "(Intercept)"
+  }
   
   clust <- names(type[type == -2])
   rande <- names(type[type == 2])
   fixe  <- names(type[type > 0])
-  
-  n.class <- length(unique(x[, clust]))
-  x[, clust] <- factor(x[, clust], labels = seq_len(n.class))
-  lev <- levels(x[, clust])
-  
+
   X <- x[, fixe, drop = FALSE]
   Z <- x[, rande, drop = FALSE]
   xobs <- x[ry, , drop = FALSE]
   yobs <- y[ry]
-  Xobs <- X[ry, , drop = FALSE]
-  Zobs <- Z[ry, , drop = FALSE]
-  
+
   # create formula, use [-1] to remove intercept
   fr <- ifelse(length(rande) > 1, 
                paste("+ ( 1 +", paste(rande[-1L], collapse = "+")), 
-                     "+ ( 1 ")
+               "+ ( 1 ")
   randmodel <- paste("yobs ~ ", paste(fixe[-1L],  collapse = "+"), 
                      fr, "|", clust, ")")
   
@@ -120,16 +116,21 @@ mice.impute.2l.bin <- function(y, ry, x, type,
     psi.star <- valprop$vectors %*% diag(valprop$values) %*% t(valprop$vectors)
   }
   
+  # find clusters for which we need imputes
+  clmis <- x[wy, clust]
+  
   # the main imputation task
-  misindicator <- which((unique(x[, clust]) %in% unique(xobs[, clust])) == FALSE)
-  for (i in misindicator) {
-    suppressWarnings(bi.star <- 
-                       t(MASS::mvrnorm(n = 1L, mu = rep(0, nrow(psi.star)), 
-                                       Sigma = psi.star))) # draw bi
-    logit <- X[wy & x[, clust] == i, ] %*% beta.star + 
-      Z[wy & x[,clust] == i, ] %*% matrix(bi.star, ncol = 1)
-    y[wy & x[, clust] == i] <- rbinom(nrow(logit), 1, 
-                                      as.vector(1/(1 + exp(-logit))))
+  for (i in clmis) {
+    bi.star <- t(MASS::mvrnorm(n = 1L, mu = rep(0, nrow(psi.star)), 
+                                       Sigma = psi.star))
+    idx <- wy & (x[, clust] == i)
+    logit <- X[idx, , drop = FALSE] %*% beta.star + 
+      Z[idx, , drop = FALSE] %*% matrix(bi.star, ncol = 1)
+    vec <- rbinom(nrow(logit), 1, as.vector(1/(1 + exp(-logit))))
+    if (is.factor(y)) {
+      vec <- factor(vec, c(0, 1), levels(y))
+    }
+    y[idx] <- vec
   }
   return(y[wy])
 }

@@ -38,8 +38,9 @@ Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 Statistical Software}, \bold{45}(3), 1-67.
 \url{http://www.jstatsoft.org/v45/i03/}
 
-#'Van Buuren, S. (2012). Flexible Imputation of Missing Data. 
-CRC/Chapman \& Hall, FL:Boca Raton.
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-categorical.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
 \code{\link{mice}}, \code{\link{glm}}, \code{\link{glm.fit}}

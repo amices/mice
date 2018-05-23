@@ -63,8 +63,9 @@ or Van Buuren (2012, p. 11-13, p. 45-46) for a discussion of this method.
 Little, R.J.A. and Rubin, D.B. (2002). Statistical Analysis with Missing 
 Data.  New York: John Wiley and Sons.
 
-Van Buuren, S. (2012). Flexible Imputation of Missing Data. 
-CRC/Chapman & Hall, FL: Boca Raton.
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-linearnormal.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
 Other univariate imputation functions: \code{\link{mice.impute.cart}},
