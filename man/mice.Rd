@@ -331,7 +331,7 @@ van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
 Fully conditional specification in multivariate imputation.  \emph{Journal of
 Statistical Computation and Simulation}, \bold{76}, 12, 1049--1064.
 
-van Buuren, S., Groothuis-Oudshoorn, K. (2011). \href{http://www.jstatsoft.org/v45/i03/}{\code{mice}:
+van Buuren, S., Groothuis-Oudshoorn, K. (2011). \href{https://www.jstatsoft.org/v45/i03/}{\code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}}. \emph{Journal of
 Statistical Software}, \bold{45}(3), 1--67.
 
@@ -342,7 +342,7 @@ Chapman & Hall/CRC. Boca Raton, FL.
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 Statistical Software}, \bold{45}(3), 1-67.
-\url{http://www.jstatsoft.org/v45/i03/}
+\url{https://www.jstatsoft.org/v45/i03/}
 
 Van Buuren, S. (2018). 
 \href{https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE}{\emph{Flexible Imputation of Missing Data. Second Edition.}}

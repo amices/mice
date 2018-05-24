@@ -58,7 +58,7 @@ to the \code{loggedEvents} component of the \code{\link{mids}} object.
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
+Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 
 Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
 multiple imputation strategies for the statistical analysis of incomplete

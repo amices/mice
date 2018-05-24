@@ -19,7 +19,7 @@
 #'@references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 #'Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #'Statistical Software}, \bold{45}(3), 1-67.
-#'\url{http://www.jstatsoft.org/v45/i03/}
+#'\url{https://www.jstatsoft.org/v45/i03/}
 #'@keywords multivariate
 #'@examples
 #'
