@@ -35,7 +35,7 @@ Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
-Imputes univariate missing data using linear regression with boostrap
+Imputes univariate missing data using linear regression with bootstrap
 }
 \details{
 Draws a bootstrap sample from \code{x[ry,]} and \code{y[ry]}, calculates

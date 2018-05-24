@@ -51,7 +51,7 @@ The number of imputations \code{m} is set to 1, and the function
 is called \code{m} times so that it fits within the \code{mice} 
 iteration scheme.
 
-This is a multivatiate imputation function using a joint model.
+This is a multivariate imputation function using a joint model.
 }
 \examples{
 blocks <-  list(c("bmi", "chl", "hyp"), "age")

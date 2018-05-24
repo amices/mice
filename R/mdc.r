@@ -17,7 +17,7 @@
 #'thereof.
 #'@param s A character vector containing the strings '\code{symbol}' or
 #''\code{line}', or abbreviations thereof.
-#'@param transparent A logical indicating whether alpha-transparancy is
+#'@param transparent A logical indicating whether alpha-transparency is
 #'allowed. The default is \code{TRUE}.
 #'@param cso The symbol color for the observed data. The default is a
 #'transparent blue.

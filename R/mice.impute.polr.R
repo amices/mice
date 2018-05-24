@@ -27,7 +27,7 @@
 #'In that case, \code{multinom} is tried as a fallback, and a record is written
 #'to the \code{loggedEvents} component of the \code{\link{mids}} object.
 #'
-#'@author Stef van Buuren, Karin Groohuis-Oudshoorn, 2000-2010
+#'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000-2010
 #'@seealso \code{\link{mice}}, \code{\link[nnet]{multinom}},
 #'\code{\link[MASS]{polr}}
 #'@references

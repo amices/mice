@@ -30,7 +30,7 @@ A \code{list} containing components \code{c} (least squares estimate),
 This function computes least squares estimates, variance/covariance matrices, 
 residuals and degrees of freedom according to ridge regression, QR decomposition 
 or Singular Value Decomposition. This function is internally called by .norm.draw(), 
-but can be called by any user-sprecified imputation function.
+but can be called by any user-specified imputation function.
 }
 \details{
 When calculating the inverse of the crossproduct of the predictor matrix, 

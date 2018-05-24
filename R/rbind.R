@@ -11,7 +11,7 @@
 #'
 #'If \code{y} is not a \code{mids} object, the columns of \code{x$data} 
 #'and \code{y} should match. The \code{where} matrix for \code{y} is set 
-#'to \code{FALSE}, signalling that any missing values 
+#'to \code{FALSE}, signaling that any missing values 
 #'in \code{y} were not imputed. 
 #'
 #'@param x A \code{mids} object.

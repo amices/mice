@@ -33,7 +33,7 @@
 #'is called \code{m} times so that it fits within the \code{mice} 
 #'iteration scheme.
 #'
-#'This is a multivatiate imputation function using a joint model.
+#'This is a multivariate imputation function using a joint model.
 #'@author Stef van Buuren, 2018, building on work of Simon Grund, 
 #'Alexander Robitzsch and Oliver Luedtke (authors of \code{mitml} package) 
 #'and Joe Schafer (author of \code{pan} package).

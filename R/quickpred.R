@@ -31,17 +31,17 @@
 #'scalars, but vectors and squares matrices of appropriate size will also work.
 #'Each element of the vector corresponds to a row of the predictor matrix, so
 #'the procedure can effectively differentiate between different target
-#'variables. Setting a high values for can be useful for auxilary, less
+#'variables. Setting a high values for can be useful for auxiliary, less
 #'important, variables. The set of predictor for those variables can remain
 #'relatively small. Using a square matrix extends the idea to the columns, so
 #'that one can also apply cellwise thresholds.
 #'
 #'@param data Matrix or data frame with incomplete data.
 #'@param mincor A scalar, numeric vector (of size \code{ncol(data))} or numeric
-#'matrix (square, of size \code{ncol(data)} specifiying the minimum
+#'matrix (square, of size \code{ncol(data)} specifying the minimum
 #'threshold(s) against which the absolute correlation in the data is compared.
 #'@param minpuc A scalar, vector (of size \code{ncol(data))} or matrix (square,
-#'of size \code{ncol(data)} specifiying the minimum threshold(s) for the
+#'of size \code{ncol(data)} specifying the minimum threshold(s) for the
 #'proportion of usable cases.
 #'@param include A string or a vector of strings containing one or more
 #'variable names from \code{names(data)}. Variables specified are always

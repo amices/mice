@@ -30,11 +30,11 @@
 #' Use \code{"scatter"} to create an imputation model based on 
 #' \emph{fully conditionally specification} (FCS). Use \code{"collect"} to 
 #' gather all variables to be imputed by a \emph{joint model} (JM). 
-#' Scenario's in-between these two extremes respresent 
+#' Scenario's in-between these two extremes represent 
 #' \emph{hybrid} imputation models that combine FCS and JM.
 #' 
 #' Any variable not listed in will not be imputed. 
-#' Specification \code{"void"} reprsents the extreme scenario that 
+#' Specification \code{"void"} represents the extreme scenario that 
 #' skips imputation of all variables. 
 #' 
 #' A variable may be a member of multiple blocks. The variable will be 
@@ -108,7 +108,7 @@ make.blocks <- function(data,
 
 #' Name imputation blocks
 #'
-#' This helper function names any unnaned elements in the \code{blocks} 
+#' This helper function names any unnamed elements in the \code{blocks} 
 #' specification. This is a convenience function.
 #' @inheritParams mice
 #' @param prefix A character vector of length 1 with the prefix to
@@ -117,7 +117,7 @@ make.blocks <- function(data,
 #' @seealso \code{\link{mice}}
 #' @details 
 #' This function will name any unnamed list elements specified in 
-#' the optional argument \code{blocks}. Unnanmed blocks 
+#' the optional argument \code{blocks}. Unnamed blocks 
 #' consisting of just one variable will be named after this variable.
 #' Unnamed blocks containing more than one variables will be named 
 #' by the \code{prefix} argument, padded by an integer sequence 

@@ -7,7 +7,7 @@
 mice.theme(transparent = TRUE, alpha.fill = 0.3)
 }
 \arguments{
-\item{transparent}{A logical indicating whether alpha-transparancy is
+\item{transparent}{A logical indicating whether alpha-transparency is
 allowed. The default is \code{TRUE}.}
 
 \item{alpha.fill}{A numerical values between 0 and 1 that indicates the

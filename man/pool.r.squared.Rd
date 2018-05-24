@@ -8,7 +8,7 @@ pool.r.squared(object, adjusted = FALSE)
 }
 \arguments{
 \item{object}{An object of class 'mira', produced by \code{lm.mids} or
-\code{with.mids} with \code{lm} as modelling function.}
+\code{with.mids} with \code{lm} as modeling function.}
 
 \item{adjusted}{A logical value. If adjusted=TRUE then the adjusted R^2 is
 calculated.  The default value is FALSE.}
@@ -24,7 +24,7 @@ Pools R^2 of m repeated complete data models.
 }
 \details{
 The function pools the coefficients of determination R^2 or the adjusted
-coefficients of determination (R^2_a) obtained with the \code{lm} modelling
+coefficients of determination (R^2_a) obtained with the \code{lm} modeling
 function. For pooling it uses the Fisher \emph{z}-transformation.
 }
 \examples{

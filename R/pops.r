@@ -1,7 +1,7 @@
 #'Project on preterm and small for gestational age infants (POPS)
 #'
 #'Subset of data from the POPS study, a national, prospective study on preterm
-#'children, including all liveborn infants <32 weeks gestional age and/or <1500
+#'children, including all liveborn infants <32 weeks gestational age and/or <1500
 #'g from 1983 (n = 1338).
 #'
 #'The data set concerns of subset of 959 children that survived up to the age

@@ -39,7 +39,7 @@ distance in boys and girls as simple functions of age, and then to compare
 the functions for boys and girls. The data have been reanalyzed by many
 authors including Jennrich and Schluchter (1986), Little and Rubin (1987),
 Pinheiro and Bates (2000), Verbeke and Molenberghs (2000) and Molenberghs and
-Kenward (2007). See Chapter 9 of Van Buuren (2012) for a challengeing
+Kenward (2007). See Chapter 9 of Van Buuren (2012) for a challenging
 exercise using these data.
 }
 \examples{

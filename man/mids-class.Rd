@@ -74,7 +74,7 @@ equivalent \code{oldClass(obj) <- "mids"}.
    \item{\code{formulas}:}{A named list of formula's, or expressions that
    can be converted into formula's by \code{as.formula}. List elements
    correspond to blocks. The block to which the list element applies is 
-   identied by its name, so list names must correspond to block names.}
+   identified by its name, so list names must correspond to block names.}
    \item{\code{post}:}{A vector of strings of length \code{length(blocks)} 
    with commands for post-processing.}
    \item{\code{seed}:}{The seed value of the solution.}

@@ -16,8 +16,8 @@
 \item{\code{rpg}}{Number of repeated groups, 0, 1, 2}
 \item{\code{lpr}}{language score PRE}
 \item{\code{lpo}}{language score POST}
-\item{\code{apr}}{Arithmatic score PRE} 
-\item{\code{apo}}{Arithmatic score POST} 
+\item{\code{apr}}{Arithmetic score PRE} 
+\item{\code{apo}}{Arithmetic score POST} 
 \item{\code{den}}{Denomination classification 1-4 - at school level}
 \item{\code{ssi}}{School SES indicator - at school level}
 }}

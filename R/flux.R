@@ -10,7 +10,7 @@
 #'\code{Yj} missing and \code{Yk} observed, divided by the total number of
 #'observed data cells. Influx depends on the proportion of missing data of the
 #'variable. Influx of a completely observed variable is equal to 0, whereas for
-#'completely missing variables wehave influx = 1. For two variables with the
+#'completely missing variables we have influx = 1. For two variables with the
 #'same proportion of missing data, the variable with higher influx is better
 #'connected to the observed data, and might thus be easier to impute.
 #'
@@ -37,7 +37,7 @@
 #'influx = Influx
 #'outflux = Outflux
 #'ainb = Average inbound statistic
-#'aout = Averege outbound statistic
+#'aout = Average outbound statistic
 #'fico = Fraction of incomplete cases among cases with \code{Yj} observed
 #'@seealso \code{\link{fluxplot}}, \code{\link{md.pattern}}, \code{\link{fico}}
 #'@author Stef van Buuren, 2012
@@ -81,7 +81,7 @@ flux <- function(data, local=names(data)){
 #'\code{Yj} missing and \code{Yk} observed, divided by the total number of
 #'observed data cells. Influx depends on the proportion of missing data of the
 #'variable. Influx of a completely observed variable is equal to 0, whereas for
-#'completely missing variables wehave influx = 1. For two variables with the
+#'completely missing variables we have influx = 1. For two variables with the
 #'same proportion of missing data, the variable with higher influx is better
 #'connected to the observed data, and might thus be easier to impute.
 #'
@@ -117,7 +117,7 @@ flux <- function(data, local=names(data)){
 #'influx = Influx
 #'outflux = Outflux
 #'ainb = Average inbound statistic
-#'aout = Averege outbound statistic
+#'aout = Average outbound statistic
 #'fico = Fraction of incomplete cases among cases with \code{Yj} observed
 #'@seealso \code{\link{flux}}, \code{\link{md.pattern}}, \code{\link{fico}}
 #'@author Stef van Buuren, 2012

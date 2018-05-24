@@ -3,7 +3,7 @@
 \name{mice.impute.quadratic}
 \alias{mice.impute.quadratic}
 \alias{quadratic}
-\title{Imputation of quadratric terms}
+\title{Imputation of quadratic terms}
 \usage{
 mice.impute.quadratic(y, ry, x, wy = NULL, ...)
 }

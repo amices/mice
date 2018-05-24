@@ -5,11 +5,11 @@
 #'Pools R^2 of m repeated complete data models.
 #'
 #'The function pools the coefficients of determination R^2 or the adjusted
-#'coefficients of determination (R^2_a) obtained with the \code{lm} modelling
+#'coefficients of determination (R^2_a) obtained with the \code{lm} modeling
 #'function. For pooling it uses the Fisher \emph{z}-transformation.
 #'
 #'@param object An object of class 'mira', produced by \code{lm.mids} or
-#'\code{with.mids} with \code{lm} as modelling function.
+#'\code{with.mids} with \code{lm} as modeling function.
 #'@param adjusted A logical value. If adjusted=TRUE then the adjusted R^2 is
 #'calculated.  The default value is FALSE.
 #'@return Returns a 1x4 table with components. Component \code{est} is the 
@@ -64,7 +64,7 @@ pool.r.squared <- function(object, adjusted = FALSE) {
     if ((m <- length(object$analyses)) < 2) 
         stop("At least two imputations are needed for pooling.\n")
     if (class((object$analyses[[1]]))[1] != "lm") 
-        stop("r^2 can only be calculated for results of the 'lm' modelling function")
+        stop("r^2 can only be calculated for results of the 'lm' modeling function")
     # Set up array r2 to store R2 values, Fisher z-transformations of R2 values and its variance.
     analyses <- object$analyses
     m <- length(analyses)

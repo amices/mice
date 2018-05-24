@@ -26,7 +26,7 @@ Applies \code{lm()} to multiply imputed data set
 }
 \details{
 This function is included for backward compatibility with V1.0. The function
-is superseeded by \code{\link{with.mids}}.
+is superseded by \code{\link{with.mids}}.
 }
 \examples{
 

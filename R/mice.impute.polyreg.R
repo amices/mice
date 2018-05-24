@@ -9,7 +9,7 @@
 #'@param nnet.MaxNWts Tuning parameter for \code{nnet()}.
 #'@return Vector with imputed data, same type as \code{y}, and of length 
 #'\code{sum(wy)}
-#'@author Stef van Buuren, Karin Groohuis-Oudshoorn, 2000-2010
+#'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000-2010
 #'@details
 #'The function \code{mice.impute.polyreg()} imputes categorical response 
 #'variables by the Bayesian polytomous regression model. See J.P.L. Brand

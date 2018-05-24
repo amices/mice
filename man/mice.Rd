@@ -70,7 +70,7 @@ of missing data) and \code{"revmonotone"} (reverse of monotone).}
 \item{formulas}{A named list of formula's, or expressions that
 can be converted into formula's by \code{as.formula}. List elements
 correspond to blocks. The block to which the list element applies is 
-identied by its name, so list names must correspond to block names.
+identified by its name, so list names must correspond to block names.
 The \code{formulas} argument is an alternative to the 
 \code{predictorMatrix} argument that allows for more flexibility in 
 specifying imputation models, e.g., for specifying interaction terms.}
@@ -82,7 +82,7 @@ called for block \code{blockname}.}
 
 \item{post}{A vector of strings with length \code{ncol(data)} specifying
 expressions as strings. Each string is parsed and 
-executed within the \code{sampler()} function to postprocess 
+executed within the \code{sampler()} function to post-process 
 imputed values during the iterations. 
 The default is a vector of empty strings, indicating no post-processing.}
 
@@ -185,7 +185,7 @@ Built-in univariate imputation methods are:
 \code{polr}         \tab ordered \tab Proportional odds model\cr
 \code{polyreg}      \tab unordered\tab Polytomous logistic regression\cr
 \code{lda}          \tab unordered\tab Linear discriminant analysis\cr
-\code{2l.norm}      \tab numeric  \tab Level-1 normal heteroskedastic\cr
+\code{2l.norm}      \tab numeric  \tab Level-1 normal heteroscedastic\cr
 \code{2l.lmer}      \tab numeric  \tab Level-1 normal homoscedastic, lmer\cr
 \code{2l.pan}       \tab numeric  \tab Level-1 normal homoscedastic, pan\cr
 \code{2l.bin}       \tab binary   \tab Level-1 logistic, glmer\cr
@@ -198,7 +198,7 @@ These corresponding functions are coded in the \code{mice} library under
 names \code{mice.impute.method}, where \code{method} is a string with the
 name of the univariate imputation method name, for example \code{norm}. The
 \code{method} argument specifies the methods to be used.  For the \code{j}'th
-column, \code{mice()} calls the first occurence of
+column, \code{mice()} calls the first occurrence of
 \code{paste('mice.impute.', method[j], sep = '')} in the search path.  The
 mechanism allows uses to write customized imputation function,
 \code{mice.impute.myfunc}. To call it for all columns specify
@@ -217,7 +217,7 @@ the same data. Passive imputation is invoked if \code{~} is specified as the
 first character of the string that specifies the univariate method.
 \code{mice()} interprets the entire string, including the \code{~} character,
 as the formula argument in a call to \code{model.frame(formula,
-data[!r[,j],])}. This provides a simple mechanism for specifying determinstic
+data[!r[,j],])}. This provides a simple mechanism for specifying deterministic
 dependencies among the columns. For example, suppose that the missing entries
 in variables \code{data$height} and \code{data$weight} are imputed. The body
 mass index (BMI) can be calculated within \code{mice} by specifying the
@@ -253,7 +253,7 @@ according to the \code{predictMatrix} specification. Variables with
 non-zero \code{type} values in the \code{predictMatrix} will 
 be added as main effects to the \code{formulas}, which will 
 act as supplementary covariates in the imputation model. It is possible
-to turn off this behaviour by specifying the 
+to turn off this behavior by specifying the 
 argument \code{auxiliary = FALSE}.
 }
 \section{Functions}{

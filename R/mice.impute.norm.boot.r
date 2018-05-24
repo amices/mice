@@ -1,6 +1,6 @@
 #'Imputation by linear regression, bootstrap method
 #'
-#'Imputes univariate missing data using linear regression with boostrap
+#'Imputes univariate missing data using linear regression with bootstrap
 #'
 #'@aliases mice.impute.norm.boot norm.boot
 #'@inheritParams mice.impute.pmm

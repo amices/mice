@@ -13,7 +13,7 @@
 #'\code{"broad"} and \code{"repeated"}. See the Details section 
 #'for the interpretation.
 #'The default is \code{action = 1L} returns the first imputed data set.
-#'@param include A logical to indicate whether the orginal data with the missing
+#'@param include A logical to indicate whether the original data with the missing
 #'values should be included.
 #'@param mild A logical indicating whether the return value should 
 #'always be an object of class \code{mild}. Setting \code{mild = TRUE} 

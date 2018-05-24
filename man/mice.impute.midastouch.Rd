@@ -97,7 +97,7 @@ surveys (with discussion), Journal of Business Economics and
 Statistics, 6, 287--301.
 
 Parzen, M., Lipsitz, S. R., Fitzmaurice, G. M. (2005), A note on reducing 
-the bias of the approximate bayesian bootstrap imputation variance estimator. 
+the bias of the approximate Bayesian bootstrap imputation variance estimator. 
 Biometrika \bold{92}, 4, 971--974.
 
 Rubin, D.B. (1987), Multiple imputation for nonresponse in surveys. New York: Wiley.

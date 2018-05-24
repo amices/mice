@@ -19,7 +19,7 @@ also be one of the following keywords: \code{"all"}, \code{"long"},
 for the interpretation.
 The default is \code{action = 1L} returns the first imputed data set.}
 
-\item{include}{A logical to indicate whether the orginal data with the missing
+\item{include}{A logical to indicate whether the original data with the missing
 values should be included.}
 
 \item{mild}{A logical indicating whether the return value should 

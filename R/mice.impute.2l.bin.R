@@ -4,7 +4,7 @@
 #'using a two-level logistic model using \code{lme4::glmer()}
 #'
 #'Data are missing systematically if they have not been measured, e.g., in the 
-#'case where we combine data from different souces. Data are missing sporadically
+#'case where we combine data from different sources. Data are missing sporadically
 #'if they have been partially observed.
 #'
 #'@inheritParams mice.impute.2l.lmer

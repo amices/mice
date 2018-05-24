@@ -26,12 +26,12 @@ be using for naming any unnamed blocks with two or more variables.}
 A named list of character vectors with variables names.
 }
 \description{
-This helper function names any unnaned elements in the \code{blocks} 
+This helper function names any unnamed elements in the \code{blocks} 
 specification. This is a convenience function.
 }
 \details{
 This function will name any unnamed list elements specified in 
-the optional argument \code{blocks}. Unnanmed blocks 
+the optional argument \code{blocks}. Unnamed blocks 
 consisting of just one variable will be named after this variable.
 Unnamed blocks containing more than one variables will be named 
 by the \code{prefix} argument, padded by an integer sequence 

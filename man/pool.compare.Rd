@@ -22,14 +22,14 @@ A list containing several components. Component \code{call} is
 the call to the \code{pool.compare} function. Component \code{call11} is
 the call that created \code{fit1}. Component \code{call12} is the 
 call that created the imputations. Component \code{call01} is the 
-call that created \code{fit0}. Compenent \code{call02} is the 
+call that created \code{fit0}. Component \code{call02} is the 
 call that created the imputations. Components \code{method} is the 
 method used to compare two models: 'Wald' or 'likelihood'. Component
 \code{nmis} is the number of missing entries for each variable.
 Component \code{m} is the number of imputations. 
-Component \code{qhat1} is a matrix, containing the estimated coeffients of the
+Component \code{qhat1} is a matrix, containing the estimated coefficients of the
 \emph{m} repeated complete data analyses from \code{fit1}. 
-Component \code{qhat0} is a matrix, containing the estimated coeffients of the
+Component \code{qhat0} is a matrix, containing the estimated coefficients of the
 \emph{m} repeated complete data analyses from \code{fit0}.
 Component \code{ubar1} is the mean of the variances of \code{fit1}, 
 formula (3.1.3), Rubin (1987).
@@ -56,7 +56,7 @@ The function is based on the article of Meng and Rubin (1992). The
 Wald-method can be found in paragraph 2.2 and the likelihood method can be
 found in paragraph 3.  One could use the Wald method for comparison of linear
 models obtained with e.g. \code{lm} (in \code{with.mids()}).  The likelihood
-method should be used in case of logistic regression models obtaind with
+method should be used in case of logistic regression models obtained with
 \code{glm()} in \code{with.mids()}.
 
 The function assumes that \code{fit1} is the 

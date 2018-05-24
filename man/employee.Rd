@@ -7,8 +7,8 @@
 \format{A data frame with 20 rows and 3 variables:
 \describe{
 \item{IQ}{candidate IQ score}
-\item{wbeing}{candicate well-being score}
-\item{jobperf}{candicate job performance score}
+\item{wbeing}{candidate well-being score}
+\item{jobperf}{candidate job performance score}
 }}
 \source{
 Enders (2010), Applied Missing Data Analysis, p. 218
@@ -20,12 +20,12 @@ employee
 A toy example from Craig Enders.
 }
 \details{
-Enders describes these data as folows: 
+Enders describes these data as follows: 
 I designed these data to mimic an employee selection scenario in
 which prospective employees complete an IQ test and a
 psychological well-being questionnaire during their interview.
 The company subsequently hires the applications that score in the 
-upper half of teh IQ distribution, and a supervisor rates their
+upper half of the IQ distribution, and a supervisor rates their
 job performance following a 6-month probationary period.
 Note that the job performance scores are missing at random (MAR)
 (i.e. individuals in the lower half of the IQ distribution were

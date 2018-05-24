@@ -8,7 +8,7 @@
 #' @param mira.obj An object of class \code{mira}
 #' @inheritParams broom::lm_tidiers
 #' @param z Data frame with a tidied version of a coefficient matrix
-#' @param conf.int Logical indicating Wwether to include 
+#' @param conf.int Logical indicating whether to include 
 #' a confidence interval. The default is \code{FALSE}.
 #' @param conf.level Confidence level of the interval, used only if
 #' \code{conf.int = TRUE}. Number between 0 and 1.
@@ -53,7 +53,7 @@ mipo <- function(mira.obj, ...) {
   structure(pool(mira.obj, ...), class = c("mipo"))
 }
 
-#'@return The \code{summary} method returns a data frame with summary statistis of the pooled analysis.
+#'@return The \code{summary} method returns a data frame with summary statistics of the pooled analysis.
 #'@rdname mipo
 #'@export
 summary.mipo <- function(object, type = c("tests", "all"),

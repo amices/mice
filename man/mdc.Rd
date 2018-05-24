@@ -19,7 +19,7 @@ thereof.}
 \item{s}{A character vector containing the strings '\code{symbol}' or
 '\code{line}', or abbreviations thereof.}
 
-\item{transparent}{A logical indicating whether alpha-transparancy is
+\item{transparent}{A logical indicating whether alpha-transparency is
 allowed. The default is \code{TRUE}.}
 
 \item{cso}{The symbol color for the observed data. The default is a

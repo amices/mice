@@ -88,7 +88,7 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...)
 #' This function computes least squares estimates, variance/covariance matrices, 
 #' residuals and degrees of freedom according to ridge regression, QR decomposition 
 #' or Singular Value Decomposition. This function is internally called by .norm.draw(), 
-#' but can be called by any user-sprecified imputation function.
+#' but can be called by any user-specified imputation function.
 #' 
 #' When calculating the inverse of the crossproduct of the predictor matrix, 
 #' problems may arise. For example, taking the inverse is not possible when the 

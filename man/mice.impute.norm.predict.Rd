@@ -54,8 +54,8 @@ richer models having more parameters does not help to evade these issues.
 Stochastic regression methods, like \code{\link{mice.impute.pmm}} or 
 \code{\link{mice.impute.norm}}, are generally preferred. 
 
-At best, prediction can give reasonble estimates of the mean, especially 
-if normality assumptions are plausble. See Little and Rubin (2002, p. 62-64)
+At best, prediction can give reasonable estimates of the mean, especially 
+if normality assumptions are plausible. See Little and Rubin (2002, p. 62-64)
 or Van Buuren (2012, p. 11-13, p. 45-46) for a discussion of this method.
 }
 

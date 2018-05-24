@@ -28,7 +28,7 @@ process_mipo(z, x, conf.int = FALSE, conf.level = 0.95,
 
 \item{object}{An object of class \code{mipo}}
 
-\item{conf.int}{Logical indicating Wwether to include 
+\item{conf.int}{Logical indicating whether to include 
 a confidence interval. The default is \code{FALSE}.}
 
 \item{conf.level}{Confidence level of the interval, used only if
@@ -43,7 +43,7 @@ logistic regression).}
 \item{z}{Data frame with a tidied version of a coefficient matrix}
 }
 \value{
-The \code{summary} method returns a data frame with summary statistis of the pooled analysis.
+The \code{summary} method returns a data frame with summary statistics of the pooled analysis.
 }
 \description{
 The \code{mipo} object contains the results of the pooling step. 

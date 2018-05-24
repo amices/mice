@@ -125,7 +125,7 @@ mice.impute.2lonly.pmm <- function (y, ry, x, type, wy = NULL, ...){
     ximp2 <- mice.impute.norm( y= as.matrix(a1[,N1]), ry=ry2, x = x1[,-1] , 
                                wy = wy2, ...)
     
-    # data postprocessing
+    # data post-processing
     cly2 <- a1[ ! ry2 , 1] 
     i1 <- match( clusterx, cly2 )
     ximp <- ( ximp2[i1] )[ wy ]

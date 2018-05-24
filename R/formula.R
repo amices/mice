@@ -50,7 +50,7 @@ make.formulas <- function(data, blocks = make.blocks(data),
 
 #' Name formula list elements
 #'
-#' This helper function names any unnaned elements in the \code{formula} 
+#' This helper function names any unnamed elements in the \code{formula} 
 #' list. This is a convenience function.
 #' @inheritParams mice
 #' @param prefix A character vector of length 1 with the prefix to
@@ -59,7 +59,7 @@ make.formulas <- function(data, blocks = make.blocks(data),
 #' @seealso \code{\link{mice}}
 #' @details 
 #' This function will name any unnamed list elements specified in 
-#' the optional argument \code{formula}. Unnanmed formula's 
+#' the optional argument \code{formula}. Unnamed formula's 
 #' consisting with just one response variable will be named 
 #' after this variable. Unnamed formula's containing more 
 #' than one variable will be named by the \code{prefix} 

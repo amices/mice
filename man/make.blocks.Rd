@@ -46,11 +46,11 @@ extreme scenarios for assigning variables to imputation blocks.
 Use \code{"scatter"} to create an imputation model based on 
 \emph{fully conditionally specification} (FCS). Use \code{"collect"} to 
 gather all variables to be imputed by a \emph{joint model} (JM). 
-Scenario's in-between these two extremes respresent 
+Scenario's in-between these two extremes represent 
 \emph{hybrid} imputation models that combine FCS and JM.
 
 Any variable not listed in will not be imputed. 
-Specification \code{"void"} reprsents the extreme scenario that 
+Specification \code{"void"} represents the extreme scenario that 
 skips imputation of all variables. 
 
 A variable may be a member of multiple blocks. The variable will be 

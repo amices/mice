@@ -1,4 +1,4 @@
-#'Imputation of quadratric terms
+#'Imputation of quadratic terms
 #'
 #'Imputes incomplete variable that appears as both
 #'main effect and quadratic effect in the complete-data model.

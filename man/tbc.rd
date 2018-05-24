@@ -40,7 +40,7 @@ and 6 years correlate strongest with adult overweight.  \emph{PLoS ONE},
 
 De Kroon, M. L. A. (2011).  \emph{The Terneuzen Birth Cohort. Detection and
 Prevention of Overweight and Cardiometabolic Risk from Infancy Onward.}
-Disseration, Vrije Universiteit, Amsterdam.
+Dissertation, Vrije Universiteit, Amsterdam.
 \url{http://dare.ubvu.vu.nl/handle/1871/23806}
 
 Van Buuren, S. (2018). 

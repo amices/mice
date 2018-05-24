@@ -94,6 +94,6 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.ri}}
 }
 \author{
-Stef van Buuren, Karin Groohuis-Oudshoorn, 2000-2010
+Stef van Buuren, Karin Groothuis-Oudshoorn, 2000-2010
 }
 \keyword{datagen}

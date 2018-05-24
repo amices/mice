@@ -63,8 +63,8 @@ is to manually recode the factor level in \code{SPSS}.
 
 \code{SPSS} will recognize the data set as a multiply imputed data set, and
 do automatic pooling in procedures where that is supported. Note however that
-pooling is an extra option only available to those who licence the
-\code{MISSING VALUES} module. Without this licence, \code{SPSS} will still
+pooling is an extra option only available to those who license the
+\code{MISSING VALUES} module. Without this license, \code{SPSS} will still
 recognize the structure of the data, but not do any pooling.
 }
 \seealso{
