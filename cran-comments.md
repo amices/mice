@@ -9,18 +9,32 @@ build_vignettes()
 build()
 ```
 
-`"/Users/buurensv/Package/mice/mice_2.47.1.9112.tar.gz"`
+`"/Users/buurensv/Package/mice/mice_3.0.0.tar.gz"`
 
 Test environments
 -----------------
 
--   local OS X install, 10.13.4, R 3.5
--   win-builder (devel and release)
+-   local OS X install, 10.13.4, R 3.5.0
+-   win-builder, using `devtools::build_win()`
+
+There was no ERROR, WARNING or NOTE.
 
 R CMD check results
 -------------------
 
-There were no ERRORs or WARNINGs or NOTEs.
+local checks of tarball fails:
+
+`$ R CMD CHECK mice_3.0.0.tar.gz`
+
+yields: `Error: package ‘Rcpp’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version Execution halted`
+
+(I have installed `Rccp 0.12.17`)
+
+`Error: package or namespace load failed for ‘lattice’:  package ‘lattice’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version`
+
+(I have installed `lattice 0.20-35`)
+
+Reinstalling does not help (`warning: package ‘Rccp’ is not available (for R version 3.5.0)`). I cannot repair this problem. I have assumed this is a temporary flitch that we may safely ignore for now.
 
 Downstream dependencies
 -----------------------
@@ -35,10 +49,7 @@ revdep_check_print_problems()
 
 There were 48 reverse dependencies.
 
-Check results
-=============
-
-Packages with problems
+Packages with problems + actions
 
 <table>
 <colgroup>
@@ -215,4 +226,4 @@ Packages with problems
 </tbody>
 </table>
 
-See <https://github.com/stefvanbuuren/mice/blob/dev/revdep/problems.md>
+See <https://github.com/stefvanbuuren/mice/blob/master/revdep/problems.md>
