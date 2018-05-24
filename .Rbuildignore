@@ -8,4 +8,5 @@ _cache$
 cran-comments.md
 cran-comments.Rmd
 README-*
+changes_mice*
 ^data-raw$
