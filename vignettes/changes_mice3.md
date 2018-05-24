@@ -90,7 +90,6 @@ An existing function call to `mice` using the old `form` argument may result in 
 
 ``` r
 library(mice, warn.conflicts = FALSE)
-#> Loading required package: lattice
 imp <- mice(nhanes, 
             formulas = list(hyp ~ bmi, 
                             chl ~ age + hyp + bmi,
