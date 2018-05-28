@@ -24,7 +24,7 @@ Display missing-data patterns.
 }
 \details{
 This function is useful for investigating any structure of missing
-observation in the data. In specific case, the missing data pattern could be
+observations in the data. In specific case, the missing data pattern could be
 (nearly) monotone. Monotonicity can be used to simplify the imputation model.
 See Schafer (1997) for details. Also, the missing pattern could suggest which
 variables could potentially be useful for imputation of missing entries.
