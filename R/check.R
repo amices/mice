@@ -20,6 +20,16 @@ check.dataform <- function(data) {
   data
 }
 
+check.m <- function(m) {
+  m <- m[1L]
+  if (!is.numeric(m))
+    stop("Argument m not numeric", call. = FALSE)
+  m <- floor(m)
+  if (m < 1L)
+    stop("Number of imputations (m) lower than 1.", call. = FALSE)
+  m
+}
+
 check.cluster <- function(data, predictorMatrix) {
   # stop if the cluster variable is a factor
   isclassvar <- apply(predictorMatrix == -2, 2, any)

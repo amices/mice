@@ -269,8 +269,9 @@ mice <- function(data, m = 5,
   call <- match.call()
   if (!is.na(seed)) set.seed(seed)
   
-  # check form of data 
+  # check form of data and m
   data <- check.dataform(data)
+  m <- check.m(m)
   
   # determine input combination: predictorMatrix, blocks, formulas
   mp <- missing(predictorMatrix)
