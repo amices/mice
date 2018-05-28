@@ -4,7 +4,7 @@
 #'Trellis plots that are built into \pkg{mice}. 
 #'
 #'@aliases mice.theme
-#'@param transparent A logical indicating whether alpha-transparancy is
+#'@param transparent A logical indicating whether alpha-transparency is
 #'allowed. The default is \code{TRUE}.
 #'@param alpha.fill A numerical values between 0 and 1 that indicates the
 #'default alpha value for fills.

@@ -15,20 +15,35 @@ build_vignettes()
 build()
 ```
 
-`"/Users/buurensv/Package/mice/mice_2.46.0.tar.gz"`
+`"/Users/buurensv/Package/mice/mice_3.0.0.tar.gz"`
 
 ## Test environments
 
-* local OS X install, 3.4.2
-* win-builder (devel and release)
+* local OS X install, 10.13.4, R 3.5.0
+* win-builder, using `devtools::build_win()`
+
+There was no ERROR, WARNING or NOTE.
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs.
+local checks of tarball fails:
 
-There was 1 NOTE: 
+`$ R CMD CHECK mice_3.0.0.tar.gz`
 
-* Version jumps in minor (submitted: 2.46.0, existing: 2.30)
+yields: 
+`Error: package ‘Rcpp’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version
+Execution halted`
+
+(I have installed `Rccp 0.12.17`)
+
+`Error: package or namespace load failed for ‘lattice’:
+ package ‘lattice’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version`
+
+(I have installed `lattice 0.20-35`)
+
+Reinstalling does not help (`warning: package ‘Rccp’ is not available
+(for R version 3.5.0)`). I cannot repair this problem. I have assumed
+this is a temporary flitch that we may safely ignore for now.
 
 ## Downstream dependencies
 
@@ -40,20 +55,30 @@ revdep_check_save_summary()
 revdep_check_print_problems()
 ```
 
-There were 40 reverse dependencies.
+There were 48 reverse dependencies.
 
-7 packages with problems
+Packages with problems + actions
 
-|package        |version  | errors| warnings| notes|
-|:--------------|:--------|------:|--------:|-----:|
-|dynr           |0.1.11-8 |      1|        0|     0|
-|Hmisc          |4.0-3    |      1|        0|     0|
-|MissingDataGUI |0.2-5    |      1|        0|     0|
-|NNLM           |0.4.1    |      1|        0|     0|
-|Qtools         |1.2      |      1|        0|     0|
-|rattle         |5.1.0    |      1|        0|     0|
-|weightTAPSPACK |0.1      |      1|        0|     0|
+|package         |version  | errors| warnings| notes| My actions
+|:---------------|:--------|------:|--------:|-----:|:---------------------------------
+|brms            |2.3.0    |      1|        0|     2| no error in brms 2.3.1 (SOLVED)
+|CALIBERrfimpute |0.1-6    |      0|        1|     1| showtable() in simstudy_survival defunct - author noted
+|codebook        |0.5.8    |      1|        0|     1| solved by change in md.pattern()
+|dlookr          |0.3.0    |      1|        0|     0| author noted, not related to mice (SOLVED)
+|dynr            |0.1.12-5 |      1|        0|     0| author noted, needs additional local installs, not further checked
+|HardyWeinberg   |1.5.9    |      0|        1|     0| asked author whether error could be correct
+|Hmisc           |4.1-1    |      1|        0|     0| installed by hand
+|hot.deck        |1.1      |      0|        1|     0| warning unrelated to mice
+|HSAUR3          |1.0-8    |      0|        1|     0| solved by reverting print.mira, broom naming, author noted 
+|JointAI         |0.1.0    |      1|        0|     0| depends on external JAGS, not further checked
+|logistf         |1.22     |      1|        0|     1| pooling code not compatible - author noted
+|miceadds        |2.11-80  |      1|        0|     0| https://github.com/alexanderrobitzsch/miceadds/issues/6, will be solved in next release
+|miceFast        |0.2.3    |      1|        0|     0| C compilation errors
+|miceMNAR        |1.0      |      1|        0|     0| incompatible mice.impute.hecknorm(), author noted
+|MissingDataGUI  |0.2-5    |      1|        0|     0| 'gWidgetsRGtk2', 'cairoDevice' not available
+|Qtools          |1.3      |      1|        0|     0| fortran compilation errors, author noted
+|rattle          |5.1.0    |      1|        0|     0| 'cairoDevice' not available
+|sjmisc          |2.7.2    |      1|        0|     0| no errors found in sjmisc 2.7.2 (SOLVED)
+|weightTAPSPACK  |0.1      |      1|        0|     0| compilation error in Rglpk
 
-- Installation failed: dynr, Hmisc, NNLM, Qtools
-- Packages required but not available: MissingDataGUI, rattle, weightTAPSPACK
-- No other ERRORs found.
+See https://github.com/stefvanbuuren/mice/blob/master/revdep/problems.md

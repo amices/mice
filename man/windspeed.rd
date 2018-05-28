@@ -29,7 +29,7 @@ windspeed[1:3,]
 }
 \references{
 Haslett, J. and Raftery, A. E. (1989).  \emph{Space-time
-Modelling with Long-memory Dependence: Assessing Ireland's Wind Power
+Modeling with Long-memory Dependence: Assessing Ireland's Wind Power
 Resource (with Discussion)}. Applied Statistics 38, 1-50.
 \url{http://lib.stat.cmu.edu/datasets/wind.desc} and
 \url{http://lib.stat.cmu.edu/datasets/wind.data}

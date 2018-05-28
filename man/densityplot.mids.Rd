@@ -47,7 +47,7 @@ which two groups are distinguished (e.g. using different colors) in the
 display. The environment in which this expression is evaluated in the
 response indicator \code{is.na(x$data)}.
 
-The default \code{na.group = NULL} constrasts the observed and missing data
+The default \code{na.group = NULL} contrasts the observed and missing data
 in the LHS \code{y} variable of the display, i.e. groups created by
 \code{is.na(y)}. The expression \code{y} creates the groups according to
 \code{is.na(y)}. The expression \code{y1 & y2} creates groups by
@@ -131,7 +131,7 @@ Use the \code{subset} and \code{na.groups} together to plots parts of the
 data. For example, select the first imputed data set by by
 \code{subset=.imp==1}.
 
-Graphical paramaters like \code{col}, \code{pch} and \code{cex} can be
+Graphical parameters like \code{col}, \code{pch} and \code{cex} can be
 specified in the arguments list to alter the plotting symbols. If
 \code{length(col)==2}, the color specification to define the observed and
 missing groups. \code{col[1]} is the color of the 'observed' data,
@@ -170,7 +170,6 @@ densityplot(imp, ~hc|.imp)
 ### All combined in one panel.
 densityplot(imp, ~hc)
 
-
 }
 \references{
 Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
@@ -178,7 +177,7 @@ Visualization with R}, Springer.
 
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
+Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
 \code{\link{mice}}, \code{\link{xyplot}}, \code{\link{stripplot}},

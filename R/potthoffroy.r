@@ -12,7 +12,7 @@
 #'the functions for boys and girls. The data have been reanalyzed by many
 #'authors including Jennrich and Schluchter (1986), Little and Rubin (1987),
 #'Pinheiro and Bates (2000), Verbeke and Molenberghs (2000) and Molenberghs and
-#'Kenward (2007). See Chapter 9 of Van Buuren (2012) for a challengeing
+#'Kenward (2007). See Chapter 9 of Van Buuren (2012) for a challenging
 #'exercise using these data.
 #'
 #'@name potthoffroy
@@ -33,8 +33,9 @@
 #'Little, R. J. A., Rubin, D. B. (1987).  \emph{Statistical Analysis with
 #'Missing Data.} New York: John Wiley & Sons.
 #'
-#'Van Buuren, S. (2012). \emph{Flexible Imputation of Missing Data.} Boca
-#'Raton, FL: Chapman \& Hall/CRC Press.
+#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/ex-ch-longitudinal.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'@keywords datasets
 #'@examples
 #'

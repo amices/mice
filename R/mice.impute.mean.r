@@ -12,13 +12,14 @@
 #'@references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 #'Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #'Statistical Software}, \bold{45}(3), 1-67.
-#'\url{http://www.jstatsoft.org/v45/i03/}
+#'\url{https://www.jstatsoft.org/v45/i03/}
 #'
 #'Little, R.J.A. and Rubin, D.B. (2002). Statistical Analysis with Missing
 #'Data.  New York: John Wiley and Sons.
 #'
-#'Van Buuren, S. (2012). Flexible Imputation of Missing Data. 
-#'CRC/Chapman & Hall, FL: Boca Raton.
+#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/sec-simplesolutions.html#sec:meanimp}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'@family univariate imputation functions
 #'@keywords datagen
 #'@export

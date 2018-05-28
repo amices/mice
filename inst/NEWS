@@ -11,6 +11,10 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+V3.0.0   24may2018 SvB
+         Major new version. 
+         See https://github.com/stefvanbuuren/mice for an overview
+
 V2.46.9  08dec2017 SvB
 UPDATE   simplify code for mids object in mice (thanks stephematician) (#61)
 

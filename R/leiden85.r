@@ -32,7 +32,8 @@
 #'missing blood pressure covariates in survival analysis.  \emph{Statistics in
 #'Medicine}, \bold{18}, 681--694.
 #'
-#'van Buuren, S. (2012). \emph{Flexible Imputation of Missing Data.} Boca
-#'Raton, FL: Chapman & Hall/CRC Press.
+#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/sec-toomany.html#sec:leiden85cohort}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'@keywords datasets
 NULL

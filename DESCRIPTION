@@ -1,8 +1,8 @@
 Package: mice
 Type: Package
-Version: 2.47.1
+Version: 3.0.0
 Title: Multivariate Imputation by Chained Equations
-Date: 2018-01-26
+Date: 2018-05-24
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -29,19 +29,24 @@ Depends:
     R (>= 2.10.0),
     lattice
 Imports:
+    broom,
+    dplyr,
     grDevices,
     graphics,
     MASS,
+    mitml,
     nnet,
+    Rcpp,
+    rlang,
     rpart,
     splines,
     stats,
     survival,
-    utils,
-    Rcpp
+    utils
 Suggests:
     AGD,
     CALIBERrfimpute,
+    DPpackage,
     gamlss,
     lme4,
     mitools,
@@ -53,8 +58,9 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    DPpackage,
-    dplyr,
+    HSAUR3,
+    micemd,
+    miceadds,
     tidyr
 LinkingTo: Rcpp
 Description: Multiple imputation using Fully Conditional Specification (FCS)

@@ -7,13 +7,10 @@
 \alias{mice}
 \title{\pkg{mice}: Multivariate Imputation by Chained Equations}
 \usage{
-mice(data, m = 5, method = vector("character", length = ncol(data)),
-  predictorMatrix = (1 - diag(1, ncol(data))), where = is.na(data),
-  visitSequence = NULL, form = vector("character", length = ncol(data)),
-  post = vector("character", length = ncol(data)), defaultMethod = c("pmm",
-  "logreg", "polyreg", "polr"), maxit = 5, diagnostics = TRUE,
-  printFlag = TRUE, seed = NA, imputationMethod = NULL,
-  defaultImputationMethod = NULL, data.init = NULL, ...)
+mice(data, m = 5, method = NULL, predictorMatrix, where = NULL, blocks,
+  visitSequence = NULL, formulas, blots = NULL, post = NULL,
+  defaultMethod = c("pmm", "logreg", "polyreg", "polr"), maxit = 5,
+  printFlag = TRUE, seed = NA, data.init = NULL, ...)
 }
 \arguments{
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing
@@ -22,23 +19,23 @@ values are coded as \code{NA}.}
 \item{m}{Number of multiple imputations. The default is \code{m=5}.}
 
 \item{method}{Can be either a single string, or a vector of strings with
-length \code{ncol(data)}, specifying the univariate imputation method to be
+length \code{length(blocks)}, specifying the imputation method to be
 used for each column in data. If specified as a single string, the same
-method will be used for all columns.  The default imputation method (when no
-argument is specified) depends on the measurement level of the target column
-and are specified by the \code{defaultMethod} argument.  Columns that need
-not be imputed have the empty method \code{''}.  See details for more
-information.}
+method will be used for all blocks. The default imputation method (when no
+argument is specified) depends on the measurement level of the target column,
+as regulated by the \code{defaultMethod} argument. Columns that need
+not be imputed have the empty method \code{""}. See details.}
 
-\item{predictorMatrix}{A square matrix of size \code{ncol(data)} containing
-0/1 data specifying the set of predictors to be used for each target column.
-Rows correspond to target variables (i.e. variables to be imputed), in the
-sequence as they appear in data. A value of '1' means that the column
-variable is used as a predictor for the target variable (in the rows). The
-diagonal of \code{predictorMatrix} must be zero. The default for
-\code{predictorMatrix} is that all other columns are used as predictors
-(sometimes called massive imputation). Note: For two-level imputation codes
-'2' and '-2' are also allowed.}
+\item{predictorMatrix}{A numeric matrix of \code{length(blocks)} rows 
+and \code{ncol(data)} columns, containing 0/1 data specifying 
+the set of predictors to be used for each target column.
+Each row corresponds to a variable block, i.e., a set of variables 
+to be imputed. A value of \code{1} means that the column
+variable is used as a predictor for the target block (in the rows). 
+By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
+rows and columns with all 1's, except for the diagonal. 
+Note: For two-level imputation models (which have \code{"2l"} in their names)
+other codes (e.g, \code{2} or \code{-2}) are also allowed.}
 
 \item{where}{A data frame or matrix with logicals of the same dimensions 
 as \code{data} indicating where in the data the imputations should be 
@@ -46,45 +43,59 @@ created. The default, \code{where = is.na(data)}, specifies that the
 missing data should be imputed. The \code{where} argument may be used to 
 overimpute observed data, or to skip imputations for selected missing values.}
 
-\item{visitSequence}{A vector of integers of arbitrary length, specifying the
-column indices of the visiting sequence. The visiting sequence is the column
-order that is used to impute the data during one pass through the data. A
-column may be visited more than once. All incomplete columns that are used as
-predictors should be visited, or else the function will stop with an error.
-The default sequence \code{1:ncol(data)} implies that columns are imputed
-from left to right. It is possible to specify one of the keywords
-\code{'roman'} (left to right), \code{'arabic'} (right to left),
-\code{'monotone'} (sorted in increasing amount of missingness) and
-\code{'revmonotone'} (reverse of monotone). The keyword should be supplied as
-a string and may be abbreviated.}
+\item{blocks}{List of vectors with variable names per block. List elements 
+may be named to identify blocks. Variables within a block are 
+imputed by a multivariate imputation method
+(see \code{method} argument). By default each variable is placed 
+into its own block, which is effectively
+fully conditional specification (FCS) by univariate models 
+(variable-by-variable imputation). Only variables whose names appear in 
+\code{blocks} are imputed. The relevant columns in the \code{where} 
+matrix are set to \code{FALSE} of variables that are not block members. 
+A variable may appear in multiple blocks. In that case, it is 
+effectively re-imputed each time that it is visited.}
 
-\item{form}{A vector of strings with length \code{ncol(data)}, specifying
-formulae. Each string is parsed and executed within the \code{sampler()}
-function to create terms for the predictor.  The default is to do nothing,
-indicated by a vector of empty strings \code{''}.  The main value
-lies in the easy specification of interaction terms.  The user must
-ensure that the set of variables in the formula match those in
-\code{predictors}.}
+\item{visitSequence}{A vector of block names of arbitrary length, specifying the
+sequence of blocks that are imputed during one iteration of the Gibbs 
+sampler. A block is a collection of variables. All variables that are 
+members of the same block are imputed 
+when the block is visited. A variable that is a member of multiple blocks 
+is re-imputed within the same iteration. 
+The default \code{visitSequence = "roman"} visits the blocks (left to right)
+in the order in which they appear in \code{blocks}. 
+One may also use one of the following keywords: \code{"arabic"} 
+(right to left), \code{"monotone"} (ordered low to high proportion 
+of missing data) and \code{"revmonotone"} (reverse of monotone).}
 
-\item{post}{A vector of strings with length \code{ncol(data)}, specifying
-expressions. Each string is parsed and executed within the \code{sampler()}
-function to postprocess imputed values.  The default is to do nothing,
-indicated by a vector of empty strings \code{''}.}
+\item{formulas}{A named list of formula's, or expressions that
+can be converted into formula's by \code{as.formula}. List elements
+correspond to blocks. The block to which the list element applies is 
+identified by its name, so list names must correspond to block names.
+The \code{formulas} argument is an alternative to the 
+\code{predictorMatrix} argument that allows for more flexibility in 
+specifying imputation models, e.g., for specifying interaction terms.}
 
-\item{defaultMethod}{A vector of three strings containing the default
-imputation methods for numerical columns, factor columns with 2 levels, and
-columns with (unordered or ordered) factors with more than two levels,
-respectively. If nothing is specified, the following defaults will be used:
+\item{blots}{A named \code{list} of \code{alist}'s that can be used 
+to pass down arguments to lower level imputation function. The entries
+of element \code{blots[[blockname]]} are passed down to the function
+called for block \code{blockname}.}
+
+\item{post}{A vector of strings with length \code{ncol(data)} specifying
+expressions as strings. Each string is parsed and 
+executed within the \code{sampler()} function to post-process 
+imputed values during the iterations. 
+The default is a vector of empty strings, indicating no post-processing.}
+
+\item{defaultMethod}{A vector of length 4 containing the default
+imputation methods for 1) numeric data, 2) factor data with 2 levels, 3) 
+factor data with > 2 unordered levels, and 4) factor data with > 2 
+ordered levels. By default, the method uses 
 \code{pmm}, predictive mean matching (numeric data) \code{logreg}, logistic
 regression imputation (binary data, factor with 2 levels) \code{polyreg},
-polytomous regression imputation for unordered categorical data (factor >= 2
-levels) \code{polr}, proportional odds model for (ordered, >= 2 levels)}
+polytomous regression imputation for unordered categorical data (factor > 2
+levels) \code{polr}, proportional odds model for (ordered, > 2 levels).}
 
 \item{maxit}{A scalar giving the number of iterations. The default is 5.}
-
-\item{diagnostics}{A Boolean flag. If \code{TRUE}, diagnostic information
-will be appended to the value of the function. If \code{FALSE}, only the
-imputed data are saved. The default is \code{TRUE}.}
 
 \item{printFlag}{If \code{TRUE}, \code{mice} will print history on console.
 Use \code{print=FALSE} for silent computation.}
@@ -93,18 +104,12 @@ Use \code{print=FALSE} for silent computation.}
 offsetting the random number generator. Default is to leave the random number
 generator alone.}
 
-\item{imputationMethod}{Same as \code{method} argument. Included for
-backwards compatibility.}
-
-\item{defaultImputationMethod}{Same as \code{defaultMethod} argument.
-Included for backwards compatibility.}
-
 \item{data.init}{A data frame of the same size and type as \code{data},
 without missing data, used to initialize imputations before the start of the
 iterative process.  The default \code{NULL} implies that starting imputation
 are created by a simple random draw from the data. Note that specification of
-\code{data.init} will start the \code{m} Gibbs sampling streams from the same
-imputations.}
+\code{data.init} will start all \code{m} Gibbs sampling streams from the same
+imputation.}
 
 \item{...}{Named arguments that are passed down to the univariate imputation
 functions.}
@@ -158,8 +163,7 @@ algorithm.
 The data may contain categorical variables that are used in a regressions on
 other variables. The algorithm creates dummy variables for the categories of
 these variables, and imputes these from the corresponding categorical
-variable. The extended model containing the dummy variables is called the
-padded model. Its structure is stored in the list component \code{pad}.
+variable.
 
 Built-in univariate imputation methods are:
 
@@ -181,9 +185,10 @@ Built-in univariate imputation methods are:
 \code{polr}         \tab ordered \tab Proportional odds model\cr
 \code{polyreg}      \tab unordered\tab Polytomous logistic regression\cr
 \code{lda}          \tab unordered\tab Linear discriminant analysis\cr
-\code{2l.norm}      \tab numeric  \tab Level-1 normal heteroskedastic\cr
+\code{2l.norm}      \tab numeric  \tab Level-1 normal heteroscedastic\cr
 \code{2l.lmer}      \tab numeric  \tab Level-1 normal homoscedastic, lmer\cr
 \code{2l.pan}       \tab numeric  \tab Level-1 normal homoscedastic, pan\cr
+\code{2l.bin}       \tab binary   \tab Level-1 logistic, glmer\cr
 \code{2lonly.mean}  \tab numeric  \tab Level-2 class mean\cr
 \code{2lonly.norm}  \tab numeric  \tab Level-2 class normal\cr
 \code{2lonly.pmm}   \tab any      \tab Level-2 class predictive mean matching
@@ -193,7 +198,7 @@ These corresponding functions are coded in the \code{mice} library under
 names \code{mice.impute.method}, where \code{method} is a string with the
 name of the univariate imputation method name, for example \code{norm}. The
 \code{method} argument specifies the methods to be used.  For the \code{j}'th
-column, \code{mice()} calls the first occurence of
+column, \code{mice()} calls the first occurrence of
 \code{paste('mice.impute.', method[j], sep = '')} in the search path.  The
 mechanism allows uses to write customized imputation function,
 \code{mice.impute.myfunc}. To call it for all columns specify
@@ -212,7 +217,7 @@ the same data. Passive imputation is invoked if \code{~} is specified as the
 first character of the string that specifies the univariate method.
 \code{mice()} interprets the entire string, including the \code{~} character,
 as the formula argument in a call to \code{model.frame(formula,
-data[!r[,j],])}. This provides a simple mechanism for specifying determinstic
+data[!r[,j],])}. This provides a simple mechanism for specifying deterministic
 dependencies among the columns. For example, suppose that the missing entries
 in variables \code{data$height} and \code{data$weight} are imputed. The body
 mass index (BMI) can be calculated within \code{mice} by specifying the
@@ -230,6 +235,26 @@ to specify \code{visitSequence} such that the column that is imputed by the
 \code{~} mechanism is visited each time after one of its predictors was
 visited. In that way, deterministic relation between columns will always be
 synchronized.
+
+#'A new argument \code{ls.meth} can be parsed to the lower level 
+\code{.norm.draw} to specify the method for generating the least squares 
+estimates and any subsequently derived estimates. Argument \code{ls.meth} 
+takes one of three inputs: \code{"qr"} for QR-decomposition, \code{"svd"} for 
+singular value decomposition and \code{"ridge"} for ridge regression. 
+\code{ls.meth} defaults to \code{ls.meth = "qr"}.
+
+\emph{Auxiliary predictors in formulas specification: }
+For a given block, the \code{formulas} specification takes precedence over 
+the corresponding row in the \code{predictMatrix} argument. This 
+precedence is, however, restricted to the subset of variables
+specified in the terms of the block formula. Any 
+variables not specified by \code{formulas} are imputed
+according to the \code{predictMatrix} specification. Variables with 
+non-zero \code{type} values in the \code{predictMatrix} will 
+be added as main effects to the \code{formulas}, which will 
+act as supplementary covariates in the imputation model. It is possible
+to turn off this behavior by specifying the 
+argument \code{auxiliary = FALSE}.
 }
 \section{Functions}{
 
@@ -260,8 +285,11 @@ We suggest going through these vignettes in the following order
 \item \href{https://gerkovink.github.io/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html}{Sensitivity analysis with \pkg{mice}}
 }
 
-The book \emph{Flexible Imputation of Missing Data} contains a lot 
-of \href{http://www.stefvanbuuren.nl/mi/FIMD.html}{example code}.
+#'Van Buuren, S. (2018). 
+Boca Raton, FL.: Chapman & Hall/CRC Press.
+The book 
+\href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+contains a lot of \href{http://www.stefvanbuuren.nl/mi/FIMD.html}{example code}.
 }
 
 \section{Methodology}{
@@ -270,7 +298,9 @@ of \href{http://www.stefvanbuuren.nl/mi/FIMD.html}{example code}.
 The \pkg{mice} software was published in the \href{https://www.jstatsoft.org/article/view/v045i03}{Journal of Statistical Software} (Van Buuren and Groothuis-Oudshoorn, 2011). 
 The first application of the method 
 concerned missing blood pressure data (Van Buuren et. al., 1999). 
-The term \emph{Fully Conditional Specification} was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Van Buuren et. al., 2006). Further details on mixes of variables and applications can be found in the book \href{https://www.crcpress.com/Flexible-Imputation-of-Missing-Data/van-Buuren/p/book/9781439868249}{\emph{Flexible Imputation of Missing Data}}.
+The term \emph{Fully Conditional Specification} was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Van Buuren et. al., 2006). Further details on mixes of variables and applications can be found in the book 
+\href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 }
 
 \examples{
@@ -301,19 +331,22 @@ van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
 Fully conditional specification in multivariate imputation.  \emph{Journal of
 Statistical Computation and Simulation}, \bold{76}, 12, 1049--1064.
 
-van Buuren, S., Groothuis-Oudshoorn, K. (2011). \href{http://www.jstatsoft.org/v45/i03/}{\code{mice}:
+van Buuren, S., Groothuis-Oudshoorn, K. (2011). \href{https://www.jstatsoft.org/v45/i03/}{\code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}}. \emph{Journal of
 Statistical Software}, \bold{45}(3), 1--67.
 
-van Buuren, S. (2012). \href{https://www.crcpress.com/Flexible-Imputation-of-Missing-Data/van-Buuren/p/book/9781439868249}{\emph{Flexible Imputation of Missing Data}}. Chapman & Hall/CRC.
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 Statistical Software}, \bold{45}(3), 1-67.
-\url{http://www.jstatsoft.org/v45/i03/}
+\url{https://www.jstatsoft.org/v45/i03/}
 
-van Buuren, S. (2012). \emph{Flexible Imputation of Missing Data.} Boca
-Raton, FL: Chapman & Hall/CRC Press.
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 
 Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
 Fully conditional specification in multivariate imputation.  \emph{Journal of

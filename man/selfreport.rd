@@ -39,8 +39,9 @@ Convenant Gezond Gewicht Beweeg- en eetgedrag van kinderen (4-11 jaar),
 jongeren (12-17 jaar) en volwassenen (18+ jaar) in 2010 en 2011.} TNO/LS
 2011.055. Leiden: TNO. (in Dutch)
 
-van Buuren, S. (2012). \emph{Flexible Imputation of Missing Data.} Boca
-Raton, FL: Chapman & Hall/CRC Press.
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-prevalence.html#sec:srcdata}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 }
 \description{
 Dataset containing height and weight data (measured, self-reported) from two

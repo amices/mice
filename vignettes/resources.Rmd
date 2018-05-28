@@ -9,6 +9,10 @@ vignette: >
 
 Selected online resources related to the `mice` package. There is also a more elaborate [overview](http://stefvanbuuren.github.io/mice/).
 
+## Books
+
+1. Van Buuren, S. (2018). [Flexible Imputation of Missing Data. Second Edition.](https://stefvanbuuren.name/fimd/). Chapman & Hall/CRC. Boca Raton, FL.
+
 ## Course materials
 
 1. [Handling Missing Data in `R` with `mice`](https://stefvanbuuren.github.io/Winnipeg/)
@@ -22,11 +26,11 @@ Selected online resources related to the `mice` package. There is also a more el
 4. [Passive imputation and post-processing](https://gerkovink.github.io/miceVignettes/Passive_Post_processing/Passive_imputation_post_processing.html)
 5. [Imputing multilevel data](https://gerkovink.github.io/miceVignettes/Multi_level/Multi_level_data.html)
 6. [Sensitivity analysis with `mice`](https://gerkovink.github.io/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html)
-7. [Generate missing values with `ampute`](https://stefvanbuuren.github.io/mice/ampute.html)
+7. [Generate missing values with `ampute`](https://rianneschouten.github.io/mice_ampute/vignette/ampute.html)
 
 ## Code from publications
 
-1. [Flexible Imputation of Missing Data](http://stefvanbuuren.github.io/mice/FIMD.html)
+1. [Flexible Imputation of Missing Data. First edition.](http://stefvanbuuren.github.io/mice/FIMD.html)
 2. [mice: Multivariate Imputation by Chained Equations in R](http://stefvanbuuren.github.io/mice/JSS.html)
 
 ## Source code 

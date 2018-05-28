@@ -7,7 +7,7 @@
 fluxplot(data, local = names(data), plot = TRUE, labels = TRUE,
   xlim = c(0, 1), ylim = c(0, 1), las = 1, xlab = "Influx",
   ylab = "Outflux", main = paste("Influx-outflux pattern for",
-  deparse(substitute(data))), eqscplot = TRUE, pty = "s", ...)
+  deparse(substitute(data))), eqscplot = TRUE, pty = "s", lwd = 1, ...)
 }
 \arguments{
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing
@@ -36,6 +36,8 @@ include all columns in the calculations.}
 
 \item{pty}{See \code{par}.}
 
+\item{lwd}{See \code{par}. Controls axis line thickness and diagonal}
+
 \item{\dots}{Further arguments passed to \code{plot()} or \code{eqscplot()}.}
 }
 \value{
@@ -44,7 +46,7 @@ pobs = Proportion observed,
 influx = Influx
 outflux = Outflux
 ainb = Average inbound statistic
-aout = Averege outbound statistic
+aout = Average outbound statistic
 fico = Fraction of incomplete cases among cases with \code{Yj} observed
 }
 \description{
@@ -59,7 +61,7 @@ Influx is equal to the number of variable pairs \code{(Yj , Yk)} with
 \code{Yj} missing and \code{Yk} observed, divided by the total number of
 observed data cells. Influx depends on the proportion of missing data of the
 variable. Influx of a completely observed variable is equal to 0, whereas for
-completely missing variables wehave influx = 1. For two variables with the
+completely missing variables we have influx = 1. For two variables with the
 same proportion of missing data, the variable with higher influx is better
 connected to the observed data, and might thus be easier to impute.
 
@@ -74,8 +76,9 @@ is better connected to the missing data, and thus potentially more useful for
 imputing other variables.
 }
 \references{
-van Buuren, S. (2012). \emph{Flexible Imputation of Missing
-Data.} Boca Raton, FL: Chapman & Hall/CRC Press.
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 
 White, I.R., Carlin, J.B. (2010). Bias and efficiency of multiple imputation
 compared with complete-case analysis for missing covariate values.

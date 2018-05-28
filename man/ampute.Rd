@@ -5,7 +5,7 @@
 \title{Generate Missing Data for Simulation Purposes}
 \usage{
 ampute(data, prop = 0.5, patterns = NULL, freq = NULL, mech = "MAR",
-  weights = NULL, cont = TRUE, type = NULL, odds = NULL,
+  weights = NULL, std = TRUE, cont = TRUE, type = NULL, odds = NULL,
   bycases = TRUE, run = TRUE)
 }
 \arguments{
@@ -46,6 +46,10 @@ returns a matrix with equal weights for all variables. In case of MAR, variables
 that will be amputed will be weighted with \code{0}. If it is MNAR, variables 
 that will be observed will be weighted with \code{0}. If mechanism is MCAR, the 
 weights matrix will not be used.}
+
+\item{std}{Logical. Whether the weighted sum scores should be calculated with 
+standardized data or with non-standardized data. The latter is advised when 
+making use of train and testsets in order to prevent leakage.}
 
 \item{cont}{Logical. Whether the probabilities should be based on a continuous 
 or discrete distribution. If TRUE, the probabilities of being missing are based 
@@ -187,10 +191,10 @@ odds <- result1$odds
 odds[2,3:4] <- c(2, 4)
 odds[3,] <- c(3, 1, NA, NA)
 # Rerun amputation
-result3 <- ampute(data = complete.data, patterns = patterns, freq = 
+result2 <- ampute(data = complete.data, patterns = patterns, freq = 
 c(0.3, 0.3, 0.4), cont = FALSE, odds = odds)
 # Run an amputation procedure with continuous probabilities
-result4 <- ampute(data = complete.data, type = c("RIGHT", "TAIL", "LEFT"))
+result3 <- ampute(data = complete.data, type = c("RIGHT", "TAIL", "LEFT"))
 
 }
 \references{
@@ -202,7 +206,8 @@ Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn, C.G.M., Rubin, D.B. (2006).
 Fully conditional specification in multivariate imputation. \emph{Journal of 
 Statistical Computation and Simulation}, 76\emph{(12)}, Appendix B.
 
-Van Buuren, S. (2012). \emph{Flexible imputation of missing data.} 
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Boca Raton, FL.: Chapman & Hall/CRC Press.
 
 Vink, G. (2016). Towards a standardized evaluation of multiple imputation 

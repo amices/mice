@@ -11,11 +11,11 @@ quickpred(data, mincor = 0.1, minpuc = 0, include = "", exclude = "",
 \item{data}{Matrix or data frame with incomplete data.}
 
 \item{mincor}{A scalar, numeric vector (of size \code{ncol(data))} or numeric
-matrix (square, of size \code{ncol(data)} specifiying the minimum
+matrix (square, of size \code{ncol(data)} specifying the minimum
 threshold(s) against which the absolute correlation in the data is compared.}
 
 \item{minpuc}{A scalar, vector (of size \code{ncol(data))} or matrix (square,
-of size \code{ncol(data)} specifiying the minimum threshold(s) for the
+of size \code{ncol(data)} specifying the minimum threshold(s) for the
 proportion of usable cases.}
 
 \item{include}{A string or a vector of strings containing one or more
@@ -64,7 +64,7 @@ Advanced topic: \code{mincor} and \code{minpuc} are typically specified as
 scalars, but vectors and squares matrices of appropriate size will also work.
 Each element of the vector corresponds to a row of the predictor matrix, so
 the procedure can effectively differentiate between different target
-variables. Setting a high values for can be useful for auxilary, less
+variables. Setting a high values for can be useful for auxiliary, less
 important, variables. The set of predictor for those variables can remain
 relatively small. Using a square matrix extends the idea to the columns, so
 that one can also apply cellwise thresholds.
@@ -99,7 +99,7 @@ imputation of missing blood pressure covariates in survival analysis.
 
 van Buuren, S. and Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \url{http://www.jstatsoft.org/v45/i03/}
+Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
 \code{\link{mice}}, \code{\link[=mids-class]{mids}}

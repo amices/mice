@@ -23,8 +23,10 @@
 #'first pattern, the second vector to the second pattern, etcetera.  
 #'@author Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
 #'@seealso \code{\link{ampute}}, \code{\link{ampute.default.type}}
-#'@references Van Buuren, S. (2012). \emph{Flexible imputation of missing data.} 
-#'Boca Raton, FL.: Chapman & Hall/CRC Press.
+#'@references 
+#'#'Van Buuren, S. (2018). 
+#'\href{https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'@keywords internal
 #'@export
 ampute.continuous <- function(P, scores, prop, type) {
@@ -93,23 +95,22 @@ ampute.continuous <- function(P, scores, prop, type) {
     retval <- list(call = match.call(), numiter = counter)
     if (outside.range) {
       if (target * sign < val.lo * sign) {
-        warning("Reached lower boundary")
+        warning("The desired proportion of ", target, " is too small; ", val.lo, " is used instead.")
         retval$flag = "Lower Boundary"
         retval$where = lo
         retval$value = val.lo
       }
       else {
-        warning("Reached upper boundary")
+        warning("The desired proportion of ", target, " is too large; ", val.hi, " is used instead.")
         retval$flag = "Upper Boundary"
         retval$where = hi
         retval$value = val.hi
       }
     }
     else if (counter >= maxiter) {
-      warning("Maximum number of iterations reached")
       retval$flag = "Maximum number of iterations reached"
-      retval$where = c(lo, hi)
-      retval$value = c(val.lo, val.hi)
+      retval$where = (lo + hi) / 2
+      retval$value = (val.lo + val.hi) / 2
     }
     else if (val.lo == target) {
       retval$flag = "Found"
@@ -123,8 +124,8 @@ ampute.continuous <- function(P, scores, prop, type) {
     }
     else {
       retval$flag = "Between Elements"
-      retval$where = c(lo, hi)
-      retval$value = c(val.lo, val.hi)
+      retval$where = (lo + hi) / 2
+      retval$value = (val.lo + val.hi) / 2
     }
     return(retval)
   }
@@ -143,8 +144,6 @@ ampute.continuous <- function(P, scores, prop, type) {
     type <- rep.int(type, length(scores))
   }
   for (i in seq_along(scores)) {
-    # The weighted sum scores of a certain pattern are scaled
-    scores.temp <- as.vector(scale(scores[[i]]))
     # The desired function is chosen
     formula <- switch(type[i],
                       LEFT = function(x, b) logit(mean(x) - x + b),
@@ -157,20 +156,22 @@ ampute.continuous <- function(P, scores, prop, type) {
     if (length(shift) > 1) {
       shift <- shift[1]
     }
-    # If there are no candidates for a certain pattern, the list will receive a 0
-    if (is.na(scores.temp[[1]])) {
-      R[[i]] <- 0
+    scores.temp <- scores[[i]]
+    if (length(scores.temp) == 1 && scores.temp == 0) {
+        R[[i]] <- 0
     } else {
-      # Otherwise, every candidate will receive a certain probability to be made
-      # missing, based on his weighted sum score and the probability function
       if (length(scores.temp) == 1) {
-        probs <- 0.5 + shift
+        probs <- prop
+      } else if (length(unique(scores.temp)) == 1) {
+        probs <- prop
       } else {
         probs <- formula(x = scores.temp, b = shift)
       }
+      
       # Based on the probabilities, each candidate will receive a missing data 
       # indicator 0, meaning he will be made missing or missing data indicator 1, 
       # meaning the candidate will remain complete.
+      
       R.temp <- 1 - rbinom(n = length(scores.temp), size = 1, prob = probs)
       R[[i]] <- replace(P, P == (i + 1), R.temp)
       R[[i]] <- replace(R[[i]], P != (i + 1), 1)

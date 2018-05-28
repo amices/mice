@@ -3,7 +3,7 @@
 #'Applies \code{lm()} to multiply imputed data set
 #'
 #'This function is included for backward compatibility with V1.0. The function
-#'is superseeded by \code{\link{with.mids}}.
+#'is superseded by \code{\link{with.mids}}.
 #'
 #'@param formula a formula object, with the response on the left of a ~
 #'operator, and the terms, separated by + operators, on the right. See the
@@ -19,7 +19,7 @@
 #'@references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 #'Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #'Statistical Software}, \bold{45}(3), 1-67.
-#'\url{http://www.jstatsoft.org/v45/i03/}
+#'\url{https://www.jstatsoft.org/v45/i03/}
 #'@keywords multivariate
 #'@examples
 #'
@@ -51,7 +51,7 @@ lm.mids <- function(formula, data, ...) {
 #'Applies \code{glm()} to a multiply imputed data set
 #'
 #'This function is included for backward compatibility with V1.0. The function
-#'is superseeded by \code{\link{with.mids}}.
+#'is superseded by \code{\link{with.mids}}.
 #'
 #'@param formula a formula expression as for other regression models, of the
 #'form response ~ predictors. See the documentation of \code{\link{lm}} and

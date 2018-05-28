@@ -35,7 +35,7 @@ Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
-Imputes univariate missing data using linear regression with boostrap
+Imputes univariate missing data using linear regression with bootstrap
 }
 \details{
 Draws a bootstrap sample from \code{x[ry,]} and \code{y[ry]}, calculates
@@ -47,7 +47,7 @@ variance-covariance matrix \code{xtx}.
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 Statistical Software}, \bold{45}(3), 1-67.
-\url{http://www.jstatsoft.org/v45/i03/}
+\url{https://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
 Other univariate imputation functions: \code{\link{mice.impute.cart}},

@@ -27,8 +27,9 @@ Hirasing, R. A., \& van Buuren, S. (2013). The world's tallest nation has
 stopped growing taller: the height of Dutch children from 1955 to 2009. 
 \emph{Pediatric Research}, \emph{73}(3), 371-377.
 
-van Buuren, S. (2012). \emph{Flexible Imputation of Missing Data.} Boca
-Raton, FL: Chapman & Hall/CRC Press.
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-nonresponse.html#fifth-dutch-growth-study}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Boca Raton, FL.: Chapman & Hall/CRC Press.
 }
 \description{
 Age, height, weight and region of 10030 children measured within the Fifth

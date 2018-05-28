@@ -36,8 +36,9 @@ weighted sum scores, calculated earlier in the multivariate amputation function
 \code{\link{ampute}}.
 }
 \references{
-Van Buuren, S. (2012). \emph{Flexible imputation of missing data.} 
-Boca Raton, FL.: Chapman & Hall/CRC Press.
+#'Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
 \code{\link{ampute}}, \code{\link{ampute.default.type}}

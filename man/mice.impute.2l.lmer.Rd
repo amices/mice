@@ -39,7 +39,7 @@ Imputes univariate systematically and sporadically missing data using a two-leve
 }
 \details{
 Data are missing systematically if they have not been measured, e.g., in the 
-case where we combine data from different souces. Data are missing sporadically
+case where we combine data from different sources. Data are missing sporadically
 if they have been partially observed.
 
 While the method is fully Bayesian, it may fix parameters of the 

@@ -37,10 +37,10 @@ fit objects from each of the \code{m} complete data analyses.}
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 Statistical Software}, \bold{45}(3), 1-67.
-\url{http://www.jstatsoft.org/v45/i03/}
+\url{https://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-\code{\link{with.mids}}, \code{\link[=mids-class]{mids}}, \code{\link[=mipo-class]{mipo}}
+\code{\link{with.mids}}, \code{\link[=mids-class]{mids}}, \code{\link{mipo}}
 }
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn, 2000

@@ -4,17 +4,13 @@
 \alias{mice.mids}
 \title{Multivariate Imputation by Chained Equations (Iteration Step)}
 \usage{
-mice.mids(obj, maxit = 1, diagnostics = TRUE, printFlag = TRUE, ...)
+mice.mids(obj, maxit = 1, printFlag = TRUE, ...)
 }
 \arguments{
 \item{obj}{An object of class \code{mids}, typically produces by a previous
 call to \code{mice()} or \code{mice.mids()}}
 
 \item{maxit}{The number of additional Gibbs sampling iterations.}
-
-\item{diagnostics}{A Boolean flag. If \code{TRUE}, diagnostic information
-will be appended to the value of the function. If \code{FALSE}, only the
-imputed data are saved.  The default is \code{TRUE}.}
 
 \item{printFlag}{A Boolean flag. If \code{TRUE}, diagnostic information
 during the Gibbs sampling iterations will be written to the command window.
@@ -54,7 +50,7 @@ identical(imp$imp, imp2$imp)
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 Statistical Software}, \bold{45}(3), 1-67.
-\url{http://www.jstatsoft.org/v45/i03/}
+\url{https://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
 \code{\link{complete}}, \code{\link{mice}}, \code{\link{set.seed}}, 

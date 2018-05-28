@@ -2,12 +2,11 @@ context("as.mids")
 
 nhanes3 <- nhanes
 rownames(nhanes3) <- LETTERS[1:nrow(nhanes3)]
-imp <- mice(nhanes3, m = 2, print = FALSE)
+imp <- mice(nhanes3, m = 2, maxit = 1, print = FALSE)
 
 X <- complete(imp, action = "long", include = TRUE)
 # create dataset with .imp variable as numeric
 X2 <- X
-X2$.imp <- as.numeric(levels(X$.imp))[X$.imp]
 
 # nhanes example
 test1 <- as.mids(X)
@@ -55,3 +54,12 @@ test_that("complete() reproduces the original data", {
   expect_true(all(complete(test6, action = "long", include = TRUE)[,-(1:2)] == X[, rev][, -(5:6)], na.rm = TRUE))
 })
 
+# works with dplyr
+
+library(dplyr)
+X3 <- X %>%
+  group_by(hyp) %>%
+  mutate(chlm = mean(chl, na.rm = TRUE))
+test_that("handles grouped_df", {
+  expect_silent(as.mids(X3))
+})

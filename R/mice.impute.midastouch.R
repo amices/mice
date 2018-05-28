@@ -59,7 +59,7 @@
 #' Statistics, 6, 287--301.
 #' 
 #' Parzen, M., Lipsitz, S. R., Fitzmaurice, G. M. (2005), A note on reducing 
-#' the bias of the approximate bayesian bootstrap imputation variance estimator. 
+#' the bias of the approximate Bayesian bootstrap imputation variance estimator. 
 #' Biometrika \bold{92}, 4, 971--974.
 #' 
 #' Rubin, D.B. (1987), Multiple imputation for nonresponse in surveys. New York: Wiley.
@@ -75,7 +75,7 @@
 #' 
 #' Van Buuren, S., Groothuis-Oudshoorn, K. (2011), \code{mice}: Multivariate 
 #' Imputation by Chained Equations in \code{R}. \emph{Journal of 
-#' Statistical Software}, \bold{45}, 3, 1--67. \url{http://www.jstatsoft.org/v45/i03/}
+#' Statistical Software}, \bold{45}, 3, 1--67. \url{https://www.jstatsoft.org/v45/i03/}
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
