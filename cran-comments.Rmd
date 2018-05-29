@@ -15,7 +15,7 @@ build_vignettes()
 build()
 ```
 
-`"/Users/buurensv/Package/mice/mice_3.0.0.tar.gz"`
+`"/Users/buurensv/Package/mice/mice_3.0.2.tar.gz"`
 
 ## Test environments
 
@@ -28,7 +28,7 @@ There was no ERROR, WARNING or NOTE.
 
 local checks of tarball fails:
 
-`$ R CMD CHECK mice_3.0.0.tar.gz`
+`$ R CMD CHECK mice_3.0.2.tar.gz`
 
 yields: 
 `Error: package ‘Rcpp’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version
@@ -55,30 +55,24 @@ revdep_check_save_summary()
 revdep_check_print_problems()
 ```
 
-There were 48 reverse dependencies.
+There were 47 reverse dependencies.
 
 Packages with problems + actions
 
 |package         |version  | errors| warnings| notes| My actions
 |:---------------|:--------|------:|--------:|-----:|:---------------------------------
-|brms            |2.3.0    |      1|        0|     2| no error in brms 2.3.1 (SOLVED)
 |CALIBERrfimpute |0.1-6    |      0|        1|     1| showtable() in simstudy_survival defunct - author noted
-|codebook        |0.5.8    |      1|        0|     1| solved by change in md.pattern()
-|dlookr          |0.3.0    |      1|        0|     0| author noted, not related to mice (SOLVED)
 |dynr            |0.1.12-5 |      1|        0|     0| author noted, needs additional local installs, not further checked
-|HardyWeinberg   |1.5.9    |      0|        1|     0| asked author whether error could be correct
+|HardyWeinberg   |1.5.9    |      0|        1|     0| author will investigate
 |Hmisc           |4.1-1    |      1|        0|     0| installed by hand
-|hot.deck        |1.1      |      0|        1|     0| warning unrelated to mice
-|HSAUR3          |1.0-8    |      0|        1|     0| solved by reverting print.mira, broom naming, author noted 
 |JointAI         |0.1.0    |      1|        0|     0| depends on external JAGS, not further checked
 |logistf         |1.22     |      1|        0|     1| pooling code not compatible - author noted
-|miceadds        |2.11-80  |      1|        0|     0| https://github.com/alexanderrobitzsch/miceadds/issues/6, will be solved in next release
+|miceadds        |2.11-87  |      1|        0|     0| several breaking changes, author working on update
 |miceFast        |0.2.3    |      1|        0|     0| C compilation errors
 |miceMNAR        |1.0      |      1|        0|     0| incompatible mice.impute.hecknorm(), author noted
 |MissingDataGUI  |0.2-5    |      1|        0|     0| 'gWidgetsRGtk2', 'cairoDevice' not available
 |Qtools          |1.3      |      1|        0|     0| fortran compilation errors, author noted
 |rattle          |5.1.0    |      1|        0|     0| 'cairoDevice' not available
-|sjmisc          |2.7.2    |      1|        0|     0| no errors found in sjmisc 2.7.2 (SOLVED)
-|weightTAPSPACK  |0.1      |      1|        0|     0| compilation error in Rglpk
+|weightTAPSPACK  |0.1      |      1|        0|     0| package "HotDeckImputation" not available
 
 See https://github.com/stefvanbuuren/mice/blob/master/revdep/problems.md
