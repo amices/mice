@@ -10,7 +10,7 @@
 |language |(EN)                         |
 |collate  |nl_NL.UTF-8                  |
 |tz       |Europe/Amsterdam             |
-|date     |2018-05-23                   |
+|date     |2018-05-28                   |
 
 ## Packages
 
@@ -21,11 +21,12 @@
 |BSDA            |   |1.2.0   |2017-07-30 |cran (@1.2.0)   |
 |CALIBERrfimpute |   |0.1-6   |2014-05-07 |cran (@0.1-6)   |
 |dplyr           |   |0.7.5   |2018-05-19 |cran (@0.7.5)   |
+|DPpackage       |   |1.1-7.4 |2018-01-06 |cran (@1.1-7.4) |
 |gamlss          |   |5.0-8   |2018-04-30 |cran (@5.0-8)   |
 |HSAUR3          |   |1.0-8   |2017-08-18 |cran (@1.0-8)   |
 |knitr           |   |1.20    |2018-02-20 |cran (@1.20)    |
 |lme4            |   |1.1-17  |2018-04-03 |cran (@1.1-17)  |
-|mice            |   |2.46.0  |2017-10-24 |cran (@2.46.0)  |
+|mice            |   |3.0.0   |2018-05-25 |cran (@3.0.0)   |
 |miceadds        |   |2.11-87 |2018-05-21 |cran (@2.11-87) |
 |micemd          |   |1.2.0   |2018-01-07 |cran (@1.2.0)   |
 |mitml           |   |0.3-5   |2017-03-15 |cran (@0.3-5)   |
@@ -41,16 +42,14 @@
 
 # Check results
 
-15 packages with problems
+13 packages with problems
 
 |package         |version  | errors| warnings| notes|
 |:---------------|:--------|------:|--------:|-----:|
 |CALIBERrfimpute |0.1-6    |      0|        1|     1|
-|codebook        |0.5.9    |      1|        0|     1|
 |dynr            |0.1.12-5 |      1|        0|     0|
 |HardyWeinberg   |1.5.9    |      0|        1|     0|
 |Hmisc           |4.1-1    |      1|        0|     0|
-|HSAUR3          |1.0-8    |      0|        1|     0|
 |JointAI         |0.1.0    |      1|        0|     0|
 |logistf         |1.22     |      1|        0|     1|
 |miceadds        |2.11-87  |      1|        0|     0|
@@ -110,35 +109,6 @@ Consider adding
 to your NAMESPACE file.
 ```
 
-## codebook (0.5.9)
-Maintainer: Ruben Arslan <ruben.arslan@gmail.com>  
-Bug reports: https://github.com/rubenarslan/codebook/issues
-
-1 error  | 0 warnings | 1 note 
-
-```
-checking examples ... ERROR
-Running examples in ‘codebook-Ex.R’ failed
-The error most likely occurred in:
-
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-> ### Name: codebook_missingness
-> ### Title: Codebook missingness
-> ### Aliases: codebook_missingness
-> 
-> ### ** Examples
-> 
-> data("bfi")
-> codebook_missingness(bfi)
-Error in `rownames<-`(`*tmp*`, value = table(pat)) : 
-  attempt to set 'rownames' on an object with no dimensions
-Calls: codebook_missingness -> md_pattern -> <Anonymous> -> rownames<-
-Execution halted
-
-checking Rd cross-references ... NOTE
-Package unavailable to check Rd xrefs: ‘labelled’
-```
-
 ## dynr (0.1.12-5)
 Maintainer: Michael D. Hunter <mhunter.ou@gmail.com>
 
@@ -186,36 +156,6 @@ Maintainer: Frank E Harrell Jr <f.harrell@vanderbilt.edu>
 checking whether package ‘Hmisc’ can be installed ... ERROR
 Installation failed.
 See ‘/Users/buurensv/Package/mice/mice/revdep/checks/Hmisc.Rcheck/00install.out’ for details.
-```
-
-## HSAUR3 (1.0-8)
-Maintainer: Torsten Hothorn <Torsten.Hothorn@R-project.org>
-
-0 errors | 1 warning  | 0 notes
-
-```
-checking re-building of vignette outputs ... WARNING
-Error in re-building vignettes:
-  ...
-    geyser
-
-The following object is masked from 'package:HSAUR3':
-
-    birds
-
-Waiting for profiling to be done...
-... 8 lines ...
-
-The following objects are masked from 'package:base':
-
-    cbind, rbind
-
-
-Error: processing vignette 'Ch_missing_values.Rnw' failed with diagnostics:
- chunk 22 (label = MV-bp-lm-mice) 
-Error in `[.data.frame`(summary(pool(fit)), , c("est", "se", "t", "Pr(>|t|)")) : 
-  undefined columns selected
-Execution halted
 ```
 
 ## JointAI (0.1.0)
