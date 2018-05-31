@@ -59,7 +59,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.6</span>
       </span>
     </div>
 
@@ -73,6 +73,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -194,7 +197,8 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>require</span>(<span class='no'>rpart</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: rpart</span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>require</span>(<span class='no'>rpart</span>)
+
 <span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'>mice</span>(<span class='no'>nhanes2</span>, <span class='kw'>meth</span> <span class='kw'>=</span> <span class='st'>'cart'</span>, <span class='kw'>minbucket</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl

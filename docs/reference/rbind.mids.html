@@ -61,7 +61,7 @@ factor or dataframe rowwise into a mids object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.6</span>
       </span>
     </div>
 
@@ -75,6 +75,9 @@ factor or dataframe rowwise into a mids object." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -183,8 +186,8 @@ Statistical Software</em>, <b>45</b>(3), 1-67.
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>imp1</span> <span class='kw'>&lt;-</span> <span class='fu'>mice</span>(<span class='no'>nhanes</span>[<span class='fl'>1</span>:<span class='fl'>13</span>, ], <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Number of logged events: 1</span></div><div class='input'><span class='no'>imp5</span> <span class='kw'>&lt;-</span> <span class='fu'>mice</span>(<span class='no'>nhanes</span>[<span class='fl'>1</span>:<span class='fl'>13</span>, ], <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Number of logged events: 1</span></div><div class='input'><span class='no'>mylist</span> <span class='kw'>&lt;-</span> <span class='fu'>list</span>(<span class='kw'>age</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>bmi</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>hyp</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>chl</span> <span class='kw'>=</span> <span class='fl'>NA</span>)
 
-<span class='fu'>nrow</span>(<span class='fu'><a href='complete.html'>complete</a></span>(<span class='fu'><a href='cbind.html'>rbind</a></span>(<span class='no'>imp1</span>, <span class='no'>imp5</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: iterations differ, so no convergence diagnostics calculated</span></div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("complete_"): no applicable method for 'complete_' applied to an object of class "mids"</span></div><div class='input'><span class='fu'>nrow</span>(<span class='fu'><a href='complete.html'>complete</a></span>(<span class='fu'><a href='cbind.html'>rbind</a></span>(<span class='no'>imp1</span>, <span class='no'>mylist</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("complete_"): no applicable method for 'complete_' applied to an object of class "mids"</span></div><div class='input'>
-<span class='fu'>nrow</span>(<span class='fu'><a href='complete.html'>complete</a></span>(<span class='fu'><a href='cbind.html'>rbind</a></span>(<span class='no'>imp1</span>, <span class='fu'>data.frame</span>(<span class='no'>mylist</span>))))</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("complete_"): no applicable method for 'complete_' applied to an object of class "mids"</span></div><div class='input'><span class='fu'>nrow</span>(<span class='fu'><a href='complete.html'>complete</a></span>(<span class='fu'><a href='cbind.html'>rbind</a></span>(<span class='no'>imp1</span>, <span class='fu'><a href='complete.html'>complete</a></span>(<span class='no'>imp5</span>))))</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("complete_"): no applicable method for 'complete_' applied to an object of class "mids"</span></div></pre>
+<span class='fu'>nrow</span>(<span class='fu'><a href='complete.html'>complete</a></span>(<span class='fu'><a href='cbind.html'>rbind</a></span>(<span class='no'>imp1</span>, <span class='no'>imp5</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: iterations differ, so no convergence diagnostics calculated</span></div><div class='output co'>#&gt; [1] 26</div><div class='input'><span class='fu'>nrow</span>(<span class='fu'><a href='complete.html'>complete</a></span>(<span class='fu'><a href='cbind.html'>rbind</a></span>(<span class='no'>imp1</span>, <span class='no'>mylist</span>)))</div><div class='output co'>#&gt; [1] 14</div><div class='input'>
+<span class='fu'>nrow</span>(<span class='fu'><a href='complete.html'>complete</a></span>(<span class='fu'><a href='cbind.html'>rbind</a></span>(<span class='no'>imp1</span>, <span class='fu'>data.frame</span>(<span class='no'>mylist</span>))))</div><div class='output co'>#&gt; [1] 14</div><div class='input'><span class='fu'>nrow</span>(<span class='fu'><a href='complete.html'>complete</a></span>(<span class='fu'><a href='cbind.html'>rbind</a></span>(<span class='no'>imp1</span>, <span class='fu'><a href='complete.html'>complete</a></span>(<span class='no'>imp5</span>))))</div><div class='output co'>#&gt; [1] 26</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

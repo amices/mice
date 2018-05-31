@@ -59,7 +59,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.6</span>
       </span>
     </div>
 
@@ -73,6 +73,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -197,35 +200,36 @@ Surveys.  New York: John Wiley and Sons.</p>
 <span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='no'>m</span>) {
    <span class='no'>Q</span>[<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='fu'>mean</span>(<span class='fu'><a href='complete.html'>complete</a></span>(<span class='no'>imp</span>, <span class='no'>i</span>)$<span class='no'>bmi</span>)
    <span class='no'>U</span>[<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='fu'>var</span>(<span class='fu'><a href='complete.html'>complete</a></span>(<span class='no'>imp</span>, <span class='no'>i</span>)$<span class='no'>bmi</span>) / <span class='fu'>nrow</span>(<span class='no'>nhanes</span>)  <span class='co'># (standard error of estimate)^2</span>
-}</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("complete_"): no applicable method for 'complete_' applied to an object of class "mids"</span></div><div class='input'><span class='fu'>pool.scalar</span>(<span class='no'>Q</span>, <span class='no'>U</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>nrow</span>(<span class='no'>nhanes</span>), <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>)  <span class='co'># Barnard-Rubin 1999</span></div><div class='output co'>#&gt; $m
+}
+<span class='fu'>pool.scalar</span>(<span class='no'>Q</span>, <span class='no'>U</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>nrow</span>(<span class='no'>nhanes</span>), <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>)  <span class='co'># Barnard-Rubin 1999</span></div><div class='output co'>#&gt; $m
 #&gt; [1] 5
 #&gt; 
 #&gt; $qhat
-#&gt; [1] NA NA NA NA NA
+#&gt; [1] 27.204 26.644 25.708 26.716 26.048
 #&gt; 
 #&gt; $u
-#&gt; [1] NA NA NA NA NA
+#&gt; [1] 0.7155827 0.8629360 0.6465307 0.8521227 0.5811707
 #&gt; 
 #&gt; $qbar
-#&gt; [1] NA
+#&gt; [1] 26.464
 #&gt; 
 #&gt; $ubar
-#&gt; [1] NA
+#&gt; [1] 0.7316685
 #&gt; 
 #&gt; $b
-#&gt; [1] NA
+#&gt; [1] 0.347024
 #&gt; 
 #&gt; $t
-#&gt; [1] NA
+#&gt; [1] 1.148097
 #&gt; 
 #&gt; $df
-#&gt; [1] NA
+#&gt; [1] 9.661673
 #&gt; 
 #&gt; $r
-#&gt; [1] NA
+#&gt; [1] 0.5691495
 #&gt; 
 #&gt; $fmi
-#&gt; [1] NA
+#&gt; [1] 0.4633762
 #&gt; </div><div class='input'>
 </div></pre>
   </div>
