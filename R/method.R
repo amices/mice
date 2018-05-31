@@ -44,6 +44,7 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
                                           blocks = blocks,
                                           defaultMethod = defaultMethod))
   nimp <- nimp(where, blocks)
+  method[nimp == 0] <- ""
   
   # expand user's imputation method to all visited columns
   # single string supplied by user (implicit assumption of two columns)
