@@ -51,10 +51,11 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
     if (is.passive(method))
       stop("Cannot have a passive imputation method for every column.")
     method <- rep(method, length(blocks))
+    method[nimp == 0] <- ""
   }
   
   #set completely observed variables to empty method
-  method[nimp == 0] <- ""
+  
   
   # check the length of the argument
   if (length(method) != length(blocks))
@@ -111,5 +112,6 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
               "\nImputation method ", mj, " is not for factors with >2 levels.",
               call. = FALSE)
   }
+  method[nimp == 0] <- ""
   method
 }
