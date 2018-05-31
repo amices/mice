@@ -11,6 +11,15 @@ Questions and suggestions about MICE can be directed to
 
 CHANGELOG MICE
 ~~~~~~~~~~~~~~
+
+V3.0.4   Patch issue with updateLog
+
+V3.0.3   Extend README
+
+V3.0.2   Repair issue #90. md.pattern. GV
+
+V3.0.1   Repair issue #89. Add check on m. SvB
+
 V3.0.0   24may2018 SvB
          Major new version. 
          See https://github.com/stefvanbuuren/mice for an overview
