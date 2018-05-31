@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -46,7 +46,7 @@
   <body>
     <div class="container template-reference-index">
       <header>
-      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -104,94 +104,22 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-missing-data-exploration" class="hasAnchor"><a href="#section-missing-data-exploration" class="anchor"></a>Missing data exploration</h2>
+          <p class="section-desc"><p>Functions to count and explore the structure of the missing data.</p></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="D1.html">D1()</a></code> </p>
+          <p><code><a href="md.pattern.html">md.pattern()</a></code> </p>
         </td>
-        <td><p>Compare two nested models using D1-statistic</p></td>
+        <td><p>Missing data pattern</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="D2.html">D2()</a></code> </p>
+          <p><code><a href="md.pairs.html">md.pairs()</a></code> </p>
         </td>
-        <td><p>Compare two nested models using D2-statistic</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="D3.html">D3()</a></code> </p>
-        </td>
-        <td><p>Compare two nested models using D3-statistic</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ampute.html">ampute()</a></code> </p>
-        </td>
-        <td><p>Generate Missing Data for Simulation Purposes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="anova.html">anova(<i>&lt;mira&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Compare several nested models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="appendbreak.html">appendbreak()</a></code> </p>
-        </td>
-        <td><p>Appends specified break to the data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as.mids.html">as.mids()</a></code> </p>
-        </td>
-        <td><p>Converts an multiply imputed dataset (long format) into a <code>mids</code> object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as.mira.html">as.mira()</a></code> </p>
-        </td>
-        <td><p>Create a <code>mira</code> object from repeated analyses</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as.mitml.result.html">as.mitml.result()</a></code> </p>
-        </td>
-        <td><p>Converts into a <code>mitml.result</code> object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="boys.html">boys</a></code> </p>
-        </td>
-        <td><p>Growth of Dutch boys</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="brandsma.html">brandsma</a></code> </p>
-        </td>
-        <td><p>Brandsma school data used Snijders and Bosker (2012)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bwplot.mads.html">bwplot(<i>&lt;mads&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Box-and-whisker plot of amputed and non-amputed data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bwplot.mids.html">bwplot(<i>&lt;mids&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Box-and-whisker plot of observed and imputed data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="cbind.mids.html">cbind.mids()</a></code> </p>
-        </td>
-        <td><p>Combine <code>mids</code> objects by columns</p></td>
+        <td><p>Missing data pattern by variable pairs</p></td>
       </tr><tr>
         
         <td>
@@ -207,102 +135,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="complete.html">complete()</a></code> </p>
-        </td>
-        <td><p>Extracts the completed data from a <code>mids</code> object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="construct.blocks.html">construct.blocks()</a></code> </p>
-        </td>
-        <td><p>Construct blocks from <code>formulas</code> and <code>predictorMatrix</code></p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="densityplot.mids.html">densityplot(<i>&lt;mids&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Density plot of observed and imputed data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="employee.html">employee</a></code> </p>
-        </td>
-        <td><p>Employee selection data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="estimice.html">estimice()</a></code> </p>
-        </td>
-        <td><p>Computes least squares parameters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="extractBS.html">extractBS()</a></code> </p>
-        </td>
-        <td><p>Extract broken stick estimates from a <code>lmer</code> object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fdd.html">fdd</a></code> </p>
-        </td>
-        <td><p>SE Fireworks disaster data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fdgs.html">fdgs</a></code> </p>
-        </td>
-        <td><p>Fifth Dutch growth study 2009</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fico.html">fico()</a></code> </p>
-        </td>
-        <td><p>Fraction of incomplete cases among cases with observed</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fix.coef.html">fix.coef()</a></code> </p>
-        </td>
-        <td><p>Fix coefficients and update model</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="flux.html">flux()</a></code> </p>
-        </td>
-        <td><p>Influx and outflux of multivariate missing data patterns</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fluxplot.html">fluxplot()</a></code> </p>
-        </td>
-        <td><p>Fluxplot of the missing data pattern</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="getfit.html">getfit()</a></code> </p>
-        </td>
-        <td><p>Extract list of fitted model</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="getqbar.html">getqbar()</a></code> </p>
-        </td>
-        <td><p>Extract estimate from <code>mipo</code> object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="glm.mids.html">glm.mids()</a></code> </p>
-        </td>
-        <td><p>Generalized linear model for <code>mids</code> object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ibind.html">ibind()</a></code> </p>
-        </td>
-        <td><p>Enlarge number of imputations by combining <code>mids</code> objects</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="ic.html">ic()</a></code> </p>
         </td>
         <td><p>Select incomplete cases</p></td>
@@ -315,130 +147,68 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="is.mads.html">is.mads()</a></code> </p>
+          <p><code><a href="ncc.html">ncc()</a></code> </p>
         </td>
-        <td><p>Check for <code>mads</code> object</p></td>
+        <td><p>Number of complete cases</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="is.mids.html">is.mids()</a></code> </p>
+          <p><code><a href="nic.html">nic()</a></code> </p>
         </td>
-        <td><p>Check for <code>mids</code> object</p></td>
+        <td><p>Number of incomplete cases</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="is.mipo.html">is.mipo()</a></code> </p>
+          <p><code><a href="nimp.html">nimp()</a></code> </p>
         </td>
-        <td><p>Check for <code>mipo</code> object</p></td>
+        <td><p>Number of imputations per block</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="is.mira.html">is.mira()</a></code> </p>
+          <p><code><a href="fico.html">fico()</a></code> </p>
         </td>
-        <td><p>Check for <code>mira</code> object</p></td>
+        <td><p>Fraction of incomplete cases among cases with observed</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="is.mitml.result.html">is.mitml.result()</a></code> </p>
+          <p><code><a href="flux.html">flux()</a></code> </p>
         </td>
-        <td><p>Check for <code>mitml.result</code> object</p></td>
+        <td><p>Influx and outflux of multivariate missing data patterns</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="leiden85.html">leiden85</a></code> </p>
+          <p><code><a href="fluxplot.html">fluxplot()</a></code> </p>
         </td>
-        <td><p>Leiden 85+ study</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lm.mids.html">lm.mids()</a></code> </p>
-        </td>
-        <td><p>Linear regression for <code>mids</code> object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="mads-class.html">mads-class</a></code> </p>
-        </td>
-        <td><p>Multivariate Amputed Data Set (<code>mads</code>)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make.blocks.html">make.blocks()</a></code> </p>
-        </td>
-        <td><p>Creates a <code>blocks</code> argument</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make.blots.html">make.blots()</a></code> </p>
-        </td>
-        <td><p>Creates a <code>blots</code> argument</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make.formulas.html">make.formulas()</a></code> </p>
-        </td>
-        <td><p>Creates a <code>formulas</code> argument</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make.method.html">make.method()</a></code> </p>
-        </td>
-        <td><p>Creates a <code>method</code> argument</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make.post.html">make.post()</a></code> </p>
-        </td>
-        <td><p>Creates a <code>post</code> argument</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make.predictorMatrix.html">make.predictorMatrix()</a></code> </p>
-        </td>
-        <td><p>Creates a <code>predictorMatrix</code> argument</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make.visitSequence.html">make.visitSequence()</a></code> </p>
-        </td>
-        <td><p>Creates a <code>visitSequence</code> argument</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make.where.html">make.where()</a></code> </p>
-        </td>
-        <td><p>Creates a <code>where</code> argument</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="mammalsleep.html">mammalsleep</a></code> </p>
-        </td>
-        <td><p>Mammal sleep data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="md.pairs.html">md.pairs()</a></code> </p>
-        </td>
-        <td><p>Missing data pattern by variable pairs</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="md.pattern.html">md.pattern()</a></code> </p>
-        </td>
-        <td><p>Missing data pattern</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="mdc.html">mdc()</a></code> </p>
-        </td>
-        <td><p>Graphical parameter for missing data plots.</p></td>
-      </tr><tr>
+        <td><p>Fluxplot of the missing data pattern</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-main-imputation-functions" class="hasAnchor"><a href="#section-main-imputation-functions" class="anchor"></a>Main imputation functions</h2>
+          <p class="section-desc"><p>The main workflow functions will multiply-impute the data, apply the complete-data model to each data set, and pool the results to get to the final inference. There are two main functions for imputing the data.</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="mice.html">mice()</a></code> </p>
         </td>
         <td><p><span class="pkg">mice</span>: Multivariate Imputation by Chained Equations</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="mice.mids.html">mice.mids()</a></code> </p>
+        </td>
+        <td><p>Multivariate Imputation by Chained Equations (Iteration Step)</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-elementary-imputation-functions" class="hasAnchor"><a href="#section-elementary-imputation-functions" class="anchor"></a>Elementary imputation functions</h2>
+          <p class="section-desc"><p>Elementary imputation functions are work horses that create the actual imputations. The funcions are called through the <code>method</code> argument of <code>mice</code> function. Each function imputes one or more columns in the data. There are also <code>mice.impute.xxx</code> functions outside the <code>mice</code> package.</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="mice.impute.2l.bin.html">mice.impute.2l.bin()</a></code> </p>
@@ -600,42 +370,80 @@
           <p><code><a href="mice.impute.sample.html">mice.impute.sample()</a></code> </p>
         </td>
         <td><p>Imputation by simple random sampling</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-imputation-model-helpers" class="hasAnchor"><a href="#section-imputation-model-helpers" class="anchor"></a>Imputation model helpers</h2>
+          <p class="section-desc"><p>Specification of the imputation models can be made more convenient using the following set of helpers.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="quickpred.html">quickpred()</a></code> </p>
+        </td>
+        <td><p>Quick selection of predictors from the data</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="mice.mids.html">mice.mids()</a></code> </p>
+          <p><code><a href="squeeze.html">squeeze()</a></code> </p>
         </td>
-        <td><p>Multivariate Imputation by Chained Equations (Iteration Step)</p></td>
+        <td><p>Squeeze the imputed values to be within specified boundaries.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="mice.theme.html">mice.theme()</a></code> </p>
+          <p><code><a href="make.blocks.html">make.blocks()</a></code> </p>
         </td>
-        <td><p>Set the theme for the plotting Trellis functions</p></td>
+        <td><p>Creates a <code>blocks</code> argument</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="mids-class.html">mids-class</a></code> </p>
+          <p><code><a href="make.blots.html">make.blots()</a></code> </p>
         </td>
-        <td><p>Multiply imputed data set (<code>mids</code>)</p></td>
+        <td><p>Creates a <code>blots</code> argument</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="mids2mplus.html">mids2mplus()</a></code> </p>
+          <p><code><a href="make.formulas.html">make.formulas()</a></code> </p>
         </td>
-        <td><p>Export <code>mids</code> object to Mplus</p></td>
+        <td><p>Creates a <code>formulas</code> argument</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="mids2spss.html">mids2spss()</a></code> </p>
+          <p><code><a href="make.method.html">make.method()</a></code> </p>
         </td>
-        <td><p>Export <code>mids</code> object to SPSS</p></td>
+        <td><p>Creates a <code>method</code> argument</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="mira-class.html">mira-class</a></code> </p>
+          <p><code><a href="make.post.html">make.post()</a></code> </p>
         </td>
-        <td><p>Multiply imputed repeated analyses (<code>mira</code>)</p></td>
+        <td><p>Creates a <code>post</code> argument</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="make.predictorMatrix.html">make.predictorMatrix()</a></code> </p>
+        </td>
+        <td><p>Creates a <code>predictorMatrix</code> argument</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="make.visitSequence.html">make.visitSequence()</a></code> </p>
+        </td>
+        <td><p>Creates a <code>visitSequence</code> argument</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="make.where.html">make.where()</a></code> </p>
+        </td>
+        <td><p>Creates a <code>where</code> argument</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="construct.blocks.html">construct.blocks()</a></code> </p>
+        </td>
+        <td><p>Construct blocks from <code>formulas</code> and <code>predictorMatrix</code></p></td>
       </tr><tr>
         
         <td>
@@ -648,18 +456,382 @@
           <p><code><a href="name.formulas.html">name.formulas()</a></code> </p>
         </td>
         <td><p>Name formula list elements</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-plots-comparing-observed-to-imputed-amputed-data" class="hasAnchor"><a href="#section-plots-comparing-observed-to-imputed-amputed-data" class="anchor"></a>Plots comparing observed to imputed/amputed data</h2>
+          <p class="section-desc"><p>These plots contrast the observed data with the imputed/amputed data, usually with a blue/red distinction.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="bwplot.mids.html">bwplot(<i>&lt;mids&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Box-and-whisker plot of observed and imputed data</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="ncc.html">ncc()</a></code> </p>
+          <p><code><a href="densityplot.mids.html">densityplot(<i>&lt;mids&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Number of complete cases</p></td>
+        <td><p>Density plot of observed and imputed data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot.mids.html">plot(<i>&lt;mids&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot the trace lines of the MICE algorithm</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="stripplot.mids.html">stripplot(<i>&lt;mids&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Stripplot of observed and imputed data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="xyplot.mids.html">xyplot(<i>&lt;mids&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Scatterplot of observed and imputed data</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-repeated-analyses-and-combining-analytic-estimates" class="hasAnchor"><a href="#section-repeated-analyses-and-combining-analytic-estimates" class="anchor"></a>Repeated analyses and combining analytic estimates</h2>
+          <p class="section-desc"><p>Multiple imputation create m &gt; 1 completed data sets, fit the model of interest to each of these, and combine the analytic estimates to a final result. The following functions assits in executing these steps:</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="with.mids.html">with(<i>&lt;mids&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Evaluate an expression in multiple imputed datasets</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pool.html">pool()</a></code> </p>
+        </td>
+        <td><p>Combine estimates by Rubin's rules</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pool.r.squared.html">pool.r.squared()</a></code> </p>
+        </td>
+        <td><p>Pooling: R squared</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pool.scalar.html">pool.scalar()</a></code> </p>
+        </td>
+        <td><p>Multiple imputation pooling: univariate version</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="nelsonaalen.html">nelsonaalen()</a></code> </p>
         </td>
         <td><p>Cumulative hazard rate or Nelson-Aalen estimator</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pool.compare.html">pool.compare()</a></code> </p>
+        </td>
+        <td><p>Compare two nested models fitted to imputed data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="anova.html">anova(<i>&lt;mira&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Compare several nested models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="fix.coef.html">fix.coef()</a></code> </p>
+        </td>
+        <td><p>Fix coefficients and update model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="D1.html">D1()</a></code> </p>
+        </td>
+        <td><p>Compare two nested models using D1-statistic</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="D2.html">D2()</a></code> </p>
+        </td>
+        <td><p>Compare two nested models using D2-statistic</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="D3.html">D3()</a></code> </p>
+        </td>
+        <td><p>Compare two nested models using D3-statistic</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-data-manipulation" class="hasAnchor"><a href="#section-data-manipulation" class="anchor"></a>Data manipulation</h2>
+          <p class="section-desc"><p>The multiply-imputed data can be combined in various ways, and exported into other formats.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="complete.html">complete()</a></code> </p>
+        </td>
+        <td><p>Extracts the completed data from a <code>mids</code> object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="as.mids.html">as.mids()</a></code> </p>
+        </td>
+        <td><p>Converts an multiply imputed dataset (long format) into a <code>mids</code> object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="as.mira.html">as.mira()</a></code> </p>
+        </td>
+        <td><p>Create a <code>mira</code> object from repeated analyses</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="as.mitml.result.html">as.mitml.result()</a></code> </p>
+        </td>
+        <td><p>Converts into a <code>mitml.result</code> object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cbind.mids.html">cbind.mids()</a></code> </p>
+        </td>
+        <td><p>Combine <code>mids</code> objects by columns</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rbind.mids.html">rbind.mids()</a></code> </p>
+        </td>
+        <td><p>Combine <code>mids</code> objects by rows</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ibind.html">ibind()</a></code> </p>
+        </td>
+        <td><p>Enlarge number of imputations by combining <code>mids</code> objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mids2mplus.html">mids2mplus()</a></code> </p>
+        </td>
+        <td><p>Export <code>mids</code> object to Mplus</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mids2spss.html">mids2spss()</a></code> </p>
+        </td>
+        <td><p>Export <code>mids</code> object to SPSS</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-class-descriptions" class="hasAnchor"><a href="#section-class-descriptions" class="anchor"></a>Class descriptions</h2>
+          <p class="section-desc"><p>The data created at the various analytic phases are stored as list objects of a specific class. The most important classes and class-test functions are:</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="mids-class.html">mids-class</a></code> </p>
+        </td>
+        <td><p>Multiply imputed data set (<code>mids</code>)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mira-class.html">mira-class</a></code> </p>
+        </td>
+        <td><p>Multiply imputed repeated analyses (<code>mira</code>)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="is.mids.html">is.mids()</a></code> </p>
+        </td>
+        <td><p>Check for <code>mids</code> object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="is.mipo.html">is.mipo()</a></code> </p>
+        </td>
+        <td><p>Check for <code>mipo</code> object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="is.mira.html">is.mira()</a></code> </p>
+        </td>
+        <td><p>Check for <code>mira</code> object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="is.mitml.result.html">is.mitml.result()</a></code> </p>
+        </td>
+        <td><p>Check for <code>mitml.result</code> object</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-extraction-functions" class="hasAnchor"><a href="#section-extraction-functions" class="anchor"></a>Extraction functions</h2>
+          <p class="section-desc"><p>Helpers to extract and print information from objects of specific classes.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="getfit.html">getfit()</a></code> </p>
+        </td>
+        <td><p>Extract list of fitted model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="getqbar.html">getqbar()</a></code> </p>
+        </td>
+        <td><p>Extract estimate from <code>mipo</code> object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="print.html">print(<i>&lt;mids&gt;</i>)</a></code> <code><a href="print.html">print(<i>&lt;mira&gt;</i>)</a></code> <code><a href="print.html">print(<i>&lt;mice.anova&gt;</i>)</a></code> <code><a href="print.html">print(<i>&lt;mice.anova.summary&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print a <code>mids</code> object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="summary.html">summary(<i>&lt;mira&gt;</i>)</a></code> <code><a href="summary.html">summary(<i>&lt;mids&gt;</i>)</a></code> <code><a href="summary.html">summary(<i>&lt;mads&gt;</i>)</a></code> <code><a href="summary.html">summary(<i>&lt;mice.anova&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Summary of a <code>mira</code> object</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-low-level-imputation-functions" class="hasAnchor"><a href="#section-low-level-imputation-functions" class="anchor"></a>Low-level imputation functions</h2>
+          <p class="section-desc"><p>Several functions are dedicated to common low-level operations to generate the imputations:</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="estimice.html">estimice()</a></code> </p>
+        </td>
+        <td><p>Computes least squares parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="norm.draw.html">norm.draw()</a></code> <code><a href="norm.draw.html">.norm.draw()</a></code> </p>
+        </td>
+        <td><p>Draws values of beta and sigma by Bayesian linear regression</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pmm.match.html">.pmm.match()</a></code> </p>
+        </td>
+        <td><p>Finds an imputed value from matches in the predictive metric (deprecated)</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-multivariate-amputation" class="hasAnchor"><a href="#section-multivariate-amputation" class="anchor"></a>Multivariate amputation</h2>
+          <p class="section-desc"><p>Amputation is the inverse of imputation, starting with a complete dataset, and creating missing data pattern according to the posited missing data mechanism. Amputation is useful for simulation studies.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="ampute.html">ampute()</a></code> </p>
+        </td>
+        <td><p>Generate Missing Data for Simulation Purposes</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bwplot.mads.html">bwplot(<i>&lt;mads&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Box-and-whisker plot of amputed and non-amputed data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="xyplot.mads.html">xyplot(<i>&lt;mads&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Scatterplot of amputed and non-amputed data against weighted sum scores</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="is.mads.html">is.mads()</a></code> </p>
+        </td>
+        <td><p>Check for <code>mads</code> object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mads-class.html">mads-class</a></code> </p>
+        </td>
+        <td><p>Multivariate Amputed Data Set (<code>mads</code>)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="print.mads.html">print(<i>&lt;mads&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print a <code>mads</code> object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="summary.html">summary(<i>&lt;mira&gt;</i>)</a></code> <code><a href="summary.html">summary(<i>&lt;mids&gt;</i>)</a></code> <code><a href="summary.html">summary(<i>&lt;mads&gt;</i>)</a></code> <code><a href="summary.html">summary(<i>&lt;mice.anova&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Summary of a <code>mira</code> object</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-datasets" class="hasAnchor"><a href="#section-datasets" class="anchor"></a>Datasets</h2>
+          <p class="section-desc"><p>Built-in datasets</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="boys.html">boys</a></code> </p>
+        </td>
+        <td><p>Growth of Dutch boys</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="brandsma.html">brandsma</a></code> </p>
+        </td>
+        <td><p>Brandsma school data used Snijders and Bosker (2012)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="employee.html">employee</a></code> </p>
+        </td>
+        <td><p>Employee selection data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="fdd.html">fdd</a></code> </p>
+        </td>
+        <td><p>SE Fireworks disaster data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="fdgs.html">fdgs</a></code> </p>
+        </td>
+        <td><p>Fifth Dutch growth study 2009</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="leiden85.html">leiden85</a></code> </p>
+        </td>
+        <td><p>Leiden 85+ study</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mammalsleep.html">mammalsleep</a></code> </p>
+        </td>
+        <td><p>Mammal sleep data</p></td>
       </tr><tr>
         
         <td>
@@ -675,63 +847,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="nic.html">nic()</a></code> </p>
-        </td>
-        <td><p>Number of incomplete cases</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="nimp.html">nimp()</a></code> </p>
-        </td>
-        <td><p>Number of imputations per block</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="norm.draw.html">norm.draw()</a></code> <code><a href="norm.draw.html">.norm.draw()</a></code> </p>
-        </td>
-        <td><p>Draws values of beta and sigma by Bayesian linear regression</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="pattern.html">pattern</a></code> </p>
         </td>
         <td><p>Datasets with various missing data patterns</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot.mids.html">plot(<i>&lt;mids&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Plot the trace lines of the MICE algorithm</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pmm.match.html">.pmm.match()</a></code> </p>
-        </td>
-        <td><p>Finds an imputed value from matches in the predictive metric (deprecated)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pool.html">pool()</a></code> </p>
-        </td>
-        <td><p>Combine estimates by Rubin's rules</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pool.compare.html">pool.compare()</a></code> </p>
-        </td>
-        <td><p>Compare two nested models fitted to imputed data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pool.r.squared.html">pool.r.squared()</a></code> </p>
-        </td>
-        <td><p>Pooling: R squared</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pool.scalar.html">pool.scalar()</a></code> </p>
-        </td>
-        <td><p>Multiple imputation pooling: univariate version</p></td>
       </tr><tr>
         
         <td>
@@ -753,69 +871,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="print.html">print(<i>&lt;mids&gt;</i>)</a></code> <code><a href="print.html">print(<i>&lt;mira&gt;</i>)</a></code> <code><a href="print.html">print(<i>&lt;mice.anova&gt;</i>)</a></code> <code><a href="print.html">print(<i>&lt;mice.anova.summary&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print a <code>mids</code> object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print.mads.html">print(<i>&lt;mads&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print a <code>mads</code> object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="quickpred.html">quickpred()</a></code> </p>
-        </td>
-        <td><p>Quick selection of predictors from the data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rbind.mids.html">rbind.mids()</a></code> </p>
-        </td>
-        <td><p>Combine <code>mids</code> objects by rows</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="selfreport.html">selfreport</a></code> </p>
         </td>
         <td><p>Self-reported and measured BMI</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="squeeze.html">squeeze()</a></code> </p>
-        </td>
-        <td><p>Squeeze the imputed values to be within specified boundaries.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="stripplot.mids.html">stripplot(<i>&lt;mids&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Stripplot of observed and imputed data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="summary.html">summary(<i>&lt;mira&gt;</i>)</a></code> <code><a href="summary.html">summary(<i>&lt;mids&gt;</i>)</a></code> <code><a href="summary.html">summary(<i>&lt;mads&gt;</i>)</a></code> <code><a href="summary.html">summary(<i>&lt;mice.anova&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Summary of a <code>mira</code> object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="supports.transparent.html">supports.transparent()</a></code> </p>
-        </td>
-        <td><p>Supports semi-transparent foreground colors?</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="tbc.html">tbc</a></code> </p>
         </td>
         <td><p>Terneuzen birth cohort</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="version.html">version()</a></code> </p>
-        </td>
-        <td><p>Echoes the package version number</p></td>
       </tr><tr>
         
         <td>
@@ -828,24 +892,62 @@
           <p><code><a href="windspeed.html">windspeed</a></code> </p>
         </td>
         <td><p>Subset of Irish wind speed data</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-miscellaneous-functions" class="hasAnchor"><a href="#section-miscellaneous-functions" class="anchor"></a>Miscellaneous functions</h2>
+          <p class="section-desc"><p>Miscellaneous functions</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="appendbreak.html">appendbreak()</a></code> </p>
+        </td>
+        <td><p>Appends specified break to the data</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="with.mids.html">with(<i>&lt;mids&gt;</i>)</a></code> </p>
+          <p><code><a href="extractBS.html">extractBS()</a></code> </p>
         </td>
-        <td><p>Evaluate an expression in multiple imputed datasets</p></td>
+        <td><p>Extract broken stick estimates from a <code>lmer</code> object</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="xyplot.mads.html">xyplot(<i>&lt;mads&gt;</i>)</a></code> </p>
+          <p><code><a href="glm.mids.html">glm.mids()</a></code> </p>
         </td>
-        <td><p>Scatterplot of amputed and non-amputed data against weighted sum scores</p></td>
+        <td><p>Generalized linear model for <code>mids</code> object</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="xyplot.mids.html">xyplot(<i>&lt;mids&gt;</i>)</a></code> </p>
+          <p><code><a href="lm.mids.html">lm.mids()</a></code> </p>
         </td>
-        <td><p>Scatterplot of observed and imputed data</p></td>
+        <td><p>Linear regression for <code>mids</code> object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mdc.html">mdc()</a></code> </p>
+        </td>
+        <td><p>Graphical parameter for missing data plots.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mice.theme.html">mice.theme()</a></code> </p>
+        </td>
+        <td><p>Set the theme for the plotting Trellis functions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="supports.transparent.html">supports.transparent()</a></code> </p>
+        </td>
+        <td><p>Supports semi-transparent foreground colors?</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="version.html">version()</a></code> </p>
+        </td>
+        <td><p>Echoes the package version number</p></td>
       </tr>
     </tbody>
     </table>
@@ -854,7 +956,19 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-missing-data-exploration">Missing data exploration</a></li>
+      <li><a href="#section-main-imputation-functions">Main imputation functions</a></li>
+      <li><a href="#section-elementary-imputation-functions">Elementary imputation functions</a></li>
+      <li><a href="#section-imputation-model-helpers">Imputation model helpers</a></li>
+      <li><a href="#section-plots-comparing-observed-to-imputed-amputed-data">Plots comparing observed to imputed/amputed data</a></li>
+      <li><a href="#section-repeated-analyses-and-combining-analytic-estimates">Repeated analyses and combining analytic estimates</a></li>
+      <li><a href="#section-data-manipulation">Data manipulation</a></li>
+      <li><a href="#section-class-descriptions">Class descriptions</a></li>
+      <li><a href="#section-extraction-functions">Extraction functions</a></li>
+      <li><a href="#section-low-level-imputation-functions">Low-level imputation functions</a></li>
+      <li><a href="#section-multivariate-amputation">Multivariate amputation</a></li>
+      <li><a href="#section-datasets">Datasets</a></li>
+      <li><a href="#section-miscellaneous-functions">Miscellaneous functions</a></li>
     </ul>
   </div>
 </div>
