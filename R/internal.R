@@ -75,9 +75,14 @@ find.collinear <- function(x, threshold = 0.999, ...) {
 }
 
 
-updateLog <- function(out = NULL, meth = NULL, frame = 2) {
-  s <- get("state", parent.frame(frame))
-  r <- get("loggedEvents", parent.frame(frame))
+updateLog <- function(out = NULL, meth = NULL, frame = 1) {
+  
+  # find structures defined a mice() level
+  pos_state <- ma_exists("state", frame)$pos
+  pos_loggedEvents <- ma_exists("loggedEvents", frame)$pos
+  
+  s <- get("state", pos_state)
+  r <- get("loggedEvents", pos_loggedEvents)
 
   rec <- data.frame(it = s$it, 
                     im = s$im, 
@@ -88,9 +93,35 @@ updateLog <- function(out = NULL, meth = NULL, frame = 2) {
   if (s$log)
     rec <- rbind(r, rec)
   s$log <- TRUE
-  assign("state", s, pos = parent.frame(frame), inherits = TRUE)
-  assign("loggedEvents", rec, pos = parent.frame(frame), inherits = TRUE)
+  assign("state", s, pos = pos_state, inherits = TRUE)
+  assign("loggedEvents", rec, pos = pos_loggedEvents, inherits = TRUE)
   return()
 }
 
 sym <- function(x) {(x + t(x)) / 2}
+
+
+# This helper function was copied from
+# https://github.com/alexanderrobitzsch/miceadds/blob/master/R/ma_exists.R
+ma_exists <- function( x, pos, n_index=1:8)
+{
+  n_index <- n_index + 1
+  is_there <- exists(x, where=pos)
+  obj <- NULL
+  if (is_there){
+    obj <- get(x, pos)
+  }
+  if (! is_there){
+    for (nn in n_index){
+      pos <- parent.frame(n=nn)
+      is_there <- exists(x, where=pos)
+      if (is_there){
+        obj <- get(x, pos)
+        break
+      }        
+    }
+  }
+  #--- output
+  res <- list( is_there=is_there, obj=obj, pos=pos)
+  return(res)
+}
