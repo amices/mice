@@ -10,3 +10,4 @@ cran-comments.Rmd
 README-*
 changes_mice*
 ^data-raw$
+index.Rmd

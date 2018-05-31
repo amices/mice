@@ -86,13 +86,11 @@ Packages that extend the functionality of `mice` include:
 
 ## Further reading
 
-1. [Article](https://www.jstatsoft.org/v45/i03/paper) in the Journal of Statistical Software [@vanbuuren2011a]. 
-2. The first application on [missing blood pressure](http://www.stefvanbuuren.nl/publications/Multiple%20imputation%20-%20Stat%20Med%201999.pdf) data [@vanbuuren1999]. 
-3. Term [Fully Conditional Specification](http://www.stefvanbuuren.nl/publications/FCS%20in%20multivariate%20imputation%20-%20JSCS%202006.pdf) describes a general class of methods that specify imputations model for multivariate data as a set of conditional distributions [@vanbuuren2006].
-4. Details about imputing [mixes of numerical and categorical data](http://www.stefvanbuuren.nl/publications/MI%20by%20FCS%20-%20SMMR%202007.pdf) can be found in [@vanbuuren2007a]. 
+1. [Article](https://www.jstatsoft.org/v45/i03/paper) in the Journal of Statistical Software [@VANBUUREN2011]. 
+2. The first application on [missing blood pressure](http://www.stefvanbuuren.nl/publications/Multiple%20imputation%20-%20Stat%20Med%201999.pdf) data [@VANBUUREN1999]. 
+3. Term [Fully Conditional Specification](http://www.stefvanbuuren.nl/publications/FCS%20in%20multivariate%20imputation%20-%20JSCS%202006.pdf) describes a general class of methods that specify imputations model for multivariate data as a set of conditional distributions [@VANBUUREN2006].
+4. Details about imputing [mixes of numerical and categorical data](http://www.stefvanbuuren.nl/publications/MI%20by%20FCS%20-%20SMMR%202007.pdf) can be found in [@VANBUUREN2007]. 
 5. [Wulff and Ejlskov](http://www.ejbrm.com/issue/download.html?idArticle=450 ) provide a comprehensive overview of MICE. 
-6. Many more details and applications can be found in the book *Flexible Imputation of Missing Data* [@vanbuuren2012] (see [Chapman \& Hall/CRC](https://www.crcpress.com/Flexible-Imputation-of-Missing-Data/van-Buuren/p/book/9781439868249) or 
-[Amazon](https://www.amazon.com/Flexible-Imputation-Missing-Interdisciplinary-Statistics/dp/1439868247/ref=pd_sim_14_2?_encoding=UTF8&pd_rd_i=1439868247&pd_rd_r=DC8AYZZZZKF9GZSVP6PK&pd_rd_w=Z2PJQ&pd_rd_wg=3iuSi&psc=1&refRID=DC8AYZZZZKF9GZSVP6PK)). 
-
+6. Many more details and applications can be found in the book *Flexible Imputation of Missing Data. Second Edition* [@VANBUUREN2018].
 
 ## References
