@@ -44,7 +44,7 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
                                           blocks = blocks,
                                           defaultMethod = defaultMethod))
   nimp <- nimp(where, blocks)
-  
+
   # expand user's imputation method to all visited columns
   # single string supplied by user (implicit assumption of two columns)
   if (length(method) == 1) {
@@ -109,5 +109,6 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
               "\nImputation method ", mj, " is not for factors with >2 levels.",
               call. = FALSE)
   }
+  method[nimp == 0] <- ""
   method
 }
