@@ -7,9 +7,11 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# mice 3.0.6
+# mice 3.0.7
 
 To be released as `mice 3.1.0`
+
+* Set empty method for complete data (#93)
 
 * Add `NEWS.md`, `index.Rmd` and online package documentation
 

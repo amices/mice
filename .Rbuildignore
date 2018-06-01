@@ -13,3 +13,4 @@ changes_mice*
 index.Rmd
 NEWS.md
 ^docs*
+_pkgdown.yaml
