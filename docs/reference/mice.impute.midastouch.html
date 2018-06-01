@@ -27,6 +27,11 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="Imputation by predictive mean matching with distance aided donor selection — mice.impute.midastouch" />
 
@@ -59,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.6</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.8</span>
       </span>
     </div>
 
@@ -82,6 +87,12 @@
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
       
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -317,35 +328,35 @@ Statistical Software</em>, <b>45</b>, 3, 1--67. <a href='https://www.jstatsoft.o
 <span class='co'># imputation on mixed data with a different method per column</span>
 <span class='fu'>mice</span>(<span class='no'>nhanes2</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'sample'</span>, <span class='st'>'midastouch'</span>, <span class='st'>'logreg'</span>, <span class='st'>'norm'</span>))</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
-#&gt;   1   1  age  bmi  hyp  chl
-#&gt;   1   2  age  bmi  hyp  chl
-#&gt;   1   3  age  bmi  hyp  chl
-#&gt;   1   4  age  bmi  hyp  chl
-#&gt;   1   5  age  bmi  hyp  chl
-#&gt;   2   1  age  bmi  hyp  chl
-#&gt;   2   2  age  bmi  hyp  chl
-#&gt;   2   3  age  bmi  hyp  chl
-#&gt;   2   4  age  bmi  hyp  chl
-#&gt;   2   5  age  bmi  hyp  chl
-#&gt;   3   1  age  bmi  hyp  chl
-#&gt;   3   2  age  bmi  hyp  chl
-#&gt;   3   3  age  bmi  hyp  chl
-#&gt;   3   4  age  bmi  hyp  chl
-#&gt;   3   5  age  bmi  hyp  chl
-#&gt;   4   1  age  bmi  hyp  chl
-#&gt;   4   2  age  bmi  hyp  chl
-#&gt;   4   3  age  bmi  hyp  chl
-#&gt;   4   4  age  bmi  hyp  chl
-#&gt;   4   5  age  bmi  hyp  chl
-#&gt;   5   1  age  bmi  hyp  chl
-#&gt;   5   2  age  bmi  hyp  chl
-#&gt;   5   3  age  bmi  hyp  chl
-#&gt;   5   4  age  bmi  hyp  chl
-#&gt;   5   5  age  bmi  hyp  chl</div><div class='output co'>#&gt; Class: mids
+#&gt;   1   1  bmi  hyp  chl
+#&gt;   1   2  bmi  hyp  chl
+#&gt;   1   3  bmi  hyp  chl
+#&gt;   1   4  bmi  hyp  chl
+#&gt;   1   5  bmi  hyp  chl
+#&gt;   2   1  bmi  hyp  chl
+#&gt;   2   2  bmi  hyp  chl
+#&gt;   2   3  bmi  hyp  chl
+#&gt;   2   4  bmi  hyp  chl
+#&gt;   2   5  bmi  hyp  chl
+#&gt;   3   1  bmi  hyp  chl
+#&gt;   3   2  bmi  hyp  chl
+#&gt;   3   3  bmi  hyp  chl
+#&gt;   3   4  bmi  hyp  chl
+#&gt;   3   5  bmi  hyp  chl
+#&gt;   4   1  bmi  hyp  chl
+#&gt;   4   2  bmi  hyp  chl
+#&gt;   4   3  bmi  hyp  chl
+#&gt;   4   4  bmi  hyp  chl
+#&gt;   4   5  bmi  hyp  chl
+#&gt;   5   1  bmi  hyp  chl
+#&gt;   5   2  bmi  hyp  chl
+#&gt;   5   3  bmi  hyp  chl
+#&gt;   5   4  bmi  hyp  chl
+#&gt;   5   5  bmi  hyp  chl</div><div class='output co'>#&gt; Class: mids
 #&gt; Number of multiple imputations:  5 
 #&gt; Imputation methods:
 #&gt;          age          bmi          hyp          chl 
-#&gt;     "sample" "midastouch"     "logreg"       "norm" 
+#&gt;           "" "midastouch"     "logreg"       "norm" 
 #&gt; PredictorMatrix:
 #&gt;     age bmi hyp chl
 #&gt; age   0   1   1   1
@@ -389,6 +400,23 @@ Philipp Gaffert, Florian Meinfelder, Volker Bosch 2015
    </div>
 
   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '491b6c2ead7f15b8c26c513b923dd6a0',
+    indexName: 'mice',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>

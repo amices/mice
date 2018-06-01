@@ -27,6 +27,11 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="Impute multilevel missing data using <code>pan</code> — mice.impute.panImpute" />
 
@@ -65,7 +70,7 @@ which offer different options for model specification." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.6</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.8</span>
       </span>
     </div>
 
@@ -88,6 +93,12 @@ which offer different options for model specification." />
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
       
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -200,11 +211,11 @@ Journal of Computational and Graphical Statistics, 11, 437-457.</p>
 <span class='no'>pred</span>[<span class='st'>"B1"</span>, <span class='st'>"hyp"</span>] <span class='kw'>&lt;-</span> -<span class='fl'>2</span>
 <span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'>mice</span>(<span class='no'>nhanes</span>, <span class='kw'>blocks</span> <span class='kw'>=</span> <span class='no'>blocks</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>method</span>, <span class='kw'>pred</span> <span class='kw'>=</span> <span class='no'>pred</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
-#&gt;   1   1  bmi chl hyp  age
-#&gt;   1   2  bmi chl hyp  age
-#&gt;   1   3  bmi chl hyp  age
-#&gt;   1   4  bmi chl hyp  age
-#&gt;   1   5  bmi chl hyp  age</div><div class='input'>
+#&gt;   1   1  bmi chl hyp
+#&gt;   1   2  bmi chl hyp
+#&gt;   1   3  bmi chl hyp
+#&gt;   1   4  bmi chl hyp
+#&gt;   1   5  bmi chl hyp</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -245,6 +256,23 @@ and Joe Schafer (author of <code>pan</code> package).
    </div>
 
   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '491b6c2ead7f15b8c26c513b923dd6a0',
+    indexName: 'mice',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>

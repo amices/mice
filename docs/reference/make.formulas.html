@@ -27,6 +27,11 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="Creates a <code>formulas</code> argument — make.formulas" />
 
@@ -62,7 +67,7 @@ the predictors by means of the standard ~ operator." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.6</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.8</span>
       </span>
     </div>
 
@@ -85,6 +90,12 @@ the predictors by means of the standard ~ operator." />
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
       
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -143,23 +154,23 @@ the rows. The default assigns each variable in its own block.</p></td>
     <pre class="examples"><div class='input'><span class='no'>f1</span> <span class='kw'>&lt;-</span> <span class='fu'>make.formulas</span>(<span class='no'>nhanes</span>)
 <span class='no'>f1</span></div><div class='output co'>#&gt; $age
 #&gt; age ~ 0 + bmi + hyp + chl
-#&gt; &lt;environment: 0x1279e3c80&gt;
+#&gt; &lt;environment: 0x116a4fe10&gt;
 #&gt; 
 #&gt; $bmi
 #&gt; bmi ~ 0 + age + hyp + chl
-#&gt; &lt;environment: 0x1279e3c80&gt;
+#&gt; &lt;environment: 0x116a4fe10&gt;
 #&gt; 
 #&gt; $hyp
 #&gt; hyp ~ 0 + age + bmi + chl
-#&gt; &lt;environment: 0x1279e3c80&gt;
+#&gt; &lt;environment: 0x116a4fe10&gt;
 #&gt; 
 #&gt; $chl
 #&gt; chl ~ 0 + age + bmi + hyp
-#&gt; &lt;environment: 0x1279e3c80&gt;
+#&gt; &lt;environment: 0x116a4fe10&gt;
 #&gt; </div><div class='input'><span class='no'>f2</span> <span class='kw'>&lt;-</span> <span class='fu'>make.formulas</span>(<span class='no'>nhanes</span>, <span class='kw'>blocks</span> <span class='kw'>=</span> <span class='fu'><a href='make.blocks.html'>make.blocks</a></span>(<span class='no'>nhanes</span>, <span class='st'>"collect"</span>))
 <span class='no'>f2</span></div><div class='output co'>#&gt; $collect
 #&gt; age + bmi + hyp + chl ~ 0
-#&gt; &lt;environment: 0x11d0c9200&gt;
+#&gt; &lt;environment: 0x11699d5c0&gt;
 #&gt; </div><div class='input'>
 <span class='co'># for editing, it may be easier to work with the character vector</span>
 <span class='no'>c1</span> <span class='kw'>&lt;-</span> <span class='fu'>as.character</span>(<span class='no'>f1</span>)
@@ -169,19 +180,19 @@ the rows. The default assigns each variable in its own block.</p></td>
 <span class='no'>f3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='name.formulas.html'>name.formulas</a></span>(<span class='fu'>lapply</span>(<span class='no'>c1</span>, <span class='no'>as.formula</span>))
 <span class='no'>f3</span></div><div class='output co'>#&gt; $age
 #&gt; age ~ 0 + bmi + hyp + chl
-#&gt; &lt;environment: 0x119354978&gt;
+#&gt; &lt;environment: 0x115cc4d20&gt;
 #&gt; 
 #&gt; $bmi
 #&gt; bmi ~ 0 + age + hyp + chl
-#&gt; &lt;environment: 0x119354978&gt;
+#&gt; &lt;environment: 0x115cc4d20&gt;
 #&gt; 
 #&gt; $hyp
 #&gt; hyp ~ 0 + age + bmi + chl
-#&gt; &lt;environment: 0x119354978&gt;
+#&gt; &lt;environment: 0x115cc4d20&gt;
 #&gt; 
 #&gt; $chl
 #&gt; chl ~ 0 + age + bmi + hyp
-#&gt; &lt;environment: 0x119354978&gt;
+#&gt; &lt;environment: 0x115cc4d20&gt;
 #&gt; </div><div class='input'>
 </div></pre>
   </div>
@@ -213,6 +224,23 @@ the rows. The default assigns each variable in its own block.</p></td>
    </div>
 
   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '491b6c2ead7f15b8c26c513b923dd6a0',
+    indexName: 'mice',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>
