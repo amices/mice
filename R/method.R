@@ -54,9 +54,6 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
     method[nimp == 0] <- ""
   }
   
-  #set completely observed variables to empty method
-  
-  
   # check the length of the argument
   if (length(method) != length(blocks))
     stop("Length of method differs from number of blocks", call. = FALSE)
