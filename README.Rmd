@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 options(width = 60, digits = 3)
 ```
 
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
+
 # [MICE: Multivariate Imputation by Chained Equations](http://stefvanbuuren.github.io/mice/)
 
 The [`mice`](https://cran.r-project.org/package=mice) package

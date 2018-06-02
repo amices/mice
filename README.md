@@ -1,4 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
+
 [MICE: Multivariate Imputation by Chained Equations](http://stefvanbuuren.github.io/mice/)
 ==========================================================================================
 
