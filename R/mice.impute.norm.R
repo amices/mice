@@ -114,13 +114,6 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...)
 #'@export
 estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
   df <- max(length(y) - ncol(x), 1)
-  search.parents <- function(name, start = 4){
-    while(inherits(try(get("printFlag", parent.frame(start)), silent = TRUE), 
-                   "try-error")){
-      start = start + 1
-    }
-    start
-  }
   if (ls.meth == "qr"){
     qr <- lm.fit(x = x, y = y)
     c <- t(qr$coef)
@@ -165,4 +158,12 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
     }
     return(list(c=c, r=r, v=v, df=df, ls.meth=ls.meth))
   }
+}
+
+search.parents <- function(name, start = 4){
+  while(inherits(try(get("printFlag", parent.frame(start)), silent = TRUE), 
+                 "try-error")){
+    start = start + 1
+  }
+  start
 }
