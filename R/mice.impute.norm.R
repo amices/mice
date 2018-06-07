@@ -114,6 +114,13 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...)
 #'@export
 estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
   df <- max(length(y) - ncol(x), 1)
+  search.parents <- function(name, start = 4){
+    while(inherits(try(get("printFlag", parent.frame(start)), silent = TRUE), 
+                   "try-error")){
+      start = start + 1
+    }
+    start
+  }
   if (ls.meth == "qr"){
     qr <- lm.fit(x = x, y = y)
     c <- t(qr$coef)
@@ -126,7 +133,7 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
       v <- solve(xtx + diag(pen)) #add ridge penalty to allow inverse of v
       mess <- "* A ridge penalty had to be used to calculate the inverse crossproduct of the predictor matrix. Please remove duplicate variables or unique respondent names/numbers from the imputation model. It may be advisable to check the fraction of missing information (fmi) to evaluate the validity of the imputation model"
       updateLog(out = mess, frame = 6)
-      if (get("printFlag", parent.frame(4)))
+      if (get("printFlag", parent.frame(search.parents("printFlag"))))
         cat("*") #indicator of added ridge penalty in the printed iteration history
     }
     return(list(c=t(c), r=t(r), v=v, df=df, ls.meth=ls.meth))
@@ -153,7 +160,7 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...){
       v <- solve(xtx + diag(pen)) #add ridge penalty to allow inverse of v
       mess <- "* A ridge penalty had to be used to calculate the inverse crossproduct of the predictor matrix. Please remove duplicate variables or unique respondent names/numbers from the imputation model. It may be advisable to check the fraction of missing information (fmi) to evaluate the validity of the imputation model"
       updateLog(out = mess, frame = 6)
-      if (get("printFlag", parent.frame(4)))
+      if (get("printFlag", parent.frame(search.parents("printFlag"))))
         cat("*") #indicator of added ridge penalty in the printed iteration history
     }
     return(list(c=c, r=r, v=v, df=df, ls.meth=ls.meth))
