@@ -7,9 +7,13 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# mice 3.0.7
+# mice 3.0.9
 
 To be released as `mice 3.1.0`
+
+* Better checking for empty methods (#99)
+
+* Remove problem with `parent.frame` (#98)
 
 * Set empty method for complete data (#93)
 
