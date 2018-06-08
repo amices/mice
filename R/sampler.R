@@ -46,10 +46,10 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           if (calltype == "type") type <- predictorMatrix[h, ] else type <- NULL
           
           user <- blots[[h]]
-          
+  
           # univariate/multivariate logic
           theMethod <- method[h]
-          empt <- theMethod == "" | all(predictorMatrix[h, ] == 0) 
+          empt <- theMethod == "" || (!is.null(type) && all(type == 0)) 
           univ <- !empt && !is.passive(theMethod) && 
             !handles.format(paste0("mice.impute.", theMethod))
           mult <- !empt && !is.passive(theMethod) && 
