@@ -49,7 +49,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           
           # univariate/multivariate logic
           theMethod <- method[h]
-          empt <- theMethod == ""
+          empt <- theMethod == "" | all(predictorMatrix[h, ] == 0) 
           univ <- !empt && !is.passive(theMethod) && 
             !handles.format(paste0("mice.impute.", theMethod))
           mult <- !empt && !is.passive(theMethod) && 
