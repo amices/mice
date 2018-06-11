@@ -21,13 +21,16 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
 <!-- docsearch -->
+<script src="../docsearch.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 <link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
@@ -61,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.8</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.9</span>
       </span>
     </div>
 
@@ -105,12 +108,14 @@
       
     </div>
 
-    <div id="mice-3-0-7" class="section level1">
+    <div id="mice-3-0-9" class="section level1">
 <h1 class="page-header">
-<a href="#mice-3-0-7" class="anchor"></a>mice 3.0.7<small> Unreleased </small>
+<a href="#mice-3-0-9" class="anchor"></a>mice 3.0.9<small> Unreleased </small>
 </h1>
 <p>To be released as <code>mice 3.1.0</code></p>
 <ul>
+<li><p>Better checking for empty methods (#99)</p></li>
+<li><p>Remove problem with <code>parent.frame</code> (#98)</p></li>
 <li><p>Set empty method for complete data (#93)</p></li>
 <li><p>Add <code>NEWS.md</code>, <code>index.Rmd</code> and online package documentation</p></li>
 <li><p>Track <code>.R</code> instead of <code>.r</code></p></li>
@@ -688,7 +693,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#mice-3-0-7">3.0.7</a></li>
+        <li><a href="#mice-3-0-9">3.0.9</a></li>
         <li><a href="#mice-3-0-0">3.0.0</a></li>
         <li><a href="#mice-2-46-9-2017-12-08">2.46.9</a></li>
         <li><a href="#mice-2-46-2017-10-22">2.46</a></li>

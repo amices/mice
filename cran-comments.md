@@ -77,7 +77,7 @@ Packages with problems + actions
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">1</td>
-<td align="left">showtable() in simstudy_survival defunct - author noted</td>
+<td align="left">showtable() in simstudy_survival defunct - author will repair</td>
 </tr>
 <tr class="even">
 <td align="left">dynr</td>
@@ -88,14 +88,6 @@ Packages with problems + actions
 <td align="left">author noted, needs additional local installs, not further checked</td>
 </tr>
 <tr class="odd">
-<td align="left">HardyWeinberg</td>
-<td align="left">1.5.9</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="left">author will investigate</td>
-</tr>
-<tr class="even">
 <td align="left">Hmisc</td>
 <td align="left">4.1-1</td>
 <td align="right">1</td>
@@ -103,7 +95,7 @@ Packages with problems + actions
 <td align="right">0</td>
 <td align="left">installed by hand</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">JointAI</td>
 <td align="left">0.1.0</td>
 <td align="right">1</td>
@@ -111,15 +103,15 @@ Packages with problems + actions
 <td align="right">0</td>
 <td align="left">depends on external JAGS, not further checked</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">logistf</td>
 <td align="left">1.22</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="left">pooling code not compatible - author noted</td>
+<td align="left">summary(pool.RR(fit.list)) error</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">miceadds</td>
 <td align="left">2.11-87</td>
 <td align="right">1</td>
@@ -127,7 +119,7 @@ Packages with problems + actions
 <td align="right">0</td>
 <td align="left">several breaking changes, author working on update</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">miceFast</td>
 <td align="left">0.2.3</td>
 <td align="right">1</td>
@@ -135,7 +127,7 @@ Packages with problems + actions
 <td align="right">0</td>
 <td align="left">C compilation errors</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">miceMNAR</td>
 <td align="left">1.0</td>
 <td align="right">1</td>
@@ -143,7 +135,7 @@ Packages with problems + actions
 <td align="right">0</td>
 <td align="left">incompatible mice.impute.hecknorm(), author noted</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">MissingDataGUI</td>
 <td align="left">0.2-5</td>
 <td align="right">1</td>
@@ -151,7 +143,7 @@ Packages with problems + actions
 <td align="right">0</td>
 <td align="left">'gWidgetsRGtk2', 'cairoDevice' not available</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Qtools</td>
 <td align="left">1.3</td>
 <td align="right">1</td>
@@ -159,7 +151,7 @@ Packages with problems + actions
 <td align="right">0</td>
 <td align="left">fortran compilation errors, author noted</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">rattle</td>
 <td align="left">5.1.0</td>
 <td align="right">1</td>
@@ -167,7 +159,7 @@ Packages with problems + actions
 <td align="right">0</td>
 <td align="left">'cairoDevice' not available</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">weightTAPSPACK</td>
 <td align="left">0.1</td>
 <td align="right">1</td>

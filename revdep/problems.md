@@ -6,35 +6,35 @@
 |:--------|:----------------------------|
 |version  |R version 3.5.0 (2018-04-23) |
 |system   |x86_64, darwin15.6.0         |
-|ui       |RStudio (1.1.453)            |
+|ui       |RStudio (1.1.447)            |
 |language |(EN)                         |
 |collate  |nl_NL.UTF-8                  |
 |tz       |Europe/Amsterdam             |
-|date     |2018-05-28                   |
+|date     |2018-06-09                   |
 
 ## Packages
 
 |package         |*  |version |date       |source          |
 |:---------------|:--|:-------|:----------|:---------------|
-|AGD             |   |0.35    |2015-05-28 |cran (@0.35)    |
+|AGD             |   |0.39    |2018-05-29 |cran (@0.39)    |
 |broom           |   |0.4.4   |2018-03-29 |cran (@0.4.4)   |
 |BSDA            |   |1.2.0   |2017-07-30 |cran (@1.2.0)   |
 |CALIBERrfimpute |   |0.1-6   |2014-05-07 |cran (@0.1-6)   |
 |dplyr           |   |0.7.5   |2018-05-19 |cran (@0.7.5)   |
 |DPpackage       |   |1.1-7.4 |2018-01-06 |cran (@1.1-7.4) |
 |gamlss          |   |5.0-8   |2018-04-30 |cran (@5.0-8)   |
-|HSAUR3          |   |1.0-8   |2017-08-18 |cran (@1.0-8)   |
+|HSAUR3          |   |1.0-9   |2018-05-28 |cran (@1.0-9)   |
 |knitr           |   |1.20    |2018-02-20 |cran (@1.20)    |
 |lme4            |   |1.1-17  |2018-04-03 |cran (@1.1-17)  |
-|mice            |   |3.0.0   |2018-05-25 |cran (@3.0.0)   |
-|miceadds        |   |2.11-87 |2018-05-21 |cran (@2.11-87) |
+|mice            |*  |3.0.0   |2018-05-25 |cran (@3.0.0)   |
+|miceadds        |   |2.12-24 |2018-06-06 |cran (@2.12-24) |
 |micemd          |   |1.2.0   |2018-01-07 |cran (@1.2.0)   |
 |mitml           |   |0.3-5   |2017-03-15 |cran (@0.3-5)   |
 |mitools         |   |2.3     |2014-09-20 |cran (@2.3)     |
 |pan             |   |1.4     |2016-02-10 |cran (@1.4)     |
 |randomForest    |   |4.6-14  |2018-03-25 |cran (@4.6-14)  |
 |Rcpp            |   |0.12.17 |2018-05-18 |cran (@0.12.17) |
-|rlang           |   |0.2.0   |2018-02-20 |cran (@0.2.0)   |
+|rlang           |   |0.2.1   |2018-05-30 |cran (@0.2.1)   |
 |rmarkdown       |   |1.9     |2018-03-01 |cran (@1.9)     |
 |testthat        |   |2.0.0   |2017-12-13 |cran (@2.0.0)   |
 |tidyr           |   |0.8.1   |2018-05-18 |cran (@0.8.1)   |
@@ -42,19 +42,16 @@
 
 # Check results
 
-13 packages with problems
+10 packages with problems
 
 |package         |version  | errors| warnings| notes|
 |:---------------|:--------|------:|--------:|-----:|
 |CALIBERrfimpute |0.1-6    |      0|        1|     1|
 |dynr            |0.1.12-5 |      1|        0|     0|
-|HardyWeinberg   |1.5.9    |      0|        1|     0|
 |Hmisc           |4.1-1    |      1|        0|     0|
 |JointAI         |0.1.0    |      1|        0|     0|
 |logistf         |1.22     |      1|        0|     1|
-|miceadds        |2.11-87  |      1|        0|     0|
 |miceFast        |0.2.3    |      1|        0|     0|
-|miceMNAR        |1.0      |      1|        0|     0|
 |MissingDataGUI  |0.2-5    |      1|        0|     0|
 |Qtools          |1.3      |      1|        0|     0|
 |rattle          |5.1.0    |      1|        0|     0|
@@ -120,33 +117,6 @@ Installation failed.
 See ‘/Users/buurensv/Package/mice/mice/revdep/checks/dynr.Rcheck/00install.out’ for details.
 ```
 
-## HardyWeinberg (1.5.9)
-Maintainer: Jan Graffelman <jan.graffelman@upc.edu>
-
-0 errors | 1 warning  | 0 notes
-
-```
-checking re-building of vignette outputs ... WARNING
-Error in re-building vignettes:
-  ...
-Loading required package: mice
-Loading required package: lattice
-
-Attaching package: 'mice'
-
-The following objects are masked from 'package:base':
-
-    cbind, rbind
-
-Loading required package: Rsolnp
-
-Error: processing vignette 'HardyWeinberg.Rnw' failed with diagnostics:
- chunk 13 
-Error in edit.setup(data, setup, ...) : nothing left to impute
-Execution halted
-
-```
-
 ## Hmisc (4.1-1)
 Maintainer: Frank E Harrell Jr <f.harrell@vanderbilt.edu>
 
@@ -209,36 +179,6 @@ search.
 See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual.
 ```
 
-## miceadds (2.11-87)
-Maintainer: Alexander Robitzsch <robitzsch@ipn.uni-kiel.de>
-
-1 error  | 0 warnings | 0 notes
-
-```
-checking examples ... ERROR
-Running examples in ‘miceadds-Ex.R’ failed
-The error most likely occurred in:
-
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-> ### Name: mi.anova
-> ### Title: Analysis of Variance for Multiply Imputed Data Sets (Using the
-> ###   D_2 Statistic)
-> ### Aliases: mi.anova
-> ### Keywords: ANOVA mids
-... 8 lines ...
-> library(mice)
-> library(car)
-Loading required package: carData
-> data(nhanes2, package="mice")
-> set.seed(9090)
-> 
-> # nhanes data in one chain and 8 imputed datasets
-> mi.res <- miceadds::mice.1chain( nhanes2, burnin=4, iter=20, Nimp=8 )
-************ BURNIN PHASE | Iterations 1 - 4 ******************
-Error: Argument `formulas` not a list
-Execution halted
-```
-
 ## miceFast (0.2.3)
 Maintainer: Maciej Nasinski <nasinski.maciej@gmail.com>  
 Bug reports: https://github.com/Polkas/miceFast/issues
@@ -251,36 +191,6 @@ Installation failed.
 See ‘/Users/buurensv/Package/mice/mice/revdep/checks/miceFast.Rcheck/00install.out’ for details.
 ```
 
-## miceMNAR (1.0)
-Maintainer: Jacques-Emmanuel Galimard <jacques-emmanuel.galimard@inserm.fr>
-
-1 error  | 0 warnings | 0 notes
-
-```
-checking examples ... ERROR
-Running examples in ‘miceMNAR-Ex.R’ failed
-The error most likely occurred in:
-
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-> ### Name: MNARargument
-> ### Title: Function providing modified arguments for imputation of Missing
-> ###   Not At Random (MNAR) outcomes using 'mice()' function of the "mice"
-> ###   package
-> ### Aliases: MNARargument
-... 48 lines ...
-+                  method = arg$method,
-+                  predictorMatrix = arg$predictorMatrix,
-+                  JointModelEq=arg$JointModelEq,
-+                  control=arg$control,
-+                  maxit=1,m=5)
-
- iter imp variable
-  1   1  hivError in model.frame.default(formula = "ry ~ ry + age + highhiv.1 + condom.1 + smoke.1 + y",  : 
-  'data' must be a data.frame, not a matrix or an array
-Calls: mice ... SemiParBIV -> eval -> eval -> model.frame -> model.frame.default
-Execution halted
-```
-
 ## MissingDataGUI (0.2-5)
 Maintainer: Xiaoyue Cheng <xycheng@unomaha.edu>
 
@@ -288,7 +198,8 @@ Maintainer: Xiaoyue Cheng <xycheng@unomaha.edu>
 
 ```
 checking package dependencies ... ERROR
-Packages required but not available: ‘gWidgetsRGtk2’ ‘cairoDevice’
+Packages required but not available:
+  ‘gWidgetsRGtk2’ ‘GGally’ ‘cairoDevice’ ‘reshape’
 
 See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
 manual.
@@ -318,7 +229,7 @@ Packages required but not available:
 Packages suggested but not available for checking:
   ‘pmml’ ‘ada’ ‘arules’ ‘arulesViz’ ‘biclust’ ‘cba’ ‘descr’ ‘doBy’
   ‘fpc’ ‘ggdendro’ ‘ggraptR’ ‘gWidgetsRGtk2’ ‘hmeasure’ ‘odfWeave’
-  ‘playwith’ ‘rattle.data’ ‘rggobi’ ‘RODBC’ ‘SnowballC’ ‘tm’
+  ‘playwith’ ‘rattle.data’ ‘reshape’ ‘rggobi’ ‘RODBC’ ‘SnowballC’ ‘tm’
   ‘verification’ ‘wskm’ ‘RGtk2Extras’ ‘xgboost’
 
 See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’

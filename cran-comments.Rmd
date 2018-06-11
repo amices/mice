@@ -28,7 +28,7 @@ There was no ERROR, WARNING or NOTE.
 
 local checks of tarball fails:
 
-`$ R CMD CHECK mice_3.0.2.tar.gz`
+`$ R CMD CHECK mice_3.0.9.tar.gz`
 
 yields: 
 `Error: package ‘Rcpp’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version
@@ -61,12 +61,11 @@ Packages with problems + actions
 
 |package         |version  | errors| warnings| notes| My actions
 |:---------------|:--------|------:|--------:|-----:|:---------------------------------
-|CALIBERrfimpute |0.1-6    |      0|        1|     1| showtable() in simstudy_survival defunct - author noted
+|CALIBERrfimpute |0.1-6    |      0|        1|     1| showtable() in simstudy_survival defunct - author will repair
 |dynr            |0.1.12-5 |      1|        0|     0| author noted, needs additional local installs, not further checked
-|HardyWeinberg   |1.5.9    |      0|        1|     0| author will investigate
 |Hmisc           |4.1-1    |      1|        0|     0| installed by hand
 |JointAI         |0.1.0    |      1|        0|     0| depends on external JAGS, not further checked
-|logistf         |1.22     |      1|        0|     1| pooling code not compatible - author noted
+|logistf         |1.22     |      1|        0|     1| summary(pool.RR(fit.list)) error 
 |miceadds        |2.11-87  |      1|        0|     0| several breaking changes, author working on update
 |miceFast        |0.2.3    |      1|        0|     0| C compilation errors
 |miceMNAR        |1.0      |      1|        0|     0| incompatible mice.impute.hecknorm(), author noted
