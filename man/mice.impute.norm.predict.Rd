@@ -5,7 +5,7 @@
 \alias{norm.predict}
 \title{Imputation by linear regression through prediction}
 \usage{
-mice.impute.norm.predict(y, ry, x, wy = NULL, ridge = 1e-05, ...)
+mice.impute.norm.predict(y, ry, x, wy = NULL, ...)
 }
 \arguments{
 \item{y}{Vector to be imputed}
@@ -21,13 +21,6 @@ model is fitted. The \code{ry} generally distinguishes the observed
 \item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
 indicates locations in \code{y} for which imputations are created.}
 
-\item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent 
-problems with multicollinearity. The default is \code{ridge = 1e-05}, 
-which means that 0.01 percent of the diagonal is added to the cross-product. 
-Larger ridges may result in more biased estimates. For highly noisy data 
-(e.g. many junk variables), set \code{ridge = 1e-06} or even lower to 
-reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
-
 \item{...}{Other named arguments.}
 }
 \value{
@@ -40,8 +33,7 @@ known as \emph{regression imputation}.
 }
 \details{
 Calculates regression weights from the observed data and returns predicted
-values to as imputations. The \code{ridge} parameter adds a penalty term
-\code{ridge*diag(xtx)} to the variance-covariance matrix \code{xtx}. This
+values to as imputations. This
 method is known as \emph{regression imputation}.
 }
 \section{Warning}{
@@ -85,6 +77,6 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.ri}}
 }
 \author{
-Stef van Buuren, 2011
+Gerko Vink, Stef van Buuren, 2018
 }
 \keyword{datagen}
