@@ -9,8 +9,7 @@
 #'\code{sum(wy)}
 #'@details
 #'Calculates regression weights from the observed data and returns predicted
-#'values to as imputations. The \code{ridge} parameter adds a penalty term
-#'\code{ridge*diag(xtx)} to the variance-covariance matrix \code{xtx}. This
+#'values to as imputations. This
 #'method is known as \emph{regression imputation}.
 #'@section Warning: THIS METHOD SHOULD NOT BE USED FOR DATA ANALYSIS. 
 #'This method is seductive because it imputes the most 
@@ -24,7 +23,7 @@
 #'At best, prediction can give reasonable estimates of the mean, especially 
 #'if normality assumptions are plausible. See Little and Rubin (2002, p. 62-64)
 #'or Van Buuren (2012, p. 11-13, p. 45-46) for a discussion of this method. 
-#'@author Stef van Buuren, 2011
+#'@author Gerko Vink, Stef van Buuren, 2018
 #'@references 
 #'Little, R.J.A. and Rubin, D.B. (2002). Statistical Analysis with Missing 
 #'Data.  New York: John Wiley and Sons.

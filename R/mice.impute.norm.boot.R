@@ -8,10 +8,8 @@
 #'\code{sum(wy)}
 #'@details
 #'Draws a bootstrap sample from \code{x[ry,]} and \code{y[ry]}, calculates
-#'regression weights and imputes with normal residuals. The \code{ridge}
-#'parameter adds a penalty term \code{ridge*diag(xtx)} to the
-#'variance-covariance matrix \code{xtx}.
-#'@author Stef van Buuren
+#'regression weights and imputes with normal residuals. 
+#'@author Gerko Vink, Stef van Buuren, 2018
 #'@references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 #'Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #'Statistical Software}, \bold{45}(3), 1-67.

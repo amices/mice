@@ -22,7 +22,7 @@
 #'@section Warning: The function does not incorporate the variability of the
 #'regression weights, so it is not 'proper' in the sense of Rubin. For small
 #'samples, variability of the imputed data is therefore underestimated.
-#'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+#'@author Gerko Vink, Stef van Buuren, Karin Groothuis-Oudshoorn, 2018
 #'@seealso \code{\link{mice}}, \code{\link{mice.impute.norm}}
 #'@references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 #'Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
@@ -42,7 +42,7 @@ mice.impute.norm.nob <- function(y, ry, x, wy = NULL, ...) {
   return(x[wy, ] %*% parm$beta + rnorm(sum(wy)) * parm$sigma)
 }
 
-.norm.fix <- function(y, ry, x, ridge = 1e-05, ...) {
+.norm.fix <- function(y, ry, x, ...) {
   p <- estimice(x[ry, , drop = FALSE], y[ry], ...)
   sigma <- sqrt((sum(p$r^2))/(sum(ry) - ncol(x) - 1))
   parm <- list(p$c, sigma)
