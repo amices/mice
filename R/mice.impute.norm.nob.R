@@ -43,17 +43,9 @@ mice.impute.norm.nob <- function(y, ry, x, wy = NULL, ...) {
 }
 
 .norm.fix <- function(y, ry, x, ridge = 1e-05, ...) {
-  xobs <- x[ry, ]
-  yobs <- y[ry]
-  xtx <- t(xobs) %*% xobs
-  pen <- ridge * diag(xtx)
-  if (length(pen) == 1) 
-    pen <- matrix(pen)
-  v <- solve(xtx + diag(pen))
-  coef <- t(yobs %*% xobs %*% v)
-  residuals <- yobs - xobs %*% coef
-  sigma <- sqrt((sum(residuals^2))/(sum(ry) - ncol(x) - 1))
-  parm <- list(coef, sigma)
+  p <- estimice(x[ry, , drop = FALSE], y[ry], ...)
+  sigma <- sqrt((sum(p$r^2))/(sum(ry) - ncol(x) - 1))
+  parm <- list(p$c, sigma)
   names(parm) <- c("beta", "sigma")
   return(parm)
 }

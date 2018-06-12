@@ -19,24 +19,15 @@
 #'@family univariate imputation functions
 #'@keywords datagen
 #'@export
-mice.impute.norm.boot <- function(y, ry, x, wy = NULL, ridge = 1e-05, ...) {
+mice.impute.norm.boot <- function(y, ry, x, wy = NULL, ...) {
   if (is.null(wy)) wy <- !ry
   x <- cbind(1, as.matrix(x))
-  xobs <- x[ry, ]
-  yobs <- y[ry]
   n1 <- sum(ry)
   s <- sample(n1, n1, replace = TRUE)
-  dotxobs <- xobs[s, ]
-  dotyobs <- yobs[s]
-  xtx <- t(dotxobs) %*% dotxobs
-  pen <- ridge * diag(xtx)
-  if (length(pen) == 1) 
-    pen <- matrix(pen)
-  v <- solve(xtx + diag(pen))
-  coef <- t(dotyobs %*% dotxobs %*% v)
-  residuals <- dotyobs - dotxobs %*% coef
-  sigma <- sqrt((sum(residuals^2))/(n1 - ncol(x) - 1))
-  parm <- list(coef, sigma)
-  names(parm) <- c("beta", "sigma")
-  return(x[wy, ] %*% parm$beta + rnorm(sum(wy)) * parm$sigma)
+  ss<-s
+  dotxobs <- x[ry, , drop = FALSE][s, ]
+  dotyobs <- y[ry][s]
+  p <- estimice(dotxobs, dotyobs, ...)
+  sigma <- sqrt((sum(p$r^2))/(n1 - ncol(x) - 1))
+  return(x[wy, ] %*% p$c + rnorm(sum(wy)) * sigma)
 }

@@ -35,16 +35,9 @@
 #'@family univariate imputation functions
 #'@keywords datagen
 #'@export
-mice.impute.norm.predict <- function(y, ry, x, wy = NULL, ridge = 1e-05, ...) {
+mice.impute.norm.predict <- function(y, ry, x, wy = NULL, ...) {
   if (is.null(wy)) wy <- !ry
   x <- cbind(1, as.matrix(x))
-  xobs <- x[ry, , drop = FALSE]
-  yobs <- y[ry]
-  xtx <- t(xobs) %*% xobs
-  pen <- ridge * diag(xtx)
-  if (length(pen) == 1) 
-    pen <- matrix(pen)
-  v <- solve(xtx + diag(pen))
-  coef <- t(yobs %*% xobs %*% v)
-  return(x[wy, , drop = FALSE] %*% coef)
+  p <- estimice(x[ry, , drop = FALSE], y[ry], ...)
+  return(x[wy, , drop = FALSE] %*% p$c)
 }
