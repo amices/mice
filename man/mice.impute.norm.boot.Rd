@@ -5,7 +5,7 @@
 \alias{norm.boot}
 \title{Imputation by linear regression, bootstrap method}
 \usage{
-mice.impute.norm.boot(y, ry, x, wy = NULL, ridge = 1e-05, ...)
+mice.impute.norm.boot(y, ry, x, wy = NULL, ...)
 }
 \arguments{
 \item{y}{Vector to be imputed}
@@ -21,13 +21,6 @@ model is fitted. The \code{ry} generally distinguishes the observed
 \item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
 indicates locations in \code{y} for which imputations are created.}
 
-\item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent 
-problems with multicollinearity. The default is \code{ridge = 1e-05}, 
-which means that 0.01 percent of the diagonal is added to the cross-product. 
-Larger ridges may result in more biased estimates. For highly noisy data 
-(e.g. many junk variables), set \code{ridge = 1e-06} or even lower to 
-reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
-
 \item{...}{Other named arguments.}
 }
 \value{
@@ -39,9 +32,7 @@ Imputes univariate missing data using linear regression with bootstrap
 }
 \details{
 Draws a bootstrap sample from \code{x[ry,]} and \code{y[ry]}, calculates
-regression weights and imputes with normal residuals. The \code{ridge}
-parameter adds a penalty term \code{ridge*diag(xtx)} to the
-variance-covariance matrix \code{xtx}.
+regression weights and imputes with normal residuals.
 }
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
@@ -67,6 +58,6 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.ri}}
 }
 \author{
-Stef van Buuren
+Gerko Vink, Stef van Buuren, 2018
 }
 \keyword{datagen}
