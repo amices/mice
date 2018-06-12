@@ -80,6 +80,6 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.ri}}
 }
 \author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+Gerko Vink, Stef van Buuren, Karin Groothuis-Oudshoorn, 2018
 }
 \keyword{datagen}

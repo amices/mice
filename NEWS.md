@@ -7,9 +7,11 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# mice 3.0.9
+# mice 3.0.10
 
 To be released as `mice 3.1.0`
+
+* Replace duplicate code by `estimice` (#101)
 
 * Better checking for empty methods (#99)
 

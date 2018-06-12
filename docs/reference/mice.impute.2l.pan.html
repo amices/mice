@@ -68,7 +68,7 @@ pan package." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.8</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.10</span>
       </span>
     </div>
 
@@ -250,33 +250,10 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
            <span class='kw'>imputationMethod</span> <span class='kw'>=</span> <span class='no'>impM1</span> , <span class='kw'>maxit</span><span class='kw'>=</span><span class='fl'>1</span> )</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  y</div><div class='input'><span class='co'># multilevel analysis</span>
-<span class='fu'>library</span>(<span class='no'>lme4</span>)
-<span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>( <span class='no'>y</span> ~ ( <span class='fl'>1</span> + <span class='no'>x</span> <span class='kw'>|</span> <span class='no'>group</span>) + <span class='no'>x</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='complete.html'>complete</a></span>(<span class='no'>imp1</span>) )
-<span class='fu'>summary</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt; Linear mixed model fit by REML ['lmerMod']
-#&gt; Formula: y ~ (1 + x | group) + x
-#&gt;    Data: complete(imp1)
-#&gt; 
-#&gt; REML criterion at convergence: 14276
-#&gt; 
-#&gt; Scaled residuals: 
-#&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -3.3797 -0.6672  0.0119  0.6454  4.1122 
-#&gt; 
-#&gt; Random effects:
-#&gt;  Groups   Name        Variance  Std.Dev. Corr
-#&gt;  group    (Intercept) 0.0751726 0.27418      
-#&gt;           x           0.0009225 0.03037  1.00
-#&gt;  Residual             0.9685437 0.98415      
-#&gt; Number of obs: 5000, groups:  group, 250
-#&gt; 
-#&gt; Fixed effects:
-#&gt;             Estimate Std. Error t value
-#&gt; (Intercept) -0.02009    0.02224  -0.903
-#&gt; x            0.27240    0.01435  18.976
-#&gt; 
-#&gt; Correlation of Fixed Effects:
-#&gt;   (Intr)
-#&gt; x 0.106 </div><div class='input'>
+<span class='fu'>library</span>(<span class='no'>lme4</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘Matrix’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:tidyr’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    expand</span></div><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>( <span class='no'>y</span> ~ ( <span class='fl'>1</span> + <span class='no'>x</span> <span class='kw'>|</span> <span class='no'>group</span>) + <span class='no'>x</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='complete.html'>complete</a></span>(<span class='no'>imp1</span>) )</div><div class='output co'>#&gt; <span class='error'>Error in checkFormulaData(formula, data, checkLHS = control$check.formula.LHS ==     "stop"): bad 'data': no applicable method for 'complete_' applied to an object of class "mids"</span></div><div class='input'><span class='fu'>summary</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt; <span class='error'>Error in summary(mod): object 'mod' not found</span></div><div class='input'>
 ############################################
 # Examples of predictorMatrix specification
 

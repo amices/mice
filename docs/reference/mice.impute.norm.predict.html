@@ -65,7 +65,7 @@ known as regression imputation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.8</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.10</span>
       </span>
     </div>
 
@@ -117,7 +117,7 @@ known as <em>regression imputation</em>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>mice.impute.norm.predict</span>(<span class='no'>y</span>, <span class='no'>ry</span>, <span class='no'>x</span>, <span class='kw'>wy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ridge</span> <span class='kw'>=</span> <span class='fl'>1e-05</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>mice.impute.norm.predict</span>(<span class='no'>y</span>, <span class='no'>ry</span>, <span class='no'>x</span>, <span class='kw'>wy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,15 +144,6 @@ model is fitted. The <code>ry</code> generally distinguishes the observed
 indicates locations in <code>y</code> for which imputations are created.</p></td>
     </tr>
     <tr>
-      <th>ridge</th>
-      <td><p>The ridge penalty used in <code>.norm.draw()</code> to prevent 
-problems with multicollinearity. The default is <code>ridge = 1e-05</code>, 
-which means that 0.01 percent of the diagonal is added to the cross-product. 
-Larger ridges may result in more biased estimates. For highly noisy data 
-(e.g. many junk variables), set <code>ridge = 1e-06</code> or even lower to 
-reduce bias. For highly collinear data, set <code>ridge = 1e-04</code> or higher.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>Other named arguments.</p></td>
     </tr>
@@ -166,8 +157,7 @@ reduce bias. For highly collinear data, set <code>ridge = 1e-04</code> or higher
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Calculates regression weights from the observed data and returns predicted
-values to as imputations. The <code>ridge</code> parameter adds a penalty term
-<code>ridge*diag(xtx)</code> to the variance-covariance matrix <code>xtx</code>. This
+values to as imputations. This
 method is known as <em>regression imputation</em>.</p>
     
     <h2 class="hasAnchor" id="warning"><a class="anchor" href="#warning"></a>Warning</h2>
@@ -230,7 +220,7 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 
     <h2>Author</h2>
     
-Stef van Buuren, 2011
+Gerko Vink, Stef van Buuren, 2018
 
   </div>
 </div>
