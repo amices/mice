@@ -183,7 +183,7 @@ importFrom(nnet,nnet)
 importFrom(parallel, clusterExport)
 importFrom(parallel, clusterEvalQ)
 importFrom(parallel, clusterSetRNGStream)
-importFrom(parallel, detectCores
+importFrom(parallel, detectCores)
 importFrom(parallel, makeCluster)
 importFrom(parallel, parLapply)
 importFrom(rlang,.data)
