@@ -6,7 +6,7 @@
 #'
 #'This function relies on package \code{\link{parallel}}, which is a base
 #'package for R versions 2.14.0 and later. We have chosen to use parallel function 
-#'\code{parLapply} to allow the use of \code{parallelMICE} on Mac, Linux and Windows
+#'\code{parLapply} to allow the use of \code{parlmice} on Mac, Linux and Windows
 #'systems. For the same reason, we use the Parallel Socket Cluster (PSOCK) type. 
 #'
 #'On systems other than Windows, it is recommended to change the cluster type to 
@@ -25,7 +25,7 @@
 #'R-script or passed to \code{\link{mice}}) will not result to reproducible results. 
 #'We refer to the manual of \code{\pkg{parallel}} for an explanation on this matter.  
 #'
-#'A vignette describing the use of `parlMICE` can be found in the \code{\pkg{mice}} 
+#'A vignette describing the use of `parlmice` can be found in the \code{\pkg{mice}} 
 #'package or through Github: https://github.com/gerkovink/parallelMICE/blob/master. 
 #'
 #'@aliases parlmice, parlMICE
@@ -38,6 +38,7 @@
 #'@param seed A scalar to be used as the seed value. It is recommended to put the 
 #'seed value here and not outside this function, as otherwise the parallel processes
 #'will be performed with separate, random seeds. 
+#'@param m The number of desired imputated datasets
 #'@param ... Named arguments that are passed down to function \code{\link{mice}} or
 #'\code{\link{makeCluster}}. 
 #'
@@ -54,22 +55,22 @@
 #'Boca Raton, FL.: Chapman & Hall/CRC Press.
 #'@examples
 #'# 150 imputations in dataset nhanes, performed by 3 cores  
-#'result1 <- parlMICE(data = nhanes, n.core = 3, n.imp.core = 50)
+#'result1 <- parlmice(data = nhanes, n.core = 3, n.imp.core = 50)
 #'# Making use of arguments in \code{mice}. 
-#'result2 <- parlMICE(data = nhanes, method = "norm.nob", m = 100)
+#'result2 <- parlmice(data = nhanes, method = "norm.nob", m = 100)
 #'with(result2, lm(bmi ~ hyp))
 #'# On systems other than Windows, use type = "FORK"
-#'result3 <- parlMICE(data = nhanes, type = "FORK", n.imp.core = 100)
+#'result3 <- parlmice(data = nhanes, type = "FORK", n.imp.core = 100)
 #' 
 #'@export
-parlmice <- function(data, n.core = detectCores() - 1, n.imp.core = 2,  
+parlMICE <- function(data, n.core = detectCores() - 1, n.imp.core = 2,  
                      seed = NULL, m = NULL, ...)
-  return(parlMICE(data, n.core = detectCores() - 1, n.imp.core = 2,  
+  return(parlmice(data, n.core = detectCores() - 1, n.imp.core = 2,  
                   seed = NULL, m = NULL, ...))
   
-###'@rdname parlmice
+###'@rdname parlMICE
 ###'@export
-parlMICE <- function(data, n.core = detectCores() - 1, n.imp.core = 2,  
+parlmice <- function(data, n.core = detectCores() - 1, n.imp.core = 2,  
                      seed = NULL, m = NULL, ...){
   cl <- makeCluster(n.core, ...)
   clusterExport(cl, varlist = "data", envir = environment())
@@ -81,7 +82,7 @@ parlMICE <- function(data, n.core = detectCores() - 1, n.imp.core = 2,
     n.imp.core <- ceiling(m / n.core)
   }
   imps <- parLapply(cl = cl, X = 1:n.core, fun = function(i){
-    mice(data, print = FALSE, m = n.imp.core, ...)
+    mice(data, printFlag = FALSE, m = n.imp.core, ...)
   })
   stopCluster(cl)
   imp <- imps[[1]]
