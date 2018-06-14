@@ -68,19 +68,19 @@ parlMICE <- function(data, n.core = detectCores() - 1, n.imp.core = 2,
 ###'@export
 parlmice <- function(data, n.core = detectCores() - 1, n.imp.core = 2,  
                      seed = NULL, m = NULL, ...){
-  cl <- makeCluster(n.core, ...)
-  clusterExport(cl, varlist = "data", envir = environment())
-  clusterEvalQ(cl, library(mice))
+  cl <- parallel::makeCluster(n.core, ...)
+  parallel::clusterExport(cl, varlist = "data", envir = environment())
+  parallel::clusterEvalQ(cl, library(mice))
   if (!is.null(seed)) {
-    clusterSetRNGStream(cl, seed)
+    parallel::clusterSetRNGStream(cl, seed)
   }
   if (!is.null(m)) {
     n.imp.core <- ceiling(m / n.core)
   }
-  imps <- parLapply(cl = cl, X = 1:n.core, fun = function(i){
+  imps <- parallel::parLapply(cl = cl, X = 1:n.core, fun = function(i){
     mice(data, printFlag = FALSE, m = n.imp.core, ...)
   })
-  stopCluster(cl)
+  parallel::stopCluster(cl)
   imp <- imps[[1]]
   if (length(imps) > 1) {
     for (i in 2:length(imps)) {
