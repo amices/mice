@@ -42,7 +42,7 @@
 #'
 #'@author Rianne Schouten, Gerko Vink, 2018
 #'@seealso \code{\link{parallel}}, \code{\link{parLapply}}, \code{\link{makeCluster}},
-#'\code{\link{mice}}, \code{\link{mids-class}}, Vignette \emph{Wrapper function parlMICE}
+#'\code{\link{mice}}, \code{\link{mids-class}}
 #'@references 
 #'Schouten, R. and Vink, G. (2017). parlmice: faster, paraleller, micer. 
 #'\url{https://gerkovink.github.io/parlMICE/Vignette_parlMICE.html}
@@ -56,10 +56,10 @@
 #'result1 <- parlmice(data = nhanes, n.core = 3, n.imp.core = 50)
 #'# Making use of arguments in mice. 
 #'result2 <- parlmice(data = nhanes, method = "norm.nob", m = 100)
-#'with(result2, lm(bmi ~ hyp))
-#'# On systems other than Windows, use type = "FORK"
-#'result3 <- parlmice(data = nhanes, type = "FORK", n.imp.core = 100)
+#'fit <- with(result2, lm(bmi ~ hyp))
+#'pool(fit)
 #' }
+#' 
 #'@export
 parlMICE <- function(data, n.core = detectCores() - 1, n.imp.core = 2,  
                      seed = NULL, m = NULL, ...)

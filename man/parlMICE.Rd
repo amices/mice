@@ -66,10 +66,10 @@ We refer to the manual of \code{\link{parallel}} for an explanation on this matt
 result1 <- parlmice(data = nhanes, n.core = 3, n.imp.core = 50)
 # Making use of arguments in mice. 
 result2 <- parlmice(data = nhanes, method = "norm.nob", m = 100)
-with(result2, lm(bmi ~ hyp))
-# On systems other than Windows, use type = "FORK"
-result3 <- parlmice(data = nhanes, type = "FORK", n.imp.core = 100)
+fit <- with(result2, lm(bmi ~ hyp))
+pool(fit)
 }
+
 }
 \references{
 Schouten, R. and Vink, G. (2017). parlmice: faster, paraleller, micer. 
@@ -80,7 +80,7 @@ Boca Raton, FL.: Chapman & Hall/CRC Press.
 }
 \seealso{
 \code{\link{parallel}}, \code{\link{parLapply}}, \code{\link{makeCluster}},
-\code{\link{mice}}, \code{\link{mids-class}}, Vignette \emph{Wrapper function parlMICE}
+\code{\link{mice}}, \code{\link{mids-class}}
 }
 \author{
 Rianne Schouten, Gerko Vink, 2018
