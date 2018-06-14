@@ -13,8 +13,7 @@
 #'\code{FORK}, as it is better in handling the memory space. When memory issues 
 #'arise on a Windows system, we advise to store the multiply imputed datasets, 
 #'clean the memory by using \code{\link{rm}} and \code{\link{gc}} and make another 
-#'run using the same settings. For more tips about dealing with memory problems, 
-#'we refer to Max Gordon's document *How-to go parallel in R – basics + tips*.
+#'run using the same settings.
 #'
 #'This wrapper function combines the output of \code{\link{parLapply}} with
 #'function \code{\link{ibind}} in \code{\pkg{mice}}. A \code{mids} object is returned
@@ -24,9 +23,6 @@
 #'with argument \code{seed}. Seed values outside the wrapper function (in an 
 #'R-script or passed to \code{\link{mice}}) will not result to reproducible results. 
 #'We refer to the manual of \code{\pkg{parallel}} for an explanation on this matter.  
-#'
-#'A vignette describing the use of `parlmice` can be found in the \code{\pkg{mice}} 
-#'package or through Github: https://github.com/gerkovink/parallelMICE/blob/master. 
 #'
 #'@aliases parlmice, parlMICE
 #'@param data A data frame or matrix containing the incomplete data. Similar to 

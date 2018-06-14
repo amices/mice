@@ -2,9 +2,14 @@
 % Please edit documentation in R/parlmice.R
 \name{parlMICE}
 \alias{parlMICE}
+\alias{parlmice,}
+\alias{parlmice}
 \title{Wrapper function that runs MICE in parallel}
 \usage{
 parlMICE(data, n.core = detectCores() - 1, n.imp.core = 2, seed = NULL,
+  m = NULL, ...)
+
+parlmice(data, n.core = detectCores() - 1, n.imp.core = 2, seed = NULL,
   m = NULL, ...)
 }
 \arguments{
@@ -21,6 +26,8 @@ total number of imputations will be equal to n.core * n.imp.core.}
 seed value here and not outside this function, as otherwise the parallel processes
 will be performed with separate, random seeds.}
 
+\item{m}{The number of desired imputated datasets}
+
 \item{...}{Named arguments that are passed down to function \code{\link{mice}} or
 \code{\link{makeCluster}}.}
 }
@@ -35,15 +42,14 @@ procedure can be sped up, which may be useful in general.
 \details{
 This function relies on package \code{\link{parallel}}, which is a base
 package for R versions 2.14.0 and later. We have chosen to use parallel function 
-\code{parLapply} to allow the use of \code{parallelMICE} on Mac, Linux and Windows
+\code{parLapply} to allow the use of \code{parlmice} on Mac, Linux and Windows
 systems. For the same reason, we use the Parallel Socket Cluster (PSOCK) type.
 
 On systems other than Windows, it is recommended to change the cluster type to 
 \code{FORK}, as it is better in handling the memory space. When memory issues 
 arise on a Windows system, we advise to store the multiply imputed datasets, 
 clean the memory by using \code{\link{rm}} and \code{\link{gc}} and make another 
-run using the same settings. For more tips about dealing with memory problems, 
-we refer to Max Gordon's document *How-to go parallel in R – basics + tips*.
+run using the same settings.
 
 This wrapper function combines the output of \code{\link{parLapply}} with
 function \code{\link{ibind}} in \code{\pkg{mice}}. A \code{mids} object is returned
@@ -53,18 +59,15 @@ Note that if a seed value is desired, the seed should be entered to this functio
 with argument \code{seed}. Seed values outside the wrapper function (in an 
 R-script or passed to \code{\link{mice}}) will not result to reproducible results. 
 We refer to the manual of \code{\pkg{parallel}} for an explanation on this matter.
-
-A vignette describing the use of `parlMICE` can be found in the \code{\pkg{mice}} 
-package or through Github: https://github.com/gerkovink/parallelMICE/blob/master.
 }
 \examples{
 # 150 imputations in dataset nhanes, performed by 3 cores  
-result1 <- parlMICE(data = nhanes, n.core = 3, n.imp.core = 50)
+result1 <- parlmice(data = nhanes, n.core = 3, n.imp.core = 50)
 # Making use of arguments in \\code{mice}. 
-result2 <- parlMICE(data = nhanes, method = "norm.nob", m = 100)
+result2 <- parlmice(data = nhanes, method = "norm.nob", m = 100)
 with(result2, lm(bmi ~ hyp))
 # On systems other than Windows, use type = "FORK"
-result3 <- parlMICE(data = nhanes, type = "FORK", n.imp.core = 100)
+result3 <- parlmice(data = nhanes, type = "FORK", n.imp.core = 100)
 
 }
 \references{
@@ -79,5 +82,5 @@ Boca Raton, FL.: Chapman & Hall/CRC Press.
 \code{\link{mice}}, \code{\link{mids-class}}, Vignette \emph{Wrapper function parlMICE}
 }
 \author{
-Rianne Schouten, Gerko Vink, 2016, with many thanks to Max Gordon.
+Rianne Schouten, Gerko Vink, 2018
 }
