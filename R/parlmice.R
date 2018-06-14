@@ -62,9 +62,15 @@
 #'result3 <- parlMICE(data = nhanes, type = "FORK", n.imp.core = 100)
 #' 
 #'@export
+parlmice <- function(data, n.core = detectCores() - 1, n.imp.core = 2,  
+                     seed = NULL, m = NULL, ...)
+  return(parlMICE(data, n.core = detectCores() - 1, n.imp.core = 2,  
+                  seed = NULL, m = NULL, ...))
+  
+###'@rdname parlmice
+###'@export
 parlMICE <- function(data, n.core = detectCores() - 1, n.imp.core = 2,  
                      seed = NULL, m = NULL, ...){
-  suppressMessages(require(parallel))
   cl <- makeCluster(n.core, ...)
   clusterExport(cl, varlist = "data", envir = environment())
   clusterEvalQ(cl, library(mice))
