@@ -16,13 +16,13 @@
 #'run using the same settings.
 #'
 #'This wrapper function combines the output of \code{\link{parLapply}} with
-#'function \code{\link{ibind}} in \code{\pkg{mice}}. A \code{mids} object is returned
+#'function \code{\link{ibind}} in \code{\link{mice}}. A \code{mids} object is returned
 #'and can be used for further analyses. 
 #'
 #'Note that if a seed value is desired, the seed should be entered to this function
 #'with argument \code{seed}. Seed values outside the wrapper function (in an 
 #'R-script or passed to \code{\link{mice}}) will not result to reproducible results. 
-#'We refer to the manual of \code{\pkg{parallel}} for an explanation on this matter.  
+#'We refer to the manual of \code{\link{parallel}} for an explanation on this matter.  
 #'
 #'@aliases parlmice, parlMICE
 #'@param data A data frame or matrix containing the incomplete data. Similar to 
@@ -41,23 +41,25 @@
 #'@return A mids object as defined by \code{\link{mids-class}}
 #'
 #'@author Rianne Schouten, Gerko Vink, 2018
-#'@seealso \code{\pkg{parallel}}, \code{\link{parLapply}}, \code{\link{makeCluster}},
+#'@seealso \code{\link{parallel}}, \code{\link{parLapply}}, \code{\link{makeCluster}},
 #'\code{\link{mice}}, \code{\link{mids-class}}, Vignette \emph{Wrapper function parlMICE}
 #'@references 
-#'Gordon, M. (2015). How-to go parallel in R – basics + tips. Available through 
-#'[link](http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/)
+#'Schouten, R. and Vink, G. (2017). parlmice: faster, paraleller, micer. 
+#'\url{https://gerkovink.github.io/parlMICE/Vignette_parlMICE.html}
 #'
 #'Van Buuren, S. (2012). \emph{Flexible imputation of missing data.} 
 #'Boca Raton, FL.: Chapman & Hall/CRC Press.
+#'
 #'@examples
 #'# 150 imputations in dataset nhanes, performed by 3 cores  
+#'\donttest{
 #'result1 <- parlmice(data = nhanes, n.core = 3, n.imp.core = 50)
-#'# Making use of arguments in \code{mice}. 
+#'# Making use of arguments in mice. 
 #'result2 <- parlmice(data = nhanes, method = "norm.nob", m = 100)
 #'with(result2, lm(bmi ~ hyp))
 #'# On systems other than Windows, use type = "FORK"
 #'result3 <- parlmice(data = nhanes, type = "FORK", n.imp.core = 100)
-#' 
+#' }
 #'@export
 parlMICE <- function(data, n.core = detectCores() - 1, n.imp.core = 2,  
                      seed = NULL, m = NULL, ...)
