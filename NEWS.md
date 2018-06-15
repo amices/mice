@@ -7,9 +7,11 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# mice 3.0.10
+# mice 3.0.11
 
 To be released as `mice 3.1.0`
+
+* Incorporate suggestion of @JoergMBeyer to `flux` (#102)
 
 * Replace duplicate code by `estimice` (#101)
 
