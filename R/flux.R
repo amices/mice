@@ -52,6 +52,7 @@
 #'@keywords misc
 #'@export
 flux <- function(data, local=names(data)){
+  .avg <- function(row) sum(row, na.rm = TRUE)/(length(row) - 1)
   ## calculates influx and outflux statistics
   ## of the missing data pattern
   x <- colMeans(!is.na(data))
@@ -60,8 +61,8 @@ flux <- function(data, local=names(data)){
   pat$rm <- pat$rm[local,,drop=FALSE]
   pat$mr <- pat$mr[local,,drop=FALSE]
   pat$mm <- pat$mm[local,,drop=FALSE]
-  ainb <- apply(pat$mr/(pat$mr+pat$mm), 1, mean)
-  aout <- apply(pat$rm/(pat$rm+pat$rr), 1, mean)
+  ainb <- apply(pat$mr/(pat$mr + pat$mm), 1, .avg)
+  aout <- apply(pat$rm/(pat$rm + pat$rr), 1, .avg)
   fico <- fico(data)
   outflux <-  rowSums(pat$rm)/(rowSums(pat$rm+pat$mm))
   influx <- rowSums(pat$mr)/(rowSums(pat$mr+pat$rr))
