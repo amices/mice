@@ -32,6 +32,7 @@ reference:
     contents:
       - mice
       - mice.mids
+      - parlmice
   - title: "Elementary imputation functions"
     desc: > 
       Elementary imputation functions are work horses that create 
