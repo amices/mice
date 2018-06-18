@@ -19,6 +19,8 @@
 #'                      packageDescription methods packageVersion
 #'@importFrom MASS      eqscplot lda mvrnorm polr truehist ginv
 #'@importFrom nnet      multinom nnet
+#'@importFrom parallel  clusterEvalQ clusterExport clusterSetRNGStream detectCores
+#'                      makeCluster parLapply stopCluster
 #'@importFrom rpart     rpart rpart.control
 #'@importFrom Rcpp      sourceCpp
 #'@importFrom lattice   bwplot densityplot xyplot stripplot

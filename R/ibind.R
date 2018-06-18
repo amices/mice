@@ -52,9 +52,9 @@ ibind <- function(x, y) {
     stop("Differences detected between `x$post` and `y$post`")
   if (!identical(x$blots, y$blots))
     stop("Differences detected between `x$blots` and `y$blots`")
-  
   visitSequence <- x$visitSequence
   imp <- vector("list", ncol(x$data))
+  names(imp) <- names(x$data)
   for (j in visitSequence) {
     imp[[j]] <- cbind(x$imp[[j]], y$imp[[j]])
   }
