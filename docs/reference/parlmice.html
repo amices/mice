@@ -21,16 +21,13 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
-
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
 <!-- docsearch -->
-<script src="../docsearch.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 <link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
@@ -69,7 +66,7 @@ procedure can be sped up, which may be useful in general." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.0.12</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.1.0</span>
       </span>
     </div>
 
@@ -197,8 +194,9 @@ We refer to the manual of <code>parallel</code> for an explanation on this matte
 
     <p>Schouten, R. and Vink, G. (2017). parlmice: faster, paraleller, micer. 
 <a href='https://gerkovink.github.io/parlMICE/Vignette_parlMICE.html'>https://gerkovink.github.io/parlMICE/Vignette_parlMICE.html</a></p>
-<p>Van Buuren, S. (2012). <em>Flexible imputation of missing data.</em> 
-Boca Raton, FL.: Chapman &amp; Hall/CRC Press.</p>
+<p>#'Van Buuren, S. (2018). 
+<a href='https://stefvanbuuren.name/fimd/parallel-computation.html'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
+Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -214,12 +212,12 @@ Boca Raton, FL.: Chapman &amp; Hall/CRC Press.</p>
 <span class='no'>imp2</span>$<span class='no'>method</span></div><div class='output co'>#&gt;        age        bmi        hyp        chl 
 #&gt;         "" "norm.nob" "norm.nob" "norm.nob" </div><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>with</span>(<span class='no'>imp2</span>, <span class='fu'>lm</span>(<span class='no'>bmi</span> ~ <span class='no'>hyp</span>))
 <span class='fu'><a href='pool.html'>pool</a></span>(<span class='no'>fit</span>)</div><div class='output co'>#&gt; Class: mipo    m = 100 
-#&gt;               estimate     ubar        b         t dfcom       df       riv
-#&gt; (Intercept) 26.2411051 7.919828 3.127161 11.078260    23 14.99103 0.3988007
-#&gt; hyp          0.1985659 4.645623 1.725240  6.388116    23 15.26253 0.3750825
+#&gt;              estimate     ubar        b         t dfcom       df       riv
+#&gt; (Intercept) 26.195523 7.883155 3.201089 11.116255    23 14.86469 0.4101276
+#&gt; hyp          0.269233 4.594263 1.712259  6.323645    23 15.24694 0.3764219
 #&gt;                lambda       fmi
-#&gt; (Intercept) 0.2851019 0.3645746
-#&gt; hyp         0.2727709 0.3524126</div><div class='input'>
+#&gt; (Intercept) 0.2908443 0.3702362
+#&gt; hyp         0.2734786 0.3531107</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
