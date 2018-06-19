@@ -5,7 +5,6 @@ Package built by
 
 ``` r
 library("devtools")
-build_vignettes()
 build()
 ```
 
@@ -17,14 +16,14 @@ Test environments
 -   local OS X install, 10.13.4, R 3.5.0
 -   win-builder, using `devtools::build_win()`
 
-There was no ERROR, WARNING or NOTE.
+Status: OK
 
 R CMD check results
 -------------------
 
 local checks of tarball fails:
 
-`$ R CMD CHECK mice_3.0.2.tar.gz`
+`$ R CMD CHECK mice_3.1.0.tar.gz`
 
 yields: `Error: package ‘Rcpp’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version Execution halted`
 
@@ -49,125 +48,23 @@ revdep_check_print_problems()
 
 There were 47 reverse dependencies.
 
-Packages with problems + actions
+10 packages with problems + actions
 
-<table>
-<colgroup>
-<col width="19%" />
-<col width="11%" />
-<col width="9%" />
-<col width="11%" />
-<col width="8%" />
-<col width="40%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">package</th>
-<th align="left">version</th>
-<th align="right">errors</th>
-<th align="right">warnings</th>
-<th align="right">notes</th>
-<th align="left">My actions</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">CALIBERrfimpute</td>
-<td align="left">0.1-6</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="left">showtable() in simstudy_survival defunct - author will repair</td>
-</tr>
-<tr class="even">
-<td align="left">dynr</td>
-<td align="left">0.1.12-5</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">author noted, needs additional local installs, not further checked</td>
-</tr>
-<tr class="odd">
-<td align="left">Hmisc</td>
-<td align="left">4.1-1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">installed by hand</td>
-</tr>
-<tr class="even">
-<td align="left">JointAI</td>
-<td align="left">0.1.0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">depends on external JAGS, not further checked</td>
-</tr>
-<tr class="odd">
-<td align="left">logistf</td>
-<td align="left">1.22</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">summary(pool.RR(fit.list)) error</td>
-</tr>
-<tr class="even">
-<td align="left">miceadds</td>
-<td align="left">2.11-87</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">several breaking changes, author working on update</td>
-</tr>
-<tr class="odd">
-<td align="left">miceFast</td>
-<td align="left">0.2.3</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">C compilation errors</td>
-</tr>
-<tr class="even">
-<td align="left">miceMNAR</td>
-<td align="left">1.0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">incompatible mice.impute.hecknorm(), author noted</td>
-</tr>
-<tr class="odd">
-<td align="left">MissingDataGUI</td>
-<td align="left">0.2-5</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">'gWidgetsRGtk2', 'cairoDevice' not available</td>
-</tr>
-<tr class="even">
-<td align="left">Qtools</td>
-<td align="left">1.3</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">fortran compilation errors, author noted</td>
-</tr>
-<tr class="odd">
-<td align="left">rattle</td>
-<td align="left">5.1.0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">'cairoDevice' not available</td>
-</tr>
-<tr class="even">
-<td align="left">weightTAPSPACK</td>
-<td align="left">0.1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">package &quot;HotDeckImputation&quot; not available</td>
-</tr>
-</tbody>
-</table>
+| package        | version  |  errors|  warnings|  notes| My actions                                           |
+|:---------------|:---------|-------:|---------:|------:|:-----------------------------------------------------|
+| dynr           | 0.1.12-5 |       1|         0|      0| needs additional local installs, not further checked |
+| Hmisc          | 4.1-1    |       1|         0|      0| installed by hand                                    |
+| JointAI        | 0.1.0    |       1|         0|      0| depends on external JAGS, not further checked        |
+| logistf        | 1.22     |       1|         0|      1| summary(pool.RR(fit.list)) error                     |
+| miceFast       | 0.2.3    |       1|         0|      0| C compilation errors                                 |
+| MissingDataGUI | 0.2-5    |       1|         0|      0| 'gWidgetsRGtk2', 'cairoDevice' not available         |
+| NNLM           | 0.4.2    |       1|         0|      0| fails to install                                     |
+| Qtools         | 1.3      |       1|         0|      0| fortran compilation errors, author noted             |
+| rattle         | 5.1.0    |       1|         0|      0| 'cairoDevice' not available                          |
+| weightTAPSPACK | 0.1      |       1|         0|      0| package "HotDeckImputation" not available            |
+
+-   Failed to install dependencies for: MissingDataGUI, rattle, weightTAPSPACK
+-   Failed to install: dynr, Hmisc, JointAI, miceFast, NNLM, Qtools
+-   logistf: checking examples ... ERROR
 
 See <https://github.com/stefvanbuuren/mice/blob/master/revdep/problems.md>
