@@ -7,32 +7,19 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# mice 3.0.12
-
-To be released as `mice 3.1.0`
+# mice 3.1.0
 
 * New parallel functionality: `parlmice` (#104)
-
 * Incorporate suggestion of @JoergMBeyer to `flux` (#102)
-
 * Replace duplicate code by `estimice` (#101)
-
 * Better checking for empty methods (#99)
-
 * Remove problem with `parent.frame` (#98)
-
 * Set empty method for complete data (#93)
-
 * Add `NEWS.md`, `index.Rmd` and online package documentation
-
 * Track `.R` instead of `.r`
-
 * Patch issue with `updateLog` (#8, @alexanderrobitzsch)
-
 * Extend README
-
 * Repair issue `md.pattern` (#90)
-
 * Repair check on `m` (#89)
 
 # mice 3.0.0 
