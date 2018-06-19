@@ -6,11 +6,11 @@
 |:--------|:----------------------------|
 |version  |R version 3.5.0 (2018-04-23) |
 |system   |x86_64, darwin15.6.0         |
-|ui       |RStudio (1.1.447)            |
+|ui       |RStudio (1.1.453)            |
 |language |(EN)                         |
 |collate  |nl_NL.UTF-8                  |
 |tz       |Europe/Amsterdam             |
-|date     |2018-06-09                   |
+|date     |2018-06-19                   |
 
 ## Packages
 
@@ -19,10 +19,10 @@
 |AGD             |   |0.39    |2018-05-29 |cran (@0.39)    |
 |broom           |   |0.4.4   |2018-03-29 |cran (@0.4.4)   |
 |BSDA            |   |1.2.0   |2017-07-30 |cran (@1.2.0)   |
-|CALIBERrfimpute |   |0.1-6   |2014-05-07 |cran (@0.1-6)   |
+|CALIBERrfimpute |   |1.0-1   |2018-06-11 |cran (@1.0-1)   |
 |dplyr           |   |0.7.5   |2018-05-19 |cran (@0.7.5)   |
 |DPpackage       |   |1.1-7.4 |2018-01-06 |cran (@1.1-7.4) |
-|gamlss          |   |5.0-8   |2018-04-30 |cran (@5.0-8)   |
+|gamlss          |   |5.1-0   |2018-06-08 |cran (@5.1-0)   |
 |HSAUR3          |   |1.0-9   |2018-05-28 |cran (@1.0-9)   |
 |knitr           |   |1.20    |2018-02-20 |cran (@1.20)    |
 |lme4            |   |1.1-17  |2018-04-03 |cran (@1.1-17)  |
@@ -35,7 +35,7 @@
 |randomForest    |   |4.6-14  |2018-03-25 |cran (@4.6-14)  |
 |Rcpp            |   |0.12.17 |2018-05-18 |cran (@0.12.17) |
 |rlang           |   |0.2.1   |2018-05-30 |cran (@0.2.1)   |
-|rmarkdown       |   |1.9     |2018-03-01 |cran (@1.9)     |
+|rmarkdown       |   |1.10    |2018-06-11 |cran (@1.10)    |
 |testthat        |   |2.0.0   |2017-12-13 |cran (@2.0.0)   |
 |tidyr           |   |0.8.1   |2018-05-18 |cran (@0.8.1)   |
 |Zelig           |   |5.1.6   |2018-02-27 |cran (@5.1.6)   |
@@ -44,67 +44,18 @@
 
 10 packages with problems
 
-|package         |version  | errors| warnings| notes|
-|:---------------|:--------|------:|--------:|-----:|
-|CALIBERrfimpute |0.1-6    |      0|        1|     1|
-|dynr            |0.1.12-5 |      1|        0|     0|
-|Hmisc           |4.1-1    |      1|        0|     0|
-|JointAI         |0.1.0    |      1|        0|     0|
-|logistf         |1.22     |      1|        0|     1|
-|miceFast        |0.2.3    |      1|        0|     0|
-|MissingDataGUI  |0.2-5    |      1|        0|     0|
-|Qtools          |1.3      |      1|        0|     0|
-|rattle          |5.1.0    |      1|        0|     0|
-|weightTAPSPACK  |0.1      |      1|        0|     0|
-
-## CALIBERrfimpute (0.1-6)
-Maintainer: Anoop Shah <anoop@doctors.org.uk>
-
-0 errors | 1 warning  | 1 note 
-
-```
-checking re-building of vignette outputs ... WARNING
-Error in re-building vignettes:
-  ...
-Loading required package: mice
-Loading required package: lattice
-
-Attaching package: ‘mice’
-
-The following objects are masked from ‘package:base’:
-
-    cbind, rbind
-
-Loading required package: randomForest
-randomForest 4.6-14
-Type rfNews() to see new features/changes/bug fixes.
-Loading required package: foreach
-Loading required package: itertools
-Loading required package: iterators
-Warning in parallel::mclapply(1:N, doanalysis) :
-  all scheduled cores encountered errors in user code
-
-Error: processing vignette 'simstudy_survival.Rnw' failed with diagnostics:
- chunk 9 
-Error in x[[method]] : subscript out of bounds
-Execution halted
-
-
-checking R code for possible problems ... NOTE
-makemar : predictions: no visible global function definition for
-  ‘rbinom’
-mice.impute.rfcat : <anonymous>: no visible global function definition
-  for ‘predict’
-mice.impute.rfcont: no visible global function definition for ‘predict’
-mice.impute.rfcont: no visible global function definition for ‘rnorm’
-simdata: no visible global function definition for ‘rbinom’
-simdata: no visible global function definition for ‘rnorm’
-Undefined global functions or variables:
-  predict rbinom rnorm
-Consider adding
-  importFrom("stats", "predict", "rbinom", "rnorm")
-to your NAMESPACE file.
-```
+|package        |version  | errors| warnings| notes|
+|:--------------|:--------|------:|--------:|-----:|
+|dynr           |0.1.12-5 |      1|        0|     0|
+|Hmisc          |4.1-1    |      1|        0|     0|
+|JointAI        |0.1.0    |      1|        0|     0|
+|logistf        |1.22     |      1|        0|     1|
+|miceFast       |0.2.3    |      1|        0|     0|
+|MissingDataGUI |0.2-5    |      1|        0|     0|
+|NNLM           |0.4.2    |      1|        0|     0|
+|Qtools         |1.3      |      1|        0|     0|
+|rattle         |5.1.0    |      1|        0|     0|
+|weightTAPSPACK |0.1      |      1|        0|     0|
 
 ## dynr (0.1.12-5)
 Maintainer: Michael D. Hunter <mhunter.ou@gmail.com>
@@ -205,6 +156,18 @@ See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
 manual.
 ```
 
+## NNLM (0.4.2)
+Maintainer: Xihui Lin <ericxihuilin@gmail.com>  
+Bug reports: https://github.com/linxihui/NNLM/issues
+
+1 error  | 0 warnings | 0 notes
+
+```
+checking whether package ‘NNLM’ can be installed ... ERROR
+Installation failed.
+See ‘/Users/buurensv/Package/mice/mice/revdep/checks/NNLM.Rcheck/00install.out’ for details.
+```
+
 ## Qtools (1.3)
 Maintainer: Marco Geraci <geraci@mailbox.sc.edu>
 
@@ -229,8 +192,8 @@ Packages required but not available:
 Packages suggested but not available for checking:
   ‘pmml’ ‘ada’ ‘arules’ ‘arulesViz’ ‘biclust’ ‘cba’ ‘descr’ ‘doBy’
   ‘fpc’ ‘ggdendro’ ‘ggraptR’ ‘gWidgetsRGtk2’ ‘hmeasure’ ‘odfWeave’
-  ‘playwith’ ‘rattle.data’ ‘reshape’ ‘rggobi’ ‘RODBC’ ‘SnowballC’ ‘tm’
-  ‘verification’ ‘wskm’ ‘RGtk2Extras’ ‘xgboost’
+  ‘party’ ‘playwith’ ‘rattle.data’ ‘reshape’ ‘rggobi’ ‘RODBC’
+  ‘SnowballC’ ‘tm’ ‘verification’ ‘wskm’ ‘RGtk2Extras’ ‘xgboost’
 
 See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
 manual.

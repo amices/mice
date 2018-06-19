@@ -90,6 +90,9 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
 }
@@ -143,7 +146,7 @@ $(document).ready(function () {
 </tr>
 <tr class="odd">
 <td align="left">ui</td>
-<td align="left">RStudio (1.1.447)</td>
+<td align="left">RStudio (1.1.453)</td>
 </tr>
 <tr class="even">
 <td align="left">language</td>
@@ -159,7 +162,7 @@ $(document).ready(function () {
 </tr>
 <tr class="odd">
 <td align="left">date</td>
-<td align="left">2018-06-09</td>
+<td align="left">2018-06-19</td>
 </tr>
 </tbody>
 </table>
@@ -201,9 +204,9 @@ $(document).ready(function () {
 <tr class="even">
 <td align="left">CALIBERrfimpute</td>
 <td align="left"></td>
-<td align="left">0.1-6</td>
-<td align="left">2014-05-07</td>
-<td align="left">cran (<span class="citation">@0.1-6</span>)</td>
+<td align="left">1.0-1</td>
+<td align="left">2018-06-11</td>
+<td align="left">cran (<span class="citation">@1.0-1</span>)</td>
 </tr>
 <tr class="odd">
 <td align="left">dplyr</td>
@@ -222,9 +225,9 @@ $(document).ready(function () {
 <tr class="odd">
 <td align="left">gamlss</td>
 <td align="left"></td>
-<td align="left">5.0-8</td>
-<td align="left">2018-04-30</td>
-<td align="left">cran (<span class="citation">@5.0-8</span>)</td>
+<td align="left">5.1-0</td>
+<td align="left">2018-06-08</td>
+<td align="left">cran (<span class="citation">@5.1-0</span>)</td>
 </tr>
 <tr class="even">
 <td align="left">HSAUR3</td>
@@ -313,9 +316,9 @@ $(document).ready(function () {
 <tr class="even">
 <td align="left">rmarkdown</td>
 <td align="left"></td>
-<td align="left">1.9</td>
-<td align="left">2018-03-01</td>
-<td align="left">cran (<span class="citation">@1.9</span>)</td>
+<td align="left">1.10</td>
+<td align="left">2018-06-11</td>
+<td align="left">cran (<span class="citation">@1.10</span>)</td>
 </tr>
 <tr class="odd">
 <td align="left">testthat</td>
@@ -357,50 +360,50 @@ $(document).ready(function () {
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">CALIBERrfimpute</td>
-<td align="left">0.1-6</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
 <td align="left">dynr</td>
 <td align="left">0.1.12-5</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Hmisc</td>
 <td align="left">4.1-1</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">JointAI</td>
 <td align="left">0.1.0</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">logistf</td>
 <td align="left">1.22</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">miceFast</td>
 <td align="left">0.2.3</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">MissingDataGUI</td>
 <td align="left">0.2-5</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">NNLM</td>
+<td align="left">0.4.2</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -428,52 +431,6 @@ $(document).ready(function () {
 </tr>
 </tbody>
 </table>
-<div id="caliberrfimpute-0.1-6" class="section level2">
-<h2>CALIBERrfimpute (0.1-6)</h2>
-<p>Maintainer: Anoop Shah <a href="mailto:anoop@doctors.org.uk">anoop@doctors.org.uk</a></p>
-<p>0 errors | 1 warning | 1 note</p>
-<pre><code>checking re-building of vignette outputs ... WARNING
-Error in re-building vignettes:
-  ...
-Loading required package: mice
-Loading required package: lattice
-
-Attaching package: ‘mice’
-
-The following objects are masked from ‘package:base’:
-
-    cbind, rbind
-
-Loading required package: randomForest
-randomForest 4.6-14
-Type rfNews() to see new features/changes/bug fixes.
-Loading required package: foreach
-Loading required package: itertools
-Loading required package: iterators
-Warning in parallel::mclapply(1:N, doanalysis) :
-  all scheduled cores encountered errors in user code
-
-Error: processing vignette 'simstudy_survival.Rnw' failed with diagnostics:
- chunk 9 
-Error in x[[method]] : subscript out of bounds
-Execution halted
-
-
-checking R code for possible problems ... NOTE
-makemar : predictions: no visible global function definition for
-  ‘rbinom’
-mice.impute.rfcat : &lt;anonymous&gt;: no visible global function definition
-  for ‘predict’
-mice.impute.rfcont: no visible global function definition for ‘predict’
-mice.impute.rfcont: no visible global function definition for ‘rnorm’
-simdata: no visible global function definition for ‘rbinom’
-simdata: no visible global function definition for ‘rnorm’
-Undefined global functions or variables:
-  predict rbinom rnorm
-Consider adding
-  importFrom(&quot;stats&quot;, &quot;predict&quot;, &quot;rbinom&quot;, &quot;rnorm&quot;)
-to your NAMESPACE file.</code></pre>
-</div>
 <div id="dynr-0.1.12-5" class="section level2">
 <h2>dynr (0.1.12-5)</h2>
 <p>Maintainer: Michael D. Hunter <a href="mailto:mhunter.ou@gmail.com">mhunter.ou@gmail.com</a></p>
@@ -555,6 +512,15 @@ Packages required but not available:
 See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
 manual.</code></pre>
 </div>
+<div id="nnlm-0.4.2" class="section level2">
+<h2>NNLM (0.4.2)</h2>
+<p>Maintainer: Xihui Lin <a href="mailto:ericxihuilin@gmail.com">ericxihuilin@gmail.com</a><br />
+Bug reports: <a href="https://github.com/linxihui/NNLM/issues" class="uri">https://github.com/linxihui/NNLM/issues</a></p>
+<p>1 error | 0 warnings | 0 notes</p>
+<pre><code>checking whether package ‘NNLM’ can be installed ... ERROR
+Installation failed.
+See ‘/Users/buurensv/Package/mice/mice/revdep/checks/NNLM.Rcheck/00install.out’ for details.</code></pre>
+</div>
 <div id="qtools-1.3" class="section level2">
 <h2>Qtools (1.3)</h2>
 <p>Maintainer: Marco Geraci <a href="mailto:geraci@mailbox.sc.edu">geraci@mailbox.sc.edu</a></p>
@@ -574,8 +540,8 @@ Packages required but not available:
 Packages suggested but not available for checking:
   ‘pmml’ ‘ada’ ‘arules’ ‘arulesViz’ ‘biclust’ ‘cba’ ‘descr’ ‘doBy’
   ‘fpc’ ‘ggdendro’ ‘ggraptR’ ‘gWidgetsRGtk2’ ‘hmeasure’ ‘odfWeave’
-  ‘playwith’ ‘rattle.data’ ‘reshape’ ‘rggobi’ ‘RODBC’ ‘SnowballC’ ‘tm’
-  ‘verification’ ‘wskm’ ‘RGtk2Extras’ ‘xgboost’
+  ‘party’ ‘playwith’ ‘rattle.data’ ‘reshape’ ‘rggobi’ ‘RODBC’
+  ‘SnowballC’ ‘tm’ ‘verification’ ‘wskm’ ‘RGtk2Extras’ ‘xgboost’
 
 See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
 manual.</code></pre>
