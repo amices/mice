@@ -77,8 +77,9 @@ pool(fit)
 Schouten, R. and Vink, G. (2017). parlmice: faster, paraleller, micer. 
 \url{https://gerkovink.github.io/parlMICE/Vignette_parlMICE.html}
 
-Van Buuren, S. (2012). \emph{Flexible imputation of missing data.} 
-Boca Raton, FL.: Chapman & Hall/CRC Press.
+#'Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/parallel-computation.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
 \code{\link{parallel}}, \code{\link{parLapply}}, \code{\link{makeCluster}},
