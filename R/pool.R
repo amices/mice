@@ -46,6 +46,12 @@
 #'
 #'@param object An object of class \code{mira} (produced by \code{with.mids()} 
 #'or \code{as.mira()}), or a \code{list} with model fits.
+#'@param dfcom A positive number representing the degrees of freedom in the
+#'complete-data analysis. The default (\code{dfcom = NULL}) is to 
+#'extract this information from the first fitted model. When that fails 
+#'the warning \code{"Large sample assumed"} is printed, and the 
+#'parameter is set \code{dfcom = 999999}. Use the \code{dfcom} parameter
+#'to specify the correct degrees of freedom.
 #'@return An object of class \code{mipo}, which stands for 'multiple imputation
 #'pooled outcome'. 
 #'@seealso \code{\link{with.mids}}, \code{\link{as.mira}}, 
@@ -66,8 +72,9 @@
 #'fit <- with(data = imp, exp = lm(bmi ~ hyp + chl))
 #'summary(pool(fit))
 #'@export
-pool <- function (object) {
+pool <- function (object, dfcom = NULL) {
   call <- match.call()
+  
   if (!is.list(object)) stop("Argument 'object' not a list", call. = FALSE)
   object <- as.mira(object)
   m <- length(object$analyses)
@@ -79,22 +86,28 @@ pool <- function (object) {
     return(fa)
   }
   
-  pooled <- pool.fitlist(getfit(object))
+  pooled <- pool.fitlist(getfit(object), dfcom = dfcom)
   rr <- list(call = call, m = m, pooled = pooled)
   class(rr) <- c("mipo", "data.frame")
   rr
 }
 
-pool.fitlist <- function (fitlist) {
+pool.fitlist <- function (fitlist, dfcom = NULL) {
   v <- summary(fitlist, type = "glance")
   w <- summary(fitlist, type = "tidy", exponentiate = FALSE)
   
   # residual degrees of freedom of model fitted on hypothetically complete data
   # assumed to be the same across imputations
-  dfcom <- v$df.residual[1L]
-  if (is.null(dfcom)) dfcom <- df.residual(getfit(fitlist, 1L))
-  if (is.null(dfcom)) dfcom <- Inf
-  
+  if (!is.null(dfcom)) dfcom <- max(dfcom, 1) 
+  else {
+    if (is.null(dfcom)) dfcom <- v$df.residual[1L]
+    if (is.null(dfcom)) dfcom <- df.residual(getfit(fitlist, 1L))
+    if (is.null(dfcom)) {
+      dfcom <- 999999
+      warning("Large sample assumed.")
+    }
+  }
+
   # combine y.level and term into term (for multinom)
   if ("y.level" %in% names(w)) w$term <- paste(w$y.level, w$term, sep = ":")
   

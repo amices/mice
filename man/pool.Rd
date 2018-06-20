@@ -4,11 +4,18 @@
 \alias{pool}
 \title{Combine estimates by Rubin's rules}
 \usage{
-pool(object)
+pool(object, dfcom = NULL)
 }
 \arguments{
 \item{object}{An object of class \code{mira} (produced by \code{with.mids()} 
 or \code{as.mira()}), or a \code{list} with model fits.}
+
+\item{dfcom}{A positive number representing the degrees of freedom in the
+complete-data analysis. The default (\code{dfcom = NULL}) is to 
+extract this information from the first fitted model. When that fails 
+the warning \code{"Large sample assumed"} is printed, and the 
+parameter is set \code{dfcom = 999999}. Use the \code{dfcom} parameter
+to specify the correct degrees of freedom.}
 }
 \value{
 An object of class \code{mipo}, which stands for 'multiple imputation
