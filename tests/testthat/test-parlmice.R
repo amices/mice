@@ -26,8 +26,6 @@ test_that("Imputations are equal between mice and parlmice", {
 #Should return m = n.imp.core * parallel::detectCores() - 1
 # test_that("Warning because n.core not specified", {
 #   expect_warning(H <- parlmice(nhanes, n.imp.core = 3))
-# })
-# test_that("Cores not specified", {
 #   expect_identical(H$m, 3 * (parallel::detectCores() - 1))
 # })
 
