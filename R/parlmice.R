@@ -146,11 +146,23 @@ parlmice <- function(data, m = 5, n.core = NULL, n.imp.core = NULL, cluster.seed
                      seed = NA, cl.type = "PSOCK", method, predictorMatrix, where, 
                      blocks, visitSequence, formulas, blots, post, defaultMethod, 
                      maxit, data.init, ...){ 
+  # check form of data and m
+  data <- check.dataform(data)
+  m <- check.m(m)
+  
+  # check if data complete
+  if (sum(is.na(data)) == 0){
+    stop("Data has no missing values")
+  }
+  
+  # check if arguments match CPU specifications
   if (!is.null(n.core)){
     if(n.core > parallel::detectCores()){ 
       stop("Number of cores specified is greater than the number of logical cores in your CPU")
     }
   } 
+  
+  # determine course of action when not all arguments specified
   if (!is.null(n.core) & is.null(n.imp.core)){
     n.imp.core = m
     warning(paste("Number of imputations per core not specified: n.imp.core = m =", m, "has been used"))
@@ -169,6 +181,8 @@ parlmice <- function(data, m = 5, n.core = NULL, n.imp.core = NULL, cluster.seed
       warning("Be careful; the specified seed is equal for all imputations. Please consider specifying cluster.seed instead.")
     }
   } 
+  
+  # create arguments to export to cluster
   args <- match.call(mice)
   args[[1]] <- NULL
   args$data <- as.name("data")
@@ -182,6 +196,8 @@ parlmice <- function(data, m = 5, n.core = NULL, n.imp.core = NULL, cluster.seed
   if(!missing(blots)){args$blots <- blots}
   if(!missing(post)){args$post <- post}
   if(!missing(data.init)){args$data.init <- data.init}
+  
+  # make computing cluster
   cl <- parallel::makeCluster(n.core, type = cl.type)
   parallel::clusterExport(cl, 
                           varlist = names(args), 
@@ -192,8 +208,12 @@ parlmice <- function(data, m = 5, n.core = NULL, n.imp.core = NULL, cluster.seed
   if (!is.na(cluster.seed)) {
     parallel::clusterSetRNGStream(cl, cluster.seed)
   }
+  
+  # generate imputations
   imps <- parallel::parLapply(cl = cl, X = 1:n.core, function(x) do.call(mice, as.list(args), envir = environment()))
   parallel::stopCluster(cl)
+  
+  # postprocess clustered imputation into a mids object
   imp <- imps[[1]]
   if (length(imps) > 1) {
     for (i in 2:length(imps)) {
@@ -203,6 +223,7 @@ parlmice <- function(data, m = 5, n.core = NULL, n.imp.core = NULL, cluster.seed
   for(i in 1:length(imp$imp)){ #let imputation matrix correspond to grand m
     colnames(imp$imp[[i]]) <- 1:imp$m
   }
+  
   return(imp)
 }
 
@@ -212,7 +233,6 @@ match.cluster <- function(n.core, m){
   out <- data.frame(results = as.vector(cores %*% t(imps)),
                     cores = cores,
                     imps = rep(imps, each = n.core))
-  #which  <- subset(out, results == m) #Gives R CMD CHECK Note
   which  <- out[out[, "results"] == m, ]
   which[order(which$cores, decreasing = T), ][1, 2:3]
 }
