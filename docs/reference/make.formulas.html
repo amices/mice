@@ -70,7 +70,7 @@ the predictors by means of the standard ~ operator." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.1.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.1.2</span>
       </span>
     </div>
 
@@ -157,23 +157,23 @@ the rows. The default assigns each variable in its own block.</p></td>
     <pre class="examples"><div class='input'><span class='no'>f1</span> <span class='kw'>&lt;-</span> <span class='fu'>make.formulas</span>(<span class='no'>nhanes</span>)
 <span class='no'>f1</span></div><div class='output co'>#&gt; $age
 #&gt; age ~ 0 + bmi + hyp + chl
-#&gt; &lt;environment: 0x7f8c11a18580&gt;
+#&gt; &lt;environment: 0x7f8a6cc31b40&gt;
 #&gt; 
 #&gt; $bmi
 #&gt; bmi ~ 0 + age + hyp + chl
-#&gt; &lt;environment: 0x7f8c11a18580&gt;
+#&gt; &lt;environment: 0x7f8a6cc31b40&gt;
 #&gt; 
 #&gt; $hyp
 #&gt; hyp ~ 0 + age + bmi + chl
-#&gt; &lt;environment: 0x7f8c11a18580&gt;
+#&gt; &lt;environment: 0x7f8a6cc31b40&gt;
 #&gt; 
 #&gt; $chl
 #&gt; chl ~ 0 + age + bmi + hyp
-#&gt; &lt;environment: 0x7f8c11a18580&gt;
+#&gt; &lt;environment: 0x7f8a6cc31b40&gt;
 #&gt; </div><div class='input'><span class='no'>f2</span> <span class='kw'>&lt;-</span> <span class='fu'>make.formulas</span>(<span class='no'>nhanes</span>, <span class='kw'>blocks</span> <span class='kw'>=</span> <span class='fu'><a href='make.blocks.html'>make.blocks</a></span>(<span class='no'>nhanes</span>, <span class='st'>"collect"</span>))
 <span class='no'>f2</span></div><div class='output co'>#&gt; $collect
 #&gt; age + bmi + hyp + chl ~ 0
-#&gt; &lt;environment: 0x7f8c0d7d0758&gt;
+#&gt; &lt;environment: 0x7f8a6d245fc8&gt;
 #&gt; </div><div class='input'>
 <span class='co'># for editing, it may be easier to work with the character vector</span>
 <span class='no'>c1</span> <span class='kw'>&lt;-</span> <span class='fu'>as.character</span>(<span class='no'>f1</span>)
@@ -183,19 +183,19 @@ the rows. The default assigns each variable in its own block.</p></td>
 <span class='no'>f3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='name.formulas.html'>name.formulas</a></span>(<span class='fu'>lapply</span>(<span class='no'>c1</span>, <span class='no'>as.formula</span>))
 <span class='no'>f3</span></div><div class='output co'>#&gt; $age
 #&gt; age ~ 0 + bmi + hyp + chl
-#&gt; &lt;environment: 0x7f8c16abe8b0&gt;
+#&gt; &lt;environment: 0x7f8a6bb21cb8&gt;
 #&gt; 
 #&gt; $bmi
 #&gt; bmi ~ 0 + age + hyp + chl
-#&gt; &lt;environment: 0x7f8c16abe8b0&gt;
+#&gt; &lt;environment: 0x7f8a6bb21cb8&gt;
 #&gt; 
 #&gt; $hyp
 #&gt; hyp ~ 0 + age + bmi + chl
-#&gt; &lt;environment: 0x7f8c16abe8b0&gt;
+#&gt; &lt;environment: 0x7f8a6bb21cb8&gt;
 #&gt; 
 #&gt; $chl
 #&gt; chl ~ 0 + age + bmi + hyp
-#&gt; &lt;environment: 0x7f8c16abe8b0&gt;
+#&gt; &lt;environment: 0x7f8a6bb21cb8&gt;
 #&gt; </div><div class='input'>
 </div></pre>
   </div>

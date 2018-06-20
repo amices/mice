@@ -68,7 +68,7 @@ using a two-level logistic model using lme4::glmer()" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.1.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.1.2</span>
       </span>
     </div>
 
@@ -205,8 +205,8 @@ participant data meta-analysis: a generalized approach using MICE.
 #&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'>data</span>(<span class='st'>"toenail"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"HSAUR3"</span>)
 <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/tidyr/topics/complete'>complete</a></span>(<span class='no'>toenail</span>, <span class='no'>patientID</span>, <span class='no'>visit</span>) <span class='kw'>%&gt;%</span>
  <span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/tidyr/topics/fill'>fill</a></span>(<span class='no'>treatment</span>) <span class='kw'>%&gt;%</span>
- <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(-<span class='no'>time</span>) <span class='kw'>%&gt;%</span>
- <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>patientID</span> <span class='kw'>=</span> <span class='fu'>as.integer</span>(<span class='no'>patientID</span>))</div><span class='co'># NOT RUN {</span>
+ <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>time</span>) <span class='kw'>%&gt;%</span>
+ <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>patientID</span> <span class='kw'>=</span> <span class='fu'>as.integer</span>(<span class='no'>patientID</span>))</div><span class='co'># NOT RUN {</span>
 <span class='no'>pred</span> <span class='kw'>&lt;-</span> <span class='fu'>mice</span>(<span class='no'>data</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>1</span>)$<span class='no'>pred</span>
 <span class='no'>pred</span>[<span class='st'>"outcome"</span>, <span class='st'>"patientID"</span>] <span class='kw'>&lt;-</span> -<span class='fl'>2</span>
 <span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'>mice</span>(<span class='no'>data</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2l.bin"</span>, <span class='kw'>pred</span> <span class='kw'>=</span> <span class='no'>pred</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>1</span>)

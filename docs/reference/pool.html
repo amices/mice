@@ -82,7 +82,7 @@ this case." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.1.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.1.2</span>
       </span>
     </div>
 
@@ -148,7 +148,7 @@ this case.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>pool</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='fu'>pool</span>(<span class='no'>object</span>, <span class='kw'>dfcom</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,6 +157,15 @@ this case.</p>
       <th>object</th>
       <td><p>An object of class <code>mira</code> (produced by <code><a href='with.mids.html'>with.mids()</a></code> 
 or <code><a href='as.mira.html'>as.mira()</a></code>), or a <code>list</code> with model fits.</p></td>
+    </tr>
+    <tr>
+      <th>dfcom</th>
+      <td><p>A positive number representing the degrees of freedom in the
+complete-data analysis. The default (<code>dfcom = NULL</code>) is to 
+extract this information from the first fitted model. When that fails 
+the warning <code>"Large sample assumed"</code> is printed, and the 
+parameter is set <code>dfcom = 999999</code>. Use the <code>dfcom</code> parameter
+to specify the correct degrees of freedom.</p></td>
     </tr>
     </table>
     
