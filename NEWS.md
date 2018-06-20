@@ -7,6 +7,10 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# mice 3.1.1
+
+* Updates to `parlmice` + bugfix (#107)
+
 # mice 3.1.0
 
 * New parallel functionality: `parlmice` (#104)
