@@ -9,6 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # mice 3.1.1
 
+* Add `dfcom` argument to `pool()` (#105, #110)
 * Updates to `parlmice` + bugfix (#107)
 
 # mice 3.1.0
