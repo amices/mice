@@ -106,14 +106,14 @@ parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL,
   } 
   
   # create arguments to export to cluster
-  args <- match.call(mice, expand.dots = TRUE, envir = parent.frame(2))
+  args <- match.call(mice, expand.dots = TRUE)
   args[[1]] <- NULL
   args$m <- n.imp.core
 
   # make computing cluster
   cl <- parallel::makeCluster(n.core, type = cl.type)
   parallel::clusterExport(cl, 
-                          varlist = c("data", ls(parent.frame())), 
+                          varlist = c("data", "m", "seed", ls(parent.frame())), 
                           envir = environment())
   parallel::clusterExport(cl, 
                           varlist = "do.call")
