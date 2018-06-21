@@ -43,32 +43,31 @@ test_that("n.core larger than logical CPU cores", {
 #   expect_warning(H <- parlmice(nhanes, n.imp.core = 3))
 #   expect_identical(H$m, 3 * (parallel::detectCores() - 1))
 # })
-
+# 
 # #Same cluster.seed - multiple cores
 # #Result: Imputations equal between parlmice instances
+# imp1 <- parlmice(nhanes, m=2, cluster.seed = 123)
+# imp2 <- parlmice(nhanes, m=2, cluster.seed = 123)
 # test_that("cluster.seed", {
-# imp1 <- parlmice(nhanes, m=4, cluster.seed = 123)
-# imp2 <- parlmice(nhanes, m=4, cluster.seed = 123)
 # expect_equal(imp1, imp2)
 # })
-
+# 
 # #Should run without failure
+# df <- boys
+# meth <- make.method(df)
+# pred <- make.predictorMatrix(df)
+# visit <- 9:1
+# imp3 <- parlmice(df, method = meth,
+#                 predictorMatrix = pred,
+#                 visitSequence = visit,
+#                 n.core = 2, 
+#                 n.imp.core = 4,
+#                 maxit = 3,
+#                 cluster.seed = 123)
 # test_that("Runs when overriding defaults", {
-#   set.seed(123)
-#   df <- boys
-#   meth <- make.method(df)
-#   pred <- make.predictorMatrix(df)
-#   visit <- sample(1:ncol(df))
-#   imp <- parlmice(df, method = meth, 
-#                   predictorMatrix = pred, 
-#                   visitSequence = visit, 
-#                   m = 2,
-#                   maxit = 3, 
-#                   cluster.seed = 123,
-#                   seed = 234)
-#   expect_identical(pred, imp$pred)
-#   expect_identical(imp$iteration, 3)
-#   expect_identical(imp$method, meth)
-#   expect_identical(imp$visitSequence, names(df)[visit])
-#   expect_identical(imp$m, 2*4)
+#   expect_identical(imp3$pred, pred)
+#   expect_identical(imp3$iteration, 3)
+#   expect_identical(imp3$method, meth)
+#   expect_identical(imp3$visitSequence, names(df)[visit])
+#   expect_identical(imp3$m, 2*4)
 # })
