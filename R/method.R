@@ -110,5 +110,5 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
               call. = FALSE)
   }
   method[nimp == 0] <- ""
-  method
+  unlist(method)
 }
