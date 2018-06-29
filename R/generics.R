@@ -23,7 +23,7 @@
 #' @export
 cbind <- function (...) {
   if (is.null(attr(list(...)[[1]], "class"))) return(base::cbind(...))
-  if (attr(list(...)[[1]], "class") == "mids") return(cbind.mids(...))
+  if ("mids" %in% attr(list(...)[[1]], "class")) return(cbind.mids(...))
   else return(base::cbind(...))
 }
 
@@ -31,6 +31,6 @@ cbind <- function (...) {
 #' @export
 rbind <- function (...) {
   if (is.null(attr(list(...)[[1]], "class"))) return(base::rbind(...))
-  if (attr(list(...)[[1]], "class") == "mids") return(rbind.mids(...))
+  if ("mids" %in% attr(list(...)[[1]], "class")) return(rbind.mids(...))
   else return(base::rbind(...))
 }

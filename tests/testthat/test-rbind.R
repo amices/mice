@@ -73,6 +73,10 @@ D_rbind <- mice:::rbind.mids(D_mids, D[6:10,])
 cmp <- complete(D_rbind, 1)
 test_that("Solves issue #59, rbind", expect_identical(cmp[6:10, ], D[6:10, ]))
 
+test_that("rbind does not throw a warning (#114)", {
+  expect_silent(rbind(ordered(c(1,2))))
+})
+
 # calculate chainMean and chainVar
 # imp1 <- mice(nhanes[1:13, ], m = 5, maxit = 25, print = FALSE, seed = 123)
 # imp2 <- mice(nhanes[14:25, ], m = 5, maxit = 25, print = FALSE, seed = 456)

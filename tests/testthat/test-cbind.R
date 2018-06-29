@@ -107,7 +107,9 @@ test_that("combined object works as input to mice.mids", {
   expect_true(is.mids(impc))
 })
 
-
+test_that("cbind does not throw a warning (#114)", {
+  expect_silent(cbind(ordered(c(1,2))))
+})
 
 # # cbind data.frame (rename to age.1)
 # imp1 <- mice(nhanes, blocks = list(c("bmi", "chl"), "hyp"), print = FALSE, maxit = 1, m = 1)
