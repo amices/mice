@@ -7,8 +7,11 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# mice 3.1.1
+# mice 3.1.3
 
+* Evades warning in `rbind` and `cbind` (#114)
+* Solves `rbind` problem when `method` is a list (#113)
+* More efficient use of `parlmice` (#109)
 * Add `dfcom` argument to `pool()` (#105, #110)
 * Updates to `parlmice` + bugfix (#107)
 
