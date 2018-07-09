@@ -80,7 +80,7 @@ mice.impute.2l.norm <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
     
     symridge <- function(x, ridge = 0.0001, ...) {
       x <- (x + t(x))/2
-      x + diag(diag(x) * ridge, nrow = length(x))
+      x + diag(diag(x) * ridge)
     }
     
     ## append intercept
