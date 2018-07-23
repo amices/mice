@@ -7,8 +7,11 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# mice 3.1.3
+# mice 3.2.0
 
+* Skip tests for `mice.impute.2l.norm()` (#129)
+* Skip tests for `D1()` (#128)
+* Solve problem with `md.pattern` (#126)
 * Evades warning in `rbind` and `cbind` (#114)
 * Solves `rbind` problem when `method` is a list (#113)
 * More efficient use of `parlmice` (#109)
