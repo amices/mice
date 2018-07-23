@@ -48,10 +48,14 @@ md.pattern <- function(x, plot = TRUE){
     stop("Data should have at least two columns")
   R <- is.na(x)
   nmis <- colSums(R)
-  R <- R[, order(nmis)] #sort columnwise
+  R <- matrix(R[, order(nmis)], dim(x)) #sort columnwise
   pat <- apply(R, 1, function(x) paste(as.numeric(x), collapse=''))
-  sortR <- R[order(pat), ] #sort rowwise
-  mpat <- sortR[!duplicated(sortR), ]
+  sortR <- matrix(R[order(pat), ], dim(x)) #sort rowwise
+  if (nrow(x) == 1){
+    mpat <- is.na(x)
+  } else {
+    mpat <- sortR[!duplicated(sortR), ]
+  }
   #update row and column margins
   if (all(!is.na(x))){
     cat(" /\\     /\\\n{  `---'  }\n{  O   O  }\n==>  V <==") 
