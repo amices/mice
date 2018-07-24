@@ -6,6 +6,9 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+# mice 3.2.1
+
+* Solve bug in passive imputation (#130)
 
 # mice 3.2.0
 
