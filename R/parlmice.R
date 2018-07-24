@@ -57,7 +57,7 @@
 #'
 #'@examples
 #'# 150 imputations in dataset nhanes, performed by 3 cores  
-#'\donttest{
+#'\dontrun{
 #'imp1 <- parlmice(data = nhanes, n.core = 3, n.imp.core = 50)
 #'# Making use of arguments in mice. 
 #'imp2 <- parlmice(data = nhanes, method = "norm.nob", m = 100)
