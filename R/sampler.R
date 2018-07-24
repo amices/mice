@@ -115,6 +115,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           if (pass) {
             for (j in b) {
               wy <- where[, j]
+              ry <- r[, j]
               imp[[j]][, i] <- model.frame(as.formula(theMethod), data[wy, ], 
                                            na.action = na.pass)
               data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
