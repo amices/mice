@@ -11,6 +11,5 @@ README-*
 changes_mice*
 ^data-raw$
 index.Rmd
-NEWS.md
 ^docs*
 _pkgdown.yaml
