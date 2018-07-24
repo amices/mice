@@ -4,34 +4,34 @@
 
 |setting  |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.5.0 (2018-04-23) |
+|version  |R version 3.5.1 (2018-07-02) |
 |system   |x86_64, darwin15.6.0         |
-|ui       |RStudio (1.1.453)            |
+|ui       |RStudio (1.1.456)            |
 |language |(EN)                         |
 |collate  |nl_NL.UTF-8                  |
 |tz       |Europe/Amsterdam             |
-|date     |2018-06-19                   |
+|date     |2018-07-24                   |
 
 ## Packages
 
 |package         |*  |version |date       |source          |
 |:---------------|:--|:-------|:----------|:---------------|
 |AGD             |   |0.39    |2018-05-29 |cran (@0.39)    |
-|broom           |   |0.4.4   |2018-03-29 |cran (@0.4.4)   |
+|broom           |   |0.5.0   |2018-07-17 |cran (@0.5.0)   |
 |BSDA            |   |1.2.0   |2017-07-30 |cran (@1.2.0)   |
 |CALIBERrfimpute |   |1.0-1   |2018-06-11 |cran (@1.0-1)   |
-|dplyr           |   |0.7.5   |2018-05-19 |cran (@0.7.5)   |
+|dplyr           |   |0.7.6   |2018-06-29 |cran (@0.7.6)   |
 |DPpackage       |   |1.1-7.4 |2018-01-06 |cran (@1.1-7.4) |
 |gamlss          |   |5.1-0   |2018-06-08 |cran (@5.1-0)   |
 |HSAUR3          |   |1.0-9   |2018-05-28 |cran (@1.0-9)   |
 |knitr           |   |1.20    |2018-02-20 |cran (@1.20)    |
 |lme4            |   |1.1-17  |2018-04-03 |cran (@1.1-17)  |
-|mice            |*  |3.0.0   |2018-05-25 |cran (@3.0.0)   |
-|miceadds        |   |2.12-24 |2018-06-06 |cran (@2.12-24) |
+|mice            |   |3.1.0   |2018-06-20 |cran (@3.1.0)   |
+|miceadds        |   |2.13-63 |2018-07-05 |cran (@2.13-63) |
 |micemd          |   |1.2.0   |2018-01-07 |cran (@1.2.0)   |
-|mitml           |   |0.3-5   |2017-03-15 |cran (@0.3-5)   |
+|mitml           |   |0.3-6   |2018-07-10 |cran (@0.3-6)   |
 |mitools         |   |2.3     |2014-09-20 |cran (@2.3)     |
-|pan             |   |1.4     |2016-02-10 |cran (@1.4)     |
+|pan             |   |1.6     |2018-06-29 |cran (@1.6)     |
 |randomForest    |   |4.6-14  |2018-03-25 |cran (@4.6-14)  |
 |Rcpp            |   |0.12.17 |2018-05-18 |cran (@0.12.17) |
 |rlang           |   |0.2.1   |2018-05-30 |cran (@0.2.1)   |
@@ -46,16 +46,50 @@
 
 |package        |version  | errors| warnings| notes|
 |:--------------|:--------|------:|--------:|-----:|
+|cobalt         |3.3.0    |      0|        1|     1|
 |dynr           |0.1.12-5 |      1|        0|     0|
 |Hmisc          |4.1-1    |      1|        0|     0|
-|JointAI        |0.1.0    |      1|        0|     0|
-|logistf        |1.22     |      1|        0|     1|
+|JointAI        |0.2.0    |      1|        0|     0|
 |miceFast       |0.2.3    |      1|        0|     0|
 |MissingDataGUI |0.2-5    |      1|        0|     0|
 |NNLM           |0.4.2    |      1|        0|     0|
 |Qtools         |1.3      |      1|        0|     0|
 |rattle         |5.1.0    |      1|        0|     0|
 |weightTAPSPACK |0.1      |      1|        0|     0|
+
+## cobalt (3.3.0)
+Maintainer: Noah Greifer <noah.greifer@gmail.com>  
+Bug reports: https://github.com/ngreifer/cobalt/issues
+
+0 errors | 1 warning  | 1 note 
+
+```
+checking re-building of vignette outputs ... WARNING
+Error in re-building vignettes:
+  ...
+Loading required package: nnet
+Loading required package: numDeriv
+Loading required package: glmnet
+Loading required package: foreach
+Loaded glmnet 2.0-16
+
+CBPS: Covariate Balancing Propensity Score
+... 8 lines ...
+
+##
+## ebal Package: Implements Entropy Balancing.
+
+## See http://www.stanford.edu/~jhain/ for additional information.
+
+
+Quitting from lines 225-239 (cobalt_A1_other_packages.Rmd) 
+Error: processing vignette 'cobalt_A1_other_packages.Rmd' failed with diagnostics:
+there is no package called 'designmatch'
+Execution halted
+
+checking package dependencies ... NOTE
+Package suggested but not available for checking: ‘designmatch’
+```
 
 ## dynr (0.1.12-5)
 Maintainer: Michael D. Hunter <mhunter.ou@gmail.com>
@@ -79,7 +113,7 @@ Installation failed.
 See ‘/Users/buurensv/Package/mice/mice/revdep/checks/Hmisc.Rcheck/00install.out’ for details.
 ```
 
-## JointAI (0.1.0)
+## JointAI (0.2.0)
 Maintainer: Nicole S. Erler <n.erler@erasmusmc.nl>  
 Bug reports: https://github.com/nerler/JointAI
 
@@ -89,45 +123,6 @@ Bug reports: https://github.com/nerler/JointAI
 checking whether package ‘JointAI’ can be installed ... ERROR
 Installation failed.
 See ‘/Users/buurensv/Package/mice/mice/revdep/checks/JointAI.Rcheck/00install.out’ for details.
-```
-
-## logistf (1.22)
-Maintainer: Georg Heinze <georg.heinze@meduniwien.ac.at>
-
-1 error  | 0 warnings | 1 note 
-
-```
-checking examples ... ERROR
-Running examples in ‘logistf-Ex.R’ failed
-The error most likely occurred in:
-
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-> ### Name: pool.RR
-> ### Title: Compute Pooled Normal Confidence Intervals (following Rubin's
-> ###   Rules) after Multiple Imputation
-> ### Aliases: pool.RR
-> ### Keywords: regression models
-... 21 lines ...
-+   toymi[[i]]$x[y1==TRUE]<-xnew1
-+   toymi[[i]]$x[y0==TRUE]<-xnew0
-+ }
-> 
-> 
-> # logistf analyses of each imputed data set
-> fit.list<-lapply(1:5, function(X) logistf(data=toymi[[X]], y~x, pl=TRUE, dataout=TRUE))
-> summary(pool.RR(fit.list))
-Error in sqrt(x$t) : non-numeric argument to mathematical function
-Calls: summary -> summary.mipo
-Execution halted
-
-checking compiled code ... NOTE
-File ‘logistf/libs/logistf.so’:
-  Found no calls to: ‘R_registerRoutines’, ‘R_useDynamicSymbols’
-
-It is good practice to register native routines and to disable symbol
-search.
-
-See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual.
 ```
 
 ## miceFast (0.2.3)

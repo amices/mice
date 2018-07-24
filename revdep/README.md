@@ -4,34 +4,34 @@
 
 |setting  |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.5.0 (2018-04-23) |
+|version  |R version 3.5.1 (2018-07-02) |
 |system   |x86_64, darwin15.6.0         |
-|ui       |RStudio (1.1.453)            |
+|ui       |RStudio (1.1.456)            |
 |language |(EN)                         |
 |collate  |nl_NL.UTF-8                  |
 |tz       |Europe/Amsterdam             |
-|date     |2018-06-19                   |
+|date     |2018-07-24                   |
 
 ## Packages
 
 |package         |*  |version |date       |source          |
 |:---------------|:--|:-------|:----------|:---------------|
 |AGD             |   |0.39    |2018-05-29 |cran (@0.39)    |
-|broom           |   |0.4.4   |2018-03-29 |cran (@0.4.4)   |
+|broom           |   |0.5.0   |2018-07-17 |cran (@0.5.0)   |
 |BSDA            |   |1.2.0   |2017-07-30 |cran (@1.2.0)   |
 |CALIBERrfimpute |   |1.0-1   |2018-06-11 |cran (@1.0-1)   |
-|dplyr           |   |0.7.5   |2018-05-19 |cran (@0.7.5)   |
+|dplyr           |   |0.7.6   |2018-06-29 |cran (@0.7.6)   |
 |DPpackage       |   |1.1-7.4 |2018-01-06 |cran (@1.1-7.4) |
 |gamlss          |   |5.1-0   |2018-06-08 |cran (@5.1-0)   |
 |HSAUR3          |   |1.0-9   |2018-05-28 |cran (@1.0-9)   |
 |knitr           |   |1.20    |2018-02-20 |cran (@1.20)    |
 |lme4            |   |1.1-17  |2018-04-03 |cran (@1.1-17)  |
-|mice            |*  |3.0.0   |2018-05-25 |cran (@3.0.0)   |
-|miceadds        |   |2.12-24 |2018-06-06 |cran (@2.12-24) |
+|mice            |   |3.1.0   |2018-06-20 |cran (@3.1.0)   |
+|miceadds        |   |2.13-63 |2018-07-05 |cran (@2.13-63) |
 |micemd          |   |1.2.0   |2018-01-07 |cran (@1.2.0)   |
-|mitml           |   |0.3-5   |2017-03-15 |cran (@0.3-5)   |
+|mitml           |   |0.3-6   |2018-07-10 |cran (@0.3-6)   |
 |mitools         |   |2.3     |2014-09-20 |cran (@2.3)     |
-|pan             |   |1.4     |2016-02-10 |cran (@1.4)     |
+|pan             |   |1.6     |2018-06-29 |cran (@1.6)     |
 |randomForest    |   |4.6-14  |2018-03-25 |cran (@4.6-14)  |
 |Rcpp            |   |0.12.17 |2018-05-18 |cran (@0.12.17) |
 |rlang           |   |0.2.1   |2018-05-30 |cran (@0.2.1)   |
@@ -42,21 +42,22 @@
 
 # Check results
 
-48 packages
+49 packages
 
 |package            |version  | errors| warnings| notes|
 |:------------------|:--------|------:|--------:|-----:|
 |accelmissing       |1.4      |      0|        0|     0|
 |BaBooN             |0.2-0    |      0|        0|     2|
 |BaM                |1.0.1    |      0|        0|     0|
-|brms               |2.3.1    |      0|        0|     1|
+|brms               |2.4.0    |      0|        0|     1|
 |bucky              |1.0.4    |      0|        0|     1|
 |CALIBERrfimpute    |1.0-1    |      0|        0|     0|
 |cati               |0.99.2   |      0|        0|     0|
-|cobalt             |3.2.3    |      0|        0|     0|
+|cobalt             |3.3.0    |      0|        1|     1|
 |codebook           |0.5.9    |      0|        0|     1|
-|dlookr             |0.3.0    |      0|        0|     0|
+|dlookr             |0.3.2    |      0|        0|     0|
 |dynr               |0.1.12-5 |      1|        0|     0|
+|finalfit           |0.8.1    |      0|        0|     0|
 |genpathmox         |0.3      |      0|        0|     0|
 |HardyWeinberg      |1.6.1    |      0|        0|     0|
 |hdnom              |5.0      |      0|        0|     0|
@@ -64,16 +65,16 @@
 |Hmisc              |4.1-1    |      1|        0|     0|
 |hot.deck           |1.1      |      0|        0|     0|
 |HSAUR3             |1.0-9    |      0|        0|     0|
-|ImputeRobust       |1.2      |      0|        0|     0|
-|JointAI            |0.1.0    |      1|        0|     0|
+|ImputeRobust       |1.3      |      0|        0|     0|
+|JointAI            |0.2.0    |      1|        0|     0|
 |JWileymisc         |0.2.1    |      0|        0|     0|
 |Lambda4            |3.0      |      0|        0|     3|
 |lavaan.survey      |1.1.3.1  |      0|        0|     0|
-|logistf            |1.22     |      1|        0|     1|
+|logistf            |1.23     |      0|        0|     0|
 |LSAmitR            |1.0-2    |      0|        0|     0|
-|mdmb               |0.7-19   |      0|        0|     0|
+|mdmb               |0.8-47   |      0|        0|     0|
 |medflex            |0.6-4    |      0|        0|     0|
-|miceadds           |2.12-24  |      0|        0|     0|
+|miceadds           |2.13-63  |      0|        0|     0|
 |miceExt            |1.1.0    |      0|        0|     0|
 |miceFast           |0.2.3    |      1|        0|     0|
 |micemd             |1.2.0    |      0|        0|     0|
@@ -81,16 +82,16 @@
 |midastouch         |1.3      |      0|        0|     0|
 |MIRL               |1.0      |      0|        0|     0|
 |MissingDataGUI     |0.2-5    |      1|        0|     0|
-|missMDA            |1.12     |      0|        0|     0|
-|mitml              |0.3-5    |      0|        0|     0|
+|missMDA            |1.13     |      0|        0|     0|
+|mitml              |0.3-6    |      0|        0|     0|
 |NNLM               |0.4.2    |      1|        0|     0|
 |PathSelectMP       |1.1      |      0|        0|     0|
 |Qtools             |1.3      |      1|        0|     0|
 |rattle             |5.1.0    |      1|        0|     0|
 |RegularizedSCA     |0.5.4    |      0|        0|     0|
 |roughrf            |1.0      |      0|        0|     1|
-|semTools           |0.4-14   |      0|        0|     0|
-|sjmisc             |2.7.2    |      0|        0|     0|
+|semTools           |0.5-0    |      0|        0|     0|
+|sjmisc             |2.7.3    |      0|        0|     0|
 |TestDataImputation |1.0      |      0|        0|     0|
 |weights            |0.90     |      0|        0|     0|
 |weightTAPSPACK     |0.1      |      1|        0|     0|
@@ -144,7 +145,7 @@ Maintainer: Jeff Gill <jgill@wustl.edu>
 
 0 errors | 0 warnings | 0 notes
 
-## brms (2.3.1)
+## brms (2.4.0)
 Maintainer: Paul-Christian Bürkner <paul.buerkner@gmail.com>  
 Bug reports: https://github.com/paul-buerkner/brms/issues
 
@@ -152,7 +153,7 @@ Bug reports: https://github.com/paul-buerkner/brms/issues
 
 ```
 checking installed package size ... NOTE
-  installed size is  8.2Mb
+  installed size is  8.3Mb
   sub-directories of 1Mb or more:
     R     5.1Mb
     doc   2.4Mb
@@ -178,11 +179,39 @@ Maintainer: Adrien Taudiere <adrien.taudiere@cefe.cnrs.fr>
 
 0 errors | 0 warnings | 0 notes
 
-## cobalt (3.2.3)
+## cobalt (3.3.0)
 Maintainer: Noah Greifer <noah.greifer@gmail.com>  
 Bug reports: https://github.com/ngreifer/cobalt/issues
 
-0 errors | 0 warnings | 0 notes
+0 errors | 1 warning  | 1 note 
+
+```
+checking re-building of vignette outputs ... WARNING
+Error in re-building vignettes:
+  ...
+Loading required package: nnet
+Loading required package: numDeriv
+Loading required package: glmnet
+Loading required package: foreach
+Loaded glmnet 2.0-16
+
+CBPS: Covariate Balancing Propensity Score
+... 8 lines ...
+
+##
+## ebal Package: Implements Entropy Balancing.
+
+## See http://www.stanford.edu/~jhain/ for additional information.
+
+
+Quitting from lines 225-239 (cobalt_A1_other_packages.Rmd) 
+Error: processing vignette 'cobalt_A1_other_packages.Rmd' failed with diagnostics:
+there is no package called 'designmatch'
+Execution halted
+
+checking package dependencies ... NOTE
+Package suggested but not available for checking: ‘designmatch’
+```
 
 ## codebook (0.5.9)
 Maintainer: Ruben Arslan <ruben.arslan@gmail.com>  
@@ -195,7 +224,7 @@ checking Rd cross-references ... NOTE
 Package unavailable to check Rd xrefs: ‘labelled’
 ```
 
-## dlookr (0.3.0)
+## dlookr (0.3.2)
 Maintainer: Choonghyun Ryu <choonghyun.ryu@gmail.com>
 
 0 errors | 0 warnings | 0 notes
@@ -210,6 +239,12 @@ checking whether package ‘dynr’ can be installed ... ERROR
 Installation failed.
 See ‘/Users/buurensv/Package/mice/mice/revdep/checks/dynr.Rcheck/00install.out’ for details.
 ```
+
+## finalfit (0.8.1)
+Maintainer: Ewen Harrison <ewen.harrison@ed.ac.uk>  
+Bug reports: https://github.com/ewenharrison/finalfit/issues
+
+0 errors | 0 warnings | 0 notes
 
 ## genpathmox (0.3)
 Maintainer: Giuseppe Lamberti <giuseppelamb@hotmail.com>
@@ -254,12 +289,12 @@ Maintainer: Torsten Hothorn <Torsten.Hothorn@R-project.org>
 
 0 errors | 0 warnings | 0 notes
 
-## ImputeRobust (1.2)
-Maintainer: Daniel Salfran <daniel.salfran@uni-hamburg.de>
+## ImputeRobust (1.3)
+Maintainer: Daniel Salfran <danielsalfran@gmail.com>
 
 0 errors | 0 warnings | 0 notes
 
-## JointAI (0.1.0)
+## JointAI (0.2.0)
 Maintainer: Nicole S. Erler <n.erler@erasmusmc.nl>  
 Bug reports: https://github.com/nerler/JointAI
 
@@ -322,51 +357,17 @@ Maintainer: Daniel Oberski <daniel.oberski@gmail.com>
 
 0 errors | 0 warnings | 0 notes
 
-## logistf (1.22)
+## logistf (1.23)
 Maintainer: Georg Heinze <georg.heinze@meduniwien.ac.at>
 
-1 error  | 0 warnings | 1 note 
-
-```
-checking examples ... ERROR
-Running examples in ‘logistf-Ex.R’ failed
-The error most likely occurred in:
-
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-> ### Name: pool.RR
-> ### Title: Compute Pooled Normal Confidence Intervals (following Rubin's
-> ###   Rules) after Multiple Imputation
-> ### Aliases: pool.RR
-> ### Keywords: regression models
-... 21 lines ...
-+   toymi[[i]]$x[y1==TRUE]<-xnew1
-+   toymi[[i]]$x[y0==TRUE]<-xnew0
-+ }
-> 
-> 
-> # logistf analyses of each imputed data set
-> fit.list<-lapply(1:5, function(X) logistf(data=toymi[[X]], y~x, pl=TRUE, dataout=TRUE))
-> summary(pool.RR(fit.list))
-Error in sqrt(x$t) : non-numeric argument to mathematical function
-Calls: summary -> summary.mipo
-Execution halted
-
-checking compiled code ... NOTE
-File ‘logistf/libs/logistf.so’:
-  Found no calls to: ‘R_registerRoutines’, ‘R_useDynamicSymbols’
-
-It is good practice to register native routines and to disable symbol
-search.
-
-See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual.
-```
+0 errors | 0 warnings | 0 notes
 
 ## LSAmitR (1.0-2)
 Maintainer: Thomas Kiefer <t.kiefer@bifie.at>
 
 0 errors | 0 warnings | 0 notes
 
-## mdmb (0.7-19)
+## mdmb (0.8-47)
 Maintainer: Alexander Robitzsch <robitzsch@ipn.uni-kiel.de>
 
 0 errors | 0 warnings | 0 notes
@@ -376,7 +377,7 @@ Maintainer: Johan Steen <johan.steen@gmail.com>
 
 0 errors | 0 warnings | 0 notes
 
-## miceadds (2.12-24)
+## miceadds (2.13-63)
 Maintainer: Alexander Robitzsch <robitzsch@ipn.uni-kiel.de>
 
 0 errors | 0 warnings | 0 notes
@@ -433,12 +434,12 @@ See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
 manual.
 ```
 
-## missMDA (1.12)
+## missMDA (1.13)
 Maintainer: Francois Husson <husson@agrocampus-ouest.fr>
 
 0 errors | 0 warnings | 0 notes
 
-## mitml (0.3-5)
+## mitml (0.3-6)
 Maintainer: Simon Grund <grund@ipn.uni-kiel.de>  
 Bug reports: https://github.com/simongrund1/mitml/issues
 
@@ -526,12 +527,13 @@ Consider adding
 to your NAMESPACE file.
 ```
 
-## semTools (0.4-14)
-Maintainer: Terrence D. Jorgensen <TJorgensen314@gmail.com>
+## semTools (0.5-0)
+Maintainer: Terrence D. Jorgensen <TJorgensen314@gmail.com>  
+Bug reports: https://github.com/simsem/semTools/issues
 
 0 errors | 0 warnings | 0 notes
 
-## sjmisc (2.7.2)
+## sjmisc (2.7.3)
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>  
 Bug reports: https://github.com/strengejacke/sjmisc/issues
 
