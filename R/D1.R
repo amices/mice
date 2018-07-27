@@ -33,7 +33,11 @@ D1 <- function(fit1, fit0 = NULL, df.com = NULL, ...) {
     # better option might be pair of df.com
     # pair <- list(getfit(fit1, 1), getfit(fit0, 1))
     # df.com <- unlist(sapply(pair, glance)["df.residual", ])
-    df.com <- glance(getfit(fit1, 1))[, "df.residual"]
+    df.com <- fit1 %>%
+      getfit(1) %>%
+      glance() %>%
+      select(df.residual)%>%
+      as.numeric()
   }
   
   tmr <- testModels(fit1, fit0, method = "D1", df.com = df.com)
