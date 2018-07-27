@@ -64,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.2.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.3.0</span>
       </span>
     </div>
 
@@ -108,9 +108,21 @@
       
     </div>
 
+    <div id="mice-3-3-0" class="section level1">
+<h1 class="page-header">
+<a href="#mice-3-3-0" class="anchor"></a>mice 3.3.0<small> Unreleased </small>
+</h1>
+<ul>
+<li>Solves bug in passive imputation (#130). <em>Warning: This bug may have caused invalid imputations in <code>mice 3.0.0</code> - <code>mice 3.2.0</code> under passive imputation.</em>
+</li>
+<li>Updates code to <code>broom 0.5.0</code> (#128)</li>
+<li>Solves problem with <code><a href="../reference/mice.impute.2l.norm.html">mice.impute.2l.norm()</a></code> (#129)</li>
+<li>Use explicit foreign function calls in tests</li>
+</ul>
+</div>
     <div id="mice-3-2-0" class="section level1">
 <h1 class="page-header">
-<a href="#mice-3-2-0" class="anchor"></a>mice 3.2.0<small> Unreleased </small>
+<a href="#mice-3-2-0" class="anchor"></a>mice 3.2.0<small> 2018-07-24 </small>
 </h1>
 <ul>
 <li>Skip tests for <code><a href="../reference/mice.impute.2l.norm.html">mice.impute.2l.norm()</a></code> (#129)</li>
@@ -163,15 +175,16 @@
 <a href="#mice-2-46-9-2017-12-08" class="anchor"></a>mice 2.46.9 (2017-12-08)<small> Unreleased </small>
 </h1>
 <ul>
-<li><p>simplify code for <code>mids</code> object in <code>mice</code> (thanks stephematician) (#61)</p></li>
-<li><p>simplify code in <code>rbind.mids</code> (thanks stephematician) (#59)</p></li>
-<li><p>repair bug in <code><a href="../reference/pool.compare.html">pool.compare()</a></code> in handling factors (#60)</p></li>
-<li><p>fixed bug in <code>rbind.mids</code> in handling <code>where</code> (#59)</p></li>
-<li><p>add new arguments to <code><a href="../reference/as.mids.html">as.mids()</a></code>, add <code>as()</code></p></li>
-<li><p>update contact info</p></li>
-<li><p>resolved problem <code>cart</code> not accepting a matrix (thanks Joerg Drechsler)</p></li>
-<li><p>Adds generalized <code><a href="../reference/pool.html">pool()</a></code> to list of models</p></li>
-<li><p>Switch to 3-digit versioning</p></li>
+<li>simplify code for <code>mids</code> object in <code>mice</code> (thanks stephematician) (#61)</li>
+<li>simplify code in <code>rbind.mids</code> (thanks stephematician) (#59)</li>
+<li>repair bug in <code><a href="../reference/pool.compare.html">pool.compare()</a></code> in handling factors (#60)</li>
+<li>fixed bug in <code>rbind.mids</code> in handling <code>where</code> (#59)</li>
+<li>add new arguments to <code><a href="../reference/as.mids.html">as.mids()</a></code>, add <code>as()</code>
+</li>
+<li>update contact info</li>
+<li>resolved problem <code>cart</code> not accepting a matrix (thanks Joerg Drechsler)</li>
+<li>Adds generalized <code><a href="../reference/pool.html">pool()</a></code> to list of models</li>
+<li>Switch to 3-digit versioning</li>
 </ul>
 </div>
     <div id="mice-2-46-2017-10-22" class="section level1">
@@ -220,12 +233,12 @@
 <a href="#mice-2-41-2017-07-10" class="anchor"></a>mice 2.41 (2017-07-10)<small> Unreleased </small>
 </h1>
 <ul>
-<li><p>Add new feature: <code>where</code>argument to mice</p></li>
-<li><p>Add new <code>wy</code> argument to imputation functions</p></li>
-<li><p>Add <code>mice.impute.2l.sys()</code>, author Shahab Jolani</p></li>
-<li><p>Update with many simplifications and code enhancements</p></li>
-<li><p>Fixed broken <code><a href="../reference/cbind.html">cbind()</a></code> function</p></li>
-<li><p>Fixed Bug that made the pad element disappear from <code>mids</code> object</p></li>
+<li>Add new feature: <code>where</code>argument to mice</li>
+<li>Add new <code>wy</code> argument to imputation functions</li>
+<li>Add <code>mice.impute.2l.sys()</code>, author Shahab Jolani</li>
+<li>Update with many simplifications and code enhancements</li>
+<li>Fixed broken <code><a href="../reference/cbind.html">cbind()</a></code> function</li>
+<li>Fixed Bug that made the pad element disappear from <code>mids</code> object</li>
 </ul>
 </div>
     <div id="mice-2-40-2017-07-07" class="section level1">
@@ -233,12 +246,14 @@
 <a href="#mice-2-40-2017-07-07" class="anchor"></a>mice 2.40 (2017-07-07)<small> Unreleased </small>
 </h1>
 <ul>
-<li><p>Fixed integration with <code>lattice</code> package</p></li>
-<li><p>Updates colors in <code>xyplot.mads</code></p></li>
-<li><p>Add support for factors in <code><a href="../reference/mice.impute.2lonly.pmm.html">mice.impute.2lonly.pmm()</a></code></p></li>
-<li><p>Create more robust version of as.mids()</p></li>
-<li><p>Update of <code><a href="../reference/ampute.html">ampute()</a></code> by Rianne Schouten</p></li>
-<li><p>Fix timestamp problem by rebuilding vignette using R 3.4.0.</p></li>
+<li>Fixed integration with <code>lattice</code> package</li>
+<li>Updates colors in <code>xyplot.mads</code>
+</li>
+<li>Add support for factors in <code><a href="../reference/mice.impute.2lonly.pmm.html">mice.impute.2lonly.pmm()</a></code>
+</li>
+<li>Create more robust version of as.mids()</li>
+<li>Update of <code><a href="../reference/ampute.html">ampute()</a></code> by Rianne Schouten</li>
+<li>Fix timestamp problem by rebuilding vignette using R 3.4.0.</li>
 </ul>
 </div>
     <div id="mice-2-34-2017-04-24" class="section level1">
@@ -246,9 +261,10 @@
 <a href="#mice-2-34-2017-04-24" class="anchor"></a>mice 2.34 (2017-04-24)<small> Unreleased </small>
 </h1>
 <ul>
-<li><p>Update to roxygen 6.0.1</p></li>
-<li><p>Stylistic changes to <code>mice</code> function (thanks Ben Ogorek)</p></li>
-<li><p>Calls to <code><a href="../reference/cbind.mids.html">cbind.mids()</a></code> replaced by calls to <code><a href="../reference/cbind.html">cbind()</a></code></p></li>
+<li>Update to roxygen 6.0.1</li>
+<li>Stylistic changes to <code>mice</code> function (thanks Ben Ogorek)</li>
+<li>Calls to <code><a href="../reference/cbind.mids.html">cbind.mids()</a></code> replaced by calls to <code><a href="../reference/cbind.html">cbind()</a></code>
+</li>
 </ul>
 </div>
     <div id="mice-2-31-2017-02-23" class="section level1">
@@ -256,17 +272,18 @@
 <a href="#mice-2-31-2017-02-23" class="anchor"></a>mice 2.31 (2017-02-23)<small> Unreleased </small>
 </h1>
 <ul>
-<li><p>Add link to <code>miceVignettes</code> on github (thanks Gerko Vink)</p></li>
-<li><p>Add package documentation</p></li>
-<li><p>Add <code>README</code> for GitHub</p></li>
-<li><p>Add new ampute functions and vignette (thanks Rianne Schouten)</p></li>
-<li><p>Rename <code>ccn</code> –&gt; <code>ncc</code>, <code>icn</code> –&gt; <code>nic</code></p></li>
-<li><p>Change helpers <code><a href="../reference/cc.html">cc()</a></code>, <code><a href="../reference/ncc.html">ncc()</a></code>, <code><a href="../reference/cci.html">cci()</a></code>, <code><a href="../reference/ic.html">ic()</a></code>, <code><a href="../reference/nic.html">nic()</a></code> and <code><a href="../reference/ici.html">ici()</a></code> use <code>S3</code> dispatch</p></li>
-<li><p>Change issues tracker on Github - add BugReports URL #21</p></li>
-<li><p>Fixed <code>multinom</code> MaxNWts type fix in <code>polyreg</code> and <code>polr</code> #9</p></li>
-<li><p>Fix checking of nested models in <code>pool.compare</code> #12</p></li>
-<li><p>Fix <code>as.mids</code> if names not same as all columns #11</p></li>
-<li><p>Fix extension for <code>glmer</code> models #5</p></li>
+<li>Add link to <code>miceVignettes</code> on github (thanks Gerko Vink)</li>
+<li>Add package documentation</li>
+<li>Add <code>README</code> for GitHub</li>
+<li>Add new ampute functions and vignette (thanks Rianne Schouten)</li>
+<li>Rename <code>ccn</code> –&gt; <code>ncc</code>, <code>icn</code> –&gt; <code>nic</code>
+</li>
+<li>Change helpers <code><a href="../reference/cc.html">cc()</a></code>, <code><a href="../reference/ncc.html">ncc()</a></code>, <code><a href="../reference/cci.html">cci()</a></code>, <code><a href="../reference/ic.html">ic()</a></code>, <code><a href="../reference/nic.html">nic()</a></code> and <code><a href="../reference/ici.html">ici()</a></code> use <code>S3</code> dispatch</li>
+<li>Change issues tracker on Github - add BugReports URL #21</li>
+<li>Fixed <code>multinom</code> MaxNWts type fix in <code>polyreg</code> and <code>polr</code> #9</li>
+<li>Fix checking of nested models in <code>pool.compare</code> #12</li>
+<li>Fix <code>as.mids</code> if names not same as all columns #11</li>
+<li>Fix extension for <code>glmer</code> models #5</li>
 </ul>
 </div>
     <div id="mice-2-29-2016-10-05" class="section level1">
@@ -290,8 +307,9 @@
 <a href="#mice-2-27-2016-07-27" class="anchor"></a>mice 2.27 (2016-07-27)<small> Unreleased </small>
 </h1>
 <ul>
-<li><p>Add <code>ridge</code> to <code>2l.norm()</code></p></li>
-<li><p>Remove <code>.o</code> files</p></li>
+<li>Add <code>ridge</code> to <code>2l.norm()</code>
+</li>
+<li>Remove <code>.o</code> files</li>
 </ul>
 </div>
     <div id="mice-2-25-2015-11-09" class="section level1">
@@ -308,11 +326,11 @@
 <a href="#mice-2-23-2015-11-04" class="anchor"></a>mice 2.23 (2015-11-04)<small> Unreleased </small>
 </h1>
 <ul>
-<li><p>Update of example code on /doc</p></li>
+<li>Update of example code on /doc</li>
 <li><p>Remove lots of dependencies, general cleanup</p></li>
-<li><p>Fix <code>impute.polyreg()</code> bug that bombed if there were no predictors (thanks Jan Graffelman)</p></li>
-<li><p>Fix <code><a href="../reference/as.mids.html">as.mids()</a></code> bug that gave incorrect $m$ (several users)</p></li>
-<li><p>Fix <code><a href="../reference/pool.compare.html">pool.compare()</a></code> error for <code>lmer</code> object (thanks Claudio Bustos)</p></li>
+<li>Fix <code>impute.polyreg()</code> bug that bombed if there were no predictors (thanks Jan Graffelman)</li>
+<li>Fix <code><a href="../reference/as.mids.html">as.mids()</a></code> bug that gave incorrect $m$ (several users)</li>
+<li>Fix <code><a href="../reference/pool.compare.html">pool.compare()</a></code> error for <code>lmer</code> object (thanks Claudio Bustos)</li>
 <li><p>Fix error in <code><a href="../reference/mice.impute.2l.norm.html">mice.impute.2l.norm()</a></code> if just one <code>NA</code> (thanks Jeroen Hoogland)</p></li>
 </ul>
 </div>
@@ -321,20 +339,25 @@
 <a href="#mice-2-22-2014-06-11" class="anchor"></a>mice 2.22 (2014-06-11)<small> 2014-06-11 </small>
 </h1>
 <ul>
-<li><p>Add about six times faster predictive mean matching</p></li>
-<li><p><code><a href="../reference/pool.scalar.html">pool.scalar()</a></code> now can do Barnard-Rubin adjustment</p></li>
-<li><p><code><a href="../reference/pool.html">pool()</a></code> now handles class <code>lmerMod</code> from the <code>lme4</code> package</p></li>
-<li><p>Added automatic bounds on donors in <code><a href="../reference/pmm.match.html">.pmm.match()</a></code> for safety</p></li>
-<li><p>Added donors argument to <code><a href="../reference/mice.impute.pmm.html">mice.impute.pmm()</a></code> for increased visibility</p></li>
-<li><p>Changes default number of trees in <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> from 100 to 10 (thanks Anoop Shah)</p></li>
-<li><p><code>long2mids()</code> deprecated. Use <code><a href="../reference/as.mids.html">as.mids()</a></code> instead</p></li>
-<li><p>Put <code>lattice</code> back into DEPENDS to find generic <code><a href="../reference/xyplot.mids.html">xyplot()</a></code> and friends</p></li>
-<li><p>Fix error in <code>2lonly.pmm</code> (thanks Alexander Robitzsch, Gerko Vink, Judith Godin)</p></li>
-<li><p>Fix number of imputations in <code><a href="../reference/as.mids.html">as.mids()</a></code> (thanks Tommy Nyberg, Gerko Vink)</p></li>
-<li><p>Fix colors to <code><a href="../reference/mdc.html">mdc()</a></code> in example <code><a href="../reference/mice.impute.quadratic.html">mice.impute.quadratic()</a></code></p></li>
-<li><p>Fix error in <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> if just one <code>NA</code> (thanks Anoop Shah)</p></li>
-<li><p>Fix error in <code><a href="../reference/mipo.html">summary.mipo()</a></code> when <code>names(x$qbar)</code> equals <code>NULL</code> (thanks Aiko Kuhn)</p></li>
-<li><p>Fix improper testing in <code>ncol()</code> in <code><a href="../reference/mice.impute.2lonly.mean.html">mice.impute.2lonly.mean()</a></code></p></li>
+<li>Add about six times faster predictive mean matching</li>
+<li>
+<code><a href="../reference/pool.scalar.html">pool.scalar()</a></code> now can do Barnard-Rubin adjustment</li>
+<li>
+<code><a href="../reference/pool.html">pool()</a></code> now handles class <code>lmerMod</code> from the <code>lme4</code> package</li>
+<li>Added automatic bounds on donors in <code><a href="../reference/pmm.match.html">.pmm.match()</a></code> for safety</li>
+<li>Added donors argument to <code><a href="../reference/mice.impute.pmm.html">mice.impute.pmm()</a></code> for increased visibility</li>
+<li>Changes default number of trees in <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> from 100 to 10 (thanks Anoop Shah)</li>
+<li>
+<code>long2mids()</code> deprecated. Use <code><a href="../reference/as.mids.html">as.mids()</a></code> instead</li>
+<li>Put <code>lattice</code> back into DEPENDS to find generic <code><a href="../reference/xyplot.mids.html">xyplot()</a></code> and friends</li>
+<li>Fix error in <code>2lonly.pmm</code> (thanks Alexander Robitzsch, Gerko Vink, Judith Godin)</li>
+<li>Fix number of imputations in <code><a href="../reference/as.mids.html">as.mids()</a></code> (thanks Tommy Nyberg, Gerko Vink)</li>
+<li>Fix colors to <code><a href="../reference/mdc.html">mdc()</a></code> in example <code><a href="../reference/mice.impute.quadratic.html">mice.impute.quadratic()</a></code>
+</li>
+<li>Fix error in <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> if just one <code>NA</code> (thanks Anoop Shah)</li>
+<li>Fix error in <code><a href="../reference/mipo.html">summary.mipo()</a></code> when <code>names(x$qbar)</code> equals <code>NULL</code> (thanks Aiko Kuhn)</li>
+<li>Fix improper testing in <code>ncol()</code> in <code><a href="../reference/mice.impute.2lonly.mean.html">mice.impute.2lonly.mean()</a></code>
+</li>
 </ul>
 </div>
     <div id="mice-2-21-02-05-2014-svb" class="section level1">
@@ -350,8 +373,8 @@
 <a href="#mice-2-20-02-02-2014-svb" class="anchor"></a>mice 2.20 02-02-2014 SvB<small> 2014-02-04 </small>
 </h1>
 <ul>
-<li><p>ADDED: experimental fastpmm() function using Rcpp</p></li>
-<li><p>FIXED: fixes to mice.impute.cart() and mice.impute.rf() (thanks Anoop Shah)</p></li>
+<li>ADDED: experimental fastpmm() function using Rcpp</li>
+<li>FIXED: fixes to mice.impute.cart() and mice.impute.rf() (thanks Anoop Shah)</li>
 </ul>
 </div>
     <div id="mice-2-19-21-01-2014-svb" class="section level1">
@@ -359,12 +382,12 @@
 <a href="#mice-2-19-21-01-2014-svb" class="anchor"></a>mice 2.19 21-01-2014 SvB<small> Unreleased </small>
 </h1>
 <ul>
-<li><p>ADDED: mice.impute.rf() for random forest imputation (thanks Lisa Doove)</p></li>
-<li><p>CHANGED: default number of donors in mice.impute.pmm() changed from 3 to 5. Use mice(…, donors = 3) to get the old behavior.</p></li>
-<li><p>CHANGED: speedup in .norm.draw() by using crossprod() (thanks Alexander Robitzsch)</p></li>
-<li><p>CHANGED: speedup in .imputation.level2() (thanks Alexander Robitzsch)</p></li>
-<li><p>FIXED: define MASS, nnet, lattice as imports instead of depends</p></li>
-<li><p>FIXED: proper handling of rare case in remove.lindep() that removed all predictors (thanks Jaap Brand)</p></li>
+<li>ADDED: mice.impute.rf() for random forest imputation (thanks Lisa Doove)</li>
+<li>CHANGED: default number of donors in mice.impute.pmm() changed from 3 to 5. Use mice(…, donors = 3) to get the old behavior.</li>
+<li>CHANGED: speedup in .norm.draw() by using crossprod() (thanks Alexander Robitzsch)</li>
+<li>CHANGED: speedup in .imputation.level2() (thanks Alexander Robitzsch)</li>
+<li>FIXED: define MASS, nnet, lattice as imports instead of depends</li>
+<li>FIXED: proper handling of rare case in remove.lindep() that removed all predictors (thanks Jaap Brand)</li>
 </ul>
 </div>
     <div id="mice-2-18-31-07-2013-svb" class="section level1">
@@ -372,9 +395,9 @@
 <a href="#mice-2-18-31-07-2013-svb" class="anchor"></a>mice 2.18 31-07-2013 SvB<small> 2013-08-01 </small>
 </h1>
 <ul>
-<li><p>ADDED: as.mids() for converting long format in a mids object (thanks Gerko Vink)</p></li>
-<li><p>FIXED: mice.impute.logreg.boot() now properly exported (thanks Suresh Pujar)</p></li>
-<li><p>FIXED: two bugs in rbind.mids() (thanks Gerko Vink)</p></li>
+<li>ADDED: as.mids() for converting long format in a mids object (thanks Gerko Vink)</li>
+<li>FIXED: mice.impute.logreg.boot() now properly exported (thanks Suresh Pujar)</li>
+<li>FIXED: two bugs in rbind.mids() (thanks Gerko Vink)</li>
 </ul>
 </div>
     <div id="mice-2-17-10-05-2013-svb" class="section level1">
@@ -382,10 +405,10 @@
 <a href="#mice-2-17-10-05-2013-svb" class="anchor"></a>mice 2.17 10-05-2013 SvB<small> 2013-05-12 </small>
 </h1>
 <ul>
-<li><p>ADDED: new form argument to mice() to specify imputation models using forms (contributed Ross Boylan)</p></li>
-<li><p>FIXED: with.mids(), is.mids(), is.mira() and is.mipo() exported</p></li>
-<li><p>FIXED: eliminated errors in the documentation of pool.scalar()</p></li>
-<li><p>FIXED: error in mice.impute.ri() (thanks Shahab Jolani)</p></li>
+<li>ADDED: new form argument to mice() to specify imputation models using forms (contributed Ross Boylan)</li>
+<li>FIXED: with.mids(), is.mids(), is.mira() and is.mipo() exported</li>
+<li>FIXED: eliminated errors in the documentation of pool.scalar()</li>
+<li>FIXED: error in mice.impute.ri() (thanks Shahab Jolani)</li>
 </ul>
 </div>
     <div id="mice-2-16-27-04-2013-svb" class="section level1">
@@ -393,12 +416,12 @@
 <a href="#mice-2-16-27-04-2013-svb" class="anchor"></a>mice 2.16 27-04-2013 SvB<small> 2013-04-27 </small>
 </h1>
 <ul>
-<li><p>ADDED: random indicator imputation by mice.impute.ri() for nonignorable models (thanks Shahab Jolani)</p></li>
-<li><p>ADDED: workhorse functions .norm.draw() and .pmm.match() are exported</p></li>
-<li><p>FIXED: bug in 2.14 and 2.15 in mice.impute.pmm() that produced an error on factors</p></li>
-<li><p>FIXED: bug that crashed R when the class variable was incomplete (thanks Robert Long)</p></li>
-<li><p>FIXED: bug in 2l.pan and 2l.norm by convert a class factor to integer (thanks Robert Long)</p></li>
-<li><p>FIXED: warning eliminated caused by character variables (thanks Robert Long)</p></li>
+<li>ADDED: random indicator imputation by mice.impute.ri() for nonignorable models (thanks Shahab Jolani)</li>
+<li>ADDED: workhorse functions .norm.draw() and .pmm.match() are exported</li>
+<li>FIXED: bug in 2.14 and 2.15 in mice.impute.pmm() that produced an error on factors</li>
+<li>FIXED: bug that crashed R when the class variable was incomplete (thanks Robert Long)</li>
+<li>FIXED: bug in 2l.pan and 2l.norm by convert a class factor to integer (thanks Robert Long)</li>
+<li>FIXED: warning eliminated caused by character variables (thanks Robert Long)</li>
 </ul>
 </div>
     <div id="mice-2-15---02-04-2013-svb" class="section level1">
@@ -406,11 +429,11 @@
 <a href="#mice-2-15---02-04-2013-svb" class="anchor"></a>mice 2.15 - 02-04-2013 SvB<small> 2013-04-03 </small>
 </h1>
 <ul>
-<li><p>CHANGED: complete reorganization of documentation and source files</p></li>
-<li><p>ADDED: source published on GitHub.com</p></li>
-<li><p>ADDED: new imputation method mice.impute.cart() (thanks Lisa Doove)</p></li>
-<li><p>FIXED: calculation of degrees of freedom in pool.compare() (thanks Lorenz Uhlmann)</p></li>
-<li><p>FIXED: error in DESCRIPTION file (thanks Kurt Hornik)</p></li>
+<li>CHANGED: complete reorganization of documentation and source files</li>
+<li>ADDED: source published on GitHub.com</li>
+<li>ADDED: new imputation method mice.impute.cart() (thanks Lisa Doove)</li>
+<li>FIXED: calculation of degrees of freedom in pool.compare() (thanks Lorenz Uhlmann)</li>
+<li>FIXED: error in DESCRIPTION file (thanks Kurt Hornik)</li>
 </ul>
 </div>
     <div id="mice-2-14---11-03-2013-svb" class="section level1">
@@ -418,16 +441,16 @@
 <a href="#mice-2-14---11-03-2013-svb" class="anchor"></a>mice 2.14 - 11-03-2013 / SvB<small> 2013-03-19 </small>
 </h1>
 <ul>
-<li><p>ADDED: mice.impute.2l.mean() for imputing class means at level 2</p></li>
-<li><p>ADDED: sampler(): new checks of degrees of freedom per variable at iteration 1</p></li>
-<li><p>ADDED: function check.df() to throw a warning about low degrees of freedom</p></li>
-<li><p>FIXED: tolower() added in “2l” test in sampler()</p></li>
-<li><p>FIXED: conversion of factors that have other roles (multilevel) in padModel()</p></li>
-<li><p>FIXED: family argument in call to glm() in glm.mids() (thanks Nicholas Horton)</p></li>
-<li><p>FIXED: .norm.draw(): evading NaN imputed values by setting df in rchisq() to a minimum of 1</p></li>
-<li><p>FIXED: bug in mice.df() that prevented the classic Rubin df calculation (thanks Jean-Batiste Pingaul)</p></li>
-<li><p>FIXED: bug fixed in mice.impute.2l.norm() (thanks Robert Long)</p></li>
-<li><p>CHANGED: faster .pmm.match2() from version 2.12 renamed to default .pmm.match()</p></li>
+<li>ADDED: mice.impute.2l.mean() for imputing class means at level 2</li>
+<li>ADDED: sampler(): new checks of degrees of freedom per variable at iteration 1</li>
+<li>ADDED: function check.df() to throw a warning about low degrees of freedom</li>
+<li>FIXED: tolower() added in “2l” test in sampler()</li>
+<li>FIXED: conversion of factors that have other roles (multilevel) in padModel()</li>
+<li>FIXED: family argument in call to glm() in glm.mids() (thanks Nicholas Horton)</li>
+<li>FIXED: .norm.draw(): evading NaN imputed values by setting df in rchisq() to a minimum of 1</li>
+<li>FIXED: bug in mice.df() that prevented the classic Rubin df calculation (thanks Jean-Batiste Pingaul)</li>
+<li>FIXED: bug fixed in mice.impute.2l.norm() (thanks Robert Long)</li>
+<li>CHANGED: faster .pmm.match2() from version 2.12 renamed to default .pmm.match()</li>
 </ul>
 </div>
     <div id="mice-2-13---03-07-2012-svb" class="section level1">
@@ -435,17 +458,17 @@
 <a href="#mice-2-13---03-07-2012-svb" class="anchor"></a>mice 2.13 - 03-07-2012 / SvB<small> 2012-07-04 </small>
 </h1>
 <ul>
-<li><p>ADDED: new multilevel functions 2l.pan(), 2lonly.norm(), 2lonly.pmm() (contributed by Alexander Robitzsch)</p></li>
-<li><p>ADDED: new quadratic imputation function: quadratic() (contributed by Gerko Vink)</p></li>
-<li><p>ADDED: pmm2(), five times faster than pmm()</p></li>
-<li><p>ADDED: new argument data.init in mice() for initialization (suggested by Alexander Robitzsch)</p></li>
-<li><p>ADDED: mice() now accepts pmm as method for (ordered) factors</p></li>
-<li><p>ADDED: warning and a note to 2l.norm() that advises to use type=2 for the predictors</p></li>
-<li><p>FIXED: bug that chrashed plot.mids() if there was only one incomplete variable (thanks Dennis Prangle)</p></li>
-<li><p>FIXED: bug in sample() in .pmm.match() when donor=1 (thanks Alexander Robitzsch)</p></li>
-<li><p>FIXED: bug in sample() in mice.impute.sample()</p></li>
-<li><p>FIXED: fixed ‘?data’ bug in check.method()</p></li>
-<li><p>REMOVED: wp.twin(). Now available from the AGD package</p></li>
+<li>ADDED: new multilevel functions 2l.pan(), 2lonly.norm(), 2lonly.pmm() (contributed by Alexander Robitzsch)</li>
+<li>ADDED: new quadratic imputation function: quadratic() (contributed by Gerko Vink)</li>
+<li>ADDED: pmm2(), five times faster than pmm()</li>
+<li>ADDED: new argument data.init in mice() for initialization (suggested by Alexander Robitzsch)</li>
+<li>ADDED: mice() now accepts pmm as method for (ordered) factors</li>
+<li>ADDED: warning and a note to 2l.norm() that advises to use type=2 for the predictors</li>
+<li>FIXED: bug that chrashed plot.mids() if there was only one incomplete variable (thanks Dennis Prangle)</li>
+<li>FIXED: bug in sample() in .pmm.match() when donor=1 (thanks Alexander Robitzsch)</li>
+<li>FIXED: bug in sample() in mice.impute.sample()</li>
+<li>FIXED: fixed ‘?data’ bug in check.method()</li>
+<li>REMOVED: wp.twin(). Now available from the AGD package</li>
 </ul>
 </div>
     <div id="mice-2-12---25-03-2012-svb" class="section level1">
@@ -453,20 +476,20 @@
 <a href="#mice-2-12---25-03-2012-svb" class="anchor"></a>mice 2.12 - 25-03-2012 / SvB<small> 2012-03-25 </small>
 </h1>
 <ul>
-<li><p>UPDATE: version for launch of Flexible Imputation of Missing Data (FIMD)</p></li>
-<li><p>ADDED: code fimd1.r-fim9.r to inst/doc for calculating solutions in FIMD</p></li>
-<li><p>FIXED: more robust version of supports.transparent() (thanks Brian Ripley)</p></li>
-<li><p>ADDED: auxiliary functions ifdo(), long2mids(), appendbreak(), extractBS(), wp.twin()</p></li>
-<li><p>ADDED: getfit() function</p></li>
-<li><p>ADDED: datasets: tbc, potthoffroy, selfreport, walking, fdd, fdgs, pattern1-pattern4, mammalsleep</p></li>
-<li><p>FIXED: as.mira() added to namespace</p></li>
-<li><p>ADDED: functions flux(), fluxplot() and fico() for missing data patterns</p></li>
-<li><p>ADDED: function nelsonaalen() for imputing survival data</p></li>
-<li><p>CHANGED: rm.whitespace() shortened</p></li>
-<li><p>FIXED: bug in pool() that crashed on nonstandard behavior of survreg() (thanks Erich Studerus)</p></li>
-<li><p>CHANGED: pool() streamlined, warnings about incompatibility in lengths of coef() and vcov()</p></li>
-<li><p>FIXED: mdc() bug that ignored transparent=FALSE argument, now made visible</p></li>
-<li><p>FIXED: bug in md.pattern() for &gt;32 variables (thanks Sascha Vieweg, Joshua Wiley)</p></li>
+<li>UPDATE: version for launch of Flexible Imputation of Missing Data (FIMD)</li>
+<li>ADDED: code fimd1.r-fim9.r to inst/doc for calculating solutions in FIMD</li>
+<li>FIXED: more robust version of supports.transparent() (thanks Brian Ripley)</li>
+<li>ADDED: auxiliary functions ifdo(), long2mids(), appendbreak(), extractBS(), wp.twin()</li>
+<li>ADDED: getfit() function</li>
+<li>ADDED: datasets: tbc, potthoffroy, selfreport, walking, fdd, fdgs, pattern1-pattern4, mammalsleep</li>
+<li>FIXED: as.mira() added to namespace</li>
+<li>ADDED: functions flux(), fluxplot() and fico() for missing data patterns</li>
+<li>ADDED: function nelsonaalen() for imputing survival data</li>
+<li>CHANGED: rm.whitespace() shortened</li>
+<li>FIXED: bug in pool() that crashed on nonstandard behavior of survreg() (thanks Erich Studerus)</li>
+<li>CHANGED: pool() streamlined, warnings about incompatibility in lengths of coef() and vcov()</li>
+<li>FIXED: mdc() bug that ignored transparent=FALSE argument, now made visible</li>
+<li>FIXED: bug in md.pattern() for &gt;32 variables (thanks Sascha Vieweg, Joshua Wiley)</li>
 </ul>
 </div>
     <div id="mice-2-11---21-11-2011-svb" class="section level1">
@@ -474,12 +497,12 @@
 <a href="#mice-2-11---21-11-2011-svb" class="anchor"></a>mice 2.11 - 21-11-2011 / SvB<small> 2011-11-22 </small>
 </h1>
 <ul>
-<li><p>UPDATE: definite reference to JSS paper</p></li>
-<li><p>ADDED: rm.whitespace() to do string manipulation (thanks Gerko Vink)</p></li>
-<li><p>ADDED: function mids2mplus() to export data to Mplus (thanks Gerko Vink)</p></li>
-<li><p>CHANGED: plot.mids() changed into trellis version</p></li>
-<li><p>ADDED: code used in JSS-paper</p></li>
-<li><p>FIXED: bug in check.method() (thanks Gerko Vink)</p></li>
+<li>UPDATE: definite reference to JSS paper</li>
+<li>ADDED: rm.whitespace() to do string manipulation (thanks Gerko Vink)</li>
+<li>ADDED: function mids2mplus() to export data to Mplus (thanks Gerko Vink)</li>
+<li>CHANGED: plot.mids() changed into trellis version</li>
+<li>ADDED: code used in JSS-paper</li>
+<li>FIXED: bug in check.method() (thanks Gerko Vink)</li>
 </ul>
 </div>
     <div id="mice-2-10---14-09-2011-svb" class="section level1">
@@ -487,8 +510,8 @@
 <a href="#mice-2-10---14-09-2011-svb" class="anchor"></a>mice 2.10 - 14-09-2011 / SvB<small> 2011-09-15 </small>
 </h1>
 <ul>
-<li><p>FIXED: arguments dec and sep in mids2spss (thanks Nicole Haag)</p></li>
-<li><p>FIXED: bug in keyword “monotone” in mice() (thanks Alain D)</p></li>
+<li>FIXED: arguments dec and sep in mids2spss (thanks Nicole Haag)</li>
+<li>FIXED: bug in keyword “monotone” in mice() (thanks Alain D)</li>
 </ul>
 </div>
     <div id="mice-2-9---31-08-2011-svb" class="section level1">
@@ -496,14 +519,14 @@
 <a href="#mice-2-9---31-08-2011-svb" class="anchor"></a>mice 2.9 - 31-08-2011 / SvB<small> 2011-09-01 </small>
 </h1>
 <ul>
-<li><p>FIXED: appropriate trimming of ynames and xnames in Trellis plots</p></li>
-<li><p>FIXED: exported: spss2mids(), mice.impute.2L.norm()</p></li>
-<li><p>ADDED: mice.impute.norm.predict(), mice.impute.norm.boot(), mice.impute.logreg.boot()</p></li>
-<li><p>ADDED: supports.transparent() to detect whether .Device can do semi-transparent colors</p></li>
-<li><p>FIXED: stringr package is now properly loaded</p></li>
-<li><p>ADDED: trellis version of plot.mids()</p></li>
-<li><p>ADDED: automatic semi-transparancy detection in mdc()</p></li>
-<li><p>FIXED: documentation of mira class (thanks Sandro Tsang)</p></li>
+<li>FIXED: appropriate trimming of ynames and xnames in Trellis plots</li>
+<li>FIXED: exported: spss2mids(), mice.impute.2L.norm()</li>
+<li>ADDED: mice.impute.norm.predict(), mice.impute.norm.boot(), mice.impute.logreg.boot()</li>
+<li>ADDED: supports.transparent() to detect whether .Device can do semi-transparent colors</li>
+<li>FIXED: stringr package is now properly loaded</li>
+<li>ADDED: trellis version of plot.mids()</li>
+<li>ADDED: automatic semi-transparancy detection in mdc()</li>
+<li>FIXED: documentation of mira class (thanks Sandro Tsang)</li>
 </ul>
 </div>
     <div id="mice-2-8---24-03-2011-svb" class="section level1">
@@ -519,9 +542,9 @@
 <a href="#mice-2-7---16-03-2011-svb" class="anchor"></a>mice 2.7 - 16-03-2011 / SvB<small> 2011-03-16 </small>
 </h1>
 <ul>
-<li><p>CHANGED: check.data(), remove.lindep(): fully missing variables are imputed if allow.na=TRUE (Alexander Robitzsch)</p></li>
-<li><p>FIXED: bug in check.data(). Now checks collinearity in predictors only (Alexander Robitzsch)</p></li>
-<li><p>CHANGED: abbreviations of arguments eliminated to evade linux warnings</p></li>
+<li>CHANGED: check.data(), remove.lindep(): fully missing variables are imputed if allow.na=TRUE (Alexander Robitzsch)</li>
+<li>FIXED: bug in check.data(). Now checks collinearity in predictors only (Alexander Robitzsch)</li>
+<li>CHANGED: abbreviations of arguments eliminated to evade linux warnings</li>
 </ul>
 </div>
     <div id="mice-2-6---03-03-2011-svb" class="section level1">
@@ -529,16 +552,16 @@
 <a href="#mice-2-6---03-03-2011-svb" class="anchor"></a>mice 2.6 - 03-03-2011 / SvB<small> 2011-03-04 </small>
 </h1>
 <ul>
-<li><p>ADDED: bwplot(), stripplot(), densityplot() and xyplot() for creating Trellis graphs</p></li>
-<li><p>ADDED: function mdc() and mice.theme() for graphical parameters</p></li>
-<li><p>ADDED: argument passing from mice() to lower-level functions (requested by Juned Siddique)</p></li>
-<li><p>FIXED: erroneous rgamma() replaced by rchisq() in .norm.draw, lowers variance a bit for small n</p></li>
-<li><p>ADDED: with.mids() extended to handle expression objects</p></li>
-<li><p>FIXED: reporting bug in summary.mipo()</p></li>
-<li><p>CHANGED: df calculation in pool(), intervals may become slightly wider</p></li>
-<li><p>ADDED: internal functions mice.df() and df.residual()</p></li>
-<li><p>FIXED: error in rm calculation for “likelihood” in pool.compare()</p></li>
-<li><p>CHANGED: default ridge parameter changed</p></li>
+<li>ADDED: bwplot(), stripplot(), densityplot() and xyplot() for creating Trellis graphs</li>
+<li>ADDED: function mdc() and mice.theme() for graphical parameters</li>
+<li>ADDED: argument passing from mice() to lower-level functions (requested by Juned Siddique)</li>
+<li>FIXED: erroneous rgamma() replaced by rchisq() in .norm.draw, lowers variance a bit for small n</li>
+<li>ADDED: with.mids() extended to handle expression objects</li>
+<li>FIXED: reporting bug in summary.mipo()</li>
+<li>CHANGED: df calculation in pool(), intervals may become slightly wider</li>
+<li>ADDED: internal functions mice.df() and df.residual()</li>
+<li>FIXED: error in rm calculation for “likelihood” in pool.compare()</li>
+<li>CHANGED: default ridge parameter changed</li>
 </ul>
 </div>
     <div id="mice-2-5---06-01-2011-svb" class="section level1">
@@ -546,25 +569,25 @@
 <a href="#mice-2-5---06-01-2011-svb" class="anchor"></a>mice 2.5 - 06-01-2011 / SvB<small> 2011-01-06 </small>
 </h1>
 <ul>
-<li><p>ADDED: various stability enhancements and code clean-up</p></li>
-<li><p>ADDED: find.collinear() function</p></li>
-<li><p>CHANGED: automatic removal of constant and collinear variables</p></li>
-<li><p>ADDED: ridge parameter in .norm.draw() and .norm.fix()</p></li>
-<li><p>ADDED: mice.impute.polr() for ordered factors</p></li>
-<li><p>FIXED: chainMean and chainVar in mice.mids()</p></li>
-<li><p>FIXED: iteration counter for mice.mids and sampler()</p></li>
-<li><p>ADDED: component ‘loggedEvents’ to mids-object for logging actions</p></li>
-<li><p>REMOVED: annoying warnings about removed predictors</p></li>
-<li><p>ADDED: updateLog() function</p></li>
-<li><p>CHANGED: smarter handling of model setup in mice()</p></li>
-<li><p>CHANGED: .pmm.match() now draws from the three closest donors</p></li>
-<li><p>ADDED: mids2spss() for shipping a mids-object to SPSS</p></li>
-<li><p>FIXED: change in summary.mipo() to work with as.mira()</p></li>
-<li><p>ADDED: function mice.impute.2L.norm.noint()</p></li>
-<li><p>ADDED: function as.mira()</p></li>
-<li><p>FIXED: global assign() removed from mice.impute.polyreg()</p></li>
-<li><p>FIXED: improved handling of factors by complete()</p></li>
-<li><p>FIXED: improved labeling of nhanes2 data</p></li>
+<li>ADDED: various stability enhancements and code clean-up</li>
+<li>ADDED: find.collinear() function</li>
+<li>CHANGED: automatic removal of constant and collinear variables</li>
+<li>ADDED: ridge parameter in .norm.draw() and .norm.fix()</li>
+<li>ADDED: mice.impute.polr() for ordered factors</li>
+<li>FIXED: chainMean and chainVar in mice.mids()</li>
+<li>FIXED: iteration counter for mice.mids and sampler()</li>
+<li>ADDED: component ‘loggedEvents’ to mids-object for logging actions</li>
+<li>REMOVED: annoying warnings about removed predictors</li>
+<li>ADDED: updateLog() function</li>
+<li>CHANGED: smarter handling of model setup in mice()</li>
+<li>CHANGED: .pmm.match() now draws from the three closest donors</li>
+<li>ADDED: mids2spss() for shipping a mids-object to SPSS</li>
+<li>FIXED: change in summary.mipo() to work with as.mira()</li>
+<li>ADDED: function mice.impute.2L.norm.noint()</li>
+<li>ADDED: function as.mira()</li>
+<li>FIXED: global assign() removed from mice.impute.polyreg()</li>
+<li>FIXED: improved handling of factors by complete()</li>
+<li>FIXED: improved labeling of nhanes2 data</li>
 </ul>
 </div>
     <div id="mice-2-4---17-10-2010-svb" class="section level1">
@@ -572,11 +595,11 @@
 <a href="#mice-2-4---17-10-2010-svb" class="anchor"></a>mice 2.4 - 17-10-2010 / SvB<small> 2010-10-18 </small>
 </h1>
 <ul>
-<li><p>ADDED: pool() now supports class ‘polr’ (Jean-Baptiste Pingault)</p></li>
-<li><p>FIXED: solved problem in mice.impute.polyreg when one of the variables was named y or x</p></li>
-<li><p>FIXED: remove.lindep: intercept prediction bug</p></li>
-<li><p>ADDED: version() function</p></li>
-<li><p>ADDED: cc(), cci() and ccn() convenience functions</p></li>
+<li>ADDED: pool() now supports class ‘polr’ (Jean-Baptiste Pingault)</li>
+<li>FIXED: solved problem in mice.impute.polyreg when one of the variables was named y or x</li>
+<li>FIXED: remove.lindep: intercept prediction bug</li>
+<li>ADDED: version() function</li>
+<li>ADDED: cc(), cci() and ccn() convenience functions</li>
 </ul>
 </div>
     <div id="mice-2-3---14-02-2010-svb" class="section level1">
@@ -584,10 +607,10 @@
 <a href="#mice-2-3---14-02-2010-svb" class="anchor"></a>mice 2.3 - 14-02-2010 / SvB<small> 2010-02-14 </small>
 </h1>
 <ul>
-<li><p>FIXED: check.method: logicals are now treated as binary variables (Emmanuel Charpentier)</p></li>
-<li><p>FIXED: complete: the NULL imputation case is now properly handled</p></li>
-<li><p>FIXED: mice.impute.pmm: now creates between imputation variability for univariate predictor</p></li>
-<li><p>FIXED: remove.lindep: returns ‘keep’ vector instead of data</p></li>
+<li>FIXED: check.method: logicals are now treated as binary variables (Emmanuel Charpentier)</li>
+<li>FIXED: complete: the NULL imputation case is now properly handled</li>
+<li>FIXED: mice.impute.pmm: now creates between imputation variability for univariate predictor</li>
+<li>FIXED: remove.lindep: returns ‘keep’ vector instead of data</li>
 </ul>
 </div>
     <div id="mice-2-2---13-01-2010-svb" class="section level1">
@@ -595,10 +618,10 @@
 <a href="#mice-2-2---13-01-2010-svb" class="anchor"></a>mice 2.2 - 13-01-2010 / SvB<small> 2010-01-14 </small>
 </h1>
 <ul>
-<li><p>ADDED: pool() now supports class ‘multinom’ (Jean-Baptiste Pingault)</p></li>
-<li><p>FIXED: bug fixed in check.data for data consisting of two columns (Rogier Donders, Thomas Koepsell)</p></li>
-<li><p>ADDED: new function remove.lindep() that removes predictors that are (almost) linearly dependent</p></li>
-<li><p>FIXED: bug fixed in pool() that produced an (innocent) warning message (Qi Zheng)</p></li>
+<li>ADDED: pool() now supports class ‘multinom’ (Jean-Baptiste Pingault)</li>
+<li>FIXED: bug fixed in check.data for data consisting of two columns (Rogier Donders, Thomas Koepsell)</li>
+<li>ADDED: new function remove.lindep() that removes predictors that are (almost) linearly dependent</li>
+<li>FIXED: bug fixed in pool() that produced an (innocent) warning message (Qi Zheng)</li>
 </ul>
 </div>
     <div id="mice-2-1---14-09-2009-svb" class="section level1">
@@ -606,12 +629,12 @@
 <a href="#mice-2-1---14-09-2009-svb" class="anchor"></a>mice 2.1 - 14-09-2009 / SvB<small> 2009-09-18 </small>
 </h1>
 <ul>
-<li><p>ADDED: pool() now also supports class ‘mer’</p></li>
-<li><p>CHANGED: nlme and lme4 are now only loaded if needed (by pool())</p></li>
-<li><p>FIXED: bug fixed in mice.impute.polyreg() when there was one missing entry (Emmanuel Charpentier)</p></li>
-<li><p>FIXED: bug fixed in plot.mids() when there was one missing entry (Emmanuel Charpentier)</p></li>
-<li><p>CHANGED: NAMESPACE expanded to allow easy access to function code</p></li>
-<li><p>FIXED: mice() can now find mice.impute.xxx() functions in the .GlobalEnv</p></li>
+<li>ADDED: pool() now also supports class ‘mer’</li>
+<li>CHANGED: nlme and lme4 are now only loaded if needed (by pool())</li>
+<li>FIXED: bug fixed in mice.impute.polyreg() when there was one missing entry (Emmanuel Charpentier)</li>
+<li>FIXED: bug fixed in plot.mids() when there was one missing entry (Emmanuel Charpentier)</li>
+<li>CHANGED: NAMESPACE expanded to allow easy access to function code</li>
+<li>FIXED: mice() can now find mice.impute.xxx() functions in the .GlobalEnv</li>
 </ul>
 </div>
     <div id="mice-2-0---26-08-2009-svb-ko-major-upgrade-for-jss-manuscript" class="section level1">
@@ -619,26 +642,26 @@
 <a href="#mice-2-0---26-08-2009-svb-ko-major-upgrade-for-jss-manuscript" class="anchor"></a>mice 2.0 - 26-08-2009 / SvB, KO Major upgrade for JSS manuscript<small> 2009-08-27 </small>
 </h1>
 <ul>
-<li><p>ADDED: new functions cbind.mids(), rbind.mids(), ibind()</p></li>
-<li><p>ADDED: new argument in mice(): ‘post’ in post-processing imputations</p></li>
-<li><p>ADDED: new functions: pool.scaler(), pool.compare(), pool.r.squared()</p></li>
-<li><p>ADDED: new data: boys, popmis, windspeed</p></li>
-<li><p>FIXED: function summary.mipo all(object$df) command fixed</p></li>
-<li><p>REMOVED: data.frame.to.matrix replaced by the internal data.matrix function</p></li>
-<li><p>ADDED: new imputation method mice.impute.2l.norm() for multilevel data</p></li>
-<li><p>CHANGED: pool now works for any class having a vcov() method</p></li>
-<li><p>ADDED: with.mids() provides a general complete-data analysis</p></li>
-<li><p>ADDED: type checking in mice() to ensure appropriate imputation methods</p></li>
-<li><p>ADDED: warning added in mice() for constant predictors</p></li>
-<li><p>ADDED: prevention of perfect prediction in mice.impute.logreg() and mice.impute.polyreg()</p></li>
-<li><p>CHANGED: mice.impute.norm.improper() changed into mice.impute.norm.nob()</p></li>
-<li><p>REMOVED: mice.impute.polyreg2() deleted</p></li>
-<li><p>ADDED: new ‘include’ argument in complete()</p></li>
-<li><p>ADDED: support for the empty imputation method in mice()</p></li>
-<li><p>ADDED: new function md.pairs()</p></li>
-<li><p>ADDED: support for intercept imputation</p></li>
-<li><p>ADDED: new function quickpred()</p></li>
-<li><p>FIXED: plot.mids() bug fix when number of variables &gt; 5</p></li>
+<li>ADDED: new functions cbind.mids(), rbind.mids(), ibind()</li>
+<li>ADDED: new argument in mice(): ‘post’ in post-processing imputations</li>
+<li>ADDED: new functions: pool.scaler(), pool.compare(), pool.r.squared()</li>
+<li>ADDED: new data: boys, popmis, windspeed</li>
+<li>FIXED: function summary.mipo all(object$df) command fixed</li>
+<li>REMOVED: data.frame.to.matrix replaced by the internal data.matrix function</li>
+<li>ADDED: new imputation method mice.impute.2l.norm() for multilevel data</li>
+<li>CHANGED: pool now works for any class having a vcov() method</li>
+<li>ADDED: with.mids() provides a general complete-data analysis</li>
+<li>ADDED: type checking in mice() to ensure appropriate imputation methods</li>
+<li>ADDED: warning added in mice() for constant predictors</li>
+<li>ADDED: prevention of perfect prediction in mice.impute.logreg() and mice.impute.polyreg()</li>
+<li>CHANGED: mice.impute.norm.improper() changed into mice.impute.norm.nob()</li>
+<li>REMOVED: mice.impute.polyreg2() deleted</li>
+<li>ADDED: new ‘include’ argument in complete()</li>
+<li>ADDED: support for the empty imputation method in mice()</li>
+<li>ADDED: new function md.pairs()</li>
+<li>ADDED: support for intercept imputation</li>
+<li>ADDED: new function quickpred()</li>
+<li>FIXED: plot.mids() bug fix when number of variables &gt; 5</li>
 </ul>
 </div>
     <div id="mice-1-21---1532009-svb-maintainance-release" class="section level1">
@@ -646,11 +669,11 @@
 <a href="#mice-1-21---1532009-svb-maintainance-release" class="anchor"></a>mice 1.21 - 15/3/2009 SvB Maintainance release<small> 2009-03-17 </small>
 </h1>
 <ul>
-<li><p>FIXED: Stricter type checking on logicals in mice() to evade warnings.</p></li>
-<li><p>CHANGED: Modernization of all help files.</p></li>
-<li><p>FIXED: padModel: treatment changed to contr.treatment</p></li>
-<li><p>CHANGED: Functions check.visitSequence, check.predictorMatrix, check.imputationMethod are now coded as local to mice()</p></li>
-<li><p>FIXED: existsFunction in check.imputationMethod now works both under S-Plus and R</p></li>
+<li>FIXED: Stricter type checking on logicals in mice() to evade warnings.</li>
+<li>CHANGED: Modernization of all help files.</li>
+<li>FIXED: padModel: treatment changed to contr.treatment</li>
+<li>CHANGED: Functions check.visitSequence, check.predictorMatrix, check.imputationMethod are now coded as local to mice()</li>
+<li>FIXED: existsFunction in check.imputationMethod now works both under S-Plus and R</li>
 </ul>
 </div>
     <div id="mice-1-16---6252007" class="section level1">
@@ -674,36 +697,44 @@
 <a href="#mice-1-14r---9262005-1144am" class="anchor"></a>mice 1.14R - 9/26/2005 11:44AM<small> 2006-04-04 </small>
 </h1>
 <ul>
-<li><p>FIXED: Passive imputation works again. (Roel de Jong)</p></li>
-<li><p>CHANGED: Random seed is now left alone, UNLESS the argument “seed” is specified. This means that unless you specify identical seed values, imputations of the same dataset will be different for multiple calls to mice. (Roel de Jong)</p></li>
-<li><p>FIXED: (docs): Documentation for “impute.mean” (Roel de Jong)</p></li>
-<li><p>FIXED: Function ‘summary.mids’ now works (Roel de Jong)</p></li>
-<li><p>FIXED: Imputation function ‘impute.polyreg’ and ‘impute.lda’ should now work under R</p></li>
+<li>FIXED: Passive imputation works again. (Roel de Jong)</li>
+<li>CHANGED: Random seed is now left alone, UNLESS the argument “seed” is specified. This means that unless you specify identical seed values, imputations of the same dataset will be different for multiple calls to mice. (Roel de Jong)</li>
+<li>FIXED: (docs): Documentation for “impute.mean” (Roel de Jong)</li>
+<li>FIXED: Function ‘summary.mids’ now works (Roel de Jong)</li>
+<li>FIXED: Imputation function ‘impute.polyreg’ and ‘impute.lda’ should now work under R</li>
 </ul>
 </div>
     <div id="mice-1-13" class="section level1">
 <h1 class="page-header">
 <a href="#mice-1-13" class="anchor"></a>mice 1.13<small> Unreleased </small>
 </h1>
-<p>Changed function checkImputationMethod, Feb 6, 2004</p>
+<ul>
+<li>Changed function checkImputationMethod, Feb 6, 2004</li>
+</ul>
 </div>
     <div id="mice-1-12" class="section level1">
 <h1 class="page-header">
 <a href="#mice-1-12" class="anchor"></a>mice 1.12<small> Unreleased </small>
 </h1>
-<p>Maintainance, S-Plus 6.1 and R 1.8 unicode, January 2004</p>
+<ul>
+<li>Maintainance, S-Plus 6.1 and R 1.8 unicode, January 2004</li>
+</ul>
 </div>
     <div id="mice-1-1" class="section level1">
 <h1 class="page-header">
 <a href="#mice-1-1" class="anchor"></a>mice 1.1<small> Unreleased </small>
 </h1>
-<p>R version (with help of Peter Malewski and Frank Harrell), Feb 2001</p>
+<ul>
+<li>R version (with help of Peter Malewski and Frank Harrell), Feb 2001</li>
+</ul>
 </div>
     <div id="mice-1-0" class="section level1">
 <h1 class="page-header">
 <a href="#mice-1-0" class="anchor"></a>mice 1.0<small> Unreleased </small>
 </h1>
-<p>Original S-PLUS release, June 14 2000</p>
+<ul>
+<li>Original S-PLUS release, June 14 2000</li>
+</ul>
 </div>
   </div>
 
@@ -711,6 +742,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#mice-3-3-0">3.3.0</a></li>
         <li><a href="#mice-3-2-0">3.2.0</a></li>
         <li><a href="#mice-3-1-0">3.1.0</a></li>
         <li><a href="#mice-3-0-0">3.0.0</a></li>

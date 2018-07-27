@@ -14,7 +14,7 @@ library("devtools")
 build()
 ```
 
-`"/Users/buurensv/Package/mice/mice_3.2.0.tar.gz"`
+`"/Users/buurensv/Package/mice/mice_3.3.0.tar.gz"`
 
 ## Test environments
 
@@ -27,9 +27,14 @@ Status: OK
 
 local checks of tarball:
 
-`$ R CMD CHECK mice_3.2.0.tar.gz`
+`$ R CMD CHECK mice_3.3.0.tar.gz`
 
-Status: OK
+Status: Error
+Error: package or namespace load failed for ‘lattice’:
+ package ‘lattice’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version
+
+This has probably to do with my local system. I am using lattice 0.20-35.
+Probably minor.
 
 ## Downstream dependencies
 
@@ -41,7 +46,7 @@ revdep_check_save_summary()
 revdep_check_print_problems()
 ```
 
-There were 47 reverse dependencies.
+There were 49 reverse dependencies.
 
 10 packages with problems + actions
 

@@ -2,7 +2,7 @@
 mice
 ====
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice) [![](http://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice) [![](https://img.shields.io/badge/github%20version-3.2.1-orange.svg)](https://github.com/stefvanbuuren/mice)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice) [![](http://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice) [![](https://img.shields.io/badge/github%20version-3.3.0-orange.svg)](https://github.com/stefvanbuuren/mice)
 
 [Multivariate Imputation by Chained Equations](http://stefvanbuuren.github.io/mice/)
 ------------------------------------------------------------------------------------

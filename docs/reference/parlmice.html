@@ -69,7 +69,7 @@ procedure can be sped up, which may be useful in general." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.2.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.3.0</span>
       </span>
     </div>
 
@@ -209,9 +209,14 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'># 150 imputations in dataset nhanes, performed by 3 cores  
-</div><div class='input'><span class='no'>imp1</span> <span class='kw'>&lt;-</span> <span class='fu'>parlmice</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>nhanes</span>, <span class='kw'>n.core</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.imp.core</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+</div><span class='co'># NOT RUN {</span>
+<span class='no'>imp1</span> <span class='kw'>&lt;-</span> <span class='fu'>parlmice</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>nhanes</span>, <span class='kw'>n.core</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.imp.core</span> <span class='kw'>=</span> <span class='fl'>50</span>)
 <span class='co'># Making use of arguments in mice. </span>
-<span class='no'>imp2</span> <span class='kw'>&lt;-</span> <span class='fu'>parlmice</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>nhanes</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"norm.nob"</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='error'>Error in get(name, envir = envir): object 'imp1' not found</span></div><div class='input'><span class='no'>imp2</span>$<span class='no'>method</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'imp2' not found</span></div><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>with</span>(<span class='no'>imp2</span>, <span class='fu'>lm</span>(<span class='no'>bmi</span> ~ <span class='no'>hyp</span>))</div><div class='output co'>#&gt; <span class='error'>Error in with(imp2, lm(bmi ~ hyp)): object 'imp2' not found</span></div><div class='input'><span class='fu'><a href='pool.html'>pool</a></span>(<span class='no'>fit</span>)</div><div class='output co'>#&gt; <span class='error'>Error in pool(fit): object 'fit' not found</span></div><div class='input'>
+<span class='no'>imp2</span> <span class='kw'>&lt;-</span> <span class='fu'>parlmice</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>nhanes</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"norm.nob"</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='no'>imp2</span>$<span class='no'>method</span>
+<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>with</span>(<span class='no'>imp2</span>, <span class='fu'>lm</span>(<span class='no'>bmi</span> ~ <span class='no'>hyp</span>))
+<span class='fu'><a href='pool.html'>pool</a></span>(<span class='no'>fit</span>)
+<span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
