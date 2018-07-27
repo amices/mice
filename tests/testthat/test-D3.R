@@ -23,7 +23,7 @@ library(lme4, quietly = TRUE)
 data(studentratings)
 fml <- ReadDis + SES ~ ReadAchiev + (1|ID)
 set.seed(26262)
-imp <- panImpute(studentratings, formula=fml, n.burn=1000, n.iter=100, m=5,
+imp <- mitml::panImpute(studentratings, formula=fml, n.burn=1000, n.iter=100, m=5,
                  silent = TRUE)
 implist <- mitmlComplete(imp, print=1:5)
 fit0 <- with(implist, lmer(ReadAchiev ~ (1|ID), REML=FALSE))

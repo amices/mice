@@ -122,7 +122,7 @@ suppressPackageStartupMessages(library(mitml, quietly = TRUE))
 library(lme4, quietly = TRUE)
 data(studentratings)
 fml <- ReadDis + SES ~ ReadAchiev + (1|ID)
-imp <- panImpute(studentratings, formula=fml, n.burn=1000, n.iter=100, m=5,
+imp <- mitml::panImpute(studentratings, formula=fml, n.burn=1000, n.iter=100, m=5,
                  silent = TRUE)
 implist <- mitmlComplete(imp, print=1:5)
 
