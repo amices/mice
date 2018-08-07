@@ -109,13 +109,20 @@ parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL,
   args <- match.call(mice, expand.dots = TRUE)
   args[[1]] <- NULL
   args$m <- n.imp.core
+  
+  unpackedArgs <- c(as.list(environment()), list(...))
+  for (key in names(args)){
+    if (key %in% names(unpackedArgs)){
+      args[key] = unpackedArgs[key]
+	}
+  }
 
   # make computing cluster
   cl <- parallel::makeCluster(n.core, type = cl.type)
   parallel::clusterExport(cl, 
                           varlist = c("data", "m", "seed", "cluster.seed", 
                                       "n.core", "n.imp.core", "cl.type",
-                                      ls(parent.frame())), 
+                                      ls(environment(parlmice))), 
                           envir = environment())
   parallel::clusterExport(cl, 
                           varlist = "do.call")
