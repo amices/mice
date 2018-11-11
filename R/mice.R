@@ -267,6 +267,7 @@ mice <- function(data, m = 5,
                  data.init = NULL,
                  ...) {
   call <- match.call()
+  check.deprecated(...)
   if (!is.na(seed)) set.seed(seed)
   
   # check form of data and m

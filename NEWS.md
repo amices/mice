@@ -12,6 +12,8 @@ imputation correctly will ignore any the specification of
 * Implements an alternative solution for #93 and #96. Instead of skipping 
 imputation of variables without predictors, `mice 3.3.1` will impute 
 those variables using the intercept only
+* Adds a routine contributed by Simon Grund that checks for deprecated 
+arguments #137
 
 # mice 3.3.0
 
