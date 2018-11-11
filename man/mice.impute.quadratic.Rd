@@ -117,4 +117,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
 \author{
 Gerko Vink (University of Utrecht), \email{g.vink@uu.nl}
 }
+\concept{univariate imputation functions}
 \keyword{datagen}

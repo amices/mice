@@ -46,4 +46,5 @@ Other univariate \code{2lonly} functions: \code{\link{mice.impute.2lonly.norm}},
 \author{
 Gerko Vink, Stef van Buuren, 2013
 }
+\concept{univariate \code{2lonly} functions}
 \keyword{datagen}

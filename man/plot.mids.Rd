@@ -4,8 +4,8 @@
 \alias{plot.mids}
 \title{Plot the trace lines of the MICE algorithm}
 \usage{
-\method{plot}{mids}(x, y = NULL, theme = mice.theme(), layout = c(2, 3),
-  type = "l", col = 1:10, lty = 1, ...)
+\method{plot}{mids}(x, y = NULL, theme = mice.theme(), layout = c(2,
+  3), type = "l", col = 1:10, lty = 1, ...)
 }
 \arguments{
 \item{x}{An object of class \code{mids}}

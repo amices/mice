@@ -7,7 +7,8 @@
 fluxplot(data, local = names(data), plot = TRUE, labels = TRUE,
   xlim = c(0, 1), ylim = c(0, 1), las = 1, xlab = "Influx",
   ylab = "Outflux", main = paste("Influx-outflux pattern for",
-  deparse(substitute(data))), eqscplot = TRUE, pty = "s", lwd = 1, ...)
+  deparse(substitute(data))), eqscplot = TRUE, pty = "s", lwd = 1,
+  ...)
 }
 \arguments{
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing

@@ -72,4 +72,5 @@ Other univariate \code{2l} functions: \code{\link{mice.impute.2l.lmer}},
 \author{
 Shahab Jolani, 2015; adapted to mice, SvB, 2018
 }
+\concept{univariate \code{2l} functions}
 \keyword{datagen}

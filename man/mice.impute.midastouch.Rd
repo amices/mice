@@ -5,7 +5,8 @@
 \title{Imputation by predictive mean matching with distance aided donor selection}
 \usage{
 mice.impute.midastouch(y, ry, x, wy = NULL, ridge = 1e-05,
-  midas.kappa = NULL, outout = TRUE, neff = NULL, debug = NULL, ...)
+  midas.kappa = NULL, outout = TRUE, neff = NULL, debug = NULL,
+  ...)
 }
 \arguments{
 \item{y}{Vector to be imputed}
@@ -135,4 +136,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
 \author{
 Philipp Gaffert, Florian Meinfelder, Volker Bosch 2015
 }
+\concept{univariate imputation functions}
 \keyword{datagen}

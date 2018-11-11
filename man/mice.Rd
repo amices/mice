@@ -4,11 +4,10 @@
 \name{mice}
 \alias{mice}
 \alias{mice-package}
-\alias{mice}
 \title{\pkg{mice}: Multivariate Imputation by Chained Equations}
 \usage{
-mice(data, m = 5, method = NULL, predictorMatrix, where = NULL, blocks,
-  visitSequence = NULL, formulas, blots = NULL, post = NULL,
+mice(data, m = 5, method = NULL, predictorMatrix, where = NULL,
+  blocks, visitSequence = NULL, formulas, blots = NULL, post = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"), maxit = 5,
   printFlag = TRUE, seed = NA, data.init = NULL, ...)
 }

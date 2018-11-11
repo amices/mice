@@ -3,7 +3,6 @@
 \name{norm.draw}
 \alias{norm.draw}
 \alias{.norm.draw}
-\alias{.norm.draw}
 \title{Draws values of beta and sigma by Bayesian linear regression}
 \usage{
 norm.draw(y, ry, x, rank.adjust = TRUE, ...)

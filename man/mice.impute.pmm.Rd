@@ -138,4 +138,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn
 }
+\concept{univariate imputation functions}
 \keyword{datagen}

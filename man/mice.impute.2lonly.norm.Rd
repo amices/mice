@@ -105,3 +105,4 @@ Other univariate \code{2lonly} functions: \code{\link{mice.impute.2lonly.mean}},
 Alexander Robitzsch (IPN - Leibniz Institute for Science and 
 Mathematics Education, Kiel, Germany), \email{robitzsch@ipn.uni-kiel.de}.
 }
+\concept{univariate \code{2lonly} functions}

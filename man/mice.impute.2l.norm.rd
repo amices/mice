@@ -77,4 +77,5 @@ Other univariate \code{2l} functions: \code{\link{mice.impute.2l.bin}},
 \author{
 Roel de Jong, 2008
 }
+\concept{univariate \code{2l} functions}
 \keyword{datagen}

@@ -69,4 +69,5 @@ Other univariate \code{2l} functions: \code{\link{mice.impute.2l.bin}},
 \author{
 Shahab Jolani, 2017
 }
+\concept{univariate \code{2l} functions}
 \keyword{datagen}

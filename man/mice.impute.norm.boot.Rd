@@ -60,4 +60,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
 \author{
 Gerko Vink, Stef van Buuren, 2018
 }
+\concept{univariate imputation functions}
 \keyword{datagen}

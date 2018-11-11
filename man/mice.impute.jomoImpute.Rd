@@ -85,4 +85,5 @@ Stef van Buuren, 2018, building on work of Simon Grund,
 Alexander Robitzsch and Oliver Luedtke (authors of \code{mitml} package) 
 and Quartagno and Carpenter (authors of \code{jomo} package).
 }
+\concept{multivariate \code{2l} functions}
 \keyword{datagen}
