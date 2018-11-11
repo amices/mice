@@ -92,4 +92,5 @@ Other univariate imputation functions: \code{\link{mice.impute.lda}},
 \author{
 Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
 }
+\concept{univariate imputation functions}
 \keyword{datagen}

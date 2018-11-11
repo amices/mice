@@ -4,9 +4,9 @@
 \alias{ampute}
 \title{Generate Missing Data for Simulation Purposes}
 \usage{
-ampute(data, prop = 0.5, patterns = NULL, freq = NULL, mech = "MAR",
-  weights = NULL, std = TRUE, cont = TRUE, type = NULL, odds = NULL,
-  bycases = TRUE, run = TRUE)
+ampute(data, prop = 0.5, patterns = NULL, freq = NULL,
+  mech = "MAR", weights = NULL, std = TRUE, cont = TRUE,
+  type = NULL, odds = NULL, bycases = TRUE, run = TRUE)
 }
 \arguments{
 \item{data}{A complete data matrix or dataframe. Values should be numeric. 

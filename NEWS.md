@@ -3,6 +3,16 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.3.1
+
+* Solves a problem in the routing logic (#149) causing that passive 
+imputation was not done when no predictors were specified. No passive
+imputation correctly will ignore any the specification of 
+`predictorMatrix`.
+* Implements an alternative solution for #93 and #96. Instead of skipping 
+imputation of variables without predictors, `mice 3.3.1` will impute 
+those variables using the intercept only
+
 # mice 3.3.0
 
 * Solves bug in passive imputation (#130). *Warning: This bug may 

@@ -46,10 +46,10 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           if (calltype == "type") type <- predictorMatrix[h, ] else type <- NULL
           
           user <- blots[[h]]
-  
+          
           # univariate/multivariate logic
           theMethod <- method[h]
-          empt <- theMethod == "" || (!is.null(type) && all(type == 0)) 
+          empt <- theMethod == ""
           univ <- !empt && !is.passive(theMethod) && 
             !handles.format(paste0("mice.impute.", theMethod))
           mult <- !empt && !is.passive(theMethod) && 
@@ -165,8 +165,12 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   
   if (calltype == "type") {
     vars <- colnames(data)[type != 0]
-    formula <- reformulate(setdiff(vars, j), response = j)
-    formula <- update(formula, ". ~ . ")
+    pred <- setdiff(vars, j)
+    if (length(pred) > 0L) {
+      formula <- reformulate(pred, response = j)
+      formula <- update(formula, ". ~ . ")
+    } else 
+      formula <- as.formula(paste0(j, " ~ 1"))
   }
   
   if (calltype == "formula") {
@@ -179,7 +183,7 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   
   # get the model matrix
   x <- obtain.design(data, formula)
-
+  
   # expand type vector to model matrix, remove intercept
   if (calltype == "type") {
     type <- type[labels(terms(formula))][attr(x, "assign")]
@@ -202,7 +206,7 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   
   cc <- wy[where[, j]]
   if (k == 1L) check.df(x, y, ry)
-
+  
   # remove linear dependencies
   keep <- remove.lindep(x, y, ry, ...)
   x <- x[, keep, drop = FALSE]
@@ -214,7 +218,7 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   f <- paste("mice.impute", method, sep = ".")
   imputes <- data[wy, j]
   imputes[!cc] <- NA
-
+  
   args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type), user, list(...))
   imputes[cc] <- do.call(f, args = args)
   imputes

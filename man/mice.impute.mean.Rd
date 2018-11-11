@@ -67,4 +67,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.rf}},
   \code{\link{mice.impute.ri}}
 }
+\concept{univariate imputation functions}
 \keyword{datagen}

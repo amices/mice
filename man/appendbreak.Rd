@@ -4,7 +4,8 @@
 \alias{appendbreak}
 \title{Appends specified break to the data}
 \usage{
-appendbreak(data, brk, warp.model = warp.model, id = NULL, typ = "pred")
+appendbreak(data, brk, warp.model = warp.model, id = NULL,
+  typ = "pred")
 }
 \arguments{
 \item{data}{A data frame in the long long format}

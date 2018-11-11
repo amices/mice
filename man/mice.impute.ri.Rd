@@ -64,4 +64,5 @@ Other univariate imputation functions: \code{\link{mice.impute.cart}},
 \author{
 Shahab Jolani (University of Utrecht) \email{s.jolani@uu.nl}
 }
+\concept{univariate imputation functions}
 \keyword{datagen}
