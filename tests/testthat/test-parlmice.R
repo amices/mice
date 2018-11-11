@@ -1,6 +1,7 @@
 #Same seed - multiple cores - 
 #Result: Imputations not equal between mice and parlmice
 test_that("Warning and Imputations between mice and parlmice are unequal", {
+  skip_if_not(parallel::detectCores() > 2)
   expect_warning(A <- parlmice(nhanes, m = 2, seed = 123))
   B <- mice(nhanes, m = 2, print = FALSE, seed = 123)
   expect_false(all(complete(A, "long") == complete(B, "long")))
