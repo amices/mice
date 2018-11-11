@@ -48,7 +48,7 @@ nelsonaalen <- function(data, timevar, statusvar) {
     time <- data[, timevar]
     status <- data[, statusvar]
     
-    hazard <- basehaz(coxph(Surv(time, status) ~ 1, data = data))
+    hazard <- basehaz(coxph(Surv(time, status) ~ 1))
     idx <- match(time, hazard[, "time"])
     return(hazard[idx, "hazard"])
 }

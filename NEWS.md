@@ -14,6 +14,8 @@ imputation of variables without predictors, `mice 3.3.1` will impute
 those variables using the intercept only
 * Adds a routine contributed by Simon Grund that checks for deprecated 
 arguments #137
+* Improves the `nelsonaalen()` function for data where variables 
+`time` or `status` have already been defined (#140), thanks matthieu-faron
 
 # mice 3.3.0
 
