@@ -110,8 +110,6 @@ mids2spss <- function(imp, filedat="midsdata.txt", filesps="readmids.sps",
     if(!is.mids(imp)) stop("Exports only objects of class 'mids'.")
     imputed <- complete(imp, "long", include=TRUE)[,-2]
     names(imputed)[1] <- "Imputation_"
-    f <- imputed[,"Imputation_"]
-    imputed[,"Imputation_"] <- as.numeric(c(levels(f),NA))[f]
     if (!is.null(path)) {
         filedat <- file.path(path,filedat)
         filesps <- file.path(path,filesps)
