@@ -71,13 +71,7 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
     fullNames <- paste("mice.impute", method[active.check], sep = ".")
     if (length(method[active.check]) == 0) fullNames <- character(0)
   }
-  notFound <- !vapply(fullNames, exists, logical(1), 
-                      mode = "function", inherits = TRUE)
-  if (any(notFound)) {
-    stop(paste("The following functions were not found:",
-               paste(fullNames[notFound], collapse = ", ")))
-  }
-  
+
   # type checks on built-in imputation methods
   for (j in names(blocks)) {
     vname <- blocks[[j]]
