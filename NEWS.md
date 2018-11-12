@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.3.2
+
+* Solves a bug that crashed `mids2spss()`, thanks Edgar Schoreit (#149)
+
 # mice 3.3.1
 
 * Solves a problem in the routing logic (#149) causing that passive 
