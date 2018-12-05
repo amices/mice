@@ -3,6 +3,14 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.3.4 
+
+* Fix to solve the name-matching problem (#156, #149, #147)
+
+# mice 3.3.3
+
+* Fix that removes the pre-check for existence of `mice.impute.xxx()` so that `mice::mice()` works as expected (#55)
+
 # mice 3.3.2
 
 * Solves a bug that crashed `mids2spss()`, thanks Edgar Schoreit (#149)
