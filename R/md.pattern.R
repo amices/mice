@@ -14,6 +14,8 @@
 #'values are coded as NA's.
 #'@param plot Should the missing data pattern be made into a plot. Default is 
 #'`plot = TRUE`.
+#'@param rotate.names Whether the variable names in the plot should be placed 
+#'horizontally or vertically. Default is `rotate.names = FALSE`.
 #'@return A matrix with \code{ncol(x)+1} columns, in which each row corresponds
 #'to a missing data pattern (1=observed, 0=missing).  Rows and columns are
 #'sorted in increasing amounts of missing information. The last column and row
@@ -41,7 +43,7 @@
 #'
 #'
 #'@export
-md.pattern <- function(x, plot = TRUE){
+md.pattern <- function(x, plot = TRUE, rotate.names = FALSE){
   if (!(is.matrix(x) || is.data.frame(x))) 
     stop("Data should be a matrix or dataframe")
   if (ncol(x) < 2) 
@@ -86,8 +88,15 @@ md.pattern <- function(x, plot = TRUE){
     M <- cbind(c(row(R)), c(col(R))) - 1
     shade <- ifelse(R[nrow(R):1, ], mdc(1), mdc(2))
     rect(M[, 2], M[, 1], M[, 2] + 1, M[, 1] + 1, col=shade)
+    if (rotate.names) {
+      adj = c(0, 0.5)
+      srt = 90
+    } else {
+      adj = c(0.5, 0)
+      srt = 0
+    }
     for(i in 1:ncol(R)){
-      text(i - .5, nrow(R) + .3, colnames(r)[i], adj = c(0.5,0))
+      text(i - .5, nrow(R) + .3, colnames(r)[i], adj = adj, srt = srt)
       text(i - .5, -.3, nmis[order(nmis)][i])
     }
     for(i in 1:nrow(R)){
