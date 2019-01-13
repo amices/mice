@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.3.5 
+
+* Remove test-fix.coef.R from tests
+
 # mice 3.3.4 
 
 * Fix to solve the name-matching problem (#156, #149, #147)
