@@ -55,7 +55,7 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/as.mitml.result.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/boys.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/boys.rd</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/brandsma.html</loc>
@@ -70,7 +70,7 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/cbind.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/cbind.mids.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/cbind.mids.rd</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/cc.html</loc>
@@ -103,10 +103,10 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/extractBS.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/fdd.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/fdd.rd</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/fdgs.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/fdgs.rd</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/fico.html</loc>
@@ -130,7 +130,7 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/glm.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ibind.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/ibind.rd</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/ic.html</loc>
@@ -157,7 +157,7 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/is.mitml.result.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/leiden85.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/leiden85.rd</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/lm.mids.html</loc>
@@ -190,7 +190,7 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/make.where.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mammalsleep.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/mammalsleep.rd</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/md.pairs.html</loc>
@@ -211,13 +211,13 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.2l.lmer.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.2l.norm.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.2l.norm.rd</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.2l.pan.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.2lonly.mean.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.2lonly.mean.rd</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.2lonly.norm.html</loc>
@@ -253,7 +253,7 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.norm.boot.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.norm.nob.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.norm.nob.rd</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.norm.predict.html</loc>
@@ -334,10 +334,10 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/norm.draw.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/parlmice.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/parlMICE.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/pattern.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/pattern.rd</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/plot.mids.html</loc>
@@ -355,16 +355,16 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/pool.r.squared.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/pool.scalar.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/pool.scalar.rd</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/popmis.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/popmis.rd</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/pops.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/pops.rd</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/potthoffroy.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/potthoffroy.rd</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/print.html</loc>
@@ -379,7 +379,7 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/rbind.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/selfreport.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/selfreport.rd</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/squeeze.html</loc>
@@ -394,16 +394,16 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/supports.transparent.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/tbc.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/tbc.rd</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/version.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/walking.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/walking.rd</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/windspeed.html</loc>
+    <loc>http://stefvanbuuren.github.io/mice/reference/windspeed.rd</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/with.mids.html</loc>
