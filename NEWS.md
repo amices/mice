@@ -6,6 +6,7 @@ output: github_document
 # mice 3.3.5 
 
 * Remove test-fix.coef.R from tests
+* Adds a rotate.names argument to md.pattern() (#154, #160)
 
 # mice 3.3.4 
 

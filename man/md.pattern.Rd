@@ -4,7 +4,7 @@
 \alias{md.pattern}
 \title{Missing data pattern}
 \usage{
-md.pattern(x, plot = TRUE)
+md.pattern(x, plot = TRUE, rotate.names = FALSE)
 }
 \arguments{
 \item{x}{A data frame or a matrix containing the incomplete data.  Missing
@@ -12,6 +12,9 @@ values are coded as NA's.}
 
 \item{plot}{Should the missing data pattern be made into a plot. Default is 
 `plot = TRUE`.}
+
+\item{rotate.names}{Whether the variable names in the plot should be placed 
+horizontally or vertically. Default is `rotate.names = FALSE`.}
 }
 \value{
 A matrix with \code{ncol(x)+1} columns, in which each row corresponds
