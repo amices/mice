@@ -3,6 +3,11 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.3.6 
+
+* Add a hex sticker to the mice package. Designed by Jaden M. Walters.
+* Specify the R3.5.0 random generator in order to pass CRAN tests
+
 # mice 3.3.5 
 
 * Remove test-fix.coef.R from tests

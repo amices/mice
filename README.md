@@ -1,8 +1,8 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-mice
-====
+mice <a href='https://stefvanbuuren.name/mice/'><img src='MICE_sticker_SMALL.png' align="right" height="139" /></a>
+===================================================================================================================
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice) [![](http://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice) [![](https://img.shields.io/badge/github%20version-3.3.5-orange.svg)](https://github.com/stefvanbuuren/mice)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice) [![](http://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice) [![](https://img.shields.io/badge/github%20version-3.3.6-orange.svg)](https://github.com/stefvanbuuren/mice)
 
 [Multivariate Imputation by Chained Equations](http://stefvanbuuren.github.io/mice/)
 ------------------------------------------------------------------------------------
@@ -128,3 +128,8 @@ Resources
 ### Code from publications
 
 1.  [Flexible Imputation of Missing Data. Second edition.](https://github.com/stefvanbuuren/FIMD/tree/master/R)
+
+Acknowledgement
+---------------
+
+The cute mice sticker was designed by Jaden M. Walters. Thanks Jaden!
