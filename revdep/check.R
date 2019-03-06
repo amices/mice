@@ -1,8 +1,19 @@
-library("devtools")
+library("revdepcheck")
 
-revdep_check_reset()
-revdep_check()
+# the following takes one hour
+revdep_check(num_workers = 3)
 
-revdep_check_save_summary()
-revdep_check_print_problems()
+# print out results
+revdep_summary()
+revdep_details(revdep = "miceFast")
 
+# commit 
+system("git add revdep/*.md")
+system("git commit -m 'Update revdep results'")
+system("git push -u origin HEAD")
+
+# signal package authors
+
+
+# after successfully submitted to CRAN, clean up 
+revdep_reset()

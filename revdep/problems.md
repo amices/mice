@@ -1,209 +1,514 @@
-# Setup
+# BaBooN
 
-## Platform
+Version: 0.2-0
 
-|setting  |value                        |
-|:--------|:----------------------------|
-|version  |R version 3.5.1 (2018-07-02) |
-|system   |x86_64, darwin15.6.0         |
-|ui       |RStudio (1.1.456)            |
-|language |(EN)                         |
-|collate  |nl_NL.UTF-8                  |
-|tz       |Europe/Amsterdam             |
-|date     |2018-07-24                   |
+## In both
 
-## Packages
+*   checking R code for possible problems ... NOTE
+    ```
+    ...
+    BayesBoot: no visible global function definition for ‘runif’
+    BayesBoot: no visible global function definition for ‘rmultinom’
+    MI.inference: no visible global function definition for ‘var’
+    MI.inference: no visible global function definition for ‘qt’
+    impChainConversion : <anonymous>: no visible binding for global
+      variable ‘var’
+    impChainConversion : <anonymous>: no visible binding for global
+      variable ‘median’
+    impChainConversion : <anonymous>: no visible binding for global
+      variable ‘sd’
+    rowimpPrep: no visible binding for global variable ‘var’
+    summary.impprep: no visible global function definition for ‘head’
+    Undefined global functions or variables:
+      as.formula binomial glm glm.control head lm median na.exclude na.omit
+      predict qt rmultinom runif sd var write.table
+    Consider adding
+      importFrom("stats", "as.formula", "binomial", "glm", "glm.control",
+                 "lm", "median", "na.exclude", "na.omit", "predict", "qt",
+                 "rmultinom", "runif", "sd", "var")
+      importFrom("utils", "head", "write.table")
+    to your NAMESPACE file.
+    ```
 
-|package         |*  |version |date       |source          |
-|:---------------|:--|:-------|:----------|:---------------|
-|AGD             |   |0.39    |2018-05-29 |cran (@0.39)    |
-|broom           |   |0.5.0   |2018-07-17 |cran (@0.5.0)   |
-|BSDA            |   |1.2.0   |2017-07-30 |cran (@1.2.0)   |
-|CALIBERrfimpute |   |1.0-1   |2018-06-11 |cran (@1.0-1)   |
-|dplyr           |   |0.7.6   |2018-06-29 |cran (@0.7.6)   |
-|DPpackage       |   |1.1-7.4 |2018-01-06 |cran (@1.1-7.4) |
-|gamlss          |   |5.1-0   |2018-06-08 |cran (@5.1-0)   |
-|HSAUR3          |   |1.0-9   |2018-05-28 |cran (@1.0-9)   |
-|knitr           |   |1.20    |2018-02-20 |cran (@1.20)    |
-|lme4            |   |1.1-17  |2018-04-03 |cran (@1.1-17)  |
-|mice            |   |3.1.0   |2018-06-20 |cran (@3.1.0)   |
-|miceadds        |   |2.13-63 |2018-07-05 |cran (@2.13-63) |
-|micemd          |   |1.2.0   |2018-01-07 |cran (@1.2.0)   |
-|mitml           |   |0.3-6   |2018-07-10 |cran (@0.3-6)   |
-|mitools         |   |2.3     |2014-09-20 |cran (@2.3)     |
-|pan             |   |1.6     |2018-06-29 |cran (@1.6)     |
-|randomForest    |   |4.6-14  |2018-03-25 |cran (@4.6-14)  |
-|Rcpp            |   |0.12.17 |2018-05-18 |cran (@0.12.17) |
-|rlang           |   |0.2.1   |2018-05-30 |cran (@0.2.1)   |
-|rmarkdown       |   |1.10    |2018-06-11 |cran (@1.10)    |
-|testthat        |   |2.0.0   |2017-12-13 |cran (@2.0.0)   |
-|tidyr           |   |0.8.1   |2018-05-18 |cran (@0.8.1)   |
-|Zelig           |   |5.1.6   |2018-02-27 |cran (@5.1.6)   |
+# brms
 
-# Check results
+Version: 2.7.0
 
-10 packages with problems
+## In both
 
-|package        |version  | errors| warnings| notes|
-|:--------------|:--------|------:|--------:|-----:|
-|cobalt         |3.3.0    |      0|        1|     1|
-|dynr           |0.1.12-5 |      1|        0|     0|
-|Hmisc          |4.1-1    |      1|        0|     0|
-|JointAI        |0.2.0    |      1|        0|     0|
-|miceFast       |0.2.3    |      1|        0|     0|
-|MissingDataGUI |0.2-5    |      1|        0|     0|
-|NNLM           |0.4.2    |      1|        0|     0|
-|Qtools         |1.3      |      1|        0|     0|
-|rattle         |5.1.0    |      1|        0|     0|
-|weightTAPSPACK |0.1      |      1|        0|     0|
+*   checking installed package size ... NOTE
+    ```
+      installed size is  6.7Mb
+      sub-directories of 1Mb or more:
+        R     4.1Mb
+        doc   1.8Mb
+    ```
 
-## cobalt (3.3.0)
-Maintainer: Noah Greifer <noah.greifer@gmail.com>  
-Bug reports: https://github.com/ngreifer/cobalt/issues
+# bucky
 
-0 errors | 1 warning  | 1 note 
+Version: 1.0.5
 
-```
-checking re-building of vignette outputs ... WARNING
-Error in re-building vignettes:
-  ...
-Loading required package: nnet
-Loading required package: numDeriv
-Loading required package: glmnet
-Loading required package: foreach
-Loaded glmnet 2.0-16
+## In both
 
-CBPS: Covariate Balancing Propensity Score
-... 8 lines ...
+*   checking package dependencies ... NOTE
+    ```
+    Packages which this enhances but not available for checking:
+      ‘texreg’ ‘stargazer’
+    ```
 
-##
-## ebal Package: Implements Entropy Balancing.
+*   checking Rd cross-references ... NOTE
+    ```
+    Package unavailable to check Rd xrefs: ‘mitools’
+    ```
 
-## See http://www.stanford.edu/~jhain/ for additional information.
+# cobalt
 
+Version: 3.6.1
 
-Quitting from lines 225-239 (cobalt_A1_other_packages.Rmd) 
-Error: processing vignette 'cobalt_A1_other_packages.Rmd' failed with diagnostics:
-there is no package called 'designmatch'
-Execution halted
+## In both
 
-checking package dependencies ... NOTE
-Package suggested but not available for checking: ‘designmatch’
-```
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘backports’
+      All declared Imports should be used.
+    ```
 
-## dynr (0.1.12-5)
-Maintainer: Michael D. Hunter <mhunter.ou@gmail.com>
+# dynr
 
-1 error  | 0 warnings | 0 notes
+Version: 0.1.13-4
+
+## In both
+
+*   checking whether package ‘dynr’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/Users/buurensv/Package/mice/mice/revdep/checks.noindex/dynr/new/dynr.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
 
 ```
-checking whether package ‘dynr’ can be installed ... ERROR
-Installation failed.
-See ‘/Users/buurensv/Package/mice/mice/revdep/checks/dynr.Rcheck/00install.out’ for details.
-```
-
-## Hmisc (4.1-1)
-Maintainer: Frank E Harrell Jr <f.harrell@vanderbilt.edu>
-
-1 error  | 0 warnings | 0 notes
+Hi Stef
+* installing *source* package ‘dynr’ ...
+** package ‘dynr’ successfully unpacked and MD5 sums checked
+checking for gsl-config... no
+configure: error: gsl-config not found, is GSL installed?
+ERROR: configuration failed for package ‘dynr’
+* removing ‘/Users/buurensv/Package/mice/mice/revdep/checks.noindex/dynr/new/dynr.Rcheck/dynr’
 
 ```
-checking whether package ‘Hmisc’ can be installed ... ERROR
-Installation failed.
-See ‘/Users/buurensv/Package/mice/mice/revdep/checks/Hmisc.Rcheck/00install.out’ for details.
-```
-
-## JointAI (0.2.0)
-Maintainer: Nicole S. Erler <n.erler@erasmusmc.nl>  
-Bug reports: https://github.com/nerler/JointAI
-
-1 error  | 0 warnings | 0 notes
+### CRAN
 
 ```
-checking whether package ‘JointAI’ can be installed ... ERROR
-Installation failed.
-See ‘/Users/buurensv/Package/mice/mice/revdep/checks/JointAI.Rcheck/00install.out’ for details.
-```
-
-## miceFast (0.2.3)
-Maintainer: Maciej Nasinski <nasinski.maciej@gmail.com>  
-Bug reports: https://github.com/Polkas/miceFast/issues
-
-1 error  | 0 warnings | 0 notes
+Hi Stef
+* installing *source* package ‘dynr’ ...
+** package ‘dynr’ successfully unpacked and MD5 sums checked
+checking for gsl-config... no
+configure: error: gsl-config not found, is GSL installed?
+ERROR: configuration failed for package ‘dynr’
+* removing ‘/Users/buurensv/Package/mice/mice/revdep/checks.noindex/dynr/old/dynr.Rcheck/dynr’
 
 ```
-checking whether package ‘miceFast’ can be installed ... ERROR
-Installation failed.
-See ‘/Users/buurensv/Package/mice/mice/revdep/checks/miceFast.Rcheck/00install.out’ for details.
+# finalfit
+
+Version: 0.9.0
+
+## In both
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    Error in re-building vignettes:
+      ...
+    pandoc: Could not fetch https://www.datasurg.net/wp-content/uploads/2018/07/table1_boot-1024x225.png
+    TlsExceptionHostPort (HandshakeFailed (Error_Misc "user error (unexpected type received. expecting handshake and got: Alert [(AlertLevel_Fatal,HandshakeFailure)])")) "www.datasurg.net" 443
+    Error: processing vignette 'bootstrap.Rmd' failed with diagnostics:
+    pandoc document conversion failed with error 67
+    Execution halted
+    ```
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘readr’
+      All declared Imports should be used.
+    ```
+
+# Lambda4
+
+Version: 3.0
+
+## In both
+
+*   checking DESCRIPTION meta-information ... NOTE
+    ```
+    Malformed Title field: should not end in a period.
+    ```
+
+*   checking dependencies in R code ... NOTE
+    ```
+    'library' or 'require' calls in package code:
+      ‘GPArotation’ ‘mice’
+      Please use :: or requireNamespace() instead.
+      See section 'Suggested packages' in the 'Writing R Extensions' manual.
+    ```
+
+*   checking R code for possible problems ... NOTE
+    ```
+    ...
+    lambda1: no visible global function definition for ‘cov2cor’
+    lambda2: no visible global function definition for ‘cov2cor’
+    lambda3: no visible global function definition for ‘cov2cor’
+    lambda3: no visible binding for global variable ‘sd’
+    lambda5: no visible global function definition for ‘cov2cor’
+    lambda6: no visible global function definition for ‘cov2cor’
+    omega.tot: no visible global function definition for ‘cov2cor’
+    omega.tot: no visible global function definition for ‘factanal’
+    quant.lambda4: no visible global function definition for ‘cov2cor’
+    quant.lambda4: no visible global function definition for ‘runif’
+    quant.lambda4: no visible global function definition for ‘quantile’
+    raju: no visible global function definition for ‘cov2cor’
+    raju: no visible global function definition for ‘runif’
+    user.lambda4: no visible global function definition for ‘runif’
+    user.lambda4: no visible binding for global variable ‘sd’
+    Undefined global functions or variables:
+      complete cov cov2cor factanal median mice quantile runif sd
+    Consider adding
+      importFrom("stats", "cov", "cov2cor", "factanal", "median", "quantile",
+                 "runif", "sd")
+    to your NAMESPACE file.
+    ```
+
+# LSAmitR
+
+Version: 1.0-2
+
+## In both
+
+*   checking data for non-ASCII characters ... NOTE
+    ```
+      Note: found 55 marked UTF-8 strings
+    ```
+
+# miceFast
+
+Version: 0.2.3
+
+## In both
+
+*   checking whether package ‘miceFast’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/Users/buurensv/Package/mice/mice/revdep/checks.noindex/miceFast/new/miceFast.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
 ```
-
-## MissingDataGUI (0.2-5)
-Maintainer: Xiaoyue Cheng <xycheng@unomaha.edu>
-
-1 error  | 0 warnings | 0 notes
-
-```
-checking package dependencies ... ERROR
-Packages required but not available:
-  ‘gWidgetsRGtk2’ ‘GGally’ ‘cairoDevice’ ‘reshape’
-
-See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-manual.
-```
-
-## NNLM (0.4.2)
-Maintainer: Xihui Lin <ericxihuilin@gmail.com>  
-Bug reports: https://github.com/linxihui/NNLM/issues
-
-1 error  | 0 warnings | 0 notes
+Hi Stef
+* installing *source* package ‘miceFast’ ...
+** package ‘miceFast’ successfully unpacked and MD5 sums checked
+** libs
+clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/buurensv/Package/mice/mice/revdep/library.noindex/mice/new/Rcpp/include" -I"/Users/buurensv/Package/mice/mice/revdep/library.noindex/miceFast/RcppArmadillo/include" -I/usr/local/include  -fopenmp -fPIC  -Wall -g -O2 -c R_funs.cpp -o R_funs.o
+clang: error: unsupported option '-fopenmp'
+make: *** [R_funs.o] Error 1
+ERROR: compilation failed for package ‘miceFast’
+* removing ‘/Users/buurensv/Package/mice/mice/revdep/checks.noindex/miceFast/new/miceFast.Rcheck/miceFast’
 
 ```
-checking whether package ‘NNLM’ can be installed ... ERROR
-Installation failed.
-See ‘/Users/buurensv/Package/mice/mice/revdep/checks/NNLM.Rcheck/00install.out’ for details.
-```
-
-## Qtools (1.3)
-Maintainer: Marco Geraci <geraci@mailbox.sc.edu>
-
-1 error  | 0 warnings | 0 notes
+### CRAN
 
 ```
-checking whether package ‘Qtools’ can be installed ... ERROR
-Installation failed.
-See ‘/Users/buurensv/Package/mice/mice/revdep/checks/Qtools.Rcheck/00install.out’ for details.
-```
-
-## rattle (5.1.0)
-Maintainer: Graham Williams <Graham.Williams@togaware.com>
-
-1 error  | 0 warnings | 0 notes
-
-```
-checking package dependencies ... ERROR
-Packages required but not available:
-  ‘RGtk2’ ‘cairoDevice’ ‘XML’ ‘rpart.plot’
-
-Packages suggested but not available for checking:
-  ‘pmml’ ‘ada’ ‘arules’ ‘arulesViz’ ‘biclust’ ‘cba’ ‘descr’ ‘doBy’
-  ‘fpc’ ‘ggdendro’ ‘ggraptR’ ‘gWidgetsRGtk2’ ‘hmeasure’ ‘odfWeave’
-  ‘party’ ‘playwith’ ‘rattle.data’ ‘reshape’ ‘rggobi’ ‘RODBC’
-  ‘SnowballC’ ‘tm’ ‘verification’ ‘wskm’ ‘RGtk2Extras’ ‘xgboost’
-
-See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-manual.
-```
-
-## weightTAPSPACK (0.1)
-Maintainer: David G. Carlson <carlson.david@wustl.edu>
-
-1 error  | 0 warnings | 0 notes
+Hi Stef
+* installing *source* package ‘miceFast’ ...
+** package ‘miceFast’ successfully unpacked and MD5 sums checked
+** libs
+clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/buurensv/Package/mice/mice/revdep/library.noindex/mice/old/Rcpp/include" -I"/Users/buurensv/Package/mice/mice/revdep/library.noindex/miceFast/RcppArmadillo/include" -I/usr/local/include  -fopenmp -fPIC  -Wall -g -O2 -c R_funs.cpp -o R_funs.o
+clang: error: unsupported option '-fopenmp'
+make: *** [R_funs.o] Error 1
+ERROR: compilation failed for package ‘miceFast’
+* removing ‘/Users/buurensv/Package/mice/mice/revdep/checks.noindex/miceFast/old/miceFast.Rcheck/miceFast’
 
 ```
-checking package dependencies ... ERROR
-Package required but not available: ‘HotDeckImputation’
+# MissingDataGUI
 
-See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-manual.
+Version: 0.2-5
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Packages required but not available: ‘gWidgetsRGtk2’ ‘cairoDevice’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
+# miWQS
+
+Version: 0.0.9
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘graphics’
+      All declared Imports should be used.
+    ```
+
+# MRPC
+
+Version: 2.0.0
+
+## In both
+
+*   checking whether package ‘MRPC’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/Users/buurensv/Package/mice/mice/revdep/checks.noindex/MRPC/new/MRPC.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
 ```
+Hi Stef
+* installing *source* package ‘MRPC’ ...
+** package ‘MRPC’ successfully unpacked and MD5 sums checked
+** R
+** data
+*** moving datasets to lazyload DB
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘GO.db’
+ERROR: lazy loading failed for package ‘MRPC’
+* removing ‘/Users/buurensv/Package/mice/mice/revdep/checks.noindex/MRPC/new/MRPC.Rcheck/MRPC’
+
+```
+### CRAN
+
+```
+Hi Stef
+* installing *source* package ‘MRPC’ ...
+** package ‘MRPC’ successfully unpacked and MD5 sums checked
+** R
+** data
+*** moving datasets to lazyload DB
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
+  there is no package called ‘GO.db’
+ERROR: lazy loading failed for package ‘MRPC’
+* removing ‘/Users/buurensv/Package/mice/mice/revdep/checks.noindex/MRPC/old/MRPC.Rcheck/MRPC’
+
+```
+# NNLM
+
+Version: 0.4.2
+
+## In both
+
+*   checking whether package ‘NNLM’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/Users/buurensv/Package/mice/mice/revdep/checks.noindex/NNLM/new/NNLM.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+Hi Stef
+* installing *source* package ‘NNLM’ ...
+** package ‘NNLM’ successfully unpacked and MD5 sums checked
+** libs
+clang++  -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -fopenmp -I"/Users/buurensv/Package/mice/mice/revdep/library.noindex/mice/new/Rcpp/include" -I"/Users/buurensv/Package/mice/mice/revdep/library.noindex/NNLM/RcppArmadillo/include" -I"/Users/buurensv/Package/mice/mice/revdep/library.noindex/NNLM/RcppProgress/include" -I/usr/local/include   -fPIC  -Wall -g -O2  -c RcppExports.cpp -o RcppExports.o
+clang: error: unsupported option '-fopenmp'
+make: *** [RcppExports.o] Error 1
+ERROR: compilation failed for package ‘NNLM’
+* removing ‘/Users/buurensv/Package/mice/mice/revdep/checks.noindex/NNLM/new/NNLM.Rcheck/NNLM’
+
+```
+### CRAN
+
+```
+Hi Stef
+* installing *source* package ‘NNLM’ ...
+** package ‘NNLM’ successfully unpacked and MD5 sums checked
+** libs
+clang++  -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -fopenmp -I"/Users/buurensv/Package/mice/mice/revdep/library.noindex/mice/old/Rcpp/include" -I"/Users/buurensv/Package/mice/mice/revdep/library.noindex/NNLM/RcppArmadillo/include" -I"/Users/buurensv/Package/mice/mice/revdep/library.noindex/NNLM/RcppProgress/include" -I/usr/local/include   -fPIC  -Wall -g -O2  -c RcppExports.cpp -o RcppExports.o
+clang: error: unsupported option '-fopenmp'
+make: *** [RcppExports.o] Error 1
+ERROR: compilation failed for package ‘NNLM’
+* removing ‘/Users/buurensv/Package/mice/mice/revdep/checks.noindex/NNLM/old/NNLM.Rcheck/NNLM’
+
+```
+# rattle
+
+Version: 5.2.0
+
+## In both
+
+*   checking package dependencies ... NOTE
+    ```
+    Packages suggested but not available for checking:
+      ‘cairoDevice’ ‘gWidgetsRGtk2’ ‘playwith’ ‘rggobi’ ‘RGtk2’
+      ‘RGtk2Extras’
+    ```
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  7.8Mb
+      sub-directories of 1Mb or more:
+        data   3.0Mb
+        etc    1.9Mb
+        po     1.2Mb
+    ```
+
+# rexposome
+
+Version: 1.2.0
+
+## In both
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    ...
+      Failed to tidy R code in chunk 'plot_enet_heatmap'. Reason:
+    Error in loadNamespace(name) : there is no package called 'formatR'
+    
+    Loading required package: lattice
+    
+    Attaching package: 'mice'
+    
+    The following objects are masked from 'package:BiocGenerics':
+    
+        cbind, rbind
+    
+    The following objects are masked from 'package:base':
+    
+        cbind, rbind
+    
+    Warning in has_utility("convert", "ImageMagick") :
+      ImageMagick not installed or not in PATH
+    Quitting from lines 229-231 (mutiple_imputation_data_analysis.Rmd) 
+    Error: processing vignette 'mutiple_imputation_data_analysis.Rmd' failed with diagnostics:
+    'names' attribute [4] must be the same length as the vector [0]
+    Execution halted
+    ```
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is 11.0Mb
+      sub-directories of 1Mb or more:
+        data      2.8Mb
+        doc       5.1Mb
+        extdata   2.2Mb
+    ```
+
+*   checking R code for possible problems ... NOTE
+    ```
+    imputeLOD: multiple local function definitions for ‘faux’ with
+      different formal arguments
+    plotHistogram,ExposomeSet: no visible binding for global variable
+      ‘..density..’
+    Undefined global functions or variables:
+      ..density..
+    ```
+
+# roughrf
+
+Version: 1.0
+
+## In both
+
+*   checking R code for possible problems ... NOTE
+    ```
+    mfix : m4m: no visible global function definition for ‘median’
+    rrfa: no visible global function definition for ‘predict’
+    rrfb: no visible global function definition for ‘predict’
+    rrfc1: no visible global function definition for ‘predict’
+    rrfc2: no visible global function definition for ‘predict’
+    rrfc3: no visible global function definition for ‘predict’
+    rrfc4: no visible global function definition for ‘predict’
+    rrfc5 : regdat: no visible global function definition for ‘predict’
+    rrfc5 : regdat: no visible global function definition for ‘glm’
+    rrfc5: no visible global function definition for ‘predict’
+    rrfc6: no visible global function definition for ‘predict’
+    rrfc7: no visible global function definition for ‘predict’
+    rrfd: no visible global function definition for ‘predict’
+    rrfe : rdms: no visible global function definition for ‘rbinom’
+    rrfe: no visible global function definition for ‘predict’
+    Undefined global functions or variables:
+      glm median predict rbinom
+    Consider adding
+      importFrom("stats", "glm", "median", "predict", "rbinom")
+    to your NAMESPACE file.
+    ```
+
+# smartdata
+
+Version: 1.0.2
+
+## In both
+
+*   checking examples ... ERROR
+    ```
+    ...
+    +     tree <- rpart(FSelector::as.simple.formula(subset, "Species"), train)
+    +     error.rate = sum(test$Species != predict(tree, test, type="c")) / nrow(test)
+    +     return(1 - error.rate)
+    +   })
+    +   print(subset)
+    +   print(mean(results))
+    +   return(mean(results))
+    + }
+    > 
+    > 
+    > 
+    > super_iris <- feature_selection(iris, "Boruta", class_attr = "Species")
+    > super_iris <- feature_selection(iris, "chi_squared",
+    +                                 class_attr = "Species", num_features = 3)
+    Error: .onLoad failed in loadNamespace() for 'rJava', details:
+      call: dyn.load(file, DLLpath = DLLpath, ...)
+      error: unable to load shared object '/Users/buurensv/Package/mice/mice/revdep/library.noindex/smartdata/rJava/libs/rJava.so':
+      dlopen(/Users/buurensv/Package/mice/mice/revdep/library.noindex/smartdata/rJava/libs/rJava.so, 6): Library not loaded: /Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home/lib/server/libjvm.dylib
+      Referenced from: /Users/buurensv/Package/mice/mice/revdep/library.noindex/smartdata/rJava/libs/rJava.so
+      Reason: image not found
+    Execution halted
+    ```
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      ══ testthat results  ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+      OK: 306 SKIPPED: 0 FAILED: 23
+      1. Failure: Correct feature selection (@testFeatSelection.R#20) 
+      2. Failure: Correct feature selection (@testFeatSelection.R#21) 
+      3. Failure: Correct feature selection (@testFeatSelection.R#24) 
+      4. Failure: Correct feature selection (@testFeatSelection.R#25) 
+      5. Failure: Correct feature selection (@testFeatSelection.R#26) 
+      6. Failure: Correct feature selection (@testFeatSelection.R#27) 
+      7. Failure: Correct feature selection (@testFeatSelection.R#28) 
+      8. Failure: Correct noise treatment (@testNoise.R#13) 
+      9. Failure: Correct noise treatment (@testNoise.R#14) 
+      1. ...
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespaces in Imports field not imported from:
+      ‘Amelia’ ‘Boruta’ ‘DMwR’ ‘MVN’ ‘NoiseFiltersR’ ‘VIM’ ‘adaptiveGPCA’
+      ‘class’ ‘clusterSim’ ‘denoiseR’ ‘discretization’ ‘imbalance’ ‘lle’
+      ‘missForest’ ‘missMDA’ ‘outliers’ ‘unbalanced’
+      All declared Imports should be used.
+    ```
 
