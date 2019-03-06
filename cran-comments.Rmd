@@ -14,12 +14,12 @@ library("devtools")
 build()
 ```
 
-`"/Users/buurensv/Package/mice/mice_3.3.0.tar.gz"`
+`"/Users/buurensv/Package/mice/mice_3.4.0.tar.gz"`
 
 ## Test environments
 
-* local OS X install, 10.13.6, R 3.5.1
-* win-builder, using `devtools::build_win()`
+* local OS X install, 10.14.3, R 3.5.2
+* win-builder, using `devtools::check_win_devel()`
 
 Status: OK
 
@@ -27,43 +27,22 @@ Status: OK
 
 local checks of tarball:
 
-`$ R CMD CHECK mice_3.3.0.tar.gz`
+`$ R CMD CHECK mice_3.4.0.tar.gz`
 
-Status: Error
-Error: package or namespace load failed for ‘lattice’:
- package ‘lattice’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version
-
-This has probably to do with my local system. I am using lattice 0.20-35.
-Probably minor.
+Status: OK
 
 ## Downstream dependencies
 
 I have run 
 
 ```{r eval=FALSE}
-revdep_check()
-revdep_check_save_summary()
-revdep_check_print_problems()
+library("revdepcheck")
+revdep_check(num_workers = 3)
+revdep_summary()
 ```
 
-There were 49 reverse dependencies.
+There were 52 reverse dependencies.
+There were 6 packages with errors. None of these errors is mice-related.
 
-10 packages with problems + actions
+See <https://github.com/stefvanbuuren/mice/tree/master/revdep>
 
-|package         |version  | errors| warnings| notes| My actions
-|:---------------|:--------|------:|--------:|-----:|:---------------------------------
-|cobalt         |3.3.0    |      0|        1|     1| mising `designmatch` package 
-|dynr           |0.1.12-5 |      1|        0|     0| needs additional local installs, not further checked
-|Hmisc          |4.1-1    |      1|        0|     0| installed by hand
-|JointAI        |0.1.0    |      1|        0|     0| depends on external JAGS, not further checked
-|miceFast       |0.2.3    |      1|        0|     0| C compilation errors
-|MissingDataGUI |0.2-5    |      1|        0|     0| 'gWidgetsRGtk2', 'cairoDevice' not available
-|NNLM           |0.4.2    |      1|        0|     0| fails to install
-|Qtools         |1.3      |      1|        0|     0| fortran compilation errors, author noted
-|rattle         |5.1.0    |      1|        0|     0| 'cairoDevice' not available
-|weightTAPSPACK |0.1      |      1|        0|     0| package "HotDeckImputation" not available
-
-* Failed to install dependencies for: cobalt, MissingDataGUI, rattle, weightTAPSPACK
-* Failed to install: dynr, Hmisc, JointAI, miceFast, NNLM, Qtools
-
-See https://github.com/stefvanbuuren/mice/blob/master/revdep/problems.md

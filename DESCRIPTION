@@ -1,6 +1,6 @@
 Package: mice
 Type: Package
-Version: 3.3.6
+Version: 3.4.0
 Title: Multivariate Imputation by Chained Equations
 Date: 2019-03-06
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
@@ -78,6 +78,6 @@ Description: Multiple imputation using Fully Conditional Specification (FCS)
 License: GPL-2 | GPL-3
 LazyLoad: yes
 LazyData: yes
-URL: http://stefvanbuuren.github.io/mice/ , http://www.stefvanbuuren.name
+URL: http://stefvanbuuren.github.io/mice/ , http://www.stefvanbuuren.name , http://www.stefvanbuuren.name/fimd/
 BugReports: https://github.com/stefvanbuuren/mice/issues
 RoxygenNote: 6.1.1

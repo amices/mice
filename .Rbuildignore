@@ -13,3 +13,4 @@ changes_mice*
 index.Rmd
 ^docs*
 _pkgdown.yaml
+.png
