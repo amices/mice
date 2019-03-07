@@ -53,7 +53,7 @@
 
 #' The book 
 #' \href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
-#' contains a lot of \href{http://www.stefvanbuuren.nl/mi/FIMD.html}{example code}.
+#' contains a lot of \href{https://github.com/stefvanbuuren/fimdbook/tree/master/R}{example code}.
 #' 
 #' @section Methodology:
 #' 
