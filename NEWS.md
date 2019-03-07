@@ -3,30 +3,15 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.3.6 
+# mice 3.4.0 
 
 * Add a hex sticker to the mice package. Designed by Jaden M. Walters.
 * Specify the R3.5.0 random generator in order to pass CRAN tests
-
-# mice 3.3.5 
-
 * Remove test-fix.coef.R from tests
 * Adds a rotate.names argument to md.pattern() (#154, #160)
-
-# mice 3.3.4 
-
 * Fix to solve the name-matching problem (#156, #149, #147)
-
-# mice 3.3.3
-
 * Fix that removes the pre-check for existence of `mice.impute.xxx()` so that `mice::mice()` works as expected (#55)
-
-# mice 3.3.2
-
 * Solves a bug that crashed `mids2spss()`, thanks Edgar Schoreit (#149)
-
-# mice 3.3.1
-
 * Solves a problem in the routing logic (#149) causing that passive 
 imputation was not done when no predictors were specified. No passive
 imputation correctly will ignore any the specification of 
