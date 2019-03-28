@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.4.1 
+
+* Fixes an error in the degrees of freedom of the P-value calculation (#171)
+
 # mice 3.4.0 
 
 * Add a hex sticker to the mice package. Designed by Jaden M. Walters.

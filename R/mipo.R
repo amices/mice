@@ -64,7 +64,7 @@ summary.mipo <- function(object, type = c("tests", "all"),
   x <- object$pooled
   std.error <- sqrt(x$t)
   statistic <- x$estimate / std.error
-  p.value <- 2 * (1 - pt(abs(statistic), max(x$df, 0.001)))
+  p.value <- 2 * (1 - pt(abs(statistic), pmax(x$df, 0.001)))
 
   z <- data.frame(x,
                   std.error = std.error,
