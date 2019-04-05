@@ -2,7 +2,7 @@
 mice <a href='https://stefvanbuuren.name/mice/'><img src='MICE_sticker_SMALL.png' align="right" height="139" /></a>
 ===================================================================================================================
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice) [![](http://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice) [![](https://img.shields.io/badge/github%20version-3.4.1-orange.svg)](https://github.com/stefvanbuuren/mice)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice) [![](http://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice) [![](https://img.shields.io/badge/github%20version-3.4.2-orange.svg)](https://github.com/stefvanbuuren/mice)
 
 [Multivariate Imputation by Chained Equations](http://stefvanbuuren.github.io/mice/)
 ------------------------------------------------------------------------------------
@@ -73,8 +73,8 @@ fit <- with(imp, lm(chl ~ age + bmi))
 # pool and summarize the results
 summary(pool(fit))
 #>             estimate std.error statistic    df  p.value
-#> (Intercept)   -54.50     54.75    -0.995 14.33 0.331861
-#> age            33.70     12.09     2.788  2.29 0.011629
+#> (Intercept)   -54.50     54.75    -0.995 14.33 0.336027
+#> age            33.70     12.09     2.788  2.29 0.093201
 #> bmi             6.86      1.65     4.170 19.26 0.000506
 ```
 
