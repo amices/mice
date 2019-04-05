@@ -91,7 +91,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           # multivariate imputation - type and formula
           if (mult) {
             mis <- !r
-            mis[, setdiff(b, colnames(data))] <- FALSE
+            mis[, setdiff(colnames(data), b)] <- FALSE
             data[mis] <- NA
             
             fm <- paste("mice.impute", theMethod, sep = ".")
