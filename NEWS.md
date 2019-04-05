@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.4.2
+
+* Removes a superfluous warning from process_mipo() (#92)
+
 # mice 3.4.1 
 
 * Fixes an error in the degrees of freedom of the P-value calculation (#171)

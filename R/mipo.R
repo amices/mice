@@ -65,7 +65,7 @@ summary.mipo <- function(object, type = c("tests", "all"),
   std.error <- sqrt(x$t)
   statistic <- x$estimate / std.error
   p.value <- 2 * (1 - pt(abs(statistic), pmax(x$df, 0.001)))
-
+  
   z <- data.frame(x,
                   std.error = std.error,
                   statistic = statistic,
@@ -102,13 +102,9 @@ print.mipo.summary <- function(x, ...) {
 #' @keywords internal
 process_mipo <- function(z, x, conf.int = FALSE, conf.level = .95,
                          exponentiate = FALSE) {
+  
   if (exponentiate) {
     # save transformation function for use on confidence interval
-    if (is.null(x$family) ||
-        (x$family$link != "logit" && x$family$link != "log")) {
-      warning(paste("Exponentiating coefficients, but model did not use",
-                    "a log or logit link function"))
-    }
     trans <- exp
   } else {
     trans <- identity
@@ -118,18 +114,12 @@ process_mipo <- function(z, x, conf.int = FALSE, conf.level = .95,
   if (conf.int) {
     # avoid "Waiting for profiling to be done..." message
     CI <- suppressMessages(confint(x, level = conf.level))
-    # Handle case if regression is rank deficient
-    p <- x$rank
-    if (!is.null(p) && !is.null(x$qr)) {
-      piv <- x$qr$pivot[seq_len(p)]
-      CI <- CI[piv, , drop = FALSE]
-    }
   }
   z$estimate <- trans(z$estimate)
   if (!is.null(CI))
-  z <- cbind(z[, c("estimate", "std.error", "statistic", "df", "p.value")], 
-             trans(unrowname(CI)),
-             z[, c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")])
+    z <- cbind(z[, c("estimate", "std.error", "statistic", "df", "p.value")], 
+               trans(unrowname(CI)),
+               z[, c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")])
   else 
     z <- cbind(z[, c("estimate", "std.error", "statistic", "df", "p.value")], 
                z[, c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")])
