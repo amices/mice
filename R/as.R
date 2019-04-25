@@ -7,7 +7,9 @@
 #'the imputed data back in a \code{mids} object. It may also be 
 #'used to store multiply imputed data sets from other software 
 #'into the format used by \code{mice}.
-#'
+#'@note The function expects the input data \code{long} to be sorted by
+#'imputation number (variable \code{".imp"} by default), and in the 
+#'same sequence within each imputation block.
 #'@param long A multiply imputed data set in long format, for example 
 #'produced by a call to \code{complete(..., action = 'long', include = TRUE)}, 
 #'or by other software. 

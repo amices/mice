@@ -42,6 +42,11 @@ the imputed data back in a \code{mids} object. It may also be
 used to store multiply imputed data sets from other software 
 into the format used by \code{mice}.
 }
+\note{
+The function expects the input data \code{long} to be sorted by
+imputation number (variable \code{".imp"} by default), and in the 
+same sequence within each imputation block.
+}
 \examples{
 # impute the nhanes dataset
 imp <- mice(nhanes, print = FALSE)
