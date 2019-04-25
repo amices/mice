@@ -6,6 +6,7 @@ output: github_document
 # mice 3.4.3
 
 * Fixes a bug in the sampler that ignored imputed values in variables outside the active block (#175, @alexanderrobitzsch)
+* Adds a note to the documenation of `as.mids`() (#173)
 
 # mice 3.4.2
 
