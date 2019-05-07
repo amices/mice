@@ -14,11 +14,11 @@ library("devtools")
 build()
 ```
 
-`"/Users/buurensv/Package/mice/mice_3.4.0.tar.gz"`
+`"/Users/buurensv/Package/mice/mice_3.5.0.tar.gz"`
 
 ## Test environments
 
-* local OS X install, 10.14.3, R 3.5.2
+* local OS X install, 10.14.4, R 3.5.3
 * win-builder, using `devtools::check_win_devel()`
 
 Status: OK
@@ -27,7 +27,7 @@ Status: OK
 
 local checks of tarball:
 
-`$ R CMD CHECK mice_3.4.0.tar.gz`
+`$ R CMD CHECK mice_3.5.0.tar.gz`
 
 Status: OK
 
