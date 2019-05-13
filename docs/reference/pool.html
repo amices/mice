@@ -84,7 +84,7 @@ this case." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.4.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.5.0</span>
       </span>
     </div>
 
@@ -222,10 +222,10 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
 #&gt;   1   2  bmi  hyp  chl
 #&gt;   2   1  bmi  hyp  chl
 #&gt;   2   2  bmi  hyp  chl</div><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>imp</span>, <span class='kw'>exp</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>bmi</span> ~ <span class='no'>hyp</span> + <span class='no'>chl</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='fu'>pool</span>(<span class='no'>fit</span>))</div><div class='output co'>#&gt;                estimate  std.error  statistic       df      p.value
-#&gt; (Intercept) 23.32410355 4.53557796  5.1424766 14.48526 0.0001342913
-#&gt; hyp         -1.87985416 1.94710003 -0.9654636 18.50412 0.3467621318
-#&gt; chl          0.02851159 0.01956345  1.4573906 20.22748 0.1603594239</div></pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='fu'>pool</span>(<span class='no'>fit</span>))</div><div class='output co'>#&gt;               estimate  std.error  statistic        df      p.value
+#&gt; (Intercept) 21.3937741 4.22217002  5.0670091 17.192034 9.211353e-05
+#&gt; hyp         -1.4382464 2.56874915 -0.5599014  4.912371 6.001139e-01
+#&gt; chl          0.0346279 0.02516489  1.3760400  6.688939 2.131088e-01</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

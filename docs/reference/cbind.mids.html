@@ -72,7 +72,7 @@ columnwise into a mids object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.4.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.5.0</span>
       </span>
     </div>
 
@@ -280,21 +280,21 @@ appending <code>".1"</code>, <code>".2"</code> to duplicated names.</p>
 
 <span class='co'># Of course, chl was not imputed</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'><a href='complete.html'>complete</a></span>(<span class='no'>imp4</span>))</div><div class='output co'>#&gt;   age  bmi hyp chl
-#&gt; 1   1 35.3   1  NA
+#&gt; 1   1 20.4   1  NA
 #&gt; 2   2 22.7   1 187
-#&gt; 3   1 33.2   1 187
-#&gt; 4   3 27.4   2  NA
+#&gt; 3   1 29.6   1 187
+#&gt; 4   3 22.0   2  NA
 #&gt; 5   1 20.4   1 113
-#&gt; 6   3 22.7   1 184</div><div class='input'>
+#&gt; 6   3 27.4   2 184</div><div class='input'>
 <span class='co'># Combine mids object with data frame</span>
 <span class='no'>imp5</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cbind.html'>cbind</a></span>(<span class='no'>imp3</span>, <span class='no'>nhanes2</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'><a href='complete.html'>complete</a></span>(<span class='no'>imp5</span>))</div><div class='output co'>#&gt;   age  bmi hyp age.1 bmi.1 hyp.1 chl
-#&gt; 1   1 35.3   1 20-39    NA  &lt;NA&gt;  NA
+#&gt; 1   1 20.4   1 20-39    NA  &lt;NA&gt;  NA
 #&gt; 2   2 22.7   1 40-59  22.7    no 187
-#&gt; 3   1 33.2   1 20-39    NA    no 187
-#&gt; 4   3 27.4   2 60-99    NA  &lt;NA&gt;  NA
+#&gt; 3   1 29.6   1 20-39    NA    no 187
+#&gt; 4   3 22.0   2 60-99    NA  &lt;NA&gt;  NA
 #&gt; 5   1 20.4   1 20-39  20.4    no 113
-#&gt; 6   3 22.7   1 60-99    NA  &lt;NA&gt; 184</div></pre>
+#&gt; 6   3 27.4   2 60-99    NA  &lt;NA&gt; 184</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

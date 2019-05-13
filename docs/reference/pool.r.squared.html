@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.4.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.5.0</span>
       </span>
     </div>
 
@@ -197,9 +197,9 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
 #&gt;   5   4  bmi  hyp  chl
 #&gt;   5   5  bmi  hyp  chl</div><div class='input'>
 <span class='no'>fit</span><span class='kw'>&lt;-</span><span class='fu'><a href='lm.mids.html'>lm.mids</a></span>(<span class='no'>chl</span>~<span class='no'>age</span>+<span class='no'>hyp</span>+<span class='no'>bmi</span>,<span class='no'>imp</span>)
-<span class='fu'>pool.r.squared</span>(<span class='no'>fit</span>)</div><div class='output co'>#&gt;           est      lo 95     hi 95 fmi
-#&gt; R^2 0.4429433 0.05242793 0.7730129 NaN</div><div class='input'><span class='fu'>pool.r.squared</span>(<span class='no'>fit</span>,<span class='kw'>adjusted</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;               est       lo 95     hi 95 fmi
-#&gt; adj R^2 0.3595634 0.008674077 0.7388859 NaN</div><div class='input'>
+<span class='fu'>pool.r.squared</span>(<span class='no'>fit</span>)</div><div class='output co'>#&gt;           est     lo 95     hi 95 fmi
+#&gt; R^2 0.5489023 0.1193317 0.8333656 NaN</div><div class='input'><span class='fu'>pool.r.squared</span>(<span class='no'>fit</span>,<span class='kw'>adjusted</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;               est      lo 95     hi 95 fmi
+#&gt; adj R^2 0.4821677 0.05662271 0.8092861 NaN</div><div class='input'>
 #fit<-lm.mids(chl~age+hyp+bmi,imp)
 #
 #> pool.r.squared(fit)

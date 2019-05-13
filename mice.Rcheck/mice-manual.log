@@ -1,0 +1,1348 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.4)  13 MAY 2019 22:32
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**\input ./Rd2.tex
+(./Rd2.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/bk10.clo
+File: bk10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count80
+\c@chapter=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\c@figure=\count87
+\c@table=\count88
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+Package: Rd 
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
+\LTleft=\skip43
+\LTright=\skip44
+\LTpre=\skip45
+\LTpost=\skip46
+\LTchunksize=\count89
+\LTcapwidth=\dimen103
+\LT@head=\box26
+\LT@firsthead=\box27
+\LT@foot=\box28
+\LT@lastfoot=\box29
+\LT@cols=\count90
+\LT@rows=\count91
+\c@LT@tables=\count92
+\c@LT@chunks=\count93
+\LT@p@ftn=\toks14
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2017/01/16 v1.2c Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup4
+\symboldletters=\mathgroup5
+\symboldsymbols=\mathgroup6
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
+LaTeX Info: Redefining \bm on input line 207.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/alltt.sty
+Package: alltt 1997/06/16 v2.0g defines alltt environment
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks15
+\verbatim@line=\toks16
+\verbatim@in@stream=\read1
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip10
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2017/04/05 v2.0i Standard LaTeX package
+Package textcomp Info: Sub-encoding information:
+(textcomp)               5 = only ISO-Adobe without \textcurrency
+(textcomp)               4 = 5 + \texteuro
+(textcomp)               3 = 4 + \textohm
+(textcomp)               2 = 3 + \textestimated + \textcurrency
+(textcomp)               1 = TS1 - \textcircled - \t
+(textcomp)               0 = TS1 (full)
+(textcomp)             Font families with sub-encoding setting implement
+(textcomp)             only a restricted character set as indicated.
+(textcomp)             Family '?' is the default used for unknown fonts.
+(textcomp)             See the documentation for details.
+Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 79.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+Now handling font encoding TS1 ...
+... processing UTF-8 mapping file for font encoding TS1
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu
+File: ts1enc.dfu 2018/04/05 v1.2c UTF-8 support for inputenc
+   defining Unicode char U+00A2 (decimal 162)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00A4 (decimal 164)
+   defining Unicode char U+00A5 (decimal 165)
+   defining Unicode char U+00A6 (decimal 166)
+   defining Unicode char U+00A7 (decimal 167)
+   defining Unicode char U+00A8 (decimal 168)
+   defining Unicode char U+00A9 (decimal 169)
+   defining Unicode char U+00AA (decimal 170)
+   defining Unicode char U+00AC (decimal 172)
+   defining Unicode char U+00AE (decimal 174)
+   defining Unicode char U+00AF (decimal 175)
+   defining Unicode char U+00B0 (decimal 176)
+   defining Unicode char U+00B1 (decimal 177)
+   defining Unicode char U+00B2 (decimal 178)
+   defining Unicode char U+00B3 (decimal 179)
+   defining Unicode char U+00B4 (decimal 180)
+   defining Unicode char U+00B5 (decimal 181)
+   defining Unicode char U+00B6 (decimal 182)
+   defining Unicode char U+00B7 (decimal 183)
+   defining Unicode char U+00B9 (decimal 185)
+   defining Unicode char U+00BA (decimal 186)
+   defining Unicode char U+00BC (decimal 188)
+   defining Unicode char U+00BD (decimal 189)
+   defining Unicode char U+00BE (decimal 190)
+   defining Unicode char U+00D7 (decimal 215)
+   defining Unicode char U+00F7 (decimal 247)
+   defining Unicode char U+0192 (decimal 402)
+   defining Unicode char U+02C7 (decimal 711)
+   defining Unicode char U+02D8 (decimal 728)
+   defining Unicode char U+02DD (decimal 733)
+   defining Unicode char U+0E3F (decimal 3647)
+   defining Unicode char U+2016 (decimal 8214)
+   defining Unicode char U+2020 (decimal 8224)
+   defining Unicode char U+2021 (decimal 8225)
+   defining Unicode char U+2022 (decimal 8226)
+   defining Unicode char U+2030 (decimal 8240)
+   defining Unicode char U+2031 (decimal 8241)
+   defining Unicode char U+203B (decimal 8251)
+   defining Unicode char U+203D (decimal 8253)
+   defining Unicode char U+2044 (decimal 8260)
+   defining Unicode char U+204E (decimal 8270)
+   defining Unicode char U+2052 (decimal 8274)
+   defining Unicode char U+20A1 (decimal 8353)
+   defining Unicode char U+20A4 (decimal 8356)
+   defining Unicode char U+20A6 (decimal 8358)
+   defining Unicode char U+20A9 (decimal 8361)
+   defining Unicode char U+20AB (decimal 8363)
+   defining Unicode char U+20AC (decimal 8364)
+   defining Unicode char U+20B1 (decimal 8369)
+   defining Unicode char U+2103 (decimal 8451)
+   defining Unicode char U+2116 (decimal 8470)
+   defining Unicode char U+2117 (decimal 8471)
+   defining Unicode char U+211E (decimal 8478)
+   defining Unicode char U+2120 (decimal 8480)
+   defining Unicode char U+2122 (decimal 8482)
+   defining Unicode char U+2126 (decimal 8486)
+   defining Unicode char U+2127 (decimal 8487)
+   defining Unicode char U+212E (decimal 8494)
+   defining Unicode char U+2190 (decimal 8592)
+   defining Unicode char U+2191 (decimal 8593)
+   defining Unicode char U+2192 (decimal 8594)
+   defining Unicode char U+2193 (decimal 8595)
+   defining Unicode char U+2329 (decimal 9001)
+   defining Unicode char U+232A (decimal 9002)
+   defining Unicode char U+2422 (decimal 9250)
+   defining Unicode char U+25E6 (decimal 9702)
+   defining Unicode char U+25EF (decimal 9711)
+   defining Unicode char U+266A (decimal 9834)
+   defining Unicode char U+FEFF (decimal 65279)
+))
+LaTeX Info: Redefining \oldstylenums on input line 334.
+Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 349.
+Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 350.
+Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 351.
+Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 352.
+Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 353.
+Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 354.
+Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 355.
+Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 356.
+Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 357.
+Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 358.
+Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 359.
+Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 360.
+Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 361.
+Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 362.
+Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 363.
+Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 364.
+Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 365.
+Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 366.
+Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 367.
+Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 368.
+Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 369.
+Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 370.
+Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 371.
+Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 372.
+
+Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 373.
+Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 374.
+Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 375.
+Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 376.
+Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 377.
+Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 378.
+Package textcomp Info: Setting lmr sub-encoding to TS1/0 on input line 379.
+Package textcomp Info: Setting lmdh sub-encoding to TS1/0 on input line 380.
+Package textcomp Info: Setting lmss sub-encoding to TS1/0 on input line 381.
+Package textcomp Info: Setting lmssq sub-encoding to TS1/0 on input line 382.
+Package textcomp Info: Setting lmvtt sub-encoding to TS1/0 on input line 383.
+Package textcomp Info: Setting lmtt sub-encoding to TS1/0 on input line 384.
+Package textcomp Info: Setting qhv sub-encoding to TS1/0 on input line 385.
+Package textcomp Info: Setting qag sub-encoding to TS1/0 on input line 386.
+Package textcomp Info: Setting qbk sub-encoding to TS1/0 on input line 387.
+Package textcomp Info: Setting qcr sub-encoding to TS1/0 on input line 388.
+Package textcomp Info: Setting qcs sub-encoding to TS1/0 on input line 389.
+Package textcomp Info: Setting qpl sub-encoding to TS1/0 on input line 390.
+Package textcomp Info: Setting qtm sub-encoding to TS1/0 on input line 391.
+Package textcomp Info: Setting qzc sub-encoding to TS1/0 on input line 392.
+Package textcomp Info: Setting qhvc sub-encoding to TS1/0 on input line 393.
+Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 394.
+Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 395.
+Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 396.
+Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 397.
+Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 398.
+Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 399.
+Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 400.
+Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 401.
+Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 402.
+Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 403.
+Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 404.
+Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 405.
+Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 406.
+Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
+Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
+Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
+)
+\ldescriptionwidth=\skip47
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def
+File: t1enc.def 2017/04/05 v2.0i Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
+))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty
+Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/zi4.sty
+Package: zi4 2017/01/04 v1.112
+
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks17
+\XKV@tempa@toks=\toks18
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex))
+\XKV@depth=\count94
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+\zifour@ocount=\count95
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 147.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2018/02/06 v6.86b Hypertext links for LaTeX
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
+
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+Package: pdftexcmds 2018/01/30 v0.27 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
+)
+Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
+Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
+Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
+Package: xcolor-patch 2016/05/16 xcolor patch
+Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
+Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
+Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
+)
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty
+Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+)
+\@linkdim=\dimen104
+\Hy@linkcounter=\count96
+\Hy@pagecounter=\count97
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2018/02/06 v6.86b Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+\Hy@SavedSpaceFactor=\count98
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4509.
+Package hyperref Info: Link nesting OFF on input line 4514.
+Package hyperref Info: Hyper index ON on input line 4517.
+Package hyperref Info: Plain pages OFF on input line 4524.
+Package hyperref Info: Backreferencing OFF on input line 4529.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4762.
+\c@Hy@tempcnt=\count99
+LaTeX Info: Redefining \url on input line 5115.
+\XeTeXLinkMargin=\dimen105
+\Fld@menulength=\count100
+\Field@Width=\dimen106
+\Fld@charsize=\dimen107
+Package hyperref Info: Hyper figures OFF on input line 6369.
+Package hyperref Info: Link nesting OFF on input line 6374.
+Package hyperref Info: Hyper index ON on input line 6377.
+Package hyperref Info: backreferencing OFF on input line 6384.
+Package hyperref Info: Link coloring OFF on input line 6389.
+Package hyperref Info: Link coloring with OCG OFF on input line 6394.
+Package hyperref Info: PDF/A mode OFF on input line 6399.
+LaTeX Info: Redefining \ref on input line 6439.
+LaTeX Info: Redefining \pageref on input line 6443.
+\Hy@abspage=\count101
+\c@Item=\count102
+\c@Hfootnote=\count103
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2018/02/06 v6.86b Hyperref driver for pdfTeX
+\Fld@listcount=\count104
+\c@bookmark@seq@number=\count105
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip48
+)
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+Package hyperref Info: Option `colorlinks' set `true' on input line 377.
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+Package hyperref Info: Option `linktocpage' set `true' on input line 377.
+Package hyperref Info: Option `plainpages' set `false' on input line 377.
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2014/09/29 v1.0m Standard LaTeX package
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2018/04/06 v1.3b Input encoding file
+\inpenc@prehook=\toks19
+\inpenc@posthook=\toks20
+)
+\@indexfile=\write3
+\openout3 = `Rd2.idx'.
+
+
+Writing index file Rd2.idx
+(./Rd2.aux)
+\openout1 = `Rd2.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 8.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 8.
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 8.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count106
+\scratchdimen=\dimen108
+\scratchbox=\box30
+\nofMPsegments=\count107
+\nofMParguments=\count108
+\everyMPshowfont=\toks21
+\MPscratchCnt=\count109
+\MPscratchDim=\dimen109
+\MPnumerator=\count110
+\makeMPintoPDFobject=\count111
+\everyMPtoPDFconversion=\toks22
+)
+\AtBeginShipoutBox=\box31
+Package hyperref Info: Link coloring ON on input line 8.
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+)
+\c@section@level=\count112
+)
+LaTeX Info: Redefining \ref on input line 8.
+LaTeX Info: Redefining \pageref on input line 8.
+LaTeX Info: Redefining \nameref on input line 8.
+
+(./Rd2.out) (./Rd2.out)
+\@outlinefile=\write4
+\openout4 = `Rd2.out'.
+
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 9.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 11.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20.74> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 11.
+LaTeX Font Info:    Try loading font information for T1+zi4 on input line 21.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/t1zi4.fd
+File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
+)
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 10.0pt on input line 21.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 44.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 44.
+ [1
+
+
+{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 61.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 61.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd
+File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
+) (./Rd2.toc
+[2] [3])
+\tf@toc=\write5
+\openout5 = `Rd2.toc'.
+
+ [4] [5]
+Overfull \hbox (26.62837pt too wide) in paragraph at lines 164--175
+\T1/ptm/m/n/10 are of im-por-tance. The de-fault weights ma-trix is made with [
+][]\T1/zi4/m/n/10 ampute.default.weights[][][]
+ []
+
+[6] [7]
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 9.0pt on input line 332.
+ [8]
+LaTeX Font Info:    Try loading font information for TS1+zi4 on input line 362.
+
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/ts1zi4.fd
+File: ts1zi4.fd 2018/01/14 TS1/zi4 (Inconsolata)
+)
+LaTeX Font Info:    Font shape `TS1/zi4/m/n' will be
+(Font)              scaled to size 10.0pt on input line 362.
+ [9] [10] [11] [12] [13] [14]
+Overfull \hbox (34.59003pt too wide) in paragraph at lines 742--745
+[]\T1/ptm/m/n/10 Constructed from \T1/zi4/m/n/10 MLbook_2nded_total_4106-99.sav
+ \T1/ptm/m/n/10 from [][]$\T1/zi4/m/n/10 https : / / www . stats . ox . ac . uk
+ / ~snijders /
+ []
+
+[15]
+Overfull \hbox (0.92805pt too wide) in paragraph at lines 807--810
+[]\T1/ptm/m/n/10 The \T1/zi4/m/n/10 mads \T1/ptm/m/n/10 ob-ject con-tains all t
+he in-for-ma-tion you need to make any de-sired plots. Check [][]\T1/zi4/m/n/10
+ mads-class[][][]
+ []
+
+[16]
+Overfull \hbox (9.03925pt too wide) in paragraph at lines 884--891
+\T1/ptm/m/n/10 it eval-u-ates in the com-pleted data \T1/zi4/m/n/10 data.frame(
+complete(x,"long",inc=TRUE))
+ []
+
+
+Overfull \hbox (12.72736pt too wide) in paragraph at lines 894--903
+[]\T1/ptm/m/n/10 A named list con-tain-ing the graph-i-cal pa-ram-e-ters. The d
+e-fault func-tion \T1/zi4/m/n/10 mice.theme
+ []
+
+[17] [18] [19] [20]
+LaTeX Font Info:    Font shape `TS1/zi4/m/n' will be
+(Font)              scaled to size 9.0pt on input line 1116.
+ [21] [22] [23] [24]
+Overfull \hbox (2.42793pt too wide) in paragraph at lines 1397--1400
+\T1/ptm/m/n/10 within \T1/zi4/m/n/10 fit1\T1/ptm/m/n/10 . The de-fault null mod
+el \T1/zi4/m/n/10 fit0 = NULL \T1/ptm/m/n/10 com-pares \T1/zi4/m/n/10 fit1 \T1/
+ptm/m/n/10 to the intercept-
+ []
+
+[25]
+Overfull \hbox (2.42793pt too wide) in paragraph at lines 1426--1429
+\T1/ptm/m/n/10 within \T1/zi4/m/n/10 fit1\T1/ptm/m/n/10 . The de-fault null mod
+el \T1/zi4/m/n/10 fit0 = NULL \T1/ptm/m/n/10 com-pares \T1/zi4/m/n/10 fit1 \T1/
+ptm/m/n/10 to the intercept-
+ []
+
+
+Overfull \hbox (2.42793pt too wide) in paragraph at lines 1465--1468
+\T1/ptm/m/n/10 within \T1/zi4/m/n/10 fit1\T1/ptm/m/n/10 . The de-fault null mod
+el \T1/zi4/m/n/10 fit0 = NULL \T1/ptm/m/n/10 com-pares \T1/zi4/m/n/10 fit1 \T1/
+ptm/m/n/10 to the intercept-
+ []
+
+[26] [27]
+Overfull \hbox (9.03925pt too wide) in paragraph at lines 1544--1551
+\T1/ptm/m/n/10 it eval-u-ates in the com-pleted data \T1/zi4/m/n/10 data.frame(
+complete(x,"long",inc=TRUE))
+ []
+
+
+Overfull \hbox (12.72736pt too wide) in paragraph at lines 1557--1566
+[]\T1/ptm/m/n/10 A named list con-tain-ing the graph-i-cal pa-ram-e-ters. The d
+e-fault func-tion \T1/zi4/m/n/10 mice.theme
+ []
+
+[28]
+Overfull \hbox (6.92987pt too wide) in paragraph at lines 1663--1669
+[][][]\T1/zi4/m/n/10 mice[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 xyplot[][][]
+\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 stripplot[][][]\T1/ptm/m/n/10 , [][]\T1/zi4
+/m/n/10 bwplot[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 lattice[][][] \T1/ptm/m
+/n/10 for an overview of the pack-age, as well as [][]\T1/zi4/m/n/10 densityplo
+t[][][]\T1/ptm/m/n/10 ,
+ []
+
+[29] [30] [31] [32] [33] [34] [35]
+Overfull \hbox (0.95691pt too wide) in paragraph at lines 2026--2029
+[]\T1/ptm/m/n/10 White, I.R., Car-lin, J.B. (2010). Bias and ef-fi-ciency of mu
+l-ti-ple im-pu-ta-tion com-pared with complete-
+ []
+
+[36] [37]
+Overfull \hbox (0.95691pt too wide) in paragraph at lines 2181--2184
+[]\T1/ptm/m/n/10 White, I.R., Car-lin, J.B. (2010). Bias and ef-fi-ciency of mu
+l-ti-ple im-pu-ta-tion com-pared with complete-
+ []
+
+[38] [39]
+Overfull \hbox (0.95691pt too wide) in paragraph at lines 2284--2287
+[]\T1/ptm/m/n/10 White, I.R., Car-lin, J.B. (2010). Bias and ef-fi-ciency of mu
+l-ti-ple im-pu-ta-tion com-pared with complete-
+ []
+
+
+Overfull \hbox (3.49908pt too wide) in paragraph at lines 2309--2311
+[]\T1/ptm/m/n/10 An ob-ject of class \T1/zi4/m/n/10 mira \T1/ptm/m/n/10 or \T1/
+zi4/m/n/10 mitml.result\T1/ptm/m/n/10 , typ-i-cally pro-duced by a call to \T1/
+zi4/m/n/10 with()\T1/ptm/m/n/10 . 
+ []
+
+[40] [41] [42] [43] [44] [45] [46] [47] [48] [49] [50] [51] [52] [53] [54]
+[55]
+Overfull \hbox (11.76907pt too wide) in paragraph at lines 3240--3244
+[]\T1/ptm/m/n/10 An op-tional key-word, one of \T1/zi4/m/n/10 "missing" \T1/ptm
+/m/n/10 (miss-ing val-ues are im-puted), \T1/zi4/m/n/10 "observed"
+ []
+
+[56] [57] [58] [59]
+Overfull \hbox (3.37807pt too wide) in paragraph at lines 3459--3463
+\T1/ptm/m/n/10 re-turn a par-tial list of named ob-jects that can be used as a 
+theme in \T1/zi4/m/n/10 stripplot\T1/ptm/m/n/10 , \T1/zi4/m/n/10 bwplot\T1/ptm/
+m/n/10 , \T1/zi4/m/n/10 densityplot
+ []
+
+[60] [61]
+Overfull \hbox (2.04837pt too wide) in paragraph at lines 3643--3648
+\T1/ptm/m/n/10 Each string is parsed and ex-e-cuted within the \T1/zi4/m/n/10 s
+ampler() \T1/ptm/m/n/10 func-tion to post-process
+ []
+
+[62]
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 3683
+.
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+) [63]
+Overfull \hbox (112.49904pt too wide) in paragraph at lines 3746--3756
+\T1/ptm/m/n/10 columns spec-ify \T1/zi4/m/n/10 method=\TS1/zi4/m/n/10 '\T1/zi4/
+m/n/10 myfunc\TS1/zi4/m/n/10 '\T1/ptm/m/n/10 . To call it only for, say, col-um
+n 2 spec-ify \T1/zi4/m/n/10 method=c(\TS1/zi4/m/n/10 '\T1/zi4/m/n/10 norm\TS1/z
+i4/m/n/10 '\T1/zi4/m/n/10 ,\TS1/zi4/m/n/10 '\T1/zi4/m/n/10 myfunc\TS1/zi4/m/n/1
+0 '\T1/zi4/m/n/10 ,\TS1/zi4/m/n/10 '\T1/zi4/m/n/10 logreg\TS1/zi4/m/n/10 '\T1/z
+i4/m/n/10 ,...{})\T1/ptm/m/n/10 . 
+ []
+
+[64]
+Overfull \hbox (46.57965pt too wide) in paragraph at lines 3866--3871
+[]\T1/ptm/m/n/10 Stef van Bu-uren \T1/zi4/m/n/10 <stef.vanbuuren@tno.nl>\T1/ptm
+/m/n/10 , Karin Groothuis-Oudshoorn \T1/zi4/m/n/10 <c.g.m.oudshoorn@utwente.nl>
+\T1/ptm/m/n/10 ,
+ []
+
+[65] [66]
+Overfull \hbox (14.57967pt too wide) in paragraph at lines 4010--4013
+[]\T1/ptm/m/n/10 Other uni-vari-ate \T1/zi4/m/n/10 2l \T1/ptm/m/n/10 func-tions
+: [][]\T1/zi4/m/n/10 mice.impute.2l.lmer[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/
+10 mice.impute.2l.norm[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.2l.
+pan[][][] 
+ []
+
+[67] [68]
+Overfull \hbox (9.57967pt too wide) in paragraph at lines 4110--4113
+[]\T1/ptm/m/n/10 Other uni-vari-ate \T1/zi4/m/n/10 2l \T1/ptm/m/n/10 func-tions
+: [][]\T1/zi4/m/n/10 mice.impute.2l.bin[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/1
+0 mice.impute.2l.norm[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.2l.p
+an[][][] 
+ []
+
+[69]
+Overfull \hbox (9.57967pt too wide) in paragraph at lines 4200--4203
+[]\T1/ptm/m/n/10 Other uni-vari-ate \T1/zi4/m/n/10 2l \T1/ptm/m/n/10 func-tions
+: [][]\T1/zi4/m/n/10 mice.impute.2l.bin[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/1
+0 mice.impute.2l.lmer[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.2l.p
+an[][][] 
+ []
+
+[70] [71]
+Overfull \hbox (14.57967pt too wide) in paragraph at lines 4287--4290
+[]\T1/ptm/m/n/10 Other uni-vari-ate \T1/zi4/m/n/10 2l \T1/ptm/m/n/10 func-tions
+: [][]\T1/zi4/m/n/10 mice.impute.2l.bin[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/1
+0 mice.impute.2l.lmer[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.2l.n
+orm[][][] 
+ []
+
+[72] [73] [74]
+Overfull \hbox (0.69807pt too wide) in paragraph at lines 4501--4501
+ []\T1/zi4/m/n/9 dfr0 <- dfr <- data.frame( "group" = rep(1:G , each=n ) , "x" 
+= x , "y" = y , "w" = w , "v" = v )[] 
+ []
+
+[75]
+Overfull \hbox (28.15746pt too wide) in paragraph at lines 4578--4582
+[]\T1/ptm/m/n/10 The ex-ten-sion to cat-e-gor-i-cal vari-ables trans-form a de-
+pen-dent fac-tor vari-able by means of the \T1/zi4/m/n/10 as.integer()
+ []
+
+[76]
+Overfull \hbox (0.69807pt too wide) in paragraph at lines 4626--4626
+ []\T1/zi4/m/n/9 dfr0 <- dfr <- data.frame( "group" = rep(1:G , each=n ) , "x" 
+= x , "y" = y , "w" = w , "v" = v )[] 
+ []
+
+[77]
+Overfull \hbox (22.68858pt too wide) in paragraph at lines 4688--4690
+[]\T1/ptm/m/n/10 The min-i-mum num-ber of ob-ser-va-tions in any ter-mi-nal nod
+e used. See [][]\T1/zi4/m/n/10 rpart.control[][][]
+ []
+
+[78]
+Overfull \hbox (50.41907pt too wide) in paragraph at lines 4742--4757
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.lda[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.b
+oot[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg[][][]\T1/ptm/m/
+n/10 ,
+ []
+
+
+Overfull \hbox (15.84094pt too wide) in paragraph at lines 4742--4757
+[][]\T1/zi4/m/n/10 mice.impute.mean[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mi
+ce.impute.midastouch[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.
+boot[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.nob[][][]\T1/ptm
+/m/n/10 ,
+ []
+
+
+Overfull \hbox (75.36096pt too wide) in paragraph at lines 4742--4757
+[][]\T1/zi4/m/n/10 mice.impute.norm.predict[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m
+/n/10 mice.impute.norm[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.pmm
+[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.polr[][][]\T1/ptm/m/n/10 
+, [][]\T1/zi4/m/n/10 mice.impute.polyreg[][][]\T1/ptm/m/n/10 ,
+ []
+
+[79] [80] [81]
+Overfull \hbox (55.41907pt too wide) in paragraph at lines 4951--4966
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.
+boot[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg[][][]\T1/ptm/m
+/n/10 ,
+ []
+
+
+Overfull \hbox (15.84094pt too wide) in paragraph at lines 4951--4966
+[][]\T1/zi4/m/n/10 mice.impute.mean[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mi
+ce.impute.midastouch[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.
+boot[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.nob[][][]\T1/ptm
+/m/n/10 ,
+ []
+
+
+Overfull \hbox (75.36096pt too wide) in paragraph at lines 4951--4966
+[][]\T1/zi4/m/n/10 mice.impute.norm.predict[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m
+/n/10 mice.impute.norm[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.pmm
+[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.polr[][][]\T1/ptm/m/n/10 
+, [][]\T1/zi4/m/n/10 mice.impute.polyreg[][][]\T1/ptm/m/n/10 ,
+ []
+
+[82]
+Overfull \hbox (40.41907pt too wide) in paragraph at lines 5050--5065
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.lda[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.boot[][][]\T1/ptm/m/n/
+10 ,
+ []
+
+
+Overfull \hbox (15.84094pt too wide) in paragraph at lines 5050--5065
+[][]\T1/zi4/m/n/10 mice.impute.mean[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mi
+ce.impute.midastouch[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.
+boot[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.nob[][][]\T1/ptm
+/m/n/10 ,
+ []
+
+
+Overfull \hbox (75.36096pt too wide) in paragraph at lines 5050--5065
+[][]\T1/zi4/m/n/10 mice.impute.norm.predict[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m
+/n/10 mice.impute.norm[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.pmm
+[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.polr[][][]\T1/ptm/m/n/10 
+, [][]\T1/zi4/m/n/10 mice.impute.polyreg[][][]\T1/ptm/m/n/10 ,
+ []
+
+[83]
+Overfull \hbox (15.41907pt too wide) in paragraph at lines 5125--5140
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.lda[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg[][][]\T1/ptm/m/n/10 ,
+ []
+
+
+Overfull \hbox (15.84094pt too wide) in paragraph at lines 5125--5140
+[][]\T1/zi4/m/n/10 mice.impute.mean[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mi
+ce.impute.midastouch[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.
+boot[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.nob[][][]\T1/ptm
+/m/n/10 ,
+ []
+
+
+Overfull \hbox (75.36096pt too wide) in paragraph at lines 5125--5140
+[][]\T1/zi4/m/n/10 mice.impute.norm.predict[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m
+/n/10 mice.impute.norm[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.pmm
+[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.polr[][][]\T1/ptm/m/n/10 
+, [][]\T1/zi4/m/n/10 mice.impute.polyreg[][][]\T1/ptm/m/n/10 ,
+ []
+
+[84]
+Overfull \hbox (40.41907pt too wide) in paragraph at lines 5202--5217
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.lda[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.boot[][][]\T1/ptm/m/n/
+10 ,
+ []
+
+
+Overfull \hbox (25.84094pt too wide) in paragraph at lines 5202--5217
+[][]\T1/zi4/m/n/10 mice.impute.logreg[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 
+mice.impute.midastouch[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.nor
+m.boot[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.nob[][][]\T1/p
+tm/m/n/10 ,
+ []
+
+
+Overfull \hbox (75.36096pt too wide) in paragraph at lines 5202--5217
+[][]\T1/zi4/m/n/10 mice.impute.norm.predict[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m
+/n/10 mice.impute.norm[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.pmm
+[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.polr[][][]\T1/ptm/m/n/10 
+, [][]\T1/zi4/m/n/10 mice.impute.polyreg[][][]\T1/ptm/m/n/10 ,
+ []
+
+
+Overfull \hbox (4.3083pt too wide) in paragraph at lines 5249--5255
+[]\T1/ptm/m/n/10 The ridge penalty used in \T1/zi4/m/n/10 .norm.draw() \T1/ptm/
+m/n/10 to pre-vent prob-lems with mul-ti-collinear-
+ []
+
+[85]
+Overfull \hbox (33.60849pt too wide) in paragraph at lines 5274--5277
+\T1/ptm/m/n/10 in which the in-put is sup-posed to be writ-ten. The ob-ject-nam
+e is \T1/zi4/m/n/10 midastouch.inputlist\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (14.65047pt too wide) in paragraph at lines 5310--5313
+\T1/ptm/m/n/10 cus-sion Pa-per. [][]$\T1/zi4/m/n/10 https : / / www . uni-[]bam
+berg . de / fileadmin / uni / fakultaeten / sowi _ lehrstuehle /
+ []
+
+[86]
+Overfull \hbox (40.41907pt too wide) in paragraph at lines 5339--5354
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.lda[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.boot[][][]\T1/ptm/m/n/
+10 ,
+ []
+
+
+Overfull \hbox (75.36096pt too wide) in paragraph at lines 5339--5354
+[][]\T1/zi4/m/n/10 mice.impute.norm.predict[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m
+/n/10 mice.impute.norm[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.pmm
+[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.polr[][][]\T1/ptm/m/n/10 
+, [][]\T1/zi4/m/n/10 mice.impute.polyreg[][][]\T1/ptm/m/n/10 ,
+ []
+
+[87]
+Overfull \hbox (40.41907pt too wide) in paragraph at lines 5447--5462
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.lda[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.boot[][][]\T1/ptm/m/n/
+10 ,
+ []
+
+
+Overfull \hbox (5.84094pt too wide) in paragraph at lines 5447--5462
+[][]\T1/zi4/m/n/10 mice.impute.logreg[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 
+mice.impute.mean[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.midastouc
+h[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.boot[][][]\T1/ptm/m
+/n/10 ,
+ []
+
+[88]
+Overfull \hbox (40.41907pt too wide) in paragraph at lines 5519--5534
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.lda[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.boot[][][]\T1/ptm/m/n/
+10 ,
+ []
+
+
+Overfull \hbox (0.84094pt too wide) in paragraph at lines 5519--5534
+[][]\T1/zi4/m/n/10 mice.impute.logreg[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 
+mice.impute.mean[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.midastouc
+h[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.nob[][][]\T1/ptm/m/
+n/10 ,
+ []
+
+
+Overfull \hbox (75.36096pt too wide) in paragraph at lines 5519--5534
+[][]\T1/zi4/m/n/10 mice.impute.norm.predict[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m
+/n/10 mice.impute.norm[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.pmm
+[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.polr[][][]\T1/ptm/m/n/10 
+, [][]\T1/zi4/m/n/10 mice.impute.polyreg[][][]\T1/ptm/m/n/10 ,
+ []
+
+[89] [90]
+Overfull \hbox (40.41907pt too wide) in paragraph at lines 5613--5628
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.lda[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.boot[][][]\T1/ptm/m/n/
+10 ,
+ []
+
+
+Overfull \hbox (5.84094pt too wide) in paragraph at lines 5613--5628
+[][]\T1/zi4/m/n/10 mice.impute.logreg[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 
+mice.impute.mean[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.midastouc
+h[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.boot[][][]\T1/ptm/m
+/n/10 ,
+ []
+
+
+Overfull \hbox (75.36096pt too wide) in paragraph at lines 5613--5628
+[][]\T1/zi4/m/n/10 mice.impute.norm.predict[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m
+/n/10 mice.impute.norm[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.pmm
+[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.polr[][][]\T1/ptm/m/n/10 
+, [][]\T1/zi4/m/n/10 mice.impute.polyreg[][][]\T1/ptm/m/n/10 ,
+ []
+
+[91]
+Overfull \hbox (40.41907pt too wide) in paragraph at lines 5704--5719
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.lda[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.boot[][][]\T1/ptm/m/n/
+10 ,
+ []
+
+
+Overfull \hbox (5.84094pt too wide) in paragraph at lines 5704--5719
+[][]\T1/zi4/m/n/10 mice.impute.logreg[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 
+mice.impute.mean[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.midastouc
+h[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.boot[][][]\T1/ptm/m
+/n/10 ,
+ []
+
+
+Overfull \hbox (55.36096pt too wide) in paragraph at lines 5704--5719
+[][]\T1/zi4/m/n/10 mice.impute.norm.nob[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/1
+0 mice.impute.norm[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.pmm[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.polr[][][]\T1/ptm/m/n/10 , []
+[]\T1/zi4/m/n/10 mice.impute.polyreg[][][]\T1/ptm/m/n/10 ,
+ []
+
+[92] [93] [94]
+Overfull \hbox (4.3083pt too wide) in paragraph at lines 5914--5920
+[]\T1/ptm/m/n/10 The ridge penalty used in \T1/zi4/m/n/10 .norm.draw() \T1/ptm/
+m/n/10 to pre-vent prob-lems with mul-ti-collinear-
+ []
+
+[95]
+Overfull \hbox (40.41907pt too wide) in paragraph at lines 5976--5991
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.lda[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.boot[][][]\T1/ptm/m/n/
+10 ,
+ []
+
+
+Overfull \hbox (5.84094pt too wide) in paragraph at lines 5976--5991
+[][]\T1/zi4/m/n/10 mice.impute.logreg[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 
+mice.impute.mean[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.midastouc
+h[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.boot[][][]\T1/ptm/m
+/n/10 ,
+ []
+
+
+Overfull \hbox (0.84094pt too wide) in paragraph at lines 5976--5991
+[][]\T1/zi4/m/n/10 mice.impute.norm.nob[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/1
+0 mice.impute.norm.predict[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute
+.norm[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.polr[][][]\T1/ptm/m/
+n/10 ,
+ []
+
+[96] [97]
+Overfull \hbox (40.41907pt too wide) in paragraph at lines 6116--6131
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.lda[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.boot[][][]\T1/ptm/m/n/
+10 ,
+ []
+
+
+Overfull \hbox (5.84094pt too wide) in paragraph at lines 6116--6131
+[][]\T1/zi4/m/n/10 mice.impute.logreg[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 
+mice.impute.mean[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.midastouc
+h[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.boot[][][]\T1/ptm/m
+/n/10 ,
+ []
+
+[98]
+Overfull \hbox (40.41907pt too wide) in paragraph at lines 6227--6242
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.lda[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.boot[][][]\T1/ptm/m/n/
+10 ,
+ []
+
+
+Overfull \hbox (5.84094pt too wide) in paragraph at lines 6227--6242
+[][]\T1/zi4/m/n/10 mice.impute.logreg[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 
+mice.impute.mean[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.midastouc
+h[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.boot[][][]\T1/ptm/m
+/n/10 ,
+ []
+
+[99] [100]
+Overfull \hbox (40.41907pt too wide) in paragraph at lines 6323--6338
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.lda[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.boot[][][]\T1/ptm/m/n/
+10 ,
+ []
+
+
+Overfull \hbox (5.84094pt too wide) in paragraph at lines 6323--6338
+[][]\T1/zi4/m/n/10 mice.impute.logreg[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 
+mice.impute.mean[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.midastouc
+h[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.boot[][][]\T1/ptm/m
+/n/10 ,
+ []
+
+[101]
+Overfull \hbox (116.50966pt too wide) in paragraph at lines 6406--6408
+[]\T1/ptm/m/n/10 Other named ar-gu-ments passed down to \T1/zi4/m/n/10 randomFo
+rest() \T1/ptm/m/n/10 and \T1/zi4/m/n/10 randomForest:::randomForest.default()\
+T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (6.6076pt too wide) in paragraph at lines 6412--6417
+[]\T1/ptm/m/n/10 Imputation of \T1/zi4/m/n/10 y \T1/ptm/m/n/10 by ran-dom fores
+ts. The method calls \T1/zi4/m/n/10 randomForrest() \T1/ptm/m/n/10 which im-ple
+-ments Breiman's
+ []
+
+
+Overfull \hbox (40.41907pt too wide) in paragraph at lines 6458--6473
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.lda[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.boot[][][]\T1/ptm/m/n/
+10 ,
+ []
+
+
+Overfull \hbox (5.84094pt too wide) in paragraph at lines 6458--6473
+[][]\T1/zi4/m/n/10 mice.impute.logreg[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 
+mice.impute.mean[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.midastouc
+h[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.boot[][][]\T1/ptm/m
+/n/10 ,
+ []
+
+[102] [103]
+Overfull \hbox (40.41907pt too wide) in paragraph at lines 6544--6559
+[]\T1/ptm/m/n/10 Other uni-vari-ate im-pu-ta-tion func-tions: [][]\T1/zi4/m/n/1
+0 mice.impute.cart[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.lda[][]
+[]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.logreg.boot[][][]\T1/ptm/m/n/
+10 ,
+ []
+
+
+Overfull \hbox (5.84094pt too wide) in paragraph at lines 6544--6559
+[][]\T1/zi4/m/n/10 mice.impute.logreg[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 
+mice.impute.mean[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.midastouc
+h[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 mice.impute.norm.boot[][][]\T1/ptm/m
+/n/10 ,
+ []
+
+[104] [105] [106] [107] [108] [109] [110] [111] [112] [113] [114] [115]
+[116] [117] [118] [119] [120]
+Overfull \hbox (29.24715pt too wide) in paragraph at lines 7656--7656
+ []\T1/zi4/m/n/9 mdpat <- cbind(expand.grid(rec = 8:1, pat = 1:4, var = 1:3), r
+=as.numeric(as.vector(is.na(data))))[] 
+ []
+
+[121]
+Overfull \hbox (0.2375pt too wide) in paragraph at lines 7758--7760
+[]\T1/ptm/m/n/10 Optionally, com-pare pooled es-ti-mates from dif-fer-ent sci-e
+n-tific mod-els by the \T1/zi4/m/n/10 pool.compare()
+ []
+
+[122] [123] [124] [125]
+Overfull \hbox (1.34705pt too wide) in paragraph at lines 7998--8001
+\T1/ptm/m/n/10 tion (R^2_a) ob-tained with the \T1/zi4/m/n/10 lm \T1/ptm/m/n/10
+ mod-el-ing func-tion. For pool-ing it uses the Fisher \T1/ptm/m/it/10 z\T1/ptm
+/m/n/10 -transformation. 
+ []
+
+[126] [127] [128] [129] [130] [131] [132] [133]
+Overfull \hbox (90.68074pt too wide) in alignment at lines 8586--8586
+ [] [] 
+ []
+
+[134] [135] [136] [137] [138]
+Overfull \hbox (9.03925pt too wide) in paragraph at lines 8824--8831
+\T1/ptm/m/n/10 it eval-u-ates in the com-pleted data \T1/zi4/m/n/10 data.frame(
+complete(x,"long",inc=TRUE))
+ []
+
+
+Overfull \hbox (12.72736pt too wide) in paragraph at lines 8834--8843
+[]\T1/ptm/m/n/10 A named list con-tain-ing the graph-i-cal pa-ram-e-ters. The d
+e-fault func-tion \T1/zi4/m/n/10 mice.theme
+ []
+
+[139]
+Overfull \hbox (6.92987pt too wide) in paragraph at lines 8927--8933
+[][][]\T1/zi4/m/n/10 mice[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 xyplot[][][]
+\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 densityplot[][][]\T1/ptm/m/n/10 , [][]\T1/z
+i4/m/n/10 bwplot[][][]\T1/ptm/m/n/10 , [][]\T1/zi4/m/n/10 lattice[][][] \T1/ptm
+/m/n/10 for an overview of the pack-age, as well as [][]\T1/zi4/m/n/10 stripplo
+t[][][]\T1/ptm/m/n/10 ,
+ []
+
+[140]
+Overfull \hbox (12.75941pt too wide) in paragraph at lines 8960--8960
+ []\T1/zi4/m/n/9 ## Not run: stripplot(imp, age+hgt~.imp|reg, hgt, col=c(hcl(0,
+0,40,0.2), mdc(2)),pch=c(1,20))[] 
+ []
+
+[141] [142] [143] [144] [145] [146] [147]
+Overfull \hbox (0.92805pt too wide) in paragraph at lines 9429--9432
+[]\T1/ptm/m/n/10 The \T1/zi4/m/n/10 mads \T1/ptm/m/n/10 ob-ject con-tains all t
+he in-for-ma-tion you need to make any de-sired plots. Check [][]\T1/zi4/m/n/10
+ mads-class[][][]
+ []
+
+[148]
+Overfull \hbox (9.03925pt too wide) in paragraph at lines 9502--9509
+\T1/ptm/m/n/10 it eval-u-ates in the com-pleted data \T1/zi4/m/n/10 data.frame(
+complete(x,"long",inc=TRUE))
+ []
+
+[149]
+Overfull \hbox (12.72736pt too wide) in paragraph at lines 9512--9521
+[]\T1/ptm/m/n/10 A named list con-tain-ing the graph-i-cal pa-ram-e-ters. The d
+e-fault func-tion \T1/zi4/m/n/10 mice.theme
+ []
+
+[150] (./Rd2.ind [151]
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 3.
+ [152
+
+]
+
+LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
+(Font)              using `T1/zi4/m/n' instead on input line 92.
+
+LaTeX Font Info:    Font shape `T1/zi4/m/it' will be
+(Font)              scaled to size 10.0pt on input line 95.
+[153] [154] [155
+
+])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 9620.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 9620.
+ (./Rd2.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 9620.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 9620.
+
+Package rerunfilecheck Info: File `Rd2.out' has not changed.
+(rerunfilecheck)             Checksum: A37E54665D288F39EF0F6E0C064E6340;6838.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 9620.
+ ) 
+Here is how much of TeX's memory you used:
+ 7828 strings out of 492649
+ 110423 string characters out of 6129623
+ 202202 words of memory out of 5000000
+ 10206 multiletter control sequences out of 15000+600000
+ 44456 words of font info for 54 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 38i,6n,36p,342b,592s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{Rfn.dev.capabilities} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.panel.stripplot} has been referenced but does n
+ot exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.tidy} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.glance} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.panel.xyplot} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.parLapply} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.gc} has been referenced but does not exist, rep
+laced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.rm} has been referenced but does not exist, rep
+laced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.parallel} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.makeCluster} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.mipo} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.mice.impute.rfcont} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.mice.impute.rfcat} has been referenced but does
+ not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.randomForest} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.polr} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.multinom} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.panImpute} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.mean} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.glm.fit} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.lda} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.jomoImpute} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.rpart} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.rpart.control} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.set.seed} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.rgb} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.hcl} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.glm} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.formula} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.lm} has been referenced but does not exist, rep
+laced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.data.enders.employee} has been referenced but d
+oes not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.panel.densityplot} has been referenced but does
+ not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.complete.cases} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.na.omit} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.cbind} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.trellis.par.set} has been referenced but does n
+ot exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.print.trellis} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.panel.bwplot} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.lattice} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.print} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.update} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.Lattice} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.with.mitml.list} has been referenced but does n
+ot exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ampute.default.odds} has been referenced but do
+es not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ampute.default.type} has been referenced but do
+es not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ampute.discrete} has been referenced but does n
+ot exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ampute.continuous} has been referenced but does
+ not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ampute.default.weights} has been referenced but
+ does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ampute.default.freq} has been referenced but do
+es not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ampute.default.patterns} has been referenced bu
+t does not exist, replaced by a fixed one
+
+{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/us
+r/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive
+/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/local/texlive/20
+18/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/local/t
+exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
+xlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
+live/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texli
+ve/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive
+/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2
+018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2018
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2018/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2018/te
+xmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2018/texmf-dis
+t/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/ty
+pe1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/ti
+mes/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8
+a.pfb>
+Output written on Rd2.pdf (155 pages, 559174 bytes).
+PDF statistics:
+ 4174 PDF objects out of 4296 (max. 8388607)
+ 3963 compressed objects within 40 object streams
+ 1414 named destinations out of 1440 (max. 500000)
+ 1001 words of extra memory for PDF output out of 10000 (max. 10000000)
+

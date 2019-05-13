@@ -3,17 +3,12 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.4.3
+# mice 3.5.0
 
+* This versiomn has some error fixes
 * Fixes a bug in the sampler that ignored imputed values in variables outside the active block (#175, @alexanderrobitzsch)
 * Adds a note to the documenation of `as.mids`() (#173)
-
-# mice 3.4.2
-
 * Removes a superfluous warning from process_mipo() (#92)
-
-# mice 3.4.1 
-
 * Fixes an error in the degrees of freedom of the P-value calculation (#171)
 
 # mice 3.4.0 
