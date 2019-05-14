@@ -7,7 +7,7 @@ output: github_document
 
 # mice 3.5.0
 
-* This versiomn has some error fixes
+* This version has some error fixes
 * Fixes a bug in the sampler that ignored imputed values in variables outside the active block (#175, @alexanderrobitzsch)
 * Adds a note to the documenation of `as.mids`() (#173)
 * Removes a superfluous warning from process_mipo() (#92)
