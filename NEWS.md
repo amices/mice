@@ -3,7 +3,9 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.5.0.9000
+# mice 3.5.1
+
+* Adds support for rotated names in `md.pattern()` (#170, #177)
 
 # mice 3.5.0
 
