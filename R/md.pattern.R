@@ -83,6 +83,8 @@ md.pattern <- function(x, plot = TRUE, rotate.names = FALSE){
       }
       R <- r[1:nrow(r)-1, 1:ncol(r)-1]
     }
+    oldpar <- par()
+    on.exit(par(oldpar))
     par(mar=rep(0, 4))
     plot.window(xlim=c(-1, ncol(R) + 1), ylim=c(-1, nrow(R) + 1), asp=1)
     M <- cbind(c(row(R)), c(col(R))) - 1
