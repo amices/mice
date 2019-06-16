@@ -86,17 +86,19 @@ md.pattern <- function(x, plot = TRUE, rotate.names = FALSE){
     oldpar <- par()
     on.exit(par(oldpar))
     par(mar=rep(0, 4))
-    plot.window(xlim=c(-1, ncol(R) + 1), ylim=c(-1, nrow(R) + 1), asp=1)
-    M <- cbind(c(row(R)), c(col(R))) - 1
-    shade <- ifelse(R[nrow(R):1, ], mdc(1), mdc(2))
-    rect(M[, 2], M[, 1], M[, 2] + 1, M[, 1] + 1, col=shade)
     if (rotate.names) {
       adj = c(0, 0.5)
       srt = 90
+      length_of_longest_colname = max(nchar(colnames(r)))/2.6
+      plot.window(xlim=c(-1, ncol(R) + 1), ylim=c(-1, nrow(R) + length_of_longest_colname), asp=1)
     } else {
       adj = c(0.5, 0)
       srt = 0
+      plot.window(xlim=c(-1, ncol(R) + 1), ylim=c(-1, nrow(R) + 1), asp=1)
     }
+    M <- cbind(c(row(R)), c(col(R))) - 1
+    shade <- ifelse(R[nrow(R):1, ], mdc(1), mdc(2))
+    rect(M[, 2], M[, 1], M[, 2] + 1, M[, 1] + 1, col=shade)
     for(i in 1:ncol(R)){
       text(i - .5, nrow(R) + .3, colnames(r)[i], adj = adj, srt = srt)
       text(i - .5, -.3, nmis[order(nmis)][i])
