@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Default <code>patterns</code> in <code>ampute</code> — ampute.default.patterns • mice</title>
+<title>Toenail data — toenail • mice</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -36,10 +36,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Default <code>patterns</code> in <code>ampute</code> — ampute.default.patterns" />
+<meta property="og:title" content="Toenail data — toenail" />
 
-<meta property="og:description" content="This function creates a default pattern matrix for the multivariate 
-amputation function ampute()." />
+<meta property="og:description" content="The toenail data come from a Multicenter study comparing two oral
+treatments for toenail infection. Patients were evaluated for the
+degree of separation of the nail. Patients were randomized into two
+treatments and were followed over seven visits - four in the first
+year and yearly thereafter. The patients have not been treated
+prior to the first visit so this should be regarded as the
+baseline." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -110,51 +115,76 @@ amputation function ampute()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Default <code>patterns</code> in <code>ampute</code></h1>
+    <h1>Toenail data</h1>
     
-    <div class="hidden name"><code>ampute.default.patterns.Rd</code></div>
+    <div class="hidden name"><code>toenail.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function creates a default pattern matrix for the multivariate 
-amputation function <code><a href='ampute.html'>ampute()</a></code>.</p>
+    <p>The toenail data come from a Multicenter study comparing two oral
+treatments for toenail infection. Patients were evaluated for the
+degree of separation of the nail. Patients were randomized into two
+treatments and were followed over seven visits - four in the first
+year and yearly thereafter. The patients have not been treated
+prior to the first visit so this should be regarded as the
+baseline.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>ampute.default.patterns</span>(<span class='no'>n</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>n</th>
-      <td><p>A scalar specifying the #variables in the data.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A square matrix of size #variables where <code>0</code> indicates a variable</p>
+    <p>A data frame with 1908 observations on the following 5 variables:</p><dl class='dl-horizontal'>
+  <dt><code>ID</code></dt><dd><p>a numeric vector giving the ID of patient</p></dd>
+  <dt><code>outcome</code></dt><dd><p>a numeric vector giving the response 
+  (0=none or mild seperation, 1=moderate or severe)</p></dd>
+  <dt><code>treatment</code></dt><dd><p>a numeric vector giving the treatment gropup</p></dd>
+  <dt><code>month</code></dt><dd><p>a numeric vector giving the time of the visit 
+  (not exactly monthly intervals hence not round numbers)</p></dd>
+  <dt><code>visit</code></dt><dd><p>a numeric vector giving the number of the visit</p></dd>
+  </dl>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <div class='dont-index'><p><code><a href='ampute.html'>ampute</a></code>, <code><a href='md.pattern.html'>md.pattern</a></code></p></div>
+    <p>De Backer, M., De Vroey, C., Lesaffre, E., Scheys, I., and De
+Keyser, P. (1998). Twelve weeks of continuous oral therapy for
+toenail onychomycosis caused by dermatophytes: A double-blind
+comparative trial of terbinafine 250 mg/day versus itraconazole 200
+mg/day. Journal of the American Academy of Dermatology, 38, 57-63.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This dataset was copied from the <code>DPpackage</code>, which is 
+scheduled to be discontinued from CRAN in August 2019.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Lesaffre, E. and Spiessens, B. (2001). On the effect of the number of
+quadrature points in a logistic random-effects model: An example.
+Journal of the Royal Statistical Society, Series C, 50, 325-335.</p>
+<p>G. Fitzmaurice, N. Laird and J. Ware (2004) Applied Longitudinal Analysis, 
+Wiley and Sons, New York, USA.</p>
+<p>Van Buuren, S. (2018). 
+<a href='https://stefvanbuuren.name/fimd/sec-catoutcome.html#example'><em>Flexible
+Imputation of Missing Data. Second Edition.</em></a> Chapman &amp; Hall/CRC.
+Boca Raton, FL.</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#format">Format</a></li>
 
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#source">Source</a></li>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#references">References</a></li>
           </ul>
 
-    <h2>Author</h2>
-    <p>Rianne Schouten, 2016</p>
   </div>
 </div>
 
