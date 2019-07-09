@@ -3,6 +3,11 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.5.2
+
+* Copy `toenail` data from orphaned `DPpackage` package
+* Remove `DPpackage`  from `Suggests` field in `DESCRIPTION` 
+
 # mice 3.5.1
 
 * Adds support for rotated names in `md.pattern()` (#170, #177)
