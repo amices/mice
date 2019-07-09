@@ -1,6 +1,14 @@
 cran-comments
 ================
 
+## Reason
+
+This update is requested by Brian Ripley, who notes that the `DPpackage`
+will soon be archived. `mice 3.6.0` copies the `toenail` data from
+`DPpackage` and removes the package from `Suggests:`.
+
+## Checks
+
 Package built by
 
 ``` r
@@ -9,7 +17,7 @@ build()
 ```
 
 ``` bash
-R CMD CHECK /Users/buurensv/Package/mice/mice_3.5.0.tar.gz
+R CMD CHECK /Users/buurensv/Package/mice/mice_3.6.0.tar.gz
 ```
 
     ## * using log directory ‘/Users/buurensv/Package/mice/mice/mice.Rcheck’
@@ -18,7 +26,7 @@ R CMD CHECK /Users/buurensv/Package/mice/mice_3.5.0.tar.gz
     ## * using session charset: UTF-8
     ## * checking for file ‘mice/DESCRIPTION’ ... OK
     ## * checking extension type ... Package
-    ## * this is package ‘mice’ version ‘3.5.0’
+    ## * this is package ‘mice’ version ‘3.6.0’
     ## * package encoding: UTF-8
     ## * checking package namespace information ... OK
     ## * checking package dependencies ... OK
@@ -77,7 +85,7 @@ R CMD CHECK /Users/buurensv/Package/mice/mice_3.5.0.tar.gz
 
 ## Test environments
 
-  - local OS X install, 10.14.4, R 3.6.0
+  - local OS X install, 10.14.5, R 3.6.0
   - win-builder, using `devtools::check_win_devel()`
 
 Status: OK
@@ -88,11 +96,12 @@ I have run
 
 ``` r
 library("revdepcheck")
+revdepcheck::revdep_reset()
 revdep_check(num_workers = 3)
 revdep_summary()
 ```
 
-There were 55 reverse dependencies. There were 4 packages that failed to
+There were 56 reverse dependencies. There were 4 packages that failed to
 check. None of these errors is mice-related.
 
 See <https://github.com/stefvanbuuren/mice/tree/master/revdep>
