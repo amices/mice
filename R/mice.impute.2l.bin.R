@@ -19,7 +19,7 @@
 #'Imputation of systematically missing predictors in an individual 
 #'participant data meta-analysis: a generalized approach using MICE. 
 #'\emph{Statistics in Medicine}, 34:1841-1863.
-#'@family univariate \code{2l} functions
+#'@family univariate-2l
 #'@keywords datagen
 #'@examples
 #'library(tidyr)

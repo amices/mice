@@ -48,7 +48,7 @@
 #' and studies with missing covariates. Statistics in Medicine, 
 #' 35:2938-2954, 2015.
 #'
-#'@family multivariate \code{2l} functions
+#'@family multivariate-2l
 #'@keywords datagen
 #'@examples
 #'\donttest{

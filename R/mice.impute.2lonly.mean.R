@@ -15,7 +15,7 @@
 #'primarily useful for repairing incomplete data that are constant within the
 #'class, but that vary over the classes.
 #'@author Gerko Vink, Stef van Buuren, 2013
-#'@family univariate \code{2lonly} functions
+#'@family univariate-2lonly
 #'@keywords datagen
 #'@export
 mice.impute.2lonly.mean <- function(y, ry, x, type, wy = NULL, ...) {

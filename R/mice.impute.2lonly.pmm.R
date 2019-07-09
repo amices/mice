@@ -31,7 +31,7 @@
 #'a dependent factor variable by means of the \code{as.integer()}
 #'function. This may make sense for categories that are 
 #'approximately ordered, and less so for pure nominal measures.
-#'@family univariate \code{2lonly} functions
+#'@family univariate-2lonly
 #'@examples
 #'
 #'##################################################

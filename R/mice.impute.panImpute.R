@@ -48,7 +48,7 @@
 #'Schafer JL, and Yucel RM (2002). Computational strategies for 
 #'multivariate linear mixed-effects models with missing values. 
 #'Journal of Computational and Graphical Statistics, 11, 437-457.
-#'@family multivariate \code{2l} functions
+#'@family multivariate-2l
 #'@keywords datagen
 #'@examples
 #'blocks <-  list(c("bmi", "chl", "hyp"), "age")

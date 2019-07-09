@@ -77,12 +77,12 @@ Journal of Computational and Graphical Statistics, 11, 437-457.
 \seealso{
 \code{\link[mitml]{panImpute}}
 
-Other multivariate \code{2l} functions: \code{\link{mice.impute.jomoImpute}}
+Other multivariate-2l: \code{\link{mice.impute.jomoImpute}}
 }
 \author{
 Stef van Buuren, 2018, building on work of Simon Grund, 
 Alexander Robitzsch and Oliver Luedtke (authors of \code{mitml} package) 
 and Joe Schafer (author of \code{pan} package).
 }
-\concept{multivariate \code{2l} functions}
+\concept{multivariate-2l}
 \keyword{datagen}

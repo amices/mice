@@ -78,12 +78,12 @@ and studies with missing covariates. Statistics in Medicine,
 \seealso{
 \code{\link[mitml]{jomoImpute}}
 
-Other multivariate \code{2l} functions: \code{\link{mice.impute.panImpute}}
+Other multivariate-2l: \code{\link{mice.impute.panImpute}}
 }
 \author{
 Stef van Buuren, 2018, building on work of Simon Grund, 
 Alexander Robitzsch and Oliver Luedtke (authors of \code{mitml} package) 
 and Quartagno and Carpenter (authors of \code{jomo} package).
 }
-\concept{multivariate \code{2l} functions}
+\concept{multivariate-2l}
 \keyword{datagen}

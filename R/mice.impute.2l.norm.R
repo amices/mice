@@ -43,7 +43,7 @@
 #'Van Buuren, S. (2011) Multiple imputation of multilevel data. In Hox, J.J.
 #'and and Roberts, J.K. (Eds.), \emph{The Handbook of Advanced Multilevel
 #'Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
-#'@family univariate \code{2l} functions
+#'@family univariate-2l
 #'@keywords datagen
 #'@export
 mice.impute.2l.norm <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...) {

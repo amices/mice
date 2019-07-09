@@ -98,11 +98,11 @@ Transactions of the Royal Society A}, \bold{366}, 2389-2404.
 \code{\link{mice.impute.norm}},
 \code{\link{mice.impute.2lonly.pmm}}, \code{\link{mice.impute.2l.pan}}
 
-Other univariate \code{2lonly} functions: \code{\link{mice.impute.2lonly.mean}},
+Other univariate-2lonly: \code{\link{mice.impute.2lonly.mean}},
   \code{\link{mice.impute.2lonly.pmm}}
 }
 \author{
 Alexander Robitzsch (IPN - Leibniz Institute for Science and 
 Mathematics Education, Kiel, Germany), \email{robitzsch@ipn.uni-kiel.de}.
 }
-\concept{univariate \code{2lonly} functions}
+\concept{univariate-2lonly}

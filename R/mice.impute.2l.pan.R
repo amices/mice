@@ -49,7 +49,7 @@
 #'@note This function does not implement the \code{where} functionality. It 
 #'always produces \code{nmis} imputation, irrespective of the \code{where} 
 #'argument of the \code{mice} function.
-#'@family univariate \code{2l} functions
+#'@family univariate-2l
 #'@references
 #'
 #'Schafer J L, Yucel RM (2002). Computational strategies for multivariate
