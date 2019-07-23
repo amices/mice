@@ -201,7 +201,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-main-imputation-functions" class="hasAnchor"><a href="#section-main-imputation-functions" class="anchor"></a>Main imputation functions</h2>
-          <p class="section-desc"><p>The main workflow functions will multiply-impute the data, apply the complete-data model to each data set, and pool the results to get to the final inference. There are two main functions for imputing the data.</p></p>
+          <p class="section-desc"><p>The workflow of multiple imputation is: multiply-impute the data, apply the complete-data model to each imputed data set, and pool the results to get to the final inference. The main functions for imputing the data are:</p></p>
         </th>
       </tr>
       <tr>
@@ -227,7 +227,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-elementary-imputation-functions" class="hasAnchor"><a href="#section-elementary-imputation-functions" class="anchor"></a>Elementary imputation functions</h2>
-          <p class="section-desc"><p>Elementary imputation functions are work horses that create the actual imputations. The funcions are called through the <code>method</code> argument of <code>mice</code> function. Each function imputes one or more columns in the data. There are also <code>mice.impute.xxx</code> functions outside the <code>mice</code> package.</p></p>
+          <p class="section-desc"><p>The elementary imputation function is the workhorse that creates the actual imputations. Elementary functions are called through the <code>method</code> argument of <code>mice</code> function. Each function imputes one or more columns in the data. There are also <code>mice.impute.xxx</code> functions outside the <code>mice</code> package.</p></p>
         </th>
       </tr>
       <tr>
@@ -521,7 +521,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-repeated-analyses-and-combining-analytic-estimates" class="hasAnchor"><a href="#section-repeated-analyses-and-combining-analytic-estimates" class="anchor"></a>Repeated analyses and combining analytic estimates</h2>
-          <p class="section-desc"><p>Multiple imputation create m &gt; 1 completed data sets, fit the model of interest to each of these, and combine the analytic estimates to a final result. The following functions assits in executing these steps:</p></p>
+          <p class="section-desc"><p>Multiple imputation creates m &gt; 1 completed data sets, fits the model of interest to each of these, and combines the analytic estimates. The following functions assist in executing the analysis and pooling steps:</p></p>
         </th>
       </tr>
       <tr>
