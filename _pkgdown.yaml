@@ -25,19 +25,19 @@ reference:
       - fluxplot
   - title: "Main imputation functions"
     desc: > 
-      The main workflow functions will multiply-impute the data, 
-      apply the complete-data model to each data set, and pool 
-      the results to get to the final inference. There are two 
-      main functions for imputing the data.
+      The workflow of multiple imputation is: multiply-impute the data, 
+      apply the complete-data model to each imputed data set, and pool 
+      the results to get to the final inference. The main functions 
+      for imputing the data are:
     contents:
       - mice
       - mice.mids
       - parlmice
   - title: "Elementary imputation functions"
     desc: > 
-      Elementary imputation functions are work horses that create 
-      the actual imputations. The funcions are called through the 
-      `method` argument of `mice` function.
+      The elementary imputation function is the workhorse that creates 
+      the actual imputations. Elementary functions are called through 
+      the `method` argument of `mice` function.
       Each function imputes one or more columns in the data. There 
       are also `mice.impute.xxx` functions outside the `mice`
       package.
@@ -73,10 +73,10 @@ reference:
       - xyplot.mids
   - title: "Repeated analyses and combining analytic estimates"
     desc: > 
-      Multiple imputation create m > 1 completed data sets, fit 
-      the model of interest to each of these, and combine the 
-      analytic estimates to a final result. The following functions
-      assits in executing these steps: 
+      Multiple imputation creates m > 1 completed data sets, fits 
+      the model of interest to each of these, and combines the 
+      analytic estimates. The following functions
+      assist in executing the analysis and pooling steps:
     contents:
       - with.mids
       - pool
