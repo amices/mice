@@ -3,7 +3,9 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.6.0.9000
+# mice 3.6.1
+
+* Fix string matching in `check.predictorMatrix()` (#191)
 
 # mice 3.6.0
 

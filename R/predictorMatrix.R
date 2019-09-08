@@ -47,7 +47,7 @@ check.predictorMatrix <- function(predictorMatrix,
         stop("Missing row/column names in predictorMatrix", call. = FALSE)
     }
     for (i in row.names(predictorMatrix))
-      predictorMatrix[i, grep(i, colnames(predictorMatrix), fixed = TRUE)] <- 0
+      predictorMatrix[i, grep(paste0("^", i, "$"), colnames(predictorMatrix))] <- 0
     return(predictorMatrix)
   }
   
