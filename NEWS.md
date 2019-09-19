@@ -3,9 +3,13 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.6.2
+
+* More informative error message when stopped after pre-processing (#194)
+* Updated URL's in DESCRIPTION
+
 # mice 3.6.1
 
-* Updated URL's in DESCRIPTION
 * Fix string matching in `check.predictorMatrix()` (#191)
 
 # mice 3.6.0
