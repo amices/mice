@@ -78,6 +78,6 @@ Encoding: UTF-8
 License: GPL-2 | GPL-3
 LazyLoad: yes
 LazyData: yes
-URL: http://stefvanbuuren.github.io/mice/ , http://www.stefvanbuuren.name , http://www.stefvanbuuren.name/fimd/
+URL: https://github.com/stefvanbuuren/mice, https://stefvanbuuren.name/mice/, https://stefvanbuuren.name/fimd/
 BugReports: https://github.com/stefvanbuuren/mice/issues
 RoxygenNote: 6.1.1

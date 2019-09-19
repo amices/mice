@@ -5,6 +5,7 @@ output: github_document
 
 # mice 3.6.1
 
+* Updated URL's in DESCRIPTION
 * Fix string matching in `check.predictorMatrix()` (#191)
 
 # mice 3.6.0
