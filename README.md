@@ -1,8 +1,3 @@
----
-output:
-  html_document: default
-  pdf_document: default
----
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 mice <a href='https://stefvanbuuren.name/mice/'><img src='MICE_sticker_SMALL.png' align="right" height="139" /></a>
 ===================================================================================================================
