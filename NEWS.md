@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.6.3
+
+* Replace deprecated `imputationMethod` argument in examples by `method`
+
 # mice 3.6.2
 
 * More informative error message when stopped after pre-processing (#194)
