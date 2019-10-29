@@ -71,11 +71,11 @@
 #'# v ... imputation at level 2 using pmm
 #'
 #'imp1 <- mice( as.matrix( dfr ) , m = 1 , predictorMatrix = predM1 , 
-#'            imputationMethod = impM1 , maxit=1 , paniter=500)
+#'            method = impM1 , maxit=1 , paniter=500)
 #'    
 #'@export
 mice.impute.2lonly.norm <- function (y, ry, x, type, wy = NULL, ...){
     imp <- .imputation.level2( y = y , ry = ry , x = x, type = type, wy = wy, 
-                               imputationMethod = "norm" , ... )
+                               method = "norm" , ... )
     return(imp)
 }

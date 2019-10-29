@@ -90,7 +90,7 @@
 #'impM <- imp0$method
 #'
 #'#...
-#'# specify predictor matrix and imputationMethod
+#'# specify predictor matrix and method
 #'predM1 <- predM
 #'predM1["y","group"] <- -2
 #'predM1["y","x"] <- 1        # fixed x effects imputation
@@ -99,7 +99,7 @@
 #'
 #'# multilevel imputation
 #'imp1 <- mice( as.matrix( dfr ) , m = 1 , predictorMatrix = predM1 , 
-#'            imputationMethod = impM1 , maxit=1 )
+#'            method = impM1 , maxit=1 )
 #'# multilevel analysis
 #'library(lme4)
 #'mod <- lmer( y ~ ( 1 + x | group) + x , data = complete(imp1) )

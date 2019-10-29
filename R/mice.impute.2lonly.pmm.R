@@ -78,18 +78,18 @@
 #'# v ... imputation at level 2 using pmm
 #'
 #'imp <- mice(dfr, m = 1, predictorMatrix = predM1 , 
-#'            imputationMethod = impM1, maxit = 1, paniter = 500)
+#'            method = impM1, maxit = 1, paniter = 500)
 #'
 #'@export
 mice.impute.2lonly.pmm <- function (y, ry, x, type, wy = NULL, ...){
   imp <- .imputation.level2( y = y , ry = ry , x = x , type = type, wy = wy, 
-                             imputationMethod = "pmm" , ... )
+                             method = "pmm" , ... )
 }
 
 #******************************************
 # imputation function at level 2
 # can be done with norm and pmm
-.imputation.level2 <- function( y , ry , x , type, wy, imputationMethod , ... ){
+.imputation.level2 <- function( y , ry , x , type, wy, method , ... ){
   if ( sum(type==-2 ) != 1 ){
     stop( "No class variable")
   }
@@ -121,7 +121,7 @@ mice.impute.2lonly.pmm <- function (y, ry, x, type, wy = NULL, ...){
   x1 <- as.matrix(a1[, -c(1, N1)])
   
   # norm imputation at level 2
-  if ( imputationMethod == "norm" ) { 
+  if ( method == "norm" ) { 
     ximp2 <- mice.impute.norm( y= as.matrix(a1[,N1]), ry=ry2, x = x1[,-1] , 
                                wy = wy2, ...)
     
@@ -133,7 +133,7 @@ mice.impute.2lonly.pmm <- function (y, ry, x, type, wy = NULL, ...){
   }
   
   # pmm imputation at level 2
-  if ( imputationMethod == "pmm" ){ 
+  if ( method == "pmm" ){ 
     ximp2 <- mice.impute.pmm(y = a1[, N1], ry = ry2, x = x1[, -1], 
                              wy = wy2, ...) 
     

@@ -82,7 +82,7 @@ impM1[c("y","w","v")] <- c("2l.pan" , "2lonly.norm" , "2lonly.pmm" )
 # v ... imputation at level 2 using pmm
 
 imp1 <- mice( as.matrix( dfr ) , m = 1 , predictorMatrix = predM1 , 
-           imputationMethod = impM1 , maxit=1 , paniter=500)
+           method = impM1 , maxit=1 , paniter=500)
    
 }
 \references{

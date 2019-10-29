@@ -91,7 +91,7 @@ levels(dfr$v) <- LETTERS[1:4]
 # v ... imputation at level 2 using pmm
 
 imp <- mice(dfr, m = 1, predictorMatrix = predM1 , 
-           imputationMethod = impM1, maxit = 1, paniter = 500)
+           method = impM1, maxit = 1, paniter = 500)
 
 }
 \references{
