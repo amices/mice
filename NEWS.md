@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.6.4
+
+* Imputation method `2lonly.mean` now also works with factors
+
 # mice 3.6.3
 
 * Replace deprecated `imputationMethod` argument in examples by `method`
