@@ -3,6 +3,14 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.6.5
+
+* Adds check on partial missing level-2 data to `2lonly.norm` and `2lonly.pmm`
+* Change calculation of `a2` to elementwise division by a matrix of observations
+* Extend documentation for `2lonly.norm` and `2lonly.pmm`
+* Streamline code, eliminate some redundancies
+* Repair return value from `2lonly.pmm`
+
 # mice 3.6.4
 
 * Imputation method `2lonly.mean` now also works with factors
