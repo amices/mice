@@ -32,13 +32,24 @@ A vector of length \code{nmis} with imputations.
 \description{
 Imputes univariate missing data at level 2 using Bayesian linear regression
 analysis.  Variables are level 1 are aggregated at level 2. The group
-identifier at level 2 must be indicated by \code{type=-2} in the
+identifier at level 2 must be indicated by \code{type = -2} in the
 \code{predictorMatrix}.
 }
 \details{
 This function allows in combination with \code{\link{mice.impute.2l.pan}}
 switching regression imputation between level 1 and level 2 as described in
 Yucel (2008) or Gelman and Hill (2007, p. 541).
+
+The function checks for partial missing level-2 data. Level-2 data 
+are assumed to be constant within the same cluster. If one or more
+entries are missing, then the procedure aborts with an error 
+message that identifies the cluster with incomplete level-2 data.
+In such cases, one may first fill in the cluster mean (or mode) by 
+the \code{2lonly.mean} method to remove inconsistencies.
+}
+\note{
+For a more general approach, see 
+\code{miceadds::mice.impute.2lonly.function()}.
 }
 \examples{
 
@@ -83,7 +94,36 @@ impM1[c("y","w","v")] <- c("2l.pan" , "2lonly.norm" , "2lonly.pmm" )
 
 imp1 <- mice( as.matrix( dfr ) , m = 1 , predictorMatrix = predM1 , 
            method = impM1 , maxit=1 , paniter=500)
-   
+
+#
+# Demonstration that 2lonly.norm aborts for partial missing data.
+# Better use 2lonly.mean for repair.
+data <- data.frame(patid = rep(1:4, each = 5),
+                   sex = rep(c(1, 2, 1, 2), each = 5),
+                   crp = c(68, 78, 93, NA, 143, 
+                            5,  7,  9, 13,  NA, 
+                           97, NA, 56, 52,  34,
+                           22, 30, NA, NA, 45))
+pred <- make.predictorMatrix(data)
+pred[, "patid"] <- -2
+# only missing value (out of five) for patid == 1
+data[3, "sex"] <- NA
+
+\dontrun{
+# The following fails because 2lonly.norm found partially missing 
+# level-2 data
+# imp <- mice(data, method = c("", "2lonly.norm", "2l.pan"), 
+#             predictorMatrix = pred, maxit = 1, m = 2)
+# > iter imp variable
+# > 1   1  sex  crpError in .imputation.level2(y = y, ... : 
+# >   Method 2lonly.norm found the following clusters with partially missing 
+#>    level-2 data: 1
+#> Method 2lonly.mean can fix such inconsistencies.
+}
+
+# In contrast, if all sex values are missing for patid == 1, it runs fine
+data[1:5, "sex"] <- NA
+imp <- mice(data, method = c("", "2lonly.norm", "2l.pan"), predictorMatrix = pred, maxit = 1, m = 2)
 }
 \references{
 Gelman, A. and Hill, J. (2007). \emph{Data analysis using
@@ -93,16 +133,22 @@ University Press.
 Yucel, RM (2008). Multiple imputation inference for multivariate multilevel
 continuous data with ignorable non-response.  \emph{Philosophical
 Transactions of the Royal Society A}, \bold{366}, 2389-2404.
+
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-level2pred.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
 \code{\link{mice.impute.norm}},
-\code{\link{mice.impute.2lonly.pmm}}, \code{\link{mice.impute.2l.pan}}
+\code{\link{mice.impute.2lonly.pmm}}, \code{\link{mice.impute.2l.pan}},
+\code{\link{mice.impute.2lonly.mean}}
 
 Other univariate-2lonly: \code{\link{mice.impute.2lonly.mean}},
   \code{\link{mice.impute.2lonly.pmm}}
 }
 \author{
 Alexander Robitzsch (IPN - Leibniz Institute for Science and 
-Mathematics Education, Kiel, Germany), \email{robitzsch@ipn.uni-kiel.de}.
+Mathematics Education, Kiel, Germany), \email{robitzsch@ipn.uni-kiel.de}
+plus some tweaks by Stef van Buuren
 }
 \concept{univariate-2lonly}

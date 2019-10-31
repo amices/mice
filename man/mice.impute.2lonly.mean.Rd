@@ -34,10 +34,7 @@ Vector with imputed data, same type as \code{y}, and of length
 Method \code{2lonly.mean} replicates the most likely value within 
 a class of a second-level variable. It works for numeric and
 factor data. The function is primarily useful as a quick fixup for
-data in which the second-level variable is inconsistent. For more
-advanced methods for imputing second-level variables, 
-see \code{\link{mice.impute.2lonly.norm}} and 
-\code{\link{mice.impute.2lonly.pmm}}.
+data in which the second-level variable is inconsistent.
 }
 \details{
 Observed values in \code{y} are averaged within the class, and 
@@ -57,7 +54,10 @@ most frequently occuring category within the class.
 If there are no observed \code{y} in the class, all entries of the 
 class are set to \code{NA}. Note that this may produce problems 
 later on in \code{mice} if imputation routines are called that 
-expects predictor data to be complete.
+expects predictor data to be complete. Methods designed for 
+imputing this type of second-level variables include
+\code{\link{mice.impute.2lonly.norm}} and 
+\code{\link{mice.impute.2lonly.pmm}}.
 }
 \references{
 Van Buuren, S. (2018). 

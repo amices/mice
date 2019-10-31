@@ -32,18 +32,28 @@ A vector of length \code{nmis} with imputations.
 \description{
 Imputes univariate missing data at level 2 using predictive mean matching.
 Variables are level 1 are aggregated at level 2. The group identifier at
-level 2 must be indicated by \code{type=-2} in the \code{predictorMatrix}.
+level 2 must be indicated by \code{type = -2} in the \code{predictorMatrix}.
 }
 \details{
 This function allows in combination with \code{\link{mice.impute.2l.pan}}
 switching regression imputation between level 1 and level 2 as described in
 Yucel (2008) or Gelman and Hill (2007, p. 541).
+
+The function checks for partial missing level-2 data. Level-2 data 
+are assumed to be constant within the same cluster. If one or more
+entries are missing, then the procedure aborts with an error 
+message that identifies the cluster with incomplete level-2 data.
+In such cases, one may first fill in the cluster mean (or mode) by 
+the \code{2lonly.mean} method to remove inconsistencies.
 }
 \note{
 The extension to categorical variables transform 
 a dependent factor variable by means of the \code{as.integer()}
 function. This may make sense for categories that are 
-approximately ordered, and less so for pure nominal measures.
+approximately ordered, but less so for pure nominal measures.
+
+For a more general approach, see 
+\code{miceadds::mice.impute.2lonly.function()}.
 }
 \examples{
 
@@ -102,16 +112,22 @@ University Press.
 Yucel, RM (2008). Multiple imputation inference for multivariate multilevel
 continuous data with ignorable non-response.  \emph{Philosophical
 Transactions of the Royal Society A}, \bold{366}, 2389-2404.
+
+Van Buuren, S. (2018). 
+\href{https://stefvanbuuren.name/fimd/sec-level2pred.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
 \code{\link{mice.impute.pmm}},
-\code{\link{mice.impute.2lonly.norm}}, \code{\link{mice.impute.2l.pan}}
+\code{\link{mice.impute.2lonly.norm}}, \code{\link{mice.impute.2l.pan}},
+\code{\link{mice.impute.2lonly.mean}}
 
 Other univariate-2lonly: \code{\link{mice.impute.2lonly.mean}},
   \code{\link{mice.impute.2lonly.norm}}
 }
 \author{
 Alexander Robitzsch (IPN - Leibniz Institute for Science and 
-Mathematics Education, Kiel, Germany), \email{robitzsch@ipn.uni-kiel.de}.
+Mathematics Education, Kiel, Germany), \email{robitzsch@ipn.uni-kiel.de},
+plus some tweaks by Stef van Buuren
 }
 \concept{univariate-2lonly}

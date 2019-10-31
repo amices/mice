@@ -80,10 +80,12 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
     mlist <- list(m1 = c("logreg", "logreg.boot", "polyreg", "lda", "polr"), 
                   m2 = c("norm", "norm.nob", "norm.predict", "norm.boot",
                          "mean", "2l.norm", "2l.pan",
-                         "2lonly.pan", "quadratic", "ri"), 
+                         "2lonly.norm", "2lonly.pan", 
+                         "quadratic", "ri"), 
                   m3 = c("norm", "norm.nob", "norm.predict", "norm.boot",
                          "mean", "2l.norm", "2l.pan", 
-                         "2lonly.pan", "quadratic", "logreg", "logreg.boot"))
+                         "2lonly.norm", "2lonly.pan", 
+                         "quadratic", "logreg", "logreg.boot"))
     cond1 <- sapply(y, is.numeric)
     cond2 <- sapply(y, is.factor) & sapply(y, nlevels) == 2 
     cond3 <- sapply(y, is.factor) & sapply(y, nlevels) > 2
