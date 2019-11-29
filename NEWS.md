@@ -3,6 +3,11 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.6.6
+
+* Prepare for new CRAN version
+* Remove links to deprecated package `CALIBERrfimpute`
+
 # mice 3.6.5
 
 * Adds check on partial missing level-2 data to `2lonly.norm` and `2lonly.pmm`

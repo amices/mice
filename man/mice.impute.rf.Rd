@@ -41,8 +41,10 @@ for classification and regression. See Appendix A.1 of Doove et al.
 }
 \note{
 An alternative implementation was independently 
-developed by Shah et al (2014), and is available in the package 
-\code{CALIBERrfimpute}. Simulations by Shah (Feb 13, 2014) suggested that 
+developed by Shah et al (2014). This were available as 
+functions \code{CALIBERrfimpute::mice.impute.rfcat} and 
+\code{CALIBERrfimpute::mice.impute.rfcont} (now archived).
+Simulations by Shah (Feb 13, 2014) suggested that 
 the quality of the imputation for 10 and 100 trees was identical, 
 so mice 2.22 changed the default number of trees from \code{ntree = 100} to 
 \code{ntree = 10}.
@@ -70,9 +72,7 @@ Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
 \code{\link{mice}}, \code{\link{mice.impute.cart}}, 
-\code{\link[randomForest]{randomForest}},
-\code{\link[CALIBERrfimpute]{mice.impute.rfcat}}, 
-\code{\link[CALIBERrfimpute]{mice.impute.rfcont}}
+\code{\link[randomForest]{randomForest}}
 
 Other univariate imputation functions: \code{\link{mice.impute.cart}},
   \code{\link{mice.impute.lda}},
