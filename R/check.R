@@ -10,12 +10,16 @@ check.dataform <- function(data) {
     stop("Data should contain at least two columns", call. = FALSE)
   data <- as.data.frame(data)
   mat <- sapply(data, is.matrix)
+  df  <- sapply(data, is.data.frame) 
   if (any(mat)) stop("Cannot handle columns with class matrix: ", 
                      colnames(data)[mat])
+  if (any(df)) stop("Cannot handle columns with class data.frame: ",
+                    colnames(data)[df])
   
   dup <- duplicated(colnames(data))
   if (any(dup)) stop("Duplicate names found: ", 
                      paste(colnames(data)[dup], collapse = ", "))
+  
   
   data
 }
