@@ -6,6 +6,9 @@
 #'@param nnet.maxit Tuning parameter for \code{nnet()}.
 #'@param nnet.trace Tuning parameter for \code{nnet()}.
 #'@param nnet.MaxNWts Tuning parameter for \code{nnet()}.
+#'@param polr.to.loggedEvents A logical indicating whether each fallback 
+#'to the \code{multinom()} function should be written to \code{loggedEvents}.
+#'The default is \code{FALSE}.
 #'@return Vector with imputed data, same type as \code{y}, and of length 
 #'\code{sum(wy)}
 #'@details
@@ -23,10 +26,20 @@
 #'In order to avoid bias due to perfect prediction, the algorithm augment the
 #'data according to the method of White, Daniel and Royston (2010).
 #'
-#'The call to \code{polr} might fail, usually because the data are very sparse.
-#'In that case, \code{multinom} is tried as a fallback, and a record is written
-#'to the \code{loggedEvents} component of the \code{\link{mids}} object.
-#'
+#' The call to \code{polr} might fail, usually because the data are very sparse.
+#' In that case, \code{multinom} is tried as a fallback. 
+#' If the local flag \code{polr.to.loggedEvents} is set to TRUE, 
+#' a record is written
+#' to the \code{loggedEvents} component of the \code{\link{mids}} object.
+#' Use \code{mice(data, polr.to.loggedEvents = TRUE)} to set the flag.
+#' 
+#' @note 
+#' In December 2019 Simon White alerted that the 
+#' \code{polr} could always fail silently. I can confirm this behaviour for 
+#' versions \code{mice 3.0.0 - mice 3.6.6}, so any method requests
+#' for \code{polr} in these versions were in fact handled by \code{multinom}.
+#' See \url{https://github.com/stefvanbuuren/mice/issues/206} for details.
+#' 
 #'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000-2010
 #'@seealso \code{\link{mice}}, \code{\link[nnet]{multinom}},
 #'\code{\link[MASS]{polr}}
@@ -50,7 +63,8 @@
 #'@keywords datagen
 #'@export
 mice.impute.polr <- function(y, ry, x, wy = NULL, nnet.maxit = 100, 
-                             nnet.trace = FALSE, nnet.MaxNWts = 1500, ...)
+                             nnet.trace = FALSE, nnet.MaxNWts = 1500, 
+                             polr.to.loggedEvents = FALSE, ...)
 {
   if (is.null(wy)) wy <- !ry
   
@@ -67,9 +81,11 @@ mice.impute.polr <- function(y, ry, x, wy = NULL, nnet.maxit = 100,
   ## polr may fail on sparse data. We revert to multinom in such cases.
   fit <- try(suppressWarnings(polr(formula(xy), 
                                    data = xy[ry, , drop = FALSE], 
-                                   weights = w[ry], ...)), silent = TRUE)
+                                   weights = w[ry], control = list(...))), silent = TRUE)
   if (inherits(fit, "try-error"))
   {
+    if (polr.to.loggedEvents) 
+      updateLog(out = "polr falls back to multinom", frame = 6)
     fit <- multinom(formula(xy), data = xy[ry, , drop = FALSE], 
                     weights = w[ry], 
                     maxit = nnet.maxit, trace = nnet.trace, 
