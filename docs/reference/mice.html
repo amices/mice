@@ -147,10 +147,24 @@ implemented to inspect the quality of the imputations.</p>
 <p>Generates Multivariate Imputations by Chained Equations (MICE)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mice</span>(<span class='no'>data</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>predictorMatrix</span>, <span class='kw'>where</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>blocks</span>, <span class='kw'>visitSequence</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>formulas</span>, <span class='kw'>blots</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>post</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>defaultMethod</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pmm"</span>, <span class='st'>"logreg"</span>, <span class='st'>"polyreg"</span>, <span class='st'>"polr"</span>), <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>printFlag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>data.init</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>mice</span>(
+  <span class='no'>data</span>,
+  <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>predictorMatrix</span>,
+  <span class='kw'>where</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>blocks</span>,
+  <span class='kw'>visitSequence</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>formulas</span>,
+  <span class='kw'>blots</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>post</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>defaultMethod</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pmm"</span>, <span class='st'>"logreg"</span>, <span class='st'>"polyreg"</span>, <span class='st'>"polr"</span>),
+  <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>printFlag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>data.init</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

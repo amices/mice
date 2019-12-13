@@ -138,14 +138,24 @@ functions extend the usual features of <span class="pkg">lattice</span>.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for mids</span>
-<span class='fu'>stripplot</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>na.groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>as.table</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>theme</span> <span class='kw'>=</span> <span class='fu'><a href='mice.theme.html'>mice.theme</a></span>(), <span class='kw'>allow.multiple</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+<span class='fu'>stripplot</span>(
+  <span class='no'>x</span>,
+  <span class='no'>data</span>,
+  <span class='kw'>na.groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>as.table</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>theme</span> <span class='kw'>=</span> <span class='fu'><a href='mice.theme.html'>mice.theme</a></span>(),
+  <span class='kw'>allow.multiple</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>outer</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>drop.unused.levels</span> <span class='kw'>=</span> <span class='kw pkg'>lattice</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lattice/man/lattice.options.html'>lattice.getOption</a></span>(<span class='st'>"drop.unused.levels"</span>),
   <span class='kw'>panel</span> <span class='kw'>=</span> <span class='kw pkg'>lattice</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lattice/man/lattice.options.html'>lattice.getOption</a></span>(<span class='st'>"panel.stripplot"</span>),
   <span class='kw'>default.prepanel</span> <span class='kw'>=</span> <span class='kw pkg'>lattice</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lattice/man/lattice.options.html'>lattice.getOption</a></span>(<span class='st'>"prepanel.default.stripplot"</span>),
-  <span class='kw'>jitter.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>horizontal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>, <span class='kw'>subscripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>jitter.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>horizontal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>subscripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

@@ -129,8 +129,16 @@
     <p>Calculates imputations for univariate missing data by predictive mean matching.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mice.impute.pmm</span>(<span class='no'>y</span>, <span class='no'>ry</span>, <span class='no'>x</span>, <span class='kw'>wy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>donors</span> <span class='kw'>=</span> <span class='fl'>5L</span>, <span class='kw'>matchtype</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>ridge</span> <span class='kw'>=</span> <span class='fl'>1e-05</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>mice.impute.pmm</span>(
+  <span class='no'>y</span>,
+  <span class='no'>ry</span>,
+  <span class='no'>x</span>,
+  <span class='kw'>wy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>donors</span> <span class='kw'>=</span> <span class='fl'>5L</span>,
+  <span class='kw'>matchtype</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
+  <span class='kw'>ridge</span> <span class='kw'>=</span> <span class='fl'>1e-05</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -226,21 +234,22 @@ Imputation by Chained Equations in <code>R</code>. <em>Journal of Statistical
 Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other univariate imputation functions: <code><a href='mice.impute.cart.html'>mice.impute.cart</a></code>,
-  <code><a href='mice.impute.lda.html'>mice.impute.lda</a></code>,
-  <code><a href='mice.impute.logreg.boot.html'>mice.impute.logreg.boot</a></code>,
-  <code><a href='mice.impute.logreg.html'>mice.impute.logreg</a></code>,
-  <code><a href='mice.impute.mean.html'>mice.impute.mean</a></code>,
-  <code><a href='mice.impute.midastouch.html'>mice.impute.midastouch</a></code>,
-  <code><a href='mice.impute.norm.boot.html'>mice.impute.norm.boot</a></code>,
-  <code><a href='mice.impute.norm.nob.html'>mice.impute.norm.nob</a></code>,
-  <code><a href='mice.impute.norm.predict.html'>mice.impute.norm.predict</a></code>,
-  <code><a href='mice.impute.norm.html'>mice.impute.norm</a></code>,
-  <code><a href='mice.impute.polr.html'>mice.impute.polr</a></code>,
-  <code><a href='mice.impute.polyreg.html'>mice.impute.polyreg</a></code>,
-  <code><a href='mice.impute.quadratic.html'>mice.impute.quadratic</a></code>,
-  <code><a href='mice.impute.rf.html'>mice.impute.rf</a></code>,
-  <code><a href='mice.impute.ri.html'>mice.impute.ri</a></code></p></div>
+    <div class='dont-index'><p>Other univariate imputation functions: 
+<code><a href='mice.impute.cart.html'>mice.impute.cart</a>()</code>,
+<code><a href='mice.impute.lda.html'>mice.impute.lda</a>()</code>,
+<code><a href='mice.impute.logreg.boot.html'>mice.impute.logreg.boot</a>()</code>,
+<code><a href='mice.impute.logreg.html'>mice.impute.logreg</a>()</code>,
+<code><a href='mice.impute.mean.html'>mice.impute.mean</a>()</code>,
+<code><a href='mice.impute.midastouch.html'>mice.impute.midastouch</a>()</code>,
+<code><a href='mice.impute.norm.boot.html'>mice.impute.norm.boot</a>()</code>,
+<code><a href='mice.impute.norm.nob.html'>mice.impute.norm.nob</a>()</code>,
+<code><a href='mice.impute.norm.predict.html'>mice.impute.norm.predict</a>()</code>,
+<code><a href='mice.impute.norm.html'>mice.impute.norm</a>()</code>,
+<code><a href='mice.impute.polr.html'>mice.impute.polr</a>()</code>,
+<code><a href='mice.impute.polyreg.html'>mice.impute.polyreg</a>()</code>,
+<code><a href='mice.impute.quadratic.html'>mice.impute.quadratic</a>()</code>,
+<code><a href='mice.impute.rf.html'>mice.impute.rf</a>()</code>,
+<code><a href='mice.impute.ri.html'>mice.impute.ri</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># We normally call mice.impute.pmm() from within mice()</span>
