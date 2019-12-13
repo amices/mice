@@ -1,3 +1,4 @@
+source("https://install-github.me/r-lib/revdepcheck")
 library("revdepcheck")
 
 # the following takes one hour

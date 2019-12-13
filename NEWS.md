@@ -3,34 +3,20 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.6.6
+# mice 3.7.0
 
-* Prepare for new CRAN version
+* Solves a bug that made `polr()` always fail (#206)
+* Aborts if one or more columns are a `data.frame` (#208)
+* Update `mira-class` documentation (#207)
 * Remove links to deprecated package `CALIBERrfimpute`
-
-# mice 3.6.5
-
 * Adds check on partial missing level-2 data to `2lonly.norm` and `2lonly.pmm`
 * Change calculation of `a2` to elementwise division by a matrix of observations
 * Extend documentation for `2lonly.norm` and `2lonly.pmm`
-* Streamline code, eliminate some redundancies
 * Repair return value from `2lonly.pmm`
-
-# mice 3.6.4
-
 * Imputation method `2lonly.mean` now also works with factors
-
-# mice 3.6.3
-
 * Replace deprecated `imputationMethod` argument in examples by `method`
-
-# mice 3.6.2
-
 * More informative error message when stopped after pre-processing (#194)
 * Updated URL's in DESCRIPTION
-
-# mice 3.6.1
-
 * Fix string matching in `check.predictorMatrix()` (#191)
 
 # mice 3.6.0
