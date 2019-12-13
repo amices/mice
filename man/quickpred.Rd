@@ -4,8 +4,14 @@
 \alias{quickpred}
 \title{Quick selection of predictors from the data}
 \usage{
-quickpred(data, mincor = 0.1, minpuc = 0, include = "",
-  exclude = "", method = "pearson")
+quickpred(
+  data,
+  mincor = 0.1,
+  minpuc = 0,
+  include = "",
+  exclude = "",
+  method = "pearson"
+)
 }
 \arguments{
 \item{data}{Matrix or data frame with incomplete data.}

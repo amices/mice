@@ -4,9 +4,20 @@
 \alias{ampute}
 \title{Generate Missing Data for Simulation Purposes}
 \usage{
-ampute(data, prop = 0.5, patterns = NULL, freq = NULL,
-  mech = "MAR", weights = NULL, std = TRUE, cont = TRUE,
-  type = NULL, odds = NULL, bycases = TRUE, run = TRUE)
+ampute(
+  data,
+  prop = 0.5,
+  patterns = NULL,
+  freq = NULL,
+  mech = "MAR",
+  weights = NULL,
+  std = TRUE,
+  cont = TRUE,
+  type = NULL,
+  odds = NULL,
+  bycases = TRUE,
+  run = TRUE
+)
 }
 \arguments{
 \item{data}{A complete data matrix or dataframe. Values should be numeric. 
@@ -99,25 +110,25 @@ we call: amputation. The function \code{ampute} is developed to perform any kind
 of amputation desired by the researcher. An extensive example and more explanation
 of the function can be found in the vignette \emph{Generate missing values with 
 ampute}, available in \pkg{mice} as well. For imputation, the function 
-\code{\link{mice}} is advised.
+\code{\link{mice}} is advised.  
 
 Until recently, univariate amputation procedures were used to generate missing
 data in complete, simulated data sets. With this approach, variables are made
 incomplete one variable at a time. When several variables need to be amputed, 
-the procedure is repeated multiple times.
+the procedure is repeated multiple times. 
 
 With this univariate approach, it is difficult to relate the missingness on one 
 variable to the missingness on another variable. A multivariate amputation procedure 
 solves this issue and moreover, it does justice to the multivariate nature of 
 data sets. Hence, \code{ampute} is developed to perform the amputation according 
-the researcher's desires.
+the researcher's desires. 
 
 The idea behind the function is the specification of several missingness 
 patterns. Each pattern is a combination of variables with and without missing 
 values (denoted by \code{0} and \code{1} respectively). For example, one might
 want to create two missingness patterns on a data set with four variables. The
 patterns could be something like: \code{0, 0, 1, 1} and \code{1, 0, 1, 0}. 
-Each combination of zeros and ones may occur.
+Each combination of zeros and ones may occur. 
 
 Furthermore, the researcher specifies the proportion of missingness, either the 
 proportion of missing cases or the proportion of missing cells, and the relative 
@@ -131,18 +142,18 @@ mechanisms: the missingness depends completely on chance (MCAR), the missingness
 depends on the values of the observed variables (i.e. the variables that remain
 complete) (MAR) or on the values of the variables that will be made incomplete (MNAR). 
 For a more thorough explanation of these definitions, I refer to Van Buuren 
-(2012).
+(2012).   
 
 When the user sets the missingness mechanism to \code{"MCAR"}, the candidates 
 have an equal probability of having missing values. No other specifications 
 have to be made. For a \code{"MAR"} or \code{"MNAR"} mechanism, weighted sum 
 scores are calculated. These scores are a linear combination of the 
-variables.
+variables. 
 
 In order to calculate the weighted sum scores, the data is standardized. That 
 is the reason the data has to be numeric. Second, for each case, the values in 
 the data set are multiplied with the weights, specified by argument \code{weights}. 
-These weighted scores will be summed, resulting in a weighted sum score for each case.
+These weighted scores will be summed, resulting in a weighted sum score for each case. 
 
 The weights may differ between patterns and they may be negative or zero as well.
 Naturally, in case of a \code{MAR} mechanism, the weights corresponding to the 
@@ -159,7 +170,7 @@ same effect on the weighted sum score: the fourth variable is weighted twice as
 much as variable 3.
 
 Based on the weighted sum scores, either a discrete or continuous distribution 
-of probabilities is used to calculate whether a candidate will have missing values.
+of probabilities is used to calculate whether a candidate will have missing values. 
 
 For a discrete distribution of probabilities, the weighted sum scores are 
 divided into subgroups of equal size (quantiles). Thereafter, the user 
@@ -168,7 +179,7 @@ subgroups and the odds values are important for the generation of missing data.
 For example, for a RIGHT-like mechanism, scoring in one of the 
 higher quantiles should have high missingness odds, whereas for a MID-like 
 mechanism, the central groups should have higher odds. Again, not the size of 
-the odds values are of importance, but the relative distance between the values.
+the odds values are of importance, but the relative distance between the values. 
 
 The continuous distributions of probabilities are based on the logit function, as 
 described by Van Buuren (2012). The user can specify the type of missingness, 
@@ -178,7 +189,7 @@ For an extensive example of the working of the function, I gladly refer to the
 vignette \emph{Generate missing values with ampute}.
 }
 \examples{
-# Simulate data set with \\code{mvrnorm} from package \\code{\\pkg{MASS}}.
+# Simulate data set with \code{mvrnorm} from package \code{\pkg{MASS}}.
 require(MASS)
 sigma <- matrix(data = c(1, 0.2, 0.2, 0.2, 1, 0.2, 0.2, 0.2, 1), nrow = 3)
 complete.data <- mvrnorm(n = 100, mu = c(5, 5, 5), Sigma = sigma)

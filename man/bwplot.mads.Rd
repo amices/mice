@@ -4,8 +4,15 @@
 \alias{bwplot.mads}
 \title{Box-and-whisker plot of amputed and non-amputed data}
 \usage{
-\method{bwplot}{mads}(x, data, which.pat = NULL, standardized = TRUE,
-  descriptives = TRUE, layout = NULL, ...)
+\method{bwplot}{mads}(
+  x,
+  data,
+  which.pat = NULL,
+  standardized = TRUE,
+  descriptives = TRUE,
+  layout = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A \code{mads} (\code{\link{mads-class}}) object, typically created by 

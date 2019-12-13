@@ -4,8 +4,7 @@
 \alias{squeeze}
 \title{Squeeze the imputed values to be within specified boundaries.}
 \usage{
-squeeze(x, bounds = c(min(x[r]), max(x[r])), r = rep.int(TRUE,
-  length(x)))
+squeeze(x, bounds = c(min(x[r]), max(x[r])), r = rep.int(TRUE, length(x)))
 }
 \arguments{
 \item{x}{A numerical vector with values}

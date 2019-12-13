@@ -4,10 +4,17 @@
 \alias{mdc}
 \title{Graphical parameter for missing data plots.}
 \usage{
-mdc(r = "observed", s = "symbol", transparent = TRUE,
-  cso = hcl(240, 100, 40, 0.7), csi = hcl(0, 100, 40, 0.7),
-  csc = "gray50", clo = hcl(240, 100, 40, 0.8), cli = hcl(0, 100, 40,
-  0.8), clc = "gray50")
+mdc(
+  r = "observed",
+  s = "symbol",
+  transparent = TRUE,
+  cso = hcl(240, 100, 40, 0.7),
+  csi = hcl(0, 100, 40, 0.7),
+  csc = "gray50",
+  clo = hcl(240, 100, 40, 0.8),
+  cli = hcl(0, 100, 40, 0.8),
+  clc = "gray50"
+)
 }
 \arguments{
 \item{r}{A numerical or character vector. The numbers 1-6 request colors as

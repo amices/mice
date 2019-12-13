@@ -57,7 +57,7 @@ Wald-method can be found in paragraph 2.2 and the likelihood method can be
 found in paragraph 3.  One could use the Wald method for comparison of linear
 models obtained with e.g. \code{lm} (in \code{with.mids()}).  The likelihood
 method should be used in case of logistic regression models obtained with
-\code{glm()} in \code{with.mids()}.
+\code{glm()} in \code{with.mids()}. 
 
 The function assumes that \code{fit1} is the 
 larger model, and that model \code{fit0} is fully contained in \code{fit1}.

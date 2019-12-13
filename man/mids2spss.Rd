@@ -4,8 +4,15 @@
 \alias{mids2spss}
 \title{Export \code{mids} object to SPSS}
 \usage{
-mids2spss(imp, filedat = "midsdata.txt", filesps = "readmids.sps",
-  path = getwd(), sep = "\\t", dec = ".", silent = FALSE)
+mids2spss(
+  imp,
+  filedat = "midsdata.txt",
+  filesps = "readmids.sps",
+  path = getwd(),
+  sep = "\\t",
+  dec = ".",
+  silent = FALSE
+)
 }
 \arguments{
 \item{imp}{The \code{imp} argument is an object of class \code{mids},

@@ -4,8 +4,13 @@
 \alias{extend.formula}
 \title{Extends a formula with predictors}
 \usage{
-extend.formula(formula = ~0, predictors = NULL, auxiliary = TRUE,
-  include.intercept = FALSE, ...)
+extend.formula(
+  formula = ~0,
+  predictors = NULL,
+  auxiliary = TRUE,
+  include.intercept = FALSE,
+  ...
+)
 }
 \arguments{
 \item{formula}{A formula. If it is 

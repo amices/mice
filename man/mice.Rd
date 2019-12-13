@@ -3,13 +3,26 @@
 \docType{package}
 \name{mice}
 \alias{mice}
-\alias{mice-package}
 \title{\pkg{mice}: Multivariate Imputation by Chained Equations}
 \usage{
-mice(data, m = 5, method = NULL, predictorMatrix, where = NULL,
-  blocks, visitSequence = NULL, formulas, blots = NULL, post = NULL,
-  defaultMethod = c("pmm", "logreg", "polyreg", "polr"), maxit = 5,
-  printFlag = TRUE, seed = NA, data.init = NULL, ...)
+mice(
+  data,
+  m = 5,
+  method = NULL,
+  predictorMatrix,
+  where = NULL,
+  blocks,
+  visitSequence = NULL,
+  formulas,
+  blots = NULL,
+  post = NULL,
+  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+  maxit = 5,
+  printFlag = TRUE,
+  seed = NA,
+  data.init = NULL,
+  ...
+)
 }
 \arguments{
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing
@@ -162,7 +175,7 @@ algorithm.
 The data may contain categorical variables that are used in a regressions on
 other variables. The algorithm creates dummy variables for the categories of
 these variables, and imputes these from the corresponding categorical
-variable.
+variable. 
 
 Built-in univariate imputation methods are:
 
@@ -240,7 +253,7 @@ synchronized.
 estimates and any subsequently derived estimates. Argument \code{ls.meth} 
 takes one of three inputs: \code{"qr"} for QR-decomposition, \code{"svd"} for 
 singular value decomposition and \code{"ridge"} for ridge regression. 
-\code{ls.meth} defaults to \code{ls.meth = "qr"}.
+\code{ls.meth} defaults to \code{ls.meth = "qr"}. 
 
 \emph{Auxiliary predictors in formulas specification: }
 For a given block, the \code{formulas} specification takes precedence over 

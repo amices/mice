@@ -4,8 +4,15 @@
 \alias{extend.formulas}
 \title{Extends formula's with predictor matrix settings}
 \usage{
-extend.formulas(formulas, data, blocks, predictorMatrix = NULL,
-  auxiliary = TRUE, include.intercept = FALSE, ...)
+extend.formulas(
+  formulas,
+  data,
+  blocks,
+  predictorMatrix = NULL,
+  auxiliary = TRUE,
+  include.intercept = FALSE,
+  ...
+)
 }
 \arguments{
 \item{formulas}{A named list of formula's, or expressions that

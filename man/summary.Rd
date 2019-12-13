@@ -7,8 +7,7 @@
 \alias{summary.mice.anova}
 \title{Summary of a \code{mira} object}
 \usage{
-\method{summary}{mira}(object, type = c("tidy", "glance", "summary"),
-  ...)
+\method{summary}{mira}(object, type = c("tidy", "glance", "summary"), ...)
 
 \method{summary}{mids}(object, ...)
 

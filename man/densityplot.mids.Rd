@@ -5,14 +5,25 @@
 \alias{densityplot}
 \title{Density plot of observed and imputed data}
 \usage{
-\method{densityplot}{mids}(x, data, na.groups = NULL, groups = NULL,
-  as.table = TRUE, plot.points = FALSE, theme = mice.theme(),
-  mayreplicate = TRUE, thicker = 2.5, allow.multiple = TRUE,
+\method{densityplot}{mids}(
+  x,
+  data,
+  na.groups = NULL,
+  groups = NULL,
+  as.table = TRUE,
+  plot.points = FALSE,
+  theme = mice.theme(),
+  mayreplicate = TRUE,
+  thicker = 2.5,
+  allow.multiple = TRUE,
   outer = TRUE,
   drop.unused.levels = lattice::lattice.getOption("drop.unused.levels"),
   panel = lattice::lattice.getOption("panel.densityplot"),
   default.prepanel = lattice::lattice.getOption("prepanel.default.densityplot"),
-  ..., subscripts = TRUE, subset = TRUE)
+  ...,
+  subscripts = TRUE,
+  subset = TRUE
+)
 }
 \arguments{
 \item{x}{A \code{mids} object, typically created by \code{mice()} or

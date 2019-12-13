@@ -4,8 +4,14 @@
 \alias{mids2mplus}
 \title{Export \code{mids} object to Mplus}
 \usage{
-mids2mplus(imp, file.prefix = "imp", path = getwd(), sep = "\\t",
-  dec = ".", silent = FALSE)
+mids2mplus(
+  imp,
+  file.prefix = "imp",
+  path = getwd(),
+  sep = "\\t",
+  dec = ".",
+  silent = FALSE
+)
 }
 \arguments{
 \item{imp}{The \code{imp} argument is an object of class \code{mids},

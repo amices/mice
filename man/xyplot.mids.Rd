@@ -5,11 +5,20 @@
 \alias{xyplot}
 \title{Scatterplot of observed and imputed data}
 \usage{
-\method{xyplot}{mids}(x, data, na.groups = NULL, groups = NULL,
-  as.table = TRUE, theme = mice.theme(), allow.multiple = TRUE,
+\method{xyplot}{mids}(
+  x,
+  data,
+  na.groups = NULL,
+  groups = NULL,
+  as.table = TRUE,
+  theme = mice.theme(),
+  allow.multiple = TRUE,
   outer = TRUE,
   drop.unused.levels = lattice::lattice.getOption("drop.unused.levels"),
-  ..., subscripts = TRUE, subset = TRUE)
+  ...,
+  subscripts = TRUE,
+  subset = TRUE
+)
 }
 \arguments{
 \item{x}{A \code{mids} object, typically created by \code{mice()} or

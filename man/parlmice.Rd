@@ -4,8 +4,16 @@
 \alias{parlmice}
 \title{Wrapper function that runs MICE in parallel}
 \usage{
-parlmice(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL,
-  n.imp.core = NULL, cl.type = "PSOCK", ...)
+parlmice(
+  data,
+  m = 5,
+  seed = NA,
+  cluster.seed = NA,
+  n.core = NULL,
+  n.imp.core = NULL,
+  cl.type = "PSOCK",
+  ...
+)
 }
 \arguments{
 \item{data}{A data frame or matrix containing the incomplete data. Similar to 
@@ -44,7 +52,7 @@ procedure can be sped up, which may be useful in general.
 This function relies on package \code{\link{parallel}}, which is a base
 package for R versions 2.14.0 and later. We have chosen to use parallel function 
 \code{parLapply} to allow the use of \code{parlmice} on Mac, Linux and Windows
-systems. For the same reason, we use the Parallel Socket Cluster (PSOCK) type by default.
+systems. For the same reason, we use the Parallel Socket Cluster (PSOCK) type by default. 
 
 On systems other than Windows, it can be hugely beneficial to change the cluster type to 
 \code{FORK}, as it generally results in improved memory handling. When memory issues 
@@ -54,7 +62,7 @@ run using the same settings.
 
 This wrapper function combines the output of \code{\link{parLapply}} with
 function \code{\link{ibind}} in \code{\link{mice}}. A \code{mids} object is returned
-and can be used for further analyses.
+and can be used for further analyses. 
 
 Note that if a seed value is desired, the seed should be entered to this function
 with argument \code{seed}. Seed values outside the wrapper function (in an 

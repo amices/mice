@@ -62,9 +62,10 @@ and and Roberts, J.K. (Eds.), \emph{The Handbook of Advanced Multilevel
 Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
 }
 \seealso{
-Other univariate-2l: \code{\link{mice.impute.2l.bin}},
-  \code{\link{mice.impute.2l.norm}},
-  \code{\link{mice.impute.2l.pan}}
+Other univariate-2l: 
+\code{\link{mice.impute.2l.bin}()},
+\code{\link{mice.impute.2l.norm}()},
+\code{\link{mice.impute.2l.pan}()}
 }
 \author{
 Shahab Jolani, 2017

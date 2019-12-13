@@ -45,21 +45,22 @@ Jolani, S. (2012).
 Dissertation. University of Utrecht, Dec 7 2012.
 }
 \seealso{
-Other univariate imputation functions: \code{\link{mice.impute.cart}},
-  \code{\link{mice.impute.lda}},
-  \code{\link{mice.impute.logreg.boot}},
-  \code{\link{mice.impute.logreg}},
-  \code{\link{mice.impute.mean}},
-  \code{\link{mice.impute.midastouch}},
-  \code{\link{mice.impute.norm.boot}},
-  \code{\link{mice.impute.norm.nob}},
-  \code{\link{mice.impute.norm.predict}},
-  \code{\link{mice.impute.norm}},
-  \code{\link{mice.impute.pmm}},
-  \code{\link{mice.impute.polr}},
-  \code{\link{mice.impute.polyreg}},
-  \code{\link{mice.impute.quadratic}},
-  \code{\link{mice.impute.rf}}
+Other univariate imputation functions: 
+\code{\link{mice.impute.cart}()},
+\code{\link{mice.impute.lda}()},
+\code{\link{mice.impute.logreg.boot}()},
+\code{\link{mice.impute.logreg}()},
+\code{\link{mice.impute.mean}()},
+\code{\link{mice.impute.midastouch}()},
+\code{\link{mice.impute.norm.boot}()},
+\code{\link{mice.impute.norm.nob}()},
+\code{\link{mice.impute.norm.predict}()},
+\code{\link{mice.impute.norm}()},
+\code{\link{mice.impute.pmm}()},
+\code{\link{mice.impute.polr}()},
+\code{\link{mice.impute.polyreg}()},
+\code{\link{mice.impute.quadratic}()},
+\code{\link{mice.impute.rf}()}
 }
 \author{
 Shahab Jolani (University of Utrecht) \email{s.jolani@uu.nl}

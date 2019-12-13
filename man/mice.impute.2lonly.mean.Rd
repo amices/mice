@@ -65,8 +65,9 @@ Van Buuren, S. (2018).
 Boca Raton, FL.: Chapman & Hall/CRC Press.
 }
 \seealso{
-Other univariate-2lonly: \code{\link{mice.impute.2lonly.norm}},
-  \code{\link{mice.impute.2lonly.pmm}}
+Other univariate-2lonly: 
+\code{\link{mice.impute.2lonly.norm}()},
+\code{\link{mice.impute.2lonly.pmm}()}
 }
 \author{
 Gerko Vink, Stef van Buuren, 2019

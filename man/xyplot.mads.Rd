@@ -4,8 +4,15 @@
 \alias{xyplot.mads}
 \title{Scatterplot of amputed and non-amputed data against weighted sum scores}
 \usage{
-\method{xyplot}{mads}(x, data, which.pat = NULL, standardized = TRUE,
-  layout = NULL, colors = mdc(1:2), ...)
+\method{xyplot}{mads}(
+  x,
+  data,
+  which.pat = NULL,
+  standardized = TRUE,
+  layout = NULL,
+  colors = mdc(1:2),
+  ...
+)
 }
 \arguments{
 \item{x}{A \code{mads} object, typically created by \code{\link{ampute}}.}

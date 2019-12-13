@@ -98,21 +98,22 @@ Chapman & Hall/CRC. Boca Raton, FL.
 Vink, G., van Buuren, S. (2013). Multiple Imputation of Squared Terms. 
 \emph{Sociological Methods & Research}, 42:598-607.
 
-Other univariate imputation functions: \code{\link{mice.impute.cart}},
-  \code{\link{mice.impute.lda}},
-  \code{\link{mice.impute.logreg.boot}},
-  \code{\link{mice.impute.logreg}},
-  \code{\link{mice.impute.mean}},
-  \code{\link{mice.impute.midastouch}},
-  \code{\link{mice.impute.norm.boot}},
-  \code{\link{mice.impute.norm.nob}},
-  \code{\link{mice.impute.norm.predict}},
-  \code{\link{mice.impute.norm}},
-  \code{\link{mice.impute.pmm}},
-  \code{\link{mice.impute.polr}},
-  \code{\link{mice.impute.polyreg}},
-  \code{\link{mice.impute.rf}},
-  \code{\link{mice.impute.ri}}
+Other univariate imputation functions: 
+\code{\link{mice.impute.cart}()},
+\code{\link{mice.impute.lda}()},
+\code{\link{mice.impute.logreg.boot}()},
+\code{\link{mice.impute.logreg}()},
+\code{\link{mice.impute.mean}()},
+\code{\link{mice.impute.midastouch}()},
+\code{\link{mice.impute.norm.boot}()},
+\code{\link{mice.impute.norm.nob}()},
+\code{\link{mice.impute.norm.predict}()},
+\code{\link{mice.impute.norm}()},
+\code{\link{mice.impute.pmm}()},
+\code{\link{mice.impute.polr}()},
+\code{\link{mice.impute.polyreg}()},
+\code{\link{mice.impute.rf}()},
+\code{\link{mice.impute.ri}()}
 }
 \author{
 Gerko Vink (University of Utrecht), \email{g.vink@uu.nl}

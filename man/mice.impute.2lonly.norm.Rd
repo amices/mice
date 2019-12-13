@@ -143,8 +143,9 @@ Chapman & Hall/CRC. Boca Raton, FL.
 \code{\link{mice.impute.2lonly.pmm}}, \code{\link{mice.impute.2l.pan}},
 \code{\link{mice.impute.2lonly.mean}}
 
-Other univariate-2lonly: \code{\link{mice.impute.2lonly.mean}},
-  \code{\link{mice.impute.2lonly.pmm}}
+Other univariate-2lonly: 
+\code{\link{mice.impute.2lonly.mean}()},
+\code{\link{mice.impute.2lonly.pmm}()}
 }
 \author{
 Alexander Robitzsch (IPN - Leibniz Institute for Science and 

@@ -5,11 +5,21 @@
 \alias{bwplot}
 \title{Box-and-whisker plot of observed and imputed data}
 \usage{
-\method{bwplot}{mids}(x, data, na.groups = NULL, groups = NULL,
-  as.table = TRUE, theme = mice.theme(), mayreplicate = TRUE,
-  allow.multiple = TRUE, outer = TRUE,
+\method{bwplot}{mids}(
+  x,
+  data,
+  na.groups = NULL,
+  groups = NULL,
+  as.table = TRUE,
+  theme = mice.theme(),
+  mayreplicate = TRUE,
+  allow.multiple = TRUE,
+  outer = TRUE,
   drop.unused.levels = lattice::lattice.getOption("drop.unused.levels"),
-  ..., subscripts = TRUE, subset = TRUE)
+  ...,
+  subscripts = TRUE,
+  subset = TRUE
+)
 }
 \arguments{
 \item{x}{A \code{mids} object, typically created by \code{mice()} or

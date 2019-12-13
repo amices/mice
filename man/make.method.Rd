@@ -4,8 +4,12 @@
 \alias{make.method}
 \title{Creates a \code{method} argument}
 \usage{
-make.method(data, where = make.where(data), blocks = make.blocks(data),
-  defaultMethod = c("pmm", "logreg", "polyreg", "polr"))
+make.method(
+  data,
+  where = make.where(data),
+  blocks = make.blocks(data),
+  defaultMethod = c("pmm", "logreg", "polyreg", "polr")
+)
 }
 \arguments{
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing

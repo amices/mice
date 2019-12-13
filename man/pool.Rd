@@ -62,7 +62,7 @@ The function requires the following input from each fitted model:
 }
 The \code{pool()} function relies on the \code{broom::tidy} and 
 \code{broom::glance} function for extracting this information from a 
-list of fitted models.
+list of fitted models. 
 
 The degrees of freedom calculation uses the Barnard-Rubin adjustment 
 for small samples (Barnard and Rubin, 1999).

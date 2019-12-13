@@ -4,8 +4,15 @@
 \alias{mice.impute.panImpute}
 \title{Impute multilevel missing data using \code{pan}}
 \usage{
-mice.impute.panImpute(data, formula, type, m = 1, silent = TRUE,
-  format = "imputes", ...)
+mice.impute.panImpute(
+  data,
+  formula,
+  type,
+  m = 1,
+  silent = TRUE,
+  format = "imputes",
+  ...
+)
 }
 \arguments{
 \item{data}{A data frame containing incomplete and auxiliary variables, 
@@ -77,7 +84,8 @@ Journal of Computational and Graphical Statistics, 11, 437-457.
 \seealso{
 \code{\link[mitml]{panImpute}}
 
-Other multivariate-2l: \code{\link{mice.impute.jomoImpute}}
+Other multivariate-2l: 
+\code{\link{mice.impute.jomoImpute}()}
 }
 \author{
 Stef van Buuren, 2018, building on work of Simon Grund, 

@@ -5,14 +5,24 @@
 \alias{stripplot}
 \title{Stripplot of observed and imputed data}
 \usage{
-\method{stripplot}{mids}(x, data, na.groups = NULL, groups = NULL,
-  as.table = TRUE, theme = mice.theme(), allow.multiple = TRUE,
+\method{stripplot}{mids}(
+  x,
+  data,
+  na.groups = NULL,
+  groups = NULL,
+  as.table = TRUE,
+  theme = mice.theme(),
+  allow.multiple = TRUE,
   outer = TRUE,
   drop.unused.levels = lattice::lattice.getOption("drop.unused.levels"),
   panel = lattice::lattice.getOption("panel.stripplot"),
   default.prepanel = lattice::lattice.getOption("prepanel.default.stripplot"),
-  jitter.data = TRUE, horizontal = FALSE, ..., subscripts = TRUE,
-  subset = TRUE)
+  jitter.data = TRUE,
+  horizontal = FALSE,
+  ...,
+  subscripts = TRUE,
+  subset = TRUE
+)
 }
 \arguments{
 \item{x}{A \code{mids} object, typically created by \code{mice()} or

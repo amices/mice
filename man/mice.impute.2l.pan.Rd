@@ -5,8 +5,16 @@
 \alias{2l.pan}
 \title{Imputation by a two-level normal model using \code{pan}}
 \usage{
-mice.impute.2l.pan(y, ry, x, type, intercept = TRUE, paniter = 500,
-  groupcenter.slope = FALSE, ...)
+mice.impute.2l.pan(
+  y,
+  ry,
+  x,
+  type,
+  intercept = TRUE,
+  paniter = 500,
+  groupcenter.slope = FALSE,
+  ...
+)
 }
 \arguments{
 \item{y}{Incomplete data vector of length \code{n}}
@@ -126,9 +134,10 @@ Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-Other univariate-2l: \code{\link{mice.impute.2l.bin}},
-  \code{\link{mice.impute.2l.lmer}},
-  \code{\link{mice.impute.2l.norm}}
+Other univariate-2l: 
+\code{\link{mice.impute.2l.bin}()},
+\code{\link{mice.impute.2l.lmer}()},
+\code{\link{mice.impute.2l.norm}()}
 }
 \author{
 Alexander Robitzsch (IPN - Leibniz Institute for Science and 

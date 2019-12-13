@@ -4,8 +4,11 @@
 \alias{make.blocks}
 \title{Creates a \code{blocks} argument}
 \usage{
-make.blocks(data, partition = c("scatter", "collect", "void"),
-  calltype = "type")
+make.blocks(
+  data,
+  partition = c("scatter", "collect", "void"),
+  calltype = "type"
+)
 }
 \arguments{
 \item{data}{A \code{data.frame}, character vector with

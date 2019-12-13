@@ -65,9 +65,10 @@ participant data meta-analysis: a generalized approach using MICE.
 \emph{Statistics in Medicine}, 34:1841-1863.
 }
 \seealso{
-Other univariate-2l: \code{\link{mice.impute.2l.lmer}},
-  \code{\link{mice.impute.2l.norm}},
-  \code{\link{mice.impute.2l.pan}}
+Other univariate-2l: 
+\code{\link{mice.impute.2l.lmer}()},
+\code{\link{mice.impute.2l.norm}()},
+\code{\link{mice.impute.2l.pan}()}
 }
 \author{
 Shahab Jolani, 2015; adapted to mice, SvB, 2018
