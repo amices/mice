@@ -5,7 +5,7 @@ output: github_document
 
 # mice 3.7.0.9000
 
-
+* Add `.gitattributes` for consistent line endings
 
 # mice 3.7.0
 
