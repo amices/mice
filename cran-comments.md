@@ -149,6 +149,22 @@ Status: `devtools::check_win_devel()` resulted in:
 I believe that these errors are due to the win-builder library. I am
 afraid I cannot solve these.
 
+``` r
+check_rhub()
+```
+
+Status: OK
+
+There is one note:
+
+    * checking for non-standard things in the check directory ... NOTE
+    Found the following files/directories:
+      'examples_i386' 'examples_x64' 'mice-Ex_i386.Rout' 'mice-Ex_x64.Rout'
+      'tests_i386' 'tests_x64'
+
+I believe these files are always produced by the builder, and do not
+indicate package failures.
+
 ## Downstream dependencies
 
 I have run
