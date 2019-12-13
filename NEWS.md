@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.7.0.9000
+
+
+
 # mice 3.7.0
 
 * Solves a bug that made `polr()` always fail (#206)
