@@ -6,14 +6,14 @@ context("mice.impute.2l.bin")
 # packageVersion(c("micemd"))
 
 # toenail: outcome is factor
-data("toenail", package = "HSAUR3")
-data <- tidyr::complete(toenail, patientID, visit) %>% 
+data("toenail2")
+data <- tidyr::complete(toenail2, patientID, visit) %>% 
   tidyr::fill(treatment) %>% 
   dplyr::select(-time) %>%
   dplyr::mutate(patientID = as.integer(patientID))
 summary(data)
-# fit1 <- glm(outcome ~ treatment * month, data = toenail, family = binomial)
-# fit2 <- glm(outcome ~ treatment * visit, data = toenail, family = binomial)
+# fit1 <- glm(outcome ~ treatment * month, data = toenail2, family = binomial)
+# fit2 <- glm(outcome ~ treatment * visit, data = toenail2, family = binomial)
 # fit3 <- lme4::glmer(outcome ~ treatment * visit + (1 | ID), data = data, family = binomial)
 
 pred <- make.predictorMatrix(data)

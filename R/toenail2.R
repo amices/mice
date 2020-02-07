@@ -7,17 +7,16 @@
 #' year and yearly thereafter. The patients have not been treated
 #' prior to the first visit so this should be regarded as the
 #' baseline.
-#' @name toenail
+#' @name toenail2
 #' @docType data
 #' @format A data frame with 1908 observations on the following 5 variables: 
 #'   \describe{
-#'   \item{\code{ID}}{a numeric vector giving the ID of patient}
-#'   \item{\code{outcome}}{a numeric vector giving the response 
-#'   (0=none or mild seperation, 1=moderate or severe)}
-#'   \item{\code{treatment}}{a numeric vector giving the treatment group}
-#'   \item{\code{month}}{a numeric vector giving the time of the visit 
+#'   \item{\code{patientID}}{a numeric vector giving the ID of patient}
+#'   \item{\code{outcome}}{a factor with 2 levels giving the response}
+#'   \item{\code{treatment}}{a factor with 2 levels giving the treatment group}
+#'   \item{\code{time}}{a numeric vector giving the time of the visit 
 #'   (not exactly monthly intervals hence not round numbers)}
-#'   \item{\code{visit}}{a numeric vector giving the number of the visit}
+#'   \item{\code{visit}}{an integer giving the number of the visit}
 #'   }
 #' @source 
 #' De Backer, M., De Vroey, C., Lesaffre, E., Scheys, I., and De
@@ -38,7 +37,8 @@
 #'Imputation of Missing Data. Second Edition.}} Chapman & Hall/CRC.
 #'Boca Raton, FL.
 #' @keywords datasets
-#' @seealso \code{\link{toenail2}}
-#' @details This dataset was copied from the \code{DPpackage}, which is 
-#' scheduled to be discontinued from CRAN in August 2019.
+#' @seealso \code{\link{toenail}}
+#' @details Apart from formatting, this dataset is identical to 
+#' \code{toenail}. The formatting is taken identical to 
+#' \code{data("toenail", package = "HSAUR3")}.
 NULL

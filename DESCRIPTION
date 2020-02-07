@@ -1,6 +1,6 @@
 Package: mice
 Type: Package
-Version: 3.7.1
+Version: 3.7.2
 Title: Multivariate Imputation by Chained Equations
 Date: 2020-02-07
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
@@ -57,7 +57,6 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    HSAUR3,
     micemd,
     miceadds,
     tidyr

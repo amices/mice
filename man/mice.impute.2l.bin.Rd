@@ -46,8 +46,8 @@ if they have been partially observed.
 \examples{
 library(tidyr)
 library(dplyr)
-data("toenail", package = "HSAUR3")
-data <- tidyr::complete(toenail, patientID, visit) \%>\% 
+data("toenail2")
+data <- tidyr::complete(toenail2, patientID, visit) \%>\% 
  tidyr::fill(treatment) \%>\% 
  dplyr::select(-time) \%>\%
  dplyr::mutate(patientID = as.integer(patientID))

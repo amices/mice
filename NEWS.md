@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.7.2
+
+* Add `toenail2` and remove dependency on `HSAUR3`
+
 # mice 3.7.1
 
 * Solved problem with `ampute` in extreme cases (#216)
