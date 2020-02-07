@@ -45,15 +45,10 @@ Imports:
     survival,
     utils
 Suggests:
-    AGD,
-    gamlss,
     lme4,
-    mitools,
     nlme,
     pan,
     randomForest,
-    Zelig,
-    BSDA,
     knitr,
     rmarkdown,
     testthat,
