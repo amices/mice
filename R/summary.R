@@ -26,7 +26,7 @@ summary.mira <- function(object,
   type <- match.arg(type)
   fitlist <- getfit(object)
   if (type == "tidy")
-    v <- lapply(fitlist, tidy, effects = "fixed", ...) %>% bind_rows()
+    v <- lapply(fitlist, tidy, effects = "fixed", parametric = TRUE, ...) %>% bind_rows()
   if (type == "glance")
     v <- lapply(fitlist, glance, ...) %>% bind_rows()
   if (type == "summary")

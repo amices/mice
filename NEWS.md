@@ -3,8 +3,9 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.7.0.9000
+# mice 3.7.1
 
+* Solved problem with `pool` with `mgcv::gam` (#218) 
 * Add `.gitattributes` for consistent line endings
 
 # mice 3.7.0
