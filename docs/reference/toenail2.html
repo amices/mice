@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Multivariate Amputation In A MCAR Manner — ampute.mcar • mice</title>
+<title>Toenail data — toenail2 • mice</title>
 
 
 <!-- jquery -->
@@ -41,10 +41,14 @@
 
 
 
-<meta property="og:title" content="Multivariate Amputation In A MCAR Manner — ampute.mcar" />
-<meta property="og:description" content="This function creates a missing data indicator for each pattern, based on a MCAR 
-missingness mechanism. The function is used in the multivariate amputation function 
-ampute." />
+<meta property="og:title" content="Toenail data — toenail2" />
+<meta property="og:description" content="The toenail data come from a Multicenter study comparing two oral
+treatments for toenail infection. Patients were evaluated for the
+degree of separation of the nail. Patients were randomized into two
+treatments and were followed over seven visits - four in the first
+year and yearly thereafter. The patients have not been treated
+prior to the first visit so this should be regarded as the
+baseline." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,64 +126,72 @@ ampute." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Multivariate Amputation In A MCAR Manner</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/ampute.mcar.R'><code>R/ampute.mcar.R</code></a></small>
-    <div class="hidden name"><code>ampute.mcar.Rd</code></div>
+    <h1>Toenail data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/toenail2.R'><code>R/toenail2.R</code></a></small>
+    <div class="hidden name"><code>toenail2.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function creates a missing data indicator for each pattern, based on a MCAR 
-missingness mechanism. The function is used in the multivariate amputation function 
-<code><a href='ampute.html'>ampute</a></code>.</p>
+    <p>The toenail data come from a Multicenter study comparing two oral
+treatments for toenail infection. Patients were evaluated for the
+degree of separation of the nail. Patients were randomized into two
+treatments and were followed over seven visits - four in the first
+year and yearly thereafter. The patients have not been treated
+prior to the first visit so this should be regarded as the
+baseline.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ampute.mcar</span>(<span class='no'>P</span>, <span class='no'>patterns</span>, <span class='no'>prop</span>)</pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>P</th>
-      <td><p>A vector containing the pattern numbers of the cases's candidacies. 
-For each case, a value between 1 and #patterns is given. For example, a 
-case with value 2 is candidate for missing data pattern 2.</p></td>
-    </tr>
-    <tr>
-      <th>patterns</th>
-      <td><p>A matrix of size #patterns by #variables where <code>0</code> indicates 
-a variable should have missing values and <code>1</code> indicates a variable should 
-remain complete. The user may specify as many patterns as desired. One pattern 
-(a vector) is also possible. Could be the result of <code><a href='ampute.default.patterns.html'>ampute.default.patterns</a></code>, 
-default will be a square matrix of size #variables where each pattern has missingness 
-on one variable only.</p></td>
-    </tr>
-    <tr>
-      <th>prop</th>
-      <td><p>A scalar specifying the proportion of missingness. Should be a value 
-between 0 and 1. Default is a missingness proportion of 0.5.</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A list containing vectors with <code>0</code> if a case should be made missing 
-and <code>1</code> if a case should remain complete. The first vector refers to the 
-first pattern, the second vector to the second pattern, etcetera.</p>
+    <p>A data frame with 1908 observations on the following 5 variables:</p><dl class='dl-horizontal'>
+  <dt><code>patientID</code></dt><dd><p>a numeric vector giving the ID of patient</p></dd>
+  <dt><code>outcome</code></dt><dd><p>a factor with 2 levels giving the response</p></dd>
+  <dt><code>treatment</code></dt><dd><p>a factor with 2 levels giving the treatment group</p></dd>
+  <dt><code>time</code></dt><dd><p>a numeric vector giving the time of the visit 
+  (not exactly monthly intervals hence not round numbers)</p></dd>
+  <dt><code>visit</code></dt><dd><p>an integer giving the number of the visit</p></dd>
+  
+</dl>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>De Backer, M., De Vroey, C., Lesaffre, E., Scheys, I., and De
+Keyser, P. (1998). Twelve weeks of continuous oral therapy for
+toenail onychomycosis caused by dermatophytes: A double-blind
+comparative trial of terbinafine 250 mg/day versus itraconazole 200
+mg/day. Journal of the American Academy of Dermatology, 38, 57-63.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Apart from formatting, this dataset is identical to 
+<code>toenail</code>. The formatting is taken identical to 
+<code><a href='https://rdrr.io/r/utils/data.html'>data("toenail", package = "HSAUR3")</a></code>.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Lesaffre, E. and Spiessens, B. (2001). On the effect of the number of
+quadrature points in a logistic random-effects model: An example.
+Journal of the Royal Statistical Society, Series C, 50, 325-335.</p>
+<p>G. Fitzmaurice, N. Laird and J. Ware (2004) Applied Longitudinal Analysis, 
+Wiley and Sons, New York, USA.</p>
+<p>Van Buuren, S. (2018). 
+<a href='https://stefvanbuuren.name/fimd/sec-catoutcome.html#example'><em>Flexible
+Imputation of Missing Data. Second Edition.</em></a> Chapman &amp; Hall/CRC.
+Boca Raton, FL.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='ampute.html'>ampute</a></code></p></div>
+    <div class='dont-index'><p><code><a href='toenail.html'>toenail</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
+      <li><a href="#format">Format</a></li>
+      <li><a href="#source">Source</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#references">References</a></li>
       <li><a href="#see-also">See also</a></li>
     </ul>
 
-    <h2>Author</h2>
-    <p>Rianne Schouten, 2016</p>
   </div>
 </div>
 
