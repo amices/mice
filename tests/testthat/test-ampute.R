@@ -173,3 +173,59 @@ test_that("error messages work properly", {
                "The objects patterns and odds are not matching")
 
 })
+
+
+# The following test was contributed by Shangzhi-hong (#216) Dec 2019
+context("ampute robust version")
+
+set.seed(1)
+
+# Set-up
+# Dataset
+NUM_OBS_DF <- 25
+NUM_VAR_DF <- 10
+
+data <- replicate(
+  n = NUM_VAR_DF,
+  expr = { rnorm(n = NUM_OBS_DF, mean = 1, sd = 1) },
+  simplify = "matrix")
+
+# Ampute pattern
+covNum <- NUM_VAR_DF - 1
+misPatCov1 <- t(combn(x = covNum, m = 1,
+                      FUN = function(x) replace(rep(1, covNum), x, 0)))
+misPat1 <- cbind(rep(1, choose(covNum, 1)), misPatCov1)
+misPatCov2 <- t(combn(x = covNum, m = 2,
+                      FUN = function(x) replace(rep(1, covNum), x, 0)))
+misPat2 <- cbind(rep(1, choose(covNum, 2)), misPatCov2)
+patterns <- rbind(misPat1, misPat2)
+weights <- matrix(0, nrow = nrow(patterns), ncol = ncol(patterns))
+weights[,1] <- 1
+
+prop <- 0.5
+mech <- "MAR"
+type <- "RIGHT"
+bycases <- TRUE
+# Other params
+# freq <- NULL
+# std <- TRUE
+# cont <- TRUE
+# type <- NULL
+# odds <- NULL
+# run <- TRUE
+
+test_that("ampute() works under extreme condition", {
+  ampDf <- ampute(
+    data = data,
+    prop = prop,
+    mech = mech,
+    type = type,
+    bycases = bycases,
+    patterns = patterns,
+    weights = weights
+  )$amp
+  outProp <-  sum(complete.cases(ampDf)) / NUM_OBS_DF
+  expect_true(outProp > 0.3 & outProp < 0.7)
+})
+
+# --- end test Shangzhi-hong (#216) Dec 2019

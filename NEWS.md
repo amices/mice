@@ -5,7 +5,8 @@ output: github_document
 
 # mice 3.7.1
 
-* Solved problem with `pool` with `mgcv::gam` (#218) 
+* Solved problem with `ampute` in extreme cases (#216)
+* Solved problem with `pool` with `mgcv::gam` (#218)
 * Add `.gitattributes` for consistent line endings
 
 # mice 3.7.0

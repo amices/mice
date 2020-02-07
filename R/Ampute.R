@@ -220,7 +220,8 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
           length_unique <- function(x) {
             return(length(unique(x)) == 1)
           }
-          if (!(nrow(candidates) > 1 && any(apply(candidates, 2, length_unique)))) { 
+          # shangzhi-hong, Feb 2020, #216
+          if (nrow(candidates) > 1 && !(any(apply(candidates, 2, length_unique)))) {
             candidates <- scale(candidates)
           }
         }
