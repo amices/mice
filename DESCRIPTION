@@ -32,8 +32,6 @@ Imports:
     graphics,
     lattice,
     methods,
-    nnet,
-    parallel,
     stats,
     utils
 Suggests:
@@ -41,6 +39,7 @@ Suggests:
     lme4,
     MASS,
     mitml,
+    nnet,
     pan,
     randomForest,
     rmarkdown,

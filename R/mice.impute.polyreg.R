@@ -54,6 +54,7 @@
 mice.impute.polyreg <- function(y, ry, x, wy = NULL, nnet.maxit = 100, 
                                 nnet.trace = FALSE, nnet.MaxNWts = 1500, ...)
 {
+  install.on.demand("nnet")
   if (is.null(wy)) 
     wy <- !ry
   
@@ -79,9 +80,9 @@ mice.impute.polyreg <- function(y, ry, x, wy = NULL, nnet.maxit = 100,
   cat.has.all.obs <- table(y[ry]) == sum(ry)
   if (any(cat.has.all.obs)) return(rep(levels(fy)[cat.has.all.obs], sum(wy)))
   
-  fit <- multinom(formula(xy), data = xy[ry, , drop = FALSE], weights = w[ry], 
-                  maxit = nnet.maxit, trace = nnet.trace, MaxNWts = nnet.MaxNWts, 
-                  ...)
+  fit <- nnet::multinom(formula(xy), data = xy[ry, , drop = FALSE], weights = w[ry], 
+                        maxit = nnet.maxit, trace = nnet.trace, MaxNWts = nnet.MaxNWts, 
+                        ...)
   post <- predict(fit, xy[wy, , drop = FALSE], type = "probs")
   if (sum(wy) == 1) 
     post <- matrix(post, nrow = 1, ncol = length(post))
