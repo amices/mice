@@ -1,4 +1,4 @@
-#' @import methods
+#' @import              methods
 #' @importFrom broom    glance tidy
 #' @importFrom dplyr    %>% .data bind_cols bind_rows group_by lead 
 #'                      mutate n pull select summarize 
