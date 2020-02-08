@@ -9,7 +9,6 @@
 #' @importFrom nnet     multinom nnet
 #' @importFrom parallel clusterEvalQ clusterExport clusterSetRNGStream 
 #'                      detectCores makeCluster parLapply stopCluster
-#' @importFrom Rcpp     sourceCpp
 #' @importFrom stats    C aggregate as.formula binomial coef
 #'                      complete.cases confint 
 #'                      contr.treatment cor df.residual fitted
