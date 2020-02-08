@@ -49,10 +49,10 @@ appendbreak <- function(data, brk, warp.model = warp.model, id=NULL, typ="pred")
   ## update age variables
   app$age <- rep(brk,each=nap)
   app$age2 <- predict(warp.model,newdata=app)
-  X <- bs(app$age,
-          knots = brk,
-          Boundary.knots = c(brk[1],brk[k]+0.0001),
-          degree = 1)
+  X <- splines::bs(app$age,
+                   knots = brk,
+                   Boundary.knots = c(brk[1],brk[k]+0.0001),
+                   degree = 1)
   X <- X[,-(k+1)]
   app[,paste0("x",seq_len(ncol(X)))] <- X
   

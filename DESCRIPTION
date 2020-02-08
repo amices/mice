@@ -38,9 +38,7 @@ Imports:
     parallel,
     Rcpp,
     rlang,
-    splines,
     stats,
-    survival,
     utils
 Suggests:
     knitr,
@@ -50,6 +48,7 @@ Suggests:
     randomForest,
     rmarkdown,
     rpart,
+    survival,
     testthat,
     tidyr
 LinkingTo: Rcpp

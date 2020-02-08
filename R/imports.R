@@ -1,7 +1,5 @@
 #'@import methods
-#'@importFrom splines   bs
-#'@importFrom survival  basehaz coxph Surv
-#'@importFrom grDevices dev.capabilities hcl palette
+#'@importFrom grDevices hcl palette
 #'@importFrom graphics  abline points text plot
 #'                      par plot.new plot.window rect
 #'                      axis box

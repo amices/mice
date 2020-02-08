@@ -41,6 +41,7 @@
 #'
 #'@export
 nelsonaalen <- function(data, timevar, statusvar) {
+    install.on.demand("survival")
     if (!is.data.frame(data)) 
         stop("Data must be a data frame")
     timevar <- as.character(substitute(timevar))
@@ -48,7 +49,7 @@ nelsonaalen <- function(data, timevar, statusvar) {
     time <- data[, timevar]
     status <- data[, statusvar]
     
-    hazard <- basehaz(coxph(Surv(time, status) ~ 1))
+    hazard <- survival::basehaz(survival::coxph(survival::Surv(time, status) ~ 1))
     idx <- match(time, hazard[, "time"])
     return(hazard[idx, "hazard"])
 }
