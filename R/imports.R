@@ -23,9 +23,8 @@
 #'@importFrom Rcpp      sourceCpp
 #'@importFrom lattice   bwplot densityplot xyplot stripplot
 #'@importFrom broom     tidy glance
-#'@importFrom rlang     .data
 #'@importFrom dplyr     summarize bind_rows group_by %>% n select pull lead
-#'                      bind_cols mutate
+#'                      bind_cols mutate .data
 #'@useDynLib mice
 NULL
 

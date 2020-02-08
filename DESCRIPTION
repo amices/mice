@@ -37,7 +37,6 @@ Imports:
     nnet,
     parallel,
     Rcpp,
-    rlang,
     stats,
     utils
 Suggests:
