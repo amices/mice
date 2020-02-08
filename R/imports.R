@@ -22,7 +22,6 @@
 #'@importFrom nnet      multinom nnet
 #'@importFrom parallel  clusterEvalQ clusterExport clusterSetRNGStream detectCores
 #'                      makeCluster parLapply stopCluster
-#'@importFrom rpart     rpart rpart.control
 #'@importFrom Rcpp      sourceCpp
 #'@importFrom lattice   bwplot densityplot xyplot stripplot
 #'@importFrom broom     tidy glance

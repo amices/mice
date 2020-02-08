@@ -52,6 +52,7 @@
 mice.impute.cart <- function(y, ry, x, wy = NULL, minbucket = 5, cp = 1e-04, 
                              ...)
 {
+  install.on.demand("rpart", ...)
   if (is.null(wy)) 
     wy <- !ry
   minbucket <- max(1, minbucket)
@@ -65,8 +66,8 @@ mice.impute.cart <- function(y, ry, x, wy = NULL, minbucket = 5, cp = 1e-04,
   yobs <- y[ry]
   if (!is.factor(yobs))
   {
-    fit <- rpart(yobs ~ ., data = cbind(yobs, xobs), method = "anova", 
-                 control = rpart.control(minbucket = minbucket, cp = cp, ...))
+    fit <- rpart::rpart(yobs ~ ., data = cbind(yobs, xobs), method = "anova", 
+                        control = rpart::rpart.control(minbucket = minbucket, cp = cp, ...))
     leafnr <- floor(as.numeric(row.names(fit$frame[fit$where, ])))
     fit$frame$yval <- as.numeric(row.names(fit$frame))
     nodes <- predict(object = fit, newdata = xmis)
@@ -86,8 +87,8 @@ mice.impute.cart <- function(y, ry, x, wy = NULL, minbucket = 5, cp = 1e-04,
     # likely to present problems further down the road
     # potential problem case: table(yobs): 0 10 15, then 
     # droplevels may forget about category 1
-    fit <- rpart(yobs ~ ., data = xy, method = "class", 
-                 control = rpart.control(minbucket = minbucket, cp = cp, ...))
+    fit <- rpart::rpart(yobs ~ ., data = xy, method = "class", 
+                        control = rpart::rpart.control(minbucket = minbucket, cp = cp, ...))
     nodes <- predict(object = fit, newdata = xmis)
     impute <- apply(nodes, MARGIN = 1, 
                     FUN = function(s) sample(colnames(nodes), 
