@@ -43,6 +43,7 @@
 #'@keywords datagen
 #'@export
 mice.impute.lda <- function(y, ry, x, wy = NULL, ...) {
+  install.on.demand("MASS")
   if (is.null(wy)) wy <- !ry
   fy <- as.factor(y)
   nc <- length(levels(fy))
@@ -53,7 +54,7 @@ mice.impute.lda <- function(y, ry, x, wy = NULL, ...) {
   #   y[ry] <- y[idx]
   #   end bootstrap
   
-  fit <- lda(x, fy, subset = ry)
+  fit <- MASS::lda(x, fy, subset = ry)
   post <- predict(fit, x[wy, , drop = FALSE])$posterior
   un <- rep(runif(sum(wy)), each = nc)
   idx <- 1 + apply(un > apply(post, 1, cumsum), 2, sum)

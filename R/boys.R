@@ -29,7 +29,6 @@
 #'@keywords datasets
 #'@examples
 #'
-#'
 #'# create two imputed data sets
 #'imp <- mice(boys, m=1, maxit=2)
 #'z <- complete(imp, 1)
@@ -44,11 +43,10 @@
 #' xlab = "Imputed BMI", ylab="Calculated BMI")   
 #'
 #'# also, BMI distributions are somewhat different
-#'require(MASS)
 #'oldpar <- par(mfrow=c(1,2))
-#'truehist(z$bmi[!is.na(boys$bmi)],h=1,xlim=c(10,30),ymax=0.25,
+#'MASS::truehist(z$bmi[!is.na(boys$bmi)],h=1,xlim=c(10,30),ymax=0.25,
 #' col=mdc(1),xlab="BMI observed")
-#'truehist(z$bmi[is.na(boys$bmi)],h=1,xlim=c(10,30),ymax=0.25,
+#'MASS::truehist(z$bmi[is.na(boys$bmi)],h=1,xlim=c(10,30),ymax=0.25,
 #' col=mdc(2),xlab="BMI imputed")
 #'par(oldpar)
 #'
@@ -67,9 +65,9 @@
 #'
 #'# and compare distributions
 #'oldpar <- par(mfrow=c(1,2))
-#'truehist(z2$bmi[!is.na(boys$bmi)],h=1,xlim=c(10,30),ymax=0.25,col=mdc(1),
+#'MASS::truehist(z2$bmi[!is.na(boys$bmi)],h=1,xlim=c(10,30),ymax=0.25,col=mdc(1),
 #' xlab="BMI observed")
-#'truehist(z2$bmi[is.na(boys$bmi)],h=1,xlim=c(10,30),ymax=0.25,col=mdc(2),
+#'MASS::truehist(z2$bmi[is.na(boys$bmi)],h=1,xlim=c(10,30),ymax=0.25,col=mdc(2),
 #' xlab="BMI imputed")
 #'par(oldpar)
 #'

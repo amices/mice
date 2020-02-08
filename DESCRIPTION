@@ -30,7 +30,6 @@ Imports:
     broom,
     dplyr,
     graphics,
-    MASS,
     lattice,
     methods,
     nnet,
@@ -40,6 +39,7 @@ Imports:
 Suggests:
     knitr,
     lme4,
+    MASS,
     mitml,
     pan,
     randomForest,

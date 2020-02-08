@@ -38,9 +38,9 @@
 #'@export
 mice.impute.2l.bin <- function(y, ry, x, type, 
                                wy = NULL, intercept = TRUE, ...) {
-  if (!requireNamespace("lme4", quietly = TRUE))
-    stop("Please install package 'lme4'", call. = FALSE)
-  
+  install.on.demand("MASS")
+  install.on.demand("lme4")
+
   if (is.null(wy)) wy <- !ry
   if (intercept) {
     x <- cbind(1, as.matrix(x))

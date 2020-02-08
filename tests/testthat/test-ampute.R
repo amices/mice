@@ -1,9 +1,8 @@
 context("ampute")
 
 # make objects for testfunctions
-require(MASS)
 sigma <- matrix(data = c(1, 0.2, 0.2, 0.2, 1, 0.2, 0.2, 0.2, 1), nrow = 3)
-complete.data <- mvrnorm(n = 100, mu = c(5, 5, 5), Sigma = sigma)
+complete.data <- MASS::mvrnorm(n = 100, mu = c(5, 5, 5), Sigma = sigma)
 
 test_that("all examples work", {
   

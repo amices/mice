@@ -5,7 +5,6 @@
 #' @importFrom graphics abline axis box par plot plot.new plot.window 
 #'                      points rect text
 #' @importFrom lattice  bwplot densityplot stripplot xyplot
-#' @importFrom MASS     ginv lda mvrnorm polr truehist
 #' @importFrom nnet     multinom nnet
 #' @importFrom parallel clusterEvalQ clusterExport clusterSetRNGStream 
 #'                      detectCores makeCluster parLapply stopCluster
