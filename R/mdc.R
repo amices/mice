@@ -50,31 +50,37 @@
 #'mdc(c('obs','mis'), 'lin')
 #'
 #'@export
-mdc <- function(r = "observed", s = "symbol", 
-                transparent = TRUE, cso = hcl(240, 100, 40, 0.7), csi = hcl(0, 100, 40, 0.7), 
-                csc = "gray50", clo = hcl(240, 100, 40, 0.8), cli = hcl(0, 100, 40, 0.8), clc = "gray50") {
+mdc <- function(r = "observed", 
+                s = "symbol", 
+                transparent = TRUE, 
+                cso = grDevices::hcl(240, 100, 40, 0.7), 
+                csi = grDevices::hcl(0, 100, 40, 0.7), 
+                csc = "gray50", 
+                clo = grDevices::hcl(240, 100, 40, 0.8), 
+                cli = grDevices::hcl(0, 100, 40, 0.8), 
+                clc = "gray50") {
     ## cso: blue symbol color for observed data csi: red symbol color for imputations csc: symbol color for combined data
     ## clo: blue line color for observed data cli: red line color for observed data clc: line color for combined data
     
     if (missing(transparent)) {
         if (!supports.transparent()) {
-            cso <- hcl(240, 100, 40)
-            csi <- hcl(0, 100, 40)
+            cso <- grDevices::hcl(240, 100, 40)
+            csi <- grDevices::hcl(0, 100, 40)
             csc <- "black"
-            clo <- hcl(240, 100, 40)
-            cli <- hcl(0, 100, 40)
+            clo <- grDevices::hcl(240, 100, 40)
+            cli <- grDevices::hcl(0, 100, 40)
             clc <- "black"
         }
     } else if (!transparent) {
-        cso <- hcl(240, 100, 40)
-        csi <- hcl(0, 100, 40)
+        cso <- grDevices::hcl(240, 100, 40)
+        csi <- grDevices::hcl(0, 100, 40)
         csc <- "black"
-        clo <- hcl(240, 100, 40)
-        cli <- hcl(0, 100, 40)
+        clo <- grDevices::hcl(240, 100, 40)
+        cli <- grDevices::hcl(0, 100, 40)
         clc <- "black"
     }
     
-    fallback <- palette()[1]
+    fallback <- grDevices::palette()[1]
     if (is.numeric(r)) {
         idx <- floor(r)
         idx[r < 1 | r > 6] <- 7

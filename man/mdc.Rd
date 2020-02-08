@@ -8,11 +8,11 @@ mdc(
   r = "observed",
   s = "symbol",
   transparent = TRUE,
-  cso = hcl(240, 100, 40, 0.7),
-  csi = hcl(0, 100, 40, 0.7),
+  cso = grDevices::hcl(240, 100, 40, 0.7),
+  csi = grDevices::hcl(0, 100, 40, 0.7),
   csc = "gray50",
-  clo = hcl(240, 100, 40, 0.8),
-  cli = hcl(0, 100, 40, 0.8),
+  clo = grDevices::hcl(240, 100, 40, 0.8),
+  cli = grDevices::hcl(0, 100, 40, 0.8),
   clc = "gray50"
 )
 }

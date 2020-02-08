@@ -32,7 +32,6 @@ Imports:
     broom,
     dplyr,
     graphics,
-    grDevices,
     MASS,
     nnet,
     parallel,

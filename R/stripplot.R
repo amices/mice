@@ -147,7 +147,8 @@
 #'### most height values are missing for those around 
 #'### the age of two years
 #'### some additional missings occur in region WEST
-#'\dontrun{stripplot(imp, age+hgt~.imp|reg, hgt, col=c(hcl(0,0,40,0.2), mdc(2)),pch=c(1,20))}
+#'\dontrun{stripplot(imp, age + hgt ~ .imp | reg, hgt, 
+#'  col = c(grDevices::hcl(0, 0, 40, 0.2), mdc(2)), pch = c(1, 20))}
 #'
 #'### heavily jitted relation between two categorical variables
 #'### labeled by missingness of gen

@@ -4,7 +4,6 @@
 #'                      mutate n pull select summarize 
 #'@importFrom graphics  abline axis box par plot plot.new plot.window 
 #'                      points rect text
-#'@importFrom grDevices hcl palette
 #'@importFrom lattice   bwplot densityplot stripplot xyplot
 #'@importFrom MASS      ginv lda mvrnorm polr truehist
 #'@importFrom nnet      multinom nnet

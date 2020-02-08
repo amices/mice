@@ -16,8 +16,9 @@
 #'@export
 mice.theme <- function(transparent=TRUE, alpha.fill=0.3){
     filler <- function(transparent, alpha){
-        if(transparent) return(c(hcl(240,100,40,alpha),hcl(0,100,40,alpha)))
-        return(c(hcl(240,100,40),hcl(0,100,40)))
+        if(transparent) return(c(grDevices::hcl(240,100,40,alpha),
+                                 grDevices::hcl(0,100,40,alpha)))
+        return(c(grDevices::hcl(240,100,40),grDevices::hcl(0,100,40)))
     }
     if (missing(transparent)) transparent <- supports.transparent()
     if (missing(alpha.fill)) alpha.fill <- ifelse(transparent, 0.3, 0)
