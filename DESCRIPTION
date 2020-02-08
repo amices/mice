@@ -26,13 +26,13 @@ Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
     methods,
-    R (>= 2.10.0),
-    lattice
+    R (>= 2.10.0)
 Imports:
     broom,
     dplyr,
     graphics,
     MASS,
+    lattice,
     nnet,
     parallel,
     Rcpp,

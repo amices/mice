@@ -1,16 +1,16 @@
-#'@import methods
-#'@importFrom broom     glance tidy
-#'@importFrom dplyr     %>% .data bind_cols bind_rows group_by lead 
+#' @import methods
+#' @importFrom broom    glance tidy
+#' @importFrom dplyr    %>% .data bind_cols bind_rows group_by lead 
 #'                      mutate n pull select summarize 
-#'@importFrom graphics  abline axis box par plot plot.new plot.window 
+#' @importFrom graphics abline axis box par plot plot.new plot.window 
 #'                      points rect text
-#'@importFrom lattice   bwplot densityplot stripplot xyplot
-#'@importFrom MASS      ginv lda mvrnorm polr truehist
-#'@importFrom nnet      multinom nnet
-#'@importFrom parallel  clusterEvalQ clusterExport clusterSetRNGStream 
+#' @importFrom lattice  bwplot densityplot stripplot xyplot
+#' @importFrom MASS     ginv lda mvrnorm polr truehist
+#' @importFrom nnet     multinom nnet
+#' @importFrom parallel clusterEvalQ clusterExport clusterSetRNGStream 
 #'                      detectCores makeCluster parLapply stopCluster
-#'@importFrom Rcpp      sourceCpp
-#'@importFrom stats     C aggregate as.formula binomial coef
+#' @importFrom Rcpp     sourceCpp
+#' @importFrom stats    C aggregate as.formula binomial coef
 #'                      complete.cases confint 
 #'                      contr.treatment cor df.residual fitted
 #'                      formula gaussian getCall 
@@ -20,10 +20,14 @@
 #'                      pf predict pt qt quantile 
 #'                      rbinom rchisq reformulate rgamma rnorm runif 
 #'                      summary.glm terms update var vcov
-#'@importFrom utils     flush.console head install.packages methods
+#' @importFrom utils    flush.console head install.packages methods
 #'                      packageDescription packageVersion
 #'                      tail write.table
-#'@useDynLib mice
+#' @export bwplot
+#' @export densityplot
+#' @export stripplot
+#' @export xyplot
+#' @useDynLib mice
 NULL
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines

@@ -162,9 +162,6 @@ bwplot(imp, tv~.imp|reg)
 
 ### same data, organized in a different way 
 bwplot(imp, tv~reg|.imp, theme=list())
-
-
-
 }
 \references{
 Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data

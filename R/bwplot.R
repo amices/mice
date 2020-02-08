@@ -138,9 +138,6 @@
 #'
 #'### same data, organized in a different way 
 #'bwplot(imp, tv~reg|.imp, theme=list())
-#'
-#'
-#'
 #'@export
 bwplot.mids <- function(x,
                         data,
