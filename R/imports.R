@@ -15,9 +15,10 @@
 #'                      update var vcov complete.cases na.omit na.pass
 #'                      reformulate is.empty.model terms
 #'                      confint getCall median
-#'@importFrom utils     flush.console write.table head tail
+#'@importFrom utils     flush.console write.table head install.packages 
+#'                      tail
 #'                      packageDescription methods packageVersion
-#'@importFrom MASS      eqscplot lda mvrnorm polr truehist ginv
+#'@importFrom MASS      lda mvrnorm polr truehist ginv
 #'@importFrom nnet      multinom nnet
 #'@importFrom parallel  clusterEvalQ clusterExport clusterSetRNGStream detectCores
 #'                      makeCluster parLapply stopCluster
@@ -26,7 +27,6 @@
 #'@importFrom lattice   bwplot densityplot xyplot stripplot
 #'@importFrom broom     tidy glance
 #'@importFrom rlang     .data
-#'@importFrom mitml     panImpute mitmlComplete testModels
 #'@importFrom dplyr     summarize bind_rows group_by %>% n select pull lead
 #'                      bind_cols mutate
 #'@useDynLib mice

@@ -143,7 +143,7 @@ fluxplot <- function(data, local=names(data),
 f <- flux(data, local)
   if (plot) {
     if (eqscplot)
-      eqscplot(x=f$influx, y=f$outflux, type='n',
+      MASS::eqscplot(x=f$influx, y=f$outflux, type='n',
           main=main,
           xlab=xlab, ylab=ylab,
           xlim=xlim, ylim=ylim,

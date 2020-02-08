@@ -5,7 +5,8 @@
 #'@aliases mice.impute.rf
 #'@inheritParams mice.impute.pmm
 #'@param ntree The number of trees to grow. The default is 10.
-#'@param \dots Other named arguments passed down to \code{randomForest()} and
+#'@param \dots Other named arguments passed down to 
+#'\code{mice:::install.on.demand()}, \code{randomForest::randomForest()} and
 #'\code{randomForest:::randomForest.default()}.
 #'@return Vector with imputed data, same type as \code{y}, and of length 
 #'\code{sum(wy)}
@@ -51,11 +52,8 @@
 #'@export
 mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10, ...)
 {
+  install.on.demand("randomForest", ...)
   if (is.null(wy)) wy <- !ry
-  if (!requireNamespace("randomForest", quietly = TRUE))
-    stop("Package 'randomForest' needed fo this function 
-             to work. Please install it.", 
-         call. = FALSE)
   onetree <- function(xobs, xmis, yobs, ...)
   {
     fit <- randomForest::randomForest(x = xobs, 

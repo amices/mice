@@ -22,7 +22,8 @@ indicates locations in \code{y} for which imputations are created.}
 
 \item{ntree}{The number of trees to grow. The default is 10.}
 
-\item{\dots}{Other named arguments passed down to \code{randomForest()} and
+\item{\dots}{Other named arguments passed down to 
+\code{mice:::install.on.demand()}, \code{randomForest::randomForest()} and
 \code{randomForest:::randomForest.default()}.}
 }
 \value{

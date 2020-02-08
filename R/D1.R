@@ -40,7 +40,7 @@ D1 <- function(fit1, fit0 = NULL, df.com = NULL, ...) {
       as.numeric()
   }
   
-  tmr <- testModels(fit1, fit0, method = "D1", df.com = df.com)
+  tmr <- mitml::testModels(fit1, fit0, method = "D1", df.com = df.com)
   
   out <- list(
     call = match.call(),

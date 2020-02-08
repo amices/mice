@@ -27,7 +27,7 @@ D2 <- function(fit1, fit0 = NULL, df.com = NULL, use = "wald", ...) {
     fit0 <- as.mitml.result(fit0)
   }
   
-  tmr <- testModels(fit1, fit0, method = "D2", use = use, ...)
+  tmr <- mitml::testModels(fit1, fit0, method = "D2", use = use, ...)
 
   out <- list(
     call = match.call(),

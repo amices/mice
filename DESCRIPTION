@@ -31,10 +31,9 @@ Depends:
 Imports:
     broom,
     dplyr,
-    grDevices,
     graphics,
+    grDevices,
     MASS,
-    mitml,
     nnet,
     parallel,
     Rcpp,
@@ -45,15 +44,13 @@ Imports:
     survival,
     utils
 Suggests:
+    knitr,
     lme4,
-    nlme,
+    mitml,
     pan,
     randomForest,
-    knitr,
     rmarkdown,
     testthat,
-    micemd,
-    miceadds,
     tidyr
 LinkingTo: Rcpp
 Description: Multiple imputation using Fully Conditional Specification (FCS)

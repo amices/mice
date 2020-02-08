@@ -132,7 +132,7 @@ data(studentratings)
 fml <- ReadDis + SES ~ ReadAchiev + (1|ID)
 imp <- mitml::panImpute(studentratings, formula=fml, n.burn=1000, n.iter=100, m=5,
                  silent = TRUE)
-implist <- mitmlComplete(imp, print=1:5)
+implist <- mitml::mitmlComplete(imp, print=1:5)
 
 # * Example 1: multiparameter hypothesis test for 'ReadDis' and 'SES'
 # This tests the hypothesis that both effects are zero.
@@ -143,7 +143,7 @@ testEstimates(fit1)
 
 # Wald test
 # multiparameter hypothesis test using D1 (default)
-testModels(fit1, fit0)
+mitml::testModels(fit1, fit0)
 stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "wald")
 # Is the same, but probably consequence of single parameter differerence
 
@@ -151,12 +151,12 @@ stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "wald")
 # ubar is vector, not a matrix anymore
 fit0 <- with(implist, lmer(ReadAchiev ~ (1|ID), REML=FALSE))
 fit1 <- with(implist, lmer(ReadAchiev ~ ReadDis + SES + (1|ID), REML=FALSE))
-testModels(fit1, fit0)
+mitml::testModels(fit1, fit0)
 stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "wald")
 # Is the same, but probably consequence of single parameter differerence
 
 # likelihood test
-testModels(fit1, fit0, method = "D3")
+mitml::testModels(fit1, fit0, method = "D3")
 stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "likelihood")
 
 # ---
