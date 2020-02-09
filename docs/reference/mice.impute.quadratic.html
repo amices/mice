@@ -76,7 +76,7 @@ main effect and quadratic effect in the complete-data model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.7.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.7.4</span>
       </span>
     </div>
 
@@ -267,14 +267,14 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 #&gt;   5   5  x  xx</div><div class='input'>
 <span class='co'># Pool results</span>
 <span class='fu'><a href='pool.html'>pool</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>y</span> ~ <span class='no'>x</span> + <span class='no'>xx</span>)))</div><div class='output co'>#&gt; Class: mipo    m = 5 
-#&gt;               estimate         ubar            b            t dfcom       df
-#&gt; (Intercept) 0.03245276 0.0014808576 2.876490e-05 0.0015153754   997 863.4388
-#&gt; x           0.48846739 0.0009650518 9.469209e-05 0.0010786823   997 256.5689
-#&gt; xx          0.46756603 0.0004826063 4.971529e-05 0.0005422647   997 240.6627
-#&gt;                    riv     lambda        fmi
-#&gt; (Intercept) 0.02330939 0.02277844 0.02503416
-#&gt; x           0.11774551 0.10534197 0.11223538
-#&gt; xx          0.12361699 0.11001702 0.11732206</div><div class='input'>
+#&gt;          term m   estimate         ubar            b            t dfcom
+#&gt; 1 (Intercept) 5 0.03245276 0.0014808576 2.876490e-05 0.0015153754   997
+#&gt; 2           x 5 0.48846739 0.0009650518 9.469209e-05 0.0010786823   997
+#&gt; 3          xx 5 0.46756603 0.0004826063 4.971529e-05 0.0005422647   997
+#&gt;         df        riv     lambda        fmi
+#&gt; 1 863.4388 0.02330939 0.02277844 0.02503416
+#&gt; 2 256.5689 0.11774551 0.10534197 0.11223538
+#&gt; 3 240.6627 0.12361699 0.11001702 0.11732206</div><div class='input'>
 <span class='co'># Plot results</span>
 <span class='fu'><a href='stripplot.mids.html'>stripplot</a></span>(<span class='no'>imp</span>)</div><div class='img'><img src='mice.impute.quadratic-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>dat</span>$<span class='no'>x</span>, <span class='no'>dat</span>$<span class='no'>xx</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='mdc.html'>mdc</a></span>(<span class='fl'>1</span>), <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"xx"</span>)</div><div class='img'><img src='mice.impute.quadratic-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>cmp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='complete.html'>complete</a></span>(<span class='no'>imp</span>)</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("complete_"): no applicable method for 'complete_' applied to an object of class "mids"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span>(<span class='no'>cmp</span>$<span class='no'>x</span>[<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>dat</span>$<span class='no'>x</span>)], <span class='no'>cmp</span>$<span class='no'>xx</span>[<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>dat</span>$<span class='no'>x</span>)], <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='mdc.html'>mdc</a></span>(<span class='fl'>2</span>))</div><div class='output co'>#&gt; <span class='error'>Error in points(cmp$x[is.na(dat$x)], cmp$xx[is.na(dat$x)], col = mdc(2)): object 'cmp' not found</span></div></pre>
   </div>
