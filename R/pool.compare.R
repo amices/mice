@@ -106,8 +106,8 @@ pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"),
   # Check: Only need the lm or lmer object
   formula1 <- formula(getfit(fit1, 1L))
   formula0 <- formula(getfit(fit0, 1L))
-  vars1 <- row.names(est1$pooled)
-  vars0 <- row.names(est0$pooled)
+  vars1 <- est1$pooled$term
+  vars0 <- est0$pooled$term
   
   if (is.null(vars1) || is.null(vars0)) 
     stop("coefficients do not have names", call. = FALSE)

@@ -109,14 +109,22 @@ pool.fitlist <- function (fitlist, dfcom = NULL) {
   }
 
   # combine y.level and term into term (for multinom)
-  if ("y.level" %in% names(w)) w$term <- paste(w$y.level, w$term, sep = ":")
+  # if ("y.level" %in% names(w)) w$term <- paste(w$y.level, w$term, sep = ":")
+  # y.level: multinom
+  # component: broom.mixed
   
   # Rubin's rules for scalar estimates
+  grp <- intersect(names(w), c("term", "y.level", "component"))
+  
+  # Note: group_by() changes the order of the terms, which is undesirable
+  # We convert any parameter terms to factor to preserve ordering
+  if ("term" %in% names(w)) w$term <- factor(w$term, levels = unique(w$term))
+  if ("y.level" %in% names(w)) w$y.level <- factor(w$y.level, levels = unique(w$y.level))
+  if ("component" %in% names(w)) w$component <- factor(w$component, levels = unique(w$component))
+  
   pooled <- w %>%
-    mutate(param = rep_len(1L:length(unique(term)), length.out = n())) %>%
-    group_by(param) %>%
+    group_by(!!!rlang::syms(grp)) %>%
     summarize(m = n(),
-              term = .data$term[1L],
               qbar = mean(.data$estimate),
               ubar = mean(.data$std.error ^ 2),
               b = var(.data$estimate),
@@ -125,11 +133,9 @@ pool.fitlist <- function (fitlist, dfcom = NULL) {
               df = barnard.rubin(m, b, t, dfcom),
               riv = (1 + 1 / m) * b / ubar,
               lambda = (1 + 1 / m) * b / t,
-              fmi = (riv + 2 / (df + 3)) / (riv + 1)) %>%
-    select(-m, -param)
-  pooled <- data.frame(pooled[, -1L], 
-                       row.names = pooled$term)
-  names(pooled)[1L] <- "estimate"
+              fmi = (riv + 2 / (df + 3)) / (riv + 1))
+  pooled <- data.frame(pooled)
+  names(pooled)[names(pooled) == "qbar"] <- "estimate"
   pooled
 }
 

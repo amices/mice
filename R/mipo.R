@@ -74,11 +74,14 @@ summary.mipo <- function(object, type = c("tests", "all"),
                     conf.int = conf.int, 
                     conf.level = conf.level,
                     exponentiate = exponentiate)
+  
+  parnames <- names(z)[1L : (pmatch("m", names(z)) - 1L)]
   if (type == "tests") {
-    out <- c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")
+    out <- c("m", "riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")
     keep <- base::setdiff(names(z), out)
     z <- z[, keep]
   }
+  
   class(z) <- c("mipo.summary", "data.frame")
   z
 }
@@ -116,13 +119,19 @@ process_mipo <- function(z, x, conf.int = FALSE, conf.level = .95,
     CI <- suppressMessages(confint(x, level = conf.level))
   }
   z$estimate <- trans(z$estimate)
-  if (!is.null(CI))
-    z <- cbind(z[, c("estimate", "std.error", "statistic", "df", "p.value")], 
+
+  # combine and sort columns in desired order  
+  parnames <- names(z)[1L : (pmatch("m", names(z)) - 1L)]
+  if (!is.null(CI)) {
+    z <- cbind(z[, parnames],
+               z[, c("m", "estimate", "std.error", "statistic", "df", "p.value")],
                trans(unrowname(CI)),
                z[, c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")])
-  else 
-    z <- cbind(z[, c("estimate", "std.error", "statistic", "df", "p.value")], 
+  } else {
+    z <- cbind(z[, parnames],
+               z[, c("m", "estimate", "std.error", "statistic", "df", "p.value")],
                z[, c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")])
+  }
   z
 }
 
