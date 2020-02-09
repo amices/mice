@@ -128,12 +128,12 @@ pool.fitlist <- function (fitlist, dfcom = NULL) {
               qbar = mean(.data$estimate),
               ubar = mean(.data$std.error ^ 2),
               b = var(.data$estimate),
-              t = ubar + (1 + 1 / m) * b,
+              t = .data$ubar + (1 + 1 / .data$m) * .data$b,
               dfcom = dfcom,
-              df = barnard.rubin(m, b, t, dfcom),
-              riv = (1 + 1 / m) * b / ubar,
-              lambda = (1 + 1 / m) * b / t,
-              fmi = (riv + 2 / (df + 3)) / (riv + 1))
+              df = barnard.rubin(.data$m, .data$b, .data$t, .data$dfcom),
+              riv = (1 + 1 / .data$m) * .data$b / .data$ubar,
+              lambda = (1 + 1 / .data$m) * .data$b / .data$t,
+              fmi = (.data$riv + 2 / (.data$df + 3)) / (.data$riv + 1))
   pooled <- data.frame(pooled)
   names(pooled)[names(pooled) == "qbar"] <- "estimate"
   pooled
