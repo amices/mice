@@ -4,7 +4,7 @@
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
 [![](http://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice)
-[![](https://img.shields.io/badge/github%20version-3.7.5-orange.svg)](https://github.com/stefvanbuuren/mice)
+[![](https://img.shields.io/badge/github%20version-3.7.6-orange.svg)](https://github.com/stefvanbuuren/mice)
 
 ## [Multivariate Imputation by Chained Equations](http://stefvanbuuren.github.io/mice/)
 
@@ -82,10 +82,10 @@ fit <- with(imp, lm(chl ~ age + bmi))
 
 # pool and summarize the results
 summary(pool(fit))
-#>   z[, parnames] estimate std.error statistic   df p.value
-#> 1   (Intercept)   -49.30    101.37    -0.486 1.82  0.6789
-#> 2           age    38.28     11.37     3.367 5.45  0.0175
-#> 3           bmi     6.54      3.08     2.124 2.14  0.1591
+#>          term estimate std.error statistic   df p.value
+#> 1 (Intercept)   -49.30    101.37    -0.486 1.82  0.6789
+#> 2         age    38.28     11.37     3.367 5.45  0.0175
+#> 3         bmi     6.54      3.08     2.124 2.14  0.1591
 ```
 
 The complete-data is fit to each imputed dataset, and the results are

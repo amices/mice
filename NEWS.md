@@ -3,6 +3,11 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.7.6
+
+* Resolves a problem from `3.7.4` in the naming of `term`
+* Remove everything in `utils::globalVariables()`
+
 # mice 3.7.5
 
 * Prevent name clashes with `tidyr` by defining `complete.mids()` as an S3 method for the `tidyr::complete()` generic (#212)
@@ -14,7 +19,7 @@ output: github_document
 # mice 3.7.3
 
 * Trims the depends, imports and suggests fields
-* Add a new `install.on.demand()` function
+* Adds a new `install.on.demand()` function for lighter installation
 
 # mice 3.7.2
 
