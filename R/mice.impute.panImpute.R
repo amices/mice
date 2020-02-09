@@ -62,6 +62,8 @@
 mice.impute.panImpute <- function(data, formula, type, m = 1, silent = TRUE,
                                   format = "imputes", ...) {
   
+  install.on.demand("mitml", ...)
+  
   nat <- mitml::panImpute(data = data, formula = formula, type = type, 
                    m = m, silent = silent, ...)
   

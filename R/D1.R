@@ -11,6 +11,9 @@
 #'@param \dots Not used.
 #'@export
 D1 <- function(fit1, fit0 = NULL, df.com = NULL, ...) {
+  
+  install.on.demand("mitml", ...)
+  
   # fit1: a fitlist or mira-object
   # fit0: named numerical vector, character vector, or list
   fit1 <- as.mitml.result(fit1)

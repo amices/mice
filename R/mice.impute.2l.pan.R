@@ -120,10 +120,9 @@
 #'@export
 mice.impute.2l.pan <- function(y, ry, x, type, intercept=TRUE, paniter = 500 , 
                                groupcenter.slope = FALSE , ...){
-    if (!requireNamespace("pan", quietly = TRUE))
-        stop("Package 'pan' needed fo this function 
-             to work. Please install it.", 
-             call. = FALSE)
+    
+    install.on.demand("pan", ...)
+    
     ## append intercept
     if (intercept) {
         x <- cbind(1, as.matrix(x))

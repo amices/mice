@@ -64,6 +64,8 @@
 mice.impute.jomoImpute <- function(data, formula, type, m = 1, silent = TRUE,
                                   format = "imputes", ...) {
   
+  install.on.demand("mitml", ...)
+  
   nat <- mitml::jomoImpute(data = data, formula = formula, type = type, 
                    m = m, silent = silent, ...)
   

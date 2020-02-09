@@ -43,7 +43,7 @@
 #'@keywords datagen
 #'@export
 mice.impute.lda <- function(y, ry, x, wy = NULL, ...) {
-  install.on.demand("MASS")
+  install.on.demand("MASS", ...)
   if (is.null(wy)) wy <- !ry
   fy <- as.factor(y)
   nc <- length(levels(fy))
