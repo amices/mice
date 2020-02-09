@@ -79,7 +79,7 @@ functions extend the usual features of lattice." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.7.3</span>
       </span>
     </div>
 
@@ -351,7 +351,8 @@ package, as well as <code><a href='https://rdrr.io/pkg/lattice/man/xyplot.html'>
 <span class='co'>### most height values are missing for those around </span>
 <span class='co'>### the age of two years</span>
 <span class='co'>### some additional missings occur in region WEST</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>stripplot</span>(<span class='no'>imp</span>, <span class='no'>age</span>+<span class='no'>hgt</span>~<span class='no'>.imp</span><span class='kw'>|</span><span class='no'>reg</span>, <span class='no'>hgt</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/grDevices/hcl.html'>hcl</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>40</span>,<span class='fl'>0.2</span>), <span class='fu'><a href='mdc.html'>mdc</a></span>(<span class='fl'>2</span>)),<span class='kw'>pch</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>20</span>))
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>stripplot</span>(<span class='no'>imp</span>, <span class='no'>age</span> + <span class='no'>hgt</span> ~ <span class='no'>.imp</span> <span class='kw'>|</span> <span class='no'>reg</span>, <span class='no'>hgt</span>,
+ <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/hcl.html'>hcl</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>40</span>, <span class='fl'>0.2</span>), <span class='fu'><a href='mdc.html'>mdc</a></span>(<span class='fl'>2</span>)), <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>20</span>))
 
 <span class='co'>### heavily jitted relation between two categorical variables</span>
 <span class='co'>### labeled by missingness of gen</span>
