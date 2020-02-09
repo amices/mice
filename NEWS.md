@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.7.4
+
+* Extends the `pool()` function to deal with multiple sets of parameters. Currently supported keywords are: `term` (all `broom` functions), `component` (some `broom.mixed` functions) and `y.values` (for `multinom()` model) (#219)
+
 # mice 3.7.3
 
 * Trims the depends, imports and suggests fields

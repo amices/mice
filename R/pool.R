@@ -123,7 +123,7 @@ pool.fitlist <- function (fitlist, dfcom = NULL) {
   if ("component" %in% names(w)) w$component <- factor(w$component, levels = unique(w$component))
   
   pooled <- w %>%
-    group_by(!!!rlang::syms(grp)) %>%
+    group_by(!!!syms(grp)) %>%
     summarize(m = n(),
               qbar = mean(.data$estimate),
               ubar = mean(.data$std.error ^ 2),
