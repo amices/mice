@@ -123,12 +123,12 @@ process_mipo <- function(z, x, conf.int = FALSE, conf.level = .95,
   # combine and sort columns in desired order  
   parnames <- names(z)[1L : (pmatch("m", names(z)) - 1L)]
   if (!is.null(CI)) {
-    z <- cbind(z[, parnames],
+    z <- cbind(z[, parnames, drop = FALSE],
                z[, c("m", "estimate", "std.error", "statistic", "df", "p.value")],
                trans(unrowname(CI)),
                z[, c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")])
   } else {
-    z <- cbind(z[, parnames],
+    z <- cbind(z[, parnames, drop = FALSE],
                z[, c("m", "estimate", "std.error", "statistic", "df", "p.value")],
                z[, c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")])
   }
