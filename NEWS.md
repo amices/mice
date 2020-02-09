@@ -3,6 +3,11 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.7.3
+
+* Trims the depends, imports and suggests fields
+* Add a new `install.on.demand()` function
+
 # mice 3.7.2
 
 * Add `toenail2` and remove dependency on `HSAUR3`
