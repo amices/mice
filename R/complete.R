@@ -3,6 +3,7 @@
 #'Takes an object of class \code{mids}, fills in the missing data, and returns
 #'the completed data in a specified format.
 #'
+#'@aliases complete
 #'@param data An object of class \code{mids} as created by the function
 #'\code{mice()}.
 #'@param action A numeric vector or a keyword. Numeric 
@@ -41,6 +42,12 @@
 #'\item{\code{"repeated"}}{ same as \code{"broad"}, but with 
 #'columns in a different order.}
 #'}
+#'@note
+#'Technical note: \code{mice 3.7.5} renamed the \code{complete()} function 
+#'to \code{complete.mids()} and exported it as an S3 method of the 
+#'generic \code{tidyr::complete()}. Name clashes between 
+#'\code{mice::complete()} and \code{tidyr::complete()} should no 
+#'longer occur.
 #'@seealso \code{\link{mice}}, \code{\link[=mids-class]{mids}}
 #'@keywords manip
 #'@examples
@@ -70,10 +77,10 @@
 #'names(dslist)
 #'
 #'@export
-complete <- function(data, action = 1L, include = FALSE, 
-                           mild = FALSE, ...) {
+complete.mids <- function(data, action = 1L, include = FALSE, 
+                          mild = FALSE, ...) {
   if (!is.mids(data)) stop("'data' not of class 'mids'")
-
+  
   m <- as.integer(data$m)
   if (is.numeric(action)) {
     action <- as.integer(action)
@@ -113,8 +120,8 @@ complete <- function(data, action = 1L, include = FALSE,
   # must be broad or repeated
   cmp <- bind_cols(mylist)
   names(cmp) <- paste(rep.int(names(data$data), m), 
-                           rep.int(idx, rep.int(ncol(data$data), length(idx))), 
-                           sep = ".")
+                      rep.int(idx, rep.int(ncol(data$data), length(idx))), 
+                      sep = ".")
   if (shape == "broad") return(cmp)
   else return(cmp[, order(rep.int(seq_len(ncol(data$data)), length(idx)))])
 }
