@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.7.5
+
+* Prevent name clashes with `tidyr` by defining `complete.mids()` as an S3 method for the `tidyr::complete()` generic (#212)
+
 # mice 3.7.4
 
 * Extends the `pool()` function to deal with multiple sets of parameters. Currently supported keywords are: `term` (all `broom` functions), `component` (some `broom.mixed` functions) and `y.values` (for `multinom()` model) (#219)

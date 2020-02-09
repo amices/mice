@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.7.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.7.5</span>
       </span>
     </div>
 
@@ -165,7 +165,7 @@ factors. <code>reg</code> is a factor.</p>
 <span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>boys</span>, <span class='kw'>m</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>maxit</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  hgt  wgt  bmi  hc  gen  phb  tv  reg
-#&gt;   2   1  hgt  wgt  bmi  hc  gen  phb  tv  reg</div><div class='input'><span class='no'>z</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='complete.html'>complete</a></span>(<span class='no'>imp</span>, <span class='fl'>1</span>)
+#&gt;   2   1  hgt  wgt  bmi  hc  gen  phb  tv  reg</div><div class='input'><span class='no'>z</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>imp</span>, <span class='fl'>1</span>)
 
 <span class='co'># create imputations for age &lt;8yrs</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>z</span>$<span class='no'>age</span>, <span class='no'>z</span>$<span class='no'>gen</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fu'><a href='mdc.html'>mdc</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>)[<span class='fl'>1</span>+<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>boys</span>$<span class='no'>gen</span>)],
@@ -190,7 +190,7 @@ factors. <code>reg</code> is a factor.</p>
 <span class='no'>imp2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>boys</span>, <span class='kw'>m</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>maxit</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>meth</span><span class='kw'>=</span><span class='no'>meth</span>, <span class='kw'>pred</span><span class='kw'>=</span><span class='no'>pred</span>)</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  hgt  wgt  bmi  hc  gen  phb  tv  reg
-#&gt;   2   1  hgt  wgt  bmi  hc  gen  phb  tv  reg</div><div class='input'><span class='no'>z2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='complete.html'>complete</a></span>(<span class='no'>imp2</span>, <span class='fl'>1</span>)
+#&gt;   2   1  hgt  wgt  bmi  hc  gen  phb  tv  reg</div><div class='input'><span class='no'>z2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>imp2</span>, <span class='fl'>1</span>)
 
 <span class='co'># show that new imputations are consistent</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>z2</span>$<span class='no'>bmi</span>,<span class='no'>z2</span>$<span class='no'>wgt</span>/(<span class='no'>z2</span>$<span class='no'>hgt</span>/<span class='fl'>100</span>)^<span class='fl'>2</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fu'><a href='mdc.html'>mdc</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>)[<span class='fl'>1</span>+<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>boys</span>$<span class='no'>bmi</span>)],

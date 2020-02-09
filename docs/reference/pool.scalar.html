@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.7.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.7.5</span>
       </span>
     </div>
 
@@ -219,37 +219,38 @@ Surveys.  New York: John Wiley and Sons.</p>
 <span class='no'>Q</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>NA</span>, <span class='no'>m</span>)
 <span class='no'>U</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>NA</span>, <span class='no'>m</span>)
 <span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='no'>m</span>) {
-   <span class='no'>Q</span>[<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='fu'><a href='complete.html'>complete</a></span>(<span class='no'>imp</span>, <span class='no'>i</span>)$<span class='no'>bmi</span>)
-   <span class='no'>U</span>[<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>var</a></span>(<span class='fu'><a href='complete.html'>complete</a></span>(<span class='no'>imp</span>, <span class='no'>i</span>)$<span class='no'>bmi</span>) / <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>nhanes</span>)  <span class='co'># (standard error of estimate)^2</span>
-}</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("complete_"): no applicable method for 'complete_' applied to an object of class "mids"</span></div><div class='input'><span class='fu'>pool.scalar</span>(<span class='no'>Q</span>, <span class='no'>U</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>nhanes</span>), <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>)  <span class='co'># Barnard-Rubin 1999</span></div><div class='output co'>#&gt; $m
+   <span class='no'>Q</span>[<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>imp</span>, <span class='no'>i</span>)$<span class='no'>bmi</span>)
+   <span class='no'>U</span>[<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>var</a></span>(<span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>imp</span>, <span class='no'>i</span>)$<span class='no'>bmi</span>) / <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>nhanes</span>)  <span class='co'># (standard error of estimate)^2</span>
+}
+<span class='fu'>pool.scalar</span>(<span class='no'>Q</span>, <span class='no'>U</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>nhanes</span>), <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>)  <span class='co'># Barnard-Rubin 1999</span></div><div class='output co'>#&gt; $m
 #&gt; [1] 5
 #&gt; 
 #&gt; $qhat
-#&gt; [1] NA NA NA NA NA
+#&gt; [1] 26.516 26.324 27.212 27.312 26.724
 #&gt; 
 #&gt; $u
-#&gt; [1] NA NA NA NA NA
+#&gt; [1] 0.7559893 0.6417093 0.5015773 0.7764107 0.7607093
 #&gt; 
 #&gt; $qbar
-#&gt; [1] NA
+#&gt; [1] 26.8176
 #&gt; 
 #&gt; $ubar
-#&gt; [1] NA
+#&gt; [1] 0.6872792
 #&gt; 
 #&gt; $b
-#&gt; [1] NA
+#&gt; [1] 0.1858368
 #&gt; 
 #&gt; $t
-#&gt; [1] NA
+#&gt; [1] 0.9102834
 #&gt; 
 #&gt; $df
-#&gt; [1] NA
+#&gt; [1] 13.40383
 #&gt; 
 #&gt; $r
-#&gt; [1] NA
+#&gt; [1] 0.3244739
 #&gt; 
 #&gt; $fmi
-#&gt; [1] NA
+#&gt; [1] 0.3370369
 #&gt; </div><div class='input'>
 </div></pre>
   </div>
