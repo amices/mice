@@ -14,7 +14,9 @@
 #'that iterates over the response and imputation models. 
 #'
 #'This routine assumes that the response model and imputation model
-# have same predictors.
+#'have same predictors.
+#'
+#' For an MNAR alternative see also \code{\link{mice.impute.mnar.logreg}}.
 #'@references Jolani, S. (2012). 
 #'\emph{Dual Imputation Strategies for Analyzing Incomplete Data}. 
 #'Dissertation. University of Utrecht, Dec 7 2012.

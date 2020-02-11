@@ -38,6 +38,9 @@ distribution of the observed and missing data using an algorithm
 that iterates over the response and imputation models. 
 
 This routine assumes that the response model and imputation model
+have same predictors.
+
+For an MNAR alternative see also \code{\link{mice.impute.mnar.logreg}}.
 }
 \references{
 Jolani, S. (2012). 

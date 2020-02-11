@@ -87,6 +87,8 @@
 #' It is not possible to specify models where the offset depends on 
 #' incomplete auxiliary variables.
 #' 
+#' For an MNAR alternative see also \code{\link{mice.impute.ri}}.
+#' 
 #' @author Margarita Moreno-Betancur, Stef van Buuren, Ian R. White, 2020.
 #' @references 
 #' Tompsett, D. M., Leacy, F., Moreno-Betancur, M., Heron, J., & 
@@ -101,6 +103,40 @@
 #' 
 #' @family univariate imputation functions
 #' @keywords datagen
+#' @examples 
+#' # 1: Example with no auxiliary data: only pass unidentifiable model specification (ums) 
+#' 
+#' # Specify argument to pass on to mnar imputation functions via "blots" argument
+#' mnar.blot <- list(X = list(ums = "-4"), Y = list(ums = "2+1*ZCat1-3*ZCat2"))
+#' 
+#' # Run NARFCS by using mnar imputation methods and passing argument via blots
+#' impNARFCS <- mice(mnar_demo_data, method = c("mnar.logreg", "mnar.norm", ""),
+#'                   blots = mnar.blot, seed = 234235, print = FALSE)
+#'                   
+#' # Obtain MI results: Note they coincide with those from old version at 
+#' # https://github.com/moreno-betancur/NARFCS
+#' pool(with(impNARFCS,lm(Y ~ X + Z)))$pooled$estimate
+#' 
+#' # 2: Example passing also auxiliary data to MNAR procedure (umx)
+#' # Assumptions: 
+#' # - Auxiliary data are complete, no missing values
+#' # - Auxiliary data are a numeric matrix
+#' # - Auxiliary data have same number of rows as x
+#' # - Auxiliary data have no overlapping variable names with x
+#' 
+#' # Specify argument to pass on to mnar imputation functions via "blots" argument
+#' aux <- matrix(0:1, nrow = nrow(mnar_demo_data))
+#' dimnames(aux) <- list(NULL, "even")
+#' mnar.blot <- list(X = list(ums = "-4"), 
+#'                   Y = list(ums = "2+1*ZCat1-3*ZCat2+0.5*even", umx = aux))
+#'                   
+#' # Run NARFCS by using mnar imputation methods and passing argument via blots
+#' impNARFCS <- mice(mnar_demo_data, method = c("mnar.logreg", "mnar.norm", ""),
+#'                   blots = mnar.blot, seed = 234235, print = FALSE)
+#'                   
+#' # Obtain MI results: As expected they differ (slightly) from those 
+#' # from old version at https://github.com/moreno-betancur/NARFCS
+#' pool(with(impNARFCS,lm(Y ~ X + Z)))$pooled$estimate
 #' @export
 mice.impute.mnar.norm <- function(y, ry, x, wy = NULL, 
                                   ums = NULL, umx = NULL, ...) {
