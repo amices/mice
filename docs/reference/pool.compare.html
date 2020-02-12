@@ -42,7 +42,8 @@
 
 
 <meta property="og:title" content="Compare two nested models fitted to imputed data — pool.compare" />
-<meta property="og:description" content="Compares two nested models after m repeated complete data analysis" />
+<meta property="og:description" content="This function is deprecated in V3. Use D1 or 
+D3 instead." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -75,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.7.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.8.0</span>
       </span>
     </div>
 
@@ -126,7 +127,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Compares two nested models after m repeated complete data analysis</p>
+    <p>This function is deprecated in V3. Use <code><a href='D1.html'>D1</a></code> or 
+<code><a href='D3.html'>D3</a></code> instead.</p>
     </div>
 
     <pre class="usage"><span class='fu'>pool.compare</span>(<span class='no'>fit1</span>, <span class='no'>fit0</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wald"</span>, <span class='st'>"likelihood"</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -187,7 +189,8 @@ Component <code>pvalue</code> is the P-value of testing whether the model <code>
 statistically different from the smaller <code>fit0</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function is based on the article of Meng and Rubin (1992). The
+    <p>Compares two nested models after m repeated complete data analysis</p>
+<p>The function is based on the article of Meng and Rubin (1992). The
 Wald-method can be found in paragraph 2.2 and the likelihood method can be
 found in paragraph 3.  One could use the Wald method for comparison of linear
 models obtained with e.g. <code>lm</code> (in <code><a href='with.mids.html'>with.mids()</a></code>).  The likelihood
@@ -211,27 +214,6 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
 
     <div class='dont-index'><p><code><a href='lm.mids.html'>lm.mids</a></code>, <code><a href='glm.mids.html'>glm.mids</a></code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>### To compare two linear models:</span>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes2</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>51009</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>mi1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>imp</span>, <span class='kw'>expr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>bmi</span> ~ <span class='no'>age</span> + <span class='no'>hyp</span> + <span class='no'>chl</span>))
-<span class='no'>mi0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>imp</span>, <span class='kw'>expr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>bmi</span> ~ <span class='no'>age</span> + <span class='no'>hyp</span>))
-<span class='no'>pc</span>  <span class='kw'>&lt;-</span> <span class='fu'>pool.compare</span>(<span class='no'>mi1</span>, <span class='no'>mi0</span>)
-<span class='no'>pc</span>$<span class='no'>pvalue</span></div><div class='output co'>#&gt;            [,1]
-#&gt; [1,] 0.01119628</div><div class='input'>
-<span class='co'>### Comparison of two general linear models (logistic regression).</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>imp</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>boys</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>gen</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>gen</span>)[<span class='fl'>1</span>] ~ <span class='no'>hgt</span> + <span class='no'>hc</span> + <span class='no'>reg</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>))
-<span class='no'>fit0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>gen</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>gen</span>)[<span class='fl'>1</span>] ~ <span class='no'>hgt</span> + <span class='no'>hc</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>))
-<span class='fu'>pool.compare</span>(<span class='no'>fit1</span>, <span class='no'>fit0</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>'likelihood'</span>)$<span class='no'>pvalue</span>
-
-<span class='co'># using factors</span>
-<span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='no'>gen</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>gen</span>)[<span class='fl'>1</span>]) ~ <span class='no'>hgt</span> + <span class='no'>hc</span> + <span class='no'>reg</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>))
-<span class='no'>fit0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='no'>gen</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>gen</span>)[<span class='fl'>1</span>]) ~ <span class='no'>hgt</span> + <span class='no'>hc</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>))
-<span class='fu'>pool.compare</span>(<span class='no'>fit1</span>, <span class='no'>fit0</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>'likelihood'</span>)$<span class='no'>pvalue</span>
-}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -241,7 +223,6 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
       <li><a href="#details">Details</a></li>
       <li><a href="#references">References</a></li>
       <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>

@@ -42,7 +42,7 @@
 
 
 <meta property="og:title" content="Compare two nested models using D3-statistic — D3" />
-<meta property="og:description" content="Compare two nested models using D3-statistic" />
+<meta property="og:description" content="The D3-statistics is a likelihood-ratio test statistic." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.7.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.8.0</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Compare two nested models using D3-statistic</p>
+    <p>The D3-statistics is a likelihood-ratio test statistic.</p>
     </div>
 
     <pre class="usage"><span class='fu'>D3</span>(<span class='no'>fit1</span>, <span class='kw'>fit0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>df.com</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='no'>...</span>)</pre>
@@ -148,8 +148,7 @@ model <code>fit0 = NULL</code> compares <code>fit1</code> to the intercept-only 
       <th>df.com</th>
       <td><p>A single number or a numeric vector denoting the 
 complete-data degrees of freedom for the hypothesis test. If not specified,
-it is set equal to <code>df.residual</code> of model <code>fit1</code>. Not used 
-for method <code><a href='D2.html'>D2()</a></code>.</p></td>
+it is set equal to <code>df.residual</code> of model <code>fit1</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -157,12 +156,33 @@ for method <code><a href='D2.html'>D2()</a></code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
+    <p>Meng, X. L., and D. B. Rubin. 1992. 
+Performing Likelihood Ratio Tests with Multiply-Imputed Data Sets. 
+<em>Biometrika</em>, 79 (1): 103–11.</p>
+<p><a href='https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:likelihoodratio'>https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:likelihoodratio</a></p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Compare two linear models:</span>
+<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes2</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>51009</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>mi1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>imp</span>, <span class='kw'>expr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>bmi</span> ~ <span class='no'>age</span> + <span class='no'>hyp</span> + <span class='no'>chl</span>))
+<span class='no'>mi0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>imp</span>, <span class='kw'>expr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>bmi</span> ~ <span class='no'>age</span> + <span class='no'>hyp</span>))
+<span class='fu'>D3</span>(<span class='no'>mi1</span>, <span class='no'>mi0</span>)</div><div class='output co'>#&gt;    test statistic df1      df2 df.com    p.value      riv
+#&gt;  1 ~~ 2  10.08898   1 4.980575    Inf 0.02477347 8.631101</div><div class='input'>
+<span class='co'># Compare two logistic regression models</span>
+<span class='no'>imp</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>boys</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>gen</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>gen</span>)[<span class='fl'>1</span>] ~ <span class='no'>hgt</span> + <span class='no'>hc</span> + <span class='no'>reg</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>))
+<span class='no'>fit0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>gen</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>gen</span>)[<span class='fl'>1</span>] ~ <span class='no'>hgt</span> + <span class='no'>hc</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>))
+<span class='fu'>D3</span>(<span class='no'>fit1</span>, <span class='no'>fit0</span>)</div><div class='output co'>#&gt;    test statistic df1      df2 df.com   p.value       riv
+#&gt;  1 ~~ 2  1.356106   4 48.02414    Inf 0.2631346 0.9558877</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#references">References</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

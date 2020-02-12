@@ -6,7 +6,7 @@ revdep_check(num_workers = 3)
 
 # print out results
 revdep_summary()
-revdep_details(revdep = "miceFast")
+revdep_details(revdep = "smartdata")
 
 # commit 
 system("git add revdep/*.md")

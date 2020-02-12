@@ -42,7 +42,8 @@
 
 
 <meta property="og:title" content="Compare two nested models using D2-statistic — D2" />
-<meta property="og:description" content="Compare two nested models using D2-statistic" />
+<meta property="og:description" content="The D2-statistic pools test statistics from the repeated analyses.
+The method is less powerful than the D1- and D3-statistics." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -75,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.7.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.8.0</span>
       </span>
     </div>
 
@@ -126,10 +127,11 @@
     </div>
 
     <div class="ref-description">
-    <p>Compare two nested models using D2-statistic</p>
+    <p>The D2-statistic pools test statistics from the repeated analyses.
+The method is less powerful than the D1- and D3-statistics.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>D2</span>(<span class='no'>fit1</span>, <span class='kw'>fit0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>df.com</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>use</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>D2</span>(<span class='no'>fit1</span>, <span class='kw'>fit0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>use</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,13 +147,6 @@ model in <code>fit0</code> is a nested within <code>fit1</code>. The default nul
 model <code>fit0 = NULL</code> compares <code>fit1</code> to the intercept-only model.</p></td>
     </tr>
     <tr>
-      <th>df.com</th>
-      <td><p>A single number or a numeric vector denoting the 
-complete-data degrees of freedom for the hypothesis test. If not specified,
-it is set equal to <code>df.residual</code> of model <code>fit1</code>. Not used 
-for method <code>D2()</code>.</p></td>
-    </tr>
-    <tr>
       <th>use</th>
       <td><p>A character string denoting Wald- or likelihood-based based tests. Can be either <code>"wald"</code> or <code>"likelihood"</code>. Only used if <code>method="D2"</code>.</p></td>
     </tr>
@@ -161,20 +156,37 @@ for method <code>D2()</code>.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>The <code>D2</code> method does not use the <code>df.com</code> parameter, so
-it does not pass it down to <code>testModels</code>.
-This prevents the following warning thrown by <code>testModels</code>: 
-<code>Complete-data degrees of freedom are not available 
-for use with 'D2', and thus were ignored.</code></p>
+    <p>Li, K. H., X. L. Meng, T. E. Raghunathan, and D. B. Rubin. 1991. 
+Significance Levels from Repeated p-Values with Multiply-Imputed Data.
+<em>Statistica Sinica</em> 1 (1): 65–92.</p>
+<p><a href='https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:chi'>https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:chi</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/mitml/man/testModels.html'>testModels</a></code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Compare two linear models:</span>
+<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes2</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>51009</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>mi1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>imp</span>, <span class='kw'>expr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>bmi</span> ~ <span class='no'>age</span> + <span class='no'>hyp</span> + <span class='no'>chl</span>))
+<span class='no'>mi0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>imp</span>, <span class='kw'>expr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>bmi</span> ~ <span class='no'>age</span> + <span class='no'>hyp</span>))
+<span class='fu'>D2</span>(<span class='no'>mi1</span>, <span class='no'>mi0</span>)</div><div class='output co'>#&gt;    test statistic df1      df2 df.com   p.value       riv
+#&gt;  1 ~~ 2  5.743493   1 24.89412     NA 0.0243856 0.6690303</div><div class='input'>
+<span class='co'># Compare two logistic regression models</span>
+<span class='no'>imp</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>boys</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>gen</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>gen</span>)[<span class='fl'>1</span>] ~ <span class='no'>hgt</span> + <span class='no'>hc</span> + <span class='no'>reg</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>))
+<span class='no'>fit0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>gen</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>gen</span>)[<span class='fl'>1</span>] ~ <span class='no'>hgt</span> + <span class='no'>hc</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>))
+<span class='fu'>D2</span>(<span class='no'>fit1</span>, <span class='no'>fit0</span>)</div><div class='output co'>#&gt;    test statistic df1     df2 df.com   p.value       riv
+#&gt;  1 ~~ 2  2.337995   4 50.8508     NA 0.0676726 0.2270525</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#details">Details</a></li>
+      <li><a href="#references">References</a></li>
+      <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

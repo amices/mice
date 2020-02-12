@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Toenail data — toenail2 • mice</title>
+<title>MNAR demo data — mnar_demo_data • mice</title>
 
 
 <!-- jquery -->
@@ -41,14 +41,8 @@
 
 
 
-<meta property="og:title" content="Toenail data — toenail2" />
-<meta property="og:description" content="The toenail data come from a Multicenter study comparing two oral
-treatments for toenail infection. Patients were evaluated for the
-degree of separation of the nail. Patients were randomized into two
-treatments and were followed over seven visits - four in the first
-year and yearly thereafter. The patients have not been treated
-prior to the first visit so this should be regarded as the
-baseline." />
+<meta property="og:title" content="MNAR demo data — mnar_demo_data" />
+<meta property="og:description" content="A toy example from Margarita Moreno-Betancur for checking NARFCS." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -126,60 +120,27 @@ baseline." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Toenail data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/toenail2.R'><code>R/toenail2.R</code></a></small>
-    <div class="hidden name"><code>toenail2.Rd</code></div>
+    <h1>MNAR demo data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/nmar_demo_data.R'><code>R/nmar_demo_data.R</code></a></small>
+    <div class="hidden name"><code>mnar_demo_data.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The toenail data come from a Multicenter study comparing two oral
-treatments for toenail infection. Patients were evaluated for the
-degree of separation of the nail. Patients were randomized into two
-treatments and were followed over seven visits - four in the first
-year and yearly thereafter. The patients have not been treated
-prior to the first visit so this should be regarded as the
-baseline.</p>
+    <p>A toy example from Margarita Moreno-Betancur for checking NARFCS.</p>
     </div>
 
+    <pre class="usage"><span class='no'>mnar_demo_data</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 1908 observations on the following 5 variables:</p><dl class='dl-horizontal'>
-  <dt><code>patientID</code></dt><dd><p>a numeric vector giving the ID of patient</p></dd>
-  <dt><code>outcome</code></dt><dd><p>a factor with 2 levels giving the response</p></dd>
-  <dt><code>treatment</code></dt><dd><p>a factor with 2 levels giving the treatment group</p></dd>
-  <dt><code>time</code></dt><dd><p>a numeric vector giving the time of the visit 
-  (not exactly monthly intervals hence not round numbers)</p></dd>
-  <dt><code>visit</code></dt><dd><p>an integer giving the number of the visit</p></dd>
-  
-</dl>
+    <p>An object of class <code>data.frame</code> with 500 rows and 3 columns.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>De Backer, M., De Vroey, C., Lesaffre, E., Scheys, I., and De
-Keyser, P. (1998). Twelve weeks of continuous oral therapy for
-toenail onychomycosis caused by dermatophytes: A double-blind
-comparative trial of terbinafine 250 mg/day versus itraconazole 200
-mg/day. Journal of the American Academy of Dermatology, 38, 57-63.</p>
+    <p><a href='https://github.com/moreno-betancur/NARFCS/blob/master/datmis.csv'>https://github.com/moreno-betancur/NARFCS/blob/master/datmis.csv</a></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Apart from formatting, this dataset is identical to 
-<code>toenail</code>. The formatting is taken identical to 
-<code><a href='https://rdrr.io/r/utils/data.html'>data("toenail", package = "HSAUR3")</a></code>.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Lesaffre, E. and Spiessens, B. (2001). On the effect of the number of
-quadrature points in a logistic random-effects model: An example.
-Journal of the Royal Statistical Society, Series C, 50, 325-335.</p>
-<p>G. Fitzmaurice, N. Laird and J. Ware (2004) Applied Longitudinal Analysis, 
-Wiley and Sons, New York, USA.</p>
-<p>Van Buuren, S. (2018). 
-<a href='https://stefvanbuuren.name/fimd/sec-catoutcome.html#example'><em>Flexible
-Imputation of Missing Data. Second Edition.</em></a> Chapman &amp; Hall/CRC.
-Boca Raton, FL.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='toenail.html'>toenail</a></code></p></div>
+    <p>A small dataset with just three columns.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -188,8 +149,6 @@ Boca Raton, FL.</p>
       <li><a href="#format">Format</a></li>
       <li><a href="#source">Source</a></li>
       <li><a href="#details">Details</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#see-also">See also</a></li>
     </ul>
 
   </div>

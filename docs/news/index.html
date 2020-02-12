@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.7.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.8.0</span>
       </span>
     </div>
 
@@ -122,60 +122,37 @@
       <small>Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="mice-3-7-6" class="section level1">
+    <div id="mice-3-8-0" class="section level1">
 <h1 class="page-header">
-<a href="#mice-3-7-6" class="anchor"></a>mice 3.7.6<small> Unreleased </small>
+<a href="#mice-3-8-0" class="anchor"></a>mice 3.8.0<small> Unreleased </small>
 </h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
-<li>Resolves a problem from <code>3.7.4</code> in the naming of <code>term</code>
-</li>
-<li>Remove everything in <code><a href="https://rdrr.io/r/utils/globalVariables.html">utils::globalVariables()</a></code>
-</li>
+<li>This version adds two new NARFCS methods for imputing data under the <em>Missing Not at Random (MNAR)</em> assumption. NARFCS is generalised version of the so-called $\delta$-adjustment method. Margarita Moreno-Betancur and Ian White kindly contributes the functions <code><a href="../reference/mice.impute.mnar.html">mice.impute.mnar.norm()</a></code> and <code><a href="../reference/mice.impute.mnar.html">mice.impute.mnar.logreg()</a></code>. These functions aid in performing sensitivity analysis to investigate the impact of different MNAR assumptions on the conclusion of the study. An alternative for MNAR is the older <code><a href="../reference/mice.impute.ri.html">mice.impute.ri()</a></code> function.</li>
+<li>Installation of <code>mice</code> is faster. External packages needed for imputation and analyses are now installed on demand. The number of dependencies as estimated by <code>rsconnect::appDepencies()</code> decreased from 132 to 83.</li>
+<li>The name clash with the <code><a href="../reference/complete.mids.html">complete()</a></code> function of <code>tidyr</code> should no longer be a problem.</li>
+<li>There is now a more flexible <code><a href="../reference/pool.html">pool()</a></code> function that integrates better with the <code>broom</code> and <code>broom.mixed</code> packages.</li>
 </ul>
 </div>
-    <div id="mice-3-7-5" class="section level1">
-<h1 class="page-header">
-<a href="#mice-3-7-5" class="anchor"></a>mice 3.7.5<small> Unreleased </small>
-</h1>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Prevent name clashes with <code>tidyr</code> by defining <code><a href="../reference/complete.mids.html">complete.mids()</a></code> as an S3 method for the <code><a href="https://tidyr.tidyverse.org/reference/complete.html">tidyr::complete()</a></code> generic (<a href='https://github.com/stefvanbuuren/mice/issues/212'>#212</a>)</li>
-</ul>
-</div>
-    <div id="mice-3-7-4" class="section level1">
-<h1 class="page-header">
-<a href="#mice-3-7-4" class="anchor"></a>mice 3.7.4<small> Unreleased </small>
-</h1>
-<ul>
+<li>Deprecates <code><a href="../reference/pool.compare.html">pool.compare()</a></code>. Use <code><a href="../reference/D1.html">D1()</a></code> instead (<a href='https://github.com/stefvanbuuren/mice/issues/220'>#220</a>)</li>
+<li>Removes everything in <code><a href="https://rdrr.io/r/utils/globalVariables.html">utils::globalVariables()</a></code>
+</li>
+<li>Prevents name clashes with <code>tidyr</code> by defining <code><a href="../reference/complete.mids.html">complete.mids()</a></code> as an S3 method for the <code><a href="https://tidyr.tidyverse.org/reference/complete.html">tidyr::complete()</a></code> generic (<a href='https://github.com/stefvanbuuren/mice/issues/212'>#212</a>)</li>
 <li>Extends the <code><a href="../reference/pool.html">pool()</a></code> function to deal with multiple sets of parameters. Currently supported keywords are: <code>term</code> (all <code>broom</code> functions), <code>component</code> (some <code>broom.mixed</code> functions) and <code>y.values</code> (for <code>multinom()</code> model) (<a href='https://github.com/stefvanbuuren/mice/issues/219'>#219</a>)</li>
-</ul>
-</div>
-    <div id="mice-3-7-3" class="section level1">
-<h1 class="page-header">
-<a href="#mice-3-7-3" class="anchor"></a>mice 3.7.3<small> Unreleased </small>
-</h1>
-<ul>
-<li>Trims the depends, imports and suggests fields</li>
 <li>Adds a new <code>install.on.demand()</code> function for lighter installation</li>
-</ul>
-</div>
-    <div id="mice-3-7-2" class="section level1">
-<h1 class="page-header">
-<a href="#mice-3-7-2" class="anchor"></a>mice 3.7.2<small> Unreleased </small>
-</h1>
-<ul>
-<li>Add <code>toenail2</code> and remove dependency on <code>HSAUR3</code>
+<li>Adds <code>toenail2</code> and remove dependency on <code>HSAUR3</code>
 </li>
+<li>Solves problem with <code>ampute</code> in extreme cases (<a href='https://github.com/stefvanbuuren/mice/issues/216'>#216</a>)</li>
+<li>Solves problem with <code>pool</code> with <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html">mgcv::gam</a></code> (<a href='https://github.com/stefvanbuuren/mice/issues/218'>#218</a>)</li>
+<li>Adds <code>.gitattributes</code> for consistent line endings</li>
 </ul>
 </div>
-    <div id="mice-3-7-1" class="section level1">
-<h1 class="page-header">
-<a href="#mice-3-7-1" class="anchor"></a>mice 3.7.1<small> Unreleased </small>
-</h1>
-<ul>
-<li>Solved problem with <code>ampute</code> in extreme cases (<a href='https://github.com/stefvanbuuren/mice/issues/216'>#216</a>)</li>
-<li>Solved problem with <code>pool</code> with <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html">mgcv::gam</a></code> (<a href='https://github.com/stefvanbuuren/mice/issues/218'>#218</a>)</li>
-<li>Add <code>.gitattributes</code> for consistent line endings</li>
-</ul>
 </div>
     <div id="mice-3-7-0" class="section level1">
 <h1 class="page-header">
@@ -877,12 +854,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#mice-3-7-6">3.7.6</a></li>
-        <li><a href="#mice-3-7-5">3.7.5</a></li>
-        <li><a href="#mice-3-7-4">3.7.4</a></li>
-        <li><a href="#mice-3-7-3">3.7.3</a></li>
-        <li><a href="#mice-3-7-2">3.7.2</a></li>
-        <li><a href="#mice-3-7-1">3.7.1</a></li>
+        <li><a href="#mice-3-8-0">3.8.0</a></li>
         <li><a href="#mice-3-7-0">3.7.0</a></li>
         <li><a href="#mice-3-6-0">3.6.0</a></li>
         <li><a href="#mice-3-5-0">3.5.0</a></li>

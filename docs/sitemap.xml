@@ -247,6 +247,9 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.midastouch.html</loc>
   </url>
   <url>
+    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.mnar.html</loc>
+  </url>
+  <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.norm.html</loc>
   </url>
   <url>
@@ -305,6 +308,9 @@
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/mira-class.html</loc>
+  </url>
+  <url>
+    <loc>http://stefvanbuuren.github.io/mice/reference/mnar_demo_data.html</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/name.blocks.html</loc>
