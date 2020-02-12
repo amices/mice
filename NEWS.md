@@ -3,37 +3,25 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.7.7
+# mice 3.8.0
 
-* Adds two NARFCS methods for imputing MNAR data: `mnar.norm` and `mnar.logreg`, kindly contributed by Margarita Moreno-Betancur and Ian White
+## Major changes 
 
-# mice 3.7.6
+* This version adds two new NARFCS methods for imputing data under the *Missing Not at Random (MNAR)* assumption. NARFCS is generalised version of the so-called $\delta$-adjustment method. Margarita Moreno-Betancur and Ian White kindly contributes the functions `mice.impute.mnar.norm()` and `mice.impute.mnar.logreg()`. These functions aid in performing sensitivity analysis to investigate the impact of different MNAR assumptions on the conclusion of the study. An alternative for MNAR is the older `mice.impute.ri()` function.
+* Installation of `mice` is now much faster. If you have already `dplyr` installed, then nothing else is needed. Other external packages needed for imputation and analyses are now installed on demand. The number of dependencies as estimated by `rsconnect::appDepencies()` decreased from 132 to 83.
+* The name clash with the `complete()` function of `tidyr` should no longer be a problem.
+* There is now a more flexible `pool()` function that integrates better with the `broom` and `broom.mixed` packages.
 
-* Resolves a problem from `3.7.4` in the naming of `term`
-* Remove everything in `utils::globalVariables()`
+## Bug fixes
 
-# mice 3.7.5
-
-* Prevent name clashes with `tidyr` by defining `complete.mids()` as an S3 method for the `tidyr::complete()` generic (#212)
-
-# mice 3.7.4
-
+* Removes everything in `utils::globalVariables()`
+* Prevents name clashes with `tidyr` by defining `complete.mids()` as an S3 method for the `tidyr::complete()` generic (#212)
 * Extends the `pool()` function to deal with multiple sets of parameters. Currently supported keywords are: `term` (all `broom` functions), `component` (some `broom.mixed` functions) and `y.values` (for `multinom()` model) (#219)
-
-# mice 3.7.3
-
-* Trims the depends, imports and suggests fields
 * Adds a new `install.on.demand()` function for lighter installation
-
-# mice 3.7.2
-
-* Add `toenail2` and remove dependency on `HSAUR3`
-
-# mice 3.7.1
-
-* Solved problem with `ampute` in extreme cases (#216)
-* Solved problem with `pool` with `mgcv::gam` (#218)
-* Add `.gitattributes` for consistent line endings
+* Adds `toenail2` and remove dependency on `HSAUR3`
+* Solves problem with `ampute` in extreme cases (#216)
+* Solves problem with `pool` with `mgcv::gam` (#218)
+* Adds `.gitattributes` for consistent line endings
 
 # mice 3.7.0
 
