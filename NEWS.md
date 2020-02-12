@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.7.7
+
+* Adds two NARFCS methods for imputing MNAR data: `mnar.norm` and `mnar.logreg`, kindly contributed by Margarita Moreno-Betancur and Ian White
+
 # mice 3.7.6
 
 * Resolves a problem from `3.7.4` in the naming of `term`
