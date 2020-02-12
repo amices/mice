@@ -22,7 +22,7 @@
 # 'fit objects from each of the \code{m} complete data analyses.
 #'@author Karin Oudshoorn, Stef van Buuren 2009-2012
 #'@seealso \code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}, \code{\link{pool}},
-#'\code{\link{pool.compare}}, \code{\link{pool.r.squared}}
+#'\code{\link{D1}}, \code{\link{D3}}, \code{\link{pool.r.squared}}
 #'@references van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 #'Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #'Statistical Software}, \bold{45}(3), 1-67.

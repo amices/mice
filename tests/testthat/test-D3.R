@@ -5,7 +5,7 @@ fit1 <- with(data = imp, expr = lm(hyp ~ age + chl))
 fit0 <- with(data = imp, expr = lm(hyp ~ 1))
 empty <- with(data = imp, expr = lm(hyp ~ 0))
 
-stat1 <- pool.compare(fit1, fit0, method = "likelihood")
+# stat1 <- pool.compare(fit1, fit0, method = "likelihood")
 
 z1 <- D3(fit1, fit0)
 z2 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), method = "D3")

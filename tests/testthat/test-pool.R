@@ -26,8 +26,8 @@ test_that("retains same numerical result", {
 imp <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
 fit0 <- with(data = imp, expr = glm(hyp == "yes" ~ 1, family = binomial))
 fit1 <- with(data = imp, expr = glm(hyp == "yes" ~ chl + bmi, family = binomial))
-stat1 <- pool.compare(fit1, fit0, method = "wald")
-stat2 <- pool.compare(fit1, fit0, method = "likelihood")
+D1(fit1, fit0)
+D3(fit1, fit0)
 
 # test_that("retains same numerical result", {
 #    expect_equal(round(as.vector(stat1$pvalue), 3), 0.188)
@@ -102,8 +102,8 @@ bwt.mis$lwt[runif(nrow(bwt)) < 0.01] <- NA
 imp <- mice(bwt.mis, print = FALSE, m = 10)
 fit1 <- with(data = imp, expr = glm(low ~ age + lwt + race + smoke + ptd + ht + ui + ftv, family = binomial))
 fit0 <- with(data = imp, glm(low ~ lwt + race + smoke + ptd + ht + ui, family = binomial))
-stat1 <- pool.compare(fit1, fit0, method = "wald")
-stat2 <- pool.compare(fit1, fit0, method = "likelihood")
+D1(fit1, fit0)
+D3(fit1, fit0)
 
 # --- test restriction of parameters
 
@@ -144,7 +144,7 @@ testEstimates(fit1)
 # Wald test
 # multiparameter hypothesis test using D1 (default)
 mitml::testModels(fit1, fit0)
-stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "wald")
+# stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "wald")
 # Is the same, but probably consequence of single parameter differerence
 
 # Wald test - multiparameter difference - incorrect because now our 
@@ -152,12 +152,12 @@ stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "wald")
 fit0 <- with(implist, lmer(ReadAchiev ~ (1|ID), REML=FALSE))
 fit1 <- with(implist, lmer(ReadAchiev ~ ReadDis + SES + (1|ID), REML=FALSE))
 mitml::testModels(fit1, fit0)
-stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "wald")
+# stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "wald")
 # Is the same, but probably consequence of single parameter differerence
 
 # likelihood test
 mitml::testModels(fit1, fit0, method = "D3")
-stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "likelihood")
+# stats <- pool.compare(as.mira(fit1), as.mira(fit0), method = "likelihood")
 
 # ---
 

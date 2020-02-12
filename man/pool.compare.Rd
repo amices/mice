@@ -49,9 +49,12 @@ Component \code{pvalue} is the P-value of testing whether the model \code{fit1} 
 statistically different from the smaller \code{fit0}.
 }
 \description{
-Compares two nested models after m repeated complete data analysis
+This function is deprecated in V3. Use \code{\link{D1}} or 
+\code{\link{D3}} instead.
 }
 \details{
+Compares two nested models after m repeated complete data analysis
+
 The function is based on the article of Meng and Rubin (1992). The
 Wald-method can be found in paragraph 2.2 and the likelihood method can be
 found in paragraph 3.  One could use the Wald method for comparison of linear
@@ -63,28 +66,6 @@ The function assumes that \code{fit1} is the
 larger model, and that model \code{fit0} is fully contained in \code{fit1}.
 In case of \code{method='wald'}, the null hypothesis is tested that the extra
 parameters are all zero.
-}
-\examples{
-
-### To compare two linear models:
-imp <- mice(nhanes2, seed = 51009, print = FALSE)
-mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
-mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
-pc  <- pool.compare(mi1, mi0)
-pc$pvalue
-
-### Comparison of two general linear models (logistic regression).
-\dontrun{
-imp  <- mice(boys, maxit = 2, print = FALSE)
-fit1 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc + reg, family = binomial))
-fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
-pool.compare(fit1, fit0, method = 'likelihood')$pvalue
-
-# using factors
-fit1 <- with(imp, glm(as.factor(gen > levels(gen)[1]) ~ hgt + hc + reg, family = binomial))
-fit0 <- with(imp, glm(as.factor(gen > levels(gen)[1]) ~ hgt + hc, family = binomial))
-pool.compare(fit1, fit0, method = 'likelihood')$pvalue
-}
 }
 \references{
 Li, K.H., Meng, X.L., Raghunathan, T.E. and Rubin, D. B. (1991).

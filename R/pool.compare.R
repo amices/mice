@@ -1,5 +1,8 @@
 #'Compare two nested models fitted to imputed data
 #' 
+#'This function is deprecated in V3. Use \code{\link{D1}} or 
+#'\code{\link{D3}} instead.
+#'
 #'Compares two nested models after m repeated complete data analysis
 #'
 #'The function is based on the article of Meng and Rubin (1992). The
@@ -62,30 +65,11 @@
 #'Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 #'Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 #'@keywords htest
-#'@examples
-#'
-#'### To compare two linear models:
-#'imp <- mice(nhanes2, seed = 51009, print = FALSE)
-#'mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
-#'mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
-#'pc  <- pool.compare(mi1, mi0)
-#'pc$pvalue
-#'
-#'### Comparison of two general linear models (logistic regression).
-#'\dontrun{
-#'imp  <- mice(boys, maxit = 2, print = FALSE)
-#'fit1 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc + reg, family = binomial))
-#'fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
-#'pool.compare(fit1, fit0, method = 'likelihood')$pvalue
-#'
-#'# using factors
-#'fit1 <- with(imp, glm(as.factor(gen > levels(gen)[1]) ~ hgt + hc + reg, family = binomial))
-#'fit0 <- with(imp, glm(as.factor(gen > levels(gen)[1]) ~ hgt + hc, family = binomial))
-#'pool.compare(fit1, fit0, method = 'likelihood')$pvalue
-#'}
 #'@export
 pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"), 
                          data = NULL) {
+  .Deprecated("D1")
+  
   # Check the arguments
   call <- match.call()
   method <- match.arg(method)

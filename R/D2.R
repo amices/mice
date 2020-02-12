@@ -1,15 +1,31 @@
 #'Compare two nested models using D2-statistic
 #'
+#'The D2-statistic pools test statistics from the repeated analyses.
+#'The method is less powerful than the D1- and D3-statistics.
+#'
 #'@inheritParams D1
 #'@inheritParams mitml::testModels
-#'@details
-#'The \code{D2} method does not use the \code{df.com} parameter, so
-#'it does not pass it down to \code{testModels}.
-#'This prevents the following warning thrown by \code{testModels}: 
-#'\code{Complete-data degrees of freedom are not available 
-#'for use with 'D2', and thus were ignored.}
+#'@references
+#'Li, K. H., X. L. Meng, T. E. Raghunathan, and D. B. Rubin. 1991. 
+#'Significance Levels from Repeated p-Values with Multiply-Imputed Data.
+#'\emph{Statistica Sinica} 1 (1): 65–92.
+#'
+#'\url{https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:chi}
+#'@examples
+#'# Compare two linear models:
+#'imp <- mice(nhanes2, seed = 51009, print = FALSE)
+#'mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
+#'mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
+#'D2(mi1, mi0)
+#'
+#'# Compare two logistic regression models
+#'imp  <- mice(boys, maxit = 2, print = FALSE)
+#'fit1 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc + reg, family = binomial))
+#'fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
+#'D2(fit1, fit0)
+#'@seealso \code{\link[mitml]{testModels}}
 #'@export
-D2 <- function(fit1, fit0 = NULL, df.com = NULL, use = "wald", ...) {
+D2 <- function(fit1, fit0 = NULL, use = "wald", ...) {
   
   install.on.demand("mitml", ...)
   # fit1: a fitlist or mira-object

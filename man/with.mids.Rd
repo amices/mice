@@ -39,7 +39,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 }
 \seealso{
 \code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}, \code{\link{pool}},
-\code{\link{pool.compare}}, \code{\link{pool.r.squared}}
+\code{\link{D1}}, \code{\link{D3}}, \code{\link{pool.r.squared}}
 }
 \author{
 Karin Oudshoorn, Stef van Buuren 2009-2012

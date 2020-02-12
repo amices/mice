@@ -15,11 +15,30 @@ model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.}
 
 \item{df.com}{A single number or a numeric vector denoting the 
 complete-data degrees of freedom for the hypothesis test. If not specified,
-it is set equal to \code{df.residual} of model \code{fit1}. Not used 
-for method \code{D2()}.}
+it is set equal to \code{df.residual} of model \code{fit1}.}
 
 \item{...}{Not used.}
 }
 \description{
-Compare two nested models using D3-statistic
+The D3-statistics is a likelihood-ratio test statistic.
+}
+\examples{
+# Compare two linear models:
+imp <- mice(nhanes2, seed = 51009, print = FALSE)
+mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
+mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
+D3(mi1, mi0)
+
+# Compare two logistic regression models
+imp  <- mice(boys, maxit = 2, print = FALSE)
+fit1 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc + reg, family = binomial))
+fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
+D3(fit1, fit0)
+}
+\references{
+Meng, X. L., and D. B. Rubin. 1992. 
+Performing Likelihood Ratio Tests with Multiply-Imputed Data Sets. 
+\emph{Biometrika}, 79 (1): 103–11.
+
+\url{https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:likelihoodratio}
 }

@@ -4,7 +4,7 @@
 \alias{D2}
 \title{Compare two nested models using D2-statistic}
 \usage{
-D2(fit1, fit0 = NULL, df.com = NULL, use = "wald", ...)
+D2(fit1, fit0 = NULL, use = "wald", ...)
 }
 \arguments{
 \item{fit1}{An object of class \code{mira}, produced by \code{with()}.}
@@ -13,22 +13,34 @@ D2(fit1, fit0 = NULL, df.com = NULL, use = "wald", ...)
 model in \code{fit0} is a nested within \code{fit1}. The default null 
 model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.}
 
-\item{df.com}{A single number or a numeric vector denoting the 
-complete-data degrees of freedom for the hypothesis test. If not specified,
-it is set equal to \code{df.residual} of model \code{fit1}. Not used 
-for method \code{D2()}.}
-
 \item{use}{A character string denoting Wald- or likelihood-based based tests. Can be either \code{"wald"} or \code{"likelihood"}. Only used if \code{method="D2"}.}
 
 \item{...}{Not used.}
 }
 \description{
-Compare two nested models using D2-statistic
+The D2-statistic pools test statistics from the repeated analyses.
+The method is less powerful than the D1- and D3-statistics.
 }
-\details{
-The \code{D2} method does not use the \code{df.com} parameter, so
-it does not pass it down to \code{testModels}.
-This prevents the following warning thrown by \code{testModels}: 
-\code{Complete-data degrees of freedom are not available 
-for use with 'D2', and thus were ignored.}
+\examples{
+# Compare two linear models:
+imp <- mice(nhanes2, seed = 51009, print = FALSE)
+mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
+mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
+D2(mi1, mi0)
+
+# Compare two logistic regression models
+imp  <- mice(boys, maxit = 2, print = FALSE)
+fit1 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc + reg, family = binomial))
+fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
+D2(fit1, fit0)
+}
+\references{
+Li, K. H., X. L. Meng, T. E. Raghunathan, and D. B. Rubin. 1991. 
+Significance Levels from Repeated p-Values with Multiply-Imputed Data.
+\emph{Statistica Sinica} 1 (1): 65–92.
+
+\url{https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:chi}
+}
+\seealso{
+\code{\link[mitml]{testModels}}
 }

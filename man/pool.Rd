@@ -33,7 +33,7 @@ by the \code{with()} function, resulting an object of class \code{mira};
 \item Pool the estimates from each model into a single set of estimates 
 and standard errors, resulting is an object of class \code{mipo};
 \item Optionally, compare pooled estimates from different scientific models 
-by the \code{pool.compare()} function.
+by the \code{D1()} or \code{D3()} functions.
 }
 A common error is to reverse steps 2 and 3, i.e., to pool the 
 multiply-imputed data instead of the estimates. Doing so may severely bias 

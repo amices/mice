@@ -15,11 +15,34 @@ model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.}
 
 \item{df.com}{A single number or a numeric vector denoting the 
 complete-data degrees of freedom for the hypothesis test. If not specified,
-it is set equal to \code{df.residual} of model \code{fit1}. Not used 
-for method \code{D2()}.}
+it is set equal to \code{df.residual} of model \code{fit1}.}
 
 \item{\dots}{Not used.}
 }
 \description{
-Compare two nested models using D1-statistic
+The D1-statistics is the multivariate Wald test.
+}
+\examples{
+# Compare two linear models:
+imp <- mice(nhanes2, seed = 51009, print = FALSE)
+mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
+mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
+D1(mi1, mi0)
+
+# Compare two logistic regression models
+imp  <- mice(boys, maxit = 2, print = FALSE)
+fit1 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc + reg, family = binomial))
+fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
+D1(fit1, fit0)
+}
+\references{
+Li, K. H., T. E. Raghunathan, and D. B. Rubin. 1991.
+Large-Sample Significance Levels from Multiply Imputed Data Using 
+Moment-Based Statistics and an F Reference Distribution.
+\emph{Journal of the American Statistical Association}, 86(416): 1065–73.
+
+\url{https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:wald}
+}
+\seealso{
+\code{\link[mitml]{testModels}}
 }
