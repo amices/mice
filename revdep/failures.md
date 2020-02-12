@@ -2,29 +2,27 @@
 
 <details>
 
-* Version: 2.10.0
+* Version: 2.11.1
 * Source code: https://github.com/cran/brms
 * URL: https://github.com/paul-buerkner/brms, http://discourse.mc-stan.org
 * BugReports: https://github.com/paul-buerkner/brms/issues
-* Date/Publication: 2019-08-29 15:50:07 UTC
-* Number of recursive dependencies: 168
+* Date/Publication: 2020-01-19 20:00:21 UTC
+* Number of recursive dependencies: 167
 
 Run `revdep_details(,"brms")` for more info
 
 </details>
 
-## Newly broken
+## In both
 
 *   R CMD check timed out
     
-
-## In both
 
 *   checking installed package size ... NOTE
     ```
       installed size is  7.6Mb
       sub-directories of 1Mb or more:
-        R     4.1Mb
+        R     4.0Mb
         doc   2.6Mb
     ```
 
@@ -32,10 +30,10 @@ Run `revdep_details(,"brms")` for more info
 
 <details>
 
-* Version: 0.1.15-1
+* Version: 0.1.15-25
 * Source code: https://github.com/cran/dynr
-* Date/Publication: 2019-10-05 06:50:02 UTC
-* Number of recursive dependencies: 120
+* Date/Publication: 2020-02-11 19:10:05 UTC
+* Number of recursive dependencies: 119
 
 Run `revdep_details(,"dynr")` for more info
 
@@ -79,11 +77,11 @@ ERROR: configuration failed for package ‘dynr’
 
 <details>
 
-* Version: 4.3-0
+* Version: 4.3-1
 * Source code: https://github.com/cran/Hmisc
 * URL: http://biostat.mc.vanderbilt.edu/Hmisc, https://github.com/harrelfe/Hmisc
-* Date/Publication: 2019-11-07 19:20:02 UTC
-* Number of recursive dependencies: 121
+* Date/Publication: 2020-02-07 15:50:02 UTC
+* Number of recursive dependencies: 122
 
 Run `revdep_details(,"Hmisc")` for more info
 
@@ -136,7 +134,7 @@ ERROR: compilation failed for package ‘Hmisc’
 * Version: 0.2-5
 * Source code: https://github.com/cran/MissingDataGUI
 * Date/Publication: 2016-04-25 08:58:53
-* Number of recursive dependencies: 103
+* Number of recursive dependencies: 104
 
 Run `revdep_details(,"MissingDataGUI")` for more info
 
@@ -253,7 +251,7 @@ ERROR: lazy loading failed for package ‘MissingDataGUI’
 * Version: 0.1.1
 * Source code: https://github.com/cran/Replication
 * Date/Publication: 2019-08-01 14:50:02 UTC
-* Number of recursive dependencies: 107
+* Number of recursive dependencies: 106
 
 Run `revdep_details(,"Replication")` for more info
 
