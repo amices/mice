@@ -4,6 +4,8 @@ install.on.demand <- function(pkg, quiet = FALSE, ...) {
   # the console (if quiet = TRUE) and installs it from CRAN
   if (requireNamespace(pkg, quietly = TRUE)) return()
   if (!quiet) cat(paste0("\nInstalling '", pkg, "' package...\n"))
-  install.packages(pkg, quiet = quiet)
+  install.packages(pkg, repos = "https://cloud.r-project.org/", 
+                   quiet = quiet)
   if (!quiet) cat("\n")
 }
+
