@@ -116,9 +116,13 @@
 #' #> Method 2lonly.mean can fix such inconsistencies.
 #' }
 #' 
-#' # In contrast, if all sex values are missing for patid == 1, it runs fine
+#' # In contrast, if all sex values are missing for patid == 1, it runs fine,
+#' # except on r-patched-solaris-x86. I used dontrun to evade CRAN errors.
+#' \dontrun{
 #' data[1:5, "sex"] <- NA
-#' imp <- mice(data, method = c("", "2lonly.norm", "2l.pan"), predictorMatrix = pred, maxit = 1, m = 2)
+#' imp <- mice(data, method = c("", "2lonly.norm", "2l.pan"), 
+#'             predictorMatrix = pred, maxit = 1, m = 2)
+#' }
 #'@export
 mice.impute.2lonly.norm <- function (y, ry, x, type, wy = NULL, ...){
     imp <- .imputation.level2( y = y , ry = ry , x = x, type = type, wy = wy, 
