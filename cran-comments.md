@@ -193,7 +193,8 @@ for a solution (which is simple).
 
 `mice 3.8.0` removes dependencies, and does not automatically install
 anymore the `jomo` package. I have alerted the `miceadds` package
-maintainer, and asked for a fix (which is simple).
+maintainer, and asked for a fix (which is simple). The maintainer
+responded to have it fixed by next week.
 
 ### Problem 4
 
@@ -279,7 +280,8 @@ system.
 The `cobalt` problem is caused by a change in `mice::complete()`. There
 is a new name clash between the `MatchThem` and `mice 3.8.0`, and
 `cobalt` uses both packages. I have noted the `MatchThem` maintainer,
-and suggested a fix.
+and suggested a fix. The maintainer responded that he would look into
+it.
 
 The `hot.deck` problem is caused by a change in the
 `mice::summary.mira()` function. I have noted the `hot.deck` maintainer,
