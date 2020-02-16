@@ -31,7 +31,7 @@ The latest version is can be installed from GitHub as follows:
 
 ``` r
 install.packages("devtools")
-devtools::install_github(repo = "stefvanbuuren/mice@narfcs")
+devtools::install_github(repo = "stefvanbuuren/mice")
 ```
 
 ## Minimal example
