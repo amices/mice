@@ -7,6 +7,16 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+## This is resubmission 2
+
+This is resubmitted after the resubmission 1 was cancelled due to a miscommunication.
+
+There are two remaining problems (problems 2 (`hot.deck`) and 3 (`miceadds`) below). I have contacted the package maintainers two weeks ago, and both promised me to update. There is indeed a new version of `miceadds` on CRAN, which supposedly solves the problem. I believe that there should also be an update of `hot.deck`, though I haven't yet seen it on CRAN so that one is probably also in submission (I cant't see that).
+
+Hope this helps to get thing going again.
+
+
 ## This is resubmission 1
 
 
