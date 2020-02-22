@@ -3,6 +3,8 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.8.0.9000
+
 # mice 3.8.0
 
 ## Major changes 
