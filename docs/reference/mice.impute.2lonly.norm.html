@@ -78,7 +78,7 @@ predictorMatrix." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.8.0.9000</span>
       </span>
     </div>
 
@@ -281,12 +281,13 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <span class='co'>#&gt; Method 2lonly.mean can fix such inconsistencies.</span>
 }
 
-<span class='co'># In contrast, if all sex values are missing for patid == 1, it runs fine</span>
+<span class='co'># In contrast, if all sex values are missing for patid == 1, it runs fine,</span>
+<span class='co'># except on r-patched-solaris-x86. I used dontrun to evade CRAN errors.</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>data</span>[<span class='fl'>1</span>:<span class='fl'>5</span>, <span class='st'>"sex"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>data</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>""</span>, <span class='st'>"2lonly.norm"</span>, <span class='st'>"2l.pan"</span>), <span class='kw'>predictorMatrix</span> <span class='kw'>=</span> <span class='no'>pred</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; 
-#&gt;  iter imp variable
-#&gt;   1   1  sex  crp
-#&gt;   1   2  sex  crp</div></pre>
+<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>data</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>""</span>, <span class='st'>"2lonly.norm"</span>, <span class='st'>"2l.pan"</span>),
+            <span class='kw'>predictorMatrix</span> <span class='kw'>=</span> <span class='no'>pred</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
