@@ -43,20 +43,20 @@ D3 <- function(fit1, fit0 = NULL, df.com = Inf, ...) {
   
   # For each imputed dataset, calculate the deviance between the two 
   # models as fitted
-  dev1.M <- lapply(fit1, glance) %>% 
+  dev1.M <- -2 * lapply(fit1, glance) %>% 
     bind_rows() %>% 
-    pull(.data$deviance)
-  dev0.M <- lapply(fit0, glance) %>% 
+    pull(.data$logLik)
+  dev0.M <- -2 * lapply(fit0, glance) %>% 
     bind_rows() %>% 
-    pull(.data$deviance)
+    pull(.data$logLik)
   
   # For each imputed dataset, calculate the deviance between the two 
   # models with coefficients restricted to qbar
   mds1 <- lapply(fit1, fix.coef, beta = qbar1)
-  dev1.L <- lapply(mds1, glance) %>% bind_rows() %>% pull(.data$deviance)
+  dev1.L <- -2 * lapply(mds1, glance) %>% bind_rows() %>% pull(.data$logLik)
   
   mds0 <- lapply(fit0, fix.coef, beta = qbar0)
-  dev0.L <- lapply(mds0, glance) %>% bind_rows() %>% pull(.data$deviance)
+  dev0.L <- -2 * lapply(mds0, glance) %>% bind_rows() %>% pull(.data$logLik)
   
   deviances <- list(dev1.M = dev1.M, dev0.M = dev0.M, 
                     dev1.L = dev1.L, dev0.L = dev0.L)
