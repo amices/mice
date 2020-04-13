@@ -5,7 +5,8 @@
 \alias{mammalsleep}
 \alias{sleep}
 \title{Mammal sleep data}
-\format{\code{mammalsleep} is a data frame with 62 rows and 11 columns:
+\format{
+\code{mammalsleep} is a data frame with 62 rows and 11 columns:
 \describe{ 
 \item{species}{Species of animal}
 \item{bw}{Body weight (kg)}
@@ -20,7 +21,8 @@
 well-protected den), 5 = most exposed} 
 \item{odi}{Overall danger index (1-5) based on the above two indices and other information, 1 = least
 danger (from other animals), 5 = most danger (from other animals)} 
-}}
+}
+}
 \source{
 Allison, T., Cicchetti, D.V. (1976). Sleep in Mammals: Ecological and
 Constitutional Correlates. Science, 194(4266), 732-734.

@@ -4,7 +4,8 @@
 \name{toenail}
 \alias{toenail}
 \title{Toenail data}
-\format{A data frame with 1908 observations on the following 5 variables: 
+\format{
+A data frame with 1908 observations on the following 5 variables: 
   \describe{
   \item{\code{ID}}{a numeric vector giving the ID of patient}
   \item{\code{outcome}}{a numeric vector giving the response 
@@ -13,7 +14,8 @@
   \item{\code{month}}{a numeric vector giving the time of the visit 
   (not exactly monthly intervals hence not round numbers)}
   \item{\code{visit}}{a numeric vector giving the number of the visit}
-  }}
+  }
+}
 \source{
 De Backer, M., De Vroey, C., Lesaffre, E., Scheys, I., and De
 Keyser, P. (1998). Twelve weeks of continuous oral therapy for

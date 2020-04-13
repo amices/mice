@@ -4,12 +4,14 @@
 \name{employee}
 \alias{employee}
 \title{Employee selection data}
-\format{A data frame with 20 rows and 3 variables:
+\format{
+A data frame with 20 rows and 3 variables:
 \describe{
 \item{IQ}{candidate IQ score}
 \item{wbeing}{candidate well-being score}
 \item{jobperf}{candidate job performance score}
-}}
+}
+}
 \source{
 Enders (2010), Applied Missing Data Analysis, p. 218
 }

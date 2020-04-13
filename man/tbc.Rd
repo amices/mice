@@ -6,7 +6,8 @@
 \alias{tbc.target}
 \alias{terneuzen}
 \title{Terneuzen birth cohort}
-\format{\code{tbs} is a data frame with 3951 rows and 11 columns: 
+\format{
+\code{tbs} is a data frame with 3951 rows and 11 columns: 
 \describe{
 \item{id}{Person number}
 \item{occ}{Occasion number}
@@ -26,7 +27,8 @@
 \item{id}{Person number}
 \item{ao}{Adult overweight (0=no, 1=yes)}
 \item{bmi.z.jv}{BMI Z-score as young adult (18-29 years)}
-}}
+}
+}
 \source{
 De Kroon, M. L. A., Renders, C. M., Kuipers, E. C., van Wouwe, J. P.,
 van Buuren, S., de Jonge, G. A., Hirasing, R. A. (2008). Identifying

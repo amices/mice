@@ -4,7 +4,8 @@
 \name{popmis}
 \alias{popmis}
 \title{Hox pupil popularity data with missing popularity scores}
-\format{A data frame with 2000 rows and 7 columns: 
+\format{
+A data frame with 2000 rows and 7 columns: 
 \describe{
 \item{pupil}{Pupil number within school} 
 \item{school}{School number} 
@@ -12,7 +13,8 @@
 \item{sex}{Pupil gender} 
 \item{texp}{Teacher experience (years)} 
 \item{const}{Constant intercept term}
-\item{teachpop}{Teacher popularity} }}
+\item{teachpop}{Teacher popularity} }
+}
 \source{
 Hox, J. J. (2002) \emph{Multilevel analysis. Techniques and
 applications.} Mahwah, NJ: Lawrence Erlbaum.

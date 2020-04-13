@@ -5,9 +5,11 @@
 \alias{pops}
 \alias{pops.pred}
 \title{Project on preterm and small for gestational age infants (POPS)}
-\format{\code{pops} is a data frame with 959 rows and 86 columns.
+\format{
+\code{pops} is a data frame with 959 rows and 86 columns.
 \code{pops.pred} is the 86 by 86 binary predictor matrix used for specifying
-the multiple imputation model.}
+the multiple imputation model.
+}
 \source{
 Hille, E. T. M., Elbertse, L., Bennebroek Gravenhorst, J., Brand, R.,
 Verloove-Vanhorick, S. P. (2005).  Nonresponse bias in a follow-up study of

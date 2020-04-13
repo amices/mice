@@ -4,7 +4,9 @@
 \name{mnar_demo_data}
 \alias{mnar_demo_data}
 \title{MNAR demo data}
-\format{An object of class \code{data.frame} with 500 rows and 3 columns.}
+\format{
+An object of class \code{data.frame} with 500 rows and 3 columns.
+}
 \source{
 \url{https://github.com/moreno-betancur/NARFCS/blob/master/datmis.csv}
 }

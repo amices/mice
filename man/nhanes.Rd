@@ -4,12 +4,14 @@
 \name{nhanes}
 \alias{nhanes}
 \title{NHANES example - all variables numerical}
-\format{A data frame with 25 observations on the following 4 variables.
+\format{
+A data frame with 25 observations on the following 4 variables.
 \describe{ 
 \item{age}{Age group (1=20-39, 2=40-59, 3=60+)}
 \item{bmi}{Body mass index (kg/m**2)} 
 \item{hyp}{Hypertensive (1=no,2=yes)} 
-\item{chl}{Total serum cholesterol (mg/dL)} }}
+\item{chl}{Total serum cholesterol (mg/dL)} }
+}
 \source{
 Schafer, J.L. (1997).  \emph{Analysis of Incomplete Multivariate
 Data.} London: Chapman & Hall. Table 6.14.

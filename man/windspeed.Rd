@@ -4,7 +4,8 @@
 \name{windspeed}
 \alias{windspeed}
 \title{Subset of Irish wind speed data}
-\format{A data frame with 433 rows and 6 columns containing the daily average
+\format{
+A data frame with 433 rows and 6 columns containing the daily average
 wind speeds within the period 1961-1978 at meteorological stations in the
 Republic of Ireland. The data are a random sample from a larger data set.
 \describe{ 
@@ -13,7 +14,8 @@ Republic of Ireland. The data are a random sample from a larger data set.
 \item{Shannon}{Shannon}
 \item{Dublin}{Dublin} 
 \item{Clones}{Clones}
-\item{MalinHead}{Malin Head} }}
+\item{MalinHead}{Malin Head} }
+}
 \description{
 Subset of Irish wind speed data
 }

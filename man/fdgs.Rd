@@ -4,7 +4,8 @@
 \name{fdgs}
 \alias{fdgs}
 \title{Fifth Dutch growth study 2009}
-\format{\code{fdgs} is a data frame with 10030 rows and 8 columns: 
+\format{
+\code{fdgs} is a data frame with 10030 rows and 8 columns: 
 \describe{
 \item{id}{Person number} 
 \item{reg}{Region (factor, 5 levels)} 
@@ -14,7 +15,8 @@
 \item{wgt}{Weight (kg)}
 \item{hgt.z}{Height Z-score} 
 \item{wgt.z}{Weight Z-score} 
-}}
+}
+}
 \source{
 Schonbeck, Y., Talma, H., van Dommelen, P., Bakker, B., Buitendijk,
 S. E., Hirasing, R. A., van Buuren, S. (2011).  Increase in prevalence of

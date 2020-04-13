@@ -5,7 +5,8 @@
 \alias{selfreport}
 \alias{mgg}
 \title{Self-reported and measured BMI}
-\format{A data frame with 2060 rows and 15 variables: 
+\format{
+A data frame with 2060 rows and 15 variables: 
 \describe{
 \item{src}{Study, either \code{krul} or \code{mgg} (factor)}
 \item{id}{Person identification number}
@@ -22,7 +23,8 @@
 \item{web}{Obtained through web survey (factor)}
 \item{bm}{BMI measured (kg/m2)}
 \item{br}{BMI reported (kg/m2)} 
-}}
+}
+}
 \source{
 Krul, A., Daanen, H. A. M., Choi, H. (2010). Self-reported and
 measured weight, height and body mass index (BMI) in Italy, The Netherlands

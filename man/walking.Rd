@@ -4,14 +4,16 @@
 \name{walking}
 \alias{walking}
 \title{Walking disability data}
-\format{A data frame with 890 rows on the following 5 variables: 
+\format{
+A data frame with 890 rows on the following 5 variables: 
 \describe{
 \item{sex}{Sex of respondent (factor)} 
 \item{age}{Age of respondent} 
 \item{YA}{Item administered in samples A and E (factor)}
 \item{YB}{Item administered in samples B and E (factor)}
 \item{src}{Source: Sample A, B or E (factor)} 
-}}
+}
+}
 \description{
 Two items YA and YB measuring walking disability in samples A, B and E.
 }

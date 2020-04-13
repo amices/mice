@@ -4,7 +4,8 @@
 \name{potthoffroy}
 \alias{potthoffroy}
 \title{Potthoff-Roy data}
-\format{\code{tbs} is a data frame with 27 rows and 6 columns: 
+\format{
+\code{tbs} is a data frame with 27 rows and 6 columns: 
 \describe{
 \item{id}{Person number}
 \item{sex}{Sex M/F}
@@ -12,7 +13,8 @@
 \item{d10}{Distance at age 10 years}
 \item{d12}{Distance at age 12 years}
 \item{d14}{Distance at age 14 years}
-}}
+}
+}
 \source{
 Potthoff, R. F., Roy, S. N. (1964).  A generalized multivariate
 analysis of variance model usefully especially for growth curve problems.

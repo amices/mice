@@ -4,7 +4,9 @@
 \name{leiden85}
 \alias{leiden85}
 \title{Leiden 85+ study}
-\format{\code{leiden85} is a data frame with 956 rows and 336 columns.}
+\format{
+\code{leiden85} is a data frame with 956 rows and 336 columns.
+}
 \source{
 Lagaay, A. M., van der Meij, J. C., Hijmans, W. (1992).  Validation of
 medical history taking as part of a population based survey in subjects aged

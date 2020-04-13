@@ -70,4 +70,4 @@ LazyLoad: yes
 LazyData: yes
 URL: https://github.com/stefvanbuuren/mice, https://stefvanbuuren.name/mice/, https://stefvanbuuren.name/fimd/
 BugReports: https://github.com/stefvanbuuren/mice/issues
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0

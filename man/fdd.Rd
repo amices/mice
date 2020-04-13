@@ -5,7 +5,8 @@
 \alias{fdd}
 \alias{fdd.pred}
 \title{SE Fireworks disaster data}
-\format{\code{fdd} is a data frame with 52 rows and 65 columns: 
+\format{
+\code{fdd} is a data frame with 52 rows and 65 columns: 
 \describe{
 \item{id}{Client number}
 \item{trt}{Treatment (E=EMDR, C=CBT)} 
@@ -74,7 +75,8 @@
 \item{bir3}{Birlison T3} 
 } 
 \code{fdd.pred} is the 65 by 65 binary
-predictor matrix used to impute \code{fdd}.}
+predictor matrix used to impute \code{fdd}.
+}
 \source{
 de Roos, C., Greenwald, R., den Hollander-Gijsman, M., Noorthoorn,
 E., van Buuren, S., de Jong, A. (2011). A Randomised Comparison of Cognitive

@@ -4,7 +4,8 @@
 \name{brandsma}
 \alias{brandsma}
 \title{Brandsma school data used Snijders and Bosker (2012)}
-\format{\code{brandsma} is a data frame with 4106 rows and 14 columns: 
+\format{
+\code{brandsma} is a data frame with 4106 rows and 14 columns: 
 \describe{
 \item{\code{sch}}{School number}
 \item{\code{pup}}{Pupil ID}
@@ -20,7 +21,8 @@
 \item{\code{apo}}{Arithmetic score POST} 
 \item{\code{den}}{Denomination classification 1-4 - at school level}
 \item{\code{ssi}}{School SES indicator - at school level}
-}}
+}
+}
 \source{
 Constructed from \code{MLbook_2nded_total_4106-99.sav} from
 \url{https://www.stats.ox.ac.uk/~snijders/mlbook.htm} by function
