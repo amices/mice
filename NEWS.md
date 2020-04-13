@@ -3,7 +3,9 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.8.0.9000
+# mice 3.8.1
+
+* Minor: Updates to latest `roxygen` version
 
 # mice 3.8.0
 

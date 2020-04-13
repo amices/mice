@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -35,7 +39,7 @@
 
 <!-- docsearch -->
 <script src="../docsearch.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
 <link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
@@ -59,7 +63,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -73,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.8.1</span>
       </span>
     </div>
 
@@ -94,7 +98,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice">
+  <a href="https://github.com/stefvanbuuren/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -118,24 +122,27 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
       <small>Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="mice-3-8-0-9000" class="section level1">
-<h1 class="page-header">
-<a href="#mice-3-8-0-9000" class="anchor"></a>mice 3.8.0.9000<small> Unreleased </small>
+    <div id="mice-3-8-1" class="section level1">
+<h1 class="page-header" data-toc-text="3.8.1">
+<a href="#mice-3-8-1" class="anchor"></a>mice 3.8.1<small> Unreleased </small>
 </h1>
+<ul>
+<li>Minor: Updates to latest <code>roxygen</code> version</li>
+</ul>
 </div>
     <div id="mice-3-8-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="3.8.0">
 <a href="#mice-3-8-0" class="anchor"></a>mice 3.8.0<small> 2020-02-21 </small>
 </h1>
 <div id="major-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
-<li>This version adds two new NARFCS methods for imputing data under the <em>Missing Not at Random (MNAR)</em> assumption. NARFCS is generalised version of the so-called $\delta$-adjustment method. Margarita Moreno-Betancur and Ian White kindly contributes the functions <code><a href="../reference/mice.impute.mnar.html">mice.impute.mnar.norm()</a></code> and <code><a href="../reference/mice.impute.mnar.html">mice.impute.mnar.logreg()</a></code>. These functions aid in performing sensitivity analysis to investigate the impact of different MNAR assumptions on the conclusion of the study. An alternative for MNAR is the older <code><a href="../reference/mice.impute.ri.html">mice.impute.ri()</a></code> function.</li>
+<li>This version adds two new NARFCS methods for imputing data under the <em>Missing Not at Random (MNAR)</em> assumption. NARFCS is generalised version of the so-called <span class="math inline"><em>Î´</em></span>-adjustment method. Margarita Moreno-Betancur and Ian White kindly contributes the functions <code><a href="../reference/mice.impute.mnar.html">mice.impute.mnar.norm()</a></code> and <code><a href="../reference/mice.impute.mnar.html">mice.impute.mnar.logreg()</a></code>. These functions aid in performing sensitivity analysis to investigate the impact of different MNAR assumptions on the conclusion of the study. An alternative for MNAR is the older <code><a href="../reference/mice.impute.ri.html">mice.impute.ri()</a></code> function.</li>
 <li>Installation of <code>mice</code> is faster. External packages needed for imputation and analyses are now installed on demand. The number of dependencies as estimated by <code>rsconnect::appDepencies()</code> decreased from 132 to 83.</li>
 <li>The name clash with the <code><a href="../reference/complete.mids.html">complete()</a></code> function of <code>tidyr</code> should no longer be a problem.</li>
 <li>There is now a more flexible <code><a href="../reference/pool.html">pool()</a></code> function that integrates better with the <code>broom</code> and <code>broom.mixed</code> packages.</li>
@@ -160,7 +167,7 @@
 </div>
 </div>
     <div id="mice-3-7-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="3.7.0">
 <a href="#mice-3-7-0" class="anchor"></a>mice 3.7.0<small> 2019-12-13 </small>
 </h1>
 <ul>
@@ -180,12 +187,12 @@
 <li>Replace deprecated <code>imputationMethod</code> argument in examples by <code>method</code>
 </li>
 <li>More informative error message when stopped after pre-processing (<a href='https://github.com/stefvanbuuren/mice/issues/194'>#194</a>)</li>
-<li>Updated URL’s in DESCRIPTION</li>
+<li>Updated URLâs in DESCRIPTION</li>
 <li>Fix string matching in <code>check.predictorMatrix()</code> (<a href='https://github.com/stefvanbuuren/mice/issues/191'>#191</a>)</li>
 </ul>
 </div>
     <div id="mice-3-6-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="3.6.0">
 <a href="#mice-3-6-0" class="anchor"></a>mice 3.6.0<small> 2019-07-10 </small>
 </h1>
 <ul>
@@ -196,7 +203,7 @@
 </ul>
 </div>
     <div id="mice-3-5-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="3.5.0">
 <a href="#mice-3-5-0" class="anchor"></a>mice 3.5.0<small> 2019-05-13 </small>
 </h1>
 <ul>
@@ -208,7 +215,7 @@
 </ul>
 </div>
     <div id="mice-3-4-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="3.4.0">
 <a href="#mice-3-4-0" class="anchor"></a>mice 3.4.0<small> 2019-03-07 </small>
 </h1>
 <ul>
@@ -226,7 +233,7 @@
 </ul>
 </div>
     <div id="mice-3-3-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="3.3.0">
 <a href="#mice-3-3-0" class="anchor"></a>mice 3.3.0<small> 2018-07-27 </small>
 </h1>
 <ul>
@@ -238,7 +245,7 @@
 </ul>
 </div>
     <div id="mice-3-2-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="3.2.0">
 <a href="#mice-3-2-0" class="anchor"></a>mice 3.2.0<small> 2018-07-24 </small>
 </h1>
 <ul>
@@ -253,7 +260,7 @@
 </ul>
 </div>
     <div id="mice-3-1-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="3.1.0">
 <a href="#mice-3-1-0" class="anchor"></a>mice 3.1.0<small> 2018-06-20 </small>
 </h1>
 <ul>
@@ -273,7 +280,7 @@
 </ul>
 </div>
     <div id="mice-3-0-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="3.0.0">
 <a href="#mice-3-0-0" class="anchor"></a>mice 3.0.0<small> 2018-05-25 </small>
 </h1>
 <p>Version 3.0 represents a major update that implements the following features:</p>
@@ -281,14 +288,14 @@
 <li><p><code>blocks</code>: The main algorithm iterates over blocks. A block is simply a collection of variables. In the common MICE algorithm each block was equivalent to one variable, which - of course - is the default; The <code>blocks</code> argument allows mixing univariate imputation method multivariate imputation methods. The <code>blocks</code> feature bridges two seemingly disparate approaches, joint modeling and fully conditional specification, into one framework;</p></li>
 <li><p><code>where</code>: The <code>where</code> argument is a logical matrix of the same size of <code>data</code> that specifies which cells should be imputed. This opens up some new analytic possibilities;</p></li>
 <li><p>Multivariate tests: There are new functions <code><a href="../reference/D1.html">D1()</a></code>, <code><a href="../reference/D2.html">D2()</a></code>, <code><a href="../reference/D3.html">D3()</a></code> and <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> that perform multivariate parameter tests on the repeated analysis from on multiply-imputed data;</p></li>
-<li><p><code>formulas</code>: The old <code>form</code> argument has been redesign and is now renamed to <code>formulas</code>. This provides an alternative way to specify imputation models that exploits the full power of R’s native formula’s.</p></li>
+<li><p><code>formulas</code>: The old <code>form</code> argument has been redesign and is now renamed to <code>formulas</code>. This provides an alternative way to specify imputation models that exploits the full power of Râs native formulaâs.</p></li>
 <li><p>Better integration with the <code>tidyverse</code> framework, especially for packages <code>dplyr</code>, <code>tibble</code> and <code>broom</code>;</p></li>
 <li><p>Improved numerical algorithms for low-level imputation function. Better handling of duplicate variables.</p></li>
 <li><p>Last but not least: A brand new edition AND online version of <a href="https://stefvanbuuren.name/fimd/">Flexible Imputation of Missing Data. Second Edition.</a></p></li>
 </ol>
 </div>
     <div id="mice-2-46-9-2017-12-08" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.46.9">
 <a href="#mice-2-46-9-2017-12-08" class="anchor"></a>mice 2.46.9 (2017-12-08)<small> Unreleased </small>
 </h1>
 <ul>
@@ -305,7 +312,7 @@
 </ul>
 </div>
     <div id="mice-2-46-2017-10-22" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.46">
 <a href="#mice-2-46-2017-10-22" class="anchor"></a>mice 2.46 (2017-10-22)<small> Unreleased </small>
 </h1>
 <ul>
@@ -313,7 +320,7 @@
 </ul>
 </div>
     <div id="mice-2-45-2017-10-21" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.45">
 <a href="#mice-2-45-2017-10-21" class="anchor"></a>mice 2.45 (2017-10-21)<small> Unreleased </small>
 </h1>
 <ul>
@@ -321,7 +328,7 @@
 </ul>
 </div>
     <div id="mice-2-44-2017-10-18" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.44">
 <a href="#mice-2-44-2017-10-18" class="anchor"></a>mice 2.44 (2017-10-18)<small> Unreleased </small>
 </h1>
 <ul>
@@ -329,7 +336,7 @@
 </ul>
 </div>
     <div id="mice-2-43-2017-07-20" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.43">
 <a href="#mice-2-43-2017-07-20" class="anchor"></a>mice 2.43 (2017-07-20)<small> Unreleased </small>
 </h1>
 <ul>
@@ -337,7 +344,7 @@
 </ul>
 </div>
     <div id="mice-2-42-2017-07-11" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.42">
 <a href="#mice-2-42-2017-07-11" class="anchor"></a>mice 2.42 (2017-07-11)<small> Unreleased </small>
 </h1>
 <ul>
@@ -346,7 +353,7 @@
 </ul>
 </div>
     <div id="mice-2-41-2017-07-10" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.41">
 <a href="#mice-2-41-2017-07-10" class="anchor"></a>mice 2.41 (2017-07-10)<small> Unreleased </small>
 </h1>
 <ul>
@@ -359,7 +366,7 @@
 </ul>
 </div>
     <div id="mice-2-40-2017-07-07" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.40">
 <a href="#mice-2-40-2017-07-07" class="anchor"></a>mice 2.40 (2017-07-07)<small> Unreleased </small>
 </h1>
 <ul>
@@ -374,7 +381,7 @@
 </ul>
 </div>
     <div id="mice-2-34-2017-04-24" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.34">
 <a href="#mice-2-34-2017-04-24" class="anchor"></a>mice 2.34 (2017-04-24)<small> Unreleased </small>
 </h1>
 <ul>
@@ -385,7 +392,7 @@
 </ul>
 </div>
     <div id="mice-2-31-2017-02-23" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.31">
 <a href="#mice-2-31-2017-02-23" class="anchor"></a>mice 2.31 (2017-02-23)<small> Unreleased </small>
 </h1>
 <ul>
@@ -393,7 +400,7 @@
 <li>Add package documentation</li>
 <li>Add <code>README</code> for GitHub</li>
 <li>Add new ampute functions and vignette (thanks Rianne Schouten)</li>
-<li>Rename <code>ccn</code> –&gt; <code>ncc</code>, <code>icn</code> –&gt; <code>nic</code>
+<li>Rename <code>ccn</code> â&gt; <code>ncc</code>, <code>icn</code> â&gt; <code>nic</code>
 </li>
 <li>Change helpers <code><a href="../reference/cc.html">cc()</a></code>, <code><a href="../reference/ncc.html">ncc()</a></code>, <code><a href="../reference/cci.html">cci()</a></code>, <code><a href="../reference/ic.html">ic()</a></code>, <code><a href="../reference/nic.html">nic()</a></code> and <code><a href="../reference/ici.html">ici()</a></code> use <code>S3</code> dispatch</li>
 <li>Change issues tracker on Github - add BugReports URL <a href='https://github.com/stefvanbuuren/mice/issues/21'>#21</a></li>
@@ -404,7 +411,7 @@
 </ul>
 </div>
     <div id="mice-2-29-2016-10-05" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.29">
 <a href="#mice-2-29-2016-10-05" class="anchor"></a>mice 2.29 (2016-10-05)<small> Unreleased </small>
 </h1>
 <ul>
@@ -412,7 +419,7 @@
 </ul>
 </div>
     <div id="mice-2-28-2016-10-05" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.28">
 <a href="#mice-2-28-2016-10-05" class="anchor"></a>mice 2.28 (2016-10-05)<small> Unreleased </small>
 </h1>
 <ul>
@@ -420,7 +427,7 @@
 </ul>
 </div>
     <div id="mice-2-27-2016-07-27" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.27">
 <a href="#mice-2-27-2016-07-27" class="anchor"></a>mice 2.27 (2016-07-27)<small> Unreleased </small>
 </h1>
 <ul>
@@ -430,7 +437,7 @@
 </ul>
 </div>
     <div id="mice-2-25-2015-11-09" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.25">
 <a href="#mice-2-25-2015-11-09" class="anchor"></a>mice 2.25 (2015-11-09)<small> 2015-11-09 </small>
 </h1>
 <ul>
@@ -439,20 +446,20 @@
 </ul>
 </div>
     <div id="mice-2-23-2015-11-04" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.23">
 <a href="#mice-2-23-2015-11-04" class="anchor"></a>mice 2.23 (2015-11-04)<small> Unreleased </small>
 </h1>
 <ul>
 <li>Update of example code on /doc</li>
 <li><p>Remove lots of dependencies, general cleanup</p></li>
 <li>Fix <code>impute.polyreg()</code> bug that bombed if there were no predictors (thanks Jan Graffelman)</li>
-<li>Fix <code><a href="../reference/as.mids.html">as.mids()</a></code> bug that gave incorrect $m$ (several users)</li>
+<li>Fix <code><a href="../reference/as.mids.html">as.mids()</a></code> bug that gave incorrect <span class="math inline"><em>m</em></span> (several users)</li>
 <li>Fix <code><a href="../reference/pool.compare.html">pool.compare()</a></code> error for <code>lmer</code> object (thanks Claudio Bustos)</li>
 <li><p>Fix error in <code><a href="../reference/mice.impute.2l.norm.html">mice.impute.2l.norm()</a></code> if just one <code>NA</code> (thanks Jeroen Hoogland)</p></li>
 </ul>
 </div>
     <div id="mice-2-22-2014-06-11" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.22">
 <a href="#mice-2-22-2014-06-11" class="anchor"></a>mice 2.22 (2014-06-11)<small> 2014-06-11 </small>
 </h1>
 <ul>
@@ -478,7 +485,7 @@
 </ul>
 </div>
     <div id="mice-2-21-02-05-2014-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.21">
 <a href="#mice-2-21-02-05-2014-svb" class="anchor"></a>mice 2.21 02-05-2014 SvB<small> 2014-02-05 </small>
 </h1>
 <ul>
@@ -486,7 +493,7 @@
 </ul>
 </div>
     <div id="mice-2-20-02-02-2014-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.20">
 <a href="#mice-2-20-02-02-2014-svb" class="anchor"></a>mice 2.20 02-02-2014 SvB<small> 2014-02-04 </small>
 </h1>
 <ul>
@@ -495,12 +502,12 @@
 </ul>
 </div>
     <div id="mice-2-19-21-01-2014-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.19">
 <a href="#mice-2-19-21-01-2014-svb" class="anchor"></a>mice 2.19 21-01-2014 SvB<small> Unreleased </small>
 </h1>
 <ul>
 <li>ADDED: mice.impute.rf() for random forest imputation (thanks Lisa Doove)</li>
-<li>CHANGED: default number of donors in mice.impute.pmm() changed from 3 to 5. Use mice(…, donors = 3) to get the old behavior.</li>
+<li>CHANGED: default number of donors in mice.impute.pmm() changed from 3 to 5. Use mice(â¦, donors = 3) to get the old behavior.</li>
 <li>CHANGED: speedup in .norm.draw() by using crossprod() (thanks Alexander Robitzsch)</li>
 <li>CHANGED: speedup in .imputation.level2() (thanks Alexander Robitzsch)</li>
 <li>FIXED: define MASS, nnet, lattice as imports instead of depends</li>
@@ -508,7 +515,7 @@
 </ul>
 </div>
     <div id="mice-2-18-31-07-2013-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.18">
 <a href="#mice-2-18-31-07-2013-svb" class="anchor"></a>mice 2.18 31-07-2013 SvB<small> 2013-08-01 </small>
 </h1>
 <ul>
@@ -518,7 +525,7 @@
 </ul>
 </div>
     <div id="mice-2-17-10-05-2013-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.17">
 <a href="#mice-2-17-10-05-2013-svb" class="anchor"></a>mice 2.17 10-05-2013 SvB<small> 2013-05-12 </small>
 </h1>
 <ul>
@@ -529,7 +536,7 @@
 </ul>
 </div>
     <div id="mice-2-16-27-04-2013-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.16">
 <a href="#mice-2-16-27-04-2013-svb" class="anchor"></a>mice 2.16 27-04-2013 SvB<small> 2013-04-27 </small>
 </h1>
 <ul>
@@ -542,7 +549,7 @@
 </ul>
 </div>
     <div id="mice-2-15---02-04-2013-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.15">
 <a href="#mice-2-15---02-04-2013-svb" class="anchor"></a>mice 2.15 - 02-04-2013 SvB<small> 2013-04-03 </small>
 </h1>
 <ul>
@@ -554,14 +561,14 @@
 </ul>
 </div>
     <div id="mice-2-14---11-03-2013-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.14">
 <a href="#mice-2-14---11-03-2013-svb" class="anchor"></a>mice 2.14 - 11-03-2013 / SvB<small> 2013-03-19 </small>
 </h1>
 <ul>
 <li>ADDED: mice.impute.2l.mean() for imputing class means at level 2</li>
 <li>ADDED: sampler(): new checks of degrees of freedom per variable at iteration 1</li>
 <li>ADDED: function check.df() to throw a warning about low degrees of freedom</li>
-<li>FIXED: tolower() added in “2l” test in sampler()</li>
+<li>FIXED: tolower() added in â2lâ test in sampler()</li>
 <li>FIXED: conversion of factors that have other roles (multilevel) in padModel()</li>
 <li>FIXED: family argument in call to glm() in glm.mids() (thanks Nicholas Horton)</li>
 <li>FIXED: .norm.draw(): evading NaN imputed values by setting df in rchisq() to a minimum of 1</li>
@@ -571,7 +578,7 @@
 </ul>
 </div>
     <div id="mice-2-13---03-07-2012-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.13">
 <a href="#mice-2-13---03-07-2012-svb" class="anchor"></a>mice 2.13 - 03-07-2012 / SvB<small> 2012-07-04 </small>
 </h1>
 <ul>
@@ -584,12 +591,12 @@
 <li>FIXED: bug that chrashed plot.mids() if there was only one incomplete variable (thanks Dennis Prangle)</li>
 <li>FIXED: bug in sample() in .pmm.match() when donor=1 (thanks Alexander Robitzsch)</li>
 <li>FIXED: bug in sample() in mice.impute.sample()</li>
-<li>FIXED: fixed ‘?data’ bug in check.method()</li>
+<li>FIXED: fixed â?dataâ bug in check.method()</li>
 <li>REMOVED: wp.twin(). Now available from the AGD package</li>
 </ul>
 </div>
     <div id="mice-2-12---25-03-2012-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.12">
 <a href="#mice-2-12---25-03-2012-svb" class="anchor"></a>mice 2.12 - 25-03-2012 / SvB<small> 2012-03-25 </small>
 </h1>
 <ul>
@@ -610,7 +617,7 @@
 </ul>
 </div>
     <div id="mice-2-11---21-11-2011-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.11">
 <a href="#mice-2-11---21-11-2011-svb" class="anchor"></a>mice 2.11 - 21-11-2011 / SvB<small> 2011-11-22 </small>
 </h1>
 <ul>
@@ -623,16 +630,16 @@
 </ul>
 </div>
     <div id="mice-2-10---14-09-2011-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.10">
 <a href="#mice-2-10---14-09-2011-svb" class="anchor"></a>mice 2.10 - 14-09-2011 / SvB<small> 2011-09-15 </small>
 </h1>
 <ul>
 <li>FIXED: arguments dec and sep in mids2spss (thanks Nicole Haag)</li>
-<li>FIXED: bug in keyword “monotone” in mice() (thanks Alain D)</li>
+<li>FIXED: bug in keyword âmonotoneâ in mice() (thanks Alain D)</li>
 </ul>
 </div>
     <div id="mice-2-9---31-08-2011-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.9">
 <a href="#mice-2-9---31-08-2011-svb" class="anchor"></a>mice 2.9 - 31-08-2011 / SvB<small> 2011-09-01 </small>
 </h1>
 <ul>
@@ -647,7 +654,7 @@
 </ul>
 </div>
     <div id="mice-2-8---24-03-2011-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.8">
 <a href="#mice-2-8---24-03-2011-svb" class="anchor"></a>mice 2.8 - 24-03-2011 / SvB<small> 2011-03-26 </small>
 </h1>
 <ul>
@@ -655,7 +662,7 @@
 </ul>
 </div>
     <div id="mice-2-7---16-03-2011-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.7">
 <a href="#mice-2-7---16-03-2011-svb" class="anchor"></a>mice 2.7 - 16-03-2011 / SvB<small> 2011-03-16 </small>
 </h1>
 <ul>
@@ -665,7 +672,7 @@
 </ul>
 </div>
     <div id="mice-2-6---03-03-2011-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.6">
 <a href="#mice-2-6---03-03-2011-svb" class="anchor"></a>mice 2.6 - 03-03-2011 / SvB<small> 2011-03-04 </small>
 </h1>
 <ul>
@@ -677,12 +684,12 @@
 <li>FIXED: reporting bug in summary.mipo()</li>
 <li>CHANGED: df calculation in pool(), intervals may become slightly wider</li>
 <li>ADDED: internal functions mice.df() and df.residual()</li>
-<li>FIXED: error in rm calculation for “likelihood” in pool.compare()</li>
+<li>FIXED: error in rm calculation for âlikelihoodâ in pool.compare()</li>
 <li>CHANGED: default ridge parameter changed</li>
 </ul>
 </div>
     <div id="mice-2-5---06-01-2011-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.5">
 <a href="#mice-2-5---06-01-2011-svb" class="anchor"></a>mice 2.5 - 06-01-2011 / SvB<small> 2011-01-06 </small>
 </h1>
 <ul>
@@ -693,7 +700,7 @@
 <li>ADDED: mice.impute.polr() for ordered factors</li>
 <li>FIXED: chainMean and chainVar in mice.mids()</li>
 <li>FIXED: iteration counter for mice.mids and sampler()</li>
-<li>ADDED: component ‘loggedEvents’ to mids-object for logging actions</li>
+<li>ADDED: component âloggedEventsâ to mids-object for logging actions</li>
 <li>REMOVED: annoying warnings about removed predictors</li>
 <li>ADDED: updateLog() function</li>
 <li>CHANGED: smarter handling of model setup in mice()</li>
@@ -708,11 +715,11 @@
 </ul>
 </div>
     <div id="mice-2-4---17-10-2010-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.4">
 <a href="#mice-2-4---17-10-2010-svb" class="anchor"></a>mice 2.4 - 17-10-2010 / SvB<small> 2010-10-18 </small>
 </h1>
 <ul>
-<li>ADDED: pool() now supports class ‘polr’ (Jean-Baptiste Pingault)</li>
+<li>ADDED: pool() now supports class âpolrâ (Jean-Baptiste Pingault)</li>
 <li>FIXED: solved problem in mice.impute.polyreg when one of the variables was named y or x</li>
 <li>FIXED: remove.lindep: intercept prediction bug</li>
 <li>ADDED: version() function</li>
@@ -720,33 +727,33 @@
 </ul>
 </div>
     <div id="mice-2-3---14-02-2010-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.3">
 <a href="#mice-2-3---14-02-2010-svb" class="anchor"></a>mice 2.3 - 14-02-2010 / SvB<small> 2010-02-14 </small>
 </h1>
 <ul>
 <li>FIXED: check.method: logicals are now treated as binary variables (Emmanuel Charpentier)</li>
 <li>FIXED: complete: the NULL imputation case is now properly handled</li>
 <li>FIXED: mice.impute.pmm: now creates between imputation variability for univariate predictor</li>
-<li>FIXED: remove.lindep: returns ‘keep’ vector instead of data</li>
+<li>FIXED: remove.lindep: returns âkeepâ vector instead of data</li>
 </ul>
 </div>
     <div id="mice-2-2---13-01-2010-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.2">
 <a href="#mice-2-2---13-01-2010-svb" class="anchor"></a>mice 2.2 - 13-01-2010 / SvB<small> 2010-01-14 </small>
 </h1>
 <ul>
-<li>ADDED: pool() now supports class ‘multinom’ (Jean-Baptiste Pingault)</li>
+<li>ADDED: pool() now supports class âmultinomâ (Jean-Baptiste Pingault)</li>
 <li>FIXED: bug fixed in check.data for data consisting of two columns (Rogier Donders, Thomas Koepsell)</li>
 <li>ADDED: new function remove.lindep() that removes predictors that are (almost) linearly dependent</li>
 <li>FIXED: bug fixed in pool() that produced an (innocent) warning message (Qi Zheng)</li>
 </ul>
 </div>
     <div id="mice-2-1---14-09-2009-svb" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.1">
 <a href="#mice-2-1---14-09-2009-svb" class="anchor"></a>mice 2.1 - 14-09-2009 / SvB<small> 2009-09-18 </small>
 </h1>
 <ul>
-<li>ADDED: pool() now also supports class ‘mer’</li>
+<li>ADDED: pool() now also supports class âmerâ</li>
 <li>CHANGED: nlme and lme4 are now only loaded if needed (by pool())</li>
 <li>FIXED: bug fixed in mice.impute.polyreg() when there was one missing entry (Emmanuel Charpentier)</li>
 <li>FIXED: bug fixed in plot.mids() when there was one missing entry (Emmanuel Charpentier)</li>
@@ -755,12 +762,12 @@
 </ul>
 </div>
     <div id="mice-2-0---26-08-2009-svb-ko-major-upgrade-for-jss-manuscript" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.0">
 <a href="#mice-2-0---26-08-2009-svb-ko-major-upgrade-for-jss-manuscript" class="anchor"></a>mice 2.0 - 26-08-2009 / SvB, KO Major upgrade for JSS manuscript<small> 2009-08-27 </small>
 </h1>
 <ul>
 <li>ADDED: new functions cbind.mids(), rbind.mids(), ibind()</li>
-<li>ADDED: new argument in mice(): ‘post’ in post-processing imputations</li>
+<li>ADDED: new argument in mice(): âpostâ in post-processing imputations</li>
 <li>ADDED: new functions: pool.scaler(), pool.compare(), pool.r.squared()</li>
 <li>ADDED: new data: boys, popmis, windspeed</li>
 <li>FIXED: function summary.mipo all(object$df) command fixed</li>
@@ -773,7 +780,7 @@
 <li>ADDED: prevention of perfect prediction in mice.impute.logreg() and mice.impute.polyreg()</li>
 <li>CHANGED: mice.impute.norm.improper() changed into mice.impute.norm.nob()</li>
 <li>REMOVED: mice.impute.polyreg2() deleted</li>
-<li>ADDED: new ‘include’ argument in complete()</li>
+<li>ADDED: new âincludeâ argument in complete()</li>
 <li>ADDED: support for the empty imputation method in mice()</li>
 <li>ADDED: new function md.pairs()</li>
 <li>ADDED: support for intercept imputation</li>
@@ -782,7 +789,7 @@
 </ul>
 </div>
     <div id="mice-1-21---1532009-svb-maintainance-release" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.21">
 <a href="#mice-1-21---1532009-svb-maintainance-release" class="anchor"></a>mice 1.21 - 15/3/2009 SvB Maintainance release<small> 2009-03-17 </small>
 </h1>
 <ul>
@@ -794,7 +801,7 @@
 </ul>
 </div>
     <div id="mice-1-16---6252007" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.16">
 <a href="#mice-1-16---6252007" class="anchor"></a>mice 1.16 - 6/25/2007<small> 2009-02-19 </small>
 </h1>
 <ul>
@@ -802,7 +809,7 @@
 </ul>
 </div>
     <div id="mice-1-15---01092006" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.15">
 <a href="#mice-1-15---01092006" class="anchor"></a>mice 1.15 - 01/09/2006<small> 2007-01-09 </small>
 </h1>
 <ul>
@@ -810,19 +817,19 @@
 </ul>
 </div>
     <div id="mice-1-14r---9262005-1144am" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.14">
 <a href="#mice-1-14r---9262005-1144am" class="anchor"></a>mice 1.14R - 9/26/2005 11:44AM<small> 2006-04-04 </small>
 </h1>
 <ul>
 <li>FIXED: Passive imputation works again. (Roel de Jong)</li>
-<li>CHANGED: Random seed is now left alone, UNLESS the argument “seed” is specified. This means that unless you specify identical seed values, imputations of the same dataset will be different for multiple calls to mice. (Roel de Jong)</li>
-<li>FIXED: (docs): Documentation for “impute.mean” (Roel de Jong)</li>
-<li>FIXED: Function ‘summary.mids’ now works (Roel de Jong)</li>
-<li>FIXED: Imputation function ‘impute.polyreg’ and ‘impute.lda’ should now work under R</li>
+<li>CHANGED: Random seed is now left alone, UNLESS the argument âseedâ is specified. This means that unless you specify identical seed values, imputations of the same dataset will be different for multiple calls to mice. (Roel de Jong)</li>
+<li>FIXED: (docs): Documentation for âimpute.meanâ (Roel de Jong)</li>
+<li>FIXED: Function âsummary.midsâ now works (Roel de Jong)</li>
+<li>FIXED: Imputation function âimpute.polyregâ and âimpute.ldaâ should now work under R</li>
 </ul>
 </div>
     <div id="mice-1-13" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.13">
 <a href="#mice-1-13" class="anchor"></a>mice 1.13<small> Unreleased </small>
 </h1>
 <ul>
@@ -830,7 +837,7 @@
 </ul>
 </div>
     <div id="mice-1-12" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.12">
 <a href="#mice-1-12" class="anchor"></a>mice 1.12<small> Unreleased </small>
 </h1>
 <ul>
@@ -838,7 +845,7 @@
 </ul>
 </div>
     <div id="mice-1-1" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.1">
 <a href="#mice-1-1" class="anchor"></a>mice 1.1<small> Unreleased </small>
 </h1>
 <ul>
@@ -846,7 +853,7 @@
 </ul>
 </div>
     <div id="mice-1-0" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.0">
 <a href="#mice-1-0" class="anchor"></a>mice 1.0<small> Unreleased </small>
 </h1>
 <ul>
@@ -855,68 +862,10 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#mice-3-8-0-9000">3.8.0.9000</a></li>
-        <li><a href="#mice-3-8-0">3.8.0</a></li>
-        <li><a href="#mice-3-7-0">3.7.0</a></li>
-        <li><a href="#mice-3-6-0">3.6.0</a></li>
-        <li><a href="#mice-3-5-0">3.5.0</a></li>
-        <li><a href="#mice-3-4-0">3.4.0</a></li>
-        <li><a href="#mice-3-3-0">3.3.0</a></li>
-        <li><a href="#mice-3-2-0">3.2.0</a></li>
-        <li><a href="#mice-3-1-0">3.1.0</a></li>
-        <li><a href="#mice-3-0-0">3.0.0</a></li>
-        <li><a href="#mice-2-46-9-2017-12-08">2.46.9</a></li>
-        <li><a href="#mice-2-46-2017-10-22">2.46</a></li>
-        <li><a href="#mice-2-45-2017-10-21">2.45</a></li>
-        <li><a href="#mice-2-44-2017-10-18">2.44</a></li>
-        <li><a href="#mice-2-43-2017-07-20">2.43</a></li>
-        <li><a href="#mice-2-42-2017-07-11">2.42</a></li>
-        <li><a href="#mice-2-41-2017-07-10">2.41</a></li>
-        <li><a href="#mice-2-40-2017-07-07">2.40</a></li>
-        <li><a href="#mice-2-34-2017-04-24">2.34</a></li>
-        <li><a href="#mice-2-31-2017-02-23">2.31</a></li>
-        <li><a href="#mice-2-29-2016-10-05">2.29</a></li>
-        <li><a href="#mice-2-28-2016-10-05">2.28</a></li>
-        <li><a href="#mice-2-27-2016-07-27">2.27</a></li>
-        <li><a href="#mice-2-25-2015-11-09">2.25</a></li>
-        <li><a href="#mice-2-23-2015-11-04">2.23</a></li>
-        <li><a href="#mice-2-22-2014-06-11">2.22</a></li>
-        <li><a href="#mice-2-21-02-05-2014-svb">2.21</a></li>
-        <li><a href="#mice-2-20-02-02-2014-svb">2.20</a></li>
-        <li><a href="#mice-2-19-21-01-2014-svb">2.19</a></li>
-        <li><a href="#mice-2-18-31-07-2013-svb">2.18</a></li>
-        <li><a href="#mice-2-17-10-05-2013-svb">2.17</a></li>
-        <li><a href="#mice-2-16-27-04-2013-svb">2.16</a></li>
-        <li><a href="#mice-2-15---02-04-2013-svb">2.15</a></li>
-        <li><a href="#mice-2-14---11-03-2013-svb">2.14</a></li>
-        <li><a href="#mice-2-13---03-07-2012-svb">2.13</a></li>
-        <li><a href="#mice-2-12---25-03-2012-svb">2.12</a></li>
-        <li><a href="#mice-2-11---21-11-2011-svb">2.11</a></li>
-        <li><a href="#mice-2-10---14-09-2011-svb">2.10</a></li>
-        <li><a href="#mice-2-9---31-08-2011-svb">2.9</a></li>
-        <li><a href="#mice-2-8---24-03-2011-svb">2.8</a></li>
-        <li><a href="#mice-2-7---16-03-2011-svb">2.7</a></li>
-        <li><a href="#mice-2-6---03-03-2011-svb">2.6</a></li>
-        <li><a href="#mice-2-5---06-01-2011-svb">2.5</a></li>
-        <li><a href="#mice-2-4---17-10-2010-svb">2.4</a></li>
-        <li><a href="#mice-2-3---14-02-2010-svb">2.3</a></li>
-        <li><a href="#mice-2-2---13-01-2010-svb">2.2</a></li>
-        <li><a href="#mice-2-1---14-09-2009-svb">2.1</a></li>
-        <li><a href="#mice-2-0---26-08-2009-svb-ko-major-upgrade-for-jss-manuscript">2.0</a></li>
-        <li><a href="#mice-1-21---1532009-svb-maintainance-release">1.21</a></li>
-        <li><a href="#mice-1-16---6252007">1.16</a></li>
-        <li><a href="#mice-1-15---01092006">1.15</a></li>
-        <li><a href="#mice-1-14r---9262005-1144am">1.14</a></li>
-        <li><a href="#mice-1-13">1.13</a></li>
-        <li><a href="#mice-1-12">1.12</a></li>
-        <li><a href="#mice-1-1">1.1</a></li>
-        <li><a href="#mice-1-0">1.0</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -928,7 +877,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
