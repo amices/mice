@@ -1,15 +1,37 @@
-#'Compare two nested models using D3-statistic
+#' Compare two nested models using D3-statistic
 #'
-#'The D3-statistics is a likelihood-ratio test statistic.
+#' The D3-statistic is a likelihood-ratio test statistic.
 #'
-#'@inheritParams D1
-#'@references
+#' @details 
+#' The \code{D3()} function implement the LR-method by 
+#' Meng and Rubin (1992). The implementation of the method relies
+#' on the \code{broom} package, the standard \code{update} mechanism 
+#' for statistical models in \code{R} and the \code{offset} function. 
+#' 
+#' The function calculates \code{m} repetitions of the full 
+#' (or null) models, calculates the mean of the estimates of the 
+#' (fixed) parameter coefficients \eqn{\beta}. For each imputed 
+#' imputed dataset, it calculates the likelihood for the model with 
+#' the parameters constrained to \eqn{\beta}.
+#' 
+#' The \code{mitml::testModels()} function offers similar functionality
+#' for a subset of statistical models. Results of \code{mice::D3()} and 
+#' \code{mitml::testModels()} differ in multilevel models because the 
+#' \code{testModels()} also constrains the variance components parameters.
+#' For more details on
+#' 
+#' @seealso \code{\link{fix.coef}}
+#' @inheritParams D1
+#' @return An object of class \code{mice.anova}
+#' @references
 #' Meng, X. L., and D. B. Rubin. 1992. 
 #' Performing Likelihood Ratio Tests with Multiply-Imputed Data Sets. 
 #' \emph{Biometrika}, 79 (1): 103–11.
 #'
-#'\url{https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:likelihoodratio}
-#'@examples
+#' \url{https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:likelihoodratio}
+#' 
+#' \url{http://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#setting-residual-variances-to-a-fixed-value-zero-or-other}
+#' @examples
 #'# Compare two linear models:
 #'imp <- mice(nhanes2, seed = 51009, print = FALSE)
 #'mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
