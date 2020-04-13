@@ -38,7 +38,7 @@ z2 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), method = "
 # This test fails
 # FIXME
 # test_that("lm: mice and mitml calculate same F", {
-#  expect_equal(z1$result[1], z2$test[1])
+# expect_equal(z1$result[1], z2$test[1])
 # })
 
 
@@ -61,17 +61,17 @@ z4 <- mitml::testModels(fit1, fit0, method = "D3")
 # This test fails.
 # FIXME
 # test_that("lmer: mice and mitml calculate same F", {
-#  expect_equal(z3$result[1], z4$test[1])
+# expect_equal(z3$result[1], z4$test[1])
 # })
 
 
 # glm
 # imp <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
-# 
+#
 # fit1 <- with(data = imp, expr = glm(hyp == "yes" ~ age + chl, family = binomial))
 # fit0 <- with(data = imp, expr = glm(hyp == "yes" ~ 1, family = binomial))
 # empty <- with(data = imp, expr = glm(hyp == "yes" ~ 0, family = binomial))
-# 
+#
 # model dev1.L does not look right, negative Dm, convergence problems
 # FIXME
 # z5 <- D3(fit1, fit0)
