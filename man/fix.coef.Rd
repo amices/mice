@@ -55,7 +55,7 @@ cor(predict(model1), predict(model1) + residuals(model1))^2
 cor(predict(model2), predict(model2) + residuals(model2))^2
 
 # extract offset from constrained model
-summary(model2$model$offset)
+summary(model2$offset)
 
 # it also works with factors and missing data
 model0 <- lm(bmi ~ age + hyp + chl, data = nhanes2)

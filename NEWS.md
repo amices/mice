@@ -5,7 +5,9 @@ output: github_document
 
 # mice 3.8.1
 
-* Minor: Updates to latest `roxygen` version
+## Major change
+
+* The `D3()` function in `mice` gave incorrect results. This version solves a problem in the calculation of the `D3`-statistic. See #226 and #228 for more details. The documentation explains why results from `mice::D3()` and `mitml::testModels()` may differ.
 
 # mice 3.8.0
 
