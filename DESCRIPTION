@@ -51,7 +51,8 @@ Suggests:
     rmarkdown,
     rpart,
     survival,
-    testthat
+    testthat,
+    lmtest
 LinkingTo: Rcpp
 Description: Multiple imputation using Fully Conditional Specification (FCS)
     implemented by the MICE algorithm as described in Van Buuren and
