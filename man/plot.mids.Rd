@@ -46,6 +46,10 @@ values against the iteration number for each of the $m$ replications. By default
 the function plot the development of the mean and standard deviation for each incomplete
 variable. On convergence, the streams should intermingle and be free of any trend.
 }
+\examples{
+imp <- mice(nhanes, print = FALSE)
+plot(imp, bmi + chl ~ .it | .ms, layout = c(2, 1))
+}
 \seealso{
 \code{\link{mice}}, \code{\link[=mids-class]{mids}}, 
 \code{\link{xyplot}}

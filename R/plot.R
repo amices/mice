@@ -23,6 +23,9 @@
 #'@seealso \code{\link{mice}}, \code{\link[=mids-class]{mids}}, 
 #'\code{\link{xyplot}}
 #'@method plot mids
+#' @examples
+#' imp <- mice(nhanes, print = FALSE)
+#' plot(imp, bmi + chl ~ .it | .ms, layout = c(2, 1))
 #'@export
 plot.mids <- function(x, y = NULL, theme = mice.theme(), layout = c(2, 3), 
                       type = "l", col = 1:10, lty = 1, ...) {
