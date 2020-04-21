@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.8.2</span>
       </span>
     </div>
 
@@ -126,6 +126,14 @@
       <small>Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="mice-3-8-2" class="section level1">
+<h1 class="page-header" data-toc-text="3.8.2">
+<a href="#mice-3-8-2" class="anchor"></a>mice 3.8.2<small> Unreleased </small>
+</h1>
+<ul>
+<li>Adds an example to the <code><a href="../reference/plot.mids.html">plot.mids()</a></code> documentation</li>
+</ul>
+</div>
     <div id="mice-3-8-1" class="section level1">
 <h1 class="page-header" data-toc-text="3.8.1">
 <a href="#mice-3-8-1" class="anchor"></a>mice 3.8.1<small> Unreleased </small>
@@ -146,7 +154,7 @@
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
-<li>This version adds two new NARFCS methods for imputing data under the <em>Missing Not at Random (MNAR)</em> assumption. NARFCS is generalised version of the so-called <span class="math inline"><em>Î´</em></span>-adjustment method. Margarita Moreno-Betancur and Ian White kindly contributes the functions <code><a href="../reference/mice.impute.mnar.html">mice.impute.mnar.norm()</a></code> and <code><a href="../reference/mice.impute.mnar.html">mice.impute.mnar.logreg()</a></code>. These functions aid in performing sensitivity analysis to investigate the impact of different MNAR assumptions on the conclusion of the study. An alternative for MNAR is the older <code><a href="../reference/mice.impute.ri.html">mice.impute.ri()</a></code> function.</li>
+<li>This version adds two new NARFCS methods for imputing data under the <em>Missing Not at Random (MNAR)</em> assumption. NARFCS is generalised version of the so-called <span class="math inline"><em>δ</em></span>-adjustment method. Margarita Moreno-Betancur and Ian White kindly contributes the functions <code><a href="../reference/mice.impute.mnar.html">mice.impute.mnar.norm()</a></code> and <code><a href="../reference/mice.impute.mnar.html">mice.impute.mnar.logreg()</a></code>. These functions aid in performing sensitivity analysis to investigate the impact of different MNAR assumptions on the conclusion of the study. An alternative for MNAR is the older <code><a href="../reference/mice.impute.ri.html">mice.impute.ri()</a></code> function.</li>
 <li>Installation of <code>mice</code> is faster. External packages needed for imputation and analyses are now installed on demand. The number of dependencies as estimated by <code>rsconnect::appDepencies()</code> decreased from 132 to 83.</li>
 <li>The name clash with the <code><a href="../reference/complete.mids.html">complete()</a></code> function of <code>tidyr</code> should no longer be a problem.</li>
 <li>There is now a more flexible <code><a href="../reference/pool.html">pool()</a></code> function that integrates better with the <code>broom</code> and <code>broom.mixed</code> packages.</li>
@@ -191,7 +199,7 @@
 <li>Replace deprecated <code>imputationMethod</code> argument in examples by <code>method</code>
 </li>
 <li>More informative error message when stopped after pre-processing (<a href='https://github.com/stefvanbuuren/mice/issues/194'>#194</a>)</li>
-<li>Updated URLâs in DESCRIPTION</li>
+<li>Updated URL’s in DESCRIPTION</li>
 <li>Fix string matching in <code>check.predictorMatrix()</code> (<a href='https://github.com/stefvanbuuren/mice/issues/191'>#191</a>)</li>
 </ul>
 </div>
@@ -292,7 +300,7 @@
 <li><p><code>blocks</code>: The main algorithm iterates over blocks. A block is simply a collection of variables. In the common MICE algorithm each block was equivalent to one variable, which - of course - is the default; The <code>blocks</code> argument allows mixing univariate imputation method multivariate imputation methods. The <code>blocks</code> feature bridges two seemingly disparate approaches, joint modeling and fully conditional specification, into one framework;</p></li>
 <li><p><code>where</code>: The <code>where</code> argument is a logical matrix of the same size of <code>data</code> that specifies which cells should be imputed. This opens up some new analytic possibilities;</p></li>
 <li><p>Multivariate tests: There are new functions <code><a href="../reference/D1.html">D1()</a></code>, <code><a href="../reference/D2.html">D2()</a></code>, <code><a href="../reference/D3.html">D3()</a></code> and <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> that perform multivariate parameter tests on the repeated analysis from on multiply-imputed data;</p></li>
-<li><p><code>formulas</code>: The old <code>form</code> argument has been redesign and is now renamed to <code>formulas</code>. This provides an alternative way to specify imputation models that exploits the full power of Râs native formulaâs.</p></li>
+<li><p><code>formulas</code>: The old <code>form</code> argument has been redesign and is now renamed to <code>formulas</code>. This provides an alternative way to specify imputation models that exploits the full power of R’s native formula’s.</p></li>
 <li><p>Better integration with the <code>tidyverse</code> framework, especially for packages <code>dplyr</code>, <code>tibble</code> and <code>broom</code>;</p></li>
 <li><p>Improved numerical algorithms for low-level imputation function. Better handling of duplicate variables.</p></li>
 <li><p>Last but not least: A brand new edition AND online version of <a href="https://stefvanbuuren.name/fimd/">Flexible Imputation of Missing Data. Second Edition.</a></p></li>
@@ -404,7 +412,7 @@
 <li>Add package documentation</li>
 <li>Add <code>README</code> for GitHub</li>
 <li>Add new ampute functions and vignette (thanks Rianne Schouten)</li>
-<li>Rename <code>ccn</code> â&gt; <code>ncc</code>, <code>icn</code> â&gt; <code>nic</code>
+<li>Rename <code>ccn</code> –&gt; <code>ncc</code>, <code>icn</code> –&gt; <code>nic</code>
 </li>
 <li>Change helpers <code><a href="../reference/cc.html">cc()</a></code>, <code><a href="../reference/ncc.html">ncc()</a></code>, <code><a href="../reference/cci.html">cci()</a></code>, <code><a href="../reference/ic.html">ic()</a></code>, <code><a href="../reference/nic.html">nic()</a></code> and <code><a href="../reference/ici.html">ici()</a></code> use <code>S3</code> dispatch</li>
 <li>Change issues tracker on Github - add BugReports URL <a href='https://github.com/stefvanbuuren/mice/issues/21'>#21</a></li>
@@ -511,7 +519,7 @@
 </h1>
 <ul>
 <li>ADDED: mice.impute.rf() for random forest imputation (thanks Lisa Doove)</li>
-<li>CHANGED: default number of donors in mice.impute.pmm() changed from 3 to 5. Use mice(â¦, donors = 3) to get the old behavior.</li>
+<li>CHANGED: default number of donors in mice.impute.pmm() changed from 3 to 5. Use mice(…, donors = 3) to get the old behavior.</li>
 <li>CHANGED: speedup in .norm.draw() by using crossprod() (thanks Alexander Robitzsch)</li>
 <li>CHANGED: speedup in .imputation.level2() (thanks Alexander Robitzsch)</li>
 <li>FIXED: define MASS, nnet, lattice as imports instead of depends</li>
@@ -572,7 +580,7 @@
 <li>ADDED: mice.impute.2l.mean() for imputing class means at level 2</li>
 <li>ADDED: sampler(): new checks of degrees of freedom per variable at iteration 1</li>
 <li>ADDED: function check.df() to throw a warning about low degrees of freedom</li>
-<li>FIXED: tolower() added in â2lâ test in sampler()</li>
+<li>FIXED: tolower() added in “2l” test in sampler()</li>
 <li>FIXED: conversion of factors that have other roles (multilevel) in padModel()</li>
 <li>FIXED: family argument in call to glm() in glm.mids() (thanks Nicholas Horton)</li>
 <li>FIXED: .norm.draw(): evading NaN imputed values by setting df in rchisq() to a minimum of 1</li>
@@ -595,7 +603,7 @@
 <li>FIXED: bug that chrashed plot.mids() if there was only one incomplete variable (thanks Dennis Prangle)</li>
 <li>FIXED: bug in sample() in .pmm.match() when donor=1 (thanks Alexander Robitzsch)</li>
 <li>FIXED: bug in sample() in mice.impute.sample()</li>
-<li>FIXED: fixed â?dataâ bug in check.method()</li>
+<li>FIXED: fixed ‘?data’ bug in check.method()</li>
 <li>REMOVED: wp.twin(). Now available from the AGD package</li>
 </ul>
 </div>
@@ -639,7 +647,7 @@
 </h1>
 <ul>
 <li>FIXED: arguments dec and sep in mids2spss (thanks Nicole Haag)</li>
-<li>FIXED: bug in keyword âmonotoneâ in mice() (thanks Alain D)</li>
+<li>FIXED: bug in keyword “monotone” in mice() (thanks Alain D)</li>
 </ul>
 </div>
     <div id="mice-2-9---31-08-2011-svb" class="section level1">
@@ -688,7 +696,7 @@
 <li>FIXED: reporting bug in summary.mipo()</li>
 <li>CHANGED: df calculation in pool(), intervals may become slightly wider</li>
 <li>ADDED: internal functions mice.df() and df.residual()</li>
-<li>FIXED: error in rm calculation for âlikelihoodâ in pool.compare()</li>
+<li>FIXED: error in rm calculation for “likelihood” in pool.compare()</li>
 <li>CHANGED: default ridge parameter changed</li>
 </ul>
 </div>
@@ -704,7 +712,7 @@
 <li>ADDED: mice.impute.polr() for ordered factors</li>
 <li>FIXED: chainMean and chainVar in mice.mids()</li>
 <li>FIXED: iteration counter for mice.mids and sampler()</li>
-<li>ADDED: component âloggedEventsâ to mids-object for logging actions</li>
+<li>ADDED: component ‘loggedEvents’ to mids-object for logging actions</li>
 <li>REMOVED: annoying warnings about removed predictors</li>
 <li>ADDED: updateLog() function</li>
 <li>CHANGED: smarter handling of model setup in mice()</li>
@@ -723,7 +731,7 @@
 <a href="#mice-2-4---17-10-2010-svb" class="anchor"></a>mice 2.4 - 17-10-2010 / SvB<small> 2010-10-18 </small>
 </h1>
 <ul>
-<li>ADDED: pool() now supports class âpolrâ (Jean-Baptiste Pingault)</li>
+<li>ADDED: pool() now supports class ‘polr’ (Jean-Baptiste Pingault)</li>
 <li>FIXED: solved problem in mice.impute.polyreg when one of the variables was named y or x</li>
 <li>FIXED: remove.lindep: intercept prediction bug</li>
 <li>ADDED: version() function</li>
@@ -738,7 +746,7 @@
 <li>FIXED: check.method: logicals are now treated as binary variables (Emmanuel Charpentier)</li>
 <li>FIXED: complete: the NULL imputation case is now properly handled</li>
 <li>FIXED: mice.impute.pmm: now creates between imputation variability for univariate predictor</li>
-<li>FIXED: remove.lindep: returns âkeepâ vector instead of data</li>
+<li>FIXED: remove.lindep: returns ‘keep’ vector instead of data</li>
 </ul>
 </div>
     <div id="mice-2-2---13-01-2010-svb" class="section level1">
@@ -746,7 +754,7 @@
 <a href="#mice-2-2---13-01-2010-svb" class="anchor"></a>mice 2.2 - 13-01-2010 / SvB<small> 2010-01-14 </small>
 </h1>
 <ul>
-<li>ADDED: pool() now supports class âmultinomâ (Jean-Baptiste Pingault)</li>
+<li>ADDED: pool() now supports class ‘multinom’ (Jean-Baptiste Pingault)</li>
 <li>FIXED: bug fixed in check.data for data consisting of two columns (Rogier Donders, Thomas Koepsell)</li>
 <li>ADDED: new function remove.lindep() that removes predictors that are (almost) linearly dependent</li>
 <li>FIXED: bug fixed in pool() that produced an (innocent) warning message (Qi Zheng)</li>
@@ -757,7 +765,7 @@
 <a href="#mice-2-1---14-09-2009-svb" class="anchor"></a>mice 2.1 - 14-09-2009 / SvB<small> 2009-09-18 </small>
 </h1>
 <ul>
-<li>ADDED: pool() now also supports class âmerâ</li>
+<li>ADDED: pool() now also supports class ‘mer’</li>
 <li>CHANGED: nlme and lme4 are now only loaded if needed (by pool())</li>
 <li>FIXED: bug fixed in mice.impute.polyreg() when there was one missing entry (Emmanuel Charpentier)</li>
 <li>FIXED: bug fixed in plot.mids() when there was one missing entry (Emmanuel Charpentier)</li>
@@ -771,7 +779,7 @@
 </h1>
 <ul>
 <li>ADDED: new functions cbind.mids(), rbind.mids(), ibind()</li>
-<li>ADDED: new argument in mice(): âpostâ in post-processing imputations</li>
+<li>ADDED: new argument in mice(): ‘post’ in post-processing imputations</li>
 <li>ADDED: new functions: pool.scaler(), pool.compare(), pool.r.squared()</li>
 <li>ADDED: new data: boys, popmis, windspeed</li>
 <li>FIXED: function summary.mipo all(object$df) command fixed</li>
@@ -784,7 +792,7 @@
 <li>ADDED: prevention of perfect prediction in mice.impute.logreg() and mice.impute.polyreg()</li>
 <li>CHANGED: mice.impute.norm.improper() changed into mice.impute.norm.nob()</li>
 <li>REMOVED: mice.impute.polyreg2() deleted</li>
-<li>ADDED: new âincludeâ argument in complete()</li>
+<li>ADDED: new ‘include’ argument in complete()</li>
 <li>ADDED: support for the empty imputation method in mice()</li>
 <li>ADDED: new function md.pairs()</li>
 <li>ADDED: support for intercept imputation</li>
@@ -826,10 +834,10 @@
 </h1>
 <ul>
 <li>FIXED: Passive imputation works again. (Roel de Jong)</li>
-<li>CHANGED: Random seed is now left alone, UNLESS the argument âseedâ is specified. This means that unless you specify identical seed values, imputations of the same dataset will be different for multiple calls to mice. (Roel de Jong)</li>
-<li>FIXED: (docs): Documentation for âimpute.meanâ (Roel de Jong)</li>
-<li>FIXED: Function âsummary.midsâ now works (Roel de Jong)</li>
-<li>FIXED: Imputation function âimpute.polyregâ and âimpute.ldaâ should now work under R</li>
+<li>CHANGED: Random seed is now left alone, UNLESS the argument “seed” is specified. This means that unless you specify identical seed values, imputations of the same dataset will be different for multiple calls to mice. (Roel de Jong)</li>
+<li>FIXED: (docs): Documentation for “impute.mean” (Roel de Jong)</li>
+<li>FIXED: Function ‘summary.mids’ now works (Roel de Jong)</li>
+<li>FIXED: Imputation function ‘impute.polyreg’ and ‘impute.lda’ should now work under R</li>
 </ul>
 </div>
     <div id="mice-1-13" class="section level1">
