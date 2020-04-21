@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.8.2
+
+* Adds an example to the `plot.mids()` documentation
+
 # mice 3.8.1
 
 ## Major change
