@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.8.4
+
+* Add bypassing of `remove.lindep()` by `eps = 0` (#225)
+
 # mice 3.8.3
 
 * Adds reference to Leacy's thesis
