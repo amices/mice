@@ -23,7 +23,7 @@
 #' @details
 #' This function imputes data that are thought to be Missing Not at 
 #' Random (MNAR) by the NARFCS method. The NARFCS procedure 
-#' (Tompsett et al, 2018) generalises the so-called 
+#' (Leacy, 2016; Tompsett et al, 2018) generalises the so-called 
 #' \eqn{\delta}-adjustment sensitivity analysis method of Van Buuren, 
 #' Boshuizen & Knook (1999) to the case with multiple incomplete
 #' variables within the FCS framework. In practical terms, the 
