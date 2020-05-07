@@ -18,7 +18,11 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99,
   
   if (ncol(x) == 0)
     return(NULL)
-  if (eps <= 0)
+  
+  # setting eps = 0 bypasses remove.lindep()
+  if (eps == 0) 
+    return(rep.int(TRUE, ncol(x)))
+  if (eps < 0)
     stop("\n Argument 'eps' must be positive.")
   
   # Keep all predictors if we allow imputation of fully missing y
