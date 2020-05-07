@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.8.3
+
+* Adds reference to Leacy's thesis
+
 # mice 3.8.2
 
 * Adds an example to the `plot.mids()` documentation
