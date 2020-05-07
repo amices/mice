@@ -154,6 +154,10 @@ impNARFCS <- mice(mnar_demo_data, method = c("mnar.logreg", "mnar.norm", ""),
 pool(with(impNARFCS,lm(Y ~ X + Z)))$pooled$estimate
 }
 \references{
+Leacy, F.P. (2016). \emph{Multiple imputation under missing not at 
+random assumptions via fully conditional specification}. 
+Dissertation, University of Cambridge, UK.
+
 Tompsett, D. M., Leacy, F., Moreno-Betancur, M., Heron, J., & 
 White, I. R. (2018). On the use of the not-at-random fully 
 conditional specification (NARFCS) procedure in practice. 
