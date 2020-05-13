@@ -37,21 +37,28 @@
 #'\item the standard error of each estimate;
 #'\item the residual degrees of freedom of the model.
 #'}
-#'The \code{pool()} function relies on the \code{broom::tidy} and 
-#'\code{broom::glance} function for extracting this information from a 
-#'list of fitted models. 
+#' The \code{pool()} function relies on the \code{broom::tidy} for 
+#' extracting the parameters. Versions before \code{mice 3.8.5} failed 
+#' when no \code{broom::glance()} function was found for extracting the 
+#' residual degrees of freedom. The \code{pool()} function is now 
+#' more forgiving. 
 #'
-#'The degrees of freedom calculation uses the Barnard-Rubin adjustment 
-#'for small samples (Barnard and Rubin, 1999).
+#' The degrees of freedom calculation for the pooled estimates uses the 
+#' Barnard-Rubin adjustment for small samples (Barnard and Rubin, 1999).
 #'
 #'@param object An object of class \code{mira} (produced by \code{with.mids()} 
 #'or \code{as.mira()}), or a \code{list} with model fits.
 #'@param dfcom A positive number representing the degrees of freedom in the
-#'complete-data analysis. The default (\code{dfcom = NULL}) is to 
-#'extract this information from the first fitted model. When that fails 
-#'the warning \code{"Large sample assumed"} is printed, and the 
-#'parameter is set \code{dfcom = 999999}. Use the \code{dfcom} parameter
-#'to specify the correct degrees of freedom.
+#'complete-data analysis. Normally, this would be the number of independent
+#'observation minus the number of fitted parameters. The default 
+#'(\code{dfcom = NULL}) extract this information in the following 
+#'order: 1) the component
+#'\code{residual.df} returned by \code{glance()} if a \code{glance()}
+#'function is found, 2) the result of \code{df.residual(} applied to 
+#'the first fitted model, and 3) as \code{999999}. 
+#'In the last case, the warning \code{"Large sample assumed"} is printed.
+#'If the degrees of freedom is incorrect, specify the appropriate value 
+#'manually.
 #'@return An object of class \code{mipo}, which stands for 'multiple imputation
 #'pooled outcome'. 
 #'@seealso \code{\link{with.mids}}, \code{\link{as.mira}}, 
@@ -93,14 +100,17 @@ pool <- function (object, dfcom = NULL) {
 }
 
 pool.fitlist <- function (fitlist, dfcom = NULL) {
-  v <- summary(fitlist, type = "glance")
   w <- summary(fitlist, type = "tidy", exponentiate = FALSE)
   
   # residual degrees of freedom of model fitted on hypothetically complete data
   # assumed to be the same across imputations
   if (!is.null(dfcom)) dfcom <- max(dfcom, 1) 
   else {
-    if (is.null(dfcom)) dfcom <- v$df.residual[1L]
+    if (is.null(dfcom)) {
+      dfcom <- try(summary(fitlist, type = "glance")$df.residual[1L], 
+                   silent = TRUE)
+      if (inherits(dfcom, "try-error")) dfcom <- NULL
+    }
     if (is.null(dfcom)) dfcom <- df.residual(getfit(fitlist, 1L))
     if (is.null(dfcom)) {
       dfcom <- 999999
