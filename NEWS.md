@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.8.5
+
+* Makes `pool()` more forgiving when there is no `glance()` function (#233)
+
 # mice 3.8.4
 
 * Add bypassing of `remove.lindep()` by `eps = 0` (#225)
