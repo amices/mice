@@ -100,9 +100,12 @@ levels(dfr$v) <- LETTERS[1:4]
 # w ... imputation at level 2 using norm
 # v ... imputation at level 2 using pmm
 
+# skip imputation on solaris
+is.solaris <- function() grepl('SunOS',Sys.info()['sysname'])
+if (!is.solaris()) {
 imp <- mice(dfr, m = 1, predictorMatrix = predM1 , 
            method = impM1, maxit = 1, paniter = 500)
-
+}
 }
 \references{
 Gelman, A. and Hill, J. (2007). \emph{Data analysis using
