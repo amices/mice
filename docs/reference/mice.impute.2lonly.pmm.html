@@ -80,7 +80,7 @@ level 2 must be indicated by type = -2 in the predictorMatrix." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.8.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.9.0</span>
       </span>
     </div>
 
@@ -260,11 +260,14 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <span class='co'># w ... imputation at level 2 using norm</span>
 <span class='co'># v ... imputation at level 2 using pmm</span>
 
+<span class='co'># skip imputation on solaris</span>
+<span class='no'>is.solaris</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>() <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span>(<span class='st'>'SunOS'</span>,<span class='fu'><a href='https://rdrr.io/r/base/Sys.info.html'>Sys.info</a></span>()[<span class='st'>'sysname'</span>])
+<span class='kw'>if</span> (!<span class='fu'>is.solaris</span>()) {
 <span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>dfr</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>predictorMatrix</span> <span class='kw'>=</span> <span class='no'>predM1</span> ,
-           <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>impM1</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>paniter</span> <span class='kw'>=</span> <span class='fl'>500</span>)</div><div class='output co'>#&gt; 
+           <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>impM1</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>paniter</span> <span class='kw'>=</span> <span class='fl'>500</span>)
+}</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
-#&gt;   1   1  y  w  v</div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; </div><div class='input'>
-</div></pre>
+#&gt;   1   1  y  w  v</div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
