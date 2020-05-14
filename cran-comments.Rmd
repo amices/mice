@@ -13,7 +13,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This update `mice 3.9.0` adds new functionality, reduces dependencies and provides solutions for issues found in `mice 3.8.0` and before.
 
-## Checks
+## Test environments
+
+* local OS X install, 10.15.4, R 4.0.0
+* win-builder
+* Rhub
+
+## Local check
 
 Package built by
 
@@ -26,7 +32,7 @@ build()
 R CMD CHECK /Users/buurensv/Package/mice/mice_3.9.0.tar.gz
 ```
 
-This fails!? (although interactive building in Rstudio works fine)
+Fails, although interactive building in Rstudio works fine
 
 ```
 * installing *source* package ‘mice’ ...
@@ -51,31 +57,104 @@ ERROR: lazy loading failed for package ‘mice’
 * removing ‘/Users/buurensv/Dropbox/Package/mice/mice/mice.Rcheck/mice’
 ```
 
-I do not understand this message. After upgrading the `R 4.0.0`, I refreshed all packages, as required. Re-installing `Rcpp` manually did not solve the problem.
+I do not understand this message. After upgrading the `R 4.0.0`, I refreshed all packages, as required. Re-installing `Rcpp` manually did not solve the problem. I will assume it is a false positive.
 
-## Test environments
 
-* local OS X install, 10.15.4, R 4.0.0
-* win-builder, using `devtools::check_win_devel()`
+## win-builder
 
-Status:
-
+```r
+devtools::check_win_devel()
 ```
 
-```
+Status: OK
 
+
+## Rhub checks
 
 ```{r eval=FALSE}
 check_rhub()
 ```
 
-The upload failed.
+```
+mice 3.9.0: NOTE
+Build ID:	mice_3.9.0.tar.gz-96a5a0f7e247483493124db3ee412d47
+Platform:	Windows Server 2008 R2 SP1, R-devel, 32/64 bit
+
+* checking examples ...
+** running examples for arch 'i386' ... NOTE
+Examples with CPU (user + system) or elapsed time > 5s
+D1 5.58   0.05    5.68
+   user system elapsed
+** running examples for arch 'x64' ... NOTE
+Examples with CPU (user + system) or elapsed time > 5s
+   user system elapsed
+D1  5.7   0.06    5.77
+```
 
 ```
-─  Uploading package
-Error in query("SUBMIT PACKAGE", data = list(email = unbox(email), token = unbox(email_get_token(email)),  : 
-  Email address not validated
+mice 3.9.0: NOTE
+Build ID:	mice_3.9.0.tar.gz-76d8ae5abbb941fc816b6716061457f4
+Platform:	Ubuntu Linux 16.04 LTS, R-release, GCC
+
+* checking examples ... NOTE
+Examples with CPU or elapsed time > 5s
+    user system elapsed
+D1 3.908  0.136   7.817
+D3 3.036  0.044   6.117
+D2 3.000  0.020   5.797
+** found \donttest examples: check also with --run-donttest
+```
+
+```
+mice 3.9.0: ERROR
+Build ID:	mice_3.9.0.tar.gz-91b0be74f9784bf484650eebf312a8b8
+Platform:	Fedora Linux, R-devel, clang, gfortran
+
+* checking examples ... ERROR
+Running examples in ‘mice-Ex.R’ failed
+The error most likely occurred in:
+
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: mice.impute.2l.bin
+> ### Title: Imputation by a two-level logistic model using 'glmer'
+> ### Aliases: mice.impute.2l.bin
+> ### Keywords: datagen
 > 
+> ### ** Examples
+> 
+> library(tidyr)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> data("toenail2")
+> data <- tidyr::complete(toenail2, patientID, visit) %>% 
++  tidyr::fill(treatment) %>% 
++  dplyr::select(-time) %>%
++  dplyr::mutate(patientID = as.integer(patientID))
+Error in bquote(on.exit({ : 'where' must be an environment
+Calls: %>% ... replace_na -> <Anonymous> -> eval_bare -> exit_handler -> bquote
+Execution halted
+```
+
+This error is in `dplyr` code execution. I don't think I can solve it.
+
+```
+mice 3.9.0: PREPERROR
+Build ID:	mice_3.9.0.tar.gz-9aa8a9462c524b0dad4e60c9f2684fed
+Platform:	Debian Linux, R-devel, GCC ASAN/UBSAN
+
+Status for build mice_3.9.0.tar.gz-9aa8a9462c524b0dad4e60c9f2684fed
+Status: success 
+Duration: 1 hour 34 minutes 26.3 seconds
 ```
 
 ## Downstream dependencies
@@ -158,4 +237,4 @@ revdep_summary()
 |MissingDataGUI |0.2-5     |1     |        |     |
 |Replication    |0.1.2     |1     |        |     |
 
-See 
+These package require additional software to be installed. See <https://github.com/stefvanbuuren/mice/blob/master/revdep/failures.md> for details.
