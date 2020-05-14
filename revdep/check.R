@@ -1,5 +1,15 @@
-source("https://install-github.me/r-lib/revdepcheck")
-library("revdepcheck")
+# library(devtools)
+# install_github("r-lib/revdepcheck")
+
+# using tools: tried, but seemed to stall, not used
+# save mice_x.y.z.tar.gz in dir specified below
+#dir <- path.expand("~/Package/mice/checkdep")
+#check_packages_in_dir(dir,
+#                      check_args = c("--as-cran", ""),
+#                      reverse = list(repos = getOption("repos")["CRAN"]))
+
+library(revdepcheck)
+revdep_reset()
 
 # the following takes one hour
 revdep_check(num_workers = 3)
