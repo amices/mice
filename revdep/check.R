@@ -11,7 +11,7 @@
 library(revdepcheck)
 revdep_reset()
 
-# the following takes one hour
+# the following takes two hours
 revdep_check(num_workers = 3)
 
 # print out results
