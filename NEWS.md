@@ -5,6 +5,7 @@ output: github_document
 
 # mice 3.9.0.9000
 
+* New `glance` and `tidy` methods for `mira` objects
 
 # mice 3.9.0
 

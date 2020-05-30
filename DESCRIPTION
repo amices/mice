@@ -33,6 +33,7 @@ Depends:
 Imports:
     broom,
     dplyr,
+    generics,
     graphics,
     lattice,
     methods,
