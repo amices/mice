@@ -45,6 +45,7 @@ z2 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), method = "
 # using lmer
 suppressPackageStartupMessages(library(mitml, quietly = TRUE))
 library(lme4, quietly = TRUE)
+library(broom.mixed, quietly = TRUE)
 data(studentratings)
 fml <- ReadDis + SES ~ ReadAchiev + (1|ID)
 set.seed(26262)

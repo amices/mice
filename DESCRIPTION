@@ -40,6 +40,7 @@ Imports:
     tidyr,
     utils
 Suggests:
+    broom.mixed,
     knitr,
     lme4,
     MASS,
