@@ -8,8 +8,8 @@
 #'coefficients of determination (R^2_a) obtained with the \code{lm} modeling
 #'function. For pooling it uses the Fisher \emph{z}-transformation.
 #'
-#'@param object An object of class 'mira', produced by \code{lm.mids} or
-#'\code{with.mids} with \code{lm} as modeling function.
+#'@param object An object of class 'mira' or 'mipo', produced by \code{lm.mids}, 
+#'\code{with.mids}, or \code{pool} with \code{lm} as modeling function.
 #'@param adjusted A logical value. If adjusted=TRUE then the adjusted R^2 is
 #'calculated.  The default value is FALSE.
 #'@return Returns a 1x4 table with components. Component \code{est} is the 
@@ -56,26 +56,40 @@
 pool.r.squared <- function(object, adjusted = FALSE) {
     # pooled rsquared for multiple imputed datasets.
     # 
-    # object: object of class mira based on article of O. Harel (Journal of Applied Statistics, 2009).
+    # object: object of class mira or mipo based on article of O. Harel (Journal of Applied Statistics, 2009).
     
     call <- match.call()
-    if (!is.mira(object)) 
-        stop("The object must have class 'mira'")
-    if ((m <- length(object$analyses)) < 2) 
-        stop("At least two imputations are needed for pooling.\n")
-    if (class((object$analyses[[1]]))[1] != "lm") 
-        stop("r^2 can only be calculated for results of the 'lm' modeling function")
+    if (!is.mira(object) & !is.mipo(object)) 
+        stop("The object must have class 'mira' or 'mipo'")
+
+    if (is.mira(object)) {
+        if ((m <- length(object$analyses)) < 2) 
+            stop("At least two imputations are needed for pooling.\n")
+        if (class((object$analyses[[1]]))[1] != "lm") 
+            stop("r^2 can only be calculated for results of the 'lm' modeling function")
+        glanced <- summary(object, type = "glance")
+    }
+
+    if (is.mipo(object)) {
+        if (nrow(object$glanced) < 2) 
+            stop("At least two imputations are needed for pooling.\n")
+        if (!'r.squared' %in% colnames(object$glanced)) 
+            stop("r^2 can only be calculated for results of the 'lm' modeling function")
+        glanced <- object$glanced
+    }
+
     # Set up array r2 to store R2 values, Fisher z-transformations of R2 values and its variance.
-    analyses <- object$analyses
-    m <- length(analyses)
+    m <- nrow(glanced)
     r2 <- matrix(NA, nrow = m, ncol = 3, dimnames = list(seq_len(m), c("R^2", "Fisher trans F^2", "se()")))
+
     # Fill arrays
     for (i in seq_len(m)) {
-        fit <- analyses[[i]]
-        r2[i, 1] <- if (!adjusted) sqrt(summary(fit)$r.squared) else sqrt(summary(fit)$adj.r.squared)
+        r2[i, 1] <- if (!adjusted) sqrt(glanced$r.squared[i]) else sqrt(glanced$adj.r.squared[i])
         r2[i, 2] <- 0.5 * log((r2[i, 1] + 1)/(1 - r2[i, 1]))
-        r2[i, 3] <- 1/(length(summary(fit)$residuals) - 3)
+        #r2[i, 3] <- 1/(length(summary(fit)$residuals) - 3)
+        r2[i, 3] <- 1/glanced$df.residual[i]
     }
+
     # Compute within, between and total variances following Rubin's rules.  with function pool.scalar().
     fit <- pool.scalar(r2[, 2], r2[, 3])
     

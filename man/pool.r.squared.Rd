@@ -7,8 +7,8 @@
 pool.r.squared(object, adjusted = FALSE)
 }
 \arguments{
-\item{object}{An object of class 'mira', produced by \code{lm.mids} or
-\code{with.mids} with \code{lm} as modeling function.}
+\item{object}{An object of class 'mira' or 'mipo', produced by \code{lm.mids}, 
+\code{with.mids}, or \code{pool} with \code{lm} as modeling function.}
 
 \item{adjusted}{A logical value. If adjusted=TRUE then the adjusted R^2 is
 calculated.  The default value is FALSE.}
