@@ -92,9 +92,28 @@ pool <- function (object, dfcom = NULL) {
     warning("Number of multiple imputations m = 1. No pooling done.")
     return(fa)
   }
+
+  # glanced
+  glanced <- try(data.frame(summary(getfit(object), type = "glance")), 
+                 silent = TRUE)
+  if (inherits(glanced, "try-error")) {
+      glanced <- NULL
+  }
+
+  # dfcom: extract from glanced if NULL
+  if (is.null(dfcom)) {
+      if (!is.null(glanced)) {
+          if ('df.residual' %in% colnames(glanced)) {
+              dfcom <- glanced$df.residual[1L]
+          }
+      }
+  }
   
+  # pooled
   pooled <- pool.fitlist(getfit(object), dfcom = dfcom)
-  rr <- list(call = call, m = m, pooled = pooled)
+
+  # mipo object
+  rr <- list(call = call, m = m, pooled = pooled, glanced = glanced)
   class(rr) <- c("mipo", "data.frame")
   rr
 }
@@ -106,11 +125,6 @@ pool.fitlist <- function (fitlist, dfcom = NULL) {
   # assumed to be the same across imputations
   if (!is.null(dfcom)) dfcom <- max(dfcom, 1) 
   else {
-    if (is.null(dfcom)) {
-      dfcom <- try(summary(fitlist, type = "glance")$df.residual[1L], 
-                   silent = TRUE)
-      if (inherits(dfcom, "try-error")) dfcom <- NULL
-    }
     if (is.null(dfcom)) dfcom <- df.residual(getfit(fitlist, 1L))
     if (is.null(dfcom)) {
       dfcom <- 999999
