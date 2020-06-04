@@ -3,8 +3,9 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.9.0.9000
+# mice 3.9.1
 
+* New functions `tidy.mipo()` and `glance.mipo()` return standardized output that conforms to `broom` specifications. Kindly contributed by Vincent Arel Bundock (#240).
 
 # mice 3.9.0
 

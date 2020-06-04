@@ -122,6 +122,7 @@ reference:
     contents:
       - getfit
       - getqbar
+      - glance.mipo
       - print.mids
       - print.mira
       - print.mice.anova
@@ -129,6 +130,7 @@ reference:
       - summary.mira 
       - summary.mids 
       - summary.mice.anova
+      - tidy.mipo
   - title: "Low-level imputation functions"
     desc: > 
       Several functions are dedicated to common low-level operations
