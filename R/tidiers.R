@@ -36,6 +36,7 @@ tidy.mipo <- function(x, conf.int = FALSE, conf.level = .95, ...) {
                    conf.int = conf.int, conf.level = conf.level)
     out$term <- as.character(out$term)
     
+    # needed for broom <= 0.5.6
     # rename variables if present
     idx <- grepl("%", names(out))
     names(out)[idx] <- c("conf.low", "conf.high")

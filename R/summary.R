@@ -27,8 +27,14 @@ summary.mira <- function(object,
   fitlist <- getfit(object)
   if (type == "tidy")
     v <- lapply(fitlist, tidy, effects = "fixed", parametric = TRUE, ...) %>% bind_rows()
-  if (type == "glance")
+  if (type == "glance") 
     v <- lapply(fitlist, glance, ...) %>% bind_rows()
+    # nobs is needed for pool.r.squared
+    # not supplied by broom <= 0.5.6
+    if (!'nobs' %in% colnames(v)) {
+        v$nobs <- tryCatch(length(stats::residuals(getfit(object)[[1]])),
+                           error = function(e) NULL)
+    }
   if (type == "summary")
     v <- lapply(fitlist, summary, ...)
   v

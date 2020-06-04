@@ -96,7 +96,13 @@ pool <- function (object, dfcom = NULL) {
   # glanced
   glanced <- try(data.frame(summary(getfit(object), type = "glance")), 
                  silent = TRUE)
-  if (inherits(glanced, "try-error")) {
+  if (inherits(glanced, "data.frame")) {
+      # nobs is needed for pool.r.squared 
+      # broom <= 0.5.6 does not supply it
+      if (!'nobs' %in% colnames(glanced)) {
+          glanced$nobs <- length(stats::residuals(object$analyses[[1]]))
+      }
+  } else {
       glanced <- NULL
   }
 

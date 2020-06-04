@@ -86,8 +86,7 @@ pool.r.squared <- function(object, adjusted = FALSE) {
     for (i in seq_len(m)) {
         r2[i, 1] <- if (!adjusted) sqrt(glanced$r.squared[i]) else sqrt(glanced$adj.r.squared[i])
         r2[i, 2] <- 0.5 * log((r2[i, 1] + 1)/(1 - r2[i, 1]))
-        #r2[i, 3] <- 1/(length(summary(fit)$residuals) - 3)
-        r2[i, 3] <- 1/glanced$df.residual[i]
+        r2[i, 3] <- 1/(glanced$nobs[i] - 3)
     }
 
     # Compute within, between and total variances following Rubin's rules.  with function pool.scalar().
