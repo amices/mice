@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Default <code>weights</code> in <code>ampute</code> — ampute.default.weights • mice</title>
+<title>Objects exported from other packages — reexports • mice</title>
 
 
 <!-- jquery -->
@@ -45,9 +45,13 @@
 
 
 
-<meta property="og:title" content="Default <code>weights</code> in <code>ampute</code> — ampute.default.weights" />
-<meta property="og:description" content="Defines the default weights matrix for the multivariate amputation function 
-ampute." />
+<meta property="og:title" content="Objects exported from other packages — reexports" />
+<meta property="og:description" content="These objects are imported from other packages. Follow the links
+below to see their documentation.
+
+  genericsglance, tidy
+
+" />
 
 
 
@@ -124,44 +128,22 @@ ampute." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Default <code>weights</code> in <code>ampute</code></h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/ampute.default.R'><code>R/ampute.default.R</code></a></small>
-    <div class="hidden name"><code>ampute.default.weights.Rd</code></div>
+    <h1>Objects exported from other packages</h1>
+    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/tidiers.R'><code>R/tidiers.R</code></a></small>
+    <div class="hidden name"><code>reexports.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Defines the default weights matrix for the multivariate amputation function 
-<code>ampute</code>.</p>
+    <p>These objects are imported from other packages. Follow the links
+below to see their documentation.</p>
+<dl'>
+  <dt>generics</dt><dd><p><code><a href='https://rdrr.io/pkg/generics/man/glance.html'>glance</a></code>, <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></code></p></dd>
+
+</dl>
     </div>
 
-    <pre class="usage"><span class='fu'>ampute.default.weights</span>(<span class='no'>patterns</span>, <span class='no'>mech</span>)</pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>patterns</th>
-      <td><p>A matrix of size #patterns by #variables where <code>0</code> indicates 
-a variable should have missing values and <code>1</code> indicates a variable should 
-remain complete. Could be the result of <code><a href='ampute.default.patterns.html'>ampute.default.patterns</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>mech</th>
-      <td><p>A string specifying the missingness mechanism.</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A matrix of size #patterns by #variables containing the weights that 
-will be used to calculate the weighted sum scores. Equal weights are given to 
-all variables. When mechanism is MAR, variables that will be amputed will be 
-weighted with <code>0</code>. If it is MNAR, variables that will be observed
-will be weighted with <code>0</code>. If mechanism is MCAR, the weights matrix will
-not be used. A default MAR matrix will be returned.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='ampute.html'>ampute</a></code>, <code><a href='ampute.default.patterns.html'>ampute.default.patterns</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

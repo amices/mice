@@ -127,6 +127,9 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/getqbar.html</loc>
   </url>
   <url>
+    <loc>http://stefvanbuuren.github.io/mice/reference/glance.mipo.html</loc>
+  </url>
+  <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/glm.mids.html</loc>
   </url>
   <url>
@@ -385,6 +388,9 @@
     <loc>http://stefvanbuuren.github.io/mice/reference/rbind.mids.html</loc>
   </url>
   <url>
+    <loc>http://stefvanbuuren.github.io/mice/reference/reexports.html</loc>
+  </url>
+  <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/selfreport.html</loc>
   </url>
   <url>
@@ -401,6 +407,9 @@
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/tbc.html</loc>
+  </url>
+  <url>
+    <loc>http://stefvanbuuren.github.io/mice/reference/tidy.mipo.html</loc>
   </url>
   <url>
     <loc>http://stefvanbuuren.github.io/mice/reference/toenail.html</loc>
