@@ -3,9 +3,15 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.9.1
+# mice 3.10.0
+
+## Major changes
 
 * New functions `tidy.mipo()` and `glance.mipo()` return standardized output that conforms to `broom` specifications. Kindly contributed by Vincent Arel Bundock (#240).
+
+## Minor changes
+
+* Solves a problem with the `D3` testing script that produced an error on CRAN (#244).
 
 # mice 3.9.0
 
