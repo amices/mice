@@ -24,5 +24,4 @@
 #' @export stripplot
 #' @export xyplot
 #' @export complete
-#' @useDynLib mice
 NULL
