@@ -29,6 +29,7 @@
 #'Larger ridges may result in more biased estimates. For highly noisy data 
 #'(e.g. many junk variables), set \code{ridge = 1e-06} or even lower to 
 #'reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.
+#'@param dev Logical. Use \code{dev = TRUE} to specify development version.
 #'@param \dots Other named arguments.
 #'@return Vector with imputed data, same type as \code{y}, and of length 
 #'\code{sum(wy)}
@@ -101,7 +102,8 @@
 #'cor(y, yimp, use = 'pair')
 #'@export
 mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L, 
-                            matchtype = 1L, ridge = 1e-05, ...)
+                            matchtype = 1L, ridge = 1e-05, 
+                            dev = FALSE, ...)
 {
   if (is.null(wy)) 
     wy <- !ry
@@ -122,7 +124,8 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
     yhatobs <- x[ry, , drop = FALSE] %*% parm$beta
     yhatmis <- x[wy, , drop = FALSE] %*% parm$beta
   }
-  idx <- matcher(yhatobs, yhatmis, k = donors)
+  if (dev) idx <- matchindex(yhatobs, yhatmis, donors)
+  else idx <- matcher(yhatobs, yhatmis, k = donors)
   return(y[ry][idx])
 }
 

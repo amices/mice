@@ -13,6 +13,7 @@ mice.impute.pmm(
   donors = 5L,
   matchtype = 1L,
   ridge = 1e-05,
+  dev = FALSE,
   ...
 )
 }
@@ -49,6 +50,8 @@ which means that 0.01 percent of the diagonal is added to the cross-product.
 Larger ridges may result in more biased estimates. For highly noisy data 
 (e.g. many junk variables), set \code{ridge = 1e-06} or even lower to 
 reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
+
+\item{dev}{Logical. Use \code{dev = TRUE} to specify development version.}
 
 \item{\dots}{Other named arguments.}
 }
