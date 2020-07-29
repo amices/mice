@@ -57,7 +57,6 @@ Suggests:
     survival,
     testthat,
     lmtest
-LinkingTo: Rcpp
 Description: Multiple imputation using Fully Conditional Specification (FCS)
     implemented by the MICE algorithm as described in Van Buuren and
     Groothuis-Oudshoorn (2011) <doi:10.18637/jss.v045.i03>. Each variable has
@@ -76,3 +75,5 @@ LazyData: yes
 URL: https://github.com/stefvanbuuren/mice, https://stefvanbuuren.name/mice/, https://stefvanbuuren.name/fimd/
 BugReports: https://github.com/stefvanbuuren/mice/issues
 RoxygenNote: 7.1.1
+LinkingTo: 
+    Rcpp
