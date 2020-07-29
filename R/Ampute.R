@@ -166,13 +166,13 @@
 #'Sociological Methods and Research. DOI: 10.1177/0049124118799376.
 #'
 #'Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn, C.G.M., Rubin, D.B. (2006). 
-#'Fully conditional specification in multivariate imputation. Journal of 
-#'Statistical Computation and Simulation, 76(12), Appendix B.
+#'\href{https://www.tandfonline.com/doi/abs/10.1080/10629360600810434}{Fully conditional specification in multivariate imputation.} Journal of 
+#'Statistical Computation and Simulation, 76(12): 1049-1064.
 #'
 #'Van Buuren, S. (2018). \href{https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni}{Flexible Imputation of Missing Data.} 
 #'Second Edition. Boca Raton, FL.: Chapman & Hall/CRC Press.
 #'
-#'Vink, G. (2016). Towards a standardized evaluation of multiple imputation 
+#'Vink, G. (2016). \href{https://www.gerkovink.com/docs/Standardized%20evaluation.pdf}{Towards a standardized evaluation of multiple imputation.} 
 #'routines. 
 #'
 #'@examples 
