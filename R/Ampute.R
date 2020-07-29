@@ -173,25 +173,30 @@
 #'Second Edition. Boca Raton, FL.: Chapman & Hall/CRC Press.
 #'
 #'Vink, G. (2016). \href{https://www.gerkovink.com/docs/Standardized%20evaluation.pdf}{Towards a standardized evaluation of multiple imputation.} 
-#'routines. 
+#'routines.
 #'
 #'@examples 
-#'# Simulate data set with \code{mvrnorm} from package \code{\pkg{MASS}}.
-#'sigma <- matrix(data = c(1, 0.2, 0.2, 0.2, 1, 0.2, 0.2, 0.2, 1), nrow = 3)
-#'complete.data <- MASS::mvrnorm(n = 100, mu = c(5, 5, 5), Sigma = sigma)
-#'# Perform quick amputation
-#'result1 <- ampute(data = complete.data)
+#'# start with a complete data set 
+#'compl_boys <- cc(boys)[1:3]
+#'
+#'# Perform amputation with default settings
+#'mads_boys <- ampute(data = compl_boys)
+#'mads_boys$amp
+#'
 #'# Change default matrices as desired
-#'patterns <- result1$patterns
-#'patterns[1:3, 2] <- 0
-#'odds <- result1$odds
-#'odds[2,3:4] <- c(2, 4)
-#'odds[3,] <- c(3, 1, NA, NA)
+#'my_patterns <- mads_boys$patterns
+#'my_patterns[1:3, 2] <- 0
+#'my_patterns
+#'
+#'my_weights <- mads_boys$weights
+#'my_weights[2, 1] <- 2
+#'my_weights[3, 1] <- 0.5
+#'my_weights
+#'
 #'# Rerun amputation
-#'result2 <- ampute(data = complete.data, patterns = patterns, freq = 
-#'c(0.3, 0.3, 0.4), cont = FALSE, odds = odds)
-#'# Run an amputation procedure with continuous probabilities
-#'result3 <- ampute(data = complete.data, type = c("RIGHT", "TAIL", "LEFT"))
+#'my_mads_boys <- ampute(data = compl_boys, patterns = my_patterns, freq = 
+#'c(0.3, 0.3, 0.4), weights = my_weights, type = c("RIGHT", "TAIL", "LEFT"))
+#'my_mads_boys$amp
 #'
 #'@export
 ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
