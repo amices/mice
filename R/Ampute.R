@@ -4,12 +4,13 @@
 #'Imputation of data sets containing missing values can be performed with 
 #'\code{\link{mice}}. 
 #'
-#'When new multiple imputation techniques are tested, missing values need to be
+#'When new multiple imputation techniques are evaluated, missing values need to be
 #'generated in simulated data sets. The generation of missing values is what
 #'we call: amputation. The function \code{ampute} is developed to perform any kind
-#'of amputation desired by the researcher. An extensive example and more explanation
-#'of the function can be found in the vignette \emph{Generate missing values with 
-#'ampute}, available in \pkg{mice} as well. For imputation, the function 
+#'of amputation desired by the researcher. The amputation methodology is published in
+#'\emph{\href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{Schouten, Lugtig and Vink, 2018}}.
+#'An extensive example can be found in the vignette \emph{\href{https://rianneschouten.github.io/mice_ampute/vignette/ampute.html}{Generate missing values with 
+#'ampute}}. For imputation, the function 
 #'\code{\link{mice}} is advised.  
 #'
 #'Until recently, univariate amputation procedures were used to generate missing
@@ -17,7 +18,7 @@
 #'incomplete one variable at a time. When several variables need to be amputed, 
 #'the procedure is repeated multiple times. 
 #'
-#'With this univariate approach, it is difficult to relate the missingness on one 
+#'With the univariate approach, it is difficult to relate the missingness on one 
 #'variable to the missingness on another variable. A multivariate amputation procedure 
 #'solves this issue and moreover, it does justice to the multivariate nature of 
 #'data sets. Hence, \code{ampute} is developed to perform the amputation according 
@@ -32,39 +33,37 @@
 #'
 #'Furthermore, the researcher specifies the proportion of missingness, either the 
 #'proportion of missing cases or the proportion of missing cells, and the relative 
-#'frequency each pattern occurs. Consequently, the data is divided over the 
-#'patterns with these probabilities. Now, each case is candidate for a certain 
-#'missingness pattern, but whether the case will have missing values eventually, 
-#'depends on other specifications.
+#'frequency each pattern occurs. Consequently, the data is split into multiple subsets,
+#'one subset per pattern. Now, each case is candidate for a certain missingness pattern, 
+#'but whether the case will have missing values eventually depends on other specifications.
 #'
 #'The first of these specifications is the missing mechanism. There are three possible 
 #'mechanisms: the missingness depends completely on chance (MCAR), the missingness 
 #'depends on the values of the observed variables (i.e. the variables that remain
 #'complete) (MAR) or on the values of the variables that will be made incomplete (MNAR). 
-#'For a more thorough explanation of these definitions, I refer to Van Buuren 
-#'(2012).   
+#'For a discussion on how missingness mechanisms are related to the observed data, 
+#'we refer to \emph{\href{https://journals.sagepub.com/doi/10.1177/0049124118799376}{Schouten and Vink, 2018}}. 
 #'
-#'When the user sets the missingness mechanism to \code{"MCAR"}, the candidates 
-#'have an equal probability of having missing values. No other specifications 
-#'have to be made. For a \code{"MAR"} or \code{"MNAR"} mechanism, weighted sum 
-#'scores are calculated. These scores are a linear combination of the 
+#'When the user specifies the missingness mechanism to be \code{MCAR}, the candidates 
+#'have an equal probability of becoming incomplete. For a \code{MAR} or \code{MNAR} mechanism, 
+#'weighted sum scores are calculated. These scores are a linear combination of the 
 #'variables. 
 #'
-#'In order to calculate the weighted sum scores, the data is standardized. That 
-#'is the reason the data has to be numeric. Second, for each case, the values in 
+#'In order to calculate the weighted sum scores, the data is standardized. For this reason, 
+#'the data has to be numeric. Second, for each case, the values in 
 #'the data set are multiplied with the weights, specified by argument \code{weights}. 
 #'These weighted scores will be summed, resulting in a weighted sum score for each case. 
 #'
 #'The weights may differ between patterns and they may be negative or zero as well.
-#'Naturally, in case of a \code{MAR} mechanism, the weights corresponding to the 
-#'variables that will be made incomplete, have a \code{0}. Note that this might be
-#'different for each pattern. In case of \code{MNAR} missingness, especially
+#'Naturally, in case of a MAR mechanism, the weights corresponding to the 
+#'variables that will be made incomplete, have a \code{0}. Note that this may be
+#'different for each pattern. In case of MNAR missingness, especially
 #'the weights of the variables that will be made incomplete are of importance. However,
-#'the other variables might be weighted as well. 
+#'the other variables may be weighted as well. 
 #'  
 #'It is the relative difference between the weights that will result in an effect 
 #'in the sum scores. For example, for the first missing data
-#'pattern mentioned above, the weights for the third and fourth variables might
+#'pattern mentioned above, the weights for the third and fourth variables could
 #'be set to 2 and 4. However, weight values of 0.2 and 0.4 will have the exact
 #'same effect on the weighted sum score: the fourth variable is weighted twice as
 #'much as variable 3.
@@ -81,12 +80,12 @@
 #'mechanism, the central groups should have higher odds. Again, not the size of 
 #'the odds values are of importance, but the relative distance between the values. 
 #'
-#'The continuous distributions of probabilities are based on the logit function, as 
-#'described by Van Buuren (2012). The user can specify the type of missingness, 
-#'which, again, may differ between patterns.
+#'The continuous distributions of probabilities are based on the logistic distribution function.
+#'The user can specify the type of missingness, which, again, may differ between patterns.
 #'
 #'For an extensive example of the working of the function, I gladly refer to the 
-#'vignette \emph{Generate missing values with ampute}. 
+#'vignette \emph{\href{https://rianneschouten.github.io/mice_ampute/vignette/ampute.html}{Generate missing values with 
+#'ampute}}. The amputation methodology is published in \emph{\href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{Schouten, Lugtig and Vink, 2018}}.
 #'
 #'@param data A complete data matrix or dataframe. Values should be numeric. 
 #'Categorical variables should have been transformed into dummies.
