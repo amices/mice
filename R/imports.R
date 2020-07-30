@@ -16,7 +16,7 @@
 #'                      rbinom rchisq reformulate rgamma rnorm runif 
 #'                      summary.glm terms update var vcov
 #' @importFrom tidyr    complete
-#' @importFrom utils    flush.console head install.packages methods
+#' @importFrom utils    askYesNo flush.console head install.packages methods
 #'                      packageDescription packageVersion
 #'                      tail write.table
 #' @export bwplot
