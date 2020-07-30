@@ -83,16 +83,16 @@ summary.mice.anova <- function(object,...) {
   # handle objects from D1, D2 and D3
   if (is.null(out))
     out <- list(`1 ~~ 2` = list(result = object$result, 
-                                df.com = object$df.com))
+                                dfcom = object$dfcom))
   
   test <- names(out)
-  df.com <- vapply(out, function(x) x$df.com, numeric(1))
+  dfcom <- vapply(out, function(x) x$dfcom, numeric(1))
   results <- t(vapply(out, function(x) x$result, numeric(5)))
   rf <- data.frame(test = test, 
                    statistic = results[, 1],
                    df1 = results[, 2], 
                    df2 = results[, 3],
-                   df.com = df.com, 
+                   dfcom = dfcom, 
                    p.value = results[, 4],
                    riv = results[, 5],
                    row.names = NULL)

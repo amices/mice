@@ -86,40 +86,18 @@ pool <- function (object, dfcom = NULL) {
   object <- as.mira(object)
   m <- length(object$analyses)
   
-  # deal with m = 1
-  fa <- getfit(object, 1)
   if (m == 1) {
     warning("Number of multiple imputations m = 1. No pooling done.")
-    return(fa)
+    return(getfit(object, 1))
   }
 
-  # glanced
-  glanced <- try(data.frame(summary(getfit(object), type = "glance")), 
-                 silent = TRUE)
-  if (inherits(glanced, "data.frame")) {
-      # nobs is needed for pool.r.squared 
-      # broom <= 0.5.6 does not supply it
-      if (!'nobs' %in% colnames(glanced)) {
-          glanced$nobs <- length(stats::residuals(object$analyses[[1]]))
-      }
-  } else {
-      glanced <- NULL
-  }
-
-  # dfcom: extract from glanced if NULL
-  if (is.null(dfcom)) {
-      if (!is.null(glanced)) {
-          if ('df.residual' %in% colnames(glanced)) {
-              dfcom <- glanced$df.residual[1L]
-          }
-      }
-  }
-  
-  # pooled
+  dfcom <- get.dfcom(object, dfcom)
   pooled <- pool.fitlist(getfit(object), dfcom = dfcom)
 
   # mipo object
-  rr <- list(call = call, m = m, pooled = pooled, glanced = glanced)
+  rr <- list(call = call, m = m, 
+             pooled = pooled, 
+             glanced = get.glanced(object))
   class(rr) <- c("mipo", "data.frame")
   rr
 }
@@ -127,17 +105,6 @@ pool <- function (object, dfcom = NULL) {
 pool.fitlist <- function (fitlist, dfcom = NULL) {
   w <- summary(fitlist, type = "tidy", exponentiate = FALSE)
   
-  # residual degrees of freedom of model fitted on hypothetically complete data
-  # assumed to be the same across imputations
-  if (!is.null(dfcom)) dfcom <- max(dfcom, 1) 
-  else {
-    if (is.null(dfcom)) dfcom <- df.residual(getfit(fitlist, 1L))
-    if (is.null(dfcom)) {
-      dfcom <- 999999
-      warning("Large sample assumed.")
-    }
-  }
-
   # combine y.level and term into term (for multinom)
   # if ("y.level" %in% names(w)) w$term <- paste(w$y.level, w$term, sep = ":")
   # y.level: multinom
@@ -168,4 +135,3 @@ pool.fitlist <- function (fitlist, dfcom = NULL) {
   names(pooled)[names(pooled) == "qbar"] <- "estimate"
   pooled
 }
-

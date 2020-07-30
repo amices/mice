@@ -6,10 +6,11 @@
 #'@param fit0 An object of class \code{mira}, produced by \code{with()}. The
 #'model in \code{fit0} is a nested within \code{fit1}. The default null 
 #'model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.
-#'@param df.com A single number or a numeric vector denoting the 
-#'complete-data degrees of freedom for the hypothesis test. If not specified,
-#'it is set equal to \code{df.residual} of model \code{fit1}.
-#'@param \dots Not used.
+#'@param dfcom A single number denoting the 
+#'complete-data degrees of freedom of model \code{fit1}. If not specified,
+#'it is set equal to \code{df.residual} of model \code{fit1}. If that cannot 
+#'be done, the procedure assumes (perhaps incorrectly) a large sample.
+#'@param df.com Deprecated
 #'@references
 #'Li, K. H., T. E. Raghunathan, and D. B. Rubin. 1991.
 #'Large-Sample Significance Levels from Multiply Imputed Data Using 
@@ -31,14 +32,23 @@
 #'D1(fit1, fit0)
 #'@seealso \code{\link[mitml]{testModels}}
 #'@export
-D1 <- function(fit1, fit0 = NULL, df.com = NULL, ...) {
+D1 <- function(fit1, fit0 = NULL, dfcom = NULL, df.com = NULL) {
   
-  install.on.demand("mitml", ...)
+  install.on.demand("mitml")
+  
+  # legacy handling
+  if (!missing(df.com)) {
+    warning("argument df.com is deprecated; please use dfcom instead.", 
+            call. = FALSE)
+    dfcom <- df.com
+  }
+  
+  dfcom <- get.dfcom(fit1, dfcom)
   
   # fit1: a fitlist or mira-object
   # fit0: named numerical vector, character vector, or list
   fit1 <- as.mitml.result(fit1)
-  est1 <- pool(fit1)
+  est1 <- pool(fit1, dfcom = dfcom)
   qbar1 <- getqbar(est1)
   
   if (is.null(fit0)) {
@@ -52,19 +62,7 @@ D1 <- function(fit1, fit0 = NULL, df.com = NULL, ...) {
     fit0 <- as.mitml.result(fit0)
   }
   
-  # automatic setting of df.com
-  if (is.null(df.com)) {
-    # better option might be pair of df.com
-    # pair <- list(getfit(fit1, 1), getfit(fit0, 1))
-    # df.com <- unlist(sapply(pair, glance)["df.residual", ])
-    df.com <- fit1 %>%
-      getfit(1) %>%
-      glance() %>%
-      select(df.residual)%>%
-      as.numeric()
-  }
-  
-  tmr <- mitml::testModels(fit1, fit0, method = "D1", df.com = df.com)
+  tmr <- mitml::testModels(fit1, fit0, method = "D1", df.com = dfcom)
   
   out <- list(
     call = match.call(),
@@ -74,7 +72,7 @@ D1 <- function(fit1, fit0 = NULL, df.com = NULL, ...) {
     m = tmr$m,
     method = "D1",
     use = NULL,
-    df.com = tmr$df.com
+    dfcom = tmr$df.com
   )
   class(out) <- c("mice.anova", class(fit1))
   out

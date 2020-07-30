@@ -17,10 +17,12 @@ anova.mira <- function(object, ..., method = "D1", use = "wald") {
   else names(first) <- names(modlist)
   
   # order by model complexity
-  idx <- order(unlist(first["df.residual", ]), decreasing = FALSE)
+  dfcom <- rep(NA, ncol(first))
+  for(j in 1:ncol(first)) dfcom[j] <- get.dfcom(modlist[[j]])
+  idx <- order(dfcom, decreasing = FALSE)
   modlist <- modlist[idx]
-  df.com <- first["df.residual", idx]
-  names(df.com) <- names(modlist)
+  dfcom <- dfcom[idx]
+  names(dfcom) <- names(modlist)
   
   # get model formulas
   formulas <- lapply(modlist, getfit, 1L) %>% lapply(formula)
@@ -31,8 +33,11 @@ anova.mira <- function(object, ..., method = "D1", use = "wald") {
   out <- vector("list", nm - 1L)
   names(out) <- paste(names(modlist), lead(names(modlist)), sep = " ~~ ")[-nm]
   for(j in seq_along(out)) {
-    args <- alist(fit1 = modlist[[j]], fit0 = modlist[[j + 1L]], 
-                  df.com = as.numeric(unlist(df.com[j])), use = use)
+    if (method == "D2") 
+      args <- alist(fit1 = modlist[[j]], fit0 = modlist[[j + 1L]], use = use)
+    else 
+      args <- alist(fit1 = modlist[[j]], fit0 = modlist[[j + 1L]], 
+                    dfcom = as.numeric(unlist(dfcom[j])))
     out[[j]] <- do.call(method, args = args)
   }
   

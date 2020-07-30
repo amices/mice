@@ -44,11 +44,20 @@
 #'fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
 #'D3(fit1, fit0)
 #'@export
-D3 <- function(fit1, fit0 = NULL, df.com = Inf, ...) {
+D3 <- function(fit1, fit0 = NULL, dfcom = NULL, df.com = NULL) {
+  
+  if (!missing(df.com)) {
+    warning("argument df.com is deprecated; please use dfcom instead.", 
+            call. = FALSE)
+    dfcom <- df.com
+  }
+  
+  dfcom <- get.dfcom(fit1, dfcom)
+  
   call <- match.call()
   fit1 <- getfit(fit1)
   m <- length(fit1)
-  est1 <- pool(fit1)
+  est1 <- pool(fit1, dfcom = dfcom)
   qbar1 <- getqbar(est1)
   
   if (is.null(fit0)) {
@@ -59,7 +68,7 @@ D3 <- function(fit1, fit0 = NULL, df.com = Inf, ...) {
   }
   else fit0 <- getfit(fit0)
   
-  est0 <- pool(fit0)
+  est0 <- pool(fit0, dfcom = dfcom)
   qbar0 <- getqbar(est0)
   k <- length(qbar1) - length(qbar0)
   
@@ -105,7 +114,7 @@ D3 <- function(fit1, fit0 = NULL, df.com = Inf, ...) {
     m = m,
     method = "D3",
     use = NULL,
-    df.com = df.com,
+    dfcom = dfcom,
     deviances = deviances)
   class(out) <- c("mice.anova", class(fit1))
   out

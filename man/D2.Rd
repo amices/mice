@@ -4,7 +4,7 @@
 \alias{D2}
 \title{Compare two nested models using D2-statistic}
 \usage{
-D2(fit1, fit0 = NULL, use = "wald", ...)
+D2(fit1, fit0 = NULL, use = "wald")
 }
 \arguments{
 \item{fit1}{An object of class \code{mira}, produced by \code{with()}.}
@@ -14,8 +14,6 @@ model in \code{fit0} is a nested within \code{fit1}. The default null
 model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.}
 
 \item{use}{A character string denoting Wald- or likelihood-based based tests. Can be either \code{"wald"} or \code{"likelihood"}. Only used if \code{method="D2"}.}
-
-\item{...}{Not used.}
 }
 \description{
 The D2-statistic pools test statistics from the repeated analyses.
