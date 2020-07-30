@@ -3,8 +3,9 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.10.0.9000
+# mice 3.10.1
 
+* The Cox model does not return `df.residual`, which causes problematic behavior in the `D1()`, `D2()`, `D3()`, `anova()` and `pool()`. `mice` now extracts the relevant information from other parts of the objects returned by `survival::coxph()`, which solves long-standing issues with the integration of the Cox model (#246).
 
 # mice 3.10.0
 
