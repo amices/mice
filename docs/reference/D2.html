@@ -79,7 +79,7 @@ The method is less powerful than the D1- and D3-statistics." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.1</span>
       </span>
     </div>
 
@@ -134,7 +134,7 @@ The method is less powerful than the D1- and D3-statistics." />
 The method is less powerful than the D1- and D3-statistics.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>D2</span>(<span class='no'>fit1</span>, <span class='kw'>fit0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>use</span> <span class='kw'>=</span> <span class='st'>"wald"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>D2</span>(<span class='no'>fit1</span>, <span class='kw'>fit0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>use</span> <span class='kw'>=</span> <span class='st'>"wald"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,10 +153,6 @@ model <code>fit0 = NULL</code> compares <code>fit1</code> to the intercept-only 
       <th>use</th>
       <td><p>A character string denoting Wald- or likelihood-based based tests. Can be either <code>"wald"</code> or <code>"likelihood"</code>. Only used if <code>method="D2"</code>.</p></td>
     </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Not used.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -174,14 +170,14 @@ Significance Levels from Repeated p-Values with Multiply-Imputed Data.
 <span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes2</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>51009</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>mi1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>imp</span>, <span class='kw'>expr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>bmi</span> ~ <span class='no'>age</span> + <span class='no'>hyp</span> + <span class='no'>chl</span>))
 <span class='no'>mi0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>imp</span>, <span class='kw'>expr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>bmi</span> ~ <span class='no'>age</span> + <span class='no'>hyp</span>))
-<span class='fu'>D2</span>(<span class='no'>mi1</span>, <span class='no'>mi0</span>)</div><div class='output co'>#&gt;    test statistic df1      df2 df.com   p.value       riv
-#&gt;  1 ~~ 2  5.743493   1 24.89412     NA 0.0243856 0.6690303</div><div class='input'>
+<span class='fu'>D2</span>(<span class='no'>mi1</span>, <span class='no'>mi0</span>)</div><div class='output co'>#&gt;    test statistic df1      df2 dfcom   p.value       riv
+#&gt;  1 ~~ 2  5.743493   1 24.89412    NA 0.0243856 0.6690303</div><div class='input'>
 <span class='co'># Compare two logistic regression models</span>
 <span class='no'>imp</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>boys</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>gen</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>gen</span>)[<span class='fl'>1</span>] ~ <span class='no'>hgt</span> + <span class='no'>hc</span> + <span class='no'>reg</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>))
 <span class='no'>fit0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>gen</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>gen</span>)[<span class='fl'>1</span>] ~ <span class='no'>hgt</span> + <span class='no'>hc</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>))
-<span class='fu'>D2</span>(<span class='no'>fit1</span>, <span class='no'>fit0</span>)</div><div class='output co'>#&gt;    test statistic df1     df2 df.com   p.value       riv
-#&gt;  1 ~~ 2  2.337995   4 50.8508     NA 0.0676726 0.2270525</div></pre>
+<span class='fu'>D2</span>(<span class='no'>fit1</span>, <span class='no'>fit0</span>)</div><div class='output co'>#&gt;    test statistic df1     df2 dfcom   p.value       riv
+#&gt;  1 ~~ 2  2.337995   4 50.8508    NA 0.0676726 0.2270525</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

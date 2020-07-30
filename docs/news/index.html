@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.1</span>
       </span>
     </div>
 
@@ -126,9 +126,17 @@
       <small>Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="mice-3101" class="section level1">
+<h1 class="page-header" data-toc-text="3.10.1">
+<a href="#mice-3101" class="anchor"></a>mice 3.10.1<small> Unreleased </small>
+</h1>
+<ul>
+<li>The Cox model does not return <code>df.residual</code>, which causes problematic behavior in the <code><a href="../reference/D1.html">D1()</a></code>, <code><a href="../reference/D2.html">D2()</a></code>, <code><a href="../reference/D3.html">D3()</a></code>, <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> and <code><a href="../reference/pool.html">pool()</a></code>. <code>mice</code> now extracts the relevant information from other parts of the objects returned by <code><a href="https://rdrr.io/pkg/survival/man/coxph.html">survival::coxph()</a></code>, which solves long-standing issues with the integration of the Cox model (<a href='https://github.com/stefvanbuuren/mice/issues/246'>#246</a>).</li>
+</ul>
+</div>
     <div id="mice-3100" class="section level1">
 <h1 class="page-header" data-toc-text="3.10.0">
-<a href="#mice-3100" class="anchor"></a>mice 3.10.0<small> Unreleased </small>
+<a href="#mice-3100" class="anchor"></a>mice 3.10.0<small> 2020-07-13 </small>
 </h1>
 <div id="major-changes" class="section level2">
 <h2 class="hasAnchor">

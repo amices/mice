@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.1</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     <p>The D3-statistic is a likelihood-ratio test statistic.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>D3</span>(<span class='no'>fit1</span>, <span class='kw'>fit0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>df.com</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>D3</span>(<span class='no'>fit1</span>, <span class='kw'>fit0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dfcom</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>df.com</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,14 +148,15 @@ model in <code>fit0</code> is a nested within <code>fit1</code>. The default nul
 model <code>fit0 = NULL</code> compares <code>fit1</code> to the intercept-only model.</p></td>
     </tr>
     <tr>
-      <th>df.com</th>
-      <td><p>A single number or a numeric vector denoting the 
-complete-data degrees of freedom for the hypothesis test. If not specified,
-it is set equal to <code>df.residual</code> of model <code>fit1</code>.</p></td>
+      <th>dfcom</th>
+      <td><p>A single number denoting the 
+complete-data degrees of freedom of model <code>fit1</code>. If not specified,
+it is set equal to <code>df.residual</code> of model <code>fit1</code>. If that cannot 
+be done, the procedure assumes (perhaps incorrectly) a large sample.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Not used.</p></td>
+      <th>df.com</th>
+      <td><p>Deprecated</p></td>
     </tr>
     </table>
 
@@ -194,14 +195,14 @@ Performing Likelihood Ratio Tests with Multiply-Imputed Data Sets.
 <span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes2</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>51009</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>mi1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>imp</span>, <span class='kw'>expr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>bmi</span> ~ <span class='no'>age</span> + <span class='no'>hyp</span> + <span class='no'>chl</span>))
 <span class='no'>mi0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>imp</span>, <span class='kw'>expr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>bmi</span> ~ <span class='no'>age</span> + <span class='no'>hyp</span>))
-<span class='fu'>D3</span>(<span class='no'>mi1</span>, <span class='no'>mi0</span>)</div><div class='output co'>#&gt;    test statistic df1      df2 df.com   p.value      riv
-#&gt;  1 ~~ 2  3.064151   1 9.149856    Inf 0.1134091 1.951462</div><div class='input'>
+<span class='fu'>D3</span>(<span class='no'>mi1</span>, <span class='no'>mi0</span>)</div><div class='output co'>#&gt;    test statistic df1      df2 dfcom   p.value      riv
+#&gt;  1 ~~ 2  3.064151   1 9.149856    20 0.1134091 1.951462</div><div class='input'>
 <span class='co'># Compare two logistic regression models</span>
 <span class='no'>imp</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>boys</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>gen</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>gen</span>)[<span class='fl'>1</span>] ~ <span class='no'>hgt</span> + <span class='no'>hc</span> + <span class='no'>reg</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>))
 <span class='no'>fit0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>gen</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>gen</span>)[<span class='fl'>1</span>] ~ <span class='no'>hgt</span> + <span class='no'>hc</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>))
-<span class='fu'>D3</span>(<span class='no'>fit1</span>, <span class='no'>fit0</span>)</div><div class='output co'>#&gt;    test statistic df1      df2 df.com   p.value       riv
-#&gt;  1 ~~ 2  1.356106   4 48.02414    Inf 0.2631346 0.9558877</div></pre>
+<span class='fu'>D3</span>(<span class='no'>fit1</span>, <span class='no'>fit0</span>)</div><div class='output co'>#&gt;    test statistic df1      df2 dfcom   p.value       riv
+#&gt;  1 ~~ 2  1.356106   4 48.02414   741 0.2631346 0.9558877</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

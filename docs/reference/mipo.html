@@ -79,7 +79,7 @@ The function pool generates an object of class mipo." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.1</span>
       </span>
     </div>
 
@@ -200,8 +200,8 @@ logistic regression).</p></td>
     <p>The <code>summary</code> method returns a data frame with summary statistics of the pooled analysis.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>An object class <code>mipo</code> is a <code>list</code> with three 
-elements: <code>call</code>, <code>m</code> and <code>pooled</code>.</p>
+    <p>An object class <code>mipo</code> is a <code>list</code> with  
+elements: <code>call</code>, <code>m</code>, <code>pooled</code> and <code>glanced</code>.</p>
 <p>The <code>pooled</code> elements is a data frame with columns:</p><table class='table'>
 <tr><td><code>estimate</code></td><td>Pooled complete data estimate</td></tr>
 <tr><td><code>ubar</code></td><td>Within-imputation variance of <code>estimate</code></td></tr>
@@ -214,6 +214,9 @@ elements: <code>call</code>, <code>m</code> and <code>pooled</code>.</p>
 <tr><td><code>fmi</code></td><td>Fraction of missing information</td></tr>
 </table>
 <p>The names of the terms are stored as <code><a href='https://rdrr.io/r/base/row.names.html'>row.names(pooled)</a></code>.</p>
+<p>The <code>glanced</code> elements is a <code>data.frame</code> with <code>m</code> rows. 
+The precise composition depends on the class of the complete-data analysis.
+At least field <code>nobs</code> is expected to be present.</p>
 <p>The <code>process_mipo</code> is a helper function to process a 
 tidied mipo object, and is normally not called directly.
 It adds a confidence interval, and optionally exponentiates, the result.</p>
