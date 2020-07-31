@@ -85,4 +85,5 @@
 #'\href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 #'Chapman & Hall/CRC. Boca Raton, FL.
 #'
+#' @importFrom Rcpp evalCpp
 NULL

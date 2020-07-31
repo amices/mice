@@ -39,6 +39,7 @@ Imports:
     graphics,
     lattice,
     methods,
+    Rcpp,
     stats,
     tidyr,
     utils
