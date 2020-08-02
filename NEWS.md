@@ -3,6 +3,11 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.10.3
+
+* Updates on `ampute` documentation (#251)
+* Adds missing `Rccp` dependency (#248)
+
 # mice 3.10.2
 
 * Ask user permission before installing a package from `suggests`.
