@@ -1,9 +1,0 @@
-* using log directory 'C:/Users/20200059/Documents/Github/mice/..Rcheck'
-* using R version 3.6.2 (2019-12-12)
-* using platform: x86_64-w64-mingw32 (64-bit)
-* using session charset: ISO8859-1
-* checking for file './DESCRIPTION' ... ERROR
-Required field missing or empty:
-  'Author'
-* DONE
-Status: 1 ERROR
