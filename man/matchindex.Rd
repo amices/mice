@@ -31,7 +31,7 @@ returns its position in vector \code{d}.
 We may use the function to perform predictive mean matching under a given 
 predictive model. To do so, specify both \code{d} and \code{t} as 
 predictions from the same model. Suppose that \code{y} contains the observed 
-outcomes of the donor case (in the same sequence as \code{d}), then 
+outcomes of the donor cases (in the same sequence as \code{d}), then 
 \code{y[matchindex(d, t)]} returns one matched outcome for every 
 target case.
 
