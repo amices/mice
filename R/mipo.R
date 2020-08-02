@@ -16,8 +16,8 @@
 #' coefficient estimates and confidence intervals (typical for 
 #' logistic regression).
 #' @param \dots Arguments passed down
-#' @details An object class \code{mipo} is a \code{list} with three 
-#' elements: \code{call}, \code{m} and \code{pooled}.
+#' @details An object class \code{mipo} is a \code{list} with  
+#' elements: \code{call}, \code{m}, \code{pooled} and \code{glanced}.
 #' 
 #' The \code{pooled} elements is a data frame with columns:
 #' \tabular{ll}{
@@ -32,6 +32,10 @@
 #' \code{fmi}     \tab Fraction of missing information\cr
 #' }
 #' The names of the terms are stored as \code{row.names(pooled)}.
+#' 
+#' The \code{glanced} elements is a \code{data.frame} with \code{m} rows. 
+#' The precise composition depends on the class of the complete-data analysis.
+#' At least field \code{nobs} is expected to be present.
 #' 
 #' The \code{process_mipo} is a helper function to process a 
 #' tidied mipo object, and is normally not called directly.

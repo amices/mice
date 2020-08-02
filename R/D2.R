@@ -25,9 +25,10 @@
 #'D2(fit1, fit0)
 #'@seealso \code{\link[mitml]{testModels}}
 #'@export
-D2 <- function(fit1, fit0 = NULL, use = "wald", ...) {
+D2 <- function(fit1, fit0 = NULL, use = "wald") {
   
-  install.on.demand("mitml", ...)
+  install.on.demand("mitml")
+  
   # fit1: a fitlist or mira-object
   # fit0: named numerical vector, character vector, or list
   fit1 <- as.mitml.result(fit1)
@@ -45,7 +46,7 @@ D2 <- function(fit1, fit0 = NULL, use = "wald", ...) {
     fit0 <- as.mitml.result(fit0)
   }
   
-  tmr <- mitml::testModels(fit1, fit0, method = "D2", use = use, ...)
+  tmr <- mitml::testModels(fit1, fit0, method = "D2", use = use)
 
   out <- list(
     call = match.call(),
@@ -55,7 +56,7 @@ D2 <- function(fit1, fit0 = NULL, use = "wald", ...) {
     m = tmr$m,
     method = "D2",
     use = use,
-    df.com = NA)
+    dfcom = NA)
   class(out) <- c("mice.anova", class(fit1))
   out
 }

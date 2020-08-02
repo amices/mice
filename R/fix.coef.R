@@ -73,6 +73,10 @@ fix.coef <- function(model, beta = NULL) {
   # re-calculate model for new beta's
   data <- model.frame(formula = formula(model), data = model.frame(model))
   mm <- model.matrix(formula(model, fixed.only = TRUE), data = data)
+  # Problem: offset cannot be calculated for the Cox model because that does 
+  # not include the intercept
+  if (inherits(model, "coxph"))
+    stop("D3 does not support the Cox model.", call. = FALSE)
   offset <- as.vector(mm %*% beta)
   uf <- . ~ 1
   if (inherits(model, "merMod")) uf <- formula(model, random.only = TRUE)
