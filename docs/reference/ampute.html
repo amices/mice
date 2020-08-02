@@ -80,7 +80,7 @@ mice." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.3</span>
       </span>
     </div>
 
@@ -157,7 +157,7 @@ Imputation of data sets containing missing values can be performed with
     <tr>
       <th>data</th>
       <td><p>A complete data matrix or dataframe. Values should be numeric. 
-Categorical variables should have been transformed into dummies.</p></td>
+Categorical variables should have been transformed to dummies.</p></td>
     </tr>
     <tr>
       <th>prop</th>
@@ -167,9 +167,9 @@ between 0 and 1. Default is a missingness proportion of 0.5.</p></td>
     <tr>
       <th>patterns</th>
       <td><p>A matrix or data frame of size #patterns by #variables where 
-<code>0</code> indicates a variable should have missing values and <code>1</code> indicates 
-a variable should remain complete. The user may specify as many patterns as 
-desired. One pattern (a vector) or double patterns are possible as well. Default 
+<code>0</code> indicates that a variable should have missing values and <code>1</code> indicates 
+that a variable should remain complete. The user may specify as many patterns as 
+desired. One pattern (a vector) is possible as well. Default 
 is a square matrix of size #variables where each pattern has missingness on one 
 variable only (created with <code><a href='ampute.default.patterns.html'>ampute.default.patterns</a></code>). After the 
 amputation procedure, <code><a href='md.pattern.html'>md.pattern</a></code> can be used to investigate the 
@@ -186,59 +186,58 @@ for each pattern, created with <code><a href='ampute.default.freq.html'>ampute.d
     </tr>
     <tr>
       <th>mech</th>
-      <td><p>A string specifying the missingness mechanism, either MCAR 
-(Missing Completely At Random), MAR (Missing At Random) or MNAR (Missing Not At 
+      <td><p>A string specifying the missingness mechanism, either "MCAR" 
+(Missing Completely At Random), "MAR" (Missing At Random) or "MNAR" (Missing Not At 
 Random). Default is a MAR missingness mechanism.</p></td>
     </tr>
     <tr>
       <th>weights</th>
       <td><p>A matrix or data frame of size #patterns by #variables. The matrix 
 contains the weights that will be used to calculate the weighted sum scores. For 
-a MAR mechanism, weights of the variables that will be made incomplete, should be 
-zero. For a MNAR mechanism, these weights might have any possible value. Furthermore, 
+a MAR mechanism, the weights of the variables that will be made incomplete should be 
+zero. For a MNAR mechanism, these weights could have any possible value. Furthermore, 
 the weights may differ between patterns and between variables. They may be negative 
 as well. Within each pattern, the relative size of the values are of importance. 
 The default weights matrix is made with <code><a href='ampute.default.weights.html'>ampute.default.weights</a></code> and 
 returns a matrix with equal weights for all variables. In case of MAR, variables 
-that will be amputed will be weighted with <code>0</code>. If it is MNAR, variables 
-that will be observed will be weighted with <code>0</code>. If mechanism is MCAR, the 
+that will be amputed will be weighted with <code>0</code>. For MNAR, variables 
+that will be observed will be weighted with <code>0</code>. If the mechanism is MCAR, the 
 weights matrix will not be used.</p></td>
     </tr>
     <tr>
       <th>std</th>
       <td><p>Logical. Whether the weighted sum scores should be calculated with 
-standardized data or with non-standardized data. The latter is advised when 
-making use of train and testsets in order to prevent leakage.</p></td>
+standardized data or with non-standardized data. The latter is especially advised when 
+making use of train and test sets in order to prevent leakage.</p></td>
     </tr>
     <tr>
       <th>cont</th>
       <td><p>Logical. Whether the probabilities should be based on a continuous 
-or discrete distribution. If TRUE, the probabilities of being missing are based 
+or a discrete distribution. If TRUE, the probabilities of being missing are based 
 on a continuous logistic distribution function. <code><a href='ampute.continuous.html'>ampute.continuous</a></code> 
-will be used to calculate and assign the probabilities. These will be based on 
-argument <code>type</code>. If FALSE, the probabilities of being missing are based on 
-a discrete distribution (<code><a href='ampute.discrete.html'>ampute.discrete</a></code>) based on the <code>odds</code> 
-argument. 
-Default is TRUE.</p></td>
+will be used to calculate and assign the probabilities. These probabilities will then 
+be based on the argument <code>type</code>. If FALSE, the probabilities of being missing are 
+based on a discrete distribution (<code><a href='ampute.discrete.html'>ampute.discrete</a></code>) based on the <code>odds</code> 
+argument. Default is TRUE.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>A vector of strings containing the type of missingness for each 
+      <td><p>A string or vector of strings containing the type of missingness for each 
 pattern. Either <code>"LEFT"</code>, <code>"MID"</code>, <code>"TAIL"</code> or '<code>"RIGHT"</code>. 
-If a single missingness type is entered, all patterns will be created by the same 
-type. If missingness types should differ over patterns, a vector of missingness 
-types should be entered. Default is RIGHT for all patterns and is the result of
+If a single missingness type is given, all patterns will be created with the same 
+type. If the missingness types should differ between patterns, a vector of missingness 
+types should be given. Default is RIGHT for all patterns and is the result of
 <code><a href='ampute.default.type.html'>ampute.default.type</a></code>.</p></td>
     </tr>
     <tr>
       <th>odds</th>
       <td><p>A matrix where #patterns defines the #rows. Each row should contain 
-the odds of being missing for the corresponding pattern. The amount of odds values 
-defines in how many quantiles the sum scores will be divided. The values are 
+the odds of being missing for the corresponding pattern. The number of odds values 
+defines in how many quantiles the sum scores will be divided. The odds values are 
 relative probabilities: a quantile with odds value 4 will have a probability of 
 being missing that is four times higher than a quantile with odds 1. The 
-#quantiles may differ between the patterns, specify NA for cells remaining empty. 
-Default is 4 quantiles with odds values 1, 2, 3 and 4, the result of 
+number of quantiles may differ between the patterns, specify NA for cells remaining empty. 
+Default is 4 quantiles with odds values 1, 2, 3 and 4 and is created by  
 <code><a href='ampute.default.odds.html'>ampute.default.odds</a></code>.</p></td>
     </tr>
     <tr>
@@ -250,7 +249,7 @@ cells. Default is TRUE.</p></td>
     <tr>
       <th>run</th>
       <td><p>Logical. If TRUE, the amputations are implemented. If FALSE, the 
-return object will contain everything but the amputed data set.</p></td>
+return object will contain everything except for the amputed data set.</p></td>
     </tr>
     </table>
 
@@ -260,58 +259,55 @@ return object will contain everything but the amputed data set.</p></td>
 amputed data set)</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>When new multiple imputation techniques are tested, missing values need to be
-generated in simulated data sets. The generation of missing values is what
-we call: amputation. The function <code>ampute</code> is developed to perform any kind
-of amputation desired by the researcher. An extensive example and more explanation
-of the function can be found in the vignette <em>Generate missing values with 
-ampute</em>, available in <span class="pkg">mice</span> as well. For imputation, the function 
-<code><a href='mice.html'>mice</a></code> is advised.</p>
+    <p>This function generates missing values in complete data sets. Amputation of complete 
+data sets is useful for the evaluation of imputation techniques, such as multiple
+imputation (performed with function <code><a href='mice.html'>mice</a></code> in this package).</p>
+<p>The vignette <a href='https://rianneschouten.github.io/mice_ampute/vignette/ampute.html'>Generate missing values with 
+ampute</a> shows an extensive example of how <code>ampute</code> can be used. For the 
+amputation methodology underlying <code>ampute</code>, we refer to 
+<a href='https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577'>Schouten, Lugtig and Vink, 2018</a>.</p>
 <p>Until recently, univariate amputation procedures were used to generate missing
 data in complete, simulated data sets. With this approach, variables are made
-incomplete one variable at a time. When several variables need to be amputed, 
+incomplete one variable at a time. When more than one variable needs to be amputed, 
 the procedure is repeated multiple times.</p>
-<p>With this univariate approach, it is difficult to relate the missingness on one 
+<p>With the univariate approach, it is difficult to relate the missingness on one 
 variable to the missingness on another variable. A multivariate amputation procedure 
 solves this issue and moreover, it does justice to the multivariate nature of 
-data sets. Hence, <code>ampute</code> is developed to perform the amputation according 
-the researcher's desires.</p>
+data sets. Hence, <code>ampute</code> is developed to perform multivariate amputation.</p>
 <p>The idea behind the function is the specification of several missingness 
 patterns. Each pattern is a combination of variables with and without missing 
 values (denoted by <code>0</code> and <code>1</code> respectively). For example, one might
 want to create two missingness patterns on a data set with four variables. The
-patterns could be something like: <code>0, 0, 1, 1</code> and <code>1, 0, 1, 0</code>. 
+patterns could be something like: <code>0,0,1,1</code> and <code>1,0,1,0</code>. 
 Each combination of zeros and ones may occur.</p>
 <p>Furthermore, the researcher specifies the proportion of missingness, either the 
 proportion of missing cases or the proportion of missing cells, and the relative 
-frequency each pattern occurs. Consequently, the data is divided over the 
-patterns with these probabilities. Now, each case is candidate for a certain 
-missingness pattern, but whether the case will have missing values eventually, 
-depends on other specifications.</p>
+frequency each pattern occurs. Consequently, the data is split into multiple subsets,
+one subset per pattern. Now, each case is candidate for a certain missingness pattern, 
+but whether the case will have missing values eventually depends on other specifications.</p>
 <p>The first of these specifications is the missing mechanism. There are three possible 
 mechanisms: the missingness depends completely on chance (MCAR), the missingness 
 depends on the values of the observed variables (i.e. the variables that remain
 complete) (MAR) or on the values of the variables that will be made incomplete (MNAR). 
-For a more thorough explanation of these definitions, I refer to Van Buuren 
-(2012).</p>
-<p>When the user sets the missingness mechanism to <code>"MCAR"</code>, the candidates 
-have an equal probability of having missing values. No other specifications 
-have to be made. For a <code>"MAR"</code> or <code>"MNAR"</code> mechanism, weighted sum 
-scores are calculated. These scores are a linear combination of the 
+For a discussion on how missingness mechanisms are related to the observed data, 
+we refer to <a href='https://journals.sagepub.com/doi/10.1177/0049124118799376'>Schouten and Vink, 2018</a>.</p>
+<p>When the user specifies the missingness mechanism to be <code>"MCAR"</code>, the candidates 
+have an equal probability of becoming incomplete. For a <code>"MAR"</code> or <code>"MNAR"</code> mechanism, 
+weighted sum scores are calculated. These scores are a linear combination of the 
 variables.</p>
-<p>In order to calculate the weighted sum scores, the data is standardized. That 
-is the reason the data has to be numeric. Second, for each case, the values in 
+<p>In order to calculate the weighted sum scores, the data is standardized. For this reason, 
+the data has to be numeric. Second, for each case, the values in 
 the data set are multiplied with the weights, specified by argument <code>weights</code>. 
 These weighted scores will be summed, resulting in a weighted sum score for each case.</p>
 <p>The weights may differ between patterns and they may be negative or zero as well.
-Naturally, in case of a <code>MAR</code> mechanism, the weights corresponding to the 
-variables that will be made incomplete, have a <code>0</code>. Note that this might be
-different for each pattern. In case of <code>MNAR</code> missingness, especially
+Naturally, in case of a MAR mechanism, the weights corresponding to the 
+variables that will be made incomplete, have a 0. Note that this may be
+different for each pattern. In case of MNAR missingness, especially
 the weights of the variables that will be made incomplete are of importance. However,
-the other variables might be weighted as well.</p> 
+the other variables may be weighted as well.</p> 
 <p>It is the relative difference between the weights that will result in an effect 
 in the sum scores. For example, for the first missing data
-pattern mentioned above, the weights for the third and fourth variables might
+pattern mentioned above, the weights for the third and fourth variables could
 be set to 2 and 4. However, weight values of 0.2 and 0.4 will have the exact
 same effect on the weighted sum score: the fourth variable is weighted twice as
 much as variable 3.</p>
@@ -325,23 +321,26 @@ For example, for a RIGHT-like mechanism, scoring in one of the
 higher quantiles should have high missingness odds, whereas for a MID-like 
 mechanism, the central groups should have higher odds. Again, not the size of 
 the odds values are of importance, but the relative distance between the values.</p>
-<p>The continuous distributions of probabilities are based on the logit function, as 
-described by Van Buuren (2012). The user can specify the type of missingness, 
-which, again, may differ between patterns.</p>
-<p>For an extensive example of the working of the function, I gladly refer to the 
-vignette <em>Generate missing values with ampute</em>.</p>
+<p>The continuous distributions of probabilities are based on the logistic distribution function.
+The user can specify the type of missingness, which, again, may differ between patterns.</p>
+<p>For an example and more explanation about how the arguments interact with each other, 
+we gladly refer to the vignette <a href='https://rianneschouten.github.io/mice_ampute/vignette/ampute.html'>Generate missing values with 
+ampute</a>. The amputation methodology is published in <a href='https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577'>Schouten, Lugtig and Vink, 2018</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Brand, J.P.L. (1999). <em>Development, implementation and 
+    <p>Brand, J.P.L. (1999) <em>Development, implementation and 
 evaluation of multiple imputation strategies for the statistical analysis of 
-incomplete data sets</em> (pp. 110-113). Dissertation. Rotterdam: Erasmus University.</p>
-<p>Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn, C.G.M., Rubin, D.B. (2006). 
-Fully conditional specification in multivariate imputation. <em>Journal of 
-Statistical Computation and Simulation</em>, 76<em>(12)</em>, Appendix B.</p>
-<p>Van Buuren, S. (2018). 
-<a href='https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
-Boca Raton, FL.: Chapman &amp; Hall/CRC Press.</p>
-<p>Vink, G. (2016). Towards a standardized evaluation of multiple imputation 
+incomplete data sets.</em> pp. 110-113. Dissertation. Rotterdam: Erasmus University.</p>
+<p>Schouten, R.M., Lugtig, P and Vink, G. (2018) <a href='https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577'>Generating missing values for simulation purposes: A multivariate amputation procedure.</a>
+<em>Journal of Statistical Computation and Simulation</em>, 88(15): 1909-1930. DOI: 10.1080/00949655.2018.1491577.</p>
+<p>Schouten, R.M. and Vink, G. (2018) <a href='https://journals.sagepub.com/doi/full/10.1177/0049124118799376'>The Dance of the Mechanisms: How Observed Information Influences the Validity of Missingness Assumptions.</a>
+<em>Sociological Methods and Research</em>, DOI: 10.1177/0049124118799376.</p>
+<p>Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn, C.G.M., Rubin, D.B. (2006)
+<a href='https://www.tandfonline.com/doi/abs/10.1080/10629360600810434'>Fully conditional specification in multivariate imputation.</a> 
+<em>Journal of Statistical Computation and Simulation</em>, 76(12): 1049-1064.</p>
+<p>Van Buuren, S. (2018) <a href='https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
+Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
+<p>Vink, G. (2016) Towards a standardized evaluation of multiple imputation. 
 routines.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -349,22 +348,471 @@ routines.</p>
 <code><a href='mice.html'>mice</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Simulate data set with \code{mvrnorm} from package \code{\pkg{MASS}}.</span>
-<span class='no'>sigma</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>0.2</span>, <span class='fl'>0.2</span>, <span class='fl'>0.2</span>, <span class='fl'>1</span>, <span class='fl'>0.2</span>, <span class='fl'>0.2</span>, <span class='fl'>0.2</span>, <span class='fl'>1</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='no'>complete.data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>MASS</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>mvrnorm</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>), <span class='kw'>Sigma</span> <span class='kw'>=</span> <span class='no'>sigma</span>)
-<span class='co'># Perform quick amputation</span>
-<span class='no'>result1</span> <span class='kw'>&lt;-</span> <span class='fu'>ampute</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>complete.data</span>)
+    <pre class="examples"><div class='input'><span class='co'># start with a complete data set </span>
+<span class='no'>compl_boys</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cc.html'>cc</a></span>(<span class='no'>boys</span>)[<span class='fl'>1</span>:<span class='fl'>3</span>]
+
+<span class='co'># Perform amputation with default settings</span>
+<span class='no'>mads_boys</span> <span class='kw'>&lt;-</span> <span class='fu'>ampute</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>compl_boys</span>)
+<span class='no'>mads_boys</span>$<span class='no'>amp</span></div><div class='output co'>#&gt;         age   hgt   wgt
+#&gt; 3279  8.859 124.8  31.0
+#&gt; 3283  8.867 145.0  38.2
+#&gt; 3296  8.908    NA  30.0
+#&gt; 3321  8.999 136.3  26.9
+#&gt; 3323  9.004 151.2  48.2
+#&gt; 3327  9.021 141.4  29.4
+#&gt; 3357  9.119 140.0  28.0
+#&gt; 3388  9.201 125.8  22.0
+#&gt; 3398  9.234    NA  35.6
+#&gt; 3409  9.270 140.4  32.0
+#&gt; 3416  9.303 142.2  31.6
+#&gt; 3422     NA 147.4  31.4
+#&gt; 3429  9.368 132.7  25.9
+#&gt; 3442  9.407 134.4  27.0
+#&gt; 3449  9.426 146.0  36.5
+#&gt; 3455  9.451 136.0  27.5
+#&gt; 3460  9.459 142.7  30.8
+#&gt; 3481  9.511 144.5  30.3
+#&gt; 3484  9.514 140.3  27.8
+#&gt; 3486  9.514 138.0  31.0
+#&gt; 3494  9.524 140.9  32.7
+#&gt; 3525  9.582 134.0  27.5
+#&gt; 3533  9.604    NA  32.6
+#&gt; 3547  9.631 139.7  28.7
+#&gt; 3609  9.834 142.0  30.3
+#&gt; 3651  9.990 149.0    NA
+#&gt; 3664 10.020 137.2  31.7
+#&gt; 3710 10.132 134.0    NA
+#&gt; 3721 10.154 139.3  30.6
+#&gt; 3724 10.160 141.3  39.5
+#&gt; 3727 10.171 135.2  31.9
+#&gt; 3805 10.398 149.8  34.7
+#&gt; 3814 10.422    NA  39.8
+#&gt; 3827 10.447    NA  41.0
+#&gt; 3834 10.477 142.6  32.5
+#&gt; 3841 10.499 148.6  38.6
+#&gt; 3865 10.554 146.3  40.4
+#&gt; 3873 10.568 151.0  36.6
+#&gt; 3880 10.581 141.2  33.8
+#&gt; 3929 10.724 144.1  29.5
+#&gt; 3975 10.888 147.0  33.8
+#&gt; 3988 10.945 149.0  45.6
+#&gt; 3991 10.954 145.1  36.2
+#&gt; 3994 10.967 137.4  29.6
+#&gt; 3995 10.970 151.2  39.2
+#&gt; 4006     NA 134.3  29.1
+#&gt; 4009 11.011 148.8  44.2
+#&gt; 4059 11.126 139.6    NA
+#&gt; 4066 11.143 135.1  25.0
+#&gt; 4067 11.143 148.3  41.5
+#&gt; 4070 11.156 163.0    NA
+#&gt; 4072 11.159 144.5    NA
+#&gt; 4102 11.222 151.8    NA
+#&gt; 4122 11.288 159.4  43.4
+#&gt; 4173 11.446 147.9  42.2
+#&gt; 4174 11.446 152.8  43.1
+#&gt; 4186 11.482 148.7  37.2
+#&gt; 4211 11.545 153.2  42.5
+#&gt; 4238 11.605 155.2    NA
+#&gt; 4240 11.611 151.0  33.8
+#&gt; 4253 11.655 160.6    NA
+#&gt; 4255 11.665 144.5    NA
+#&gt; 4266 11.690 148.0  35.2
+#&gt; 4293 11.759 153.2  42.8
+#&gt; 4301 11.789 135.4  29.7
+#&gt; 4302 11.791 152.8  43.5
+#&gt; 4312 11.811 145.9  34.8
+#&gt; 4318 11.827 151.0  33.0
+#&gt; 4332 11.874 152.0  32.5
+#&gt; 4349 11.926    NA  44.5
+#&gt; 4399 12.071 151.1  34.5
+#&gt; 4465 12.265    NA  43.3
+#&gt; 4481 12.292 145.8  39.2
+#&gt; 4487     NA 161.4  44.0
+#&gt; 4505 12.375 157.2    NA
+#&gt; 4532 12.457 161.4    NA
+#&gt; 4552 12.501 170.5  53.4
+#&gt; 4561     NA 162.1  44.1
+#&gt; 4579 12.574 163.8  51.6
+#&gt; 4585 12.583 163.3  52.6
+#&gt; 4591 12.599    NA  39.0
+#&gt; 4646 12.741 172.0  79.5
+#&gt; 4682 12.821 170.2    NA
+#&gt; 4721     NA 169.5  54.8
+#&gt; 4727 12.944 157.0  41.2
+#&gt; 4745 12.991    NA  31.1
+#&gt; 4748 12.993    NA  42.3
+#&gt; 4752 12.996 158.9  49.1
+#&gt; 4809 13.108    NA  61.7
+#&gt; 4823 13.127 175.0  65.1
+#&gt; 4824 13.127    NA  57.8
+#&gt; 4825     NA 156.4  40.8
+#&gt; 4847     NA 168.1  53.4
+#&gt; 4848 13.190 155.4  42.1
+#&gt; 4887     NA 161.2  37.0
+#&gt; 4892 13.300 165.5  41.9
+#&gt; 4961 13.489 161.3  41.4
+#&gt; 4994 13.552 157.7  46.2
+#&gt; 5039     NA 179.0  54.9
+#&gt; 5044 13.642 153.4  40.6
+#&gt; 5048     NA 175.4  74.8
+#&gt; 5064 13.686 168.7  46.1
+#&gt; 5085 13.749 155.5  36.5
+#&gt; 5113 13.839 162.1  44.9
+#&gt; 5126 13.883 176.2  48.1
+#&gt; 5130 13.891 174.6    NA
+#&gt; 5133     NA 181.7  61.9
+#&gt; 5147 13.924 144.8  35.1
+#&gt; 5159 13.938 156.9  50.0
+#&gt; 5206 14.045 170.0  54.7
+#&gt; 5219 14.069 170.6  59.2
+#&gt; 5228 14.083    NA  50.9
+#&gt; 5247 14.121 159.2  42.7
+#&gt; 5288 14.209 170.9  54.8
+#&gt; 5293 14.220 165.5  48.0
+#&gt; 5327     NA 153.2  44.3
+#&gt; 5335 14.308 171.0  56.0
+#&gt; 5343 14.332 164.1    NA
+#&gt; 5367 14.412 165.5  54.2
+#&gt; 5410 14.527 160.7  52.0
+#&gt; 5415     NA 182.4  76.0
+#&gt; 5416     NA 173.7  69.5
+#&gt; 5417 14.543 176.4  51.0
+#&gt; 5420 14.546 167.3  61.0
+#&gt; 5478     NA 182.9  57.2
+#&gt; 5496 14.721 169.1  50.7
+#&gt; 5509 14.762    NA  47.6
+#&gt; 5520 14.811 173.8    NA
+#&gt; 5522 14.811 179.0  66.5
+#&gt; 5539     NA 172.7  64.3
+#&gt; 5551 14.863 169.1  66.3
+#&gt; 5567 14.926 177.4  58.3
+#&gt; 5585     NA 174.1  88.0
+#&gt; 5598 14.997 181.2  65.1
+#&gt; 5602     NA 188.0  91.6
+#&gt; 5610 15.025    NA  62.7
+#&gt; 5612 15.028 178.5  54.1
+#&gt; 5642 15.099 178.1    NA
+#&gt; 5654 15.129    NA  58.6
+#&gt; 5675 15.162 176.8  54.8
+#&gt; 5710 15.249 188.0    NA
+#&gt; 5714 15.266    NA  62.5
+#&gt; 5763 15.411 173.3  54.1
+#&gt; 5764 15.416    NA  80.6
+#&gt; 5789 15.474 192.2    NA
+#&gt; 5806 15.504 172.0  52.3
+#&gt; 5823 15.542 171.0  50.0
+#&gt; 5830     NA 183.3  61.5
+#&gt; 5856 15.622 184.1    NA
+#&gt; 5857 15.630    NA  52.6
+#&gt; 5858 15.633 186.0    NA
+#&gt; 5879 15.663 172.7    NA
+#&gt; 5880 15.668    NA  63.8
+#&gt; 5883 15.674 176.6    NA
+#&gt; 5947 15.838    NA  63.5
+#&gt; 5964     NA 168.6  56.0
+#&gt; 5971     NA 176.2  57.5
+#&gt; 5975 15.912    NA  65.2
+#&gt; 5986 15.926 167.8    NA
+#&gt; 6005 15.989 187.8    NA
+#&gt; 6029 16.049 186.7  70.6
+#&gt; 6033 16.062 183.9  61.5
+#&gt; 6036     NA 184.4  68.5
+#&gt; 6037 16.068 186.5    NA
+#&gt; 6064     NA 194.3 113.0
+#&gt; 6083 16.235 185.4    NA
+#&gt; 6085 16.246 183.5  76.0
+#&gt; 6092 16.273 177.9  57.0
+#&gt; 6117 16.355    NA  59.1
+#&gt; 6132 16.402 173.6    NA
+#&gt; 6138     NA 195.5  69.0
+#&gt; 6141 16.435    NA  64.5
+#&gt; 6166     NA 188.0  62.5
+#&gt; 6185 16.544    NA  65.7
+#&gt; 6251     NA 180.2  66.4
+#&gt; 6253 16.720 192.8  88.3
+#&gt; 6262 16.741 189.8  70.3
+#&gt; 6283 16.807 184.3  77.0
+#&gt; 6343 16.966    NA  63.7
+#&gt; 6361 16.999 179.0  68.1
+#&gt; 6372 17.018    NA  65.5
+#&gt; 6416 17.117    NA  69.3
+#&gt; 6482 17.333 180.3    NA
+#&gt; 6483     NA 183.9  66.3
+#&gt; 6528 17.440 171.4    NA
+#&gt; 6539 17.467    NA  55.5
+#&gt; 6567     NA 186.5  71.2
+#&gt; 6611 17.678    NA  72.8
+#&gt; 6641 17.749 174.0    NA
+#&gt; 6647 17.757    NA  81.0
+#&gt; 6686 17.911 181.2    NA
+#&gt; 6700 17.957    NA  64.5
+#&gt; 6756 18.121 171.6  58.4
+#&gt; 6782 18.209 177.9    NA
+#&gt; 6789 18.220 187.4    NA
+#&gt; 6831     NA 193.6  69.2
+#&gt; 6858     NA 170.5  53.5
+#&gt; 6892 18.551 193.0  71.7
+#&gt; 6923 18.617 188.0    NA
+#&gt; 6963 18.737    NA  81.3
+#&gt; 6964 18.743 192.0    NA
+#&gt; 6977 18.773 189.4  69.6
+#&gt; 6981 18.792 174.8    NA
+#&gt; 7001 18.850 179.8  62.6
+#&gt; 7032 18.959    NA  76.2
+#&gt; 7066 19.060    NA  93.8
+#&gt; 7068     NA 175.0  72.4
+#&gt; 7073 19.077 182.7    NA
+#&gt; 7101     NA 186.5  71.9
+#&gt; 7141 19.310 177.1  60.1
+#&gt; 7152     NA 178.0  78.1
+#&gt; 7161 19.408    NA 100.1
+#&gt; 7173     NA 191.0  87.1
+#&gt; 7200 19.575    NA  88.9
+#&gt; 7221 19.633 182.1    NA
+#&gt; 7240 19.707    NA  70.6
+#&gt; 7247 19.739    NA  65.5
+#&gt; 7293 19.926 192.3    NA
+#&gt; 7297 19.934 181.8  76.2
+#&gt; 7319 20.010 170.0  68.8
+#&gt; 7328 20.030 178.6    NA
+#&gt; 7362 20.117 188.7    NA
+#&gt; 7396     NA 185.1  81.1</div><div class='input'>
 <span class='co'># Change default matrices as desired</span>
-<span class='no'>patterns</span> <span class='kw'>&lt;-</span> <span class='no'>result1</span>$<span class='no'>patterns</span>
-<span class='no'>patterns</span>[<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fl'>2</span>] <span class='kw'>&lt;-</span> <span class='fl'>0</span>
-<span class='no'>odds</span> <span class='kw'>&lt;-</span> <span class='no'>result1</span>$<span class='no'>odds</span>
-<span class='no'>odds</span>[<span class='fl'>2</span>,<span class='fl'>3</span>:<span class='fl'>4</span>] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>)
-<span class='no'>odds</span>[<span class='fl'>3</span>,] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>)
+<span class='no'>my_patterns</span> <span class='kw'>&lt;-</span> <span class='no'>mads_boys</span>$<span class='no'>patterns</span>
+<span class='no'>my_patterns</span>[<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fl'>2</span>] <span class='kw'>&lt;-</span> <span class='fl'>0</span>
+
+<span class='no'>my_weights</span> <span class='kw'>&lt;-</span> <span class='no'>mads_boys</span>$<span class='no'>weights</span>
+<span class='no'>my_weights</span>[<span class='fl'>2</span>, <span class='fl'>1</span>] <span class='kw'>&lt;-</span> <span class='fl'>2</span>
+<span class='no'>my_weights</span>[<span class='fl'>3</span>, <span class='fl'>1</span>] <span class='kw'>&lt;-</span> <span class='fl'>0.5</span>
+
 <span class='co'># Rerun amputation</span>
-<span class='no'>result2</span> <span class='kw'>&lt;-</span> <span class='fu'>ampute</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>complete.data</span>, <span class='kw'>patterns</span> <span class='kw'>=</span> <span class='no'>patterns</span>, <span class='kw'>freq</span> <span class='kw'>=</span>
-<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.3</span>, <span class='fl'>0.3</span>, <span class='fl'>0.4</span>), <span class='kw'>cont</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>odds</span> <span class='kw'>=</span> <span class='no'>odds</span>)
-<span class='co'># Run an amputation procedure with continuous probabilities</span>
-<span class='no'>result3</span> <span class='kw'>&lt;-</span> <span class='fu'>ampute</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>complete.data</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"RIGHT"</span>, <span class='st'>"TAIL"</span>, <span class='st'>"LEFT"</span>))</div></pre>
+<span class='no'>my_mads_boys</span> <span class='kw'>&lt;-</span> <span class='fu'>ampute</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>compl_boys</span>, <span class='kw'>patterns</span> <span class='kw'>=</span> <span class='no'>my_patterns</span>, <span class='kw'>freq</span> <span class='kw'>=</span>
+<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.3</span>, <span class='fl'>0.3</span>, <span class='fl'>0.4</span>), <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>my_weights</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"RIGHT"</span>, <span class='st'>"TAIL"</span>, <span class='st'>"LEFT"</span>))
+<span class='no'>my_mads_boys</span>$<span class='no'>amp</span></div><div class='output co'>#&gt;         age   hgt   wgt
+#&gt; 3279     NA    NA  31.0
+#&gt; 3283  8.867    NA  38.2
+#&gt; 3296  8.908    NA    NA
+#&gt; 3321  8.999 136.3  26.9
+#&gt; 3323  9.004    NA    NA
+#&gt; 3327  9.021 141.4  29.4
+#&gt; 3357  9.119    NA    NA
+#&gt; 3388  9.201    NA  22.0
+#&gt; 3398  9.234 139.8  35.6
+#&gt; 3409  9.270 140.4  32.0
+#&gt; 3416  9.303    NA  31.6
+#&gt; 3422  9.316    NA    NA
+#&gt; 3429  9.368    NA  25.9
+#&gt; 3442  9.407 134.4  27.0
+#&gt; 3449  9.426 146.0  36.5
+#&gt; 3455  9.451 136.0  27.5
+#&gt; 3460  9.459    NA    NA
+#&gt; 3481  9.511 144.5  30.3
+#&gt; 3484  9.514 140.3  27.8
+#&gt; 3486  9.514 138.0  31.0
+#&gt; 3494  9.524 140.9  32.7
+#&gt; 3525  9.582 134.0  27.5
+#&gt; 3533  9.604 139.7  32.6
+#&gt; 3547  9.631    NA    NA
+#&gt; 3609  9.834 142.0  30.3
+#&gt; 3651  9.990    NA    NA
+#&gt; 3664 10.020    NA  31.7
+#&gt; 3710 10.132 134.0  26.5
+#&gt; 3721 10.154    NA    NA
+#&gt; 3724 10.160    NA  39.5
+#&gt; 3727 10.171    NA    NA
+#&gt; 3805 10.398    NA    NA
+#&gt; 3814 10.422    NA    NA
+#&gt; 3827 10.447 148.7  41.0
+#&gt; 3834     NA    NA  32.5
+#&gt; 3841 10.499    NA  38.6
+#&gt; 3865     NA    NA  40.4
+#&gt; 3873 10.568 151.0  36.6
+#&gt; 3880     NA    NA  33.8
+#&gt; 3929 10.724    NA    NA
+#&gt; 3975 10.888    NA    NA
+#&gt; 3988 10.945 149.0  45.6
+#&gt; 3991 10.954 145.1  36.2
+#&gt; 3994 10.967    NA    NA
+#&gt; 3995 10.970    NA    NA
+#&gt; 4006 11.003    NA    NA
+#&gt; 4009 11.011 148.8  44.2
+#&gt; 4059 11.126    NA  32.7
+#&gt; 4066 11.143 135.1  25.0
+#&gt; 4067 11.143    NA    NA
+#&gt; 4070 11.156 163.0  44.5
+#&gt; 4072 11.159    NA    NA
+#&gt; 4102 11.222    NA    NA
+#&gt; 4122     NA    NA  43.4
+#&gt; 4173 11.446 147.9  42.2
+#&gt; 4174 11.446    NA    NA
+#&gt; 4186 11.482    NA    NA
+#&gt; 4211     NA    NA  42.5
+#&gt; 4238 11.605    NA    NA
+#&gt; 4240 11.611    NA    NA
+#&gt; 4253     NA    NA  44.4
+#&gt; 4255 11.665 144.5  30.8
+#&gt; 4266 11.690    NA    NA
+#&gt; 4293 11.759    NA  42.8
+#&gt; 4301 11.789 135.4  29.7
+#&gt; 4302 11.791 152.8  43.5
+#&gt; 4312 11.811 145.9  34.8
+#&gt; 4318 11.827 151.0  33.0
+#&gt; 4332 11.874 152.0  32.5
+#&gt; 4349 11.926 156.5  44.5
+#&gt; 4399 12.071    NA  34.5
+#&gt; 4465 12.265 156.6  43.3
+#&gt; 4481 12.292 145.8  39.2
+#&gt; 4487 12.303    NA    NA
+#&gt; 4505 12.375    NA    NA
+#&gt; 4532 12.457 161.4  52.6
+#&gt; 4552 12.501    NA    NA
+#&gt; 4561 12.520    NA    NA
+#&gt; 4579 12.574 163.8  51.6
+#&gt; 4585 12.583 163.3  52.6
+#&gt; 4591 12.599    NA  39.0
+#&gt; 4646 12.741 172.0  79.5
+#&gt; 4682 12.821 170.2  56.0
+#&gt; 4721 12.933    NA    NA
+#&gt; 4727 12.944 157.0  41.2
+#&gt; 4745 12.991 148.7  31.1
+#&gt; 4748 12.993    NA  42.3
+#&gt; 4752 12.996 158.9  49.1
+#&gt; 4809     NA    NA  61.7
+#&gt; 4823     NA    NA  65.1
+#&gt; 4824 13.127 180.0  57.8
+#&gt; 4825 13.130 156.4  40.8
+#&gt; 4847 13.188 168.1  53.4
+#&gt; 4848 13.190 155.4  42.1
+#&gt; 4887     NA    NA  37.0
+#&gt; 4892 13.300    NA    NA
+#&gt; 4961 13.489 161.3  41.4
+#&gt; 4994 13.552    NA    NA
+#&gt; 5039 13.631    NA  54.9
+#&gt; 5044 13.642 153.4  40.6
+#&gt; 5048 13.656 175.4  74.8
+#&gt; 5064 13.686 168.7  46.1
+#&gt; 5085 13.749    NA    NA
+#&gt; 5113     NA    NA  44.9
+#&gt; 5126 13.883 176.2  48.1
+#&gt; 5130 13.891    NA    NA
+#&gt; 5133 13.897 181.7  61.9
+#&gt; 5147 13.924 144.8  35.1
+#&gt; 5159 13.938 156.9  50.0
+#&gt; 5206 14.045 170.0  54.7
+#&gt; 5219     NA    NA  59.2
+#&gt; 5228 14.083 172.1  50.9
+#&gt; 5247 14.121 159.2  42.7
+#&gt; 5288 14.209 170.9  54.8
+#&gt; 5293 14.220 165.5  48.0
+#&gt; 5327     NA    NA  44.3
+#&gt; 5335 14.308    NA  56.0
+#&gt; 5343 14.332    NA    NA
+#&gt; 5367 14.412 165.5  54.2
+#&gt; 5410     NA    NA  52.0
+#&gt; 5415     NA    NA  76.0
+#&gt; 5416 14.543    NA    NA
+#&gt; 5417 14.543 176.4  51.0
+#&gt; 5420 14.546 167.3  61.0
+#&gt; 5478 14.669 182.9  57.2
+#&gt; 5496 14.721 169.1  50.7
+#&gt; 5509 14.762 168.6  47.6
+#&gt; 5520 14.811    NA  61.7
+#&gt; 5522     NA    NA  66.5
+#&gt; 5539     NA    NA  64.3
+#&gt; 5551 14.863 169.1  66.3
+#&gt; 5567 14.926    NA    NA
+#&gt; 5585 14.967    NA    NA
+#&gt; 5598 14.997    NA  65.1
+#&gt; 5602 15.003    NA  91.6
+#&gt; 5610 15.025 185.5  62.7
+#&gt; 5612 15.028 178.5  54.1
+#&gt; 5642 15.099 178.1  74.5
+#&gt; 5654 15.129 176.9  58.6
+#&gt; 5675     NA    NA  54.8
+#&gt; 5710 15.249    NA  89.0
+#&gt; 5714 15.266 175.2  62.5
+#&gt; 5763 15.411 173.3  54.1
+#&gt; 5764 15.416 187.2  80.6
+#&gt; 5789 15.474    NA    NA
+#&gt; 5806 15.504    NA  52.3
+#&gt; 5823 15.542 171.0  50.0
+#&gt; 5830     NA    NA  61.5
+#&gt; 5856 15.622 184.1  70.5
+#&gt; 5857 15.630    NA  52.6
+#&gt; 5858 15.633 186.0  67.0
+#&gt; 5879 15.663 172.7  58.6
+#&gt; 5880 15.668 176.0  63.8
+#&gt; 5883     NA    NA  56.9
+#&gt; 5947 15.838    NA    NA
+#&gt; 5964 15.893    NA  56.0
+#&gt; 5971 15.906 176.2  57.5
+#&gt; 5975     NA    NA  65.2
+#&gt; 5986 15.926 167.8  62.2
+#&gt; 6005 15.989 187.8  64.8
+#&gt; 6029 16.049 186.7  70.6
+#&gt; 6033 16.062 183.9  61.5
+#&gt; 6036     NA    NA  68.5
+#&gt; 6037 16.068 186.5  70.7
+#&gt; 6064     NA    NA 113.0
+#&gt; 6083 16.235 185.4  60.0
+#&gt; 6085     NA    NA  76.0
+#&gt; 6092 16.273    NA  57.0
+#&gt; 6117     NA    NA  59.1
+#&gt; 6132 16.402 173.6  54.5
+#&gt; 6138     NA    NA  69.0
+#&gt; 6141 16.435 175.1  64.5
+#&gt; 6166 16.492 188.0  62.5
+#&gt; 6185 16.544 178.0  65.7
+#&gt; 6251 16.717    NA    NA
+#&gt; 6253 16.720 192.8  88.3
+#&gt; 6262 16.741    NA    NA
+#&gt; 6283 16.807 184.3  77.0
+#&gt; 6343     NA    NA  63.7
+#&gt; 6361 16.999    NA    NA
+#&gt; 6372 17.018 183.0  65.5
+#&gt; 6416     NA    NA  69.3
+#&gt; 6482     NA    NA  76.8
+#&gt; 6483 17.336 183.9  66.3
+#&gt; 6528 17.440 171.4  71.7
+#&gt; 6539 17.467 173.6  55.5
+#&gt; 6567 17.560 186.5  71.2
+#&gt; 6611     NA    NA  72.8
+#&gt; 6641 17.749    NA    NA
+#&gt; 6647 17.757    NA  81.0
+#&gt; 6686 17.911 181.2  86.8
+#&gt; 6700 17.957 172.2  64.5
+#&gt; 6756     NA    NA  58.4
+#&gt; 6782 18.209    NA    NA
+#&gt; 6789     NA    NA  79.0
+#&gt; 6831 18.349    NA    NA
+#&gt; 6858     NA    NA  53.5
+#&gt; 6892     NA    NA  71.7
+#&gt; 6923 18.617 188.0  61.9
+#&gt; 6963 18.737    NA  81.3
+#&gt; 6964     NA    NA  99.0
+#&gt; 6977 18.773 189.4  69.6
+#&gt; 6981 18.792    NA    NA
+#&gt; 7001 18.850    NA    NA
+#&gt; 7032 18.959    NA  76.2
+#&gt; 7066     NA    NA  93.8
+#&gt; 7068     NA    NA  72.4
+#&gt; 7073     NA    NA  70.0
+#&gt; 7101 19.148    NA  71.9
+#&gt; 7141 19.310    NA    NA
+#&gt; 7152     NA    NA  78.1
+#&gt; 7161 19.408 192.7 100.1
+#&gt; 7173 19.471    NA  87.1
+#&gt; 7200 19.575 195.0  88.9
+#&gt; 7221 19.633 182.1  75.0
+#&gt; 7240     NA    NA  70.6
+#&gt; 7247 19.739    NA  65.5
+#&gt; 7293 19.926 192.3 117.4
+#&gt; 7297     NA    NA  76.2
+#&gt; 7319 20.010 170.0  68.8
+#&gt; 7328 20.030    NA    NA
+#&gt; 7362 20.117 188.7  89.4
+#&gt; 7396     NA    NA  81.1</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
