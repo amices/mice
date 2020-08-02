@@ -4,31 +4,30 @@
 #'Imputation of data sets containing missing values can be performed with 
 #'\code{\link{mice}}. 
 #'
-#'When new multiple imputation techniques are evaluated, missing values need to be
-#'generated in simulated data sets. The generation of missing values is what
-#'we call: amputation. The function \code{ampute} is developed to perform any kind
-#'of amputation desired by the researcher. The amputation methodology is published in
-#'\emph{\href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{Schouten, Lugtig and Vink, 2018}}.
-#'An extensive example can be found in the vignette \emph{\href{https://rianneschouten.github.io/mice_ampute/vignette/ampute.html}{Generate missing values with 
-#'ampute}}. For imputation, the function 
-#'\code{\link{mice}} is advised.  
+#'This function generates missing values in complete data sets. Amputation of complete 
+#'data sets is useful for the evaluation of imputation techniques, such as multiple
+#'imputation (performed with function \code{\link{mice}} in this package). 
+#'
+#'The vignette \href{https://rianneschouten.github.io/mice_ampute/vignette/ampute.html}{Generate missing values with 
+#'ampute} shows an extensive example of how \code{ampute} can be used. For the 
+#'amputation methodology underlying \code{ampute}, we refer to 
+#'\href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{Schouten, Lugtig and Vink, 2018}.
 #'
 #'Until recently, univariate amputation procedures were used to generate missing
 #'data in complete, simulated data sets. With this approach, variables are made
-#'incomplete one variable at a time. When several variables need to be amputed, 
+#'incomplete one variable at a time. When more than one variable needs to be amputed, 
 #'the procedure is repeated multiple times. 
 #'
 #'With the univariate approach, it is difficult to relate the missingness on one 
 #'variable to the missingness on another variable. A multivariate amputation procedure 
 #'solves this issue and moreover, it does justice to the multivariate nature of 
-#'data sets. Hence, \code{ampute} is developed to perform the amputation according 
-#'the researcher's desires. 
+#'data sets. Hence, \code{ampute} is developed to perform multivariate amputation.
 #'
 #'The idea behind the function is the specification of several missingness 
 #'patterns. Each pattern is a combination of variables with and without missing 
 #'values (denoted by \code{0} and \code{1} respectively). For example, one might
 #'want to create two missingness patterns on a data set with four variables. The
-#'patterns could be something like: \code{0, 0, 1, 1} and \code{1, 0, 1, 0}. 
+#'patterns could be something like: \code{0,0,1,1} and \code{1,0,1,0}. 
 #'Each combination of zeros and ones may occur. 
 #'
 #'Furthermore, the researcher specifies the proportion of missingness, either the 
@@ -42,10 +41,10 @@
 #'depends on the values of the observed variables (i.e. the variables that remain
 #'complete) (MAR) or on the values of the variables that will be made incomplete (MNAR). 
 #'For a discussion on how missingness mechanisms are related to the observed data, 
-#'we refer to \emph{\href{https://journals.sagepub.com/doi/10.1177/0049124118799376}{Schouten and Vink, 2018}}. 
+#'we refer to \href{https://journals.sagepub.com/doi/10.1177/0049124118799376}{Schouten and Vink, 2018}. 
 #'
-#'When the user specifies the missingness mechanism to be \code{MCAR}, the candidates 
-#'have an equal probability of becoming incomplete. For a \code{MAR} or \code{MNAR} mechanism, 
+#'When the user specifies the missingness mechanism to be \code{"MCAR"}, the candidates 
+#'have an equal probability of becoming incomplete. For a \code{"MAR"} or \code{"MNAR"} mechanism, 
 #'weighted sum scores are calculated. These scores are a linear combination of the 
 #'variables. 
 #'
@@ -56,7 +55,7 @@
 #'
 #'The weights may differ between patterns and they may be negative or zero as well.
 #'Naturally, in case of a MAR mechanism, the weights corresponding to the 
-#'variables that will be made incomplete, have a \code{0}. Note that this may be
+#'variables that will be made incomplete, have a 0. Note that this may be
 #'different for each pattern. In case of MNAR missingness, especially
 #'the weights of the variables that will be made incomplete are of importance. However,
 #'the other variables may be weighted as well. 
@@ -83,9 +82,9 @@
 #'The continuous distributions of probabilities are based on the logistic distribution function.
 #'The user can specify the type of missingness, which, again, may differ between patterns.
 #'
-#'For an extensive example of the working of the function, we gladly refer to the 
-#'vignette \emph{\href{https://rianneschouten.github.io/mice_ampute/vignette/ampute.html}{Generate missing values with 
-#'ampute}}. The amputation methodology is published in \emph{\href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{Schouten, Lugtig and Vink, 2018}}.
+#'For an example and more explanation about how the arguments interact with each other, 
+#'we gladly refer to the vignette \href{https://rianneschouten.github.io/mice_ampute/vignette/ampute.html}{Generate missing values with 
+#'ampute}. The amputation methodology is published in \href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{Schouten, Lugtig and Vink, 2018}.
 #'
 #'@param data A complete data matrix or dataframe. Values should be numeric. 
 #'Categorical variables should have been transformed to dummies.
@@ -172,7 +171,7 @@
 #'Van Buuren, S. (2018) \href{https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 #'Chapman & Hall/CRC. Boca Raton, FL.
 #'
-#''Vink, G. (2016) Towards a standardized evaluation of multiple imputation. 
+#'Vink, G. (2016) Towards a standardized evaluation of multiple imputation. 
 #'routines.
 #'
 #'@examples 
