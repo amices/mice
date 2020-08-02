@@ -169,8 +169,8 @@
 #'\href{https://www.tandfonline.com/doi/abs/10.1080/10629360600810434}{Fully conditional specification in multivariate imputation.} 
 #'\emph{Journal of Statistical Computation and Simulation}, 76(12): 1049-1064.
 #'
-#'Van Buuren, S. (2018) \emph{\href{https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni}}{Flexible Imputation of Missing Data.} 
-#'Second Edition. Boca Raton, FL.: Chapman & Hall/CRC Press.
+#'Van Buuren, S. (2018) \href{https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#'Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #''Vink, G. (2016) Towards a standardized evaluation of multiple imputation. 
 #'routines.
