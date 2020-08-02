@@ -83,7 +83,7 @@
 #'The continuous distributions of probabilities are based on the logistic distribution function.
 #'The user can specify the type of missingness, which, again, may differ between patterns.
 #'
-#'For an extensive example of the working of the function, I gladly refer to the 
+#'For an extensive example of the working of the function, we gladly refer to the 
 #'vignette \emph{\href{https://rianneschouten.github.io/mice_ampute/vignette/ampute.html}{Generate missing values with 
 #'ampute}}. The amputation methodology is published in \emph{\href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{Schouten, Lugtig and Vink, 2018}}.
 #'
@@ -155,24 +155,24 @@
 #'@seealso \code{\link{mads-class}}, \code{\link{bwplot}}, \code{\link{xyplot}},
 #'\code{\link{mice}}
 #' 
-#'@references Brand, J.P.L. (1999). \emph{Development, implementation and 
+#'@references Brand, J.P.L. (1999) \emph{Development, implementation and 
 #'evaluation of multiple imputation strategies for the statistical analysis of 
-#'incomplete data sets} (pp. 110-113). Dissertation. Rotterdam: Erasmus University.
+#'incomplete data sets.} pp. 110-113. Dissertation. Rotterdam: Erasmus University.
 #'
-#'Schouten, R.M., Lugtig, P and Vink, G. (2018) \href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{Generating missing values for simulation purposes: A multivariate amputation procedure.Journal of Statistical Computation and Simulation.}
-#'88(15): 1909-1930. DOI: 10.1080/00949655.2018.1491577.
+#'Schouten, R.M., Lugtig, P and Vink, G. (2018) \href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{Generating missing values for simulation purposes: A multivariate amputation procedure.}
+#'\emph{Journal of Statistical Computation and Simulation}, 88(15): 1909-1930. DOI: 10.1080/00949655.2018.1491577.
 #'
-#'Schouten, R.M. and Vink, G. (2018) \href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{The Dance of the Mechanisms: How Observed Information Influences the Validity of Missingness Assumptions.}
-#'Sociological Methods and Research. DOI: 10.1177/0049124118799376.
+#'Schouten, R.M. and Vink, G. (2018) \href{https://journals.sagepub.com/doi/full/10.1177/0049124118799376}{The Dance of the Mechanisms: How Observed Information Influences the Validity of Missingness Assumptions.}
+#'\emph{Sociological Methods and Research}, DOI: 10.1177/0049124118799376.
 #'
-#'Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn, C.G.M., Rubin, D.B. (2006). 
-#'\href{https://www.tandfonline.com/doi/abs/10.1080/10629360600810434}{Fully conditional specification in multivariate imputation.} Journal of 
-#'Statistical Computation and Simulation, 76(12): 1049-1064.
+#'Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn, C.G.M., Rubin, D.B. (2006)
+#'\href{https://www.tandfonline.com/doi/abs/10.1080/10629360600810434}{Fully conditional specification in multivariate imputation.} 
+#'\emph{Journal of Statistical Computation and Simulation}, 76(12): 1049-1064.
 #'
-#'Van Buuren, S. (2018). \href{https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni}{Flexible Imputation of Missing Data.} 
+#'Van Buuren, S. (2018) \emph{\href{https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni}{Flexible Imputation of Missing Data.}} 
 #'Second Edition. Boca Raton, FL.: Chapman & Hall/CRC Press.
 #'
-#'Vink, G. (2016). \href{https://www.gerkovink.com/docs/Standardized%20evaluation.pdf}{Towards a standardized evaluation of multiple imputation.} 
+#'Vink, G. (2016) \href{https://www.gerkovink.com/docs/Standardized%20evaluation.pdf}{Towards a standardized evaluation of multiple imputation.} 
 #'routines.
 #'
 #'@examples 
@@ -186,12 +186,10 @@
 #'# Change default matrices as desired
 #'my_patterns <- mads_boys$patterns
 #'my_patterns[1:3, 2] <- 0
-#'my_patterns
 #'
 #'my_weights <- mads_boys$weights
 #'my_weights[2, 1] <- 2
 #'my_weights[3, 1] <- 0.5
-#'my_weights
 #'
 #'# Rerun amputation
 #'my_mads_boys <- ampute(data = compl_boys, patterns = my_patterns, freq = 

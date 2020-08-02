@@ -6,18 +6,21 @@ complete.data <- MASS::mvrnorm(n = 100, mu = c(5, 5, 5), Sigma = sigma)
 
 test_that("all examples work", {
   
-  expect_error(ampute(data = complete.data), NA)
+  compl_boys <- cc(boys)[1:3]
   
-  result1 <- ampute(data = complete.data)
-  patterns <- result1$patterns
-  patterns[1:3, 2] <- 0
-  odds <- result1$odds
-  odds[2,3:4] <- c(2, 4)
-  odds[3,] <- c(3, 1, NA, NA)
+  expect_error(ampute(data = compl_boys), NA)
   
-  expect_error(ampute(data = complete.data, patterns = patterns, 
-                      freq = c(0.3, 0.3, 0.4), cont = FALSE, odds = odds), NA)
-  expect_error(ampute(data = complete.data, 
+  mads_boys <- ampute(data = compl_boys)
+  
+  my_patterns <- mads_boys$patterns
+  my_patterns[1:3, 2] <- 0
+
+  my_weights <- mads_boys$weights
+  my_weights[2, 1] <- 2
+  my_weights[3, 1] <- 0.5
+
+  expect_error(ampute(data = compl_boys, patterns = my_patterns, 
+                      freq = c(0.3, 0.3, 0.4), weights = my_weights, 
                       type = c("RIGHT", "TAIL", "LEFT")), NA)
 
 })
