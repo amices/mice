@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.0</span>
       </span>
     </div>
 
@@ -126,45 +126,42 @@
       <small>Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="mice-3103" class="section level1">
-<h1 class="page-header" data-toc-text="3.10.3">
-<a href="#mice-3103" class="anchor"></a>mice 3.10.3<small> Unreleased </small>
-</h1>
-<ul>
-<li>Updates on <code>ampute</code> documentation (<a href='https://github.com/stefvanbuuren/mice/issues/251'>#251</a>)</li>
-<li>Adds missing <code>Rccp</code> dependency (<a href='https://github.com/stefvanbuuren/mice/issues/248'>#248</a>)</li>
-</ul>
-</div>
-    <div id="mice-3102" class="section level1">
-<h1 class="page-header" data-toc-text="3.10.2">
-<a href="#mice-3102" class="anchor"></a>mice 3.10.2<small> Unreleased </small>
-</h1>
-<ul>
-<li>Ask user permission before installing a package from <code>suggests</code>.</li>
-</ul>
-</div>
-    <div id="mice-3101" class="section level1">
-<h1 class="page-header" data-toc-text="3.10.1">
-<a href="#mice-3101" class="anchor"></a>mice 3.10.1<small> Unreleased </small>
-</h1>
-<ul>
-<li>The Cox model does not return <code>df.residual</code>, which causes problematic behavior in the <code><a href="../reference/D1.html">D1()</a></code>, <code><a href="../reference/D2.html">D2()</a></code>, <code><a href="../reference/D3.html">D3()</a></code>, <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> and <code><a href="../reference/pool.html">pool()</a></code>. <code>mice</code> now extracts the relevant information from other parts of the objects returned by <code><a href="https://rdrr.io/pkg/survival/man/coxph.html">survival::coxph()</a></code>, which solves long-standing issues with the integration of the Cox model (<a href='https://github.com/stefvanbuuren/mice/issues/246'>#246</a>).</li>
-</ul>
-</div>
-    <div id="mice-3100" class="section level1">
-<h1 class="page-header" data-toc-text="3.10.0">
-<a href="#mice-3100" class="anchor"></a>mice 3.10.0<small> 2020-07-13 </small>
+    <div id="mice-3110" class="section level1">
+<h1 class="page-header" data-toc-text="3.11.0">
+<a href="#mice-3110" class="anchor"></a>mice 3.11.0<small> Unreleased </small>
 </h1>
 <div id="major-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
-<li>New functions <code><a href="../reference/tidy.mipo.html">tidy.mipo()</a></code> and <code><a href="../reference/glance.mipo.html">glance.mipo()</a></code> return standardized output that conforms to <code>broom</code> specifications. Kindly contributed by Vincent Arel Bundock (<a href='https://github.com/stefvanbuuren/mice/issues/240'>#240</a>).</li>
+<li>The Cox model does not return <code>df.residual</code>, which caused problematic behavior in the <code><a href="../reference/D1.html">D1()</a></code>, <code><a href="../reference/D2.html">D2()</a></code>, <code><a href="../reference/D3.html">D3()</a></code>, <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> and <code><a href="../reference/pool.html">pool()</a></code>. <code>mice</code> now extracts the relevant information from other parts of the objects returned by <code><a href="https://rdrr.io/pkg/survival/man/coxph.html">survival::coxph()</a></code>, which solves long-standing issues with the integration of the Cox model (<a href='https://github.com/stefvanbuuren/mice/issues/246'>#246</a>).</li>
+<li>Adds missing <code>Rccp</code> dependency to work with <code>tidyr 1.1.1</code> (<a href='https://github.com/stefvanbuuren/mice/issues/248'>#248</a>).</li>
 </ul>
 </div>
 <div id="minor-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<ul>
+<li>Addresses warnings: <code>Non-file package-anchored link(s) in documentation object</code>.</li>
+<li>Updates on <code>ampute</code> documentation (<a href='https://github.com/stefvanbuuren/mice/issues/251'>#251</a>).</li>
+<li>Ask user permission before installing a package from <code>suggests</code>.</li>
+</ul>
+</div>
+</div>
+    <div id="mice-3100" class="section level1">
+<h1 class="page-header" data-toc-text="3.10.0">
+<a href="#mice-3100" class="anchor"></a>mice 3.10.0<small> 2020-07-13 </small>
+</h1>
+<div id="major-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
+<ul>
+<li>New functions <code><a href="../reference/tidy.mipo.html">tidy.mipo()</a></code> and <code><a href="../reference/glance.mipo.html">glance.mipo()</a></code> return standardized output that conforms to <code>broom</code> specifications. Kindly contributed by Vincent Arel Bundock (<a href='https://github.com/stefvanbuuren/mice/issues/240'>#240</a>).</li>
+</ul>
+</div>
+<div id="minor-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Solves a problem with the <code>D3</code> testing script that produced an error on CRAN (<a href='https://github.com/stefvanbuuren/mice/issues/244'>#244</a>).</li>
 </ul>
@@ -174,18 +171,18 @@
 <h1 class="page-header" data-toc-text="3.9.0">
 <a href="#mice-390" class="anchor"></a>mice 3.9.0<small> 2020-05-14 </small>
 </h1>
-<div id="major-changes-1" class="section level2">
+<div id="major-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
 <ul>
 <li>The <code><a href="../reference/D3.html">D3()</a></code> function in <code>mice</code> gave incorrect results. This version solves a problem in the calculation of the <code>D3</code>-statistic. See <a href='https://github.com/stefvanbuuren/mice/issues/226'>#226</a> and <a href='https://github.com/stefvanbuuren/mice/issues/228'>#228</a> for more details. The documentation explains why results from <code><a href="../reference/D3.html">mice::D3()</a></code> and <code><a href="https://rdrr.io/pkg/mitml/man/testModels.html">mitml::testModels()</a></code> may differ.</li>
 <li>The <code><a href="../reference/pool.html">pool()</a></code> function is now more forgiving when there is no <code><a href="https://rdrr.io/pkg/generics/man/glance.html">glance()</a></code> function (<a href='https://github.com/stefvanbuuren/mice/issues/233'>#233</a>)</li>
 <li>It is possible to bypass <code>remove.lindep()</code> by setting <code>eps = 0</code> (<a href='https://github.com/stefvanbuuren/mice/issues/225'>#225</a>)</li>
 </ul>
 </div>
-<div id="minor-changes-1" class="section level2">
+<div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Adds reference to Leacy’s thesis</li>
 <li>Adds an example to the <code><a href="../reference/plot.mids.html">plot.mids()</a></code> documentation</li>
@@ -196,9 +193,9 @@
 <h1 class="page-header" data-toc-text="3.8.0">
 <a href="#mice-380" class="anchor"></a>mice 3.8.0<small> 2020-02-21 </small>
 </h1>
-<div id="major-changes-2" class="section level2">
+<div id="major-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
 <ul>
 <li>This version adds two new NARFCS methods for imputing data under the <em>Missing Not at Random (MNAR)</em> assumption. NARFCS is generalised version of the so-called <span class="math inline"><em>δ</em></span>-adjustment method. Margarita Moreno-Betancur and Ian White kindly contributes the functions <code><a href="../reference/mice.impute.mnar.html">mice.impute.mnar.norm()</a></code> and <code><a href="../reference/mice.impute.mnar.html">mice.impute.mnar.logreg()</a></code>. These functions aid in performing sensitivity analysis to investigate the impact of different MNAR assumptions on the conclusion of the study. An alternative for MNAR is the older <code><a href="../reference/mice.impute.ri.html">mice.impute.ri()</a></code> function.</li>
 <li>Installation of <code>mice</code> is faster. External packages needed for imputation and analyses are now installed on demand. The number of dependencies as estimated by <code>rsconnect::appDepencies()</code> decreased from 132 to 83.</li>
