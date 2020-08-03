@@ -3,18 +3,18 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.10.3
+# mice 3.11.0
 
-* Updates on `ampute` documentation (#251)
-* Adds missing `Rccp` dependency (#248)
+## Major changes
 
-# mice 3.10.2
+* The Cox model does not return `df.residual`, which caused problematic behavior in the `D1()`, `D2()`, `D3()`, `anova()` and `pool()`. `mice` now extracts the relevant information from other parts of the objects returned by `survival::coxph()`, which solves long-standing issues with the integration of the Cox model (#246).
+* Adds missing `Rccp` dependency to work with `tidyr 1.1.1` (#248).
 
+## Minor changes
+
+* Addresses warnings: `Non-file package-anchored link(s) in documentation object`.
+* Updates on `ampute` documentation (#251).
 * Ask user permission before installing a package from `suggests`.
-
-# mice 3.10.1
-
-* The Cox model does not return `df.residual`, which causes problematic behavior in the `D1()`, `D2()`, `D3()`, `anova()` and `pool()`. `mice` now extracts the relevant information from other parts of the objects returned by `survival::coxph()`, which solves long-standing issues with the integration of the Cox model (#246).
 
 # mice 3.10.0
 
