@@ -37,6 +37,6 @@ mimic a situation where the applicant's well-being questionnaire
 is inadvertently lost.
 
 A larger version of this data set in present as 
-\code{\link[miceadds]{data.enders.employee}}.
+\code{\link[miceadds:data.enders]{data.enders.employee}}.
 }
 \keyword{datasets}

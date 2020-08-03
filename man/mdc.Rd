@@ -78,8 +78,8 @@ Visualization with R}, Springer.
 }
 \seealso{
 \code{\link{hcl}}, \code{\link{rgb}},
-\code{\link[mice:xyplot]{xyplot.mids}}, \code{\link[lattice:xyplot]{xyplot}},
-\code{\link[lattice:trellis.par.set]{trellis.par.set}}
+\code{\link{xyplot.mids}}, \code{\link[lattice:xyplot]{xyplot}},
+\code{\link[lattice:trellis.par.get]{trellis.par.set}}
 }
 \author{
 Stef van Buuren, sept 2012.

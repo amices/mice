@@ -108,7 +108,7 @@
 #'package, as well as \code{\link[lattice:xyplot]{xyplot}},
 #'\code{\link[lattice:panel.xyplot]{panel.xyplot}},
 #'\code{\link[lattice:print.trellis]{print.trellis}},
-#'\code{\link[lattice:trellis.par.set]{trellis.par.set}}
+#'\code{\link[lattice:trellis.par.get]{trellis.par.set}}
 #'@references Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
 #'Visualization with R}, Springer.
 #'

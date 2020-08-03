@@ -201,10 +201,10 @@ Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 \seealso{
 \code{\link{mice}}, \code{\link{xyplot}}, \code{\link{densityplot}},
 \code{\link{bwplot}}, \code{\link{lattice}} for an overview of the
-package, as well as \code{\link[lattice:stripplot]{stripplot}},
+package, as well as \code{\link[lattice:xyplot]{stripplot}},
 \code{\link[lattice:panel.stripplot]{panel.stripplot}},
 \code{\link[lattice:print.trellis]{print.trellis}},
-\code{\link[lattice:trellis.par.set]{trellis.par.set}}
+\code{\link[lattice:trellis.par.get]{trellis.par.set}}
 }
 \author{
 Stef van Buuren

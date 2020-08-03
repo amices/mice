@@ -93,6 +93,6 @@ Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
 \code{\link{with.mids}}, \code{\link{as.mira}}, 
-\code{\link[broom]{glance}}, \code{\link[broom]{tidy}}
+\code{\link[broom:reexports]{glance}}, \code{\link[broom:reexports]{tidy}}
 }
 \keyword{htest}

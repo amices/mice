@@ -164,7 +164,7 @@ Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 package, as well as \code{\link[lattice:xyplot]{xyplot}},
 \code{\link[lattice:panel.xyplot]{panel.xyplot}},
 \code{\link[lattice:print.trellis]{print.trellis}},
-\code{\link[lattice:trellis.par.set]{trellis.par.set}}
+\code{\link[lattice:trellis.par.get]{trellis.par.set}}
 }
 \author{
 Stef van Buuren

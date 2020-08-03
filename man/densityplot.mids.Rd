@@ -193,10 +193,10 @@ Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 \seealso{
 \code{\link{mice}}, \code{\link{xyplot}}, \code{\link{stripplot}},
 \code{\link{bwplot}}, \code{\link{lattice}} for an overview of the
-package, as well as \code{\link[lattice:densityplot]{densityplot}},
+package, as well as \code{\link[lattice:histogram]{densityplot}},
 \code{\link[lattice:panel.densityplot]{panel.densityplot}},
 \code{\link[lattice:print.trellis]{print.trellis}},
-\code{\link[lattice:trellis.par.set]{trellis.par.set}}
+\code{\link[lattice:trellis.par.get]{trellis.par.set}}
 }
 \author{
 Stef van Buuren

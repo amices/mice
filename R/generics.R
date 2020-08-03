@@ -17,7 +17,7 @@
 #' \code{base} package.
 #'
 #' @inheritParams base::cbind
-#' @seealso \code{\link[base]{cbind}}, \code{\link[base]{rbind}}, 
+#' @seealso \code{\link[base:cbind]{cbind}}, \code{\link[base:cbind]{rbind}}, 
 #' \code{\link{cbind.mids}}, \code{\link{rbind.mids}}
 #' @keywords internal
 #' @export

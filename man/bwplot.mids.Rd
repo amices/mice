@@ -174,10 +174,10 @@ Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 \seealso{
 \code{\link{mice}}, \code{\link{xyplot}}, \code{\link{densityplot}},
 \code{\link{stripplot}}, \code{\link{lattice}} for an overview of the
-package, as well as \code{\link[lattice:bwplot]{bwplot}},
-\code{\link[lattice:panel.bwplot]{panel.bwplot}},
+package, as well as \code{\link[lattice:xyplot]{bwplot}},
+\code{\link[lattice:panel.xyplot]{panel.bwplot}},
 \code{\link[lattice:print.trellis]{print.trellis}},
-\code{\link[lattice:trellis.par.set]{trellis.par.set}}
+\code{\link[lattice:trellis.par.get]{trellis.par.set}}
 }
 \author{
 Stef van Buuren

@@ -115,10 +115,10 @@
 #'@author Stef van Buuren
 #'@seealso \code{\link{mice}}, \code{\link{xyplot}}, \code{\link{densityplot}},
 #'\code{\link{stripplot}}, \code{\link{lattice}} for an overview of the
-#'package, as well as \code{\link[lattice:bwplot]{bwplot}},
-#'\code{\link[lattice:panel.bwplot]{panel.bwplot}},
+#'package, as well as \code{\link[lattice:xyplot]{bwplot}},
+#'\code{\link[lattice:panel.xyplot]{panel.bwplot}},
 #'\code{\link[lattice:print.trellis]{print.trellis}},
-#'\code{\link[lattice:trellis.par.set]{trellis.par.set}}
+#'\code{\link[lattice:trellis.par.get]{trellis.par.set}}
 #'@references Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
 #'Visualization with R}, Springer.
 #' 

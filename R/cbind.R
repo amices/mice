@@ -47,7 +47,7 @@
 #'}
 #'
 #'@author Karin Groothuis-Oudshoorn, Stef van Buuren
-#'@seealso \code{\link{cbind}}, \code{\link{rbind.mids}}, \code{\link{ibind}}, 
+#'@seealso \code{\link[base:cbind]{cbind}}, \code{\link{rbind.mids}}, \code{\link{ibind}}, 
 #'\code{\link[=mids-class]{mids}}
 #'@keywords manip
 #'@examples

@@ -95,7 +95,7 @@ imp5 <- cbind(imp3, nhanes2)
 head(complete(imp5))
 }
 \seealso{
-\code{\link{cbind}}, \code{\link{rbind.mids}}, \code{\link{ibind}}, 
+\code{\link[base:cbind]{cbind}}, \code{\link{rbind.mids}}, \code{\link{ibind}}, 
 \code{\link[=mids-class]{mids}}
 }
 \author{

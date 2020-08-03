@@ -36,7 +36,7 @@ all other cases, the call is forwarded to standard functions in the
 \code{base} package.
 }
 \seealso{
-\code{\link[base]{cbind}}, \code{\link[base]{rbind}}, 
+\code{\link[base:cbind]{cbind}}, \code{\link[base:cbind]{rbind}}, 
 \code{\link{cbind.mids}}, \code{\link{rbind.mids}}
 }
 \keyword{internal}

@@ -62,7 +62,7 @@
 #'@return An object of class \code{mipo}, which stands for 'multiple imputation
 #'pooled outcome'. 
 #'@seealso \code{\link{with.mids}}, \code{\link{as.mira}}, 
-#'\code{\link[broom]{glance}}, \code{\link[broom]{tidy}}
+#'\code{\link[broom:reexports]{glance}}, \code{\link[broom:reexports]{tidy}}
 #'@references Barnard, J. and Rubin, D.B. (1999). Small sample degrees of
 #'freedom with multiple imputation. \emph{Biometrika}, 86, 948-955.
 #'
