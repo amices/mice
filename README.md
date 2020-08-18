@@ -169,7 +169,7 @@ these through Github’s issues facility.
 ### Code from publications
 
 1.  [Flexible Imputation of Missing Data. Second
-    edition.](https://github.com/stefvanbuuren/FIMD/tree/master/R)
+    edition.](https://github.com/stefvanbuuren/FIMD2/tree/master/R)
 
 ## Acknowledgement
 
