@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -123,19 +123,28 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+      <small>Source: <a href='https://github.com/amices/mice/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="mice-3111" class="section level1">
+<h1 class="page-header" data-toc-text="3.11.1">
+<a href="#mice-3111" class="anchor"></a>mice 3.11.1<small> Unreleased </small>
+</h1>
+<ul>
+<li>Update URL’s after transfer to organisation <code>amices</code>
+</li>
+</ul>
+</div>
     <div id="mice-3110" class="section level1">
 <h1 class="page-header" data-toc-text="3.11.0">
-<a href="#mice-3110" class="anchor"></a>mice 3.11.0<small> Unreleased </small>
+<a href="#mice-3110" class="anchor"></a>mice 3.11.0<small> 2020-08-05 </small>
 </h1>
 <div id="major-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
-<li>The Cox model does not return <code>df.residual</code>, which caused problematic behavior in the <code><a href="../reference/D1.html">D1()</a></code>, <code><a href="../reference/D2.html">D2()</a></code>, <code><a href="../reference/D3.html">D3()</a></code>, <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> and <code><a href="../reference/pool.html">pool()</a></code>. <code>mice</code> now extracts the relevant information from other parts of the objects returned by <code><a href="https://rdrr.io/pkg/survival/man/coxph.html">survival::coxph()</a></code>, which solves long-standing issues with the integration of the Cox model (<a href='https://github.com/stefvanbuuren/mice/issues/246'>#246</a>).</li>
-<li>Adds missing <code>Rccp</code> dependency to work with <code>tidyr 1.1.1</code> (<a href='https://github.com/stefvanbuuren/mice/issues/248'>#248</a>).</li>
+<li>The Cox model does not return <code>df.residual</code>, which caused problematic behavior in the <code><a href="../reference/D1.html">D1()</a></code>, <code><a href="../reference/D2.html">D2()</a></code>, <code><a href="../reference/D3.html">D3()</a></code>, <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> and <code><a href="../reference/pool.html">pool()</a></code>. <code>mice</code> now extracts the relevant information from other parts of the objects returned by <code><a href="https://rdrr.io/pkg/survival/man/coxph.html">survival::coxph()</a></code>, which solves long-standing issues with the integration of the Cox model (<a href='https://github.com/amices/mice/issues/246'>#246</a>).</li>
+<li>Adds missing <code>Rccp</code> dependency to work with <code>tidyr 1.1.1</code> (<a href='https://github.com/amices/mice/issues/248'>#248</a>).</li>
 </ul>
 </div>
 <div id="minor-changes" class="section level2">
@@ -143,7 +152,7 @@
 <a href="#minor-changes" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Addresses warnings: <code>Non-file package-anchored link(s) in documentation object</code>.</li>
-<li>Updates on <code>ampute</code> documentation (<a href='https://github.com/stefvanbuuren/mice/issues/251'>#251</a>).</li>
+<li>Updates on <code>ampute</code> documentation (<a href='https://github.com/amices/mice/issues/251'>#251</a>).</li>
 <li>Ask user permission before installing a package from <code>suggests</code>.</li>
 </ul>
 </div>
@@ -156,14 +165,14 @@
 <h2 class="hasAnchor">
 <a href="#major-changes-1" class="anchor"></a>Major changes</h2>
 <ul>
-<li>New functions <code><a href="../reference/tidy.mipo.html">tidy.mipo()</a></code> and <code><a href="../reference/glance.mipo.html">glance.mipo()</a></code> return standardized output that conforms to <code>broom</code> specifications. Kindly contributed by Vincent Arel Bundock (<a href='https://github.com/stefvanbuuren/mice/issues/240'>#240</a>).</li>
+<li>New functions <code><a href="../reference/tidy.mipo.html">tidy.mipo()</a></code> and <code><a href="../reference/glance.mipo.html">glance.mipo()</a></code> return standardized output that conforms to <code>broom</code> specifications. Kindly contributed by Vincent Arel Bundock (<a href='https://github.com/amices/mice/issues/240'>#240</a>).</li>
 </ul>
 </div>
 <div id="minor-changes-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
 <ul>
-<li>Solves a problem with the <code>D3</code> testing script that produced an error on CRAN (<a href='https://github.com/stefvanbuuren/mice/issues/244'>#244</a>).</li>
+<li>Solves a problem with the <code>D3</code> testing script that produced an error on CRAN (<a href='https://github.com/amices/mice/issues/244'>#244</a>).</li>
 </ul>
 </div>
 </div>
@@ -175,9 +184,9 @@
 <h2 class="hasAnchor">
 <a href="#major-changes-2" class="anchor"></a>Major changes</h2>
 <ul>
-<li>The <code><a href="../reference/D3.html">D3()</a></code> function in <code>mice</code> gave incorrect results. This version solves a problem in the calculation of the <code>D3</code>-statistic. See <a href='https://github.com/stefvanbuuren/mice/issues/226'>#226</a> and <a href='https://github.com/stefvanbuuren/mice/issues/228'>#228</a> for more details. The documentation explains why results from <code><a href="../reference/D3.html">mice::D3()</a></code> and <code><a href="https://rdrr.io/pkg/mitml/man/testModels.html">mitml::testModels()</a></code> may differ.</li>
-<li>The <code><a href="../reference/pool.html">pool()</a></code> function is now more forgiving when there is no <code><a href="https://rdrr.io/pkg/generics/man/glance.html">glance()</a></code> function (<a href='https://github.com/stefvanbuuren/mice/issues/233'>#233</a>)</li>
-<li>It is possible to bypass <code>remove.lindep()</code> by setting <code>eps = 0</code> (<a href='https://github.com/stefvanbuuren/mice/issues/225'>#225</a>)</li>
+<li>The <code><a href="../reference/D3.html">D3()</a></code> function in <code>mice</code> gave incorrect results. This version solves a problem in the calculation of the <code>D3</code>-statistic. See <a href='https://github.com/amices/mice/issues/226'>#226</a> and <a href='https://github.com/amices/mice/issues/228'>#228</a> for more details. The documentation explains why results from <code><a href="../reference/D3.html">mice::D3()</a></code> and <code><a href="https://rdrr.io/pkg/mitml/man/testModels.html">mitml::testModels()</a></code> may differ.</li>
+<li>The <code><a href="../reference/pool.html">pool()</a></code> function is now more forgiving when there is no <code><a href="https://rdrr.io/pkg/generics/man/glance.html">glance()</a></code> function (<a href='https://github.com/amices/mice/issues/233'>#233</a>)</li>
+<li>It is possible to bypass <code>remove.lindep()</code> by setting <code>eps = 0</code> (<a href='https://github.com/amices/mice/issues/225'>#225</a>)</li>
 </ul>
 </div>
 <div id="minor-changes-2" class="section level2">
@@ -207,16 +216,16 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Deprecates <code><a href="../reference/pool.compare.html">pool.compare()</a></code>. Use <code><a href="../reference/D1.html">D1()</a></code> instead (<a href='https://github.com/stefvanbuuren/mice/issues/220'>#220</a>)</li>
+<li>Deprecates <code><a href="../reference/pool.compare.html">pool.compare()</a></code>. Use <code><a href="../reference/D1.html">D1()</a></code> instead (<a href='https://github.com/amices/mice/issues/220'>#220</a>)</li>
 <li>Removes everything in <code><a href="https://rdrr.io/r/utils/globalVariables.html">utils::globalVariables()</a></code>
 </li>
-<li>Prevents name clashes with <code>tidyr</code> by defining <code><a href="../reference/complete.mids.html">complete.mids()</a></code> as an S3 method for the <code><a href="https://tidyr.tidyverse.org/reference/complete.html">tidyr::complete()</a></code> generic (<a href='https://github.com/stefvanbuuren/mice/issues/212'>#212</a>)</li>
-<li>Extends the <code><a href="../reference/pool.html">pool()</a></code> function to deal with multiple sets of parameters. Currently supported keywords are: <code>term</code> (all <code>broom</code> functions), <code>component</code> (some <code>broom.mixed</code> functions) and <code>y.values</code> (for <code>multinom()</code> model) (<a href='https://github.com/stefvanbuuren/mice/issues/219'>#219</a>)</li>
+<li>Prevents name clashes with <code>tidyr</code> by defining <code><a href="../reference/complete.mids.html">complete.mids()</a></code> as an S3 method for the <code><a href="https://tidyr.tidyverse.org/reference/complete.html">tidyr::complete()</a></code> generic (<a href='https://github.com/amices/mice/issues/212'>#212</a>)</li>
+<li>Extends the <code><a href="../reference/pool.html">pool()</a></code> function to deal with multiple sets of parameters. Currently supported keywords are: <code>term</code> (all <code>broom</code> functions), <code>component</code> (some <code>broom.mixed</code> functions) and <code>y.values</code> (for <code>multinom()</code> model) (<a href='https://github.com/amices/mice/issues/219'>#219</a>)</li>
 <li>Adds a new <code>install.on.demand()</code> function for lighter installation</li>
 <li>Adds <code>toenail2</code> and remove dependency on <code>HSAUR3</code>
 </li>
-<li>Solves problem with <code>ampute</code> in extreme cases (<a href='https://github.com/stefvanbuuren/mice/issues/216'>#216</a>)</li>
-<li>Solves problem with <code>pool</code> with <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html">mgcv::gam</a></code> (<a href='https://github.com/stefvanbuuren/mice/issues/218'>#218</a>)</li>
+<li>Solves problem with <code>ampute</code> in extreme cases (<a href='https://github.com/amices/mice/issues/216'>#216</a>)</li>
+<li>Solves problem with <code>pool</code> with <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html">mgcv::gam</a></code> (<a href='https://github.com/amices/mice/issues/218'>#218</a>)</li>
 <li>Adds <code>.gitattributes</code> for consistent line endings</li>
 </ul>
 </div>
@@ -226,9 +235,9 @@
 <a href="#mice-370" class="anchor"></a>mice 3.7.0<small> 2019-12-13 </small>
 </h1>
 <ul>
-<li>Solves a bug that made <code>polr()</code> always fail (<a href='https://github.com/stefvanbuuren/mice/issues/206'>#206</a>)</li>
-<li>Aborts if one or more columns are a <code>data.frame</code> (<a href='https://github.com/stefvanbuuren/mice/issues/208'>#208</a>)</li>
-<li>Update <code>mira-class</code> documentation (<a href='https://github.com/stefvanbuuren/mice/issues/207'>#207</a>)</li>
+<li>Solves a bug that made <code>polr()</code> always fail (<a href='https://github.com/amices/mice/issues/206'>#206</a>)</li>
+<li>Aborts if one or more columns are a <code>data.frame</code> (<a href='https://github.com/amices/mice/issues/208'>#208</a>)</li>
+<li>Update <code>mira-class</code> documentation (<a href='https://github.com/amices/mice/issues/207'>#207</a>)</li>
 <li>Remove links to deprecated package <code>CALIBERrfimpute</code>
 </li>
 <li>Adds check on partial missing level-2 data to <code>2lonly.norm</code> and <code>2lonly.pmm</code>
@@ -241,9 +250,9 @@
 <li>Imputation method <code>2lonly.mean</code> now also works with factors</li>
 <li>Replace deprecated <code>imputationMethod</code> argument in examples by <code>method</code>
 </li>
-<li>More informative error message when stopped after pre-processing (<a href='https://github.com/stefvanbuuren/mice/issues/194'>#194</a>)</li>
+<li>More informative error message when stopped after pre-processing (<a href='https://github.com/amices/mice/issues/194'>#194</a>)</li>
 <li>Updated URL’s in DESCRIPTION</li>
-<li>Fix string matching in <code>check.predictorMatrix()</code> (<a href='https://github.com/stefvanbuuren/mice/issues/191'>#191</a>)</li>
+<li>Fix string matching in <code>check.predictorMatrix()</code> (<a href='https://github.com/amices/mice/issues/191'>#191</a>)</li>
 </ul>
 </div>
     <div id="mice-360" class="section level1">
@@ -254,7 +263,7 @@
 <li>Copy <code>toenail</code> data from orphaned <code>DPpackage</code> package</li>
 <li>Remove <code>DPpackage</code> from <code>Suggests</code> field in <code>DESCRIPTION</code>
 </li>
-<li>Adds support for rotated names in <code><a href="../reference/md.pattern.html">md.pattern()</a></code> (<a href='https://github.com/stefvanbuuren/mice/issues/170'>#170</a>, <a href='https://github.com/stefvanbuuren/mice/issues/177'>#177</a>)</li>
+<li>Adds support for rotated names in <code><a href="../reference/md.pattern.html">md.pattern()</a></code> (<a href='https://github.com/amices/mice/issues/170'>#170</a>, <a href='https://github.com/amices/mice/issues/177'>#177</a>)</li>
 </ul>
 </div>
     <div id="mice-350" class="section level1">
@@ -263,10 +272,10 @@
 </h1>
 <ul>
 <li>This version has some error fixes</li>
-<li>Fixes a bug in the sampler that ignored imputed values in variables outside the active block (<a href='https://github.com/stefvanbuuren/mice/issues/175'>#175</a>, <a href='https://github.com/alexanderrobitzsch'>@alexanderrobitzsch</a>)</li>
-<li>Adds a note to the documenation of <code>as.mids</code>() (<a href='https://github.com/stefvanbuuren/mice/issues/173'>#173</a>)</li>
-<li>Removes a superfluous warning from process_mipo() (<a href='https://github.com/stefvanbuuren/mice/issues/92'>#92</a>)</li>
-<li>Fixes an error in the degrees of freedom of the P-value calculation (<a href='https://github.com/stefvanbuuren/mice/issues/171'>#171</a>)</li>
+<li>Fixes a bug in the sampler that ignored imputed values in variables outside the active block (<a href='https://github.com/amices/mice/issues/175'>#175</a>, <a href='https://github.com/alexanderrobitzsch'>@alexanderrobitzsch</a>)</li>
+<li>Adds a note to the documenation of <code>as.mids</code>() (<a href='https://github.com/amices/mice/issues/173'>#173</a>)</li>
+<li>Removes a superfluous warning from process_mipo() (<a href='https://github.com/amices/mice/issues/92'>#92</a>)</li>
+<li>Fixes an error in the degrees of freedom of the P-value calculation (<a href='https://github.com/amices/mice/issues/171'>#171</a>)</li>
 </ul>
 </div>
     <div id="mice-340" class="section level1">
@@ -277,14 +286,14 @@
 <li>Add a hex sticker to the mice package. Designed by Jaden M. Walters.</li>
 <li>Specify the R3.5.0 random generator in order to pass CRAN tests</li>
 <li>Remove test-fix.coef.R from tests</li>
-<li>Adds a rotate.names argument to md.pattern() (<a href='https://github.com/stefvanbuuren/mice/issues/154'>#154</a>, <a href='https://github.com/stefvanbuuren/mice/issues/160'>#160</a>)</li>
-<li>Fix to solve the name-matching problem (<a href='https://github.com/stefvanbuuren/mice/issues/156'>#156</a>, <a href='https://github.com/stefvanbuuren/mice/issues/149'>#149</a>, <a href='https://github.com/stefvanbuuren/mice/issues/147'>#147</a>)</li>
-<li>Fix that removes the pre-check for existence of <code>mice.impute.xxx()</code> so that <code><a href="../reference/mice.html">mice::mice()</a></code> works as expected (<a href='https://github.com/stefvanbuuren/mice/issues/55'>#55</a>)</li>
-<li>Solves a bug that crashed <code><a href="../reference/mids2spss.html">mids2spss()</a></code>, thanks Edgar Schoreit (<a href='https://github.com/stefvanbuuren/mice/issues/149'>#149</a>)</li>
-<li>Solves a problem in the routing logic (<a href='https://github.com/stefvanbuuren/mice/issues/149'>#149</a>) causing that passive imputation was not done when no predictors were specified. No passive imputation correctly will ignore any the specification of <code>predictorMatrix</code>.</li>
-<li>Implements an alternative solution for <a href='https://github.com/stefvanbuuren/mice/issues/93'>#93</a> and <a href='https://github.com/stefvanbuuren/mice/issues/96'>#96</a>. Instead of skipping imputation of variables without predictors, <code>mice 3.3.1</code> will impute those variables using the intercept only</li>
-<li>Adds a routine contributed by Simon Grund that checks for deprecated arguments <a href='https://github.com/stefvanbuuren/mice/issues/137'>#137</a></li>
-<li>Improves the <code><a href="../reference/nelsonaalen.html">nelsonaalen()</a></code> function for data where variables <code>time</code> or <code>status</code> have already been defined (<a href='https://github.com/stefvanbuuren/mice/issues/140'>#140</a>), thanks matthieu-faron</li>
+<li>Adds a rotate.names argument to md.pattern() (<a href='https://github.com/amices/mice/issues/154'>#154</a>, <a href='https://github.com/amices/mice/issues/160'>#160</a>)</li>
+<li>Fix to solve the name-matching problem (<a href='https://github.com/amices/mice/issues/156'>#156</a>, <a href='https://github.com/amices/mice/issues/149'>#149</a>, <a href='https://github.com/amices/mice/issues/147'>#147</a>)</li>
+<li>Fix that removes the pre-check for existence of <code>mice.impute.xxx()</code> so that <code><a href="../reference/mice.html">mice::mice()</a></code> works as expected (<a href='https://github.com/amices/mice/issues/55'>#55</a>)</li>
+<li>Solves a bug that crashed <code><a href="../reference/mids2spss.html">mids2spss()</a></code>, thanks Edgar Schoreit (<a href='https://github.com/amices/mice/issues/149'>#149</a>)</li>
+<li>Solves a problem in the routing logic (<a href='https://github.com/amices/mice/issues/149'>#149</a>) causing that passive imputation was not done when no predictors were specified. No passive imputation correctly will ignore any the specification of <code>predictorMatrix</code>.</li>
+<li>Implements an alternative solution for <a href='https://github.com/amices/mice/issues/93'>#93</a> and <a href='https://github.com/amices/mice/issues/96'>#96</a>. Instead of skipping imputation of variables without predictors, <code>mice 3.3.1</code> will impute those variables using the intercept only</li>
+<li>Adds a routine contributed by Simon Grund that checks for deprecated arguments <a href='https://github.com/amices/mice/issues/137'>#137</a></li>
+<li>Improves the <code><a href="../reference/nelsonaalen.html">nelsonaalen()</a></code> function for data where variables <code>time</code> or <code>status</code> have already been defined (<a href='https://github.com/amices/mice/issues/140'>#140</a>), thanks matthieu-faron</li>
 </ul>
 </div>
     <div id="mice-330" class="section level1">
@@ -292,10 +301,10 @@
 <a href="#mice-330" class="anchor"></a>mice 3.3.0<small> 2018-07-27 </small>
 </h1>
 <ul>
-<li>Solves bug in passive imputation (<a href='https://github.com/stefvanbuuren/mice/issues/130'>#130</a>). <em>Warning: This bug may have caused invalid imputations in <code>mice 3.0.0</code> - <code>mice 3.2.0</code> under passive imputation.</em>
+<li>Solves bug in passive imputation (<a href='https://github.com/amices/mice/issues/130'>#130</a>). <em>Warning: This bug may have caused invalid imputations in <code>mice 3.0.0</code> - <code>mice 3.2.0</code> under passive imputation.</em>
 </li>
-<li>Updates code to <code>broom 0.5.0</code> (<a href='https://github.com/stefvanbuuren/mice/issues/128'>#128</a>)</li>
-<li>Solves problem with <code><a href="../reference/mice.impute.2l.norm.html">mice.impute.2l.norm()</a></code> (<a href='https://github.com/stefvanbuuren/mice/issues/129'>#129</a>)</li>
+<li>Updates code to <code>broom 0.5.0</code> (<a href='https://github.com/amices/mice/issues/128'>#128</a>)</li>
+<li>Solves problem with <code><a href="../reference/mice.impute.2l.norm.html">mice.impute.2l.norm()</a></code> (<a href='https://github.com/amices/mice/issues/129'>#129</a>)</li>
 <li>Use explicit foreign function calls in tests</li>
 </ul>
 </div>
@@ -304,14 +313,14 @@
 <a href="#mice-320" class="anchor"></a>mice 3.2.0<small> 2018-07-24 </small>
 </h1>
 <ul>
-<li>Skip tests for <code><a href="../reference/mice.impute.2l.norm.html">mice.impute.2l.norm()</a></code> (<a href='https://github.com/stefvanbuuren/mice/issues/129'>#129</a>)</li>
-<li>Skip tests for <code><a href="../reference/D1.html">D1()</a></code> (<a href='https://github.com/stefvanbuuren/mice/issues/128'>#128</a>)</li>
-<li>Solve problem with <code>md.pattern</code> (<a href='https://github.com/stefvanbuuren/mice/issues/126'>#126</a>)</li>
-<li>Evades warning in <code>rbind</code> and <code>cbind</code> (<a href='https://github.com/stefvanbuuren/mice/issues/114'>#114</a>)</li>
-<li>Solves <code>rbind</code> problem when <code>method</code> is a list (<a href='https://github.com/stefvanbuuren/mice/issues/113'>#113</a>)</li>
-<li>More efficient use of <code>parlmice</code> (<a href='https://github.com/stefvanbuuren/mice/issues/109'>#109</a>)</li>
-<li>Add <code>dfcom</code> argument to <code><a href="../reference/pool.html">pool()</a></code> (<a href='https://github.com/stefvanbuuren/mice/issues/105'>#105</a>, <a href='https://github.com/stefvanbuuren/mice/issues/110'>#110</a>)</li>
-<li>Updates to <code>parlmice</code> + bugfix (<a href='https://github.com/stefvanbuuren/mice/issues/107'>#107</a>)</li>
+<li>Skip tests for <code><a href="../reference/mice.impute.2l.norm.html">mice.impute.2l.norm()</a></code> (<a href='https://github.com/amices/mice/issues/129'>#129</a>)</li>
+<li>Skip tests for <code><a href="../reference/D1.html">D1()</a></code> (<a href='https://github.com/amices/mice/issues/128'>#128</a>)</li>
+<li>Solve problem with <code>md.pattern</code> (<a href='https://github.com/amices/mice/issues/126'>#126</a>)</li>
+<li>Evades warning in <code>rbind</code> and <code>cbind</code> (<a href='https://github.com/amices/mice/issues/114'>#114</a>)</li>
+<li>Solves <code>rbind</code> problem when <code>method</code> is a list (<a href='https://github.com/amices/mice/issues/113'>#113</a>)</li>
+<li>More efficient use of <code>parlmice</code> (<a href='https://github.com/amices/mice/issues/109'>#109</a>)</li>
+<li>Add <code>dfcom</code> argument to <code><a href="../reference/pool.html">pool()</a></code> (<a href='https://github.com/amices/mice/issues/105'>#105</a>, <a href='https://github.com/amices/mice/issues/110'>#110</a>)</li>
+<li>Updates to <code>parlmice</code> + bugfix (<a href='https://github.com/amices/mice/issues/107'>#107</a>)</li>
 </ul>
 </div>
     <div id="mice-310" class="section level1">
@@ -319,19 +328,19 @@
 <a href="#mice-310" class="anchor"></a>mice 3.1.0<small> 2018-06-20 </small>
 </h1>
 <ul>
-<li>New parallel functionality: <code>parlmice</code> (<a href='https://github.com/stefvanbuuren/mice/issues/104'>#104</a>)</li>
-<li>Incorporate suggestion of <a href='https://github.com/JoergMBeyer'>@JoergMBeyer</a> to <code>flux</code> (<a href='https://github.com/stefvanbuuren/mice/issues/102'>#102</a>)</li>
-<li>Replace duplicate code by <code>estimice</code> (<a href='https://github.com/stefvanbuuren/mice/issues/101'>#101</a>)</li>
-<li>Better checking for empty methods (<a href='https://github.com/stefvanbuuren/mice/issues/99'>#99</a>)</li>
-<li>Remove problem with <code>parent.frame</code> (<a href='https://github.com/stefvanbuuren/mice/issues/98'>#98</a>)</li>
-<li>Set empty method for complete data (<a href='https://github.com/stefvanbuuren/mice/issues/93'>#93</a>)</li>
+<li>New parallel functionality: <code>parlmice</code> (<a href='https://github.com/amices/mice/issues/104'>#104</a>)</li>
+<li>Incorporate suggestion of <a href='https://github.com/JoergMBeyer'>@JoergMBeyer</a> to <code>flux</code> (<a href='https://github.com/amices/mice/issues/102'>#102</a>)</li>
+<li>Replace duplicate code by <code>estimice</code> (<a href='https://github.com/amices/mice/issues/101'>#101</a>)</li>
+<li>Better checking for empty methods (<a href='https://github.com/amices/mice/issues/99'>#99</a>)</li>
+<li>Remove problem with <code>parent.frame</code> (<a href='https://github.com/amices/mice/issues/98'>#98</a>)</li>
+<li>Set empty method for complete data (<a href='https://github.com/amices/mice/issues/93'>#93</a>)</li>
 <li>Add <code>NEWS.md</code>, <code>index.Rmd</code> and online package documentation</li>
 <li>Track <code>.R</code> instead of <code>.r</code>
 </li>
-<li>Patch issue with <code>updateLog</code> (<a href='https://github.com/stefvanbuuren/mice/issues/8'>#8</a>, <a href='https://github.com/alexanderrobitzsch'>@alexanderrobitzsch</a>)</li>
+<li>Patch issue with <code>updateLog</code> (<a href='https://github.com/amices/mice/issues/8'>#8</a>, <a href='https://github.com/alexanderrobitzsch'>@alexanderrobitzsch</a>)</li>
 <li>Extend README</li>
-<li>Repair issue <code>md.pattern</code> (<a href='https://github.com/stefvanbuuren/mice/issues/90'>#90</a>)</li>
-<li>Repair check on <code>m</code> (<a href='https://github.com/stefvanbuuren/mice/issues/89'>#89</a>)</li>
+<li>Repair issue <code>md.pattern</code> (<a href='https://github.com/amices/mice/issues/90'>#90</a>)</li>
+<li>Repair check on <code>m</code> (<a href='https://github.com/amices/mice/issues/89'>#89</a>)</li>
 </ul>
 </div>
     <div id="mice-300" class="section level1">
@@ -354,10 +363,10 @@
 <a href="#mice-2469-2017-12-08" class="anchor"></a>mice 2.46.9 (2017-12-08)<small> Unreleased </small>
 </h1>
 <ul>
-<li>simplify code for <code>mids</code> object in <code>mice</code> (thanks stephematician) (<a href='https://github.com/stefvanbuuren/mice/issues/61'>#61</a>)</li>
-<li>simplify code in <code>rbind.mids</code> (thanks stephematician) (<a href='https://github.com/stefvanbuuren/mice/issues/59'>#59</a>)</li>
-<li>repair bug in <code><a href="../reference/pool.compare.html">pool.compare()</a></code> in handling factors (<a href='https://github.com/stefvanbuuren/mice/issues/60'>#60</a>)</li>
-<li>fixed bug in <code>rbind.mids</code> in handling <code>where</code> (<a href='https://github.com/stefvanbuuren/mice/issues/59'>#59</a>)</li>
+<li>simplify code for <code>mids</code> object in <code>mice</code> (thanks stephematician) (<a href='https://github.com/amices/mice/issues/61'>#61</a>)</li>
+<li>simplify code in <code>rbind.mids</code> (thanks stephematician) (<a href='https://github.com/amices/mice/issues/59'>#59</a>)</li>
+<li>repair bug in <code><a href="../reference/pool.compare.html">pool.compare()</a></code> in handling factors (<a href='https://github.com/amices/mice/issues/60'>#60</a>)</li>
+<li>fixed bug in <code>rbind.mids</code> in handling <code>where</code> (<a href='https://github.com/amices/mice/issues/59'>#59</a>)</li>
 <li>add new arguments to <code><a href="../reference/as.mids.html">as.mids()</a></code>, add <code>as()</code>
 </li>
 <li>update contact info</li>
@@ -458,11 +467,11 @@
 <li>Rename <code>ccn</code> –&gt; <code>ncc</code>, <code>icn</code> –&gt; <code>nic</code>
 </li>
 <li>Change helpers <code><a href="../reference/cc.html">cc()</a></code>, <code><a href="../reference/ncc.html">ncc()</a></code>, <code><a href="../reference/cci.html">cci()</a></code>, <code><a href="../reference/ic.html">ic()</a></code>, <code><a href="../reference/nic.html">nic()</a></code> and <code><a href="../reference/ici.html">ici()</a></code> use <code>S3</code> dispatch</li>
-<li>Change issues tracker on Github - add BugReports URL <a href='https://github.com/stefvanbuuren/mice/issues/21'>#21</a></li>
-<li>Fixed <code>multinom</code> MaxNWts type fix in <code>polyreg</code> and <code>polr</code> <a href='https://github.com/stefvanbuuren/mice/issues/9'>#9</a></li>
-<li>Fix checking of nested models in <code>pool.compare</code> <a href='https://github.com/stefvanbuuren/mice/issues/12'>#12</a></li>
-<li>Fix <code>as.mids</code> if names not same as all columns <a href='https://github.com/stefvanbuuren/mice/issues/11'>#11</a></li>
-<li>Fix extension for <code>glmer</code> models <a href='https://github.com/stefvanbuuren/mice/issues/5'>#5</a></li>
+<li>Change issues tracker on Github - add BugReports URL <a href='https://github.com/amices/mice/issues/21'>#21</a></li>
+<li>Fixed <code>multinom</code> MaxNWts type fix in <code>polyreg</code> and <code>polr</code> <a href='https://github.com/amices/mice/issues/9'>#9</a></li>
+<li>Fix checking of nested models in <code>pool.compare</code> <a href='https://github.com/amices/mice/issues/12'>#12</a></li>
+<li>Fix <code>as.mids</code> if names not same as all columns <a href='https://github.com/amices/mice/issues/11'>#11</a></li>
+<li>Fix extension for <code>glmer</code> models <a href='https://github.com/amices/mice/issues/5'>#5</a></li>
 </ul>
 </div>
     <div id="mice-229-2016-10-05" class="section level1">

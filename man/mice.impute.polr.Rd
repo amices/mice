@@ -76,7 +76,7 @@ In December 2019 Simon White alerted that the
 \code{polr} could always fail silently. I can confirm this behaviour for 
 versions \code{mice 3.0.0 - mice 3.6.6}, so any method requests
 for \code{polr} in these versions were in fact handled by \code{multinom}.
-See \url{https://github.com/stefvanbuuren/mice/issues/206} for details.
+See \url{https://github.com/amices/mice/issues/206} for details.
 }
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
