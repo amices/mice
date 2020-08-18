@@ -38,7 +38,7 @@
 #' \code{polr} could always fail silently. I can confirm this behaviour for 
 #' versions \code{mice 3.0.0 - mice 3.6.6}, so any method requests
 #' for \code{polr} in these versions were in fact handled by \code{multinom}.
-#' See \url{https://github.com/stefvanbuuren/mice/issues/206} for details.
+#' See \url{https://github.com/amices/mice/issues/206} for details.
 #' 
 #'@author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000-2010
 #'@seealso \code{\link{mice}}, \code{\link[nnet]{multinom}},

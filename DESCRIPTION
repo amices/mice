@@ -1,8 +1,8 @@
 Package: mice
 Type: Package
-Version: 3.11.0
+Version: 3.11.1
 Title: Multivariate Imputation by Chained Equations
-Date: 2020-08-02
+Date: 2020-08-18
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -74,6 +74,6 @@ Encoding: UTF-8
 License: GPL-2 | GPL-3
 LazyLoad: yes
 LazyData: yes
-URL: https://github.com/stefvanbuuren/mice, https://stefvanbuuren.name/mice/, https://stefvanbuuren.name/fimd/
-BugReports: https://github.com/stefvanbuuren/mice/issues
+URL: https://github.com/amices/mice, https://amices.github.io/mice/, https://stefvanbuuren.name/fimd/
+BugReports: https://github.com/amices/mice/issues
 RoxygenNote: 7.1.1

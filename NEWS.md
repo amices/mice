@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.11.1
+
+* Update URL's after transfer to organisation `amices`
+
 # mice 3.11.0
 
 ## Major changes

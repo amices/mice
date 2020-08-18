@@ -8,7 +8,7 @@ bibliography: refs.bibtex
 ## Software
 
 1. [`mice` package at CRAN](https://cran.r-project.org/package=mice)
-2. [mice GitHUB repository](https://github.com/stefvanbuuren/mice)
+2. [mice GitHUB repository](https://github.com/amices/mice)
 
 ## Installation
 

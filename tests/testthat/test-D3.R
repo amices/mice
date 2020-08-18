@@ -1,7 +1,7 @@
 context("D3")
 
 # The following test was contributed by jawitte
-# https://github.com/stefvanbuuren/mice/issues/226
+# https://github.com/amices/mice/issues/226
 A <- rnorm(100)
 B <- 0.1*A + rnorm(100)
 fit1 <- lapply(1:5, function(m){lm(B~A)})

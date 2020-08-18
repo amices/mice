@@ -215,4 +215,4 @@ revdep_summary()
 |dynr    |0.1.15-25 |1     |        |     |
 ```
 
-This package requires additional software to be installed. See <https://github.com/stefvanbuuren/mice/blob/master/revdep/failures.md> for details.
+This package requires additional software to be installed. See <https://github.com/amices/mice/blob/master/revdep/failures.md> for details.
