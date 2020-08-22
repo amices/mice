@@ -156,3 +156,8 @@ through Github's issues facility.
 ## Acknowledgement
 
 The cute mice sticker was designed by Jaden M. Walters. Thanks Jaden!
+
+## Code of Conduct
+
+Please note that the mice project is released with a [Contributor Code of Conduct](https://amices.github.io/mice/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+
