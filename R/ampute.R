@@ -160,10 +160,12 @@
 #' evaluation of multiple imputation strategies for the statistical analysis of
 #' incomplete data sets.} pp. 110-113. Dissertation. Rotterdam: Erasmus University.
 #'
-#' Schouten, R.M., Lugtig, P and Vink, G. (2018) \href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{Generating missing values for simulation purposes: A multivariate amputation procedure.}
-#' \emph{Journal of Statistical Computation and Simulation}, 88(15): 1909-1930. DOI: 10.1080/00949655.2018.1491577.
+#' Schouten, R.M., Lugtig, P and Vink, G. (2018)
+#' \href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{Generating missing values for simulation purposes: A multivariate amputation procedure.}.
+#' \emph{Journal of Statistical Computation and Simulation}, 88(15): 1909-1930.
+#' DOI: 10.1080/00949655.2018.1491577.
 #'
-#' Schouten, R.M. and Vink, G. (2018) \href{https://journals.sagepub.com/doi/full/10.1177/0049124118799376}{The Dance of the Mechanisms: How Observed Information Influences the Validity of Missingness Assumptions.}
+#' Schouten, R.M. and Vink, G. (2018) \href{https://journals.sagepub.com/doi/full/10.1177/0049124118799376}{The Dance of the Mechanisms: How Observed Information Influences the Validity of Missingness Assumptions}.
 #' \emph{Sociological Methods and Research}, DOI: 10.1177/0049124118799376.
 #'
 #' Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn, C.G.M., Rubin, D.B. (2006)
@@ -173,7 +175,7 @@
 #' Van Buuren, S. (2018) \href{https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #'
-#' Vink, G. (2016) \href{https://www.gerkovink.com/docs/Standardized%20evaluation.pdf}{Towards a standardized evaluation of multiple imputation routines.}
+#' Vink, G. (2016) Towards a standardized evaluation of multiple imputation routines.
 #' @examples
 #' # start with a complete data set
 #' compl_boys <- cc(boys)[1:3]
@@ -402,7 +404,8 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
         P = P,
         data = data,
         std = std,
-        weights = weights
+        weights = weights,
+        patterns = patterns
       )
       if (!cont) {
         R <- ampute.discrete(
@@ -452,7 +455,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   #
   # Return result
   oldClass(result) <- "mads"
-  return(result)
+  result
 }
 
 
@@ -462,7 +465,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
 # will obtain a certain score that will define his probability to be made missing.
 # The calculation of the probabilities occur in the function ampute.mcar(),
 # ampute.continuous() or ampute.discrete(), based on the kind of missingness.
-sum.scores <- function(P, data, std, weights) {
+sum.scores <- function(P, data, std, weights, patterns) {
   weights <- as.matrix(weights)
   f <- function(i) {
     if (length(P[P == (i + 1)]) == 0) {
@@ -486,8 +489,7 @@ sum.scores <- function(P, data, std, weights) {
       return(scores)
     }
   }
-  scores <- lapply(seq_len(nrow(patterns)), f)
-  return(scores)
+  lapply(seq_len(nrow(patterns)), f)
 }
 
 
@@ -509,14 +511,14 @@ recalculate.prop <- function(prop, n, patterns, freq) {
   } else {
     prop <- sum(cases) / n
   }
-  return(prop)
+  prop
 }
 
 
 # This is an underlying function of multivariate amputation function ampute().
 # The function recalculates the frequency vector to make the sum equal to 1.
 recalculate.freq <- function(freq) {
-  return(freq / sum(freq))
+  freq / sum(freq)
 }
 
 
@@ -559,5 +561,5 @@ check.patterns <- function(patterns, freq, prop) {
     freq = freq,
     row.zero = row.zero
   )
-  return(objects)
+  objects
 }
