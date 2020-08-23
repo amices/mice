@@ -17,19 +17,19 @@ norm.draw(y, ry, x, rank.adjust = TRUE, ...)
 
 \item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
 
-\item{rank.adjust}{Argument that specifies whether \code{NA}'s in the 
-coefficients need to be set to zero. Only relevant when \code{ls.meth = "qr"} 
+\item{rank.adjust}{Argument that specifies whether \code{NA}'s in the
+coefficients need to be set to zero. Only relevant when \code{ls.meth = "qr"}
 AND the predictor matrix is rank-deficient.}
 
 \item{...}{Other named arguments.}
 }
 \value{
 A \code{list} containing components \code{coef} (least squares estimate),
-\code{beta} (drawn regression weights) and \code{sigma} (drawn value of the 
+\code{beta} (drawn regression weights) and \code{sigma} (drawn value of the
 residual standard deviation).
 }
 \description{
-This function draws random values of beta and sigma under the Bayesian 
+This function draws random values of beta and sigma under the Bayesian
 linear regression model as described in Rubin (1987, p. 167). This function
 can be called by user-specified imputation functions.
 }
@@ -37,6 +37,6 @@ can be called by user-specified imputation functions.
 Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
 }
 \author{
-Gerko Vink, 2018, for this version, based on earlier versions written 
+Gerko Vink, 2018, for this version, based on earlier versions written
 by Stef van Buuren, Karin Groothuis-Oudshoorn, 2017
 }

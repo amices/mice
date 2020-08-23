@@ -9,10 +9,10 @@ name.formulas(formulas, prefix = "F")
 \arguments{
 \item{formulas}{A named list of formula's, or expressions that
 can be converted into formula's by \code{as.formula}. List elements
-correspond to blocks. The block to which the list element applies is 
+correspond to blocks. The block to which the list element applies is
 identified by its name, so list names must correspond to block names.
-The \code{formulas} argument is an alternative to the 
-\code{predictorMatrix} argument that allows for more flexibility in 
+The \code{formulas} argument is an alternative to the
+\code{predictorMatrix} argument that allows for more flexibility in
 specifying imputation models, e.g., for specifying interaction terms.}
 
 \item{prefix}{A character vector of length 1 with the prefix to
@@ -22,22 +22,24 @@ be using for naming any unnamed blocks with two or more variables.}
 Named list of formulas
 }
 \description{
-This helper function names any unnamed elements in the \code{formula} 
+This helper function names any unnamed elements in the \code{formula}
 list. This is a convenience function.
 }
 \details{
-This function will name any unnamed list elements specified in 
-the optional argument \code{formula}. Unnamed formula's 
-consisting with just one response variable will be named 
-after this variable. Unnamed formula's containing more 
-than one variable will be named by the \code{prefix} 
+This function will name any unnamed list elements specified in
+the optional argument \code{formula}. Unnamed formula's
+consisting with just one response variable will be named
+after this variable. Unnamed formula's containing more
+than one variable will be named by the \code{prefix}
 argument, padded by an integer sequence stating at 1.
 }
 \examples{
 # fully conditionally specified main effects model
-form1 <- list(bmi ~ age + chl + hyp, 
-              hyp ~ age + bmi + chl,
-              chl ~ age + bmi + hyp)
+form1 <- list(
+  bmi ~ age + chl + hyp,
+  hyp ~ age + bmi + chl,
+  chl ~ age + bmi + hyp
+)
 form1 <- name.formulas(form1)
 imp1 <- mice(nhanes, formulas = form1, print = FALSE, m = 1, seed = 12199)
 

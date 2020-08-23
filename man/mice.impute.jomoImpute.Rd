@@ -15,48 +15,48 @@ mice.impute.jomoImpute(
 )
 }
 \arguments{
-\item{data}{A data frame containing incomplete and auxiliary variables, 
-the cluster indicator variable, and any other variables that should be 
+\item{data}{A data frame containing incomplete and auxiliary variables,
+the cluster indicator variable, and any other variables that should be
 present in the imputed datasets.}
 
-\item{formula}{A formula specifying the role of each variable 
-in the imputation model. The basic model is constructed 
-by \code{model.matrix}, thus allowing to include derived variables 
-in the imputation model using \code{I()}. See 
+\item{formula}{A formula specifying the role of each variable
+in the imputation model. The basic model is constructed
+by \code{model.matrix}, thus allowing to include derived variables
+in the imputation model using \code{I()}. See
 \code{\link[mitml]{jomoImpute}}.}
 
-\item{type}{An integer vector specifying the role of each variable 
+\item{type}{An integer vector specifying the role of each variable
 in the imputation model (see \code{\link[mitml]{jomoImpute}})}
 
 \item{m}{The number of imputed data sets to generate. Default is to 10.}
 
 \item{silent}{(optional) Logical flag indicating if console output should be suppressed. Default is to \code{FALSE}.}
 
-\item{format}{A character vector specifying the type of object that should 
+\item{format}{A character vector specifying the type of object that should
 be returned. The default is \code{format = "list"}. No other formats are
 currently supported.}
 
-\item{...}{Other named arguments: \code{n.burn}, \code{n.iter}, 
+\item{...}{Other named arguments: \code{n.burn}, \code{n.iter},
 \code{group}, \code{prior}, \code{silent} and others.}
 }
 \value{
 A list of imputations for all incomplete variables in the model,
-that can be stored in the the \code{imp} component of the \code{mids} 
+that can be stored in the the \code{imp} component of the \code{mids}
 object.
 }
 \description{
 This function is a wrapper around the \code{jomoImpute} function
-from the \code{mitml} package so that it can be called to 
+from the \code{mitml} package so that it can be called to
 impute blocks of variables in \code{mice}. The \code{mitml::jomoImpute}
-function provides an interface to the \code{jomo} package for 
-multiple imputation of multilevel data 
+function provides an interface to the \code{jomo} package for
+multiple imputation of multilevel data
 \url{https://CRAN.R-project.org/package=jomo}.
-Imputations can be generated using \code{type} or \code{formula}, 
+Imputations can be generated using \code{type} or \code{formula},
 which offer different options for model specification.
 }
 \note{
-The number of imputations \code{m} is set to 1, and the function 
-is called \code{m} times so that it fits within the \code{mice} 
+The number of imputations \code{m} is set to 1, and the function
+is called \code{m} times so that it fits within the \code{mice}
 iteration scheme.
 
 This is a multivariate imputation function using a joint model.
@@ -64,7 +64,7 @@ This is a multivariate imputation function using a joint model.
 \examples{
 \donttest{
 # Note: Requires mitml 0.3-5.7
-blocks <-  list(c("bmi", "chl", "hyp"), "age")
+blocks <- list(c("bmi", "chl", "hyp"), "age")
 method <- c("jomoImpute", "pmm")
 ini <- mice(nhanes, blocks = blocks, method = method, maxit = 0)
 pred <- ini$pred
@@ -73,13 +73,13 @@ imp <- mice(nhanes, blocks = blocks, method = method, pred = pred, maxit = 1)
 }
 }
 \references{
-Grund S, Luedtke O, Robitzsch A (2016). Multiple 
-Imputation of Multilevel Missing Data: An Introduction to the R 
+Grund S, Luedtke O, Robitzsch A (2016). Multiple
+Imputation of Multilevel Missing Data: An Introduction to the R
 Package \code{pan}. SAGE Open.
 
-Quartagno M and Carpenter JR (2015). 
-Multiple imputation for IPD meta-analysis: allowing for heterogeneity 
-and studies with missing covariates. Statistics in Medicine, 
+Quartagno M and Carpenter JR (2015).
+Multiple imputation for IPD meta-analysis: allowing for heterogeneity
+and studies with missing covariates. Statistics in Medicine,
 35:2938-2954, 2015.
 }
 \seealso{
@@ -89,8 +89,8 @@ Other multivariate-2l:
 \code{\link{mice.impute.panImpute}()}
 }
 \author{
-Stef van Buuren, 2018, building on work of Simon Grund, 
-Alexander Robitzsch and Oliver Luedtke (authors of \code{mitml} package) 
+Stef van Buuren, 2018, building on work of Simon Grund,
+Alexander Robitzsch and Oliver Luedtke (authors of \code{mitml} package)
 and Quartagno and Carpenter (authors of \code{jomo} package).
 }
 \concept{multivariate-2l}

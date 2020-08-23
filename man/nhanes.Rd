@@ -6,10 +6,10 @@
 \title{NHANES example - all variables numerical}
 \format{
 A data frame with 25 observations on the following 4 variables.
-\describe{ 
+\describe{
 \item{age}{Age group (1=20-39, 2=40-59, 3=60+)}
-\item{bmi}{Body mass index (kg/m**2)} 
-\item{hyp}{Hypertensive (1=no,2=yes)} 
+\item{bmi}{Body mass index (kg/m**2)}
+\item{hyp}{Hypertensive (1=no,2=yes)}
 \item{chl}{Total serum cholesterol (mg/dL)} }
 }
 \source{
@@ -24,11 +24,11 @@ A small data set with all numerical variables. The data set \code{nhanes2} is
 the same data set, but with \code{age} and \code{hyp} treated as factors.
 }
 \examples{
- 
+# create 5 imputed data sets
+imp <- mice(nhanes)
 
-imp <- mice(nhanes)     # create 5 imputed data sets
-complete(imp)           # print the first imputed data set
-
+# print the first imputed data set
+complete(imp)
 }
 \seealso{
 \code{\link{nhanes2}}

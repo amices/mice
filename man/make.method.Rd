@@ -15,28 +15,28 @@ make.method(
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing
 values are coded as \code{NA}.}
 
-\item{where}{A data frame or matrix with logicals of the same dimensions 
-as \code{data} indicating where in the data the imputations should be 
+\item{where}{A data frame or matrix with logicals of the same dimensions
+as \code{data} indicating where in the data the imputations should be
 created. The default, \code{where = is.na(data)}, specifies that the
-missing data should be imputed. The \code{where} argument may be used to 
+missing data should be imputed. The \code{where} argument may be used to
 overimpute observed data, or to skip imputations for selected missing values.}
 
-\item{blocks}{List of vectors with variable names per block. List elements 
-may be named to identify blocks. Variables within a block are 
+\item{blocks}{List of vectors with variable names per block. List elements
+may be named to identify blocks. Variables within a block are
 imputed by a multivariate imputation method
-(see \code{method} argument). By default each variable is placed 
+(see \code{method} argument). By default each variable is placed
 into its own block, which is effectively
-fully conditional specification (FCS) by univariate models 
-(variable-by-variable imputation). Only variables whose names appear in 
-\code{blocks} are imputed. The relevant columns in the \code{where} 
-matrix are set to \code{FALSE} of variables that are not block members. 
-A variable may appear in multiple blocks. In that case, it is 
+fully conditional specification (FCS) by univariate models
+(variable-by-variable imputation). Only variables whose names appear in
+\code{blocks} are imputed. The relevant columns in the \code{where}
+matrix are set to \code{FALSE} of variables that are not block members.
+A variable may appear in multiple blocks. In that case, it is
 effectively re-imputed each time that it is visited.}
 
 \item{defaultMethod}{A vector of length 4 containing the default
-imputation methods for 1) numeric data, 2) factor data with 2 levels, 3) 
-factor data with > 2 unordered levels, and 4) factor data with > 2 
-ordered levels. By default, the method uses 
+imputation methods for 1) numeric data, 2) factor data with 2 levels, 3)
+factor data with > 2 unordered levels, and 4) factor data with > 2
+ordered levels. By default, the method uses
 \code{pmm}, predictive mean matching (numeric data) \code{logreg}, logistic
 regression imputation (binary data, factor with 2 levels) \code{polyreg},
 polytomous regression imputation for unordered categorical data (factor > 2
@@ -46,8 +46,8 @@ levels) \code{polr}, proportional odds model for (ordered, > 2 levels).}
 Vector of \code{length(blocks)} element with method names
 }
 \description{
-This helper function creates a valid \code{method} vector. The 
-\code{method} vector is an argument to the \code{mice} function that 
+This helper function creates a valid \code{method} vector. The
+\code{method} vector is an argument to the \code{mice} function that
 specifies the method for each block.
 }
 \examples{

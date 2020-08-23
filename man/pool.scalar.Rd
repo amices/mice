@@ -13,17 +13,19 @@ analyses.}
 \item{U}{A vector containing the corresponding \code{m} variances of the univariate
 estimates.}
 
-\item{n}{A number providing the sample size. If nothing is specified, an infinite sample \code{n = Inf} is assumed.}
+\item{n}{A number providing the sample size. If nothing is specified,
+an infinite sample \code{n = Inf} is assumed.}
 
-\item{k}{A number indicating the number of parameters to be estimated. By default, \code{k = 1} is assumed.}
+\item{k}{A number indicating the number of parameters to be estimated.
+By default, \code{k = 1} is assumed.}
 }
 \value{
-Returns a list with components. Component \code{m} is the 
-number of imputations. Component \code{qhat} contains the \code{m} 
+Returns a list with components. Component \code{m} is the
+number of imputations. Component \code{qhat} contains the \code{m}
 univariate estimates of repeated complete data analyses.
 Component \code{u} contains the corresponding \code{m} variances of the univariate estimates.
 Component \code{qbar} is the pooled univariate estimate, formula (3.1.2) Rubin
-(1987). Component \code{ubar} is the mean of the variances 
+(1987). Component \code{ubar} is the mean of the variances
 (i.e. the pooled within-imputation variance), formula (3.1.3) Rubin (1987).
 Component \code{b} is the between-imputation variance, formula (3.1.4) Rubin (1987).
 Component \code{t} is the total variance of the pooled estimated, formula (3.1.5) Rubin
@@ -45,18 +47,15 @@ relative increase in variance due to nonresponse and the fraction of missing
 information.
 }
 \examples{
-
-
 imp <- mice(nhanes)
 m <- imp$m
 Q <- rep(NA, m)
 U <- rep(NA, m)
 for (i in 1:m) {
-   Q[i] <- mean(complete(imp, i)$bmi)
-   U[i] <- var(complete(imp, i)$bmi) / nrow(nhanes)  # (standard error of estimate)^2
+  Q[i] <- mean(complete(imp, i)$bmi)
+  U[i] <- var(complete(imp, i)$bmi) / nrow(nhanes) # (standard error of estimate)^2
 }
-pool.scalar(Q, U, n = nrow(nhanes), k = 1)  # Barnard-Rubin 1999
-
+pool.scalar(Q, U, n = nrow(nhanes), k = 1) # Barnard-Rubin 1999
 }
 \references{
 Rubin, D.B. (1987). Multiple Imputation for Nonresponse in

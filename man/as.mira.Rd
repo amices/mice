@@ -13,8 +13,8 @@ as.mira(fitlist)
 An S3 object of class \code{mira}.
 }
 \description{
-The \code{as.mira()} function takes the results of repeated 
-complete-data analysis stored as a list, and turns it 
+The \code{as.mira()} function takes the results of repeated
+complete-data analysis stored as a list, and turns it
 into a \code{mira} object that can be pooled.
 }
 \seealso{

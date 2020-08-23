@@ -17,43 +17,43 @@ extend.formulas(
 \arguments{
 \item{formulas}{A named list of formula's, or expressions that
 can be converted into formula's by \code{as.formula}. List elements
-correspond to blocks. The block to which the list element applies is 
+correspond to blocks. The block to which the list element applies is
 identified by its name, so list names must correspond to block names.
-The \code{formulas} argument is an alternative to the 
-\code{predictorMatrix} argument that allows for more flexibility in 
+The \code{formulas} argument is an alternative to the
+\code{predictorMatrix} argument that allows for more flexibility in
 specifying imputation models, e.g., for specifying interaction terms.}
 
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing
 values are coded as \code{NA}.}
 
-\item{blocks}{List of vectors with variable names per block. List elements 
-may be named to identify blocks. Variables within a block are 
+\item{blocks}{List of vectors with variable names per block. List elements
+may be named to identify blocks. Variables within a block are
 imputed by a multivariate imputation method
-(see \code{method} argument). By default each variable is placed 
+(see \code{method} argument). By default each variable is placed
 into its own block, which is effectively
-fully conditional specification (FCS) by univariate models 
-(variable-by-variable imputation). Only variables whose names appear in 
-\code{blocks} are imputed. The relevant columns in the \code{where} 
-matrix are set to \code{FALSE} of variables that are not block members. 
-A variable may appear in multiple blocks. In that case, it is 
+fully conditional specification (FCS) by univariate models
+(variable-by-variable imputation). Only variables whose names appear in
+\code{blocks} are imputed. The relevant columns in the \code{where}
+matrix are set to \code{FALSE} of variables that are not block members.
+A variable may appear in multiple blocks. In that case, it is
 effectively re-imputed each time that it is visited.}
 
-\item{predictorMatrix}{A numeric matrix of \code{length(blocks)} rows 
-and \code{ncol(data)} columns, containing 0/1 data specifying 
+\item{predictorMatrix}{A numeric matrix of \code{length(blocks)} rows
+and \code{ncol(data)} columns, containing 0/1 data specifying
 the set of predictors to be used for each target column.
-Each row corresponds to a variable block, i.e., a set of variables 
+Each row corresponds to a variable block, i.e., a set of variables
 to be imputed. A value of \code{1} means that the column
-variable is used as a predictor for the target block (in the rows). 
+variable is used as a predictor for the target block (in the rows).
 By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
-rows and columns with all 1's, except for the diagonal. 
+rows and columns with all 1's, except for the diagonal.
 Note: For two-level imputation models (which have \code{"2l"} in their names)
 other codes (e.g, \code{2} or \code{-2}) are also allowed.}
 
 \item{auxiliary}{A logical that indicates whether the variables
-listed in \code{predictors} should be added to the formula as main 
+listed in \code{predictors} should be added to the formula as main
 effects. The default is \code{TRUE}.}
 
-\item{include.intercept}{A logical that indicated whether the intercept 
+\item{include.intercept}{A logical that indicated whether the intercept
 should be included in the result.}
 
 \item{...}{Named arguments that are passed down to the univariate imputation

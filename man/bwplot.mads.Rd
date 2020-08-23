@@ -15,47 +15,46 @@
 )
 }
 \arguments{
-\item{x}{A \code{mads} (\code{\link{mads-class}}) object, typically created by 
+\item{x}{A \code{mads} (\code{\link{mads-class}}) object, typically created by
 \code{\link{ampute}}.}
 
-\item{data}{A string or vector of variable names that needs to be plotted. As 
+\item{data}{A string or vector of variable names that needs to be plotted. As
 a default, all variables will be plotted.}
 
-\item{which.pat}{A scalar or vector indicating which patterns need to be plotted. 
+\item{which.pat}{A scalar or vector indicating which patterns need to be plotted.
 As a default, all patterns are plotted.}
 
 \item{standardized}{Logical. Whether the box-and-whisker plots need to be created
 from standardized data or not. Default is TRUE.}
 
 \item{descriptives}{Logical. Whether the mean, variance and n of the variables
-need to be printed. This is useful to examine the effect of the amputation. 
+need to be printed. This is useful to examine the effect of the amputation.
 Default is TRUE.}
 
 \item{layout}{A vector of two values indicating how the boxplots of one pattern
-should be divided over the plot. For example, \code{c(2, 3)} indicates that the 
+should be divided over the plot. For example, \code{c(2, 3)} indicates that the
 boxplots of six variables need to be placed on 3 rows and 2 columns. Default
-is 1 row and an amount of columns equal to #variables. Note that for more than 
+is 1 row and an amount of columns equal to #variables. Note that for more than
 6 variables, multiple plots will be created automatically.}
 
 \item{\dots}{Not used, but for consistency with generic}
 }
 \value{
-A list containing the box-and-whisker plots. Note that a new pattern 
+A list containing the box-and-whisker plots. Note that a new pattern
 will always be shown in a new plot.
 }
 \description{
-Plotting method to investigate the result of function \code{\link{ampute}}. 
-the relation between the data variables and the amputed data. The function does 
-not show which data is amputed. It does show how the amputed values are related 
+Plotting method to investigate the relation between the data variables and
+the amputed data. The function shows how the amputed values are related
 to the variable values.
 }
 \note{
-The \code{mads} object contains all the information you need to 
-make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate 
+The \code{mads} object contains all the information you need to
+make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate
 Amputation using Ampute} to understand the contents of class object \code{mads}.
 }
 \seealso{
-\code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for 
+\code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for
 an overview of the package, \code{\link{mads-class}}
 }
 \author{

@@ -8,7 +8,7 @@ nic(x)
 }
 \arguments{
 \item{x}{An \code{R} object. Currently supported are methods for the
-following classes: \code{mids}, \code{data.frame} and \code{matrix}. Also, 
+following classes: \code{mids}, \code{data.frame} and \code{matrix}. Also,
 \code{x} can be a vector.}
 }
 \value{
@@ -18,10 +18,8 @@ Number of elements in \code{x} with incomplete data.
 Calculates the number of incomplete cases.
 }
 \examples{
-
- nic(nhanes) # the remaining 12 rows 
- nic(nhanes[,c("bmi","hyp")]) # number of cases with incomplete bmi and hyp
-
+nic(nhanes) # the remaining 12 rows
+nic(nhanes[, c("bmi", "hyp")]) # number of cases with incomplete bmi and hyp
 }
 \seealso{
 \code{\link{ncc}}, \code{\link{cci}}

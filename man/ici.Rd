@@ -22,8 +22,7 @@ The companion function  \code{cci()} selects the complete cases.
 }
 \examples{
 
- ici(nhanes) # indicator for 12 rows with incomplete cases 
-
+ici(nhanes) # indicator for 12 rows with incomplete cases
 }
 \seealso{
 \code{\link{cci}}, \code{\link{ic}}

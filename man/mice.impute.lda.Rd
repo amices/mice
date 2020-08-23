@@ -9,21 +9,21 @@ mice.impute.lda(y, ry, x, wy = NULL, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the 
-the subset \code{y[ry]} of elements in \code{y} to which the imputation 
-model is fitted. The \code{ry} generally distinguishes the observed 
+\item{ry}{Logical vector of length \code{length(y)} indicating the
+the subset \code{y[ry]} of elements in \code{y} to which the imputation
+model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
 \item{...}{Other named arguments. Not used.}
 }
 \value{
-Vector with imputed data, of type factor, and of length 
+Vector with imputed data, of type factor, and of length
 \code{sum(wy)}
 }
 \description{
@@ -47,7 +47,8 @@ discriminant weight, so it is not 'proper' in the sense of Rubin. For small
 samples and rare categories in the \code{y}, variability of the imputed data
 could therefore be underestimated.
 
-Added: SvB June 2009 to include bootstrap - disabled since
+Added: SvB June 2009 Tried to include bootstrap, but disabled since
+bootstrapping may easily lead to constant variables within groups.
 }
 
 \references{

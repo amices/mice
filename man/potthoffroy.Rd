@@ -5,7 +5,7 @@
 \alias{potthoffroy}
 \title{Potthoff-Roy data}
 \format{
-\code{tbs} is a data frame with 27 rows and 6 columns: 
+\code{tbs} is a data frame with 27 rows and 6 columns:
 \describe{
 \item{id}{Person number}
 \item{sex}{Sex M/F}
@@ -23,7 +23,7 @@ analysis of variance model usefully especially for growth curve problems.
 Little, R. J. A., Rubin, D. B. (1987).  \emph{Statistical Analysis with
 Missing Data.} New York: John Wiley & Sons.
 
-Van Buuren, S. (2018). 
+Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/ex-ch-longitudinal.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 }
@@ -45,17 +45,13 @@ Kenward (2007). See Chapter 9 of Van Buuren (2012) for a challenging
 exercise using these data.
 }
 \examples{
-
-
 ### create missing values at age 10 as in Little and Rubin (1987)
 
 phr <- potthoffroy
-idmis <- c(3,6,9,10,13,16,23,24,27)
+idmis <- c(3, 6, 9, 10, 13, 16, 23, 24, 27)
 phr[idmis, 4] <- NA
 phr
 
 md.pattern(phr)
-
-
 }
 \keyword{datasets}

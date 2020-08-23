@@ -29,12 +29,9 @@ This function is included for backward compatibility with V1.0. The function
 is superseded by \code{\link{with.mids}}.
 }
 \examples{
-
-
 imp <- mice(nhanes)
-fit <- lm.mids(bmi~hyp+chl, data = imp)
+fit <- lm.mids(bmi ~ hyp + chl, data = imp)
 fit
-
 }
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:

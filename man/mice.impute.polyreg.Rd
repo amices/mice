@@ -18,15 +18,15 @@ mice.impute.polyreg(
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the 
-the subset \code{y[ry]} of elements in \code{y} to which the imputation 
-model is fitted. The \code{ry} generally distinguishes the observed 
+\item{ry}{Logical vector of length \code{length(y)} indicating the
+the subset \code{y[ry]} of elements in \code{y} to which the imputation
+model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
 \item{nnet.maxit}{Tuning parameter for \code{nnet()}.}
@@ -38,24 +38,24 @@ indicates locations in \code{y} for which imputations are created.}
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length 
+Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
 Imputes missing data in a categorical variable using polytomous regression
 }
 \details{
-The function \code{mice.impute.polyreg()} imputes categorical response 
+The function \code{mice.impute.polyreg()} imputes categorical response
 variables by the Bayesian polytomous regression model. See J.P.L. Brand
 (1999), Chapter 4, Appendix B.
 
 By default, unordered factors with more than two levels are imputed by
 \code{mice.impute.polyreg()}.
 
-The method consists of the following steps: 
-\enumerate{ 
-\item Fit categorical response as a multinomial model 
-\item Compute predicted categories 
+The method consists of the following steps:
+\enumerate{
+\item Fit categorical response as a multinomial model
+\item Compute predicted categories
 \item Add appropriate noise to predictions
 }
 

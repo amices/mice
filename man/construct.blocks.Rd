@@ -9,20 +9,20 @@ construct.blocks(formulas = NULL, predictorMatrix = NULL)
 \arguments{
 \item{formulas}{A named list of formula's, or expressions that
 can be converted into formula's by \code{as.formula}. List elements
-correspond to blocks. The block to which the list element applies is 
+correspond to blocks. The block to which the list element applies is
 identified by its name, so list names must correspond to block names.
-The \code{formulas} argument is an alternative to the 
-\code{predictorMatrix} argument that allows for more flexibility in 
+The \code{formulas} argument is an alternative to the
+\code{predictorMatrix} argument that allows for more flexibility in
 specifying imputation models, e.g., for specifying interaction terms.}
 
-\item{predictorMatrix}{A numeric matrix of \code{length(blocks)} rows 
-and \code{ncol(data)} columns, containing 0/1 data specifying 
+\item{predictorMatrix}{A numeric matrix of \code{length(blocks)} rows
+and \code{ncol(data)} columns, containing 0/1 data specifying
 the set of predictors to be used for each target column.
-Each row corresponds to a variable block, i.e., a set of variables 
+Each row corresponds to a variable block, i.e., a set of variables
 to be imputed. A value of \code{1} means that the column
-variable is used as a predictor for the target block (in the rows). 
+variable is used as a predictor for the target block (in the rows).
 By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
-rows and columns with all 1's, except for the diagonal. 
+rows and columns with all 1's, except for the diagonal.
 Note: For two-level imputation models (which have \code{"2l"} in their names)
 other codes (e.g, \code{2} or \code{-2}) are also allowed.}
 }
@@ -32,13 +32,13 @@ A \code{blocks} object.
 \description{
 This helper function attempts to find blocks of variables in the
 specification of the \code{formulas} and/or \code{predictorMatrix}
-objects. Blocks specified by \code{formulas} may consist of 
+objects. Blocks specified by \code{formulas} may consist of
 multiple variables. Blocks specified by \code{predictorMatrix} are
-assumed to consist of single variables. Any duplicates in names are 
+assumed to consist of single variables. Any duplicates in names are
 removed, and the formula specification is preferred.
-\code{predictorMatrix} and \code{formulas}. When both arguments 
-specify models for the same block, the model for the 
-\code{predictMatrix} is removed, and priority is given to the 
+\code{predictorMatrix} and \code{formulas}. When both arguments
+specify models for the same block, the model for the
+\code{predictMatrix} is removed, and priority is given to the
 specification given in \code{formulas}.
 }
 \examples{

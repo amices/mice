@@ -9,10 +9,10 @@ rbind.mids(x, y = NULL, ...)
 \arguments{
 \item{x}{A \code{mids} object.}
 
-\item{y}{A \code{mids} object, or a \code{data.frame}, \code{matrix}, \code{factor} 
+\item{y}{A \code{mids} object, or a \code{data.frame}, \code{matrix}, \code{factor}
 or \code{vector}.}
 
-\item{\dots}{Additional \code{data.frame}, \code{matrix}, \code{vector} or \code{factor}. 
+\item{\dots}{Additional \code{data.frame}, \code{matrix}, \code{vector} or \code{factor}.
 These can be given as named arguments.}
 }
 \value{
@@ -25,13 +25,13 @@ factor or dataframe rowwise into a \code{mids} object.
 }
 \details{
 If \code{y} is a
-\code{mids} object, then \code{rbind} requires that the number of 
-multiple imputations in \code{x} and \code{y} is identical. Also, 
+\code{mids} object, then \code{rbind} requires that the number of
+multiple imputations in \code{x} and \code{y} is identical. Also,
 columns of \code{x$data} and \code{y$data} should match.
 
-If \code{y} is not a \code{mids} object, the columns of \code{x$data} 
-and \code{y} should match. The \code{where} matrix for \code{y} is set 
-to \code{FALSE}, signaling that any missing values 
+If \code{y} is not a \code{mids} object, the columns of \code{x$data}
+and \code{y} should match. The \code{where} matrix for \code{y} is set
+to \code{FALSE}, signaling that any missing values
 in \code{y} were not imputed.
 }
 \note{

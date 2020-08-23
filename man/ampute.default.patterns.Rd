@@ -7,13 +7,13 @@
 ampute.default.patterns(n)
 }
 \arguments{
-\item{n}{A scalar specifying the #variables in the data.}
+\item{n}{A scalar specifying the number of variables in the data.}
 }
 \value{
-A square matrix of size #variables where \code{0} indicates a variable
+A square matrix of size \code{n} where \code{0} indicates a variable
 }
 \description{
-This function creates a default pattern matrix for the multivariate 
+This function creates a default pattern matrix for the multivariate
 amputation function \code{ampute()}.
 }
 \seealso{

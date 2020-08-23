@@ -7,16 +7,16 @@
 name.blocks(blocks, prefix = "B")
 }
 \arguments{
-\item{blocks}{List of vectors with variable names per block. List elements 
-may be named to identify blocks. Variables within a block are 
+\item{blocks}{List of vectors with variable names per block. List elements
+may be named to identify blocks. Variables within a block are
 imputed by a multivariate imputation method
-(see \code{method} argument). By default each variable is placed 
+(see \code{method} argument). By default each variable is placed
 into its own block, which is effectively
-fully conditional specification (FCS) by univariate models 
-(variable-by-variable imputation). Only variables whose names appear in 
-\code{blocks} are imputed. The relevant columns in the \code{where} 
-matrix are set to \code{FALSE} of variables that are not block members. 
-A variable may appear in multiple blocks. In that case, it is 
+fully conditional specification (FCS) by univariate models
+(variable-by-variable imputation). Only variables whose names appear in
+\code{blocks} are imputed. The relevant columns in the \code{where}
+matrix are set to \code{FALSE} of variables that are not block members.
+A variable may appear in multiple blocks. In that case, it is
 effectively re-imputed each time that it is visited.}
 
 \item{prefix}{A character vector of length 1 with the prefix to
@@ -26,15 +26,15 @@ be using for naming any unnamed blocks with two or more variables.}
 A named list of character vectors with variables names.
 }
 \description{
-This helper function names any unnamed elements in the \code{blocks} 
+This helper function names any unnamed elements in the \code{blocks}
 specification. This is a convenience function.
 }
 \details{
-This function will name any unnamed list elements specified in 
-the optional argument \code{blocks}. Unnamed blocks 
+This function will name any unnamed list elements specified in
+the optional argument \code{blocks}. Unnamed blocks
 consisting of just one variable will be named after this variable.
-Unnamed blocks containing more than one variables will be named 
-by the \code{prefix} argument, padded by an integer sequence 
+Unnamed blocks containing more than one variables will be named
+by the \code{prefix} argument, padded by an integer sequence
 stating at 1.
 }
 \examples{

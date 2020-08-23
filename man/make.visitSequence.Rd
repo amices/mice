@@ -10,24 +10,24 @@ make.visitSequence(data = NULL, blocks = NULL)
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing
 values are coded as \code{NA}.}
 
-\item{blocks}{List of vectors with variable names per block. List elements 
-may be named to identify blocks. Variables within a block are 
+\item{blocks}{List of vectors with variable names per block. List elements
+may be named to identify blocks. Variables within a block are
 imputed by a multivariate imputation method
-(see \code{method} argument). By default each variable is placed 
+(see \code{method} argument). By default each variable is placed
 into its own block, which is effectively
-fully conditional specification (FCS) by univariate models 
-(variable-by-variable imputation). Only variables whose names appear in 
-\code{blocks} are imputed. The relevant columns in the \code{where} 
-matrix are set to \code{FALSE} of variables that are not block members. 
-A variable may appear in multiple blocks. In that case, it is 
+fully conditional specification (FCS) by univariate models
+(variable-by-variable imputation). Only variables whose names appear in
+\code{blocks} are imputed. The relevant columns in the \code{where}
+matrix are set to \code{FALSE} of variables that are not block members.
+A variable may appear in multiple blocks. In that case, it is
 effectively re-imputed each time that it is visited.}
 }
 \value{
 Vector containing block names
 }
 \description{
-This helper function creates a valid \code{visitSequence}. The 
-\code{visitSequence} is an argument to the \code{mice} function that 
+This helper function creates a valid \code{visitSequence}. The
+\code{visitSequence} is an argument to the \code{mice} function that
 specifies the sequence in which blocks are imputed.
 }
 \examples{

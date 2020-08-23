@@ -99,7 +99,7 @@ subsequently update components of the object, and the
 will plot it on an appropriate plotting device.
 }
 \description{
-Plotting methods for imputed data using \pkg{lattice}. 
+Plotting methods for imputed data using \pkg{lattice}.
 \code{xyplot()} produces a conditional scatterplots. The function
 automatically separates the observed (blue) and imputed (red) data. The
 function extends the usual features of \pkg{lattice}.
@@ -139,16 +139,15 @@ In \pkg{mice} the argument \code{data} is always a formula object, whereas in
 All other arguments have identical interpretation.
 }
 \examples{
-imp <- mice(boys, maxit=1)
+imp <- mice(boys, maxit = 1)
 
-### xyplot: scatterplot by imputation number
-### observe the erroneous outlying imputed values
-### (caused by imputing hgt from bmi)
-xyplot(imp, hgt~age|.imp, pch=c(1,20),cex=c(1,1.5))
+# xyplot: scatterplot by imputation number
+# observe the erroneous outlying imputed values
+# (caused by imputing hgt from bmi)
+xyplot(imp, hgt ~ age | .imp, pch = c(1, 20), cex = c(1, 1.5))
 
-### same, but label with missingness of wgt (four cases)
-xyplot(imp, hgt~age|.imp, na.group=wgt, pch=c(1,20),cex=c(1,1.5))
-
+# same, but label with missingness of wgt (four cases)
+xyplot(imp, hgt ~ age | .imp, na.group = wgt, pch = c(1, 20), cex = c(1, 1.5))
 }
 \references{
 Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data

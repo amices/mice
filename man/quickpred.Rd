@@ -76,27 +76,24 @@ relatively small. Using a square matrix extends the idea to the columns, so
 that one can also apply cellwise thresholds.
 }
 \examples{
-
-
 # default: include all predictors with absolute correlation over 0.1
 quickpred(nhanes)
 
 # all predictors with absolute correlation over 0.4
-quickpred(nhanes, mincor=0.4)
+quickpred(nhanes, mincor = 0.4)
 
 # include age and bmi, exclude chl
-quickpred(nhanes, mincor=0.4, inc=c('age','bmi'), exc='chl')
+quickpred(nhanes, mincor = 0.4, inc = c("age", "bmi"), exc = "chl")
 
 # only include predictors with at least 30\% usable cases
-quickpred(nhanes, minpuc=0.3)
+quickpred(nhanes, minpuc = 0.3)
 
 # use low threshold for bmi, and high thresholds for hyp and chl
-pred <- quickpred(nhanes, mincor=c(0,0.1,0.5,0.5))
+pred <- quickpred(nhanes, mincor = c(0, 0.1, 0.5, 0.5))
 pred
 
 # use it directly from mice
-imp <- mice(nhanes, pred=quickpred(nhanes, minpuc=0.25, include='age'))
-
+imp <- mice(nhanes, pred = quickpred(nhanes, minpuc = 0.25, include = "age"))
 }
 \references{
 van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple

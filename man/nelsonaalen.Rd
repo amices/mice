@@ -30,25 +30,23 @@ models.  See section 7.1 of Van Buuren (2012) for an example.
 \examples{
 require(MASS)
 
-leuk$status <- 1  ## no censoring occurs in leuk data (MASS)
+leuk$status <- 1 ## no censoring occurs in leuk data (MASS)
 ch <- nelsonaalen(leuk, time, status)
-plot(x = leuk$time, y = ch, ylab='Cumulative hazard', xlab='Time')
+plot(x = leuk$time, y = ch, ylab = "Cumulative hazard", xlab = "Time")
 
 ### See example on http://www.engineeredsoftware.com/lmar/pe_cum_hazard_function.htm
-time <- c(43, 67, 92, 94, 149, rep(149,7))
-status <- c(rep(1,5),rep(0,7))
+time <- c(43, 67, 92, 94, 149, rep(149, 7))
+status <- c(rep(1, 5), rep(0, 7))
 eng <- data.frame(time, status)
 ch <- nelsonaalen(eng, time, status)
-plot(x = time, y = ch, ylab='Cumulative hazard', xlab='Time')
-
-
+plot(x = time, y = ch, ylab = "Cumulative hazard", xlab = "Time")
 }
 \references{
 White, I. R., Royston, P. (2009). Imputing missing covariate
 values for the Cox model.  \emph{Statistics in Medicine}, \emph{28}(15),
 1982-1998.
 
-Van Buuren, S. (2018). 
+Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-toomany.html#a-further-improvement-survival-as-predictor-variable}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 }

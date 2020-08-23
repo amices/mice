@@ -8,22 +8,21 @@ ic(x)
 }
 \arguments{
 \item{x}{An \code{R} object. Methods are available for classes
-\code{mids}, \code{data.frame} and \code{matrix}. Also, \code{x} 
+\code{mids}, \code{data.frame} and \code{matrix}. Also, \code{x}
 could be a vector.}
 }
 \value{
 A \code{vector}, \code{matrix} or \code{data.frame} containing the data of the complete cases.
 }
 \description{
-Extracts incomplete cases from a data set. 
+Extracts incomplete cases from a data set.
 The companion function for selecting the complete cases is \code{\link{cc}}.
 }
 \examples{
 
-ic(nhanes)   # get the 12 rows with incomplete cases 
-ic(nhanes[1:10,])  # incomplete cases within the first ten rows
-ic(nhanes[, c("bmi", "hyp")])  # restrict extraction to variables bmi and hyp
-
+ic(nhanes) # get the 12 rows with incomplete cases
+ic(nhanes[1:10, ]) # incomplete cases within the first ten rows
+ic(nhanes[, c("bmi", "hyp")]) # restrict extraction to variables bmi and hyp
 }
 \seealso{
 \code{\link{cc}}, \code{\link{ici}}
