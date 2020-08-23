@@ -5,6 +5,7 @@
 #' @importFrom graphics abline axis box par plot plot.new plot.window
 #'                      points rect text
 #' @importFrom lattice  bwplot densityplot stripplot xyplot
+#' @importFrom Rcpp     evalCpp
 #' @importFrom stats    C aggregate as.formula binomial coef
 #'                      complete.cases confint
 #'                      contr.treatment cor df.residual fitted
