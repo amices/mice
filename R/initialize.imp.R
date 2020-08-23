@@ -1,4 +1,4 @@
-initialize.imp <- function(data, m, where, blocks, visitSequence, 
+initialize.imp <- function(data, m, where, blocks, visitSequence,
                            method, nmis, data.init) {
   imp <- vector("list", ncol(data))
   names(imp) <- names(data)
@@ -18,7 +18,9 @@ initialize.imp <- function(data, m, where, blocks, visitSequence,
             } else {
               imp[[j]][, i] <- data.init[wy, j]
             }
-          } else imp[[j]][, i] <- rnorm(nrow(data))
+          } else {
+            imp[[j]][, i] <- rnorm(nrow(data))
+          }
         }
       }
     }
