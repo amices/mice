@@ -42,7 +42,7 @@ ampute.discrete <- function(P, scores, prop, odds) {
       if (anyDuplicated(quantiles) || anyNA(quantiles)) {
         stop("Division of sum scores into quantiles did not succeed. Possibly
              the sum scores contain too few different observations (in case of
-             categorical or dummy variables). Try using more variables to 
+             categorical or dummy variables). Try using more variables to
              calculate the sum scores or diminish the number of quantiles in the
              odds matrix", call. = FALSE)
       }
@@ -60,8 +60,8 @@ ampute.discrete <- function(P, scores, prop, odds) {
       for (l in seq_len(ng)) {
         prob <- (ng * prop * odds[i, l]) / sum(odds[i, ], na.rm = TRUE)
         if (prob >= 1.0) {
-          warning("Combination of odds matrix and desired proportion of 
-                  missingness results to small quantile groups, probably 
+          warning("Combination of odds matrix and desired proportion of
+                  missingness results to small quantile groups, probably
                   decreasing the obtained proportion of missingness",
             call. = FALSE
           )
@@ -86,5 +86,5 @@ ampute.discrete <- function(P, scores, prop, odds) {
       R[[i]] <- replace(R[[i]], P != (i + 1), 1)
     }
   }
-  return(R)
+  R
 }

@@ -16,7 +16,7 @@ ampute.default.patterns <- function(n) {
     seq_len(n),
     function(i) c(rep.int(1, i - 1), 0, rep.int(1, n - i))
   )
-  return(do.call(rbind, patterns.list))
+  do.call(rbind, patterns.list)
 }
 
 #' Default \code{freq} in \code{ampute}
@@ -34,8 +34,7 @@ ampute.default.patterns <- function(n) {
 #' @keywords internal
 #' @export
 ampute.default.freq <- function(patterns) {
-  freq <- rep.int(1 / nrow(patterns), nrow(patterns))
-  return(freq)
+  rep.int(1 / nrow(patterns), nrow(patterns))
 }
 
 #' Default \code{weights} in \code{ampute}
@@ -66,7 +65,7 @@ ampute.default.weights <- function(patterns, mech) {
     weights <- matrix(data = 0, nrow = nrow(patterns), ncol = ncol(patterns))
     weights[patterns == 0] <- 1
   }
-  return(weights)
+  weights
 }
 
 #' Default \code{type} in \code{ampute()}
@@ -84,8 +83,7 @@ ampute.default.weights <- function(patterns, mech) {
 #' @keywords internal
 #' @export
 ampute.default.type <- function(patterns) {
-  type <- rep.int("RIGHT", nrow(patterns))
-  return(type)
+  rep.int("RIGHT", nrow(patterns))
 }
 
 #' Default \code{odds} in \code{ampute()}
@@ -103,6 +101,5 @@ ampute.default.type <- function(patterns) {
 #' @keywords internal
 #' @export
 ampute.default.odds <- function(patterns) {
-  odds <- matrix(seq_len(4), nrow = nrow(patterns), ncol = 4, byrow = TRUE)
-  return(odds)
+  matrix(seq_len(4), nrow = nrow(patterns), ncol = 4, byrow = TRUE)
 }

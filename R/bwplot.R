@@ -272,6 +272,5 @@ bwplot.mids <- function(x,
 
   ## go
   tp <- do.call("bwplot", args)
-  tp <- update(tp, par.settings = theme)
-  return(tp)
+  update(tp, par.settings = theme)
 }

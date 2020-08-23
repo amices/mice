@@ -41,6 +41,5 @@ ampute.mcar <- function(P, patterns, prop) {
     }
   }
 
-  R <- lapply(seq_len(nrow(patterns)), f)
-  return(R)
+  lapply(seq_len(nrow(patterns)), f)
 }

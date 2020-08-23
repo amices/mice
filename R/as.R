@@ -148,7 +148,7 @@ as.mira <- function(fitlist) {
   class(fitlist) <- "list"
   object <- list(call = call, call1 = NULL, nmis = NULL, analyses = fitlist)
   oldClass(object) <- c("mira", "matrix")
-  return(object)
+  object
 }
 
 #' Converts into a \code{mitml.result} object

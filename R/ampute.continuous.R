@@ -79,7 +79,7 @@ ampute.continuous <- function(P, scores, prop, type) {
       R[[i]] <- replace(R[[i]], P != (i + 1), 1)
     }
   }
-  return(R)
+  R
 }
 
 # This is a custom adaptation of function binsearch from package gtools
@@ -173,5 +173,5 @@ bin.search <- function(fun, range = c(-8, 8), ..., target = 0,
     retval$where <- (lo + hi) / 2
     retval$value <- (val.lo + val.hi) / 2
   }
-  return(retval)
+  retval
 }

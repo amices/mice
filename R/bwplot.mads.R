@@ -147,5 +147,5 @@ bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
         xlab = paste("Data distributions in pattern", which.pat[i])
       )
   }
-  return(p)
+  p
 }

@@ -213,7 +213,7 @@ cbind.mids <- function(x, y = NULL, ...) {
     date = Sys.Date()
   )
   oldClass(midsobj) <- "mids"
-  return(midsobj)
+  midsobj
 }
 
 
@@ -367,5 +367,5 @@ cbind.mids.mids <- function(x, y, call) {
     date = Sys.Date()
   )
   oldClass(midsobj) <- "mids"
-  return(midsobj)
+  midsobj
 }

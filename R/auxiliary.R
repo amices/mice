@@ -59,8 +59,7 @@ appendbreak <- function(data, brk, warp.model = warp.model, id = NULL, typ = "pr
   ## update outcome variable (set to missing)
   app[, c("hgt.z", "wgt.z", "bmi.z")] <- NA
   app <- rbind(data, app)
-  data <- app[order(app$id, app$age), ]
-  return(data)
+  app[order(app$id, app$age), ]
 }
 
 #' Extract broken stick estimates from a \code{lmer} object
@@ -71,16 +70,14 @@ appendbreak <- function(data, brk, warp.model = warp.model, id = NULL, typ = "pr
 #' @export
 extractBS <- function(fit) {
   siz <- t(lme4::ranef(fit)[[1]]) + lme4::fixef(fit)
-  bs <- matrix(siz, nrow = nrow(siz) * ncol(siz), ncol = 1)
-  return(bs)
+  matrix(siz, nrow = nrow(siz) * ncol(siz), ncol = 1)
 }
 
 
 ## used by mice.impute.midastouch
 bootfunc.plain <- function(n) {
   random <- sample.int(n, replace = TRUE)
-  weights <- as.numeric(table(factor(random, levels = seq_len(n))))
-  return(weights)
+  as.numeric(table(factor(random, levels = seq_len(n))))
 }
 
 minmax <- function(x, domin = TRUE, domax = TRUE) {
@@ -92,7 +89,7 @@ minmax <- function(x, domin = TRUE, domax = TRUE) {
   if (domax) {
     x <- pmax(x, minx)
   }
-  return(x)
+  x
 }
 
 single2imputes <- function(single, mis) {
