@@ -34,8 +34,10 @@ test_that("throws error", {
   expect_error(rbind(imp1, imp7), "datasets have different variable names")
 })
 test_that("throws warning", {
-  expect_warning(rbind(imp1, imp5), 
-                 "iterations differ, so no convergence diagnostics calculated")
+  expect_warning(
+    rbind(imp1, imp5),
+    "iterations differ, so no convergence diagnostics calculated"
+  )
 })
 
 r1 <- rbind(imp8, imp5)
@@ -64,17 +66,17 @@ r31 <- mice.mids(r3, print = FALSE)
 # issue #59
 set.seed <- 818
 x <- rnorm(10)
-D <- data.frame(x=x, y=2*x+rnorm(10))
+D <- data.frame(x = x, y = 2 * x + rnorm(10))
 D[c(2:4, 7), 1] <- NA
-expect_error(D_mids <<- mice(D[1:5,], print = FALSE), "`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
-expect_warning(D_mids <<- mice(D[1:5,], print = FALSE, remove.collinear = FALSE))
+expect_error(D_mids <<- mice(D[1:5, ], print = FALSE), "`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
+expect_warning(D_mids <<- mice(D[1:5, ], print = FALSE, remove.collinear = FALSE))
 
-D_rbind <- mice:::rbind.mids(D_mids, D[6:10,])
+D_rbind <- mice:::rbind.mids(D_mids, D[6:10, ])
 cmp <- complete(D_rbind, 1)
 test_that("Solves issue #59, rbind", expect_identical(cmp[6:10, ], D[6:10, ]))
 
 test_that("rbind does not throw a warning (#114)", {
-  expect_silent(rbind(ordered(c(1,2))))
+  expect_silent(rbind(ordered(c(1, 2))))
 })
 
 # calculate chainMean and chainVar
@@ -82,9 +84,9 @@ test_that("rbind does not throw a warning (#114)", {
 # imp2 <- mice(nhanes[14:25, ], m = 5, maxit = 25, print = FALSE, seed = 456)
 # z <- rbind(imp1, imp2)
 # plot(z)
-# 
+#
 # imp3 <- mice(nhanes, m = 5, maxit = 25, print = FALSE, seed = 123)
 # plot(imp3)
 #
-# An interesting observation is that the SD(hyp, a) < SD(hyp, imp3). This is 
+# An interesting observation is that the SD(hyp, a) < SD(hyp, imp3). This is
 # because SD(hyp, imp1) = 0.

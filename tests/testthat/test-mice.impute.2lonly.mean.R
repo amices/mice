@@ -2,7 +2,7 @@ context("mice.impute.2lonly.mean")
 
 set.seed(66322)
 y <- popmis$texp
-y[rbinom(length(y), size = 1, prob = 0.5) == 1] <- NA 
+y[rbinom(length(y), size = 1, prob = 0.5) == 1] <- NA
 x <- popmis[, c("pupil", "school", "sex")]
 ry <- !is.na(y)
 wy1 <- !ry
@@ -23,7 +23,7 @@ test_that("Returns requested length, for numeric", {
 set.seed(66322)
 y <- popmis$texp
 y <- cut(y, breaks = c(0, 5, 10, 20, 30))
-y[rbinom(length(y), size = 1, prob = 0.5) == 1] <- NA 
+y[rbinom(length(y), size = 1, prob = 0.5) == 1] <- NA
 
 test_that("Returns requested length, for factor", {
   expect_equal(length(mice.impute.2lonly.mean(y, ry, x, type, wy1)), sum(wy1))

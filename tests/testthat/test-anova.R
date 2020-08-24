@@ -9,7 +9,7 @@ test_that("anova.mira() produces silent D1 and D3", {
   expect_silent(z1 <- anova(m2, m1, m0))
   expect_silent(z3 <- anova(m2, m1, m0, method = "D3"))
 })
-  
+
 test_that("anova.mira() produces silent with D2", {
   expect_silent(z2a <- anova(m2, m1, m0, method = "D2"))
   expect_silent(z2b <- anova(m2, m1, m0, method = "D2", use = "likelihood"))

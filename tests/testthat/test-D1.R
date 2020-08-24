@@ -9,7 +9,7 @@ empty <- with(data = imp, expr = glm(hyp == "yes" ~ 0, family = binomial))
 # deprecated because it relies on full vcov, which is not present anymore
 # in the mipo object
 
-# the next tests were remove because they failed on many 
+# the next tests were remove because they failed on many
 # systems, not yet clear what the cause is (#128)
 # This is solved in #132
 
@@ -19,8 +19,8 @@ z2 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), df.com = 2
 z3 <- D1(fit1)
 
 test_that("compares fit1 to the intercept-only model", {
-   expect_identical(z1$result, z2$test)
-   expect_identical(z1$test, z3$test)
+  expect_identical(z1$result, z2$test)
+  expect_identical(z1$test, z3$test)
 })
 
 # two ways to compare fit1 to the empty model

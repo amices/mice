@@ -11,5 +11,3 @@ test_that("loggedEvents is NULL", {
   expect_null(imp1$loggedEvents)
   expect_type(imp2$loggedEvents, "list")
 })
-
-
