@@ -17,10 +17,8 @@ installed directory.
 Echoes the package version number
 }
 \examples{
-
 version()
 version("base")
-
 }
 \author{
 Stef van Buuren, Oct 2010

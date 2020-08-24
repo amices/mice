@@ -11,16 +11,16 @@ make.where(data, keyword = c("missing", "all", "none", "observed"))
 
 \item{keyword}{An optional keyword, one of \code{"missing"} (missing
 values are imputed), \code{"observed"} (observed values are imputed),
-\code{"all"} and \code{"none"}. The default 
+\code{"all"} and \code{"none"}. The default
 is \code{keyword = "missing"}}
 }
 \value{
 A matrix with logical
 }
 \description{
-This helper function creates a valid \code{where} matrix. The 
-\code{where} matrix is an argument to the \code{mice} function. 
-It has the same size as \code{data} and specifies which values 
+This helper function creates a valid \code{where} matrix. The
+\code{where} matrix is an argument to the \code{mice} function.
+It has the same size as \code{data} and specifies which values
 are to be imputed (\code{TRUE}) or nor (\code{FALSE}).
 }
 \examples{

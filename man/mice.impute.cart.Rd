@@ -10,28 +10,28 @@ mice.impute.cart(y, ry, x, wy = NULL, minbucket = 5, cp = 1e-04, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the 
-the subset \code{y[ry]} of elements in \code{y} to which the imputation 
-model is fitted. The \code{ry} generally distinguishes the observed 
+\item{ry}{Logical vector of length \code{length(y)} indicating the
+the subset \code{y[ry]} of elements in \code{y} to which the imputation
+model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
 \item{minbucket}{The minimum number of observations in any terminal node used.
 See \code{\link{rpart.control}} for details.}
 
 \item{cp}{Complexity parameter. Any split that does not decrease the overall
-lack of fit by a factor of cp is not attempted. See \code{\link{rpart.control}} 
+lack of fit by a factor of cp is not attempted. See \code{\link{rpart.control}}
 for details.}
 
 \item{...}{Other named arguments passed down to \code{rpart()}.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length 
+Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 
 Numeric vector of length \code{sum(!ry)} with imputations
@@ -41,36 +41,35 @@ Imputes univariate missing data using classification and regression trees.
 }
 \details{
 Imputation of \code{y} by classification and regression trees. The procedure
-is as follows: 
-\enumerate{ 
+is as follows:
+\enumerate{
 \item Fit a classification or regression tree by recursive partitioning;
 \item For each \code{ymis}, find the terminal node they end up according to the fitted tree;
-\item Make a random draw among the member in the node, and take the observed value from that 
+\item Make a random draw among the member in the node, and take the observed value from that
 draw as the imputation.
 }
 }
 \examples{
 require(rpart)
 
-imp <- mice(nhanes2, meth = 'cart', minbucket = 4)
+imp <- mice(nhanes2, meth = "cart", minbucket = 4)
 plot(imp)
-
 }
 \references{
-Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning 
-for missing data imputation in the presence of interaction Effects. 
+Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning
+for missing data imputation in the presence of interaction Effects.
 Computational Statistics \& Data Analysis, 72, 92-104.
 
 Breiman, L., Friedman, J. H., Olshen, R. A., and Stone, C. J.
 (1984), Classification and regression trees, Monterey, CA: Wadsworth &
 Brooks/Cole Advanced Books & Software.
 
-Van Buuren, S. (2018). 
+Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-cart.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
-\code{\link{mice}}, \code{\link{mice.impute.rf}}, 
+\code{\link{mice}}, \code{\link{mice.impute.rf}},
 \code{\link[rpart]{rpart}}, \code{\link[rpart]{rpart.control}}
 
 Other univariate imputation functions: 

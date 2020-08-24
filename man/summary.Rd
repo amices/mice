@@ -18,12 +18,12 @@
 \arguments{
 \item{object}{A \code{mira} object}
 
-\item{type}{A length-1 character vector indicating the 
+\item{type}{A length-1 character vector indicating the
 type of summary. There are three choices: \code{type = "tidy"}
 return the parameters estimates of each analyses as a data frame.
 \code{type = "glance"} return the fit statistics of each analysis
 as a data frame. \code{type = "summary"} returns a list of
-length \code{m} with the analysis results. The default is 
+length \code{m} with the analysis results. The default is
 \code{"tidy"}.}
 
 \item{...}{Other parameters passed down to \code{print()} and \code{summary()}}

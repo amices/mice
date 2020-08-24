@@ -35,16 +35,15 @@ is specified in the \code{mice()} function and cannot be changed with
 \code{mids} object.
 }
 \examples{
-
-imp1 <- mice(nhanes, maxit=1, seed = 123)
+imp1 <- mice(nhanes, maxit = 1, seed = 123)
 imp2 <- mice.mids(imp1)
 
 # yields the same result as
-imp <- mice(nhanes, maxit=2, seed = 123)
+imp <- mice(nhanes, maxit = 2, seed = 123)
 
 # verification
 identical(imp$imp, imp2$imp)
-# 
+#
 }
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
@@ -53,7 +52,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 \url{https://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-\code{\link{complete}}, \code{\link{mice}}, \code{\link{set.seed}}, 
+\code{\link{complete}}, \code{\link{mice}}, \code{\link{set.seed}},
 \code{\link[=mids-class]{mids}}
 }
 \author{

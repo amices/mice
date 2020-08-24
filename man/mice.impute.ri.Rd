@@ -10,15 +10,15 @@ mice.impute.ri(y, ry, x, wy = NULL, ri.maxit = 10, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the 
-the subset \code{y[ry]} of elements in \code{y} to which the imputation 
-model is fitted. The \code{ry} generally distinguishes the observed 
+\item{ry}{Logical vector of length \code{length(y)} indicating the
+the subset \code{y[ry]} of elements in \code{y} to which the imputation
+model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
 \item{ri.maxit}{Number of inner iterations}
@@ -26,16 +26,16 @@ indicates locations in \code{y} for which imputations are created.}
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length 
+Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
 Imputes nonignorable missing data by the random indicator method.
 }
 \details{
-The random indicator method estimates an offset between the 
-distribution of the observed and missing data using an algorithm 
-that iterates over the response and imputation models. 
+The random indicator method estimates an offset between the
+distribution of the observed and missing data using an algorithm
+that iterates over the response and imputation models.
 
 This routine assumes that the response model and imputation model
 have same predictors.
@@ -43,8 +43,8 @@ have same predictors.
 For an MNAR alternative see also \code{\link{mice.impute.mnar.logreg}}.
 }
 \references{
-Jolani, S. (2012). 
-\emph{Dual Imputation Strategies for Analyzing Incomplete Data}. 
+Jolani, S. (2012).
+\emph{Dual Imputation Strategies for Analyzing Incomplete Data}.
 Dissertation. University of Utrecht, Dec 7 2012.
 }
 \seealso{
@@ -67,7 +67,7 @@ Other univariate imputation functions:
 \code{\link{mice.impute.rf}()}
 }
 \author{
-Shahab Jolani (University of Utrecht) \email{s.jolani@uu.nl}
+Shahab Jolani (University of Utrecht)
 }
 \concept{univariate imputation functions}
 \keyword{datagen}

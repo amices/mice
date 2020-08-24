@@ -12,7 +12,7 @@ pool.compare(fit1, fit0, method = c("wald", "likelihood"), data = NULL)
 \item{fit0}{An object of class 'mira', produced by \code{with.mids()}. The
 model in \code{fit0} is a nested fit0 of \code{fit1}.}
 
-\item{method}{Either \code{"wald"} or \code{"likelihood"} specifying 
+\item{method}{Either \code{"wald"} or \code{"likelihood"} specifying
 the type of comparison. The default is \code{"wald"}.}
 
 \item{data}{No longer used.}
@@ -20,20 +20,20 @@ the type of comparison. The default is \code{"wald"}.}
 \value{
 A list containing several components. Component \code{call} is
 the call to the \code{pool.compare} function. Component \code{call11} is
-the call that created \code{fit1}. Component \code{call12} is the 
-call that created the imputations. Component \code{call01} is the 
-call that created \code{fit0}. Component \code{call02} is the 
-call that created the imputations. Components \code{method} is the 
+the call that created \code{fit1}. Component \code{call12} is the
+call that created the imputations. Component \code{call01} is the
+call that created \code{fit0}. Component \code{call02} is the
+call that created the imputations. Components \code{method} is the
 method used to compare two models: 'Wald' or 'likelihood'. Component
 \code{nmis} is the number of missing entries for each variable.
-Component \code{m} is the number of imputations. 
+Component \code{m} is the number of imputations.
 Component \code{qhat1} is a matrix, containing the estimated coefficients of the
-\emph{m} repeated complete data analyses from \code{fit1}. 
+\emph{m} repeated complete data analyses from \code{fit1}.
 Component \code{qhat0} is a matrix, containing the estimated coefficients of the
 \emph{m} repeated complete data analyses from \code{fit0}.
-Component \code{ubar1} is the mean of the variances of \code{fit1}, 
+Component \code{ubar1} is the mean of the variances of \code{fit1},
 formula (3.1.3), Rubin (1987).
-Component \code{ubar0} is the mean of the variances of \code{fit0}, 
+Component \code{ubar0} is the mean of the variances of \code{fit0},
 formula (3.1.3), Rubin (1987).
 Component \code{qbar1} is the pooled estimate of \code{fit1}, formula (3.1.2) Rubin
 (1987).
@@ -44,12 +44,12 @@ Component \code{rm} is the relative increase in variance due to nonresponse, for
 (3.1.7), Rubin (1987).
 Component \code{df1}: df1 = under the null hypothesis it is assumed that \code{Dm} has an F
 distribution with (df1,df2) degrees of freedom.
-Component \code{df2}: df2. 
+Component \code{df2}: df2.
 Component \code{pvalue} is the P-value of testing whether the model \code{fit1} is
 statistically different from the smaller \code{fit0}.
 }
 \description{
-This function is deprecated in V3. Use \code{\link{D1}} or 
+This function is deprecated in V3. Use \code{\link{D1}} or
 \code{\link{D3}} instead.
 }
 \details{
@@ -60,9 +60,9 @@ Wald-method can be found in paragraph 2.2 and the likelihood method can be
 found in paragraph 3.  One could use the Wald method for comparison of linear
 models obtained with e.g. \code{lm} (in \code{with.mids()}).  The likelihood
 method should be used in case of logistic regression models obtained with
-\code{glm()} in \code{with.mids()}. 
+\code{glm()} in \code{with.mids()}.
 
-The function assumes that \code{fit1} is the 
+The function assumes that \code{fit1} is the
 larger model, and that model \code{fit0} is fully contained in \code{fit1}.
 In case of \code{method='wald'}, the null hypothesis is tested that the extra
 parameters are all zero.

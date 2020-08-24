@@ -53,8 +53,8 @@ include all columns in the calculations.}
 \item{\dots}{Further arguments passed to \code{plot()} or \code{eqscplot()}.}
 }
 \value{
-An invisible data frame with \code{ncol(data)} rows and six columns: 
-pobs = Proportion observed, 
+An invisible data frame with \code{ncol(data)} rows and six columns:
+pobs = Proportion observed,
 influx = Influx
 outflux = Outflux
 ainb = Average inbound statistic
@@ -88,7 +88,7 @@ is better connected to the missing data, and thus potentially more useful for
 imputing other variables.
 }
 \references{
-Van Buuren, S. (2018). 
+Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 

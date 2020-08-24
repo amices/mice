@@ -6,14 +6,14 @@
 \title{Growth of Dutch boys}
 \format{
 A data frame with 748 rows on the following 9 variables: \describe{
-\item{age}{Decimal age (0-21 years)} 
+\item{age}{Decimal age (0-21 years)}
 \item{hgt}{Height (cm)}
-\item{wgt}{Weight (kg)} 
+\item{wgt}{Weight (kg)}
 \item{bmi}{Body mass index}
-\item{hc}{Head circumference (cm)} 
-\item{gen}{Genital Tanner stage (G1-G5)} 
+\item{hc}{Head circumference (cm)}
+\item{gen}{Genital Tanner stage (G1-G5)}
 \item{phb}{Pubic hair (Tanner P1-P6)}
-\item{tv}{Testicular volume (ml)} 
+\item{tv}{Testicular volume (ml)}
 \item{reg}{Region (north, east, west, south, city)} }
 }
 \source{
@@ -37,47 +37,59 @@ factors. \code{reg} is a factor.
 \examples{
 
 # create two imputed data sets
-imp <- mice(boys, m=1, maxit=2)
+imp <- mice(boys, m = 1, maxit = 2)
 z <- complete(imp, 1)
 
 # create imputations for age <8yrs
-plot(z$age, z$gen, col=mdc(1:2)[1+is.na(boys$gen)],
- xlab = "Age (years)", ylab = "Tanner Stage Genital")
+plot(z$age, z$gen,
+  col = mdc(1:2)[1 + is.na(boys$gen)],
+  xlab = "Age (years)", ylab = "Tanner Stage Genital"
+)
 
-# figure to show that the default imputation method does not impute BMI 
+# figure to show that the default imputation method does not impute BMI
 # consistently
-plot(z$bmi,z$wgt/(z$hgt/100)^2, col=mdc(1:2)[1+is.na(boys$bmi)],
-xlab = "Imputed BMI", ylab="Calculated BMI")   
+plot(z$bmi, z$wgt / (z$hgt / 100)^2,
+  col = mdc(1:2)[1 + is.na(boys$bmi)],
+  xlab = "Imputed BMI", ylab = "Calculated BMI"
+)
 
 # also, BMI distributions are somewhat different
-oldpar <- par(mfrow=c(1,2))
-MASS::truehist(z$bmi[!is.na(boys$bmi)],h=1,xlim=c(10,30),ymax=0.25,
-col=mdc(1),xlab="BMI observed")
-MASS::truehist(z$bmi[is.na(boys$bmi)],h=1,xlim=c(10,30),ymax=0.25,
-col=mdc(2),xlab="BMI imputed")
+oldpar <- par(mfrow = c(1, 2))
+MASS::truehist(z$bmi[!is.na(boys$bmi)],
+  h = 1, xlim = c(10, 30), ymax = 0.25,
+  col = mdc(1), xlab = "BMI observed"
+)
+MASS::truehist(z$bmi[is.na(boys$bmi)],
+  h = 1, xlim = c(10, 30), ymax = 0.25,
+  col = mdc(2), xlab = "BMI imputed"
+)
 par(oldpar)
 
 # repair the inconsistency problem by passive imputation
 meth <- imp$meth
 meth["bmi"] <- "~I(wgt/(hgt/100)^2)"
 pred <- imp$predictorMatrix
-pred["hgt","bmi"] <- 0
-pred["wgt","bmi"] <- 0
-imp2 <- mice(boys, m=1, maxit=2, meth=meth, pred=pred)
+pred["hgt", "bmi"] <- 0
+pred["wgt", "bmi"] <- 0
+imp2 <- mice(boys, m = 1, maxit = 2, meth = meth, pred = pred)
 z2 <- complete(imp2, 1)
 
 # show that new imputations are consistent
-plot(z2$bmi,z2$wgt/(z2$hgt/100)^2, col=mdc(1:2)[1+is.na(boys$bmi)],
-ylab="Calculated BMI")   
+plot(z2$bmi, z2$wgt / (z2$hgt / 100)^2,
+  col = mdc(1:2)[1 + is.na(boys$bmi)],
+  ylab = "Calculated BMI"
+)
 
 # and compare distributions
-oldpar <- par(mfrow=c(1,2))
-MASS::truehist(z2$bmi[!is.na(boys$bmi)],h=1,xlim=c(10,30),ymax=0.25,col=mdc(1),
-xlab="BMI observed")
-MASS::truehist(z2$bmi[is.na(boys$bmi)],h=1,xlim=c(10,30),ymax=0.25,col=mdc(2),
-xlab="BMI imputed")
+oldpar <- par(mfrow = c(1, 2))
+MASS::truehist(z2$bmi[!is.na(boys$bmi)],
+  h = 1, xlim = c(10, 30), ymax = 0.25, col = mdc(1),
+  xlab = "BMI observed"
+)
+MASS::truehist(z2$bmi[is.na(boys$bmi)],
+  h = 1, xlim = c(10, 30), ymax = 0.25, col = mdc(2),
+  xlab = "BMI imputed"
+)
 par(oldpar)
-
-
 }
 \keyword{datasets}

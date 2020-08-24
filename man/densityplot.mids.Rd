@@ -126,7 +126,7 @@ subsequently update components of the object, and the
 will plot it on an appropriate plotting device.
 }
 \description{
-Plotting methods for imputed data using \pkg{lattice}. \code{densityplot} 
+Plotting methods for imputed data using \pkg{lattice}. \code{densityplot}
 produces plots of the densities. The function
 automatically separates the observed and imputed data. The
 functions extend the usual features of \pkg{lattice}.
@@ -172,15 +172,14 @@ automatically}. There is yet no workaround for this problem. Use the more
 robust \code{bwplot} or \code{stripplot} as a replacement.
 }
 \examples{
-imp <- mice(boys, maxit=1)
+imp <- mice(boys, maxit = 1)
 
 ### density plot of head circumference per imputation
 ### blue is observed, red is imputed
-densityplot(imp, ~hc|.imp)
+densityplot(imp, ~ hc | .imp)
 
 ### All combined in one panel.
 densityplot(imp, ~hc)
-
 }
 \references{
 Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data

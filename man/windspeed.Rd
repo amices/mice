@@ -8,11 +8,11 @@
 A data frame with 433 rows and 6 columns containing the daily average
 wind speeds within the period 1961-1978 at meteorological stations in the
 Republic of Ireland. The data are a random sample from a larger data set.
-\describe{ 
+\describe{
 \item{RochePt}{Roche Point}
-\item{Rosslare}{Rosslare} 
+\item{Rosslare}{Rosslare}
 \item{Shannon}{Shannon}
-\item{Dublin}{Dublin} 
+\item{Dublin}{Dublin}
 \item{Clones}{Clones}
 \item{MalinHead}{Malin Head} }
 }
@@ -26,8 +26,7 @@ the influence of extreme MAR mechanisms on the quality of imputation.
 }
 \examples{
 
-windspeed[1:3,]
-
+windspeed[1:3, ]
 }
 \references{
 Haslett, J. and Raftery, A. E. (1989).  \emph{Space-time

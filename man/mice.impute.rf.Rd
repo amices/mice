@@ -9,45 +9,45 @@ mice.impute.rf(y, ry, x, wy = NULL, ntree = 10, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the 
-the subset \code{y[ry]} of elements in \code{y} to which the imputation 
-model is fitted. The \code{ry} generally distinguishes the observed 
+\item{ry}{Logical vector of length \code{length(y)} indicating the
+the subset \code{y[ry]} of elements in \code{y} to which the imputation
+model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
 \item{ntree}{The number of trees to grow. The default is 10.}
 
-\item{\dots}{Other named arguments passed down to 
+\item{\dots}{Other named arguments passed down to
 \code{mice:::install.on.demand()}, \code{randomForest::randomForest()} and
 \code{randomForest:::randomForest.default()}.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length 
+Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
 Imputes univariate missing data using random forests.
 }
 \details{
-Imputation of \code{y} by random forests. The method 
-calls \code{randomForrest()} which implements Breiman's random forest 
-algorithm (based on Breiman and Cutler's original Fortran code) 
-for classification and regression. See Appendix A.1 of Doove et al. 
+Imputation of \code{y} by random forests. The method
+calls \code{randomForrest()} which implements Breiman's random forest
+algorithm (based on Breiman and Cutler's original Fortran code)
+for classification and regression. See Appendix A.1 of Doove et al.
 (2014) for the definition of the algorithm used.
 }
 \note{
-An alternative implementation was independently 
-developed by Shah et al (2014). This were available as 
-functions \code{CALIBERrfimpute::mice.impute.rfcat} and 
+An alternative implementation was independently
+developed by Shah et al (2014). This were available as
+functions \code{CALIBERrfimpute::mice.impute.rfcat} and
 \code{CALIBERrfimpute::mice.impute.rfcont} (now archived).
-Simulations by Shah (Feb 13, 2014) suggested that 
-the quality of the imputation for 10 and 100 trees was identical, 
-so mice 2.22 changed the default number of trees from \code{ntree = 100} to 
+Simulations by Shah (Feb 13, 2014) suggested that
+the quality of the imputation for 10 and 100 trees was identical,
+so mice 2.22 changed the default number of trees from \code{ntree = 100} to
 \code{ntree = 10}.
 }
 \examples{
@@ -55,24 +55,23 @@ library("lattice")
 
 imp <- mice(nhanes2, meth = "rf", ntree = 3)
 plot(imp)
-
 }
 \references{
-Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning 
-for missing data imputation in the presence of interaction Effects. 
+Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning
+for missing data imputation in the presence of interaction Effects.
 Computational Statistics \& Data Analysis, 72, 92-104.
 
 Shah, A.D., Bartlett, J.W., Carpenter, J., Nicholas, O., Hemingway, H. (2014),
-Comparison of random forest and parametric imputation models for 
-imputing missing data using MICE: A CALIBER study. American Journal 
-of Epidemiology, doi: 10.1093/aje/kwt312. 
+Comparison of random forest and parametric imputation models for
+imputing missing data using MICE: A CALIBER study. American Journal
+of Epidemiology, doi: 10.1093/aje/kwt312.
 
-Van Buuren, S. (2018). 
+Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-cart.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
-\code{\link{mice}}, \code{\link{mice.impute.cart}}, 
+\code{\link{mice}}, \code{\link{mice.impute.cart}},
 \code{\link[randomForest]{randomForest}}
 
 Other univariate imputation functions: 

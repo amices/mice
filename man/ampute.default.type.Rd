@@ -7,16 +7,16 @@
 ampute.default.type(patterns)
 }
 \arguments{
-\item{patterns}{A matrix of size #patterns by #variables where 0 indicates a 
-variable should have missing values and 1 indicates a variable should remain 
+\item{patterns}{A matrix of size #patterns by #variables where 0 indicates a
+variable should have missing values and 1 indicates a variable should remain
 complete. Could be the result of \code{\link{ampute.default.patterns}}.}
 }
 \value{
-A string vector of length #patterns containing the missingness types.  
+A string vector of length #patterns containing the missingness types.
 Each pattern will be amputed with a "RIGHT" missingness.
 }
 \description{
-Defines the default type vector for the multivariate amputation function 
+Defines the default type vector for the multivariate amputation function
 \code{ampute}.
 }
 \seealso{

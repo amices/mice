@@ -9,21 +9,21 @@ mice.impute.mean(y, ry, x = NULL, wy = NULL, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the 
-the subset \code{y[ry]} of elements in \code{y} to which the imputation 
-model is fitted. The \code{ry} generally distinguishes the observed 
+\item{ry}{Logical vector of length \code{length(y)} indicating the
+the subset \code{y[ry]} of elements in \code{y} to which the imputation
+model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length 
+Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
@@ -31,7 +31,7 @@ Imputes the arithmetic mean of the observed data
 }
 \section{Warning}{
  Imputing the mean of a variable is almost never
-appropriate.  See Little and Rubin (2002, p. 61-62) or 
+appropriate.  See Little and Rubin (2002, p. 61-62) or
 Van Buuren (2012, p. 10-11)
 }
 
@@ -44,7 +44,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 Little, R.J.A. and Rubin, D.B. (2002). Statistical Analysis with Missing
 Data.  New York: John Wiley and Sons.
 
-Van Buuren, S. (2018). 
+Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-simplesolutions.html#sec:meanimp}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 }

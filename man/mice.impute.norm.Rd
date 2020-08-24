@@ -10,34 +10,34 @@ mice.impute.norm(y, ry, x, wy = NULL, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the 
-the subset \code{y[ry]} of elements in \code{y} to which the imputation 
-model is fitted. The \code{ry} generally distinguishes the observed 
+\item{ry}{Logical vector of length \code{length(y)} indicating the
+the subset \code{y[ry]} of elements in \code{y} to which the imputation
+model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length 
+Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
-Calculates imputations for univariate missing data by Bayesian linear 
+Calculates imputations for univariate missing data by Bayesian linear
 regression, also known as the normal model.
 }
 \details{
-Imputation of \code{y} by the normal model by the method defined by 
+Imputation of \code{y} by the normal model by the method defined by
 Rubin (1987, p. 167). The procedure is as follows:
 
 \enumerate{
 \item{Calculate the cross-product matrix \eqn{S=X_{obs}'X_{obs}}.}
-\item{Calculate \eqn{V = (S+{diag}(S)\kappa)^{-1}}, with some small ridge 
+\item{Calculate \eqn{V = (S+{diag}(S)\kappa)^{-1}}, with some small ridge
 parameter \eqn{\kappa}.}
 \item{Calculate regression weights \eqn{\hat\beta = VX_{obs}'y_{obs}.}}
 \item{Draw a random variable \eqn{\dot g \sim \chi^2_\nu} with \eqn{\nu=n_1 - q}.}

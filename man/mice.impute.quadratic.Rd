@@ -10,21 +10,21 @@ mice.impute.quadratic(y, ry, x, wy = NULL, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the 
-the subset \code{y[ry]} of elements in \code{y} to which the imputation 
-model is fitted. The \code{ry} generally distinguishes the observed 
+\item{ry}{Logical vector of length \code{length(y)} indicating the
+the subset \code{y[ry]} of elements in \code{y} to which the imputation
+model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length 
+Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
@@ -32,13 +32,13 @@ Imputes incomplete variable that appears as both
 main effect and quadratic effect in the complete-data model.
 }
 \details{
-This function implements the "polynomial combination" method. 
+This function implements the "polynomial combination" method.
 First, the polynomial
-combination \eqn{Z = Y \beta_1 + Y^2 \beta_2} is formed. 
+combination \eqn{Z = Y \beta_1 + Y^2 \beta_2} is formed.
 \eqn{Z} is imputed by
-predictive mean matching, followed by a decomposition of the imputed 
+predictive mean matching, followed by a decomposition of the imputed
 data \eqn{Z}
-into components \eqn{Y} and \eqn{Y^2}. 
+into components \eqn{Y} and \eqn{Y^2}.
 See Van Buuren (2012, pp. 139-141) and Vink
 et al (2012) for more details. The method ensures that 1) the imputed data
 for \eqn{Y} and \eqn{Y^2} are mutually consistent, and 2) that provides unbiased
@@ -60,8 +60,8 @@ variables in the multivariate incomplete data that we might wish to impute.
 require(lattice)
 
 # Create Data
-B1 = .5
-B2 = .5
+B1 <- .5
+B2 <- .5
 X <- rnorm(1000)
 XX <- X^2
 e <- rnorm(1000, 0, 1)
@@ -69,7 +69,7 @@ Y <- B1 * X + B2 * XX + e
 dat <- data.frame(x = X, xx = XX, y = Y)
 
 # Impose 25 percent MCAR Missingness
-dat[0 == rbinom(1000, 1, 1 -.25), 1:2] <- NA
+dat[0 == rbinom(1000, 1, 1 - .25), 1:2] <- NA
 
 # Prepare data for imputation
 ini <- mice(dat, maxit = 0)
@@ -91,11 +91,11 @@ points(cmp$x[is.na(dat$x)], cmp$xx[is.na(dat$x)], col = mdc(2))
 }
 \seealso{
 \code{\link{mice.impute.pmm}}
-Van Buuren, S. (2018). 
+Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 
-Vink, G., van Buuren, S. (2013). Multiple Imputation of Squared Terms. 
+Vink, G., van Buuren, S. (2013). Multiple Imputation of Squared Terms.
 \emph{Sociological Methods & Research}, 42:598-607.
 
 Other univariate imputation functions: 

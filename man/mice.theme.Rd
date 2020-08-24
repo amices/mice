@@ -20,7 +20,7 @@ default alpha value for fills.}
 semi-transparent colors.
 }
 \description{
-The \code{mice.theme()} function sets default choices for  
+The \code{mice.theme()} function sets default choices for
 Trellis plots that are built into \pkg{mice}.
 }
 \author{

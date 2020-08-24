@@ -16,14 +16,14 @@ An S3 object of class \code{mids}
 }
 \description{
 This function combines two \code{mids} objects \code{x} and \code{y} into a
-single \code{mids} object, with the objective of increasing the number of 
-imputed data sets. If the number of imputations in \code{x} and \code{y} are 
-\code{m(x)} and \code{m(y)}, then the combined object will have 
+single \code{mids} object, with the objective of increasing the number of
+imputed data sets. If the number of imputations in \code{x} and \code{y} are
+\code{m(x)} and \code{m(y)}, then the combined object will have
 \code{m(x)+m(y)} imputations.
 }
 \details{
-The two \code{mids} objects are required to 
-have the same underlying multiple imputation model and should 
+The two \code{mids} objects are required to
+have the same underlying multiple imputation model and should
 be fitted on the same data.
 }
 \examples{

@@ -9,21 +9,21 @@ mice.impute.logreg(y, ry, x, wy = NULL, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the 
-the subset \code{y[ry]} of elements in \code{y} to which the imputation 
-model is fitted. The \code{ry} generally distinguishes the observed 
+\item{ry}{Logical vector of length \code{length(y)} indicating the
+the subset \code{y[ry]} of elements in \code{y} to which the imputation
+model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length 
+Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
@@ -32,13 +32,13 @@ Imputes univariate missing data using logistic regression.
 \details{
 Imputation for binary response variables by the Bayesian logistic regression
 model (Rubin 1987, p. 169-170).  The
-Bayesian method consists of the following steps: 
-\enumerate{ 
-\item Fit a logit, and find (bhat, V(bhat)) 
-\item Draw BETA from N(bhat, V(bhat)) 
-\item Compute predicted scores for m.d., i.e. logit-1(X BETA) 
+Bayesian method consists of the following steps:
+\enumerate{
+\item Fit a logit, and find (bhat, V(bhat))
+\item Draw BETA from N(bhat, V(bhat))
+\item Compute predicted scores for m.d., i.e. logit-1(X BETA)
 \item Compare the score to a random (0,1) deviate, and impute.
-} 
+}
 The method relies on the
 standard \code{glm.fit} function. Warnings from \code{glm.fit} are
 suppressed. Perfect prediction is handled by the data augmentation

@@ -2,27 +2,24 @@
 % Please edit documentation in R/pool.r.squared.R
 \name{pool.r.squared}
 \alias{pool.r.squared}
-\title{Pooling: R squared}
+\title{Pools R^2 of m models fitted to multiply-imputed data}
 \usage{
 pool.r.squared(object, adjusted = FALSE)
 }
 \arguments{
-\item{object}{An object of class 'mira' or 'mipo', produced by \code{lm.mids}, 
+\item{object}{An object of class 'mira' or 'mipo', produced by \code{lm.mids},
 \code{with.mids}, or \code{pool} with \code{lm} as modeling function.}
 
 \item{adjusted}{A logical value. If adjusted=TRUE then the adjusted R^2 is
 calculated.  The default value is FALSE.}
 }
 \value{
-Returns a 1x4 table with components. Component \code{est} is the 
+Returns a 1x4 table with components. Component \code{est} is the
 pooled R^2 estimate. Component \code{lo95} is the 95 \% lower bound of the pooled R^2.
 Component \code{hi95} is the 95 \% upper bound of the pooled R^2.
 Component \code{fmi} is the fraction of missing information due to nonresponse.
 }
 \description{
-Pools R^2 of m repeated complete data models.
-}
-\details{
 The function pools the coefficients of determination R^2 or the adjusted
 coefficients of determination (R^2_a) obtained with the \code{lm} modeling
 function. For pooling it uses the Fisher \emph{z}-transformation.

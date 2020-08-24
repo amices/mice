@@ -9,18 +9,18 @@ make.blots(data, blocks = make.blocks(data))
 \arguments{
 \item{data}{A \code{data.frame} with the source data}
 
-\item{blocks}{An optional specification for blocks of variables in 
+\item{blocks}{An optional specification for blocks of variables in
 the rows. The default assigns each variable in its own block.}
 }
 \value{
 A matrix
 }
 \description{
-This helper function creates a valid \code{blots} object. The 
-\code{blots} object is an argument to the \code{mice} function. 
-The name \code{blots} is a contraction of blocks-dots. 
-Through \code{blots}, the user can specify any additional 
-arguments that are specifically passed down to the lowest level 
+This helper function creates a valid \code{blots} object. The
+\code{blots} object is an argument to the \code{mice} function.
+The name \code{blots} is a contraction of blocks-dots.
+Through \code{blots}, the user can specify any additional
+arguments that are specifically passed down to the lowest level
 imputation function.
 }
 \examples{

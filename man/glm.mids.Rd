@@ -35,9 +35,8 @@ is superseded by \code{\link{with.mids}}.
 imp <- mice(nhanes)
 
 # logistic regression on the imputed data
-fit <- glm.mids((hyp==2)~bmi+chl, data=imp, family = binomial)
+fit <- glm.mids((hyp == 2) ~ bmi + chl, data = imp, family = binomial)
 fit
-
 }
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, C.G.M. (2000)

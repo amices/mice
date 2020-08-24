@@ -9,20 +9,20 @@ mice.impute.2l.bin(y, ry, x, type, wy = NULL, intercept = TRUE, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the 
-the subset \code{y[ry]} of elements in \code{y} to which the imputation 
-model is fitted. The \code{ry} generally distinguishes the observed 
+\item{ry}{Logical vector of length \code{length(y)} indicating the
+the subset \code{y[ry]} of elements in \code{y} to which the imputation
+model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
 \item{type}{Vector of length \code{ncol(x)} identifying random and class
 variables.  Random variables are identified by a '2'. The class variable
-(only one is allowed) is coded as '-2'. Fixed effects are indicated by 
+(only one is allowed) is coded as '-2'. Fixed effects are indicated by
 a '1'.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
 \item{intercept}{Logical determining whether the intercept is automatically
@@ -31,15 +31,15 @@ added.}
 \item{\dots}{Arguments passed down to \code{glmer}}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length 
+Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
-Imputes univariate systematically and sporadically missing data 
+Imputes univariate systematically and sporadically missing data
 using a two-level logistic model using \code{lme4::glmer()}
 }
 \details{
-Data are missing systematically if they have not been measured, e.g., in the 
+Data are missing systematically if they have not been measured, e.g., in the
 case where we combine data from different sources. Data are missing sporadically
 if they have been partially observed.
 }
@@ -47,11 +47,10 @@ if they have been partially observed.
 library(tidyr)
 library(dplyr)
 data("toenail2")
-data <- tidyr::complete(toenail2, patientID, visit) \%>\% 
- tidyr::fill(treatment) \%>\% 
- dplyr::select(-time) \%>\%
- dplyr::mutate(patientID = as.integer(patientID))
-
+data <- tidyr::complete(toenail2, patientID, visit) \%>\%
+  tidyr::fill(treatment) \%>\%
+  dplyr::select(-time) \%>\%
+  dplyr::mutate(patientID = as.integer(patientID))
 \dontrun{
 pred <- mice(data, print = FALSE, maxit = 0, seed = 1)$pred
 pred["outcome", "patientID"] <- -2
@@ -60,8 +59,8 @@ imp <- mice(data, method = "2l.bin", pred = pred, maxit = 1, m = 1, seed = 1)
 }
 \references{
 Jolani S., Debray T.P.A., Koffijberg H., van Buuren S., Moons K.G.M. (2015).
-Imputation of systematically missing predictors in an individual 
-participant data meta-analysis: a generalized approach using MICE. 
+Imputation of systematically missing predictors in an individual
+participant data meta-analysis: a generalized approach using MICE.
 \emph{Statistics in Medicine}, 34:1841-1863.
 }
 \seealso{

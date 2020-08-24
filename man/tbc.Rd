@@ -7,7 +7,7 @@
 \alias{terneuzen}
 \title{Terneuzen birth cohort}
 \format{
-\code{tbs} is a data frame with 3951 rows and 11 columns: 
+\code{tbs} is a data frame with 3951 rows and 11 columns:
 \describe{
 \item{id}{Person number}
 \item{occ}{Occasion number}
@@ -17,12 +17,12 @@
 \item{age}{Age (years)}
 \item{sex}{Sex 1=M, 2=F}
 \item{hgt.z}{Height Z-score}
-\item{wgt.z}{Weight Z-score} 
+\item{wgt.z}{Weight Z-score}
 \item{bmi.z}{BMI Z-score}
 \item{ao}{Adult overweight (0=no, 1=yes)}
 }
 
-\code{tbc.target} is a data frame with 2612 rows and 3 columns: 
+\code{tbc.target} is a data frame with 2612 rows and 3 columns:
 \describe{
 \item{id}{Person number}
 \item{ao}{Adult overweight (0=no, 1=yes)}
@@ -45,7 +45,7 @@ Prevention of Overweight and Cardiometabolic Risk from Infancy Onward.}
 Dissertation, Vrije Universiteit, Amsterdam.
 \url{http://dare.ubvu.vu.nl/handle/1871/23806}
 
-Van Buuren, S. (2018). 
+Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-rastering.html#terneuzen-birth-cohort}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 }
@@ -62,9 +62,7 @@ outcomes at adult age. For more details, see De Kroon et al (2008, 2010,
 (2012).
 }
 \examples{
-
 data <- tbc
 md.pattern(data)
-
 }
 \keyword{datasets}

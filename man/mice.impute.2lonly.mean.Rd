@@ -10,57 +10,57 @@ mice.impute.2lonly.mean(y, ry, x, type, wy = NULL, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the 
-the subset \code{y[ry]} of elements in \code{y} to which the imputation 
-model is fitted. The \code{ry} generally distinguishes the observed 
+\item{ry}{Logical vector of length \code{length(y)} indicating the
+the subset \code{y[ry]} of elements in \code{y} to which the imputation
+model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
 \item{type}{Vector of length \code{ncol(x)} identifying random and class
 variables.  The class variable (only one is allowed) is coded as \code{-2}.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length 
+Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
-Method \code{2lonly.mean} replicates the most likely value within 
+Method \code{2lonly.mean} replicates the most likely value within
 a class of a second-level variable. It works for numeric and
 factor data. The function is primarily useful as a quick fixup for
 data in which the second-level variable is inconsistent.
 }
 \details{
-Observed values in \code{y} are averaged within the class, and 
-replicated to the missing \code{y} within that class. 
-This function is primarily useful for repairing incomplete data 
+Observed values in \code{y} are averaged within the class, and
+replicated to the missing \code{y} within that class.
+This function is primarily useful for repairing incomplete data
 that are constant within the class, but vary over classes.
 
-For numeric variables, \code{mice.impute.2lonly.mean()} imputes the 
-class mean of \code{y}. If \code{y} is a second-level variable, then 
-conventionally all observed \code{y} will be identical within the 
-class, and the function just provides a quick fix for any 
-missing \code{y} by filling in the class mean. 
+For numeric variables, \code{mice.impute.2lonly.mean()} imputes the
+class mean of \code{y}. If \code{y} is a second-level variable, then
+conventionally all observed \code{y} will be identical within the
+class, and the function just provides a quick fix for any
+missing \code{y} by filling in the class mean.
 
 For factor variables, \code{mice.impute.2lonly.mean()} imputes the
-most frequently occuring category within the class. 
+most frequently occuring category within the class.
 
-If there are no observed \code{y} in the class, all entries of the 
-class are set to \code{NA}. Note that this may produce problems 
-later on in \code{mice} if imputation routines are called that 
-expects predictor data to be complete. Methods designed for 
+If there are no observed \code{y} in the class, all entries of the
+class are set to \code{NA}. Note that this may produce problems
+later on in \code{mice} if imputation routines are called that
+expects predictor data to be complete. Methods designed for
 imputing this type of second-level variables include
-\code{\link{mice.impute.2lonly.norm}} and 
+\code{\link{mice.impute.2lonly.norm}} and
 \code{\link{mice.impute.2lonly.pmm}}.
 }
 \references{
-Van Buuren, S. (2018). 
+Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-level2pred.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Boca Raton, FL.: Chapman & Hall/CRC Press.
 }

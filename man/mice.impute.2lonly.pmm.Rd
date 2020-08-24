@@ -10,18 +10,18 @@ mice.impute.2lonly.pmm(y, ry, x, type, wy = NULL, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the 
-the subset \code{y[ry]} of elements in \code{y} to which the imputation 
-model is fitted. The \code{ry} generally distinguishes the observed 
+\item{ry}{Logical vector of length \code{length(y)} indicating the
+the subset \code{y[ry]} of elements in \code{y} to which the imputation
+model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
 \item{type}{Group identifier must be specified by '-2'. Predictors must be
 specified by '1'.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
 \item{...}{Other named arguments.}
@@ -39,58 +39,54 @@ This function allows in combination with \code{\link{mice.impute.2l.pan}}
 switching regression imputation between level 1 and level 2 as described in
 Yucel (2008) or Gelman and Hill (2007, p. 541).
 
-The function checks for partial missing level-2 data. Level-2 data 
+The function checks for partial missing level-2 data. Level-2 data
 are assumed to be constant within the same cluster. If one or more
-entries are missing, then the procedure aborts with an error 
+entries are missing, then the procedure aborts with an error
 message that identifies the cluster with incomplete level-2 data.
-In such cases, one may first fill in the cluster mean (or mode) by 
+In such cases, one may first fill in the cluster mean (or mode) by
 the \code{2lonly.mean} method to remove inconsistencies.
 }
 \note{
-The extension to categorical variables transform 
+The extension to categorical variables transforms
 a dependent factor variable by means of the \code{as.integer()}
-function. This may make sense for categories that are 
+function. This may make sense for categories that are
 approximately ordered, but less so for pure nominal measures.
 
-For a more general approach, see 
+For a more general approach, see
 \code{miceadds::mice.impute.2lonly.function()}.
 }
 \examples{
-
-##################################################
 # simulate some data
 # x,y ... level 1 variables
 # v,w ... level 2 variables
 
-G <- 250            # number of groups
-n <- 20             # number of persons
-beta <- .3          # regression coefficient
-rho <- .30          # residual intraclass correlation
-rho.miss <- .10     # correlation with missing response
-missrate <- .50     # missing proportion
-y1 <- rep( rnorm( G , sd = sqrt( rho ) ) , each=n ) + rnorm(G*n , sd = sqrt( 1 - rho )) 
-w <- rep( round( rnorm(G ) , 2 ) , each=n )
-v <- rep( round( runif( G , 0 , 3 ) ) , each=n )
-x <-  rnorm( G*n ) 
-y <- y1 + beta  * x + .2 * w + .1 * v
-dfr0 <- dfr <- data.frame( "group" = rep(1:G , each=n ) , "x" = x , "y" = y , "w" = w , "v" = v )
-dfr[ rho.miss * x + rnorm( G*n , sd = sqrt( 1 - rho.miss ) ) < qnorm( missrate ) , "y" ] <- NA
-dfr[ rep( rnorm(G) , each=n ) < qnorm( missrate ) , "w" ] <- NA
-dfr[ rep( rnorm(G) , each=n ) < qnorm( missrate ) , "v" ] <- NA
+G <- 250 # number of groups
+n <- 20 # number of persons
+beta <- .3 # regression coefficient
+rho <- .30 # residual intraclass correlation
+rho.miss <- .10 # correlation with missing response
+missrate <- .50 # missing proportion
+y1 <- rep(rnorm(G, sd = sqrt(rho)), each = n) + rnorm(G * n, sd = sqrt(1 - rho))
+w <- rep(round(rnorm(G), 2), each = n)
+v <- rep(round(runif(G, 0, 3)), each = n)
+x <- rnorm(G * n)
+y <- y1 + beta * x + .2 * w + .1 * v
+dfr0 <- dfr <- data.frame("group" = rep(1:G, each = n), "x" = x, "y" = y, "w" = w, "v" = v)
+dfr[rho.miss * x + rnorm(G * n, sd = sqrt(1 - rho.miss)) < qnorm(missrate), "y"] <- NA
+dfr[rep(rnorm(G), each = n) < qnorm(missrate), "w"] <- NA
+dfr[rep(rnorm(G), each = n) < qnorm(missrate), "v"] <- NA
 
-#....
 # empty mice imputation
-imp0 <- mice( as.matrix(dfr)  , maxit=0 )
+imp0 <- mice(as.matrix(dfr), maxit = 0)
 predM <- imp0$predictorMatrix
 impM <- imp0$method
 
-#...
 # multilevel imputation
 predM1 <- predM
-predM1[c("w","y","v"),"group"] <- -2
-predM1["y","x"] <- 1        # fixed x effects imputation
+predM1[c("w", "y", "v"), "group"] <- -2
+predM1["y", "x"] <- 1 # fixed x effects imputation
 impM1 <- impM
-impM1[c("y","w","v")] <- c("2l.pan" , "2lonly.norm" , "2lonly.pmm" )
+impM1[c("y", "w", "v")] <- c("2l.pan", "2lonly.norm", "2lonly.pmm")
 
 # turn v into a categorical variable
 dfr$v <- as.factor(dfr$v)
@@ -101,10 +97,12 @@ levels(dfr$v) <- LETTERS[1:4]
 # v ... imputation at level 2 using pmm
 
 # skip imputation on solaris
-is.solaris <- function() grepl('SunOS',Sys.info()['sysname'])
+is.solaris <- function() grepl("SunOS", Sys.info()["sysname"])
 if (!is.solaris()) {
-imp <- mice(dfr, m = 1, predictorMatrix = predM1 , 
-           method = impM1, maxit = 1, paniter = 500)
+  imp <- mice(dfr,
+    m = 1, predictorMatrix = predM1,
+    method = impM1, maxit = 1, paniter = 500
+  )
 }
 }
 \references{
@@ -116,7 +114,7 @@ Yucel, RM (2008). Multiple imputation inference for multivariate multilevel
 continuous data with ignorable non-response.  \emph{Philosophical
 Transactions of the Royal Society A}, \bold{366}, 2389-2404.
 
-Van Buuren, S. (2018). 
+Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-level2pred.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 }
@@ -130,8 +128,7 @@ Other univariate-2lonly:
 \code{\link{mice.impute.2lonly.norm}()}
 }
 \author{
-Alexander Robitzsch (IPN - Leibniz Institute for Science and 
-Mathematics Education, Kiel, Germany), \email{robitzsch@ipn.uni-kiel.de},
-plus some tweaks by Stef van Buuren
+Alexander Robitzsch (IPN - Leibniz Institute for Science and
+Mathematics Education, Kiel, Germany), \email{robitzsch@ipn.uni-kiel.de}
 }
 \concept{univariate-2lonly}

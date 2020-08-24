@@ -1,5 +1,5 @@
 #' Toenail data
-#' 
+#'
 #' The toenail data come from a Multicenter study comparing two oral
 #' treatments for toenail infection. Patients were evaluated for the
 #' degree of separation of the nail. Patients were randomized into two
@@ -9,17 +9,17 @@
 #' baseline.
 #' @name toenail
 #' @docType data
-#' @format A data frame with 1908 observations on the following 5 variables: 
+#' @format A data frame with 1908 observations on the following 5 variables:
 #'   \describe{
 #'   \item{\code{ID}}{a numeric vector giving the ID of patient}
-#'   \item{\code{outcome}}{a numeric vector giving the response 
+#'   \item{\code{outcome}}{a numeric vector giving the response
 #'   (0=none or mild seperation, 1=moderate or severe)}
 #'   \item{\code{treatment}}{a numeric vector giving the treatment group}
-#'   \item{\code{month}}{a numeric vector giving the time of the visit 
+#'   \item{\code{month}}{a numeric vector giving the time of the visit
 #'   (not exactly monthly intervals hence not round numbers)}
 #'   \item{\code{visit}}{a numeric vector giving the number of the visit}
 #'   }
-#' @source 
+#' @source
 #' De Backer, M., De Vroey, C., Lesaffre, E., Scheys, I., and De
 #' Keyser, P. (1998). Twelve weeks of continuous oral therapy for
 #' toenail onychomycosis caused by dermatophytes: A double-blind
@@ -29,16 +29,16 @@
 #' Lesaffre, E. and Spiessens, B. (2001). On the effect of the number of
 #' quadrature points in a logistic random-effects model: An example.
 #' Journal of the Royal Statistical Society, Series C, 50, 325-335.
-#' 
-#' G. Fitzmaurice, N. Laird and J. Ware (2004) Applied Longitudinal Analysis, 
+#'
+#' G. Fitzmaurice, N. Laird and J. Ware (2004) Applied Longitudinal Analysis,
 #' Wiley and Sons, New York, USA.
-#' 
-#' Van Buuren, S. (2018). 
-#'\href{https://stefvanbuuren.name/fimd/sec-catoutcome.html#example}{\emph{Flexible
-#'Imputation of Missing Data. Second Edition.}} Chapman & Hall/CRC.
-#'Boca Raton, FL.
+#'
+#' Van Buuren, S. (2018).
+#' \href{https://stefvanbuuren.name/fimd/sec-catoutcome.html#example}{\emph{Flexible
+#' Imputation of Missing Data. Second Edition.}} Chapman & Hall/CRC.
+#' Boca Raton, FL.
 #' @keywords datasets
 #' @seealso \code{\link{toenail2}}
-#' @details This dataset was copied from the \code{DPpackage}, which is 
+#' @details This dataset was copied from the \code{DPpackage}, which is
 #' scheduled to be discontinued from CRAN in August 2019.
 NULL

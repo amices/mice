@@ -9,20 +9,20 @@ mice.impute.2l.lmer(y, ry, x, type, wy = NULL, intercept = TRUE, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the 
-the subset \code{y[ry]} of elements in \code{y} to which the imputation 
-model is fitted. The \code{ry} generally distinguishes the observed 
+\item{ry}{Logical vector of length \code{length(y)} indicating the
+the subset \code{y[ry]} of elements in \code{y} to which the imputation
+model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
 \item{type}{Vector of length \code{ncol(x)} identifying random and class
 variables.  Random variables are identified by a '2'. The class variable
-(only one is allowed) is coded as '-2'. Fixed effects are indicated by 
+(only one is allowed) is coded as '-2'. Fixed effects are indicated by
 a '1'.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
 \item{intercept}{Logical determining whether the intercept is automatically
@@ -31,30 +31,31 @@ added.}
 \item{\dots}{Arguments passed down to \code{lmer}}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length 
+Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
-Imputes univariate systematically and sporadically missing data using a two-level normal model using \code{lme4::lmer()}
+Imputes univariate systematically and sporadically missing data using a
+two-level normal model using \code{lme4::lmer()}.
 }
 \details{
-Data are missing systematically if they have not been measured, e.g., in the 
+Data are missing systematically if they have not been measured, e.g., in the
 case where we combine data from different sources. Data are missing sporadically
 if they have been partially observed.
 
-While the method is fully Bayesian, it may fix parameters of the 
+While the method is fully Bayesian, it may fix parameters of the
 variance-covariance matrix or the random effects to their estimated
-value in cases where creating draws from the posterior is not 
+value in cases where creating draws from the posterior is not
 possible. The procedure throws a warning when this happens.
 }
 \references{
-Jolani S. (2017) Hierarchical imputation of systematically and 
-sporadically missing data: An approximate Bayesian approach using 
+Jolani S. (2017) Hierarchical imputation of systematically and
+sporadically missing data: An approximate Bayesian approach using
 chained equations. Forthcoming.
 
 Jolani S., Debray T.P.A., Koffijberg H., van Buuren S., Moons K.G.M. (2015).
-Imputation of systematically missing predictors in an individual 
-participant data meta-analysis: a generalized approach using MICE. 
+Imputation of systematically missing predictors in an individual
+participant data meta-analysis: a generalized approach using MICE.
 \emph{Statistics in Medicine}, 34:1841-1863.
 
 Van Buuren, S. (2011) Multiple imputation of multilevel data. In Hox, J.J.

@@ -10,10 +10,10 @@ md.pattern(x, plot = TRUE, rotate.names = FALSE)
 \item{x}{A data frame or a matrix containing the incomplete data.  Missing
 values are coded as NA's.}
 
-\item{plot}{Should the missing data pattern be made into a plot. Default is 
+\item{plot}{Should the missing data pattern be made into a plot. Default is
 `plot = TRUE`.}
 
-\item{rotate.names}{Whether the variable names in the plot should be placed 
+\item{rotate.names}{Whether the variable names in the plot should be placed
 horizontally or vertically. Default is `rotate.names = FALSE`.}
 }
 \value{
@@ -33,8 +33,6 @@ See Schafer (1997) for details. Also, the missing pattern could suggest which
 variables could potentially be useful for imputation of missing entries.
 }
 \examples{
-
-
 md.pattern(nhanes)
 #     age hyp bmi chl
 #  13   1   1   1   1  0
@@ -43,8 +41,6 @@ md.pattern(nhanes)
 #   1   1   0   0   1  2
 #   7   1   0   0   0  3
 #   0   8   9  10 27
-
-
 }
 \references{
 Schafer, J.L. (1997), Analysis of multivariate incomplete data.

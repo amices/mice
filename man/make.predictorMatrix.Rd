@@ -9,17 +9,17 @@ make.predictorMatrix(data, blocks = make.blocks(data))
 \arguments{
 \item{data}{A \code{data.frame} with the source data}
 
-\item{blocks}{An optional specification for blocks of variables in 
+\item{blocks}{An optional specification for blocks of variables in
 the rows. The default assigns each variable in its own block.}
 }
 \value{
 A matrix
 }
 \description{
-This helper function creates a valid \code{predictMatrix}. The 
-\code{predictorMatrix} is an argument to the \code{mice} function. 
-It specifies the target variable or block in the rows, and the 
-predictor variables on the columns. An entry of \code{0} means that 
+This helper function creates a valid \code{predictMatrix}. The
+\code{predictorMatrix} is an argument to the \code{mice} function.
+It specifies the target variable or block in the rows, and the
+predictor variables on the columns. An entry of \code{0} means that
 the column variable is NOT used to impute the row variable or block.
 A nonzero value indicates that it is used.
 }

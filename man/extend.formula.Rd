@@ -13,16 +13,16 @@ extend.formula(
 )
 }
 \arguments{
-\item{formula}{A formula. If it is 
+\item{formula}{A formula. If it is
 not a formula, the formula is internally reset to \code{~0}.}
 
 \item{predictors}{A character vector of variable names.}
 
 \item{auxiliary}{A logical that indicates whether the variables
-listed in \code{predictors} should be added to the formula as main 
+listed in \code{predictors} should be added to the formula as main
 effects. The default is \code{TRUE}.}
 
-\item{include.intercept}{A logical that indicated whether the intercept 
+\item{include.intercept}{A logical that indicated whether the intercept
 should be included in the result.}
 }
 \value{
