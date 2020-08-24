@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.11.2 
+
+* Repairs a bug in the routine for finding the `printFlag` value (#258)
+
 # mice 3.11.1
 
 * Update URL's after transfer to organisation `amices`
