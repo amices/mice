@@ -3,6 +3,17 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.11.3
+
+* Styles all sources files with styler
+* Improves consistency in code and documentation
+* Moves internally defined functions to global namespace
+* Solves bug in internal `sum.scores()`
+* Adds deprecated messages to `lm.mids()`, `glm.mids()`, `pool.compare()`
+* Removes `.pmm.match()` and `expandcov()`
+* Strips out all `return()` calls placed just before end-of-function
+* Remove all trailing spaces
+
 # mice 3.11.2 
 
 * Repairs a bug in the routine for finding the `printFlag` value (#258)
