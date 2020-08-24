@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pooling: R squared — pool.r.squared • mice</title>
+<title>Pools R^2 of m models fitted to multiply-imputed data — pool.r.squared • mice</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,10 @@
 
 
 
-<meta property="og:title" content="Pooling: R squared — pool.r.squared" />
-<meta property="og:description" content="Pools R^2 of m repeated complete data models." />
+<meta property="og:title" content="Pools R^2 of m models fitted to multiply-imputed data — pool.r.squared" />
+<meta property="og:description" content="The function pools the coefficients of determination R^2 or the adjusted
+coefficients of determination (R^2_a) obtained with the lm modeling
+function. For pooling it uses the Fisher z-transformation." />
 
 
 
@@ -78,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -123,13 +125,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pooling: R squared</h1>
+    <h1>Pools R^2 of m models fitted to multiply-imputed data</h1>
     <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/pool.r.squared.R'><code>R/pool.r.squared.R</code></a></small>
     <div class="hidden name"><code>pool.r.squared.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Pools R^2 of m repeated complete data models.</p>
+    <p>The function pools the coefficients of determination R^2 or the adjusted
+coefficients of determination (R^2_a) obtained with the <code>lm</code> modeling
+function. For pooling it uses the Fisher <em>z</em>-transformation.</p>
     </div>
 
     <pre class="usage"><span class='fu'>pool.r.squared</span>(<span class='no'>object</span>, <span class='kw'>adjusted</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -139,7 +143,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>An object of class 'mira' or 'mipo', produced by <code>lm.mids</code>, 
+      <td><p>An object of class 'mira' or 'mipo', produced by <code>lm.mids</code>,
 <code>with.mids</code>, or <code>pool</code> with <code>lm</code> as modeling function.</p></td>
     </tr>
     <tr>
@@ -151,15 +155,10 @@ calculated.  The default value is FALSE.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a 1x4 table with components. Component <code>est</code> is the 
+    <p>Returns a 1x4 table with components. Component <code>est</code> is the
 pooled R^2 estimate. Component <code>lo95</code> is the 95 % lower bound of the pooled R^2.
 Component <code>hi95</code> is the 95 % upper bound of the pooled R^2.
 Component <code>fmi</code> is the fraction of missing information due to nonresponse.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The function pools the coefficients of determination R^2 or the adjusted
-coefficients of determination (R^2_a) obtained with the <code>lm</code> modeling
-function. For pooling it uses the Fisher <em>z</em>-transformation.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Harel, O (2009). The estimation of R^2 and adjusted R^2 in

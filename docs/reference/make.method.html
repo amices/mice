@@ -46,8 +46,8 @@
 
 
 <meta property="og:title" content="Creates a <code>method</code> argument — make.method" />
-<meta property="og:description" content="This helper function creates a valid method vector. The 
-method vector is an argument to the mice function that 
+<meta property="og:description" content="This helper function creates a valid method vector. The
+method vector is an argument to the mice function that
 specifies the method for each block." />
 
 
@@ -80,7 +80,7 @@ specifies the method for each block." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -131,8 +131,8 @@ specifies the method for each block." />
     </div>
 
     <div class="ref-description">
-    <p>This helper function creates a valid <code>method</code> vector. The 
-<code>method</code> vector is an argument to the <code>mice</code> function that 
+    <p>This helper function creates a valid <code>method</code> vector. The
+<code>method</code> vector is an argument to the <code>mice</code> function that
 specifies the method for each block.</p>
     </div>
 
@@ -153,32 +153,32 @@ values are coded as <code>NA</code>.</p></td>
     </tr>
     <tr>
       <th>where</th>
-      <td><p>A data frame or matrix with logicals of the same dimensions 
-as <code>data</code> indicating where in the data the imputations should be 
+      <td><p>A data frame or matrix with logicals of the same dimensions
+as <code>data</code> indicating where in the data the imputations should be
 created. The default, <code>where = is.na(data)</code>, specifies that the
-missing data should be imputed. The <code>where</code> argument may be used to 
+missing data should be imputed. The <code>where</code> argument may be used to
 overimpute observed data, or to skip imputations for selected missing values.</p></td>
     </tr>
     <tr>
       <th>blocks</th>
-      <td><p>List of vectors with variable names per block. List elements 
-may be named to identify blocks. Variables within a block are 
+      <td><p>List of vectors with variable names per block. List elements
+may be named to identify blocks. Variables within a block are
 imputed by a multivariate imputation method
-(see <code>method</code> argument). By default each variable is placed 
+(see <code>method</code> argument). By default each variable is placed
 into its own block, which is effectively
-fully conditional specification (FCS) by univariate models 
-(variable-by-variable imputation). Only variables whose names appear in 
-<code>blocks</code> are imputed. The relevant columns in the <code>where</code> 
-matrix are set to <code>FALSE</code> of variables that are not block members. 
-A variable may appear in multiple blocks. In that case, it is 
+fully conditional specification (FCS) by univariate models
+(variable-by-variable imputation). Only variables whose names appear in
+<code>blocks</code> are imputed. The relevant columns in the <code>where</code>
+matrix are set to <code>FALSE</code> of variables that are not block members.
+A variable may appear in multiple blocks. In that case, it is
 effectively re-imputed each time that it is visited.</p></td>
     </tr>
     <tr>
       <th>defaultMethod</th>
       <td><p>A vector of length 4 containing the default
-imputation methods for 1) numeric data, 2) factor data with 2 levels, 3) 
-factor data with &gt; 2 unordered levels, and 4) factor data with &gt; 2 
-ordered levels. By default, the method uses 
+imputation methods for 1) numeric data, 2) factor data with 2 levels, 3)
+factor data with &gt; 2 unordered levels, and 4) factor data with &gt; 2
+ordered levels. By default, the method uses
 <code>pmm</code>, predictive mean matching (numeric data) <code>logreg</code>, logistic
 regression imputation (binary data, factor with 2 levels) <code>polyreg</code>,
 polytomous regression imputation for unordered categorical data (factor &gt; 2

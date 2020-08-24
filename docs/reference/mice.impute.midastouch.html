@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -154,58 +154,58 @@
     </tr>
     <tr>
       <th>ry</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the 
-the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation 
-model is fitted. The <code>ry</code> generally distinguishes the observed 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the
+the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation
+model is fitted. The <code>ry</code> generally distinguishes the observed
 (<code>TRUE</code>) and missing values (<code>FALSE</code>) in <code>y</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for 
+      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for
 <code>y</code>. Matrix <code>x</code> may have no missing values.</p></td>
     </tr>
     <tr>
       <th>wy</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value
 indicates locations in <code>y</code> for which imputations are created.</p></td>
     </tr>
     <tr>
       <th>ridge</th>
-      <td><p>The ridge penalty used in <code><a href='norm.draw.html'>.norm.draw()</a></code> to prevent 
-problems with multicollinearity. The default is <code>ridge = 1e-05</code>, 
-which means that 0.01 percent of the diagonal is added to the cross-product. 
-Larger ridges may result in more biased estimates. For highly noisy data 
-(e.g. many junk variables), set <code>ridge = 1e-06</code> or even lower to 
+      <td><p>The ridge penalty used in <code><a href='norm.draw.html'>.norm.draw()</a></code> to prevent
+problems with multicollinearity. The default is <code>ridge = 1e-05</code>,
+which means that 0.01 percent of the diagonal is added to the cross-product.
+Larger ridges may result in more biased estimates. For highly noisy data
+(e.g. many junk variables), set <code>ridge = 1e-06</code> or even lower to
 reduce bias. For highly collinear data, set <code>ridge = 1e-04</code> or higher.</p></td>
     </tr>
     <tr>
       <th>midas.kappa</th>
-      <td><p>Scalar. If <code>NULL</code> (default) then the 
-optimal <code>kappa</code> gets selected automatically. Alternatively, the user 
-may specify a scalar. Siddique and Belin 2008 find <code>midas.kappa = 3</code> 
+      <td><p>Scalar. If <code>NULL</code> (default) then the
+optimal <code>kappa</code> gets selected automatically. Alternatively, the user
+may specify a scalar. Siddique and Belin 2008 find <code>midas.kappa = 3</code>
 to be sensible.</p></td>
     </tr>
     <tr>
       <th>outout</th>
-      <td><p>Logical. If <code>TRUE</code> (default) one model is estimated 
-for each donor (leave-one-out principle). For speedup choose 
-<code>outout = FALSE</code>, which estimates one model for all observations 
-leading to in-sample predictions for the donors and out-of-sample 
+      <td><p>Logical. If <code>TRUE</code> (default) one model is estimated
+for each donor (leave-one-out principle). For speedup choose
+<code>outout = FALSE</code>, which estimates one model for all observations
+leading to in-sample predictions for the donors and out-of-sample
 predictions for the recipients. Mind the inappropriateness, though.</p></td>
     </tr>
     <tr>
       <th>neff</th>
-      <td><p>FOR EXPERTS. Null or character string. The name of an existing 
-environment in which the effective sample size of the donors for each 
-loop (CE iterations times multiple imputations) is supposed to be written. 
-The effective sample size is necessary to compute the correction for the 
-total variance as originally suggested by Parzen, Lipsitz and 
+      <td><p>FOR EXPERTS. Null or character string. The name of an existing
+environment in which the effective sample size of the donors for each
+loop (CE iterations times multiple imputations) is supposed to be written.
+The effective sample size is necessary to compute the correction for the
+total variance as originally suggested by Parzen, Lipsitz and
 Fitzmaurice 2005. The objectname is <code>midastouch.neff</code>.</p></td>
     </tr>
     <tr>
       <th>debug</th>
-      <td><p>FOR EXPERTS. Null or character string. The name of an existing 
-environment in which the input is supposed to be written. The objectname 
+      <td><p>FOR EXPERTS. Null or character string. The name of an existing
+environment in which the input is supposed to be written. The objectname
 is <code>midastouch.inputlist</code>.</p></td>
     </tr>
     <tr>
@@ -216,12 +216,12 @@ is <code>midastouch.inputlist</code>.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Vector with imputed data, same type as <code>y</code>, and of 
+    <p>Vector with imputed data, same type as <code>y</code>, and of
 length <code><a href='https://rdrr.io/r/base/sum.html'>sum(wy)</a></code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Imputation of <code>y</code> by predictive mean matching, based on 
-Rubin (1987, p. 168, formulas a and b) and Siddique and Belin 2008. 
+    <p>Imputation of <code>y</code> by predictive mean matching, based on
+Rubin (1987, p. 168, formulas a and b) and Siddique and Belin 2008.
 The procedure is as follows:</p><ol>
 <li><p>Draw a bootstrap sample from the donor pool.</p></li>
 <li><p>Estimate a beta matrix on the bootstrap sample by the leave one out principle.</p></li>
@@ -234,25 +234,25 @@ The procedure is as follows:</p><ol>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Gaffert, P., Meinfelder, F., Bosch V. (2015) Towards an MI-proper 
-Predictive Mean Matching, Discussion Paper. 
+    <p>Gaffert, P., Meinfelder, F., Bosch V. (2015) Towards an MI-proper
+Predictive Mean Matching, Discussion Paper.
 <a href='https://www.uni-bamberg.de/fileadmin/uni/fakultaeten/sowi_lehrstuehle/statistik/Personen/Dateien_Florian/properPMM.pdf'>https://www.uni-bamberg.de/fileadmin/uni/fakultaeten/sowi_lehrstuehle/statistik/Personen/Dateien_Florian/properPMM.pdf</a></p>
-<p>Little, R.J.A. (1988), Missing data adjustments in large 
-surveys (with discussion), Journal of Business Economics and 
+<p>Little, R.J.A. (1988), Missing data adjustments in large
+surveys (with discussion), Journal of Business Economics and
 Statistics, 6, 287--301.</p>
-<p>Parzen, M., Lipsitz, S. R., Fitzmaurice, G. M. (2005), A note on reducing 
-the bias of the approximate Bayesian bootstrap imputation variance estimator. 
+<p>Parzen, M., Lipsitz, S. R., Fitzmaurice, G. M. (2005), A note on reducing
+the bias of the approximate Bayesian bootstrap imputation variance estimator.
 Biometrika <b>92</b>, 4, 971--974.</p>
 <p>Rubin, D.B. (1987), Multiple imputation for nonresponse in surveys. New York: Wiley.</p>
-<p>Siddique, J., Belin, T.R. (2008), Multiple imputation using an iterative 
-hot-deck with distance-based donor selection. Statistics in medicine, 
+<p>Siddique, J., Belin, T.R. (2008), Multiple imputation using an iterative
+hot-deck with distance-based donor selection. Statistics in medicine,
 <b>27</b>, 1, 83--102</p>
-<p>Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006), 
+<p>Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006),
 Fully conditional specification in multivariate imputation.
-<em>Journal of Statistical Computation and Simulation</em>, <b>76</b>, 12, 
+<em>Journal of Statistical Computation and Simulation</em>, <b>76</b>, 12,
 1049--1064.</p>
-<p>Van Buuren, S., Groothuis-Oudshoorn, K. (2011), <code>mice</code>: Multivariate 
-Imputation by Chained Equations in <code>R</code>. <em>Journal of 
+<p>Van Buuren, S., Groothuis-Oudshoorn, K. (2011), <code>mice</code>: Multivariate
+Imputation by Chained Equations in <code>R</code>. <em>Journal of
 Statistical Software</em>, <b>45</b>, 3, 1--67. <a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -276,7 +276,7 @@ Statistical Software</em>, <b>45</b>, 3, 1--67. <a href='https://www.jstatsoft.o
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># do default multiple imputation on a numeric matrix</span>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>'midastouch'</span>)</div><div class='output co'>#&gt; 
+<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"midastouch"</span>)</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl
 #&gt;   1   2  bmi  hyp  chl
@@ -352,7 +352,7 @@ Statistical Software</em>, <b>45</b>, 3, 1--67. <a href='https://www.jstatsoft.o
 #&gt; 24   3 24.9   1 184
 #&gt; 25   2 27.4   1 186</div><div class='input'>
 <span class='co'># imputation on mixed data with a different method per column</span>
-<span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes2</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'sample'</span>, <span class='st'>'midastouch'</span>, <span class='st'>'logreg'</span>, <span class='st'>'norm'</span>))</div><div class='output co'>#&gt; 
+<span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes2</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sample"</span>, <span class='st'>"midastouch"</span>, <span class='st'>"logreg"</span>, <span class='st'>"norm"</span>))</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl
 #&gt;   1   2  bmi  hyp  chl

@@ -47,12 +47,12 @@
 
 <meta property="og:title" content="Multivariate multilevel imputation using <code>jomo</code> — mice.impute.jomoImpute" />
 <meta property="og:description" content="This function is a wrapper around the jomoImpute function
-from the mitml package so that it can be called to 
+from the mitml package so that it can be called to
 impute blocks of variables in mice. The mitml::jomoImpute
-function provides an interface to the jomo package for 
-multiple imputation of multilevel data 
+function provides an interface to the jomo package for
+multiple imputation of multilevel data
 https://CRAN.R-project.org/package=jomo.
-Imputations can be generated using type or formula, 
+Imputations can be generated using type or formula,
 which offer different options for model specification." />
 
 
@@ -85,7 +85,7 @@ which offer different options for model specification." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -137,12 +137,12 @@ which offer different options for model specification." />
 
     <div class="ref-description">
     <p>This function is a wrapper around the <code>jomoImpute</code> function
-from the <code>mitml</code> package so that it can be called to 
+from the <code>mitml</code> package so that it can be called to
 impute blocks of variables in <code>mice</code>. The <code><a href='https://rdrr.io/pkg/mitml/man/jomoImpute.html'>mitml::jomoImpute</a></code>
-function provides an interface to the <code>jomo</code> package for 
-multiple imputation of multilevel data 
+function provides an interface to the <code>jomo</code> package for
+multiple imputation of multilevel data
 <a href='https://CRAN.R-project.org/package=jomo'>https://CRAN.R-project.org/package=jomo</a>.
-Imputations can be generated using <code>type</code> or <code>formula</code>, 
+Imputations can be generated using <code>type</code> or <code>formula</code>,
 which offer different options for model specification.</p>
     </div>
 
@@ -161,21 +161,21 @@ which offer different options for model specification.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A data frame containing incomplete and auxiliary variables, 
-the cluster indicator variable, and any other variables that should be 
+      <td><p>A data frame containing incomplete and auxiliary variables,
+the cluster indicator variable, and any other variables that should be
 present in the imputed datasets.</p></td>
     </tr>
     <tr>
       <th>formula</th>
-      <td><p>A formula specifying the role of each variable 
-in the imputation model. The basic model is constructed 
-by <code>model.matrix</code>, thus allowing to include derived variables 
-in the imputation model using <code><a href='https://rdrr.io/r/base/AsIs.html'>I()</a></code>. See 
+      <td><p>A formula specifying the role of each variable
+in the imputation model. The basic model is constructed
+by <code>model.matrix</code>, thus allowing to include derived variables
+in the imputation model using <code><a href='https://rdrr.io/r/base/AsIs.html'>I()</a></code>. See
 <code><a href='https://rdrr.io/pkg/mitml/man/jomoImpute.html'>jomoImpute</a></code>.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>An integer vector specifying the role of each variable 
+      <td><p>An integer vector specifying the role of each variable
 in the imputation model (see <code><a href='https://rdrr.io/pkg/mitml/man/jomoImpute.html'>jomoImpute</a></code>)</p></td>
     </tr>
     <tr>
@@ -188,13 +188,13 @@ in the imputation model (see <code><a href='https://rdrr.io/pkg/mitml/man/jomoIm
     </tr>
     <tr>
       <th>format</th>
-      <td><p>A character vector specifying the type of object that should 
+      <td><p>A character vector specifying the type of object that should
 be returned. The default is <code>format = "list"</code>. No other formats are
 currently supported.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Other named arguments: <code>n.burn</code>, <code>n.iter</code>, 
+      <td><p>Other named arguments: <code>n.burn</code>, <code>n.iter</code>,
 <code>group</code>, <code>prior</code>, <code>silent</code> and others.</p></td>
     </tr>
     </table>
@@ -202,22 +202,22 @@ currently supported.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list of imputations for all incomplete variables in the model,
-that can be stored in the the <code>imp</code> component of the <code>mids</code> 
+that can be stored in the the <code>imp</code> component of the <code>mids</code>
 object.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The number of imputations <code>m</code> is set to 1, and the function 
-is called <code>m</code> times so that it fits within the <code>mice</code> 
+    <p>The number of imputations <code>m</code> is set to 1, and the function
+is called <code>m</code> times so that it fits within the <code>mice</code>
 iteration scheme.</p>
 <p>This is a multivariate imputation function using a joint model.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Grund S, Luedtke O, Robitzsch A (2016). Multiple 
-Imputation of Multilevel Missing Data: An Introduction to the R 
+    <p>Grund S, Luedtke O, Robitzsch A (2016). Multiple
+Imputation of Multilevel Missing Data: An Introduction to the R
 Package <code>pan</code>. SAGE Open.</p>
-<p>Quartagno M and Carpenter JR (2015). 
-Multiple imputation for IPD meta-analysis: allowing for heterogeneity 
-and studies with missing covariates. Statistics in Medicine, 
+<p>Quartagno M and Carpenter JR (2015).
+Multiple imputation for IPD meta-analysis: allowing for heterogeneity
+and studies with missing covariates. Statistics in Medicine,
 35:2938-2954, 2015.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -228,7 +228,7 @@ and studies with missing covariates. Statistics in Medicine,
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># Note: Requires mitml 0.3-5.7</span>
-<span class='no'>blocks</span> <span class='kw'>&lt;-</span>  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"bmi"</span>, <span class='st'>"chl"</span>, <span class='st'>"hyp"</span>), <span class='st'>"age"</span>)
+<span class='no'>blocks</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"bmi"</span>, <span class='st'>"chl"</span>, <span class='st'>"hyp"</span>), <span class='st'>"age"</span>)
 <span class='no'>method</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"jomoImpute"</span>, <span class='st'>"pmm"</span>)
 <span class='no'>ini</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>, <span class='kw'>blocks</span> <span class='kw'>=</span> <span class='no'>blocks</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>method</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>0</span>)
 <span class='no'>pred</span> <span class='kw'>&lt;-</span> <span class='no'>ini</span>$<span class='no'>pred</span>

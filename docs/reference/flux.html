@@ -80,7 +80,7 @@ imputation model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -156,7 +156,7 @@ include all columns in the calculations.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(data)</a></code> rows and six columns:
-pobs = Proportion observed, 
+pobs = Proportion observed,
 influx = Influx
 outflux = Outflux
 ainb = Average inbound statistic
@@ -164,7 +164,7 @@ aout = Average outbound statistic
 fico = Fraction of incomplete cases among cases with <code>Yj</code> observed</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Infux and outflux have been proposed by Van Buuren (2012), chapter 4.</p>
+    <p>Infux and outflux have been proposed by Van Buuren (2018), chapter 4.</p>
 <p>Influx is equal to the number of variable pairs <code>(Yj , Yk)</code> with
 <code>Yj</code> missing and <code>Yk</code> observed, divided by the total number of
 observed data cells. Influx depends on the proportion of missing data of the
@@ -185,7 +185,7 @@ imputing other variables.</p>
 among cases with <code>Yj</code> observed (White and Carlin, 2010).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Van Buuren, S. (2018). 
+    <p>Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <p>White, I.R., Carlin, J.B. (2010). Bias and efficiency of multiple imputation

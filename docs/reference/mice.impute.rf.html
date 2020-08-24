@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -143,19 +143,19 @@
     </tr>
     <tr>
       <th>ry</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the 
-the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation 
-model is fitted. The <code>ry</code> generally distinguishes the observed 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the
+the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation
+model is fitted. The <code>ry</code> generally distinguishes the observed
 (<code>TRUE</code>) and missing values (<code>FALSE</code>) in <code>y</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for 
+      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for
 <code>y</code>. Matrix <code>x</code> may have no missing values.</p></td>
     </tr>
     <tr>
       <th>wy</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value
 indicates locations in <code>y</code> for which imputations are created.</p></td>
     </tr>
     <tr>
@@ -164,7 +164,7 @@ indicates locations in <code>y</code> for which imputations are created.</p></td
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Other named arguments passed down to 
+      <td><p>Other named arguments passed down to
 <code>mice:::install.on.demand()</code>, <code><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest::randomForest()</a></code> and
 <code>randomForest:::randomForest.default()</code>.</p></td>
     </tr>
@@ -172,40 +172,40 @@ indicates locations in <code>y</code> for which imputations are created.</p></td
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Vector with imputed data, same type as <code>y</code>, and of length 
+    <p>Vector with imputed data, same type as <code>y</code>, and of length
 <code><a href='https://rdrr.io/r/base/sum.html'>sum(wy)</a></code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Imputation of <code>y</code> by random forests. The method 
-calls <code>randomForrest()</code> which implements Breiman's random forest 
-algorithm (based on Breiman and Cutler's original Fortran code) 
-for classification and regression. See Appendix A.1 of Doove et al. 
+    <p>Imputation of <code>y</code> by random forests. The method
+calls <code>randomForrest()</code> which implements Breiman's random forest
+algorithm (based on Breiman and Cutler's original Fortran code)
+for classification and regression. See Appendix A.1 of Doove et al.
 (2014) for the definition of the algorithm used.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>An alternative implementation was independently 
-developed by Shah et al (2014). This were available as 
-functions <code>CALIBERrfimpute::mice.impute.rfcat</code> and 
+    <p>An alternative implementation was independently
+developed by Shah et al (2014). This were available as
+functions <code>CALIBERrfimpute::mice.impute.rfcat</code> and
 <code>CALIBERrfimpute::mice.impute.rfcont</code> (now archived).
-Simulations by Shah (Feb 13, 2014) suggested that 
-the quality of the imputation for 10 and 100 trees was identical, 
-so mice 2.22 changed the default number of trees from <code>ntree = 100</code> to 
+Simulations by Shah (Feb 13, 2014) suggested that
+the quality of the imputation for 10 and 100 trees was identical,
+so mice 2.22 changed the default number of trees from <code>ntree = 100</code> to
 <code>ntree = 10</code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning 
-for missing data imputation in the presence of interaction Effects. 
+    <p>Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning
+for missing data imputation in the presence of interaction Effects.
 Computational Statistics \&amp; Data Analysis, 72, 92-104.</p>
 <p>Shah, A.D., Bartlett, J.W., Carpenter, J., Nicholas, O., Hemingway, H. (2014),
-Comparison of random forest and parametric imputation models for 
-imputing missing data using MICE: A CALIBER study. American Journal 
+Comparison of random forest and parametric imputation models for
+imputing missing data using MICE: A CALIBER study. American Journal
 of Epidemiology, doi: 10.1093/aje/kwt312.</p>
-<p>Van Buuren, S. (2018). 
+<p>Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/sec-cart.html'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='mice.html'>mice</a></code>, <code><a href='mice.impute.cart.html'>mice.impute.cart</a></code>, 
+    <div class='dont-index'><p><code><a href='mice.html'>mice</a></code>, <code><a href='mice.impute.cart.html'>mice.impute.cart</a></code>,
 <code><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></code></p>
 <p>Other univariate imputation functions: 
 <code><a href='mice.impute.cart.html'>mice.impute.cart</a>()</code>,
@@ -254,8 +254,7 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 #&gt;   5   2  bmi  hyp  chl
 #&gt;   5   3  bmi  hyp  chl
 #&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>imp</span>)</div><div class='img'><img src='mice.impute.rf-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>imp</span>)</div><div class='img'><img src='mice.impute.rf-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -47,7 +47,7 @@
 
 <meta property="og:title" content="Complete case indicator — cci" />
 <meta property="og:description" content="The complete case indicator is useful for extracting the subset of complete cases. The function
-cci(x) calls complete.cases(x). 
+cci(x) calls complete.cases(x).
 The companion function ici() selects the incomplete cases." />
 
 
@@ -80,7 +80,7 @@ The companion function ici() selects the incomplete cases." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@ The companion function ici() selects the incomplete cases." />
 
     <div class="ref-description">
     <p>The complete case indicator is useful for extracting the subset of complete cases. The function
-<code>cci(x)</code> calls <code><a href='https://rdrr.io/r/stats/complete.cases.html'>complete.cases(x)</a></code>. 
+<code>cci(x)</code> calls <code><a href='https://rdrr.io/r/stats/complete.cases.html'>complete.cases(x)</a></code>.
 The companion function <code><a href='ici.html'>ici()</a></code> selects the incomplete cases.</p>
     </div>
 
@@ -156,12 +156,12 @@ following classes: <code>mids</code>.</p></td>
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/complete.cases.html'>complete.cases</a></code>, <code><a href='ici.html'>ici</a></code>, <code><a href='cc.html'>cc</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>cci</span>(<span class='no'>nhanes</span>) <span class='co'># indicator for 13 complete cases </span></div><div class='output co'>#&gt;  [1] FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE
+    <pre class="examples"><div class='input'><span class='fu'>cci</span>(<span class='no'>nhanes</span>) <span class='co'># indicator for 13 complete cases</span></div><div class='output co'>#&gt;  [1] FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE
 #&gt; [13]  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE
 #&gt; [25]  TRUE</div><div class='input'><span class='fu'>cci</span>(<span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>0</span>))</div><div class='output co'>#&gt;  [1] FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE
 #&gt; [13]  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE
-#&gt; [25]  TRUE</div><div class='input'><span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>cci</span>(<span class='no'>nhanes</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"bmi"</span>,<span class='st'>"hyp"</span>)]) <span class='co'># complete data for bmi and hyp</span>
-<span class='no'>nhanes</span>[<span class='no'>f</span>,] <span class='co'># obtain all data from those with complete bmi and hyp</span></div><div class='output co'>#&gt;    age  bmi hyp chl
+#&gt; [25]  TRUE</div><div class='input'><span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>cci</span>(<span class='no'>nhanes</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"bmi"</span>, <span class='st'>"hyp"</span>)]) <span class='co'># complete data for bmi and hyp</span>
+<span class='no'>nhanes</span>[<span class='no'>f</span>, ] <span class='co'># obtain all data from those with complete bmi and hyp</span></div><div class='output co'>#&gt;    age  bmi hyp chl
 #&gt; 2    2 22.7   1 187
 #&gt; 5    1 20.4   1 113
 #&gt; 7    1 22.5   1 118

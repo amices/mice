@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="<code>mipo</code>: Multiple imputation pooled object — mipo" />
-<meta property="og:description" content="The mipo object contains the results of the pooling step. 
+<meta property="og:description" content="The mipo object contains the results of the pooling step.
 The function pool generates an object of class mipo." />
 
 
@@ -79,7 +79,7 @@ The function pool generates an object of class mipo." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -130,7 +130,7 @@ The function pool generates an object of class mipo." />
     </div>
 
     <div class="ref-description">
-    <p>The <code>mipo</code> object contains the results of the pooling step. 
+    <p>The <code>mipo</code> object contains the results of the pooling step.
 The function <code><a href='pool.html'>pool</a></code> generates an object of class <code>mipo</code>.</p>
     </div>
 
@@ -171,7 +171,7 @@ The function <code><a href='pool.html'>pool</a></code> generates an object of cl
     </tr>
     <tr>
       <th>conf.int</th>
-      <td><p>Logical indicating whether to include 
+      <td><p>Logical indicating whether to include
 a confidence interval. The default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
@@ -181,8 +181,8 @@ a confidence interval. The default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>exponentiate</th>
-      <td><p>Flag indicating whether to exponentiate the 
-coefficient estimates and confidence intervals (typical for 
+      <td><p>Flag indicating whether to exponentiate the
+coefficient estimates and confidence intervals (typical for
 logistic regression).</p></td>
     </tr>
     <tr>
@@ -200,7 +200,7 @@ logistic regression).</p></td>
     <p>The <code>summary</code> method returns a data frame with summary statistics of the pooled analysis.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>An object class <code>mipo</code> is a <code>list</code> with  
+    <p>An object class <code>mipo</code> is a <code>list</code> with
 elements: <code>call</code>, <code>m</code>, <code>pooled</code> and <code>glanced</code>.</p>
 <p>The <code>pooled</code> elements is a data frame with columns:</p><table class='table'>
 <tr><td><code>estimate</code></td><td>Pooled complete data estimate</td></tr>
@@ -214,10 +214,10 @@ elements: <code>call</code>, <code>m</code>, <code>pooled</code> and <code>glanc
 <tr><td><code>fmi</code></td><td>Fraction of missing information</td></tr>
 </table>
 <p>The names of the terms are stored as <code><a href='https://rdrr.io/r/base/row.names.html'>row.names(pooled)</a></code>.</p>
-<p>The <code>glanced</code> elements is a <code>data.frame</code> with <code>m</code> rows. 
+<p>The <code>glanced</code> elements is a <code>data.frame</code> with <code>m</code> rows.
 The precise composition depends on the class of the complete-data analysis.
 At least field <code>nobs</code> is expected to be present.</p>
-<p>The <code>process_mipo</code> is a helper function to process a 
+<p>The <code>process_mipo</code> is a helper function to process a
 tidied mipo object, and is normally not called directly.
 It adds a confidence interval, and optionally exponentiates, the result.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -228,7 +228,7 @@ Statistical Software</em>, <b>45</b>(3), 1-67.
 <a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='pool.html'>pool</a></code>, 
+    <div class='dont-index'><p><code><a href='pool.html'>pool</a></code>,
 <code><a href='mids-class.html'>mids</a></code>, <code><a href='mira-class.html'>mira</a></code></p></div>
 
   </div>

@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -126,6 +126,32 @@
       <small>Source: <a href='https://github.com/amices/mice/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="mice-3113" class="section level1">
+<h1 class="page-header" data-toc-text="3.11.3">
+<a href="#mice-3113" class="anchor"></a>mice 3.11.3<small> Unreleased </small>
+</h1>
+<ul>
+<li>Styles all sources files with styler</li>
+<li>Improves consistency in code and documentation</li>
+<li>Moves internally defined functions to global namespace</li>
+<li>Solves bug in internal <code>sum.scores()</code>
+</li>
+<li>Adds deprecated messages to <code><a href="../reference/lm.mids.html">lm.mids()</a></code>, <code><a href="../reference/glm.mids.html">glm.mids()</a></code>, <code><a href="../reference/pool.compare.html">pool.compare()</a></code>
+</li>
+<li>Removes <code>.pmm.match()</code> and <code>expandcov()</code>
+</li>
+<li>Strips out all <code><a href="https://rdrr.io/r/base/function.html">return()</a></code> calls placed just before end-of-function</li>
+<li>Remove all trailing spaces</li>
+</ul>
+</div>
+    <div id="mice-3112" class="section level1">
+<h1 class="page-header" data-toc-text="3.11.2">
+<a href="#mice-3112" class="anchor"></a>mice 3.11.2<small> Unreleased </small>
+</h1>
+<ul>
+<li>Repairs a bug in the routine for finding the <code>printFlag</code> value (<a href='https://github.com/amices/mice/issues/258'>#258</a>)</li>
+</ul>
+</div>
     <div id="mice-3111" class="section level1">
 <h1 class="page-header" data-toc-text="3.11.1">
 <a href="#mice-3111" class="anchor"></a>mice 3.11.1<small> Unreleased </small>
@@ -532,7 +558,7 @@
 <code><a href="../reference/pool.scalar.html">pool.scalar()</a></code> now can do Barnard-Rubin adjustment</li>
 <li>
 <code><a href="../reference/pool.html">pool()</a></code> now handles class <code>lmerMod</code> from the <code>lme4</code> package</li>
-<li>Added automatic bounds on donors in <code><a href="../reference/pmm.match.html">.pmm.match()</a></code> for safety</li>
+<li>Added automatic bounds on donors in <code>.pmm.match()</code> for safety</li>
 <li>Added donors argument to <code><a href="../reference/mice.impute.pmm.html">mice.impute.pmm()</a></code> for increased visibility</li>
 <li>Changes default number of trees in <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> from 100 to 10 (thanks Anoop Shah)</li>
 <li>

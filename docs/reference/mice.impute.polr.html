@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -153,19 +153,19 @@
     </tr>
     <tr>
       <th>ry</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the 
-the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation 
-model is fitted. The <code>ry</code> generally distinguishes the observed 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the
+the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation
+model is fitted. The <code>ry</code> generally distinguishes the observed
 (<code>TRUE</code>) and missing values (<code>FALSE</code>) in <code>y</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for 
+      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for
 <code>y</code>. Matrix <code>x</code> may have no missing values.</p></td>
     </tr>
     <tr>
       <th>wy</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value
 indicates locations in <code>y</code> for which imputations are created.</p></td>
     </tr>
     <tr>
@@ -182,7 +182,7 @@ indicates locations in <code>y</code> for which imputations are created.</p></td
     </tr>
     <tr>
       <th>polr.to.loggedEvents</th>
-      <td><p>A logical indicating whether each fallback 
+      <td><p>A logical indicating whether each fallback
 to the <code>multinom()</code> function should be written to <code>loggedEvents</code>.
 The default is <code>FALSE</code>.</p></td>
     </tr>
@@ -194,7 +194,7 @@ The default is <code>FALSE</code>.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Vector with imputed data, same type as <code>y</code>, and of length 
+    <p>Vector with imputed data, same type as <code>y</code>, and of length
 <code><a href='https://rdrr.io/r/base/sum.html'>sum(wy)</a></code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -209,15 +209,15 @@ the <code>MASS</code> package.</p>
 <p>In order to avoid bias due to perfect prediction, the algorithm augment the
 data according to the method of White, Daniel and Royston (2010).</p>
 <p>The call to <code>polr</code> might fail, usually because the data are very sparse.
-In that case, <code>multinom</code> is tried as a fallback. 
-If the local flag <code>polr.to.loggedEvents</code> is set to TRUE, 
+In that case, <code>multinom</code> is tried as a fallback.
+If the local flag <code>polr.to.loggedEvents</code> is set to TRUE,
 a record is written
 to the <code>loggedEvents</code> component of the <code><a href='mids-class.html'>mids</a></code> object.
 Use <code><a href='mice.html'>mice(data, polr.to.loggedEvents = TRUE)</a></code> to set the flag.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>In December 2019 Simon White alerted that the 
-<code>polr</code> could always fail silently. I can confirm this behaviour for 
+    <p>In December 2019 Simon White alerted that the
+<code>polr</code> could always fail silently. I can confirm this behaviour for
 versions <code>mice 3.0.0 - mice 3.6.6</code>, so any method requests
 for <code>polr</code> in these versions were in fact handled by <code>multinom</code>.
 See <a href='https://github.com/amices/mice/issues/206'>https://github.com/amices/mice/issues/206</a> for details.</p>

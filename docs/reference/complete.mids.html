@@ -79,7 +79,7 @@ the completed data in a specified format." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -147,12 +147,12 @@ the completed data in a specified format.</p>
     </tr>
     <tr>
       <th>action</th>
-      <td><p>A numeric vector or a keyword. Numeric 
-values between 1 and <code>data$m</code> return the data with 
-imputation number <code>action</code> filled in. The value of <code>action = 0</code> 
+      <td><p>A numeric vector or a keyword. Numeric
+values between 1 and <code>data$m</code> return the data with
+imputation number <code>action</code> filled in. The value of <code>action = 0</code>
 return the original data, with missing values. <code>action</code> can
-also be one of the following keywords: <code>"all"</code>, <code>"long"</code>, 
-<code>"broad"</code> and <code>"repeated"</code>. See the Details section 
+also be one of the following keywords: <code>"all"</code>, <code>"long"</code>,
+<code>"broad"</code> and <code>"repeated"</code>. See the Details section
 for the interpretation.
 The default is <code>action = 1L</code> returns the first imputed data set.</p></td>
     </tr>
@@ -163,9 +163,9 @@ values should be included.</p></td>
     </tr>
     <tr>
       <th>mild</th>
-      <td><p>A logical indicating whether the return value should 
-always be an object of class <code>mild</code>. Setting <code>mild = TRUE</code> 
-overrides <code>action</code> keywords <code>"long"</code>, <code>"broad"</code> 
+      <td><p>A logical indicating whether the return value should
+always be an object of class <code>mild</code>. Setting <code>mild = TRUE</code>
+overrides <code>action</code> keywords <code>"long"</code>, <code>"broad"</code>
 and <code>"repeated"</code>. The default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
@@ -176,35 +176,35 @@ and <code>"repeated"</code>. The default is <code>FALSE</code>.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Complete data set with missing values replaced by imputations. 
+    <p>Complete data set with missing values replaced by imputations.
 A <code>data.frame</code>, or a list of data frames of class <code>mild</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The argument <code>action</code> can be length-1 character, which is 
+    <p>The argument <code>action</code> can be length-1 character, which is
 matched to one of the following keywords:</p><dl'>
-<dt><code>"all"</code></dt><dd><p>produces a <code>mild</code> object of imputed data sets. When 
-<code>include = TRUE</code>, then the original data are appended as the first list 
+<dt><code>"all"</code></dt><dd><p>produces a <code>mild</code> object of imputed data sets. When
+<code>include = TRUE</code>, then the original data are appended as the first list
 element;</p></dd>
-<dt><code>"long"</code></dt><dd><p>produces a data set where imputed data sets 
+<dt><code>"long"</code></dt><dd><p>produces a data set where imputed data sets
 are stacked vertically. The columns are added: 1) <code>.imp</code>, integer,
-referring the imputation number, and 2) <code>.id</code>, character, the row 
+referring the imputation number, and 2) <code>.id</code>, character, the row
 names of <code>data$data</code>;</p></dd>
-<dt><code>"stacked"</code></dt><dd><p>same as <code>"long"</code> but without the two 
+<dt><code>"stacked"</code></dt><dd><p>same as <code>"long"</code> but without the two
 additional columns;</p></dd>
-<dt><code>"broad"</code></dt><dd><p>produces a data set with where imputed data sets 
-are stacked horizontally. Columns are ordered as in the original data. 
+<dt><code>"broad"</code></dt><dd><p>produces a data set with where imputed data sets
+are stacked horizontally. Columns are ordered as in the original data.
 The imputation number is appended to each column name;</p></dd>
-<dt><code>"repeated"</code></dt><dd><p>same as <code>"broad"</code>, but with 
+<dt><code>"repeated"</code></dt><dd><p>same as <code>"broad"</code>, but with
 columns in a different order.</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Technical note: <code>mice 3.7.5</code> renamed the <code>complete()</code> function 
-to <code>complete.mids()</code> and exported it as an S3 method of the 
-generic <code><a href='https://tidyr.tidyverse.org/reference/complete.html'>tidyr::complete()</a></code>. Name clashes between 
-<code>mice::complete()</code> and <code><a href='https://tidyr.tidyverse.org/reference/complete.html'>tidyr::complete()</a></code> should no 
+    <p>Technical note: <code>mice 3.7.5</code> renamed the <code>complete()</code> function
+to <code>complete.mids()</code> and exported it as an S3 method of the
+generic <code><a href='https://tidyr.tidyverse.org/reference/complete.html'>tidyr::complete()</a></code>. Name clashes between
+<code>mice::complete()</code> and <code><a href='https://tidyr.tidyverse.org/reference/complete.html'>tidyr::complete()</a></code> should no
 longer occur.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -235,8 +235,7 @@ longer occur.</p>
 <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>dslist</span>)</div><div class='output co'>#&gt; [1] 6</div><div class='input'>
 <span class='co'># select original + 3 + 5, store as mild</span>
 <span class='no'>dslist</span> <span class='kw'>&lt;-</span> <span class='fu'>complete</span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>3</span>, <span class='fl'>5</span>), <span class='kw'>mild</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>dslist</span>)</div><div class='output co'>#&gt; [1] "0" "3" "5"</div><div class='input'>
-</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>dslist</span>)</div><div class='output co'>#&gt; [1] "0" "3" "5"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

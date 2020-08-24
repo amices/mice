@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -166,7 +166,7 @@ models.  See section 7.1 of Van Buuren (2012) for an example.</p>
     <p>White, I. R., Royston, P. (2009). Imputing missing covariate
 values for the Cox model.  <em>Statistics in Medicine</em>, <em>28</em>(15),
 1982-1998.</p>
-<p>Van Buuren, S. (2018). 
+<p>Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/sec-toomany.html#a-further-improvement-survival-as-predictor-variable'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 
@@ -175,17 +175,15 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 #&gt; <span class='message'>Attaching package: ‘MASS’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:dplyr’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    select</span></div><div class='input'>
-<span class='no'>leuk</span>$<span class='no'>status</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>  <span class='co'>## no censoring occurs in leuk data (MASS)</span>
+<span class='no'>leuk</span>$<span class='no'>status</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span> <span class='co'>## no censoring occurs in leuk data (MASS)</span>
 <span class='no'>ch</span> <span class='kw'>&lt;-</span> <span class='fu'>nelsonaalen</span>(<span class='no'>leuk</span>, <span class='no'>time</span>, <span class='no'>status</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>leuk</span>$<span class='no'>time</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>ch</span>, <span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>'Cumulative hazard'</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>'Time'</span>)</div><div class='img'><img src='nelsonaalen-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>leuk</span>$<span class='no'>time</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>ch</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Cumulative hazard"</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Time"</span>)</div><div class='img'><img src='nelsonaalen-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>### See example on http://www.engineeredsoftware.com/lmar/pe_cum_hazard_function.htm</span>
-<span class='no'>time</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>43</span>, <span class='fl'>67</span>, <span class='fl'>92</span>, <span class='fl'>94</span>, <span class='fl'>149</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>149</span>,<span class='fl'>7</span>))
-<span class='no'>status</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>,<span class='fl'>5</span>),<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0</span>,<span class='fl'>7</span>))
+<span class='no'>time</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>43</span>, <span class='fl'>67</span>, <span class='fl'>92</span>, <span class='fl'>94</span>, <span class='fl'>149</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>149</span>, <span class='fl'>7</span>))
+<span class='no'>status</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0</span>, <span class='fl'>7</span>))
 <span class='no'>eng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='no'>time</span>, <span class='no'>status</span>)
 <span class='no'>ch</span> <span class='kw'>&lt;-</span> <span class='fu'>nelsonaalen</span>(<span class='no'>eng</span>, <span class='no'>time</span>, <span class='no'>status</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>time</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>ch</span>, <span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>'Cumulative hazard'</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>'Time'</span>)</div><div class='img'><img src='nelsonaalen-2.png' alt='' width='700' height='433' /></div><div class='input'>
-
-</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>time</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>ch</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Cumulative hazard"</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Time"</span>)</div><div class='img'><img src='nelsonaalen-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -80,7 +80,7 @@ factor or dataframe rowwise into a mids object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -147,12 +147,12 @@ factor or dataframe rowwise into a <code>mids</code> object.</p>
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A <code>mids</code> object, or a <code>data.frame</code>, <code>matrix</code>, <code>factor</code> 
+      <td><p>A <code>mids</code> object, or a <code>data.frame</code>, <code>matrix</code>, <code>factor</code>
 or <code>vector</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional <code>data.frame</code>, <code>matrix</code>, <code>vector</code> or <code>factor</code>. 
+      <td><p>Additional <code>data.frame</code>, <code>matrix</code>, <code>vector</code> or <code>factor</code>.
 These can be given as named arguments.</p></td>
     </tr>
     </table>
@@ -163,12 +163,12 @@ These can be given as named arguments.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If <code>y</code> is a
-<code>mids</code> object, then <code>rbind</code> requires that the number of 
-multiple imputations in <code>x</code> and <code>y</code> is identical. Also, 
+<code>mids</code> object, then <code>rbind</code> requires that the number of
+multiple imputations in <code>x</code> and <code>y</code> is identical. Also,
 columns of <code>x$data</code> and <code>y$data</code> should match.</p>
-<p>If <code>y</code> is not a <code>mids</code> object, the columns of <code>x$data</code> 
-and <code>y</code> should match. The <code>where</code> matrix for <code>y</code> is set 
-to <code>FALSE</code>, signaling that any missing values 
+<p>If <code>y</code> is not a <code>mids</code> object, the columns of <code>x$data</code>
+and <code>y</code> should match. The <code>where</code> matrix for <code>y</code> is set
+to <code>FALSE</code>, signaling that any missing values
 in <code>y</code> were not imputed.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 

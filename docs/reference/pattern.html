@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -142,7 +142,7 @@
 data pattern</p></dd> <dt>list("pattern2")</dt><dd><p>Data with a monotone missing data
 pattern</p></dd> <dt>list("pattern3")</dt><dd><p>Data with a file matching missing data
 pattern</p></dd> <dt>list("pattern4")</dt><dd><p>Data with a general missing data pattern</p></dd> 
-</dl><p>Van Buuren, S. (2018). 
+</dl><p>Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/missing-data-pattern.html'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -164,19 +164,23 @@ missing data patterns.</p>
 #&gt; 31 NA NA 35
 #&gt; 32 NA NA 33</div><div class='input'>
 <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cbind.html'>rbind</a></span>(<span class='no'>pattern1</span>, <span class='no'>pattern2</span>, <span class='no'>pattern3</span>, <span class='no'>pattern4</span>)
-<span class='no'>mdpat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cbind.html'>cbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/expand.grid.html'>expand.grid</a></span>(<span class='kw'>rec</span> <span class='kw'>=</span> <span class='fl'>8</span>:<span class='fl'>1</span>, <span class='kw'>pat</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>var</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>), <span class='kw'>r</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>data</span>))))
+<span class='no'>mdpat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cbind.html'>cbind</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/expand.grid.html'>expand.grid</a></span>(<span class='kw'>rec</span> <span class='kw'>=</span> <span class='fl'>8</span>:<span class='fl'>1</span>, <span class='kw'>pat</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>var</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>), <span class='kw'>r</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>data</span>))))
 
-<span class='no'>types</span> <span class='kw'>&lt;-</span>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Univariate"</span>,<span class='st'>"Monotone"</span>,<span class='st'>"File matching"</span>,<span class='st'>"General"</span>)
-<span class='no'>tp41</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lattice/man/levelplot.html'>levelplot</a></span>(<span class='no'>r</span>~<span class='no'>var</span>+<span class='no'>rec</span><span class='kw'>|</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='no'>pat</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>mdpat</span>,
-         <span class='kw'>as.table</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>aspect</span><span class='kw'>=</span><span class='st'>"iso"</span>,
-         <span class='kw'>shrink</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.9</span>),
-         <span class='kw'>col.regions</span> <span class='kw'>=</span> <span class='fu'><a href='mdc.html'>mdc</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>),
-         <span class='kw'>colorkey</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
-         <span class='kw'>scales</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>draw</span><span class='kw'>=</span><span class='fl'>FALSE</span>),
-         <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>""</span>, <span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>""</span>,
-         <span class='kw'>between</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>y</span><span class='kw'>=</span><span class='fl'>0</span>),
-         <span class='kw'>strip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/lattice/man/strip.default.html'>strip.custom</a></span>(<span class='kw'>bg</span> <span class='kw'>=</span> <span class='st'>"grey95"</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-           <span class='kw'>factor.levels</span> <span class='kw'>=</span> <span class='no'>types</span>))
+<span class='no'>types</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Univariate"</span>, <span class='st'>"Monotone"</span>, <span class='st'>"File matching"</span>, <span class='st'>"General"</span>)
+<span class='no'>tp41</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lattice/man/levelplot.html'>levelplot</a></span>(<span class='no'>r</span> ~ <span class='no'>var</span> + <span class='no'>rec</span> <span class='kw'>|</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='no'>pat</span>),
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mdpat</span>,
+  <span class='kw'>as.table</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>aspect</span> <span class='kw'>=</span> <span class='st'>"iso"</span>,
+  <span class='kw'>shrink</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.9</span>),
+  <span class='kw'>col.regions</span> <span class='kw'>=</span> <span class='fu'><a href='mdc.html'>mdc</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>),
+  <span class='kw'>colorkey</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>scales</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>draw</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
+  <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>between</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>0</span>),
+  <span class='kw'>strip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/lattice/man/strip.default.html'>strip.custom</a></span>(
+    <span class='kw'>bg</span> <span class='kw'>=</span> <span class='st'>"grey95"</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+    <span class='kw'>factor.levels</span> <span class='kw'>=</span> <span class='no'>types</span>
+  )
+)
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>tp41</span>)</div><div class='img'><img src='pattern-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='md.pattern.html'>md.pattern</a></span>(<span class='no'>pattern4</span>)</div><div class='img'><img src='pattern-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;   A B C  
 #&gt; 2 1 1 1 0
@@ -209,19 +213,17 @@ missing data patterns.</p>
 #&gt; C 0 0 3
 #&gt; </div><div class='input'>
 <span class='co'>### proportion of usable cases</span>
-<span class='no'>p</span>$<span class='no'>mr</span>/(<span class='no'>p</span>$<span class='no'>mr</span>+<span class='no'>p</span>$<span class='no'>mm</span>)</div><div class='output co'>#&gt;           A B C
+<span class='no'>p</span>$<span class='no'>mr</span> / (<span class='no'>p</span>$<span class='no'>mr</span> + <span class='no'>p</span>$<span class='no'>mm</span>)</div><div class='output co'>#&gt;           A B C
 #&gt; A 0.0000000 0 1
 #&gt; B 0.3333333 0 1
 #&gt; C 1.0000000 1 0</div><div class='input'>
 <span class='co'>### outbound statistics</span>
-<span class='no'>p</span>$<span class='no'>rm</span>/(<span class='no'>p</span>$<span class='no'>rm</span>+<span class='no'>p</span>$<span class='no'>rr</span>)</div><div class='output co'>#&gt;     A         B   C
+<span class='no'>p</span>$<span class='no'>rm</span> / (<span class='no'>p</span>$<span class='no'>rm</span> + <span class='no'>p</span>$<span class='no'>rr</span>)</div><div class='output co'>#&gt;     A         B   C
 #&gt; A 0.0 0.1666667 0.5
 #&gt; B 0.0 0.0000000 0.6
 #&gt; C 0.4 0.6000000 0.0</div><div class='input'>
 
-<span class='fu'><a href='fluxplot.html'>fluxplot</a></span>(<span class='no'>pattern2</span>)</div><div class='img'><img src='pattern-3.png' alt='' width='700' height='433' /></div><div class='input'>
-
-</div></pre>
+<span class='fu'><a href='fluxplot.html'>fluxplot</a></span>(<span class='no'>pattern2</span>)</div><div class='img'><img src='pattern-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

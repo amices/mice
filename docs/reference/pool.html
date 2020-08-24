@@ -46,21 +46,21 @@
 
 
 <meta property="og:title" content="Combine estimates by Rubin's rules — pool" />
-<meta property="og:description" content="The pool() function combines the estimates from m 
-repeated complete data analyses. The typical sequence of steps to 
+<meta property="og:description" content="The pool() function combines the estimates from m
+repeated complete data analyses. The typical sequence of steps to
 do a multiple imputation analysis is:
-Impute the missing data by the mice function, resulting in 
+Impute the missing data by the mice function, resulting in
 a multiple imputed data set (class mids);
-Fit the model of interest (scientific model) on each imputed data set 
+Fit the model of interest (scientific model) on each imputed data set
 by the with() function, resulting an object of class mira;
-Pool the estimates from each model into a single set of estimates 
+Pool the estimates from each model into a single set of estimates
 and standard errors, resulting is an object of class mipo;
-Optionally, compare pooled estimates from different scientific models 
+Optionally, compare pooled estimates from different scientific models
 by the D1() or D3() functions.
-A common error is to reverse steps 2 and 3, i.e., to pool the 
-multiply-imputed data instead of the estimates. Doing so may severely bias 
-the estimates of scientific interest and yield incorrect statistical 
-intervals and p-values. The pool() function will detect 
+A common error is to reverse steps 2 and 3, i.e., to pool the
+multiply-imputed data instead of the estimates. Doing so may severely bias
+the estimates of scientific interest and yield incorrect statistical
+intervals and p-values. The pool() function will detect
 this case." />
 
 
@@ -93,7 +93,7 @@ this case." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -144,21 +144,21 @@ this case." />
     </div>
 
     <div class="ref-description">
-    <p>The <code>pool()</code> function combines the estimates from <code>m</code> 
-repeated complete data analyses. The typical sequence of steps to 
+    <p>The <code>pool()</code> function combines the estimates from <code>m</code>
+repeated complete data analyses. The typical sequence of steps to
 do a multiple imputation analysis is:</p><ol>
-<li><p>Impute the missing data by the <code>mice</code> function, resulting in 
+<li><p>Impute the missing data by the <code>mice</code> function, resulting in
 a multiple imputed data set (class <code>mids</code>);</p></li>
-<li><p>Fit the model of interest (scientific model) on each imputed data set 
+<li><p>Fit the model of interest (scientific model) on each imputed data set
 by the <code><a href='https://rdrr.io/r/base/with.html'>with()</a></code> function, resulting an object of class <code>mira</code>;</p></li>
-<li><p>Pool the estimates from each model into a single set of estimates 
+<li><p>Pool the estimates from each model into a single set of estimates
 and standard errors, resulting is an object of class <code>mipo</code>;</p></li>
-<li><p>Optionally, compare pooled estimates from different scientific models 
+<li><p>Optionally, compare pooled estimates from different scientific models
 by the <code><a href='D1.html'>D1()</a></code> or <code><a href='D3.html'>D3()</a></code> functions.</p></li>
-</ol><p>A common error is to reverse steps 2 and 3, i.e., to pool the 
-multiply-imputed data instead of the estimates. Doing so may severely bias 
-the estimates of scientific interest and yield incorrect statistical 
-intervals and p-values. The <code>pool()</code> function will detect 
+</ol><p>A common error is to reverse steps 2 and 3, i.e., to pool the
+multiply-imputed data instead of the estimates. Doing so may severely bias
+the estimates of scientific interest and yield incorrect statistical
+intervals and p-values. The <code>pool()</code> function will detect
 this case.</p>
     </div>
 
@@ -169,21 +169,21 @@ this case.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>An object of class <code>mira</code> (produced by <code><a href='with.mids.html'>with.mids()</a></code> 
+      <td><p>An object of class <code>mira</code> (produced by <code><a href='with.mids.html'>with.mids()</a></code>
 or <code><a href='as.mira.html'>as.mira()</a></code>), or a <code>list</code> with model fits.</p></td>
     </tr>
     <tr>
       <th>dfcom</th>
       <td><p>A positive number representing the degrees of freedom in the
 complete-data analysis. Normally, this would be the number of independent
-observation minus the number of fitted parameters. The default 
-(<code>dfcom = NULL</code>) extract this information in the following 
+observation minus the number of fitted parameters. The default
+(<code>dfcom = NULL</code>) extract this information in the following
 order: 1) the component
 <code>residual.df</code> returned by <code><a href='https://rdrr.io/pkg/generics/man/glance.html'>glance()</a></code> if a <code><a href='https://rdrr.io/pkg/generics/man/glance.html'>glance()</a></code>
-function is found, 2) the result of <code>df.residual(</code> applied to 
-the first fitted model, and 3) as <code>999999</code>. 
+function is found, 2) the result of <code>df.residual(</code> applied to
+the first fitted model, and 3) as <code>999999</code>.
 In the last case, the warning <code>"Large sample assumed"</code> is printed.
-If the degrees of freedom is incorrect, specify the appropriate value 
+If the degrees of freedom is incorrect, specify the appropriate value
 manually.</p></td>
     </tr>
     </table>
@@ -194,10 +194,10 @@ manually.</p></td>
 pooled outcome'.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>pool()</code> function averages the estimates of the complete 
+    <p>The <code>pool()</code> function averages the estimates of the complete
 data model, computes the
-total variance over the repeated analyses by Rubin's rules 
-(Rubin, 1987, p. 76), 
+total variance over the repeated analyses by Rubin's rules
+(Rubin, 1987, p. 76),
 and computes the following diagnostic statistics per estimate:</p><ol>
 <li><p>Relative increase in variance due to nonresponse <code>r</code>;</p></li>
 <li><p>Residual degrees of freedom for hypothesis testing <code>df</code>;</p></li>
@@ -209,12 +209,12 @@ and computes the following diagnostic statistics per estimate:</p><ol>
 <li><p>the estimates of the model, usually obtainable by <code><a href='https://rdrr.io/r/stats/coef.html'>coef()</a></code></p></li>
 <li><p>the standard error of each estimate;</p></li>
 <li><p>the residual degrees of freedom of the model.</p></li>
-</ol><p>The <code>pool()</code> function relies on the <code><a href='https://broom.tidymodels.org/reference/reexports.html'>broom::tidy</a></code> for 
-extracting the parameters. Versions before <code>mice 3.8.5</code> failed 
-when no <code><a href='https://broom.tidymodels.org/reference/reexports.html'>broom::glance()</a></code> function was found for extracting the 
-residual degrees of freedom. The <code>pool()</code> function is now 
+</ol><p>The <code>pool()</code> function relies on the <code><a href='https://broom.tidymodels.org/reference/reexports.html'>broom::tidy</a></code> for
+extracting the parameters. Versions before <code>mice 3.8.5</code> failed
+when no <code><a href='https://broom.tidymodels.org/reference/reexports.html'>broom::glance()</a></code> function was found for extracting the
+residual degrees of freedom. The <code>pool()</code> function is now
 more forgiving.</p>
-<p>The degrees of freedom calculation for the pooled estimates uses the 
+<p>The degrees of freedom calculation for the pooled estimates uses the
 Barnard-Rubin adjustment for small samples (Barnard and Rubin, 1999).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -227,7 +227,7 @@ Imputation by Chained Equations in <code>R</code>. <em>Journal of Statistical
 Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='with.mids.html'>with.mids</a></code>, <code><a href='as.mira.html'>as.mira</a></code>, 
+    <div class='dont-index'><p><code><a href='with.mids.html'>with.mids</a></code>, <code><a href='as.mira.html'>as.mira</a></code>,
 <code><a href='https://broom.tidymodels.org/reference/reexports.html'>glance</a></code>, <code><a href='https://broom.tidymodels.org/reference/reexports.html'>tidy</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

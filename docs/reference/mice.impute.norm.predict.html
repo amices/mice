@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Imputation by linear regression through prediction — mice.impute.norm.predict" />
-<meta property="og:description" content="Imputes the &quot;best value&quot; according to the linear regression model, also 
+<meta property="og:description" content="Imputes the &quot;best value&quot; according to the linear regression model, also
 known as regression imputation." />
 
 
@@ -79,7 +79,7 @@ known as regression imputation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -130,7 +130,7 @@ known as regression imputation." />
     </div>
 
     <div class="ref-description">
-    <p>Imputes the "best value" according to the linear regression model, also 
+    <p>Imputes the "best value" according to the linear regression model, also
 known as <em>regression imputation</em>.</p>
     </div>
 
@@ -145,19 +145,19 @@ known as <em>regression imputation</em>.</p>
     </tr>
     <tr>
       <th>ry</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the 
-the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation 
-model is fitted. The <code>ry</code> generally distinguishes the observed 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the
+the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation
+model is fitted. The <code>ry</code> generally distinguishes the observed
 (<code>TRUE</code>) and missing values (<code>FALSE</code>) in <code>y</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for 
+      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for
 <code>y</code>. Matrix <code>x</code> may have no missing values.</p></td>
     </tr>
     <tr>
       <th>wy</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value
 indicates locations in <code>y</code> for which imputations are created.</p></td>
     </tr>
     <tr>
@@ -168,7 +168,7 @@ indicates locations in <code>y</code> for which imputations are created.</p></td
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Vector with imputed data, same type as <code>y</code>, and of length 
+    <p>Vector with imputed data, same type as <code>y</code>, and of length
 <code><a href='https://rdrr.io/r/base/sum.html'>sum(wy)</a></code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -177,22 +177,22 @@ values to as imputations. This
 method is known as <em>regression imputation</em>.</p>
     <h2 class="hasAnchor" id="warning"><a class="anchor" href="#warning"></a>Warning</h2>
 
-    <p>THIS METHOD SHOULD NOT BE USED FOR DATA ANALYSIS. 
-This method is seductive because it imputes the most 
+    <p>THIS METHOD SHOULD NOT BE USED FOR DATA ANALYSIS.
+This method is seductive because it imputes the most
 likely value according to the model. However, it ignores the uncertainty
-of the missing values and artificially 
-amplifies the relations between the columns of the data. Application of 
-richer models having more parameters does not help to evade these issues. 
-Stochastic regression methods, like <code><a href='mice.impute.pmm.html'>mice.impute.pmm</a></code> or 
+of the missing values and artificially
+amplifies the relations between the columns of the data. Application of
+richer models having more parameters does not help to evade these issues.
+Stochastic regression methods, like <code><a href='mice.impute.pmm.html'>mice.impute.pmm</a></code> or
 <code><a href='mice.impute.norm.html'>mice.impute.norm</a></code>, are generally preferred.</p>
-<p>At best, prediction can give reasonable estimates of the mean, especially 
+<p>At best, prediction can give reasonable estimates of the mean, especially
 if normality assumptions are plausible. See Little and Rubin (2002, p. 62-64)
 or Van Buuren (2012, p. 11-13, p. 45-46) for a discussion of this method.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Little, R.J.A. and Rubin, D.B. (2002). Statistical Analysis with Missing 
+    <p>Little, R.J.A. and Rubin, D.B. (2002). Statistical Analysis with Missing
 Data.  New York: John Wiley and Sons.</p>
-<p>Van Buuren, S. (2018). 
+<p>Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/sec-linearnormal.html'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

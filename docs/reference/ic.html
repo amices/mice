@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Select incomplete cases — ic" />
-<meta property="og:description" content="Extracts incomplete cases from a data set. 
+<meta property="og:description" content="Extracts incomplete cases from a data set.
 The companion function for selecting the complete cases is cc." />
 
 
@@ -79,7 +79,7 @@ The companion function for selecting the complete cases is cc." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -130,7 +130,7 @@ The companion function for selecting the complete cases is cc." />
     </div>
 
     <div class="ref-description">
-    <p>Extracts incomplete cases from a data set. 
+    <p>Extracts incomplete cases from a data set.
 The companion function for selecting the complete cases is <code><a href='cc.html'>cc</a></code>.</p>
     </div>
 
@@ -142,7 +142,7 @@ The companion function for selecting the complete cases is <code><a href='cc.htm
     <tr>
       <th>x</th>
       <td><p>An <code>R</code> object. Methods are available for classes
-<code>mids</code>, <code>data.frame</code> and <code>matrix</code>. Also, <code>x</code> 
+<code>mids</code>, <code>data.frame</code> and <code>matrix</code>. Also, <code>x</code>
 could be a vector.</p></td>
     </tr>
     </table>
@@ -156,7 +156,7 @@ could be a vector.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>ic</span>(<span class='no'>nhanes</span>)   <span class='co'># get the 12 rows with incomplete cases </span></div><div class='output co'>#&gt;    age  bmi hyp chl
+<span class='fu'>ic</span>(<span class='no'>nhanes</span>) <span class='co'># get the 12 rows with incomplete cases</span></div><div class='output co'>#&gt;    age  bmi hyp chl
 #&gt; 1    1   NA  NA  NA
 #&gt; 3    1   NA   1 187
 #&gt; 4    3   NA  NA  NA
@@ -168,12 +168,12 @@ could be a vector.</p></td>
 #&gt; 16   1   NA  NA  NA
 #&gt; 20   3 25.5   2  NA
 #&gt; 21   1   NA  NA  NA
-#&gt; 24   3 24.9   1  NA</div><div class='input'><span class='fu'>ic</span>(<span class='no'>nhanes</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,])  <span class='co'># incomplete cases within the first ten rows</span></div><div class='output co'>#&gt;    age bmi hyp chl
+#&gt; 24   3 24.9   1  NA</div><div class='input'><span class='fu'>ic</span>(<span class='no'>nhanes</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ]) <span class='co'># incomplete cases within the first ten rows</span></div><div class='output co'>#&gt;    age bmi hyp chl
 #&gt; 1    1  NA  NA  NA
 #&gt; 3    1  NA   1 187
 #&gt; 4    3  NA  NA  NA
 #&gt; 6    3  NA  NA 184
-#&gt; 10   2  NA  NA  NA</div><div class='input'><span class='fu'>ic</span>(<span class='no'>nhanes</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"bmi"</span>, <span class='st'>"hyp"</span>)])  <span class='co'># restrict extraction to variables bmi and hyp</span></div><div class='output co'>#&gt;    bmi hyp
+#&gt; 10   2  NA  NA  NA</div><div class='input'><span class='fu'>ic</span>(<span class='no'>nhanes</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"bmi"</span>, <span class='st'>"hyp"</span>)]) <span class='co'># restrict extraction to variables bmi and hyp</span></div><div class='output co'>#&gt;    bmi hyp
 #&gt; 1   NA  NA
 #&gt; 3   NA   1
 #&gt; 4   NA  NA
@@ -182,8 +182,7 @@ could be a vector.</p></td>
 #&gt; 11  NA  NA
 #&gt; 12  NA  NA
 #&gt; 16  NA  NA
-#&gt; 21  NA  NA</div><div class='input'>
-</div></pre>
+#&gt; 21  NA  NA</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

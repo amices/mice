@@ -47,8 +47,8 @@
 
 <meta property="og:title" content="Combine <code>mids</code> objects by columns — cbind.mids" />
 <meta property="og:description" content="This function combines two mids objects columnwise into a single
-object of class mids, or combines a single mids object with 
-a vector, matrix, factor or data.frame 
+object of class mids, or combines a single mids object with
+a vector, matrix, factor or data.frame
 columnwise into a mids object." />
 
 
@@ -81,7 +81,7 @@ columnwise into a mids object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -133,8 +133,8 @@ columnwise into a mids object." />
 
     <div class="ref-description">
     <p>This function combines two <code>mids</code> objects columnwise into a single
-object of class <code>mids</code>, or combines a single <code>mids</code> object with 
-a <code>vector</code>, <code>matrix</code>, <code>factor</code> or <code>data.frame</code> 
+object of class <code>mids</code>, or combines a single <code>mids</code> object with
+a <code>vector</code>, <code>matrix</code>, <code>factor</code> or <code>data.frame</code>
 columnwise into a <code>mids</code> object.</p>
     </div>
 
@@ -149,12 +149,12 @@ columnwise into a <code>mids</code> object.</p>
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A <code>mids</code> object, or a <code>data.frame</code>, <code>matrix</code>, 
+      <td><p>A <code>mids</code> object, or a <code>data.frame</code>, <code>matrix</code>,
 <code>factor</code> or <code>vector</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional <code>data.frame</code>, <code>matrix</code>, <code>vector</code> 
+      <td><p>Additional <code>data.frame</code>, <code>matrix</code>, <code>vector</code>
 or <code>factor</code>. These can be given as named arguments.</p></td>
     </tr>
     </table>
@@ -164,11 +164,11 @@ or <code>factor</code>. These can be given as named arguments.</p></td>
     <p>An S3 object of class <code>mids</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><em>Pre-requisites:</em> If <code>y</code> is a <code>mids</code>-object, the rows 
-of <code>x$data</code> and <code>y$data</code> should match, as well as the number 
-of imputations (<code>m</code>). Other <code>y</code> are transformed into a 
+    <p><em>Pre-requisites:</em> If <code>y</code> is a <code>mids</code>-object, the rows
+of <code>x$data</code> and <code>y$data</code> should match, as well as the number
+of imputations (<code>m</code>). Other <code>y</code> are transformed into a
 <code>data.frame</code> whose rows should match with <code>x$data</code>.</p>
-<p>The function renames any duplicated variable or block names by 
+<p>The function renames any duplicated variable or block names by
 appending <code>".1"</code>, <code>".2"</code> to duplicated names.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -178,7 +178,7 @@ appending <code>".1"</code>, <code>".2"</code> to duplicated names.</p>
 <tr><td><code>m</code></td><td>Taken from <code>x$m</code></td></tr>
 <tr><td><code>where</code></td><td>Columnwise combination of <code>x$where</code> and <code>y$where</code></td></tr>
 <tr><td><code>blocks</code></td><td>Combines <code>x$blocks</code> and <code>y$blocks</code></td></tr>
-<tr><td><code>call</code></td><td>Vector, <code>call[1]</code> creates <code>x</code>, <code>call[2]</code> 
+<tr><td><code>call</code></td><td>Vector, <code>call[1]</code> creates <code>x</code>, <code>call[2]</code>
 is call to <code>cbind.mids</code></td></tr>
 <tr><td><code>nmis</code></td><td>Equals <code><a href='https://rdrr.io/r/base/c.html'>c(x$nmis, y$nmis)</a></code></td></tr>
 <tr><td><code>method</code></td><td>Combines <code>x$method</code> and <code>y$method</code></td></tr>
@@ -200,7 +200,7 @@ is call to <code>cbind.mids</code></td></tr>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></code>, <code><a href='rbind.mids.html'>rbind.mids</a></code>, <code><a href='ibind.html'>ibind</a></code>, 
+    <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></code>, <code><a href='rbind.mids.html'>rbind.mids</a></code>, <code><a href='ibind.html'>ibind</a></code>,
 <code><a href='mids-class.html'>mids</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -236,7 +236,7 @@ is call to <code>cbind.mids</code></td></tr>
 #&gt; bmi   0   0   1   0</div><div class='input'>
 <span class='co'># Append 'forgotten' variable chl</span>
 <span class='no'>data3</span> <span class='kw'>&lt;-</span> <span class='no'>nhanes</span>[, <span class='fl'>1</span>:<span class='fl'>3</span>]
-<span class='no'>imp3</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>data3</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>,<span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>imp3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>data3</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>imp4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cbind.html'>cbind</a></span>(<span class='no'>imp3</span>, <span class='kw'>chl</span> <span class='kw'>=</span> <span class='no'>nhanes</span>$<span class='no'>chl</span>)
 
 <span class='co'># Of course, chl was not imputed</span>

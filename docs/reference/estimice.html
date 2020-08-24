@@ -46,9 +46,9 @@
 
 
 <meta property="og:title" content="Computes least squares parameters — estimice" />
-<meta property="og:description" content="This function computes least squares estimates, variance/covariance matrices, 
-residuals and degrees of freedom according to ridge regression, QR decomposition 
-or Singular Value Decomposition. This function is internally called by .norm.draw(), 
+<meta property="og:description" content="This function computes least squares estimates, variance/covariance matrices,
+residuals and degrees of freedom according to ridge regression, QR decomposition
+or Singular Value Decomposition. This function is internally called by .norm.draw(),
 but can be called by any user-specified imputation function." />
 
 
@@ -81,7 +81,7 @@ but can be called by any user-specified imputation function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -132,9 +132,9 @@ but can be called by any user-specified imputation function." />
     </div>
 
     <div class="ref-description">
-    <p>This function computes least squares estimates, variance/covariance matrices, 
-residuals and degrees of freedom according to ridge regression, QR decomposition 
-or Singular Value Decomposition. This function is internally called by .norm.draw(), 
+    <p>This function computes least squares estimates, variance/covariance matrices,
+residuals and degrees of freedom according to ridge regression, QR decomposition
+or Singular Value Decomposition. This function is internally called by .norm.draw(),
 but can be called by any user-specified imputation function.</p>
     </div>
 
@@ -153,12 +153,12 @@ but can be called by any user-specified imputation function.</p>
     </tr>
     <tr>
       <th>ls.meth</th>
-      <td><p>the method to use for obtaining the least squares estimates. By 
+      <td><p>the method to use for obtaining the least squares estimates. By
 default parameters are drawn by means of QR decomposition.</p></td>
     </tr>
     <tr>
       <th>ridge</th>
-      <td><p>A small numerical value specifying the size of the ridge used. 
+      <td><p>A small numerical value specifying the size of the ridge used.
 The default value <code>ridge = 1e-05</code> represents a compromise between stability
 and unbiasedness. Decrease <code>ridge</code> if the data contain many junk variables.
 Increase <code>ridge</code> for highly collinear data.</p></td>
@@ -172,16 +172,21 @@ Increase <code>ridge</code> for highly collinear data.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>list</code> containing components <code>c</code> (least squares estimate),
-<code>r</code> (residuals), <code>v</code> (variance/covariance matrix) and <code>df</code> 
+<code>r</code> (residuals), <code>v</code> (variance/covariance matrix) and <code>df</code>
 (degrees of freedom).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>When calculating the inverse of the crossproduct of the predictor matrix, 
-problems may arise. For example, taking the inverse is not possible when the 
-predictor matrix is rank deficient, or when the estimation problem is 
-computationally singular. This function detects such error cases and 
-automatically falls back to adding a ridge penalty to the diagonal of the 
+    <p>When calculating the inverse of the crossproduct of the predictor matrix,
+problems may arise. For example, taking the inverse is not possible when the
+predictor matrix is rank deficient, or when the estimation problem is
+computationally singular. This function detects such error cases and
+automatically falls back to adding a ridge penalty to the diagonal of the
 crossproduct to allow for proper calculation of the inverse.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>This functions adds a star to variable names in the mice iteration
+history to signal that a ridge penalty was added. In that case, it
+also adds an entry to <code>loggedEvents</code>.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

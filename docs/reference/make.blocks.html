@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Creates a <code>blocks</code> argument — make.blocks" />
-<meta property="og:description" content="This helper function generates a list of the type needed for 
+<meta property="og:description" content="This helper function generates a list of the type needed for
 blocks argument in the [=mice]{mice} function." />
 
 
@@ -79,7 +79,7 @@ blocks argument in the [=mice]{mice} function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -130,7 +130,7 @@ blocks argument in the [=mice]{mice} function." />
     </div>
 
     <div class="ref-description">
-    <p>This helper function generates a list of the type needed for 
+    <p>This helper function generates a list of the type needed for
 <code>blocks</code> argument in the <code>[=mice]{mice}</code> function.</p>
     </div>
 
@@ -150,28 +150,28 @@ variable names, or <code>list</code> with variable names.</p></td>
     </tr>
     <tr>
       <th>partition</th>
-      <td><p>A character vector of length 1 used to assign 
-variables to blocks when <code>data</code> is a <code>data.frame</code>. Value 
-<code>"scatter"</code> (default) will assign each column to it own 
-block. Value <code>"collect"</code> assigns all variables to one block, 
+      <td><p>A character vector of length 1 used to assign
+variables to blocks when <code>data</code> is a <code>data.frame</code>. Value
+<code>"scatter"</code> (default) will assign each column to it own
+block. Value <code>"collect"</code> assigns all variables to one block,
 whereas <code>"void"</code> produces an empty list.</p></td>
     </tr>
     <tr>
       <th>calltype</th>
-      <td><p>A character vector of <code><a href='https://rdrr.io/r/base/length.html'>length(block)</a></code> elements 
-that indicates how the imputation model is specified. If 
-<code>calltype = "type"</code> (the default), the underlying imputation 
-model is called by means of the <code>type</code> argument. The 
-<code>type</code> argument for block <code>h</code> is equivalent to  
+      <td><p>A character vector of <code><a href='https://rdrr.io/r/base/length.html'>length(block)</a></code> elements
+that indicates how the imputation model is specified. If
+<code>calltype = "type"</code> (the default), the underlying imputation
+model is called by means of the <code>type</code> argument. The
+<code>type</code> argument for block <code>h</code> is equivalent to
 row <code>h</code> in the <code>predictorMatrix</code>.
-The alternative is <code>calltype = "formula"</code>. This will pass 
-<code>formulas[[h]]</code> to the underlying imputation 
+The alternative is <code>calltype = "formula"</code>. This will pass
+<code>formulas[[h]]</code> to the underlying imputation
 function for block <code>h</code>, together with the current data.
-The <code>calltype</code> of a block is set automatically during 
-initialization. Where a choice is possible, calltype 
-<code>"formula"</code> is preferred over <code>"type"</code> since this is 
+The <code>calltype</code> of a block is set automatically during
+initialization. Where a choice is possible, calltype
+<code>"formula"</code> is preferred over <code>"type"</code> since this is
 more flexible and extendable. However, what precisely happens
-depends also on the capabilities of the imputation 
+depends also on the capabilities of the imputation
 function that is called.</p></td>
     </tr>
     </table>
@@ -181,23 +181,23 @@ function that is called.</p></td>
     <p>A named list of character vectors with variables names.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Choices <code>"scatter"</code> and <code>"collect"</code> represent to two 
-extreme scenarios for assigning variables to imputation blocks. 
-Use <code>"scatter"</code> to create an imputation model based on 
-<em>fully conditionally specification</em> (FCS). Use <code>"collect"</code> to 
-gather all variables to be imputed by a <em>joint model</em> (JM). 
-Scenario's in-between these two extremes represent 
+    <p>Choices <code>"scatter"</code> and <code>"collect"</code> represent to two
+extreme scenarios for assigning variables to imputation blocks.
+Use <code>"scatter"</code> to create an imputation model based on
+<em>fully conditionally specification</em> (FCS). Use <code>"collect"</code> to
+gather all variables to be imputed by a <em>joint model</em> (JM).
+Scenario's in-between these two extremes represent
 <em>hybrid</em> imputation models that combine FCS and JM.</p>
-<p>Any variable not listed in will not be imputed. 
-Specification <code>"void"</code> represents the extreme scenario that 
+<p>Any variable not listed in will not be imputed.
+Specification <code>"void"</code> represents the extreme scenario that
 skips imputation of all variables.</p>
-<p>A variable may be a member of multiple blocks. The variable will be 
-re-imputed in each block, so the final imputations for variable 
-will come from the last block that was executed. This scenario 
-may be useful where the same complete background factors appear in 
+<p>A variable may be a member of multiple blocks. The variable will be
+re-imputed in each block, so the final imputations for variable
+will come from the last block that was executed. This scenario
+may be useful where the same complete background factors appear in
 multiple imputation blocks.</p>
-<p>A variable may appear multiple times within a given block. If a univariate 
-imputation model is applied to such a block, then the variable is 
+<p>A variable may appear multiple times within a given block. If a univariate
+imputation model is applied to such a block, then the variable is
 re-imputed each time as it appears in the block.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

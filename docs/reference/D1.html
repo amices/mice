@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -144,14 +144,14 @@
     <tr>
       <th>fit0</th>
       <td><p>An object of class <code>mira</code>, produced by <code><a href='https://rdrr.io/r/base/with.html'>with()</a></code>. The
-model in <code>fit0</code> is a nested within <code>fit1</code>. The default null 
+model in <code>fit0</code> is a nested within <code>fit1</code>. The default null
 model <code>fit0 = NULL</code> compares <code>fit1</code> to the intercept-only model.</p></td>
     </tr>
     <tr>
       <th>dfcom</th>
-      <td><p>A single number denoting the 
+      <td><p>A single number denoting the
 complete-data degrees of freedom of model <code>fit1</code>. If not specified,
-it is set equal to <code>df.residual</code> of model <code>fit1</code>. If that cannot 
+it is set equal to <code>df.residual</code> of model <code>fit1</code>. If that cannot
 be done, the procedure assumes (perhaps incorrectly) a large sample.</p></td>
     </tr>
     <tr>
@@ -163,7 +163,7 @@ be done, the procedure assumes (perhaps incorrectly) a large sample.</p></td>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Li, K. H., T. E. Raghunathan, and D. B. Rubin. 1991.
-Large-Sample Significance Levels from Multiply Imputed Data Using 
+Large-Sample Significance Levels from Multiply Imputed Data Using
 Moment-Based Statistics and an F Reference Distribution.
 <em>Journal of the American Statistical Association</em>, 86(416): 1065–73.</p>
 <p><a href='https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:wald'>https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:wald</a></p>
@@ -177,10 +177,9 @@ Moment-Based Statistics and an F Reference Distribution.
 <span class='no'>mi1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>imp</span>, <span class='kw'>expr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>bmi</span> ~ <span class='no'>age</span> + <span class='no'>hyp</span> + <span class='no'>chl</span>))
 <span class='no'>mi0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>imp</span>, <span class='kw'>expr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>bmi</span> ~ <span class='no'>age</span> + <span class='no'>hyp</span>))
 <span class='fu'>D1</span>(<span class='no'>mi1</span>, <span class='no'>mi0</span>)</div><div class='output co'>#&gt;    test statistic df1 df2 dfcom    p.value       riv
-#&gt;  1 ~~ 2  6.983285   1   4    20 0.05742461 0.4170675</div><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt;  1 ~~ 2  6.983285   1   4    20 0.05742461 0.4170675</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Compare two logistic regression models</span>
-<span class='no'>imp</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>boys</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>boys</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>gen</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>gen</span>)[<span class='fl'>1</span>] ~ <span class='no'>hgt</span> + <span class='no'>hc</span> + <span class='no'>reg</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>))
 <span class='no'>fit0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>gen</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>gen</span>)[<span class='fl'>1</span>] ~ <span class='no'>hgt</span> + <span class='no'>hc</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>))
 <span class='fu'>D1</span>(<span class='no'>fit1</span>, <span class='no'>fit0</span>)

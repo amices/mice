@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Scatterplot of observed and imputed data — xyplot.mids" />
-<meta property="og:description" content="Plotting methods for imputed data using lattice. 
+<meta property="og:description" content="Plotting methods for imputed data using lattice.
 xyplot() produces a conditional scatterplots. The function
 automatically separates the observed (blue) and imputed (red) data. The
 function extends the usual features of lattice." />
@@ -81,7 +81,7 @@ function extends the usual features of lattice." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@ function extends the usual features of lattice." />
     </div>
 
     <div class="ref-description">
-    <p>Plotting methods for imputed data using <span class="pkg">lattice</span>. 
+    <p>Plotting methods for imputed data using <span class="pkg">lattice</span>.
 <code>xyplot()</code> produces a conditional scatterplots. The function
 automatically separates the observed (blue) and imputed (red) data. The
 function extends the usual features of <span class="pkg">lattice</span>.</p>
@@ -303,20 +303,19 @@ package, as well as <code><a href='https://rdrr.io/pkg/lattice/man/xyplot.html'>
 <code><a href='https://rdrr.io/pkg/lattice/man/trellis.par.get.html'>trellis.par.set</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>boys</span>, <span class='kw'>maxit</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; 
+    <pre class="examples"><div class='input'><span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>boys</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  hgt  wgt  bmi  hc  gen  phb  tv  reg
 #&gt;   1   2  hgt  wgt  bmi  hc  gen  phb  tv  reg
 #&gt;   1   3  hgt  wgt  bmi  hc  gen  phb  tv  reg
 #&gt;   1   4  hgt  wgt  bmi  hc  gen  phb  tv  reg
 #&gt;   1   5  hgt  wgt  bmi  hc  gen  phb  tv  reg</div><div class='input'>
-<span class='co'>### xyplot: scatterplot by imputation number</span>
-<span class='co'>### observe the erroneous outlying imputed values</span>
-<span class='co'>### (caused by imputing hgt from bmi)</span>
-<span class='fu'>xyplot</span>(<span class='no'>imp</span>, <span class='no'>hgt</span>~<span class='no'>age</span><span class='kw'>|</span><span class='no'>.imp</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>20</span>),<span class='kw'>cex</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1.5</span>))</div><div class='img'><img src='xyplot.mids-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>### same, but label with missingness of wgt (four cases)</span>
-<span class='fu'>xyplot</span>(<span class='no'>imp</span>, <span class='no'>hgt</span>~<span class='no'>age</span><span class='kw'>|</span><span class='no'>.imp</span>, <span class='kw'>na.group</span><span class='kw'>=</span><span class='no'>wgt</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>20</span>),<span class='kw'>cex</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1.5</span>))</div><div class='img'><img src='xyplot.mids-2.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+<span class='co'># xyplot: scatterplot by imputation number</span>
+<span class='co'># observe the erroneous outlying imputed values</span>
+<span class='co'># (caused by imputing hgt from bmi)</span>
+<span class='fu'>xyplot</span>(<span class='no'>imp</span>, <span class='no'>hgt</span> ~ <span class='no'>age</span> <span class='kw'>|</span> <span class='no'>.imp</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>20</span>), <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1.5</span>))</div><div class='img'><img src='xyplot.mids-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># same, but label with missingness of wgt (four cases)</span>
+<span class='fu'>xyplot</span>(<span class='no'>imp</span>, <span class='no'>hgt</span> ~ <span class='no'>age</span> <span class='kw'>|</span> <span class='no'>.imp</span>, <span class='kw'>na.group</span> <span class='kw'>=</span> <span class='no'>wgt</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>20</span>), <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1.5</span>))</div><div class='img'><img src='xyplot.mids-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
