@@ -2,8 +2,8 @@ pandoc: 2.7.3
 pkgdown: 1.5.1
 pkgdown_sha: ~
 articles: []
-last_built: 2020-08-24T20:40Z
+last_built: 2020-08-25T19:38Z
 urls:
-  reference: http://stefvanbuuren.github.io/mice/reference
-  article: http://stefvanbuuren.github.io/mice/articles
+  reference: https://amices.github.io/mice/reference
+  article: https://amices.github.io/mice/articles
 
