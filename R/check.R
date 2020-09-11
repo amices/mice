@@ -60,3 +60,35 @@ check.cluster <- function(data, predictorMatrix) {
   }
   TRUE
 }
+
+check.ignore <- function(ignore, data) {
+  if (is.null(ignore)) {
+    return(rep(FALSE, nrow(data)))
+  }
+  if (!is.logical(ignore)) {
+    stop("Argument ignore not a logical.")
+  }
+  if (length(ignore) != nrow(data)) {
+    stop(
+      "length(ignore) (", length(ignore),
+      ") does not match nrow(data) (", nrow(data), ")."
+    )
+  }
+  if (sum(ignore) < 10L) {
+    warning(
+      "Fewer than 10 rows for fitting the imputation model. Are you sure?",
+      call. = FALSE
+    )
+  }
+  ignore
+}
+
+check.newdata <- function(newdata, data) {
+  if (is.null(newdata)) {
+    stop("No newdata found.")
+  }
+  if (!is.data.frame(newdata)) {
+    stop("newdata not a data.frame.")
+  }
+  newdata
+}

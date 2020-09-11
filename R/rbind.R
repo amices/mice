@@ -36,6 +36,7 @@
 #' \code{formulas}  \tab Taken from \code{x$formulas}\cr
 #' \code{post}      \tab Taken from \code{x$post}\cr
 #' \code{blots}     \tab Taken from \code{x$blots}\cr
+#' \code{ignore}    \tab Concatenate \code{x$ignore} and \code{y$ignore}\cr
 #' \code{seed}            \tab Taken from \code{x$seed}\cr
 #' \code{iteration}       \tab Taken from \code{x$iteration}\cr
 #' \code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
@@ -106,6 +107,7 @@ rbind.mids <- function(x, y = NULL, ...) {
   post <- x$post
   formulas <- x$formulas
   blots <- x$blots
+  ignore <- x$ignore
   predictorMatrix <- x$predictorMatrix
   visitSequence <- x$visitSequence
 
@@ -127,8 +129,11 @@ rbind.mids <- function(x, y = NULL, ...) {
     method = method,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
-    formulas = formulas, post = post,
-    blots = blots, seed = seed,
+    formulas = formulas,
+    post = post,
+    blots = blots,
+    ignore = ignore,
+    seed = seed,
     iteration = iteration,
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
@@ -180,6 +185,7 @@ rbind.mids.mids <- function(x, y, call) {
   post <- x$post
   formulas <- x$formulas
   blots <- x$blots
+  ignore <- c(x$ignore, y$ignore)
   predictorMatrix <- x$predictorMatrix
   visitSequence <- x$visitSequence
 
@@ -218,8 +224,10 @@ rbind.mids.mids <- function(x, y, call) {
     method = method,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
-    formulas = formulas, post = post,
+    formulas = formulas,
+    post = post,
     blots = blots,
+    ignore = ignore,
     seed = seed,
     iteration = iteration,
     lastSeedValue = lastSeedValue,

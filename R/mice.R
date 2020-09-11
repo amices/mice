@@ -197,6 +197,16 @@
 #' are created by a simple random draw from the data. Note that specification of
 #' \code{data.init} will start all \code{m} Gibbs sampling streams from the same
 #' imputation.
+#' @param ignore A logical vector of \code{length(n)} elements indicating
+#' which rows are ignored when creating the imputation model. The default
+#' \code{NULL} includes all rows that have an observed value of the variable
+#' to imputed. Rows with \code{ignore} set to \code{TRUE} do not influence the
+#' parameters of the imputation model, but are still imputed. We may use the
+#' \code{ignore} argument to split \code{data} into a training set (on which the
+#' imputation model is built) and a test set (that does not influence the
+#' imputation model estimates).
+#' Note: Multivariate imputation methods, like \code{mice.impute.jomoImpute()}
+#' or \code{mice.impute.panImpute()}, do not honour the \code{ignore} argument.
 #' @param ... Named arguments that are passed down to the univariate imputation
 #' functions.
 #'
@@ -260,6 +270,7 @@ mice <- function(data, m = 5,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
                  maxit = 5, printFlag = TRUE, seed = NA,
                  data.init = NULL,
+                 ignore = NULL,
                  ...) {
   call <- match.call()
   check.deprecated(...)
@@ -351,6 +362,7 @@ mice <- function(data, m = 5,
   )
   post <- check.post(post, data)
   blots <- check.blots(blots, data, blocks)
+  ignore <- check.ignore(ignore, data)
 
   # data frame for storing the event log
   state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
@@ -373,7 +385,7 @@ mice <- function(data, m = 5,
   nmis <- apply(is.na(data), 2, sum)
   imp <- initialize.imp(
     data, m, where, blocks, visitSequence,
-    method, nmis, data.init
+    method, nmis, data.init, ignore
   )
 
   # and iterate...
@@ -381,8 +393,8 @@ mice <- function(data, m = 5,
   to <- from + maxit - 1
   q <- sampler(
     data, m, where, imp, blocks, method, visitSequence,
-    predictorMatrix, formulas, blots, post, c(from, to),
-    printFlag, ...
+    predictorMatrix, formulas, blots, post, ignore,
+    c(from, to), printFlag, ...
   )
 
   if (!state$log) loggedEvents <- NULL
@@ -390,14 +402,20 @@ mice <- function(data, m = 5,
 
   ## save, and return
   midsobj <- list(
-    data = data, imp = q$imp, m = m,
-    where = where, blocks = blocks,
-    call = call, nmis = nmis,
+    data = data,
+    imp = q$imp,
+    m = m,
+    where = where,
+    blocks = blocks,
+    call = call,
+    nmis = nmis,
     method = method,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
-    formulas = formulas, post = post,
+    formulas = formulas,
+    post = post,
     blots = blots,
+    ignore = ignore,
     seed = seed,
     iteration = q$iteration,
     lastSeedValue = .Random.seed,

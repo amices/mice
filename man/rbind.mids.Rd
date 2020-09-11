@@ -51,6 +51,7 @@ the data of \code{y} will be copied\cr
 \code{formulas}  \tab Taken from \code{x$formulas}\cr
 \code{post}      \tab Taken from \code{x$post}\cr
 \code{blots}     \tab Taken from \code{x$blots}\cr
+\code{ignore}    \tab Concatenate \code{x$ignore} and \code{y$ignore}\cr
 \code{seed}            \tab Taken from \code{x$seed}\cr
 \code{iteration}       \tab Taken from \code{x$iteration}\cr
 \code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr

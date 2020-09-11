@@ -1,12 +1,12 @@
 initialize.imp <- function(data, m, where, blocks, visitSequence,
-                           method, nmis, data.init) {
+                           method, nmis, data.init, ignore) {
   imp <- vector("list", ncol(data))
   names(imp) <- names(data)
   r <- !is.na(data)
   for (h in visitSequence) {
     for (j in blocks[[h]]) {
       y <- data[, j]
-      ry <- r[, j]
+      ry <- r[, j] & !ignore
       wy <- where[, j]
       imp[[j]] <- as.data.frame(matrix(NA, nrow = sum(wy), ncol = m))
       dimnames(imp[[j]]) <- list(row.names(data)[wy], 1:m)

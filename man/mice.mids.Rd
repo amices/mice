@@ -4,11 +4,14 @@
 \alias{mice.mids}
 \title{Multivariate Imputation by Chained Equations (Iteration Step)}
 \usage{
-mice.mids(obj, maxit = 1, printFlag = TRUE, ...)
+mice.mids(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...)
 }
 \arguments{
 \item{obj}{An object of class \code{mids}, typically produces by a previous
 call to \code{mice()} or \code{mice.mids()}}
+
+\item{newdata}{An optional \code{data.frame} for which multiple imputations
+are generated according to the model in \code{obj}.}
 
 \item{maxit}{The number of additional Gibbs sampling iterations.}
 

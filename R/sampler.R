@@ -1,7 +1,7 @@
 # The sampler controls the actual Gibbs sampling iteration scheme.
 # This function is called by mice and mice.mids
 sampler <- function(data, m, where, imp, blocks, method, visitSequence,
-                    predictorMatrix, formulas, blots, post,
+                    predictorMatrix, formulas, blots, post, ignore,
                     fromto, printFlag, ...) {
   from <- fromto[1]
   to <- fromto[2]
@@ -78,7 +78,8 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
                   method = theMethod,
                   yname = j, k = k,
                   calltype = calltype,
-                  user = user, ...
+                  user = user, ignore = ignore,
+                  ...
                 )
 
               data[(!r[, j]) & where[, j], j] <-
@@ -128,6 +129,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           }
 
           # passive imputation
+          # applies to all rows, so no ignore needed
           if (pass) {
             for (j in b) {
               wy <- where[, j]
@@ -177,7 +179,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
 
 
 sampler.univ <- function(data, r, where, type, formula, method, yname, k,
-                         calltype = "type", user, ...) {
+                         calltype = "type", user, ignore, ...) {
   j <- yname[1L]
 
   if (calltype == "type") {
@@ -217,7 +219,7 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
 
   # define y, ry and wy
   y <- data[, j]
-  ry <- complete.cases(x, y) & r[, j]
+  ry <- complete.cases(x, y) & r[, j] & !ignore
   wy <- complete.cases(x) & where[, j]
 
   # nothing to impute

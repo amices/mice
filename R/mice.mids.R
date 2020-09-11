@@ -15,6 +15,8 @@
 #'
 #' @param obj An object of class \code{mids}, typically produces by a previous
 #' call to \code{mice()} or \code{mice.mids()}
+#' @param newdata An optional \code{data.frame} for which multiple imputations
+#' are generated according to the model in \code{obj}.
 #' @param maxit The number of additional Gibbs sampling iterations.
 #' @param printFlag A Boolean flag. If \code{TRUE}, diagnostic information
 #' during the Gibbs sampling iterations will be written to the command window.
@@ -40,7 +42,7 @@
 #' identical(imp$imp, imp2$imp)
 #' #
 #' @export
-mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
+mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
   if (!is.mids(obj)) {
     stop("Object should be of type mids.")
   }
@@ -60,6 +62,20 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
     )
   }
 
+  # obj contains training data, newdata contains test data
+  # overwrite obj with combined obj + imp.newdata
+  if (!is.null(newdata)) {
+    ignore <- rep(FALSE, nrow(obj$data))
+    if (!is.null(obj$ignore)) ignore <- obj$ignore
+
+    newdata <- check.newdata(newdata, obj$data)
+    imp.newdata <- mice(newdata, m = obj$m, maxit = 0)
+    obj <- rbind.mids(obj, imp.newdata)
+
+    # ignore newdata for model building, but do impute
+    obj$ignore <- c(ignore, rep(TRUE, nrow(newdata)))
+  }
+
   # Initialize local variables
   call <- match.call()
   imp <- obj$imp
@@ -77,7 +93,8 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
   q <- sampler(
     obj$data, obj$m, where, imp, blocks, obj$method,
     obj$visitSequence, obj$predictorMatrix,
-    obj$formulas, obj$blots, obj$post, c(from, to), printFlag, ...
+    obj$formulas, obj$blots, obj$post, obj$ignore,
+    c(from, to), printFlag, ...
   )
 
   imp <- q$imp
@@ -125,6 +142,7 @@ mice.mids <- function(obj, maxit = 1, printFlag = TRUE, ...) {
     visitSequence = obj$visitSequence,
     formulas = obj$formulas, post = obj$post,
     blots = obj$blots,
+    ignore = obj$ignore,
     seed = obj$seed,
     iteration = sumIt,
     lastSeedValue = .Random.seed,

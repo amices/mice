@@ -21,6 +21,7 @@ mice(
   printFlag = TRUE,
   seed = NA,
   data.init = NULL,
+  ignore = NULL,
   ...
 )
 }
@@ -122,6 +123,17 @@ iterative process.  The default \code{NULL} implies that starting imputation
 are created by a simple random draw from the data. Note that specification of
 \code{data.init} will start all \code{m} Gibbs sampling streams from the same
 imputation.}
+
+\item{ignore}{A logical vector of \code{length(n)} elements indicating
+which rows are ignored when creating the imputation model. The default
+\code{NULL} includes all rows that have an observed value of the variable
+to imputed. Rows with \code{ignore} set to \code{TRUE} do not influence the
+parameters of the imputation model, but are still imputed. We may use the
+\code{ignore} argument to split \code{data} into a training set (on which the
+imputation model is built) and a test set (that does not influence the
+imputation model estimates).
+Note: Multivariate imputation methods, like \code{mice.impute.jomoImpute()}
+or \code{mice.impute.panImpute()}, do not honour the \code{ignore} argument.}
 
 \item{...}{Named arguments that are passed down to the univariate imputation
 functions.}

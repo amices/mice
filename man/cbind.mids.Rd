@@ -50,6 +50,7 @@ is call to \code{cbind.mids}\cr
 \code{formulas}  \tab Combined as \code{c(x$formulas, y$formulas)}\cr
 \code{post}      \tab Combined as \code{c(x$post, y$post)}\cr
 \code{blots}     \tab Combined as \code{c(x$blots, y$blots)}\cr
+\code{ignore}    \tab Taken from \code{x$ignore}\cr
 \code{seed}            \tab Taken from \code{x$seed}\cr
 \code{iteration}       \tab Taken from \code{x$iteration}\cr
 \code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr

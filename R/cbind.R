@@ -36,6 +36,7 @@
 #' \code{formulas}  \tab Combined as \code{c(x$formulas, y$formulas)}\cr
 #' \code{post}      \tab Combined as \code{c(x$post, y$post)}\cr
 #' \code{blots}     \tab Combined as \code{c(x$blots, y$blots)}\cr
+#' \code{ignore}    \tab Taken from \code{x$ignore}\cr
 #' \code{seed}            \tab Taken from \code{x$seed}\cr
 #' \code{iteration}       \tab Taken from \code{x$iteration}\cr
 #' \code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
@@ -183,6 +184,7 @@ cbind.mids <- function(x, y = NULL, ...) {
   post <- c(x$post, rep.int("", ncol(y)))
   names(post) <- varnames
   blots <- x$blots
+  ignore <- x$ignore
 
   # seed, lastSeedvalue, number of iterations, chainMean and chainVar
   # is taken as in mids object x.
@@ -202,8 +204,11 @@ cbind.mids <- function(x, y = NULL, ...) {
     method = method,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
-    formulas = formulas, post = post,
-    blots = blots, seed = seed,
+    formulas = formulas,
+    post = post,
+    blots = blots,
+    ignore = ignore,
+    seed = seed,
     iteration = iteration,
     lastSeedValue = .Random.seed,
     chainMean = chainMean,
@@ -300,6 +305,7 @@ cbind.mids.mids <- function(x, y, call) {
   names(post) <- varnames
   blots <- c(x$blots, y$blots)
   names(blots) <- blocknames
+  ignore <- x$ignore
 
   # For the elements seed, lastSeedvalue and iteration the values
   # from midsobject x are copied.
@@ -356,8 +362,11 @@ cbind.mids.mids <- function(x, y, call) {
     method = method,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
-    formulas = formulas, post = post,
-    blots = blots, seed = seed,
+    formulas = formulas,
+    post = post,
+    blots = blots,
+    ignore = ignore,
+    seed = seed,
     iteration = iteration,
     lastSeedValue = .Random.seed,
     chainMean = chainMean,
