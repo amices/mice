@@ -65,7 +65,7 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
   # obj contains training data, newdata contains test data
   # overwrite obj with combined obj + imp.newdata
   if (!is.null(newdata)) {
-    ignore <- rep(FALSE, nrow(obj$data))
+    ignore <- obj$ignore
     if (!is.null(obj$ignore)) ignore <- obj$ignore
 
     newdata <- check.newdata(newdata, obj$data)
