@@ -70,7 +70,16 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
 
     newdata <- check.newdata(newdata, obj$data)
     imp.newdata <- mice(newdata, m = obj$m, maxit = 0)
-    obj <- rbind.mids(obj, imp.newdata)
+    obj <- withCallingHandlers(
+      rbind.mids(obj, imp.newdata),
+      warning = function(w) {
+        # Catch warnings concerning iterations, these differ by design 
+        if(!grepl("iterations differ", w$message)){
+           warning(w$message)
+         }
+        invokeRestart("muffleWarning")
+      }
+    )
 
     # ignore newdata for model building, but do impute
     obj$ignore <- c(ignore, rep(TRUE, nrow(newdata)))
