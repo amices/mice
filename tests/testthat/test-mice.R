@@ -229,14 +229,14 @@ add_pmm <- data.frame(
 )
 
 imp_pmm1 <- mice(
-  rbind(add, nhanes), 
+  rbind(add_pmm, nhanes), 
   maxit = 1, m = 1, print = FALSE, seed = 1, donors = 1L
 )
 
 imp_pmm2 <- mice(
   rbind(add_pmm, nhanes), 
   maxit = 1, m = 1, print = FALSE, seed = 1, donors = 1L,
-  ignore = c(rep(TRUE, nrow(add)), rep(FALSE, nrow(nhanes)))
+  ignore = c(rep(TRUE, nrow(add_pmm)), rep(FALSE, nrow(nhanes)))
 )
 
 test_that("`ignore` works with pmm", {
