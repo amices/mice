@@ -74,7 +74,7 @@ check.ignore <- function(ignore, data) {
       ") does not match nrow(data) (", nrow(data), ")."
     )
   }
-  if (sum(ignore) < 10L) {
+  if (sum(!ignore) < 10L) {
     warning(
       "Fewer than 10 rows for fitting the imputation model. Are you sure?",
       call. = FALSE
