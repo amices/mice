@@ -96,6 +96,9 @@ rbind.mids <- function(x, y = NULL, ...) {
   wy <- matrix(FALSE, nrow = nrow(y), ncol = ncol(y))
   where <- rbind(x$where, wy)
 
+  # ignore argument: include all new values
+  ignore <- c(x$ignore, rep(FALSE, nrow(y)))
+  
   # The number of imputations in the new midsobject is equal to that in x.
   m <- x$m
 
@@ -107,7 +110,6 @@ rbind.mids <- function(x, y = NULL, ...) {
   post <- x$post
   formulas <- x$formulas
   blots <- x$blots
-  ignore <- x$ignore
   predictorMatrix <- x$predictorMatrix
   visitSequence <- x$visitSequence
 
