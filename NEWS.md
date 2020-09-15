@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.11.4 
+
+* Add warning to `quickpred()` documentation (#268)
+
 # mice 3.11.3
 
 * Styles all sources files with styler
