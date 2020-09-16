@@ -46,22 +46,7 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
   if (!is.mids(obj)) {
     stop("Object should be of type mids.")
   }
-  if (maxit < 1) {
-    return(obj)
-  }
-
-  loggedEvents <- obj$loggedEvents
-  state <- list(
-    it = 0, im = 0, co = 0, dep = "", meth = "",
-    log = !is.null(loggedEvents)
-  )
-  if (is.null(loggedEvents)) {
-    loggedEvents <- data.frame(
-      it = 0, im = 0, co = 0, dep = "",
-      meth = "", out = ""
-    )
-  }
-
+  
   # obj contains training data, newdata contains test data
   # overwrite obj with combined obj + imp.newdata
   if (!is.null(newdata)) {
@@ -79,9 +64,25 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
         }
       }
     )
-
+    
     # ignore newdata for model building, but do impute
     obj$ignore <- c(ignore, rep(TRUE, nrow(newdata)))
+  }
+  
+  if (maxit < 1) {
+    return(obj)
+  }
+
+  loggedEvents <- obj$loggedEvents
+  state <- list(
+    it = 0, im = 0, co = 0, dep = "", meth = "",
+    log = !is.null(loggedEvents)
+  )
+  if (is.null(loggedEvents)) {
+    loggedEvents <- data.frame(
+      it = 0, im = 0, co = 0, dep = "",
+      meth = "", out = ""
+    )
   }
 
   # Initialize local variables
