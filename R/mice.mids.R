@@ -100,9 +100,9 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
   from <- obj$iteration + 1
   to <- from + maxit - 1
   q <- sampler(
-    obj$data, obj$m, where, imp, blocks, obj$method,
-    obj$visitSequence, obj$predictorMatrix,
-    obj$formulas, obj$blots, obj$post, obj$ignore,
+    obj$data, obj$m, obj$ignore, where, imp, blocks, 
+    obj$method, obj$visitSequence, obj$predictorMatrix,
+    obj$formulas, obj$blots, obj$post, 
     c(from, to), printFlag, ...
   )
 
