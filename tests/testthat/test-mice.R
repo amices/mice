@@ -196,6 +196,8 @@ test_that("`ignore` throws appropriate errors and warnings", {
 })
 
 
+# Check that the ignore argument is taken into account when
+# calculating the results
 # # all FALSE
 imp1 <- mice(nhanes, 
   maxit = 1, m = 1, print = FALSE, seed = 1,
@@ -205,10 +207,8 @@ imp1 <- mice(nhanes,
 # # NULL
 imp2 <- mice(nhanes, maxit = 1, m = 1, print = FALSE, seed = 1)
 
-
 # # alternate
 alternate <- rep(c(TRUE, FALSE), nrow(nhanes))[1:nrow(nhanes)]
-
 imp3 <- mice(nhanes, 
   maxit = 0, m = 1, print = FALSE, seed = 1,
   ignore = alternate
@@ -220,6 +220,8 @@ test_that("`ignore` changes the imputation results", {
 })
 
 
+# Check that rows flagged as ignored are indeed ignored by the
+# univariate sampler in mice
 artificial <- data.frame(
   age = c(1, 1),
   bmi = c(NA, 40.0), 
