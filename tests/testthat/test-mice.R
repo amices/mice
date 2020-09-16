@@ -179,7 +179,7 @@ test_that("`where` produces correct number of imputes", {
 context("mice: ignore")
 
 # # all TRUE
-test_that("throws errors and warnings", {
+test_that("`ignore` throws appropriate errors and warnings", {
   expect_error(
     mice(nhanes, maxit = 1, m = 1, print = FALSE, seed = 1, ignore = TRUE),
     "does not match"
@@ -220,7 +220,7 @@ test_that("`ignore` changes the imputation results", {
 })
 
 
-add_pmm <- data.frame(
+artificial <- data.frame(
   age = c(1, 1),
   bmi = c(NA, 40.0), 
   hyp = c(1, 1),
@@ -228,50 +228,18 @@ add_pmm <- data.frame(
   row.names = paste0("a", 1:2)
 )
 
-imp_pmm1 <- mice(
-  rbind(nhanes, add_pmm), 
-  maxit = 1, m = 1, print = FALSE, seed = 1, donors = 1L
+imp1 <- mice(
+  rbind(nhanes, artificial), 
+  maxit = 1, m = 1, print = FALSE, seed = 1, donors = 1L, matchtype = 0
 )
 
-imp_pmm2 <- mice(
-  rbind(nhanes, add_pmm), 
-  maxit = 1, m = 1, print = FALSE, seed = 1, donors = 1L,
-  ignore = c(rep(FALSE, nrow(nhanes)), rep(TRUE, nrow(add_pmm)))
+imp2 <- mice(
+  rbind(nhanes, artificial), 
+  maxit = 1, m = 1, print = FALSE, seed = 1, donors = 1L, matchtype = 0,
+  ignore = c(rep(FALSE, nrow(nhanes)), rep(TRUE, nrow(artificial)))
 )
 
 test_that("`ignore` works with pmm", {
-  expect_equal(complete(imp_pmm1)["a1", "bmi"], 40.0)
-  expect_failure(expect_equal(complete(imp_pmm2)["a1", "bmi"], 40.0))
+  expect_equal(complete(imp1)["a1", "bmi"], 40.0)
+  expect_failure(expect_equal(complete(imp2)["a1", "bmi"], 40.0))
 })
-
-
-
-lastSeedValue <- .Random.seed
-set.seed(1)
-add_norm <- nhanes
-rownames(add_norm) <- paste0("a", rownames(nhanes))
-add_norm$bmi <- c(NA, rnorm(nrow(nhanes)-1, mean = 9999, sd = 20))
-assign(".Random.seed", lastSeedValue, pos = 1)
-
-imp_norm1 <- mice(
-  rbind(nhanes, add_norm), 
-  maxit = 1, m = 1, print = FALSE, seed = 1, method = "norm"
-)
-
-imp_norm2 <- mice(
-  rbind(nhanes, add_norm), 
-  maxit = 1, m = 1, print = FALSE, seed = 1, method = "norm",
-  ignore = c(rep(FALSE, nrow(nhanes)), rep(TRUE, nrow(add_norm)))
-)
-
-test_that("`ignore` works with norm", {
-  expect_true(complete(imp_norm1)["a1", "bmi"] > 100)
-  expect_true(complete(imp_norm2)["a1", "bmi"] < 100)
-})
-
-
-
-
-
-
-
