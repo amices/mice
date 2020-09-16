@@ -73,11 +73,10 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
     obj <- withCallingHandlers(
       rbind.mids(obj, imp.newdata),
       warning = function(w) {
-        # Catch warnings concerning iterations, these differ by design 
-        if(!grepl("iterations differ", w$message)){
-           warning(w$message)
-         }
-        invokeRestart("muffleWarning")
+        if(grepl("iterations differ", w$message)){
+          # Catch warnings concerning iterations, these differ by design 
+          invokeRestart("muffleWarning")
+        }
       }
     )
 
