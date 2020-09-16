@@ -3,7 +3,7 @@ context("mice.mids: newdata")
 # Check that mice.mids correctly appends the newdata to the
 # existing mids object
 set.seed(1)
-init0 <- mice(nhanes, maxit = 1, m = 1, print = FALSE)
+init0 <- mice(nhanes, maxit = 0, m = 1, print = FALSE)
 
 set.seed(2)
 init1 <- mice(nhanes, maxit = 0, m = 1, print = FALSE)
