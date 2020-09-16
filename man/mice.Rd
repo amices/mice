@@ -217,6 +217,18 @@ mechanism allows uses to write customized imputation function,
 \code{method='myfunc'}.  To call it only for, say, column 2 specify
 \code{method=c('norm','myfunc','logreg',\dots{})}.
 
+\emph{Skipping imputation:} The user may skip imputation of a column by
+setting its entry to the empty method: \code{""}. For complete columns without
+missing data \code{mice} will automatically set the empty method. Setting t
+he empty method does not produce imputations for the column, so any missing
+cells remain \code{NA}. If column A contains \code{NA}'s and is used as
+predictor in the imputation model for column B, then \code{mice} produces no
+imputations for the rows in B where A is missing. The imputed data
+for B may thus contain \code{NA}'s. The remedy is to remove column A from
+the imputation model for the other columns in the data. This can be done
+by setting the entire column for variable A in the \code{predictorMatrix}
+equal to zero.
+
 \emph{Passive imputation:} \code{mice()} supports a special built-in method,
 called passive imputation. This method can be used to ensure that a data
 transform always depends on the most recently generated imputations.  In some
