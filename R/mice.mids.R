@@ -54,7 +54,9 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
     if (!is.null(obj$ignore)) ignore <- obj$ignore
     
     newdata <- check.newdata(newdata, obj$data)
-    imp.newdata <- mice(newdata, m = obj$m, maxit = 0)
+    imp.newdata <- mice(newdata, m = obj$m, maxit = 0,
+                        remove.collinear = FALSE, 
+                        remove.constant = FALSE)
     obj <- withCallingHandlers(
       rbind.mids(obj, imp.newdata),
       warning = function(w) {
