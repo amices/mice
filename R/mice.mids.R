@@ -46,6 +46,31 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
   if (!is.mids(obj)) {
     stop("Object should be of type mids.")
   }
+  
+  # obj contains training data, newdata contains test data
+  # overwrite obj with combined obj + imp.newdata
+  if (!is.null(newdata)) {
+    ignore <- rep(FALSE, nrow(obj$data))
+    if (!is.null(obj$ignore)) ignore <- obj$ignore
+    
+    newdata <- check.newdata(newdata, obj$data)
+    imp.newdata <- mice(newdata, m = obj$m, maxit = 0,
+                        remove.collinear = FALSE, 
+                        remove.constant = FALSE)
+    obj <- withCallingHandlers(
+      rbind.mids(obj, imp.newdata),
+      warning = function(w) {
+        if(grepl("iterations differ", w$message)){
+          # Catch warnings concerning iterations, these differ by design 
+          invokeRestart("muffleWarning")
+        }
+      }
+    )
+    
+    # ignore newdata for model building, but do impute
+    obj$ignore <- c(ignore, rep(TRUE, nrow(newdata)))
+  }
+  
   if (maxit < 1) {
     return(obj)
   }
@@ -60,20 +85,6 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
       it = 0, im = 0, co = 0, dep = "",
       meth = "", out = ""
     )
-  }
-
-  # obj contains training data, newdata contains test data
-  # overwrite obj with combined obj + imp.newdata
-  if (!is.null(newdata)) {
-    ignore <- rep(FALSE, nrow(obj$data))
-    if (!is.null(obj$ignore)) ignore <- obj$ignore
-
-    newdata <- check.newdata(newdata, obj$data)
-    imp.newdata <- mice(newdata, m = obj$m, maxit = 0)
-    obj <- rbind.mids(obj, imp.newdata)
-
-    # ignore newdata for model building, but do impute
-    obj$ignore <- c(ignore, rep(TRUE, nrow(newdata)))
   }
 
   # Initialize local variables
@@ -91,9 +102,9 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
   from <- obj$iteration + 1
   to <- from + maxit - 1
   q <- sampler(
-    obj$data, obj$m, where, imp, blocks, obj$method,
-    obj$visitSequence, obj$predictorMatrix,
-    obj$formulas, obj$blots, obj$post, obj$ignore,
+    obj$data, obj$m, obj$ignore, where, imp, blocks, 
+    obj$method, obj$visitSequence, obj$predictorMatrix,
+    obj$formulas, obj$blots, obj$post, 
     c(from, to), printFlag, ...
   )
 

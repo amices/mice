@@ -19,6 +19,8 @@ nh3 <- nhanes
 colnames(nh3) <- c("AGE", "bmi", "hyp", "chl")
 imp7 <- mice(nh3[14:25, ], m = 2, maxit = 2, print = FALSE)
 expect_warning(imp8 <<- mice(nhanes[1:13, ], m = 2, maxit = 2, print = FALSE))
+imp9 <- mice(nhanes, m = 2, maxit = 1, print = FALSE, 
+             ignore = c(rep(FALSE, 20), rep(TRUE, 5)))
 
 mylist <- list(age = NA, bmi = NA, hyp = NA, chl = NA)
 nhalf <- nhanes[13:25, ]
@@ -38,12 +40,17 @@ test_that("throws warning", {
     rbind(imp1, imp5),
     "iterations differ, so no convergence diagnostics calculated"
   )
+  expect_warning(
+    rbind(imp5, imp9),
+    "iterations differ, so no convergence diagnostics calculated"
+  )
 })
 
 r1 <- rbind(imp8, imp5)
 r2 <- rbind(imp1, mylist)
 r3 <- rbind(imp1, nhalf)
 r4 <- rbind(imp1, imp2)
+r5 <- rbind(imp2, imp9)
 
 test_that("Produces longer imputed data", {
   expect_identical(nrow(complete(r1)), 26L)
@@ -53,6 +60,11 @@ test_that("Produces longer imputed data", {
 test_that("Constant variables are not imputed", {
   expect_equal(sum(is.na(complete(r3))), 15L)
   expect_equal(sum(is.na(complete(r4))), 6L)
+})
+
+test_that("`ignore` is correctly appended", {
+  expect_equal(r2$ignore, rep(FALSE, 14))
+  expect_equal(r5$ignore, c(rep(FALSE, 32), rep(TRUE, 5)))
 })
 
 # r11 <- mice.mids(rbind(imp1, imp5), print = FALSE)
