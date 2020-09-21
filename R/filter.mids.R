@@ -79,7 +79,7 @@ filter.mids <- function(obj, include = NULL){
     wy <- obj$where[, i]
     iy <- obj$where[, i] & include
     
-    imp[[i]] <- obj$imp[[i]][iy[wy], ]
+    imp[[i]] <- obj$imp[[i]][iy[wy], , drop = FALSE]
   }
   
   # Components that need to be recalculated/reset
