@@ -164,5 +164,14 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
     date = Sys.Date()
   )
   oldClass(midsobj) <- "mids"
+  
+  if (!is.null(newdata)) {
+    include <- c(
+      rep(FALSE, nrow(midsobj$data) - nrow(newdata)),
+      rep(TRUE, nrow(newdata))
+    )
+    midsobj <- filter.mids(midsobj, include)
+  }
+  
   midsobj
 }

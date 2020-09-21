@@ -33,6 +33,11 @@ imp1 <- mice(nhanes, maxit = 1, m = 1, print = FALSE, seed = 1,
 set.seed(2)
 imp2 <- mice.mids(imp1, newdata = artificial, maxit = 1, print = FALSE)
 
-test_that("`ignore` works with pmm", {
+test_that("`newdata` works with pmm", {
   expect_failure(expect_equal(complete(imp2)["a1", "bmi"], 40.0))
 })
+
+test_that("`newdata` returns filtered mids object", {
+  expect_equal(nrow(complete(imp2)), nrow(artificial))
+})
+
