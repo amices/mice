@@ -43,8 +43,8 @@ nelsonaalen <- function(data, timevar, statusvar) {
   }
   timevar <- as.character(substitute(timevar))
   statusvar <- as.character(substitute(statusvar))
-  time <- data[, timevar]
-  status <- data[, statusvar]
+  time <- data[, timevar, drop = TRUE]
+  status <- data[, statusvar, drop = TRUE]
 
   hazard <- survival::basehaz(survival::coxph(survival::Surv(time, status) ~ 1))
   idx <- match(time, hazard[, "time"])

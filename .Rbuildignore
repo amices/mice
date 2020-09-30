@@ -17,3 +17,4 @@ _pkgdown.yaml
 .png
 ^script$
 ^CODE_OF_CONDUCT*
+^mice\.Rproj$
