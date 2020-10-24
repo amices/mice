@@ -3,6 +3,11 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.11.6
+
+* Makes `tidy.mipo` more flexible (#276)
+* Solves a problem if `nelsonaalen()` gets a `tibble` (#272)
+
 # mice 3.11.5
 
 * Add explanation to how `NA`s can appear in the imputed data (#267)
