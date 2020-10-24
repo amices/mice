@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.6</span>
       </span>
     </div>
 
@@ -132,14 +132,14 @@
     <p>Selects predictors according to simple statistics</p>
     </div>
 
-    <pre class="usage"><span class='fu'>quickpred</span>(
-  <span class='no'>data</span>,
-  <span class='kw'>mincor</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>minpuc</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>include</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>quickpred</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  mincor <span class='op'>=</span> <span class='fl'>0.1</span>,
+  minpuc <span class='op'>=</span> <span class='fl'>0</span>,
+  include <span class='op'>=</span> <span class='st'>""</span>,
+  exclude <span class='op'>=</span> <span class='st'>""</span>,
+  method <span class='op'>=</span> <span class='st'>"pearson"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -212,6 +212,11 @@ variables. Setting a high values for can be useful for auxiliary, less
 important, variables. The set of predictor for those variables can remain
 relatively small. Using a square matrix extends the idea to the columns, so
 that one can also apply cellwise thresholds.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p><code>quickpred()</code> uses <code><a href='https://rdrr.io/r/base/data.matrix.html'>data.matrix</a></code> to convert
+factors to numbers through their internal codes. Especially for unordered
+factors the resulting quantification may not make sense.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple
@@ -223,41 +228,50 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='mice.html'>mice</a></code>, <code><a href='mids-class.html'>mids</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Stef van Buuren, Aug 2009</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># default: include all predictors with absolute correlation over 0.1</span>
-<span class='fu'>quickpred</span>(<span class='no'>nhanes</span>)</div><div class='output co'>#&gt;     age bmi hyp chl
+<span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     age bmi hyp chl
 #&gt; age   0   0   0   0
 #&gt; bmi   1   0   1   1
 #&gt; hyp   1   0   0   1
 #&gt; chl   1   1   1   0</div><div class='input'>
 <span class='co'># all predictors with absolute correlation over 0.4</span>
-<span class='fu'>quickpred</span>(<span class='no'>nhanes</span>, <span class='kw'>mincor</span> <span class='kw'>=</span> <span class='fl'>0.4</span>)</div><div class='output co'>#&gt;     age bmi hyp chl
+<span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, mincor <span class='op'>=</span> <span class='fl'>0.4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     age bmi hyp chl
 #&gt; age   0   0   0   0
 #&gt; bmi   0   0   0   0
 #&gt; hyp   1   0   0   1
 #&gt; chl   1   0   1   0</div><div class='input'>
 <span class='co'># include age and bmi, exclude chl</span>
-<span class='fu'>quickpred</span>(<span class='no'>nhanes</span>, <span class='kw'>mincor</span> <span class='kw'>=</span> <span class='fl'>0.4</span>, <span class='kw'>inc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"age"</span>, <span class='st'>"bmi"</span>), <span class='kw'>exc</span> <span class='kw'>=</span> <span class='st'>"chl"</span>)</div><div class='output co'>#&gt;     age bmi hyp chl
+<span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, mincor <span class='op'>=</span> <span class='fl'>0.4</span>, inc <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"age"</span>, <span class='st'>"bmi"</span><span class='op'>)</span>, exc <span class='op'>=</span> <span class='st'>"chl"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     age bmi hyp chl
 #&gt; age   0   0   0   0
 #&gt; bmi   1   0   0   0
 #&gt; hyp   1   1   0   0
 #&gt; chl   1   1   1   0</div><div class='input'>
 <span class='co'># only include predictors with at least 30% usable cases</span>
-<span class='fu'>quickpred</span>(<span class='no'>nhanes</span>, <span class='kw'>minpuc</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</div><div class='output co'>#&gt;     age bmi hyp chl
+<span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, minpuc <span class='op'>=</span> <span class='fl'>0.3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     age bmi hyp chl
 #&gt; age   0   0   0   0
 #&gt; bmi   1   0   0   0
 #&gt; hyp   1   0   0   0
 #&gt; chl   1   1   1   0</div><div class='input'>
 <span class='co'># use low threshold for bmi, and high thresholds for hyp and chl</span>
-<span class='no'>pred</span> <span class='kw'>&lt;-</span> <span class='fu'>quickpred</span>(<span class='no'>nhanes</span>, <span class='kw'>mincor</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0.1</span>, <span class='fl'>0.5</span>, <span class='fl'>0.5</span>))
-<span class='no'>pred</span></div><div class='output co'>#&gt;     age bmi hyp chl
+<span class='va'>pred</span> <span class='op'>&lt;-</span> <span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, mincor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.1</span>, <span class='fl'>0.5</span>, <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>pred</span>
+</div><div class='output co'>#&gt;     age bmi hyp chl
 #&gt; age   0   0   0   0
 #&gt; bmi   1   0   1   1
 #&gt; hyp   1   0   0   0
 #&gt; chl   1   0   0   0</div><div class='input'>
 <span class='co'># use it directly from mice</span>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>, <span class='kw'>pred</span> <span class='kw'>=</span> <span class='fu'>quickpred</span>(<span class='no'>nhanes</span>, <span class='kw'>minpuc</span> <span class='kw'>=</span> <span class='fl'>0.25</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='st'>"age"</span>))</div><div class='output co'>#&gt; 
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, pred <span class='op'>=</span> <span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, minpuc <span class='op'>=</span> <span class='fl'>0.25</span>, include <span class='op'>=</span> <span class='st'>"age"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl
 #&gt;   1   2  bmi  hyp  chl
@@ -299,7 +313,7 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

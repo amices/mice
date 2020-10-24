@@ -81,7 +81,7 @@ densityplot and xyplot." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.6</span>
       </span>
     </div>
 
@@ -138,17 +138,17 @@ that can be used as a theme in <code>stripplot</code>, <code>bwplot</code>,
 <code>densityplot</code> and <code>xyplot</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mdc</span>(
-  <span class='kw'>r</span> <span class='kw'>=</span> <span class='st'>"observed"</span>,
-  <span class='kw'>s</span> <span class='kw'>=</span> <span class='st'>"symbol"</span>,
-  <span class='kw'>transparent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>cso</span> <span class='kw'>=</span> <span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/hcl.html'>hcl</a></span>(<span class='fl'>240</span>, <span class='fl'>100</span>, <span class='fl'>40</span>, <span class='fl'>0.7</span>),
-  <span class='kw'>csi</span> <span class='kw'>=</span> <span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/hcl.html'>hcl</a></span>(<span class='fl'>0</span>, <span class='fl'>100</span>, <span class='fl'>40</span>, <span class='fl'>0.7</span>),
-  <span class='kw'>csc</span> <span class='kw'>=</span> <span class='st'>"gray50"</span>,
-  <span class='kw'>clo</span> <span class='kw'>=</span> <span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/hcl.html'>hcl</a></span>(<span class='fl'>240</span>, <span class='fl'>100</span>, <span class='fl'>40</span>, <span class='fl'>0.8</span>),
-  <span class='kw'>cli</span> <span class='kw'>=</span> <span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/hcl.html'>hcl</a></span>(<span class='fl'>0</span>, <span class='fl'>100</span>, <span class='fl'>40</span>, <span class='fl'>0.8</span>),
-  <span class='kw'>clc</span> <span class='kw'>=</span> <span class='st'>"gray50"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>mdc</span><span class='op'>(</span>
+  r <span class='op'>=</span> <span class='st'>"observed"</span>,
+  s <span class='op'>=</span> <span class='st'>"symbol"</span>,
+  transparent <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  cso <span class='op'>=</span> <span class='fu'>grDevices</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/hcl.html'>hcl</a></span><span class='op'>(</span><span class='fl'>240</span>, <span class='fl'>100</span>, <span class='fl'>40</span>, <span class='fl'>0.7</span><span class='op'>)</span>,
+  csi <span class='op'>=</span> <span class='fu'>grDevices</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/hcl.html'>hcl</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>100</span>, <span class='fl'>40</span>, <span class='fl'>0.7</span><span class='op'>)</span>,
+  csc <span class='op'>=</span> <span class='st'>"gray50"</span>,
+  clo <span class='op'>=</span> <span class='fu'>grDevices</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/hcl.html'>hcl</a></span><span class='op'>(</span><span class='fl'>240</span>, <span class='fl'>100</span>, <span class='fl'>40</span>, <span class='fl'>0.8</span><span class='op'>)</span>,
+  cli <span class='op'>=</span> <span class='fu'>grDevices</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/hcl.html'>hcl</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>100</span>, <span class='fl'>40</span>, <span class='fl'>0.8</span><span class='op'>)</span>,
+  clc <span class='op'>=</span> <span class='st'>"gray50"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -222,12 +222,17 @@ Visualization with R</em>, Springer.</p>
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/grDevices/hcl.html'>hcl</a></code>, <code><a href='https://rdrr.io/r/grDevices/rgb.html'>rgb</a></code>,
 <code><a href='xyplot.mids.html'>xyplot.mids</a></code>, <code><a href='https://rdrr.io/pkg/lattice/man/xyplot.html'>xyplot</a></code>,
 <code><a href='https://rdrr.io/pkg/lattice/man/trellis.par.get.html'>trellis.par.set</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Stef van Buuren, sept 2012.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># all six colors</span>
-<span class='fu'>mdc</span>(<span class='fl'>1</span>:<span class='fl'>6</span>)</div><div class='output co'>#&gt; [1] "#006CC2B3" "#B61A51B3" "gray50"    "#006CC2CC" "#B61A51CC" "gray50"   </div><div class='input'>
+<span class='fu'>mdc</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "#006CC2B3" "#B61A51B3" "gray50"    "#006CC2CC" "#B61A51CC" "gray50"   </div><div class='input'>
 <span class='co'># lines color for observed and missing data</span>
-<span class='fu'>mdc</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"obs"</span>, <span class='st'>"mis"</span>), <span class='st'>"lin"</span>)</div><div class='output co'>#&gt; [1] "#006CC2CC" "#B61A51CC"</div></pre>
+<span class='fu'>mdc</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"obs"</span>, <span class='st'>"mis"</span><span class='op'>)</span>, <span class='st'>"lin"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "#006CC2CC" "#B61A51CC"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -243,7 +248,7 @@ Visualization with R</em>, Springer.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

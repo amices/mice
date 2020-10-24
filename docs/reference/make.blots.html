@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Creates a <code>blots</code> argument — make.blots • mice</title>
+<title>Creates a blots argument — make.blots • mice</title>
 
 
 <!-- jquery -->
@@ -45,7 +45,7 @@
 
 
 
-<meta property="og:title" content="Creates a <code>blots</code> argument — make.blots" />
+<meta property="og:title" content="Creates a blots argument — make.blots" />
 <meta property="og:description" content="This helper function creates a valid blots object. The
 blots object is an argument to the mice function.
 The name blots is a contraction of blocks-dots.
@@ -83,7 +83,7 @@ imputation function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.6</span>
       </span>
     </div>
 
@@ -142,7 +142,7 @@ arguments that are specifically passed down to the lowest level
 imputation function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>make.blots</span>(<span class='no'>data</span>, <span class='kw'>blocks</span> <span class='kw'>=</span> <span class='fu'><a href='make.blocks.html'>make.blocks</a></span>(<span class='no'>data</span>))</pre>
+    <pre class="usage"><span class='fu'>make.blots</span><span class='op'>(</span><span class='va'>data</span>, blocks <span class='op'>=</span> <span class='fu'><a href='make.blocks.html'>make.blocks</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,11 +166,13 @@ the rows. The default assigns each variable in its own block.</p></td>
     <div class='dont-index'><p><code><a href='make.blocks.html'>make.blocks</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='make.predictorMatrix.html'>make.predictorMatrix</a></span>(<span class='no'>nhanes</span>)</div><div class='output co'>#&gt;     age bmi hyp chl
+    <pre class="examples"><div class='input'><span class='fu'><a href='make.predictorMatrix.html'>make.predictorMatrix</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     age bmi hyp chl
 #&gt; age   0   1   1   1
 #&gt; bmi   1   0   1   1
 #&gt; hyp   1   1   0   1
-#&gt; chl   1   1   1   0</div><div class='input'><span class='fu'>make.blots</span>(<span class='no'>nhanes</span>, <span class='kw'>blocks</span> <span class='kw'>=</span> <span class='fu'><a href='name.blocks.html'>name.blocks</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"age"</span>, <span class='st'>"hyp"</span>), <span class='st'>"xxx"</span>))</div><div class='output co'>#&gt; $age
+#&gt; chl   1   1   1   0</div><div class='input'><span class='fu'>make.blots</span><span class='op'>(</span><span class='va'>nhanes</span>, blocks <span class='op'>=</span> <span class='fu'><a href='name.blocks.html'>name.blocks</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"age"</span>, <span class='st'>"hyp"</span><span class='op'>)</span>, <span class='st'>"xxx"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $age
 #&gt; list()
 #&gt; 
 #&gt; $hyp
@@ -191,7 +193,7 @@ the rows. The default assigns each variable in its own block.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
