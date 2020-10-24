@@ -1,7 +1,7 @@
 #' @import              methods
 #' @importFrom broom    glance tidy
-#' @importFrom dplyr    %>% .data bind_cols bind_rows group_by lead
-#'                      mutate n pull select summarize syms
+#' @importFrom dplyr    %>% .data bind_cols bind_rows filter group_by lead
+#'                      mutate n pull row_number select summarize syms
 #' @importFrom graphics abline axis box par plot plot.new plot.window
 #'                      points rect text
 #' @importFrom lattice  bwplot densityplot stripplot xyplot

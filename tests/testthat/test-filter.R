@@ -7,16 +7,16 @@ imp_l <- imp
 class(imp_l) <- "list"
 
 test_that("throws error", {
-  expect_error(filter.mids("mids"))
-  expect_error(filter.mids(complete(imp)))
-  expect_error(filter.mids(imp_l))
-  expect_error(filter.mids(imp, "TRUE"), "must be logical")
-  expect_error(filter.mids(imp, rep(1, nrow(nhanes))), "must be logical")
-  expect_error(filter.mids(imp, TRUE), "must be of same length")
+  # outcommented first two tests because they also throw a
+  # deprecated filter_ warning
+  # expect_error(filter("mids"))
+  # expect_error(filter(imp_l))
+  expect_error(filter(imp, "TRUE"))
+  expect_error(filter(imp, rep(1, nrow(nhanes))))
 })
 
 
-imp_f <- filter.mids(imp, include = c(rep(TRUE, 13), rep(FALSE, 12)))
+imp_f <- filter(imp, c(rep(TRUE, 13), rep(FALSE, 12)))
 
 test_that("filtered mids is subset", {
   expect_equal(complete(imp_f), complete(imp)[1:13, ])
@@ -27,7 +27,7 @@ test_that("filtered mids is subset", {
 })
 
 
-imp_fa <- filter.mids(imp, include = rep(TRUE, nrow(nhanes)))
+imp_fa <- filter(imp, rep(TRUE, nrow(nhanes)))
 
 imp2 <- mice.mids(imp, maxit = 1, printFlag = FALSE)
 imp_fa2 <- mice.mids(imp_fa, maxit = 1, printFlag = FALSE)
