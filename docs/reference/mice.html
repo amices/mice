@@ -155,6 +155,7 @@ implemented to inspect the quality of the imputations.</p>
   m <span class='op'>=</span> <span class='fl'>5</span>,
   method <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>predictorMatrix</span>,
+  ignore <span class='op'>=</span> <span class='cn'>NULL</span>,
   where <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>blocks</span>,
   visitSequence <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -203,6 +204,19 @@ By default, the <code>predictorMatrix</code> is a square matrix of <code><a href
 rows and columns with all 1's, except for the diagonal.
 Note: For two-level imputation models (which have <code>"2l"</code> in their names)
 other codes (e.g, <code>2</code> or <code>-2</code>) are also allowed.</p></td>
+    </tr>
+    <tr>
+      <th>ignore</th>
+      <td><p>A logical vector of <code><a href='https://rdrr.io/r/base/length.html'>length(n)</a></code> elements indicating
+which rows are ignored when creating the imputation model. The default
+<code>NULL</code> includes all rows that have an observed value of the variable
+to imputed. Rows with <code>ignore</code> set to <code>TRUE</code> do not influence the
+parameters of the imputation model, but are still imputed. We may use the
+<code>ignore</code> argument to split <code>data</code> into a training set (on which the
+imputation model is built) and a test set (that does not influence the
+imputation model estimates).
+Note: Multivariate imputation methods, like <code><a href='mice.impute.jomoImpute.html'>mice.impute.jomoImpute()</a></code>
+or <code><a href='mice.impute.panImpute.html'>mice.impute.panImpute()</a></code>, do not honour the <code>ignore</code> argument.</p></td>
     </tr>
     <tr>
       <th>where</th>
@@ -577,39 +591,39 @@ John Fox, Frank E. Harrell, and Peter Malewski.</p>
 <span class='co'># list the actual imputations for BMI</span>
 <span class='va'>imp</span><span class='op'>$</span><span class='va'>imp</span><span class='op'>$</span><span class='va'>bmi</span>
 </div><div class='output co'>#&gt;       1    2    3    4    5
-#&gt; 1  25.5 29.6 22.0 35.3 35.3
-#&gt; 3  29.6 30.1 27.5 30.1 28.7
-#&gt; 4  27.4 22.5 27.2 20.4 22.7
-#&gt; 6  21.7 24.9 20.4 24.9 21.7
-#&gt; 10 25.5 22.5 27.5 22.0 20.4
-#&gt; 11 30.1 29.6 22.5 33.2 20.4
-#&gt; 12 29.6 26.3 27.4 26.3 27.2
-#&gt; 16 35.3 22.7 26.3 27.2 33.2
-#&gt; 21 29.6 27.2 29.6 30.1 29.6</div><div class='input'>
+#&gt; 1  27.2 22.0 29.6 33.2 22.0
+#&gt; 3  26.3 29.6 27.2 33.2 25.5
+#&gt; 4  20.4 25.5 21.7 27.4 20.4
+#&gt; 6  24.9 24.9 20.4 22.7 21.7
+#&gt; 10 28.7 25.5 22.7 20.4 25.5
+#&gt; 11 30.1 29.6 22.0 30.1 33.2
+#&gt; 12 22.5 30.1 27.5 35.3 20.4
+#&gt; 16 22.5 27.2 27.2 29.6 29.6
+#&gt; 21 22.5 27.2 20.4 33.2 35.3</div><div class='input'>
 <span class='co'># first completed data matrix</span>
 <span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    age  bmi hyp chl
-#&gt; 1    1 25.5   1 187
+#&gt; 1    1 27.2   1 187
 #&gt; 2    2 22.7   1 187
-#&gt; 3    1 29.6   1 187
-#&gt; 4    3 27.4   2 184
+#&gt; 3    1 26.3   1 187
+#&gt; 4    3 20.4   2 187
 #&gt; 5    1 20.4   1 113
-#&gt; 6    3 21.7   1 184
+#&gt; 6    3 24.9   2 184
 #&gt; 7    1 22.5   1 118
 #&gt; 8    1 30.1   1 187
 #&gt; 9    2 22.0   1 238
-#&gt; 10   2 25.5   2 206
-#&gt; 11   1 30.1   1 229
-#&gt; 12   2 29.6   1 204
+#&gt; 10   2 28.7   2 206
+#&gt; 11   1 30.1   1 204
+#&gt; 12   2 22.5   1 238
 #&gt; 13   3 21.7   1 206
 #&gt; 14   2 28.7   2 204
-#&gt; 15   1 29.6   1 187
-#&gt; 16   1 35.3   1 206
+#&gt; 15   1 29.6   1 199
+#&gt; 16   1 22.5   1 131
 #&gt; 17   3 27.2   2 284
 #&gt; 18   2 26.3   2 199
 #&gt; 19   1 35.3   1 218
 #&gt; 20   3 25.5   2 184
-#&gt; 21   1 29.6   1 229
+#&gt; 21   1 22.5   1 131
 #&gt; 22   1 33.2   1 229
 #&gt; 23   1 27.5   1 131
 #&gt; 24   3 24.9   1 184

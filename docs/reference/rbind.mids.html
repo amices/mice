@@ -169,7 +169,9 @@ columns of <code>x$data</code> and <code>y$data</code> should match.</p>
 <p>If <code>y</code> is not a <code>mids</code> object, the columns of <code>x$data</code>
 and <code>y</code> should match. The <code>where</code> matrix for <code>y</code> is set
 to <code>FALSE</code>, signaling that any missing values
-in <code>y</code> were not imputed.</p>
+in <code>y</code> were not imputed. The <code>ignore</code> vector for <code>y</code> is
+set to <code>FALSE</code>, elements of <code>y</code> will therefore influence 
+the parameters of the imputation model in future iterations.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The function construct the elements of the new <code>mids</code> object as follows:</p><table class='table'>
@@ -187,6 +189,7 @@ the data of <code>y</code> will be copied</td></tr>
 <tr><td><code>formulas</code></td><td>Taken from <code>x$formulas</code></td></tr>
 <tr><td><code>post</code></td><td>Taken from <code>x$post</code></td></tr>
 <tr><td><code>blots</code></td><td>Taken from <code>x$blots</code></td></tr>
+<tr><td><code>ignore</code></td><td>Concatenate <code>x$ignore</code> and <code>y$ignore</code></td></tr>
 <tr><td><code>seed</code></td><td>Taken from <code>x$seed</code></td></tr>
 <tr><td><code>iteration</code></td><td>Taken from <code>x$iteration</code></td></tr>
 <tr><td><code>lastSeedValue</code></td><td>Taken from <code>x$lastSeedValue</code></td></tr>

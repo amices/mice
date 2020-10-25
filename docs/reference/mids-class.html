@@ -207,6 +207,10 @@ equivalent <code>oldClass(obj) &lt;- "mids"</code>.</p>
    identified by its name, so list names must correspond to block names.</p></dd>
    <dt><code>post</code>:</dt><dd><p>A vector of strings of length <code><a href='https://rdrr.io/r/base/length.html'>length(blocks)</a></code>
    with commands for post-processing.</p></dd>
+   <dt><code>blots</code>:</dt><dd><p>"Block dots". The <code>blots</code> argument to the <code><a href='mice.html'>mice()</a></code>
+   function.</p></dd>
+   <dt><code>ignore</code>:</dt><dd><p>A logical vector of length <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(data)</a></code> indicating
+   the rows in <code>data</code> used to build the imputation model. (new in <code>mice 3.12.0</code>)</p></dd>
    <dt><code>seed</code>:</dt><dd><p>The seed value of the solution.</p></dd>
    <dt><code>iteration</code>:</dt><dd><p>Last Gibbs sampling iteration number.</p></dd>
    <dt><code>lastSeedValue</code>:</dt><dd><p>The most recent seed value.</p></dd>

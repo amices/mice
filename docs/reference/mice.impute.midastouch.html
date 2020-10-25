@@ -321,42 +321,42 @@ Statistical Software</em>, <b>45</b>, 3, 1--67. <a href='https://www.jstatsoft.o
 <span class='co'># list the actual imputations for BMI</span>
 <span class='va'>imp</span><span class='op'>$</span><span class='va'>imp</span><span class='op'>$</span><span class='va'>bmi</span>
 </div><div class='output co'>#&gt;       1    2    3    4    5
-#&gt; 1  29.6 27.2 30.1 29.6 28.7
-#&gt; 3  29.6 27.2 30.1 29.6 29.6
-#&gt; 4  24.9 21.7 22.5 22.0 25.5
-#&gt; 6  25.5 24.9 21.7 35.3 22.7
-#&gt; 10 22.7 28.7 24.9 27.5 26.3
-#&gt; 11 29.6 27.2 30.1 29.6 20.4
-#&gt; 12 28.7 26.3 35.3 20.4 25.5
-#&gt; 16 29.6 35.3 30.1 29.6 26.3
-#&gt; 21 27.5 35.3 30.1 29.6 29.6</div><div class='input'>
+#&gt; 1  29.6 35.3 30.1 30.1 20.4
+#&gt; 3  29.6 26.3 30.1 30.1 30.1
+#&gt; 4  25.5 27.2 24.9 25.5 22.0
+#&gt; 6  24.9 24.9 25.5 25.5 22.7
+#&gt; 10 35.3 26.3 26.3 22.7 22.0
+#&gt; 11 22.0 22.0 30.1 30.1 20.4
+#&gt; 12 35.3 27.5 22.7 22.7 22.7
+#&gt; 16 22.0 27.5 30.1 30.1 20.4
+#&gt; 21 22.0 27.5 30.1 30.1 30.1</div><div class='input'>
 <span class='co'># first completed data matrix</span>
 <span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    age  bmi hyp chl
-#&gt; 1    1 29.6   1 118
+#&gt; 1    1 29.6   1 187
 #&gt; 2    2 22.7   1 187
 #&gt; 3    1 29.6   1 187
-#&gt; 4    3 24.9   2 186
+#&gt; 4    3 25.5   2 184
 #&gt; 5    1 20.4   1 113
-#&gt; 6    3 25.5   2 184
+#&gt; 6    3 24.9   2 184
 #&gt; 7    1 22.5   1 118
 #&gt; 8    1 30.1   1 187
 #&gt; 9    2 22.0   1 238
-#&gt; 10   2 22.7   1 229
-#&gt; 11   1 29.6   1 118
-#&gt; 12   2 28.7   1 186
+#&gt; 10   2 35.3   1 184
+#&gt; 11   1 22.0   1 118
+#&gt; 12   2 35.3   1 118
 #&gt; 13   3 21.7   1 206
 #&gt; 14   2 28.7   2 204
-#&gt; 15   1 29.6   1 118
-#&gt; 16   1 29.6   1 118
+#&gt; 15   1 29.6   1 187
+#&gt; 16   1 22.0   1 118
 #&gt; 17   3 27.2   2 284
 #&gt; 18   2 26.3   2 199
 #&gt; 19   1 35.3   1 218
-#&gt; 20   3 25.5   2 184
-#&gt; 21   1 27.5   1 131
+#&gt; 20   3 25.5   2 186
+#&gt; 21   1 22.0   1 118
 #&gt; 22   1 33.2   1 229
 #&gt; 23   1 27.5   1 131
-#&gt; 24   3 24.9   1 184
+#&gt; 24   3 24.9   1 238
 #&gt; 25   2 27.4   1 186</div><div class='input'>
 <span class='co'># imputation on mixed data with a different method per column</span>
 <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sample"</span>, <span class='st'>"midastouch"</span>, <span class='st'>"logreg"</span>, <span class='st'>"norm"</span><span class='op'>)</span><span class='op'>)</span>

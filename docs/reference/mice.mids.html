@@ -132,7 +132,7 @@
     <p>Takes a <code>mids</code> object, and produces a new object of class <code>mids</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mice.mids</span><span class='op'>(</span><span class='va'>obj</span>, maxit <span class='op'>=</span> <span class='fl'>1</span>, printFlag <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>mice.mids</span><span class='op'>(</span><span class='va'>obj</span>, newdata <span class='op'>=</span> <span class='cn'>NULL</span>, maxit <span class='op'>=</span> <span class='fl'>1</span>, printFlag <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,6 +141,11 @@
       <th>obj</th>
       <td><p>An object of class <code>mids</code>, typically produces by a previous
 call to <code><a href='mice.html'>mice()</a></code> or <code>mice.mids()</code></p></td>
+    </tr>
+    <tr>
+      <th>newdata</th>
+      <td><p>An optional <code>data.frame</code> for which multiple imputations
+are generated according to the model in <code>obj</code>.</p></td>
     </tr>
     <tr>
       <th>maxit</th>
