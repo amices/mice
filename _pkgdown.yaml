@@ -101,6 +101,7 @@ reference:
       - cbind.mids
       - rbind.mids
       - ibind
+      - filter.mids
       - mids2mplus
       - mids2spss
   - title: "Class descriptions"
