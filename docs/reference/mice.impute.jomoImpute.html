@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Multivariate multilevel imputation using <code>jomo</code> — mice.impute.jomoImpute • mice</title>
+<title>Multivariate multilevel imputation using jomo — mice.impute.jomoImpute • mice</title>
 
 
 <!-- jquery -->
@@ -45,7 +45,7 @@
 
 
 
-<meta property="og:title" content="Multivariate multilevel imputation using <code>jomo</code> — mice.impute.jomoImpute" />
+<meta property="og:title" content="Multivariate multilevel imputation using jomo — mice.impute.jomoImpute" />
 <meta property="og:description" content="This function is a wrapper around the jomoImpute function
 from the mitml package so that it can be called to
 impute blocks of variables in mice. The mitml::jomoImpute
@@ -85,7 +85,7 @@ which offer different options for model specification." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.6</span>
       </span>
     </div>
 
@@ -146,15 +146,15 @@ Imputations can be generated using <code>type</code> or <code>formula</code>,
 which offer different options for model specification.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mice.impute.jomoImpute</span>(
-  <span class='no'>data</span>,
-  <span class='no'>formula</span>,
-  <span class='no'>type</span>,
-  <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"imputes"</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>mice.impute.jomoImpute</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>formula</span>,
+  <span class='va'>type</span>,
+  m <span class='op'>=</span> <span class='fl'>1</span>,
+  silent <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  format <span class='op'>=</span> <span class='st'>"imputes"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -224,22 +224,28 @@ and studies with missing covariates. Statistics in Medicine,
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/mitml/man/jomoImpute.html'>jomoImpute</a></code></p>
 <p>Other multivariate-2l: 
 <code><a href='mice.impute.panImpute.html'>mice.impute.panImpute</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Stef van Buuren, 2018, building on work of Simon Grund,
+Alexander Robitzsch and Oliver Luedtke (authors of <code>mitml</code> package)
+and Quartagno and Carpenter (authors of <code>jomo</code> package).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># Note: Requires mitml 0.3-5.7</span>
-<span class='no'>blocks</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"bmi"</span>, <span class='st'>"chl"</span>, <span class='st'>"hyp"</span>), <span class='st'>"age"</span>)
-<span class='no'>method</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"jomoImpute"</span>, <span class='st'>"pmm"</span>)
-<span class='no'>ini</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>, <span class='kw'>blocks</span> <span class='kw'>=</span> <span class='no'>blocks</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>method</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>0</span>)
-<span class='no'>pred</span> <span class='kw'>&lt;-</span> <span class='no'>ini</span>$<span class='no'>pred</span>
-<span class='no'>pred</span>[<span class='st'>"B1"</span>, <span class='st'>"hyp"</span>] <span class='kw'>&lt;-</span> -<span class='fl'>2</span>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>, <span class='kw'>blocks</span> <span class='kw'>=</span> <span class='no'>blocks</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>method</span>, <span class='kw'>pred</span> <span class='kw'>=</span> <span class='no'>pred</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; 
+<span class='va'>blocks</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"bmi"</span>, <span class='st'>"chl"</span>, <span class='st'>"hyp"</span><span class='op'>)</span>, <span class='st'>"age"</span><span class='op'>)</span>
+<span class='va'>method</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"jomoImpute"</span>, <span class='st'>"pmm"</span><span class='op'>)</span>
+<span class='va'>ini</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, blocks <span class='op'>=</span> <span class='va'>blocks</span>, method <span class='op'>=</span> <span class='va'>method</span>, maxit <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>pred</span> <span class='op'>&lt;-</span> <span class='va'>ini</span><span class='op'>$</span><span class='va'>pred</span>
+<span class='va'>pred</span><span class='op'>[</span><span class='st'>"B1"</span>, <span class='st'>"hyp"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fl'>2</span>
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, blocks <span class='op'>=</span> <span class='va'>blocks</span>, method <span class='op'>=</span> <span class='va'>method</span>, pred <span class='op'>=</span> <span class='va'>pred</span>, maxit <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi chl hyp
 #&gt;   1   2  bmi chl hyp
 #&gt;   1   3  bmi chl hyp
 #&gt;   1   4  bmi chl hyp
-#&gt;   1   5  bmi chl hyp</div><div class='input'># }
+#&gt;   1   5  bmi chl hyp</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -256,7 +262,7 @@ and studies with missing covariates. Statistics in Medicine,
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.6</span>
       </span>
     </div>
 
@@ -102,18 +102,21 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>The <code>mice</code> package can be installed from CRAN as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"mice"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"mice"</span><span class="op">)</span></pre></div>
 <p>The latest version is can be installed from GitHub as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="kw">repo</span> <span class="kw">=</span> <span class="st">"amices/mice"</span>)</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"amices/mice"</span><span class="op">)</span></pre></div>
 </div>
 <div id="minimal-example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minimal-example" class="anchor"></a>Minimal example</h2>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">mice</span>, <span class="kw">warn.conflicts</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice">mice</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># show the missing data pattern</span>
-<span class="fu"><a href="reference/md.pattern.html">md.pattern</a></span>(<span class="no">nhanes</span>)</pre></div>
+<span class="fu"><a href="reference/md.pattern.html">md.pattern</a></span><span class="op">(</span><span class="va">nhanes</span><span class="op">)</span></pre></div>
 <p><img src="README-pattern-1.png" alt="Missing data pattern of nhanes data. Blue is observed, red is missing."></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">#&gt;    age hyp bmi chl   </span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="co">#&gt; 13   1   1   1   1  0</span></span>
@@ -123,8 +126,9 @@
 <span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; 7    1   0   0   0  3</span></span>
 <span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt;      0   8   9  10 27</span></span></code></pre></div>
 <p>The table and the graph summarize where the missing data occur in the <code>nhanes</code> dataset.</p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="co"># multiple impute the missing values</span>
-<span class="no">imp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/mice.html">mice</a></span>(<span class="no">nhanes</span>, <span class="kw">maxit</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">m</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">seed</span> <span class="kw">=</span> <span class="fl">1</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="co"># multiple impute the missing values</span>
+<span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, maxit <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">2</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;  iter imp variable</span>
 <span class="co">#&gt;   1   1  bmi  hyp  chl</span>
@@ -133,14 +137,15 @@
 <span class="co">#&gt;   2   2  bmi  hyp  chl</span>
 
 <span class="co"># inspect quality of imputations</span>
-<span class="fu"><a href="reference/stripplot.mids.html">stripplot</a></span>(<span class="no">imp</span>, <span class="no">chl</span>, <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">19</span>, <span class="kw">xlab</span> <span class="kw">=</span> <span class="st">"Imputation number"</span>)</pre></div>
+<span class="fu"><a href="reference/stripplot.mids.html">stripplot</a></span><span class="op">(</span><span class="va">imp</span>, <span class="va">chl</span>, pch <span class="op">=</span> <span class="fl">19</span>, xlab <span class="op">=</span> <span class="st">"Imputation number"</span><span class="op">)</span></pre></div>
 <p><img src="README-stripplot-1.png" alt="Distribution of chl per imputed data set."></p>
 <p>In general, we would like the imputations to be plausible, i.e., values that could have been observed if they had not been missing.</p>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="co"># fit complete-data model</span>
-<span class="no">fit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(<span class="no">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">chl</span> ~ <span class="no">age</span> + <span class="no">bmi</span>))
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="co"># fit complete-data model</span>
+<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">chl</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">bmi</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># pool and summarize the results</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="fu"><a href="reference/pool.html">pool</a></span>(<span class="no">fit</span>))
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="reference/pool.html">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;          term estimate std.error statistic   df p.value</span>
 <span class="co">#&gt; 1 (Intercept)   -49.30    101.37    -0.486 1.82  0.6789</span>
 <span class="co">#&gt; 2         age    38.28     11.37     3.367 5.45  0.0175</span>
@@ -262,7 +267,7 @@
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/package=mice"><img src="https://www.r-pkg.org/badges/version/mice" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://cran.r-project.org/package=mice"><img src="https://cranlogs.r-pkg.org/badges/mice"></a></li>
-<li><a href="https://amices.github.io/mice/"><img src="https://img.shields.io/badge/github%20version-3.11.3-orange.svg"></a></li>
+<li><a href="https://amices.github.io/mice/"><img src="https://img.shields.io/badge/github%20version-3.11.6-orange.svg"></a></li>
 </ul>
 </div>
 </div>
@@ -274,7 +279,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

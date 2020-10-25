@@ -34,6 +34,10 @@
 #' relatively small. Using a square matrix extends the idea to the columns, so
 #' that one can also apply cellwise thresholds.
 #'
+#' @note \code{quickpred()} uses \code{\link[base]{data.matrix}} to convert
+#' factors to numbers through their internal codes. Especially for unordered
+#' factors the resulting quantification may not make sense.
+#'
 #' @param data Matrix or data frame with incomplete data.
 #' @param mincor A scalar, numeric vector (of size \code{ncol(data))} or numeric
 #' matrix (square, of size \code{ncol(data)} specifying the minimum

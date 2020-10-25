@@ -33,7 +33,9 @@ generics::glance
 tidy.mipo <- function(x, conf.int = FALSE, conf.level = .95, ...) {
   out <- summary(x,
     type = "all",
-    conf.int = conf.int, conf.level = conf.level
+    conf.int = conf.int, 
+    conf.level = conf.level,
+    ...
   )
   out$term <- as.character(out$term)
 

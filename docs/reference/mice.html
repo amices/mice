@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title><span class="pkg">mice</span>: Multivariate Imputation by Chained Equations — mice • mice</title>
+<title>mice: Multivariate Imputation by Chained Equations — mice • mice</title>
 
 
 <!-- jquery -->
@@ -45,7 +45,7 @@
 
 
 
-<meta property="og:title" content="<span class="pkg">mice</span>: Multivariate Imputation by Chained Equations — mice" />
+<meta property="og:title" content="mice: Multivariate Imputation by Chained Equations — mice" />
 <meta property="og:description" content="The mice package implements a method to deal with missing data.
 The package creates multiple imputations (replacement values) for
 multivariate missing data. The method is based on Fully Conditional
@@ -87,7 +87,7 @@ Generates Multivariate Imputations by Chained Equations (MICE)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.6</span>
       </span>
     </div>
 
@@ -150,24 +150,24 @@ implemented to inspect the quality of the imputations.</p>
 <p>Generates Multivariate Imputations by Chained Equations (MICE)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mice</span>(
-  <span class='no'>data</span>,
-  <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>predictorMatrix</span>,
-  <span class='kw'>where</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>blocks</span>,
-  <span class='kw'>visitSequence</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>formulas</span>,
-  <span class='kw'>blots</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>post</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>defaultMethod</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pmm"</span>, <span class='st'>"logreg"</span>, <span class='st'>"polyreg"</span>, <span class='st'>"polr"</span>),
-  <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>printFlag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>data.init</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>mice</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  m <span class='op'>=</span> <span class='fl'>5</span>,
+  method <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>predictorMatrix</span>,
+  where <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>blocks</span>,
+  visitSequence <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>formulas</span>,
+  blots <span class='op'>=</span> <span class='cn'>NULL</span>,
+  post <span class='op'>=</span> <span class='cn'>NULL</span>,
+  defaultMethod <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pmm"</span>, <span class='st'>"logreg"</span>, <span class='st'>"polyreg"</span>, <span class='st'>"polr"</span><span class='op'>)</span>,
+  maxit <span class='op'>=</span> <span class='fl'>5</span>,
+  printFlag <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  seed <span class='op'>=</span> <span class='cn'>NA</span>,
+  data.init <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -381,6 +381,17 @@ mechanism allows uses to write customized imputation function,
 <code>mice.impute.myfunc</code>. To call it for all columns specify
 <code>method='myfunc'</code>.  To call it only for, say, column 2 specify
 <code>method=c('norm','myfunc','logreg',...{})</code>.</p>
+<p><em>Skipping imputation:</em> The user may skip imputation of a column by
+setting its entry to the empty method: <code>""</code>. For complete columns without
+missing data <code>mice</code> will automatically set the empty method. Setting t
+he empty method does not produce imputations for the column, so any missing
+cells remain <code>NA</code>. If column A contains <code>NA</code>'s and is used as
+predictor in the imputation model for column B, then <code>mice</code> produces no
+imputations for the rows in B where A is missing. The imputed data
+for B may thus contain <code>NA</code>'s. The remedy is to remove column A from
+the imputation model for the other columns in the data. This can be done
+by setting the entire column for variable A in the <code>predictorMatrix</code>
+equal to zero.</p>
 <p><em>Passive imputation:</em> <code>mice()</code> supports a special built-in method,
 called passive imputation. This method can be used to ensure that a data
 transform always depends on the most recently generated imputations.  In some
@@ -388,16 +399,16 @@ cases, an imputation model may need transformed data in addition to the
 original data (e.g. log, quadratic, recodes, interaction, sum scores, and so
 on).</p>
 <p>Passive imputation maintains consistency among different transformations of
-the same data. Passive imputation is invoked if <code>~</code> is specified as the
+the same data. Passive imputation is invoked if <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> is specified as the
 first character of the string that specifies the univariate method.
-<code>mice()</code> interprets the entire string, including the <code>~</code> character,
+<code>mice()</code> interprets the entire string, including the <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> character,
 as the formula argument in a call to <code><a href='https://rdrr.io/r/stats/model.frame.html'>model.frame(formula,
 data[!r[,j],])</a></code>. This provides a simple mechanism for specifying deterministic
 dependencies among the columns. For example, suppose that the missing entries
 in variables <code>data$height</code> and <code>data$weight</code> are imputed. The body
 mass index (BMI) can be calculated within <code>mice</code> by specifying the
 string <code>'~I(weight/height^2)'</code> as the univariate imputation method for
-the target column <code>data$bmi</code>.  Note that the <code>~</code> mechanism works
+the target column <code>data$bmi</code>.  Note that the <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> mechanism works
 only on those entries which have missing values in the target column. You
 should make sure that the combined observed and imputed parts of the target
 column make sense. An easy way to create consistency is by coding all entries
@@ -407,7 +418,7 @@ inefficient.  Note that you may also need to adapt the default
 could cause errors like <code>Error in solve.default()</code> or <code>Error:
 system is exactly singular</code>. Though not strictly needed, it is often useful
 to specify <code>visitSequence</code> such that the column that is imputed by the
-<code>~</code> mechanism is visited each time after one of its predictors was
+<code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> mechanism is visited each time after one of its predictors was
 visited. In that way, deterministic relation between columns will always be
 synchronized.</p>
 <p>#'A new argument <code>ls.meth</code> can be parsed to the lower level
@@ -514,10 +525,18 @@ data sets.</em> Dissertation. Rotterdam: Erasmus University.</p>
 <code><a href='pool.html'>pool</a></code>, <code><a href='complete.mids.html'>complete</a></code>, <code><a href='ampute.html'>ampute</a></code></p>
 <p><code><a href='mids-class.html'>mids</a></code>, <code><a href='with.mids.html'>with.mids</a></code>,
 <code><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></code>, <code><a href='complete.mids.html'>complete</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Stef van Buuren <a href='mailto:stef.vanbuuren@tno.nl'>stef.vanbuuren@tno.nl</a>, Karin
+Groothuis-Oudshoorn <a href='mailto:c.g.m.oudshoorn@utwente.nl'>c.g.m.oudshoorn@utwente.nl</a>, 2000-2010, with
+contributions of Alexander Robitzsch, Gerko Vink, Shahab Jolani,
+Roel de Jong, Jason Turner, Lisa Doove,
+John Fox, Frank E. Harrell, and Peter Malewski.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># do default multiple imputation on a numeric matrix</span>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'>mice</span>(<span class='no'>nhanes</span>)</div><div class='output co'>#&gt; 
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'>mice</span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl
 #&gt;   1   2  bmi  hyp  chl
@@ -543,7 +562,8 @@ data sets.</em> Dissertation. Rotterdam: Erasmus University.</p>
 #&gt;   5   2  bmi  hyp  chl
 #&gt;   5   3  bmi  hyp  chl
 #&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='no'>imp</span></div><div class='output co'>#&gt; Class: mids
+#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='va'>imp</span>
+</div><div class='output co'>#&gt; Class: mids
 #&gt; Number of multiple imputations:  5 
 #&gt; Imputation methods:
 #&gt;   age   bmi   hyp   chl 
@@ -555,7 +575,8 @@ data sets.</em> Dissertation. Rotterdam: Erasmus University.</p>
 #&gt; hyp   1   1   0   1
 #&gt; chl   1   1   1   0</div><div class='input'>
 <span class='co'># list the actual imputations for BMI</span>
-<span class='no'>imp</span>$<span class='no'>imp</span>$<span class='no'>bmi</span></div><div class='output co'>#&gt;       1    2    3    4    5
+<span class='va'>imp</span><span class='op'>$</span><span class='va'>imp</span><span class='op'>$</span><span class='va'>bmi</span>
+</div><div class='output co'>#&gt;       1    2    3    4    5
 #&gt; 1  25.5 29.6 22.0 35.3 35.3
 #&gt; 3  29.6 30.1 27.5 30.1 28.7
 #&gt; 4  27.4 22.5 27.2 20.4 22.7
@@ -566,7 +587,8 @@ data sets.</em> Dissertation. Rotterdam: Erasmus University.</p>
 #&gt; 16 35.3 22.7 26.3 27.2 33.2
 #&gt; 21 29.6 27.2 29.6 30.1 29.6</div><div class='input'>
 <span class='co'># first completed data matrix</span>
-<span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>imp</span>)</div><div class='output co'>#&gt;    age  bmi hyp chl
+<span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    age  bmi hyp chl
 #&gt; 1    1 25.5   1 187
 #&gt; 2    2 22.7   1 187
 #&gt; 3    1 29.6   1 187
@@ -593,7 +615,8 @@ data sets.</em> Dissertation. Rotterdam: Erasmus University.</p>
 #&gt; 24   3 24.9   1 184
 #&gt; 25   2 27.4   1 186</div><div class='input'>
 <span class='co'># imputation on mixed data with a different method per column</span>
-<span class='fu'>mice</span>(<span class='no'>nhanes2</span>, <span class='kw'>meth</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sample"</span>, <span class='st'>"pmm"</span>, <span class='st'>"logreg"</span>, <span class='st'>"norm"</span>))</div><div class='output co'>#&gt; 
+<span class='fu'>mice</span><span class='op'>(</span><span class='va'>nhanes2</span>, meth <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sample"</span>, <span class='st'>"pmm"</span>, <span class='st'>"logreg"</span>, <span class='st'>"norm"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl
 #&gt;   1   2  bmi  hyp  chl
@@ -645,7 +668,7 @@ data sets.</em> Dissertation. Rotterdam: Erasmus University.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

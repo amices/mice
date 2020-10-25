@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Export <code>mids</code> object to Mplus — mids2mplus • mice</title>
+<title>Export mids object to Mplus — mids2mplus • mice</title>
 
 
 <!-- jquery -->
@@ -45,7 +45,7 @@
 
 
 
-<meta property="og:title" content="Export <code>mids</code> object to Mplus — mids2mplus" />
+<meta property="og:title" content="Export mids object to Mplus — mids2mplus" />
 <meta property="og:description" content="Converts a mids object into a format recognized by Mplus, and writes
 the data and the Mplus input files" />
 
@@ -79,7 +79,7 @@ the data and the Mplus input files" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.6</span>
       </span>
     </div>
 
@@ -134,14 +134,14 @@ the data and the Mplus input files" />
 the data and the Mplus input files</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mids2mplus</span>(
-  <span class='no'>imp</span>,
-  <span class='kw'>file.prefix</span> <span class='kw'>=</span> <span class='st'>"imp"</span>,
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>(),
-  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"\t"</span>,
-  <span class='kw'>dec</span> <span class='kw'>=</span> <span class='st'>"."</span>,
-  <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>mids2mplus</span><span class='op'>(</span>
+  <span class='va'>imp</span>,
+  file.prefix <span class='op'>=</span> <span class='st'>"imp"</span>,
+  path <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>,
+  sep <span class='op'>=</span> <span class='st'>"\t"</span>,
+  dec <span class='op'>=</span> <span class='st'>"."</span>,
+  silent <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,6 +191,9 @@ do automatic pooling in procedures where that is supported.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='mids-class.html'>mids</a></code>, <code><a href='mids2spss.html'>mids2spss</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Gerko Vink, 2011.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -207,7 +210,7 @@ do automatic pooling in procedures where that is supported.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

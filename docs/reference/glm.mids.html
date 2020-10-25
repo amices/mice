@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generalized linear model for <code>mids</code> object — glm.mids • mice</title>
+<title>Generalized linear model for mids object — glm.mids • mice</title>
 
 
 <!-- jquery -->
@@ -45,7 +45,7 @@
 
 
 
-<meta property="og:title" content="Generalized linear model for <code>mids</code> object — glm.mids" />
+<meta property="og:title" content="Generalized linear model for mids object — glm.mids" />
 <meta property="og:description" content="Applies glm() to a multiply imputed data set" />
 
 
@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.6</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     <p>Applies <code><a href='https://rdrr.io/r/stats/glm.html'>glm()</a></code> to a multiply imputed data set</p>
     </div>
 
-    <pre class="usage"><span class='fu'>glm.mids</span>(<span class='no'>formula</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>gaussian</span>, <span class='no'>data</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>glm.mids</span><span class='op'>(</span><span class='va'>formula</span>, family <span class='op'>=</span> <span class='va'>gaussian</span>, <span class='va'>data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,10 +176,14 @@ Leiden: TNO Quality of Life.</p>
 
     <div class='dont-index'><p><code><a href='with.mids.html'>with.mids</a></code>, <code><a href='https://rdrr.io/r/stats/glm.html'>glm</a></code>, <code><a href='mids-class.html'>mids</a></code>,
 <code><a href='mira-class.html'>mira</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Stef van Buuren, Karin Groothuis-Oudshoorn, 2000</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>)</div><div class='output co'>#&gt; 
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl
 #&gt;   1   2  bmi  hyp  chl
@@ -207,7 +211,9 @@ Leiden: TNO Quality of Life.</p>
 #&gt;   5   4  bmi  hyp  chl
 #&gt;   5   5  bmi  hyp  chl</div><div class='input'>
 <span class='co'># logistic regression on the imputed data</span>
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>glm.mids</span>((<span class='no'>hyp</span> <span class='kw'>==</span> <span class='fl'>2</span>) ~ <span class='no'>bmi</span> + <span class='no'>chl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>imp</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Use with(imp, glm(yourmodel).</span></div><div class='input'><span class='no'>fit</span></div><div class='output co'>#&gt; call :
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>glm.mids</span><span class='op'>(</span><span class='op'>(</span><span class='va'>hyp</span> <span class='op'>==</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>bmi</span> <span class='op'>+</span> <span class='va'>chl</span>, data <span class='op'>=</span> <span class='va'>imp</span>, family <span class='op'>=</span> <span class='va'>binomial</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Use with(imp, glm(yourmodel).</span></div><div class='input'><span class='va'>fit</span>
+</div><div class='output co'>#&gt; call :
 #&gt; glm.mids(formula = (hyp == 2) ~ bmi + chl, family = binomial, 
 #&gt;     data = imp)
 #&gt; 
@@ -300,7 +306,7 @@ Leiden: TNO Quality of Life.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

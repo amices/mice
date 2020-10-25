@@ -81,7 +81,7 @@ different MNAR assumptions on the conclusions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.6</span>
       </span>
     </div>
 
@@ -138,9 +138,9 @@ different model specifications may shed light on the impact of
 different MNAR assumptions on the conclusions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mice.impute.mnar.logreg</span>(<span class='no'>y</span>, <span class='no'>ry</span>, <span class='no'>x</span>, <span class='kw'>wy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ums</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>umx</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>mice.impute.mnar.logreg</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, wy <span class='op'>=</span> <span class='cn'>NULL</span>, ums <span class='op'>=</span> <span class='cn'>NULL</span>, umx <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>mice.impute.mnar.norm</span>(<span class='no'>y</span>, <span class='no'>ry</span>, <span class='no'>x</span>, <span class='kw'>wy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ums</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>umx</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>mice.impute.mnar.norm</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, wy <span class='op'>=</span> <span class='cn'>NULL</span>, ums <span class='op'>=</span> <span class='cn'>NULL</span>, umx <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -219,12 +219,12 @@ following characteristics:</p><ol>
 not multiplied by any variable name, must be included in the
 expression;</p></li>
 <li><p>Each term in the expression (corresponding to the intercept
-or a predictor variable) must be separated by either a <code><a href='https://rdrr.io/r/base/Arithmetic.html'>"+"</a></code>
-or <code><a href='https://rdrr.io/r/base/Arithmetic.html'>"-"</a></code> sign, depending on the sign of the sensitivity
+or a predictor variable) must be separated by either a <code>"+"</code>
+or <code>"-"</code> sign, depending on the sign of the sensitivity
 parameter;</p></li>
 <li><p>Within each non-intercept term, the sensitivity parameter
 value comes first and the predictor variable comes second, and these
-must be separated by a <code><a href='https://rdrr.io/r/base/Arithmetic.html'>"*"</a></code> sign;</p></li>
+must be separated by a <code>"*"</code> sign;</p></li>
 <li><p>For categorical predictors, for example a variable <code>Z</code>
 with K + 1 categories <code>("Cat0","Cat1", ...,"CatK")</code>, K
 category-specific terms are needed, and those not in <code>umx</code>
@@ -287,22 +287,26 @@ imputation of missing blood pressure covariates in survival analysis.
 <code><a href='mice.impute.quadratic.html'>mice.impute.quadratic</a>()</code>,
 <code><a href='mice.impute.rf.html'>mice.impute.rf</a>()</code>,
 <code><a href='mice.impute.ri.html'>mice.impute.ri</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Margarita Moreno-Betancur, Stef van Buuren, Ian R. White, 2020.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># 1: Example with no auxiliary data: only pass unidentifiable model specification (ums)</span>
 
 <span class='co'># Specify argument to pass on to mnar imputation functions via "blots" argument</span>
-<span class='no'>mnar.blot</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>X</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>ums</span> <span class='kw'>=</span> <span class='st'>"-4"</span>), <span class='kw'>Y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>ums</span> <span class='kw'>=</span> <span class='st'>"2+1*ZCat1-3*ZCat2"</span>))
+<span class='va'>mnar.blot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>X <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>ums <span class='op'>=</span> <span class='st'>"-4"</span><span class='op'>)</span>, Y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>ums <span class='op'>=</span> <span class='st'>"2+1*ZCat1-3*ZCat2"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># Run NARFCS by using mnar imputation methods and passing argument via blots</span>
-<span class='no'>impNARFCS</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>mnar_demo_data</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mnar.logreg"</span>, <span class='st'>"mnar.norm"</span>, <span class='st'>""</span>),
-  <span class='kw'>blots</span> <span class='kw'>=</span> <span class='no'>mnar.blot</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>234235</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)
+<span class='va'>impNARFCS</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>mnar_demo_data</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mnar.logreg"</span>, <span class='st'>"mnar.norm"</span>, <span class='st'>""</span><span class='op'>)</span>,
+  blots <span class='op'>=</span> <span class='va'>mnar.blot</span>, seed <span class='op'>=</span> <span class='fl'>234235</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
 
 <span class='co'># Obtain MI results: Note they coincide with those from old version at</span>
 <span class='co'># https://github.com/moreno-betancur/NARFCS</span>
-<span class='fu'><a href='pool.html'>pool</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>impNARFCS</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Y</span> ~ <span class='no'>X</span> + <span class='no'>Z</span>)))$<span class='no'>pooled</span>$<span class='no'>estimate</span></div><div class='output co'>#&gt; [1]  19.368813   3.039045 -14.643202 -28.586061</div><div class='input'>
+<span class='fu'><a href='pool.html'>pool</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>impNARFCS</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>X</span> <span class='op'>+</span> <span class='va'>Z</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='va'>pooled</span><span class='op'>$</span><span class='va'>estimate</span>
+</div><div class='output co'>#&gt; [1]  19.368813   3.039045 -14.643202 -28.586061</div><div class='input'>
 <span class='co'># 2: Example passing also auxiliary data to MNAR procedure (umx)</span>
 <span class='co'># Assumptions:</span>
 <span class='co'># - Auxiliary data are complete, no missing values</span>
@@ -311,22 +315,23 @@ imputation of missing blood pressure covariates in survival analysis.
 <span class='co'># - Auxiliary data have no overlapping variable names with x</span>
 
 <span class='co'># Specify argument to pass on to mnar imputation functions via "blots" argument</span>
-<span class='no'>aux</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>0</span>:<span class='fl'>1</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>mnar_demo_data</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/dimnames.html'>dimnames</a></span>(<span class='no'>aux</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>NULL</span>, <span class='st'>"even"</span>)
-<span class='no'>mnar.blot</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  <span class='kw'>X</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>ums</span> <span class='kw'>=</span> <span class='st'>"-4"</span>),
-  <span class='kw'>Y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>ums</span> <span class='kw'>=</span> <span class='st'>"2+1*ZCat1-3*ZCat2+0.5*even"</span>, <span class='kw'>umx</span> <span class='kw'>=</span> <span class='no'>aux</span>)
-)
+<span class='va'>aux</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>1</span>, nrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>mnar_demo_data</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/dimnames.html'>dimnames</a></span><span class='op'>(</span><span class='va'>aux</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='st'>"even"</span><span class='op'>)</span>
+<span class='va'>mnar.blot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+  X <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>ums <span class='op'>=</span> <span class='st'>"-4"</span><span class='op'>)</span>,
+  Y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>ums <span class='op'>=</span> <span class='st'>"2+1*ZCat1-3*ZCat2+0.5*even"</span>, umx <span class='op'>=</span> <span class='va'>aux</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># Run NARFCS by using mnar imputation methods and passing argument via blots</span>
-<span class='no'>impNARFCS</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>mnar_demo_data</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mnar.logreg"</span>, <span class='st'>"mnar.norm"</span>, <span class='st'>""</span>),
-  <span class='kw'>blots</span> <span class='kw'>=</span> <span class='no'>mnar.blot</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>234235</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)
+<span class='va'>impNARFCS</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>mnar_demo_data</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mnar.logreg"</span>, <span class='st'>"mnar.norm"</span>, <span class='st'>""</span><span class='op'>)</span>,
+  blots <span class='op'>=</span> <span class='va'>mnar.blot</span>, seed <span class='op'>=</span> <span class='fl'>234235</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
 
 <span class='co'># Obtain MI results: As expected they differ (slightly) from those</span>
 <span class='co'># from old version at https://github.com/moreno-betancur/NARFCS</span>
-<span class='fu'><a href='pool.html'>pool</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>impNARFCS</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Y</span> ~ <span class='no'>X</span> + <span class='no'>Z</span>)))$<span class='no'>pooled</span>$<span class='no'>estimate</span></div><div class='output co'>#&gt; [1]  19.521134   2.952546 -14.729454 -28.699292</div></pre>
+<span class='fu'><a href='pool.html'>pool</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>impNARFCS</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>X</span> <span class='op'>+</span> <span class='va'>Z</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='va'>pooled</span><span class='op'>$</span><span class='va'>estimate</span>
+</div><div class='output co'>#&gt; [1]  19.521134   2.952546 -14.729454 -28.699292</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -342,7 +347,7 @@ imputation of missing blood pressure covariates in survival analysis.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

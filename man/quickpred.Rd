@@ -75,6 +75,11 @@ important, variables. The set of predictor for those variables can remain
 relatively small. Using a square matrix extends the idea to the columns, so
 that one can also apply cellwise thresholds.
 }
+\note{
+\code{quickpred()} uses \code{\link[base]{data.matrix}} to convert
+factors to numbers through their internal codes. Especially for unordered
+factors the resulting quantification may not make sense.
+}
 \examples{
 # default: include all predictors with absolute correlation over 0.1
 quickpred(nhanes)
