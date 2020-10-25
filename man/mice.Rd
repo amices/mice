@@ -50,7 +50,7 @@ rows and columns with all 1's, except for the diagonal.
 Note: For two-level imputation models (which have \code{"2l"} in their names)
 other codes (e.g, \code{2} or \code{-2}) are also allowed.}
 
-\item{ignore}{A logical vector of \code{length(n)} elements indicating
+\item{ignore}{A logical vector of \code{nrow(data)} elements indicating
 which rows are ignored when creating the imputation model. The default
 \code{NULL} includes all rows that have an observed value of the variable
 to imputed. Rows with \code{ignore} set to \code{TRUE} do not influence the

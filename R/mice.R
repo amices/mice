@@ -129,7 +129,7 @@
 #' @param data A data frame or a matrix containing the incomplete data.  Missing
 #' values are coded as \code{NA}.
 #' @param m Number of multiple imputations. The default is \code{m=5}.
-#' @param ignore A logical vector of \code{length(n)} elements indicating
+#' @param ignore A logical vector of \code{nrow(data)} elements indicating
 #' which rows are ignored when creating the imputation model. The default
 #' \code{NULL} includes all rows that have an observed value of the variable
 #' to imputed. Rows with \code{ignore} set to \code{TRUE} do not influence the
@@ -404,8 +404,8 @@ mice <- function(data, m = 5,
   from <- 1
   to <- from + maxit - 1
   q <- sampler(
-    data, m, ignore, where, imp, blocks, method, 
-    visitSequence,predictorMatrix, formulas, blots, 
+    data, m, ignore, where, imp, blocks, method,
+    visitSequence,predictorMatrix, formulas, blots,
     post, c(from, to), printFlag, ...
   )
 
