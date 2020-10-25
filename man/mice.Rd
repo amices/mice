@@ -135,7 +135,7 @@ are created by a simple random draw from the data. Note that specification of
 \code{data.init} will start all \code{m} Gibbs sampling streams from the same
 imputation.}
 
-\item{...}{Named arguments that are passed down to the univariate imputation
+\item{\dots}{Named arguments that are passed down to the univariate imputation
 functions.}
 }
 \value{

@@ -129,6 +129,23 @@
 #' @param data A data frame or a matrix containing the incomplete data.  Missing
 #' values are coded as \code{NA}.
 #' @param m Number of multiple imputations. The default is \code{m=5}.
+#' @param method Can be either a single string, or a vector of strings with
+#' length \code{length(blocks)}, specifying the imputation method to be
+#' used for each column in data. If specified as a single string, the same
+#' method will be used for all blocks. The default imputation method (when no
+#' argument is specified) depends on the measurement level of the target column,
+#' as regulated by the \code{defaultMethod} argument. Columns that need
+#' not be imputed have the empty method \code{""}. See details.
+#' @param predictorMatrix A numeric matrix of \code{length(blocks)} rows
+#' and \code{ncol(data)} columns, containing 0/1 data specifying
+#' the set of predictors to be used for each target column.
+#' Each row corresponds to a variable block, i.e., a set of variables
+#' to be imputed. A value of \code{1} means that the column
+#' variable is used as a predictor for the target block (in the rows).
+#' By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
+#' rows and columns with all 1's, except for the diagonal.
+#' Note: For two-level imputation models (which have \code{"2l"} in their names)
+#' other codes (e.g, \code{2} or \code{-2}) are also allowed.
 #' @param ignore A logical vector of \code{nrow(data)} elements indicating
 #' which rows are ignored when creating the imputation model. The default
 #' \code{NULL} includes all rows that have an observed value of the variable
@@ -155,23 +172,6 @@
 #' matrix are set to \code{FALSE} of variables that are not block members.
 #' A variable may appear in multiple blocks. In that case, it is
 #' effectively re-imputed each time that it is visited.
-#' @param method Can be either a single string, or a vector of strings with
-#' length \code{length(blocks)}, specifying the imputation method to be
-#' used for each column in data. If specified as a single string, the same
-#' method will be used for all blocks. The default imputation method (when no
-#' argument is specified) depends on the measurement level of the target column,
-#' as regulated by the \code{defaultMethod} argument. Columns that need
-#' not be imputed have the empty method \code{""}. See details.
-#' @param predictorMatrix A numeric matrix of \code{length(blocks)} rows
-#' and \code{ncol(data)} columns, containing 0/1 data specifying
-#' the set of predictors to be used for each target column.
-#' Each row corresponds to a variable block, i.e., a set of variables
-#' to be imputed. A value of \code{1} means that the column
-#' variable is used as a predictor for the target block (in the rows).
-#' By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
-#' rows and columns with all 1's, except for the diagonal.
-#' Note: For two-level imputation models (which have \code{"2l"} in their names)
-#' other codes (e.g, \code{2} or \code{-2}) are also allowed.
 #' @param visitSequence A vector of block names of arbitrary length, specifying the
 #' sequence of blocks that are imputed during one iteration of the Gibbs
 #' sampler. A block is a collection of variables. All variables that are
@@ -219,7 +219,7 @@
 #' are created by a simple random draw from the data. Note that specification of
 #' \code{data.init} will start all \code{m} Gibbs sampling streams from the same
 #' imputation.
-#' @param ... Named arguments that are passed down to the univariate imputation
+#' @param \dots Named arguments that are passed down to the univariate imputation
 #' functions.
 #'
 #' @return Returns an S3 object of class \code{\link[=mids-class]{mids}}
@@ -270,7 +270,8 @@
 #' # imputation on mixed data with a different method per column
 #' mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"))
 #' @export
-mice <- function(data, m = 5,
+mice <- function(data,
+                 m = 5,
                  method = NULL,
                  predictorMatrix,
                  ignore = NULL,
@@ -281,7 +282,9 @@ mice <- function(data, m = 5,
                  blots = NULL,
                  post = NULL,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-                 maxit = 5, printFlag = TRUE, seed = NA,
+                 maxit = 5,
+                 printFlag = TRUE,
+                 seed = NA,
                  data.init = NULL,
                  ...) {
   call <- match.call()
