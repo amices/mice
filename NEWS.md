@@ -3,6 +3,22 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.11.7
+
+Two major additions crafted by Patrick Rockenschaub:
+
+* New `ignore` argument to `mice()`. This argument is a logical vector 
+of `nrow(data)` elements indicating which rows are ignored when creating 
+the imputation model. We may use the `ignore` argument to split the data 
+into a training set (on which the imputation model is built) and a test 
+set (that does not influence the imputation model estimates). The argument
+is based on the suggestion in 
+<https://github.com/amices/mice/issues/32#issuecomment-355600365>. See #32 for 
+more background and techniques.
+* New `filter()` method that subsets a `mids` object (multiply-imputed data set).
+The method accepts a logical vector of length `nrow(data)`, or an expression
+to construct such a vector from the incomplete data. (#269)
+
 # mice 3.11.6
 
 * Makes `tidy.mipo` more flexible (#276)
