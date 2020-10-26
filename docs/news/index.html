@@ -135,6 +135,8 @@
 <a href="#spectacular-speed-improvement-for-predictive-mean-matching" class="anchor"></a>Spectacular speed improvement for predictive mean matching</h3>
 <ul>
 <li>The new <code>matchindex</code> C function makes predictive mean matching <strong>50 to 600 times faster</strong>. The speed of <code>pmm</code> is now on par with normal imputation (<code><a href="../reference/mice.impute.norm.html">mice.impute.norm()</a></code>) and with the <code>miceFast</code> package, without compromising on the statistical quality of the imputations. Thanks to Polkas <a href="https://github.com/Polkas/miceFast/issues/10" class="uri">https://github.com/Polkas/miceFast/issues/10</a> and suggestions by Alexander Robitzsch. See <a href='https://github.com/amices/mice/issues/236'>#236</a> for more details.</li>
+<li>
+<strong>Breaking change:</strong> The default in <code>pmm</code> has changed. If you want the old behavior, specify <code><a href="../reference/mice.html">mice(..., use.matcher = TRUE)</a></code>.</li>
 </ul>
 </div>
 </div>

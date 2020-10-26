@@ -11,6 +11,8 @@ The speed of `pmm` is now on par with normal imputation (`mice.impute.norm()`)
 and with the `miceFast` package, without compromising on the statistical quality of 
 the imputations. Thanks to Polkas <https://github.com/Polkas/miceFast/issues/10> and 
 suggestions by Alexander Robitzsch. See #236 for more details.
+* **Breaking change:** The default in `pmm` has changed. If you want the 
+old behavior, specify `mice(..., use.matcher = TRUE)`.
 
 # mice 3.11.7
 
