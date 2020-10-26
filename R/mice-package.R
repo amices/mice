@@ -64,6 +64,12 @@
 #' \href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #'
+#' @section Enhanced linear algebra:
+#'
+#' Updating the BLAS can improve speed of R, sometime considerably. The details
+#' depend on the operating system. See the discussion in the
+#' "R Installation and Administration" guide for further information.
+#'
 #' @docType package
 #' @name mice
 #' @seealso \code{\link{mice}}, \code{\link{with.mids}},

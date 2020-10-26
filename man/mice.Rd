@@ -339,6 +339,14 @@ The term \emph{Fully Conditional Specification} was introduced in 2006 to descri
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 
+\section{Enhanced linear algebra}{
+
+
+Updating the BLAS can improve speed of R, sometime considerably. The details
+depend on the operating system. See the discussion in the
+"R Installation and Administration" guide for further information.
+}
+
 \examples{
 # do default multiple imputation on a numeric matrix
 imp <- mice(nhanes)
