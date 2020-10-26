@@ -2,6 +2,12 @@
 title: "News"
 output: github_document
 ---
+
+# mice 3.11.9
+
+* Improve documentation for `pool()` and `pool.scalar()` (#142, #106, #190 and others)
+
+
 # mice 3.11.8 
 
 ### Spectacular speed improvement for predictive mean matching
