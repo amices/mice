@@ -79,7 +79,7 @@ main effect and quadratic effect in the complete-data model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@ main effect and quadratic effect in the complete-data model." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -125,7 +125,7 @@ main effect and quadratic effect in the complete-data model." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Imputation of quadratic terms</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/mice.impute.quadratic.R'><code>R/mice.impute.quadratic.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/mice.impute.quadratic.R'><code>R/mice.impute.quadratic.R</code></a></small>
     <div class="hidden name"><code>mice.impute.quadratic.Rd</code></div>
     </div>
 
@@ -134,7 +134,7 @@ main effect and quadratic effect in the complete-data model." />
 main effect and quadratic effect in the complete-data model.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mice.impute.quadratic</span>(<span class='no'>y</span>, <span class='no'>ry</span>, <span class='no'>x</span>, <span class='kw'>wy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>mice.impute.quadratic</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, wy <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,19 +145,19 @@ main effect and quadratic effect in the complete-data model.</p>
     </tr>
     <tr>
       <th>ry</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the 
-the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation 
-model is fitted. The <code>ry</code> generally distinguishes the observed 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the
+the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation
+model is fitted. The <code>ry</code> generally distinguishes the observed
 (<code>TRUE</code>) and missing values (<code>FALSE</code>) in <code>y</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for 
+      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for
 <code>y</code>. Matrix <code>x</code> may have no missing values.</p></td>
     </tr>
     <tr>
       <th>wy</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value
 indicates locations in <code>y</code> for which imputations are created.</p></td>
     </tr>
     <tr>
@@ -168,17 +168,17 @@ indicates locations in <code>y</code> for which imputations are created.</p></td
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Vector with imputed data, same type as <code>y</code>, and of length 
+    <p>Vector with imputed data, same type as <code>y</code>, and of length
 <code><a href='https://rdrr.io/r/base/sum.html'>sum(wy)</a></code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function implements the "polynomial combination" method. 
+    <p>This function implements the "polynomial combination" method.
 First, the polynomial
-combination \(Z = Y \beta_1 + Y^2 \beta_2\) is formed. 
+combination \(Z = Y \beta_1 + Y^2 \beta_2\) is formed.
 \(Z\) is imputed by
-predictive mean matching, followed by a decomposition of the imputed 
+predictive mean matching, followed by a decomposition of the imputed
 data \(Z\)
-into components \(Y\) and \(Y^2\). 
+into components \(Y\) and \(Y^2\).
 See Van Buuren (2012, pp. 139-141) and Vink
 et al (2012) for more details. The method ensures that 1) the imputed data
 for \(Y\) and \(Y^2\) are mutually consistent, and 2) that provides unbiased
@@ -198,10 +198,10 @@ variables in the multivariate incomplete data that we might wish to impute.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='mice.impute.pmm.html'>mice.impute.pmm</a></code>
-Van Buuren, S. (2018). 
+Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
-<p>Vink, G., van Buuren, S. (2013). Multiple Imputation of Squared Terms. 
+<p>Vink, G., van Buuren, S. (2013). Multiple Imputation of Squared Terms.
 <em>Sociological Methods &amp; Research</em>, 42:598-607.</p>
 <p>Other univariate imputation functions: 
 <code><a href='mice.impute.cart.html'>mice.impute.cart</a>()</code>,
@@ -210,7 +210,7 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <code><a href='mice.impute.logreg.html'>mice.impute.logreg</a>()</code>,
 <code><a href='mice.impute.mean.html'>mice.impute.mean</a>()</code>,
 <code><a href='mice.impute.midastouch.html'>mice.impute.midastouch</a>()</code>,
-<code><a href='mice.impute.mnar.html'>mice.impute.mnar.logreg</a>()</code>,
+<code><a href='mice.impute.mnar.logreg.html'>mice.impute.mnar.logreg</a>()</code>,
 <code><a href='mice.impute.norm.boot.html'>mice.impute.norm.boot</a>()</code>,
 <code><a href='mice.impute.norm.nob.html'>mice.impute.norm.nob</a>()</code>,
 <code><a href='mice.impute.norm.predict.html'>mice.impute.norm.predict</a>()</code>,
@@ -220,29 +220,34 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <code><a href='mice.impute.polyreg.html'>mice.impute.polyreg</a>()</code>,
 <code><a href='mice.impute.rf.html'>mice.impute.rf</a>()</code>,
 <code><a href='mice.impute.ri.html'>mice.impute.ri</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Gerko Vink (University of Utrecht), <a href='mailto:g.vink@uu.nl'>g.vink@uu.nl</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>lattice</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='http://lattice.r-forge.r-project.org/'>lattice</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='input'>
 <span class='co'># Create Data</span>
-<span class='no'>B1</span> <span class='kw'>=</span> <span class='fl'>.5</span>
-<span class='no'>B2</span> <span class='kw'>=</span> <span class='fl'>.5</span>
-<span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>)
-<span class='no'>XX</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>^<span class='fl'>2</span>
-<span class='no'>e</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>)
-<span class='no'>Y</span> <span class='kw'>&lt;-</span> <span class='no'>B1</span> * <span class='no'>X</span> + <span class='no'>B2</span> * <span class='no'>XX</span> + <span class='no'>e</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>X</span>, <span class='kw'>xx</span> <span class='kw'>=</span> <span class='no'>XX</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>Y</span>)
+<span class='va'>B1</span> <span class='op'>&lt;-</span> <span class='fl'>.5</span>
+<span class='va'>B2</span> <span class='op'>&lt;-</span> <span class='fl'>.5</span>
+<span class='va'>X</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>
+<span class='va'>XX</span> <span class='op'>&lt;-</span> <span class='va'>X</span><span class='op'>^</span><span class='fl'>2</span>
+<span class='va'>e</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>Y</span> <span class='op'>&lt;-</span> <span class='va'>B1</span> <span class='op'>*</span> <span class='va'>X</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>*</span> <span class='va'>XX</span> <span class='op'>+</span> <span class='va'>e</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>X</span>, xx <span class='op'>=</span> <span class='va'>XX</span>, y <span class='op'>=</span> <span class='va'>Y</span><span class='op'>)</span>
 
 <span class='co'># Impose 25 percent MCAR Missingness</span>
-<span class='no'>dat</span>[<span class='fl'>0</span> <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span> -<span class='fl'>.25</span>), <span class='fl'>1</span>:<span class='fl'>2</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='va'>dat</span><span class='op'>[</span><span class='fl'>0</span> <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span> <span class='op'>-</span> <span class='fl'>.25</span><span class='op'>)</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
 
 <span class='co'># Prepare data for imputation</span>
-<span class='no'>ini</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>dat</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>0</span>)
-<span class='no'>meth</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"quadratic"</span>, <span class='st'>"~I(x^2)"</span>, <span class='st'>""</span>)
-<span class='no'>pred</span> <span class='kw'>&lt;-</span> <span class='no'>ini</span>$<span class='no'>pred</span>
-<span class='no'>pred</span>[, <span class='st'>"xx"</span>] <span class='kw'>&lt;-</span> <span class='fl'>0</span>
+<span class='va'>ini</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>dat</span>, maxit <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>meth</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"quadratic"</span>, <span class='st'>"~I(x^2)"</span>, <span class='st'>""</span><span class='op'>)</span>
+<span class='va'>pred</span> <span class='op'>&lt;-</span> <span class='va'>ini</span><span class='op'>$</span><span class='va'>pred</span>
+<span class='va'>pred</span><span class='op'>[</span>, <span class='st'>"xx"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
 
 <span class='co'># Impute data</span>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>dat</span>, <span class='kw'>meth</span> <span class='kw'>=</span> <span class='no'>meth</span>, <span class='kw'>pred</span> <span class='kw'>=</span> <span class='no'>pred</span>)</div><div class='output co'>#&gt; 
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>dat</span>, meth <span class='op'>=</span> <span class='va'>meth</span>, pred <span class='op'>=</span> <span class='va'>pred</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  x  xx
 #&gt;   1   2  x  xx
@@ -270,7 +275,8 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 #&gt;   5   4  x  xx
 #&gt;   5   5  x  xx</div><div class='input'>
 <span class='co'># Pool results</span>
-<span class='fu'><a href='pool.html'>pool</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>y</span> ~ <span class='no'>x</span> + <span class='no'>xx</span>)))</div><div class='output co'>#&gt; Class: mipo    m = 5 
+<span class='fu'><a href='pool.html'>pool</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>xx</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Class: mipo    m = 5 
 #&gt;          term m   estimate         ubar            b            t dfcom
 #&gt; 1 (Intercept) 5 0.03245276 0.0014808576 2.876490e-05 0.0015153754   997
 #&gt; 2           x 5 0.48846739 0.0009650518 9.469209e-05 0.0010786823   997
@@ -280,8 +286,11 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 #&gt; 2 256.5689 0.11774551 0.10534197 0.11223538
 #&gt; 3 240.6627 0.12361699 0.11001702 0.11732206</div><div class='input'>
 <span class='co'># Plot results</span>
-<span class='fu'><a href='stripplot.mids.html'>stripplot</a></span>(<span class='no'>imp</span>)</div><div class='img'><img src='mice.impute.quadratic-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>dat</span>$<span class='no'>x</span>, <span class='no'>dat</span>$<span class='no'>xx</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='mdc.html'>mdc</a></span>(<span class='fl'>1</span>), <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"xx"</span>)</div><div class='input'><span class='no'>cmp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>imp</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span>(<span class='no'>cmp</span>$<span class='no'>x</span>[<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>dat</span>$<span class='no'>x</span>)], <span class='no'>cmp</span>$<span class='no'>xx</span>[<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>dat</span>$<span class='no'>x</span>)], <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='mdc.html'>mdc</a></span>(<span class='fl'>2</span>))</div><div class='img'><img src='mice.impute.quadratic-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='stripplot.mids.html'>stripplot</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
+</div><div class='img'><img src='mice.impute.quadratic-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>xx</span>, col <span class='op'>=</span> <span class='fu'><a href='mdc.html'>mdc</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>, xlab <span class='op'>=</span> <span class='st'>"x"</span>, ylab <span class='op'>=</span> <span class='st'>"xx"</span><span class='op'>)</span>
+</div><div class='input'><span class='va'>cmp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span><span class='op'>(</span><span class='va'>cmp</span><span class='op'>$</span><span class='va'>x</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>cmp</span><span class='op'>$</span><span class='va'>xx</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span><span class='op'>]</span>, col <span class='op'>=</span> <span class='fu'><a href='mdc.html'>mdc</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='mice.impute.quadratic-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -297,7 +306,7 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

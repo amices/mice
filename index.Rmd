@@ -3,12 +3,12 @@ output: rmarkdown::html_vignette
 bibliography: refs.bibtex
 ---
 
-# [MICE: Multivariate Imputation by Chained Equations](http://stefvanbuuren.github.io/mice/)
+# [MICE: Multivariate Imputation by Chained Equations](https://stefvanbuuren.github.io/mice/)
 
 ## Software
 
 1. [`mice` package at CRAN](https://cran.r-project.org/package=mice)
-2. [mice GitHUB repository](https://github.com/stefvanbuuren/mice)
+2. [mice GitHUB repository](https://github.com/amices/mice)
 
 ## Installation
 
@@ -68,8 +68,8 @@ Function name        | Description
 
 ## Code from publications
 
-1. [Flexible Imputation of Missing Data](http://stefvanbuuren.github.io/mice/FIMD.html)
-2. [mice: Multivariate Imputation by Chained Equations in R](http://stefvanbuuren.github.io/mice/JSS.html)
+1. [Flexible Imputation of Missing Data](https://stefvanbuuren.github.io/mice/FIMD.html)
+2. [mice: Multivariate Imputation by Chained Equations in R](https://stefvanbuuren.github.io/mice/JSS.html)
 
 ## Related packages
 
@@ -87,10 +87,10 @@ Packages that extend the functionality of `mice` include:
 ## Further reading
 
 1. [Article](https://www.jstatsoft.org/v45/i03/paper) in the Journal of Statistical Software [@VANBUUREN2011]. 
-2. The first application on [missing blood pressure](http://www.stefvanbuuren.nl/publications/Multiple%20imputation%20-%20Stat%20Med%201999.pdf) data [@VANBUUREN1999]. 
-3. Term [Fully Conditional Specification](http://www.stefvanbuuren.nl/publications/FCS%20in%20multivariate%20imputation%20-%20JSCS%202006.pdf) describes a general class of methods that specify imputations model for multivariate data as a set of conditional distributions [@VANBUUREN2006].
-4. Details about imputing [mixes of numerical and categorical data](http://www.stefvanbuuren.nl/publications/MI%20by%20FCS%20-%20SMMR%202007.pdf) can be found in [@VANBUUREN2007]. 
-5. [Wulff and Ejlskov](http://www.ejbrm.com/issue/download.html?idArticle=450 ) provide a comprehensive overview of MICE. 
+2. The first application on [missing blood pressure](https://www.stefvanbuuren.nl/publications/Multiple%20imputation%20-%20Stat%20Med%201999.pdf) data [@VANBUUREN1999]. 
+3. Term [Fully Conditional Specification](https://www.stefvanbuuren.nl/publications/FCS%20in%20multivariate%20imputation%20-%20JSCS%202006.pdf) describes a general class of methods that specify imputations model for multivariate data as a set of conditional distributions [@VANBUUREN2006].
+4. Details about imputing [mixes of numerical and categorical data](https://www.stefvanbuuren.nl/publications/MI%20by%20FCS%20-%20SMMR%202007.pdf) can be found in [@VANBUUREN2007]. 
+5. [Wulff and Ejlskov](https://www.ejbrm.com/issue/download.html?idArticle=450 ) provide a comprehensive overview of MICE. 
 6. Many more details and applications can be found in the book *Flexible Imputation of Missing Data. Second Edition* [@VANBUUREN2018].
 
 ## References

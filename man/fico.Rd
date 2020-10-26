@@ -18,7 +18,7 @@ FICO is an outbound statistic defined by the fraction of incomplete cases
 among cases with \code{Yj} observed (White and Carlin, 2010).
 }
 \references{
-Van Buuren, S. (2018). 
+Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 

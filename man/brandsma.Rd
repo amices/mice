@@ -5,7 +5,7 @@
 \alias{brandsma}
 \title{Brandsma school data used Snijders and Bosker (2012)}
 \format{
-\code{brandsma} is a data frame with 4106 rows and 14 columns: 
+\code{brandsma} is a data frame with 4106 rows and 14 columns:
 \describe{
 \item{\code{sch}}{School number}
 \item{\code{pup}}{Pupil ID}
@@ -17,8 +17,8 @@
 \item{\code{rpg}}{Number of repeated groups, 0, 1, 2}
 \item{\code{lpr}}{language score PRE}
 \item{\code{lpo}}{language score POST}
-\item{\code{apr}}{Arithmetic score PRE} 
-\item{\code{apo}}{Arithmetic score POST} 
+\item{\code{apr}}{Arithmetic score PRE}
+\item{\code{apo}}{Arithmetic score POST}
 \item{\code{den}}{Denomination classification 1-4 - at school level}
 \item{\code{ssi}}{School SES indicator - at school level}
 }
@@ -29,34 +29,34 @@ Constructed from \code{MLbook_2nded_total_4106-99.sav} from
 \code{data-raw/R/brandsma.R}
 }
 \description{
-Dataset with raw data from Snijders and Bosker (2012) containing 
-data from 4106 pupils attending 216 schools. This dataset 
+Dataset with raw data from Snijders and Bosker (2012) containing
+data from 4106 pupils attending 216 schools. This dataset
 includes all pupils and schools with missing data.
 }
 \note{
-This dataset is constructed from the raw data. There are 
-a few differences with the data set used in Chapter 4 and 5 
+This dataset is constructed from the raw data. There are
+a few differences with the data set used in Chapter 4 and 5
 of Snijders and Bosker:
 \enumerate{
 \item All schools are included, including the five school with
 missing values on \code{langpost}.
 \item Missing \code{denomina} codes are left as missing.
 \item Aggregates are undefined in the presence of missing data
-in the underlying values. 
+in the underlying values.
 Variables \code{ses}, \code{iqv} and \code{iqp} are in their
-original scale, and not globally centered. 
+original scale, and not globally centered.
 No aggregate variables at the school level are included.
-\item There is a wider selection of original variables. Note 
-however that the source data contain an even wider set of 
+\item There is a wider selection of original variables. Note
+however that the source data contain an even wider set of
 variables.
 }
 }
 \references{
-Brandsma, HP and Knuver, JWM (1989), Effects of school and 
-classroom characteristics on pupil progress in language and arithmetic. 
+Brandsma, HP and Knuver, JWM (1989), Effects of school and
+classroom characteristics on pupil progress in language and arithmetic.
 International Journal of Educational Research, 13(7), 777 - 788.
 
-Snijders, TAB and Bosker RJ (2012). Multilevel Analysis, 2nd Ed. Sage, 
+Snijders, TAB and Bosker RJ (2012). Multilevel Analysis, 2nd Ed. Sage,
 Los Angeles, 2012.
 }
 \keyword{datasets}

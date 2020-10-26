@@ -46,8 +46,8 @@
 
 
 <meta property="og:title" content="Scatterplot of amputed and non-amputed data against weighted sum scores — xyplot.mads" />
-<meta property="og:description" content="Plotting method to investigate relation between amputed data and the weighted sum 
-scores. Based on lattice. xyplot produces scatterplots. 
+<meta property="og:description" content="Plotting method to investigate relation between amputed data and the weighted sum
+scores. Based on lattice. xyplot produces scatterplots.
 The function plots the variables against the weighted sum scores. The function
 automatically separates the amputed and non-amputed data to see the relation between
 the amputation and the weighted sum scores." />
@@ -82,7 +82,7 @@ the amputation and the weighted sum scores." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -103,7 +103,7 @@ the amputation and the weighted sum scores." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -128,28 +128,28 @@ the amputation and the weighted sum scores." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Scatterplot of amputed and non-amputed data against weighted sum scores</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/xyplot.mads.R'><code>R/xyplot.mads.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/xyplot.mads.R'><code>R/xyplot.mads.R</code></a></small>
     <div class="hidden name"><code>xyplot.mads.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plotting method to investigate relation between amputed data and the weighted sum 
-scores. Based on <code>lattice</code>. <code>xyplot</code> produces scatterplots. 
+    <p>Plotting method to investigate relation between amputed data and the weighted sum
+scores. Based on <code><a href='https://rdrr.io/pkg/lattice/man/Lattice.html'>lattice</a></code>. <code>xyplot</code> produces scatterplots.
 The function plots the variables against the weighted sum scores. The function
 automatically separates the amputed and non-amputed data to see the relation between
 the amputation and the weighted sum scores.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for mads</span>
-<span class='fu'><a href='xyplot.mids.html'>xyplot</a></span>(
-  <span class='no'>x</span>,
-  <span class='no'>data</span>,
-  <span class='kw'>which.pat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>standardized</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>layout</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fu'><a href='mdc.html'>mdc</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>),
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'><a href='xyplot.mids.html'>xyplot</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>data</span>,
+  which.pat <span class='op'>=</span> <span class='cn'>NULL</span>,
+  standardized <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  layout <span class='op'>=</span> <span class='cn'>NULL</span>,
+  colors <span class='op'>=</span> <span class='fu'><a href='mdc.html'>mdc</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,12 +160,12 @@ the amputation and the weighted sum scores.</p>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>A string or vector of variable names that needs to be plotted. As 
+      <td><p>A string or vector of variable names that needs to be plotted. As
 a default, all variables will be plotted.</p></td>
     </tr>
     <tr>
       <th>which.pat</th>
-      <td><p>A scalar or vector indicating which patterns need to be plotted. 
+      <td><p>A scalar or vector indicating which patterns need to be plotted.
 As a default, all patterns are plotted.</p></td>
     </tr>
     <tr>
@@ -175,15 +175,15 @@ from standardized data or not. Default is TRUE.</p></td>
     </tr>
     <tr>
       <th>layout</th>
-      <td><p>A vector of two values indicating how the scatterplots of one 
-pattern should be divided over the plot. For example, <code><a href='https://rdrr.io/r/base/c.html'>c(2, 3)</a></code> indicates 
-that the scatterplots of six variables need to be placed on 3 rows and 2 columns. 
-There are several defaults for different #variables. Note that for more than 
+      <td><p>A vector of two values indicating how the scatterplots of one
+pattern should be divided over the plot. For example, <code><a href='https://rdrr.io/r/base/c.html'>c(2, 3)</a></code> indicates
+that the scatterplots of six variables need to be placed on 3 rows and 2 columns.
+There are several defaults for different #variables. Note that for more than
 9 variables, multiple plots will be created automatically.</p></td>
     </tr>
     <tr>
       <th>colors</th>
-      <td><p>A vector of two RGB values defining the colors of the non-amputed and 
+      <td><p>A vector of two RGB values defining the colors of the non-amputed and
 amputed data respectively. RGB values can be obtained with <code><a href='https://rdrr.io/r/grDevices/hcl.html'>hcl</a></code>.</p></td>
     </tr>
     <tr>
@@ -194,17 +194,20 @@ amputed data respectively. RGB values can be obtained with <code><a href='https:
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list containing the scatterplots. Note that a new pattern 
+    <p>A list containing the scatterplots. Note that a new pattern
 will always be shown in a new plot.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The <code>mads</code> object contains all the information you need to 
-make any desired plots. Check <code><a href='mads-class.html'>mads-class</a></code> or the vignette <em>Multivariate 
+    <p>The <code>mads</code> object contains all the information you need to
+make any desired plots. Check <code><a href='mads-class.html'>mads-class</a></code> or the vignette <em>Multivariate
 Amputation using Ampute</em> to understand the contents of class object <code>mads</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='ampute.html'>ampute</a></code>, <code><a href='bwplot.mids.html'>bwplot</a></code>, <code>Lattice</code> for 
+    <div class='dont-index'><p><code><a href='ampute.html'>ampute</a></code>, <code><a href='bwplot.mids.html'>bwplot</a></code>, <code><a href='https://rdrr.io/pkg/lattice/man/Lattice.html'>Lattice</a></code> for
 an overview of the package, <code><a href='mads-class.html'>mads-class</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rianne Schouten, 2016</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -221,7 +224,7 @@ an overview of the package, <code><a href='mads-class.html'>mads-class</a></code
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

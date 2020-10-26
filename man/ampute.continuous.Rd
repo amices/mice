@@ -2,41 +2,41 @@
 % Please edit documentation in R/ampute.continuous.R
 \name{ampute.continuous}
 \alias{ampute.continuous}
-\title{Multivariate Amputation Based On Continuous Probability Functions}
+\title{Multivariate amputation based on continuous probability functions}
 \usage{
 ampute.continuous(P, scores, prop, type)
 }
 \arguments{
-\item{P}{A vector containing the pattern numbers of the cases's candidacies. 
-For each case, a value between 1 and #patterns is given. For example, a 
+\item{P}{A vector containing the pattern numbers of the cases's candidacies.
+For each case, a value between 1 and #patterns is given. For example, a
 case with value 2 is candidate for missing data pattern 2.}
 
-\item{scores}{A list containing vectors with the candidates's weighted sum scores, 
+\item{scores}{A list containing vectors with the candidates's weighted sum scores,
 the result of an underlying function in \code{\link{ampute}}.}
 
-\item{prop}{A scalar specifying the proportion of missingness. Should be a value 
+\item{prop}{A scalar specifying the proportion of missingness. Should be a value
 between 0 and 1. Default is a missingness proportion of 0.5.}
 
-\item{type}{A vector of strings containing the type of missingness for each 
-pattern. Either \code{"LEFT"}, \code{"MID"}, \code{"TAIL"} or '\code{"RIGHT"}. 
-If a single missingness type is entered, all patterns will be created by the same 
-type. If missingness types should differ over patterns, a vector of missingness 
+\item{type}{A vector of strings containing the type of missingness for each
+pattern. Either \code{"LEFT"}, \code{"MID"}, \code{"TAIL"} or '\code{"RIGHT"}.
+If a single missingness type is entered, all patterns will be created by the same
+type. If missingness types should differ over patterns, a vector of missingness
 types should be entered. Default is RIGHT for all patterns and is the result of
 \code{\link{ampute.default.type}}.}
 }
 \value{
-A list containing vectors with \code{0} if a case should be made missing 
-and \code{1} if a case should remain complete. The first vector refers to the 
+A list containing vectors with \code{0} if a case should be made missing
+and \code{1} if a case should remain complete. The first vector refers to the
 first pattern, the second vector to the second pattern, etcetera.
 }
 \description{
 This function creates a missing data indicator for each pattern. The continuous
-probability distributions (Van Buuren, 2012, pp. 63, 64) will be induced on the 
-weighted sum scores, calculated earlier in the multivariate amputation function 
+probability distributions (Van Buuren, 2012, pp. 63, 64) will be induced on the
+weighted sum scores, calculated earlier in the multivariate amputation function
 \code{\link{ampute}}.
 }
 \references{
-#'Van Buuren, S. (2018). 
+#'Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 }

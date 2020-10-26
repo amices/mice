@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Compare two nested models fitted to imputed data — pool.compare" />
-<meta property="og:description" content="This function is deprecated in V3. Use D1 or 
+<meta property="og:description" content="This function is deprecated in V3. Use D1 or
 D3 instead." />
 
 
@@ -79,7 +79,7 @@ D3 instead." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@ D3 instead." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -125,16 +125,16 @@ D3 instead." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Compare two nested models fitted to imputed data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/pool.compare.R'><code>R/pool.compare.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/pool.compare.R'><code>R/pool.compare.R</code></a></small>
     <div class="hidden name"><code>pool.compare.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function is deprecated in V3. Use <code><a href='D1.html'>D1</a></code> or 
+    <p>This function is deprecated in V3. Use <code><a href='D1.html'>D1</a></code> or
 <code><a href='D3.html'>D3</a></code> instead.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pool.compare</span>(<span class='no'>fit1</span>, <span class='no'>fit0</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wald"</span>, <span class='st'>"likelihood"</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>pool.compare</span><span class='op'>(</span><span class='va'>fit1</span>, <span class='va'>fit0</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wald"</span>, <span class='st'>"likelihood"</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,7 +150,7 @@ model in <code>fit0</code> is a nested fit0 of <code>fit1</code>.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>Either <code>"wald"</code> or <code>"likelihood"</code> specifying 
+      <td><p>Either <code>"wald"</code> or <code>"likelihood"</code> specifying
 the type of comparison. The default is <code>"wald"</code>.</p></td>
     </tr>
     <tr>
@@ -163,20 +163,20 @@ the type of comparison. The default is <code>"wald"</code>.</p></td>
 
     <p>A list containing several components. Component <code>call</code> is
 the call to the <code>pool.compare</code> function. Component <code>call11</code> is
-the call that created <code>fit1</code>. Component <code>call12</code> is the 
-call that created the imputations. Component <code>call01</code> is the 
-call that created <code>fit0</code>. Component <code>call02</code> is the 
-call that created the imputations. Components <code>method</code> is the 
+the call that created <code>fit1</code>. Component <code>call12</code> is the
+call that created the imputations. Component <code>call01</code> is the
+call that created <code>fit0</code>. Component <code>call02</code> is the
+call that created the imputations. Components <code>method</code> is the
 method used to compare two models: 'Wald' or 'likelihood'. Component
 <code>nmis</code> is the number of missing entries for each variable.
-Component <code>m</code> is the number of imputations. 
+Component <code>m</code> is the number of imputations.
 Component <code>qhat1</code> is a matrix, containing the estimated coefficients of the
-<em>m</em> repeated complete data analyses from <code>fit1</code>. 
+<em>m</em> repeated complete data analyses from <code>fit1</code>.
 Component <code>qhat0</code> is a matrix, containing the estimated coefficients of the
 <em>m</em> repeated complete data analyses from <code>fit0</code>.
-Component <code>ubar1</code> is the mean of the variances of <code>fit1</code>, 
+Component <code>ubar1</code> is the mean of the variances of <code>fit1</code>,
 formula (3.1.3), Rubin (1987).
-Component <code>ubar0</code> is the mean of the variances of <code>fit0</code>, 
+Component <code>ubar0</code> is the mean of the variances of <code>fit0</code>,
 formula (3.1.3), Rubin (1987).
 Component <code>qbar1</code> is the pooled estimate of <code>fit1</code>, formula (3.1.2) Rubin
 (1987).
@@ -187,7 +187,7 @@ Component <code>rm</code> is the relative increase in variance due to nonrespons
 (3.1.7), Rubin (1987).
 Component <code>df1</code>: df1 = under the null hypothesis it is assumed that <code>Dm</code> has an F
 distribution with (df1,df2) degrees of freedom.
-Component <code>df2</code>: df2. 
+Component <code>df2</code>: df2.
 Component <code>pvalue</code> is the P-value of testing whether the model <code>fit1</code> is
 statistically different from the smaller <code>fit0</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -199,7 +199,7 @@ found in paragraph 3.  One could use the Wald method for comparison of linear
 models obtained with e.g. <code>lm</code> (in <code><a href='with.mids.html'>with.mids()</a></code>).  The likelihood
 method should be used in case of logistic regression models obtained with
 <code><a href='https://rdrr.io/r/stats/glm.html'>glm()</a></code> in <code><a href='with.mids.html'>with.mids()</a></code>.</p>
-<p>The function assumes that <code>fit1</code> is the 
+<p>The function assumes that <code>fit1</code> is the
 larger model, and that model <code>fit0</code> is fully contained in <code>fit1</code>.
 In case of <code>method='wald'</code>, the null hypothesis is tested that the extra
 parameters are all zero.</p>
@@ -216,6 +216,9 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='lm.mids.html'>lm.mids</a></code>, <code><a href='glm.mids.html'>glm.mids</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Karin Groothuis-Oudshoorn and Stef van Buuren, 2009</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -232,7 +235,7 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

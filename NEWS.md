@@ -3,8 +3,66 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.10.0.9000
+# mice 3.11.7
 
+Two major additions crafted by Patrick Rockenschaub:
+
+* New `ignore` argument to `mice()`. This argument is a logical vector 
+of `nrow(data)` elements indicating which rows are ignored when creating 
+the imputation model. We may use the `ignore` argument to split the data 
+into a training set (on which the imputation model is built) and a test 
+set (that does not influence the imputation model estimates). The argument
+is based on the suggestion in 
+<https://github.com/amices/mice/issues/32#issuecomment-355600365>. See #32 for 
+more background and techniques.
+* New `filter()` method that subsets a `mids` object (multiply-imputed data set).
+The method accepts a logical vector of length `nrow(data)`, or an expression
+to construct such a vector from the incomplete data. (#269)
+
+# mice 3.11.6
+
+* Makes `tidy.mipo` more flexible (#276)
+* Solves a problem if `nelsonaalen()` gets a `tibble` (#272)
+
+# mice 3.11.5
+
+* Add explanation to how `NA`s can appear in the imputed data (#267)
+
+# mice 3.11.4 
+
+* Add warning to `quickpred()` documentation (#268)
+
+# mice 3.11.3
+
+* Styles all sources files with styler
+* Improves consistency in code and documentation
+* Moves internally defined functions to global namespace
+* Solves bug in internal `sum.scores()`
+* Adds deprecated messages to `lm.mids()`, `glm.mids()`, `pool.compare()`
+* Removes `.pmm.match()` and `expandcov()`
+* Strips out all `return()` calls placed just before end-of-function
+* Remove all trailing spaces
+
+# mice 3.11.2 
+
+* Repairs a bug in the routine for finding the `printFlag` value (#258)
+
+# mice 3.11.1
+
+* Update URL's after transfer to organisation `amices`
+
+# mice 3.11.0
+
+## Major changes
+
+* The Cox model does not return `df.residual`, which caused problematic behavior in the `D1()`, `D2()`, `D3()`, `anova()` and `pool()`. `mice` now extracts the relevant information from other parts of the objects returned by `survival::coxph()`, which solves long-standing issues with the integration of the Cox model (#246).
+* Adds missing `Rccp` dependency to work with `tidyr 1.1.1` (#248).
+
+## Minor changes
+
+* Addresses warnings: `Non-file package-anchored link(s) in documentation object`.
+* Updates on `ampute` documentation (#251).
+* Ask user permission before installing a package from `suggests`.
 
 # mice 3.10.0
 

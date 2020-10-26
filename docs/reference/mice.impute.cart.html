@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -124,7 +124,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Imputation by classification and regression trees</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/mice.impute.cart.R'><code>R/mice.impute.cart.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/mice.impute.cart.R'><code>R/mice.impute.cart.R</code></a></small>
     <div class="hidden name"><code>mice.impute.cart.Rd</code></div>
     </div>
 
@@ -132,7 +132,7 @@
     <p>Imputes univariate missing data using classification and regression trees.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mice.impute.cart</span>(<span class='no'>y</span>, <span class='no'>ry</span>, <span class='no'>x</span>, <span class='kw'>wy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>minbucket</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>cp</span> <span class='kw'>=</span> <span class='fl'>1e-04</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>mice.impute.cart</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, wy <span class='op'>=</span> <span class='cn'>NULL</span>, minbucket <span class='op'>=</span> <span class='fl'>5</span>, cp <span class='op'>=</span> <span class='fl'>1e-04</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,19 +143,19 @@
     </tr>
     <tr>
       <th>ry</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the 
-the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation 
-model is fitted. The <code>ry</code> generally distinguishes the observed 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the
+the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation
+model is fitted. The <code>ry</code> generally distinguishes the observed
 (<code>TRUE</code>) and missing values (<code>FALSE</code>) in <code>y</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for 
+      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for
 <code>y</code>. Matrix <code>x</code> may have no missing values.</p></td>
     </tr>
     <tr>
       <th>wy</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value
 indicates locations in <code>y</code> for which imputations are created.</p></td>
     </tr>
     <tr>
@@ -166,7 +166,7 @@ See <code>rpart.control</code> for details.</p></td>
     <tr>
       <th>cp</th>
       <td><p>Complexity parameter. Any split that does not decrease the overall
-lack of fit by a factor of cp is not attempted. See <code>rpart.control</code> 
+lack of fit by a factor of cp is not attempted. See <code>rpart.control</code>
 for details.</p></td>
     </tr>
     <tr>
@@ -177,7 +177,7 @@ for details.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Vector with imputed data, same type as <code>y</code>, and of length 
+    <p>Vector with imputed data, same type as <code>y</code>, and of length
 <code><a href='https://rdrr.io/r/base/sum.html'>sum(wy)</a></code></p>
 <p>Numeric vector of length <code><a href='https://rdrr.io/r/base/sum.html'>sum(!ry)</a></code> with imputations</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -186,24 +186,24 @@ for details.</p></td>
 is as follows:</p><ol>
 <li><p>Fit a classification or regression tree by recursive partitioning;</p></li>
 <li><p>For each <code>ymis</code>, find the terminal node they end up according to the fitted tree;</p></li>
-<li><p>Make a random draw among the member in the node, and take the observed value from that 
+<li><p>Make a random draw among the member in the node, and take the observed value from that
 draw as the imputation.</p></li>
 </ol>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning 
-for missing data imputation in the presence of interaction Effects. 
+    <p>Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning
+for missing data imputation in the presence of interaction Effects.
 Computational Statistics \&amp; Data Analysis, 72, 92-104.</p>
 <p>Breiman, L., Friedman, J. H., Olshen, R. A., and Stone, C. J.
 (1984), Classification and regression trees, Monterey, CA: Wadsworth &amp;
 Brooks/Cole Advanced Books &amp; Software.</p>
-<p>Van Buuren, S. (2018). 
+<p>Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/sec-cart.html'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='mice.html'>mice</a></code>, <code><a href='mice.impute.rf.html'>mice.impute.rf</a></code>, 
+    <div class='dont-index'><p><code><a href='mice.html'>mice</a></code>, <code><a href='mice.impute.rf.html'>mice.impute.rf</a></code>,
 <code><a href='https://rdrr.io/pkg/rpart/man/rpart.html'>rpart</a></code>, <code><a href='https://rdrr.io/pkg/rpart/man/rpart.control.html'>rpart.control</a></code></p>
 <p>Other univariate imputation functions: 
 <code><a href='mice.impute.lda.html'>mice.impute.lda</a>()</code>,
@@ -211,7 +211,7 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <code><a href='mice.impute.logreg.html'>mice.impute.logreg</a>()</code>,
 <code><a href='mice.impute.mean.html'>mice.impute.mean</a>()</code>,
 <code><a href='mice.impute.midastouch.html'>mice.impute.midastouch</a>()</code>,
-<code><a href='mice.impute.mnar.html'>mice.impute.mnar.logreg</a>()</code>,
+<code><a href='mice.impute.mnar.logreg.html'>mice.impute.mnar.logreg</a>()</code>,
 <code><a href='mice.impute.norm.boot.html'>mice.impute.norm.boot</a>()</code>,
 <code><a href='mice.impute.norm.nob.html'>mice.impute.norm.nob</a>()</code>,
 <code><a href='mice.impute.norm.predict.html'>mice.impute.norm.predict</a>()</code>,
@@ -222,10 +222,15 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <code><a href='mice.impute.quadratic.html'>mice.impute.quadratic</a>()</code>,
 <code><a href='mice.impute.rf.html'>mice.impute.rf</a>()</code>,
 <code><a href='mice.impute.ri.html'>mice.impute.ri</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>rpart</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: rpart</span></div><div class='input'>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes2</span>, <span class='kw'>meth</span> <span class='kw'>=</span> <span class='st'>'cart'</span>, <span class='kw'>minbucket</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; 
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/bethatkinson/rpart'>rpart</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: rpart</span></div><div class='input'>
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span>, meth <span class='op'>=</span> <span class='st'>"cart"</span>, minbucket <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl
 #&gt;   1   2  bmi  hyp  chl
@@ -251,8 +256,8 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 #&gt;   5   2  bmi  hyp  chl
 #&gt;   5   3  bmi  hyp  chl
 #&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>imp</span>)</div><div class='img'><img src='mice.impute.cart-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
+</div><div class='img'><img src='mice.impute.cart-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -268,7 +273,7 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -6,16 +6,16 @@
 \alias{fdd.pred}
 \title{SE Fireworks disaster data}
 \format{
-\code{fdd} is a data frame with 52 rows and 65 columns: 
+\code{fdd} is a data frame with 52 rows and 65 columns:
 \describe{
 \item{id}{Client number}
-\item{trt}{Treatment (E=EMDR, C=CBT)} 
+\item{trt}{Treatment (E=EMDR, C=CBT)}
 \item{pp}{Per protocol (Y/N)}
 \item{trtp}{Number of parental treatments}
 \item{sex}{Sex: M/F}
-\item{etn}{Ethnicity: NL/OTHER} 
+\item{etn}{Ethnicity: NL/OTHER}
 \item{age}{Age (years)}
-\item{trauma}{Trauma count (1-5)} 
+\item{trauma}{Trauma count (1-5)}
 \item{prop1}{PROPS total score T1}
 \item{prop2}{PROPS total score T2}
 \item{prop3}{PROPS total score T3}
@@ -72,8 +72,8 @@
 \item{cbex3}{CBCL Externalizing T3}
 \item{bir1}{Birlison T1}
 \item{bir2}{Birlison T2}
-\item{bir3}{Birlison T3} 
-} 
+\item{bir3}{Birlison T3}
+}
 \code{fdd.pred} is the 65 by 65 binary
 predictor matrix used to impute \code{fdd}.
 }
@@ -84,7 +84,7 @@ Behavioral Therapy (CBT) and Eye Movement Desensitisation and Reprocessing
 (EMDR) in disaster-exposed children. \emph{European Journal of
 Psychotraumatology}, \emph{2}, 5694.
 
-Van Buuren, S. (2018). 
+Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-fdd.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 Boca Raton, FL.: Chapman & Hall/CRC Press.
@@ -107,7 +107,5 @@ The imputation methodology is explained in Chapter 9 of van Buuren (2012).
 
 data <- fdd
 md.pattern(fdd)
-
-
 }
 \keyword{datasets}

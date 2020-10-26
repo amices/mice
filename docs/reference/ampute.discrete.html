@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Multivariate Amputation Based On Discrete Probability Functions — ampute.discrete • mice</title>
+<title>Multivariate amputation based on discrete probability functions — ampute.discrete • mice</title>
 
 
 <!-- jquery -->
@@ -45,9 +45,9 @@
 
 
 
-<meta property="og:title" content="Multivariate Amputation Based On Discrete Probability Functions — ampute.discrete" />
-<meta property="og:description" content="This function creates a missing data indicator for each pattern. Odds probabilities 
-(Brand, 1999, pp. 110-113) will be induced on the weighted sum scores, calculated earlier 
+<meta property="og:title" content="Multivariate amputation based on discrete probability functions — ampute.discrete" />
+<meta property="og:description" content="This function creates a missing data indicator for each pattern. Odds probabilities
+(Brand, 1999, pp. 110-113) will be induced on the weighted sum scores, calculated earlier
 in the multivariate amputation function ampute." />
 
 
@@ -80,7 +80,7 @@ in the multivariate amputation function ampute." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -101,7 +101,7 @@ in the multivariate amputation function ampute." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -125,64 +125,67 @@ in the multivariate amputation function ampute." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Multivariate Amputation Based On Discrete Probability Functions</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/ampute.discrete.R'><code>R/ampute.discrete.R</code></a></small>
+    <h1>Multivariate amputation based on discrete probability functions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/ampute.discrete.R'><code>R/ampute.discrete.R</code></a></small>
     <div class="hidden name"><code>ampute.discrete.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function creates a missing data indicator for each pattern. Odds probabilities 
-(Brand, 1999, pp. 110-113) will be induced on the weighted sum scores, calculated earlier 
+    <p>This function creates a missing data indicator for each pattern. Odds probabilities
+(Brand, 1999, pp. 110-113) will be induced on the weighted sum scores, calculated earlier
 in the multivariate amputation function <code><a href='ampute.html'>ampute</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ampute.discrete</span>(<span class='no'>P</span>, <span class='no'>scores</span>, <span class='no'>prop</span>, <span class='no'>odds</span>)</pre>
+    <pre class="usage"><span class='fu'>ampute.discrete</span><span class='op'>(</span><span class='va'>P</span>, <span class='va'>scores</span>, <span class='va'>prop</span>, <span class='va'>odds</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>P</th>
-      <td><p>A vector containing the pattern numbers of the cases's candidacies. 
-For each case, a value between 1 and #patterns is given. For example, a 
+      <td><p>A vector containing the pattern numbers of candidates.
+For each case, a value between 1 and #patterns is given. For example, a
 case with value 2 is candidate for missing data pattern 2.</p></td>
     </tr>
     <tr>
       <th>scores</th>
-      <td><p>A list containing vectors with the candidates's weighted sum scores, 
+      <td><p>A list containing vectors with the candidates's weighted sum scores,
 the result of an underlying function in <code><a href='ampute.html'>ampute</a></code>.</p></td>
     </tr>
     <tr>
       <th>prop</th>
-      <td><p>A scalar specifying the proportion of missingness. Should be a value 
+      <td><p>A scalar specifying the proportion of missingness. Should be a value
 between 0 and 1. Default is a missingness proportion of 0.5.</p></td>
     </tr>
     <tr>
       <th>odds</th>
-      <td><p>A matrix where #patterns defines the #rows. Each row should contain 
-the odds of being missing for the corresponding pattern. The amount of odds values 
-defines in how many quantiles the sum scores will be divided. The values are 
-relative probabilities: a quantile with odds value 4 will have a probability of 
-being missing that is four times higher than a quantile with odds 1. The 
-#quantiles may differ between the patterns, specify NA for cells remaining empty. 
-Default is 4 quantiles with odds values 1, 2, 3 and 4, the result of 
+      <td><p>A matrix where #patterns defines the #rows. Each row should contain
+the odds of being missing for the corresponding pattern. The amount of odds values
+defines in how many quantiles the sum scores will be divided. The values are
+relative probabilities: a quantile with odds value 4 will have a probability of
+being missing that is four times higher than a quantile with odds 1. The
+#quantiles may differ between the patterns, specify NA for cells remaining empty.
+Default is 4 quantiles with odds values 1, 2, 3 and 4, the result of
 <code><a href='ampute.default.odds.html'>ampute.default.odds</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list containing vectors with <code>0</code> if a case should be made missing 
-and <code>1</code> if a case should remain complete. The first vector refers to the 
+    <p>A list containing vectors with <code>0</code> if a case should be made missing
+and <code>1</code> if a case should remain complete. The first vector refers to the
 first pattern, the second vector to the second pattern, etcetera.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Brand, J.P.L. (1999). <em>Development, implementation and 
-evaluation of multiple imputation strategies for the statistical analysis of 
+    <p>Brand, J.P.L. (1999). <em>Development, implementation and
+evaluation of multiple imputation strategies for the statistical analysis of
 incomplete data sets.</em> Dissertation. Rotterdam: Erasmus University.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='ampute.html'>ampute</a></code>, <code><a href='ampute.default.odds.html'>ampute.default.odds</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rianne Schouten, 2016</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -199,7 +202,7 @@ incomplete data sets.</em> Dissertation. Rotterdam: Erasmus University.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -46,8 +46,8 @@
 
 
 <meta property="og:title" content="Brandsma school data used Snijders and Bosker (2012) — brandsma" />
-<meta property="og:description" content="Dataset with raw data from Snijders and Bosker (2012) containing 
-data from 4106 pupils attending 216 schools. This dataset 
+<meta property="og:description" content="Dataset with raw data from Snijders and Bosker (2012) containing
+data from 4106 pupils attending 216 schools. This dataset
 includes all pupils and schools with missing data." />
 
 
@@ -80,7 +80,7 @@ includes all pupils and schools with missing data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -101,7 +101,7 @@ includes all pupils and schools with missing data." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -126,13 +126,13 @@ includes all pupils and schools with missing data." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Brandsma school data used Snijders and Bosker (2012)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/brandsma.R'><code>R/brandsma.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/brandsma.R'><code>R/brandsma.R</code></a></small>
     <div class="hidden name"><code>brandsma.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Dataset with raw data from Snijders and Bosker (2012) containing 
-data from 4106 pupils attending 216 schools. This dataset 
+    <p>Dataset with raw data from Snijders and Bosker (2012) containing
+data from 4106 pupils attending 216 schools. This dataset
 includes all pupils and schools with missing data.</p>
     </div>
 
@@ -140,7 +140,7 @@ includes all pupils and schools with missing data.</p>
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p><code>brandsma</code> is a data frame with 4106 rows and 14 columns:</p><dl'>
+    <p><code>brandsma</code> is a data frame with 4106 rows and 14 columns:</p><dl>
 <dt><code>sch</code></dt><dd><p>School number</p></dd>
 <dt><code>pup</code></dt><dd><p>Pupil ID</p></dd>
 <dt><code>iqv</code></dt><dd><p>IQ verbal</p></dd>
@@ -151,8 +151,8 @@ includes all pupils and schools with missing data.</p>
 <dt><code>rpg</code></dt><dd><p>Number of repeated groups, 0, 1, 2</p></dd>
 <dt><code>lpr</code></dt><dd><p>language score PRE</p></dd>
 <dt><code>lpo</code></dt><dd><p>language score POST</p></dd>
-<dt><code>apr</code></dt><dd><p>Arithmetic score PRE</p></dd> 
-<dt><code>apo</code></dt><dd><p>Arithmetic score POST</p></dd> 
+<dt><code>apr</code></dt><dd><p>Arithmetic score PRE</p></dd>
+<dt><code>apo</code></dt><dd><p>Arithmetic score POST</p></dd>
 <dt><code>den</code></dt><dd><p>Denomination classification 1-4 - at school level</p></dd>
 <dt><code>ssi</code></dt><dd><p>School SES indicator - at school level</p></dd>
 
@@ -165,28 +165,28 @@ includes all pupils and schools with missing data.</p>
 <code>data-raw/R/brandsma.R</code></p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>This dataset is constructed from the raw data. There are 
-a few differences with the data set used in Chapter 4 and 5 
+    <p>This dataset is constructed from the raw data. There are
+a few differences with the data set used in Chapter 4 and 5
 of Snijders and Bosker:</p><ol>
 <li><p>All schools are included, including the five school with
 missing values on <code>langpost</code>.</p></li>
 <li><p>Missing <code>denomina</code> codes are left as missing.</p></li>
 <li><p>Aggregates are undefined in the presence of missing data
-in the underlying values. 
+in the underlying values.
 Variables <code>ses</code>, <code>iqv</code> and <code>iqp</code> are in their
-original scale, and not globally centered. 
+original scale, and not globally centered.
 No aggregate variables at the school level are included.</p></li>
-<li><p>There is a wider selection of original variables. Note 
-however that the source data contain an even wider set of 
+<li><p>There is a wider selection of original variables. Note
+however that the source data contain an even wider set of
 variables.</p></li>
 </ol>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Brandsma, HP and Knuver, JWM (1989), Effects of school and 
-classroom characteristics on pupil progress in language and arithmetic. 
+    <p>Brandsma, HP and Knuver, JWM (1989), Effects of school and
+classroom characteristics on pupil progress in language and arithmetic.
 International Journal of Educational Research, 13(7), 777 - 788.</p>
-<p>Snijders, TAB and Bosker RJ (2012). Multilevel Analysis, 2nd Ed. Sage, 
+<p>Snijders, TAB and Bosker RJ (2012). Multilevel Analysis, 2nd Ed. Sage,
 Los Angeles, 2012.</p>
 
   </div>
@@ -204,7 +204,7 @@ Los Angeles, 2012.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

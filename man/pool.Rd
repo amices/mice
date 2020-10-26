@@ -7,19 +7,19 @@
 pool(object, dfcom = NULL)
 }
 \arguments{
-\item{object}{An object of class \code{mira} (produced by \code{with.mids()} 
+\item{object}{An object of class \code{mira} (produced by \code{with.mids()}
 or \code{as.mira()}), or a \code{list} with model fits.}
 
 \item{dfcom}{A positive number representing the degrees of freedom in the
 complete-data analysis. Normally, this would be the number of independent
-observation minus the number of fitted parameters. The default 
-(\code{dfcom = NULL}) extract this information in the following 
+observation minus the number of fitted parameters. The default
+(\code{dfcom = NULL}) extract this information in the following
 order: 1) the component
 \code{residual.df} returned by \code{glance()} if a \code{glance()}
-function is found, 2) the result of \code{df.residual(} applied to 
-the first fitted model, and 3) as \code{999999}. 
+function is found, 2) the result of \code{df.residual(} applied to
+the first fitted model, and 3) as \code{999999}.
 In the last case, the warning \code{"Large sample assumed"} is printed.
-If the degrees of freedom is incorrect, specify the appropriate value 
+If the degrees of freedom is incorrect, specify the appropriate value
 manually.}
 }
 \value{
@@ -27,30 +27,30 @@ An object of class \code{mipo}, which stands for 'multiple imputation
 pooled outcome'.
 }
 \description{
-The \code{pool()} function combines the estimates from \code{m} 
-repeated complete data analyses. The typical sequence of steps to 
+The \code{pool()} function combines the estimates from \code{m}
+repeated complete data analyses. The typical sequence of steps to
 do a multiple imputation analysis is:
 \enumerate{
-\item Impute the missing data by the \code{mice} function, resulting in 
+\item Impute the missing data by the \code{mice} function, resulting in
 a multiple imputed data set (class \code{mids});
-\item Fit the model of interest (scientific model) on each imputed data set 
+\item Fit the model of interest (scientific model) on each imputed data set
 by the \code{with()} function, resulting an object of class \code{mira};
-\item Pool the estimates from each model into a single set of estimates 
+\item Pool the estimates from each model into a single set of estimates
 and standard errors, resulting is an object of class \code{mipo};
-\item Optionally, compare pooled estimates from different scientific models 
+\item Optionally, compare pooled estimates from different scientific models
 by the \code{D1()} or \code{D3()} functions.
 }
-A common error is to reverse steps 2 and 3, i.e., to pool the 
-multiply-imputed data instead of the estimates. Doing so may severely bias 
-the estimates of scientific interest and yield incorrect statistical 
-intervals and p-values. The \code{pool()} function will detect 
+A common error is to reverse steps 2 and 3, i.e., to pool the
+multiply-imputed data instead of the estimates. Doing so may severely bias
+the estimates of scientific interest and yield incorrect statistical
+intervals and p-values. The \code{pool()} function will detect
 this case.
 }
 \details{
-The \code{pool()} function averages the estimates of the complete 
+The \code{pool()} function averages the estimates of the complete
 data model, computes the
-total variance over the repeated analyses by Rubin's rules 
-(Rubin, 1987, p. 76), 
+total variance over the repeated analyses by Rubin's rules
+(Rubin, 1987, p. 76),
 and computes the following diagnostic statistics per estimate:
 \enumerate{
 \item Relative increase in variance due to nonresponse {\code{r}};
@@ -60,18 +60,18 @@ and computes the following diagnostic statistics per estimate:
 }
 
 The function requires the following input from each fitted model:
-\enumerate{ 
+\enumerate{
 \item the estimates of the model, usually obtainable by \code{coef()}
 \item the standard error of each estimate;
 \item the residual degrees of freedom of the model.
 }
-The \code{pool()} function relies on the \code{broom::tidy} for 
-extracting the parameters. Versions before \code{mice 3.8.5} failed 
-when no \code{broom::glance()} function was found for extracting the 
-residual degrees of freedom. The \code{pool()} function is now 
-more forgiving. 
+The \code{pool()} function relies on the \code{broom::tidy} for
+extracting the parameters. Versions before \code{mice 3.8.5} failed
+when no \code{broom::glance()} function was found for extracting the
+residual degrees of freedom. The \code{pool()} function is now
+more forgiving.
 
-The degrees of freedom calculation for the pooled estimates uses the 
+The degrees of freedom calculation for the pooled estimates uses the
 Barnard-Rubin adjustment for small samples (Barnard and Rubin, 1999).
 }
 \examples{
@@ -92,7 +92,7 @@ Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-\code{\link{with.mids}}, \code{\link{as.mira}}, 
-\code{\link[broom]{glance}}, \code{\link[broom]{tidy}}
+\code{\link{with.mids}}, \code{\link{as.mira}},
+\code{\link[broom:reexports]{glance}}, \code{\link[broom:reexports]{tidy}}
 }
 \keyword{htest}

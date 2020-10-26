@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title><span class="pkg">mice</span>: Multivariate Imputation by Chained Equations — mice • mice</title>
+<title>mice: Multivariate Imputation by Chained Equations — mice • mice</title>
 
 
 <!-- jquery -->
@@ -45,15 +45,15 @@
 
 
 
-<meta property="og:title" content="<span class="pkg">mice</span>: Multivariate Imputation by Chained Equations — mice" />
-<meta property="og:description" content="The mice package implements a method to deal with missing data. 
-The package creates multiple imputations (replacement values) for 
-multivariate missing data. The method is based on Fully Conditional 
-Specification, where each incomplete variable is imputed by a separate 
-model. The MICE algorithm can impute mixes of continuous, binary, 
-unordered categorical and ordered categorical data. In addition, MICE 
-can impute continuous two-level data, and maintain consistency between 
-imputations by means of passive imputation. Many diagnostic plots are 
+<meta property="og:title" content="mice: Multivariate Imputation by Chained Equations — mice" />
+<meta property="og:description" content="The mice package implements a method to deal with missing data.
+The package creates multiple imputations (replacement values) for
+multivariate missing data. The method is based on Fully Conditional
+Specification, where each incomplete variable is imputed by a separate
+model. The MICE algorithm can impute mixes of continuous, binary,
+unordered categorical and ordered categorical data. In addition, MICE
+can impute continuous two-level data, and maintain consistency between
+imputations by means of passive imputation. Many diagnostic plots are
 implemented to inspect the quality of the imputations.
 Generates Multivariate Imputations by Chained Equations (MICE)" />
 
@@ -87,7 +87,7 @@ Generates Multivariate Imputations by Chained Equations (MICE)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@ Generates Multivariate Imputations by Chained Equations (MICE)" />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -133,41 +133,42 @@ Generates Multivariate Imputations by Chained Equations (MICE)" />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1><span class="pkg">mice</span>: Multivariate Imputation by Chained Equations</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/mice-package.R'><code>R/mice-package.R</code></a>, <a href='https://github.com/stefvanbuuren/mice/blob/master/R/mice.R'><code>R/mice.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/mice-package.R'><code>R/mice-package.R</code></a>, <a href='https://github.com/amices/mice/blob/master/R/mice.R'><code>R/mice.R</code></a></small>
     <div class="hidden name"><code>mice.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <span class="pkg">mice</span> package implements a method to deal with missing data. 
-The package creates multiple imputations (replacement values) for 
-multivariate missing data. The method is based on Fully Conditional 
-Specification, where each incomplete variable is imputed by a separate 
-model. The MICE algorithm can impute mixes of continuous, binary, 
-unordered categorical and ordered categorical data. In addition, MICE 
-can impute continuous two-level data, and maintain consistency between 
-imputations by means of passive imputation. Many diagnostic plots are 
+    <p>The <span class="pkg">mice</span> package implements a method to deal with missing data.
+The package creates multiple imputations (replacement values) for
+multivariate missing data. The method is based on Fully Conditional
+Specification, where each incomplete variable is imputed by a separate
+model. The MICE algorithm can impute mixes of continuous, binary,
+unordered categorical and ordered categorical data. In addition, MICE
+can impute continuous two-level data, and maintain consistency between
+imputations by means of passive imputation. Many diagnostic plots are
 implemented to inspect the quality of the imputations.</p>
 <p>Generates Multivariate Imputations by Chained Equations (MICE)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mice</span>(
-  <span class='no'>data</span>,
-  <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>predictorMatrix</span>,
-  <span class='kw'>where</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>blocks</span>,
-  <span class='kw'>visitSequence</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>formulas</span>,
-  <span class='kw'>blots</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>post</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>defaultMethod</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pmm"</span>, <span class='st'>"logreg"</span>, <span class='st'>"polyreg"</span>, <span class='st'>"polr"</span>),
-  <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>printFlag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>data.init</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>mice</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  m <span class='op'>=</span> <span class='fl'>5</span>,
+  method <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>predictorMatrix</span>,
+  ignore <span class='op'>=</span> <span class='cn'>NULL</span>,
+  where <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>blocks</span>,
+  visitSequence <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>formulas</span>,
+  blots <span class='op'>=</span> <span class='cn'>NULL</span>,
+  post <span class='op'>=</span> <span class='cn'>NULL</span>,
+  defaultMethod <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pmm"</span>, <span class='st'>"logreg"</span>, <span class='st'>"polyreg"</span>, <span class='st'>"polr"</span><span class='op'>)</span>,
+  maxit <span class='op'>=</span> <span class='fl'>5</span>,
+  printFlag <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  seed <span class='op'>=</span> <span class='cn'>NA</span>,
+  data.init <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,66 +194,79 @@ not be imputed have the empty method <code>""</code>. See details.</p></td>
     </tr>
     <tr>
       <th>predictorMatrix</th>
-      <td><p>A numeric matrix of <code><a href='https://rdrr.io/r/base/length.html'>length(blocks)</a></code> rows 
-and <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(data)</a></code> columns, containing 0/1 data specifying 
+      <td><p>A numeric matrix of <code><a href='https://rdrr.io/r/base/length.html'>length(blocks)</a></code> rows
+and <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(data)</a></code> columns, containing 0/1 data specifying
 the set of predictors to be used for each target column.
-Each row corresponds to a variable block, i.e., a set of variables 
+Each row corresponds to a variable block, i.e., a set of variables
 to be imputed. A value of <code>1</code> means that the column
-variable is used as a predictor for the target block (in the rows). 
+variable is used as a predictor for the target block (in the rows).
 By default, the <code>predictorMatrix</code> is a square matrix of <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(data)</a></code>
-rows and columns with all 1's, except for the diagonal. 
+rows and columns with all 1's, except for the diagonal.
 Note: For two-level imputation models (which have <code>"2l"</code> in their names)
 other codes (e.g, <code>2</code> or <code>-2</code>) are also allowed.</p></td>
     </tr>
     <tr>
+      <th>ignore</th>
+      <td><p>A logical vector of <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(data)</a></code> elements indicating
+which rows are ignored when creating the imputation model. The default
+<code>NULL</code> includes all rows that have an observed value of the variable
+to imputed. Rows with <code>ignore</code> set to <code>TRUE</code> do not influence the
+parameters of the imputation model, but are still imputed. We may use the
+<code>ignore</code> argument to split <code>data</code> into a training set (on which the
+imputation model is built) and a test set (that does not influence the
+imputation model estimates).
+Note: Multivariate imputation methods, like <code><a href='mice.impute.jomoImpute.html'>mice.impute.jomoImpute()</a></code>
+or <code><a href='mice.impute.panImpute.html'>mice.impute.panImpute()</a></code>, do not honour the <code>ignore</code> argument.</p></td>
+    </tr>
+    <tr>
       <th>where</th>
-      <td><p>A data frame or matrix with logicals of the same dimensions 
-as <code>data</code> indicating where in the data the imputations should be 
+      <td><p>A data frame or matrix with logicals of the same dimensions
+as <code>data</code> indicating where in the data the imputations should be
 created. The default, <code>where = is.na(data)</code>, specifies that the
-missing data should be imputed. The <code>where</code> argument may be used to 
+missing data should be imputed. The <code>where</code> argument may be used to
 overimpute observed data, or to skip imputations for selected missing values.</p></td>
     </tr>
     <tr>
       <th>blocks</th>
-      <td><p>List of vectors with variable names per block. List elements 
-may be named to identify blocks. Variables within a block are 
+      <td><p>List of vectors with variable names per block. List elements
+may be named to identify blocks. Variables within a block are
 imputed by a multivariate imputation method
-(see <code>method</code> argument). By default each variable is placed 
+(see <code>method</code> argument). By default each variable is placed
 into its own block, which is effectively
-fully conditional specification (FCS) by univariate models 
-(variable-by-variable imputation). Only variables whose names appear in 
-<code>blocks</code> are imputed. The relevant columns in the <code>where</code> 
-matrix are set to <code>FALSE</code> of variables that are not block members. 
-A variable may appear in multiple blocks. In that case, it is 
+fully conditional specification (FCS) by univariate models
+(variable-by-variable imputation). Only variables whose names appear in
+<code>blocks</code> are imputed. The relevant columns in the <code>where</code>
+matrix are set to <code>FALSE</code> of variables that are not block members.
+A variable may appear in multiple blocks. In that case, it is
 effectively re-imputed each time that it is visited.</p></td>
     </tr>
     <tr>
       <th>visitSequence</th>
       <td><p>A vector of block names of arbitrary length, specifying the
-sequence of blocks that are imputed during one iteration of the Gibbs 
-sampler. A block is a collection of variables. All variables that are 
-members of the same block are imputed 
-when the block is visited. A variable that is a member of multiple blocks 
-is re-imputed within the same iteration. 
+sequence of blocks that are imputed during one iteration of the Gibbs
+sampler. A block is a collection of variables. All variables that are
+members of the same block are imputed
+when the block is visited. A variable that is a member of multiple blocks
+is re-imputed within the same iteration.
 The default <code>visitSequence = "roman"</code> visits the blocks (left to right)
-in the order in which they appear in <code>blocks</code>. 
-One may also use one of the following keywords: <code>"arabic"</code> 
-(right to left), <code>"monotone"</code> (ordered low to high proportion 
+in the order in which they appear in <code>blocks</code>.
+One may also use one of the following keywords: <code>"arabic"</code>
+(right to left), <code>"monotone"</code> (ordered low to high proportion
 of missing data) and <code>"revmonotone"</code> (reverse of monotone).</p></td>
     </tr>
     <tr>
       <th>formulas</th>
       <td><p>A named list of formula's, or expressions that
 can be converted into formula's by <code>as.formula</code>. List elements
-correspond to blocks. The block to which the list element applies is 
+correspond to blocks. The block to which the list element applies is
 identified by its name, so list names must correspond to block names.
-The <code>formulas</code> argument is an alternative to the 
-<code>predictorMatrix</code> argument that allows for more flexibility in 
+The <code>formulas</code> argument is an alternative to the
+<code>predictorMatrix</code> argument that allows for more flexibility in
 specifying imputation models, e.g., for specifying interaction terms.</p></td>
     </tr>
     <tr>
       <th>blots</th>
-      <td><p>A named <code>list</code> of <code>alist</code>'s that can be used 
+      <td><p>A named <code>list</code> of <code>alist</code>'s that can be used
 to pass down arguments to lower level imputation function. The entries
 of element <code>blots[[blockname]]</code> are passed down to the function
 called for block <code>blockname</code>.</p></td>
@@ -260,17 +274,17 @@ called for block <code>blockname</code>.</p></td>
     <tr>
       <th>post</th>
       <td><p>A vector of strings with length <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(data)</a></code> specifying
-expressions as strings. Each string is parsed and 
-executed within the <code>sampler()</code> function to post-process 
-imputed values during the iterations. 
+expressions as strings. Each string is parsed and
+executed within the <code>sampler()</code> function to post-process
+imputed values during the iterations.
 The default is a vector of empty strings, indicating no post-processing.</p></td>
     </tr>
     <tr>
       <th>defaultMethod</th>
       <td><p>A vector of length 4 containing the default
-imputation methods for 1) numeric data, 2) factor data with 2 levels, 3) 
-factor data with &gt; 2 unordered levels, and 4) factor data with &gt; 2 
-ordered levels. By default, the method uses 
+imputation methods for 1) numeric data, 2) factor data with 2 levels, 3)
+factor data with &gt; 2 unordered levels, and 4) factor data with &gt; 2
+ordered levels. By default, the method uses
 <code>pmm</code>, predictive mean matching (numeric data) <code>logreg</code>, logistic
 regression imputation (binary data, factor with 2 levels) <code>polyreg</code>,
 polytomous regression imputation for unordered categorical data (factor &gt; 2
@@ -381,6 +395,17 @@ mechanism allows uses to write customized imputation function,
 <code>mice.impute.myfunc</code>. To call it for all columns specify
 <code>method='myfunc'</code>.  To call it only for, say, column 2 specify
 <code>method=c('norm','myfunc','logreg',...{})</code>.</p>
+<p><em>Skipping imputation:</em> The user may skip imputation of a column by
+setting its entry to the empty method: <code>""</code>. For complete columns without
+missing data <code>mice</code> will automatically set the empty method. Setting t
+he empty method does not produce imputations for the column, so any missing
+cells remain <code>NA</code>. If column A contains <code>NA</code>'s and is used as
+predictor in the imputation model for column B, then <code>mice</code> produces no
+imputations for the rows in B where A is missing. The imputed data
+for B may thus contain <code>NA</code>'s. The remedy is to remove column A from
+the imputation model for the other columns in the data. This can be done
+by setting the entire column for variable A in the <code>predictorMatrix</code>
+equal to zero.</p>
 <p><em>Passive imputation:</em> <code>mice()</code> supports a special built-in method,
 called passive imputation. This method can be used to ensure that a data
 transform always depends on the most recently generated imputations.  In some
@@ -388,16 +413,16 @@ cases, an imputation model may need transformed data in addition to the
 original data (e.g. log, quadratic, recodes, interaction, sum scores, and so
 on).</p>
 <p>Passive imputation maintains consistency among different transformations of
-the same data. Passive imputation is invoked if <code>~</code> is specified as the
+the same data. Passive imputation is invoked if <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> is specified as the
 first character of the string that specifies the univariate method.
-<code>mice()</code> interprets the entire string, including the <code>~</code> character,
+<code>mice()</code> interprets the entire string, including the <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> character,
 as the formula argument in a call to <code><a href='https://rdrr.io/r/stats/model.frame.html'>model.frame(formula,
 data[!r[,j],])</a></code>. This provides a simple mechanism for specifying deterministic
 dependencies among the columns. For example, suppose that the missing entries
 in variables <code>data$height</code> and <code>data$weight</code> are imputed. The body
 mass index (BMI) can be calculated within <code>mice</code> by specifying the
 string <code>'~I(weight/height^2)'</code> as the univariate imputation method for
-the target column <code>data$bmi</code>.  Note that the <code>~</code> mechanism works
+the target column <code>data$bmi</code>.  Note that the <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> mechanism works
 only on those entries which have missing values in the target column. You
 should make sure that the combined observed and imputed parts of the target
 column make sense. An easy way to create consistency is by coding all entries
@@ -407,26 +432,26 @@ inefficient.  Note that you may also need to adapt the default
 could cause errors like <code>Error in solve.default()</code> or <code>Error:
 system is exactly singular</code>. Though not strictly needed, it is often useful
 to specify <code>visitSequence</code> such that the column that is imputed by the
-<code>~</code> mechanism is visited each time after one of its predictors was
+<code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> mechanism is visited each time after one of its predictors was
 visited. In that way, deterministic relation between columns will always be
 synchronized.</p>
-<p>#'A new argument <code>ls.meth</code> can be parsed to the lower level 
-<code>.norm.draw</code> to specify the method for generating the least squares 
-estimates and any subsequently derived estimates. Argument <code>ls.meth</code> 
-takes one of three inputs: <code>"qr"</code> for QR-decomposition, <code>"svd"</code> for 
-singular value decomposition and <code>"ridge"</code> for ridge regression. 
+<p>#'A new argument <code>ls.meth</code> can be parsed to the lower level
+<code>.norm.draw</code> to specify the method for generating the least squares
+estimates and any subsequently derived estimates. Argument <code>ls.meth</code>
+takes one of three inputs: <code>"qr"</code> for QR-decomposition, <code>"svd"</code> for
+singular value decomposition and <code>"ridge"</code> for ridge regression.
 <code>ls.meth</code> defaults to <code>ls.meth = "qr"</code>.</p>
 <p><em>Auxiliary predictors in formulas specification: </em>
-For a given block, the <code>formulas</code> specification takes precedence over 
-the corresponding row in the <code>predictMatrix</code> argument. This 
+For a given block, the <code>formulas</code> specification takes precedence over
+the corresponding row in the <code>predictMatrix</code> argument. This
 precedence is, however, restricted to the subset of variables
-specified in the terms of the block formula. Any 
+specified in the terms of the block formula. Any
 variables not specified by <code>formulas</code> are imputed
-according to the <code>predictMatrix</code> specification. Variables with 
-non-zero <code>type</code> values in the <code>predictMatrix</code> will 
-be added as main effects to the <code>formulas</code>, which will 
+according to the <code>predictMatrix</code> specification. Variables with
+non-zero <code>type</code> values in the <code>predictMatrix</code> will
+be added as main effects to the <code>formulas</code>, which will
 act as supplementary covariates in the imputation model. It is possible
-to turn off this behavior by specifying the 
+to turn off this behavior by specifying the
 argument <code>auxiliary = FALSE</code>.</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
@@ -447,8 +472,8 @@ argument <code>auxiliary = FALSE</code>.</p>
     
 
 
-<p>There is a detailed series of 
-six online vignettes that walk you through solving realistic inference 
+<p>There is a detailed series of
+six online vignettes that walk you through solving realistic inference
 problems with mice.</p>
 <p>We suggest going through these vignettes in the following order</p><ol>
 <li><p><a href='https://gerkovink.github.io/miceVignettes/Ad_hoc_and_mice/Ad_hoc_methods.html'>Ad hoc methods and the MICE algorithm</a></p></li>
@@ -459,9 +484,9 @@ problems with mice.</p>
 <li><p><a href='https://gerkovink.github.io/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html'>Sensitivity analysis with <span class="pkg">mice</span></a></p></li>
 </ol>
 
-<p>#'Van Buuren, S. (2018). 
+<p>#'Van Buuren, S. (2018).
 Boca Raton, FL.: Chapman &amp; Hall/CRC Press.
-The book 
+The book
 <a href='https://stefvanbuuren.name/fimd/'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 contains a lot of <a href='https://github.com/stefvanbuuren/fimdbook/tree/master/R'>example code</a>.</p>
     <h2 class="hasAnchor" id="methodology"><a class="anchor" href="#methodology"></a>Methodology</h2>
@@ -469,10 +494,10 @@ contains a lot of <a href='https://github.com/stefvanbuuren/fimdbook/tree/master
     
 
 
-<p>The <span class="pkg">mice</span> software was published in the <a href='https://www.jstatsoft.org/article/view/v045i03'>Journal of Statistical Software</a> (Van Buuren and Groothuis-Oudshoorn, 2011). 
-The first application of the method 
-concerned missing blood pressure data (Van Buuren et. al., 1999). 
-The term <em>Fully Conditional Specification</em> was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Van Buuren et. al., 2006). Further details on mixes of variables and applications can be found in the book 
+<p>The <span class="pkg">mice</span> software was published in the <a href='https://www.jstatsoft.org/article/view/v045i03'>Journal of Statistical Software</a> (Van Buuren and Groothuis-Oudshoorn, 2011).
+The first application of the method
+concerned missing blood pressure data (Van Buuren et. al., 1999).
+The term <em>Fully Conditional Specification</em> was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Van Buuren et. al., 2006). Further details on mixes of variables and applications can be found in the book
 <a href='https://stefvanbuuren.name/fimd/'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -486,14 +511,14 @@ Statistical Computation and Simulation</em>, <b>76</b>, 12, 1049--1064.</p>
 <p>van Buuren, S., Groothuis-Oudshoorn, K. (2011). <a href='https://www.jstatsoft.org/v45/i03/'><code>mice</code>:
 Multivariate Imputation by Chained Equations in <code>R</code></a>. <em>Journal of
 Statistical Software</em>, <b>45</b>(3), 1--67.</p>
-<p>Van Buuren, S. (2018). 
+<p>Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <p>Van Buuren, S., Groothuis-Oudshoorn, K. (2011). <code>mice</code>:
 Multivariate Imputation by Chained Equations in <code>R</code>. <em>Journal of
 Statistical Software</em>, <b>45</b>(3), 1-67.
 <a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
-<p>Van Buuren, S. (2018). 
+<p>Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <p>Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
@@ -514,12 +539,18 @@ data sets.</em> Dissertation. Rotterdam: Erasmus University.</p>
 <code><a href='pool.html'>pool</a></code>, <code><a href='complete.mids.html'>complete</a></code>, <code><a href='ampute.html'>ampute</a></code></p>
 <p><code><a href='mids-class.html'>mids</a></code>, <code><a href='with.mids.html'>with.mids</a></code>,
 <code><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></code>, <code><a href='complete.mids.html'>complete</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Stef van Buuren <a href='mailto:stef.vanbuuren@tno.nl'>stef.vanbuuren@tno.nl</a>, Karin
+Groothuis-Oudshoorn <a href='mailto:c.g.m.oudshoorn@utwente.nl'>c.g.m.oudshoorn@utwente.nl</a>, 2000-2010, with
+contributions of Alexander Robitzsch, Gerko Vink, Shahab Jolani,
+Roel de Jong, Jason Turner, Lisa Doove,
+John Fox, Frank E. Harrell, and Peter Malewski.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-
-<span class='co'># do default multiple imputation on a numeric matrix</span>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'>mice</span>(<span class='no'>nhanes</span>)</div><div class='output co'>#&gt; 
+    <pre class="examples"><div class='input'><span class='co'># do default multiple imputation on a numeric matrix</span>
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'>mice</span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl
 #&gt;   1   2  bmi  hyp  chl
@@ -545,7 +576,8 @@ data sets.</em> Dissertation. Rotterdam: Erasmus University.</p>
 #&gt;   5   2  bmi  hyp  chl
 #&gt;   5   3  bmi  hyp  chl
 #&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='no'>imp</span></div><div class='output co'>#&gt; Class: mids
+#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='va'>imp</span>
+</div><div class='output co'>#&gt; Class: mids
 #&gt; Number of multiple imputations:  5 
 #&gt; Imputation methods:
 #&gt;   age   bmi   hyp   chl 
@@ -557,47 +589,48 @@ data sets.</em> Dissertation. Rotterdam: Erasmus University.</p>
 #&gt; hyp   1   1   0   1
 #&gt; chl   1   1   1   0</div><div class='input'>
 <span class='co'># list the actual imputations for BMI</span>
-<span class='no'>imp</span>$<span class='no'>imp</span>$<span class='no'>bmi</span></div><div class='output co'>#&gt;       1    2    3    4    5
-#&gt; 1  30.1 22.0 22.5 30.1 29.6
-#&gt; 3  28.7 30.1 27.5 30.1 33.2
-#&gt; 4  25.5 27.4 27.4 21.7 22.7
-#&gt; 6  21.7 20.4 20.4 24.9 21.7
-#&gt; 10 20.4 26.3 35.3 22.7 28.7
-#&gt; 11 27.2 25.5 20.4 28.7 33.2
-#&gt; 12 27.4 27.5 30.1 27.5 26.3
-#&gt; 16 22.0 33.2 26.3 27.2 35.3
-#&gt; 21 22.0 25.5 27.4 30.1 30.1</div><div class='input'>
+<span class='va'>imp</span><span class='op'>$</span><span class='va'>imp</span><span class='op'>$</span><span class='va'>bmi</span>
+</div><div class='output co'>#&gt;       1    2    3    4    5
+#&gt; 1  27.2 22.0 29.6 33.2 22.0
+#&gt; 3  26.3 29.6 27.2 33.2 25.5
+#&gt; 4  20.4 25.5 21.7 27.4 20.4
+#&gt; 6  24.9 24.9 20.4 22.7 21.7
+#&gt; 10 28.7 25.5 22.7 20.4 25.5
+#&gt; 11 30.1 29.6 22.0 30.1 33.2
+#&gt; 12 22.5 30.1 27.5 35.3 20.4
+#&gt; 16 22.5 27.2 27.2 29.6 29.6
+#&gt; 21 22.5 27.2 20.4 33.2 35.3</div><div class='input'>
 <span class='co'># first completed data matrix</span>
-<span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>imp</span>)</div><div class='output co'>#&gt;    age  bmi hyp chl
-#&gt; 1    1 30.1   1 187
+<span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    age  bmi hyp chl
+#&gt; 1    1 27.2   1 187
 #&gt; 2    2 22.7   1 187
-#&gt; 3    1 28.7   1 187
-#&gt; 4    3 25.5   2 206
+#&gt; 3    1 26.3   1 187
+#&gt; 4    3 20.4   2 187
 #&gt; 5    1 20.4   1 113
-#&gt; 6    3 21.7   2 184
+#&gt; 6    3 24.9   2 184
 #&gt; 7    1 22.5   1 118
 #&gt; 8    1 30.1   1 187
 #&gt; 9    2 22.0   1 238
-#&gt; 10   2 20.4   1 131
-#&gt; 11   1 27.2   1 187
-#&gt; 12   2 27.4   1 206
+#&gt; 10   2 28.7   2 206
+#&gt; 11   1 30.1   1 204
+#&gt; 12   2 22.5   1 238
 #&gt; 13   3 21.7   1 206
 #&gt; 14   2 28.7   2 204
 #&gt; 15   1 29.6   1 199
-#&gt; 16   1 22.0   1 118
+#&gt; 16   1 22.5   1 131
 #&gt; 17   3 27.2   2 284
 #&gt; 18   2 26.3   2 199
 #&gt; 19   1 35.3   1 218
-#&gt; 20   3 25.5   2 218
-#&gt; 21   1 22.0   2 238
+#&gt; 20   3 25.5   2 184
+#&gt; 21   1 22.5   1 131
 #&gt; 22   1 33.2   1 229
 #&gt; 23   1 27.5   1 131
-#&gt; 24   3 24.9   1 206
+#&gt; 24   3 24.9   1 184
 #&gt; 25   2 27.4   1 186</div><div class='input'>
-
 <span class='co'># imputation on mixed data with a different method per column</span>
-
-<span class='fu'>mice</span>(<span class='no'>nhanes2</span>, <span class='kw'>meth</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'sample'</span>,<span class='st'>'pmm'</span>,<span class='st'>'logreg'</span>,<span class='st'>'norm'</span>))</div><div class='output co'>#&gt; 
+<span class='fu'>mice</span><span class='op'>(</span><span class='va'>nhanes2</span>, meth <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sample"</span>, <span class='st'>"pmm"</span>, <span class='st'>"logreg"</span>, <span class='st'>"norm"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl
 #&gt;   1   2  bmi  hyp  chl
@@ -633,8 +666,7 @@ data sets.</em> Dissertation. Rotterdam: Erasmus University.</p>
 #&gt; age   0   1   1   1
 #&gt; bmi   1   0   1   1
 #&gt; hyp   1   1   0   1
-#&gt; chl   1   1   1   0</div><div class='input'>
-</div></pre>
+#&gt; chl   1   1   1   0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -650,7 +682,7 @@ data sets.</em> Dissertation. Rotterdam: Erasmus University.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

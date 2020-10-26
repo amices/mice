@@ -10,12 +10,12 @@ as.mitml.result(x)
 \item{x}{An object of class \code{mira}}
 }
 \value{
-An S3 object of class \code{mitml.result}, a list 
+An S3 object of class \code{mitml.result}, a list
 containing $m$ fitted analysis objects.
 }
 \description{
-The \code{as.mitml.result()} function takes the results of repeated 
-complete-data analysis stored as a list, and turns it 
+The \code{as.mitml.result()} function takes the results of repeated
+complete-data analysis stored as a list, and turns it
 into an object of class \code{mitml.result}.
 }
 \seealso{

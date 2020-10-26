@@ -2,7 +2,7 @@
 % Please edit documentation in R/mdc.R
 \name{mdc}
 \alias{mdc}
-\title{Graphical parameter for missing data plots.}
+\title{Graphical parameter for missing data plots}
 \usage{
 mdc(
   r = "observed",
@@ -20,11 +20,11 @@ mdc(
 \item{r}{A numerical or character vector. The numbers 1-6 request colors as
 follows: 1=\code{cso}, 2=\code{csi}, 3=\code{csc}, 4=\code{clo}, 5=\code{cli}
 and 6=\code{clc}. Alternatively, \code{r} may contain the strings
-'\code{observed}', '\code{missing}', or '\code{both}', or abbreviations
+' \code{observed}', '\code{missing}', or '\code{both}', or abbreviations
 thereof.}
 
 \item{s}{A character vector containing the strings '\code{symbol}' or
-'\code{line}', or abbreviations thereof.}
+' \code{line}', or abbreviations thereof.}
 
 \item{transparent}{A logical indicating whether alpha-transparency is
 allowed. The default is \code{TRUE}.}
@@ -64,13 +64,11 @@ the Abayomi convention, which uses blue for observed data, red for missing or
 imputed data, and black for combined data.
 }
 \examples{
-
 # all six colors
 mdc(1:6)
 
 # lines color for observed and missing data
-mdc(c('obs','mis'), 'lin')
-
+mdc(c("obs", "mis"), "lin")
 }
 \references{
 Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
@@ -78,8 +76,8 @@ Visualization with R}, Springer.
 }
 \seealso{
 \code{\link{hcl}}, \code{\link{rgb}},
-\code{\link[mice:xyplot]{xyplot.mids}}, \code{\link[lattice:xyplot]{xyplot}},
-\code{\link[lattice:trellis.par.set]{trellis.par.set}}
+\code{\link{xyplot.mids}}, \code{\link[lattice:xyplot]{xyplot}},
+\code{\link[lattice:trellis.par.get]{trellis.par.set}}
 }
 \author{
 Stef van Buuren, sept 2012.

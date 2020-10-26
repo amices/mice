@@ -8,7 +8,7 @@ ncc(x)
 }
 \arguments{
 \item{x}{An \code{R} object. Currently supported are methods for the
-following classes: \code{mids}, \code{data.frame} and \code{matrix}. Also, 
+following classes: \code{mids}, \code{data.frame} and \code{matrix}. Also,
 \code{x} can be a vector.}
 }
 \value{
@@ -18,9 +18,7 @@ Number of elements in \code{x} with complete data.
 Calculates the number of complete cases.
 }
 \examples{
-
- ncc(nhanes) # 13 complete cases 
-
+ncc(nhanes) # 13 complete cases
 }
 \seealso{
 \code{\link{nic}}, \code{\link{cci}}

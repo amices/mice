@@ -2,21 +2,21 @@
   "index_name": "mice",
   "start_urls": [
     {
-      "url": "http://stefvanbuuren.github.io/mice/index.html",
+      "url": "https://amices.github.io/mice/index.html",
       "selectors_key": "homepage",
       "tags": [
         "homepage"
       ]
     },
     {
-      "url": "http://stefvanbuuren.github.io/mice/reference",
+      "url": "https://amices.github.io/mice/reference",
       "selectors_key": "reference",
       "tags": [
         "reference"
       ]
     },
     {
-      "url": "http://stefvanbuuren.github.io/mice/articles",
+      "url": "https://amices.github.io/mice/articles",
       "selectors_key": "articles",
       "tags": [
         "articles"
@@ -30,7 +30,7 @@
     "/articles/index.html"
   ],
   "sitemap_urls": [
-    "http://stefvanbuuren.github.io/mice/sitemap.xml"
+    "https://amices.github.io/mice/sitemap.xml"
   ],
   "selectors": {
     "homepage": {

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Converts an multiply imputed dataset (long format) into a <code>mids</code> object — as.mids • mice</title>
+<title>Converts an imputed dataset (long format) into a mids object — as.mids • mice</title>
 
 
 <!-- jquery -->
@@ -45,13 +45,13 @@
 
 
 
-<meta property="og:title" content="Converts an multiply imputed dataset (long format) into a <code>mids</code> object — as.mids" />
-<meta property="og:description" content="This function converts imputed data stored in long format into 
-an object of class mids. The original incomplete dataset 
+<meta property="og:title" content="Converts an imputed dataset (long format) into a mids object — as.mids" />
+<meta property="og:description" content="This function converts imputed data stored in long format into
+an object of class mids. The original incomplete dataset
 needs to be available so that we know where the missing data are.
-The function is useful to convert back operations applied to 
-the imputed data back in a mids object. It may also be 
-used to store multiply imputed data sets from other software 
+The function is useful to convert back operations applied to
+the imputed data back in a mids object. It may also be
+used to store multiply imputed data sets from other software
 into the format used by mice." />
 
 
@@ -84,7 +84,7 @@ into the format used by mice." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@ into the format used by mice." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -129,55 +129,55 @@ into the format used by mice." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Converts an multiply imputed dataset (long format) into a <code>mids</code> object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/as.R'><code>R/as.R</code></a></small>
+    <h1>Converts an imputed dataset (long format) into a <code>mids</code> object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/as.R'><code>R/as.R</code></a></small>
     <div class="hidden name"><code>as.mids.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function converts imputed data stored in long format into 
-an object of class <code>mids</code>. The original incomplete dataset 
+    <p>This function converts imputed data stored in long format into
+an object of class <code>mids</code>. The original incomplete dataset
 needs to be available so that we know where the missing data are.
-The function is useful to convert back operations applied to 
-the imputed data back in a <code>mids</code> object. It may also be 
-used to store multiply imputed data sets from other software 
+The function is useful to convert back operations applied to
+the imputed data back in a <code>mids</code> object. It may also be
+used to store multiply imputed data sets from other software
 into the format used by <code>mice</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as.mids</span>(<span class='no'>long</span>, <span class='kw'>where</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.imp</span> <span class='kw'>=</span> <span class='st'>".imp"</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>".id"</span>)</pre>
+    <pre class="usage"><span class='fu'>as.mids</span><span class='op'>(</span><span class='va'>long</span>, where <span class='op'>=</span> <span class='cn'>NULL</span>, .imp <span class='op'>=</span> <span class='st'>".imp"</span>, .id <span class='op'>=</span> <span class='st'>".id"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>long</th>
-      <td><p>A multiply imputed data set in long format, for example 
-produced by a call to <code><a href='complete.mids.html'>complete(..., action = 'long', include = TRUE)</a></code>, 
+      <td><p>A multiply imputed data set in long format, for example
+produced by a call to <code><a href='complete.mids.html'>complete(..., action = 'long', include = TRUE)</a></code>,
 or by other software.</p></td>
     </tr>
     <tr>
       <th>where</th>
-      <td><p>A data frame or matrix with logicals of the same dimensions 
-as <code>data</code> indicating where in the data the imputations should be 
+      <td><p>A data frame or matrix with logicals of the same dimensions
+as <code>data</code> indicating where in the data the imputations should be
 created. The default, <code>where = is.na(data)</code>, specifies that the
-missing data should be imputed. The <code>where</code> argument may be used to 
+missing data should be imputed. The <code>where</code> argument may be used to
 overimpute observed data, or to skip imputations for selected missing values.</p></td>
     </tr>
     <tr>
       <th>.imp</th>
-      <td><p>An optional column number or column name in <code>long</code>, 
-indicating the imputation index. The values are assumed to be consecutive 
-integers between 0 and <code>m</code>. Values <code>1</code> through <code>m</code> 
-correspond to the imputation index, value <code>0</code> indicates 
-the original data (with missings). 
+      <td><p>An optional column number or column name in <code>long</code>,
+indicating the imputation index. The values are assumed to be consecutive
+integers between 0 and <code>m</code>. Values <code>1</code> through <code>m</code>
+correspond to the imputation index, value <code>0</code> indicates
+the original data (with missings).
 By default, the procedure will search for a variable named <code>".imp"</code>.</p></td>
     </tr>
     <tr>
       <th>.id</th>
-      <td><p>An optional column number or column name in <code>long</code>, 
-indicating the subject identification. If not specified, then the 
-function searches for a variable named <code>".id"</code>. If this variable 
-is found, the values in the column will define the row names in 
+      <td><p>An optional column number or column name in <code>long</code>,
+indicating the subject identification. If not specified, then the
+function searches for a variable named <code>".id"</code>. If this variable
+is found, the values in the column will define the row names in
 the <code>data</code> element of the resulting <code>mids</code> object.</p></td>
     </tr>
     </table>
@@ -188,46 +188,60 @@ the <code>data</code> element of the resulting <code>mids</code> object.</p></td
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The function expects the input data <code>long</code> to be sorted by
-imputation number (variable <code>".imp"</code> by default), and in the 
+imputation number (variable <code>".imp"</code> by default), and in the
 same sequence within each imputation block.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Gerko Vink</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># impute the nhanes dataset</span>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='co'># extract the data in long format</span>
-<span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>imp</span>, <span class='kw'>action</span> <span class='kw'>=</span> <span class='st'>"long"</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>X</span> <span class='op'>&lt;-</span> <span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp</span>, action <span class='op'>=</span> <span class='st'>"long"</span>, include <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='co'># create dataset with .imp variable as numeric</span>
-<span class='no'>X2</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>
+<span class='va'>X2</span> <span class='op'>&lt;-</span> <span class='va'>X</span>
 
 <span class='co'># nhanes example without .id</span>
-<span class='no'>test1</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mids</span>(<span class='no'>X</span>)
-<span class='fu'><a href='is.mids.html'>is.mids</a></span>(<span class='no'>test1</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>test1</span>, <span class='kw'>action</span> <span class='kw'>=</span> <span class='st'>"long"</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='no'>X</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='va'>test1</span> <span class='op'>&lt;-</span> <span class='fu'>as.mids</span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span>
+<span class='fu'><a href='is.mids.html'>is.mids</a></span><span class='op'>(</span><span class='va'>test1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>test1</span>, action <span class='op'>=</span> <span class='st'>"long"</span>, include <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, <span class='va'>X</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
 <span class='co'># nhanes example without .id where .imp is numeric</span>
-<span class='no'>test2</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mids</span>(<span class='no'>X2</span>)
-<span class='fu'><a href='is.mids.html'>is.mids</a></span>(<span class='no'>test2</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>test2</span>, <span class='kw'>action</span> <span class='kw'>=</span> <span class='st'>"long"</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='no'>X</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='va'>test2</span> <span class='op'>&lt;-</span> <span class='fu'>as.mids</span><span class='op'>(</span><span class='va'>X2</span><span class='op'>)</span>
+<span class='fu'><a href='is.mids.html'>is.mids</a></span><span class='op'>(</span><span class='va'>test2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>test2</span>, action <span class='op'>=</span> <span class='st'>"long"</span>, include <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, <span class='va'>X</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
 <span class='co'># nhanes example, where we explicitly specify .id as column 2</span>
-<span class='no'>test3</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mids</span>(<span class='no'>X</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>".id"</span>)
-<span class='fu'><a href='is.mids.html'>is.mids</a></span>(<span class='no'>test3</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>test3</span>, <span class='kw'>action</span> <span class='kw'>=</span> <span class='st'>"long"</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='no'>X</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='va'>test3</span> <span class='op'>&lt;-</span> <span class='fu'>as.mids</span><span class='op'>(</span><span class='va'>X</span>, .id <span class='op'>=</span> <span class='st'>".id"</span><span class='op'>)</span>
+<span class='fu'><a href='is.mids.html'>is.mids</a></span><span class='op'>(</span><span class='va'>test3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>test3</span>, action <span class='op'>=</span> <span class='st'>"long"</span>, include <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, <span class='va'>X</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
 <span class='co'># nhanes example with .id where .imp is numeric</span>
-<span class='no'>test4</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mids</span>(<span class='no'>X2</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='fu'><a href='is.mids.html'>is.mids</a></span>(<span class='no'>test4</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>test4</span>, <span class='kw'>action</span> <span class='kw'>=</span> <span class='st'>"long"</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='no'>X</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='va'>test4</span> <span class='op'>&lt;-</span> <span class='fu'>as.mids</span><span class='op'>(</span><span class='va'>X2</span>, .id <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'><a href='is.mids.html'>is.mids</a></span><span class='op'>(</span><span class='va'>test4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>test4</span>, action <span class='op'>=</span> <span class='st'>"long"</span>, include <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, <span class='va'>X</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
 <span class='co'># example without an .id variable</span>
 <span class='co'># variable .id not preserved</span>
-<span class='no'>X3</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>[, -<span class='fl'>2</span>]
-<span class='no'>test5</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mids</span>(<span class='no'>X3</span>)
-<span class='fu'><a href='is.mids.html'>is.mids</a></span>(<span class='no'>test5</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>test5</span>, <span class='kw'>action</span> <span class='kw'>=</span> <span class='st'>"long"</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)[, -<span class='fl'>2</span>], <span class='no'>X</span>[, -<span class='fl'>2</span>])</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='va'>X3</span> <span class='op'>&lt;-</span> <span class='va'>X</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>2</span><span class='op'>]</span>
+<span class='va'>test5</span> <span class='op'>&lt;-</span> <span class='fu'>as.mids</span><span class='op'>(</span><span class='va'>X3</span><span class='op'>)</span>
+<span class='fu'><a href='is.mids.html'>is.mids</a></span><span class='op'>(</span><span class='va'>test5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>test5</span>, action <span class='op'>=</span> <span class='st'>"long"</span>, include <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>2</span><span class='op'>]</span>, <span class='va'>X</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
 <span class='co'># as() syntax has fewer options</span>
-<span class='no'>test7</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>X</span>, <span class='st'>"mids"</span>)
-<span class='no'>test8</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>X2</span>, <span class='st'>"mids"</span>)
-<span class='no'>test9</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>X2</span>[, -<span class='fl'>2</span>], <span class='st'>"mids"</span>)
-<span class='no'>rev</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>X</span>):<span class='fl'>1</span>
-<span class='no'>test10</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>X</span>[, <span class='no'>rev</span>], <span class='st'>"mids"</span>)
+<span class='va'>test7</span> <span class='op'>&lt;-</span> <span class='fu'>as</span><span class='op'>(</span><span class='va'>X</span>, <span class='st'>"mids"</span><span class='op'>)</span>
+<span class='va'>test8</span> <span class='op'>&lt;-</span> <span class='fu'>as</span><span class='op'>(</span><span class='va'>X2</span>, <span class='st'>"mids"</span><span class='op'>)</span>
+<span class='va'>test9</span> <span class='op'>&lt;-</span> <span class='fu'>as</span><span class='op'>(</span><span class='va'>X2</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>2</span><span class='op'>]</span>, <span class='st'>"mids"</span><span class='op'>)</span>
+<span class='va'>rev</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span><span class='op'>:</span><span class='fl'>1</span>
+<span class='va'>test10</span> <span class='op'>&lt;-</span> <span class='fu'>as</span><span class='op'>(</span><span class='va'>X</span><span class='op'>[</span>, <span class='va'>rev</span><span class='op'>]</span>, <span class='st'>"mids"</span><span class='op'>)</span>
 
 <span class='co'># where argument copies also observed data into $imp element</span>
-<span class='no'>where</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>TRUE</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>nhanes</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>nhanes</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>where</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>nhanes</span>)
-<span class='no'>test11</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mids</span>(<span class='no'>X</span>, <span class='kw'>where</span> <span class='kw'>=</span> <span class='no'>where</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>test11</span>, <span class='kw'>action</span> <span class='kw'>=</span> <span class='st'>"long"</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='no'>X</span>)</div><div class='output co'>#&gt; [1] FALSE</div></pre>
+<span class='va'>where</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, nrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>where</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
+<span class='va'>test11</span> <span class='op'>&lt;-</span> <span class='fu'>as.mids</span><span class='op'>(</span><span class='va'>X</span>, where <span class='op'>=</span> <span class='va'>where</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>test11</span>, action <span class='op'>=</span> <span class='st'>"long"</span>, include <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, <span class='va'>X</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -243,7 +257,7 @@ same sequence within each imputation block.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -27,9 +27,9 @@ Performs a computation of each of imputed datasets in data.
 
 
 imp <- mice(nhanes2)
-fit1 <- with(data=imp,exp=lm(bmi~age+hyp+chl))
-fit2 <- with(data=imp,exp=glm(hyp~age+bmi+chl,family=binomial))
-anova.imp <- with(data=imp,exp=anova(lm(bmi~age+hyp+chl)))
+fit1 <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+fit2 <- with(data = imp, exp = glm(hyp ~ age + bmi + chl, family = binomial))
+anova.imp <- with(data = imp, exp = anova(lm(bmi ~ age + hyp + chl)))
 }
 \references{
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:

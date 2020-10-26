@@ -111,7 +111,7 @@ subsequently update components of the object, and the
 will plot it on an appropriate plotting device.
 }
 \description{
-Plotting methods for imputed data using \pkg{lattice}.  \code{bwplot}
+Plotting methods for imputed data using \pkg{lattice}. \code{bwplot}
 produces box-and-whisker plots. The function
 automatically separates the observed and imputed data. The
 functions extend the usual features of \pkg{lattice}.
@@ -152,16 +152,16 @@ All other arguments have identical interpretation.
 }
 \examples{
 
-imp <- mice(boys, maxit=1)
+imp <- mice(boys, maxit = 1)
 
 ### box-and-whisker plot per imputation of all numerical variables
 bwplot(imp)
 
 ### tv (testicular volume), conditional on region
-bwplot(imp, tv~.imp|reg)
+bwplot(imp, tv ~ .imp | reg)
 
-### same data, organized in a different way 
-bwplot(imp, tv~reg|.imp, theme=list())
+### same data, organized in a different way
+bwplot(imp, tv ~ reg | .imp, theme = list())
 }
 \references{
 Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
@@ -174,10 +174,10 @@ Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 \seealso{
 \code{\link{mice}}, \code{\link{xyplot}}, \code{\link{densityplot}},
 \code{\link{stripplot}}, \code{\link{lattice}} for an overview of the
-package, as well as \code{\link[lattice:bwplot]{bwplot}},
-\code{\link[lattice:panel.bwplot]{panel.bwplot}},
+package, as well as \code{\link[lattice:xyplot]{bwplot}},
+\code{\link[lattice:panel.xyplot]{panel.bwplot}},
 \code{\link[lattice:print.trellis]{print.trellis}},
-\code{\link[lattice:trellis.par.set]{trellis.par.set}}
+\code{\link[lattice:trellis.par.get]{trellis.par.set}}
 }
 \author{
 Stef van Buuren

@@ -2,8 +2,8 @@ context("mice.impute.2l.bin")
 
 # toenail: outcome is factor
 data("toenail2")
-data <- tidyr::complete(toenail2, patientID, visit) %>% 
-  tidyr::fill(treatment) %>% 
+data <- tidyr::complete(toenail2, patientID, visit) %>%
+  tidyr::fill(treatment) %>%
   dplyr::select(-time) %>%
   dplyr::mutate(patientID = as.integer(patientID))
 summary(data)
@@ -21,8 +21,8 @@ test_that("mice::mice.impute.2l.bin() accepts factor outcome", {
 
 # toenail: outcome is 0/1
 data("toenail")
-data <- tidyr::complete(toenail, ID, visit) %>% 
-  tidyr::fill(treatment) %>% 
+data <- tidyr::complete(toenail, ID, visit) %>%
+  tidyr::fill(treatment) %>%
   dplyr::select(-month)
 summary(data)
 pred <- make.predictorMatrix(data)
@@ -32,4 +32,3 @@ test_that("mice::mice.impute.2l.bin() accepts 0/1 outcome", {
   expect_silent(imp <- mice(data, method = "2l.bin", print = FALSE, pred = pred, m = 1, maxit = 1))
   expect_false(anyNA(complete(imp)))
 })
-

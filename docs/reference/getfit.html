@@ -79,7 +79,7 @@ results, or optionally, one of these fit objects." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@ results, or optionally, one of these fit objects." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -125,7 +125,7 @@ results, or optionally, one of these fit objects." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Extract list of fitted model</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/getfit.R'><code>R/getfit.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/getfit.R'><code>R/getfit.R</code></a></small>
     <div class="hidden name"><code>getfit.Rd</code></div>
     </div>
 
@@ -134,14 +134,14 @@ results, or optionally, one of these fit objects." />
 results, or optionally, one of these fit objects.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getfit</span>(<span class='no'>x</span>, <span class='kw'>i</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>getfit</span><span class='op'>(</span><span class='va'>x</span>, i <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1L</span>, simplify <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>An object of class <code>mira</code> or <code>mitml.result</code>, 
+      <td><p>An object of class <code>mira</code> or <code>mitml.result</code>,
 typically produced by a call to <code><a href='https://rdrr.io/r/base/with.html'>with()</a></code>.</p></td>
     </tr>
     <tr>
@@ -157,16 +157,20 @@ repeated analysis. The default <code>i= -1</code> return a list with all analyse
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>If <code>i = -1</code> an object of class <code>mitml.result</code> containing 
-all analyses, otherwise it returns the fitted object of 
+    <p>If <code>i = -1</code> an object of class <code>mitml.result</code> containing
+all analyses, otherwise it returns the fitted object of
 the i'th repeated analysis.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='mira-class.html'>mira</a></code>, <code><a href='with.mids.html'>with.mids</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Stef van Buuren, March 2012.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>)</div><div class='output co'>#&gt; 
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl
 #&gt;   1   2  bmi  hyp  chl
@@ -192,15 +196,16 @@ the i'th repeated analysis.</p>
 #&gt;   5   2  bmi  hyp  chl
 #&gt;   5   3  bmi  hyp  chl
 #&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>bmi</span>~<span class='no'>chl</span>+<span class='no'>hyp</span>))
-<span class='fu'>getfit</span>(<span class='no'>fit</span>)</div><div class='output co'>#&gt; Component 1 :
+#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>chl</span> <span class='op'>+</span> <span class='va'>hyp</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>getfit</span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Component 1 :
 #&gt; 
 #&gt; Call:
 #&gt; lm(formula = bmi ~ chl + hyp)
 #&gt; 
 #&gt; Coefficients:
 #&gt; (Intercept)          chl          hyp  
-#&gt;    19.37121      0.04321     -0.98924  
+#&gt;    26.83326      0.01965     -2.78901  
 #&gt; 
 #&gt; 
 #&gt; Component 2 :
@@ -210,7 +215,7 @@ the i'th repeated analysis.</p>
 #&gt; 
 #&gt; Coefficients:
 #&gt; (Intercept)          chl          hyp  
-#&gt;    19.33455      0.03598     -0.57460  
+#&gt;   25.723339     0.009112    -0.497376  
 #&gt; 
 #&gt; 
 #&gt; Component 3 :
@@ -220,7 +225,7 @@ the i'th repeated analysis.</p>
 #&gt; 
 #&gt; Coefficients:
 #&gt; (Intercept)          chl          hyp  
-#&gt;    17.69044      0.02971      2.48226  
+#&gt;    17.43035      0.04444      0.10900  
 #&gt; 
 #&gt; 
 #&gt; Component 4 :
@@ -230,7 +235,7 @@ the i'th repeated analysis.</p>
 #&gt; 
 #&gt; Coefficients:
 #&gt; (Intercept)          chl          hyp  
-#&gt;    20.50070      0.03807     -1.46880  
+#&gt;    24.13106      0.02267     -1.35507  
 #&gt; 
 #&gt; 
 #&gt; Component 5 :
@@ -240,17 +245,17 @@ the i'th repeated analysis.</p>
 #&gt; 
 #&gt; Coefficients:
 #&gt; (Intercept)          chl          hyp  
-#&gt;    23.65820      0.03846     -3.63370  
+#&gt;    21.58818      0.04572     -3.04625  
 #&gt; 
-#&gt; </div><div class='input'><span class='fu'>getfit</span>(<span class='no'>fit</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>getfit</span><span class='op'>(</span><span class='va'>fit</span>, <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Call:
 #&gt; lm(formula = bmi ~ chl + hyp)
 #&gt; 
 #&gt; Coefficients:
 #&gt; (Intercept)          chl          hyp  
-#&gt;    19.33455      0.03598     -0.57460  
-#&gt; </div><div class='input'>
-</div></pre>
+#&gt;   25.723339     0.009112    -0.497376  
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -266,7 +271,7 @@ the i'th repeated analysis.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

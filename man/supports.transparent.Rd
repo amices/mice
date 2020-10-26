@@ -22,7 +22,6 @@ current device is unknown.
 \examples{
 
 supports.transparent()
-
 }
 \seealso{
 \code{\link{mdc}} \code{\link{dev.capabilities}}

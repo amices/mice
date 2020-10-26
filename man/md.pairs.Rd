@@ -26,8 +26,6 @@ The four components in the output value is have the following interpretation:
 \item{list('mm')}{missing -missing, both variables are missing} }
 }
 \examples{
-
-
 pat <- md.pairs(nhanes)
 pat
 
@@ -36,8 +34,7 @@ pat
 pat$rr + pat$rm + pat$mr + pat$mm
 
 # percentage of usable cases to impute row variable from column variable
-round(100*pat$mr/(pat$mr+pat$mm))
-
+round(100 * pat$mr / (pat$mr + pat$mm))
 }
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:

@@ -3,11 +3,13 @@ context("formulas")
 data <- nhanes
 
 test_that("model.matrix() deletes incomplete cases", {
-  expect_identical(dim(model.matrix(~ age, data)), c(25L, 2L))
-  expect_identical(dim(model.matrix(~ chl, data)), c(15L, 2L))
+  expect_identical(dim(model.matrix(~age, data)), c(25L, 2L))
+  expect_identical(dim(model.matrix(~chl, data)), c(15L, 2L))
   expect_identical(dim(model.matrix(~ poly(age), data)), c(25L, 2L))
-  expect_error(model.matrix(~ poly(chl), data), 
-               "missing values are not allowed in 'poly'")
+  expect_error(
+    model.matrix(~ poly(chl), data),
+    "missing values are not allowed in 'poly'"
+  )
   expect_identical(dim(model.matrix(~ poly(chl, raw = TRUE), data)), c(15L, 2L))
 })
 

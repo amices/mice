@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pooling: R squared — pool.r.squared • mice</title>
+<title>Pools R^2 of m models fitted to multiply-imputed data — pool.r.squared • mice</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,10 @@
 
 
 
-<meta property="og:title" content="Pooling: R squared — pool.r.squared" />
-<meta property="og:description" content="Pools R^2 of m repeated complete data models." />
+<meta property="og:title" content="Pools R^2 of m models fitted to multiply-imputed data — pool.r.squared" />
+<meta property="og:description" content="The function pools the coefficients of determination R^2 or the adjusted
+coefficients of determination (R^2_a) obtained with the lm modeling
+function. For pooling it uses the Fisher z-transformation." />
 
 
 
@@ -78,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -99,7 +101,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -123,23 +125,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pooling: R squared</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/pool.r.squared.R'><code>R/pool.r.squared.R</code></a></small>
+    <h1>Pools R^2 of m models fitted to multiply-imputed data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/pool.r.squared.R'><code>R/pool.r.squared.R</code></a></small>
     <div class="hidden name"><code>pool.r.squared.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Pools R^2 of m repeated complete data models.</p>
+    <p>The function pools the coefficients of determination R^2 or the adjusted
+coefficients of determination (R^2_a) obtained with the <code>lm</code> modeling
+function. For pooling it uses the Fisher <em>z</em>-transformation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pool.r.squared</span>(<span class='no'>object</span>, <span class='kw'>adjusted</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>pool.r.squared</span><span class='op'>(</span><span class='va'>object</span>, adjusted <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>An object of class 'mira' or 'mipo', produced by <code>lm.mids</code>, 
+      <td><p>An object of class 'mira' or 'mipo', produced by <code>lm.mids</code>,
 <code>with.mids</code>, or <code>pool</code> with <code>lm</code> as modeling function.</p></td>
     </tr>
     <tr>
@@ -151,15 +155,10 @@ calculated.  The default value is FALSE.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a 1x4 table with components. Component <code>est</code> is the 
+    <p>Returns a 1x4 table with components. Component <code>est</code> is the
 pooled R^2 estimate. Component <code>lo95</code> is the 95 % lower bound of the pooled R^2.
 Component <code>hi95</code> is the 95 % upper bound of the pooled R^2.
 Component <code>fmi</code> is the fraction of missing information due to nonresponse.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The function pools the coefficients of determination R^2 or the adjusted
-coefficients of determination (R^2_a) obtained with the <code>lm</code> modeling
-function. For pooling it uses the Fisher <em>z</em>-transformation.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Harel, O (2009). The estimation of R^2 and adjusted R^2 in
@@ -173,54 +172,27 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='pool.html'>pool</a></code>,<code><a href='pool.scalar.html'>pool.scalar</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Karin Groothuis-Oudshoorn and Stef van Buuren, 2009</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span>, seed <span class='op'>=</span> <span class='fl'>16117</span><span class='op'>)</span>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>chl</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>bmi</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='no'>imp</span><span class='kw'>&lt;-</span><span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>)</div><div class='output co'>#&gt; 
-#&gt;  iter imp variable
-#&gt;   1   1  bmi  hyp  chl
-#&gt;   1   2  bmi  hyp  chl
-#&gt;   1   3  bmi  hyp  chl
-#&gt;   1   4  bmi  hyp  chl
-#&gt;   1   5  bmi  hyp  chl
-#&gt;   2   1  bmi  hyp  chl
-#&gt;   2   2  bmi  hyp  chl
-#&gt;   2   3  bmi  hyp  chl
-#&gt;   2   4  bmi  hyp  chl
-#&gt;   2   5  bmi  hyp  chl
-#&gt;   3   1  bmi  hyp  chl
-#&gt;   3   2  bmi  hyp  chl
-#&gt;   3   3  bmi  hyp  chl
-#&gt;   3   4  bmi  hyp  chl
-#&gt;   3   5  bmi  hyp  chl
-#&gt;   4   1  bmi  hyp  chl
-#&gt;   4   2  bmi  hyp  chl
-#&gt;   4   3  bmi  hyp  chl
-#&gt;   4   4  bmi  hyp  chl
-#&gt;   4   5  bmi  hyp  chl
-#&gt;   5   1  bmi  hyp  chl
-#&gt;   5   2  bmi  hyp  chl
-#&gt;   5   3  bmi  hyp  chl
-#&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='input'>
-<span class='no'>fit</span><span class='kw'>&lt;-</span><span class='fu'><a href='lm.mids.html'>lm.mids</a></span>(<span class='no'>chl</span>~<span class='no'>age</span>+<span class='no'>hyp</span>+<span class='no'>bmi</span>,<span class='no'>imp</span>)
-<span class='fu'>pool.r.squared</span>(<span class='no'>fit</span>)</div><div class='output co'>#&gt;           est      lo 95     hi 95 fmi
-#&gt; R^2 0.4759817 0.06327148 0.7981661 NaN</div><div class='input'><span class='fu'>pool.r.squared</span>(<span class='no'>fit</span>,<span class='kw'>adjusted</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;               est      lo 95     hi 95 fmi
-#&gt; adj R^2 0.3973215 0.01440308 0.7694223 NaN</div><div class='input'>
-#fit&lt;-lm.mids(chl~age+hyp+bmi,imp)
-#
-#&gt; pool.r.squared(fit)
-#          est     lo 95     hi 95       fmi
-#R^2 0.5108041 0.1479687 0.7791927 0.3024413
-#
-#&gt; pool.r.squared(fit,adjusted=TRUE)
-#          est      lo 95    hi 95       fmi
-#adj R^2 0.4398066 0.08251427 0.743172 0.3404165
-#
-
-
-</div></pre>
+<span class='co'># input: mira object</span>
+<span class='fu'>pool.r.squared</span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           est     lo 95     hi 95 fmi
+#&gt; R^2 0.5366586 0.1457725 0.8079782 NaN</div><div class='input'><span class='fu'>pool.r.squared</span><span class='op'>(</span><span class='va'>fit</span>, adjusted <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;               est      lo 95     hi 95 fmi
+#&gt; adj R^2 0.4688312 0.07905477 0.7787898 NaN</div><div class='input'>
+<span class='co'># input: mipo object</span>
+<span class='va'>est</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pool.html'>pool</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
+<span class='fu'>pool.r.squared</span><span class='op'>(</span><span class='va'>est</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           est     lo 95     hi 95 fmi
+#&gt; R^2 0.5366586 0.1457725 0.8079782 NaN</div><div class='input'><span class='fu'>pool.r.squared</span><span class='op'>(</span><span class='va'>est</span>, adjusted <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;               est      lo 95     hi 95 fmi
+#&gt; adj R^2 0.4688312 0.07905477 0.7787898 NaN</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -236,7 +208,7 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

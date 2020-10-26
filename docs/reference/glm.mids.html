@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generalized linear model for <code>mids</code> object — glm.mids • mice</title>
+<title>Generalized linear model for mids object — glm.mids • mice</title>
 
 
 <!-- jquery -->
@@ -45,7 +45,7 @@
 
 
 
-<meta property="og:title" content="Generalized linear model for <code>mids</code> object — glm.mids" />
+<meta property="og:title" content="Generalized linear model for mids object — glm.mids" />
 <meta property="og:description" content="Applies glm() to a multiply imputed data set" />
 
 
@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -124,7 +124,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Generalized linear model for <code>mids</code> object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/lm.R'><code>R/lm.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/lm.R'><code>R/lm.R</code></a></small>
     <div class="hidden name"><code>glm.mids.Rd</code></div>
     </div>
 
@@ -132,7 +132,7 @@
     <p>Applies <code><a href='https://rdrr.io/r/stats/glm.html'>glm()</a></code> to a multiply imputed data set</p>
     </div>
 
-    <pre class="usage"><span class='fu'>glm.mids</span>(<span class='no'>formula</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>gaussian</span>, <span class='no'>data</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>glm.mids</span><span class='op'>(</span><span class='va'>formula</span>, family <span class='op'>=</span> <span class='va'>gaussian</span>, <span class='va'>data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,10 +176,14 @@ Leiden: TNO Quality of Life.</p>
 
     <div class='dont-index'><p><code><a href='with.mids.html'>with.mids</a></code>, <code><a href='https://rdrr.io/r/stats/glm.html'>glm</a></code>, <code><a href='mids-class.html'>mids</a></code>,
 <code><a href='mira-class.html'>mira</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Stef van Buuren, Karin Groothuis-Oudshoorn, 2000</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>)</div><div class='output co'>#&gt; 
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl
 #&gt;   1   2  bmi  hyp  chl
@@ -207,8 +211,9 @@ Leiden: TNO Quality of Life.</p>
 #&gt;   5   4  bmi  hyp  chl
 #&gt;   5   5  bmi  hyp  chl</div><div class='input'>
 <span class='co'># logistic regression on the imputed data</span>
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>glm.mids</span>((<span class='no'>hyp</span><span class='kw'>==</span><span class='fl'>2</span>)~<span class='no'>bmi</span>+<span class='no'>chl</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>imp</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>binomial</span>)
-<span class='no'>fit</span></div><div class='output co'>#&gt; call :
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>glm.mids</span><span class='op'>(</span><span class='op'>(</span><span class='va'>hyp</span> <span class='op'>==</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>bmi</span> <span class='op'>+</span> <span class='va'>chl</span>, data <span class='op'>=</span> <span class='va'>imp</span>, family <span class='op'>=</span> <span class='va'>binomial</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Use with(imp, glm(yourmodel).</span></div><div class='input'><span class='va'>fit</span>
+</div><div class='output co'>#&gt; call :
 #&gt; glm.mids(formula = (hyp == 2) ~ bmi + chl, family = binomial, 
 #&gt;     data = imp)
 #&gt; 
@@ -227,11 +232,11 @@ Leiden: TNO Quality of Life.</p>
 #&gt; 
 #&gt; Coefficients:
 #&gt; (Intercept)          bmi          chl  
-#&gt;    -2.02452     -0.18651      0.02821  
+#&gt;    -2.78830     -0.10337      0.02061  
 #&gt; 
 #&gt; Degrees of Freedom: 24 Total (i.e. Null);  22 Residual
 #&gt; Null Deviance:	    25.02 
-#&gt; Residual Deviance: 21 	AIC: 27
+#&gt; Residual Deviance: 22.71 	AIC: 28.71
 #&gt; 
 #&gt; [[2]]
 #&gt; 
@@ -240,11 +245,11 @@ Leiden: TNO Quality of Life.</p>
 #&gt; 
 #&gt; Coefficients:
 #&gt; (Intercept)          bmi          chl  
-#&gt;     -3.5877      -0.1414       0.0309  
+#&gt;    -7.52057      0.03721      0.02847  
 #&gt; 
 #&gt; Degrees of Freedom: 24 Total (i.e. Null);  22 Residual
-#&gt; Null Deviance:	    27.55 
-#&gt; Residual Deviance: 22.28 	AIC: 28.28
+#&gt; Null Deviance:	    29.65 
+#&gt; Residual Deviance: 25.15 	AIC: 31.15
 #&gt; 
 #&gt; [[3]]
 #&gt; 
@@ -253,11 +258,11 @@ Leiden: TNO Quality of Life.</p>
 #&gt; 
 #&gt; Coefficients:
 #&gt; (Intercept)          bmi          chl  
-#&gt;    -5.79358     -0.01727      0.02563  
+#&gt;    -4.28581      0.03952      0.01031  
 #&gt; 
 #&gt; Degrees of Freedom: 24 Total (i.e. Null);  22 Residual
 #&gt; Null Deviance:	    27.55 
-#&gt; Residual Deviance: 24.2 	AIC: 30.2
+#&gt; Residual Deviance: 26.71 	AIC: 32.71
 #&gt; 
 #&gt; [[4]]
 #&gt; 
@@ -266,11 +271,11 @@ Leiden: TNO Quality of Life.</p>
 #&gt; 
 #&gt; Coefficients:
 #&gt; (Intercept)          bmi          chl  
-#&gt;     -2.2053      -0.1082       0.0194  
+#&gt;     -5.7709       0.0671       0.0139  
 #&gt; 
 #&gt; Degrees of Freedom: 24 Total (i.e. Null);  22 Residual
 #&gt; Null Deviance:	    27.55 
-#&gt; Residual Deviance: 25.51 	AIC: 31.51
+#&gt; Residual Deviance: 25.54 	AIC: 31.54
 #&gt; 
 #&gt; [[5]]
 #&gt; 
@@ -279,14 +284,13 @@ Leiden: TNO Quality of Life.</p>
 #&gt; 
 #&gt; Coefficients:
 #&gt; (Intercept)          bmi          chl  
-#&gt;    -7.58892      0.03615      0.02620  
+#&gt;    -3.33347     -0.13050      0.02782  
 #&gt; 
 #&gt; Degrees of Freedom: 24 Total (i.e. Null);  22 Residual
-#&gt; Null Deviance:	    25.02 
-#&gt; Residual Deviance: 21.35 	AIC: 27.35
+#&gt; Null Deviance:	    27.55 
+#&gt; Residual Deviance: 23.19 	AIC: 29.19
 #&gt; 
-#&gt; </div><div class='input'>
-</div></pre>
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -302,7 +306,7 @@ Leiden: TNO Quality of Life.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

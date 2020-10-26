@@ -19,15 +19,15 @@ mice.impute.polr(
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the 
-the subset \code{y[ry]} of elements in \code{y} to which the imputation 
-model is fitted. The \code{ry} generally distinguishes the observed 
+\item{ry}{Logical vector of length \code{length(y)} indicating the
+the subset \code{y[ry]} of elements in \code{y} to which the imputation
+model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for 
+\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value 
+\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
 \item{nnet.maxit}{Tuning parameter for \code{nnet()}.}
@@ -36,14 +36,14 @@ indicates locations in \code{y} for which imputations are created.}
 
 \item{nnet.MaxNWts}{Tuning parameter for \code{nnet()}.}
 
-\item{polr.to.loggedEvents}{A logical indicating whether each fallback 
+\item{polr.to.loggedEvents}{A logical indicating whether each fallback
 to the \code{multinom()} function should be written to \code{loggedEvents}.
 The default is \code{FALSE}.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length 
+Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
@@ -65,18 +65,18 @@ In order to avoid bias due to perfect prediction, the algorithm augment the
 data according to the method of White, Daniel and Royston (2010).
 
 The call to \code{polr} might fail, usually because the data are very sparse.
-In that case, \code{multinom} is tried as a fallback. 
-If the local flag \code{polr.to.loggedEvents} is set to TRUE, 
+In that case, \code{multinom} is tried as a fallback.
+If the local flag \code{polr.to.loggedEvents} is set to TRUE,
 a record is written
 to the \code{loggedEvents} component of the \code{\link{mids}} object.
 Use \code{mice(data, polr.to.loggedEvents = TRUE)} to set the flag.
 }
 \note{
-In December 2019 Simon White alerted that the 
-\code{polr} could always fail silently. I can confirm this behaviour for 
+In December 2019 Simon White alerted that the
+\code{polr} could always fail silently. I can confirm this behaviour for
 versions \code{mice 3.0.0 - mice 3.6.6}, so any method requests
 for \code{polr} in these versions were in fact handled by \code{multinom}.
-See \url{https://github.com/stefvanbuuren/mice/issues/206} for details.
+See \url{https://github.com/amices/mice/issues/206} for details.
 }
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate

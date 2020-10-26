@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title><code>mipo</code>: Multiple imputation pooled object — mipo • mice</title>
+<title>mipo: Multiple imputation pooled object — mipo • mice</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,8 @@
 
 
 
-<meta property="og:title" content="<code>mipo</code>: Multiple imputation pooled object — mipo" />
-<meta property="og:description" content="The mipo object contains the results of the pooling step. 
+<meta property="og:title" content="mipo: Multiple imputation pooled object — mipo" />
+<meta property="og:description" content="The mipo object contains the results of the pooling step.
 The function pool generates an object of class mipo." />
 
 
@@ -79,7 +79,7 @@ The function pool generates an object of class mipo." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@ The function pool generates an object of class mipo." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -125,34 +125,34 @@ The function pool generates an object of class mipo." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1><code>mipo</code>: Multiple imputation pooled object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/mipo.R'><code>R/mipo.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/mipo.R'><code>R/mipo.R</code></a></small>
     <div class="hidden name"><code>mipo.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>mipo</code> object contains the results of the pooling step. 
+    <p>The <code>mipo</code> object contains the results of the pooling step.
 The function <code><a href='pool.html'>pool</a></code> generates an object of class <code>mipo</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mipo</span>(<span class='no'>mira.obj</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>mipo</span><span class='op'>(</span><span class='va'>mira.obj</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for mipo</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(
-  <span class='no'>object</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"tests"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>conf.int</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>conf.level</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"tests"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  conf.int <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  conf.level <span class='op'>=</span> <span class='fl'>0.95</span>,
+  exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for mipo</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for mipo.summary</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>process_mipo</span>(<span class='no'>z</span>, <span class='no'>x</span>, <span class='kw'>conf.int</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>conf.level</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>exponentiate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>process_mipo</span><span class='op'>(</span><span class='va'>z</span>, <span class='va'>x</span>, conf.int <span class='op'>=</span> <span class='cn'>FALSE</span>, conf.level <span class='op'>=</span> <span class='fl'>0.95</span>, exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,7 +171,7 @@ The function <code><a href='pool.html'>pool</a></code> generates an object of cl
     </tr>
     <tr>
       <th>conf.int</th>
-      <td><p>Logical indicating whether to include 
+      <td><p>Logical indicating whether to include
 a confidence interval. The default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
@@ -181,8 +181,8 @@ a confidence interval. The default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>exponentiate</th>
-      <td><p>Flag indicating whether to exponentiate the 
-coefficient estimates and confidence intervals (typical for 
+      <td><p>Flag indicating whether to exponentiate the
+coefficient estimates and confidence intervals (typical for
 logistic regression).</p></td>
     </tr>
     <tr>
@@ -200,8 +200,8 @@ logistic regression).</p></td>
     <p>The <code>summary</code> method returns a data frame with summary statistics of the pooled analysis.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>An object class <code>mipo</code> is a <code>list</code> with three 
-elements: <code>call</code>, <code>m</code> and <code>pooled</code>.</p>
+    <p>An object class <code>mipo</code> is a <code>list</code> with
+elements: <code>call</code>, <code>m</code>, <code>pooled</code> and <code>glanced</code>.</p>
 <p>The <code>pooled</code> elements is a data frame with columns:</p><table class='table'>
 <tr><td><code>estimate</code></td><td>Pooled complete data estimate</td></tr>
 <tr><td><code>ubar</code></td><td>Within-imputation variance of <code>estimate</code></td></tr>
@@ -214,7 +214,10 @@ elements: <code>call</code>, <code>m</code> and <code>pooled</code>.</p>
 <tr><td><code>fmi</code></td><td>Fraction of missing information</td></tr>
 </table>
 <p>The names of the terms are stored as <code><a href='https://rdrr.io/r/base/row.names.html'>row.names(pooled)</a></code>.</p>
-<p>The <code>process_mipo</code> is a helper function to process a 
+<p>The <code>glanced</code> elements is a <code>data.frame</code> with <code>m</code> rows.
+The precise composition depends on the class of the complete-data analysis.
+At least field <code>nobs</code> is expected to be present.</p>
+<p>The <code>process_mipo</code> is a helper function to process a
 tidied mipo object, and is normally not called directly.
 It adds a confidence interval, and optionally exponentiates, the result.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -225,7 +228,7 @@ Statistical Software</em>, <b>45</b>(3), 1-67.
 <a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='pool.html'>pool</a></code>, 
+    <div class='dont-index'><p><code><a href='pool.html'>pool</a></code>,
 <code><a href='mids-class.html'>mids</a></code>, <code><a href='mira-class.html'>mira</a></code></p></div>
 
   </div>
@@ -243,7 +246,7 @@ Statistical Software</em>, <b>45</b>(3), 1-67.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -7,16 +7,16 @@
 ampute.default.freq(patterns)
 }
 \arguments{
-\item{patterns}{A matrix of size #patterns by #variables where \code{0} indicates 
-a variable should have missing values and \code{1} indicates a variable should 
+\item{patterns}{A matrix of size #patterns by #variables where \code{0} indicates
+a variable should have missing values and \code{1} indicates a variable should
 remain complete. Could be the result of \code{\link{ampute.default.patterns}}.}
 }
 \value{
-A vector of length #patterns containing the relative frequencies with 
+A vector of length #patterns containing the relative frequencies with
 which the patterns should occur. An equal probability is given to each pattern.
 }
 \description{
-Defines the default relative frequency vector for the multivariate 
+Defines the default relative frequency vector for the multivariate
 amputation function \code{ampute}.
 }
 \seealso{

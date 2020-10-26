@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -124,7 +124,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>NHANES example - all variables numerical</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/nhanes.R'><code>R/nhanes.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/nhanes.R'><code>R/nhanes.R</code></a></small>
     <div class="hidden name"><code>nhanes.Rd</code></div>
     </div>
 
@@ -136,10 +136,10 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 25 observations on the following 4 variables.</p><dl'>
+    <p>A data frame with 25 observations on the following 4 variables.</p><dl>
 <dt>age</dt><dd><p>Age group (1=20-39, 2=40-59, 3=60+)</p></dd>
-<dt>bmi</dt><dd><p>Body mass index (kg/m**2)</p></dd> 
-<dt>hyp</dt><dd><p>Hypertensive (1=no,2=yes)</p></dd> 
+<dt>bmi</dt><dd><p>Body mass index (kg/m**2)</p></dd>
+<dt>hyp</dt><dd><p>Hypertensive (1=no,2=yes)</p></dd>
 <dt>chl</dt><dd><p>Total serum cholesterol (mg/dL)</p></dd> 
 </dl>
 
@@ -156,9 +156,9 @@ the same data set, but with <code>age</code> and <code>hyp</code> treated as fac
     <div class='dont-index'><p><code><a href='nhanes2.html'>nhanes2</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>)     <span class='co'># create 5 imputed data sets</span></div><div class='output co'>#&gt; 
+    <pre class="examples"><div class='input'><span class='co'># create 5 imputed data sets</span>
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl
 #&gt;   1   2  bmi  hyp  chl
@@ -184,7 +184,10 @@ the same data set, but with <code>age</code> and <code>hyp</code> treated as fac
 #&gt;   5   2  bmi  hyp  chl
 #&gt;   5   3  bmi  hyp  chl
 #&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>imp</span>)           <span class='co'># print the first imputed data set</span></div><div class='output co'>#&gt;    age  bmi hyp chl
+#&gt;   5   5  bmi  hyp  chl</div><div class='input'>
+<span class='co'># print the first imputed data set</span>
+<span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    age  bmi hyp chl
 #&gt; 1    1 30.1   1 187
 #&gt; 2    2 22.7   1 187
 #&gt; 3    1 35.3   1 187
@@ -209,8 +212,7 @@ the same data set, but with <code>age</code> and <code>hyp</code> treated as fac
 #&gt; 22   1 33.2   1 229
 #&gt; 23   1 27.5   1 131
 #&gt; 24   3 24.9   1 284
-#&gt; 25   2 27.4   1 186</div><div class='input'>
-</div></pre>
+#&gt; 25   2 27.4   1 186</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -226,7 +228,7 @@ the same data set, but with <code>age</code> and <code>hyp</code> treated as fac
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

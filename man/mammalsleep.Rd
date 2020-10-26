@@ -7,7 +7,7 @@
 \title{Mammal sleep data}
 \format{
 \code{mammalsleep} is a data frame with 62 rows and 11 columns:
-\describe{ 
+\describe{
 \item{species}{Species of animal}
 \item{bw}{Body weight (kg)}
 \item{brw}{Brain weight (g)}
@@ -18,9 +18,9 @@
 \item{gt}{Gestation time (days)}
 \item{pi}{Predation index (1-5), 1 = least likely to be preyed upon}
 \item{sei}{Sleep exposure index (1-5), 1 = least exposed (e.g. animal sleeps in a
-well-protected den), 5 = most exposed} 
+well-protected den), 5 = most exposed}
 \item{odi}{Overall danger index (1-5) based on the above two indices and other information, 1 = least
-danger (from other animals), 5 = most danger (from other animals)} 
+danger (from other animals), 5 = most danger (from other animals)}
 }
 }
 \source{
@@ -43,10 +43,6 @@ related to predatory danger, suggesting that large amounts of this sleep
 phase are disadvantageous in prey species.
 }
 \examples{
-
-
 sleep <- data(mammalsleep)
-
-
 }
 \keyword{datasets}

@@ -46,13 +46,13 @@
 
 
 <meta property="og:title" content="Appends specified break to the data — appendbreak" />
-<meta property="og:description" content="A custom function to insert rows in long data with new pseudo-observations 
-that are being done on the specified break ages. There should be a 
+<meta property="og:description" content="A custom function to insert rows in long data with new pseudo-observations
+that are being done on the specified break ages. There should be a
 column called first in data with logical data that codes whether
 the current row is the first for subject id. Furthermore,
 the function assumes that columns age, occ,
-hgt.z, wgt.z and 
-bmi.z are available. This function is used on the tbc 
+hgt.z, wgt.z and
+bmi.z are available. This function is used on the tbc
 data in FIMD chapter 9. Check that out to see it in action." />
 
 
@@ -85,7 +85,7 @@ data in FIMD chapter 9. Check that out to see it in action." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -106,7 +106,7 @@ data in FIMD chapter 9. Check that out to see it in action." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -131,22 +131,22 @@ data in FIMD chapter 9. Check that out to see it in action." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Appends specified break to the data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/auxiliary.R'><code>R/auxiliary.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/auxiliary.R'><code>R/auxiliary.R</code></a></small>
     <div class="hidden name"><code>appendbreak.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A custom function to insert rows in long data with new pseudo-observations 
-that are being done on the specified break ages. There should be a 
+    <p>A custom function to insert rows in long data with new pseudo-observations
+that are being done on the specified break ages. There should be a
 column called <code>first</code> in <code>data</code> with logical data that codes whether
 the current row is the first for subject <code>id</code>. Furthermore,
 the function assumes that columns <code>age</code>, <code>occ</code>,
-<code>hgt.z</code>, <code>wgt.z</code> and 
-<code>bmi.z</code> are available. This function is used on the <code>tbc</code> 
+<code>hgt.z</code>, <code>wgt.z</code> and
+<code>bmi.z</code> are available. This function is used on the <code>tbc</code>
 data in FIMD chapter 9. Check that out to see it in action.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>appendbreak</span>(<span class='no'>data</span>, <span class='no'>brk</span>, <span class='kw'>warp.model</span> <span class='kw'>=</span> <span class='no'>warp.model</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>typ</span> <span class='kw'>=</span> <span class='st'>"pred"</span>)</pre>
+    <pre class="usage"><span class='fu'>appendbreak</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>brk</span>, warp.model <span class='op'>=</span> <span class='va'>warp.model</span>, id <span class='op'>=</span> <span class='cn'>NULL</span>, typ <span class='op'>=</span> <span class='st'>"pred"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,7 +192,7 @@ data in FIMD chapter 9. Check that out to see it in action.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

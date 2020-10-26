@@ -9,7 +9,7 @@
 \arguments{
 \item{object}{Two or more objects of class \code{mira}}
 
-\item{...}{Other parameters passed down to \code{D1()}, \code{D2()}, 
+\item{...}{Other parameters passed down to \code{D1()}, \code{D2()},
 \code{D3()} and \code{mitml::testModels}.}
 
 \item{method}{Either \code{"D1"}, \code{"D2"} or \code{"D3"}}

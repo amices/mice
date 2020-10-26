@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Draws values of beta and sigma by Bayesian linear regression — norm.draw" />
-<meta property="og:description" content="This function draws random values of beta and sigma under the Bayesian 
+<meta property="og:description" content="This function draws random values of beta and sigma under the Bayesian
 linear regression model as described in Rubin (1987, p. 167). This function
 can be called by user-specified imputation functions." />
 
@@ -80,7 +80,7 @@ can be called by user-specified imputation functions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -101,7 +101,7 @@ can be called by user-specified imputation functions." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -126,19 +126,19 @@ can be called by user-specified imputation functions." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Draws values of beta and sigma by Bayesian linear regression</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/mice.impute.norm.R'><code>R/mice.impute.norm.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/mice.impute.norm.R'><code>R/mice.impute.norm.R</code></a></small>
     <div class="hidden name"><code>norm.draw.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function draws random values of beta and sigma under the Bayesian 
+    <p>This function draws random values of beta and sigma under the Bayesian
 linear regression model as described in Rubin (1987, p. 167). This function
 can be called by user-specified imputation functions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>norm.draw</span>(<span class='no'>y</span>, <span class='no'>ry</span>, <span class='no'>x</span>, <span class='kw'>rank.adjust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>norm.draw</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, rank.adjust <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>.norm.draw</span>(<span class='no'>y</span>, <span class='no'>ry</span>, <span class='no'>x</span>, <span class='kw'>rank.adjust</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>.norm.draw</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, rank.adjust <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,8 +158,8 @@ can be called by user-specified imputation functions.</p>
     </tr>
     <tr>
       <th>rank.adjust</th>
-      <td><p>Argument that specifies whether <code>NA</code>'s in the 
-coefficients need to be set to zero. Only relevant when <code>ls.meth = "qr"</code> 
+      <td><p>Argument that specifies whether <code>NA</code>'s in the
+coefficients need to be set to zero. Only relevant when <code>ls.meth = "qr"</code>
 AND the predictor matrix is rank-deficient.</p></td>
     </tr>
     <tr>
@@ -171,11 +171,15 @@ AND the predictor matrix is rank-deficient.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>list</code> containing components <code>coef</code> (least squares estimate),
-<code>beta</code> (drawn regression weights) and <code>sigma</code> (drawn value of the 
+<code>beta</code> (drawn regression weights) and <code>sigma</code> (drawn value of the
 residual standard deviation).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Rubin, D.B. (1987). <em>Multiple imputation for nonresponse in surveys</em>. New York: Wiley.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Gerko Vink, 2018, for this version, based on earlier versions written
+by Stef van Buuren, Karin Groothuis-Oudshoorn, 2017</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -192,7 +196,7 @@ residual standard deviation).</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

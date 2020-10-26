@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Stripplot of observed and imputed data — stripplot.mids" />
-<meta property="og:description" content="Plotting methods for imputed data using lattice. 
+<meta property="og:description" content="Plotting methods for imputed data using lattice.
 stripplot produces one-dimensional
 scatterplots. The function
 automatically separates the observed and imputed data. The
@@ -82,7 +82,7 @@ functions extend the usual features of lattice." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -103,7 +103,7 @@ functions extend the usual features of lattice." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -128,12 +128,12 @@ functions extend the usual features of lattice." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Stripplot of observed and imputed data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/stripplot.R'><code>R/stripplot.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/stripplot.R'><code>R/stripplot.R</code></a></small>
     <div class="hidden name"><code>stripplot.mids.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plotting methods for imputed data using <span class="pkg">lattice</span>. 
+    <p>Plotting methods for imputed data using <span class="pkg">lattice</span>.
 <code>stripplot</code> produces one-dimensional
 scatterplots. The function
 automatically separates the observed and imputed data. The
@@ -141,24 +141,24 @@ functions extend the usual features of <span class="pkg">lattice</span>.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for mids</span>
-<span class='fu'>stripplot</span>(
-  <span class='no'>x</span>,
-  <span class='no'>data</span>,
-  <span class='kw'>na.groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>as.table</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>theme</span> <span class='kw'>=</span> <span class='fu'><a href='mice.theme.html'>mice.theme</a></span>(),
-  <span class='kw'>allow.multiple</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>outer</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>drop.unused.levels</span> <span class='kw'>=</span> <span class='kw pkg'>lattice</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lattice/man/lattice.options.html'>lattice.getOption</a></span>(<span class='st'>"drop.unused.levels"</span>),
-  <span class='kw'>panel</span> <span class='kw'>=</span> <span class='kw pkg'>lattice</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lattice/man/lattice.options.html'>lattice.getOption</a></span>(<span class='st'>"panel.stripplot"</span>),
-  <span class='kw'>default.prepanel</span> <span class='kw'>=</span> <span class='kw pkg'>lattice</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lattice/man/lattice.options.html'>lattice.getOption</a></span>(<span class='st'>"prepanel.default.stripplot"</span>),
-  <span class='kw'>jitter.data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>horizontal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>subscripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+<span class='fu'>stripplot</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>data</span>,
+  na.groups <span class='op'>=</span> <span class='cn'>NULL</span>,
+  groups <span class='op'>=</span> <span class='cn'>NULL</span>,
+  as.table <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  theme <span class='op'>=</span> <span class='fu'><a href='mice.theme.html'>mice.theme</a></span><span class='op'>(</span><span class='op'>)</span>,
+  allow.multiple <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  outer <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  drop.unused.levels <span class='op'>=</span> <span class='fu'>lattice</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lattice/man/lattice.options.html'>lattice.getOption</a></span><span class='op'>(</span><span class='st'>"drop.unused.levels"</span><span class='op'>)</span>,
+  panel <span class='op'>=</span> <span class='fu'>lattice</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lattice/man/lattice.options.html'>lattice.getOption</a></span><span class='op'>(</span><span class='st'>"panel.stripplot"</span><span class='op'>)</span>,
+  default.prepanel <span class='op'>=</span> <span class='fu'>lattice</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lattice/man/lattice.options.html'>lattice.getOption</a></span><span class='op'>(</span><span class='st'>"prepanel.default.stripplot"</span><span class='op'>)</span>,
+  jitter.data <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  horizontal <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>,
+  subscripts <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  subset <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -223,7 +223,7 @@ differs from <code>na.groups</code> because it evaluates in the completed data
       <td><p>A named list containing the graphical parameters. The default
 function <code>mice.theme</code> produces a short list of default colors, line
 width, and so on. The extensive list may be obtained from
-<code>trellis.par.get()</code>. Global graphical parameters like <code>col</code> or
+<code><a href='https://rdrr.io/pkg/lattice/man/trellis.par.get.html'>trellis.par.get()</a></code>. Global graphical parameters like <code>col</code> or
 <code>cex</code> in high-level calls are still honored, so first experiment with
 the global parameters. Many setting consists of a pair. For example,
 <code>mice.theme</code> defines two symbol colors. The first is for the observed
@@ -321,14 +321,18 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='mice.html'>mice</a></code>, <code><a href='xyplot.mids.html'>xyplot</a></code>, <code><a href='densityplot.mids.html'>densityplot</a></code>,
-<code><a href='bwplot.mids.html'>bwplot</a></code>, <code>lattice</code> for an overview of the
+<code><a href='bwplot.mids.html'>bwplot</a></code>, <code><a href='https://rdrr.io/pkg/lattice/man/Lattice.html'>lattice</a></code> for an overview of the
 package, as well as <code><a href='https://rdrr.io/pkg/lattice/man/xyplot.html'>stripplot</a></code>,
 <code><a href='https://rdrr.io/pkg/lattice/man/panel.stripplot.html'>panel.stripplot</a></code>,
 <code><a href='https://rdrr.io/pkg/lattice/man/print.trellis.html'>print.trellis</a></code>,
 <code><a href='https://rdrr.io/pkg/lattice/man/trellis.par.get.html'>trellis.par.set</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Stef van Buuren</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>boys</span>, <span class='kw'>maxit</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; 
+    <pre class="examples"><div class='input'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>boys</span>, maxit <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  hgt  wgt  bmi  hc  gen  phb  tv  reg
 #&gt;   1   2  hgt  wgt  bmi  hc  gen  phb  tv  reg
@@ -336,36 +340,55 @@ package, as well as <code><a href='https://rdrr.io/pkg/lattice/man/xyplot.html'>
 #&gt;   1   4  hgt  wgt  bmi  hc  gen  phb  tv  reg
 #&gt;   1   5  hgt  wgt  bmi  hc  gen  phb  tv  reg</div><div class='input'>
 <span class='co'>### stripplot, all numerical variables</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>stripplot</span>(<span class='no'>imp</span>)
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>stripplot</span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'>### same, but with improved display</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>stripplot</span>(<span class='no'>imp</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"grey"</span>,<span class='fu'><a href='mdc.html'>mdc</a></span>(<span class='fl'>2</span>)),<span class='kw'>pch</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>20</span>))
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>stripplot</span><span class='op'>(</span><span class='va'>imp</span>, col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"grey"</span>, <span class='fu'><a href='mdc.html'>mdc</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>, pch <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'>### distribution per imputation of height, weight and bmi</span>
 <span class='co'>### labeled by their own missingness</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>stripplot</span>(<span class='no'>imp</span>, <span class='no'>hgt</span>+<span class='no'>wgt</span>+<span class='no'>bmi</span>~<span class='no'>.imp</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>), <span class='kw'>pch</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>20</span>),<span class='kw'>jitter</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
-<span class='kw'>layout</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>1</span>))
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>stripplot</span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>hgt</span> <span class='op'>+</span> <span class='va'>wgt</span> <span class='op'>+</span> <span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>.imp</span>,
+  cex <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>4</span><span class='op'>)</span>, pch <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>20</span><span class='op'>)</span>, jitter <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  layout <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'>### same, but labeled with the missingness of wgt (just four cases)</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>stripplot</span>(<span class='no'>imp</span>, <span class='no'>hgt</span>+<span class='no'>wgt</span>+<span class='no'>bmi</span>~<span class='no'>.imp</span>, <span class='kw'>na</span><span class='kw'>=</span><span class='no'>wgt</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>), <span class='kw'>pch</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>20</span>),<span class='kw'>jitter</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
-<span class='kw'>layout</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>1</span>))
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>stripplot</span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>hgt</span> <span class='op'>+</span> <span class='va'>wgt</span> <span class='op'>+</span> <span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>.imp</span>,
+  na <span class='op'>=</span> <span class='va'>wgt</span>, cex <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>4</span><span class='op'>)</span>, pch <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>20</span><span class='op'>)</span>, jitter <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  layout <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'>### distribution of age and height, labeled by missingness in height</span>
-<span class='co'>### most height values are missing for those around </span>
+<span class='co'>### most height values are missing for those around</span>
 <span class='co'>### the age of two years</span>
 <span class='co'>### some additional missings occur in region WEST</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>stripplot</span>(<span class='no'>imp</span>, <span class='no'>age</span> + <span class='no'>hgt</span> ~ <span class='no'>.imp</span> <span class='kw'>|</span> <span class='no'>reg</span>, <span class='no'>hgt</span>,
- <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/hcl.html'>hcl</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>40</span>, <span class='fl'>0.2</span>), <span class='fu'><a href='mdc.html'>mdc</a></span>(<span class='fl'>2</span>)), <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>20</span>))
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>stripplot</span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hgt</span> <span class='op'>~</span> <span class='va'>.imp</span> <span class='op'>|</span> <span class='va'>reg</span>, <span class='va'>hgt</span>,
+  col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'>grDevices</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/hcl.html'>hcl</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>40</span>, <span class='fl'>0.2</span><span class='op'>)</span>, <span class='fu'><a href='mdc.html'>mdc</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>, pch <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>20</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'>### heavily jitted relation between two categorical variables</span>
 <span class='co'>### labeled by missingness of gen</span>
 <span class='co'>### aggregated over all imputed data sets</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>stripplot</span>(<span class='no'>imp</span>, <span class='no'>gen</span>~<span class='no'>phb</span>, <span class='kw'>factor</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>cex</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>8</span>,<span class='fl'>1</span>), <span class='kw'>hor</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>stripplot</span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>gen</span> <span class='op'>~</span> <span class='va'>phb</span>, factor <span class='op'>=</span> <span class='fl'>2</span>, cex <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>8</span>, <span class='fl'>1</span><span class='op'>)</span>, hor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'>### circle fun</span>
-<span class='fu'>stripplot</span>(<span class='no'>imp</span>, <span class='no'>gen</span>~<span class='no'>.imp</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='no'>wgt</span>, <span class='kw'>factor</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>8.6</span>),
-         <span class='kw'>hor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>outer</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>scales</span> <span class='kw'>=</span> <span class='st'>"free"</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>19</span>))</div><div class='img'><img src='stripplot.mids-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+<span class='fu'>stripplot</span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>gen</span> <span class='op'>~</span> <span class='va'>.imp</span>,
+  na <span class='op'>=</span> <span class='va'>wgt</span>, factor <span class='op'>=</span> <span class='fl'>2</span>, cex <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>8.6</span><span class='op'>)</span>,
+  hor <span class='op'>=</span> <span class='cn'>FALSE</span>, outer <span class='op'>=</span> <span class='cn'>TRUE</span>, scales <span class='op'>=</span> <span class='st'>"free"</span>, pch <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>19</span><span class='op'>)</span>
+<span class='op'>)</span>
+</div><div class='img'><img src='stripplot.mids-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -381,7 +404,7 @@ package, as well as <code><a href='https://rdrr.io/pkg/lattice/man/xyplot.html'>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

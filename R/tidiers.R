@@ -31,26 +31,29 @@ generics::glance
 #'      \item conf.high (if called with conf.int = TRUE)
 #' }
 tidy.mipo <- function(x, conf.int = FALSE, conf.level = .95, ...) {
-    
-    out <- summary(x, type = 'all', 
-                   conf.int = conf.int, conf.level = conf.level)
-    out$term <- as.character(out$term)
-    
-    # needed for broom <= 0.5.6
-    # rename variables if present
-    idx <- grepl("%", names(out))
-    names(out)[idx] <- c("conf.low", "conf.high")
-    idx <- names(out) == 't'
-    names(out)[idx] <- 'statistic'
-    
-    # order columns
-    cols_a <- c('term', 'estimate', 'std.error', 'statistic', 'p.value',
-                'conf.low', 'conf.high')
-    cols_a <- base::intersect(cols_a, colnames(out))
-    cols_b <- sort(base::setdiff(colnames(out), cols_a))
-    out <- out[, c(cols_a, cols_b)]
-    
-    return(out)
+  out <- summary(x,
+    type = "all",
+    conf.int = conf.int, 
+    conf.level = conf.level,
+    ...
+  )
+  out$term <- as.character(out$term)
+
+  # needed for broom <= 0.5.6
+  # rename variables if present
+  idx <- grepl("%", names(out))
+  names(out)[idx] <- c("conf.low", "conf.high")
+  idx <- names(out) == "t"
+  names(out)[idx] <- "statistic"
+
+  # order columns
+  cols_a <- c(
+    "term", "estimate", "std.error", "statistic", "p.value",
+    "conf.low", "conf.high"
+  )
+  cols_a <- base::intersect(cols_a, colnames(out))
+  cols_b <- sort(base::setdiff(colnames(out), cols_a))
+  out[, c(cols_a, cols_b)]
 }
 
 #' Glance method to extract information from a `mipo` object
@@ -67,16 +70,18 @@ tidy.mipo <- function(x, conf.int = FALSE, conf.level = .95, ...) {
 #' @keywords internal
 #' @family tidiers
 glance.mipo <- function(x, ...) {
-    
-    out <- data.frame(nimp = nrow(x$glanced))
-    out$nobs <- tryCatch(x$glanced$nobs[1],
-                         error = function(e) NULL)
+  out <- data.frame(nimp = nrow(x$glanced))
+  out$nobs <- tryCatch(x$glanced$nobs[1],
+    error = function(e) NULL
+  )
 
-    # R2 in lm models
-    out$r.squared <- tryCatch(pool.r.squared(x, adjusted = FALSE)[1],
-                              error = function(e) NULL)
-    out$adj.r.squared <- tryCatch(pool.r.squared(x, adjusted = TRUE)[1],
-                                  error = function(e) NULL)
-    
-    return(out)
+  # R2 in lm models
+  out$r.squared <- tryCatch(pool.r.squared(x, adjusted = FALSE)[1],
+    error = function(e) NULL
+  )
+  out$adj.r.squared <- tryCatch(pool.r.squared(x, adjusted = TRUE)[1],
+    error = function(e) NULL
+  )
+
+  out
 }

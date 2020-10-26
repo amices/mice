@@ -15,7 +15,7 @@ include all columns in the calculations.}
 }
 \value{
 A data frame with \code{ncol(data)} rows and six columns:
-pobs = Proportion observed, 
+pobs = Proportion observed,
 influx = Influx
 outflux = Outflux
 ainb = Average inbound statistic
@@ -28,7 +28,7 @@ statistics are useful in selecting predictors that should go into the
 imputation model.
 }
 \details{
-Infux and outflux have been proposed by Van Buuren (2012), chapter 4.
+Infux and outflux have been proposed by Van Buuren (2018), chapter 4.
 
 Influx is equal to the number of variable pairs \code{(Yj , Yk)} with
 \code{Yj} missing and \code{Yk} observed, divided by the total number of
@@ -52,7 +52,7 @@ FICO is an outbound statistic defined by the fraction of incomplete cases
 among cases with \code{Yj} observed (White and Carlin, 2010).
 }
 \references{
-Van Buuren, S. (2018). 
+Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 

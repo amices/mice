@@ -46,8 +46,8 @@
 
 
 <meta property="og:title" content="Wrapper function that runs MICE in parallel — parlmice" />
-<meta property="og:description" content="This is a wrapper function for mice, using multiple cores to 
-execute mice in parallel. As a result, the imputation 
+<meta property="og:description" content="This is a wrapper function for mice, using multiple cores to
+execute mice in parallel. As a result, the imputation
 procedure can be sped up, which may be useful in general." />
 
 
@@ -80,7 +80,7 @@ procedure can be sped up, which may be useful in general." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -101,7 +101,7 @@ procedure can be sped up, which may be useful in general." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -126,33 +126,33 @@ procedure can be sped up, which may be useful in general." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Wrapper function that runs MICE in parallel</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/parlmice.R'><code>R/parlmice.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/parlmice.R'><code>R/parlmice.R</code></a></small>
     <div class="hidden name"><code>parlmice.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This is a wrapper function for <code><a href='mice.html'>mice</a></code>, using multiple cores to 
-execute <code><a href='mice.html'>mice</a></code> in parallel. As a result, the imputation 
+    <p>This is a wrapper function for <code><a href='mice.html'>mice</a></code>, using multiple cores to
+execute <code><a href='mice.html'>mice</a></code> in parallel. As a result, the imputation
 procedure can be sped up, which may be useful in general.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>parlmice</span>(
-  <span class='no'>data</span>,
-  <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>cluster.seed</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>n.core</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>n.imp.core</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cl.type</span> <span class='kw'>=</span> <span class='st'>"PSOCK"</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>parlmice</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  m <span class='op'>=</span> <span class='fl'>5</span>,
+  seed <span class='op'>=</span> <span class='cn'>NA</span>,
+  cluster.seed <span class='op'>=</span> <span class='cn'>NA</span>,
+  n.core <span class='op'>=</span> <span class='cn'>NULL</span>,
+  n.imp.core <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cl.type <span class='op'>=</span> <span class='st'>"PSOCK"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A data frame or matrix containing the incomplete data. Similar to 
+      <td><p>A data frame or matrix containing the incomplete data. Similar to
 the first argument of <code><a href='mice.html'>mice</a></code>.</p></td>
     </tr>
     <tr>
@@ -161,14 +161,14 @@ the first argument of <code><a href='mice.html'>mice</a></code>.</p></td>
     </tr>
     <tr>
       <th>seed</th>
-      <td><p>A scalar to be used as the seed value for the mice algorithm within 
-each parallel stream. Please note that the imputations will be the same for all 
-streams and, hence, this should be used if and only if <code>n.core = 1</code> and 
+      <td><p>A scalar to be used as the seed value for the mice algorithm within
+each parallel stream. Please note that the imputations will be the same for all
+streams and, hence, this should be used if and only if <code>n.core = 1</code> and
 if it is desired to obtain the same output as under <code>mice</code>.</p></td>
     </tr>
     <tr>
       <th>cluster.seed</th>
-      <td><p>A scalar to be used as the seed value. It is recommended to put the 
+      <td><p>A scalar to be used as the seed value. It is recommended to put the
 seed value here and not outside this function, as otherwise the parallel processes
 will be performed with separate, random seeds.</p></td>
     </tr>
@@ -197,44 +197,49 @@ generally benefit from much faster cluster computation if <code>type</code> is s
     <p>A mids object as defined by <code><a href='mids-class.html'>mids-class</a></code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function relies on package <code>parallel</code>, which is a base
-package for R versions 2.14.0 and later. We have chosen to use parallel function 
+    <p>This function relies on package <code><a href='https://rdrr.io/pkg/lattice/man/splom.html'>parallel</a></code>, which is a base
+package for R versions 2.14.0 and later. We have chosen to use parallel function
 <code>parLapply</code> to allow the use of <code>parlmice</code> on Mac, Linux and Windows
 systems. For the same reason, we use the Parallel Socket Cluster (PSOCK) type by default.</p>
-<p>On systems other than Windows, it can be hugely beneficial to change the cluster type to 
-<code>FORK</code>, as it generally results in improved memory handling. When memory issues 
-arise on a Windows system, we advise to store the multiply imputed datasets, 
-clean the memory by using <code><a href='https://rdrr.io/r/base/rm.html'>rm</a></code> and <code><a href='https://rdrr.io/r/base/gc.html'>gc</a></code> and make another 
+<p>On systems other than Windows, it can be hugely beneficial to change the cluster type to
+<code>FORK</code>, as it generally results in improved memory handling. When memory issues
+arise on a Windows system, we advise to store the multiply imputed datasets,
+clean the memory by using <code><a href='https://rdrr.io/r/base/rm.html'>rm</a></code> and <code><a href='https://rdrr.io/r/base/gc.html'>gc</a></code> and make another
 run using the same settings.</p>
 <p>This wrapper function combines the output of <code>parLapply</code> with
 function <code><a href='ibind.html'>ibind</a></code> in <code><a href='mice.html'>mice</a></code>. A <code>mids</code> object is returned
 and can be used for further analyses.</p>
 <p>Note that if a seed value is desired, the seed should be entered to this function
-with argument <code>seed</code>. Seed values outside the wrapper function (in an 
-R-script or passed to <code><a href='mice.html'>mice</a></code>) will not result to reproducible results. 
-We refer to the manual of <code>parallel</code> for an explanation on this matter.</p>
+with argument <code>seed</code>. Seed values outside the wrapper function (in an
+R-script or passed to <code><a href='mice.html'>mice</a></code>) will not result to reproducible results.
+We refer to the manual of <code><a href='https://rdrr.io/pkg/lattice/man/splom.html'>parallel</a></code> for an explanation on this matter.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Schouten, R. and Vink, G. (2017). parlmice: faster, paraleller, micer. 
+    <p>Schouten, R. and Vink, G. (2017). parlmice: faster, paraleller, micer.
 <a href='https://gerkovink.github.io/parlMICE/Vignette_parlMICE.html'>https://gerkovink.github.io/parlMICE/Vignette_parlMICE.html</a></p>
-<p>#'Van Buuren, S. (2018). 
+<p>#'Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/parallel-computation.html'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>parallel</code>, <code>parLapply</code>, <code>makeCluster</code>,
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/lattice/man/splom.html'>parallel</a></code>, <code>parLapply</code>, <code>makeCluster</code>,
 <code><a href='mice.html'>mice</a></code>, <code><a href='mids-class.html'>mids-class</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Gerko Vink, Rianne Schouten</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># 150 imputations in dataset nhanes, performed by 3 cores  </span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>imp1</span> <span class='kw'>&lt;-</span> <span class='fu'>parlmice</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>nhanes</span>, <span class='kw'>n.core</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.imp.core</span> <span class='kw'>=</span> <span class='fl'>50</span>)
-<span class='co'># Making use of arguments in mice. </span>
-<span class='no'>imp2</span> <span class='kw'>&lt;-</span> <span class='fu'>parlmice</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>nhanes</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"norm.nob"</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='no'>imp2</span>$<span class='no'>method</span>
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp2</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>bmi</span> ~ <span class='no'>hyp</span>))
-<span class='fu'><a href='pool.html'>pool</a></span>(<span class='no'>fit</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># 150 imputations in dataset nhanes, performed by 3 cores</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>imp1</span> <span class='op'>&lt;-</span> <span class='fu'>parlmice</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>nhanes</span>, n.core <span class='op'>=</span> <span class='fl'>3</span>, n.imp.core <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>
+<span class='co'># Making use of arguments in mice.</span>
+<span class='va'>imp2</span> <span class='op'>&lt;-</span> <span class='fu'>parlmice</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>nhanes</span>, method <span class='op'>=</span> <span class='st'>"norm.nob"</span>, m <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>imp2</span><span class='op'>$</span><span class='va'>method</span>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp2</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>hyp</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='pool.html'>pool</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -250,7 +255,7 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

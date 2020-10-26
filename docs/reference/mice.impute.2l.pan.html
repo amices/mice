@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Imputation by a two-level normal model using <code>pan</code> — mice.impute.2l.pan • mice</title>
+<title>Imputation by a two-level normal model using pan — mice.impute.2l.pan • mice</title>
 
 
 <!-- jquery -->
@@ -45,7 +45,7 @@
 
 
 
-<meta property="og:title" content="Imputation by a two-level normal model using <code>pan</code> — mice.impute.2l.pan" />
+<meta property="og:title" content="Imputation by a two-level normal model using pan — mice.impute.2l.pan" />
 <meta property="og:description" content="Imputes univariate missing data using a two-level normal model with
 homogeneous within group variances. Aggregated group effects (i.e. group
 means) can be automatically created and included as predictors in the
@@ -82,7 +82,7 @@ pan package." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -103,7 +103,7 @@ pan package." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -128,7 +128,7 @@ pan package." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Imputation by a two-level normal model using <code>pan</code></h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/mice.impute.2l.pan.R'><code>R/mice.impute.2l.pan.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/mice.impute.2l.pan.R'><code>R/mice.impute.2l.pan.R</code></a></small>
     <div class="hidden name"><code>mice.impute.2l.pan.Rd</code></div>
     </div>
 
@@ -140,16 +140,16 @@ two-level regression (see argument <code>type</code>). This function needs the
 <code>pan</code> package.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mice.impute.2l.pan</span>(
-  <span class='no'>y</span>,
-  <span class='no'>ry</span>,
-  <span class='no'>x</span>,
-  <span class='no'>type</span>,
-  <span class='kw'>intercept</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>paniter</span> <span class='kw'>=</span> <span class='fl'>500</span>,
-  <span class='kw'>groupcenter.slope</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>mice.impute.2l.pan</span><span class='op'>(</span>
+  <span class='va'>y</span>,
+  <span class='va'>ry</span>,
+  <span class='va'>x</span>,
+  <span class='va'>type</span>,
+  intercept <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  paniter <span class='op'>=</span> <span class='fl'>500</span>,
+  groupcenter.slope <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -210,8 +210,8 @@ The random intercept is automatically added in <!-- % -->
 <code><a href='mice.impute.2l.norm.html'>mice.impute.2l.norm()</a></code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>This function does not implement the <code>where</code> functionality. It 
-always produces <code>nmis</code> imputation, irrespective of the <code>where</code> 
+    <p>This function does not implement the <code>where</code> functionality. It
+always produces <code>nmis</code> imputation, irrespective of the <code>where</code>
 argument of the <code>mice</code> function.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -227,91 +227,97 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
 <code><a href='mice.impute.2l.bin.html'>mice.impute.2l.bin</a>()</code>,
 <code><a href='mice.impute.2l.lmer.html'>mice.impute.2l.lmer</a>()</code>,
 <code><a href='mice.impute.2l.norm.html'>mice.impute.2l.norm</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alexander Robitzsch (IPN - Leibniz Institute for Science and
+Mathematics Education, Kiel, Germany), <a href='mailto:robitzsch@ipn.uni-kiel.de'>robitzsch@ipn.uni-kiel.de</a></p>
+<p>Alexander Robitzsch (IPN - Leibniz Institute for Science and
+Mathematics Education, Kiel, Germany), <a href='mailto:robitzsch@ipn.uni-kiel.de'>robitzsch@ipn.uni-kiel.de</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>###################################</span>
-<span class='co'># simulate some data</span>
+    <pre class="examples"><div class='input'><span class='co'># simulate some data</span>
 <span class='co'># two-level regression model with fixed slope</span>
 
 <span class='co'># number of groups</span>
-<span class='no'>G</span> <span class='kw'>&lt;-</span> <span class='fl'>250</span>
+<span class='va'>G</span> <span class='op'>&lt;-</span> <span class='fl'>250</span>
 <span class='co'># number of persons</span>
-<span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>20</span>
+<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>20</span>
 <span class='co'># regression parameter</span>
-<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fl'>.3</span>
+<span class='va'>beta</span> <span class='op'>&lt;-</span> <span class='fl'>.3</span>
 <span class='co'># intraclass correlation</span>
-<span class='no'>rho</span> <span class='kw'>&lt;-</span> <span class='fl'>.30</span>
+<span class='va'>rho</span> <span class='op'>&lt;-</span> <span class='fl'>.30</span>
 <span class='co'># correlation with missing response</span>
-<span class='no'>rho.miss</span> <span class='kw'>&lt;-</span> <span class='fl'>.10</span>
+<span class='va'>rho.miss</span> <span class='op'>&lt;-</span> <span class='fl'>.10</span>
 <span class='co'># missing proportion</span>
-<span class='no'>missrate</span> <span class='kw'>&lt;-</span> <span class='fl'>.50</span>
-<span class='no'>y1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>( <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>( <span class='no'>G</span> , <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>( <span class='no'>rho</span> ) ) , <span class='kw'>each</span><span class='kw'>=</span><span class='no'>n</span> ) + <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>G</span>*<span class='no'>n</span> , <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>( <span class='fl'>1</span> - <span class='no'>rho</span> ))
-<span class='no'>x</span> <span class='kw'>&lt;-</span>  <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>( <span class='no'>G</span>*<span class='no'>n</span> )
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='no'>y1</span> + <span class='no'>beta</span>  * <span class='no'>x</span>
-<span class='no'>dfr0</span> <span class='kw'>&lt;-</span> <span class='no'>dfr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>( <span class='st'>"group"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>:<span class='no'>G</span> , <span class='kw'>each</span><span class='kw'>=</span><span class='no'>n</span> ) , <span class='st'>"x"</span> <span class='kw'>=</span> <span class='no'>x</span> , <span class='st'>"y"</span> <span class='kw'>=</span> <span class='no'>y</span> )
-<span class='no'>dfr</span>[ <span class='no'>rho.miss</span> * <span class='no'>x</span> + <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>( <span class='no'>G</span>*<span class='no'>n</span> , <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>( <span class='fl'>1</span> - <span class='no'>rho.miss</span> ) ) <span class='kw'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span>( <span class='no'>missrate</span> ) , <span class='st'>"y"</span> ] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='va'>missrate</span> <span class='op'>&lt;-</span> <span class='fl'>.50</span>
+<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>G</span>, sd <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>rho</span><span class='op'>)</span><span class='op'>)</span>, each <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>G</span> <span class='op'>*</span> <span class='va'>n</span>, sd <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>rho</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>G</span> <span class='op'>*</span> <span class='va'>n</span><span class='op'>)</span>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>y1</span> <span class='op'>+</span> <span class='va'>beta</span> <span class='op'>*</span> <span class='va'>x</span>
+<span class='va'>dfr0</span> <span class='op'>&lt;-</span> <span class='va'>dfr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='st'>"group"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>G</span>, each <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span>, <span class='st'>"x"</span> <span class='op'>=</span> <span class='va'>x</span>, <span class='st'>"y"</span> <span class='op'>=</span> <span class='va'>y</span><span class='op'>)</span>
+<span class='va'>dfr</span><span class='op'>[</span><span class='va'>rho.miss</span> <span class='op'>*</span> <span class='va'>x</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>G</span> <span class='op'>*</span> <span class='va'>n</span>, sd <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>rho.miss</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span><span class='op'>(</span><span class='va'>missrate</span><span class='op'>)</span>, <span class='st'>"y"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
 
-<span class='co'>#.....</span>
 <span class='co'># empty imputation in mice</span>
-<span class='no'>imp0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='no'>dfr</span>)  , <span class='kw'>maxit</span><span class='kw'>=</span><span class='fl'>0</span> )
-<span class='no'>predM</span> <span class='kw'>&lt;-</span> <span class='no'>imp0</span>$<span class='no'>predictorMatrix</span>
-<span class='no'>impM</span> <span class='kw'>&lt;-</span> <span class='no'>imp0</span>$<span class='no'>method</span>
+<span class='va'>imp0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>)</span>, maxit <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>predM</span> <span class='op'>&lt;-</span> <span class='va'>imp0</span><span class='op'>$</span><span class='va'>predictorMatrix</span>
+<span class='va'>impM</span> <span class='op'>&lt;-</span> <span class='va'>imp0</span><span class='op'>$</span><span class='va'>method</span>
 
-<span class='co'>#...</span>
 <span class='co'># specify predictor matrix and method</span>
-<span class='no'>predM1</span> <span class='kw'>&lt;-</span> <span class='no'>predM</span>
-<span class='no'>predM1</span>[<span class='st'>"y"</span>,<span class='st'>"group"</span>] <span class='kw'>&lt;-</span> -<span class='fl'>2</span>
-<span class='no'>predM1</span>[<span class='st'>"y"</span>,<span class='st'>"x"</span>] <span class='kw'>&lt;-</span> <span class='fl'>1</span>        <span class='co'># fixed x effects imputation</span>
-<span class='no'>impM1</span> <span class='kw'>&lt;-</span> <span class='no'>impM</span>
-<span class='no'>impM1</span>[<span class='st'>"y"</span>] <span class='kw'>&lt;-</span> <span class='st'>"2l.pan"</span>
+<span class='va'>predM1</span> <span class='op'>&lt;-</span> <span class='va'>predM</span>
+<span class='va'>predM1</span><span class='op'>[</span><span class='st'>"y"</span>, <span class='st'>"group"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fl'>2</span>
+<span class='va'>predM1</span><span class='op'>[</span><span class='st'>"y"</span>, <span class='st'>"x"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='co'># fixed x effects imputation</span>
+<span class='va'>impM1</span> <span class='op'>&lt;-</span> <span class='va'>impM</span>
+<span class='va'>impM1</span><span class='op'>[</span><span class='st'>"y"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"2l.pan"</span>
 
 <span class='co'># multilevel imputation</span>
-<span class='no'>imp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>( <span class='no'>dfr</span> ) , <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>1</span> , <span class='kw'>predictorMatrix</span> <span class='kw'>=</span> <span class='no'>predM1</span> ,
-           <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>impM1</span> , <span class='kw'>maxit</span><span class='kw'>=</span><span class='fl'>1</span> )</div><div class='output co'>#&gt; 
+<span class='va'>imp1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>)</span>,
+  m <span class='op'>=</span> <span class='fl'>1</span>, predictorMatrix <span class='op'>=</span> <span class='va'>predM1</span>,
+  method <span class='op'>=</span> <span class='va'>impM1</span>, maxit <span class='op'>=</span> <span class='fl'>1</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
-#&gt;   1   1  y</div><div class='input'><span class='co'># multilevel analysis</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lme4</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt;   1   1  y</div><div class='input'>
+<span class='co'># multilevel analysis</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/lme4/lme4/'>lme4</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘Matrix’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:tidyr’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    expand, pack, unpack</span></div><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>( <span class='no'>y</span> ~ ( <span class='fl'>1</span> + <span class='no'>x</span> <span class='kw'>|</span> <span class='no'>group</span>) + <span class='no'>x</span> , <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>imp1</span>) )
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt; Linear mixed model fit by REML ['lmerMod']
+#&gt; <span class='message'>    expand, pack, unpack</span></div><div class='input'><span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>x</span> <span class='op'>|</span> <span class='va'>group</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>x</span>, data <span class='op'>=</span> <span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Linear mixed model fit by REML ['lmerMod']
 #&gt; Formula: y ~ (1 + x | group) + x
 #&gt;    Data: complete(imp1)
 #&gt; 
-#&gt; REML criterion at convergence: 12906.2
+#&gt; REML criterion at convergence: 13103.7
 #&gt; 
 #&gt; Scaled residuals: 
 #&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -3.7977 -0.6605 -0.0136  0.6442  3.4518 
+#&gt; -3.0023 -0.6503  0.0032  0.6613  3.5793 
 #&gt; 
 #&gt; Random effects:
 #&gt;  Groups   Name        Variance Std.Dev. Corr
-#&gt;  group    (Intercept) 0.307461 0.5545       
-#&gt;           x           0.007073 0.0841   0.04
-#&gt;  Residual             0.682193 0.8259       
+#&gt;  group    (Intercept) 0.31478  0.56105      
+#&gt;           x           0.00236  0.04858  0.33
+#&gt;  Residual             0.71466  0.84537      
 #&gt; Number of obs: 5000, groups:  group, 250
 #&gt; 
 #&gt; Fixed effects:
-#&gt;             Estimate Std. Error t value
-#&gt; (Intercept) -0.00201    0.03698  -0.054
-#&gt; x            0.26392    0.01336  19.753
+#&gt;              Estimate Std. Error t value
+#&gt; (Intercept) -0.007008   0.037449  -0.187
+#&gt; x            0.227451   0.012765  17.818
 #&gt; 
 #&gt; Correlation of Fixed Effects:
 #&gt;   (Intr)
-#&gt; x 0.015 </div><div class='input'>
-############################################
-# Examples of predictorMatrix specification
+#&gt; x 0.074 </div><div class='input'>
+<span class='co'># Examples of predictorMatrix specification</span>
 
-# random x effects
-# predM1["y","x"] &lt;- 2
+<span class='co'># random x effects</span>
+<span class='co'># predM1["y","x"] &lt;- 2</span>
 
-# fixed x effects and group mean of x
-# predM1["y","x"] &lt;- 3        
+<span class='co'># fixed x effects and group mean of x</span>
+<span class='co'># predM1["y","x"] &lt;- 3</span>
 
-# random x effects and group mean of x
-# predM1["y","x"] &lt;- 4        
-
+<span class='co'># random x effects and group mean of x</span>
+<span class='co'># predM1["y","x"] &lt;- 4</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -328,7 +334,7 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

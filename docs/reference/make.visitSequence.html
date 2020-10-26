@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Creates a <code>visitSequence</code> argument — make.visitSequence • mice</title>
+<title>Creates a visitSequence argument — make.visitSequence • mice</title>
 
 
 <!-- jquery -->
@@ -45,9 +45,9 @@
 
 
 
-<meta property="og:title" content="Creates a <code>visitSequence</code> argument — make.visitSequence" />
-<meta property="og:description" content="This helper function creates a valid visitSequence. The 
-visitSequence is an argument to the mice function that 
+<meta property="og:title" content="Creates a visitSequence argument — make.visitSequence" />
+<meta property="og:description" content="This helper function creates a valid visitSequence. The
+visitSequence is an argument to the mice function that
 specifies the sequence in which blocks are imputed." />
 
 
@@ -80,7 +80,7 @@ specifies the sequence in which blocks are imputed." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -101,7 +101,7 @@ specifies the sequence in which blocks are imputed." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -126,17 +126,17 @@ specifies the sequence in which blocks are imputed." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Creates a <code>visitSequence</code> argument</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/visitSequence.R'><code>R/visitSequence.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/visitSequence.R'><code>R/visitSequence.R</code></a></small>
     <div class="hidden name"><code>make.visitSequence.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This helper function creates a valid <code>visitSequence</code>. The 
-<code>visitSequence</code> is an argument to the <code>mice</code> function that 
+    <p>This helper function creates a valid <code>visitSequence</code>. The
+<code>visitSequence</code> is an argument to the <code>mice</code> function that
 specifies the sequence in which blocks are imputed.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>make.visitSequence</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>blocks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>make.visitSequence</span><span class='op'>(</span>data <span class='op'>=</span> <span class='cn'>NULL</span>, blocks <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,16 +148,16 @@ values are coded as <code>NA</code>.</p></td>
     </tr>
     <tr>
       <th>blocks</th>
-      <td><p>List of vectors with variable names per block. List elements 
-may be named to identify blocks. Variables within a block are 
+      <td><p>List of vectors with variable names per block. List elements
+may be named to identify blocks. Variables within a block are
 imputed by a multivariate imputation method
-(see <code>method</code> argument). By default each variable is placed 
+(see <code>method</code> argument). By default each variable is placed
 into its own block, which is effectively
-fully conditional specification (FCS) by univariate models 
-(variable-by-variable imputation). Only variables whose names appear in 
-<code>blocks</code> are imputed. The relevant columns in the <code>where</code> 
-matrix are set to <code>FALSE</code> of variables that are not block members. 
-A variable may appear in multiple blocks. In that case, it is 
+fully conditional specification (FCS) by univariate models
+(variable-by-variable imputation). Only variables whose names appear in
+<code>blocks</code> are imputed. The relevant columns in the <code>where</code>
+matrix are set to <code>FALSE</code> of variables that are not block members.
+A variable may appear in multiple blocks. In that case, it is
 effectively re-imputed each time that it is visited.</p></td>
     </tr>
     </table>
@@ -170,7 +170,8 @@ effectively re-imputed each time that it is visited.</p></td>
     <div class='dont-index'><p><code><a href='mice.html'>mice</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>make.visitSequence</span>(<span class='no'>nhanes</span>)</div><div class='output co'>#&gt; [1] "age" "bmi" "hyp" "chl"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>make.visitSequence</span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "age" "bmi" "hyp" "chl"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -186,7 +187,7 @@ effectively re-imputed each time that it is visited.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

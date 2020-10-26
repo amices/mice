@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Combine R Objects by Rows and Columns — cbind • mice</title>
+<title>Combine R objects by rows and columns — cbind • mice</title>
 
 
 <!-- jquery -->
@@ -45,10 +45,10 @@
 
 
 
-<meta property="og:title" content="Combine R Objects by Rows and Columns — cbind" />
-<meta property="og:description" content="Functions cbind() and rbind() are defined in 
-the mice package in order to 
-enable dispatch to cbind.mids() and rbind.mids() 
+<meta property="og:title" content="Combine R objects by rows and columns — cbind" />
+<meta property="og:description" content="Functions cbind() and rbind() are defined in
+the mice package in order to
+enable dispatch to cbind.mids() and rbind.mids()
 when one of the arguments is a data.frame." />
 
 
@@ -81,7 +81,7 @@ when one of the arguments is a data.frame." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@ when one of the arguments is a data.frame." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -126,21 +126,21 @@ when one of the arguments is a data.frame." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Combine R Objects by Rows and Columns</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/generics.R'><code>R/generics.R</code></a></small>
+    <h1>Combine R objects by rows and columns</h1>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/generics.R'><code>R/generics.R</code></a></small>
     <div class="hidden name"><code>cbind.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Functions <code>cbind()</code> and <code>rbind()</code> are defined in 
-the <code>mice</code> package in order to 
-enable dispatch to <code><a href='cbind.mids.html'>cbind.mids()</a></code> and <code><a href='rbind.mids.html'>rbind.mids()</a></code> 
+    <p>Functions <code>cbind()</code> and <code>rbind()</code> are defined in
+the <code>mice</code> package in order to
+enable dispatch to <code><a href='cbind.mids.html'>cbind.mids()</a></code> and <code><a href='rbind.mids.html'>rbind.mids()</a></code>
 when one of the arguments is a <code>data.frame</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cbind</span>(<span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>cbind</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>rbind</span>(<span class='no'>...</span>)</pre>
+<span class='fu'>rbind</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,19 +158,19 @@ when one of the arguments is a <code>data.frame</code>.</p>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The standard <code><a href='https://rdrr.io/r/base/cbind.html'>base::cbind()</a></code> and <code><a href='https://rdrr.io/r/base/cbind.html'>base::rbind()</a></code> 
-always dispatch to 
+    <p>The standard <code><a href='https://rdrr.io/r/base/cbind.html'>base::cbind()</a></code> and <code><a href='https://rdrr.io/r/base/cbind.html'>base::rbind()</a></code>
+always dispatch to
 <code><a href='https://rdrr.io/r/base/cbind.html'>base::cbind.data.frame()</a></code> or <code><a href='https://rdrr.io/r/base/cbind.html'>base::rbind.data.frame()</a></code>
-if one of the arguments is a 
-<code>data.frame</code>. The versions defined in the <code>mice</code> 
+if one of the arguments is a
+<code>data.frame</code>. The versions defined in the <code>mice</code>
 package intercept the user command
 and test whether the first argument has class <code>"mids"</code>. If so,
-function calls <code><a href='cbind.mids.html'>cbind.mids()</a></code>, respectively <code><a href='rbind.mids.html'>rbind.mids()</a></code>. In 
+function calls <code><a href='cbind.mids.html'>cbind.mids()</a></code>, respectively <code><a href='rbind.mids.html'>rbind.mids()</a></code>. In
 all other cases, the call is forwarded to standard functions in the
 <code>base</code> package.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></code>, <code><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></code>, 
+    <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></code>, <code><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></code>,
 <code><a href='cbind.mids.html'>cbind.mids</a></code>, <code><a href='rbind.mids.html'>rbind.mids</a></code></p></div>
 
   </div>
@@ -188,7 +188,7 @@ all other cases, the call is forwarded to standard functions in the
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

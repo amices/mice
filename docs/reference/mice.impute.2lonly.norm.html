@@ -81,7 +81,7 @@ predictorMatrix." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@ predictorMatrix." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -127,7 +127,7 @@ predictorMatrix." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Imputation at level 2 by Bayesian linear regression</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/mice.impute.2lonly.norm.R'><code>R/mice.impute.2lonly.norm.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/mice.impute.2lonly.norm.R'><code>R/mice.impute.2lonly.norm.R</code></a></small>
     <div class="hidden name"><code>mice.impute.2lonly.norm.Rd</code></div>
     </div>
 
@@ -138,7 +138,7 @@ identifier at level 2 must be indicated by <code>type = -2</code> in the
 <code>predictorMatrix</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mice.impute.2lonly.norm</span>(<span class='no'>y</span>, <span class='no'>ry</span>, <span class='no'>x</span>, <span class='no'>type</span>, <span class='kw'>wy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>mice.impute.2lonly.norm</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, <span class='va'>type</span>, wy <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,14 +149,14 @@ identifier at level 2 must be indicated by <code>type = -2</code> in the
     </tr>
     <tr>
       <th>ry</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the 
-the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation 
-model is fitted. The <code>ry</code> generally distinguishes the observed 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the
+the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation
+model is fitted. The <code>ry</code> generally distinguishes the observed
 (<code>TRUE</code>) and missing values (<code>FALSE</code>) in <code>y</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for 
+      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for
 <code>y</code>. Matrix <code>x</code> may have no missing values.</p></td>
     </tr>
     <tr>
@@ -166,7 +166,7 @@ specified by '1'.</p></td>
     </tr>
     <tr>
       <th>wy</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value
 indicates locations in <code>y</code> for which imputations are created.</p></td>
     </tr>
     <tr>
@@ -183,15 +183,15 @@ indicates locations in <code>y</code> for which imputations are created.</p></td
     <p>This function allows in combination with <code><a href='mice.impute.2l.pan.html'>mice.impute.2l.pan</a></code>
 switching regression imputation between level 1 and level 2 as described in
 Yucel (2008) or Gelman and Hill (2007, p. 541).</p>
-<p>The function checks for partial missing level-2 data. Level-2 data 
+<p>The function checks for partial missing level-2 data. Level-2 data
 are assumed to be constant within the same cluster. If one or more
-entries are missing, then the procedure aborts with an error 
+entries are missing, then the procedure aborts with an error
 message that identifies the cluster with incomplete level-2 data.
-In such cases, one may first fill in the cluster mean (or mode) by 
+In such cases, one may first fill in the cluster mean (or mode) by
 the <code>2lonly.mean</code> method to remove inconsistencies.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>For a more general approach, see 
+    <p>For a more general approach, see
 <code><a href='https://rdrr.io/pkg/miceadds/man/mice.impute.2lonly.function.html'>miceadds::mice.impute.2lonly.function()</a></code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -201,7 +201,7 @@ University Press.</p>
 <p>Yucel, RM (2008). Multiple imputation inference for multivariate multilevel
 continuous data with ignorable non-response.  <em>Philosophical
 Transactions of the Royal Society A</em>, <b>366</b>, 2389-2404.</p>
-<p>Van Buuren, S. (2018). 
+<p>Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/sec-level2pred.html'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -212,85 +212,93 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <p>Other univariate-2lonly: 
 <code><a href='mice.impute.2lonly.mean.html'>mice.impute.2lonly.mean</a>()</code>,
 <code><a href='mice.impute.2lonly.pmm.html'>mice.impute.2lonly.pmm</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alexander Robitzsch (IPN - Leibniz Institute for Science and
+Mathematics Education, Kiel, Germany), <a href='mailto:robitzsch@ipn.uni-kiel.de'>robitzsch@ipn.uni-kiel.de</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>##################################################</span>
-<span class='co'># simulate some data</span>
+    <pre class="examples"><div class='input'><span class='co'># simulate some data</span>
 <span class='co'># x,y ... level 1 variables</span>
 <span class='co'># v,w ... level 2 variables</span>
 
-<span class='no'>G</span> <span class='kw'>&lt;-</span> <span class='fl'>250</span>            <span class='co'># number of groups</span>
-<span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>20</span>             <span class='co'># number of persons</span>
-<span class='no'>beta</span> <span class='kw'>&lt;-</span> <span class='fl'>.3</span>          <span class='co'># regression coefficient</span>
-<span class='no'>rho</span> <span class='kw'>&lt;-</span> <span class='fl'>.30</span>          <span class='co'># residual intraclass correlation</span>
-<span class='no'>rho.miss</span> <span class='kw'>&lt;-</span> <span class='fl'>.10</span>     <span class='co'># correlation with missing response</span>
-<span class='no'>missrate</span> <span class='kw'>&lt;-</span> <span class='fl'>.50</span>     <span class='co'># missing proportion</span>
-<span class='no'>y1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>( <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>( <span class='no'>G</span> , <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>( <span class='no'>rho</span> ) ) , <span class='kw'>each</span><span class='kw'>=</span><span class='no'>n</span> ) + <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>G</span>*<span class='no'>n</span> , <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>( <span class='fl'>1</span> - <span class='no'>rho</span> ))
-<span class='no'>w</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>( <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>G</span> ) , <span class='fl'>2</span> ) , <span class='kw'>each</span><span class='kw'>=</span><span class='no'>n</span> )
-<span class='no'>v</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>( <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>( <span class='no'>G</span> , <span class='fl'>0</span> , <span class='fl'>3</span> ) ) , <span class='kw'>each</span><span class='kw'>=</span><span class='no'>n</span> )
-<span class='no'>x</span> <span class='kw'>&lt;-</span>  <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>( <span class='no'>G</span>*<span class='no'>n</span> )
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='no'>y1</span> + <span class='no'>beta</span>  * <span class='no'>x</span> + <span class='fl'>.2</span> * <span class='no'>w</span> + <span class='fl'>.1</span> * <span class='no'>v</span>
-<span class='no'>dfr0</span> <span class='kw'>&lt;-</span> <span class='no'>dfr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>( <span class='st'>"group"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>:<span class='no'>G</span> , <span class='kw'>each</span><span class='kw'>=</span><span class='no'>n</span> ) , <span class='st'>"x"</span> <span class='kw'>=</span> <span class='no'>x</span> , <span class='st'>"y"</span> <span class='kw'>=</span> <span class='no'>y</span> , <span class='st'>"w"</span> <span class='kw'>=</span> <span class='no'>w</span> , <span class='st'>"v"</span> <span class='kw'>=</span> <span class='no'>v</span> )
-<span class='no'>dfr</span>[ <span class='no'>rho.miss</span> * <span class='no'>x</span> + <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>( <span class='no'>G</span>*<span class='no'>n</span> , <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>( <span class='fl'>1</span> - <span class='no'>rho.miss</span> ) ) <span class='kw'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span>( <span class='no'>missrate</span> ) , <span class='st'>"y"</span> ] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>dfr</span>[ <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>( <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>G</span>) , <span class='kw'>each</span><span class='kw'>=</span><span class='no'>n</span> ) <span class='kw'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span>( <span class='no'>missrate</span> ) , <span class='st'>"w"</span> ] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>dfr</span>[ <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>( <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>G</span>) , <span class='kw'>each</span><span class='kw'>=</span><span class='no'>n</span> ) <span class='kw'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span>( <span class='no'>missrate</span> ) , <span class='st'>"v"</span> ] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
+<span class='va'>G</span> <span class='op'>&lt;-</span> <span class='fl'>250</span> <span class='co'># number of groups</span>
+<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>20</span> <span class='co'># number of persons</span>
+<span class='va'>beta</span> <span class='op'>&lt;-</span> <span class='fl'>.3</span> <span class='co'># regression coefficient</span>
+<span class='va'>rho</span> <span class='op'>&lt;-</span> <span class='fl'>.30</span> <span class='co'># residual intraclass correlation</span>
+<span class='va'>rho.miss</span> <span class='op'>&lt;-</span> <span class='fl'>.10</span> <span class='co'># correlation with missing response</span>
+<span class='va'>missrate</span> <span class='op'>&lt;-</span> <span class='fl'>.50</span> <span class='co'># missing proportion</span>
+<span class='va'>y1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>G</span>, sd <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>rho</span><span class='op'>)</span><span class='op'>)</span>, each <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>G</span> <span class='op'>*</span> <span class='va'>n</span>, sd <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>rho</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>w</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>G</span><span class='op'>)</span>, <span class='fl'>2</span><span class='op'>)</span>, each <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span>
+<span class='va'>v</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>G</span>, <span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>, each <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>G</span> <span class='op'>*</span> <span class='va'>n</span><span class='op'>)</span>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>y1</span> <span class='op'>+</span> <span class='va'>beta</span> <span class='op'>*</span> <span class='va'>x</span> <span class='op'>+</span> <span class='fl'>.2</span> <span class='op'>*</span> <span class='va'>w</span> <span class='op'>+</span> <span class='fl'>.1</span> <span class='op'>*</span> <span class='va'>v</span>
+<span class='va'>dfr0</span> <span class='op'>&lt;-</span> <span class='va'>dfr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='st'>"group"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>G</span>, each <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span>, <span class='st'>"x"</span> <span class='op'>=</span> <span class='va'>x</span>, <span class='st'>"y"</span> <span class='op'>=</span> <span class='va'>y</span>, <span class='st'>"w"</span> <span class='op'>=</span> <span class='va'>w</span>, <span class='st'>"v"</span> <span class='op'>=</span> <span class='va'>v</span><span class='op'>)</span>
+<span class='va'>dfr</span><span class='op'>[</span><span class='va'>rho.miss</span> <span class='op'>*</span> <span class='va'>x</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>G</span> <span class='op'>*</span> <span class='va'>n</span>, sd <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>rho.miss</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span><span class='op'>(</span><span class='va'>missrate</span><span class='op'>)</span>, <span class='st'>"y"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
+<span class='va'>dfr</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>G</span><span class='op'>)</span>, each <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span><span class='op'>(</span><span class='va'>missrate</span><span class='op'>)</span>, <span class='st'>"w"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
+<span class='va'>dfr</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>G</span><span class='op'>)</span>, each <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span><span class='op'>(</span><span class='va'>missrate</span><span class='op'>)</span>, <span class='st'>"v"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
 
-<span class='co'>#....</span>
 <span class='co'># empty mice imputation</span>
-<span class='no'>imp0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='no'>dfr</span>)  , <span class='kw'>maxit</span><span class='kw'>=</span><span class='fl'>0</span> )
-<span class='no'>predM</span> <span class='kw'>&lt;-</span> <span class='no'>imp0</span>$<span class='no'>predictorMatrix</span>
-<span class='no'>impM</span> <span class='kw'>&lt;-</span> <span class='no'>imp0</span>$<span class='no'>method</span>
+<span class='va'>imp0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>)</span>, maxit <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>predM</span> <span class='op'>&lt;-</span> <span class='va'>imp0</span><span class='op'>$</span><span class='va'>predictorMatrix</span>
+<span class='va'>impM</span> <span class='op'>&lt;-</span> <span class='va'>imp0</span><span class='op'>$</span><span class='va'>method</span>
 
-<span class='co'>#...</span>
 <span class='co'># multilevel imputation</span>
-<span class='no'>predM1</span> <span class='kw'>&lt;-</span> <span class='no'>predM</span>
-<span class='no'>predM1</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"w"</span>,<span class='st'>"y"</span>,<span class='st'>"v"</span>),<span class='st'>"group"</span>] <span class='kw'>&lt;-</span> -<span class='fl'>2</span>
-<span class='no'>predM1</span>[<span class='st'>"y"</span>,<span class='st'>"x"</span>] <span class='kw'>&lt;-</span> <span class='fl'>1</span>        <span class='co'># fixed x effects imputation</span>
-<span class='no'>impM1</span> <span class='kw'>&lt;-</span> <span class='no'>impM</span>
-<span class='no'>impM1</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"y"</span>,<span class='st'>"w"</span>,<span class='st'>"v"</span>)] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2l.pan"</span> , <span class='st'>"2lonly.norm"</span> , <span class='st'>"2lonly.pmm"</span> )
+<span class='va'>predM1</span> <span class='op'>&lt;-</span> <span class='va'>predM</span>
+<span class='va'>predM1</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"w"</span>, <span class='st'>"y"</span>, <span class='st'>"v"</span><span class='op'>)</span>, <span class='st'>"group"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fl'>2</span>
+<span class='va'>predM1</span><span class='op'>[</span><span class='st'>"y"</span>, <span class='st'>"x"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='co'># fixed x effects imputation</span>
+<span class='va'>impM1</span> <span class='op'>&lt;-</span> <span class='va'>impM</span>
+<span class='va'>impM1</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"y"</span>, <span class='st'>"w"</span>, <span class='st'>"v"</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2l.pan"</span>, <span class='st'>"2lonly.norm"</span>, <span class='st'>"2lonly.pmm"</span><span class='op'>)</span>
 
 <span class='co'># y ... imputation using pan</span>
 <span class='co'># w ... imputation at level 2 using norm</span>
 <span class='co'># v ... imputation at level 2 using pmm</span>
 
-<span class='no'>imp1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>( <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>( <span class='no'>dfr</span> ) , <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>1</span> , <span class='kw'>predictorMatrix</span> <span class='kw'>=</span> <span class='no'>predM1</span> ,
-           <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>impM1</span> , <span class='kw'>maxit</span><span class='kw'>=</span><span class='fl'>1</span> , <span class='kw'>paniter</span><span class='kw'>=</span><span class='fl'>500</span>)</div><div class='output co'>#&gt; 
+<span class='va'>imp1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>dfr</span><span class='op'>)</span>,
+  m <span class='op'>=</span> <span class='fl'>1</span>, predictorMatrix <span class='op'>=</span> <span class='va'>predM1</span>,
+  method <span class='op'>=</span> <span class='va'>impM1</span>, maxit <span class='op'>=</span> <span class='fl'>1</span>, paniter <span class='op'>=</span> <span class='fl'>500</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  y  w  v</div><div class='input'>
-<span class='co'>#</span>
 <span class='co'># Demonstration that 2lonly.norm aborts for partial missing data.</span>
 <span class='co'># Better use 2lonly.mean for repair.</span>
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>patid</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>5</span>),
-                   <span class='kw'>sex</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>2</span>), <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>5</span>),
-                   <span class='kw'>crp</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>68</span>, <span class='fl'>78</span>, <span class='fl'>93</span>, <span class='fl'>NA</span>, <span class='fl'>143</span>,
-                            <span class='fl'>5</span>,  <span class='fl'>7</span>,  <span class='fl'>9</span>, <span class='fl'>13</span>,  <span class='fl'>NA</span>,
-                           <span class='fl'>97</span>, <span class='fl'>NA</span>, <span class='fl'>56</span>, <span class='fl'>52</span>,  <span class='fl'>34</span>,
-                           <span class='fl'>22</span>, <span class='fl'>30</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>45</span>))
-<span class='no'>pred</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make.predictorMatrix.html'>make.predictorMatrix</a></span>(<span class='no'>data</span>)
-<span class='no'>pred</span>[, <span class='st'>"patid"</span>] <span class='kw'>&lt;-</span> -<span class='fl'>2</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  patid <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, each <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>,
+  sex <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, each <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>,
+  crp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    <span class='fl'>68</span>, <span class='fl'>78</span>, <span class='fl'>93</span>, <span class='cn'>NA</span>, <span class='fl'>143</span>,
+    <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>9</span>, <span class='fl'>13</span>, <span class='cn'>NA</span>,
+    <span class='fl'>97</span>, <span class='cn'>NA</span>, <span class='fl'>56</span>, <span class='fl'>52</span>, <span class='fl'>34</span>,
+    <span class='fl'>22</span>, <span class='fl'>30</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='fl'>45</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>pred</span> <span class='op'>&lt;-</span> <span class='fu'><a href='make.predictorMatrix.html'>make.predictorMatrix</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
+<span class='va'>pred</span><span class='op'>[</span>, <span class='st'>"patid"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fl'>2</span>
 <span class='co'># only missing value (out of five) for patid == 1</span>
-<span class='no'>data</span>[<span class='fl'>3</span>, <span class='st'>"sex"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># The following fails because 2lonly.norm found partially missing </span>
+<span class='va'>data</span><span class='op'>[</span><span class='fl'>3</span>, <span class='st'>"sex"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># The following fails because 2lonly.norm found partially missing</span>
 <span class='co'># level-2 data</span>
-<span class='co'># imp &lt;- mice(data, method = c("", "2lonly.norm", "2l.pan"), </span>
+<span class='co'># imp &lt;- mice(data, method = c("", "2lonly.norm", "2l.pan"),</span>
 <span class='co'>#             predictorMatrix = pred, maxit = 1, m = 2)</span>
 <span class='co'># &gt; iter imp variable</span>
-<span class='co'># &gt; 1   1  sex  crpError in .imputation.level2(y = y, ... : </span>
-<span class='co'># &gt;   Method 2lonly.norm found the following clusters with partially missing </span>
-<span class='co'>#&gt;    level-2 data: 1</span>
-<span class='co'>#&gt; Method 2lonly.mean can fix such inconsistencies.</span>
-}
+<span class='co'># &gt; 1   1  sex  crpError in .imputation.level2(y = y, ... :</span>
+<span class='co'># &gt;   Method 2lonly.norm found the following clusters with partially missing</span>
+<span class='co'># &gt;    level-2 data: 1</span>
+<span class='co'># &gt; Method 2lonly.mean can fix such inconsistencies.</span>
+<span class='op'>}</span>
 
 <span class='co'># In contrast, if all sex values are missing for patid == 1, it runs fine,</span>
 <span class='co'># except on r-patched-solaris-x86. I used dontrun to evade CRAN errors.</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>data</span>[<span class='fl'>1</span>:<span class='fl'>5</span>, <span class='st'>"sex"</span>] <span class='kw'>&lt;-</span> <span class='fl'>NA</span>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>data</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>""</span>, <span class='st'>"2lonly.norm"</span>, <span class='st'>"2l.pan"</span>),
-            <span class='kw'>predictorMatrix</span> <span class='kw'>=</span> <span class='no'>pred</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-}</div></pre>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>data</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, <span class='st'>"sex"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>data</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>""</span>, <span class='st'>"2lonly.norm"</span>, <span class='st'>"2l.pan"</span><span class='op'>)</span>,
+  predictorMatrix <span class='op'>=</span> <span class='va'>pred</span>, maxit <span class='op'>=</span> <span class='fl'>1</span>, m <span class='op'>=</span> <span class='fl'>2</span>
+<span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -306,7 +314,7 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

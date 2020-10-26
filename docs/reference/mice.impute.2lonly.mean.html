@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Imputation of most likely value within the class — mice.impute.2lonly.mean" />
-<meta property="og:description" content="Method 2lonly.mean replicates the most likely value within 
+<meta property="og:description" content="Method 2lonly.mean replicates the most likely value within
 a class of a second-level variable. It works for numeric and
 factor data. The function is primarily useful as a quick fixup for
 data in which the second-level variable is inconsistent." />
@@ -81,7 +81,7 @@ data in which the second-level variable is inconsistent." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@ data in which the second-level variable is inconsistent." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -127,18 +127,18 @@ data in which the second-level variable is inconsistent." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Imputation of most likely value within the class</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/mice.impute.2lonly.mean.R'><code>R/mice.impute.2lonly.mean.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/mice.impute.2lonly.mean.R'><code>R/mice.impute.2lonly.mean.R</code></a></small>
     <div class="hidden name"><code>mice.impute.2lonly.mean.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Method <code>2lonly.mean</code> replicates the most likely value within 
+    <p>Method <code>2lonly.mean</code> replicates the most likely value within
 a class of a second-level variable. It works for numeric and
 factor data. The function is primarily useful as a quick fixup for
 data in which the second-level variable is inconsistent.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mice.impute.2lonly.mean</span>(<span class='no'>y</span>, <span class='no'>ry</span>, <span class='no'>x</span>, <span class='no'>type</span>, <span class='kw'>wy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>mice.impute.2lonly.mean</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, <span class='va'>type</span>, wy <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,14 +149,14 @@ data in which the second-level variable is inconsistent.</p>
     </tr>
     <tr>
       <th>ry</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the 
-the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation 
-model is fitted. The <code>ry</code> generally distinguishes the observed 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the
+the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation
+model is fitted. The <code>ry</code> generally distinguishes the observed
 (<code>TRUE</code>) and missing values (<code>FALSE</code>) in <code>y</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for 
+      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for
 <code>y</code>. Matrix <code>x</code> may have no missing values.</p></td>
     </tr>
     <tr>
@@ -166,7 +166,7 @@ variables.  The class variable (only one is allowed) is coded as <code>-2</code>
     </tr>
     <tr>
       <th>wy</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value
 indicates locations in <code>y</code> for which imputations are created.</p></td>
     </tr>
     <tr>
@@ -177,31 +177,31 @@ indicates locations in <code>y</code> for which imputations are created.</p></td
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Vector with imputed data, same type as <code>y</code>, and of length 
+    <p>Vector with imputed data, same type as <code>y</code>, and of length
 <code><a href='https://rdrr.io/r/base/sum.html'>sum(wy)</a></code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Observed values in <code>y</code> are averaged within the class, and 
-replicated to the missing <code>y</code> within that class. 
-This function is primarily useful for repairing incomplete data 
+    <p>Observed values in <code>y</code> are averaged within the class, and
+replicated to the missing <code>y</code> within that class.
+This function is primarily useful for repairing incomplete data
 that are constant within the class, but vary over classes.</p>
-<p>For numeric variables, <code>mice.impute.2lonly.mean()</code> imputes the 
-class mean of <code>y</code>. If <code>y</code> is a second-level variable, then 
-conventionally all observed <code>y</code> will be identical within the 
-class, and the function just provides a quick fix for any 
+<p>For numeric variables, <code>mice.impute.2lonly.mean()</code> imputes the
+class mean of <code>y</code>. If <code>y</code> is a second-level variable, then
+conventionally all observed <code>y</code> will be identical within the
+class, and the function just provides a quick fix for any
 missing <code>y</code> by filling in the class mean.</p>
 <p>For factor variables, <code>mice.impute.2lonly.mean()</code> imputes the
 most frequently occuring category within the class.</p>
-<p>If there are no observed <code>y</code> in the class, all entries of the 
-class are set to <code>NA</code>. Note that this may produce problems 
-later on in <code>mice</code> if imputation routines are called that 
-expects predictor data to be complete. Methods designed for 
+<p>If there are no observed <code>y</code> in the class, all entries of the
+class are set to <code>NA</code>. Note that this may produce problems
+later on in <code>mice</code> if imputation routines are called that
+expects predictor data to be complete. Methods designed for
 imputing this type of second-level variables include
-<code><a href='mice.impute.2lonly.norm.html'>mice.impute.2lonly.norm</a></code> and 
+<code><a href='mice.impute.2lonly.norm.html'>mice.impute.2lonly.norm</a></code> and
 <code><a href='mice.impute.2lonly.pmm.html'>mice.impute.2lonly.pmm</a></code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Van Buuren, S. (2018). 
+    <p>Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/sec-level2pred.html'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Boca Raton, FL.: Chapman &amp; Hall/CRC Press.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -209,6 +209,9 @@ Boca Raton, FL.: Chapman &amp; Hall/CRC Press.</p>
     <div class='dont-index'><p>Other univariate-2lonly: 
 <code><a href='mice.impute.2lonly.norm.html'>mice.impute.2lonly.norm</a>()</code>,
 <code><a href='mice.impute.2lonly.pmm.html'>mice.impute.2lonly.pmm</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Gerko Vink, Stef van Buuren, 2019</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -225,7 +228,7 @@ Boca Raton, FL.: Chapman &amp; Hall/CRC Press.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

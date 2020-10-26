@@ -9,10 +9,10 @@ cbind.mids(x, y = NULL, ...)
 \arguments{
 \item{x}{A \code{mids} object.}
 
-\item{y}{A \code{mids} object, or a \code{data.frame}, \code{matrix}, 
+\item{y}{A \code{mids} object, or a \code{data.frame}, \code{matrix},
 \code{factor} or \code{vector}.}
 
-\item{\dots}{Additional \code{data.frame}, \code{matrix}, \code{vector} 
+\item{\dots}{Additional \code{data.frame}, \code{matrix}, \code{vector}
 or \code{factor}. These can be given as named arguments.}
 }
 \value{
@@ -20,17 +20,17 @@ An S3 object of class \code{mids}
 }
 \description{
 This function combines two \code{mids} objects columnwise into a single
-object of class \code{mids}, or combines a single \code{mids} object with 
-a \code{vector}, \code{matrix}, \code{factor} or \code{data.frame} 
+object of class \code{mids}, or combines a single \code{mids} object with
+a \code{vector}, \code{matrix}, \code{factor} or \code{data.frame}
 columnwise into a \code{mids} object.
 }
 \details{
-\emph{Pre-requisites:} If \code{y} is a \code{mids}-object, the rows 
-of \code{x$data} and \code{y$data} should match, as well as the number 
-of imputations (\code{m}). Other \code{y} are transformed into a 
+\emph{Pre-requisites:} If \code{y} is a \code{mids}-object, the rows
+of \code{x$data} and \code{y$data} should match, as well as the number
+of imputations (\code{m}). Other \code{y} are transformed into a
 \code{data.frame} whose rows should match with \code{x$data}.
 
-The function renames any duplicated variable or block names by 
+The function renames any duplicated variable or block names by
 appending \code{".1"}, \code{".2"} to duplicated names.
 }
 \note{
@@ -41,7 +41,7 @@ The function constructs the elements of the new \code{mids} object as follows:
 \code{m}        \tab Taken from \code{x$m}\cr
 \code{where}    \tab Columnwise combination of \code{x$where} and \code{y$where}\cr
 \code{blocks}   \tab Combines \code{x$blocks} and \code{y$blocks}\cr
-\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} 
+\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]}
 is call to \code{cbind.mids}\cr
 \code{nmis}     \tab Equals \code{c(x$nmis, y$nmis)}\cr
 \code{method}   \tab Combines \code{x$method} and \code{y$method}\cr
@@ -50,6 +50,7 @@ is call to \code{cbind.mids}\cr
 \code{formulas}  \tab Combined as \code{c(x$formulas, y$formulas)}\cr
 \code{post}      \tab Combined as \code{c(x$post, y$post)}\cr
 \code{blots}     \tab Combined as \code{c(x$blots, y$blots)}\cr
+\code{ignore}    \tab Taken from \code{x$ignore}\cr
 \code{seed}            \tab Taken from \code{x$seed}\cr
 \code{iteration}       \tab Taken from \code{x$iteration}\cr
 \code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
@@ -84,7 +85,7 @@ imp21$predictorMatrix
 
 # Append 'forgotten' variable chl
 data3 <- nhanes[, 1:3]
-imp3  <- mice(data3, maxit = 1,m = 2, print = FALSE)
+imp3 <- mice(data3, maxit = 1, m = 2, print = FALSE)
 imp4 <- cbind(imp3, chl = nhanes$chl)
 
 # Of course, chl was not imputed
@@ -95,7 +96,7 @@ imp5 <- cbind(imp3, nhanes2)
 head(complete(imp5))
 }
 \seealso{
-\code{\link{cbind}}, \code{\link{rbind.mids}}, \code{\link{ibind}}, 
+\code{\link[base:cbind]{cbind}}, \code{\link{rbind.mids}}, \code{\link{ibind}},
 \code{\link[=mids-class]{mids}}
 }
 \author{

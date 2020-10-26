@@ -32,14 +32,14 @@ process_mipo(z, x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE)
 
 \item{object}{An object of class \code{mipo}}
 
-\item{conf.int}{Logical indicating whether to include 
+\item{conf.int}{Logical indicating whether to include
 a confidence interval. The default is \code{FALSE}.}
 
 \item{conf.level}{Confidence level of the interval, used only if
 \code{conf.int = TRUE}. Number between 0 and 1.}
 
-\item{exponentiate}{Flag indicating whether to exponentiate the 
-coefficient estimates and confidence intervals (typical for 
+\item{exponentiate}{Flag indicating whether to exponentiate the
+coefficient estimates and confidence intervals (typical for
 logistic regression).}
 
 \item{x}{An object of class \code{mipo}}
@@ -50,12 +50,12 @@ logistic regression).}
 The \code{summary} method returns a data frame with summary statistics of the pooled analysis.
 }
 \description{
-The \code{mipo} object contains the results of the pooling step. 
+The \code{mipo} object contains the results of the pooling step.
 The function \code{\link{pool}} generates an object of class \code{mipo}.
 }
 \details{
-An object class \code{mipo} is a \code{list} with three 
-elements: \code{call}, \code{m} and \code{pooled}.
+An object class \code{mipo} is a \code{list} with
+elements: \code{call}, \code{m}, \code{pooled} and \code{glanced}.
 
 The \code{pooled} elements is a data frame with columns:
 \tabular{ll}{
@@ -71,7 +71,11 @@ The \code{pooled} elements is a data frame with columns:
 }
 The names of the terms are stored as \code{row.names(pooled)}.
 
-The \code{process_mipo} is a helper function to process a 
+The \code{glanced} elements is a \code{data.frame} with \code{m} rows.
+The precise composition depends on the class of the complete-data analysis.
+At least field \code{nobs} is expected to be present.
+
+The \code{process_mipo} is a helper function to process a
 tidied mipo object, and is normally not called directly.
 It adds a confidence interval, and optionally exponentiates, the result.
 }
@@ -82,7 +86,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 \url{https://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-\code{\link{pool}}, 
+\code{\link{pool}},
 \code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}
 }
 \keyword{classes}

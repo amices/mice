@@ -46,9 +46,8 @@
 
 
 <meta property="og:title" content="Box-and-whisker plot of amputed and non-amputed data — bwplot.mads" />
-<meta property="og:description" content="Plotting method to investigate the result of function ampute. 
-the relation between the data variables and the amputed data. The function does 
-not show which data is amputed. It does show how the amputed values are related 
+<meta property="og:description" content="Plotting method to investigate the relation between the data variables and
+the amputed data. The function shows how the amputed values are related
 to the variable values." />
 
 
@@ -81,7 +80,7 @@ to the variable values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -102,7 +101,7 @@ to the variable values." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -127,44 +126,43 @@ to the variable values." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Box-and-whisker plot of amputed and non-amputed data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/bwplot.mads.R'><code>R/bwplot.mads.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/bwplot.mads.R'><code>R/bwplot.mads.R</code></a></small>
     <div class="hidden name"><code>bwplot.mads.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plotting method to investigate the result of function <code><a href='ampute.html'>ampute</a></code>. 
-the relation between the data variables and the amputed data. The function does 
-not show which data is amputed. It does show how the amputed values are related 
+    <p>Plotting method to investigate the relation between the data variables and
+the amputed data. The function shows how the amputed values are related
 to the variable values.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for mads</span>
-<span class='fu'><a href='bwplot.mids.html'>bwplot</a></span>(
-  <span class='no'>x</span>,
-  <span class='no'>data</span>,
-  <span class='kw'>which.pat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>standardized</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>descriptives</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>layout</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'><a href='bwplot.mids.html'>bwplot</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>data</span>,
+  which.pat <span class='op'>=</span> <span class='cn'>NULL</span>,
+  standardized <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  descriptives <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  layout <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A <code>mads</code> (<code><a href='mads-class.html'>mads-class</a></code>) object, typically created by 
+      <td><p>A <code>mads</code> (<code><a href='mads-class.html'>mads-class</a></code>) object, typically created by
 <code><a href='ampute.html'>ampute</a></code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>A string or vector of variable names that needs to be plotted. As 
+      <td><p>A string or vector of variable names that needs to be plotted. As
 a default, all variables will be plotted.</p></td>
     </tr>
     <tr>
       <th>which.pat</th>
-      <td><p>A scalar or vector indicating which patterns need to be plotted. 
+      <td><p>A scalar or vector indicating which patterns need to be plotted.
 As a default, all patterns are plotted.</p></td>
     </tr>
     <tr>
@@ -175,15 +173,15 @@ from standardized data or not. Default is TRUE.</p></td>
     <tr>
       <th>descriptives</th>
       <td><p>Logical. Whether the mean, variance and n of the variables
-need to be printed. This is useful to examine the effect of the amputation. 
+need to be printed. This is useful to examine the effect of the amputation.
 Default is TRUE.</p></td>
     </tr>
     <tr>
       <th>layout</th>
       <td><p>A vector of two values indicating how the boxplots of one pattern
-should be divided over the plot. For example, <code><a href='https://rdrr.io/r/base/c.html'>c(2, 3)</a></code> indicates that the 
+should be divided over the plot. For example, <code><a href='https://rdrr.io/r/base/c.html'>c(2, 3)</a></code> indicates that the
 boxplots of six variables need to be placed on 3 rows and 2 columns. Default
-is 1 row and an amount of columns equal to #variables. Note that for more than 
+is 1 row and an amount of columns equal to #variables. Note that for more than
 6 variables, multiple plots will be created automatically.</p></td>
     </tr>
     <tr>
@@ -194,17 +192,20 @@ is 1 row and an amount of columns equal to #variables. Note that for more than
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list containing the box-and-whisker plots. Note that a new pattern 
+    <p>A list containing the box-and-whisker plots. Note that a new pattern
 will always be shown in a new plot.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The <code>mads</code> object contains all the information you need to 
-make any desired plots. Check <code><a href='mads-class.html'>mads-class</a></code> or the vignette <em>Multivariate 
+    <p>The <code>mads</code> object contains all the information you need to
+make any desired plots. Check <code><a href='mads-class.html'>mads-class</a></code> or the vignette <em>Multivariate
 Amputation using Ampute</em> to understand the contents of class object <code>mads</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='ampute.html'>ampute</a></code>, <code><a href='bwplot.mids.html'>bwplot</a></code>, <code>Lattice</code> for 
+    <div class='dont-index'><p><code><a href='ampute.html'>ampute</a></code>, <code><a href='bwplot.mids.html'>bwplot</a></code>, <code>Lattice</code> for
 an overview of the package, <code><a href='mads-class.html'>mads-class</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rianne Schouten, 2016</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -221,7 +222,7 @@ an overview of the package, <code><a href='mads-class.html'>mads-class</a></code
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

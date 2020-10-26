@@ -32,4 +32,3 @@ test_that("workflow mids, mild and long produce same estimates", {
   expect_identical(getqbar(est.mice), getqbar(est.mild))
   expect_identical(getqbar(est.mice), getqbar(est.long))
 })
-

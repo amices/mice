@@ -1,438 +1,438 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/index.html</loc>
+    <loc>https://amices.github.io/mice/index.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/D1.html</loc>
+    <loc>https://amices.github.io/mice/reference/D1.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/D2.html</loc>
+    <loc>https://amices.github.io/mice/reference/D2.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/D3.html</loc>
+    <loc>https://amices.github.io/mice/reference/D3.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ampute.html</loc>
+    <loc>https://amices.github.io/mice/reference/ampute.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ampute.continuous.html</loc>
+    <loc>https://amices.github.io/mice/reference/ampute.continuous.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ampute.default.freq.html</loc>
+    <loc>https://amices.github.io/mice/reference/ampute.default.freq.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ampute.default.odds.html</loc>
+    <loc>https://amices.github.io/mice/reference/ampute.default.odds.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ampute.default.patterns.html</loc>
+    <loc>https://amices.github.io/mice/reference/ampute.default.patterns.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ampute.default.type.html</loc>
+    <loc>https://amices.github.io/mice/reference/ampute.default.type.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ampute.default.weights.html</loc>
+    <loc>https://amices.github.io/mice/reference/ampute.default.weights.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ampute.discrete.html</loc>
+    <loc>https://amices.github.io/mice/reference/ampute.discrete.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ampute.mcar.html</loc>
+    <loc>https://amices.github.io/mice/reference/ampute.mcar.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/anova.html</loc>
+    <loc>https://amices.github.io/mice/reference/anova.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/appendbreak.html</loc>
+    <loc>https://amices.github.io/mice/reference/appendbreak.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/as.mids.html</loc>
+    <loc>https://amices.github.io/mice/reference/as.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/as.mira.html</loc>
+    <loc>https://amices.github.io/mice/reference/as.mira.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/as.mitml.result.html</loc>
+    <loc>https://amices.github.io/mice/reference/as.mitml.result.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/boys.html</loc>
+    <loc>https://amices.github.io/mice/reference/boys.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/brandsma.html</loc>
+    <loc>https://amices.github.io/mice/reference/brandsma.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/bwplot.mads.html</loc>
+    <loc>https://amices.github.io/mice/reference/bwplot.mads.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/bwplot.mids.html</loc>
+    <loc>https://amices.github.io/mice/reference/bwplot.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/cbind.html</loc>
+    <loc>https://amices.github.io/mice/reference/cbind.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/cbind.mids.html</loc>
+    <loc>https://amices.github.io/mice/reference/cbind.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/cc.html</loc>
+    <loc>https://amices.github.io/mice/reference/cc.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/cci.html</loc>
+    <loc>https://amices.github.io/mice/reference/cci.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/complete.mids.html</loc>
+    <loc>https://amices.github.io/mice/reference/complete.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/construct.blocks.html</loc>
+    <loc>https://amices.github.io/mice/reference/construct.blocks.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/densityplot.mids.html</loc>
+    <loc>https://amices.github.io/mice/reference/densityplot.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/employee.html</loc>
+    <loc>https://amices.github.io/mice/reference/employee.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/estimice.html</loc>
+    <loc>https://amices.github.io/mice/reference/estimice.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/extend.formula.html</loc>
+    <loc>https://amices.github.io/mice/reference/extend.formula.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/extend.formulas.html</loc>
+    <loc>https://amices.github.io/mice/reference/extend.formulas.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/extractBS.html</loc>
+    <loc>https://amices.github.io/mice/reference/extractBS.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/fdd.html</loc>
+    <loc>https://amices.github.io/mice/reference/fdd.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/fdgs.html</loc>
+    <loc>https://amices.github.io/mice/reference/fdgs.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/fico.html</loc>
+    <loc>https://amices.github.io/mice/reference/fico.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/fix.coef.html</loc>
+    <loc>https://amices.github.io/mice/reference/filter.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/flux.html</loc>
+    <loc>https://amices.github.io/mice/reference/fix.coef.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/fluxplot.html</loc>
+    <loc>https://amices.github.io/mice/reference/flux.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/getfit.html</loc>
+    <loc>https://amices.github.io/mice/reference/fluxplot.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/getqbar.html</loc>
+    <loc>https://amices.github.io/mice/reference/getfit.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/glance.mipo.html</loc>
+    <loc>https://amices.github.io/mice/reference/getqbar.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/glm.mids.html</loc>
+    <loc>https://amices.github.io/mice/reference/glance.mipo.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ibind.html</loc>
+    <loc>https://amices.github.io/mice/reference/glm.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ic.html</loc>
+    <loc>https://amices.github.io/mice/reference/ibind.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ici.html</loc>
+    <loc>https://amices.github.io/mice/reference/ic.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ifdo.html</loc>
+    <loc>https://amices.github.io/mice/reference/ici.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/is.mads.html</loc>
+    <loc>https://amices.github.io/mice/reference/ifdo.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/is.mids.html</loc>
+    <loc>https://amices.github.io/mice/reference/is.mads.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/is.mipo.html</loc>
+    <loc>https://amices.github.io/mice/reference/is.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/is.mira.html</loc>
+    <loc>https://amices.github.io/mice/reference/is.mipo.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/is.mitml.result.html</loc>
+    <loc>https://amices.github.io/mice/reference/is.mira.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/leiden85.html</loc>
+    <loc>https://amices.github.io/mice/reference/is.mitml.result.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/lm.mids.html</loc>
+    <loc>https://amices.github.io/mice/reference/leiden85.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mads-class.html</loc>
+    <loc>https://amices.github.io/mice/reference/lm.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/make.blocks.html</loc>
+    <loc>https://amices.github.io/mice/reference/mads-class.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/make.blots.html</loc>
+    <loc>https://amices.github.io/mice/reference/make.blocks.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/make.formulas.html</loc>
+    <loc>https://amices.github.io/mice/reference/make.blots.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/make.method.html</loc>
+    <loc>https://amices.github.io/mice/reference/make.formulas.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/make.post.html</loc>
+    <loc>https://amices.github.io/mice/reference/make.method.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/make.predictorMatrix.html</loc>
+    <loc>https://amices.github.io/mice/reference/make.post.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/make.visitSequence.html</loc>
+    <loc>https://amices.github.io/mice/reference/make.predictorMatrix.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/make.where.html</loc>
+    <loc>https://amices.github.io/mice/reference/make.visitSequence.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mammalsleep.html</loc>
+    <loc>https://amices.github.io/mice/reference/make.where.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/md.pairs.html</loc>
+    <loc>https://amices.github.io/mice/reference/mammalsleep.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/md.pattern.html</loc>
+    <loc>https://amices.github.io/mice/reference/md.pairs.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mdc.html</loc>
+    <loc>https://amices.github.io/mice/reference/md.pattern.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.html</loc>
+    <loc>https://amices.github.io/mice/reference/mdc.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.2l.bin.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.2l.lmer.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.2l.bin.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.2l.norm.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.2l.lmer.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.2l.pan.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.2l.norm.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.2lonly.mean.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.2l.pan.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.2lonly.norm.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.2lonly.mean.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.2lonly.pmm.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.2lonly.norm.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.cart.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.2lonly.pmm.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.jomoImpute.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.cart.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.lda.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.jomoImpute.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.logreg.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.lda.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.logreg.boot.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.logreg.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.mean.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.logreg.boot.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.midastouch.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.mean.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.mnar.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.midastouch.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.norm.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.mnar.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.norm.boot.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.norm.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.norm.nob.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.norm.boot.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.norm.predict.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.norm.nob.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.panImpute.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.norm.predict.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.passive.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.panImpute.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.pmm.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.passive.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.polr.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.pmm.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.polyreg.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.polr.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.quadratic.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.polyreg.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.rf.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.quadratic.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.ri.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.rf.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.impute.sample.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.ri.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.mids.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.impute.sample.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mice.theme.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mids-class.html</loc>
+    <loc>https://amices.github.io/mice/reference/mice.theme.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mids2mplus.html</loc>
+    <loc>https://amices.github.io/mice/reference/mids-class.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mids2spss.html</loc>
+    <loc>https://amices.github.io/mice/reference/mids2mplus.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mipo.html</loc>
+    <loc>https://amices.github.io/mice/reference/mids2spss.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mira-class.html</loc>
+    <loc>https://amices.github.io/mice/reference/mipo.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/mnar_demo_data.html</loc>
+    <loc>https://amices.github.io/mice/reference/mira-class.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/name.blocks.html</loc>
+    <loc>https://amices.github.io/mice/reference/mnar_demo_data.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/name.formulas.html</loc>
+    <loc>https://amices.github.io/mice/reference/name.blocks.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/ncc.html</loc>
+    <loc>https://amices.github.io/mice/reference/name.formulas.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/nelsonaalen.html</loc>
+    <loc>https://amices.github.io/mice/reference/ncc.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/nhanes.html</loc>
+    <loc>https://amices.github.io/mice/reference/nelsonaalen.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/nhanes2.html</loc>
+    <loc>https://amices.github.io/mice/reference/nhanes.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/nic.html</loc>
+    <loc>https://amices.github.io/mice/reference/nhanes2.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/nimp.html</loc>
+    <loc>https://amices.github.io/mice/reference/nic.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/norm.draw.html</loc>
+    <loc>https://amices.github.io/mice/reference/nimp.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/parlmice.html</loc>
+    <loc>https://amices.github.io/mice/reference/norm.draw.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/pattern.html</loc>
+    <loc>https://amices.github.io/mice/reference/parlmice.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/plot.mids.html</loc>
+    <loc>https://amices.github.io/mice/reference/pattern.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/pmm.match.html</loc>
+    <loc>https://amices.github.io/mice/reference/plot.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/pool.html</loc>
+    <loc>https://amices.github.io/mice/reference/pool.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/pool.compare.html</loc>
+    <loc>https://amices.github.io/mice/reference/pool.compare.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/pool.r.squared.html</loc>
+    <loc>https://amices.github.io/mice/reference/pool.r.squared.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/pool.scalar.html</loc>
+    <loc>https://amices.github.io/mice/reference/pool.scalar.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/popmis.html</loc>
+    <loc>https://amices.github.io/mice/reference/popmis.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/pops.html</loc>
+    <loc>https://amices.github.io/mice/reference/pops.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/potthoffroy.html</loc>
+    <loc>https://amices.github.io/mice/reference/potthoffroy.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/print.html</loc>
+    <loc>https://amices.github.io/mice/reference/print.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/print.mads.html</loc>
+    <loc>https://amices.github.io/mice/reference/print.mads.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/quickpred.html</loc>
+    <loc>https://amices.github.io/mice/reference/quickpred.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/rbind.mids.html</loc>
+    <loc>https://amices.github.io/mice/reference/rbind.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/reexports.html</loc>
+    <loc>https://amices.github.io/mice/reference/reexports.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/selfreport.html</loc>
+    <loc>https://amices.github.io/mice/reference/selfreport.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/squeeze.html</loc>
+    <loc>https://amices.github.io/mice/reference/squeeze.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/stripplot.mids.html</loc>
+    <loc>https://amices.github.io/mice/reference/stripplot.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/summary.html</loc>
+    <loc>https://amices.github.io/mice/reference/summary.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/supports.transparent.html</loc>
+    <loc>https://amices.github.io/mice/reference/supports.transparent.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/tbc.html</loc>
+    <loc>https://amices.github.io/mice/reference/tbc.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/tidy.mipo.html</loc>
+    <loc>https://amices.github.io/mice/reference/tidy.mipo.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/toenail.html</loc>
+    <loc>https://amices.github.io/mice/reference/toenail.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/toenail2.html</loc>
+    <loc>https://amices.github.io/mice/reference/toenail2.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/version.html</loc>
+    <loc>https://amices.github.io/mice/reference/version.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/walking.html</loc>
+    <loc>https://amices.github.io/mice/reference/walking.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/windspeed.html</loc>
+    <loc>https://amices.github.io/mice/reference/windspeed.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/with.mids.html</loc>
+    <loc>https://amices.github.io/mice/reference/with.mids.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/xyplot.mads.html</loc>
+    <loc>https://amices.github.io/mice/reference/xyplot.mads.html</loc>
   </url>
   <url>
-    <loc>http://stefvanbuuren.github.io/mice/reference/xyplot.mids.html</loc>
+    <loc>https://amices.github.io/mice/reference/xyplot.mids.html</loc>
   </url>
 </urlset>

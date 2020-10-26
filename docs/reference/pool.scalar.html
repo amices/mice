@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -124,7 +124,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Multiple imputation pooling: univariate version</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/pool.scalar.R'><code>R/pool.scalar.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/pool.scalar.R'><code>R/pool.scalar.R</code></a></small>
     <div class="hidden name"><code>pool.scalar.Rd</code></div>
     </div>
 
@@ -132,7 +132,7 @@
     <p>Pools univariate estimates of m repeated complete data analysis</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pool.scalar</span>(<span class='no'>Q</span>, <span class='no'>U</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>pool.scalar</span><span class='op'>(</span><span class='va'>Q</span>, <span class='va'>U</span>, n <span class='op'>=</span> <span class='cn'>Inf</span>, k <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,22 +149,24 @@ estimates.</p></td>
     </tr>
     <tr>
       <th>n</th>
-      <td><p>A number providing the sample size. If nothing is specified, an infinite sample <code>n = Inf</code> is assumed.</p></td>
+      <td><p>A number providing the sample size. If nothing is specified,
+an infinite sample <code>n = Inf</code> is assumed.</p></td>
     </tr>
     <tr>
       <th>k</th>
-      <td><p>A number indicating the number of parameters to be estimated. By default, <code>k = 1</code> is assumed.</p></td>
+      <td><p>A number indicating the number of parameters to be estimated.
+By default, <code>k = 1</code> is assumed.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a list with components. Component <code>m</code> is the 
-number of imputations. Component <code>qhat</code> contains the <code>m</code> 
+    <p>Returns a list with components. Component <code>m</code> is the
+number of imputations. Component <code>qhat</code> contains the <code>m</code>
 univariate estimates of repeated complete data analyses.
 Component <code>u</code> contains the corresponding <code>m</code> variances of the univariate estimates.
 Component <code>qbar</code> is the pooled univariate estimate, formula (3.1.2) Rubin
-(1987). Component <code>ubar</code> is the mean of the variances 
+(1987). Component <code>ubar</code> is the mean of the variances
 (i.e. the pooled within-imputation variance), formula (3.1.3) Rubin (1987).
 Component <code>b</code> is the between-imputation variance, formula (3.1.4) Rubin (1987).
 Component <code>t</code> is the total variance of the pooled estimated, formula (3.1.5) Rubin
@@ -188,11 +190,13 @@ Surveys.  New York: John Wiley and Sons.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='pool.html'>pool</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Karin Groothuis-Oudshoorn and Stef van Buuren, 2009</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>)</div><div class='output co'>#&gt; 
+    <pre class="examples"><div class='input'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl
 #&gt;   1   2  bmi  hyp  chl
@@ -218,44 +222,44 @@ Surveys.  New York: John Wiley and Sons.</p>
 #&gt;   5   2  bmi  hyp  chl
 #&gt;   5   3  bmi  hyp  chl
 #&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='no'>imp</span>$<span class='no'>m</span>
-<span class='no'>Q</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>NA</span>, <span class='no'>m</span>)
-<span class='no'>U</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>NA</span>, <span class='no'>m</span>)
-<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='no'>m</span>) {
-   <span class='no'>Q</span>[<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>imp</span>, <span class='no'>i</span>)$<span class='no'>bmi</span>)
-   <span class='no'>U</span>[<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>var</a></span>(<span class='fu'><a href='complete.mids.html'>complete</a></span>(<span class='no'>imp</span>, <span class='no'>i</span>)$<span class='no'>bmi</span>) / <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>nhanes</span>)  <span class='co'># (standard error of estimate)^2</span>
-}
-<span class='fu'>pool.scalar</span>(<span class='no'>Q</span>, <span class='no'>U</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>nhanes</span>), <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>)  <span class='co'># Barnard-Rubin 1999</span></div><div class='output co'>#&gt; $m
+#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='va'>m</span> <span class='op'>&lt;-</span> <span class='va'>imp</span><span class='op'>$</span><span class='va'>m</span>
+<span class='va'>Q</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='va'>m</span><span class='op'>)</span>
+<span class='va'>U</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='va'>m</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>m</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>Q</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>i</span><span class='op'>)</span><span class='op'>$</span><span class='va'>bmi</span><span class='op'>)</span>
+  <span class='va'>U</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>var</a></span><span class='op'>(</span><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>i</span><span class='op'>)</span><span class='op'>$</span><span class='va'>bmi</span><span class='op'>)</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span> <span class='co'># (standard error of estimate)^2</span>
+<span class='op'>}</span>
+<span class='fu'>pool.scalar</span><span class='op'>(</span><span class='va'>Q</span>, <span class='va'>U</span>, n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>, k <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='co'># Barnard-Rubin 1999</span>
+</div><div class='output co'>#&gt; $m
 #&gt; [1] 5
 #&gt; 
 #&gt; $qhat
-#&gt; [1] 26.564 26.832 27.412 26.540 26.532
+#&gt; [1] 26.816 26.184 26.692 27.076 26.528
 #&gt; 
 #&gt; $u
-#&gt; [1] 0.5947960 0.7992907 0.8649440 0.6654000 0.6145907
+#&gt; [1] 0.7888227 0.5449227 0.7764973 0.6764760 0.5379173
 #&gt; 
 #&gt; $qbar
-#&gt; [1] 26.776
+#&gt; [1] 26.6592
 #&gt; 
 #&gt; $ubar
-#&gt; [1] 0.7078043
+#&gt; [1] 0.6649272
 #&gt; 
 #&gt; $b
-#&gt; [1] 0.141952
+#&gt; [1] 0.1106032
 #&gt; 
 #&gt; $t
-#&gt; [1] 0.8781467
+#&gt; [1] 0.797651
 #&gt; 
 #&gt; $df
-#&gt; [1] 15.32876
+#&gt; [1] 16.41929
 #&gt; 
 #&gt; $r
-#&gt; [1] 0.2406631
+#&gt; [1] 0.1996066
 #&gt; 
 #&gt; $fmi
-#&gt; [1] 0.2819309
-#&gt; </div><div class='input'>
-</div></pre>
+#&gt; [1] 0.2522468
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -271,7 +275,7 @@ Surveys.  New York: John Wiley and Sons.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

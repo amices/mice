@@ -76,17 +76,20 @@ test_that("replicates unnamed constant", {
 imp6 <- cbind(imp1, int = 51:75, out = 15, NA)
 test_that("appends names vectors and constants", {
   expect_identical(ncol(complete(imp6)), 7L)
-  expect_error(cbind(imp1, c(NA, 9)), 
-               "arguments imply differing number of rows: 25, 2")
+  expect_error(
+    cbind(imp1, c(NA, 9)),
+    "arguments imply differing number of rows: 25, 2"
+  )
 })
 
 # matrix, factor, data.frame
-# NOTE: cbind() dispatches to wrong function if there is a data.frame 
+# NOTE: cbind() dispatches to wrong function if there is a data.frame
 # so use cbind.mids()
-imp8 <- mice:::cbind.mids(imp1, 
-                          ma = matrix(1:50, nrow = 25, ncol = 2), 
-                          age = nhanes2$age, 
-                          df = nhanes2[, c("hyp", "chl")])
+imp8 <- mice:::cbind.mids(imp1,
+  ma = matrix(1:50, nrow = 25, ncol = 2),
+  age = nhanes2$age,
+  df = nhanes2[, c("hyp", "chl")]
+)
 test_that("appends matrix, factor and data.frame", {
   expect_identical(ncol(complete(imp8)), 9L)
 })
@@ -94,10 +97,11 @@ test_that("appends matrix, factor and data.frame", {
 
 
 # NOTE: now using own version of cbind()
-imp9 <- cbind(imp1, 
-              ma = matrix(1:50, nrow = 25, ncol = 2), 
-              age = nhanes2$age, 
-              df = nhanes2[, c("hyp", "chl")])
+imp9 <- cbind(imp1,
+  ma = matrix(1:50, nrow = 25, ncol = 2),
+  age = nhanes2$age,
+  df = nhanes2[, c("hyp", "chl")]
+)
 test_that("appends matrix, factor and data.frame", {
   expect_identical(ncol(complete(imp9)), 9L)
 })
@@ -108,7 +112,7 @@ test_that("combined object works as input to mice.mids", {
 })
 
 test_that("cbind does not throw a warning (#114)", {
-  expect_silent(cbind(ordered(c(1,2))))
+  expect_silent(cbind(ordered(c(1, 2))))
 })
 
 # # cbind data.frame (rename to age.1)
@@ -118,7 +122,7 @@ test_that("cbind does not throw a warning (#114)", {
 # imp2 <- mice:::cbind.mids(imp1, data.frame(age = agevar, hyp = "test"))
 # imp3 <- mice.mids(imp2, max = 2, print = FALSE)
 # complete(imp3)
-# 
+#
 # # cbind data.frame (use quoted name)
 # imp1 <- mice(nhanes, blocks = list(c("bmi", "chl"), "hyp"), print = FALSE, maxit = 1, m = 1)
 # agevar <- nhanes$age
@@ -126,5 +130,4 @@ test_that("cbind does not throw a warning (#114)", {
 # imp2 <- mice:::cbind.mids(imp1, age = agevar, hyp = "test")
 # imp3 <- mice.mids(imp2, max = 2, print = FALSE)
 # complete(imp3)
-# 
-
+#

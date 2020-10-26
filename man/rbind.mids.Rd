@@ -9,10 +9,10 @@ rbind.mids(x, y = NULL, ...)
 \arguments{
 \item{x}{A \code{mids} object.}
 
-\item{y}{A \code{mids} object, or a \code{data.frame}, \code{matrix}, \code{factor} 
+\item{y}{A \code{mids} object, or a \code{data.frame}, \code{matrix}, \code{factor}
 or \code{vector}.}
 
-\item{\dots}{Additional \code{data.frame}, \code{matrix}, \code{vector} or \code{factor}. 
+\item{\dots}{Additional \code{data.frame}, \code{matrix}, \code{vector} or \code{factor}.
 These can be given as named arguments.}
 }
 \value{
@@ -25,14 +25,16 @@ factor or dataframe rowwise into a \code{mids} object.
 }
 \details{
 If \code{y} is a
-\code{mids} object, then \code{rbind} requires that the number of 
-multiple imputations in \code{x} and \code{y} is identical. Also, 
+\code{mids} object, then \code{rbind} requires that the number of
+multiple imputations in \code{x} and \code{y} is identical. Also,
 columns of \code{x$data} and \code{y$data} should match.
 
-If \code{y} is not a \code{mids} object, the columns of \code{x$data} 
-and \code{y} should match. The \code{where} matrix for \code{y} is set 
-to \code{FALSE}, signaling that any missing values 
-in \code{y} were not imputed.
+If \code{y} is not a \code{mids} object, the columns of \code{x$data}
+and \code{y} should match. The \code{where} matrix for \code{y} is set
+to \code{FALSE}, signaling that any missing values
+in \code{y} were not imputed. The \code{ignore} vector for \code{y} is
+set to \code{FALSE}, elements of \code{y} will therefore influence 
+the parameters of the imputation model in future iterations.
 }
 \note{
 The function construct the elements of the new \code{mids} object as follows:
@@ -51,6 +53,7 @@ the data of \code{y} will be copied\cr
 \code{formulas}  \tab Taken from \code{x$formulas}\cr
 \code{post}      \tab Taken from \code{x$post}\cr
 \code{blots}     \tab Taken from \code{x$blots}\cr
+\code{ignore}    \tab Concatenate \code{x$ignore} and \code{y$ignore}\cr
 \code{seed}            \tab Taken from \code{x$seed}\cr
 \code{iteration}       \tab Taken from \code{x$iteration}\cr
 \code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr

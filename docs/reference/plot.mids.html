@@ -49,8 +49,8 @@
 <meta property="og:description" content="Trace line plots portray the value of an estimate
 against the iteration number. The estimate can be anything that you can calculate, but
 typically are chosen as parameter of scientific interest. The plot method for
-a mids object plots the mean and standard deviation of the imputed (not observed) 
-values against the iteration number for each of the $m$ replications. By default, 
+a mids object plots the mean and standard deviation of the imputed (not observed)
+values against the iteration number for each of the $m$ replications. By default,
 the function plot the development of the mean and standard deviation for each incomplete
 variable. On convergence, the streams should intermingle and be free of any trend." />
 
@@ -84,7 +84,7 @@ variable. On convergence, the streams should intermingle and be free of any tren
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@ variable. On convergence, the streams should intermingle and be free of any tren
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -130,7 +130,7 @@ variable. On convergence, the streams should intermingle and be free of any tren
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot the trace lines of the MICE algorithm</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
     <div class="hidden name"><code>plot.mids.Rd</code></div>
     </div>
 
@@ -138,23 +138,23 @@ variable. On convergence, the streams should intermingle and be free of any tren
     <p>Trace line plots portray the value of an estimate
 against the iteration number. The estimate can be anything that you can calculate, but
 typically are chosen as parameter of scientific interest. The <code>plot</code> method for
-a <code>mids</code> object plots the mean and standard deviation of the imputed (not observed) 
-values against the iteration number for each of the $m$ replications. By default, 
+a <code>mids</code> object plots the mean and standard deviation of the imputed (not observed)
+values against the iteration number for each of the $m$ replications. By default,
 the function plot the development of the mean and standard deviation for each incomplete
 variable. On convergence, the streams should intermingle and be free of any trend.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for mids</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(
-  <span class='no'>x</span>,
-  <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>theme</span> <span class='kw'>=</span> <span class='fu'><a href='mice.theme.html'>mice.theme</a></span>(),
-  <span class='kw'>layout</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>),
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>,
-  <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  y <span class='op'>=</span> <span class='cn'>NULL</span>,
+  theme <span class='op'>=</span> <span class='fu'><a href='mice.theme.html'>mice.theme</a></span><span class='op'>(</span><span class='op'>)</span>,
+  layout <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>,
+  type <span class='op'>=</span> <span class='st'>"l"</span>,
+  col <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,
+  lty <span class='op'>=</span> <span class='fl'>1</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,7 +165,7 @@ variable. On convergence, the streams should intermingle and be free of any tren
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A formula that specifies which variables, stream and iterations are plotted. 
+      <td><p>A formula that specifies which variables, stream and iterations are plotted.
 If omitted, all streams, variables and iterations are plotted.</p></td>
     </tr>
     <tr>
@@ -174,20 +174,20 @@ If omitted, all streams, variables and iterations are plotted.</p></td>
     </tr>
     <tr>
       <th>layout</th>
-      <td><p>A vector of length 2 given the number of columns and rows in the plot. 
+      <td><p>A vector of length 2 given the number of columns and rows in the plot.
 The default is <code><a href='https://rdrr.io/r/base/c.html'>c(2, 3)</a></code>.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Parameter <code>type</code> of <code>panel.xyplot</code>.</p></td>
+      <td><p>Parameter <code>type</code> of <code><a href='https://rdrr.io/pkg/lattice/man/panel.xyplot.html'>panel.xyplot</a></code>.</p></td>
     </tr>
     <tr>
       <th>col</th>
-      <td><p>Parameter <code>col</code> of <code>panel.xyplot</code>.</p></td>
+      <td><p>Parameter <code>col</code> of <code><a href='https://rdrr.io/pkg/lattice/man/panel.xyplot.html'>panel.xyplot</a></code>.</p></td>
     </tr>
     <tr>
       <th>lty</th>
-      <td><p>Parameter <code>lty</code> of <code>panel.xyplot</code>.</p></td>
+      <td><p>Parameter <code>lty</code> of <code><a href='https://rdrr.io/pkg/lattice/man/panel.xyplot.html'>panel.xyplot</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -200,12 +200,16 @@ The default is <code><a href='https://rdrr.io/r/base/c.html'>c(2, 3)</a></code>.
     <p>An object of class <code>"trellis"</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='mice.html'>mice</a></code>, <code><a href='mids-class.html'>mids</a></code>, 
+    <div class='dont-index'><p><code><a href='mice.html'>mice</a></code>, <code><a href='mids-class.html'>mids</a></code>,
 <code><a href='xyplot.mids.html'>xyplot</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Stef van Buuren 2011</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>nhanes</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>imp</span>, <span class='no'>bmi</span> + <span class='no'>chl</span> ~ <span class='no'>.it</span> <span class='kw'>|</span> <span class='no'>.ms</span>, <span class='kw'>layout</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>1</span>))</div><div class='img'><img src='plot.mids-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.mids-2.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>bmi</span> <span class='op'>+</span> <span class='va'>chl</span> <span class='op'>~</span> <span class='va'>.it</span> <span class='op'>|</span> <span class='va'>.ms</span>, layout <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.mids-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plot.mids-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -221,7 +225,7 @@ The default is <code><a href='https://rdrr.io/r/base/c.html'>c(2, 3)</a></code>.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

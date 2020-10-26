@@ -6,10 +6,10 @@
 \title{NHANES example - mixed numerical and discrete variables}
 \format{
 A data frame with 25 observations on the following 4 variables.
-\describe{ 
+\describe{
 \item{age}{Age group (1=20-39, 2=40-59, 3=60+)}
-\item{bmi}{Body mass index (kg/m**2)} 
-\item{hyp}{Hypertensive (1=no,2=yes)} 
+\item{bmi}{Body mass index (kg/m**2)}
+\item{hyp}{Hypertensive (1=no,2=yes)}
 \item{chl}{Total serum cholesterol (mg/dL)} }
 }
 \source{
@@ -25,11 +25,11 @@ variables. The data set \code{nhanes} is the same data set, but with all data
 treated as numerical.
 }
 \examples{
+# create 5 imputed data sets
+imp <- mice(nhanes2)
 
-
-imp <- mice(nhanes2)     # create 5 imputed data sets
-complete(imp)           # print the first imputed data set
-
+# print the first imputed data set
+complete(imp)
 }
 \seealso{
 \code{\link{nhanes}}

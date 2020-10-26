@@ -46,9 +46,9 @@
 
 
 <meta property="og:title" content="Imputation under MNAR mechanism by NARFCS — mice.impute.mnar.logreg" />
-<meta property="og:description" content="Imputes univariate data under a user-specified MNAR mechanism by 
-linear or logistic regression and NARFCS. Sensitivity analysis under 
-different model specifications may shed light on the impact of 
+<meta property="og:description" content="Imputes univariate data under a user-specified MNAR mechanism by
+linear or logistic regression and NARFCS. Sensitivity analysis under
+different model specifications may shed light on the impact of
 different MNAR assumptions on the conclusions." />
 
 
@@ -81,7 +81,7 @@ different MNAR assumptions on the conclusions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@ different MNAR assumptions on the conclusions." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -127,20 +127,20 @@ different MNAR assumptions on the conclusions." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Imputation under MNAR mechanism by NARFCS</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/mice.impute.mnar.logreg.R'><code>R/mice.impute.mnar.logreg.R</code></a>, <a href='https://github.com/stefvanbuuren/mice/blob/master/R/mice.impute.mnar.norm.R'><code>R/mice.impute.mnar.norm.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/mice.impute.mnar.logreg.R'><code>R/mice.impute.mnar.logreg.R</code></a>, <a href='https://github.com/amices/mice/blob/master/R/mice.impute.mnar.norm.R'><code>R/mice.impute.mnar.norm.R</code></a></small>
     <div class="hidden name"><code>mice.impute.mnar.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Imputes univariate data under a user-specified MNAR mechanism by 
-linear or logistic regression and NARFCS. Sensitivity analysis under 
-different model specifications may shed light on the impact of 
+    <p>Imputes univariate data under a user-specified MNAR mechanism by
+linear or logistic regression and NARFCS. Sensitivity analysis under
+different model specifications may shed light on the impact of
 different MNAR assumptions on the conclusions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mice.impute.mnar.logreg</span>(<span class='no'>y</span>, <span class='no'>ry</span>, <span class='no'>x</span>, <span class='kw'>wy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ums</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>umx</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>mice.impute.mnar.logreg</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, wy <span class='op'>=</span> <span class='cn'>NULL</span>, ums <span class='op'>=</span> <span class='cn'>NULL</span>, umx <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>mice.impute.mnar.norm</span>(<span class='no'>y</span>, <span class='no'>ry</span>, <span class='no'>x</span>, <span class='kw'>wy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ums</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>umx</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>mice.impute.mnar.norm</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, wy <span class='op'>=</span> <span class='cn'>NULL</span>, ums <span class='op'>=</span> <span class='cn'>NULL</span>, umx <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,34 +151,34 @@ different MNAR assumptions on the conclusions.</p>
     </tr>
     <tr>
       <th>ry</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the 
-the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation 
-model is fitted. The <code>ry</code> generally distinguishes the observed 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the
+the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation
+model is fitted. The <code>ry</code> generally distinguishes the observed
 (<code>TRUE</code>) and missing values (<code>FALSE</code>) in <code>y</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for 
+      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for
 <code>y</code>. Matrix <code>x</code> may have no missing values.</p></td>
     </tr>
     <tr>
       <th>wy</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value 
+      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value
 indicates locations in <code>y</code> for which imputations are created.</p></td>
     </tr>
     <tr>
       <th>ums</th>
-      <td><p>A string containing the specification of the 
-unidentifiable part of the imputation model (the *unidentifiable 
-model specification”), that is, the desired \(\delta\)-adjustment 
-(offset) as a function of other variables and values for the 
+      <td><p>A string containing the specification of the
+unidentifiable part of the imputation model (the *unidentifiable
+model specification”), that is, the desired \(\delta\)-adjustment
+(offset) as a function of other variables and values for the
 corresponding deltas (sensitivity parameters). See details.</p></td>
     </tr>
     <tr>
       <th>umx</th>
-      <td><p>An auxiliary data matrix containing variables that do 
-not appear in the identifiable part of the imputation procedure 
-but that have been specified via <code>ums</code> as being predictors 
+      <td><p>An auxiliary data matrix containing variables that do
+not appear in the identifiable part of the imputation procedure
+but that have been specified via <code>ums</code> as being predictors
 in the unidentifiable part of the imputation model. See details.</p></td>
     </tr>
     <tr>
@@ -189,83 +189,83 @@ in the unidentifiable part of the imputation model. See details.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Vector with imputed data, same type as <code>y</code>, and of length 
+    <p>Vector with imputed data, same type as <code>y</code>, and of length
 <code><a href='https://rdrr.io/r/base/sum.html'>sum(wy)</a></code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function imputes data that are thought to be Missing Not at 
-Random (MNAR) by the NARFCS method. The NARFCS procedure 
-(Leacy, 2016; Tompsett et al, 2018) generalises the so-called 
-\(\delta\)-adjustment sensitivity analysis method of Van Buuren, 
+    <p>This function imputes data that are thought to be Missing Not at
+Random (MNAR) by the NARFCS method. The NARFCS procedure
+(Leacy, 2016; Tompsett et al, 2018) generalises the so-called
+\(\delta\)-adjustment sensitivity analysis method of Van Buuren,
 Boshuizen &amp; Knook (1999) to the case with multiple incomplete
-variables within the FCS framework. In practical terms, the 
+variables within the FCS framework. In practical terms, the
 NARFCS procedure shifts the imputations drawn at each
-iteration of <code>mice</code> by a user-specified quantity that can 
-vary across subjects, to reflect systematic departures of the 
+iteration of <code>mice</code> by a user-specified quantity that can
+vary across subjects, to reflect systematic departures of the
 missing data from the data distribution imputed under MAR.</p>
-<p>Specification of the NARFCS model is done by the <code>blots</code> 
-argument of <code><a href='mice.html'>mice()</a></code>. The <code>blots</code> parameter is a named 
+<p>Specification of the NARFCS model is done by the <code>blots</code>
+argument of <code><a href='mice.html'>mice()</a></code>. The <code>blots</code> parameter is a named
 list. For each variable to be imputed by
 <code>mice.impute.mnar.norm()</code> or <code>mice.impute.mnar.logreg()</code>
-the corresponding element in <code>blots</code> is a list with 
-at least one argument <code>ums</code> and, optionally, a second 
-argument <code>umx</code>. 
-For example, the high-level call might like something like 
+the corresponding element in <code>blots</code> is a list with
+at least one argument <code>ums</code> and, optionally, a second
+argument <code>umx</code>.
+For example, the high-level call might like something like
 <code><a href='mice.html'>mice(nhanes[, c(2, 4)], method = c("pmm", "mnar.norm"), blots = list(chl = list(ums = "-3+2*bmi")))</a></code>.</p>
-<p>The <code>ums</code> parameter is required, and might look like this: 
-<code>"-4+1*Y"</code>. The <code>ums</code> specifcation must have the 
+<p>The <code>ums</code> parameter is required, and might look like this:
+<code>"-4+1*Y"</code>. The <code>ums</code> specifcation must have the
 following characteristics:</p><ol>
-<li><p>A single term corresponding to the intercept (constant) term, 
-not multiplied by any variable name, must be included in the 
+<li><p>A single term corresponding to the intercept (constant) term,
+not multiplied by any variable name, must be included in the
 expression;</p></li>
-<li><p>Each term in the expression (corresponding to the intercept 
-or a predictor variable) must be separated by either a <code><a href='https://rdrr.io/r/base/Arithmetic.html'>"+"</a></code> 
-or <code><a href='https://rdrr.io/r/base/Arithmetic.html'>"-"</a></code> sign, depending on the sign of the sensitivity 
+<li><p>Each term in the expression (corresponding to the intercept
+or a predictor variable) must be separated by either a <code>"+"</code>
+or <code>"-"</code> sign, depending on the sign of the sensitivity
 parameter;</p></li>
-<li><p>Within each non-intercept term, the sensitivity parameter 
-value comes first and the predictor variable comes second, and these 
-must be separated by a <code><a href='https://rdrr.io/r/base/Arithmetic.html'>"*"</a></code> sign;</p></li>
-<li><p>For categorical predictors, for example a variable <code>Z</code> 
+<li><p>Within each non-intercept term, the sensitivity parameter
+value comes first and the predictor variable comes second, and these
+must be separated by a <code>"*"</code> sign;</p></li>
+<li><p>For categorical predictors, for example a variable <code>Z</code>
 with K + 1 categories <code>("Cat0","Cat1", ...,"CatK")</code>, K
-category-specific terms are needed, and those not in <code>umx</code> 
-(see below) must be specified by concatenating the variable name 
-with the name of the category (e.g. <code>ZCat1</code>) as this is how 
-they are named in the design matrix (argument <code>x</code>) passed 
-to the univariate imputation function. An example is 
+category-specific terms are needed, and those not in <code>umx</code>
+(see below) must be specified by concatenating the variable name
+with the name of the category (e.g. <code>ZCat1</code>) as this is how
+they are named in the design matrix (argument <code>x</code>) passed
+to the univariate imputation function. An example is
 <code>"2+1*ZCat1-3*ZCat2"</code>.</p></li>
 </ol>
 
-<p>If given, the <code>umx</code> specification must have the following 
+<p>If given, the <code>umx</code> specification must have the following
 characteristics:</p><ol>
 <li><p>It contains only complete variables, with no missing values;</p></li>
-<li><p>It is a numeric matrix. In particular, categorical variables 
-must be represented as dummy indicators with names corresponding 
-to what is used in <code>ums</code> to refer to the category-specific terms 
+<li><p>It is a numeric matrix. In particular, categorical variables
+must be represented as dummy indicators with names corresponding
+to what is used in <code>ums</code> to refer to the category-specific terms
 (see above);</p></li>
-<li><p>It has the same number of rows as the <code>data</code> argument 
+<li><p>It has the same number of rows as the <code>data</code> argument
 passed on to the main <code>mice</code> function;</p></li>
-<li><p>It does not contain variables that were already predictors 
-in the identifiable part of the model for the variable under 
+<li><p>It does not contain variables that were already predictors
+in the identifiable part of the model for the variable under
 imputation.</p></li>
 </ol>
 
-<p>Limitation: The present implementation can only condition on variables 
-that appear in the identifiable part of the imputation model (<code>x</code>) or 
-in complete auxiliary variables passed on via the <code>umx</code> argument. 
-It is not possible to specify models where the offset depends on 
+<p>Limitation: The present implementation can only condition on variables
+that appear in the identifiable part of the imputation model (<code>x</code>) or
+in complete auxiliary variables passed on via the <code>umx</code> argument.
+It is not possible to specify models where the offset depends on
 incomplete auxiliary variables.</p>
 <p>For an MNAR alternative see also <code><a href='mice.impute.ri.html'>mice.impute.ri</a></code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Leacy, F.P. (2016). <em>Multiple imputation under missing not at 
-random assumptions via fully conditional specification</em>. 
+    <p>Leacy, F.P. (2016). <em>Multiple imputation under missing not at
+random assumptions via fully conditional specification</em>.
 Dissertation, University of Cambridge, UK.</p>
-<p>Tompsett, D. M., Leacy, F., Moreno-Betancur, M., Heron, J., &amp; 
-White, I. R. (2018). On the use of the not-at-random fully 
-conditional specification (NARFCS) procedure in practice. 
-<em>Statistics in Medicine</em>, <b>37</b>(15), 2338-2353. 
+<p>Tompsett, D. M., Leacy, F., Moreno-Betancur, M., Heron, J., &amp;
+White, I. R. (2018). On the use of the not-at-random fully
+conditional specification (NARFCS) procedure in practice.
+<em>Statistics in Medicine</em>, <b>37</b>(15), 2338-2353.
 <a href='https://doi.org/10.1002/sim.7643'>https://doi.org/10.1002/sim.7643</a>.</p>
-<p>Van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple 
+<p>Van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple
 imputation of missing blood pressure covariates in survival analysis.
 <em>Statistics in Medicine</em>, <b>18</b>, 681--694.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -287,40 +287,51 @@ imputation of missing blood pressure covariates in survival analysis.
 <code><a href='mice.impute.quadratic.html'>mice.impute.quadratic</a>()</code>,
 <code><a href='mice.impute.rf.html'>mice.impute.rf</a>()</code>,
 <code><a href='mice.impute.ri.html'>mice.impute.ri</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Margarita Moreno-Betancur, Stef van Buuren, Ian R. White, 2020.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># 1: Example with no auxiliary data: only pass unidentifiable model specification (ums) </span>
+    <pre class="examples"><div class='input'><span class='co'># 1: Example with no auxiliary data: only pass unidentifiable model specification (ums)</span>
 
 <span class='co'># Specify argument to pass on to mnar imputation functions via "blots" argument</span>
-<span class='no'>mnar.blot</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>X</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>ums</span> <span class='kw'>=</span> <span class='st'>"-4"</span>), <span class='kw'>Y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>ums</span> <span class='kw'>=</span> <span class='st'>"2+1*ZCat1-3*ZCat2"</span>))
+<span class='va'>mnar.blot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>X <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>ums <span class='op'>=</span> <span class='st'>"-4"</span><span class='op'>)</span>, Y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>ums <span class='op'>=</span> <span class='st'>"2+1*ZCat1-3*ZCat2"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># Run NARFCS by using mnar imputation methods and passing argument via blots</span>
-<span class='no'>impNARFCS</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>mnar_demo_data</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mnar.logreg"</span>, <span class='st'>"mnar.norm"</span>, <span class='st'>""</span>),
-                  <span class='kw'>blots</span> <span class='kw'>=</span> <span class='no'>mnar.blot</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>234235</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='va'>impNARFCS</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>mnar_demo_data</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mnar.logreg"</span>, <span class='st'>"mnar.norm"</span>, <span class='st'>""</span><span class='op'>)</span>,
+  blots <span class='op'>=</span> <span class='va'>mnar.blot</span>, seed <span class='op'>=</span> <span class='fl'>234235</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
 
-<span class='co'># Obtain MI results: Note they coincide with those from old version at </span>
+<span class='co'># Obtain MI results: Note they coincide with those from old version at</span>
 <span class='co'># https://github.com/moreno-betancur/NARFCS</span>
-<span class='fu'><a href='pool.html'>pool</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>impNARFCS</span>,<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Y</span> ~ <span class='no'>X</span> + <span class='no'>Z</span>)))$<span class='no'>pooled</span>$<span class='no'>estimate</span></div><div class='output co'>#&gt; [1]  19.368813   3.039045 -14.643202 -28.586061</div><div class='input'>
+<span class='fu'><a href='pool.html'>pool</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>impNARFCS</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>X</span> <span class='op'>+</span> <span class='va'>Z</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='va'>pooled</span><span class='op'>$</span><span class='va'>estimate</span>
+</div><div class='output co'>#&gt; [1]  19.368813   3.039045 -14.643202 -28.586061</div><div class='input'>
 <span class='co'># 2: Example passing also auxiliary data to MNAR procedure (umx)</span>
-<span class='co'># Assumptions: </span>
+<span class='co'># Assumptions:</span>
 <span class='co'># - Auxiliary data are complete, no missing values</span>
 <span class='co'># - Auxiliary data are a numeric matrix</span>
 <span class='co'># - Auxiliary data have same number of rows as x</span>
 <span class='co'># - Auxiliary data have no overlapping variable names with x</span>
 
 <span class='co'># Specify argument to pass on to mnar imputation functions via "blots" argument</span>
-<span class='no'>aux</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>0</span>:<span class='fl'>1</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>mnar_demo_data</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/dimnames.html'>dimnames</a></span>(<span class='no'>aux</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>NULL</span>, <span class='st'>"even"</span>)
-<span class='no'>mnar.blot</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>X</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>ums</span> <span class='kw'>=</span> <span class='st'>"-4"</span>),
-                  <span class='kw'>Y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>ums</span> <span class='kw'>=</span> <span class='st'>"2+1*ZCat1-3*ZCat2+0.5*even"</span>, <span class='kw'>umx</span> <span class='kw'>=</span> <span class='no'>aux</span>))
+<span class='va'>aux</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>1</span>, nrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>mnar_demo_data</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/dimnames.html'>dimnames</a></span><span class='op'>(</span><span class='va'>aux</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='st'>"even"</span><span class='op'>)</span>
+<span class='va'>mnar.blot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+  X <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>ums <span class='op'>=</span> <span class='st'>"-4"</span><span class='op'>)</span>,
+  Y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>ums <span class='op'>=</span> <span class='st'>"2+1*ZCat1-3*ZCat2+0.5*even"</span>, umx <span class='op'>=</span> <span class='va'>aux</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># Run NARFCS by using mnar imputation methods and passing argument via blots</span>
-<span class='no'>impNARFCS</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>mnar_demo_data</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mnar.logreg"</span>, <span class='st'>"mnar.norm"</span>, <span class='st'>""</span>),
-                  <span class='kw'>blots</span> <span class='kw'>=</span> <span class='no'>mnar.blot</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>234235</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='va'>impNARFCS</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>mnar_demo_data</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mnar.logreg"</span>, <span class='st'>"mnar.norm"</span>, <span class='st'>""</span><span class='op'>)</span>,
+  blots <span class='op'>=</span> <span class='va'>mnar.blot</span>, seed <span class='op'>=</span> <span class='fl'>234235</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
 
-<span class='co'># Obtain MI results: As expected they differ (slightly) from those </span>
+<span class='co'># Obtain MI results: As expected they differ (slightly) from those</span>
 <span class='co'># from old version at https://github.com/moreno-betancur/NARFCS</span>
-<span class='fu'><a href='pool.html'>pool</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>impNARFCS</span>,<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Y</span> ~ <span class='no'>X</span> + <span class='no'>Z</span>)))$<span class='no'>pooled</span>$<span class='no'>estimate</span></div><div class='output co'>#&gt; [1]  19.521134   2.952546 -14.729454 -28.699292</div></pre>
+<span class='fu'><a href='pool.html'>pool</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>impNARFCS</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>X</span> <span class='op'>+</span> <span class='va'>Z</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='va'>pooled</span><span class='op'>$</span><span class='va'>estimate</span>
+</div><div class='output co'>#&gt; [1]  19.521134   2.952546 -14.729454 -28.699292</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -336,7 +347,7 @@ imputation of missing blood pressure covariates in survival analysis.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

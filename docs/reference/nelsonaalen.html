@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -124,7 +124,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Cumulative hazard rate or Nelson-Aalen estimator</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/nelsonaalen.R'><code>R/nelsonaalen.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/nelsonaalen.R'><code>R/nelsonaalen.R</code></a></small>
     <div class="hidden name"><code>nelsonaalen.Rd</code></div>
     </div>
 
@@ -132,7 +132,7 @@
     <p>Calculates the cumulative hazard rate (Nelson-Aalen estimator)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nelsonaalen</span>(<span class='no'>data</span>, <span class='no'>timevar</span>, <span class='no'>statusvar</span>)</pre>
+    <pre class="usage"><span class='fu'>nelsonaalen</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>timevar</span>, <span class='va'>statusvar</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,26 +166,30 @@ models.  See section 7.1 of Van Buuren (2012) for an example.</p>
     <p>White, I. R., Royston, P. (2009). Imputing missing covariate
 values for the Cox model.  <em>Statistics in Medicine</em>, <em>28</em>(15),
 1982-1998.</p>
-<p>Van Buuren, S. (2018). 
+<p>Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/sec-toomany.html#a-further-improvement-survival-as-predictor-variable'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Stef van Buuren, 2012</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>MASS</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: MASS</span></div><div class='output co'>#&gt; <span class='message'></span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='http://www.stats.ox.ac.uk/pub/MASS4/'>MASS</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: MASS</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘MASS’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:dplyr’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    select</span></div><div class='input'>
-<span class='no'>leuk</span>$<span class='no'>status</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>  <span class='co'>## no censoring occurs in leuk data (MASS)</span>
-<span class='no'>ch</span> <span class='kw'>&lt;-</span> <span class='fu'>nelsonaalen</span>(<span class='no'>leuk</span>, <span class='no'>time</span>, <span class='no'>status</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>leuk</span>$<span class='no'>time</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>ch</span>, <span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>'Cumulative hazard'</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>'Time'</span>)</div><div class='img'><img src='nelsonaalen-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>leuk</span><span class='op'>$</span><span class='va'>status</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='co'>## no censoring occurs in leuk data (MASS)</span>
+<span class='va'>ch</span> <span class='op'>&lt;-</span> <span class='fu'>nelsonaalen</span><span class='op'>(</span><span class='va'>leuk</span>, <span class='va'>time</span>, <span class='va'>status</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>leuk</span><span class='op'>$</span><span class='va'>time</span>, y <span class='op'>=</span> <span class='va'>ch</span>, ylab <span class='op'>=</span> <span class='st'>"Cumulative hazard"</span>, xlab <span class='op'>=</span> <span class='st'>"Time"</span><span class='op'>)</span>
+</div><div class='img'><img src='nelsonaalen-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>### See example on http://www.engineeredsoftware.com/lmar/pe_cum_hazard_function.htm</span>
-<span class='no'>time</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>43</span>, <span class='fl'>67</span>, <span class='fl'>92</span>, <span class='fl'>94</span>, <span class='fl'>149</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>149</span>,<span class='fl'>7</span>))
-<span class='no'>status</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>,<span class='fl'>5</span>),<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0</span>,<span class='fl'>7</span>))
-<span class='no'>eng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='no'>time</span>, <span class='no'>status</span>)
-<span class='no'>ch</span> <span class='kw'>&lt;-</span> <span class='fu'>nelsonaalen</span>(<span class='no'>eng</span>, <span class='no'>time</span>, <span class='no'>status</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>time</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>ch</span>, <span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>'Cumulative hazard'</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>'Time'</span>)</div><div class='img'><img src='nelsonaalen-2.png' alt='' width='700' height='433' /></div><div class='input'>
-
-</div></pre>
+<span class='va'>time</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>43</span>, <span class='fl'>67</span>, <span class='fl'>92</span>, <span class='fl'>94</span>, <span class='fl'>149</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>149</span>, <span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>status</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>5</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>eng</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>time</span>, <span class='va'>status</span><span class='op'>)</span>
+<span class='va'>ch</span> <span class='op'>&lt;-</span> <span class='fu'>nelsonaalen</span><span class='op'>(</span><span class='va'>eng</span>, <span class='va'>time</span>, <span class='va'>status</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>time</span>, y <span class='op'>=</span> <span class='va'>ch</span>, ylab <span class='op'>=</span> <span class='st'>"Cumulative hazard"</span>, xlab <span class='op'>=</span> <span class='st'>"Time"</span><span class='op'>)</span>
+</div><div class='img'><img src='nelsonaalen-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -201,7 +205,7 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

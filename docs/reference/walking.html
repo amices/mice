@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -124,7 +124,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Walking disability data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/walking.R'><code>R/walking.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/walking.R'><code>R/walking.R</code></a></small>
     <div class="hidden name"><code>walking.Rd</code></div>
     </div>
 
@@ -136,12 +136,12 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 890 rows on the following 5 variables:</p><dl'>
-<dt>sex</dt><dd><p>Sex of respondent (factor)</p></dd> 
-<dt>age</dt><dd><p>Age of respondent</p></dd> 
+    <p>A data frame with 890 rows on the following 5 variables:</p><dl>
+<dt>sex</dt><dd><p>Sex of respondent (factor)</p></dd>
+<dt>age</dt><dd><p>Age of respondent</p></dd>
 <dt>YA</dt><dd><p>Item administered in samples A and E (factor)</p></dd>
 <dt>YB</dt><dd><p>Item administered in samples B and E (factor)</p></dd>
-<dt>src</dt><dd><p>Source: Sample A, B or E (factor)</p></dd> 
+<dt>src</dt><dd><p>Source: Sample A, B or E (factor)</p></dd>
 
 </dl>
 
@@ -154,47 +154,52 @@ study is better than simple equating or than imputation under independence.</p>
 <p>Item YA corresponds to the HAQ8 item, and item YB corresponds to the GAR9
 items from Van Buuren et al (2005).  Sample E (as well as sample B) is the
 Euridiss study (n=292), sample A is the ERGOPLUS study (n=306).</p>
-<p>See Van Buuren (2012) chapter 7 for more details on the imputation
+<p>See Van Buuren (2018) section 9.4 for more details on the imputation
 methodology.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>van Buuren, S., Eyres, S., Tennant, A., Hopman-Rock, M. (2005).
 Improving comparability of existing data by Response Conversion.
 <em>Journal of Official Statistics</em>, <b>21</b>(1), 53-72.</p>
-<p>Van Buuren, S. (2018). 
+<p>Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/sec-codingsystems.html#sec:impbridge'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'><a href='md.pattern.html'>md.pattern</a></span>(<span class='no'>walking</span>)</div><div class='img'><img src='walking-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;     sex age src  YA  YB    
+    <pre class="examples"><div class='input'><span class='fu'><a href='md.pattern.html'>md.pattern</a></span><span class='op'>(</span><span class='va'>walking</span><span class='op'>)</span>
+</div><div class='img'><img src='walking-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;     sex age src  YA  YB    
 #&gt; 290   1   1   1   1   1   0
 #&gt; 300   1   1   1   1   0   1
 #&gt; 294   1   1   1   0   1   1
 #&gt; 6     1   1   1   0   0   2
 #&gt;       0   0   0 300 306 606</div><div class='input'>
-<span class='no'>micemill</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>n</span>) {
- <span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='no'>n</span>) {
-   <span class='no'>imp</span> <span class='kw'>&lt;&lt;-</span> <span class='fu'><a href='mice.mids.html'>mice.mids</a></span>(<span class='no'>imp</span>) <span class='co'># global assignment </span>
-   <span class='no'>cors</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>YA</span>),
-                        <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>YB</span>),
-                        <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"kendall"</span>))
-   <span class='no'>tau</span> <span class='kw'>&lt;&lt;-</span> <span class='fu'><a href='cbind.html'>rbind</a></span>(<span class='no'>tau</span>, <span class='fu'><a href='getfit.html'>getfit</a></span>(<span class='no'>cors</span>, <span class='kw'>s</span><span class='kw'>=</span><span class='fl'>TRUE</span>))  <span class='co'># global assignment</span>
- }
-}
+<span class='va'>micemill</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>n</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='va'>imp</span> <span class='op'>&lt;&lt;-</span> <span class='fu'><a href='mice.mids.html'>mice.mids</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span> <span class='co'># global assignment</span>
+    <span class='va'>cors</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>YA</span><span class='op'>)</span>,
+      <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>YB</span><span class='op'>)</span>,
+      method <span class='op'>=</span> <span class='st'>"kendall"</span>
+    <span class='op'>)</span><span class='op'>)</span>
+    <span class='va'>tau</span> <span class='op'>&lt;&lt;-</span> <span class='fu'><a href='cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>tau</span>, <span class='fu'><a href='getfit.html'>getfit</a></span><span class='op'>(</span><span class='va'>cors</span>, s <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># global assignment</span>
+  <span class='op'>}</span>
+<span class='op'>}</span>
 
-<span class='no'>plotit</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>()
- <span class='fu'><a href='https://rdrr.io/r/graphics/matplot.html'>matplot</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>tau</span>),<span class='kw'>y</span><span class='kw'>=</span><span class='no'>tau</span>,
-       <span class='kw'>ylab</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Kendall's "</span>,<span class='no'>tau</span>)),
-         <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Iteration"</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"l"</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>1</span>,
-       <span class='kw'>lty</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>10</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>"black"</span>)
+<span class='va'>plotit</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/graphics/matplot.html'>matplot</a></span><span class='op'>(</span>
+    x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>tau</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='va'>tau</span>,
+    ylab <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Kendall's "</span>, <span class='va'>tau</span><span class='op'>)</span><span class='op'>)</span>,
+    xlab <span class='op'>=</span> <span class='st'>"Iteration"</span>, type <span class='op'>=</span> <span class='st'>"l"</span>, lwd <span class='op'>=</span> <span class='fl'>1</span>,
+    lty <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, col <span class='op'>=</span> <span class='st'>"black"</span>
+  <span class='op'>)</span>
+<span class='op'>}</span>
 
-<span class='no'>tau</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>walking</span>, <span class='kw'>max</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>m</span><span class='kw'>=</span><span class='fl'>10</span>, <span class='kw'>seed</span><span class='kw'>=</span><span class='fl'>92786</span>)
-<span class='no'>pred</span> <span class='kw'>&lt;-</span> <span class='no'>imp</span>$<span class='no'>pred</span>
-<span class='no'>pred</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"src"</span>,<span class='st'>"age"</span>,<span class='st'>"sex"</span>)] <span class='kw'>&lt;-</span> <span class='fl'>0</span>
-<span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span>(<span class='no'>walking</span>, <span class='kw'>max</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>m</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>seed</span><span class='kw'>=</span><span class='fl'>92786</span>, <span class='kw'>pred</span><span class='kw'>=</span><span class='no'>pred</span>)
-<span class='fu'>micemill</span>(<span class='fl'>5</span>)</div><div class='output co'>#&gt; 
+<span class='va'>tau</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span>
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>walking</span>, max <span class='op'>=</span> <span class='fl'>0</span>, m <span class='op'>=</span> <span class='fl'>10</span>, seed <span class='op'>=</span> <span class='fl'>92786</span><span class='op'>)</span>
+<span class='va'>pred</span> <span class='op'>&lt;-</span> <span class='va'>imp</span><span class='op'>$</span><span class='va'>pred</span>
+<span class='va'>pred</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"src"</span>, <span class='st'>"age"</span>, <span class='st'>"sex"</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>walking</span>, max <span class='op'>=</span> <span class='fl'>0</span>, m <span class='op'>=</span> <span class='fl'>3</span>, seed <span class='op'>=</span> <span class='fl'>92786</span>, pred <span class='op'>=</span> <span class='va'>pred</span><span class='op'>)</span>
+<span class='fu'>micemill</span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  YA  YB
 #&gt;   1   2  YA  YB
@@ -218,9 +223,9 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 #&gt;  iter imp variable
 #&gt;   5   1  YA  YB
 #&gt;   5   2  YA  YB
-#&gt;   5   3  YA  YB</div><div class='input'><span class='fu'>plotit</span>()</div><div class='img'><img src='walking-2.png' alt='' width='700' height='433' /></div><div class='input'>
-### to get figure 7.8 van Buuren (2012) use m=10 and micemill(20) 
-
+#&gt;   5   3  YA  YB</div><div class='input'><span class='fu'>plotit</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='walking-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'>### to get figure 9.8 van Buuren (2018) use m=10 and micemill(20)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -237,7 +242,7 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

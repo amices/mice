@@ -18,12 +18,12 @@
 \arguments{
 \item{x}{An object of class \code{mids}}
 
-\item{y}{A formula that specifies which variables, stream and iterations are plotted. 
+\item{y}{A formula that specifies which variables, stream and iterations are plotted.
 If omitted, all streams, variables and iterations are plotted.}
 
 \item{theme}{The trellis theme to applied to the graphs. The default is \code{mice.theme()}.}
 
-\item{layout}{A vector of length 2 given the number of columns and rows in the plot. 
+\item{layout}{A vector of length 2 given the number of columns and rows in the plot.
 The default is \code{c(2, 3)}.}
 
 \item{type}{Parameter \code{type} of \code{\link{panel.xyplot}}.}
@@ -41,8 +41,8 @@ An object of class \code{"trellis"}.
 Trace line plots portray the value of an estimate
 against the iteration number. The estimate can be anything that you can calculate, but
 typically are chosen as parameter of scientific interest. The \code{plot} method for
-a \code{mids} object plots the mean and standard deviation of the imputed (not observed) 
-values against the iteration number for each of the $m$ replications. By default, 
+a \code{mids} object plots the mean and standard deviation of the imputed (not observed)
+values against the iteration number for each of the $m$ replications. By default,
 the function plot the development of the mean and standard deviation for each incomplete
 variable. On convergence, the streams should intermingle and be free of any trend.
 }
@@ -51,7 +51,7 @@ imp <- mice(nhanes, print = FALSE)
 plot(imp, bmi + chl ~ .it | .ms, layout = c(2, 1))
 }
 \seealso{
-\code{\link{mice}}, \code{\link[=mids-class]{mids}}, 
+\code{\link{mice}}, \code{\link[=mids-class]{mids}},
 \code{\link{xyplot}}
 }
 \author{

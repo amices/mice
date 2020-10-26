@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Number of imputations per block — nimp" />
-<meta property="og:description" content="Calculates the number of cells within a block for which imputation 
+<meta property="og:description" content="Calculates the number of cells within a block for which imputation
 is requested." />
 
 
@@ -79,7 +79,7 @@ is requested." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@ is requested." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/stefvanbuuren/mice/">
+  <a href="https://github.com/amices/mice/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -125,60 +125,62 @@ is requested." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Number of imputations per block</h1>
-    <small class="dont-index">Source: <a href='https://github.com/stefvanbuuren/mice/blob/master/R/nimp.R'><code>R/nimp.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/nimp.R'><code>R/nimp.R</code></a></small>
     <div class="hidden name"><code>nimp.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculates the number of cells within a block for which imputation 
+    <p>Calculates the number of cells within a block for which imputation
 is requested.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nimp</span>(<span class='no'>where</span>, <span class='kw'>blocks</span> <span class='kw'>=</span> <span class='fu'><a href='make.blocks.html'>make.blocks</a></span>(<span class='no'>where</span>))</pre>
+    <pre class="usage"><span class='fu'>nimp</span><span class='op'>(</span><span class='va'>where</span>, blocks <span class='op'>=</span> <span class='fu'><a href='make.blocks.html'>make.blocks</a></span><span class='op'>(</span><span class='va'>where</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>where</th>
-      <td><p>A data frame or matrix with logicals of the same dimensions 
-as <code>data</code> indicating where in the data the imputations should be 
+      <td><p>A data frame or matrix with logicals of the same dimensions
+as <code>data</code> indicating where in the data the imputations should be
 created. The default, <code>where = is.na(data)</code>, specifies that the
-missing data should be imputed. The <code>where</code> argument may be used to 
+missing data should be imputed. The <code>where</code> argument may be used to
 overimpute observed data, or to skip imputations for selected missing values.</p></td>
     </tr>
     <tr>
       <th>blocks</th>
-      <td><p>List of vectors with variable names per block. List elements 
-may be named to identify blocks. Variables within a block are 
+      <td><p>List of vectors with variable names per block. List elements
+may be named to identify blocks. Variables within a block are
 imputed by a multivariate imputation method
-(see <code>method</code> argument). By default each variable is placed 
+(see <code>method</code> argument). By default each variable is placed
 into its own block, which is effectively
-fully conditional specification (FCS) by univariate models 
-(variable-by-variable imputation). Only variables whose names appear in 
-<code>blocks</code> are imputed. The relevant columns in the <code>where</code> 
-matrix are set to <code>FALSE</code> of variables that are not block members. 
-A variable may appear in multiple blocks. In that case, it is 
+fully conditional specification (FCS) by univariate models
+(variable-by-variable imputation). Only variables whose names appear in
+<code>blocks</code> are imputed. The relevant columns in the <code>where</code>
+matrix are set to <code>FALSE</code> of variables that are not block members.
+A variable may appear in multiple blocks. In that case, it is
 effectively re-imputed each time that it is visited.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A numeric vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(blocks)</a></code> containing 
+    <p>A numeric vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(blocks)</a></code> containing
 the number of cells that need to be imputed within a block.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='mice.html'>mice</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>where</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>nhanes</span>)
+    <pre class="examples"><div class='input'><span class='va'>where</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
 
 <span class='co'># standard FCS</span>
-<span class='fu'>nimp</span>(<span class='no'>where</span>)</div><div class='output co'>#&gt; age bmi hyp chl 
+<span class='fu'>nimp</span><span class='op'>(</span><span class='va'>where</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; age bmi hyp chl 
 #&gt;   0   9   8  10 </div><div class='input'>
 <span class='co'># user-defined blocks</span>
-<span class='fu'>nimp</span>(<span class='no'>where</span>, <span class='kw'>blocks</span> <span class='kw'>=</span> <span class='fu'><a href='name.blocks.html'>name.blocks</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"bmi"</span>, <span class='st'>"hyp"</span>), <span class='st'>"age"</span>, <span class='st'>"chl"</span>)))</div><div class='output co'>#&gt;  B1 age chl 
+<span class='fu'>nimp</span><span class='op'>(</span><span class='va'>where</span>, blocks <span class='op'>=</span> <span class='fu'><a href='name.blocks.html'>name.blocks</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"bmi"</span>, <span class='st'>"hyp"</span><span class='op'>)</span>, <span class='st'>"age"</span>, <span class='st'>"chl"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  B1 age chl 
 #&gt;  17   0  10 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -195,7 +197,7 @@ the number of cells that need to be imputed within a block.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -2,49 +2,49 @@
 % Please edit documentation in R/as.R
 \name{as.mids}
 \alias{as.mids}
-\title{Converts an multiply imputed dataset (long format) into a \code{mids} object}
+\title{Converts an imputed dataset (long format) into a \code{mids} object}
 \usage{
 as.mids(long, where = NULL, .imp = ".imp", .id = ".id")
 }
 \arguments{
-\item{long}{A multiply imputed data set in long format, for example 
-produced by a call to \code{complete(..., action = 'long', include = TRUE)}, 
+\item{long}{A multiply imputed data set in long format, for example
+produced by a call to \code{complete(..., action = 'long', include = TRUE)},
 or by other software.}
 
-\item{where}{A data frame or matrix with logicals of the same dimensions 
-as \code{data} indicating where in the data the imputations should be 
+\item{where}{A data frame or matrix with logicals of the same dimensions
+as \code{data} indicating where in the data the imputations should be
 created. The default, \code{where = is.na(data)}, specifies that the
-missing data should be imputed. The \code{where} argument may be used to 
+missing data should be imputed. The \code{where} argument may be used to
 overimpute observed data, or to skip imputations for selected missing values.}
 
-\item{.imp}{An optional column number or column name in \code{long}, 
-indicating the imputation index. The values are assumed to be consecutive 
-integers between 0 and \code{m}. Values \code{1} through \code{m} 
-correspond to the imputation index, value \code{0} indicates 
-the original data (with missings). 
+\item{.imp}{An optional column number or column name in \code{long},
+indicating the imputation index. The values are assumed to be consecutive
+integers between 0 and \code{m}. Values \code{1} through \code{m}
+correspond to the imputation index, value \code{0} indicates
+the original data (with missings).
 By default, the procedure will search for a variable named \code{".imp"}.}
 
-\item{.id}{An optional column number or column name in \code{long}, 
-indicating the subject identification. If not specified, then the 
-function searches for a variable named \code{".id"}. If this variable 
-is found, the values in the column will define the row names in 
+\item{.id}{An optional column number or column name in \code{long},
+indicating the subject identification. If not specified, then the
+function searches for a variable named \code{".id"}. If this variable
+is found, the values in the column will define the row names in
 the \code{data} element of the resulting \code{mids} object.}
 }
 \value{
 An object of class \code{mids}
 }
 \description{
-This function converts imputed data stored in long format into 
-an object of class \code{mids}. The original incomplete dataset 
+This function converts imputed data stored in long format into
+an object of class \code{mids}. The original incomplete dataset
 needs to be available so that we know where the missing data are.
-The function is useful to convert back operations applied to 
-the imputed data back in a \code{mids} object. It may also be 
-used to store multiply imputed data sets from other software 
+The function is useful to convert back operations applied to
+the imputed data back in a \code{mids} object. It may also be
+used to store multiply imputed data sets from other software
 into the format used by \code{mice}.
 }
 \note{
 The function expects the input data \code{long} to be sorted by
-imputation number (variable \code{".imp"} by default), and in the 
+imputation number (variable \code{".imp"} by default), and in the
 same sequence within each imputation block.
 }
 \examples{

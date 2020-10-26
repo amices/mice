@@ -1,11 +1,15 @@
 context("D3")
 
 # The following test was contributed by jawitte
-# https://github.com/stefvanbuuren/mice/issues/226
+# https://github.com/amices/mice/issues/226
 A <- rnorm(100)
-B <- 0.1*A + rnorm(100)
-fit1 <- lapply(1:5, function(m){lm(B~A)})
-fit0 <- lapply(1:5, function(m){lm(B~1)})
+B <- 0.1 * A + rnorm(100)
+fit1 <- lapply(1:5, function(m) {
+  lm(B ~ A)
+})
+fit0 <- lapply(1:5, function(m) {
+  lm(B ~ 1)
+})
 x1 <- lmtest::lrtest(fit1[[1]], fit0[[1]])
 x2 <- D3(fit1 = fit1, fit0 = fit0)
 x3 <- mitml::testModels(fit1, fit0, method = "D3")
@@ -47,13 +51,15 @@ suppressPackageStartupMessages(library(mitml, quietly = TRUE))
 library(lme4, quietly = TRUE)
 library(broom.mixed, quietly = TRUE)
 data(studentratings)
-fml <- ReadDis + SES ~ ReadAchiev + (1|ID)
+fml <- ReadDis + SES ~ ReadAchiev + (1 | ID)
 set.seed(26262)
-imp <- mitml::panImpute(studentratings, formula=fml, n.burn=1000, n.iter=100, m=5,
-                 silent = TRUE)
-implist <- mitml::mitmlComplete(imp, print=1:5)
-fit0 <- with(implist, lmer(ReadAchiev ~ (1|ID), REML=FALSE))
-fit1 <- with(implist, lmer(ReadAchiev ~ ReadDis + SES + (1|ID), REML=FALSE))
+imp <- mitml::panImpute(studentratings,
+  formula = fml, n.burn = 1000, n.iter = 100, m = 5,
+  silent = TRUE
+)
+implist <- mitml::mitmlComplete(imp, print = 1:5)
+fit0 <- with(implist, lmer(ReadAchiev ~ (1 | ID), REML = FALSE))
+fit1 <- with(implist, lmer(ReadAchiev ~ ReadDis + SES + (1 | ID), REML = FALSE))
 
 # likelihood test
 z3 <- D3(fit1, fit0)

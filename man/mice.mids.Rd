@@ -4,11 +4,14 @@
 \alias{mice.mids}
 \title{Multivariate Imputation by Chained Equations (Iteration Step)}
 \usage{
-mice.mids(obj, maxit = 1, printFlag = TRUE, ...)
+mice.mids(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...)
 }
 \arguments{
 \item{obj}{An object of class \code{mids}, typically produces by a previous
 call to \code{mice()} or \code{mice.mids()}}
+
+\item{newdata}{An optional \code{data.frame} for which multiple imputations
+are generated according to the model in \code{obj}.}
 
 \item{maxit}{The number of additional Gibbs sampling iterations.}
 
@@ -35,16 +38,15 @@ is specified in the \code{mice()} function and cannot be changed with
 \code{mids} object.
 }
 \examples{
-
-imp1 <- mice(nhanes, maxit=1, seed = 123)
+imp1 <- mice(nhanes, maxit = 1, seed = 123)
 imp2 <- mice.mids(imp1)
 
 # yields the same result as
-imp <- mice(nhanes, maxit=2, seed = 123)
+imp <- mice(nhanes, maxit = 2, seed = 123)
 
 # verification
 identical(imp$imp, imp2$imp)
-# 
+#
 }
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
@@ -53,7 +55,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 \url{https://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-\code{\link{complete}}, \code{\link{mice}}, \code{\link{set.seed}}, 
+\code{\link{complete}}, \code{\link{mice}}, \code{\link{set.seed}},
 \code{\link[=mids-class]{mids}}
 }
 \author{

@@ -4,20 +4,21 @@
 \alias{D1}
 \title{Compare two nested models using D1-statistic}
 \usage{
-D1(fit1, fit0 = NULL, df.com = NULL, ...)
+D1(fit1, fit0 = NULL, dfcom = NULL, df.com = NULL)
 }
 \arguments{
 \item{fit1}{An object of class \code{mira}, produced by \code{with()}.}
 
 \item{fit0}{An object of class \code{mira}, produced by \code{with()}. The
-model in \code{fit0} is a nested within \code{fit1}. The default null 
+model in \code{fit0} is a nested within \code{fit1}. The default null
 model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.}
 
-\item{df.com}{A single number or a numeric vector denoting the 
-complete-data degrees of freedom for the hypothesis test. If not specified,
-it is set equal to \code{df.residual} of model \code{fit1}.}
+\item{dfcom}{A single number denoting the
+complete-data degrees of freedom of model \code{fit1}. If not specified,
+it is set equal to \code{df.residual} of model \code{fit1}. If that cannot
+be done, the procedure assumes (perhaps incorrectly) a large sample.}
 
-\item{\dots}{Not used.}
+\item{df.com}{Deprecated}
 }
 \description{
 The D1-statistics is the multivariate Wald test.
@@ -28,16 +29,17 @@ imp <- mice(nhanes2, seed = 51009, print = FALSE)
 mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
 mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
 D1(mi1, mi0)
-
+\dontrun{
 # Compare two logistic regression models
-imp  <- mice(boys, maxit = 2, print = FALSE)
+imp <- mice(boys, maxit = 2, print = FALSE)
 fit1 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc + reg, family = binomial))
 fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
 D1(fit1, fit0)
 }
+}
 \references{
 Li, K. H., T. E. Raghunathan, and D. B. Rubin. 1991.
-Large-Sample Significance Levels from Multiply Imputed Data Using 
+Large-Sample Significance Levels from Multiply Imputed Data Using
 Moment-Based Statistics and an F Reference Distribution.
 \emph{Journal of the American Statistical Association}, 86(416): 1065–73.
 

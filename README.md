@@ -1,12 +1,12 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# mice <a href='https://stefvanbuuren.name/mice/'><img src='MICE_sticker_SMALL.png' align="right" height="139" /></a>
+# mice <a href='https://amices.github.io/mice/'><img src='MICE_sticker_SMALL.png' align="right" height="139" /></a>
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
-[![](http://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice)
-[![](https://img.shields.io/badge/github%20version-3.10.0-orange.svg)](https://github.com/stefvanbuuren/mice)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
+[![](https://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice)
+[![](https://img.shields.io/badge/github%20version-3.11.7-orange.svg)](https://amices.github.io/mice/)
 
-## [Multivariate Imputation by Chained Equations](http://stefvanbuuren.github.io/mice/)
+## [Multivariate Imputation by Chained Equations](https://amices.github.io/mice/)
 
 The [`mice`](https://cran.r-project.org/package=mice) package implements
 a method to deal with missing data. The package creates multiple
@@ -31,7 +31,7 @@ The latest version is can be installed from GitHub as follows:
 
 ``` r
 install.packages("devtools")
-devtools::install_github(repo = "stefvanbuuren/mice")
+devtools::install_github(repo = "amices/mice")
 ```
 
 ## Minimal example
@@ -129,7 +129,7 @@ features:
     Edition.](https://stefvanbuuren.name/fimd/)
 
 See [MICE: Multivariate Imputation by Chained
-Equations](http://stefvanbuuren.github.io/mice/) for more resources.
+Equations](https://amices.github.io/mice/) for more resources.
 
 I’ll be happy to take feedback and discuss suggestions. Please submit
 these through Github’s issues facility.
@@ -145,7 +145,7 @@ these through Github’s issues facility.
 ### Course materials
 
 1.  [Handling Missing Data in `R` with
-    `mice`](https://stefvanbuuren.github.io/Winnipeg/)
+    `mice`](https://amices.github.io/Winnipeg/)
 2.  [Statistical Methods for combined data
     sets](https://stefvanbuuren.github.io/RECAPworkshop/)
 
@@ -169,8 +169,14 @@ these through Github’s issues facility.
 ### Code from publications
 
 1.  [Flexible Imputation of Missing Data. Second
-    edition.](https://github.com/stefvanbuuren/FIMD/tree/master/R)
+    edition.](https://github.com/stefvanbuuren/FIMD2/tree/master/R)
 
 ## Acknowledgement
 
 The cute mice sticker was designed by Jaden M. Walters. Thanks Jaden\!
+
+## Code of Conduct
+
+Please note that the mice project is released with a [Contributor Code
+of Conduct](https://amices.github.io/mice/CODE_OF_CONDUCT.html). By
+contributing to this project, you agree to abide by its terms.

@@ -30,10 +30,16 @@ d2 <- mice:::update.design(design, data, varname = "bmi")
 d3 <- mice:::update.design(design, data, varname = ".")
 
 test_that("caries through selected row reversals", {
-  expect_identical(as.vector(design[1:4, 2:3]), 
-                   as.vector(d1[4:1, 2:3]))
-  expect_identical(as.vector(design[1:4, 4]), 
-                   as.vector(d2[4:1, 4]))
-  expect_identical(as.vector(design[1:4, 2:5]), 
-                   as.vector(d3[4:1, 2:5]))
+  expect_identical(
+    as.vector(design[1:4, 2:3]),
+    as.vector(d1[4:1, 2:3])
+  )
+  expect_identical(
+    as.vector(design[1:4, 4]),
+    as.vector(d2[4:1, 4])
+  )
+  expect_identical(
+    as.vector(design[1:4, 2:5]),
+    as.vector(d3[4:1, 2:5])
+  )
 })

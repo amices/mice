@@ -5,13 +5,13 @@
 \alias{popmis}
 \title{Hox pupil popularity data with missing popularity scores}
 \format{
-A data frame with 2000 rows and 7 columns: 
+A data frame with 2000 rows and 7 columns:
 \describe{
-\item{pupil}{Pupil number within school} 
-\item{school}{School number} 
+\item{pupil}{Pupil number within school}
+\item{school}{School number}
 \item{popular}{Pupil popularity with 848 missing entries}
-\item{sex}{Pupil gender} 
-\item{texp}{Teacher experience (years)} 
+\item{sex}{Pupil gender}
+\item{texp}{Teacher experience (years)}
 \item{const}{Constant intercept term}
 \item{teachpop}{Teacher popularity} }
 }
@@ -29,7 +29,6 @@ in pupil popularity.
 }
 \examples{
 
-popmis[1:3,]
-
+popmis[1:3, ]
 }
 \keyword{datasets}

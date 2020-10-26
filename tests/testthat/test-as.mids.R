@@ -16,10 +16,10 @@ test2 <- as.mids(X2)
 test3 <- as.mids(X, .id = 2)
 # nhanes example with .id where .imp is numeric
 test4 <- as.mids(X2, .id = 2)
-#'# example without an .id variable
-#'# variable .id not preserved
+#' # example without an .id variable
+#' # variable .id not preserved
 test5 <- as.mids(X[, -2])
-#'# reverse data order
+#' # reverse data order
 rev <- ncol(X):1
 test6 <- as.mids(X[, rev])
 
@@ -39,10 +39,14 @@ test_that("as.mids() produces a `mids` object", {
   expect_is(test8, "mids")
   expect_is(test9, "mids")
   expect_is(test10, "mids")
-  expect_error(as(X[-(1:10), ], "mids"), 
-               "Unequal group sizes in imputation index `.imp`")
-  expect_error(as(X[, -(1:2)], "mids"), 
-               "Imputation index `.imp` not found")
+  expect_error(
+    as(X[-(1:10), ], "mids"),
+    "Unequal group sizes in imputation index `.imp`"
+  )
+  expect_error(
+    as(X[, -(1:2)], "mids"),
+    "Imputation index `.imp` not found"
+  )
 })
 
 test_that("complete() reproduces the original data", {
@@ -51,7 +55,7 @@ test_that("complete() reproduces the original data", {
   expect_true(all(complete(test3, action = "long", include = TRUE) == X, na.rm = TRUE))
   expect_true(all(complete(test4, action = "long", include = TRUE) == X, na.rm = TRUE))
   expect_true(all(complete(test5, action = "long", include = TRUE)[, -2] == X[, -2], na.rm = TRUE))
-  expect_true(all(complete(test6, action = "long", include = TRUE)[,-(1:2)] == X[, rev][, -(5:6)], na.rm = TRUE))
+  expect_true(all(complete(test6, action = "long", include = TRUE)[, -(1:2)] == X[, rev][, -(5:6)], na.rm = TRUE))
 })
 
 # works with dplyr
