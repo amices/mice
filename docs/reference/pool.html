@@ -93,7 +93,7 @@ this case." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.9</span>
       </span>
     </div>
 
@@ -209,13 +209,40 @@ and computes the following diagnostic statistics per estimate:</p><ol>
 <li><p>the estimates of the model, usually obtainable by <code><a href='https://rdrr.io/r/stats/coef.html'>coef()</a></code></p></li>
 <li><p>the standard error of each estimate;</p></li>
 <li><p>the residual degrees of freedom of the model.</p></li>
-</ol><p>The <code>pool()</code> function relies on the <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>broom::tidy</a></code> for
+</ol>
+
+<p>The degrees of freedom calculation for the pooled estimates uses the
+Barnard-Rubin adjustment for small samples (Barnard and Rubin, 1999).</p>
+<p>The <code>pool()</code> function relies on the <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>broom::tidy</a></code> for
 extracting the parameters. Versions before <code>mice 3.8.5</code> failed
 when no <code><a href='https://rdrr.io/pkg/generics/man/glance.html'>broom::glance()</a></code> function was found for extracting the
 residual degrees of freedom. The <code>pool()</code> function is now
 more forgiving.</p>
-<p>The degrees of freedom calculation for the pooled estimates uses the
-Barnard-Rubin adjustment for small samples (Barnard and Rubin, 1999).</p>
+<p>In versions prior to <code>mice 3.0</code> pooling required only that
+<code><a href='https://rdrr.io/r/stats/coef.html'>coef()</a></code> and <code><a href='https://rdrr.io/r/stats/vcov.html'>vcov()</a></code> methods were available for fitted
+objects. <em>This feature is no longer supported</em>. The reason is that <code><a href='https://rdrr.io/r/stats/vcov.html'>vcov()</a></code>
+methods are inconsistent across packages, leading to buggy behaviour
+of the <code>pool()</code> function.</p>
+<p>Since <code>mice 3.0+</code>, the <code>broom</code>
+package takes care of filtering out the relevant parts of the
+complete-data analysis. It may happen that you'll see the messages
+like <code>Error: No tidy method for objects of class ...</code> or
+<code>Error: No glance method for objects of class ...</code>. The message
+means that your complete-data method used in <code><a href='https://rdrr.io/r/base/with.html'>with(imp, ...)</a></code> has
+no <code>tidy</code> or <code>glance</code> method defined in the <code>broom</code> package.</p>
+<p>The <code>broom.mixed</code> package contains <code>tidy</code> and <code>glance</code> methods
+for mixed models. If you are using a mixed model, first run
+<code><a href='http://github.com/bbolker/broom.mixed'>library(broom.mixed)</a></code> before calling <code>pool()</code>.</p>
+<p>If no <code>tidy</code> or <code>glance</code> methods are defined for your analysis
+tabulate the <code>m</code> parameter estimates and their variance
+estimates (the square of the standard errors) from the <code>m</code> fitted
+models stored in <code>fit$analyses</code>. For each parameter, run
+<code><a href='pool.scalar.html'>pool.scalar</a></code> to obtain the pooled parameters estimate, its variance, the
+degrees of freedom, the relative increase in variance and the fraction of missing
+information.</p>
+<p>An alternative is to write your own <code><a href='https://rdrr.io/pkg/generics/man/glance.html'>glance()</a></code> and <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy()</a></code>
+methods and add these to <code>broom</code> according to the specifications
+given in <a href='https://broom.tidyverse.org/articles/adding-tidiers.html'>https://broom.tidyverse.org/articles/adding-tidiers.html</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Barnard, J. and Rubin, D.B. (1999). Small sample degrees of
@@ -227,8 +254,10 @@ Imputation by Chained Equations in <code>R</code>. <em>Journal of Statistical
 Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='with.mids.html'>with.mids</a></code>, <code><a href='as.mira.html'>as.mira</a></code>,
-<code>glance</code>, <code>tidy</code></p></div>
+    <div class='dont-index'><p><code><a href='with.mids.html'>with.mids</a></code>, <code><a href='as.mira.html'>as.mira</a></code>, <code><a href='pool.scalar.html'>pool.scalar</a></code>,
+<code>glance</code>, <code>tidy</code>
+<a href='https://github.com/amices/mice/issues/142'>https://github.com/amices/mice/issues/142</a>,
+<a href='https://github.com/amices/mice/issues/274'>https://github.com/amices/mice/issues/274</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># pool using the classic MICE workflow</span>

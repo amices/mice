@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.9</span>
       </span>
     </div>
 
@@ -161,22 +161,25 @@ By default, <code>k = 1</code> is assumed.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a list with components. Component <code>m</code> is the
-number of imputations. Component <code>qhat</code> contains the <code>m</code>
-univariate estimates of repeated complete data analyses.
-Component <code>u</code> contains the corresponding <code>m</code> variances of the univariate estimates.
-Component <code>qbar</code> is the pooled univariate estimate, formula (3.1.2) Rubin
-(1987). Component <code>ubar</code> is the mean of the variances
-(i.e. the pooled within-imputation variance), formula (3.1.3) Rubin (1987).
-Component <code>b</code> is the between-imputation variance, formula (3.1.4) Rubin (1987).
-Component <code>t</code> is the total variance of the pooled estimated, formula (3.1.5) Rubin
-(1987).
-Component <code>r</code> is the relative increase in variance due to nonresponse, formula
-(3.1.7) Rubin (1987).
-Component <code>df</code> is the degrees of freedom for t reference distribution, formula
-(3.1.6) Rubin (1987) or method of Barnard-Rubin (1999) (if <code>method = "smallsample"</code>).
-Component <code>fmi</code> is the fraction missing information due to nonresponse, formula
-(3.1.10) Rubin (1987).</p>
+    <p>Returns a list with components.</p><dl>
+    <dt><code>m</code>:</dt><dd><p>Number of imputations.</p></dd>
+    <dt><code>qhat</code>:</dt><dd><p>The <code>m</code> univariate estimates of repeated complete-data analyses.</p></dd>
+    <dt><code>u</code>:</dt><dd><p>The corresponding <code>m</code> variances of the univariate estimates.</p></dd>
+    <dt><code>qbar</code>:</dt><dd><p>The pooled univariate estimate, formula (3.1.2) Rubin (1987).</p></dd>
+    <dt><code>ubar</code>:</dt><dd><p>The mean of the variances (i.e. the pooled within-imputation variance),
+    formula (3.1.3) Rubin (1987).</p></dd>
+    <dt><code>b</code>:</dt><dd><p>The between-imputation variance, formula (3.1.4) Rubin (1987).</p></dd>
+    <dt><code>t</code>:</dt><dd><p>The total variance of the pooled estimated, formula (3.1.5)
+    Rubin (1987).</p></dd>
+    <dt><code>r</code>:</dt><dd><p>The relative increase in variance due to nonresponse, formula
+    (3.1.7) Rubin (1987).</p></dd>
+    <dt><code>df</code>:</dt><dd><p>The degrees of freedom for t reference distribution by the
+    method of Barnard-Rubin (1999).</p></dd>
+    <dt><code>fmi</code>:</dt><dd><p>The fraction missing information due to nonresponse,
+    formula (3.1.10) Rubin (1987).</p></dd>
+    
+</dl>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function averages the univariate estimates of the complete data model,
@@ -195,71 +198,89 @@ Surveys.  New York: John Wiley and Sons.</p>
     <p>Karin Groothuis-Oudshoorn and Stef van Buuren, 2009</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'># example with manual and automatic pooling</span>
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, maxit <span class='op'>=</span> <span class='fl'>2</span>, m <span class='op'>=</span> <span class='fl'>2</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span>, seed <span class='op'>=</span> <span class='fl'>18210</span><span class='op'>)</span>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># manual pooling</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>$</span><span class='va'>analyses</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt;  iter imp variable
-#&gt;   1   1  bmi  hyp  chl
-#&gt;   1   2  bmi  hyp  chl
-#&gt;   1   3  bmi  hyp  chl
-#&gt;   1   4  bmi  hyp  chl
-#&gt;   1   5  bmi  hyp  chl
-#&gt;   2   1  bmi  hyp  chl
-#&gt;   2   2  bmi  hyp  chl
-#&gt;   2   3  bmi  hyp  chl
-#&gt;   2   4  bmi  hyp  chl
-#&gt;   2   5  bmi  hyp  chl
-#&gt;   3   1  bmi  hyp  chl
-#&gt;   3   2  bmi  hyp  chl
-#&gt;   3   3  bmi  hyp  chl
-#&gt;   3   4  bmi  hyp  chl
-#&gt;   3   5  bmi  hyp  chl
-#&gt;   4   1  bmi  hyp  chl
-#&gt;   4   2  bmi  hyp  chl
-#&gt;   4   3  bmi  hyp  chl
-#&gt;   4   4  bmi  hyp  chl
-#&gt;   4   5  bmi  hyp  chl
-#&gt;   5   1  bmi  hyp  chl
-#&gt;   5   2  bmi  hyp  chl
-#&gt;   5   3  bmi  hyp  chl
-#&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='va'>m</span> <span class='op'>&lt;-</span> <span class='va'>imp</span><span class='op'>$</span><span class='va'>m</span>
-<span class='va'>Q</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='va'>m</span><span class='op'>)</span>
-<span class='va'>U</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='va'>m</span><span class='op'>)</span>
-<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>m</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>Q</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>i</span><span class='op'>)</span><span class='op'>$</span><span class='va'>bmi</span><span class='op'>)</span>
-  <span class='va'>U</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>var</a></span><span class='op'>(</span><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>i</span><span class='op'>)</span><span class='op'>$</span><span class='va'>bmi</span><span class='op'>)</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span> <span class='co'># (standard error of estimate)^2</span>
-<span class='op'>}</span>
-<span class='fu'>pool.scalar</span><span class='op'>(</span><span class='va'>Q</span>, <span class='va'>U</span>, n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>, k <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='co'># Barnard-Rubin 1999</span>
+#&gt; Call:
+#&gt; lm(formula = bmi ~ age)
+#&gt; 
+#&gt; Residuals:
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -6.1587 -3.0674  0.9413  2.3870  8.7413 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)  28.1043     1.8853   14.91 2.61e-13 ***
+#&gt; age          -1.5457     0.9723   -1.59    0.126    
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; 
+#&gt; Residual standard error: 3.957 on 23 degrees of freedom
+#&gt; Multiple R-squared:  0.099,	Adjusted R-squared:  0.05983 
+#&gt; F-statistic: 2.527 on 1 and 23 DF,  p-value: 0.1255
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>$</span><span class='va'>analyses</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = bmi ~ age)
+#&gt; 
+#&gt; Residuals:
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -7.3611 -3.6333  0.9389  2.3389  7.5389 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)   29.189      2.019  14.460 4.92e-13 ***
+#&gt; age           -1.428      1.041  -1.371    0.183    
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; 
+#&gt; Residual standard error: 4.236 on 23 degrees of freedom
+#&gt; Multiple R-squared:  0.0756,	Adjusted R-squared:  0.03541 
+#&gt; F-statistic: 1.881 on 1 and 23 DF,  p-value: 0.1835
+#&gt; </div><div class='input'><span class='fu'>pool.scalar</span><span class='op'>(</span>Q <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1.5457</span>, <span class='op'>-</span><span class='fl'>1.428</span><span class='op'>)</span>, U <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.9723</span><span class='op'>^</span><span class='fl'>2</span>, <span class='fl'>1.041</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>, n <span class='op'>=</span> <span class='fl'>25</span>, k <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $m
-#&gt; [1] 5
+#&gt; [1] 2
 #&gt; 
 #&gt; $qhat
-#&gt; [1] 26.712 26.036 26.404 26.040 27.200
+#&gt; [1] -1.5457 -1.4280
 #&gt; 
 #&gt; $u
-#&gt; [1] 0.5111107 0.5453960 0.5095493 0.5904000 0.8397333
+#&gt; [1] 0.9453673 1.0836810
 #&gt; 
 #&gt; $qbar
-#&gt; [1] 26.4784
+#&gt; [1] -1.48685
 #&gt; 
 #&gt; $ubar
-#&gt; [1] 0.5992379
+#&gt; [1] 1.014524
 #&gt; 
 #&gt; $b
-#&gt; [1] 0.2421808
+#&gt; [1] 0.006926645
 #&gt; 
 #&gt; $t
-#&gt; [1] 0.8898548
+#&gt; [1] 1.024914
 #&gt; 
 #&gt; $df
-#&gt; [1] 10.69643
+#&gt; [1] 20.97025
 #&gt; 
 #&gt; $r
-#&gt; [1] 0.4849776
+#&gt; [1] 0.01024122
 #&gt; 
 #&gt; $fmi
-#&gt; [1] 0.4249229
-#&gt; </div></pre>
+#&gt; [1] 0.09272831
+#&gt; </div><div class='input'>
+<span class='co'># automatic pooling using broom</span>
+<span class='fu'><a href='pool.html'>pool</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Class: mipo    m = 2 
+#&gt;          term m  estimate     ubar           b        t dfcom       df
+#&gt; 1 (Intercept) 2 28.646618 3.814682 0.588114658 4.696854    23 10.72144
+#&gt; 2         age 2 -1.486715 1.014543 0.006947187 1.024964    23 20.96937
+#&gt;         riv     lambda        fmi
+#&gt; 1 0.2312570 0.18782190 0.30620278
+#&gt; 2 0.0102714 0.01016697 0.09275848</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
