@@ -2,7 +2,7 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2020-10-26T21:04Z
+last_built: 2020-10-26T21:26Z
 urls:
   reference: https://amices.github.io/mice/reference
   article: https://amices.github.io/mice/articles
