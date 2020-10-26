@@ -13,6 +13,7 @@ mice.impute.pmm(
   donors = 5L,
   matchtype = 1L,
   ridge = 1e-05,
+  use.matcher = FALSE,
   ...
 )
 }
@@ -50,6 +51,13 @@ Larger ridges may result in more biased estimates. For highly noisy data
 (e.g. many junk variables), set \code{ridge = 1e-06} or even lower to
 reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
 
+\item{use.matcher}{Logical. Set \code{use.matcher = TRUE} to specify
+the C function \code{matcher()}, the now deprecated matching function that
+was default in versions
+\code{2.22} (June 2014) to \code{3.11.7} (Oct 2020). Since version \code{3.12.0}
+\code{mice()} uses the much faster \code{matchindex} C function. Use
+the deprecated \code{matcher} function only for exact reproduction.}
+
 \item{\dots}{Other named arguments.}
 }
 \value{
@@ -57,7 +65,7 @@ Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
-Calculates imputations for univariate missing data by predictive mean matching.
+Imputation by predictive mean matching
 }
 \details{
 Imputation of \code{y} by predictive mean matching, based on
@@ -103,14 +111,13 @@ hist(yimp, xlab = "Imputed missing tv")
 # Impute all tv data
 yimp <- mice.impute.pmm(y, ry, x, wy = rep(TRUE, length(y)))
 length(yimp)
-hist(yimp, xlab = "Imputed missing and observed tv")
+hist(yimp, xlab = 'Imputed missing and observed tv')
 plot(jitter(y), jitter(yimp),
-  main = "Predictive mean matching on age, height and weight",
-  xlab = "Observed tv (n = 224)",
-  ylab = "Imputed tv (n = 224)"
-)
+    main = 'Predictive mean matching on age, height and weight',
+    xlab = 'Observed tv (n = 224)',
+    ylab = 'Imputed tv (n = 224)')
 abline(0, 1)
-cor(y, yimp, use = "pair")
+cor(y, yimp, use = 'pair')
 }
 \references{
 Little, R.J.A. (1988), Missing data adjustments in large surveys

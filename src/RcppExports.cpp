@@ -18,3 +18,27 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// matchindex
+IntegerVector matchindex(NumericVector d, NumericVector t, int k);
+RcppExport SEXP _mice_matchindex(SEXP dSEXP, SEXP tSEXP, SEXP kSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type d(dSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type t(tSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    rcpp_result_gen = Rcpp::wrap(matchindex(d, t, k));
+    return rcpp_result_gen;
+END_RCPP
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_mice_matcher", (DL_FUNC) &_mice_matcher, 3},
+    {"_mice_matchindex", (DL_FUNC) &_mice_matchindex, 3},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_mice(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+}
