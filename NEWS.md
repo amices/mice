@@ -2,10 +2,19 @@
 title: "News"
 output: github_document
 ---
+# mice 3.11.8 
+
+### Spectacular speed improvement for predictive mean matching
+
+* The new `matchindex` C function makes predictive mean matching **50 to 600 times faster**. 
+The speed of `pmm` is now on par with normal imputation (`mice.impute.norm()`)
+and with the `miceFast` package, without compromising on the statistical quality of 
+the imputations. Thanks to Polkas <https://github.com/Polkas/miceFast/issues/10> and 
+suggestions by Alexander Robitzsch. See #236 for more details.
 
 # mice 3.11.7
 
-Two major additions crafted by Patrick Rockenschaub:
+### New `ignore` and `filter` options
 
 * New `ignore` argument to `mice()`. This argument is a logical vector 
 of `nrow(data)` elements indicating which rows are ignored when creating 
@@ -18,6 +27,7 @@ more background and techniques.
 * New `filter()` method that subsets a `mids` object (multiply-imputed data set).
 The method accepts a logical vector of length `nrow(data)`, or an expression
 to construct such a vector from the incomplete data. (#269)
+* Both improvements were crafted by Patrick Rockenschaub.
 
 # mice 3.11.6
 
