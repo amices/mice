@@ -65,14 +65,45 @@ The function requires the following input from each fitted model:
 \item the standard error of each estimate;
 \item the residual degrees of freedom of the model.
 }
+
+The degrees of freedom calculation for the pooled estimates uses the
+Barnard-Rubin adjustment for small samples (Barnard and Rubin, 1999).
+
 The \code{pool()} function relies on the \code{broom::tidy} for
 extracting the parameters. Versions before \code{mice 3.8.5} failed
 when no \code{broom::glance()} function was found for extracting the
 residual degrees of freedom. The \code{pool()} function is now
 more forgiving.
 
-The degrees of freedom calculation for the pooled estimates uses the
-Barnard-Rubin adjustment for small samples (Barnard and Rubin, 1999).
+In versions prior to \code{mice 3.0} pooling required only that
+\code{coef()} and \code{vcov()} methods were available for fitted
+objects. \emph{This feature is no longer supported}. The reason is that \code{vcov()}
+methods are inconsistent across packages, leading to buggy behaviour
+of the \code{pool()} function.
+
+Since \code{mice 3.0+}, the \code{broom}
+package takes care of filtering out the relevant parts of the
+complete-data analysis. It may happen that you'll see the messages
+like \code{Error: No tidy method for objects of class ...} or
+\code{Error: No glance method for objects of class ...}. The message
+means that your complete-data method used in \code{with(imp, ...)} has
+no \code{tidy} or \code{glance} method defined in the \code{broom} package.
+
+The \code{broom.mixed} package contains \code{tidy} and \code{glance} methods
+for mixed models. If you are using a mixed model, first run
+\code{library(broom.mixed)} before calling \code{pool()}.
+
+If no \code{tidy} or \code{glance} methods are defined for your analysis
+tabulate the \code{m} parameter estimates and their variance
+estimates (the square of the standard errors) from the \code{m} fitted
+models stored in \code{fit$analyses}. For each parameter, run
+\code{\link{pool.scalar}} to obtain the pooled parameters estimate, its variance, the
+degrees of freedom, the relative increase in variance and the fraction of missing
+information.
+
+An alternative is to write your own \code{glance()} and \code{tidy()}
+methods and add these to \code{broom} according to the specifications
+given in \url{https://broom.tidyverse.org/articles/adding-tidiers.html}.
 }
 \examples{
 # pool using the classic MICE workflow
@@ -92,7 +123,8 @@ Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 }
 \seealso{
-\code{\link{with.mids}}, \code{\link{as.mira}},
+\code{\link{with.mids}}, \code{\link{as.mira}}, \code{\link{pool.scalar}},
 \code{\link[broom:reexports]{glance}}, \code{\link[broom:reexports]{tidy}}
+\url{https://github.com/amices/mice/issues/142},
+\url{https://github.com/amices/mice/issues/274}
 }
-\keyword{htest}
