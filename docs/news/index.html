@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.8</span>
       </span>
     </div>
 
@@ -126,15 +126,31 @@
       <small>Source: <a href='https://github.com/amices/mice/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="mice-3118" class="section level1">
+<h1 class="page-header" data-toc-text="3.11.8">
+<a href="#mice-3118" class="anchor"></a>mice 3.11.8<small> Unreleased </small>
+</h1>
+<div id="spectacular-speed-improvement-for-predictive-mean-matching" class="section level3">
+<h3 class="hasAnchor">
+<a href="#spectacular-speed-improvement-for-predictive-mean-matching" class="anchor"></a>Spectacular speed improvement for predictive mean matching</h3>
+<ul>
+<li>The new <code>matchindex</code> C function makes predictive mean matching <strong>50 to 600 times faster</strong>. The speed of <code>pmm</code> is now on par with normal imputation (<code><a href="../reference/mice.impute.norm.html">mice.impute.norm()</a></code>) and with the <code>miceFast</code> package, without compromising on the statistical quality of the imputations. Thanks to Polkas <a href="https://github.com/Polkas/miceFast/issues/10" class="uri">https://github.com/Polkas/miceFast/issues/10</a> and suggestions by Alexander Robitzsch. See <a href='https://github.com/amices/mice/issues/236'>#236</a> for more details.</li>
+</ul>
+</div>
+</div>
     <div id="mice-3117" class="section level1">
 <h1 class="page-header" data-toc-text="3.11.7">
 <a href="#mice-3117" class="anchor"></a>mice 3.11.7<small> Unreleased </small>
 </h1>
-<p>Two major additions crafted by Patrick Rockenschaub:</p>
+<div id="new-ignore-and-filter-options" class="section level3">
+<h3 class="hasAnchor">
+<a href="#new-ignore-and-filter-options" class="anchor"></a>New <code>ignore</code> and <code>filter</code> options</h3>
 <ul>
 <li>New <code>ignore</code> argument to <code><a href="../reference/mice.html">mice()</a></code>. This argument is a logical vector of <code><a href="https://rdrr.io/r/base/nrow.html">nrow(data)</a></code> elements indicating which rows are ignored when creating the imputation model. We may use the <code>ignore</code> argument to split the data into a training set (on which the imputation model is built) and a test set (that does not influence the imputation model estimates). The argument is based on the suggestion in <a href="https://github.com/amices/mice/issues/32#issuecomment-355600365" class="uri">https://github.com/amices/mice/issues/32#issuecomment-355600365</a>. See <a href='https://github.com/amices/mice/issues/32'>#32</a> for more background and techniques.</li>
 <li>New <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> method that subsets a <code>mids</code> object (multiply-imputed data set). The method accepts a logical vector of length <code><a href="https://rdrr.io/r/base/nrow.html">nrow(data)</a></code>, or an expression to construct such a vector from the incomplete data. (<a href='https://github.com/amices/mice/issues/269'>#269</a>)</li>
+<li>Both improvements were crafted by Patrick Rockenschaub.</li>
 </ul>
+</div>
 </div>
     <div id="mice-3116" class="section level1">
 <h1 class="page-header" data-toc-text="3.11.6">

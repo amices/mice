@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Imputation by predictive mean matching — mice.impute.pmm" />
-<meta property="og:description" content="Calculates imputations for univariate missing data by predictive mean matching." />
+<meta property="og:description" content="Imputation by predictive mean matching" />
 
 
 
@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.8</span>
       </span>
     </div>
 
@@ -129,7 +129,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Calculates imputations for univariate missing data by predictive mean matching.</p>
+    <p>Imputation by predictive mean matching</p>
     </div>
 
     <pre class="usage"><span class='fu'>mice.impute.pmm</span><span class='op'>(</span>
@@ -140,6 +140,7 @@
   donors <span class='op'>=</span> <span class='fl'>5L</span>,
   matchtype <span class='op'>=</span> <span class='fl'>1L</span>,
   ridge <span class='op'>=</span> <span class='fl'>1e-05</span>,
+  use.matcher <span class='op'>=</span> <span class='cn'>FALSE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -192,6 +193,15 @@ which means that 0.01 percent of the diagonal is added to the cross-product.
 Larger ridges may result in more biased estimates. For highly noisy data
 (e.g. many junk variables), set <code>ridge = 1e-06</code> or even lower to
 reduce bias. For highly collinear data, set <code>ridge = 1e-04</code> or higher.</p></td>
+    </tr>
+    <tr>
+      <th>use.matcher</th>
+      <td><p>Logical. Set <code>use.matcher = TRUE</code> to specify
+the C function <code>matcher()</code>, the now deprecated matching function that
+was default in versions
+<code>2.22</code> (June 2014) to <code>3.11.7</code> (Oct 2020). Since version <code>3.12.0</code>
+<code><a href='mice.html'>mice()</a></code> uses the much faster <code>matchindex</code> C function. Use
+the deprecated <code>matcher</code> function only for exact reproduction.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -283,15 +293,14 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
 <span class='co'># Impute all tv data</span>
 <span class='va'>yimp</span> <span class='op'>&lt;-</span> <span class='fu'>mice.impute.pmm</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, wy <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>yimp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 727</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>yimp</span>, xlab <span class='op'>=</span> <span class='st'>"Imputed missing and observed tv"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 727</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>yimp</span>, xlab <span class='op'>=</span> <span class='st'>'Imputed missing and observed tv'</span><span class='op'>)</span>
 </div><div class='img'><img src='mice.impute.pmm-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/jitter.html'>jitter</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/jitter.html'>jitter</a></span><span class='op'>(</span><span class='va'>yimp</span><span class='op'>)</span>,
-  main <span class='op'>=</span> <span class='st'>"Predictive mean matching on age, height and weight"</span>,
-  xlab <span class='op'>=</span> <span class='st'>"Observed tv (n = 224)"</span>,
-  ylab <span class='op'>=</span> <span class='st'>"Imputed tv (n = 224)"</span>
-<span class='op'>)</span>
+    main <span class='op'>=</span> <span class='st'>'Predictive mean matching on age, height and weight'</span>,
+    xlab <span class='op'>=</span> <span class='st'>'Observed tv (n = 224)'</span>,
+    ylab <span class='op'>=</span> <span class='st'>'Imputed tv (n = 224)'</span><span class='op'>)</span>
 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='img'><img src='mice.impute.pmm-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>yimp</span>, use <span class='op'>=</span> <span class='st'>"pair"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.7687127</div></pre>
+</div><div class='img'><img src='mice.impute.pmm-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>yimp</span>, use <span class='op'>=</span> <span class='st'>'pair'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.7415001</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

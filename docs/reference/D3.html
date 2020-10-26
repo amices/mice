@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.8</span>
       </span>
     </div>
 
@@ -196,15 +196,15 @@ Performing Likelihood Ratio Tests with Multiply-Imputed Data Sets.
 <span class='va'>mi1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, expr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>mi0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, expr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>D3</span><span class='op'>(</span><span class='va'>mi1</span>, <span class='va'>mi0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    test statistic df1      df2 dfcom   p.value      riv
-#&gt;  1 ~~ 2  3.064151   1 9.149856    20 0.1134091 1.951462</div><div class='input'>
+</div><div class='output co'>#&gt;    test statistic df1      df2 dfcom  p.value      riv
+#&gt;  1 ~~ 2  2.917381   1 8.764849    20 0.122711 2.082143</div><div class='input'>
 <span class='co'># Compare two logistic regression models</span>
 <span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>boys</span>, maxit <span class='op'>=</span> <span class='fl'>2</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>gen</span> <span class='op'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>gen</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>~</span> <span class='va'>hgt</span> <span class='op'>+</span> <span class='va'>hc</span> <span class='op'>+</span> <span class='va'>reg</span>, family <span class='op'>=</span> <span class='va'>binomial</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>fit0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>gen</span> <span class='op'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>gen</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>~</span> <span class='va'>hgt</span> <span class='op'>+</span> <span class='va'>hc</span>, family <span class='op'>=</span> <span class='va'>binomial</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>D3</span><span class='op'>(</span><span class='va'>fit1</span>, <span class='va'>fit0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    test statistic df1      df2 dfcom   p.value       riv
-#&gt;  1 ~~ 2  1.356106   4 48.02414   741 0.2631346 0.9558877</div></pre>
+</div><div class='output co'>#&gt;    test statistic df1      df2 dfcom   p.value      riv
+#&gt;  1 ~~ 2 0.9199975   4 38.04838   741 0.4623669 1.278402</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

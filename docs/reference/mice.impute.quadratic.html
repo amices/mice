@@ -79,7 +79,7 @@ main effect and quadratic effect in the complete-data model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.8</span>
       </span>
     </div>
 
@@ -277,14 +277,14 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <span class='co'># Pool results</span>
 <span class='fu'><a href='pool.html'>pool</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>xx</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Class: mipo    m = 5 
-#&gt;          term m   estimate         ubar            b            t dfcom
-#&gt; 1 (Intercept) 5 0.03245276 0.0014808576 2.876490e-05 0.0015153754   997
-#&gt; 2           x 5 0.48846739 0.0009650518 9.469209e-05 0.0010786823   997
-#&gt; 3          xx 5 0.46756603 0.0004826063 4.971529e-05 0.0005422647   997
+#&gt;          term m    estimate         ubar            b            t dfcom
+#&gt; 1 (Intercept) 5 -0.05601439 0.0017416853 1.282091e-04 0.0018955363   997
+#&gt; 2           x 5  0.44710524 0.0010866872 7.756583e-05 0.0011797662   997
+#&gt; 3          xx 5  0.52453983 0.0006169592 7.281374e-05 0.0007043356   997
 #&gt;         df        riv     lambda        fmi
-#&gt; 1 863.4388 0.02330939 0.02277844 0.02503416
-#&gt; 2 256.5689 0.11774551 0.10534197 0.11223538
-#&gt; 3 240.6627 0.12361699 0.11001702 0.11732206</div><div class='input'>
+#&gt; 1 364.8662 0.08833452 0.08116486 0.08616034
+#&gt; 2 377.7501 0.08565390 0.07889614 0.08373450
+#&gt; 3 200.2092 0.14162442 0.12405518 0.13267630</div><div class='input'>
 <span class='co'># Plot results</span>
 <span class='fu'><a href='stripplot.mids.html'>stripplot</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
 </div><div class='img'><img src='mice.impute.quadratic-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>xx</span>, col <span class='op'>=</span> <span class='fu'><a href='mdc.html'>mdc</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>, xlab <span class='op'>=</span> <span class='st'>"x"</span>, ylab <span class='op'>=</span> <span class='st'>"xx"</span><span class='op'>)</span>
