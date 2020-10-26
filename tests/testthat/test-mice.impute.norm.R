@@ -64,9 +64,9 @@ test_that("Correct estimation method used", {
 # TEST 3: correct imputation model   #
 #####################################
 
-expect_warning(imp.qr <- mice(mammalsleep[, -1], ls.meth = "qr", seed = 123, print = FALSE))
-expect_warning(imp.svd <- mice(mammalsleep[, -1], ls.meth = "svd", seed = 123, print = FALSE))
-expect_warning(imp.ridge <- mice(mammalsleep[, -1], ls.meth = "ridge", seed = 123, print = FALSE))
+expect_warning(imp.qr <- mice(mammalsleep[, -1], ls.meth = "qr", seed = 123, print = FALSE, use.matcher = TRUE))
+expect_warning(imp.svd <- mice(mammalsleep[, -1], ls.meth = "svd", seed = 123, print = FALSE, use.matcher = TRUE))
+expect_warning(imp.ridge <- mice(mammalsleep[, -1], ls.meth = "ridge", seed = 123, print = FALSE, use.matcher = TRUE))
 
 test_that("Imputations are equal", {
   expect_equal(imp.qr$imp, imp.svd$imp)
@@ -149,3 +149,4 @@ test_that("Imputations are invariant to column order", {
   expect_equal(norm.predict1, norm.predict2)
   expect_equal(norm.boot1, norm.boot2)
 })
+
