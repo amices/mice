@@ -39,13 +39,13 @@
 #' Surveys.  New York: John Wiley and Sons.
 #' @examples
 #' # example with manual and automatic pooling
-#' imp <- mice(nhanes, maxit = 2, m = 2, print = FALSE, seed = 18211)
+#' imp <- mice(nhanes, maxit = 2, m = 2, print = FALSE, seed = 18210)
 #' fit <- with(data = imp, lm(bmi ~ age))
 #'
 #' # manual pooling
 #' summary(fit$analyses[[1]])
 #' summary(fit$analyses[[2]])
-#' pool.scalar(Q = c(-2.2739, -2.129), U = c(0.9641^2, 1.089^2), n = 25, k = 2)
+#' pool.scalar(Q = c(-1.5457, -1.428), U = c(0.9723^2, 1.041^2), n = 25, k = 2)
 #'
 #' # automatic pooling using broom
 #' pool(fit)
