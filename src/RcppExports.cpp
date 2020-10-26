@@ -31,24 +31,10 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// neibo
-NumericVector neibo(NumericVector y, NumericVector miss, int k);
-RcppExport SEXP _mice_neibo(SEXP ySEXP, SEXP missSEXP, SEXP kSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type miss(missSEXP);
-    Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    rcpp_result_gen = Rcpp::wrap(neibo(y, miss, k));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_mice_matcher", (DL_FUNC) &_mice_matcher, 3},
     {"_mice_matchindex", (DL_FUNC) &_mice_matchindex, 3},
-    {"_mice_neibo", (DL_FUNC) &_mice_neibo, 3},
     {NULL, NULL, 0}
 };
 
