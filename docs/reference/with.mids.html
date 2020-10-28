@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.10</span>
       </span>
     </div>
 
@@ -145,20 +145,22 @@ data set', typically created by a call to function <code><a href='mice.html'>mic
     </tr>
     <tr>
       <th>expr</th>
-      <td><p>An expression with a formula object, with the response on the
-left of a <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> operator, and the terms, separated by <code><a href='https://rdrr.io/r/base/Arithmetic.html'>+</a></code> operators,
-on the right. See the documentation of <code><a href='https://rdrr.io/r/stats/lm.html'>lm</a></code> and
-<code><a href='https://rdrr.io/r/stats/formula.html'>formula</a></code> for details.</p></td>
+      <td><p>An expression to evaluate for each imputed data set. Formula's
+containing a dot (notation for "all other variables") do not work.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional parameters passed to <code>expr</code></p></td>
+      <td><p>Not used</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list object of S3 class <code>mira</code></p>
+    <p>An object of S3 class <code><a href='mira-class.html'>mira</a></code></p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Version 3.11.10 changed to tidy evaluation on a quosure. This change
+should not affect any code that worked on previous versions.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>van Buuren S and Groothuis-Oudshoorn K (2011). <code>mice</code>:
@@ -171,41 +173,29 @@ Statistical Software</em>, <b>45</b>(3), 1-67.
 <code><a href='D1.html'>D1</a></code>, <code><a href='D3.html'>D3</a></code>, <code><a href='pool.r.squared.html'>pool.r.squared</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Karin Oudshoorn, Stef van Buuren 2009-2012</p>
+    <p>Karin Oudshoorn, Stef van Buuren 2009, 2012, 2020</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span>, m <span class='op'>=</span> <span class='fl'>2</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span>, seed <span class='op'>=</span> <span class='fl'>14221</span><span class='op'>)</span>
 
-<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt;  iter imp variable
-#&gt;   1   1  bmi  hyp  chl
-#&gt;   1   2  bmi  hyp  chl
-#&gt;   1   3  bmi  hyp  chl
-#&gt;   1   4  bmi  hyp  chl
-#&gt;   1   5  bmi  hyp  chl
-#&gt;   2   1  bmi  hyp  chl
-#&gt;   2   2  bmi  hyp  chl
-#&gt;   2   3  bmi  hyp  chl
-#&gt;   2   4  bmi  hyp  chl
-#&gt;   2   5  bmi  hyp  chl
-#&gt;   3   1  bmi  hyp  chl
-#&gt;   3   2  bmi  hyp  chl
-#&gt;   3   3  bmi  hyp  chl
-#&gt;   3   4  bmi  hyp  chl
-#&gt;   3   5  bmi  hyp  chl
-#&gt;   4   1  bmi  hyp  chl
-#&gt;   4   2  bmi  hyp  chl
-#&gt;   4   3  bmi  hyp  chl
-#&gt;   4   4  bmi  hyp  chl
-#&gt;   4   5  bmi  hyp  chl
-#&gt;   5   1  bmi  hyp  chl
-#&gt;   5   2  bmi  hyp  chl
-#&gt;   5   3  bmi  hyp  chl
-#&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>hyp</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>bmi</span> <span class='op'>+</span> <span class='va'>chl</span>, family <span class='op'>=</span> <span class='va'>binomial</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='input'><span class='va'>anova.imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='co'># descriptive statistics</span>
+<span class='fu'><a href='getfit.html'>getfit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>hyp</span>, <span class='va'>age</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Component 1 :
+#&gt;      age
+#&gt; hyp   20-39 40-59 60-99
+#&gt;   no     12     4     3
+#&gt;   yes     0     3     3
+#&gt; 
+#&gt; Component 2 :
+#&gt;      age
+#&gt; hyp   20-39 40-59 60-99
+#&gt;   no     11     4     4
+#&gt;   yes     1     3     2
+#&gt; </div><div class='input'>
+<span class='co'># model fitting and testing</span>
+<span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>hyp</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>chl</span>, family <span class='op'>=</span> <span class='va'>binomial</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>fit3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
