@@ -2,23 +2,15 @@
 #'
 #' Performs a computation of each of imputed datasets in data.
 #'
-#'
 #' @param data An object of type \code{mids}, which stands for 'multiply imputed
 #' data set', typically created by a call to function \code{mice()}.
-#' @param expr An expression with a formula object, with the response on the
-#' left of a \code{~} operator, and the terms, separated by \code{+} operators,
-#' on the right. See the documentation of \code{\link{lm}} and
-#' \code{\link{formula}} for details.
-#' @param \dots Additional parameters passed to \code{expr}
-#' @return A list object of S3 class \code{mira}
-# '@returnItem call The call that created the \code{mira} object.
-# '@returnItem call1 The call that created the \code{mids} object that was used
-# 'in \code{call}.
-# '@returnItem nmis An array containing the number of missing observations per
-# 'column.
-# '@returnItem analyses A list of \code{m} components containing the individual
-# 'fit objects from each of the \code{m} complete data analyses.
-#' @author Karin Oudshoorn, Stef van Buuren 2009-2012
+#' @param expr An expression to evaluate for each imputed data set. Formula's
+#' containing a dot (notation for "all other variables") do not work.
+#' @param \dots Not used
+#' @return An object of S3 class \code{\link[=mira-class]{mira}}
+#' @note Version 3.11.10 changed to tidy evaluation on a quosure. This change
+#' should not affect any code that worked on previous versions.
+#' @author Karin Oudshoorn, Stef van Buuren 2009, 2012, 2020
 #' @seealso \code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}, \code{\link{pool}},
 #' \code{\link{D1}}, \code{\link{D3}}, \code{\link{pool.r.squared}}
 #' @references van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
@@ -27,12 +19,15 @@
 #' \url{https://www.jstatsoft.org/v45/i03/}
 #' @keywords multivariate
 #' @examples
+#' imp <- mice(nhanes2, m = 2, print = FALSE, seed = 14221)
 #'
+#' # descriptive statistics
+#' getfit(with(imp, table(hyp, age)))
 #'
-#' imp <- mice(nhanes2)
-#' fit1 <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
-#' fit2 <- with(data = imp, exp = glm(hyp ~ age + bmi + chl, family = binomial))
-#' anova.imp <- with(data = imp, exp = anova(lm(bmi ~ age + hyp + chl)))
+#' # model fitting and testing
+#' fit1 <- with(imp, lm(bmi ~ age + hyp + chl))
+#' fit2 <- with(imp, glm(hyp ~ age + chl, family = binomial))
+#' fit3 <- with(imp, anova(lm(bmi ~ age + chl)))
 #' @method with mids
 #' @export
 with.mids <- function(data, expr, ...) {
