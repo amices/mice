@@ -42,6 +42,7 @@ Imports:
     lattice,
     methods,
     Rcpp,
+    rlang,
     stats,
     tidyr,
     utils

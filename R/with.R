@@ -45,19 +45,9 @@ with.mids <- function(data, expr, ...) {
   # do the repeated analysis, store the result.
   for (i in seq_along(analyses)) {
     data.i <- complete(data, i)
-    analyses[[i]] <- eval(
-      expr = substitute(expr),
-      envir = data.i,
-      enclos = parent.frame()
-    )
-    if (is.expression(analyses[[i]])) {
-      analyses[[i]] <- eval(
-        expr = analyses[[i]],
-        envir = data.i,
-        enclos = parent.frame()
-      )
-    }
+    analyses[[i]] <- eval_tidy(enquo(expr), data.i)
   }
+
   # return the complete data analyses as a list of length nimp
   object <- list(call = call, call1 = data$call, nmis = data$nmis, analyses = analyses)
   # formula=formula(analyses[[1]]$terms))
