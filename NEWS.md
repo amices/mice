@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.11.10
+
+* Simplifies `with.mids()` by calling `eval_tidy()` on a quosure. Does not yet solve #265.
+
 # mice 3.11.9
 
 * Improve documentation for `pool()` and `pool.scalar()` (#142, #106, #190 and others)
