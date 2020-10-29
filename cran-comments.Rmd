@@ -52,10 +52,12 @@ Status: OK
 check_rhub()
 ```
 
-```
-Waiting for results -- Include here
-```
+Results:
 
+1. <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-c1ee4204486443fe91ff1a562649428b>: Success
+2. <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-97a2521ab76f45a480967534d56bf9c2>: Success
+3. <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-e7d1b6eaeddd463c977514a65908d40e>: Success
+4. <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-d1415825ea594cd2befbae2228885d71>: Success
 
 
 ## Downstream dependencies
