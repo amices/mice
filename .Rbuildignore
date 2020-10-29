@@ -11,10 +11,11 @@ cran-comments.Rmd
 README-*
 changes_mice*
 ^data-raw$
-index.Rmd
-^docs*
-_pkgdown.yaml
 .png
 ^script$
 ^CODE_OF_CONDUCT*
 ^mice\.Rproj$
+vignettes/
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

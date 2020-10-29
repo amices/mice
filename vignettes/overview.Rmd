@@ -1,0 +1,102 @@
+---
+title: "Overview"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+bibliography: refs.bibtex
+vignette: >
+  %\VignetteIndexEntry{Overview}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+<!-- overview.md is generated from overview.Rmd. Please edit that file -->
+
+## Software
+
+1. [`mice` package at CRAN](https://cran.r-project.org/package=mice)
+2. [mice GitHUB repository](https://github.com/amices/mice)
+
+## Installation
+
+The `mice` package can be installed from CRAN as follows:
+
+```{r eval = FALSE}
+install.packages("mice")
+```
+
+The latest version is can be installed from GitHub as follows: 
+
+```{r eval = FALSE}
+install.packages("devtools")
+devtools::install_github("amices/mice")
+```
+
+## Capabilities of `mice` package
+
+The `mice` package contains functions to
+
+- Inspect the missing data pattern
+- Impute the missing data $m$ times, resulting in $m$ completed data sets
+- Diagnose the quality of the imputed values
+- Analyze each completed data set
+- Pool the results of the repeated analyses
+- Store and export the imputed data in various formats
+- Generate simulated incomplete data
+- Incorporate custom imputation methods
+- Choose which cells to impute
+
+## Main functions
+
+The main functions in the `mice` package are:
+
+Function name      | Description
+-------------------|---------------------------------
+mice()             | Impute the missing data $m$ times 
+with()             | Analyze completed data sets
+pool()             | Combine parameter estimates
+complete()         | Export imputed data
+ampute()           | Generate missing data
+
+## Course materials
+
+1. [Handling Missing Data in `R` with `mice`](https://github.com/amices/Winnipeg)
+2. [Statistical Methods for combined data sets](https://stefvanbuuren.name/RECAPworkshop/)
+
+## Vignettes
+
+1. [Ad hoc methods and the MICE algorithm](https://www.gerkovink.com/miceVignettes/Ad_hoc_and_mice/Ad_hoc_methods.html)
+2. [Convergence and pooling](https://www.gerkovink.com/miceVignettes/Convergence_pooling/Convergence_and_pooling.html)
+3. [Inspecting how the observed data and missingness are related](https://www.gerkovink.com/miceVignettes/Missingness_inspection/Missingness_inspection.html)
+4. [Passive imputation and post-processing](https://www.gerkovink.com/miceVignettes/Passive_Post_processing/Passive_imputation_post_processing.html)
+5. [Combining inferences](https://www.gerkovink.com/miceVignettes/Combining_inferences/Combining_inferences.html)
+6. [Imputing multilevel data](https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html)
+7. [Sensitivity analysis with `mice`](https://www.gerkovink.com/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html)
+8. [Generate missing values with `ampute`](https://rianneschouten.github.io/mice_ampute/vignette/ampute.html)
+9. [`parlMICE`: Parallel MICE imputation wrapper](https://www.gerkovink.com/parlMICE/Vignette_parlMICE.html)
+
+## Related packages
+
+Packages that extend the functionality of `mice` include:
+
+1. [`ImputeRobust`: Multiple Imputation with `GAMLSS`](https://github.com/dsalfran/ImputeRobust)
+2. [`countimp`: Incomplete count data](https://github.com/kkleinke/countimp)
+3. [`miceadds`: Functions for multilevel imputation](https://github.com/alexanderrobitzsch/miceadds)
+4. [`micemd`: Functions for multilevel imputation](https://cran.r-project.org/package=micemd)
+5. [`smcfcs`: Addressing incompatibility in selected models](https://github.com/jwb133/smcfcs)
+6. [`fancyimpyute`: MICE in Python for ordinal data](https://github.com/hammerlab/fancyimpute)
+
+## Further reading
+
+1. [mice: Multivariate Imputation by Chained Equations in R](https://stefvanbuuren.name/publications/2011%20MICE%20-%20JSS.pdf) in the Journal of Statistical Software [@VANBUUREN2011]. 
+2. The first application on [missing blood pressure](https://stefvanbuuren.name/publications/Multiple%20imputation%20-%20Stat%20Med%201999.pdf) data [@VANBUUREN1999]. 
+3. Term [Fully Conditional Specification](https://stefvanbuuren.name/publications/FCS%20in%20multivariate%20imputation%20-%20JSCS%202006.pdf) describes a general class of methods that specify imputations model for multivariate data as a set of conditional distributions [@VANBUUREN2006].
+4. Details about imputing [mixes of numerical and categorical data](https://stefvanbuuren.name/publications/MI%20by%20FCS%20-%20SMMR%202007.pdf) can be found in [@VANBUUREN2007]. 
+5. Book [Flexible Imputation of Missing Data. Second Edition](https://stefvanbuuren.name/fimd/) [@VANBUUREN2018].
+
+## Code from publications
+
+1. [R code](https://github.com/stefvanbuuren/fimdbook/blob/master/R/fimd.R) from [Flexible Imputation of Missing Data. Second Edition](https://stefvanbuuren.name/fimd/)
+2. [R code](https://www.jstatsoft.org/index.php/jss/article/downloadSuppFile/v045i03/v45i03.R) from [mice: Multivariate Imputation by Chained Equations in R](https://www.jstatsoft.org/article/view/v045i03)
+
+
+## References

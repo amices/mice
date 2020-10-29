@@ -1,0 +1,197 @@
+title: mice
+url: https://amices.org/mice
+template:
+  params:
+    bootswatch: flatly
+    docsearch:
+      api_key: '491b6c2ead7f15b8c26c513b923dd6a0'
+      index_name: 'mice'
+navbar:
+  type: inverse
+reference:
+  - title: "Missing data exploration"
+    desc: >
+      Functions to count and explore the structure of the missing data.
+    contents:
+      - md.pattern
+      - md.pairs
+      - cc
+      - cci
+      - ic
+      - ici
+      - ncc
+      - nic
+      - nimp
+      - fico
+      - flux
+      - fluxplot
+  - title: "Main imputation functions"
+    desc: >
+      The workflow of multiple imputation is: multiply-impute the data,
+      apply the complete-data model to each imputed data set, and pool
+      the results to get to the final inference. The main functions
+      for imputing the data are:
+    contents:
+      - mice
+      - mice.mids
+      - parlmice
+  - title: "Elementary imputation functions"
+    desc: >
+      The elementary imputation function is the workhorse that creates
+      the actual imputations. Elementary functions are called through
+      the `method` argument of `mice` function.
+      Each function imputes one or more columns in the data. There
+      are also `mice.impute.xxx` functions outside the `mice`
+      package.
+    contents:
+      - starts_with("mice.impute")
+  - title: "Imputation model helpers"
+    desc: >
+      Specification of the imputation models can be made more
+      convenient using the following set of helpers.
+    contents:
+      - quickpred
+      - squeeze
+      - make.blocks
+      - make.blots
+      - make.formulas
+      - make.method
+      - make.post
+      - make.predictorMatrix
+      - make.visitSequence
+      - make.where
+      - construct.blocks
+      - name.blocks
+      - name.formulas
+  - title: "Plots comparing observed to imputed/amputed data"
+    desc: >
+      These plots contrast the observed data with the
+      imputed/amputed data, usually with a blue/red distinction.
+    contents:
+      - bwplot.mids
+      - densityplot.mids
+      - plot.mids
+      - stripplot.mids
+      - xyplot.mids
+  - title: "Repeated analyses and combining analytic estimates"
+    desc: >
+      Multiple imputation creates m > 1 completed data sets, fits
+      the model of interest to each of these, and combines the
+      analytic estimates. The following functions
+      assist in executing the analysis and pooling steps:
+    contents:
+      - with.mids
+      - pool
+      - pool.r.squared
+      - pool.scalar
+      - nelsonaalen
+      - pool.compare
+      - anova.mira
+      - fix.coef
+      - D1
+      - D2
+      - D3
+  - title: "Data manipulation"
+    desc: >
+      The multiply-imputed data can be combined in various ways,
+      and exported into other formats.
+    contents:
+      - complete
+      - as.mids
+      - as.mira
+      - as.mitml.result
+      - cbind.mids
+      - rbind.mids
+      - ibind
+      - filter.mids
+      - mids2mplus
+      - mids2spss
+  - title: "Class descriptions"
+    desc: >
+      The data created at the various analytic phases are stored
+      as list objects of a specific class. The most important classes
+      and class-test functions are:
+    contents:
+      - mids-class
+      - mira-class
+      - is.mids
+      - is.mipo
+      - is.mira
+      - is.mitml.result
+  - title: "Extraction functions"
+    desc: >
+      Helpers to extract and print information from objects of
+      specific classes.
+    contents:
+      - getfit
+      - getqbar
+      - glance.mipo
+      - print.mids
+      - print.mira
+      - print.mice.anova
+      - print.mice.anova.summary
+      - summary.mira
+      - summary.mids
+      - summary.mice.anova
+      - tidy.mipo
+  - title: "Low-level imputation functions"
+    desc: >
+      Several functions are dedicated to common low-level operations
+      to generate the imputations:
+    contents:
+      - estimice
+      - norm.draw
+      - .norm.draw
+      - .pmm.match
+  - title: "Multivariate amputation"
+    desc: >
+      Amputation is the inverse of imputation, starting with a
+      complete dataset, and creating missing data pattern according
+      to the posited missing data mechanism. Amputation is
+      useful for simulation studies.
+    contents:
+      - ampute
+      - bwplot.mads
+      - xyplot.mads
+      - is.mads
+      - mads-class
+      - print.mads
+      - summary.mads
+  - title: "Datasets"
+    desc: "Built-in datasets"
+    contents:
+      - boys
+      - brandsma
+      - employee
+      - fdd
+      - fdgs
+      - leiden85
+      - mammalsleep
+      - nhanes
+      - nhanes2
+      - pattern
+      - popmis
+      - pops
+      - potthoffroy
+      - selfreport
+      - tbc
+      - toenail
+      - walking
+      - windspeed
+  - title: "Miscellaneous functions"
+    desc: "Miscellaneous functions"
+    contents:
+      - appendbreak
+      - extractBS
+      - glm.mids
+      - lm.mids
+      - mdc
+      - mice.theme
+      - supports.transparent
+      - version
+articles:
+  - title: "General"
+    navbar: ~
+    contents:
+      - overview
+      - oldfriends

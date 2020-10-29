@@ -96,6 +96,21 @@ the predictors by means of the standard ~ operator." />
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/overview.html">Overview</a>
+    </li>
+    <li>
+      <a href="../articles/oldfriends.html">Help for old friends</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -170,24 +185,24 @@ the rows. The default assigns each variable in its own block.</p></td>
 <span class='va'>f1</span>
 </div><div class='output co'>#&gt; $age
 #&gt; age ~ 0 + bmi + hyp + chl
-#&gt; &lt;environment: 0x7f9abb408120&gt;
+#&gt; &lt;environment: 0x7fce87d262e8&gt;
 #&gt; 
 #&gt; $bmi
 #&gt; bmi ~ 0 + age + hyp + chl
-#&gt; &lt;environment: 0x7f9abb408120&gt;
+#&gt; &lt;environment: 0x7fce87d262e8&gt;
 #&gt; 
 #&gt; $hyp
 #&gt; hyp ~ 0 + age + bmi + chl
-#&gt; &lt;environment: 0x7f9abb408120&gt;
+#&gt; &lt;environment: 0x7fce87d262e8&gt;
 #&gt; 
 #&gt; $chl
 #&gt; chl ~ 0 + age + bmi + hyp
-#&gt; &lt;environment: 0x7f9abb408120&gt;
+#&gt; &lt;environment: 0x7fce87d262e8&gt;
 #&gt; </div><div class='input'><span class='va'>f2</span> <span class='op'>&lt;-</span> <span class='fu'>make.formulas</span><span class='op'>(</span><span class='va'>nhanes</span>, blocks <span class='op'>=</span> <span class='fu'><a href='make.blocks.html'>make.blocks</a></span><span class='op'>(</span><span class='va'>nhanes</span>, <span class='st'>"collect"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>f2</span>
 </div><div class='output co'>#&gt; $collect
 #&gt; age + bmi + hyp + chl ~ 0
-#&gt; &lt;environment: 0x7f9ab995e6d8&gt;
+#&gt; &lt;environment: 0x7fce92619598&gt;
 #&gt; </div><div class='input'>
 <span class='co'># for editing, it may be easier to work with the character vector</span>
 <span class='va'>c1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>f1</span><span class='op'>)</span>
@@ -199,19 +214,19 @@ the rows. The default assigns each variable in its own block.</p></td>
 <span class='va'>f3</span>
 </div><div class='output co'>#&gt; $age
 #&gt; age ~ 0 + bmi + hyp + chl
-#&gt; &lt;environment: 0x7f9ab96102e8&gt;
+#&gt; &lt;environment: 0x7fcea02c8718&gt;
 #&gt; 
 #&gt; $bmi
 #&gt; bmi ~ 0 + age + hyp + chl
-#&gt; &lt;environment: 0x7f9ab96102e8&gt;
+#&gt; &lt;environment: 0x7fcea02c8718&gt;
 #&gt; 
 #&gt; $hyp
 #&gt; hyp ~ 0 + age + bmi + chl
-#&gt; &lt;environment: 0x7f9ab96102e8&gt;
+#&gt; &lt;environment: 0x7fcea02c8718&gt;
 #&gt; 
 #&gt; $chl
 #&gt; chl ~ 0 + age + bmi + hyp
-#&gt; &lt;environment: 0x7f9ab96102e8&gt;
+#&gt; &lt;environment: 0x7fcea02c8718&gt;
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
