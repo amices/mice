@@ -46,8 +46,8 @@
 
 
 <meta property="og:title" content="Finds an imputed value from matches in the predictive metric (deprecated) — .pmm.match" />
-<meta property="og:description" content="This function finds matches among the observed data in the predictive 
-mean metric. It selects the donors closest matches, randomly 
+<meta property="og:description" content="This function finds matches among the observed data in the predictive
+mean metric. It selects the donors closest matches, randomly
 samples one of the donors, and returns the observed value of the
 match." />
 
@@ -81,7 +81,7 @@ match." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.12.0</span>
       </span>
     </div>
 
@@ -132,13 +132,13 @@ match." />
     </div>
 
     <div class="ref-description">
-    <p>This function finds matches among the observed data in the predictive 
-mean metric. It selects the <code>donors</code> closest matches, randomly 
+    <p>This function finds matches among the observed data in the predictive
+mean metric. It selects the <code>donors</code> closest matches, randomly
 samples one of the donors, and returns the observed value of the
 match.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>.pmm.match</span>(<span class='no'>z</span>, <span class='kw'>yhat</span> <span class='kw'>=</span> <span class='no'>yhat</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='kw'>donors</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>.pmm.match</span><span class='op'>(</span><span class='va'>z</span>, yhat <span class='op'>=</span> <span class='va'>yhat</span>, y <span class='op'>=</span> <span class='va'>y</span>, donors <span class='op'>=</span> <span class='fl'>5</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,7 +150,7 @@ to be imputed.</p></td>
     </tr>
     <tr>
       <th>yhat</th>
-      <td><p>A vector containing the predicted values for all cases with an observed 
+      <td><p>A vector containing the predicted values for all cases with an observed
 outcome.</p></td>
     </tr>
     <tr>
@@ -159,9 +159,9 @@ outcome.</p></td>
     </tr>
     <tr>
       <th>donors</th>
-      <td><p>The size of the donor pool among which a draw is made. The default is 
-<code>donors = 5</code>. Setting <code>donors = 1</code> always selects the closest match. Values 
-between 3 and 10 provide the best results. Note: This setting was changed from 
+      <td><p>The size of the donor pool among which a draw is made. The default is
+<code>donors = 5</code>. Setting <code>donors = 1</code> always selects the closest match. Values
+between 3 and 10 provide the best results. Note: This setting was changed from
 3 to 5 in version 2.19, based on simulation work by Tim Morris (UCL).</p></td>
     </tr>
     <tr>
@@ -175,16 +175,19 @@ between 3 and 10 provide the best results. Note: This setting was changed from
     <p>A scalar containing the observed value of the selected donor.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is included for backward compatibility. It was 
-used up to <code>mice 2.21</code>. The current <code><a href='mice.impute.pmm.html'>mice.impute.pmm()</a></code> 
-function calls the faster <code>C</code> function <code>matcher</code> instead of 
+    <p>This function is included for backward compatibility. It was
+used up to <code>mice 2.21</code>. The current <code><a href='mice.impute.pmm.html'>mice.impute.pmm()</a></code>
+function calls the faster <code>C</code> function <code>matcher</code> instead of
 <code>.pmm.match()</code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Schenker N \&amp; Taylor JMG (1996) Partially parametric techniques 
+    <p>Schenker N \&amp; Taylor JMG (1996) Partially parametric techniques
 for multiple imputation. <em>Computational Statistics and Data Analysis</em>, 22, 425-446.</p>
-<p>Little RJA (1988) Missing-data adjustments in large surveys (with discussion). 
+<p>Little RJA (1988) Missing-data adjustments in large surveys (with discussion).
 <em>Journal of Business Economics and Statistics</em>, 6, 287-301.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Stef van Buuren</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -201,7 +204,7 @@ for multiple imputation. <em>Computational Statistics and Data Analysis</em>, 22
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
