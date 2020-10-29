@@ -114,6 +114,9 @@ A second problem concerned to `miceadds` package. This package uses
 `mice::.pmm.match`, which I had removed because I thought nobody used it
 anymore. I will put it back in.
 
+The `idem` package yields two notes. Neither of these is related to
+`mice`.
+
 ### README.md
 
     # Platform
