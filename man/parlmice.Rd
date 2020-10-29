@@ -83,7 +83,7 @@ pool(fit)
 }
 \references{
 Schouten, R. and Vink, G. (2017). parlmice: faster, paraleller, micer.
-\url{https://gerkovink.github.io/parlMICE/Vignette_parlMICE.html}
+\url{https://www.gerkovink.com/parlMICE/Vignette_parlMICE.html}
 
 #'Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/parallel-computation.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}

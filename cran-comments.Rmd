@@ -7,19 +7,17 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## mice 3.11.00
+## mice 3.12.0
 
 New submission. 
 
-## Reasons
+## Reason
 
-1. `tidyr` stopped importing `Rccp`, and because of that `mice` failed to build on CRAN
-2. Various changes and enhancements since `mice 3.10.0`
-
+`mice 3.12.0` implements three new features and contains bug fixes.
 
 ## Test environments
 
-* local OS X install, 10.15.6, R 4.0.2
+* local OS X install, 10.15.7, R 4.0.2
 * win-builder
 * Rhub
 
@@ -33,7 +31,7 @@ build()
 ```
 
 ```{bash eval=FALSE}
-R CMD CHECK /Users/buurensv/Package/mice/mice_3.11.0.tar.gz
+R CMD CHECK mice_3.12.0.tar.gz
 ```
 
 

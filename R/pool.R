@@ -75,7 +75,7 @@
 #'
 #' An alternative is to write your own \code{glance()} and \code{tidy()}
 #' methods and add these to \code{broom} according to the specifications
-#' given in \url{https://broom.tidyverse.org/articles/adding-tidiers.html}.
+#' given in \url{https://broom.tidymodels.org}.
 #'
 #' @param object An object of class \code{mira} (produced by \code{with.mids()}
 #' or \code{as.mira()}), or a \code{list} with model fits.

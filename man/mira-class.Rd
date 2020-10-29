@@ -23,7 +23,7 @@ like \code{No method for tidying an S3 object of class ...} or
 \code{Error: No glance method for objects of class ...}. The royal
 way to solve this problem is to write your own \code{glance()} and \code{tidy()}
 methods and add these to \code{broom} according to the specifications
-given in \url{https://broom.tidyverse.org/articles/adding-tidiers.html}.
+given in \url{https://broom.tidymodels.org}.
 
 #'The \code{mira} class of objects has methods for the
 following generic functions: \code{print}, \code{summary}.

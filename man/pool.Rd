@@ -103,7 +103,7 @@ information.
 
 An alternative is to write your own \code{glance()} and \code{tidy()}
 methods and add these to \code{broom} according to the specifications
-given in \url{https://broom.tidyverse.org/articles/adding-tidiers.html}.
+given in \url{https://broom.tidymodels.org}.
 }
 \examples{
 # pool using the classic MICE workflow

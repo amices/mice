@@ -313,12 +313,12 @@ problems with mice.
 
 We suggest going through these vignettes in the following order
 \enumerate{
-\item \href{https://gerkovink.github.io/miceVignettes/Ad_hoc_and_mice/Ad_hoc_methods.html}{Ad hoc methods and the MICE algorithm}
-\item \href{https://gerkovink.github.io/miceVignettes/Convergence_pooling/Convergence_and_pooling.html}{Convergence and pooling}
-\item \href{https://gerkovink.github.io/miceVignettes/Missingness_inspection/Missingness_inspection.html}{Inspecting how the observed data and missingness are related}
-\item \href{https://gerkovink.github.io/miceVignettes/Passive_Post_processing/Passive_imputation_post_processing.html}{Passive imputation and post-processing}
-\item \href{https://gerkovink.github.io/miceVignettes/Multi_level/Multi_level_data.html}{Imputing multilevel data}
-\item \href{https://gerkovink.github.io/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html}{Sensitivity analysis with \pkg{mice}}
+\item \href{https://www.gerkovink.com/miceVignettes/Ad_hoc_and_mice/Ad_hoc_methods.html}{Ad hoc methods and the MICE algorithm}
+\item \href{https://www.gerkovink.com/miceVignettes/Convergence_pooling/Convergence_and_pooling.html}{Convergence and pooling}
+\item \href{https://www.gerkovink.com/miceVignettes/Missingness_inspection/Missingness_inspection.html}{Inspecting how the observed data and missingness are related}
+\item \href{https://www.gerkovink.com/miceVignettes/Passive_Post_processing/Passive_imputation_post_processing.html}{Passive imputation and post-processing}
+\item \href{https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html}{Imputing multilevel data}
+\item \href{https://www.gerkovink.com/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html}{Sensitivity analysis with \pkg{mice}}
 }
 
 #'Van Buuren, S. (2018).
