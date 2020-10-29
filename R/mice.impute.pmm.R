@@ -133,3 +133,52 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
   else idx <- matchindex(yhatobs, yhatmis, donors)
   return(y[ry][idx])
 }
+
+#' Finds an imputed value from matches in the predictive metric (deprecated)
+#'
+#' This function finds matches among the observed data in the predictive
+#' mean metric. It selects the \code{donors} closest matches, randomly
+#' samples one of the donors, and returns the observed value of the
+#' match.
+#'
+#' This function is included for backward compatibility. It was
+#' used up to \code{mice 2.21}. The current \code{mice.impute.pmm()}
+#' function calls the faster \code{C} function \code{matcher} instead of
+#' \code{.pmm.match()}.
+#'
+#'@aliases .pmm.match
+#'@param z A scalar containing the predicted value for the current case
+#'to be imputed.
+#'@param yhat A vector containing the predicted values for all cases with an observed
+#'outcome.
+#'@param y A vector of \code{length(yhat)} elements containing the observed outcome
+#'@param donors The size of the donor pool among which a draw is made. The default is
+#'\code{donors = 5}. Setting \code{donors = 1} always selects the closest match. Values
+#'between 3 and 10 provide the best results. Note: This setting was changed from
+#'3 to 5 in version 2.19, based on simulation work by Tim Morris (UCL).
+#'@param \dots Other parameters (not used).
+#'@return A scalar containing the observed value of the selected donor.
+#'@author Stef van Buuren
+#'@rdname pmm.match
+#'@references
+#'Schenker N \& Taylor JMG (1996) Partially parametric techniques
+#'for multiple imputation. \emph{Computational Statistics and Data Analysis}, 22, 425-446.
+#'
+#'Little RJA (1988) Missing-data adjustments in large surveys (with discussion).
+#'\emph{Journal of Business Economics and Statistics}, 6, 287-301.
+#'
+#'@export
+.pmm.match <- function(z, yhat = yhat, y = y, donors = 5, ...)
+{
+  d <- abs(yhat - z)
+  f <- d > 0
+  a1 <- ifelse(any(f), min(d[f]), 1)
+  d <- d + runif(length(d), 0, a1/10^10)
+  if (donors == 1)
+    return(y[which.min(d)])
+  donors <- min(donors, length(d))
+  donors <- max(donors, 1)
+  ds <- sort.int(d, partial = donors)
+  m <- sample(y[d <= ds[donors]], 1)
+  return(m)
+}
