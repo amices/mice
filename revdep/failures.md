@@ -1,3 +1,53 @@
+# brms
+
+<details>
+
+* Version: 
+* Source code: ???
+* URL: https://github.com/amices/mice, https://amices.org/mice/, https://stefvanbuuren.name/fimd/
+* BugReports: https://github.com/amices/mice/issues
+* Number of recursive dependencies: 0
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+  There are binary versions available but the source versions are later:
+            binary  source needs_compilation
+KernSmooth 2.23-17 2.23-18              TRUE
+rmarkdown      2.3     2.5             FALSE
+rstan       2.21.1  2.21.2              TRUE
+
+  Binaries will be installed
+
+
+installing the source package ‘rmarkdown’
+
+
+
+```
+### CRAN
+
+```
+
+  There are binary versions available but the source versions are later:
+            binary  source needs_compilation
+KernSmooth 2.23-17 2.23-18              TRUE
+rmarkdown      2.3     2.5             FALSE
+rstan       2.21.1  2.21.2              TRUE
+
+  Binaries will be installed
+
+
+installing the source package ‘rmarkdown’
+
+
+
+```
 # dynr
 
 <details>
