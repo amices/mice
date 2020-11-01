@@ -209,6 +209,18 @@ xyplot.mids <- function(x,
     }
   }
 
+  # Determine if observations were ignored during imputation
+  if(any(x$ignore)){
+    cd$.ignore <- factor(x$ignore, c(FALSE, TRUE), c("Included", "Ignored"))
+    
+    if(!is.symbol(formula[[3]]) && formula[[3]][[1]] == substitute(`|`)) {
+      formula[[3]][[3]] <- call("+", substitute(.ignore), formula[[3]][[3]])
+
+    } else {
+      formula[[3]] <- call("|", formula[[3]], substitute(.ignore))
+    }
+  }
+  
   ## ready
   args <- c(
     x = formula, data = list(cd),
@@ -218,5 +230,62 @@ xyplot.mids <- function(x,
 
   ## go
   tp <- do.call("xyplot", args)
+  tp <- format_lattice_as_grid(tp)
   update(tp, par.settings = theme)
 }
+
+
+format_lattice_as_grid <- function(x){
+  # Helper function to format lattice trellis plot like ggplot2::facet_grid. 
+  # 
+  # Code adapted from the latticeExtra::useOuterStrips function 
+  # created by Deepayan Sarkar: 
+  #    http://r-forge.r-project.org/scm/viewvc.php/pkg/R/utilities.R?view=markup&root=latticeextra
+  dimx <- dim(x)
+  if(length(dimx) != 2 | names(x$condlevels)[[1]] != ".ignore") {
+    return(x)
+  }
+  
+  as.table <- x$as.table
+  opar <- if (is.null(x$par.settings)) {
+    list()
+  } else {
+    x$par.settings
+  }
+  par.settings <- modifyList(
+    opar, list(
+      layout.heights = if (as.table) { 
+        list(strip = c(1, rep(0, dimx[2] - 1)))
+      } else {
+        list(strip = c(rep(0, dimx[2] - 1), 1))
+      }, 
+      layout.widths = list(strip.left = c(1,  rep(0, dimx[1] - 1)))
+    )
+  )
+  
+  # Define column headers
+  new.strip <- function(which.given, which.panel, var.name, ...) {
+    row.to.keep <- if (as.table) { 1 } else { nrow(lattice::trellis.currentLayout()) }
+    if (which.given == 1 && lattice::current.row() == row.to.keep) 
+      lattice::strip.default(
+        which.given = 1, which.panel = which.panel[1], 
+        var.name = var.name[1], ...
+      )
+  }
+  
+  # Define row titles
+  new.strip.left <- function(which.given, which.panel, var.name, ...) {
+    if (which.given == 2 && lattice::current.column() == 1) {
+      strip.left <- lattice::strip.custom(horizontal = FALSE)
+      strip.left(  
+        which.given = 1, which.panel = which.panel[2], 
+        var.name = var.name[2], ...)
+    }
+  }
+  
+  update(x, par.settings = par.settings, strip = new.strip, 
+         strip.left = new.strip.left, par.strip.text = list(lines = 0.5), 
+         layout = dimx)
+}
+
+
