@@ -27,7 +27,7 @@ The `mice` package can be installed from CRAN as follows:
 install.packages("mice")
 ```
 
-The latest version is can be installed from GitHub as follows:
+The latest version can be installed from GitHub as follows:
 
 ``` r
 install.packages("devtools")
