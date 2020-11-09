@@ -18,11 +18,13 @@
 #' mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
 #' D2(mi1, mi0)
 #'
+#' \donttest{
 #' # Compare two logistic regression models
 #' imp <- mice(boys, maxit = 2, print = FALSE)
 #' fit1 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc + reg, family = binomial))
 #' fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
 #' D2(fit1, fit0)
+#' }
 #' @seealso \code{\link[mitml]{testModels}}
 #' @export
 D2 <- function(fit1, fit0 = NULL, use = "wald") {
