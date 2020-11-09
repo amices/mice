@@ -179,6 +179,7 @@
 <h3 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h3>
 <ul>
+<li>Corrected installation problem related to <code>cpp11</code> package (<a href='https://github.com/amices/mice/issues/286'>#286</a>)</li>
 <li>Simplifies <code><a href="../reference/with.mids.html">with.mids()</a></code> by calling <code>eval_tidy()</code> on a quosure. Does not yet solve <a href='https://github.com/amices/mice/issues/265'>#265</a>.</li>
 <li>Improve documentation for <code><a href="../reference/pool.html">pool()</a></code> and <code><a href="../reference/pool.scalar.html">pool.scalar()</a></code> (<a href='https://github.com/amices/mice/issues/142'>#142</a>, <a href='https://github.com/amices/mice/issues/106'>#106</a>, <a href='https://github.com/amices/mice/issues/190'>#190</a> and others)</li>
 <li>Makes <code>tidy.mipo</code> more flexible (<a href='https://github.com/amices/mice/issues/276'>#276</a>)</li>
@@ -252,7 +253,7 @@
 <a href="#major-changes-2" class="anchor"></a>Major changes</h2>
 <ul>
 <li>The <code><a href="../reference/D3.html">D3()</a></code> function in <code>mice</code> gave incorrect results. This version solves a problem in the calculation of the <code>D3</code>-statistic. See <a href='https://github.com/amices/mice/issues/226'>#226</a> and <a href='https://github.com/amices/mice/issues/228'>#228</a> for more details. The documentation explains why results from <code><a href="../reference/D3.html">mice::D3()</a></code> and <code><a href="https://rdrr.io/pkg/mitml/man/testModels.html">mitml::testModels()</a></code> may differ.</li>
-<li>The <code><a href="../reference/pool.html">pool()</a></code> function is now more forgiving when there is no <code><a href="https://rdrr.io/pkg/generics/man/glance.html">glance()</a></code> function (<a href='https://github.com/amices/mice/issues/233'>#233</a>)</li>
+<li>The <code><a href="../reference/pool.html">pool()</a></code> function is now more forgiving when there is no <code><a href="https://generics.r-lib.org/reference/glance.html">glance()</a></code> function (<a href='https://github.com/amices/mice/issues/233'>#233</a>)</li>
 <li>It is possible to bypass <code>remove.lindep()</code> by setting <code>eps = 0</code> (<a href='https://github.com/amices/mice/issues/225'>#225</a>)</li>
 </ul>
 </div>

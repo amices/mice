@@ -194,7 +194,7 @@ complete-data analysis. Normally, this would be the number of independent
 observation minus the number of fitted parameters. The default
 (<code>dfcom = NULL</code>) extract this information in the following
 order: 1) the component
-<code>residual.df</code> returned by <code><a href='https://rdrr.io/pkg/generics/man/glance.html'>glance()</a></code> if a <code><a href='https://rdrr.io/pkg/generics/man/glance.html'>glance()</a></code>
+<code>residual.df</code> returned by <code><a href='https://generics.r-lib.org/reference/glance.html'>glance()</a></code> if a <code><a href='https://generics.r-lib.org/reference/glance.html'>glance()</a></code>
 function is found, 2) the result of <code>df.residual(</code> applied to
 the first fitted model, and 3) as <code>999999</code>.
 In the last case, the warning <code>"Large sample assumed"</code> is printed.
@@ -228,9 +228,9 @@ and computes the following diagnostic statistics per estimate:</p><ol>
 
 <p>The degrees of freedom calculation for the pooled estimates uses the
 Barnard-Rubin adjustment for small samples (Barnard and Rubin, 1999).</p>
-<p>The <code>pool()</code> function relies on the <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>broom::tidy</a></code> for
+<p>The <code>pool()</code> function relies on the <code><a href='https://generics.r-lib.org/reference/tidy.html'>broom::tidy</a></code> for
 extracting the parameters. Versions before <code>mice 3.8.5</code> failed
-when no <code><a href='https://rdrr.io/pkg/generics/man/glance.html'>broom::glance()</a></code> function was found for extracting the
+when no <code><a href='https://generics.r-lib.org/reference/glance.html'>broom::glance()</a></code> function was found for extracting the
 residual degrees of freedom. The <code>pool()</code> function is now
 more forgiving.</p>
 <p>In versions prior to <code>mice 3.0</code> pooling required only that
@@ -255,7 +255,7 @@ models stored in <code>fit$analyses</code>. For each parameter, run
 <code><a href='pool.scalar.html'>pool.scalar</a></code> to obtain the pooled parameters estimate, its variance, the
 degrees of freedom, the relative increase in variance and the fraction of missing
 information.</p>
-<p>An alternative is to write your own <code><a href='https://rdrr.io/pkg/generics/man/glance.html'>glance()</a></code> and <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy()</a></code>
+<p>An alternative is to write your own <code><a href='https://generics.r-lib.org/reference/glance.html'>glance()</a></code> and <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code>
 methods and add these to <code>broom</code> according to the specifications
 given in <a href='https://broom.tidymodels.org'>https://broom.tidymodels.org</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
