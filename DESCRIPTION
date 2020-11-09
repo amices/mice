@@ -79,5 +79,5 @@ LazyData: yes
 URL: https://github.com/amices/mice, https://amices.org/mice/, https://stefvanbuuren.name/fimd/
 BugReports: https://github.com/amices/mice/issues
 RoxygenNote: 7.1.1
-LinkingTo: 
-    Rcpp
+LinkingTo: cpp11
+SystemRequirements: C++11
