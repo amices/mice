@@ -38,6 +38,7 @@ for speed improvements. If you want the old behavior, specify `mice(..., use.mat
 
 ### Minor changes
 
+* Corrected installation problem related to `cpp11` package (#286)
 * Simplifies `with.mids()` by calling `eval_tidy()` on a quosure. Does not yet solve #265.
 * Improve documentation for `pool()` and `pool.scalar()` (#142, #106, #190 and others)
 * Makes `tidy.mipo` more flexible (#276)
