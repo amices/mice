@@ -13,11 +13,11 @@ New submission.
 
 ## Reason
 
-`mice 3.12.0` implements three new features and contains bug fixes.
+`mice 3.12.0` implements important new features and contains bug fixes.
 
 ## Test environments
 
-* local OS X install, 10.15.7, R 4.0.2
+* local OS X install, 10.15.7, R 4.0.3
 * win-builder
 * Rhub
 
@@ -54,10 +54,10 @@ check_rhub()
 
 Results:
 
-1. <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-c1ee4204486443fe91ff1a562649428b>: Success
-2. <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-97a2521ab76f45a480967534d56bf9c2>: Success
-3. <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-e7d1b6eaeddd463c977514a65908d40e>: Success
-4. <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-d1415825ea594cd2befbae2228885d71>: Success
+1. Debian Linux, R-devel, GCC ASAN/UBSAN: <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-0f353a5af0994e03a4d81cfe59b64208>: Error, possibly related to an installing problem of miceadds package
+2. Windows Server 2008 R2 SP1, R-devel, 32/64 bit: <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-7b498c42ea2e4649890a59cae55aceb4>: Success
+3. Ubuntu Linux 16.04 LTS, R-release, GCC: <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-c2ce58219fd54312ab8ea65cddafcf8f>: Success
+4. Fedora Linux, R-devel, clang, gfortran: <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-b7d7fa09d5a54f97a0d475bb0f61339b>: Error, likely to be unrelated to mice
 
 
 ## Downstream dependencies
@@ -104,9 +104,13 @@ Best wishes, Stef
 
 ---
 
+Update Nov 9: The package maintainers of `BaM` and `Qtools` told me that the planned mice update did not affect the validity of their packages. Did not see a reaction from other maintainers.
+
 A second problem concerned to `miceadds` package. This package uses 
 `mice::.pmm.match`, which I had removed because I thought nobody used it 
 anymore. I will put it back in.
+
+Update Nov 9: `mice::.pmm.match` is now again part of the `mice` package
 
 The `idem` package yields two notes. Neither of these is related to `mice`.
 
