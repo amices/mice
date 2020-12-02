@@ -39,6 +39,7 @@ Imports:
     dplyr,
     generics,
     graphics,
+    haven,
     lattice,
     methods,
     Rcpp,
