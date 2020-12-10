@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.12.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.12.2</span>
       </span>
     </div>
 
@@ -175,7 +175,9 @@ containing a dot (notation for "all other variables") do not work.</p></td>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Version 3.11.10 changed to tidy evaluation on a quosure. This change
-should not affect any code that worked on previous versions.</p>
+should not affect any code that worked on previous versions.
+It turned out that the latter statement was not true (#292).
+Version 3.12.2 reverts to the old <code><a href='https://rdrr.io/r/base/with.html'>with()</a></code> function.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>van Buuren S and Groothuis-Oudshoorn K (2011). <code>mice</code>:
