@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.12.3
+
+* Updated `mids2spss()` replaces the `foreign` by `haven` package. Contributed Gerko Vink (#291)
+
 # mice 3.12.2
 
 * Reverts `with.mids()` function to old version because the change in commit 4634094 broke downstream package `metafor` (#292)
