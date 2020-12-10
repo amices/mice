@@ -3,6 +3,12 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.12.1 
+
+### Minor changes
+
+* Solves a glitch in `mice.impute.rf()` in finding candidate donors (#288, #289)
+
 # mice 3.12.0
 
 ### Much faster predictive mean matching
