@@ -59,7 +59,9 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10, ...) {
       ntree = 1, ...
     )
     leafnr <- predict(object = fit, newdata = xobs, nodes = TRUE)
+    leafnr <- as.vector(attr(leafnr, "nodes"))
     nodes <- predict(object = fit, newdata = xmis, nodes = TRUE)
+    nodes <- as.vector(attr(nodes, "nodes"))
     donor <- lapply(nodes, function(s) yobs[leafnr == s])
     return(donor)
   }
