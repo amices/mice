@@ -6,11 +6,9 @@
 \usage{
 mids2spss(
   imp,
-  filedat = "midsdata.txt",
-  filesps = "readmids.sps",
+  filename = "midsdata",
   path = getwd(),
-  sep = "\\t",
-  dec = ".",
+  compress = FALSE,
   silent = FALSE
 )
 }
@@ -18,22 +16,18 @@ mids2spss(
 \item{imp}{The \code{imp} argument is an object of class \code{mids},
 typically produced by the \code{mice()} function.}
 
-\item{filedat}{A character string describing the name of the output data
-file.}
-
-\item{filesps}{A character string describing the name of the output syntax
-file.}
+\item{filename}{A character string describing the name of the output data
+file and its extension.}
 
 \item{path}{A character string containing the path of the output file. The
-value in \code{path} is appended to \code{filedat} and \code{filesps}. By
+value in \code{path} is appended to \code{filedat}. By
 default, files are written to the current \code{R} working directory. If
 \code{path=NULL} then no file path appending is done.}
 
-\item{sep}{The separator between the data fields.}
+\item{compress}{A logical flag stating whether the resulting SPSS set should 
+be a compressed \code{.zsav} file.}
 
-\item{dec}{The decimal separator for numerical data.}
-
-\item{silent}{A logical flag stating whether the names of the files should be
+\item{silent}{A logical flag stating whether the location of the saved file should be
 printed.}
 }
 \value{
@@ -45,11 +39,8 @@ the data and the SPSS syntax files.
 }
 \details{
 This function automates most of the work needed to export a \code{mids}
-object to SPSS. It uses a modified version of \code{writeForeignSPSS()} from
-the \code{foreign} package. The modified version allows for a choice of the
-field and decimal separators, and makes some improvements to the formatting,
-so that the generated syntax file is amenable to the \code{INCLUDE} statement
-in SPSS.
+object to SPSS. It uses \code{haven::write_sav()} to facilitate the export to an 
+SPSS \code{.sav} or \code{.zsav} file. 
 
 Below are some things to pay attention to.
 
@@ -62,22 +53,19 @@ Factors in \code{R} translate into categorical variables in \code{SPSS}. The
 internal coding of factor levels used in \code{R} is exported. This is
 generally acceptable for \code{SPSS}. However, when the data are to be
 combined with existing \code{SPSS} data, watch out for any changes in the
-factor levels codes. The \code{read.spss()} in package \code{foreign} for
-reading \code{.sav} uses its own internal numbering scheme \code{1,2,3,...}
-for the levels of a factor. Consequently, changes in factor code can cause
-discrepancies in factor level when re-imported to \code{SPSS}. The solution
-is to manually recode the factor level in \code{SPSS}.
+factor levels codes. 
 
 \code{SPSS} will recognize the data set as a multiply imputed data set, and
 do automatic pooling in procedures where that is supported. Note however that
 pooling is an extra option only available to those who license the
 \code{MISSING VALUES} module. Without this license, \code{SPSS} will still
-recognize the structure of the data, but not do any pooling.
+recognize the structure of the data, but it will not pool the multiply imputed 
+estimates into a single inference.
 }
 \seealso{
 \code{\link[=mids-class]{mids}}
 }
 \author{
-Stef van Buuren, dec 2010.
+Gerko Vink, dec 2020.
 }
 \keyword{manip}

@@ -48,6 +48,7 @@ Imports:
     utils
 Suggests:
     broom.mixed,
+    haven,
     knitr,
     lme4,
     MASS,
