@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.12.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.12.1</span>
       </span>
     </div>
 
@@ -141,9 +141,21 @@
       <small>Source: <a href='https://github.com/amices/mice/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="mice-3121" class="section level1">
+<h1 class="page-header" data-toc-text="3.12.1">
+<a href="#mice-3121" class="anchor"></a>mice 3.12.1<small> Unreleased </small>
+</h1>
+<div id="minor-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>Solves a glitch in <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> in finding candidate donors (<a href='https://github.com/amices/mice/issues/288'>#288</a>, <a href='https://github.com/amices/mice/issues/289'>#289</a>)</li>
+</ul>
+</div>
+</div>
     <div id="mice-3120" class="section level1">
 <h1 class="page-header" data-toc-text="3.12.0">
-<a href="#mice-3120" class="anchor"></a>mice 3.12.0<small> Unreleased </small>
+<a href="#mice-3120" class="anchor"></a>mice 3.12.0<small> 2020-11-14 </small>
 </h1>
 <div id="much-faster-predictive-mean-matching" class="section level3">
 <h3 class="hasAnchor">
@@ -175,9 +187,9 @@
 <strong>Breaking change:</strong> The <code>matcher</code> algorithm in <code>pmm</code> has changed to <code>matchindex</code> for speed improvements. If you want the old behavior, specify <code><a href="../reference/mice.html">mice(..., use.matcher = TRUE)</a></code>.</li>
 </ul>
 </div>
-<div id="minor-changes" class="section level3">
+<div id="minor-changes-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Corrected installation problem related to <code>cpp11</code> package (<a href='https://github.com/amices/mice/issues/286'>#286</a>)</li>
 <li>Simplifies <code><a href="../reference/with.mids.html">with.mids()</a></code> by calling <code>eval_tidy()</code> on a quosure. Does not yet solve <a href='https://github.com/amices/mice/issues/265'>#265</a>.</li>
@@ -215,9 +227,9 @@
 <li>Adds missing <code>Rccp</code> dependency to work with <code>tidyr 1.1.1</code> (<a href='https://github.com/amices/mice/issues/248'>#248</a>).</li>
 </ul>
 </div>
-<div id="minor-changes-1" class="section level2">
+<div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Addresses warnings: <code>Non-file package-anchored link(s) in documentation object</code>.</li>
 <li>Updates on <code>ampute</code> documentation (<a href='https://github.com/amices/mice/issues/251'>#251</a>).</li>
@@ -236,9 +248,9 @@
 <li>New functions <code><a href="../reference/tidy.mipo.html">tidy.mipo()</a></code> and <code><a href="../reference/glance.mipo.html">glance.mipo()</a></code> return standardized output that conforms to <code>broom</code> specifications. Kindly contributed by Vincent Arel Bundock (<a href='https://github.com/amices/mice/issues/240'>#240</a>).</li>
 </ul>
 </div>
-<div id="minor-changes-2" class="section level2">
+<div id="minor-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Solves a problem with the <code>D3</code> testing script that produced an error on CRAN (<a href='https://github.com/amices/mice/issues/244'>#244</a>).</li>
 </ul>
@@ -257,9 +269,9 @@
 <li>It is possible to bypass <code>remove.lindep()</code> by setting <code>eps = 0</code> (<a href='https://github.com/amices/mice/issues/225'>#225</a>)</li>
 </ul>
 </div>
-<div id="minor-changes-3" class="section level2">
+<div id="minor-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-4" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Adds reference to Leacy’s thesis</li>
 <li>Adds an example to the <code><a href="../reference/plot.mids.html">plot.mids()</a></code> documentation</li>
