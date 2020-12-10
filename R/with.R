@@ -10,6 +10,8 @@
 #' @return An object of S3 class \code{\link[=mira-class]{mira}}
 #' @note Version 3.11.10 changed to tidy evaluation on a quosure. This change
 #' should not affect any code that worked on previous versions.
+#' It turned out that the latter statement was not true (#292).
+#' Version 3.12.2 reverts to the old \code{with()} function.
 #' @author Karin Oudshoorn, Stef van Buuren 2009, 2012, 2020
 #' @seealso \code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}, \code{\link{pool}},
 #' \code{\link{D1}}, \code{\link{D3}}, \code{\link{pool.r.squared}}
@@ -40,7 +42,9 @@ with.mids <- function(data, expr, ...) {
   # do the repeated analysis, store the result.
   for (i in seq_along(analyses)) {
     data.i <- complete(data, i)
-    analyses[[i]] <- eval_tidy(enquo(expr), data.i)
+    analyses[[i]] <- eval(expr = substitute(expr), envir = data.i, enclos = parent.frame())
+    if (is.expression(analyses[[i]]))
+      analyses[[i]] <- eval(expr = analyses[[i]], envir = data.i, enclos = parent.frame())
   }
 
   # return the complete data analyses as a list of length nimp

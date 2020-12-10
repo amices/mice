@@ -6,7 +6,7 @@
 #'                      points rect text
 #' @importFrom lattice  bwplot densityplot stripplot xyplot
 #' @importFrom Rcpp     evalCpp
-#' @importFrom rlang    .data enquo eval_tidy syms
+#' @importFrom rlang    .data syms
 #' @importFrom stats    C aggregate as.formula binomial coef
 #'                      complete.cases confint
 #'                      contr.treatment cor df.residual fitted

@@ -24,6 +24,8 @@ Performs a computation of each of imputed datasets in data.
 \note{
 Version 3.11.10 changed to tidy evaluation on a quosure. This change
 should not affect any code that worked on previous versions.
+It turned out that the latter statement was not true (#292).
+Version 3.12.2 reverts to the old \code{with()} function.
 }
 \examples{
 imp <- mice(nhanes2, m = 2, print = FALSE, seed = 14221)
