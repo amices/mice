@@ -51,6 +51,7 @@ Suggests:
     knitr,
     lme4,
     MASS,
+    metafor,
     mitml,
     miceadds,
     nnet,
