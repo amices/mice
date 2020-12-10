@@ -47,6 +47,7 @@
 mids2spss <- function(imp, filename="midsdata",
                       path=getwd(), compress = FALSE, silent=FALSE) {
   .id <- NULL # avoid empty global variable binding
+  install.on.demand("haven")
   #extract a completed dataset (long format - all imputations stacked)
   #rename the .imp variable to imputation_, such that SPSS can identify a multiply imputed dataset
   out <-
