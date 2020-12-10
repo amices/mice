@@ -3,7 +3,11 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.12.1 
+# mice 3.12.2
+
+* Reverts `with.mids()` function to old version because the change in commit 4634094 broke downstream package `metafor` (#292)
+
+# mice 3.12.1
 
 ### Minor changes
 
