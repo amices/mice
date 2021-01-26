@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.12.4 
+
+* Repairs an error in `tests\testhat\test-D1.R` that failed on `mitml 0.4-0`
+
 # mice 3.12.3
 
 * Updated `mids2spss()` replaces the `foreign` by `haven` package. Contributed Gerko Vink (#291)

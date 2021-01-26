@@ -28,9 +28,9 @@ in the imputation model using \code{I()}. See
 \item{type}{An integer vector specifying the role of each variable
 in the imputation model (see \code{\link[mitml]{jomoImpute}})}
 
-\item{m}{The number of imputed data sets to generate. Default is to 10.}
+\item{m}{The number of imputed data sets to generate. Default is 10.}
 
-\item{silent}{(optional) Logical flag indicating if console output should be suppressed. Default is to \code{FALSE}.}
+\item{silent}{(optional) Logical flag indicating if console output should be suppressed. Default is \code{FALSE}.}
 
 \item{format}{A character vector specifying the type of object that should
 be returned. The default is \code{format = "list"}. No other formats are
