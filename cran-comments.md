@@ -1,19 +1,20 @@
 cran-comments
 ================
 
-## mice 3.12.0
+## mice 3.13.0
 
 New submission.
 
 ## Reason
 
-`mice 3.12.0` implements important new features and contains bug fixes.
+After signal sent by Brian Ripley on Jan26. `mice 3.13.0` implements a
+fix for a bug that produced errors with `mitml 0.4-0`.
 
 ## Test environments
 
-  - local OS X install, 10.15.7, R 4.0.3
-  - win-builder
-  - Rhub
+-   local OS X install, 11.11, R 4.0.3
+-   win-builder
+-   Rhub
 
 ## Local check
 
@@ -25,7 +26,7 @@ build()
 ```
 
 ``` bash
-R CMD CHECK mice_3.12.0.tar.gz
+R CMD CHECK mice_3.13.0.tar.gz
 ```
 
 Status: OK
@@ -46,18 +47,12 @@ check_rhub()
 
 Results:
 
-1.  Debian Linux, R-devel, GCC ASAN/UBSAN:
-    <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-0f353a5af0994e03a4d81cfe59b64208>:
-    Error, possibly related to an installing problem of miceadds package
-2.  Windows Server 2008 R2 SP1, R-devel, 32/64 bit:
-    <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-7b498c42ea2e4649890a59cae55aceb4>:
-    Success
-3.  Ubuntu Linux 16.04 LTS, R-release, GCC:
-    <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-c2ce58219fd54312ab8ea65cddafcf8f>:
-    Success
-4.  Fedora Linux, R-devel, clang, gfortran:
-    <https://builder.r-hub.io/status/mice_3.12.0.tar.gz-b7d7fa09d5a54f97a0d475bb0f61339b>:
-    Error, likely to be unrelated to mice
+1.  Debian Linux, R-devel, GCC ASAN/UBSAN: Error, compilation failed for
+    package `miceadds`
+2.  Windows Server 2008 R2 SP1, R-devel, 32/64 bit: Finished: SUCCESS
+3.  Ubuntu Linux 20.04.1 LTS, R-release, GCC: Success
+4.  Fedora Linux, R-devel, clang, gfortran: Success, with four (benign)
+    warnings about CPU time for examples
 
 ## Downstream dependencies
 
@@ -71,132 +66,67 @@ revdep_check(num_workers = 10)
 
 ### `failures.md`
 
-There are one new failure (`brms`) and one old (`dynr`). Both failures
-are caused by installation problems on the test servers. These failure
-do not seem to be related to `mice`.
+There is one old failure (`dynr`):
+`configure: error: gsl-config not found, is GSL installed?` Not related
+to `mice`.
 
 ### `problems.md`
 
-There are new warnings in several packages because `mice 3.12.0` exports
-a new `filter.mids()` method for the `dplyr::filter()` generic. For
-example, we get `Warning: replacing previous import ‘mice::filter’ by
-‘stats::filter’ when loading ‘BaM’`. Sometimes we get the reverse
-message. I noted the package authors the upcoming change in mice on Oct
-29. Affected packages: `BaM`, `genpathmox`, `idem`, `misaem`, `Qtools`,
-`TestDataImputation`
-
-Here’s the mail:
-
------
-
-R packages: BaM, genpathmox, idem, misaem, Qtools, TestDataImputation
-
-Dear package maintainer,
-
-A reversed dependency check revealed a new warning in your package that
-results from the upcoming release mice 3.12.0. The new release exports a
-new `filter.mids()` method for the `dplyr::filter()` generic.
-
-I get: `Warning: replacing previous import ‘mice::filter’ by
-‘stats::filter’ when loading ‘BaM’` and others. For Qtools I get the
-reverse: Warning: replacing previous import ‘stats::filter’ by
-‘mice::filter’ when loading ‘Qtools’.
-
-The warning is probably benign, but please check in your package if the
-introduction of `mice::filter.mids()` would inadvertent change a call to
-`stats::filter()` to `dplyr::filter()` or vice versa. If this happens,
-please update your import directive.
-
-I intend to submit to CRAN in about one week. Hope this helps to evade
-surprises when mice 3.12.0 hits CRAN.
-
-Best wishes, Stef
-
------
-
-Update Nov 9: The package maintainers of `BaM` and `Qtools` told me that
-the planned mice update did not affect the validity of their packages.
-Did not see a reaction from other maintainers.
-
-A second problem concerned to `miceadds` package. This package uses
-`mice::.pmm.match`, which I had removed because I thought nobody used it
-anymore. I will put it back in.
-
-Update Nov 9: `mice::.pmm.match` is now again part of the `mice` package
-
-The `idem` package yields two notes. Neither of these is related to
-`mice`.
+*Wow, no problems at all. :)*
 
 ### README.md
 
     # Platform
-    
+
     |field    |value                        |
     |:--------|:----------------------------|
-    |version  |R version 4.0.2 (2020-06-22) |
-    |os       |macOS Catalina 10.15.7       |
+    |version  |R version 4.0.3 (2020-10-10) |
+    |os       |macOS Big Sur 10.16          |
     |system   |x86_64, darwin17.0           |
     |ui       |RStudio                      |
     |language |(EN)                         |
     |collate  |en_US.UTF-8                  |
     |ctype    |en_US.UTF-8                  |
     |tz       |Europe/Amsterdam             |
-    |date     |2020-10-29                   |
-    
+    |date     |2021-01-26                   |
+
     # Dependencies
-    
+
     |package    |old    |new    |Δ  |
     |:----------|:------|:------|:--|
-    |mice       |3.11.0 |3.12.0 |*  |
+    |mice       |3.12.0 |3.13.0 |*  |
     |assertthat |0.2.1  |0.2.1  |   |
-    |backports  |1.1.10 |1.1.10 |   |
-    |broom      |0.7.2  |0.7.2  |   |
-    |cli        |2.1.0  |2.1.0  |   |
-    |cpp11      |0.2.3  |0.2.3  |   |
+    |backports  |1.2.1  |1.2.1  |   |
+    |broom      |0.7.3  |0.7.3  |   |
+    |cli        |2.2.0  |2.2.0  |   |
+    |cpp11      |0.2.5  |0.2.5  |   |
     |crayon     |1.3.4  |1.3.4  |   |
     |digest     |0.6.27 |0.6.27 |   |
-    |dplyr      |1.0.2  |1.0.2  |   |
+    |dplyr      |1.0.3  |1.0.3  |   |
     |ellipsis   |0.3.1  |0.3.1  |   |
-    |fansi      |0.4.1  |0.4.1  |   |
-    |generics   |0.0.2  |0.0.2  |   |
+    |fansi      |0.4.2  |0.4.2  |   |
+    |generics   |0.1.0  |0.1.0  |   |
     |glue       |1.4.2  |1.4.2  |   |
     |lifecycle  |0.2.0  |0.2.0  |   |
-    |magrittr   |1.5    |1.5    |   |
-    |pillar     |1.4.6  |1.4.6  |   |
+    |magrittr   |2.0.1  |2.0.1  |   |
+    |pillar     |1.4.7  |1.4.7  |   |
     |pkgconfig  |2.0.3  |2.0.3  |   |
     |purrr      |0.3.4  |0.3.4  |   |
     |R6         |2.5.0  |2.5.0  |   |
-    |Rcpp       |1.0.5  |1.0.5  |   |
-    |rlang      |0.4.8  |0.4.8  |   |
+    |Rcpp       |1.0.6  |1.0.6  |   |
+    |rlang      |0.4.10 |0.4.10 |   |
     |stringi    |1.5.3  |1.5.3  |   |
     |stringr    |1.4.0  |1.4.0  |   |
-    |tibble     |3.0.4  |3.0.4  |   |
+    |tibble     |3.0.5  |3.0.5  |   |
     |tidyr      |1.1.2  |1.1.2  |   |
     |tidyselect |1.1.0  |1.1.0  |   |
     |utf8       |1.1.4  |1.1.4  |   |
-    |vctrs      |0.3.4  |0.3.4  |   |
-    
+    |vctrs      |0.3.6  |0.3.6  |   |
+
     # Revdeps
-    
-    ## Failed to check (2)
-    
+
+    ## Failed to check (1)
+
     |package |version   |error |warning |note |
     |:-------|:---------|:-----|:-------|:----|
-    |brms    |?         |      |        |     |
     |dynr    |0.1.15-25 |1     |        |     |
-    
-    ## New problems (7)
-    
-    |package                                              |version |error |warning |note     |
-    |:----------------------------------------------------|:-------|:-----|:-------|:--------|
-    |[BaM](problems.md#bam)                               |1.0.1   |      |__+1__  |         |
-    |[genpathmox](problems.md#genpathmox)                 |0.4     |      |__+1__  |         |
-    |[idem](problems.md#idem)                             |5.0     |      |__+1__  |2        |
-    |[miceadds](problems.md#miceadds)                     |3.10-28 |      |        |2 __+1__ |
-    |[misaem](problems.md#misaem)                         |1.0.0   |      |__+1__  |         |
-    |[Qtools](problems.md#qtools)                         |1.5.2   |      |__+1__  |         |
-    |[TestDataImputation](problems.md#testdataimputation) |1.1     |      |__+1__  |         |
-
-This package requires additional software to be installed. See
-<https://github.com/amices/mice/blob/master/revdep/failures.md> for
-details.
