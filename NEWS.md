@@ -3,22 +3,16 @@ title: "News"
 output: github_document
 ---
 
-# mice 3.12.4 
+# mice 3.13.0
 
-* Repairs an error in `tests\testhat\test-D1.R` that failed on `mitml 0.4-0`
-
-# mice 3.12.3
+### Major changes
 
 * Updated `mids2spss()` replaces the `foreign` by `haven` package. Contributed Gerko Vink (#291)
 
-# mice 3.12.2
-
-* Reverts `with.mids()` function to old version because the change in commit 4634094 broke downstream package `metafor` (#292)
-
-# mice 3.12.1
-
 ### Minor changes
 
+* Repairs an error in `tests\testhat\test-D1.R` that failed on `mitml 0.4-0`
+* Reverts `with.mids()` function to old version because the change in commit 4634094 broke downstream package `metafor` (#292)
 * Solves a glitch in `mice.impute.rf()` in finding candidate donors (#288, #289)
 
 # mice 3.12.0
