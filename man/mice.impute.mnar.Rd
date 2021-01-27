@@ -168,7 +168,7 @@ Tompsett, D. M., Leacy, F., Moreno-Betancur, M., Heron, J., &
 White, I. R. (2018). On the use of the not-at-random fully
 conditional specification (NARFCS) procedure in practice.
 \emph{Statistics in Medicine}, \bold{37}(15), 2338-2353.
-\url{https://doi.org/10.1002/sim.7643}.
+\doi{10.1002/sim.7643}.
 
 Van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple
 imputation of missing blood pressure covariates in survival analysis.
