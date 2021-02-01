@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.13.1
+
+* Solves a bug in mnar imputation routine. Contributed by Margarita Moreno Betancur.
+
 # mice 3.13.0
 
 ### Major changes
