@@ -28,7 +28,7 @@ indicates locations in \code{y} for which imputations are created.}
 
 \item{ums}{A string containing the specification of the
 unidentifiable part of the imputation model (the *unidentifiable
-model specification”), that is, the desired \eqn{\delta}-adjustment
+model specification"), that is, the desired \eqn{\delta}-adjustment
 (offset) as a function of other variables and values for the
 corresponding deltas (sensitivity parameters). See details.}
 
@@ -52,7 +52,7 @@ different MNAR assumptions on the conclusions.
 \details{
 This function imputes data that are thought to be Missing Not at
 Random (MNAR) by the NARFCS method. The NARFCS procedure
-(Leacy, 2016; Tompsett et al, 2018) generalises the so-called
+(Tompsett et al, 2018) generalises the so-called
 \eqn{\delta}-adjustment sensitivity analysis method of Van Buuren,
 Boshuizen & Knook (1999) to the case with multiple incomplete
 variables within the FCS framework. In practical terms, the
@@ -69,7 +69,8 @@ the corresponding element in \code{blots} is a list with
 at least one argument \code{ums} and, optionally, a second
 argument \code{umx}.
 For example, the high-level call might like something like
-\code{mice(nhanes[, c(2, 4)], method = c("pmm", "mnar.norm"), blots = list(chl = list(ums = "-3+2*bmi")))}.
+\code{mice(nhanes[, c(2, 4)], method = c("pmm", "mnar.norm"),
+blots = list(chl = list(ums = "-3+2*bmi")))}.
 
 The \code{ums} parameter is required, and might look like this:
 \code{"-4+1*Y"}. The \code{ums} specifcation must have the
@@ -160,10 +161,6 @@ impNARFCS <- mice(mnar_demo_data,
 pool(with(impNARFCS, lm(Y ~ X + Z)))$pooled$estimate
 }
 \references{
-Leacy, F.P. (2016). \emph{Multiple imputation under missing not at
-random assumptions via fully conditional specification}.
-Dissertation, University of Cambridge, UK.
-
 Tompsett, D. M., Leacy, F., Moreno-Betancur, M., Heron, J., &
 White, I. R. (2018). On the use of the not-at-random fully
 conditional specification (NARFCS) procedure in practice.
