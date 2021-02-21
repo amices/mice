@@ -93,7 +93,7 @@ this case." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.2</span>
       </span>
     </div>
 
@@ -233,6 +233,9 @@ extracting the parameters. Versions before <code>mice 3.8.5</code> failed
 when no <code><a href='https://generics.r-lib.org/reference/glance.html'>broom::glance()</a></code> function was found for extracting the
 residual degrees of freedom. The <code>pool()</code> function is now
 more forgiving.</p>
+<p>Since <code>mice 3.13.2</code> function <code>pool()</code> uses the robust
+the standard error estimate for pooling when it can extract
+<code>robust.se</code> from the <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> object.</p>
 <p>In versions prior to <code>mice 3.0</code> pooling required only that
 <code><a href='https://rdrr.io/r/stats/coef.html'>coef()</a></code> and <code><a href='https://rdrr.io/r/stats/vcov.html'>vcov()</a></code> methods were available for fitted
 objects. <em>This feature is no longer supported</em>. The reason is that <code><a href='https://rdrr.io/r/stats/vcov.html'>vcov()</a></code>
