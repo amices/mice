@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.13.2
+
+* Uses the robust standard error estimate for pooling when `pool()` can extract `robust.se` from the object returned by `broom::tidy()` (#310)
+
 # mice 3.13.1
 
 * Solves a bug in mnar imputation routine. Contributed by Margarita Moreno Betancur.
