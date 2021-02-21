@@ -47,6 +47,10 @@
 #' residual degrees of freedom. The \code{pool()} function is now
 #' more forgiving.
 #'
+#' Since \code{mice 3.13.2} function \code{pool()} uses the robust
+#' the standard error estimate for pooling when it can extract
+#' \code{robust.se} from the \code{tidy()} object.
+#'
 #' In versions prior to \code{mice 3.0} pooling required only that
 #' \code{coef()} and \code{vcov()} methods were available for fitted
 #' objects. \emph{This feature is no longer supported}. The reason is that \code{vcov()}
@@ -147,6 +151,10 @@ pool.fitlist <- function(fitlist, dfcom = NULL) {
   if ("term" %in% names(w)) w$term <- factor(w$term, levels = unique(w$term))
   if ("y.level" %in% names(w)) w$y.level <- factor(w$y.level, levels = unique(w$y.level))
   if ("component" %in% names(w)) w$component <- factor(w$component, levels = unique(w$component))
+
+  # https://github.com/amices/mice/issues/310
+  # Prefer using robust.se when tidy object contains it
+  if ("robust.se" %in% names(w)) w$std.error <- w$robust.se
 
   pooled <- w %>%
     group_by(!!!syms(grp)) %>%

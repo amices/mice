@@ -75,6 +75,10 @@ when no \code{broom::glance()} function was found for extracting the
 residual degrees of freedom. The \code{pool()} function is now
 more forgiving.
 
+Since \code{mice 3.13.2} function \code{pool()} uses the robust
+the standard error estimate for pooling when it can extract
+\code{robust.se} from the \code{tidy()} object.
+
 In versions prior to \code{mice 3.0} pooling required only that
 \code{coef()} and \code{vcov()} methods were available for fitted
 objects. \emph{This feature is no longer supported}. The reason is that \code{vcov()}
