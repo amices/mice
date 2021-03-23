@@ -39,9 +39,12 @@ make.formulas <- function(data, blocks = make.blocks(data),
       predictors <- names(type)[type != 0]
     }
     x <- setdiff(predictors, y)
+    if (length(x) == 0) {
+      x <- "0"
+    }
     formulas[[h]] <- paste(
       paste(y, collapse = "+"), "~",
-      paste(c("0", x), collapse = "+")
+      paste(x, collapse = "+")
     )
   }
 
