@@ -2,14 +2,11 @@ context("mice.mids: newdata")
 
 # Check that mice.mids correctly appends the newdata to the
 # existing mids object
-set.seed(1)
-init0 <- mice(nhanes, maxit = 0, m = 1, print = FALSE)
+init0 <- mice(nhanes, maxit = 0, m = 1, print = FALSE, seed = 1)
 
-set.seed(2)
 init1 <- mice(nhanes, maxit = 0, m = 1, print = FALSE)
 init1$ignore <- rep(FALSE, nrow(nhanes))
 
-set.seed(2)
 init2 <- mice.mids(init0, newdata = nhanes, maxit = 0, print = FALSE)
 
 test_that("`newdata` works like rbind with ignore", {
@@ -30,8 +27,9 @@ artificial <- data.frame(
 imp1 <- mice(nhanes, maxit = 1, m = 1, print = FALSE, seed = 1, 
              donors = 1L, matchtype = 0)
 
-set.seed(2)
 imp2 <- mice.mids(imp1, newdata = artificial, maxit = 1, print = FALSE)
+imp2b <- mice.mids(imp1, newdata = artificial, maxit = 1, print = FALSE)
+
 
 test_that("`newdata` works with pmm", {
   expect_failure(expect_equal(complete(imp2)["a1", "bmi"], 40.0))
@@ -41,3 +39,6 @@ test_that("`newdata` returns filtered mids object", {
   expect_equal(nrow(complete(imp2)), nrow(artificial))
 })
 
+test_that("`newdata` uses a common seed", {
+  expect_true(identical(complete(imp2), complete(imp2b)))
+})
