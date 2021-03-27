@@ -13,7 +13,7 @@
 #' and \code{y} should match. The \code{where} matrix for \code{y} is set
 #' to \code{FALSE}, signaling that any missing values
 #' in \code{y} were not imputed. The \code{ignore} vector for \code{y} is
-#' set to \code{FALSE}, elements of \code{y} will therefore influence 
+#' set to \code{FALSE}, elements of \code{y} will therefore influence
 #' the parameters of the imputation model in future iterations.
 #'
 #' @param x A \code{mids} object.
@@ -96,11 +96,12 @@ rbind.mids <- function(x, y = NULL, ...) {
 
   # where argument: code all values as observed, including NA
   wy <- matrix(FALSE, nrow = nrow(y), ncol = ncol(y))
+  rownames(wy) <- rownames(y)
   where <- rbind(x$where, wy)
 
   # ignore argument: include all new values
   ignore <- c(x$ignore, rep(FALSE, nrow(y)))
-  
+
   # The number of imputations in the new midsobject is equal to that in x.
   m <- x$m
 

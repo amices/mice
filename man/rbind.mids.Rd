@@ -33,7 +33,7 @@ If \code{y} is not a \code{mids} object, the columns of \code{x$data}
 and \code{y} should match. The \code{where} matrix for \code{y} is set
 to \code{FALSE}, signaling that any missing values
 in \code{y} were not imputed. The \code{ignore} vector for \code{y} is
-set to \code{FALSE}, elements of \code{y} will therefore influence 
+set to \code{FALSE}, elements of \code{y} will therefore influence
 the parameters of the imputation model in future iterations.
 }
 \note{

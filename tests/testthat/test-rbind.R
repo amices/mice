@@ -19,7 +19,7 @@ nh3 <- nhanes
 colnames(nh3) <- c("AGE", "bmi", "hyp", "chl")
 imp7 <- mice(nh3[14:25, ], m = 2, maxit = 2, print = FALSE)
 expect_warning(imp8 <<- mice(nhanes[1:13, ], m = 2, maxit = 2, print = FALSE))
-imp9 <- mice(nhanes, m = 2, maxit = 1, print = FALSE, 
+imp9 <- mice(nhanes, m = 2, maxit = 1, print = FALSE,
              ignore = c(rep(FALSE, 20), rep(TRUE, 5)))
 
 mylist <- list(age = NA, bmi = NA, hyp = NA, chl = NA)
@@ -102,3 +102,30 @@ test_that("rbind does not throw a warning (#114)", {
 #
 # An interesting observation is that the SD(hyp, a) < SD(hyp, imp3). This is
 # because SD(hyp, imp1) = 0.
+
+# issue 319: https://github.com/amices/mice/issues/319
+# impute a subset
+# do not touch or impute non-selected rows
+# return full data as mids object
+
+# example: impute even rows only
+data <- nhanes
+odd <- as.logical((1:nrow(data)) %%2)
+
+# method 1: ignore + where
+where <- make.where(data)
+where[odd, ] <- FALSE
+imp1 <- mice(nhanes, ignore = odd, where = where, seed = 1, m = 2, print = FALSE)
+c1 <- complete(imp1, 2)
+
+# method 2: filter + rbind
+imp2 <- mice(data[!odd, ], seed = 1, m = 2, print = FALSE)
+imp2 <- rbind(imp2, data[odd, ])
+idx <- order(as.numeric(rownames(imp2$data)))
+imp2$data <- imp2$data[idx, ]
+imp2$where <- imp2$where[idx, ]
+c2 <- complete(imp2, 2)
+
+test_that("ignore + where is identical to filter + rbind (#319)", {
+  expect_identical(c1, c2)
+})
