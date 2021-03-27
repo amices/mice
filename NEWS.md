@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.13.3
+
+* Solves a problem with row names of the `where` element created in `rbind()` (#319)
+
 # mice 3.13.2
 
 * Uses the robust standard error estimate for pooling when `pool()` can extract `robust.se` from the object returned by `broom::tidy()` (#310)
