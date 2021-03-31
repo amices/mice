@@ -3,6 +3,12 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.13.4
+
+* Solves a problem with the plot produced by `md.pattern()` (#318, #323)
+* Fixes the intercept in `make.formulas()` (#305, #324)
+* Fixes seed when using `newdata` in `mice.mids()` (#313, #325)
+
 # mice 3.13.3
 
 * Solves a problem with row names of the `where` element created in `rbind()` (#319)
