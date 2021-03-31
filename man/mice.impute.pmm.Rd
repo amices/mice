@@ -111,13 +111,14 @@ hist(yimp, xlab = "Imputed missing tv")
 # Impute all tv data
 yimp <- mice.impute.pmm(y, ry, x, wy = rep(TRUE, length(y)))
 length(yimp)
-hist(yimp, xlab = 'Imputed missing and observed tv')
+hist(yimp, xlab = "Imputed missing and observed tv")
 plot(jitter(y), jitter(yimp),
-    main = 'Predictive mean matching on age, height and weight',
-    xlab = 'Observed tv (n = 224)',
-    ylab = 'Imputed tv (n = 224)')
+  main = "Predictive mean matching on age, height and weight",
+  xlab = "Observed tv (n = 224)",
+  ylab = "Imputed tv (n = 224)"
+)
 abline(0, 1)
-cor(y, yimp, use = 'pair')
+cor(y, yimp, use = "pair")
 }
 \references{
 Little, R.J.A. (1988), Missing data adjustments in large surveys

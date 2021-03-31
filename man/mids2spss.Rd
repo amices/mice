@@ -24,7 +24,7 @@ value in \code{path} is appended to \code{filedat}. By
 default, files are written to the current \code{R} working directory. If
 \code{path=NULL} then no file path appending is done.}
 
-\item{compress}{A logical flag stating whether the resulting SPSS set should 
+\item{compress}{A logical flag stating whether the resulting SPSS set should
 be a compressed \code{.zsav} file.}
 
 \item{silent}{A logical flag stating whether the location of the saved file should be
@@ -39,8 +39,8 @@ the data and the SPSS syntax files.
 }
 \details{
 This function automates most of the work needed to export a \code{mids}
-object to SPSS. It uses \code{haven::write_sav()} to facilitate the export to an 
-SPSS \code{.sav} or \code{.zsav} file. 
+object to SPSS. It uses \code{haven::write_sav()} to facilitate the export to an
+SPSS \code{.sav} or \code{.zsav} file.
 
 Below are some things to pay attention to.
 
@@ -53,13 +53,13 @@ Factors in \code{R} translate into categorical variables in \code{SPSS}. The
 internal coding of factor levels used in \code{R} is exported. This is
 generally acceptable for \code{SPSS}. However, when the data are to be
 combined with existing \code{SPSS} data, watch out for any changes in the
-factor levels codes. 
+factor levels codes.
 
 \code{SPSS} will recognize the data set as a multiply imputed data set, and
 do automatic pooling in procedures where that is supported. Note however that
 pooling is an extra option only available to those who license the
 \code{MISSING VALUES} module. Without this license, \code{SPSS} will still
-recognize the structure of the data, but it will not pool the multiply imputed 
+recognize the structure of the data, but it will not pool the multiply imputed
 estimates into a single inference.
 }
 \seealso{

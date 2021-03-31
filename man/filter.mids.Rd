@@ -66,7 +66,7 @@ nrow(complete(imp_f))
 
 # example with calculated include vector
 imp_f2 <- filter(imp, age >= 2 & hyp == 1)
-nrow(complete(imp_f2))  # should be 5
+nrow(complete(imp_f2)) # should be 5
 }
 \seealso{
 \code{\link[dplyr]{filter}}
