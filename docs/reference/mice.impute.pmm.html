@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.5</span>
       </span>
     </div>
 
@@ -308,13 +308,14 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
 <span class='co'># Impute all tv data</span>
 <span class='va'>yimp</span> <span class='op'>&lt;-</span> <span class='fu'>mice.impute.pmm</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, wy <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>yimp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 727</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>yimp</span>, xlab <span class='op'>=</span> <span class='st'>'Imputed missing and observed tv'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 727</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>yimp</span>, xlab <span class='op'>=</span> <span class='st'>"Imputed missing and observed tv"</span><span class='op'>)</span>
 </div><div class='img'><img src='mice.impute.pmm-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/jitter.html'>jitter</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/jitter.html'>jitter</a></span><span class='op'>(</span><span class='va'>yimp</span><span class='op'>)</span>,
-    main <span class='op'>=</span> <span class='st'>'Predictive mean matching on age, height and weight'</span>,
-    xlab <span class='op'>=</span> <span class='st'>'Observed tv (n = 224)'</span>,
-    ylab <span class='op'>=</span> <span class='st'>'Imputed tv (n = 224)'</span><span class='op'>)</span>
+  main <span class='op'>=</span> <span class='st'>"Predictive mean matching on age, height and weight"</span>,
+  xlab <span class='op'>=</span> <span class='st'>"Observed tv (n = 224)"</span>,
+  ylab <span class='op'>=</span> <span class='st'>"Imputed tv (n = 224)"</span>
+<span class='op'>)</span>
 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='img'><img src='mice.impute.pmm-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>yimp</span>, use <span class='op'>=</span> <span class='st'>'pair'</span><span class='op'>)</span>
+</div><div class='img'><img src='mice.impute.pmm-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>yimp</span>, use <span class='op'>=</span> <span class='st'>"pair"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.7415001</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

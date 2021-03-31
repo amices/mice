@@ -87,7 +87,7 @@ Generates Multivariate Imputations by Chained Equations (MICE)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.5</span>
       </span>
     </div>
 
@@ -267,7 +267,12 @@ The default <code>visitSequence = "roman"</code> visits the blocks (left to righ
 in the order in which they appear in <code>blocks</code>.
 One may also use one of the following keywords: <code>"arabic"</code>
 (right to left), <code>"monotone"</code> (ordered low to high proportion
-of missing data) and <code>"revmonotone"</code> (reverse of monotone).</p></td>
+of missing data) and <code>"revmonotone"</code> (reverse of monotone).
+<em>Special case</em>: If you specify both <code>visitSequence = "monotone"</code> and
+<code>maxit = 1</code>, then the procedure will edit the <code>predictorMatrix</code>
+to conform to the monotone pattern. Realize that convergence in one
+iteration is only guaranteed if the missing data pattern is actually
+monotone. The procedure does not check this.</p></td>
     </tr>
     <tr>
       <th>formulas</th>
@@ -292,7 +297,8 @@ called for block <code>blockname</code>.</p></td>
 expressions as strings. Each string is parsed and
 executed within the <code>sampler()</code> function to post-process
 imputed values during the iterations.
-The default is a vector of empty strings, indicating no post-processing.</p></td>
+The default is a vector of empty strings, indicating no post-processing.
+Multivariate (block) imputation methods ignore the <code>post</code> parameter.</p></td>
     </tr>
     <tr>
       <th>defaultMethod</th>
