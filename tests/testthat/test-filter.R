@@ -35,5 +35,3 @@ imp_fa2 <- mice.mids(imp_fa, maxit = 1, printFlag = FALSE)
 test_that("other elements of mids are left unchanged", {
   expect_equal(complete(imp2), complete(imp_fa2))
 })
-
-

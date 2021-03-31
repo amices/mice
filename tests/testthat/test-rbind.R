@@ -19,8 +19,10 @@ nh3 <- nhanes
 colnames(nh3) <- c("AGE", "bmi", "hyp", "chl")
 imp7 <- mice(nh3[14:25, ], m = 2, maxit = 2, print = FALSE)
 expect_warning(imp8 <<- mice(nhanes[1:13, ], m = 2, maxit = 2, print = FALSE))
-imp9 <- mice(nhanes, m = 2, maxit = 1, print = FALSE,
-             ignore = c(rep(FALSE, 20), rep(TRUE, 5)))
+imp9 <- mice(nhanes,
+  m = 2, maxit = 1, print = FALSE,
+  ignore = c(rep(FALSE, 20), rep(TRUE, 5))
+)
 
 mylist <- list(age = NA, bmi = NA, hyp = NA, chl = NA)
 nhalf <- nhanes[13:25, ]
@@ -110,7 +112,7 @@ test_that("rbind does not throw a warning (#114)", {
 
 # example: impute even rows only
 data <- nhanes
-odd <- as.logical((1:nrow(data)) %%2)
+odd <- as.logical((1:nrow(data)) %% 2)
 
 # method 1: ignore + where
 where <- make.where(data)

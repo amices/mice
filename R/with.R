@@ -43,8 +43,9 @@ with.mids <- function(data, expr, ...) {
   for (i in seq_along(analyses)) {
     data.i <- complete(data, i)
     analyses[[i]] <- eval(expr = substitute(expr), envir = data.i, enclos = parent.frame())
-    if (is.expression(analyses[[i]]))
+    if (is.expression(analyses[[i]])) {
       analyses[[i]] <- eval(expr = analyses[[i]], envir = data.i, enclos = parent.frame())
+    }
   }
 
   # return the complete data analyses as a list of length nimp

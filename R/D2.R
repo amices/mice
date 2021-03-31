@@ -17,7 +17,6 @@
 #' mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
 #' mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
 #' D2(mi1, mi0)
-#'
 #' \donttest{
 #' # Compare two logistic regression models
 #' imp <- mice(boys, maxit = 2, print = FALSE)

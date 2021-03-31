@@ -56,9 +56,9 @@ dplyr::filter
 #'
 #' # example with calculated include vector
 #' imp_f2 <- filter(imp, age >= 2 & hyp == 1)
-#' nrow(complete(imp_f2))  # should be 5
+#' nrow(complete(imp_f2)) # should be 5
 #' @export
-filter.mids <- function(.data, ..., .preserve = FALSE){
+filter.mids <- function(.data, ..., .preserve = FALSE) {
   if (!is.mids(.data)) {
     stop("Argument `.data` should be of class mids.")
   }

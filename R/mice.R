@@ -422,7 +422,7 @@ mice <- function(data,
   to <- from + maxit - 1
   q <- sampler(
     data, m, ignore, where, imp, blocks, method,
-    visitSequence,predictorMatrix, formulas, blots,
+    visitSequence, predictorMatrix, formulas, blots,
     post, c(from, to), printFlag, ...
   )
 

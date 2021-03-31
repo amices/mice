@@ -33,4 +33,3 @@ test_that("tidy.mipo: nhanes lm", {
     2.16193377446054
   ))
 })
-

@@ -149,4 +149,3 @@ test_that("Imputations are invariant to column order", {
   expect_equal(norm.predict1, norm.predict2)
   expect_equal(norm.boot1, norm.boot2)
 })
-

@@ -18,14 +18,16 @@ test_that("`newdata` works like rbind with ignore", {
 # univariate sampler in mice.mids
 artificial <- data.frame(
   age = c(1, 1),
-  bmi = c(NA, 40.0), 
+  bmi = c(NA, 40.0),
   hyp = c(1, 1),
-  chl = c(200, 200), 
+  chl = c(200, 200),
   row.names = paste0("a", 1:2)
 )
 
-imp1 <- mice(nhanes, maxit = 1, m = 1, print = FALSE, seed = 1, 
-             donors = 1L, matchtype = 0)
+imp1 <- mice(nhanes,
+  maxit = 1, m = 1, print = FALSE, seed = 1,
+  donors = 1L, matchtype = 0
+)
 
 imp2 <- mice.mids(imp1, newdata = artificial, maxit = 1, print = FALSE)
 imp2b <- mice.mids(imp1, newdata = artificial, maxit = 1, print = FALSE)

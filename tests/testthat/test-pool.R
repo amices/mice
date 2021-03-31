@@ -167,4 +167,3 @@ mitml::testModels(fit1, fit0, method = "D3")
 # ---
 
 fit1 <- with(implist, lmer(ReadAchiev ~ ReadDis + SES + (1 | ID), REML = FALSE))
-
