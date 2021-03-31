@@ -81,7 +81,7 @@ the predictors by means of the standard ~ operator." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.4</span>
       </span>
     </div>
 
@@ -184,49 +184,49 @@ the rows. The default assigns each variable in its own block.</p></td>
     <pre class="examples"><div class='input'><span class='va'>f1</span> <span class='op'>&lt;-</span> <span class='fu'>make.formulas</span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
 <span class='va'>f1</span>
 </div><div class='output co'>#&gt; $age
-#&gt; age ~ 0 + bmi + hyp + chl
-#&gt; &lt;environment: 0x7fbb9ffc1600&gt;
+#&gt; age ~ bmi + hyp + chl
+#&gt; &lt;environment: 0x7fbb50e13110&gt;
 #&gt; 
 #&gt; $bmi
-#&gt; bmi ~ 0 + age + hyp + chl
-#&gt; &lt;environment: 0x7fbb9ffc1600&gt;
+#&gt; bmi ~ age + hyp + chl
+#&gt; &lt;environment: 0x7fbb50e13110&gt;
 #&gt; 
 #&gt; $hyp
-#&gt; hyp ~ 0 + age + bmi + chl
-#&gt; &lt;environment: 0x7fbb9ffc1600&gt;
+#&gt; hyp ~ age + bmi + chl
+#&gt; &lt;environment: 0x7fbb50e13110&gt;
 #&gt; 
 #&gt; $chl
-#&gt; chl ~ 0 + age + bmi + hyp
-#&gt; &lt;environment: 0x7fbb9ffc1600&gt;
+#&gt; chl ~ age + bmi + hyp
+#&gt; &lt;environment: 0x7fbb50e13110&gt;
 #&gt; </div><div class='input'><span class='va'>f2</span> <span class='op'>&lt;-</span> <span class='fu'>make.formulas</span><span class='op'>(</span><span class='va'>nhanes</span>, blocks <span class='op'>=</span> <span class='fu'><a href='make.blocks.html'>make.blocks</a></span><span class='op'>(</span><span class='va'>nhanes</span>, <span class='st'>"collect"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>f2</span>
 </div><div class='output co'>#&gt; $collect
 #&gt; age + bmi + hyp + chl ~ 0
-#&gt; &lt;environment: 0x7fbba83030e8&gt;
+#&gt; &lt;environment: 0x7fbb464e4380&gt;
 #&gt; </div><div class='input'>
 <span class='co'># for editing, it may be easier to work with the character vector</span>
 <span class='va'>c1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>f1</span><span class='op'>)</span>
 <span class='va'>c1</span>
-</div><div class='output co'>#&gt; [1] "age ~ 0 + bmi + hyp + chl" "bmi ~ 0 + age + hyp + chl"
-#&gt; [3] "hyp ~ 0 + age + bmi + chl" "chl ~ 0 + age + bmi + hyp"</div><div class='input'>
+</div><div class='output co'>#&gt; [1] "age ~ bmi + hyp + chl" "bmi ~ age + hyp + chl" "hyp ~ age + bmi + chl"
+#&gt; [4] "chl ~ age + bmi + hyp"</div><div class='input'>
 <span class='co'># fold it back into a formula list</span>
 <span class='va'>f3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='name.formulas.html'>name.formulas</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>c1</span>, <span class='va'>as.formula</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>f3</span>
 </div><div class='output co'>#&gt; $age
-#&gt; age ~ 0 + bmi + hyp + chl
-#&gt; &lt;environment: 0x7fbba86c0208&gt;
+#&gt; age ~ bmi + hyp + chl
+#&gt; &lt;environment: 0x7fbb4552f630&gt;
 #&gt; 
 #&gt; $bmi
-#&gt; bmi ~ 0 + age + hyp + chl
-#&gt; &lt;environment: 0x7fbba86c0208&gt;
+#&gt; bmi ~ age + hyp + chl
+#&gt; &lt;environment: 0x7fbb4552f630&gt;
 #&gt; 
 #&gt; $hyp
-#&gt; hyp ~ 0 + age + bmi + chl
-#&gt; &lt;environment: 0x7fbba86c0208&gt;
+#&gt; hyp ~ age + bmi + chl
+#&gt; &lt;environment: 0x7fbb4552f630&gt;
 #&gt; 
 #&gt; $chl
-#&gt; chl ~ 0 + age + bmi + hyp
-#&gt; &lt;environment: 0x7fbba86c0208&gt;
+#&gt; chl ~ age + bmi + hyp
+#&gt; &lt;environment: 0x7fbb4552f630&gt;
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
