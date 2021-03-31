@@ -3,6 +3,11 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.13.5
+
+* Edits the `predictorMatrix` to a monotone pattern if `visitSequence = "monotone"` and `maxit = 1` (#316)
+* Documents that multivariate imputation methods do not support the `post` parameter (#326)
+
 # mice 3.13.4
 
 * Solves a problem with the plot produced by `md.pattern()` (#318, #323)
