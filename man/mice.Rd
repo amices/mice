@@ -89,7 +89,12 @@ The default \code{visitSequence = "roman"} visits the blocks (left to right)
 in the order in which they appear in \code{blocks}.
 One may also use one of the following keywords: \code{"arabic"}
 (right to left), \code{"monotone"} (ordered low to high proportion
-of missing data) and \code{"revmonotone"} (reverse of monotone).}
+of missing data) and \code{"revmonotone"} (reverse of monotone).
+\emph{Special case}: If you specify both \code{visitSequence = "monotone"} and
+\code{maxit = 1}, then the procedure will edit the \code{predictorMatrix}
+to conform to the monotone pattern. Realize that convergence in one
+iteration is only guaranteed if the missing data pattern is actually
+monotone. The procedure does not check this.}
 
 \item{formulas}{A named list of formula's, or expressions that
 can be converted into formula's by \code{as.formula}. List elements
@@ -108,7 +113,8 @@ called for block \code{blockname}.}
 expressions as strings. Each string is parsed and
 executed within the \code{sampler()} function to post-process
 imputed values during the iterations.
-The default is a vector of empty strings, indicating no post-processing.}
+The default is a vector of empty strings, indicating no post-processing.
+Multivariate (block) imputation methods ignore the \code{post} parameter.}
 
 \item{defaultMethod}{A vector of length 4 containing the default
 imputation methods for 1) numeric data, 2) factor data with 2 levels, 3)

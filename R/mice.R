@@ -183,6 +183,11 @@
 #' One may also use one of the following keywords: \code{"arabic"}
 #' (right to left), \code{"monotone"} (ordered low to high proportion
 #' of missing data) and \code{"revmonotone"} (reverse of monotone).
+#' \emph{Special case}: If you specify both \code{visitSequence = "monotone"} and
+#' \code{maxit = 1}, then the procedure will edit the \code{predictorMatrix}
+#' to conform to the monotone pattern. Realize that convergence in one
+#' iteration is only guaranteed if the missing data pattern is actually
+#' monotone. The procedure does not check this.
 #' @param formulas A named list of formula's, or expressions that
 #' can be converted into formula's by \code{as.formula}. List elements
 #' correspond to blocks. The block to which the list element applies is
@@ -199,6 +204,7 @@
 #' executed within the \code{sampler()} function to post-process
 #' imputed values during the iterations.
 #' The default is a vector of empty strings, indicating no post-processing.
+#' Multivariate (block) imputation methods ignore the \code{post} parameter.
 #' @param defaultMethod A vector of length 4 containing the default
 #' imputation methods for 1) numeric data, 2) factor data with 2 levels, 3)
 #' factor data with > 2 unordered levels, and 4) factor data with > 2
@@ -367,9 +373,17 @@ mice <- function(data,
 
   chk <- check.cluster(data, predictorMatrix)
   where <- check.where(where, data, blocks)
+
+  # check visitSequence, edit predictorMatrix for monotone
+  user.visitSequence <- visitSequence
   visitSequence <- check.visitSequence(visitSequence,
-    data = data,
-    where = where, blocks = blocks
+    data = data, where = where, blocks = blocks
+  )
+  predictorMatrix <- edit.predictorMatrix(
+    predictorMatrix = predictorMatrix,
+    visitSequence = visitSequence,
+    user.visitSequence = user.visitSequence,
+    maxit = maxit
   )
   method <- check.method(
     method = method, data = data, where = where,

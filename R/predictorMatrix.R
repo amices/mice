@@ -120,3 +120,16 @@ check.predictorMatrix <- function(predictorMatrix,
     blocks = blocks
   )
 }
+
+edit.predictorMatrix <- function(predictorMatrix,
+                                 visitSequence,
+                                 user.visitSequence,
+                                 maxit) {
+  # edit predictorMatrix to a monotone pattern
+  if (maxit == 1L && !is.null(user.visitSequence) && user.visitSequence == "monotone") {
+    for (i in 1L:length(visitSequence)) {
+      predictorMatrix[visitSequence[i], visitSequence[i:length(visitSequence)]] <- 0
+    }
+  }
+  predictorMatrix
+}
