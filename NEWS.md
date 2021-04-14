@@ -3,6 +3,11 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.13.6
+
+* Solves problem with `Xi <- as.matrix(...)` in `mice.impute.2l.lmer()` that occurred when a cluster contains only one observation (#384)
+* Add reprex to test (#326)
+
 # mice 3.13.5
 
 * Edits the `predictorMatrix` to a monotone pattern if `visitSequence = "monotone"` and `maxit = 1` (#316)
