@@ -139,7 +139,7 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
   # Calculate myi, vyi and drawing bi per cluster
   for (jj in lev) {
     if (jj %in% unique(xobs[, clust])) {
-      Xi <- as.matrix(Xobs[xobs[, clust] == jj, ])
+      Xi <- Xobs[xobs[, clust] == jj, ]
       Zi <- as.matrix(Zobs[xobs[, clust] == jj, ])
       yi <- yobs[xobs[, clust] == jj]
       sigma2 <- diag(sigma2star, nrow = nrow(Zi))
