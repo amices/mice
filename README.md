@@ -1,14 +1,12 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-mice <a href='https://amices.github.io/mice/'><img src='MICE_sticker_SMALL.png' align="right" height="139" /></a>
-=================================================================================================================
+# mice <a href='https://amices.github.io/mice/'><img src='MICE_sticker_SMALL.png' align="right" height="139" /></a>
 
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
 [![](https://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice)
-[![](https://img.shields.io/badge/github%20version-3.13.5-orange.svg)](https://amices.github.io/mice/)
+[![](https://img.shields.io/badge/github%20version-3.13.6-orange.svg)](https://amices.github.io/mice/)
 
-[Multivariate Imputation by Chained Equations](https://amices.github.io/mice/)
-------------------------------------------------------------------------------
+## [Multivariate Imputation by Chained Equations](https://amices.github.io/mice/)
 
 The [`mice`](https://cran.r-project.org/package=mice) package implements
 a method to deal with missing data. The package creates multiple
@@ -21,8 +19,7 @@ two-level data, and maintain consistency between imputations by means of
 passive imputation. Many diagnostic plots are implemented to inspect the
 quality of the imputations.
 
-Installation
-------------
+## Installation
 
 The `mice` package can be installed from CRAN as follows:
 
@@ -37,8 +34,7 @@ install.packages("devtools")
 devtools::install_github(repo = "amices/mice")
 ```
 
-Minimal example
----------------
+## Minimal example
 
 ``` r
 library(mice, warn.conflicts = FALSE)
@@ -96,8 +92,7 @@ The complete-data is fit to each imputed dataset, and the results are
 combined to arrive at estimates that properly account for the missing
 data.
 
-`mice 3.0`
-----------
+## `mice 3.0`
 
 Version 3.0 represents a major update that implements the following
 features:
@@ -139,8 +134,7 @@ Equations](https://amices.github.io/mice/) for more resources.
 I’ll be happy to take feedback and discuss suggestions. Please submit
 these through Github’s issues facility.
 
-Resources
----------
+## Resources
 
 ### Books
 
@@ -177,13 +171,11 @@ Resources
 1.  [Flexible Imputation of Missing Data. Second
     edition.](https://github.com/stefvanbuuren/FIMD2/tree/master/R)
 
-Acknowledgement
----------------
+## Acknowledgement
 
 The cute mice sticker was designed by Jaden M. Walters. Thanks Jaden!
 
-Code of Conduct
----------------
+## Code of Conduct
 
 Please note that the mice project is released with a [Contributor Code
 of Conduct](https://amices.github.io/mice/CODE_OF_CONDUCT.html). By
