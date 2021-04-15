@@ -47,6 +47,12 @@ While the method is fully Bayesian, it may fix parameters of the
 variance-covariance matrix or the random effects to their estimated
 value in cases where creating draws from the posterior is not
 possible. The procedure throws a warning when this happens.
+
+If \code{lme4::lmer()} fails, the procedure prints the warning
+\code{"lmer does not run. Simplify imputation model"} and returns the
+current imputation.  If that happens we see flat lines in the
+trace line plots. Thus, the appearance of flat trace lines should be taken
+as an additional alert to a problem with imputation model fitting.
 }
 \references{
 Jolani S. (2017) Hierarchical imputation of systematically and
