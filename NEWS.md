@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.13.7
+
+* Documents the "flat-line behaviour" of `mice.impute.2l.lmer()` to indicate a problem in fitting the imputation model (#385)
+
 # mice 3.13.6
 
 * Solves problem with `Xi <- as.matrix(...)` in `mice.impute.2l.lmer()` that occurred when a cluster contains only one observation (#384)
