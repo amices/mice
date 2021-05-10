@@ -110,6 +110,7 @@ Other univariate imputation functions:
 \code{\link{mice.impute.norm.nob}()},
 \code{\link{mice.impute.norm.predict}()},
 \code{\link{mice.impute.norm}()},
+\code{\link{mice.impute.pmm.exclude}()},
 \code{\link{mice.impute.pmm}()},
 \code{\link{mice.impute.polr}()},
 \code{\link{mice.impute.polyreg}()},
