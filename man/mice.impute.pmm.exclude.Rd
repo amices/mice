@@ -3,7 +3,7 @@
 \name{mice.impute.pmm.exclude}
 \alias{mice.impute.pmm.exclude}
 \alias{pmm.exclude}
-\title{Imputation by predictive mean matching}
+\title{Imputation by predictive mean matching with optional exclusion of values}
 \usage{
 mice.impute.pmm.exclude(
   y,
@@ -68,31 +68,15 @@ Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
-Imputation by predictive mean matching
+Imputation by predictive mean matching with optional exclusion of values
 }
 \details{
 Imputation of \code{y} by predictive mean matching, based on
-van Buuren (2012, p. 73). The procedure is as follows:
-
-\enumerate{
-\item{Calculate the cross-product matrix \eqn{S=X_{obs}'X_{obs}}.}
-\item{Calculate \eqn{V = (S+{diag}(S)\kappa)^{-1}}, with some small ridge
-parameter \eqn{\kappa}.}
-\item{Calculate regression weights \eqn{\hat\beta = VX_{obs}'y_{obs}.}}
-\item{Draw \eqn{q} independent \eqn{N(0,1)} variates in vector \eqn{\dot z_1}.}
-\item{Calculate \eqn{V^{1/2}} by Cholesky decomposition.}
-\item{Calculate \eqn{\dot\beta = \hat\beta + \dot\sigma\dot z_1 V^{1/2}}.}
-\item{Calculate \eqn{\dot\eta(i,j)=|X_{{obs},[i]|}\hat\beta-X_{{mis},[j]}\dot\beta}
-with \eqn{i=1,\dots,n_1} and \eqn{j=1,\dots,n_0}.}
-\item{Construct \eqn{n_0} sets \eqn{Z_j}, each containing \eqn{d} candidate donors, from Y_{obs} such that \eqn{\sum_d\dot\eta(i,j)} is minimum for all \eqn{j=1,\dots,n_0}. Break ties randomly.}
-\item{Draw one donor \eqn{i_j} from \eqn{Z_j} randomly for \eqn{j=1,\dots,n_0}.}
-\item{Calculate imputations \eqn{\dot y_j = y_{i_j}} for \eqn{j=1,\dots,n_0}.}
-}
-
-The name \emph{predictive mean matching} was proposed by Little (1988).
+van Buuren (2012, p. 73). More details can be found in the documentation for 
+[mice.impute.pmm()]
 }
 \examples{
-# We normally call mice.impute.pmm() from within mice()
+# We normally call mice.impute.pmm.exclude() from within mice()
 # But we may call it directly as follows (not recommended)
 
 set.seed(53177)
@@ -106,32 +90,20 @@ table(ry)
 # percentage of missing data in tv
 sum(!ry) / length(ry)
 
-# Impute missing tv data with original pmm
+# Impute missing tv data with original pmm and pmm.exclude where the 
+# excluded value (-Inf) falls outside the range of the observed data
 set.seed(123); yimp.pmm <- mice.impute.pmm(y, ry, x)
 set.seed(123); yimp <- mice.impute.pmm.exclude(y, ry, x)
 identical(yimp, yimp.pmm) #should be TRUE
 
-set.seed(123); yimp.pmm <- mice.impute.pmm(y, ry, x)
+# Impute missing tv data with pmm.exclude set to exclude 20 and 25
 set.seed(123); yimp <- mice.impute.pmm.exclude(y, ry, x, exclude = c(20, 25))
 identical(yimp, yimp.pmm) # should be FALSE
 c(20, 25) \%in\% yimp # should be FALSE twice
 }
-\references{
-Little, R.J.A. (1988), Missing data adjustments in large surveys
-(with discussion), Journal of Business Economics and Statistics, 6, 287--301.
-
-Morris TP, White IR, Royston P (2015). Tuning multiple imputation by predictive
-mean matching and local residual draws. BMC Med Res Methodol. ;14:75.
-
-Van Buuren, S. (2018).
-\href{https://stefvanbuuren.name/fimd/sec-pmm.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
-Chapman & Hall/CRC. Boca Raton, FL.
-
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
-Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
-}
 \seealso{
+[mice.impute.pmm()]
+
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},
 \code{\link{mice.impute.lda}()},
