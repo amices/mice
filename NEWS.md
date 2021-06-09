@@ -3,6 +3,11 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.13.8
+
+* Generalises `pool()` so that it processes the parameters from all `gamlss` sub-models. Thanks 
+Marcio Augusto Diniz (#406, #405)
+
 # mice 3.13.7
 
 * Documents the "flat-line behaviour" of `mice.impute.2l.lmer()` to indicate a problem in fitting the imputation model (#385)
