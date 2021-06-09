@@ -144,7 +144,7 @@ pool.fitlist <- function(fitlist, dfcom = NULL) {
   w <- summary(fitlist, type = "tidy", exponentiate = FALSE)
 
   # Rubin's rules for scalar estimates
-  grp <- intersect(names(w), c("term", "y.level", "component"))
+  grp <- intersect(names(w), c("parameter", "term", "y.level", "component"))
 
   # Note: group_by() changes the order of the terms, which is undesirable
   # We convert any parameter terms to factor to preserve ordering
