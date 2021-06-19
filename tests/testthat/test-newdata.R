@@ -13,6 +13,10 @@ test_that("`newdata` works like rbind with ignore", {
   expect_equal(complete(rbind(init0, init1)), complete(init2))
 })
 
+imp <- mice(nhanes2, maxit = 0, m = 1, seed = 1)
+test_that("`newdata` produces warning `invalid factor level, NA generated`", {
+  expect_silent(mice.mids(imp, newdata = nhanes2[1, ]))
+})
 
 # Check that rows flagged as ignored are indeed ignored by the
 # univariate sampler in mice.mids
@@ -44,3 +48,5 @@ test_that("`newdata` returns filtered mids object", {
 test_that("`newdata` uses a common seed", {
   expect_true(identical(complete(imp2), complete(imp2b)))
 })
+
+
