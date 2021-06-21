@@ -12,14 +12,16 @@ initialize.imp <- function(data, m, ignore, where, blocks, visitSequence,
       dimnames(imp[[j]]) <- list(row.names(data)[wy], 1:m)
       if (method[h] != "") {
         for (i in seq_len(m)) {
-          if (nmis[j] < nrow(data)) {
-            if (is.null(data.init)) {
-              imp[[j]][, i] <- mice.impute.sample(y, ry, wy = wy)
-            } else {
-              imp[[j]][, i] <- data.init[wy, j]
-            }
+          if (nmis[j] < nrow(data) && is.null(data.init)) {
+            imp[[j]][, i] <- mice.impute.sample(y, ry, wy = wy)
+          } else if (!is.null(data.init)) {
+            imp[[j]][, i] <- data.init[wy, j]
           } else {
-            imp[[j]][, i] <- rnorm(nrow(data))
+            if (is.factor(y)) {
+              imp[[j]][, i] <- sample(levels(y), nrow(data))
+            } else {
+              imp[[j]][, i] <- rnorm(nrow(data))
+            }
           }
         }
       }
