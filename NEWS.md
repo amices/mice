@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.13.9
+
+* Solves a problem with "last resort" initialisation of factors (#410)
+
 # mice 3.13.8
 
 * Generalises `pool()` so that it processes the parameters from all `gamlss` sub-models. Thanks 
