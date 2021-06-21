@@ -15,7 +15,7 @@ test_that("`newdata` works like rbind with ignore", {
 
 imp <- mice(nhanes2, maxit = 0, m = 1, seed = 1)
 test_that("`newdata` produces warning `invalid factor level, NA generated`", {
-  expect_silent(mice.mids(imp, newdata = nhanes2[1, ]))
+  expect_silent(mice.mids(imp, newdata = nhanes2[1, ], print = FALSE))
 })
 
 # Check that rows flagged as ignored are indeed ignored by the
