@@ -88,11 +88,13 @@
 #' missing completely at random for incomplete multivariate data. Psychometrika,
 #' 75(4), 649–674. <doi:10.1007/s11336-010-9175-3>
 #' @keywords internal
+#' @examples
+#' MCAR(nhanes)
 #' @export
 #' @importFrom stats cov pchisq spline
 MCAR <- function(x,
-                 imputed = mice(x, method = "pmm"),
-                 min_n = floor(.05 * nrow(x)),
+                 imputed = mice(x, method = "norm"),
+                 min_n = 6,
                  method = "Auto",
                  replications = 10000,
                  use_chisq = 30,
@@ -103,13 +105,12 @@ MCAR <- function(x,
 #' @method MCAR data.frame
 #' @export
 MCAR.data.frame <- function(x,
-                            imputed = mice(x, method = "pmm"),
-                            min_n = floor(.05 * nrow(x)),
-                            method = "auto",
+                            imputed = mice(x, method = "norm"),
+                            min_n = 6,
+                            method = "Auto",
                             replications = 10000,
                             use_chisq = 30,
-                            alpha = 0.05)
-{
+                            alpha = 0.05) {
   out <-
     list(
       hawk_chisq = NULL,
