@@ -1,7 +1,6 @@
 #' Jamshidian and Jalal's Non-Parametric MCAR Test
 #'
-#' Test whether the missing data mechanism is contingent upon the observed
-#' variables,
+#' Test whether missingness is contingent upon the observed variables,
 #' according to the methodology developed by Jamshidian and Jalal (2010) (see
 #' Details).
 #' @param x An object for which a method exists; usually a `data.frame`.
