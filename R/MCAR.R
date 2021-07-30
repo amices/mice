@@ -4,8 +4,8 @@
 #' according to the methodology developed by Jamshidian and Jalal (2010) (see
 #' Details).
 #' @param x An object for which a method exists; usually a `data.frame`.
-#' @param imputed Either an object of class `mids`, as returned by [mice::mice],
-#' or a list of `data.frame`s.
+#' @param imputed Either an object of class `mids`, as returned by
+#' [mice::mice()], or a list of `data.frame`s.
 #' @param min_n Atomic numeric. When there are missing data patterns with
 #' fewer than `min_n` cases, all cases with that pattern will be removed from
 #' `x` and `imputed`.
@@ -16,8 +16,8 @@
 #' Details section, and in Figure 7 of Jamshidian and Jalal (2010).
 #' @param replications Number of replications used to simulate the Neyman
 #' distribution when performing Hawkins' test. As this method is based on random
-#' sampling, use a high number of `replications` (and optionally, `set.seed()`)
-#' to minimize Monte Carlo error and ensure reproducibility.
+#' sampling, use a high number of `replications` (and optionally,
+#' [set.seed()]) to minimize Monte Carlo error and ensure reproducibility.
 #' @param use_chisq Atomic integer, indicating the minimum number of cases
 #' within a group *k* that triggers the use of asymptotic Chi-square
 #' distribution instead of the emprical distribution in the Neyman uniformity
@@ -37,8 +37,9 @@
 #' using the following procedure:
 #' \enumerate{
 #'   \item Data are imputed.
-#'   \item The imputed data are split into *k* groups according to the *k*
-#'   missing data patterns in the original data (see [mice::md.pattern].
+#'   \item The imputed data are split into *k* groups according to the
+#'   *k* missing data patterns in the original data (see
+#'   [mice::md.pattern()]).
 #'   \item Perform Hawkins' test for equality of covariances across the *k*
 #'   groups.
 #'   \item If the test is *not significant*, conclude that there is no evidence
@@ -80,22 +81,33 @@
 #' @references
 #' Rubin, D. B. (1976). Inference and Missing Data. Biometrika, Vol. 63, No. 3,
 #' pp. 581-592. <doi:10.2307/2335739>
+#'
 #' Eekhout, I., M. A. Wiel, & M. W. Heymans (2017). Methods for Significance
 #' Testing of Categorical Covariates in Logistic Regression Models After
 #' Multiple Imputation: Power and Applicability Analysis. BMC Medical Research
 #' Methodology 17 (1): 129.
+#'
 #' Jamshidian, M., & Jalal, S. (2010). Tests of homoscedasticity, normality, and
 #' missing completely at random for incomplete multivariate data. Psychometrika,
 #' 75(4), 649–674. <doi:10.1007/s11336-010-9175-3>
 #' @keywords internal
 #' @examples
-#' MCAR(nhanes)
+#' res <- MCAR(nhanes)
+#' # Examine test results
+#' res
+#' # Plot p-values across imputed data sets
+#' plot(res)
+#' # Plot md patterns used for the test
+#' plot(res, type = "md.pattern")
+#' # Note difference with the raw md.patterns:
+#' md.pattern(nhanes)
 #' @export
 #' @importFrom stats cov pchisq spline
+#' @md
 MCAR <- function(x,
                  imputed = mice(x, method = "norm"),
                  min_n = 6,
-                 method = "Auto",
+                 method = "auto",
                  replications = 10000,
                  use_chisq = 30,
                  alpha = 0.05) {
@@ -107,7 +119,7 @@ MCAR <- function(x,
 MCAR.data.frame <- function(x,
                             imputed = mice(x, method = "norm"),
                             min_n = 6,
-                            method = "Auto",
+                            method = "auto",
                             replications = 10000,
                             use_chisq = 30,
                             alpha = 0.05) {
