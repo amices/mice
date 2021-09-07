@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.13.10 
+
+* Adds Rcpp necessities
+
 # mice 3.13.9
 
 * Solves a problem with "last resort" initialisation of factors (#410)
