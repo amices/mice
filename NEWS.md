@@ -3,6 +3,10 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.13.11
+
+* Updates documentation for post-processing (#387)
+
 # mice 3.13.10 
 
 * Adds Rcpp necessities
