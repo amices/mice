@@ -5,6 +5,10 @@
 #' @aliases mice.impute.rf
 #' @inheritParams mice.impute.pmm
 #' @param ntree The number of trees to grow. The default is 10.
+#' @param rfPackage A single string specifying the backend for estimating the 
+#' random forest. The default backend is the \code{randomForest} package (for 
+#' backwards compatibility). The only alternative currently implemented is the 
+#' \code{ranger} package, which has been found to be faster.
 #' @param \dots Other named arguments passed down to
 #' \code{mice:::install.on.demand()}, \code{randomForest::randomForest()} and
 #' \code{randomForest:::randomForest.default()}.
@@ -41,6 +45,7 @@
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @seealso \code{\link{mice}}, \code{\link{mice.impute.cart}},
 #' \code{\link[randomForest]{randomForest}}
+#' \code{\link[ranger]{ranger}}
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @examples
@@ -49,10 +54,37 @@
 #' imp <- mice(nhanes2, meth = "rf", ntree = 3)
 #' plot(imp)
 #' @export
-mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10, ...) {
-  install.on.demand("randomForest", ...)
+mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10, 
+                           rfPackage = c("randomForest", "ranger"), ...) {
+  rfPackage = match.arg(rfPackage)
+  
   if (is.null(wy)) wy <- !ry
+  
+  ntree <- max(1, ntree) # safety
+  nmis <- sum(wy)
+  xobs <- x[ry, , drop = FALSE]
+  xmis <- x[wy, , drop = FALSE]
+  yobs <- y[ry]
+  
+  # Find eligible donors
+  f <- switch(rfPackage,
+    randomForest = .randomForest.donors,
+    ranger = .ranger.donors
+  )
+  
+  forest <- f(xobs, xmis, yobs, ntree, ...)
+  
+  # Sample from donors
+  if (nmis == 1) forest <- array(forest, dim = c(1, ntree))
+  apply(forest, MARGIN = 1, FUN = function(s) sample(unlist(s), 1))
+}
+
+# Find eligible donors using the randomForest package (default)
+.randomForest.donors <- function(xobs, xmis, yobs, ntree, ...) {
+  install.on.demand("randomForest", ...)
+  
   onetree <- function(xobs, xmis, yobs, ...) {
+    # Function to fit a single tree
     fit <- randomForest::randomForest(
       x = xobs,
       y = yobs,
@@ -65,13 +97,28 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10, ...) {
     donor <- lapply(nodes, function(s) yobs[leafnr == s])
     return(donor)
   }
-  ntree <- max(1, ntree) # safety
-  nmis <- sum(wy)
-  xobs <- x[ry, , drop = FALSE]
-  xmis <- x[wy, , drop = FALSE]
-  yobs <- y[ry]
+  
+  sapply(seq_len(ntree), FUN = function(s) onetree(xobs, xmis, yobs, ...))
+}
 
-  forest <- sapply(seq_len(ntree), FUN = function(s) onetree(xobs, xmis, yobs, ...))
-  if (nmis == 1) forest <- array(forest, dim = c(1, ntree))
-  apply(forest, MARGIN = 1, FUN = function(s) sample(unlist(s), 1))
+# Find eligible donors using the ranger package
+.ranger.donors <- function(xobs, xmis, yobs, ntree, ...) {
+  install.on.demand("ranger", ...)
+  
+  # Fit all trees at once
+  fit <- ranger::ranger(x = xobs, y = yobs, num.trees = ntree)
+  
+  nodes <- predict(object = fit, data = rbind(xobs, xmis), 
+                   type = "terminalNodes", predict.all = TRUE)
+  nodes <- ranger::predictions(nodes)
+  nodes_obs <- nodes[1:nrow(xobs), ]
+  nodes_mis <- nodes[(nrow(xobs)+1):nrow(nodes), ]
+  
+  select_donors <- function(i){
+    # Function to extract all eligible donors for each missing value
+    donors <- split(yobs, nodes_obs[, i])
+    donors[as.character(nodes_mis[, i])]
+  }
+  
+  sapply(seq_len(ntree), FUN = select_donors)
 }
