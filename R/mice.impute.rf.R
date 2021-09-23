@@ -55,7 +55,7 @@
 #' plot(imp)
 #' @export
 mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10, 
-                           rfPackage = c("randomForest", "ranger"), ...) {
+                           rfPackage = c("ranger", "randomForest"), ...) {
   rfPackage = match.arg(rfPackage)
   
   if (is.null(wy)) wy <- !ry
