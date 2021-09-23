@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.13</span>
       </span>
     </div>
 
@@ -336,30 +336,30 @@ Statistical Software</em>, <b>45</b>, 3, 1--67. <a href='https://www.jstatsoft.o
 <span class='co'># list the actual imputations for BMI</span>
 <span class='va'>imp</span><span class='op'>$</span><span class='va'>imp</span><span class='op'>$</span><span class='va'>bmi</span>
 </div><div class='output co'>#&gt;       1    2    3    4    5
-#&gt; 1  29.6 22.5 35.3 29.6 33.2
-#&gt; 3  29.6 30.1 30.1 29.6 30.1
-#&gt; 4  22.5 21.7 21.7 21.7 21.7
-#&gt; 6  25.5 21.7 21.7 27.5 21.7
-#&gt; 10 20.4 22.7 26.3 27.4 22.0
-#&gt; 11 22.5 22.0 35.3 22.0 33.2
-#&gt; 12 25.5 26.3 22.7 27.4 27.4
-#&gt; 16 22.5 22.5 35.3 29.6 33.2
-#&gt; 21 22.5 22.0 30.1 29.6 33.2</div><div class='input'>
+#&gt; 1  29.6 22.5 27.5 30.1 29.6
+#&gt; 3  29.6 30.1 29.6 30.1 29.6
+#&gt; 4  27.4 27.4 25.5 35.3 27.5
+#&gt; 6  24.9 27.4 25.5 22.5 27.5
+#&gt; 10 29.6 20.4 22.7 35.3 22.0
+#&gt; 11 35.3 30.1 27.5 35.3 29.6
+#&gt; 12 29.6 30.1 22.7 27.4 22.7
+#&gt; 16 22.5 20.4 33.2 20.4 22.7
+#&gt; 21 29.6 28.7 33.2 30.1 22.7</div><div class='input'>
 <span class='co'># first completed data matrix</span>
 <span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    age  bmi hyp chl
-#&gt; 1    1 29.6   1 118
+#&gt; 1    1 29.6   1 187
 #&gt; 2    2 22.7   1 187
 #&gt; 3    1 29.6   1 187
-#&gt; 4    3 22.5   1 199
+#&gt; 4    3 27.4   2 284
 #&gt; 5    1 20.4   1 113
-#&gt; 6    3 25.5   1 184
+#&gt; 6    3 24.9   2 184
 #&gt; 7    1 22.5   1 118
 #&gt; 8    1 30.1   1 187
 #&gt; 9    2 22.0   1 238
-#&gt; 10   2 20.4   1 229
-#&gt; 11   1 22.5   1 118
-#&gt; 12   2 25.5   1 199
+#&gt; 10   2 29.6   1 218
+#&gt; 11   1 35.3   1 218
+#&gt; 12   2 29.6   1 284
 #&gt; 13   3 21.7   1 206
 #&gt; 14   2 28.7   2 204
 #&gt; 15   1 29.6   1 187
@@ -367,11 +367,11 @@ Statistical Software</em>, <b>45</b>, 3, 1--67. <a href='https://www.jstatsoft.o
 #&gt; 17   3 27.2   2 284
 #&gt; 18   2 26.3   2 199
 #&gt; 19   1 35.3   1 218
-#&gt; 20   3 25.5   2 204
-#&gt; 21   1 22.5   1 118
+#&gt; 20   3 25.5   2 206
+#&gt; 21   1 29.6   1 187
 #&gt; 22   1 33.2   1 229
 #&gt; 23   1 27.5   1 131
-#&gt; 24   3 24.9   1 204
+#&gt; 24   3 24.9   1 184
 #&gt; 25   2 27.4   1 186</div><div class='input'>
 <span class='co'># imputation on mixed data with a different method per column</span>
 <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sample"</span>, <span class='st'>"midastouch"</span>, <span class='st'>"logreg"</span>, <span class='st'>"norm"</span><span class='op'>)</span><span class='op'>)</span>
