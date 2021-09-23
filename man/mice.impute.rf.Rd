@@ -30,9 +30,9 @@ indicates locations in \code{y} for which imputations are created.}
 
 \item{ntree}{The number of trees to grow. The default is 10.}
 
-\item{rfPackage}{A single string specifying the backend for estimating the 
-random forest. The default backend is the \code{ranger} package. The only 
-alternative currently implemented is the \code{randomForest} package, which 
+\item{rfPackage}{A single string specifying the backend for estimating the
+random forest. The default backend is the \code{ranger} package. The only
+alternative currently implemented is the \code{randomForest} package, which
 used to be the default in mice 3.13.0 and earlier.}
 
 \item{\dots}{Other named arguments passed down to
