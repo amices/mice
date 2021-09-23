@@ -5,6 +5,9 @@
 stabler behavior in complex scripts, but may break exact reproducibility in 
 some cases. If you run into a problem, I fear the only way to solve is to 
 install `mice 3.13.12` or before.
+* Improves the imputation of parabolic data in `mice.impute.quadratic()`, 
+adds a parameter `quad.outcome` containing the name of the outcome variable 
+in the complete-data model. Contributed @Mingyang-Cai, @gerkovink (#408)
 
 # mice 3.13.12
 
