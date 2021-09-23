@@ -1,7 +1,10 @@
----
-title: "News"
-output: github_document
----
+# mice 3.13.13
+
+* Avoids changing the global `.Random.seed` (#426, #432) by implementing 
+`withr::local_preserve_seed()` and `withr::local_seed()`. This change provides
+stabler behavior in complex scripts, but may break exact reproducibility in 
+some cases. If you run into a problem, I fear the only way to solve is to 
+install `mice 3.13.12` or before.
 
 # mice 3.13.12
 
@@ -24,8 +27,8 @@ Contributed @prockenschaub (#431).
 
 # mice 3.13.8
 
-* Generalises `pool()` so that it processes the parameters from all `gamlss` sub-models. Thanks 
-Marcio Augusto Diniz (#406, #405)
+* Generalises `pool()` so that it processes the parameters from all 
+`gamlss` sub-models. Thanks Marcio Augusto Diniz (#406, #405)
 
 # mice 3.13.7
 
