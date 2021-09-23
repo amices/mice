@@ -33,7 +33,7 @@ indicates locations in \code{y} for which imputations are created.}
 \item{rfPackage}{A single string specifying the backend for estimating the
 random forest. The default backend is the \code{ranger} package. The only
 alternative currently implemented is the \code{randomForest} package, which
-used to be the default in mice 3.13.0 and earlier.}
+used to be the default in mice 3.13.10 and earlier.}
 
 \item{\dots}{Other named arguments passed down to
 \code{mice:::install.on.demand()}, \code{randomForest::randomForest()} and
@@ -107,7 +107,7 @@ Other univariate imputation functions:
 \code{\link{mice.impute.ri}()}
 }
 \author{
-Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
+Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012; Patrick Rockenschaub, 2021
 }
 \concept{univariate imputation functions}
 \keyword{datagen}

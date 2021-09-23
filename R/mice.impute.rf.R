@@ -8,7 +8,7 @@
 #' @param rfPackage A single string specifying the backend for estimating the
 #' random forest. The default backend is the \code{ranger} package. The only
 #' alternative currently implemented is the \code{randomForest} package, which
-#' used to be the default in mice 3.13.0 and earlier.
+#' used to be the default in mice 3.13.10 and earlier.
 #' @param \dots Other named arguments passed down to
 #' \code{mice:::install.on.demand()}, \code{randomForest::randomForest()} and
 #' \code{randomForest:::randomForest.default()}.
@@ -28,7 +28,7 @@
 #' the quality of the imputation for 10 and 100 trees was identical,
 #' so mice 2.22 changed the default number of trees from \code{ntree = 100} to
 #' \code{ntree = 10}.
-#' @author Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
+#' @author Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012; Patrick Rockenschaub, 2021
 #' @references
 #'
 #' Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning
