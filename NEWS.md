@@ -3,9 +3,16 @@ title: "News"
 output: github_document
 ---
 
+# mice 3.13.12
+
+* By default, `mice.impute.rf()` now uses the faster `ranger` package as 
+back-end instead of `randomForest` package. If you want the old behaviour 
+specify the `rfPackage = "randomForest"` argument to the `mice(...)` call. 
+Contributed @prockenschaub (#431).
+
 # mice 3.13.11
 
-* Updates documentation for post-processing (#387)
+* Updates documentation for post-processing functionality (#387)
 
 # mice 3.13.10 
 
