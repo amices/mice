@@ -147,6 +147,7 @@
 </h1>
 <ul>
 <li>Avoids changing the global <code>.Random.seed</code> (<a href='https://github.com/amices/mice/issues/426'>#426</a>, <a href='https://github.com/amices/mice/issues/432'>#432</a>) by implementing <code><a href="https://withr.r-lib.org/reference/with_seed.html">withr::local_preserve_seed()</a></code> and <code><a href="https://withr.r-lib.org/reference/with_seed.html">withr::local_seed()</a></code>. This change provides stabler behavior in complex scripts, but may break exact reproducibility in some cases. If you run into a problem, I fear the only way to solve is to install <code>mice 3.13.12</code> or before.</li>
+<li>Improves the imputation of parabolic data in <code><a href="../reference/mice.impute.quadratic.html">mice.impute.quadratic()</a></code>, adds a parameter <code>quad.outcome</code> containing the name of the outcome variable in the complete-data model. Contributed <a href='https://github.com/Mingyang-Cai'>@Mingyang-Cai</a>, <a href='https://github.com/gerkovink'>@gerkovink</a> (<a href='https://github.com/amices/mice/issues/408'>#408</a>)</li>
 </ul>
 </div>
     <div id="mice-31312" class="section level1">
