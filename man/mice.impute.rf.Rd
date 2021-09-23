@@ -4,7 +4,15 @@
 \alias{mice.impute.rf}
 \title{Imputation by random forests}
 \usage{
-mice.impute.rf(y, ry, x, wy = NULL, ntree = 10, ...)
+mice.impute.rf(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  ntree = 10,
+  rfPackage = c("ranger", "randomForest"),
+  ...
+)
 }
 \arguments{
 \item{y}{Vector to be imputed}
@@ -21,6 +29,11 @@ model is fitted. The \code{ry} generally distinguishes the observed
 indicates locations in \code{y} for which imputations are created.}
 
 \item{ntree}{The number of trees to grow. The default is 10.}
+
+\item{rfPackage}{A single string specifying the backend for estimating the
+random forest. The default backend is the \code{ranger} package. The only
+alternative currently implemented is the \code{randomForest} package, which
+used to be the default in mice 3.13.10 and earlier.}
 
 \item{\dots}{Other named arguments passed down to
 \code{mice:::install.on.demand()}, \code{randomForest::randomForest()} and
@@ -73,6 +86,7 @@ Chapman & Hall/CRC. Boca Raton, FL.
 \seealso{
 \code{\link{mice}}, \code{\link{mice.impute.cart}},
 \code{\link[randomForest]{randomForest}}
+\code{\link[ranger]{ranger}}
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},
@@ -93,7 +107,7 @@ Other univariate imputation functions:
 \code{\link{mice.impute.ri}()}
 }
 \author{
-Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
+Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012; Patrick Rockenschaub, 2021
 }
 \concept{univariate imputation functions}
 \keyword{datagen}
