@@ -128,7 +128,7 @@ pool.syn <- function(object, dfcom = NULL) {
   }
   
   dfcom <- get.dfcom(object, dfcom)
-  pooled <- pool.fitlist(getfit(object), dfcom = dfcom)
+  pooled <- pool.syn.fitlist(getfit(object), dfcom = dfcom)
   
   # mipo object
   rr <- list(
