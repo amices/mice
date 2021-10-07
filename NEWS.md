@@ -1,3 +1,7 @@
+# mice 3.13.14
+
+* Informs the user that `pool()` cannot take a `mids` object (#433)
+
 # mice 3.13.13
 
 * Avoids changing the global `.Random.seed` (#426, #432) by implementing 
