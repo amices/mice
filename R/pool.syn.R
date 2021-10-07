@@ -90,7 +90,7 @@
 #' manually.
 #' @return An object of class \code{mipo}, which stands for 'multiple imputation
 #' pooled outcome'.
-#' @seealso \code{\link{with.mids}}, \code{\link{as.mira}}, \code{\link{pool.scalar}},
+#' @seealso \code{\link{with.mids}}, \code{\link{as.mira}}, \code{\link{pool.scalar.syn}},
 #' \code{\link[broom:reexports]{glance}}, \code{\link[broom:reexports]{tidy}}
 #' \url{https://github.com/amices/mice/issues/142},
 #' \url{https://github.com/amices/mice/issues/274}
