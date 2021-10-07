@@ -4,7 +4,7 @@
 
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
 [![](https://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice)
-[![](https://img.shields.io/badge/github%20version-3.13.13-orange.svg)](https://amices.github.io/mice/)
+[![](https://img.shields.io/badge/github%20version-3.13.14-orange.svg)](https://amices.github.io/mice/)
 
 ## [Multivariate Imputation by Chained Equations](https://amices.github.io/mice/)
 
@@ -66,7 +66,6 @@ imp <- mice(nhanes, maxit = 2, m = 2, seed = 1)
 #>   1   2  bmi  hyp  chl
 #>   2   1  bmi  hyp  chl
 #>   2   2  bmi  hyp  chl
-
 # inspect quality of imputations
 stripplot(imp, chl, pch = 19, xlab = "Imputation number")
 ```
