@@ -1,7 +1,8 @@
-#' Combine estimates by Rubin's rules
+#' Combine estimates by Reiter's partially synthetic data pooling rules
 #'
 #' The \code{pool.syn()} function combines the estimates from \code{m}
-#' repeated complete data analyses on synthetic data. The typical sequence 
+#' repeated complete data analyses on synthetic data, in which the data
+#' that is synthesized must be completely observed. The typical sequence 
 #' of steps to do a multiple imputation analysis on synthetic data is:
 #' \enumerate{
 #' \item Create \code{m} synthetic versions of the data by using the
@@ -27,6 +28,10 @@
 #' \item Relative increase in variance due to imputation {\code{r}};
 #' \item Residual degrees of freedom for hypothesis testing {\code{df}}.
 #' }
+#' 
+#' Note that the values for \code{lambda}, and \code{fmi} (fraction of 
+#' missing information) are set to NaN, because these do not apply when 
+#' synthesizing completely observed data sets.
 #'
 #' The function requires the following input from each fitted model:
 #' \enumerate{
@@ -102,9 +107,9 @@
 #' Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 #' @examples
 #' # pool using the classic MICE workflow
-#' imp <- mice(nhanes, maxit = 2, m = 2, 
-#'             where = matrix(TRUE, nrow(nhanes), ncol(nhanes)))
-#' fit <- with(data = imp, exp = lm(bmi ~ hyp + chl))
+#' imp <- mice(cars, maxit = 2, m = 2, 
+#'             where = matrix(TRUE, nrow(cars), ncol(cars)))
+#' fit <- with(data = imp, exp = lm(speed ~ dist))
 #' summary(pool.syn(fit))
 #' @export
 pool.syn <- function(object, dfcom = NULL) {
@@ -135,7 +140,6 @@ pool.syn <- function(object, dfcom = NULL) {
 pool.syn.fitlist <- function(fitlist, dfcom = NULL) {
   w <- summary(fitlist, type = "tidy", exponentiate = FALSE)
   
-  # Rubin's rules for scalar estimates
   grp <- intersect(names(w), c("parameter", "term", "y.level", "component"))
   
   # Note: group_by() changes the order of the terms, which is undesirable

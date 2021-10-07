@@ -38,14 +38,14 @@
 #' Public Use Microdata Sets. \emph{Survey Methodology}, \bold{29}, 181-189.
 #' @examples
 #' # example with manual and automatic pooling
-#' imp <- mice(nhanes, maxit = 2, m = 2, print = FALSE, seed = 18210,
-#'             where = matrix(TRUE, nrow(nhanes), ncol(nhanes)))
-#' fit <- with(data = imp, lm(bmi ~ age))
+#' imp <- mice(cars, maxit = 2, m = 2, print = FALSE, seed = 18210,
+#'             where = matrix(TRUE, nrow(cars), ncol(cars)))
+#' fit <- with(data = imp, lm(speed ~ dist))
 #'
 #' # manual pooling
 #' summary(fit$analyses[[1]])
 #' summary(fit$analyses[[2]])
-#' pool.scalar(Q = c(-0.699, -1.227), U = c(01.048^2, 1.203^2), n = 25, k = 2)
+#' pool.scalar(Q = c(0.12182, 0.13209), U = c(0.02121^2, 0.02516^2), n = 50, k = 2)
 #'
 #' # automatic pooling using broom
 #' pool(fit)
