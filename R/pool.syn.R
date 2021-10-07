@@ -1,34 +1,31 @@
 #' Combine estimates by Rubin's rules
 #'
-#' The \code{pool()} function combines the estimates from \code{m}
-#' repeated complete data analyses. The typical sequence of steps to
-#' do a multiple imputation analysis is:
+#' The \code{pool.syn()} function combines the estimates from \code{m}
+#' repeated complete data analyses on synthetic data. The typical sequence 
+#' of steps to do a multiple imputation analysis on synthetic data is:
 #' \enumerate{
-#' \item Impute the missing data by the \code{mice} function, resulting in
-#' a multiple imputed data set (class \code{mids});
+#' \item Create \code{m} synthetic versions of the data by using the
+#' \code{mice} function to overimpute existing data using the \code{where}
+#' parameter, resulting in a multiple imputed data set (class \code{mids});
 #' \item Fit the model of interest (scientific model) on each imputed data set
 #' by the \code{with()} function, resulting an object of class \code{mira};
 #' \item Pool the estimates from each model into a single set of estimates
-#' and standard errors, resulting is an object of class \code{mipo};
-#' \item Optionally, compare pooled estimates from different scientific models
-#' by the \code{D1()} or \code{D3()} functions.
+#' and standard errors, resulting in an object of class \code{mipo};
 #' }
 #' A common error is to reverse steps 2 and 3, i.e., to pool the
 #' multiply-imputed data instead of the estimates. Doing so may severely bias
 #' the estimates of scientific interest and yield incorrect statistical
-#' intervals and p-values. The \code{pool()} function will detect
+#' intervals and p-values. The \code{pool.syn()} function will detect
 #' this case.
 #'
-#' The \code{pool()} function averages the estimates of the complete
+#' The \code{pool.syn()} function averages the estimates of the synthetic
 #' data model, computes the
-#' total variance over the repeated analyses by Rubin's rules
-#' (Rubin, 1987, p. 76),
+#' total variance over the synthetic data analyses by pooling rules developed
+#' by Reiter (2003)
 #' and computes the following diagnostic statistics per estimate:
 #' \enumerate{
-#' \item Relative increase in variance due to nonresponse {\code{r}};
-#' \item Residual degrees of freedom for hypothesis testing {\code{df}};
-#' \item Proportion of total variance due to missingness {\code{lambda}};
-#' \item Fraction of missing information {\code{fmi}}.
+#' \item Relative increase in variance due to imputation {\code{r}};
+#' \item Residual degrees of freedom for hypothesis testing {\code{df}}.
 #' }
 #'
 #' The function requires the following input from each fitted model:
@@ -38,24 +35,22 @@
 #' \item the residual degrees of freedom of the model.
 #' }
 #'
-#' The degrees of freedom calculation for the pooled estimates uses the
-#' Barnard-Rubin adjustment for small samples (Barnard and Rubin, 1999).
 #'
-#' The \code{pool()} function relies on the \code{broom::tidy} for
+#' The \code{pool.syn()} function relies on the \code{broom::tidy} for
 #' extracting the parameters. Versions before \code{mice 3.8.5} failed
 #' when no \code{broom::glance()} function was found for extracting the
-#' residual degrees of freedom. The \code{pool()} function is now
+#' residual degrees of freedom. The \code{pool.syn()} function is now
 #' more forgiving.
 #'
-#' Since \code{mice 3.13.2} function \code{pool()} uses the robust
-#' the standard error estimate for pooling when it can extract
+#' Since \code{mice 3.13.2} function \code{pool.syn()} uses the robust
+#' standard error estimate for pooling when it can extract
 #' \code{robust.se} from the \code{tidy()} object.
 #'
 #' In versions prior to \code{mice 3.0} pooling required only that
 #' \code{coef()} and \code{vcov()} methods were available for fitted
 #' objects. \emph{This feature is no longer supported}. The reason is that \code{vcov()}
 #' methods are inconsistent across packages, leading to buggy behaviour
-#' of the \code{pool()} function.
+#' of the \code{pool.syn()} function.
 #'
 #' Since \code{mice 3.0+}, the \code{broom}
 #' package takes care of filtering out the relevant parts of the
@@ -67,15 +62,14 @@
 #'
 #' The \code{broom.mixed} package contains \code{tidy} and \code{glance} methods
 #' for mixed models. If you are using a mixed model, first run
-#' \code{library(broom.mixed)} before calling \code{pool()}.
+#' \code{library(broom.mixed)} before calling \code{pool.syn()}.
 #'
 #' If no \code{tidy} or \code{glance} methods are defined for your analysis
 #' tabulate the \code{m} parameter estimates and their variance
 #' estimates (the square of the standard errors) from the \code{m} fitted
 #' models stored in \code{fit$analyses}. For each parameter, run
-#' \code{\link{pool.scalar}} to obtain the pooled parameters estimate, its variance, the
-#' degrees of freedom, the relative increase in variance and the fraction of missing
-#' information.
+#' \code{\link{pool.scalar.syn}} to obtain the pooled parameters estimate, its variance, the
+#' degrees of freedom, the relative increase in variance.
 #'
 #' An alternative is to write your own \code{glance()} and \code{tidy()}
 #' methods and add these to \code{broom} according to the specifications
@@ -100,20 +94,18 @@
 #' \code{\link[broom:reexports]{glance}}, \code{\link[broom:reexports]{tidy}}
 #' \url{https://github.com/amices/mice/issues/142},
 #' \url{https://github.com/amices/mice/issues/274}
-#' @references Barnard, J. and Rubin, D.B. (1999). Small sample degrees of
-#' freedom with multiple imputation. \emph{Biometrika}, 86, 948-955.
-#'
-#' Rubin, D.B. (1987). \emph{Multiple Imputation for Nonresponse in Surveys}.
-#' New York: John Wiley and Sons.
+#' @references Reiter, J.P. (2003). Inference for Partially Synthetic, 
+#' Public Use Microdata Sets. \emph{Survey Methodology}, \bold{29}, 181-189.
 #'
 #' van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}: Multivariate
 #' Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 #' Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 #' @examples
 #' # pool using the classic MICE workflow
-#' imp <- mice(nhanes, maxit = 2, m = 2)
+#' imp <- mice(nhanes, maxit = 2, m = 2, 
+#'             where = matrix(TRUE, nrow(nhanes), ncol(nhanes)))
 #' fit <- with(data = imp, exp = lm(bmi ~ hyp + chl))
-#' summary(pool(fit))
+#' summary(pool.syn(fit))
 #' @export
 pool.syn <- function(object, dfcom = NULL) {
   call <- match.call()
@@ -167,8 +159,8 @@ pool.syn.fitlist <- function(fitlist, dfcom = NULL) {
       dfcom = dfcom,
       df = (.data$m - 1) * (1 + (.data$ubar / (.data$b/.data$m)))^2,
       riv = (1 + 1 / .data$m) * .data$b / .data$ubar,
-      lambda = (1 + 1 / .data$m) * .data$b / .data$t,
-      fmi = (.data$riv + 2 / (.data$df + 3)) / (.data$riv + 1)
+      lambda = NaN,
+      fmi = NaN
     )
   pooled <- data.frame(pooled)
   names(pooled)[names(pooled) == "qbar"] <- "estimate"
