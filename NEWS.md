@@ -1,3 +1,7 @@
+# mice 3.13.15
+
+* Adds two new functions `pool.syn()` and `pool.scalar.syn()` that specialise pooling estimates from synthetic data. The `"reiter2003"` pooling rule assumes that synthetic data were created from complete data. Thanks Thom Volker (#436).
+
 # mice 3.13.14
 
 * Informs the user that `pool()` cannot take a `mids` object (#433)
