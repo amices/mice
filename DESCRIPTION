@@ -32,7 +32,9 @@ Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     person("Vincent", "Arel-Bundock", role = "ctb",
     email = "vincent.arel-bundock@umontreal.ca"),
     person("Mingyang", "Cai", role = "ctb",
-    email = "m.cai@uu.nl"))
+    email = "m.cai@uu.nl"),
+    person("Thom", "Volker", role = "ctb",
+    email = "t.b.volker@uu.nl"))
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
     R (>= 2.10.0)
