@@ -1,15 +1,15 @@
-#' Combine estimates by Rubin's rules
+#' Combine estimates by pooling rules
 #'
 #' The \code{pool()} function combines the estimates from \code{m}
 #' repeated complete data analyses. The typical sequence of steps to
-#' do a multiple imputation analysis is:
+#' perform a multiple imputation analysis is:
 #' \enumerate{
-#' \item Impute the missing data by the \code{mice} function, resulting in
+#' \item Impute the missing data by the \code{mice()} function, resulting in
 #' a multiple imputed data set (class \code{mids});
 #' \item Fit the model of interest (scientific model) on each imputed data set
 #' by the \code{with()} function, resulting an object of class \code{mira};
 #' \item Pool the estimates from each model into a single set of estimates
-#' and standard errors, resulting is an object of class \code{mipo};
+#' and standard errors, resulting in an object of class \code{mipo};
 #' \item Optionally, compare pooled estimates from different scientific models
 #' by the \code{D1()} or \code{D3()} functions.
 #' }
@@ -19,43 +19,35 @@
 #' intervals and p-values. The \code{pool()} function will detect
 #' this case.
 #'
+#' @details
 #' The \code{pool()} function averages the estimates of the complete
-#' data model, computes the
-#' total variance over the repeated analyses by Rubin's rules
-#' (Rubin, 1987, p. 76),
-#' and computes the following diagnostic statistics per estimate:
+#' data model, computes the total variance over the repeated analyses
+#' by Rubin's rules (Rubin, 1987, p. 76), and computes the following
+#' diagnostic statistics per estimate:
 #' \enumerate{
 #' \item Relative increase in variance due to nonresponse {\code{r}};
 #' \item Residual degrees of freedom for hypothesis testing {\code{df}};
 #' \item Proportion of total variance due to missingness {\code{lambda}};
 #' \item Fraction of missing information {\code{fmi}}.
 #' }
-#'
-#' The function requires the following input from each fitted model:
-#' \enumerate{
-#' \item the estimates of the model, usually obtainable by \code{coef()}
-#' \item the standard error of each estimate;
-#' \item the residual degrees of freedom of the model.
-#' }
-#'
 #' The degrees of freedom calculation for the pooled estimates uses the
 #' Barnard-Rubin adjustment for small samples (Barnard and Rubin, 1999).
 #'
-#' The \code{pool()} function relies on the \code{broom::tidy} for
-#' extracting the parameters. Versions before \code{mice 3.8.5} failed
-#' when no \code{broom::glance()} function was found for extracting the
-#' residual degrees of freedom. The \code{pool()} function is now
-#' more forgiving.
+#' The \code{pool.syn()} function combines estimates by Reiter's partially
+#' synthetic data pooling rules (Reiter, 2003). This combination rule
+#' assumes that the data that is synthesised is completely observed.
+#' Pooling differs from Rubin's method in the calculation of the total
+#' variance and the degrees of freedom.
 #'
-#' Since \code{mice 3.13.2} function \code{pool()} uses the robust
-#' the standard error estimate for pooling when it can extract
-#' \code{robust.se} from the \code{tidy()} object.
-#'
-#' In versions prior to \code{mice 3.0} pooling required only that
-#' \code{coef()} and \code{vcov()} methods were available for fitted
-#' objects. \emph{This feature is no longer supported}. The reason is that \code{vcov()}
-#' methods are inconsistent across packages, leading to buggy behaviour
-#' of the \code{pool()} function.
+#' Pooling requires the following input from each fitted model:
+#' \enumerate{
+#' \item the estimates of the model;
+#' \item the standard error of each estimate;
+#' \item the residual degrees of freedom of the model.
+#' }
+#' The \code{pool()} and \code{pool.syn()} functions rely on the
+#' \code{broom::tidy} and \code{broom::glance} for extracting these
+#' parameters.
 #'
 #' Since \code{mice 3.0+}, the \code{broom}
 #' package takes care of filtering out the relevant parts of the
@@ -80,6 +72,16 @@
 #' An alternative is to write your own \code{glance()} and \code{tidy()}
 #' methods and add these to \code{broom} according to the specifications
 #' given in \url{https://broom.tidymodels.org}.
+
+#' In versions prior to \code{mice 3.0} pooling required that
+#' \code{coef()} and \code{vcov()} methods were available for fitted
+#' objects. \emph{This feature is no longer supported}. The reason is that
+#' \code{vcov()} methods are inconsistent across packages, leading to
+#' buggy behaviour of the \code{pool()} function.
+#'
+#' Since \code{mice 3.13.2} function \code{pool()} uses the robust
+#' the standard error estimate for pooling when it can extract
+#' \code{robust.se} from the \code{tidy()} object.
 #'
 #' @param object An object of class \code{mira} (produced by \code{with.mids()}
 #' or \code{as.mira()}), or a \code{list} with model fits.
@@ -94,28 +96,44 @@
 #' In the last case, the warning \code{"Large sample assumed"} is printed.
 #' If the degrees of freedom is incorrect, specify the appropriate value
 #' manually.
+#' @param rule A string indicating the pooling rule. Currently supported are
+#' \code{"rubin1987"} (default, for missing data) and \code{"reiter2003"}
+#' (for synthetic data created from a complete data set).
 #' @return An object of class \code{mipo}, which stands for 'multiple imputation
 #' pooled outcome'.
+#' For rule \code{"reiter2003"} values for \code{lambda} and \code{fmi} are
+#' set to `NA`, as these statistics do not apply for data synthesised from
+#' fully observed data.
 #' @seealso \code{\link{with.mids}}, \code{\link{as.mira}}, \code{\link{pool.scalar}},
 #' \code{\link[broom:reexports]{glance}}, \code{\link[broom:reexports]{tidy}}
 #' \url{https://github.com/amices/mice/issues/142},
 #' \url{https://github.com/amices/mice/issues/274}
-#' @references Barnard, J. and Rubin, D.B. (1999). Small sample degrees of
+#' @references
+#' Barnard, J. and Rubin, D.B. (1999). Small sample degrees of
 #' freedom with multiple imputation. \emph{Biometrika}, 86, 948-955.
 #'
 #' Rubin, D.B. (1987). \emph{Multiple Imputation for Nonresponse in Surveys}.
 #' New York: John Wiley and Sons.
 #'
+#' Reiter, J.P. (2003). Inference for Partially Synthetic,
+#' Public Use Microdata Sets. \emph{Survey Methodology}, \bold{29}, 181-189.
+#'
 #' van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}: Multivariate
 #' Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 #' Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
 #' @examples
-#' # pool using the classic MICE workflow
+#' # impute missing data, analyse and pool using the classic MICE workflow
 #' imp <- mice(nhanes, maxit = 2, m = 2)
 #' fit <- with(data = imp, exp = lm(bmi ~ hyp + chl))
 #' summary(pool(fit))
+#'
+#' # generate fully synthetic data, analyse and pool
+#' imp <- mice(cars, maxit = 2, m = 2,
+#'             where = matrix(TRUE, nrow(cars), ncol(cars)))
+#' fit <- with(data = imp, exp = lm(speed ~ dist))
+#' summary(pool.syn(fit))
 #' @export
-pool <- function(object, dfcom = NULL) {
+pool <- function(object, dfcom = NULL, rule = NULL) {
   call <- match.call()
 
   if (!is.list(object)) stop("Argument 'object' not a list", call. = FALSE)
@@ -128,7 +146,7 @@ pool <- function(object, dfcom = NULL) {
   }
 
   dfcom <- get.dfcom(object, dfcom)
-  pooled <- pool.fitlist(getfit(object), dfcom = dfcom)
+  pooled <- pool.fitlist(getfit(object), dfcom = dfcom, rule = rule)
 
   # mipo object
   rr <- list(
@@ -140,10 +158,14 @@ pool <- function(object, dfcom = NULL) {
   rr
 }
 
-pool.fitlist <- function(fitlist, dfcom = NULL) {
-  w <- summary(fitlist, type = "tidy", exponentiate = FALSE)
+pool.fitlist <- function(fitlist, dfcom = NULL,
+                         rule = c("rubin1987", "reiter2003")) {
 
-  # Rubin's rules for scalar estimates
+  # rubin1987: Rubin's rules for scalar estimates
+  # reiter2003: Reiter's rules for partially synthetic data
+  rule <- match.arg(rule)
+
+  w <- summary(fitlist, type = "tidy", exponentiate = FALSE)
   grp <- intersect(names(w), c("parameter", "term", "y.level", "component"))
 
   # Note: group_by() changes the order of the terms, which is undesirable
@@ -156,21 +178,47 @@ pool.fitlist <- function(fitlist, dfcom = NULL) {
   # Prefer using robust.se when tidy object contains it
   if ("robust.se" %in% names(w)) w$std.error <- w$robust.se
 
-  pooled <- w %>%
-    group_by(!!!syms(grp)) %>%
-    summarize(
-      m = n(),
-      qbar = mean(.data$estimate),
-      ubar = mean(.data$std.error^2),
-      b = var(.data$estimate),
-      t = .data$ubar + (1 + 1 / .data$m) * .data$b,
-      dfcom = dfcom,
-      df = barnard.rubin(.data$m, .data$b, .data$t, .data$dfcom),
-      riv = (1 + 1 / .data$m) * .data$b / .data$ubar,
-      lambda = (1 + 1 / .data$m) * .data$b / .data$t,
-      fmi = (.data$riv + 2 / (.data$df + 3)) / (.data$riv + 1)
-    )
+  if (rule == "rubin1987") {
+    pooled <- w %>%
+      group_by(!!!syms(grp)) %>%
+      summarize(
+        m = n(),
+        qbar = mean(.data$estimate),
+        ubar = mean(.data$std.error^2),
+        b = var(.data$estimate),
+        t = .data$ubar + (1 + 1 / .data$m) * .data$b,
+        dfcom = dfcom,
+        df = barnard.rubin(.data$m, .data$b, .data$t, .data$dfcom),
+        riv = (1 + 1 / .data$m) * .data$b / .data$ubar,
+        lambda = (1 + 1 / .data$m) * .data$b / .data$t,
+        fmi = (.data$riv + 2 / (.data$df + 3)) / (.data$riv + 1)
+      )
+  }
+
+  if (rule == "reiter2003") {
+    pooled <- w %>%
+      group_by(!!!syms(grp)) %>%
+      summarize(
+        m = n(),
+        qbar = mean(.data$estimate),
+        ubar = mean(.data$std.error^2),
+        b = var(.data$estimate),
+        t = .data$ubar + (1 / .data$m) * .data$b,
+        dfcom = dfcom,
+        df = (.data$m - 1) * (1 + (.data$ubar / (.data$b/.data$m)))^2,
+        riv = (1 + 1 / .data$m) * .data$b / .data$ubar,
+        lambda = NA_real_,
+        fmi = NA_real_
+      )
+  }
+
   pooled <- data.frame(pooled)
   names(pooled)[names(pooled) == "qbar"] <- "estimate"
   pooled
+}
+
+#' @rdname pool
+#' @export
+pool.syn <- function(object, dfcom = NULL, rule = "reiter2003") {
+  pool(object = object, dfcom = dfcom, rule = rule)
 }
