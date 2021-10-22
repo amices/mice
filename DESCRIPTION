@@ -37,6 +37,7 @@ Depends:
 Imports:
     broom,
     dplyr,
+    glmnet,
     generics,
     graphics,
     lattice,

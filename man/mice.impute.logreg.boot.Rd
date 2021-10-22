@@ -47,6 +47,10 @@ Chapman & Hall/CRC. Boca Raton, FL.
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},
+\code{\link{mice.impute.durr.logreg}()},
+\code{\link{mice.impute.durr.norm}()},
+\code{\link{mice.impute.iurr.logreg}()},
+\code{\link{mice.impute.iurr.norm}()},
 \code{\link{mice.impute.lda}()},
 \code{\link{mice.impute.logreg}()},
 \code{\link{mice.impute.mean}()},
