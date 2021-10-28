@@ -34,7 +34,7 @@ test_that("Returns dichotomous imputations", {
 #########################
 
 set.seed(20211013)
-n <- 1e3
+n <- 1e4
 p <- 3
 b0 = 1
 bs = rep(0, p)
@@ -59,7 +59,7 @@ test_that("Returns dichotomous imputations", {
 # TEST 3: Everything is important #
 #########################
 
-n <- 1e2
+n <- 1e4
 p <- 10
 b0 <- 1
 bs <- rep(1, p)

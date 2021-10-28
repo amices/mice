@@ -10,7 +10,7 @@ n <- 1e3
 y <- rnorm(n)
 x <- y * .3 + rnorm(n, 0, .25)
 x2 <- x + rnorm(n, 2, 3)
-x <- cbind(1, x, x2)
+x <- cbind(x, x2)
 
 # make missingness
 y[sample(1:n, n*.3)] <- NA
@@ -31,10 +31,10 @@ test_that("Returns requested length", {
 
 n <- 1e2
 p <- 10
-bs <- c(b0 = 1,
-        b = rep(0, p))
-x <- cbind(1, matrix(rnorm(n * p), n, p))
-y <- x %*% bs + rnorm(n)
+b0 <- 100
+bs <- rep(0, p)
+x <- matrix(rnorm(n * p), n, p)
+y <- b0 + x %*% bs + rnorm(n)
 
 # Missing values
 y[sample(1:n, n*.3)] <- NA
@@ -55,10 +55,10 @@ test_that("Works for intercept only model", {
 
 n <- 1e2
 p <- 10
-bs <- c(b0 = 0,
-        b = rep(1, p))
-x <- cbind(1, matrix(rnorm(n * p), n, p))
-y <- x %*% bs + rnorm(n)
+b0 <- 100
+bs <- rep(1, p)
+x <- matrix(rnorm(n * p), n, p)
+y <- b0 + x %*% bs + rnorm(n)
 
 # Missing values
 y[sample(1:n, n*.3)] <- NA

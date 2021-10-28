@@ -10,7 +10,7 @@ n <- 1e3
 y <- rnorm(n)
 x <- y * .3 + rnorm(n, 0, .25)
 x2 <- x + rnorm(n, 2, 3)
-x <- cbind(1, x, x2)
+x <- cbind(x, x2)
 
 # make missingness
 y[sample(1:n, n*.3)] <- NA

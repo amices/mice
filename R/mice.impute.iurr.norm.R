@@ -42,7 +42,7 @@ mice.impute.iurr.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
 
   # Train imputation model
   # used later in the estiamtion require this.
-  cv_lasso <- glmnet::cv.glmnet(x = xobs[, -1], y = yobs,
+  cv_lasso <- glmnet::cv.glmnet(x = xobs, y = yobs,
                                 family = "gaussian",
                                 nfolds = nfolds,
                                 alpha = 1)
@@ -50,7 +50,7 @@ mice.impute.iurr.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
   # Define Active Set
   glmnet_coefs <- as.matrix(coef(cv_lasso,
                                  s = "lambda.min"))[, 1]
-  AS <- which(glmnet_coefs != 0)[-1] # Non-zero reg coefficinets
+  AS <- which((glmnet_coefs != 0)[-1]) # Non-zero reg coefficinets
 
   # MLE estiamtes by Optimize loss function
   lm_dat <- data.frame(cbind(yobs, xobs[, AS, drop = FALSE]))
