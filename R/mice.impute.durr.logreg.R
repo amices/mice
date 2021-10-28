@@ -32,7 +32,7 @@
 #' @keywords datagen
 #' @export
 mice.impute.durr.logreg <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
-
+  install.on.demand("glmnet", ...)
   if (is.null(wy)) wy <- !ry
 
   # Bootstrap sample

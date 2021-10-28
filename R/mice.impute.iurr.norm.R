@@ -32,6 +32,7 @@
 #' @keywords datagen
 #' @export
 mice.impute.iurr.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
+  install.on.demand("glmnet", ...)
 
   # Body
   if (is.null(wy)) wy <- !ry

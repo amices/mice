@@ -32,6 +32,8 @@
 #' @keywords datagen
 #' @export
 mice.impute.durr.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
+  install.on.demand("glmnet", ...)
+
   # Bootstrap sample
   if (is.null(wy)) wy <- !ry
   n1 <- sum(ry)
