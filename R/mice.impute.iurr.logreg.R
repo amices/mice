@@ -12,11 +12,19 @@
 #' Uses lasso penalty to identify an active set, then samples imputation model
 #' parameter values and uses them to define a posterior predictive distirbution
 #' to sample imputations from.
+#'
+#' The user can specify a \code{predictMatrix} in the \code{mice} call
+#' to define which predictors are provided to this univariate imputation method.
+#' The lasso regularization will select, among the variables indicated by
+#' the user, the ones that are important for imputation at any given iteration.
+#' Therefore, users may force the exclusion of a predictor from a given
+#' imputation model by speficing a \code{0} entry.
+#' However, a non-zero entry does not guarantee the variable will be used,
+#' as this decision is ultimately made by the lasso variable selection
+#' procedure.
+#'
 #' This function implements the MICE-IURR for Bernoulli data univariate imputation
 #' method presented by Deng Et Al (2016).
-#' When using only mice.impute.iurr methods, the user can provide the default
-#' predictor matrix. The method will then take care of selecting which variables are
-#' important for imputation.
 #' @author Edoardo Costantini, 2021
 #' @references
 #'

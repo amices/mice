@@ -39,9 +39,6 @@ penalised lasso regression by \code{nfolds} cross-validation, and imputes
 with normal residuals.
 The method is based on the Direct Use of Regularized Regression proposed by
 Zhao & Long (2016) and Deng et al (2016).
-When using only mice.impute.iurr methods, the user can provide the default
-predictor matrix. The method will then take care of selecting which variables are
-important for imputation.
 }
 \references{
 Deng, Y., Chang, C., Ido, M. S., & Long, Q. (2016). Multiple imputation for
