@@ -52,21 +52,9 @@ mice.impute.iurr.logreg <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
                                  s = "lambda.min"))[, 1]
   AS <- which((glmnet_coefs != 0)[-1]) # Non-zero reg coefficinets
 
-  # MLE estiamtes by Optimize loss function
-  lm_dat <- data.frame(cbind(yobs, xobs[, AS, drop = FALSE]))
-  glm_fit <- glm(yobs ~ ., data = lm_dat)
-  Sigma <- vcov(glm_fit)
-  Theta <- coef(glm_fit)
-
-  # Sample parameters
-  pdraws_par <- MASS::mvrnorm(1, mu = Theta, Sigma = Sigma)
-
-  # Obtain imputation
-  p <- 1 / (1 + exp(-(xmis[, c(1, AS), drop = FALSE] %*% pdraws_par)))
-  vec <- (runif(nrow(p)) <= p)
-  vec[vec] <- 1
-  if (is.factor(y)) {
-    vec <- factor(vec, c(0, 1), levels(y))
-  }
+  # Perform regular logreg draw
+  xas <- x[, AS, drop = FALSE]
+  vec <- mice.impute.logreg(y = y, ry = ry, x = xas, wy = wy,
+                            ...)
   vec
 }

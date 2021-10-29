@@ -52,51 +52,9 @@ mice.impute.iurr.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
                                  s = "lambda.min"))[, 1]
   AS <- which((glmnet_coefs != 0)[-1]) # Non-zero reg coefficinets
 
-  # MLE estiamtes by Optimize loss function
-  lm_dat <- data.frame(cbind(yobs, xobs[, AS, drop = FALSE]))
-  lm_fit <- lm(yobs ~ ., data = lm_dat)
-  X_mle  <- model.matrix(yobs ~ ., data = lm_dat)
-  start_values <- c(coef(lm_fit), stats::sigma(lm_fit))
-  MLE_fit <- stats::optim(start_values,
-                          .lmLoss,
-                          method = "BFGS",
-                          hessian = T,
-                          Y = yobs, X = X_mle)
-  theta <- MLE_fit$par
-  OI <- solve(MLE_fit$hessian) # parameters cov matrix
-
-  # Sample parameters
-  pdraws_par <- MASS::mvrnorm(1, mu = theta, Sigma = OI)
-
-  # Posterior Predictive Draws
-  df_ppd <- data.frame(y_place_holder = 1,
-                       xmis[, AS, drop = FALSE])
-  x_ppd  <- model.matrix(y_place_holder ~ ., data = df_ppd)
-  b_ppd <- pdraws_par[-length(pdraws_par)] # betas for posterior pred dist
-  s_ppd <- tail(pdraws_par, 1) # sigma for posterior pred dist
-  y_imp <- rnorm(n = nrow(x_ppd),
-                 mean = x_ppd %*% b_ppd,
-                 sd = s_ppd)
-  y_imp
-}
-
-# Internal function for lm loss function
-.lmLoss <- function(theta, Y, X){
-  # credits: https://rpubs.com/YaRrr/MLTutorial
-  k <- ncol(X)
-  beta <- theta[1:k]
-  sigma <- theta[k+1]
-
-  # Check validity of sigma
-  if(sigma < 0) {
-    # the optimization procedure to stay away from invalid parameter values.
-    dev <- 1e7
-  } else {
-    # calculate (log) likelihood of each data point
-    ll <- stats::dnorm(Y, mean = X %*% beta, sd = sigma, log = TRUE)
-    # summarize into deviance score
-    dev <- -2 * sum(ll)
-  }
-  # Return
-  return(dev)
+  # Perform regular norm draw from Bayesian linear model
+  xas <- x[, AS, drop = FALSE]
+  vec <- mice.impute.norm(y = y, ry = ry, x = xas, wy = wy,
+                          ...)
+  vec
 }

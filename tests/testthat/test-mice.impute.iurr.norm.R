@@ -45,8 +45,8 @@ wy <- !ry
 set.seed(123)
 imps_t2 <- mice.impute.iurr.norm(y, ry, x)
 
-test_that("Works for intercept only model", {
-  expect_equal(class(imps_t2), "numeric")
+test_that("Returns requested length w/ intercept only model", {
+  expect_equal(length(imps_t2), sum(!ry))
 })
 
 #########################
@@ -69,8 +69,8 @@ wy <- !ry
 set.seed(123)
 imps_t3 <- mice.impute.iurr.norm(y, ry, x)
 
-test_that("Works when all predictors are important", {
-  expect_equal(class(imps_t3), "numeric")
+test_that("Returns requested length when all predictors are important", {
+  expect_equal(length(imps_t3), sum(!ry))
 })
 
 #########################
