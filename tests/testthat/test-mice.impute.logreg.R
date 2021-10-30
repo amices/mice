@@ -9,29 +9,41 @@ set.seed(123)
 n <- 1e2
 p <- 4
 Sigma <- matrix(.7, nrow = p, ncol = p)
-  diag(Sigma) <- 1
+diag(Sigma) <- 1
 x <- MASS::mvrnorm(n, rep(0, p), Sigma)
 
 # Create Perfect Predictor
 y <- factor(x[, 1] < 0, labels = c("y", "n"))
 
 # Missing values
-y[sample(1:n, n*.3)] <- NA
+y[sample(1:n, n * .3)] <- NA
 ry <- !is.na(y)
 wy <- !ry
 
 # Imputation well behaved
 wellBehaved <- tryCatch(
-  expr = { mice.impute.logreg(y = y, ry = ry, x = x[, -1]) },
-  error = function(e){ e },
-  warning = function(w){ w }
+  expr = {
+    mice.impute.logreg(y = y, ry = ry, x = x[, -1])
+  },
+  error = function(e) {
+    e
+  },
+  warning = function(w) {
+    w
+  }
 )
 
 # Imputation perfect prediction
 perfectPred <- tryCatch(
-  expr = { mice.impute.logreg(y = y, ry = ry, x = x) },
-  error = function(e){ e },
-  warning = function(w){ w }
+  expr = {
+    mice.impute.logreg(y = y, ry = ry, x = x)
+  },
+  error = function(e) {
+    e
+  },
+  warning = function(w) {
+    w
+  }
 )
 
 # Test

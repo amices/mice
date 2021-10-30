@@ -59,19 +59,24 @@ mice.impute.iurr.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
 
   # Train imputation model
   # used later in the estiamtion require this.
-  cv_lasso <- glmnet::cv.glmnet(x = xobs, y = yobs,
-                                family = "gaussian",
-                                nfolds = nfolds,
-                                alpha = 1)
+  cv_lasso <- glmnet::cv.glmnet(
+    x = xobs, y = yobs,
+    family = "gaussian",
+    nfolds = nfolds,
+    alpha = 1
+  )
 
   # Define Active Set
   glmnet_coefs <- as.matrix(coef(cv_lasso,
-                                 s = "lambda.min"))[, 1]
+    s = "lambda.min"
+  ))[, 1]
   AS <- which((glmnet_coefs != 0)[-1]) # Non-zero reg coefficinets
 
   # Perform regular norm draw from Bayesian linear model
   xas <- x[, AS, drop = FALSE]
-  vec <- mice.impute.norm(y = y, ry = ry, x = xas, wy = wy,
-                          ...)
+  vec <- mice.impute.norm(
+    y = y, ry = ry, x = xas, wy = wy,
+    ...
+  )
   vec
 }

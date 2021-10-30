@@ -50,10 +50,12 @@ mice.impute.durr.logreg <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
   dotyobs <- y[ry][s]
 
   # Train imputation model
-  cv_lasso <- glmnet::cv.glmnet(x = dotxobs, y = dotyobs,
-                                family = "binomial",
-                                nfolds = nfolds,
-                                alpha = 1)
+  cv_lasso <- glmnet::cv.glmnet(
+    x = dotxobs, y = dotyobs,
+    family = "binomial",
+    nfolds = nfolds,
+    alpha = 1
+  )
 
   # Obtain imputation
   p <- 1 / (1 + exp(predict(cv_lasso, x[wy, ], s = "lambda.min")))

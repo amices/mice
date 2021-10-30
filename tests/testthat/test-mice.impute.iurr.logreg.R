@@ -11,10 +11,10 @@ y <- rnorm(n)
 x <- y * .3 + rnorm(n, 0, .25)
 x2 <- x + rnorm(n, 2, 3)
 x <- cbind(x, x2)
-y <- as.numeric(cut(y, 2))-1
+y <- as.numeric(cut(y, 2)) - 1
 
 # make missingness
-y[sample(1:n, n*.3)] <- NA
+y[sample(1:n, n * .3)] <- NA
 ry <- !is.na(y)
 wy <- !ry
 
@@ -36,14 +36,14 @@ test_that("Returns dichotomous imputations", {
 set.seed(20211013)
 n <- 1e4
 p <- 3
-b0 = 1
-bs = rep(0, p)
+b0 <- 1
+bs <- rep(0, p)
 x <- cbind(matrix(rnorm(n * p), n, p))
 y <- b0 + x %*% bs + rnorm(n)
-y <- as.numeric(cut(y, 2))-1
+y <- as.numeric(cut(y, 2)) - 1
 
 # Missing values
-y[sample(1:n, n*.3)] <- NA
+y[sample(1:n, n * .3)] <- NA
 ry <- !is.na(y)
 wy <- !ry
 
@@ -65,10 +65,10 @@ b0 <- 1
 bs <- rep(1, p)
 x <- cbind(matrix(rnorm(n * p), n, p))
 y <- b0 + x %*% bs + rnorm(n)
-y <- as.numeric(cut(y, 2))-1
+y <- as.numeric(cut(y, 2)) - 1
 
 # Missing values
-y[sample(1:n, n*.3)] <- NA
+y[sample(1:n, n * .3)] <- NA
 ry <- !is.na(y)
 wy <- !ry
 
@@ -88,23 +88,29 @@ test_that("Works when all predictors are important", {
 n <- 1e2
 p <- 4
 Sigma <- matrix(.7, nrow = p, ncol = p)
-  diag(Sigma) <- 1
+diag(Sigma) <- 1
 X <- as.data.frame(MASS::mvrnorm(n, rep(0, p), Sigma))
 
 # Discretize and impose miss
-for(j in 1:2){
+for (j in 1:2) {
   X[, j] <- cut(X[, j], 2) # Make it discrete
-  X[sample(1:n, n*.3), j] <- NA # Impose missings
+  X[sample(1:n, n * .3), j] <- NA # Impose missings
 }
 
 # Imputations
-iurr_default <- mice(X, m = 2, maxit = 2, method = "iurr.logreg",
-                     print = FALSE)
-iurr_custom <- mice(X, m = 2, maxit = 2, method = "iurr.logreg",
-                    nfolds = 5,
-                    print = FALSE)
-logreg_default <- mice(X, m = 2, maxit = 2, method = "logreg",
-                       print = FALSE)
+iurr_default <- mice(X,
+  m = 2, maxit = 2, method = "iurr.logreg",
+  print = FALSE
+)
+iurr_custom <- mice(X,
+  m = 2, maxit = 2, method = "iurr.logreg",
+  nfolds = 5,
+  print = FALSE
+)
+logreg_default <- mice(X,
+  m = 2, maxit = 2, method = "logreg",
+  print = FALSE
+)
 
 # Tests
 test_that("mice call works", {
@@ -116,8 +122,10 @@ test_that("mice call works w/ custom arguments", {
 })
 
 test_that("same class as logreg default method", {
-  expect_equal(class(complete(logreg_default)[, 1]),
-               class(complete(iurr_default)[, 1]))
+  expect_equal(
+    class(complete(logreg_default)[, 1]),
+    class(complete(iurr_default)[, 1])
+  )
 })
 
 #########################
@@ -129,29 +137,41 @@ set.seed(123)
 n <- 1e2
 p <- 4
 Sigma <- matrix(.7, nrow = p, ncol = p)
-  diag(Sigma) <- 1
+diag(Sigma) <- 1
 x <- MASS::mvrnorm(n, rep(0, p), Sigma)
 
 # Create Perfect Predictor
 y <- factor(x[, 1] < 0, labels = c("y", "n"))
 
 # Missing values
-y[sample(1:n, n*.3)] <- NA
+y[sample(1:n, n * .3)] <- NA
 ry <- !is.na(y)
 wy <- !ry
 
 # Imputation well behaved
 wellBehaved <- tryCatch(
-  expr = { mice.impute.iurr.logreg(y = y, ry = ry, x = x[, -1]) },
-  error = function(e){ e },
-  warning = function(w){ w }
+  expr = {
+    mice.impute.iurr.logreg(y = y, ry = ry, x = x[, -1])
+  },
+  error = function(e) {
+    e
+  },
+  warning = function(w) {
+    w
+  }
 )
 
 # Imputation perfect prediction
 perfectPred <- tryCatch(
-  expr = { mice.impute.iurr.logreg(y = y, ry = ry, x = x) },
-  error = function(e){ e },
-  warning = function(w){ w }
+  expr = {
+    mice.impute.iurr.logreg(y = y, ry = ry, x = x)
+  },
+  error = function(e) {
+    e
+  },
+  warning = function(w) {
+    w
+  }
 )
 
 # Test

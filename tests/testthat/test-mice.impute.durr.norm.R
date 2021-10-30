@@ -13,7 +13,7 @@ x2 <- x + rnorm(n, 2, 3)
 x <- cbind(x, x2)
 
 # make missingness
-y[sample(1:n, n*.3)] <- NA
+y[sample(1:n, n * .3)] <- NA
 ry <- !is.na(y)
 
 # Use univariate imputation model
@@ -30,11 +30,15 @@ test_that("Returns requested length", {
 #########################
 
 boys_cont <- boys[, 1:4]
-durr_default <- mice(boys_cont, m = 2, maxit = 2, method = "durr.norm",
-                     print = FALSE)
-durr_custom <- mice(boys_cont, m = 2, maxit = 2, method = "durr.norm",
-                    nfolds = 5,
-                    print = FALSE)
+durr_default <- mice(boys_cont,
+  m = 2, maxit = 2, method = "durr.norm",
+  print = FALSE
+)
+durr_custom <- mice(boys_cont,
+  m = 2, maxit = 2, method = "durr.norm",
+  nfolds = 5,
+  print = FALSE
+)
 
 test_that("mice call works", {
   expect_equal(class(durr_custom), "mids")

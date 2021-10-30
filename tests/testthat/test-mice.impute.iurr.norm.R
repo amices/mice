@@ -13,7 +13,7 @@ x2 <- x + rnorm(n, 2, 3)
 x <- cbind(x, x2)
 
 # make missingness
-y[sample(1:n, n*.3)] <- NA
+y[sample(1:n, n * .3)] <- NA
 ry <- !is.na(y)
 wy <- !ry
 
@@ -37,7 +37,7 @@ x <- matrix(rnorm(n * p), n, p)
 y <- b0 + x %*% bs + rnorm(n)
 
 # Missing values
-y[sample(1:n, n*.3)] <- NA
+y[sample(1:n, n * .3)] <- NA
 ry <- !is.na(y)
 wy <- !ry
 
@@ -61,7 +61,7 @@ x <- matrix(rnorm(n * p), n, p)
 y <- b0 + x %*% bs + rnorm(n)
 
 # Missing values
-y[sample(1:n, n*.3)] <- NA
+y[sample(1:n, n * .3)] <- NA
 ry <- !is.na(y)
 wy <- !ry
 
@@ -78,11 +78,15 @@ test_that("Returns requested length when all predictors are important", {
 #########################
 
 boys_cont <- boys[, 1:4]
-iurr_default <- mice(boys_cont, m = 2, maxit = 2, method = "iurr.norm",
-                     print = FALSE)
-iurr_custom <- mice(boys_cont, m = 2, maxit = 2, method = "iurr.norm",
-                    nfolds = 5,
-                    print = FALSE)
+iurr_default <- mice(boys_cont,
+  m = 2, maxit = 2, method = "iurr.norm",
+  print = FALSE
+)
+iurr_custom <- mice(boys_cont,
+  m = 2, maxit = 2, method = "iurr.norm",
+  nfolds = 5,
+  print = FALSE
+)
 
 test_that("mice call works", {
   expect_equal(class(iurr_custom), "mids")

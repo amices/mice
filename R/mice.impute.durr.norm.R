@@ -50,13 +50,15 @@ mice.impute.durr.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
   dotyobs <- y[ry][s]
 
   # Train imputation model
-  cv_lasso <- glmnet::cv.glmnet(x = dotxobs, y = dotyobs,
-                                family = "gaussian",
-                                nfolds = nfolds,
-                                alpha = 1)
+  cv_lasso <- glmnet::cv.glmnet(
+    x = dotxobs, y = dotyobs,
+    family = "gaussian",
+    nfolds = nfolds,
+    alpha = 1
+  )
 
   # Obtain imputations
-  s2hat   <- mean((predict(cv_lasso, dotxobs, s = "lambda.min") - dotyobs)^2)
+  s2hat <- mean((predict(cv_lasso, dotxobs, s = "lambda.min") - dotyobs)^2)
   as.vector(predict(cv_lasso, x[wy, ], s = "lambda.min")) +
     rnorm(sum(wy), 0, sqrt(s2hat))
 }
