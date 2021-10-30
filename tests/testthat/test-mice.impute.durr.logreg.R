@@ -45,10 +45,13 @@ for(j in 1:2){
 }
 
 # Imputations
-durr_default <- mice(X, m = 2, maxit = 2, method = "durr.logreg", eps = 0)
+durr_default <- mice(X, m = 2, maxit = 2, method = "durr.logreg", eps = 0,
+                     print = FALSE)
 durr_custom <- mice(X, m = 2, maxit = 2, method = "durr.logreg", eps = 0,
-                    nfolds = 5)
-logreg_default <- mice(X, m = 2, maxit = 2, method = "logreg")
+                    nfolds = 5,
+                    print = FALSE)
+logreg_default <- mice(X, m = 2, maxit = 2, method = "logreg",
+                       print = FALSE)
 
 # Tests
 test_that("mice call works", {

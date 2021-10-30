@@ -78,9 +78,11 @@ test_that("Returns requested length when all predictors are important", {
 #########################
 
 boys_cont <- boys[, 1:4]
-iurr_default <- mice(boys_cont, m = 2, maxit = 2, method = "iurr.norm", eps = 0)
+iurr_default <- mice(boys_cont, m = 2, maxit = 2, method = "iurr.norm", eps = 0,
+                     print = FALSE)
 iurr_custom <- mice(boys_cont, m = 2, maxit = 2, method = "iurr.norm", eps = 0,
-                    nfolds = 5)
+                    nfolds = 5,
+                    print = FALSE)
 
 test_that("mice call works", {
   expect_equal(class(iurr_custom), "mids")

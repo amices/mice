@@ -30,9 +30,11 @@ test_that("Returns requested length", {
 #########################
 
 boys_cont <- boys[, 1:4]
-durr_default <- mice(boys_cont, m = 2, maxit = 2, method = "durr.norm", eps = 0)
+durr_default <- mice(boys_cont, m = 2, maxit = 2, method = "durr.norm", eps = 0,
+                     print = FALSE)
 durr_custom <- mice(boys_cont, m = 2, maxit = 2, method = "durr.norm", eps = 0,
-                    nfolds = 5)
+                    nfolds = 5,
+                    print = FALSE)
 
 test_that("mice call works", {
   expect_equal(class(durr_custom), "mids")
