@@ -34,10 +34,19 @@ Vector with imputed data, same type as \code{y}, and of length
 Imputes univariate missing data using lasso 2-step linear regression
 }
 \details{
-Uses lasso penalty to identify an active set, then samples imputation model
-parameter values and uses them to define a posterior predictive distirbution
-to sample imputations.
-
+The method consists of the following steps:
+\enumerate{
+\item For a given \code{y} variable under imputation, fit a linear regression with lasso
+penalty using \code{y[ry]} as dependent variable and \code{x[ry, ]} as predictors.
+Coefficients that are not shrunk to 0 define an active set of predictors
+that will be used for imputation
+\item Define a Bayesian linear model using \code{y[ry]} as the
+dependent variable, the active set of \code{x[ry, ]} as predictors, and standard
+non-informative priors
+\item Draw parameter values for the intercept, regression weights, and error
+variance from their posterior distribution
+\item Draw imputations from the posterior predictive distribution
+}
 The user can specify a \code{predictMatrix} in the \code{mice} call
 to define which predictors are provided to this univariate imputation method.
 The lasso regularization will select, among the variables indicated by

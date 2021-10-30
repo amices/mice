@@ -9,10 +9,17 @@
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #' \code{sum(wy)}
 #' @details
-#' Uses lasso penalty to identify an active set, then samples imputation model
-#' parameter values and uses them to define a posterior predictive distirbution
-#' to sample imputations from.
-#'
+#' The method consists of the following steps:
+#' \enumerate{
+#' \item For a given \code{y} variable under imputation, fit a linear regression with lasso
+#' penalty using \code{y[ry]} as dependent variable and \code{x[ry, ]} as predictors.
+#' The coefficients that are not shrunk to 0 define the active set of predictors
+#' that will be used for imputation.
+#' \item Fit a logit with the active set of predictors, and find (bhat, V(bhat))
+#' \item Draw BETA from N(bhat, V(bhat))
+#' \item Compute predicted scores for m.d., i.e. logit-1(X BETA)
+#' \item Compare the score to a random (0,1) deviate, and impute.
+#' }
 #' The user can specify a \code{predictMatrix} in the \code{mice} call
 #' to define which predictors are provided to this univariate imputation method.
 #' The lasso regularization will select, among the variables indicated by

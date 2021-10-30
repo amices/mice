@@ -9,9 +9,20 @@
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #' \code{sum(wy)}
 #' @details
-#' Draws a bootstrap sample from \code{x} and \code{y}, trains a
-#' penalised lasso regression by \code{nfolds} cross-validation, and imputes
-#' with normal residuals.
+#' The method consists of the following steps:
+#' \enumerate{
+#' \item For a given y variable under imputation, draw a bootstrap version y*
+#' with replacement from the observed cases \code{y[ry]}, and stores in x* the
+#' corresponding values from \code{x[ry, ]}.
+#' \item Fit a regularised (lasso) linear regression with y* as the outcome,
+#' and x* as predictors.
+#' A vector of regression coefficients bhat is obtained.
+#' All of these coefficients are considered random draws from the imputation model
+#' parameters posterior distribution.
+#' Same of these coefficients will be shrunken to 0.
+#' \item Draw the imputed values from the predictive distribution defined by
+#' the original (non-bootstrap) data, bhat, and estimated error variance.
+#' }
 #' The method is based on the Direct Use of Regularized Regression proposed by
 #' Zhao & Long (2016) and Deng et al (2016).
 #' @author Edoardo Costantini, 2021

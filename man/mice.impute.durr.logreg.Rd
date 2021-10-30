@@ -34,9 +34,20 @@ Vector with imputed data, same type as \code{y}, and of length
 Imputes univariate missing data using lasso logistic regression with bootstrap
 }
 \details{
-Draws a bootstrap sample from \code{x} and \code{y}, trains a
-penalised lasso logistic regression by \code{nfolds} cross-validation,
-and imputes based on the logistic function.
+The method consists of the following steps:
+\enumerate{
+\item For a given y variable under imputation, draw a bootstrap version y*
+with replacement from the observed cases \code{y[ry]}, and stores in x* the
+corresponding values from \code{x[ry, ]}.
+\item Fit a regularised (lasso) logistic regression with y* as the outcome,
+and x* as predictors.
+A vector of regression coefficients bhat is obtained.
+All of these coefficients are considered random draws from the imputation model
+parameters posterior distribution.
+Same of these coefficients will be shrunken to 0.
+\item Compute predicted scores for m.d., i.e. logit-1(X bhat)
+\item Compare the score to a random (0,1) deviate, and impute.
+}
 The method is based on the Direct Use of Regularized Regression proposed by
 Zhao & Long (2016) and Deng et al (2016).
 }
