@@ -1,4 +1,4 @@
-context("mice.impute.iurr.logreg")
+context("mice.impute.lasso.select.logreg")
 
 #########################
 # TEST 1: Simple problem #
@@ -20,7 +20,7 @@ wy <- !ry
 
 # Use univariate imputation model
 set.seed(123)
-imps_t1 <- mice.impute.iurr.logreg(y, ry, x)
+imps_t1 <- mice.impute.lasso.select.logreg(y, ry, x)
 
 test_that("Returns requested length", {
   expect_equal(length(imps_t1), sum(!ry))
@@ -49,7 +49,7 @@ wy <- !ry
 
 # Use univariate imputation model
 set.seed(123)
-imps_t2 <- mice.impute.iurr.logreg(y, ry, x)
+imps_t2 <- mice.impute.lasso.select.logreg(y, ry, x)
 
 test_that("Returns dichotomous imputations", {
   expect_equal(length(unique(imps_t2)), 2)
@@ -74,7 +74,7 @@ wy <- !ry
 
 # Use univariate imputation model
 set.seed(123)
-imps_t3 <- mice.impute.iurr.logreg(y, ry, x)
+imps_t3 <- mice.impute.lasso.select.logreg(y, ry, x)
 
 test_that("Works when all predictors are important", {
   expect_equal(length(unique(imps_t3)), 2)
@@ -99,11 +99,11 @@ for (j in 1:2) {
 
 # Imputations
 iurr_default <- mice(X,
-  m = 2, maxit = 2, method = "iurr.logreg",
+  m = 2, maxit = 2, method = "lasso.select.logreg",
   print = FALSE
 )
 iurr_custom <- mice(X,
-  m = 2, maxit = 2, method = "iurr.logreg",
+  m = 2, maxit = 2, method = "lasso.select.logreg",
   nfolds = 5,
   print = FALSE
 )
@@ -151,7 +151,7 @@ wy <- !ry
 # Imputation well behaved
 wellBehaved <- tryCatch(
   expr = {
-    mice.impute.iurr.logreg(y = y, ry = ry, x = x[, -1])
+    mice.impute.lasso.select.logreg(y = y, ry = ry, x = x[, -1])
   },
   error = function(e) {
     e
@@ -164,7 +164,7 @@ wellBehaved <- tryCatch(
 # Imputation perfect prediction
 perfectPred <- tryCatch(
   expr = {
-    mice.impute.iurr.logreg(y = y, ry = ry, x = x)
+    mice.impute.lasso.select.logreg(y = y, ry = ry, x = x)
   },
   error = function(e) {
     e

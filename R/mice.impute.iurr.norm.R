@@ -1,8 +1,9 @@
-#' Imputation by Indirect Use of (lasso) Regularised (linear) Regression (IURR)
+#' Imputation by indirect use of lasso linear regression
 #'
-#' Imputes univariate missing data using lasso 2-step linear regression
+#' Imputes univariate missing data using Bayesian linear regression following a
+#' preprocessing lasso variable selection step.
 #'
-#' @aliases mice.impute.iurr.norm iurr.norm
+#' @aliases mice.impute.lasso.select.norm lasso.select.norm
 #' @inheritParams mice.impute.pmm
 #' @param nfolds The number of folds for the cross-validation of the lasso penalty.
 #' The default is 10.
@@ -32,7 +33,7 @@
 #' as this decision is ultimately made by the lasso variable selection
 #' procedure.
 #'
-#' The method is based on the Iirect Use of Regularized Regression proposed by
+#' The method is based on the Indirect Use of Regularized Regression (IURR) proposed by
 #' Zhao & Long (2016) and Deng et al (2016).
 #' @author Edoardo Costantini, 2021
 #' @references
@@ -48,7 +49,7 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
-mice.impute.iurr.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
+mice.impute.lasso.select.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
   install.on.demand("glmnet", ...)
 
   # Body

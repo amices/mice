@@ -1,4 +1,4 @@
-context("mice.impute.iurr.norm")
+context("mice.impute.lasso.select.norm")
 
 #########################
 # TEST 1: Simple problem #
@@ -19,7 +19,7 @@ wy <- !ry
 
 # Use univariate imputation model
 set.seed(123)
-imps_t1 <- mice.impute.iurr.norm(y, ry, x)
+imps_t1 <- mice.impute.lasso.select.norm(y, ry, x)
 
 test_that("Returns requested length", {
   expect_equal(length(imps_t1), sum(!ry))
@@ -43,7 +43,7 @@ wy <- !ry
 
 # Use univariate imputation model
 set.seed(123)
-imps_t2 <- mice.impute.iurr.norm(y, ry, x)
+imps_t2 <- mice.impute.lasso.select.norm(y, ry, x)
 
 test_that("Returns requested length w/ intercept only model", {
   expect_equal(length(imps_t2), sum(!ry))
@@ -67,7 +67,7 @@ wy <- !ry
 
 # Use univariate imputation model
 set.seed(123)
-imps_t3 <- mice.impute.iurr.norm(y, ry, x)
+imps_t3 <- mice.impute.lasso.select.norm(y, ry, x)
 
 test_that("Returns requested length when all predictors are important", {
   expect_equal(length(imps_t3), sum(!ry))
@@ -79,11 +79,11 @@ test_that("Returns requested length when all predictors are important", {
 
 boys_cont <- boys[, 1:4]
 iurr_default <- mice(boys_cont,
-  m = 2, maxit = 2, method = "iurr.norm",
+  m = 2, maxit = 2, method = "lasso.select.norm",
   print = FALSE
 )
 iurr_custom <- mice(boys_cont,
-  m = 2, maxit = 2, method = "iurr.norm",
+  m = 2, maxit = 2, method = "lasso.select.norm",
   nfolds = 5,
   print = FALSE
 )

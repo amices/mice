@@ -1,8 +1,8 @@
-#' Imputation by Direct Use of (lasso) Regularised (linear) Regression (DURR)
+#' Imputation by direct use of lasso linear regression
 #'
-#' Imputes univariate missing data using lasso linear regression with bootstrap
+#' Imputes univariate missing normal data using lasso linear regression with bootstrap.
 #'
-#' @aliases mice.impute.durr.norm durr.norm
+#' @aliases mice.impute.lasso.norm lasso.norm
 #' @inheritParams mice.impute.norm.boot
 #' @param nfolds The number of folds for the cross-validation of the lasso penalty.
 #' The default is 10.
@@ -23,7 +23,7 @@
 #' \item Draw the imputed values from the predictive distribution defined by
 #' the original (non-bootstrap) data, bhat, and estimated error variance.
 #' }
-#' The method is based on the Direct Use of Regularized Regression proposed by
+#' The method is based on the Direct Use of Regularized Regression (DURR) proposed by
 #' Zhao & Long (2016) and Deng et al (2016).
 #' @author Edoardo Costantini, 2021
 #' @references
@@ -39,7 +39,7 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
-mice.impute.durr.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
+mice.impute.lasso.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
   install.on.demand("glmnet", ...)
 
   # Bootstrap sample

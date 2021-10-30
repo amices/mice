@@ -1,4 +1,4 @@
-context("mice.impute.durr.norm")
+context("mice.impute.lasso.norm")
 
 #########################
 # TEST 1: Simple problem #
@@ -18,7 +18,7 @@ ry <- !is.na(y)
 
 # Use univariate imputation model
 set.seed(123)
-imps <- mice.impute.durr.norm(y, ry, x)
+imps <- mice.impute.lasso.norm(y, ry, x)
 
 test_that("Returns requested length", {
   expect_equal(length(imps), sum(!ry))
@@ -31,11 +31,11 @@ test_that("Returns requested length", {
 
 boys_cont <- boys[, 1:4]
 durr_default <- mice(boys_cont,
-  m = 2, maxit = 2, method = "durr.norm",
+  m = 2, maxit = 2, method = "lasso.norm",
   print = FALSE
 )
 durr_custom <- mice(boys_cont,
-  m = 2, maxit = 2, method = "durr.norm",
+  m = 2, maxit = 2, method = "lasso.norm",
   nfolds = 5,
   print = FALSE
 )

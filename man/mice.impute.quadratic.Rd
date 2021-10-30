@@ -100,10 +100,10 @@ Vink, G., van Buuren, S. (2013). Multiple Imputation of Squared Terms.
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},
-\code{\link{mice.impute.durr.logreg}()},
-\code{\link{mice.impute.durr.norm}()},
-\code{\link{mice.impute.iurr.logreg}()},
-\code{\link{mice.impute.iurr.norm}()},
+\code{\link{mice.impute.lasso.logreg}()},
+\code{\link{mice.impute.lasso.norm}()},
+\code{\link{mice.impute.lasso.select.logreg}()},
+\code{\link{mice.impute.lasso.select.norm}()},
 \code{\link{mice.impute.lda}()},
 \code{\link{mice.impute.logreg.boot}()},
 \code{\link{mice.impute.logreg}()},

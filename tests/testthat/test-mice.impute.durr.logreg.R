@@ -1,4 +1,4 @@
-context("mice.impute.durr.norm")
+context("mice.impute.lasso.norm")
 
 #########################
 # TEST 1: Simple problem #
@@ -20,7 +20,7 @@ wy <- !ry
 
 # Use univariate imputation model
 set.seed(123)
-imps <- mice.impute.durr.logreg(y, ry, x)
+imps <- mice.impute.lasso.logreg(y, ry, x)
 
 test_that("Returns a matrix of dimensionality sum(wy) x 1", {
   expect_equal(class(imps), c("matrix", "array"))
@@ -46,11 +46,11 @@ for (j in 1:2) {
 
 # Imputations
 durr_default <- mice(X,
-  m = 2, maxit = 2, method = "durr.logreg",
+  m = 2, maxit = 2, method = "lasso.logreg",
   print = FALSE
 )
 durr_custom <- mice(X,
-  m = 2, maxit = 2, method = "durr.logreg",
+  m = 2, maxit = 2, method = "lasso.logreg",
   nfolds = 5,
   print = FALSE
 )
@@ -98,7 +98,7 @@ wy <- !ry
 # Imputation well behaved
 wellBehaved <- tryCatch(
   expr = {
-    mice.impute.durr.logreg(y = y, ry = ry, x = x[, -1])
+    mice.impute.lasso.logreg(y = y, ry = ry, x = x[, -1])
   },
   error = function(e) {
     e
@@ -111,7 +111,7 @@ wellBehaved <- tryCatch(
 # Imputation perfect prediction
 perfectPred <- tryCatch(
   expr = {
-    mice.impute.durr.logreg(y = y, ry = ry, x = x)
+    mice.impute.lasso.logreg(y = y, ry = ry, x = x)
   },
   error = function(e) {
     e

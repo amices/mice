@@ -1,8 +1,9 @@
-#' Imputation by Indirect Use of (lasso) Regularised (logistic) Regression (IURR)
+#' Imputation by indirect use of lasso logistic regression
 #'
-#' Imputes univariate missing data using lasso 2-step logistic regression
+#' Imputes univariate missing data using logistic regression following a
+#' preprocessing lasso variable selection step.
 #'
-#' @aliases mice.impute.iurr.logreg iurr.logreg
+#' @aliases mice.impute.lasso.select.logreg lasso.select.logreg
 #' @inheritParams mice.impute.pmm
 #' @param nfolds The number of folds for the cross-validation of the lasso penalty.
 #' The default is 10.
@@ -30,8 +31,8 @@
 #' as this decision is ultimately made by the lasso variable selection
 #' procedure.
 #'
-#' This function implements the MICE-IURR for Bernoulli data univariate imputation
-#' method presented by Deng Et Al (2016).
+#' The method is based on the Indirect Use of Regularized Regression (IURR) proposed by
+#' Zhao & Long (2016) and Deng et al (2016).
 #' @author Edoardo Costantini, 2021
 #' @references
 #'
@@ -46,7 +47,7 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
-mice.impute.iurr.logreg <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
+mice.impute.lasso.select.logreg <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
   install.on.demand("glmnet", ...)
 
   # Body

@@ -1,8 +1,8 @@
-#' Imputation by Direct Use of (lasso) Regularised (logistic) Regression (DURR)
+#' Imputation by direct use of lasso logistic regression
 #'
-#' Imputes univariate missing data using lasso logistic regression with bootstrap
+#' Imputes univariate missing binary data using lasso logistic regression with bootstrap.
 #'
-#' @aliases mice.impute.durr.logreg durr.logreg
+#' @aliases mice.impute.lasso.logreg lasso.logreg
 #' @inheritParams mice.impute.pmm
 #' @param nfolds The number of folds for the cross-validation of the lasso penalty.
 #' The default is 10.
@@ -23,7 +23,7 @@
 #' \item Compute predicted scores for m.d., i.e. logit-1(X bhat)
 #' \item Compare the score to a random (0,1) deviate, and impute.
 #' }
-#' The method is based on the Direct Use of Regularized Regression proposed by
+#' The method is based on the Direct Use of Regularized Regression (DURR) proposed by
 #' Zhao & Long (2016) and Deng et al (2016).
 #' @author Edoardo Costantini, 2021
 #' @references
@@ -39,7 +39,7 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
-mice.impute.durr.logreg <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
+mice.impute.lasso.logreg <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
   install.on.demand("glmnet", ...)
   if (is.null(wy)) wy <- !ry
 
