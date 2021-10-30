@@ -98,9 +98,9 @@ for(j in 1:2){
 }
 
 # Imputations
-iurr_default <- mice(X, m = 2, maxit = 2, method = "iurr.logreg", eps = 0,
+iurr_default <- mice(X, m = 2, maxit = 2, method = "iurr.logreg",
                      print = FALSE)
-iurr_custom <- mice(X, m = 2, maxit = 2, method = "iurr.logreg", eps = 0,
+iurr_custom <- mice(X, m = 2, maxit = 2, method = "iurr.logreg",
                     nfolds = 5,
                     print = FALSE)
 logreg_default <- mice(X, m = 2, maxit = 2, method = "logreg",

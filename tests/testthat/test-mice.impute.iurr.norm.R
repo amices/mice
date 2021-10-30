@@ -78,9 +78,9 @@ test_that("Returns requested length when all predictors are important", {
 #########################
 
 boys_cont <- boys[, 1:4]
-iurr_default <- mice(boys_cont, m = 2, maxit = 2, method = "iurr.norm", eps = 0,
+iurr_default <- mice(boys_cont, m = 2, maxit = 2, method = "iurr.norm",
                      print = FALSE)
-iurr_custom <- mice(boys_cont, m = 2, maxit = 2, method = "iurr.norm", eps = 0,
+iurr_custom <- mice(boys_cont, m = 2, maxit = 2, method = "iurr.norm",
                     nfolds = 5,
                     print = FALSE)
 
