@@ -46,7 +46,7 @@ that will be used for imputation.
 \item Compute predicted scores for m.d., i.e. logit-1(X BETA)
 \item Compare the score to a random (0,1) deviate, and impute.
 }
-The user can specify a \code{predictMatrix} in the \code{mice} call
+The user can specify a \code{predictorMatrix} in the \code{mice} call
 to define which predictors are provided to this univariate imputation method.
 The lasso regularization will select, among the variables indicated by
 the user, the ones that are important for imputation at any given iteration.
