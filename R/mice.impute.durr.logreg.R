@@ -58,7 +58,7 @@ mice.impute.lasso.logreg <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
   )
 
   # Obtain imputation
-  p <- 1 / (1 + exp(predict(cv_lasso, x[wy, ], s = "lambda.min")))
+  p <- 1 / (1 + exp(-predict(cv_lasso, x[wy, ], s = "lambda.min")))
   vec <- (runif(nrow(p)) <= p)
   vec[vec] <- 1
   if (is.factor(y)) {
