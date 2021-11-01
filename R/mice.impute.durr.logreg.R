@@ -46,7 +46,8 @@ mice.impute.lasso.logreg <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
   # Bootstrap sample
   n1 <- sum(ry)
   s <- sample(n1, n1, replace = TRUE)
-  dotxobs <- x[ry, , drop = FALSE][s, ]
+  x_glmnet <- cbind(1, x)
+  dotxobs <- x_glmnet[ry, , drop = FALSE][s, , drop = FALSE]
   dotyobs <- y[ry][s]
 
   # Train imputation model
@@ -58,7 +59,7 @@ mice.impute.lasso.logreg <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
   )
 
   # Obtain imputation
-  p <- 1 / (1 + exp(-predict(cv_lasso, x[wy, ], s = "lambda.min")))
+  p <- 1 / (1 + exp(-predict(cv_lasso, x_glmnet[wy, ], s = "lambda.min")))
   vec <- (runif(nrow(p)) <= p)
   vec[vec] <- 1
   if (is.factor(y)) {

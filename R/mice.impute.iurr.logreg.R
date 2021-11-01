@@ -52,7 +52,8 @@ mice.impute.lasso.select.logreg <- function(y, ry, x, wy = NULL, nfolds = 10, ..
 
   # Body
   if (is.null(wy)) wy <- !ry
-  xobs <- x[ry, ]
+  x_glmnet <- cbind(1, x)
+  xobs <- x_glmnet[ry, , drop = FALSE]
   xmis <- x[wy, ]
   yobs <- y[ry]
 
@@ -72,7 +73,7 @@ mice.impute.lasso.select.logreg <- function(y, ry, x, wy = NULL, nfolds = 10, ..
   AS <- which((glmnet_coefs != 0)[-1]) # Non-zero reg coefficinets
 
   # Perform regular logreg draw
-  xas <- x[, AS, drop = FALSE]
+  xas <- x_glmnet[, AS, drop = FALSE]
   vec <- mice.impute.logreg(
     y = y, ry = ry, x = xas, wy = wy,
     ...

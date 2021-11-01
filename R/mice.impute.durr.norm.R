@@ -46,7 +46,8 @@ mice.impute.lasso.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
   if (is.null(wy)) wy <- !ry
   n1 <- sum(ry)
   s <- sample(n1, n1, replace = TRUE)
-  dotxobs <- x[ry, , drop = FALSE][s, ]
+  x_glmnet <- cbind(1, x)
+  dotxobs <- x_glmnet[ry, , drop = FALSE][s, , drop = FALSE]
   dotyobs <- y[ry][s]
 
   # Train imputation model
@@ -59,6 +60,6 @@ mice.impute.lasso.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
 
   # Obtain imputations
   s2hat <- mean((predict(cv_lasso, dotxobs, s = "lambda.min") - dotyobs)^2)
-  as.vector(predict(cv_lasso, x[wy, ], s = "lambda.min")) +
+  as.vector(predict(cv_lasso, x_glmnet[wy, ], s = "lambda.min")) +
     rnorm(sum(wy), 0, sqrt(s2hat))
 }
