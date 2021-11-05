@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.16</span>
       </span>
     </div>
 
@@ -150,6 +150,7 @@
 <span class="co">#&gt;   1   2  bmi  hyp  chl</span>
 <span class="co">#&gt;   2   1  bmi  hyp  chl</span>
 <span class="co">#&gt;   2   2  bmi  hyp  chl</span>
+
 <span class="co"># inspect quality of imputations</span>
 <span class="fu"><a href="reference/stripplot.mids.html">stripplot</a></span><span class="op">(</span><span class="va">imp</span>, <span class="va">chl</span>, pch <span class="op">=</span> <span class="fl">19</span>, xlab <span class="op">=</span> <span class="st">"Imputation number"</span><span class="op">)</span></code></pre></div>
 <p><img src="README-stripplot-1.png" alt="Distribution of chl per imputed data set."></p>
@@ -160,10 +161,10 @@
 
 <span class="co"># pool and summarize the results</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="reference/pool.html">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;          term estimate std.error statistic    df p.value</span>
-<span class="co">#&gt; 1 (Intercept)     9.08     73.09     0.124  4.50  0.9065</span>
-<span class="co">#&gt; 2         age    35.23     17.46     2.017  1.36  0.2377</span>
-<span class="co">#&gt; 3         bmi     4.69      1.94     2.417 15.25  0.0286</span></code></pre></div>
+<span class="co">#&gt;          term estimate std.error statistic   df p.value</span>
+<span class="co">#&gt; 1 (Intercept)   -49.30    101.37    -0.486 1.82  0.6789</span>
+<span class="co">#&gt; 2         age    38.28     11.37     3.367 5.45  0.0175</span>
+<span class="co">#&gt; 3         bmi     6.54      3.08     2.124 2.14  0.1591</span></code></pre></div>
 <p>The complete-data is fit to each imputed dataset, and the results are combined to arrive at estimates that properly account for the missing data.</p>
 </div>
 <div id="mice-30" class="section level2">
@@ -281,7 +282,7 @@
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/package=mice"><img src="https://www.r-pkg.org/badges/version/mice" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://cran.r-project.org/package=mice"><img src="https://cranlogs.r-pkg.org/badges/mice"></a></li>
-<li><a href="https://amices.github.io/mice/"><img src="https://img.shields.io/badge/github%20version-3.13.15-orange.svg"></a></li>
+<li><a href="https://amices.github.io/mice/"><img src="https://img.shields.io/badge/github%20version-3.13.16-orange.svg"></a></li>
 </ul>
 </div>
 </div>

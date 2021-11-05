@@ -1,3 +1,7 @@
+# mice 3.13.16
+
+* Repairs an error in the `mice:::barnard.rubin()` function for infinite `dfcom`. Thanks @huftis (#441).
+
 # mice 3.13.15
 
 * Adds two new functions `pool.syn()` and `pool.scalar.syn()` that specialise pooling estimates from synthetic data. The `"reiter2003"` pooling rule assumes that synthetic data were created from complete data. Thanks Thom Volker (#436).

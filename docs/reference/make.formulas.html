@@ -81,7 +81,7 @@ the predictors by means of the standard ~ operator." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.16</span>
       </span>
     </div>
 
@@ -185,24 +185,24 @@ the rows. The default assigns each variable in its own block.</p></td>
 <span class='va'>f1</span>
 </div><div class='output co'>#&gt; $age
 #&gt; age ~ bmi + hyp + chl
-#&gt; &lt;environment: 0x7f851c2b06f0&gt;
+#&gt; &lt;environment: 0x7fc9dbaa0b00&gt;
 #&gt; 
 #&gt; $bmi
 #&gt; bmi ~ age + hyp + chl
-#&gt; &lt;environment: 0x7f851c2b06f0&gt;
+#&gt; &lt;environment: 0x7fc9dbaa0b00&gt;
 #&gt; 
 #&gt; $hyp
 #&gt; hyp ~ age + bmi + chl
-#&gt; &lt;environment: 0x7f851c2b06f0&gt;
+#&gt; &lt;environment: 0x7fc9dbaa0b00&gt;
 #&gt; 
 #&gt; $chl
 #&gt; chl ~ age + bmi + hyp
-#&gt; &lt;environment: 0x7f851c2b06f0&gt;
+#&gt; &lt;environment: 0x7fc9dbaa0b00&gt;
 #&gt; </div><div class='input'><span class='va'>f2</span> <span class='op'>&lt;-</span> <span class='fu'>make.formulas</span><span class='op'>(</span><span class='va'>nhanes</span>, blocks <span class='op'>=</span> <span class='fu'><a href='make.blocks.html'>make.blocks</a></span><span class='op'>(</span><span class='va'>nhanes</span>, <span class='st'>"collect"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>f2</span>
 </div><div class='output co'>#&gt; $collect
 #&gt; age + bmi + hyp + chl ~ 0
-#&gt; &lt;environment: 0x7f851c19c840&gt;
+#&gt; &lt;environment: 0x7fc9d9a2eae8&gt;
 #&gt; </div><div class='input'>
 <span class='co'># for editing, it may be easier to work with the character vector</span>
 <span class='va'>c1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>f1</span><span class='op'>)</span>
@@ -214,19 +214,19 @@ the rows. The default assigns each variable in its own block.</p></td>
 <span class='va'>f3</span>
 </div><div class='output co'>#&gt; $age
 #&gt; age ~ bmi + hyp + chl
-#&gt; &lt;environment: 0x7f851afd1e20&gt;
+#&gt; &lt;environment: 0x7fc9d97c6150&gt;
 #&gt; 
 #&gt; $bmi
 #&gt; bmi ~ age + hyp + chl
-#&gt; &lt;environment: 0x7f851afd1e20&gt;
+#&gt; &lt;environment: 0x7fc9d97c6150&gt;
 #&gt; 
 #&gt; $hyp
 #&gt; hyp ~ age + bmi + chl
-#&gt; &lt;environment: 0x7f851afd1e20&gt;
+#&gt; &lt;environment: 0x7fc9d97c6150&gt;
 #&gt; 
 #&gt; $chl
 #&gt; chl ~ age + bmi + hyp
-#&gt; &lt;environment: 0x7f851afd1e20&gt;
+#&gt; &lt;environment: 0x7fc9d97c6150&gt;
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

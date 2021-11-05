@@ -2,9 +2,9 @@
 
 # mice <a href='https://amices.github.io/mice/'><img src='MICE_sticker_SMALL.png' align="right" height="139" /></a>
 
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
 [![](https://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice)
-[![](https://img.shields.io/badge/github%20version-3.13.15-orange.svg)](https://amices.github.io/mice/)
+[![](https://img.shields.io/badge/github%20version-3.13.16-orange.svg)](https://amices.github.io/mice/)
 
 ## [Multivariate Imputation by Chained Equations](https://amices.github.io/mice/)
 
@@ -66,6 +66,7 @@ imp <- mice(nhanes, maxit = 2, m = 2, seed = 1)
 #>   1   2  bmi  hyp  chl
 #>   2   1  bmi  hyp  chl
 #>   2   2  bmi  hyp  chl
+
 # inspect quality of imputations
 stripplot(imp, chl, pch = 19, xlab = "Imputation number")
 ```
@@ -81,10 +82,10 @@ fit <- with(imp, lm(chl ~ age + bmi))
 
 # pool and summarize the results
 summary(pool(fit))
-#>          term estimate std.error statistic    df p.value
-#> 1 (Intercept)     9.08     73.09     0.124  4.50  0.9065
-#> 2         age    35.23     17.46     2.017  1.36  0.2377
-#> 3         bmi     4.69      1.94     2.417 15.25  0.0286
+#>          term estimate std.error statistic   df p.value
+#> 1 (Intercept)   -49.30    101.37    -0.486 1.82  0.6789
+#> 2         age    38.28     11.37     3.367 5.45  0.0175
+#> 3         bmi     6.54      3.08     2.124 2.14  0.1591
 ```
 
 The complete-data is fit to each imputed dataset, and the results are
