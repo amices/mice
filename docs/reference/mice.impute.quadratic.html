@@ -79,7 +79,7 @@ main effect and quadratic effect in the complete-data model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.16</span>
       </span>
     </div>
 
@@ -149,7 +149,7 @@ main effect and quadratic effect in the complete-data model." />
 main effect and quadratic effect in the complete-data model.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mice.impute.quadratic</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, wy <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>mice.impute.quadratic</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, wy <span class='op'>=</span> <span class='cn'>NULL</span>, quad.outcome <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,6 +174,12 @@ model is fitted. The <code>ry</code> generally distinguishes the observed
       <th>wy</th>
       <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value
 indicates locations in <code>y</code> for which imputations are created.</p></td>
+    </tr>
+    <tr>
+      <th>quad.outcome</th>
+      <td><p>The name of the outcome in the quadratic analysis as a 
+character string. For example, if the substantive model of interest is 
+<code>y ~ x + xx</code>, then <code>"y"</code> would be the <code>quad.outcome</code></p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -237,7 +243,7 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <code><a href='mice.impute.ri.html'>mice.impute.ri</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Gerko Vink (University of Utrecht), <a href='mailto:g.vink@uu.nl'>g.vink@uu.nl</a></p>
+    <p>Mingyang Cai and Gerko Vink</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='http://lattice.r-forge.r-project.org/'>lattice</a></span><span class='op'>)</span>
@@ -261,7 +267,7 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <span class='va'>pred</span><span class='op'>[</span>, <span class='st'>"xx"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
 
 <span class='co'># Impute data</span>
-<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>dat</span>, meth <span class='op'>=</span> <span class='va'>meth</span>, pred <span class='op'>=</span> <span class='va'>pred</span><span class='op'>)</span>
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>dat</span>, meth <span class='op'>=</span> <span class='va'>meth</span>, pred <span class='op'>=</span> <span class='va'>pred</span>, quad.outcome <span class='op'>=</span> <span class='st'>"y"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  x  xx
@@ -293,13 +299,13 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <span class='fu'><a href='pool.html'>pool</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>xx</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Class: mipo    m = 5 
 #&gt;          term m    estimate         ubar            b            t dfcom
-#&gt; 1 (Intercept) 5 -0.05601439 0.0017416853 1.282091e-04 0.0018955363   997
-#&gt; 2           x 5  0.44710524 0.0010866872 7.756583e-05 0.0011797662   997
-#&gt; 3          xx 5  0.52453983 0.0006169592 7.281374e-05 0.0007043356   997
-#&gt;         df        riv     lambda        fmi
-#&gt; 1 364.8662 0.08833452 0.08116486 0.08616034
-#&gt; 2 377.7501 0.08565390 0.07889614 0.08373450
-#&gt; 3 200.2092 0.14162442 0.12405518 0.13267630</div><div class='input'>
+#&gt; 1 (Intercept) 5 -0.05304664 0.0017547291 2.438149e-04 0.0020473070   997
+#&gt; 2           x 5  0.44435765 0.0010903497 2.796007e-04 0.0014258706   997
+#&gt; 3          xx 5  0.52371832 0.0006205929 7.572287e-05 0.0007114604   997
+#&gt;          df       riv    lambda       fmi
+#&gt; 1 159.27848 0.1667368 0.1429086 0.1534719
+#&gt; 2  65.97647 0.3077185 0.2353095 0.2574820
+#&gt; 3 191.19549 0.1464204 0.1277196 0.1367031</div><div class='input'>
 <span class='co'># Plot results</span>
 <span class='fu'><a href='stripplot.mids.html'>stripplot</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
 </div><div class='img'><img src='mice.impute.quadratic-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>dat</span><span class='op'>$</span><span class='va'>xx</span>, col <span class='op'>=</span> <span class='fu'><a href='mdc.html'>mdc</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>, xlab <span class='op'>=</span> <span class='st'>"x"</span>, ylab <span class='op'>=</span> <span class='st'>"xx"</span><span class='op'>)</span>

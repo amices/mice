@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.16</span>
       </span>
     </div>
 
@@ -141,6 +141,63 @@
       <small>Source: <a href='https://github.com/amices/mice/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="mice-31316" class="section level1">
+<h1 class="page-header" data-toc-text="3.13.16">
+<a href="#mice-31316" class="anchor"></a>mice 3.13.16<small> Unreleased </small>
+</h1>
+<ul>
+<li>Repairs an error in the <code>mice:::barnard.rubin()</code> function for infinite <code>dfcom</code>. Thanks <a href='https://github.com/huftis'>@huftis</a> (<a href='https://github.com/amices/mice/issues/441'>#441</a>).</li>
+</ul>
+</div>
+    <div id="mice-31315" class="section level1">
+<h1 class="page-header" data-toc-text="3.13.15">
+<a href="#mice-31315" class="anchor"></a>mice 3.13.15<small> Unreleased </small>
+</h1>
+<ul>
+<li>Adds two new functions <code><a href="../reference/pool.html">pool.syn()</a></code> and <code><a href="../reference/pool.scalar.html">pool.scalar.syn()</a></code> that specialise pooling estimates from synthetic data. The <code>"reiter2003"</code> pooling rule assumes that synthetic data were created from complete data. Thanks Thom Volker (<a href='https://github.com/amices/mice/issues/436'>#436</a>).</li>
+</ul>
+</div>
+    <div id="mice-31314" class="section level1">
+<h1 class="page-header" data-toc-text="3.13.14">
+<a href="#mice-31314" class="anchor"></a>mice 3.13.14<small> Unreleased </small>
+</h1>
+<ul>
+<li>Informs the user that <code><a href="../reference/pool.html">pool()</a></code> cannot take a <code>mids</code> object (<a href='https://github.com/amices/mice/issues/433'>#433</a>)</li>
+</ul>
+</div>
+    <div id="mice-31313" class="section level1">
+<h1 class="page-header" data-toc-text="3.13.13">
+<a href="#mice-31313" class="anchor"></a>mice 3.13.13<small> Unreleased </small>
+</h1>
+<ul>
+<li>Avoids changing the global <code>.Random.seed</code> (<a href='https://github.com/amices/mice/issues/426'>#426</a>, <a href='https://github.com/amices/mice/issues/432'>#432</a>) by implementing <code><a href="https://withr.r-lib.org/reference/with_seed.html">withr::local_preserve_seed()</a></code> and <code><a href="https://withr.r-lib.org/reference/with_seed.html">withr::local_seed()</a></code>. This change provides stabler behavior in complex scripts, but may break exact reproducibility in some cases. If you run into a problem, I fear the only way to solve is to install <code>mice 3.13.12</code> or before.</li>
+<li>Improves the imputation of parabolic data in <code><a href="../reference/mice.impute.quadratic.html">mice.impute.quadratic()</a></code>, adds a parameter <code>quad.outcome</code> containing the name of the outcome variable in the complete-data model. Contributed <a href='https://github.com/Mingyang-Cai'>@Mingyang-Cai</a>, <a href='https://github.com/gerkovink'>@gerkovink</a> (<a href='https://github.com/amices/mice/issues/408'>#408</a>)</li>
+</ul>
+</div>
+    <div id="mice-31312" class="section level1">
+<h1 class="page-header" data-toc-text="3.13.12">
+<a href="#mice-31312" class="anchor"></a>mice 3.13.12<small> Unreleased </small>
+</h1>
+<ul>
+<li>By default, <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> now uses the faster <code>ranger</code> package as back-end instead of <code>randomForest</code> package. If you want the old behaviour specify the <code>rfPackage = "randomForest"</code> argument to the <code><a href="../reference/mice.html">mice(...)</a></code> call. Contributed <a href='https://github.com/prockenschaub'>@prockenschaub</a> (<a href='https://github.com/amices/mice/issues/431'>#431</a>).</li>
+</ul>
+</div>
+    <div id="mice-31311" class="section level1">
+<h1 class="page-header" data-toc-text="3.13.11">
+<a href="#mice-31311" class="anchor"></a>mice 3.13.11<small> Unreleased </small>
+</h1>
+<ul>
+<li>Updates documentation for post-processing functionality (<a href='https://github.com/amices/mice/issues/387'>#387</a>)</li>
+</ul>
+</div>
+    <div id="mice-31310" class="section level1">
+<h1 class="page-header" data-toc-text="3.13.10">
+<a href="#mice-31310" class="anchor"></a>mice 3.13.10<small> Unreleased </small>
+</h1>
+<ul>
+<li>Adds Rcpp necessities</li>
+</ul>
+</div>
     <div id="mice-3139" class="section level1">
 <h1 class="page-header" data-toc-text="3.13.9">
 <a href="#mice-3139" class="anchor"></a>mice 3.13.9<small> Unreleased </small>

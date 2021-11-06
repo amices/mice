@@ -79,7 +79,7 @@ The method is less powerful than the D1- and D3-statistics." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.16</span>
       </span>
     </div>
 
@@ -193,8 +193,8 @@ Significance Levels from Repeated p-Values with Multiply-Imputed Data.
 <span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>gen</span> <span class='op'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>gen</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>~</span> <span class='va'>hgt</span> <span class='op'>+</span> <span class='va'>hc</span> <span class='op'>+</span> <span class='va'>reg</span>, family <span class='op'>=</span> <span class='va'>binomial</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>fit0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>gen</span> <span class='op'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>gen</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>~</span> <span class='va'>hgt</span> <span class='op'>+</span> <span class='va'>hc</span>, family <span class='op'>=</span> <span class='va'>binomial</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>D2</span><span class='op'>(</span><span class='va'>fit1</span>, <span class='va'>fit0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    test statistic df1      df2 dfcom    p.value        riv
-#&gt;  1 ~~ 2   2.47825   4 222.4287    NA 0.04500903 0.09706164</div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt;    test statistic df1    df2 dfcom   p.value      riv
+#&gt;  1 ~~ 2 0.7271036   4 7.0135    NA 0.6007928 0.993012</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

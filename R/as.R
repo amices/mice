@@ -141,6 +141,9 @@ as.mira <- function(fitlist) {
   if (is.mira(fitlist)) {
     return(fitlist)
   }
+  if (is.mids(fitlist)) {
+    stop("as.mira() cannot convert class 'mids' into 'mira'. Use with() instead.")
+  }
   call <- match.call()
   if (!is.list(fitlist)) {
     stop("Argument 'fitlist' is not a list")

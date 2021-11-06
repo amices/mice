@@ -132,7 +132,9 @@ Use \code{print=FALSE} for silent computation.}
 
 \item{seed}{An integer that is used as argument by the \code{set.seed()} for
 offsetting the random number generator. Default is to leave the random number
-generator alone.}
+generator alone. Versions later than 3.13.11 reset the random generator to the
+state before calling \code{mice()}. This effectively isolates the \code{mice}
+random generator from the calling environment.}
 
 \item{data.init}{A data frame of the same size and type as \code{data},
 without missing data, used to initialize imputations before the start of the

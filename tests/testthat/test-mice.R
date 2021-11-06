@@ -247,3 +247,21 @@ test_that("`ignore` works with pmm", {
   expect_equal(complete(imp1)["a1", "bmi"], 40.0)
   expect_failure(expect_equal(complete(imp2)["a1", "bmi"], 40.0))
 })
+
+context("mice: local random stream")
+
+set.seed(1)
+a <- runif(10)
+
+set.seed(1)
+b1 <- runif(6)
+
+imp <- mice(nhanes, maxit = 0, seed = 82, print = FALSE)
+imp2 <- mice.mids(imp, maxit = 1, print = FALSE)
+
+b2 <- runif(4)
+
+test_that("mice and mice.mids use a local random stream", {
+  expect_equal(a, c(b1, b2))
+})
+
