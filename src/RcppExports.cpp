@@ -10,7 +10,6 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-<<<<<<< HEAD
 // legendre
 Rcpp::NumericMatrix legendre(Rcpp::NumericVector x, int p);
 RcppExport SEXP _mice_legendre(SEXP xSEXP, SEXP pSEXP) {
@@ -23,8 +22,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-=======
->>>>>>> 3048d9e012f56967fbfead48e4da276ef89d5a07
 // matcher
 IntegerVector matcher(NumericVector obs, NumericVector mis, int k);
 RcppExport SEXP _mice_matcher(SEXP obsSEXP, SEXP misSEXP, SEXP kSEXP) {
