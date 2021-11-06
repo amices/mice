@@ -6,9 +6,9 @@
 #' @param x An object for which a method exists; usually a `data.frame`.
 #' @param imputed Either an object of class `mids`, as returned by
 #' [mice::mice()], or a list of `data.frame`s.
-#' @param min_n Atomic numeric. When there are missing data patterns with
-#' fewer than `min_n` cases, all cases with that pattern will be removed from
-#' `x` and `imputed`.
+#' @param min_n Atomic numeric, must be greater than 1. When there are missing
+#' data patterns with fewer than `min_n` cases, all cases with that pattern will
+#' be removed from `x` and `imputed`.
 #' @param method Atomic character. If it is known (or assumed) that data are
 #' either multivariate normally distributed or not, then use either
 #' `method = "hawkins"` or `method = "nonparametric"`, respectively.
@@ -126,6 +126,9 @@ MCAR.data.frame <- function(x,
   anyfact <- sapply(x, inherits, what = "factor")
   if(any(anyfact)){
     stop("Be advised that this MCAR test has not been validated for categorical variables.")
+  }
+  if(min_n < 1){
+    stop("Argument 'min_n' must be greater than 1.")
   }
   out <-
     list(
