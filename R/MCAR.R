@@ -78,7 +78,7 @@
 #' }
 #'
 #' @return An object of class `mcar_object`.
-#' @author Caspar J. Van Lissa [ctb]
+#' @author Caspar J. Van Lissa
 #' @references
 #' Rubin, D. B. (1976). Inference and Missing Data. Biometrika, Vol. 63, No. 3,
 #' pp. 581-592. <doi:10.2307/2335739>
