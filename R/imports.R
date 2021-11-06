@@ -14,13 +14,14 @@
 #'                      glm is.empty.model lm lm.fit
 #'                      median model.frame model.matrix
 #'                      na.exclude na.omit na.pass
-#'                      pf predict pt qt quantile
+#'                      pf predict pt qt quantile quasibinomial
 #'                      rbinom rchisq reformulate rgamma rnorm runif
-#'                      summary.glm terms update var vcov
+#'                      sd summary.glm terms update var vcov
 #' @importFrom tidyr    complete
 #' @importFrom utils    askYesNo flush.console head install.packages methods
 #'                      packageDescription packageVersion
 #'                      tail write.table
+#' @importFrom withr    local_preserve_seed local_seed
 #' @export bwplot
 #' @export densityplot
 #' @export stripplot
