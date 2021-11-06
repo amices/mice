@@ -123,6 +123,10 @@ MCAR.data.frame <- function(x,
                             replications = 10000,
                             use_chisq = 30,
                             alpha = 0.05) {
+  anyfact <- sapply(x, inherits, what = "factor")
+  if(any(anyfact)){
+    stop("Be advised that this MCAR test has not been validated for categorical variables.")
+  }
   out <-
     list(
       hawk_chisq = NULL,
@@ -165,9 +169,6 @@ MCAR.data.frame <- function(x,
   univals <- sapply(x, function(i){length(unique(i))})
   if(any(univals < 2)){
     stop("Some columns are constant, not variable. This will result in invalid results.")
-  }
-  if(any(univals < 5)){
-    warning("Some columns contain less than five unique values. Be advised that this test has not been validated for categorical variables.")
   }
   newdata <- x
   missings <- is.na(x)
