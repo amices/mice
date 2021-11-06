@@ -285,6 +285,8 @@ print.mcar_object <- function(x, ...) {
   }
 }
 
+#' @importFrom graphics hist
+#' @importFrom grDevices dev.off
 #' @method plot mcar_object
 #' @export
 plot.mcar_object <- function(x, y, type = NULL, ...){
