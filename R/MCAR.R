@@ -31,10 +31,11 @@
 #' and missing not at random (MNAR), which means that missingness is related to
 #' unobserved data.
 #'
-#' Jamshidian and Jalal's non-parametric MCAR test assumes that, if data are
-#' not MAR, the covariance matrices of the imputed data will be equal accross
-#' groups with different patterns of missingness. This assumption is tested
-#' using the following procedure:
+#' Jamshidian and Jalal's non-parametric MCAR test assumes that the missing data
+#' are either MCAR or MAR, and tests whether the missingness is independent of
+#' the observed values. If so, the covariance matrices of the imputed data will
+#' be equal accross groups with different patterns of missingness. This test
+#' consists of the following procedure:
 #' \enumerate{
 #'   \item Data are imputed.
 #'   \item The imputed data are split into *k* groups according to the
@@ -56,8 +57,8 @@
 #' }
 #'
 #' Note that, despite its name in common parlance, an MCAR test can only
-#' indicate whether missingness is MAR versus non-MAR.
-#' A non-significant MCAR test cannot distinguish between MCAR or MNAR.
+#' indicate whether missingness is MCAR or MAR. The procedure cannot distinguish
+#' MCAR from MNAR, so a non-significant result does not rule out MNAR.
 #'
 #' This is a re-implementation of the function `TestMCARNormality`, which was
 #' originally published in the R-packgage `MissMech`, which has been removed
