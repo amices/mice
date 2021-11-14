@@ -174,6 +174,10 @@ imputation of missing blood pressure covariates in survival analysis.
 \seealso{
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},
+\code{\link{mice.impute.lasso.logreg}()},
+\code{\link{mice.impute.lasso.norm}()},
+\code{\link{mice.impute.lasso.select.logreg}()},
+\code{\link{mice.impute.lasso.select.norm}()},
 \code{\link{mice.impute.lda}()},
 \code{\link{mice.impute.logreg.boot}()},
 \code{\link{mice.impute.logreg}()},

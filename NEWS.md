@@ -1,5 +1,20 @@
+# mice 3.13.18
+
 * Add Jamshidian && Jalal's non-parametric MCAR test, `mice::MCAR()` and
-  associated plot method.
+  associated plot method. Contributed by @cjvanlissa (#423).
+
+# mice 3.13.17
+
+* Adds four new univariate functions using the lasso for automatic variable selection: 
+
+| Function                          | Description                       |
+| --------------------------------- | --------------------------------- |
+|`mice.impute.lasso.norm()`         | Lasso linear regression |
+|`mice.impute.lasso.logreg()`       | Lasso logistic regression | 
+|`mice.impute.lasso.select.norm()`  | Lasso selector + linear regression |
+|`mice.impute.lasso.select.logreg()`| Lasso selector + logistic regression | 
+
+Contributed by @EdoardoCostantini (#438).
 
 # mice 3.13.16
 
