@@ -1,3 +1,16 @@
+# mice 3.13.17
+
+* Adds four new univariate functions using the lasso for automatic variable selection: 
+
+| Function                          | Description                       |
+| --------------------------------- | --------------------------------- |
+|`mice.impute.lasso.norm()`         | Lasso linear regression |
+|`mice.impute.lasso.logreg()`       | Lasso logistic regression | 
+|`mice.impute.lasso.select.norm()`  | Lasso selector + linear regression |
+|`mice.impute.lasso.select.logreg()`| Lasso selector + logistic regression | 
+
+Contributed by @EdoardoCostantini (#438).
+
 # mice 3.13.16
 
 * Repairs an error in the `mice:::barnard.rubin()` function for infinite `dfcom`. Thanks @huftis (#441).

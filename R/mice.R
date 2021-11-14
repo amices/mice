@@ -26,30 +26,34 @@
 #' Built-in univariate imputation methods are:
 #'
 #' \tabular{lll}{
-#' \code{pmm}          \tab any     \tab Predictive mean matching\cr
-#' \code{midastouch}   \tab any     \tab Weighted predictive mean matching\cr
-#' \code{sample}       \tab any     \tab Random sample from observed values\cr
-#' \code{cart}         \tab any     \tab Classification and regression trees\cr
-#' \code{rf}           \tab any     \tab Random forest imputations\cr
-#' \code{mean}         \tab numeric \tab Unconditional mean imputation\cr
-#' \code{norm}         \tab numeric \tab Bayesian linear regression\cr
-#' \code{norm.nob}     \tab numeric \tab Linear regression ignoring model error\cr
-#' \code{norm.boot}    \tab numeric \tab Linear regression using bootstrap\cr
-#' \code{norm.predict} \tab numeric \tab Linear regression, predicted values\cr
-#' \code{quadratic}    \tab numeric \tab Imputation of quadratic terms\cr
-#' \code{ri}           \tab numeric \tab Random indicator for nonignorable data\cr
-#' \code{logreg}       \tab binary  \tab Logistic regression\cr
-#' \code{logreg.boot}  \tab binary  \tab Logistic regression with bootstrap\cr
-#' \code{polr}         \tab ordered \tab Proportional odds model\cr
-#' \code{polyreg}      \tab unordered\tab Polytomous logistic regression\cr
-#' \code{lda}          \tab unordered\tab Linear discriminant analysis\cr
-#' \code{2l.norm}      \tab numeric  \tab Level-1 normal heteroscedastic\cr
-#' \code{2l.lmer}      \tab numeric  \tab Level-1 normal homoscedastic, lmer\cr
-#' \code{2l.pan}       \tab numeric  \tab Level-1 normal homoscedastic, pan\cr
-#' \code{2l.bin}       \tab binary   \tab Level-1 logistic, glmer\cr
-#' \code{2lonly.mean}  \tab numeric  \tab Level-2 class mean\cr
-#' \code{2lonly.norm}  \tab numeric  \tab Level-2 class normal\cr
-#' \code{2lonly.pmm}   \tab any      \tab Level-2 class predictive mean matching
+#' \code{pmm}               \tab any     \tab Predictive mean matching\cr
+#' \code{midastouch}        \tab any     \tab Weighted predictive mean matching\cr
+#' \code{sample}            \tab any     \tab Random sample from observed values\cr
+#' \code{cart}              \tab any     \tab Classification and regression trees\cr
+#' \code{rf}                \tab any     \tab Random forest imputations\cr
+#' \code{mean}              \tab numeric \tab Unconditional mean imputation\cr
+#' \code{norm}              \tab numeric \tab Bayesian linear regression\cr
+#' \code{norm.nob}          \tab numeric \tab Linear regression ignoring model error\cr
+#' \code{norm.boot}         \tab numeric \tab Linear regression using bootstrap\cr
+#' \code{norm.predict}      \tab numeric \tab Linear regression, predicted values\cr
+#' \code{lasso.norm}        \tab numeric \tab Lasso linear regression\cr
+#' \code{lasso.select.norm} \tab numeric \tab Lasso select + linear regression\cr
+#' \code{quadratic}         \tab numeric \tab Imputation of quadratic terms\cr
+#' \code{ri}                \tab numeric \tab Random indicator for nonignorable data\cr
+#' \code{logreg}            \tab binary  \tab Logistic regression\cr
+#' \code{logreg.boot}       \tab binary  \tab Logistic regression with bootstrap\cr
+#' \code{lasso.logreg}      \tab binary  \tab Lasso logistic regression\cr
+#' \code{lasso.select.logreg}\tab binary  \tab Lasso select + logistic regression\cr
+#' \code{polr}              \tab ordered \tab Proportional odds model\cr
+#' \code{polyreg}           \tab unordered\tab Polytomous logistic regression\cr
+#' \code{lda}               \tab unordered\tab Linear discriminant analysis\cr
+#' \code{2l.norm}           \tab numeric  \tab Level-1 normal heteroscedastic\cr
+#' \code{2l.lmer}           \tab numeric  \tab Level-1 normal homoscedastic, lmer\cr
+#' \code{2l.pan}            \tab numeric  \tab Level-1 normal homoscedastic, pan\cr
+#' \code{2l.bin}            \tab binary   \tab Level-1 logistic, glmer\cr
+#' \code{2lonly.mean}       \tab numeric  \tab Level-2 class mean\cr
+#' \code{2lonly.norm}       \tab numeric  \tab Level-2 class normal\cr
+#' \code{2lonly.pmm}        \tab any      \tab Level-2 class predictive mean matching
 #' }
 #'
 #' These corresponding functions are coded in the \code{mice} library under

@@ -53,7 +53,7 @@ to define which predictors are provided to this univariate imputation method.
 The lasso regularization will select, among the variables indicated by
 the user, the ones that are important for imputation at any given iteration.
 Therefore, users may force the exclusion of a predictor from a given
-imputation model by specificing a \code{0} entry.
+imputation model by specifying a \code{0} entry.
 However, a non-zero entry does not guarantee the variable will be used,
 as this decision is ultimately made by the lasso variable selection
 procedure.
