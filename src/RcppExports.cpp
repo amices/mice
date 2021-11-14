@@ -10,6 +10,18 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// legendre
+Rcpp::NumericMatrix legendre(Rcpp::NumericVector x, int p);
+RcppExport SEXP _mice_legendre(SEXP xSEXP, SEXP pSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    rcpp_result_gen = Rcpp::wrap(legendre(x, p));
+    return rcpp_result_gen;
+END_RCPP
+}
 // matcher
 IntegerVector matcher(NumericVector obs, NumericVector mis, int k);
 RcppExport SEXP _mice_matcher(SEXP obsSEXP, SEXP misSEXP, SEXP kSEXP) {
@@ -38,6 +50,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_mice_legendre", (DL_FUNC) &_mice_legendre, 2},
     {"_mice_matcher", (DL_FUNC) &_mice_matcher, 3},
     {"_mice_matchindex", (DL_FUNC) &_mice_matchindex, 3},
     {NULL, NULL, 0}

@@ -1,3 +1,8 @@
+# mice 3.13.18
+
+* Add Jamshidian && Jalal's non-parametric MCAR test, `mice::MCAR()` and
+  associated plot method. Contributed by @cjvanlissa (#423).
+
 # mice 3.13.17
 
 * Adds four new univariate functions using the lasso for automatic variable selection: 
