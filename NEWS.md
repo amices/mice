@@ -1,8 +1,9 @@
+* Add Jamshidian && Jalal's non-parametric MCAR test, `mice::MCAR()` and
+  associated plot method.
+
 # mice 3.13.16
 
 * Repairs an error in the `mice:::barnard.rubin()` function for infinite `dfcom`. Thanks @huftis (#441).
-* Add Jamshidian && Jalal's non-parametric MCAR test, `mice::MCAR()` and
-  associated plot method.
 
 # mice 3.13.15
 
