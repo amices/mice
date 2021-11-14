@@ -20,9 +20,9 @@ MCAR(
 \item{imputed}{Either an object of class \code{mids}, as returned by
 \code{\link[=mice]{mice()}}, or a list of \code{data.frame}s.}
 
-\item{min_n}{Atomic numeric. When there are missing data patterns with
-fewer than \code{min_n} cases, all cases with that pattern will be removed from
-\code{x} and \code{imputed}.}
+\item{min_n}{Atomic numeric, must be greater than 1. When there are missing
+data patterns with fewer than \code{min_n} cases, all cases with that pattern will
+be removed from \code{x} and \code{imputed}.}
 
 \item{method}{Atomic character. If it is known (or assumed) that data are
 either multivariate normally distributed or not, then use either
@@ -59,10 +59,11 @@ missing at random (MAR), which means that missingness is contingent on the
 and missing not at random (MNAR), which means that missingness is related to
 unobserved data.
 
-Jamshidian and Jalal's non-parametric MCAR test assumes that, if data are
-not MAR, the covariance matrices of the imputed data will be equal accross
-groups with different patterns of missingness. This assumption is tested
-using the following procedure:
+Jamshidian and Jalal's non-parametric MCAR test assumes that the missing data
+are either MCAR or MAR, and tests whether the missingness is independent of
+the observed values. If so, the covariance matrices of the imputed data will
+be equal accross groups with different patterns of missingness. This test
+consists of the following procedure:
 \enumerate{
 \item Data are imputed.
 \item The imputed data are split into \emph{k} groups according to the
@@ -84,8 +85,8 @@ it can be concluded that missingness is MAR.
 }
 
 Note that, despite its name in common parlance, an MCAR test can only
-indicate whether missingness is MAR versus non-MAR.
-A non-significant MCAR test cannot distinguish between MCAR or MNAR.
+indicate whether missingness is MCAR or MAR. The procedure cannot distinguish
+MCAR from MNAR, so a non-significant result does not rule out MNAR.
 
 This is a re-implementation of the function \code{TestMCARNormality}, which was
 originally published in the R-packgage \code{MissMech}, which has been removed
@@ -129,6 +130,6 @@ missing completely at random for incomplete multivariate data. Psychometrika,
 75(4), 649–674. \url{doi:10.1007/s11336-010-9175-3}
 }
 \author{
-Caspar J. Van Lissa \link{ctb}
+Caspar J. Van Lissa
 }
 \keyword{internal}
