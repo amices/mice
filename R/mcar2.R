@@ -93,7 +93,7 @@
 #' 75(4), 649–674. <doi:10.1007/s11336-010-9175-3>
 #' @keywords internal
 #' @examples
-#' res <- MCAR(nhanes)
+#' res <- mcar(nhanes)
 #' # Examine test results
 #' res
 #' # Plot p-values across imputed data sets
@@ -105,19 +105,19 @@
 #' @export
 #' @importFrom stats cov pchisq spline
 #' @md
-MCAR <- function(x,
+mcar <- function(x,
                  imputed = mice(x, method = "norm"),
                  min_n = 6,
                  method = "auto",
                  replications = 10000,
                  use_chisq = 30,
                  alpha = 0.05) {
-  UseMethod("MCAR", x)
+  UseMethod("mcar", x)
 }
 
-#' @method MCAR data.frame
+#' @method mcar data.frame
 #' @export
-MCAR.data.frame <- function(x,
+mcar.data.frame <- function(x,
                             imputed = mice(x, method = "norm"),
                             min_n = 6,
                             method = "auto",
