@@ -34,7 +34,9 @@ Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     person("Mingyang", "Cai", role = "ctb",
     email = "m.cai@uu.nl"),
     person("Thom", "Volker", role = "ctb",
-    email = "t.b.volker@uu.nl"))
+    email = "t.b.volker@uu.nl"),
+    person("Edoardo", "Costantini", role = "ctb",
+    email = "e.costantini@tilburguniversity.edu"))
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
     R (>= 2.10.0)
@@ -68,7 +70,8 @@ Suggests:
     rpart,
     survival,
     testthat,
-    lmtest
+    lmtest,
+    glmnet
 Description: Multiple imputation using Fully Conditional Specification (FCS)
     implemented by the MICE algorithm as described in Van Buuren and
     Groothuis-Oudshoorn (2011) <doi:10.18637/jss.v045.i03>. Each variable has
