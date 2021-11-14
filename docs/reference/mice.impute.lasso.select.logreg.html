@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Select incomplete cases — ic • mice</title>
+<title>Imputation by indirect use of lasso logistic regression — mice.impute.lasso.select.logreg • mice</title>
 
 
 <!-- jquery -->
@@ -45,9 +45,9 @@
 
 
 
-<meta property="og:title" content="Select incomplete cases — ic" />
-<meta property="og:description" content="Extracts incomplete cases from a data set.
-The companion function for selecting the complete cases is cc." />
+<meta property="og:title" content="Imputation by indirect use of lasso logistic regression — mice.impute.lasso.select.logreg" />
+<meta property="og:description" content="Imputes univariate missing data using logistic regression following a
+preprocessing lasso variable selection step." />
 
 
 
@@ -139,74 +139,114 @@ The companion function for selecting the complete cases is cc." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Select incomplete cases</h1>
-    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/cc.R'><code>R/cc.R</code></a></small>
-    <div class="hidden name"><code>ic.Rd</code></div>
+    <h1>Imputation by indirect use of lasso logistic regression</h1>
+    <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/mice.impute.lasso.select.logreg.R'><code>R/mice.impute.lasso.select.logreg.R</code></a></small>
+    <div class="hidden name"><code>mice.impute.lasso.select.logreg.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extracts incomplete cases from a data set.
-The companion function for selecting the complete cases is <code><a href='cc.html'>cc</a></code>.</p>
+    <p>Imputes univariate missing data using logistic regression following a
+preprocessing lasso variable selection step.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ic</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>mice.impute.lasso.select.logreg</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, wy <span class='op'>=</span> <span class='cn'>NULL</span>, nfolds <span class='op'>=</span> <span class='fl'>10</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>y</th>
+      <td><p>Vector to be imputed</p></td>
+    </tr>
+    <tr>
+      <th>ry</th>
+      <td><p>Logical vector of length <code>length(y)</code> indicating the
+the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation
+model is fitted. The <code>ry</code> generally distinguishes the observed
+(<code>TRUE</code>) and missing values (<code>FALSE</code>) in <code>y</code>.</p></td>
+    </tr>
+    <tr>
       <th>x</th>
-      <td><p>An <code>R</code> object. Methods are available for classes
-<code>mids</code>, <code>data.frame</code> and <code>matrix</code>. Also, <code>x</code>
-could be a vector.</p></td>
+      <td><p>Numeric design matrix with <code>length(y)</code> rows with predictors for
+<code>y</code>. Matrix <code>x</code> may have no missing values.</p></td>
+    </tr>
+    <tr>
+      <th>wy</th>
+      <td><p>Logical vector of length <code>length(y)</code>. A <code>TRUE</code> value
+indicates locations in <code>y</code> for which imputations are created.</p></td>
+    </tr>
+    <tr>
+      <th>nfolds</th>
+      <td><p>The number of folds for the cross-validation of the lasso penalty.
+The default is 10.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other named arguments.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>vector</code>, <code>matrix</code> or <code>data.frame</code> containing the data of the complete cases.</p>
+    <p>Vector with imputed data, same type as <code>y</code>, and of length
+<code>sum(wy)</code></p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The method consists of the following steps:</p><ol>
+<li><p>For a given <code>y</code> variable under imputation, fit a linear regression with lasso
+penalty using <code>y[ry]</code> as dependent variable and <code>x[ry, ]</code> as predictors.
+The coefficients that are not shrunk to 0 define the active set of predictors
+that will be used for imputation.</p></li>
+<li><p>Fit a logit with the active set of predictors, and find (bhat, V(bhat))</p></li>
+<li><p>Draw BETA from N(bhat, V(bhat))</p></li>
+<li><p>Compute predicted scores for m.d., i.e. logit-1(X BETA)</p></li>
+<li><p>Compare the score to a random (0,1) deviate, and impute.</p></li>
+</ol><p>The user can specify a <code>predictorMatrix</code> in the <code>mice</code> call
+to define which predictors are provided to this univariate imputation method.
+The lasso regularization will select, among the variables indicated by
+the user, the ones that are important for imputation at any given iteration.
+Therefore, users may force the exclusion of a predictor from a given
+imputation model by speficing a <code>0</code> entry.
+However, a non-zero entry does not guarantee the variable will be used,
+as this decision is ultimately made by the lasso variable selection
+procedure.</p>
+<p>The method is based on the Indirect Use of Regularized Regression (IURR) proposed by
+Zhao &amp; Long (2016) and Deng et al (2016).</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Deng, Y., Chang, C., Ido, M. S., &amp; Long, Q. (2016). Multiple imputation for
+general missing data patterns in the presence of high-dimensional data.
+Scientific reports, 6(1), 1-10.</p>
+<p>Zhao, Y., &amp; Long, Q. (2016). Multiple imputation in the presence of
+high-dimensional data. Statistical Methods in Medical Research, 25(5),
+2021-2035.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='cc.html'>cc</a></code>, <code><a href='ici.html'>ici</a></code></p></div>
+    <div class='dont-index'><p>Other univariate imputation functions: 
+<code><a href='mice.impute.cart.html'>mice.impute.cart</a>()</code>,
+<code><a href='mice.impute.lasso.logreg.html'>mice.impute.lasso.logreg</a>()</code>,
+<code><a href='mice.impute.lasso.norm.html'>mice.impute.lasso.norm</a>()</code>,
+<code><a href='mice.impute.lasso.select.norm.html'>mice.impute.lasso.select.norm</a>()</code>,
+<code><a href='mice.impute.lda.html'>mice.impute.lda</a>()</code>,
+<code><a href='mice.impute.logreg.boot.html'>mice.impute.logreg.boot</a>()</code>,
+<code><a href='mice.impute.logreg.html'>mice.impute.logreg</a>()</code>,
+<code><a href='mice.impute.mean.html'>mice.impute.mean</a>()</code>,
+<code><a href='mice.impute.midastouch.html'>mice.impute.midastouch</a>()</code>,
+<code><a href='mice.impute.mnar.logreg.html'>mice.impute.mnar.logreg</a>()</code>,
+<code><a href='mice.impute.norm.boot.html'>mice.impute.norm.boot</a>()</code>,
+<code><a href='mice.impute.norm.nob.html'>mice.impute.norm.nob</a>()</code>,
+<code><a href='mice.impute.norm.predict.html'>mice.impute.norm.predict</a>()</code>,
+<code><a href='mice.impute.norm.html'>mice.impute.norm</a>()</code>,
+<code><a href='mice.impute.pmm.html'>mice.impute.pmm</a>()</code>,
+<code><a href='mice.impute.polr.html'>mice.impute.polr</a>()</code>,
+<code><a href='mice.impute.polyreg.html'>mice.impute.polyreg</a>()</code>,
+<code><a href='mice.impute.quadratic.html'>mice.impute.quadratic</a>()</code>,
+<code><a href='mice.impute.rf.html'>mice.impute.rf</a>()</code>,
+<code><a href='mice.impute.ri.html'>mice.impute.ri</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Stef van Buuren, 2017.</p>
+    <p>Edoardo Costantini, 2021</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'></span>
-<span class='r-in'><span class='fu'>ic</span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span> <span class='co'># get the 12 rows with incomplete cases</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    age  bmi hyp chl</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   NA  NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 3    1   NA   1 187</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 4    3   NA  NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 6    3   NA  NA 184</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 10   2   NA  NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 11   1   NA  NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 12   2   NA  NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 15   1 29.6   1  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 16   1   NA  NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 20   3 25.5   2  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 21   1   NA  NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 24   3 24.9   1  NA</span>
-<span class='r-in'><span class='fu'>ic</span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='op'>]</span><span class='op'>)</span> <span class='co'># incomplete cases within the first ten rows</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    age bmi hyp chl</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1  NA  NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 3    1  NA   1 187</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 4    3  NA  NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 6    3  NA  NA 184</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 10   2  NA  NA  NA</span>
-<span class='r-in'><span class='fu'>ic</span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"bmi"</span>, <span class='st'>"hyp"</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span> <span class='co'># restrict extraction to variables bmi and hyp</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    bmi hyp</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   NA   1</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 10  NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 11  NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 12  NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 16  NA  NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 21  NA  NA</span>
-</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
