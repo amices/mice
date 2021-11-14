@@ -82,7 +82,7 @@ Description: Multiple imputation using Fully Conditional Specification (FCS)
     continuous two-level data (normal model, pan, second-level variables).
     Passive imputation can be used to maintain consistency between variables.
     Various diagnostic plots are available to inspect the quality of the
-    imputations.
+    imputations. x
 Encoding: UTF-8
 License: GPL-2 | GPL-3
 LazyLoad: yes
