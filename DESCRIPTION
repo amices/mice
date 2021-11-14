@@ -23,7 +23,6 @@ Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "margarita.moreno@mcri.edu.au"),
     person("Ian", "White", role="ctb",
     email = "ian.white@ucl.ac.uk"),
-    person("Caspar", "van Lissa", role = "ctb", email = "c.j.vanlissa@uu.nl"),
     person("Philipp","Gaffert", role = "ctb",
     email = "philipp.gaffert@gfk.com"),
     person("Florian","Meinfelder", role = "ctb",
@@ -37,7 +36,9 @@ Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     person("Thom", "Volker", role = "ctb",
     email = "t.b.volker@uu.nl"),
     person("Edoardo", "Costantini", role = "ctb",
-    email = "e.costantini@tilburguniversity.edu"))
+    email = "e.costantini@tilburguniversity.edu"),
+    person("Caspar", "van Lissa", role = "ctb", 
+    email = "c.j.vanlissa@uu.nl"))
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
     R (>= 2.10.0)
@@ -46,6 +47,7 @@ Imports:
     dplyr,
     generics,
     graphics,
+    grDevices,
     lattice,
     methods,
     Rcpp,
@@ -53,10 +55,10 @@ Imports:
     stats,
     tidyr,
     utils,
-    withr,
-    grDevices
+    withr
 Suggests:
     broom.mixed,
+    decor,
     glmnet,
     haven,
     knitr,
