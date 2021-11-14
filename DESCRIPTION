@@ -1,8 +1,8 @@
 Package: mice
 Type: Package
-Version: 3.13.9
+Version: 3.13.16
 Title: Multivariate Imputation by Chained Equations
-Date: 2021-06-21
+Date: 2021-11-05
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -31,6 +31,10 @@ Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "bfgray3@gmail.com"),
     person("Vincent", "Arel-Bundock", role = "ctb",
     email = "vincent.arel-bundock@umontreal.ca"),
+    person("Mingyang", "Cai", role = "ctb",
+    email = "m.cai@uu.nl"),
+    person("Thom", "Volker", role = "ctb",
+    email = "t.b.volker@uu.nl"),
     person("Edoardo", "Costantini", role = "ctb",
     email = "e.costantini@tilburguniversity.edu"))
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
@@ -47,7 +51,8 @@ Imports:
     rlang,
     stats,
     tidyr,
-    utils
+    utils,
+    withr
 Suggests:
     broom.mixed,
     haven,
@@ -60,6 +65,7 @@ Suggests:
     nnet,
     pan,
     randomForest,
+    ranger,
     rmarkdown,
     rpart,
     survival,
@@ -83,6 +89,6 @@ LazyLoad: yes
 LazyData: yes
 URL: https://github.com/amices/mice, https://amices.org/mice/, https://stefvanbuuren.name/fimd/
 BugReports: https://github.com/amices/mice/issues
-RoxygenNote: 7.1.1
 LinkingTo: cpp11, Rcpp
 SystemRequirements: C++11
+RoxygenNote: 7.1.2

@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // matcher
 IntegerVector matcher(NumericVector obs, NumericVector mis, int k);
 RcppExport SEXP _mice_matcher(SEXP obsSEXP, SEXP misSEXP, SEXP kSEXP) {

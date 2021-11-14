@@ -189,7 +189,6 @@ cbind.mids <- function(x, y = NULL, ...) {
   # seed, lastSeedvalue, number of iterations, chainMean and chainVar
   # is taken as in mids object x.
   seed <- x$seed
-  lastSeedvalue <- x$lastSeedvalue
   iteration <- x$iteration
   chainMean <- x$chainMean
   chainVar <- x$chainVar
@@ -210,7 +209,7 @@ cbind.mids <- function(x, y = NULL, ...) {
     ignore = ignore,
     seed = seed,
     iteration = iteration,
-    lastSeedValue = .Random.seed,
+    lastSeedValue = x$lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
     loggedEvents = loggedEvents,

@@ -16,7 +16,7 @@ Character vector of \code{ncol(data)} element
 \description{
 This helper function creates a valid \code{post} vector. The
 \code{post} vector is an argument to the \code{mice} function that
-specifies post-processing for a variable just after imputation.
+specifies post-processing for a variable after each iteration of imputation.
 }
 \examples{
 make.post(nhanes2)
