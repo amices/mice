@@ -218,10 +218,9 @@ incomplete data sets.} pp. 110-113. Dissertation. Rotterdam: Erasmus University.
 Schouten, R.M., Lugtig, P and Vink, G. (2018)
 \href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{Generating missing values for simulation purposes: A multivariate amputation procedure.}.
 \emph{Journal of Statistical Computation and Simulation}, 88(15): 1909-1930.
-DOI: 10.1080/00949655.2018.1491577.
 
 Schouten, R.M. and Vink, G. (2018) \href{https://journals.sagepub.com/doi/full/10.1177/0049124118799376}{The Dance of the Mechanisms: How Observed Information Influences the Validity of Missingness Assumptions}.
-\emph{Sociological Methods and Research}, DOI: 10.1177/0049124118799376.
+\emph{Sociological Methods and Research}, 50(3): 1243-1258.
 
 Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn, C.G.M., Rubin, D.B. (2006)
 \href{https://www.tandfonline.com/doi/abs/10.1080/10629360600810434}{Fully conditional specification in multivariate imputation.}

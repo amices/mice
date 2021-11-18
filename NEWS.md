@@ -1,3 +1,7 @@
+# mice 3.13.19
+
+* Update reference to literature (#442)
+
 # mice 3.13.18
 
 * Add Jamshidian && Jalal's non-parametric MCAR test, `mice::MCAR()` and
