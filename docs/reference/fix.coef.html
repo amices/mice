@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.18</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.19</span>
       </span>
     </div>
 
@@ -184,7 +184,7 @@ if we set <code>beta = coef(model)</code>.</p>
     <pre class="examples"><span class='r-in'><span class='va'>model0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Volume</span> <span class='op'>~</span> <span class='va'>Girth</span> <span class='op'>+</span> <span class='va'>Height</span>, data <span class='op'>=</span> <span class='va'>trees</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Volume ~ Girth + Height</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7f97dc11f7b8&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7ff0afc446f0&gt;</span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)       Girth      Height </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> -57.9876589   4.7081605   0.3392512 </span>
@@ -195,7 +195,7 @@ if we set <code>beta = coef(model)</code>.</p>
 <span class='r-in'><span class='va'>model1</span> <span class='op'>&lt;-</span> <span class='fu'>fix.coef</span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Volume ~ 1</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7f97dc11f7b8&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7ff0afc446f0&gt;</span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>  (Intercept) </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 3.988039e-14 </span>
