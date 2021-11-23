@@ -1,22 +1,6 @@
-# mice 3.13.21
+# mice 3.14.0
 
-* Replaces URL to jstatsoft with DOI
-
-# mice 3.13.20
-
-* Removes `install.on.demand()` for recommended packages
-* Run `install.on.demand()` only in interactive mode 
-
-# mice 3.13.19
-
-* Update reference to literature (#442)
-
-# mice 3.13.18
-
-* Add Jamshidian && Jalal's non-parametric MCAR test, `mice::MCAR()` and
-  associated plot method. Contributed by @cjvanlissa (#423).
-
-# mice 3.13.17
+### Major changes
 
 * Adds four new univariate functions using the lasso for automatic variable selection: 
 
@@ -29,84 +13,44 @@
 
 Contributed by @EdoardoCostantini (#438).
 
-# mice 3.13.16
-
-* Repairs an error in the `mice:::barnard.rubin()` function for infinite `dfcom`. Thanks @huftis (#441).
-
-# mice 3.13.15
+* Adds Jamshidian && Jalal's non-parametric MCAR test, `mice::MCAR()` and associated plot method. Contributed by @cjvanlissa (#423).
 
 * Adds two new functions `pool.syn()` and `pool.scalar.syn()` that specialise pooling estimates from synthetic data. The `"reiter2003"` pooling rule assumes that synthetic data were created from complete data. Thanks Thom Volker (#436).
 
-# mice 3.13.14
+* Avoids changing the global `.Random.seed` (#426, #432) by implementing `withr::local_preserve_seed()` and `withr::local_seed()`. This change provides stabler behavior in complex scripts. The change does not appear to break reproducibility when `mice()` was run with a seed. Nevertheless, if you run into a reproducibility problem, install `mice 3.13.12` or before.
 
-* Informs the user that `pool()` cannot take a `mids` object (#433)
+* Improves the imputation of parabolic data in `mice.impute.quadratic()`, adds a parameter `quad.outcome` containing the name of the outcome variable in the complete-data model. Contributed @Mingyang-Cai, @gerkovink (#408)
 
-# mice 3.13.13
+* By default, `mice.impute.rf()` now uses the faster `ranger` package as back-end instead of `randomForest` package. If you want the old behaviour specify the `rfPackage = "randomForest"` argument to the `mice(...)` call. Contributed @prockenschaub (#431).
 
-* Avoids changing the global `.Random.seed` (#426, #432) by implementing 
-`withr::local_preserve_seed()` and `withr::local_seed()`. This change provides
-stabler behavior in complex scripts, but may break exact reproducibility in 
-some cases. If you run into a problem, I fear the only way to solve is to 
-install `mice 3.13.12` or before.
-* Improves the imputation of parabolic data in `mice.impute.quadratic()`, 
-adds a parameter `quad.outcome` containing the name of the outcome variable 
-in the complete-data model. Contributed @Mingyang-Cai, @gerkovink (#408)
-
-# mice 3.13.12
-
-* By default, `mice.impute.rf()` now uses the faster `ranger` package as 
-back-end instead of `randomForest` package. If you want the old behaviour 
-specify the `rfPackage = "randomForest"` argument to the `mice(...)` call. 
-Contributed @prockenschaub (#431).
-
-# mice 3.13.11
-
-* Updates documentation for post-processing functionality (#387)
-
-# mice 3.13.10 
-
-* Adds Rcpp necessities
-
-# mice 3.13.9
-
-* Solves a problem with "last resort" initialisation of factors (#410)
-
-# mice 3.13.8
-
-* Generalises `pool()` so that it processes the parameters from all 
-`gamlss` sub-models. Thanks Marcio Augusto Diniz (#406, #405)
-
-# mice 3.13.7
-
-* Documents the "flat-line behaviour" of `mice.impute.2l.lmer()` to indicate a problem in fitting the imputation model (#385)
-
-# mice 3.13.6
-
-* Solves problem with `Xi <- as.matrix(...)` in `mice.impute.2l.lmer()` that occurred when a cluster contains only one observation (#384)
-* Add reprex to test (#326)
-
-# mice 3.13.5
-
-* Edits the `predictorMatrix` to a monotone pattern if `visitSequence = "monotone"` and `maxit = 1` (#316)
-* Documents that multivariate imputation methods do not support the `post` parameter (#326)
-
-# mice 3.13.4
-
-* Solves a problem with the plot produced by `md.pattern()` (#318, #323)
-* Fixes the intercept in `make.formulas()` (#305, #324)
-* Fixes seed when using `newdata` in `mice.mids()` (#313, #325)
-
-# mice 3.13.3
-
-* Solves a problem with row names of the `where` element created in `rbind()` (#319)
-
-# mice 3.13.2
+* Generalises `pool()` so that it processes the parameters from all `gamlss` sub-models. Thanks Marcio Augusto Diniz (#406, #405)
 
 * Uses the robust standard error estimate for pooling when `pool()` can extract `robust.se` from the object returned by `broom::tidy()` (#310)
 
-# mice 3.13.1
+### Bug fixes
 
+* Contains an emergency solution as `install.on.demand()` broke the standard CRAN workflow. mice 3.14.0 does not call `install.on.demand()` anymore for recommended packages. Also, `install.on.demand()` will not run anymore in non-interactive mode.
+* Repairs an error in the `mice:::barnard.rubin()` function for infinite `dfcom`. Thanks @huftis (#441).
+* Solves problem with `Xi <- as.matrix(...)` in `mice.impute.2l.lmer()` that occurred when a cluster contains only one observation (#384)
+* Edits the `predictorMatrix` to a monotone pattern if `visitSequence = "monotone"` and `maxit = 1` (#316)
+* Solves a problem with the plot produced by `md.pattern()` (#318, #323)
+* Fixes the intercept in `make.formulas()` (#305, #324)
+* Fixes seed when using `newdata` in `mice.mids()` (#313, #325)
+* Solves a problem with row names of the `where` element created in `rbind()` (#319)
 * Solves a bug in mnar imputation routine. Contributed by Margarita Moreno Betancur.
+
+### Minor changes
+
+* Replaces URL to jstatsoft with DOI
+* Update reference to literature (#442)
+* Informs the user that `pool()` cannot take a `mids` object (#433)
+* Updates documentation for post-processing functionality (#387)
+* Adds Rcpp necessities
+* Solves a problem with "last resort" initialisation of factors (#410)
+* Documents the "flat-line behaviour" of `mice.impute.2l.lmer()` to indicate a problem in fitting the imputation model (#385)
+* Add reprex to test (#326)
+* Documents that multivariate imputation methods do not support the `post` parameter (#326)
+
 
 # mice 3.13.0
 
