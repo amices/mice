@@ -1,3 +1,8 @@
+# mice 3.13.20
+
+* Removes `install.on.demand()` for recommended packages
+* Run `install.on.demand()` only in interactive mode 
+
 # mice 3.13.19
 
 * Update reference to literature (#442)
