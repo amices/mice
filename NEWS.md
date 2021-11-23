@@ -1,3 +1,7 @@
+# mice 3.13.21
+
+* Replaces URL to jstatsoft with DOI
+
 # mice 3.13.20
 
 * Removes `install.on.demand()` for recommended packages
