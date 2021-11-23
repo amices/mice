@@ -65,8 +65,6 @@
 mice.impute.polr <- function(y, ry, x, wy = NULL, nnet.maxit = 100,
                              nnet.trace = FALSE, nnet.MaxNWts = 1500,
                              polr.to.loggedEvents = FALSE, ...) {
-  install.on.demand("MASS", ...)
-  install.on.demand("nnet", ...)
   if (is.null(wy)) wy <- !ry
 
   # augment data to evade issues with perfect prediction

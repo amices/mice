@@ -53,7 +53,6 @@
 #' @export
 mice.impute.polyreg <- function(y, ry, x, wy = NULL, nnet.maxit = 100,
                                 nnet.trace = FALSE, nnet.MaxNWts = 1500, ...) {
-  install.on.demand("nnet", ...)
   if (is.null(wy)) {
     wy <- !ry
   }
