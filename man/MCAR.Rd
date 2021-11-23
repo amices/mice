@@ -118,7 +118,7 @@ md.pattern(nhanes)
 }
 \references{
 Rubin, D. B. (1976). Inference and Missing Data. Biometrika, Vol. 63, No. 3,
-pp. 581-592. \url{doi:10.2307/2335739}
+pp. 581-592. \doi{10.2307/2335739}
 
 Eekhout, I., M. A. Wiel, & M. W. Heymans (2017). Methods for Significance
 Testing of Categorical Covariates in Logistic Regression Models After
@@ -127,7 +127,7 @@ Methodology 17 (1): 129.
 
 Jamshidian, M., & Jalal, S. (2010). Tests of homoscedasticity, normality, and
 missing completely at random for incomplete multivariate data. Psychometrika,
-75(4), 649–674. \url{doi:10.1007/s11336-010-9175-3}
+75(4), 649–674. \doi{10.1007/s11336-010-9175-3}
 }
 \author{
 Caspar J. Van Lissa
