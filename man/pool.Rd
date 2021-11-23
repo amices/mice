@@ -143,7 +143,7 @@ Public Use Microdata Sets. \emph{Survey Methodology}, \bold{29}, 181-189.
 
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
+Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
 \code{\link{with.mids}}, \code{\link{as.mira}}, \code{\link{pool.scalar}},
