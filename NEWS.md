@@ -1,3 +1,7 @@
+# mice 3.14.1
+
+* @str-amg reported that the new dependency on `withr` package should have version 2.4.0  (published in January 2021) or higher. Version `withr 2.30.0` and before may give `Error: object 'local_seed' is not exported by 'namespace:withr'`. Either update manually, or install the patched version `mice 3.14.1` from GitHub. (#445)
+
 # mice 3.14.0
 
 ### Major changes
