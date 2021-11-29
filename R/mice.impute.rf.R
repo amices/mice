@@ -113,8 +113,8 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
     type = "terminalNodes", predict.all = TRUE
   )
   nodes <- ranger::predictions(nodes)
-  nodes_obs <- nodes[1:nrow(xobs), ]
-  nodes_mis <- nodes[(nrow(xobs) + 1):nrow(nodes), ]
+  nodes_obs <- nodes[1:nrow(xobs), , drop = FALSE]
+  nodes_mis <- nodes[(nrow(xobs) + 1):nrow(nodes), , drop = FALSE]
 
   select_donors <- function(i) {
     # Function to extract all eligible donors for each missing value
