@@ -1,3 +1,8 @@
+# mice 3.14.2
+
+* Repairs a `drop = FALSE` buglet in `mice.impute.rf()` (#447, #448)
+* Adds testfile `test-mice.impute.rf.R`(#448)
+
 # mice 3.14.1
 
 * @str-amg reported that the new dependency on `withr` package should have version 2.4.0  (published in January 2021) or higher. Versions `withr 2.3.0` and before may give `Error: object 'local_seed' is not exported by 'namespace:withr'`. Either update manually, or install the patched version `mice 3.14.1` from GitHub. (#445)

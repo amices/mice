@@ -4,7 +4,7 @@
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
 [![](https://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice)
-[![](https://img.shields.io/badge/github%20version-3.14.1-orange.svg)](https://amices.github.io/mice/)
+[![](https://img.shields.io/badge/github%20version-3.14.2-orange.svg)](https://amices.github.io/mice/)
 
 ## [Multivariate Imputation by Chained Equations](https://amices.github.io/mice/)
 
