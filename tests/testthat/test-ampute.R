@@ -268,6 +268,96 @@ test_that("error messages work properly", {
   )
 })
 
+# extra tests for dimensions patterns and weights matrix (#449)
+
+test_that("patterns and weights matrices have right dimensions", {
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0))$patterns == c(0, 1, 0)
+    ))
+  )
+  
+  suppressWarnings(
+  expect_true(all(
+      ampute(data = complete.data, patterns = c(0, 1, 0, 1, 1, 1))$patterns == c(0, 1, 0)
+    ))
+  )
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1))$patterns == c(0, 1, 0)
+    ))
+  )
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0),
+            weights = c(1, 0, 0, 0, 1, 0))$weights == c(0, 1, 0)
+    ))
+  )
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(0, 1, 0, 1, 1, 1),
+            weights = c(1, 0, 0, 0, 1, 0))$weights == c(1, 0, 0)
+    ))
+  )
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(0, 1, 0, 1, 1, 1),
+            weights = c(1, 0, 0))$weights == c(1, 0, 0)
+    ))
+  )
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1),
+            weights = c(1, 0, 0))$weights == c(1, 0, 0)
+    ))
+  )
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1),
+            weights = c(1, 0, 0, 0, 1, 0, 0, 0, 1))$weights == c(0, 1, 0)
+    ))
+  )
+  
+})
+
+test_that("prop and freq are properly adjusted when patterns contain only 1's", {
+  
+  suppressWarnings(
+    expect_equal(ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0))$prop, 0.25)
+  )
+  
+  suppressWarnings(
+    expect_equal(ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0))$freq, 1)
+  )
+  
+  suppressWarnings(
+    expect_equal(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 0, 1, 0))$prop, 1/3)
+  )
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 0, 1, 0))$freq == c(0.5, 0.5)))
+  )
+  
+  suppressWarnings(
+    expect_equal(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1))$prop, 1/3*0.5)
+  )
+  
+  suppressWarnings(
+    expect_equal(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1))$freq, 1)
+  )
+    
+})
 
 # The following test was contributed by Shangzhi-hong (#216) Dec 2019
 context("ampute robust version")

@@ -229,7 +229,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (is.null(patterns)) {
     patterns <- ampute.default.patterns(n = ncol(data))
   } else if (is.vector(patterns) && (length(patterns) / ncol(data)) %% 1 == 0) {
-    patterns <- matrix(patterns, length(patterns) / ncol(data), byrow = TRUE)
+    patterns <- matrix(patterns, nrow = length(patterns) / ncol(data), byrow = TRUE)
     if (nrow(patterns) == 1 && all(patterns[1, ] %in% 1)) {
       stop("One pattern with merely ones results to no amputation at all, the procedure is therefore stopped", call. = FALSE)
     }
@@ -299,7 +299,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   }
   if (mech != "MCAR" && !is.null(weights)) {
     if (is.vector(weights) && (length(weights) / ncol(data)) %% 1 == 0) {
-      weights <- matrix(weights, length(weights) / ncol(data), byrow = TRUE)
+      weights <- matrix(weights, nrow = length(weights) / ncol(data), byrow = TRUE)
     } else if (is.vector(weights)) {
       stop("Length of weight vector does not match #variables", call. = FALSE)
     } else if (!is.matrix(weights) && !is.data.frame(weights)) {
@@ -311,11 +311,18 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       patterns = patterns.new,
       mech = mech
     )
-  }
+  } 
   weights <- as.data.frame(weights)
-  if (!nrow(weights) %in% c(nrow(patterns), nrow(patterns.new))) {
+  if (!nrow(weights) == nrow(patterns.new)){
+    if (!is.null(check.pat[['row.one']])){
+      weights <- weights[-check.pat[['row.one']],]
+    }
+  }
+  if (!nrow(weights) == nrow(patterns.new)){
     stop("The objects patterns and weights are not matching", call. = FALSE)
   }
+  
+  
   if (!is.vector(cont)) {
     cont <- as.vector(cont)
     warning("Continuous should contain merely TRUE or FALSE", call. = FALSE)
@@ -539,8 +546,8 @@ check.patterns <- function(patterns, freq, prop) {
     }
   }
   if (prop.one != 0) {
-    warning(paste("Proportion of missingness has changed from", prop, "to", prop.one, "because of pattern(s) with merely ones"), call. = FALSE)
-    prop <- prop.one
+    warning(paste("Proportion of missingness has changed from", prop, "to", (1-prop.one)*prop, "because of pattern(s) with merely ones"), call. = FALSE)
+    prop <- (1-prop.one)*prop
     freq <- freq[-row.one]
     freq <- recalculate.freq(freq)
     patterns <- patterns[-row.one, ]
@@ -558,6 +565,7 @@ check.patterns <- function(patterns, freq, prop) {
     patterns = patterns,
     prop = prop,
     freq = freq,
+    row.one = row.one,
     row.zero = row.zero
   )
   objects
