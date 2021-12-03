@@ -397,6 +397,13 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       n = nrow(patterns.new), size = nrow(data),
       replace = TRUE, prob = freq
     ) + 1
+    
+    # Check whether cases are assigned to all patterns
+    non.used.patterns <- c(2:(nrow(patterns.new)+1))[!c(2:(nrow(patterns.new)+1)) %in% unique(P)]
+    if (length(non.used.patterns) > 0){
+      warning(paste0("No records are assigned to patterns ", toString(non.used.patterns - 1), ". These patterns will not be generated. Consider reducing the number of patterns or increasing the dataset size."), call. = FALSE)
+    }
+    
     # Calculate missingness according MCAR or calculate weighted sum scores
     # Standardized data is used to calculate weighted sum scores
     if (mech == "MCAR") {
@@ -475,7 +482,7 @@ sum.scores <- function(P, data, std, weights, patterns) {
   weights <- as.matrix(weights)
   f <- function(i) {
     if (length(P[P == (i + 1)]) == 0) {
-      return(0)
+      return(0) # this will ensure length 1 which is used in ampute.continuous
     } else {
       candidates <- as.matrix(data[P == (i + 1), ])
       # For each candidate in the pattern, a weighted sum score is calculated
