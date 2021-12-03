@@ -255,14 +255,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (sum(freq) != 1) {
     freq <- recalculate.freq(freq = freq)
   }
-  if (!bycases) {
-    prop <- recalculate.prop(
-      prop = prop,
-      freq = freq,
-      patterns = patterns,
-      n = ncol(data)
-    )
-  }
   check.pat <- check.patterns(
     patterns = patterns,
     freq = freq,
@@ -271,6 +263,16 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   patterns.new <- check.pat[["patterns"]]
   freq <- check.pat[["freq"]]
   prop <- check.pat[["prop"]]
+  
+  if (!bycases) {
+    prop <- recalculate.prop(
+      prop = prop,
+      freq = freq,
+      patterns = patterns.new,
+      n = ncol(data)
+    )
+  }
+  
   if (any(!mech %in% c("MCAR", "MAR", "MNAR"))) {
     stop("Mechanism should be either MCAR, MAR or MNAR", call. = FALSE)
   }
