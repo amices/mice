@@ -87,7 +87,7 @@ Generates Multivariate Imputations by Chained Equations (MICE)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.3</span>
       </span>
     </div>
 
@@ -708,6 +708,28 @@ John Fox, Frank E. Harrell, and Peter Malewski.</p>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> bmi   1   0   1   1</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> hyp   1   1   0   1</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> chl   1   1   1   0</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># example where we fit the imputation model on the train data</span></span>
+<span class='r-in'><span class='co'># and apply the model to impute the test data</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>ignore</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>25</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span>, prob <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.3</span>, <span class='fl'>0.7</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># scenario 1: train and test in the same dataset</span></span>
+<span class='r-in'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'>mice</span><span class='op'>(</span><span class='va'>nhanes2</span>, m <span class='op'>=</span> <span class='fl'>2</span>, ignore <span class='op'>=</span> <span class='va'>ignore</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span>, seed <span class='op'>=</span> <span class='fl'>22112</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>imp.test1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>ignore</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>imp.test1</span><span class='op'>$</span><span class='va'>data</span></span>
+<span class='r-in'><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp.test1</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp.test1</span>, <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># scenario 2: train and test in separate datasets</span></span>
+<span class='r-in'><span class='va'>traindata</span> <span class='op'>&lt;-</span> <span class='va'>nhanes2</span><span class='op'>[</span><span class='op'>!</span><span class='va'>ignore</span>, <span class='op'>]</span></span>
+<span class='r-in'><span class='va'>testdata</span> <span class='op'>&lt;-</span> <span class='va'>nhanes2</span><span class='op'>[</span><span class='va'>ignore</span>, <span class='op'>]</span></span>
+<span class='r-in'><span class='va'>imp.train</span> <span class='op'>&lt;-</span> <span class='fu'>mice</span><span class='op'>(</span><span class='va'>traindata</span>, m <span class='op'>=</span> <span class='fl'>2</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span>, seed <span class='op'>=</span> <span class='fl'>22112</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>imp.test2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.mids.html'>mice.mids</a></span><span class='op'>(</span><span class='va'>imp.train</span>, newdata <span class='op'>=</span> <span class='va'>testdata</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp.test2</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp.test2</span>, <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
