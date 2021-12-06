@@ -1,3 +1,8 @@
+# mice 3.14.3
+
+* Adds example code to fit model on train data and apply to test data to `mice()`
+* Adds example code on synthetic data generation and analysis in `make.where()`
+
 # mice 3.14.2
 
 * Repairs a `drop = FALSE` buglet in `mice.impute.rf()` (#447, #448)
