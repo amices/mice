@@ -269,7 +269,8 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       prop = prop,
       freq = freq,
       patterns = patterns.new,
-      n = ncol(data)
+      k = ncol(data),
+      n = nrow(data)
     )
   }
   
@@ -511,8 +512,8 @@ sum.scores <- function(P, data, std, weights, patterns) {
 # This is an underlying function of multivariate amputation function ampute().
 # The function recalculates the proportion of missing cases for the desired
 # #missing cells.
-recalculate.prop <- function(prop, n, patterns, freq) {
-  miss <- prop * n^2 # Desired #missing cells
+recalculate.prop <- function(prop, n, k, patterns, freq) {
+  miss <- prop * n * k # Desired #missing cells
   # Calculate #cases according prop and #zeros in patterns
   cases <- vapply(
     seq_len(nrow(patterns)),
