@@ -52,11 +52,11 @@
 #' dat[0 == rbinom(1000, 1, 1 - .25), 1:2] <- NA
 #'
 #' # Prepare data for imputation
-#' blk <- list(c("X", "XX"), "Y")
-#' meth <- c("pmm.cra", "")
+#' blk <- list(c("x", "xx"), "y")
+#' meth <- c("mpmm", "")
 #' 
 #' # Impute data
-#' imp <- mice(dat, blocks = blk, method = method, print = FALSE)
+#' imp <- mice(dat, blocks = blk, method = meth, print = FALSE)
 #'
 #' # Pool results
 #' pool(with(imp, lm(y ~ x + xx)))
@@ -67,20 +67,33 @@
 #' cmp <- complete(imp)
 #' points(cmp$x[is.na(dat$x)], cmp$xx[is.na(dat$x)], col = mdc(2))
 #' @export
-mice.impute.mpmm <- function(y, ry, x, wy = NULL, ...){
-  r <- 1 * is.na(y)
+#' 
+mice.impute.mpmm <- function(data, format = "imputes", ...){
+  order <- dimnames(data)[[1]]
+  res <- mpmm.impute(data, ...)
+  return(mice:::single2imputes(res[order,], is.na(data)))
+}
+
+
+mpmm.impute <- function(data, ...){
+  data <- as.data.frame(data)
+  r <- !is.na(data)
   mpat <- apply(r, 1, function(x) paste(as.numeric(x), collapse=''))
   nmpat <- length(unique(mpat)) 
   if (nmpat != 2) stop("There are more than one missingness patterns")
-  if (!is.null(dim(ry))) ry <- ry[, 1]
-  if (is.null(wy)) wy <- !ry
-  if (!is.null(dim(wy))) wy <- wy[, 1]
-  ES <- eigen(solve(cov(y[ry, ], y[ry, ])) %*% cov(y[ry, ], x[ry,]) 
-              %*% solve(cov(x[ry,], x[ry,])) %*% cov(x[ry,], y[ry, ]))
+  r <- unique(r)[2, ]
+  y <- data[, which(r == FALSE), drop = FALSE]
+  ry <- !is.na(y)[,1]
+  x <- data[, which(r == TRUE), drop = FALSE]
+  wy <- !ry
+  ES <- eigen(solve(cov(y[ry, ,drop = FALSE], y[ry, ,drop = FALSE])) %*% cov(y[ry, ,drop = FALSE], x[ry, ,drop = FALSE]) 
+              %*% solve(cov(x[ry, ,drop = FALSE], x[ry, ,drop = FALSE])) %*% cov(x[ry, ,drop = FALSE], y[ry, ,drop = FALSE]))
   parm <- as.matrix(ES$vectors[, 1]) 
   z <- as.matrix(y) %*% parm
   imp <- mice.impute.pmm(z, ry, x)
   zstar <- as.matrix(imp)
   y[wy, ] <- y[ry, ,drop = FALSE][match(zstar, z[ry]), ]
-  return(y[wy, ])
+  data <- cbind(y, x)
+  data <- as.data.frame(data)
+  return(data)
 }
