@@ -80,7 +80,7 @@ Details)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -312,13 +312,11 @@ missing completely at random for incomplete multivariate data. Psychometrika,
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Missing data patterns: 2 used, 3 removed.</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Cases used: 20 </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Hawkins' test: median chi^2 (4) = 2.20373, median p = 0.6983465. Some p-values for Hawkins' test were significant; please inspect their values, e.g., using `plot(x)`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hawkins' test: median chi^2 (4) = 2.760281, median p = 0.5987083</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Anderson-Darling rank test: median T = 0.7527769, median p = 0.4135451. Some p-values for the Anderson-Darling test were significant; please inspect their values, e.g., using `plot(x)`</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Interpretation of results:</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>  Hawkins' test is not significant; there is no evidence to reject the assumptions of multivariate normality and MCAR.</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  Anderson-Darling test is not significant. There is thus evidence against multivariate normality, but not against MCAR.</span>
 <span class='r-in'><span class='co'># Plot p-values across imputed data sets</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span></span>
 <span class='r-in'><span class='co'># Plot md patterns used for the test</span></span>

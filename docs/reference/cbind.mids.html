@@ -81,7 +81,7 @@ columnwise into a mids object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -267,23 +267,23 @@ is call to <code>cbind.mids</code></td></tr>
 <span class='r-in'><span class='co'># Of course, chl was not imputed</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp4</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   age  bmi hyp chl</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   1 22.5   1  NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   1 33.2   1  NA</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 2   2 22.7   1 187</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   1 27.5   1 187</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   3 25.5   2  NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   1 22.0   1 187</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   3 22.0   2  NA</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 5   1 20.4   1 113</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   3 27.4   1 184</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   3 22.7   1 184</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># Combine mids object with data frame</span></span>
 <span class='r-in'><span class='va'>imp5</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>imp3</span>, <span class='va'>nhanes2</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp5</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   age  bmi hyp age.1 bmi.1 hyp.1 chl</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   1 22.5   1 20-39    NA  &lt;NA&gt;  NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   1 33.2   1 20-39    NA  &lt;NA&gt;  NA</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 2   2 22.7   1 40-59  22.7    no 187</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   1 27.5   1 20-39    NA    no 187</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   3 25.5   2 60-99    NA  &lt;NA&gt;  NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   1 22.0   1 20-39    NA    no 187</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   3 22.0   2 60-99    NA  &lt;NA&gt;  NA</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 5   1 20.4   1 20-39  20.4    no 113</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   3 27.4   1 60-99    NA  &lt;NA&gt; 184</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   3 22.7   1 60-99    NA  &lt;NA&gt; 184</span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

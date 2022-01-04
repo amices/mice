@@ -81,7 +81,7 @@ the predictors by means of the standard ~ operator." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -185,25 +185,25 @@ the rows. The default assigns each variable in its own block.</p></td>
 <span class='r-in'><span class='va'>f1</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $age</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> age ~ bmi + hyp + chl</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fd76bf11870&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fafcfceaff0&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $bmi</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> bmi ~ age + hyp + chl</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fd76bf11870&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fafcfceaff0&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $hyp</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> hyp ~ age + bmi + chl</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fd76bf11870&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fafcfceaff0&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $chl</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> chl ~ age + bmi + hyp</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fd76bf11870&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fafcfceaff0&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-in'><span class='va'>f2</span> <span class='op'>&lt;-</span> <span class='fu'>make.formulas</span><span class='op'>(</span><span class='va'>nhanes</span>, blocks <span class='op'>=</span> <span class='fu'><a href='make.blocks.html'>make.blocks</a></span><span class='op'>(</span><span class='va'>nhanes</span>, <span class='st'>"collect"</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>f2</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $collect</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> age + bmi + hyp + chl ~ 0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fd72e38f3e8&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fafcff90798&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># for editing, it may be easier to work with the character vector</span></span>
@@ -217,19 +217,19 @@ the rows. The default assigns each variable in its own block.</p></td>
 <span class='r-in'><span class='va'>f3</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $age</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> age ~ bmi + hyp + chl</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fd769e41940&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fafcfded878&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $bmi</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> bmi ~ age + hyp + chl</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fd769e41940&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fafcfded878&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $hyp</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> hyp ~ age + bmi + chl</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fd769e41940&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fafcfded878&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> $chl</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> chl ~ age + bmi + hyp</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fd769e41940&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fafcfded878&gt;</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 </pre>
   </div>

@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -219,8 +219,8 @@ Performing Likelihood Ratio Tests with Multiply-Imputed Data Sets.
 <span class='r-in'><span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>gen</span> <span class='op'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>gen</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>~</span> <span class='va'>hgt</span> <span class='op'>+</span> <span class='va'>hc</span> <span class='op'>+</span> <span class='va'>reg</span>, family <span class='op'>=</span> <span class='va'>binomial</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>fit0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>gen</span> <span class='op'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>gen</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>~</span> <span class='va'>hgt</span> <span class='op'>+</span> <span class='va'>hc</span>, family <span class='op'>=</span> <span class='va'>binomial</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'>D3</span><span class='op'>(</span><span class='va'>fit1</span>, <span class='va'>fit0</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    test statistic df1     df2 dfcom   p.value       riv</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  1 ~~ 2   1.53657   4 66.8667   741 0.2016532 0.6788932</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    test statistic df1     df2 dfcom    p.value       riv</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1 ~~ 2  2.227273   4 95.7121   741 0.07172716 0.4958803</span>
 <span class='r-in'><span class='co'># }</span></span>
 </pre>
   </div>
