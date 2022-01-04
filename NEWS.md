@@ -1,3 +1,7 @@
+# mice 3.14.4
+
+* Preserves stochastic nature of mice() by smarter random seed initialisation (#459)
+
 # mice 3.14.3
 
 * Adds example code to fit model on train data and apply to test data to `mice()`
