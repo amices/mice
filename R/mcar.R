@@ -177,6 +177,9 @@ mcar.data.frame <- function(x,
   newdata <- x
   missings <- is.na(x)
   pats <- mice::md.pattern(x, plot = FALSE)
+  if(nrow(pats) < 4L){
+    stop("Two or more missing data patterns are required.")
+  }
   remove_pats <- as.numeric(rownames(pats))[-nrow(pats)] <= min_n
   if (any(remove_pats)) {
     out$removed_patterns <- pats[remove_pats, ]
