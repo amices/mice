@@ -8,41 +8,46 @@
 #'
 #' This function relies on package \code{\link{furrr}}, which is a
 #' package for R versions 3.2.0 and later. We have chosen to use furrr function
-#' \code{future_map} to allow the use of \code{futuremice} on Mac, Linux and Windows
-#' systems.
+#' \code{future_map} to allow the use of \code{futuremice} on Mac, Linux and 
+#' Windows systems.
 #'
 #'
 #' This wrapper function combines the output of \code{\link{future_map}} with
-#' function \code{\link{ibind}} in \code{\link{mice}}. A \code{mids} object is returned
-#' and can be used for further analyses.
+#' function \code{\link{ibind}} from the \code{\link{mice}} package. A 
+#' \code{mids} object is returned and can be used for further analyses.
 #'
-#' A seed value is drawn randomly by default, and accessible through \code{$parallelseed}.
-#' The seed can also be entered through specifying the argument parallelseed in the
-#' \code{\link{futuremice}} call. Hence, results will always be reproducible, regardless
-#' of whether the seed is specified in the global environment, or by setting the same
-#' seed within the function (potentially by extracting the seed from the \code{futuremice}
-#' output object.
+#' A seed value can be specified in the global environment, which will yield 
+#' reproducible results. A seed value can also be specified within the 
+#' \code{\link{futuremice}} call, through specifying the argument 
+#' \code{parallelseed}. If \code{parallelseed} is not specified, a seed value is 
+#' drawn randomly by default, and accessible through \code{$parallelseed} in the 
+#' output object. Hence, results will always be reproducible, regardless of 
+#' whether the seed is specified in the global environment, or by setting the 
+#' same seed within the function (potentially by extracting the seed from the 
+#' \code{futuremice} output object.
 #'
 #' @aliases futuremice
 #' @param data A data frame or matrix containing the incomplete data. Similar to
 #' the first argument of \code{\link{mice}}.
-#' @param m The number of desired imputated datasets. By default $m=5$ as with \code{mice}
-#' @param parallelseed A scalar to be used to obtain reproducible results over the
-#' futures. The default \code{parallelseed = NA} will result in a seed value that is 
-#' randomly drawn between -999999999 and 999999999.
+#' @param m The number of desired imputated datasets. By default $m=5$ as with 
+#' \code{mice}
+#' @param parallelseed A scalar to be used to obtain reproducible results over 
+#' the futures. The default \code{parallelseed = NA} will result in a seed value 
+#' that is randomly drawn between -999999999 and 999999999.
 #' @param n.core A scalar indicating the number of cores that should be used.
-#' @param seed A scalar to be used as the seed value for the mice algorithm within
-#' each parallel stream. Please note that the imputations will be the same for all
-#' streams and, hence, this should be used if and only if \code{n.core = 1} and
-#' if it is desired to obtain the same output as under \code{mice}.
-#' @param use.logical A logical indicating whether logical (\code{TRUE}) or physical 
-#' (\code{FALSE}) CPU's on machine should be used.
+#' @param seed A scalar to be used as the seed value for the mice algorithm 
+#' within each parallel stream. Please note that the imputations will be the 
+#' same for all streams and, hence, this should be used if and only if 
+#' \code{n.core = 1} and if it is desired to obtain the same output as under 
+#' \code{mice}.
+#' @param use.logical A logical indicating whether logical (\code{TRUE}) or 
+#' physical (\code{FALSE}) CPU's on machine should be used.
 #' @param future.plan A character indicating how \code{future}s are resolved. 
 #' The default \code{multisession} resolves futures asynchronously (in parallel)
-#' in separate \code{R} sessions running in the background. See \link{\code{plan}}
-#' for more information on future plans.
-#' @param ... Named arguments that are passed down to function \code{\link{mice}} or
-#' \code{\link{makeCluster}}.
+#' in separate \code{R} sessions running in the background. See 
+#' \link{\code{plan}} for more information on future plans.
+#' @param ... Named arguments that are passed down to function 
+#' \code{\link{mice}}.
 #'
 #' @return A mids object as defined by \code{\link{mids-class}}
 #'
@@ -96,7 +101,7 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
       n.core <- available
     } 
     if (n.core > m) {
-      message(paste("The number of cores exceeds the number of imputations. The number of cores used is set equal to the number of imputations (m = ", m, ")."))
+      message(paste("The number of cores exceeds the number of imputations. The number of cores used is set equal to the number of imputations (m =", m,")."))
       n.core <- m
     }
   } else {
