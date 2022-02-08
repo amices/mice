@@ -56,7 +56,7 @@
 #' \code{\link{plan}}, \code{\link{mice}}, \code{\link{mids-class}}
 #' @references
 #' Volker, T.B. and Vink, G. (2022). futuremice: The future starts today.
-#' \url{https://www.gerkovink.com/parlMICE/Vignette_futuremice.html}
+#' \url{https://www.gerkovink.com/futuremice/Vignette_futuremice.html}
 #'
 #' #'Van Buuren, S. (2018).
 #' \href{https://stefvanbuuren.name/fimd/parallel-computation.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
