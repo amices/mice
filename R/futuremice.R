@@ -101,7 +101,7 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
       n.core <- available
     } 
     if (n.core > m) {
-      message(paste("The number of cores exceeds the number of imputations. The number of cores used is set equal to the number of imputations (m =", m,")."))
+      warning(paste("The number of cores exceeds the number of imputations. The number of cores used is set equal to the number of imputations (m =", m,")."))
       n.core <- m
     }
   } else {
