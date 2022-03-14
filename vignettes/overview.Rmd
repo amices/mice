@@ -73,6 +73,7 @@ ampute()           | Generate missing data
 7. [Sensitivity analysis with `mice`](https://www.gerkovink.com/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html)
 8. [Generate missing values with `ampute`](https://rianneschouten.github.io/mice_ampute/vignette/ampute.html)
 9. [`parlMICE`: Parallel MICE imputation wrapper](https://www.gerkovink.com/parlMICE/Vignette_parlMICE.html)
+10. [`futuremice`: Wrapper for parallel MICE imputation through futures](https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremice.html)
 
 ## Related packages
 
