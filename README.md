@@ -2,7 +2,7 @@
 
 # mice <a href='https://amices.github.io/mice/'><img src='MICE_sticker_SMALL.png' align="right" height="139" /></a>
 
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
 [![](https://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice)
 [![](https://img.shields.io/badge/github%20version-3.13.14-orange.svg)](https://amices.github.io/mice/)
 
@@ -66,6 +66,7 @@ imp <- mice(nhanes, maxit = 2, m = 2, seed = 1)
 #>   1   2  bmi  hyp  chl
 #>   2   1  bmi  hyp  chl
 #>   2   2  bmi  hyp  chl
+
 # inspect quality of imputations
 stripplot(imp, chl, pch = 19, xlab = "Imputation number")
 ```
@@ -164,6 +165,8 @@ these through Github’s issues facility.
     `mice`](https://gerkovink.github.io/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html)
 7.  [Generate missing values with
     `ampute`](https://rianneschouten.github.io/mice_ampute/vignette/ampute.html)
+8.  [`futuremice`: Wrapper for parallel MICE imputation through
+    futures](https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremice.html)
 
 ### Code from publications
 
