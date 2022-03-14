@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -141,137 +141,132 @@
       <small>Source: <a href='https://github.com/amices/mice/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="mice-31314" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.14">
-<a href="#mice-31314" class="anchor"></a>mice 3.13.14<small> Unreleased </small>
+    <div id="mice-3144" class="section level1">
+<h1 class="page-header" data-toc-text="3.14.4">
+<a href="#mice-3144" class="anchor"></a>mice 3.14.4<small> Unreleased </small>
 </h1>
 <ul>
-<li>Informs the user that <code><a href="../reference/pool.html">pool()</a></code> cannot take a <code>mids</code> object (<a href='https://github.com/amices/mice/issues/433'>#433</a>)</li>
+<li>Preserves stochastic nature of mice() by smarter random seed initialisation (<a href='https://github.com/amices/mice/issues/459'>#459</a>)</li>
 </ul>
 </div>
-    <div id="mice-31313" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.13">
-<a href="#mice-31313" class="anchor"></a>mice 3.13.13<small> Unreleased </small>
+    <div id="mice-3143" class="section level1">
+<h1 class="page-header" data-toc-text="3.14.3">
+<a href="#mice-3143" class="anchor"></a>mice 3.14.3<small> Unreleased </small>
 </h1>
 <ul>
-<li>Avoids changing the global <code>.Random.seed</code> (<a href='https://github.com/amices/mice/issues/426'>#426</a>, <a href='https://github.com/amices/mice/issues/432'>#432</a>) by implementing <code><a href="https://withr.r-lib.org/reference/with_seed.html">withr::local_preserve_seed()</a></code> and <code><a href="https://withr.r-lib.org/reference/with_seed.html">withr::local_seed()</a></code>. This change provides stabler behavior in complex scripts, but may break exact reproducibility in some cases. If you run into a problem, I fear the only way to solve is to install <code>mice 3.13.12</code> or before.</li>
-<li>Improves the imputation of parabolic data in <code><a href="../reference/mice.impute.quadratic.html">mice.impute.quadratic()</a></code>, adds a parameter <code>quad.outcome</code> containing the name of the outcome variable in the complete-data model. Contributed <a href='https://github.com/Mingyang-Cai'>@Mingyang-Cai</a>, <a href='https://github.com/gerkovink'>@gerkovink</a> (<a href='https://github.com/amices/mice/issues/408'>#408</a>)</li>
+<li>Adds example code to fit model on train data and apply to test data to <code><a href="../reference/mice.html">mice()</a></code>
+</li>
+<li>Adds example code on synthetic data generation and analysis in <code><a href="../reference/make.where.html">make.where()</a></code>
+</li>
 </ul>
 </div>
-    <div id="mice-31312" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.12">
-<a href="#mice-31312" class="anchor"></a>mice 3.13.12<small> Unreleased </small>
+    <div id="mice-3142" class="section level1">
+<h1 class="page-header" data-toc-text="3.14.2">
+<a href="#mice-3142" class="anchor"></a>mice 3.14.2<small> Unreleased </small>
 </h1>
 <ul>
-<li>By default, <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> now uses the faster <code>ranger</code> package as back-end instead of <code>randomForest</code> package. If you want the old behaviour specify the <code>rfPackage = "randomForest"</code> argument to the <code><a href="../reference/mice.html">mice(...)</a></code> call. Contributed <a href='https://github.com/prockenschaub'>@prockenschaub</a> (<a href='https://github.com/amices/mice/issues/431'>#431</a>).</li>
+<li>Repairs a <code>drop = FALSE</code> buglet in <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> (<a href='https://github.com/amices/mice/issues/447'>#447</a>, <a href='https://github.com/amices/mice/issues/448'>#448</a>)</li>
+<li>Adds testfile <code>test-mice.impute.rf.R</code>(<a href='https://github.com/amices/mice/issues/448'>#448</a>)</li>
 </ul>
 </div>
-    <div id="mice-31311" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.11">
-<a href="#mice-31311" class="anchor"></a>mice 3.13.11<small> Unreleased </small>
+    <div id="mice-3141" class="section level1">
+<h1 class="page-header" data-toc-text="3.14.1">
+<a href="#mice-3141" class="anchor"></a>mice 3.14.1<small> Unreleased </small>
 </h1>
 <ul>
-<li>Updates documentation for post-processing functionality (<a href='https://github.com/amices/mice/issues/387'>#387</a>)</li>
+<li>@str-amg reported that the new dependency on <code>withr</code> package should have version 2.4.0 (published in January 2021) or higher. Versions <code>withr 2.3.0</code> and before may give <code>Error: object 'local_seed' is not exported by 'namespace:withr'</code>. Either update manually, or install the patched version <code>mice 3.14.1</code> from GitHub. (<a href='https://github.com/amices/mice/issues/445'>#445</a>)</li>
 </ul>
 </div>
-    <div id="mice-31310" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.10">
-<a href="#mice-31310" class="anchor"></a>mice 3.13.10<small> Unreleased </small>
-</h1>
-<ul>
-<li>Adds Rcpp necessities</li>
-</ul>
-</div>
-    <div id="mice-3139" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.9">
-<a href="#mice-3139" class="anchor"></a>mice 3.13.9<small> Unreleased </small>
-</h1>
-<ul>
-<li>Solves a problem with “last resort” initialisation of factors (<a href='https://github.com/amices/mice/issues/410'>#410</a>)</li>
-</ul>
-</div>
-    <div id="mice-3138" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.8">
-<a href="#mice-3138" class="anchor"></a>mice 3.13.8<small> Unreleased </small>
-</h1>
-<ul>
-<li>Generalises <code><a href="../reference/pool.html">pool()</a></code> so that it processes the parameters from all <code>gamlss</code> sub-models. Thanks Marcio Augusto Diniz (<a href='https://github.com/amices/mice/issues/406'>#406</a>, <a href='https://github.com/amices/mice/issues/405'>#405</a>)</li>
-</ul>
-</div>
-    <div id="mice-3137" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.7">
-<a href="#mice-3137" class="anchor"></a>mice 3.13.7<small> Unreleased </small>
-</h1>
-<ul>
-<li>Documents the “flat-line behaviour” of <code><a href="../reference/mice.impute.2l.lmer.html">mice.impute.2l.lmer()</a></code> to indicate a problem in fitting the imputation model (<a href='https://github.com/amices/mice/issues/385'>#385</a>)</li>
-</ul>
-</div>
-    <div id="mice-3136" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.6">
-<a href="#mice-3136" class="anchor"></a>mice 3.13.6<small> Unreleased </small>
-</h1>
-<ul>
-<li>Solves problem with <code>Xi &lt;- as.matrix(...)</code> in <code><a href="../reference/mice.impute.2l.lmer.html">mice.impute.2l.lmer()</a></code> that occurred when a cluster contains only one observation (<a href='https://github.com/amices/mice/issues/384'>#384</a>)</li>
-<li>Add reprex to test (<a href='https://github.com/amices/mice/issues/326'>#326</a>)</li>
-</ul>
-</div>
-    <div id="mice-3135" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.5">
-<a href="#mice-3135" class="anchor"></a>mice 3.13.5<small> Unreleased </small>
-</h1>
-<ul>
-<li>Edits the <code>predictorMatrix</code> to a monotone pattern if <code>visitSequence = "monotone"</code> and <code>maxit = 1</code> (<a href='https://github.com/amices/mice/issues/316'>#316</a>)</li>
-<li>Documents that multivariate imputation methods do not support the <code>post</code> parameter (<a href='https://github.com/amices/mice/issues/326'>#326</a>)</li>
-</ul>
-</div>
-    <div id="mice-3134" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.4">
-<a href="#mice-3134" class="anchor"></a>mice 3.13.4<small> Unreleased </small>
-</h1>
-<ul>
-<li>Solves a problem with the plot produced by <code><a href="../reference/md.pattern.html">md.pattern()</a></code> (<a href='https://github.com/amices/mice/issues/318'>#318</a>, <a href='https://github.com/amices/mice/issues/323'>#323</a>)</li>
-<li>Fixes the intercept in <code><a href="../reference/make.formulas.html">make.formulas()</a></code> (<a href='https://github.com/amices/mice/issues/305'>#305</a>, <a href='https://github.com/amices/mice/issues/324'>#324</a>)</li>
-<li>Fixes seed when using <code>newdata</code> in <code><a href="../reference/mice.mids.html">mice.mids()</a></code> (<a href='https://github.com/amices/mice/issues/313'>#313</a>, <a href='https://github.com/amices/mice/issues/325'>#325</a>)</li>
-</ul>
-</div>
-    <div id="mice-3133" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.3">
-<a href="#mice-3133" class="anchor"></a>mice 3.13.3<small> Unreleased </small>
-</h1>
-<ul>
-<li>Solves a problem with row names of the <code>where</code> element created in <code><a href="../reference/cbind.html">rbind()</a></code> (<a href='https://github.com/amices/mice/issues/319'>#319</a>)</li>
-</ul>
-</div>
-    <div id="mice-3132" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.2">
-<a href="#mice-3132" class="anchor"></a>mice 3.13.2<small> Unreleased </small>
-</h1>
-<ul>
-<li>Uses the robust standard error estimate for pooling when <code><a href="../reference/pool.html">pool()</a></code> can extract <code>robust.se</code> from the object returned by <code><a href="https://generics.r-lib.org/reference/tidy.html">broom::tidy()</a></code> (<a href='https://github.com/amices/mice/issues/310'>#310</a>)</li>
-</ul>
-</div>
-    <div id="mice-3131" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.1">
-<a href="#mice-3131" class="anchor"></a>mice 3.13.1<small> Unreleased </small>
-</h1>
-<ul>
-<li>Solves a bug in mnar imputation routine. Contributed by Margarita Moreno Betancur.</li>
-</ul>
-</div>
-    <div id="mice-3130" class="section level1">
-<h1 class="page-header" data-toc-text="3.13.0">
-<a href="#mice-3130" class="anchor"></a>mice 3.13.0<small> 2021-01-27 </small>
+    <div id="mice-3140" class="section level1">
+<h1 class="page-header" data-toc-text="3.14.0">
+<a href="#mice-3140" class="anchor"></a>mice 3.14.0<small> 2021-11-24 </small>
 </h1>
 <div id="major-changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h3>
 <ul>
-<li>Updated <code><a href="../reference/mids2spss.html">mids2spss()</a></code> replaces the <code>foreign</code> by <code>haven</code> package. Contributed Gerko Vink (<a href='https://github.com/amices/mice/issues/291'>#291</a>)</li>
+<li>Adds four new univariate functions using the lasso for automatic variable selection:</li>
+</ul>
+<table>
+<thead><tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code><a href="../reference/mice.impute.lasso.norm.html">mice.impute.lasso.norm()</a></code></td>
+<td>Lasso linear regression</td>
+</tr>
+<tr class="even">
+<td><code><a href="../reference/mice.impute.lasso.logreg.html">mice.impute.lasso.logreg()</a></code></td>
+<td>Lasso logistic regression</td>
+</tr>
+<tr class="odd">
+<td><code><a href="../reference/mice.impute.lasso.select.norm.html">mice.impute.lasso.select.norm()</a></code></td>
+<td>Lasso selector + linear regression</td>
+</tr>
+<tr class="even">
+<td><code><a href="../reference/mice.impute.lasso.select.logreg.html">mice.impute.lasso.select.logreg()</a></code></td>
+<td>Lasso selector + logistic regression</td>
+</tr>
+</tbody>
+</table>
+<p>Contributed by <a href='https://github.com/EdoardoCostantini'>@EdoardoCostantini</a> (<a href='https://github.com/amices/mice/issues/438'>#438</a>).</p>
+<ul>
+<li><p>Adds Jamshidian &amp;&amp; Jalal’s non-parametric MCAR test, <code>mice::MCAR()</code> and associated plot method. Contributed by <a href='https://github.com/cjvanlissa'>@cjvanlissa</a> (<a href='https://github.com/amices/mice/issues/423'>#423</a>).</p></li>
+<li><p>Adds two new functions <code><a href="../reference/pool.html">pool.syn()</a></code> and <code><a href="../reference/pool.scalar.html">pool.scalar.syn()</a></code> that specialise pooling estimates from synthetic data. The <code>"reiter2003"</code> pooling rule assumes that synthetic data were created from complete data. Thanks Thom Volker (<a href='https://github.com/amices/mice/issues/436'>#436</a>).</p></li>
+<li><p>Avoids changing the global <code>.Random.seed</code> (<a href='https://github.com/amices/mice/issues/426'>#426</a>, <a href='https://github.com/amices/mice/issues/432'>#432</a>) by implementing <code><a href="https://withr.r-lib.org/reference/with_seed.html">withr::local_preserve_seed()</a></code> and <code><a href="https://withr.r-lib.org/reference/with_seed.html">withr::local_seed()</a></code>. This change provides stabler behavior in complex scripts. The change does not appear to break reproducibility when <code><a href="../reference/mice.html">mice()</a></code> was run with a seed. Nevertheless, if you run into a reproducibility problem, install <code>mice 3.13.12</code> or before.</p></li>
+<li><p>Improves the imputation of parabolic data in <code><a href="../reference/mice.impute.quadratic.html">mice.impute.quadratic()</a></code>, adds a parameter <code>quad.outcome</code> containing the name of the outcome variable in the complete-data model. Contributed <a href='https://github.com/Mingyang-Cai'>@Mingyang-Cai</a>, <a href='https://github.com/gerkovink'>@gerkovink</a> (<a href='https://github.com/amices/mice/issues/408'>#408</a>)</p></li>
+<li><p>By default, <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> now uses the faster <code>ranger</code> package as back-end instead of <code>randomForest</code> package. If you want the old behaviour specify the <code>rfPackage = "randomForest"</code> argument to the <code>mice(...)</code> call. Contributed <a href='https://github.com/prockenschaub'>@prockenschaub</a> (<a href='https://github.com/amices/mice/issues/431'>#431</a>).</p></li>
+<li><p>Generalises <code><a href="../reference/pool.html">pool()</a></code> so that it processes the parameters from all <code>gamlss</code> sub-models. Thanks Marcio Augusto Diniz (<a href='https://github.com/amices/mice/issues/406'>#406</a>, <a href='https://github.com/amices/mice/issues/405'>#405</a>)</p></li>
+<li><p>Uses the robust standard error estimate for pooling when <code><a href="../reference/pool.html">pool()</a></code> can extract <code>robust.se</code> from the object returned by <code><a href="https://generics.r-lib.org/reference/tidy.html">broom::tidy()</a></code> (<a href='https://github.com/amices/mice/issues/310'>#310</a>)</p></li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h3>
+<ul>
+<li>Contains an emergency solution as <code>install.on.demand()</code> broke the standard CRAN workflow. mice 3.14.0 does not call <code>install.on.demand()</code> anymore for recommended packages. Also, <code>install.on.demand()</code> will not run anymore in non-interactive mode.</li>
+<li>Repairs an error in the <code>mice:::barnard.rubin()</code> function for infinite <code>dfcom</code>. Thanks <a href='https://github.com/huftis'>@huftis</a> (<a href='https://github.com/amices/mice/issues/441'>#441</a>).</li>
+<li>Solves problem with <code>Xi &lt;- as.matrix(...)</code> in <code><a href="../reference/mice.impute.2l.lmer.html">mice.impute.2l.lmer()</a></code> that occurred when a cluster contains only one observation (<a href='https://github.com/amices/mice/issues/384'>#384</a>)</li>
+<li>Edits the <code>predictorMatrix</code> to a monotone pattern if <code>visitSequence = "monotone"</code> and <code>maxit = 1</code> (<a href='https://github.com/amices/mice/issues/316'>#316</a>)</li>
+<li>Solves a problem with the plot produced by <code><a href="../reference/md.pattern.html">md.pattern()</a></code> (<a href='https://github.com/amices/mice/issues/318'>#318</a>, <a href='https://github.com/amices/mice/issues/323'>#323</a>)</li>
+<li>Fixes the intercept in <code><a href="../reference/make.formulas.html">make.formulas()</a></code> (<a href='https://github.com/amices/mice/issues/305'>#305</a>, <a href='https://github.com/amices/mice/issues/324'>#324</a>)</li>
+<li>Fixes seed when using <code>newdata</code> in <code><a href="../reference/mice.mids.html">mice.mids()</a></code> (<a href='https://github.com/amices/mice/issues/313'>#313</a>, <a href='https://github.com/amices/mice/issues/325'>#325</a>)</li>
+<li>Solves a problem with row names of the <code>where</code> element created in <code><a href="../reference/cbind.html">rbind()</a></code> (<a href='https://github.com/amices/mice/issues/319'>#319</a>)</li>
+<li>Solves a bug in mnar imputation routine. Contributed by Margarita Moreno Betancur.</li>
 </ul>
 </div>
 <div id="minor-changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>Replaces URL to jstatsoft with DOI</li>
+<li>Update reference to literature (<a href='https://github.com/amices/mice/issues/442'>#442</a>)</li>
+<li>Informs the user that <code><a href="../reference/pool.html">pool()</a></code> cannot take a <code>mids</code> object (<a href='https://github.com/amices/mice/issues/433'>#433</a>)</li>
+<li>Updates documentation for post-processing functionality (<a href='https://github.com/amices/mice/issues/387'>#387</a>)</li>
+<li>Adds Rcpp necessities</li>
+<li>Solves a problem with “last resort” initialisation of factors (<a href='https://github.com/amices/mice/issues/410'>#410</a>)</li>
+<li>Documents the “flat-line behaviour” of <code><a href="../reference/mice.impute.2l.lmer.html">mice.impute.2l.lmer()</a></code> to indicate a problem in fitting the imputation model (<a href='https://github.com/amices/mice/issues/385'>#385</a>)</li>
+<li>Add reprex to test (<a href='https://github.com/amices/mice/issues/326'>#326</a>)</li>
+<li>Documents that multivariate imputation methods do not support the <code>post</code> parameter (<a href='https://github.com/amices/mice/issues/326'>#326</a>)</li>
+</ul>
+</div>
+</div>
+    <div id="mice-3130" class="section level1">
+<h1 class="page-header" data-toc-text="3.13.0">
+<a href="#mice-3130" class="anchor"></a>mice 3.13.0<small> 2021-01-27 </small>
+</h1>
+<div id="major-changes-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#major-changes-1" class="anchor"></a>Major changes</h3>
+<ul>
+<li>Updated <code><a href="../reference/mids2spss.html">mids2spss()</a></code> replaces the <code>foreign</code> by <code>haven</code> package. Contributed Gerko Vink (<a href='https://github.com/amices/mice/issues/291'>#291</a>)</li>
+</ul>
+</div>
+<div id="minor-changes-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Repairs an error in <code>tests\testhat\test-D1.R</code> that failed on <code>mitml 0.4-0</code>
 </li>
@@ -296,14 +291,14 @@
 <a href="#new-ignore-argument-to-mice" class="anchor"></a>New <code>ignore</code> argument to <code>mice</code>
 </h3>
 <ul>
-<li>New <code>ignore</code> argument to <code><a href="../reference/mice.html">mice()</a></code>. This argument is a logical vector of <code><a href="https://rdrr.io/r/base/nrow.html">nrow(data)</a></code> elements indicating which rows are ignored when creating the imputation model. We may use the <code>ignore</code> argument to split the data into a training set (on which the imputation model is built) and a test set (that does not influence the imputation model estimates). The argument is based on the suggestion in <a href="https://github.com/amices/mice/issues/32#issuecomment-355600365" class="uri">https://github.com/amices/mice/issues/32#issuecomment-355600365</a>. See <a href='https://github.com/amices/mice/issues/32'>#32</a> for more background and techniques. Crafted by Patrick Rockenschaub</li>
+<li>New <code>ignore</code> argument to <code><a href="../reference/mice.html">mice()</a></code>. This argument is a logical vector of <code>nrow(data)</code> elements indicating which rows are ignored when creating the imputation model. We may use the <code>ignore</code> argument to split the data into a training set (on which the imputation model is built) and a test set (that does not influence the imputation model estimates). The argument is based on the suggestion in <a href="https://github.com/amices/mice/issues/32#issuecomment-355600365" class="uri">https://github.com/amices/mice/issues/32#issuecomment-355600365</a>. See <a href='https://github.com/amices/mice/issues/32'>#32</a> for more background and techniques. Crafted by Patrick Rockenschaub</li>
 </ul>
 </div>
 <div id="new-filter-function-for-mids-objects" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new-filter-function-for-mids-objects" class="anchor"></a>New <code>filter()</code> function for <code>mids</code> objects</h3>
 <ul>
-<li>New <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> method that subsets a <code>mids</code> object (multiply-imputed data set). The method accepts a logical vector of length <code><a href="https://rdrr.io/r/base/nrow.html">nrow(data)</a></code>, or an expression to construct such a vector from the incomplete data. (<a href='https://github.com/amices/mice/issues/269'>#269</a>). Crafted by Patrick Rockenschaub.</li>
+<li>New <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> method that subsets a <code>mids</code> object (multiply-imputed data set). The method accepts a logical vector of length <code>nrow(data)</code>, or an expression to construct such a vector from the incomplete data. (<a href='https://github.com/amices/mice/issues/269'>#269</a>). Crafted by Patrick Rockenschaub.</li>
 </ul>
 </div>
 <div id="changes-affecting-reproducibility" class="section level3">
@@ -311,12 +306,12 @@
 <a href="#changes-affecting-reproducibility" class="anchor"></a>Changes affecting reproducibility</h3>
 <ul>
 <li>
-<strong>Breaking change:</strong> The <code>matcher</code> algorithm in <code>pmm</code> has changed to <code>matchindex</code> for speed improvements. If you want the old behavior, specify <code><a href="../reference/mice.html">mice(..., use.matcher = TRUE)</a></code>.</li>
+<strong>Breaking change:</strong> The <code>matcher</code> algorithm in <code>pmm</code> has changed to <code>matchindex</code> for speed improvements. If you want the old behavior, specify <code>mice(..., use.matcher = TRUE)</code>.</li>
 </ul>
 </div>
-<div id="minor-changes-1" class="section level3">
+<div id="minor-changes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Corrected installation problem related to <code>cpp11</code> package (<a href='https://github.com/amices/mice/issues/286'>#286</a>)</li>
 <li>Simplifies <code><a href="../reference/with.mids.html">with.mids()</a></code> by calling <code>eval_tidy()</code> on a quosure. Does not yet solve <a href='https://github.com/amices/mice/issues/265'>#265</a>.</li>
@@ -346,17 +341,17 @@
 <h1 class="page-header" data-toc-text="3.11.0">
 <a href="#mice-3110" class="anchor"></a>mice 3.11.0<small> 2020-08-05 </small>
 </h1>
-<div id="major-changes-1" class="section level2">
+<div id="major-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
 <ul>
 <li>The Cox model does not return <code>df.residual</code>, which caused problematic behavior in the <code><a href="../reference/D1.html">D1()</a></code>, <code><a href="../reference/D2.html">D2()</a></code>, <code><a href="../reference/D3.html">D3()</a></code>, <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> and <code><a href="../reference/pool.html">pool()</a></code>. <code>mice</code> now extracts the relevant information from other parts of the objects returned by <code><a href="https://rdrr.io/pkg/survival/man/coxph.html">survival::coxph()</a></code>, which solves long-standing issues with the integration of the Cox model (<a href='https://github.com/amices/mice/issues/246'>#246</a>).</li>
 <li>Adds missing <code>Rccp</code> dependency to work with <code>tidyr 1.1.1</code> (<a href='https://github.com/amices/mice/issues/248'>#248</a>).</li>
 </ul>
 </div>
-<div id="minor-changes-2" class="section level2">
+<div id="minor-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Addresses warnings: <code>Non-file package-anchored link(s) in documentation object</code>.</li>
 <li>Updates on <code>ampute</code> documentation (<a href='https://github.com/amices/mice/issues/251'>#251</a>).</li>
@@ -368,16 +363,16 @@
 <h1 class="page-header" data-toc-text="3.10.0">
 <a href="#mice-3100" class="anchor"></a>mice 3.10.0<small> 2020-07-13 </small>
 </h1>
-<div id="major-changes-2" class="section level2">
+<div id="major-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
 <ul>
 <li>New functions <code><a href="../reference/tidy.mipo.html">tidy.mipo()</a></code> and <code><a href="../reference/glance.mipo.html">glance.mipo()</a></code> return standardized output that conforms to <code>broom</code> specifications. Kindly contributed by Vincent Arel Bundock (<a href='https://github.com/amices/mice/issues/240'>#240</a>).</li>
 </ul>
 </div>
-<div id="minor-changes-3" class="section level2">
+<div id="minor-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-4" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Solves a problem with the <code>D3</code> testing script that produced an error on CRAN (<a href='https://github.com/amices/mice/issues/244'>#244</a>).</li>
 </ul>
@@ -387,18 +382,18 @@
 <h1 class="page-header" data-toc-text="3.9.0">
 <a href="#mice-390" class="anchor"></a>mice 3.9.0<small> 2020-05-14 </small>
 </h1>
-<div id="major-changes-3" class="section level2">
+<div id="major-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-4" class="anchor"></a>Major changes</h2>
 <ul>
 <li>The <code><a href="../reference/D3.html">D3()</a></code> function in <code>mice</code> gave incorrect results. This version solves a problem in the calculation of the <code>D3</code>-statistic. See <a href='https://github.com/amices/mice/issues/226'>#226</a> and <a href='https://github.com/amices/mice/issues/228'>#228</a> for more details. The documentation explains why results from <code><a href="../reference/D3.html">mice::D3()</a></code> and <code><a href="https://rdrr.io/pkg/mitml/man/testModels.html">mitml::testModels()</a></code> may differ.</li>
 <li>The <code><a href="../reference/pool.html">pool()</a></code> function is now more forgiving when there is no <code><a href="https://generics.r-lib.org/reference/glance.html">glance()</a></code> function (<a href='https://github.com/amices/mice/issues/233'>#233</a>)</li>
 <li>It is possible to bypass <code>remove.lindep()</code> by setting <code>eps = 0</code> (<a href='https://github.com/amices/mice/issues/225'>#225</a>)</li>
 </ul>
 </div>
-<div id="minor-changes-4" class="section level2">
+<div id="minor-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-5" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Adds reference to Leacy’s thesis</li>
 <li>Adds an example to the <code><a href="../reference/plot.mids.html">plot.mids()</a></code> documentation</li>
@@ -409,9 +404,9 @@
 <h1 class="page-header" data-toc-text="3.8.0">
 <a href="#mice-380" class="anchor"></a>mice 3.8.0<small> 2020-02-21 </small>
 </h1>
-<div id="major-changes-4" class="section level2">
+<div id="major-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-4" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-5" class="anchor"></a>Major changes</h2>
 <ul>
 <li>This version adds two new NARFCS methods for imputing data under the <em>Missing Not at Random (MNAR)</em> assumption. NARFCS is generalised version of the so-called <span class="math inline"><em>δ</em></span>-adjustment method. Margarita Moreno-Betancur and Ian White kindly contributes the functions <code><a href="../reference/mice.impute.mnar.logreg.html">mice.impute.mnar.norm()</a></code> and <code><a href="../reference/mice.impute.mnar.logreg.html">mice.impute.mnar.logreg()</a></code>. These functions aid in performing sensitivity analysis to investigate the impact of different MNAR assumptions on the conclusion of the study. An alternative for MNAR is the older <code><a href="../reference/mice.impute.ri.html">mice.impute.ri()</a></code> function.</li>
 <li>Installation of <code>mice</code> is faster. External packages needed for imputation and analyses are now installed on demand. The number of dependencies as estimated by <code>rsconnect::appDepencies()</code> decreased from 132 to 83.</li>
@@ -419,9 +414,9 @@
 <li>There is now a more flexible <code><a href="../reference/pool.html">pool()</a></code> function that integrates better with the <code>broom</code> and <code>broom.mixed</code> packages.</li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Deprecates <code><a href="../reference/pool.compare.html">pool.compare()</a></code>. Use <code><a href="../reference/D1.html">D1()</a></code> instead (<a href='https://github.com/amices/mice/issues/220'>#220</a>)</li>
 <li>Removes everything in <code><a href="https://rdrr.io/r/utils/globalVariables.html">utils::globalVariables()</a></code>
@@ -574,7 +569,7 @@
 <li>simplify code in <code>rbind.mids</code> (thanks stephematician) (<a href='https://github.com/amices/mice/issues/59'>#59</a>)</li>
 <li>repair bug in <code><a href="../reference/pool.compare.html">pool.compare()</a></code> in handling factors (<a href='https://github.com/amices/mice/issues/60'>#60</a>)</li>
 <li>fixed bug in <code>rbind.mids</code> in handling <code>where</code> (<a href='https://github.com/amices/mice/issues/59'>#59</a>)</li>
-<li>add new arguments to <code><a href="../reference/as.mids.html">as.mids()</a></code>, add <code>as()</code>
+<li>add new arguments to <code><a href="../reference/as.mids.html">as.mids()</a></code>, add <code><a href="https://rdrr.io/r/methods/as.html">as()</a></code>
 </li>
 <li>update contact info</li>
 <li>resolved problem <code>cart</code> not accepting a matrix (thanks Joerg Drechsler)</li>
@@ -750,7 +745,7 @@
 <li>Fix colors to <code><a href="../reference/mdc.html">mdc()</a></code> in example <code><a href="../reference/mice.impute.quadratic.html">mice.impute.quadratic()</a></code>
 </li>
 <li>Fix error in <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> if just one <code>NA</code> (thanks Anoop Shah)</li>
-<li>Fix error in <code><a href="../reference/mipo.html">summary.mipo()</a></code> when <code><a href="https://rdrr.io/r/base/names.html">names(x$qbar)</a></code> equals <code>NULL</code> (thanks Aiko Kuhn)</li>
+<li>Fix error in <code><a href="../reference/mipo.html">summary.mipo()</a></code> when <code>names(x$qbar)</code> equals <code>NULL</code> (thanks Aiko Kuhn)</li>
 <li>Fix improper testing in <code><a href="https://rdrr.io/r/base/nrow.html">ncol()</a></code> in <code><a href="../reference/mice.impute.2lonly.mean.html">mice.impute.2lonly.mean()</a></code>
 </li>
 </ul>

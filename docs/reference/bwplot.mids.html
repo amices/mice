@@ -81,7 +81,7 @@ functions extend the usual features of lattice." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -186,7 +186,7 @@ variables (used for the per-panel display) and the optional conditioning
 variables (which define the subsets plotted in different panels) to be used
 in the plot.</p>
 <p>The formula is evaluated on the complete data set in the <code>long</code> form.
-Legal variable names for the formula include <code><a href='https://rdrr.io/r/base/names.html'>names(x$data)</a></code> plus the
+Legal variable names for the formula include <code>names(x$data)</code> plus the
 two administrative factors <code>.imp</code> and <code>.id</code>.</p>
 <p><b>Extended formula interface:</b> The primary variable terms (both the LHS
 <code>y</code> and RHS <code>x</code>) may consist of multiple terms separated by a
@@ -206,11 +206,11 @@ produces odds labeling of vertical axis.</p>
       <td><p>An expression evaluating to a logical vector indicating
 which two groups are distinguished (e.g. using different colors) in the
 display. The environment in which this expression is evaluated in the
-response indicator <code><a href='https://rdrr.io/r/base/NA.html'>is.na(x$data)</a></code>.</p>
+response indicator <code>is.na(x$data)</code>.</p>
 <p>The default <code>na.group = NULL</code> contrasts the observed and missing data
 in the LHS <code>y</code> variable of the display, i.e. groups created by
-<code><a href='https://rdrr.io/r/base/NA.html'>is.na(y)</a></code>. The expression <code>y</code> creates the groups according to
-<code><a href='https://rdrr.io/r/base/NA.html'>is.na(y)</a></code>. The expression <code>y1 &amp; y2</code> creates groups by
+<code>is.na(y)</code>. The expression <code>y</code> creates the groups according to
+<code>is.na(y)</code>. The expression <code>y1 &amp; y2</code> creates groups by
 <code>is.na(y1) &amp; is.na(y2)</code>, and <code>y1 | y2</code> creates groups as
 <code>is.na(y1) | is.na(y2)</code>, and so on.</p></td>
     </tr>
@@ -218,7 +218,7 @@ in the LHS <code>y</code> variable of the display, i.e. groups created by
       <th>groups</th>
       <td><p>This is the usual <code>groups</code> arguments in <span class="pkg">lattice</span>. It
 differs from <code>na.groups</code> because it evaluates in the completed data
-<code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame(complete(x, "long", inc=TRUE))</a></code> (as usual), whereas
+<code>data.frame(complete(x, "long", inc=TRUE))</code> (as usual), whereas
 <code>na.groups</code> evaluates in the response indicator. See
 <code><a href='xyplot.mids.html'>xyplot</a></code> for more details. When both <code>na.groups</code> and
 <code>groups</code> are specified, <code>na.groups</code> takes precedence, and
@@ -320,7 +320,7 @@ in <span class="pkg">lattice</span> the argument <code>x</code> is always a form
 Visualization with R</em>, Springer.</p>
 <p>van Buuren S and Groothuis-Oudshoorn K (2011). <code>mice</code>: Multivariate
 Imputation by Chained Equations in <code>R</code>. <em>Journal of Statistical
-Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
+Software</em>, <b>45</b>(3), 1-67. doi: <a href='https://doi.org/10.18637/jss.v045.i03'>10.18637/jss.v045.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='mice.html'>mice</a></code>, <code><a href='xyplot.mids.html'>xyplot</a></code>, <code><a href='densityplot.mids.html'>densityplot</a></code>,
@@ -334,24 +334,28 @@ package, as well as <code><a href='https://rdrr.io/pkg/lattice/man/xyplot.html'>
     <p>Stef van Buuren</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>boys</span>, maxit <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt;  iter imp variable
-#&gt;   1   1  hgt  wgt  bmi  hc  gen  phb  tv  reg
-#&gt;   1   2  hgt  wgt  bmi  hc  gen  phb  tv  reg
-#&gt;   1   3  hgt  wgt  bmi  hc  gen  phb  tv  reg
-#&gt;   1   4  hgt  wgt  bmi  hc  gen  phb  tv  reg
-#&gt;   1   5  hgt  wgt  bmi  hc  gen  phb  tv  reg</div><div class='input'>
-<span class='co'>### box-and-whisker plot per imputation of all numerical variables</span>
-<span class='fu'>bwplot</span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
-</div><div class='img'><img src='bwplot.mids-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>### tv (testicular volume), conditional on region</span>
-<span class='fu'>bwplot</span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>tv</span> <span class='op'>~</span> <span class='va'>.imp</span> <span class='op'>|</span> <span class='va'>reg</span><span class='op'>)</span>
-</div><div class='img'><img src='bwplot.mids-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>### same data, organized in a different way</span>
-<span class='fu'>bwplot</span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>tv</span> <span class='op'>~</span> <span class='va'>reg</span> <span class='op'>|</span> <span class='va'>.imp</span>, theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='bwplot.mids-3.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>boys</span>, maxit <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  iter imp variable</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   1  hgt  wgt  bmi  hc  gen  phb  tv  reg</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   2  hgt  wgt  bmi  hc  gen  phb  tv  reg</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   3  hgt  wgt  bmi  hc  gen  phb  tv  reg</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   4  hgt  wgt  bmi  hc  gen  phb  tv  reg</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   5  hgt  wgt  bmi  hc  gen  phb  tv  reg</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>### box-and-whisker plot per imputation of all numerical variables</span></span>
+<span class='r-in'><span class='fu'>bwplot</span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='bwplot.mids-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>### tv (testicular volume), conditional on region</span></span>
+<span class='r-in'><span class='fu'>bwplot</span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>tv</span> <span class='op'>~</span> <span class='va'>.imp</span> <span class='op'>|</span> <span class='va'>reg</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='bwplot.mids-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>### same data, organized in a different way</span></span>
+<span class='r-in'><span class='fu'>bwplot</span><span class='op'>(</span><span class='va'>imp</span>, <span class='va'>tv</span> <span class='op'>~</span> <span class='va'>reg</span> <span class='op'>|</span> <span class='va'>.imp</span>, theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='bwplot.mids-3.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

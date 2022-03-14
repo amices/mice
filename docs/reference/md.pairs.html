@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -178,57 +178,60 @@ observations within four missing data pattern.</p>
     <p>Van Buuren, S., Groothuis-Oudshoorn, K. (2011). <code>mice</code>:
 Multivariate Imputation by Chained Equations in <code>R</code>. <em>Journal of
 Statistical Software</em>, <b>45</b>(3), 1-67.
-<a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
+doi: <a href='https://doi.org/10.18637/jss.v045.i03'>10.18637/jss.v045.i03</a></p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Stef van Buuren, Karin Groothuis-Oudshoorn, 2009</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>pat</span> <span class='op'>&lt;-</span> <span class='fu'>md.pairs</span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
-<span class='va'>pat</span>
-</div><div class='output co'>#&gt; $rr
-#&gt;     age bmi hyp chl
-#&gt; age  25  16  17  15
-#&gt; bmi  16  16  16  13
-#&gt; hyp  17  16  17  14
-#&gt; chl  15  13  14  15
-#&gt; 
-#&gt; $rm
-#&gt;     age bmi hyp chl
-#&gt; age   0   9   8  10
-#&gt; bmi   0   0   0   3
-#&gt; hyp   0   1   0   3
-#&gt; chl   0   2   1   0
-#&gt; 
-#&gt; $mr
-#&gt;     age bmi hyp chl
-#&gt; age   0   0   0   0
-#&gt; bmi   9   0   1   2
-#&gt; hyp   8   0   0   1
-#&gt; chl  10   3   3   0
-#&gt; 
-#&gt; $mm
-#&gt;     age bmi hyp chl
-#&gt; age   0   0   0   0
-#&gt; bmi   0   9   8   7
-#&gt; hyp   0   8   8   7
-#&gt; chl   0   7   7  10
-#&gt; </div><div class='input'>
-<span class='co'># show that these four matrices decompose the total sample size</span>
-<span class='co'># for each pair</span>
-<span class='va'>pat</span><span class='op'>$</span><span class='va'>rr</span> <span class='op'>+</span> <span class='va'>pat</span><span class='op'>$</span><span class='va'>rm</span> <span class='op'>+</span> <span class='va'>pat</span><span class='op'>$</span><span class='va'>mr</span> <span class='op'>+</span> <span class='va'>pat</span><span class='op'>$</span><span class='va'>mm</span>
-</div><div class='output co'>#&gt;     age bmi hyp chl
-#&gt; age  25  25  25  25
-#&gt; bmi  25  25  25  25
-#&gt; hyp  25  25  25  25
-#&gt; chl  25  25  25  25</div><div class='input'>
-<span class='co'># percentage of usable cases to impute row variable from column variable</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fl'>100</span> <span class='op'>*</span> <span class='va'>pat</span><span class='op'>$</span><span class='va'>mr</span> <span class='op'>/</span> <span class='op'>(</span><span class='va'>pat</span><span class='op'>$</span><span class='va'>mr</span> <span class='op'>+</span> <span class='va'>pat</span><span class='op'>$</span><span class='va'>mm</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     age bmi hyp chl
-#&gt; age NaN NaN NaN NaN
-#&gt; bmi 100   0  11  22
-#&gt; hyp 100   0   0  12
-#&gt; chl 100  30  30   0</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>pat</span> <span class='op'>&lt;-</span> <span class='fu'>md.pairs</span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>pat</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $rr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     age bmi hyp chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age  25  16  17  15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bmi  16  16  16  13</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hyp  17  16  17  14</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl  15  13  14  15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $rm</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     age bmi hyp chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age   0   9   8  10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bmi   0   0   0   3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hyp   0   1   0   3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl   0   2   1   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $mr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     age bmi hyp chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age   0   0   0   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bmi   9   0   1   2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hyp   8   0   0   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl  10   3   3   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $mm</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     age bmi hyp chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age   0   0   0   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bmi   0   9   8   7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hyp   0   8   8   7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl   0   7   7  10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># show that these four matrices decompose the total sample size</span></span>
+<span class='r-in'><span class='co'># for each pair</span></span>
+<span class='r-in'><span class='va'>pat</span><span class='op'>$</span><span class='va'>rr</span> <span class='op'>+</span> <span class='va'>pat</span><span class='op'>$</span><span class='va'>rm</span> <span class='op'>+</span> <span class='va'>pat</span><span class='op'>$</span><span class='va'>mr</span> <span class='op'>+</span> <span class='va'>pat</span><span class='op'>$</span><span class='va'>mm</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     age bmi hyp chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age  25  25  25  25</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bmi  25  25  25  25</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hyp  25  25  25  25</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl  25  25  25  25</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># percentage of usable cases to impute row variable from column variable</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fl'>100</span> <span class='op'>*</span> <span class='va'>pat</span><span class='op'>$</span><span class='va'>mr</span> <span class='op'>/</span> <span class='op'>(</span><span class='va'>pat</span><span class='op'>$</span><span class='va'>mr</span> <span class='op'>+</span> <span class='va'>pat</span><span class='op'>$</span><span class='va'>mm</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     age bmi hyp chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age NaN NaN NaN NaN</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bmi 100   0  11  22</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hyp 100   0   0  12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl 100  30  30   0</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -158,9 +158,9 @@
     </tr>
     <tr>
       <th>beta</th>
-      <td><p>A numeric vector with <code><a href='https://rdrr.io/r/base/length.html'>length(coef)</a></code> model coefficients.
+      <td><p>A numeric vector with <code>length(coef)</code> model coefficients.
 If the vector is not named, the coefficients should be
-given in the same order as in <code><a href='https://rdrr.io/r/stats/coef.html'>coef(model)</a></code>. If the vector is named,
+given in the same order as in <code>coef(model)</code>. If the vector is named,
 the procedure attempts to match on names.</p></td>
     </tr>
     </table>
@@ -181,47 +181,61 @@ if we set <code>beta = coef(model)</code>.</p>
     <p>Stef van Buuren, 2018</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>model0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Volume</span> <span class='op'>~</span> <span class='va'>Girth</span> <span class='op'>+</span> <span class='va'>Height</span>, data <span class='op'>=</span> <span class='va'>trees</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Volume ~ Girth + Height
-#&gt; &lt;environment: 0x7f9388d36bc8&gt;</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; (Intercept)       Girth      Height 
-#&gt; -57.9876589   4.7081605   0.3392512 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/deviance.html'>deviance</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 421.9214</div><div class='input'>
-<span class='co'># refit same model</span>
-<span class='va'>model1</span> <span class='op'>&lt;-</span> <span class='fu'>fix.coef</span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Volume ~ 1
-#&gt; &lt;environment: 0x7f9388d36bc8&gt;</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  (Intercept) 
-#&gt; 3.988039e-14 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/deviance.html'>deviance</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 421.9214</div><div class='input'>
-<span class='co'># change the beta's</span>
-<span class='va'>model2</span> <span class='op'>&lt;-</span> <span class='fu'>fix.coef</span><span class='op'>(</span><span class='va'>model0</span>, beta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>50</span>, <span class='fl'>5</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; (Intercept) 
-#&gt;   -62.07097 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/deviance.html'>deviance</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 1098.984</div><div class='input'>
-<span class='co'># compare predictions</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='img'><img src='fix.coef-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='img'><img src='fix.coef-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># compare proportion explained variance</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span>
-</div><div class='output co'>#&gt; [1] 0.94795</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span>
-</div><div class='output co'>#&gt; [1] 0.94795</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span>
-</div><div class='output co'>#&gt; [1] 0.9228528</div><div class='input'>
-<span class='co'># extract offset from constrained model</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>$</span><span class='va'>offset</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;   57.00   82.00   87.00   92.24  102.25  140.00 </div><div class='input'>
-<span class='co'># it also works with factors and missing data</span>
-<span class='va'>model0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span>, data <span class='op'>=</span> <span class='va'>nhanes2</span><span class='op'>)</span>
-<span class='va'>model1</span> <span class='op'>&lt;-</span> <span class='fu'>fix.coef</span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span>
-<span class='va'>model2</span> <span class='op'>&lt;-</span> <span class='fu'>fix.coef</span><span class='op'>(</span><span class='va'>model0</span>, beta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>15</span>, <span class='op'>-</span><span class='fl'>8</span>, <span class='op'>-</span><span class='fl'>8</span>, <span class='fl'>2</span>, <span class='fl'>0.2</span><span class='op'>)</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>model0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Volume</span> <span class='op'>~</span> <span class='va'>Girth</span> <span class='op'>+</span> <span class='va'>Height</span>, data <span class='op'>=</span> <span class='va'>trees</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Volume ~ Girth + Height</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fafba4349d8&gt;</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)       Girth      Height </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -57.9876589   4.7081605   0.3392512 </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/deviance.html'>deviance</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 421.9214</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># refit same model</span></span>
+<span class='r-in'><span class='va'>model1</span> <span class='op'>&lt;-</span> <span class='fu'>fix.coef</span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/formula.html'>formula</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Volume ~ 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7fafba4349d8&gt;</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  (Intercept) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3.988039e-14 </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/deviance.html'>deviance</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 421.9214</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># change the beta's</span></span>
+<span class='r-in'><span class='va'>model2</span> <span class='op'>&lt;-</span> <span class='fu'>fix.coef</span><span class='op'>(</span><span class='va'>model0</span>, beta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>50</span>, <span class='fl'>5</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -62.07097 </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/deviance.html'>deviance</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1098.984</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># compare predictions</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='fix.coef-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='fix.coef-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># compare proportion explained variance</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.94795</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>model1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.94795</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.9228528</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># extract offset from constrained model</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>$</span><span class='va'>offset</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   57.00   82.00   87.00   92.24  102.25  140.00 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># it also works with factors and missing data</span></span>
+<span class='r-in'><span class='va'>model0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span>, data <span class='op'>=</span> <span class='va'>nhanes2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>model1</span> <span class='op'>&lt;-</span> <span class='fu'>fix.coef</span><span class='op'>(</span><span class='va'>model0</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>model2</span> <span class='op'>&lt;-</span> <span class='fu'>fix.coef</span><span class='op'>(</span><span class='va'>model0</span>, beta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>15</span>, <span class='op'>-</span><span class='fl'>8</span>, <span class='op'>-</span><span class='fl'>8</span>, <span class='fl'>2</span>, <span class='fl'>0.2</span><span class='op'>)</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

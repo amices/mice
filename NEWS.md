@@ -1,73 +1,74 @@
-# mice 3.13.14
+# mice 3.14.4
 
-* Informs the user that `pool()` cannot take a `mids` object (#433)
+* Preserves stochastic nature of mice() by smarter random seed initialisation (#459)
 
-# mice 3.13.13
+# mice 3.14.3
 
-* Avoids changing the global `.Random.seed` (#426, #432) by implementing 
-`withr::local_preserve_seed()` and `withr::local_seed()`. This change provides
-stabler behavior in complex scripts, but may break exact reproducibility in 
-some cases. If you run into a problem, I fear the only way to solve is to 
-install `mice 3.13.12` or before.
-* Improves the imputation of parabolic data in `mice.impute.quadratic()`, 
-adds a parameter `quad.outcome` containing the name of the outcome variable 
-in the complete-data model. Contributed @Mingyang-Cai, @gerkovink (#408)
+* Adds example code to fit model on train data and apply to test data to `mice()`
+* Adds example code on synthetic data generation and analysis in `make.where()`
 
-# mice 3.13.12
+# mice 3.14.2
 
-* By default, `mice.impute.rf()` now uses the faster `ranger` package as 
-back-end instead of `randomForest` package. If you want the old behaviour 
-specify the `rfPackage = "randomForest"` argument to the `mice(...)` call. 
-Contributed @prockenschaub (#431).
+* Repairs a `drop = FALSE` buglet in `mice.impute.rf()` (#447, #448)
+* Adds testfile `test-mice.impute.rf.R`(#448)
 
-# mice 3.13.11
+# mice 3.14.1
 
-* Updates documentation for post-processing functionality (#387)
+* @str-amg reported that the new dependency on `withr` package should have version 2.4.0  (published in January 2021) or higher. Versions `withr 2.3.0` and before may give `Error: object 'local_seed' is not exported by 'namespace:withr'`. Either update manually, or install the patched version `mice 3.14.1` from GitHub. (#445)
 
-# mice 3.13.10 
+# mice 3.14.0
 
-* Adds Rcpp necessities
+### Major changes
 
-# mice 3.13.9
+* Adds four new univariate functions using the lasso for automatic variable selection: 
 
-* Solves a problem with "last resort" initialisation of factors (#410)
+| Function                          | Description                       |
+| --------------------------------- | --------------------------------- |
+|`mice.impute.lasso.norm()`         | Lasso linear regression |
+|`mice.impute.lasso.logreg()`       | Lasso logistic regression | 
+|`mice.impute.lasso.select.norm()`  | Lasso selector + linear regression |
+|`mice.impute.lasso.select.logreg()`| Lasso selector + logistic regression | 
 
-# mice 3.13.8
+Contributed by @EdoardoCostantini (#438).
 
-* Generalises `pool()` so that it processes the parameters from all 
-`gamlss` sub-models. Thanks Marcio Augusto Diniz (#406, #405)
+* Adds Jamshidian && Jalal's non-parametric MCAR test, `mice::MCAR()` and associated plot method. Contributed by @cjvanlissa (#423).
 
-# mice 3.13.7
+* Adds two new functions `pool.syn()` and `pool.scalar.syn()` that specialise pooling estimates from synthetic data. The `"reiter2003"` pooling rule assumes that synthetic data were created from complete data. Thanks Thom Volker (#436).
 
-* Documents the "flat-line behaviour" of `mice.impute.2l.lmer()` to indicate a problem in fitting the imputation model (#385)
+* Avoids changing the global `.Random.seed` (#426, #432) by implementing `withr::local_preserve_seed()` and `withr::local_seed()`. This change provides stabler behavior in complex scripts. The change does not appear to break reproducibility when `mice()` was run with a seed. Nevertheless, if you run into a reproducibility problem, install `mice 3.13.12` or before.
 
-# mice 3.13.6
+* Improves the imputation of parabolic data in `mice.impute.quadratic()`, adds a parameter `quad.outcome` containing the name of the outcome variable in the complete-data model. Contributed @Mingyang-Cai, @gerkovink (#408)
 
-* Solves problem with `Xi <- as.matrix(...)` in `mice.impute.2l.lmer()` that occurred when a cluster contains only one observation (#384)
-* Add reprex to test (#326)
+* By default, `mice.impute.rf()` now uses the faster `ranger` package as back-end instead of `randomForest` package. If you want the old behaviour specify the `rfPackage = "randomForest"` argument to the `mice(...)` call. Contributed @prockenschaub (#431).
 
-# mice 3.13.5
-
-* Edits the `predictorMatrix` to a monotone pattern if `visitSequence = "monotone"` and `maxit = 1` (#316)
-* Documents that multivariate imputation methods do not support the `post` parameter (#326)
-
-# mice 3.13.4
-
-* Solves a problem with the plot produced by `md.pattern()` (#318, #323)
-* Fixes the intercept in `make.formulas()` (#305, #324)
-* Fixes seed when using `newdata` in `mice.mids()` (#313, #325)
-
-# mice 3.13.3
-
-* Solves a problem with row names of the `where` element created in `rbind()` (#319)
-
-# mice 3.13.2
+* Generalises `pool()` so that it processes the parameters from all `gamlss` sub-models. Thanks Marcio Augusto Diniz (#406, #405)
 
 * Uses the robust standard error estimate for pooling when `pool()` can extract `robust.se` from the object returned by `broom::tidy()` (#310)
 
-# mice 3.13.1
+### Bug fixes
 
+* Contains an emergency solution as `install.on.demand()` broke the standard CRAN workflow. mice 3.14.0 does not call `install.on.demand()` anymore for recommended packages. Also, `install.on.demand()` will not run anymore in non-interactive mode.
+* Repairs an error in the `mice:::barnard.rubin()` function for infinite `dfcom`. Thanks @huftis (#441).
+* Solves problem with `Xi <- as.matrix(...)` in `mice.impute.2l.lmer()` that occurred when a cluster contains only one observation (#384)
+* Edits the `predictorMatrix` to a monotone pattern if `visitSequence = "monotone"` and `maxit = 1` (#316)
+* Solves a problem with the plot produced by `md.pattern()` (#318, #323)
+* Fixes the intercept in `make.formulas()` (#305, #324)
+* Fixes seed when using `newdata` in `mice.mids()` (#313, #325)
+* Solves a problem with row names of the `where` element created in `rbind()` (#319)
 * Solves a bug in mnar imputation routine. Contributed by Margarita Moreno Betancur.
+
+### Minor changes
+
+* Replaces URL to jstatsoft with DOI
+* Update reference to literature (#442)
+* Informs the user that `pool()` cannot take a `mids` object (#433)
+* Updates documentation for post-processing functionality (#387)
+* Adds Rcpp necessities
+* Solves a problem with "last resort" initialisation of factors (#410)
+* Documents the "flat-line behaviour" of `mice.impute.2l.lmer()` to indicate a problem in fitting the imputation model (#385)
+* Add reprex to test (#326)
+* Documents that multivariate imputation methods do not support the `post` parameter (#326)
+
 
 # mice 3.13.0
 

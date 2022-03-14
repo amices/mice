@@ -81,7 +81,7 @@ from the observed data y[ry] and x[ry, ]." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -164,19 +164,19 @@ from the observed data <code>y[ry]</code> and <code>x[ry, ]</code>.</p>
     </tr>
     <tr>
       <th>ry</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the
+      <td><p>Logical vector of length <code>length(y)</code> indicating the
 the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation
 model is fitted. The <code>ry</code> generally distinguishes the observed
 (<code>TRUE</code>) and missing values (<code>FALSE</code>) in <code>y</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for
+      <td><p>Numeric design matrix with <code>length(y)</code> rows with predictors for
 <code>y</code>. Matrix <code>x</code> may have no missing values.</p></td>
     </tr>
     <tr>
       <th>wy</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value
+      <td><p>Logical vector of length <code>length(y)</code>. A <code>TRUE</code> value
 indicates locations in <code>y</code> for which imputations are created.</p></td>
     </tr>
     <tr>
@@ -188,13 +188,13 @@ indicates locations in <code>y</code> for which imputations are created.</p></td
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Vector with imputed data, same type as <code>y</code>, and of length
-<code><a href='https://rdrr.io/r/base/sum.html'>sum(wy)</a></code></p>
+<code>sum(wy)</code></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Van Buuren, S., Groothuis-Oudshoorn, K. (2011). <code>mice</code>:
 Multivariate Imputation by Chained Equations in <code>R</code>. <em>Journal of
 Statistical Software</em>, <b>45</b>(3), 1-67.
-<a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
+doi: <a href='https://doi.org/10.18637/jss.v045.i03'>10.18637/jss.v045.i03</a></p>
 <p>Van Buuren, S. (2018).
 <a href='https://stefvanbuuren.name/fimd/sec-categorical.html'><em>Flexible Imputation of Missing Data. Second Edition.</em></a>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
@@ -203,6 +203,10 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
     <div class='dont-index'><p><code><a href='mice.html'>mice</a></code>, <code><a href='https://rdrr.io/r/stats/glm.html'>glm</a></code>, <code><a href='https://rdrr.io/r/stats/glm.html'>glm.fit</a></code></p>
 <p>Other univariate imputation functions: 
 <code><a href='mice.impute.cart.html'>mice.impute.cart</a>()</code>,
+<code><a href='mice.impute.lasso.logreg.html'>mice.impute.lasso.logreg</a>()</code>,
+<code><a href='mice.impute.lasso.norm.html'>mice.impute.lasso.norm</a>()</code>,
+<code><a href='mice.impute.lasso.select.logreg.html'>mice.impute.lasso.select.logreg</a>()</code>,
+<code><a href='mice.impute.lasso.select.norm.html'>mice.impute.lasso.select.norm</a>()</code>,
 <code><a href='mice.impute.lda.html'>mice.impute.lda</a>()</code>,
 <code><a href='mice.impute.logreg.html'>mice.impute.logreg</a>()</code>,
 <code><a href='mice.impute.mean.html'>mice.impute.mean</a>()</code>,

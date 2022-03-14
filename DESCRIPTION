@@ -1,8 +1,8 @@
 Package: mice
 Type: Package
-Version: 3.13.14
+Version: 3.14.4
 Title: Multivariate Imputation by Chained Equations
-Date: 2021-10-05
+Date: 2022-01-04
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -32,7 +32,13 @@ Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     person("Vincent", "Arel-Bundock", role = "ctb",
     email = "vincent.arel-bundock@umontreal.ca"),
     person("Mingyang", "Cai", role = "ctb",
-    email = "m.cai@uu.nl"))
+    email = "m.cai@uu.nl"),
+    person("Thom", "Volker", role = "ctb",
+    email = "t.b.volker@uu.nl"),
+    person("Edoardo", "Costantini", role = "ctb",
+    email = "e.costantini@tilburguniversity.edu"),
+    person("Caspar", "van Lissa", role = "ctb", 
+    email = "c.j.vanlissa@uu.nl"))
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
     R (>= 2.10.0)
@@ -41,6 +47,7 @@ Imports:
     dplyr,
     generics,
     graphics,
+    grDevices,
     lattice,
     methods,
     Rcpp,
@@ -48,12 +55,15 @@ Imports:
     stats,
     tidyr,
     utils,
-    withr
+    withr (>= 2.4.0)
 Suggests:
     broom.mixed,
+    decor,
+    glmnet,
     haven,
     knitr,
     lme4,
+    lmtest,
     MASS,
     metafor,
     mitml,
@@ -68,8 +78,7 @@ Suggests:
     rmarkdown,
     rpart,
     survival,
-    testthat,
-    lmtest
+    testthat
 Description: Multiple imputation using Fully Conditional Specification (FCS)
     implemented by the MICE algorithm as described in Van Buuren and
     Groothuis-Oudshoorn (2011) <doi:10.18637/jss.v045.i03>. Each variable has

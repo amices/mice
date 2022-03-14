@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Combine estimates by Rubin's rules — pool • mice</title>
+<title>Combine estimates by pooling rules — pool • mice</title>
 
 
 <!-- jquery -->
@@ -45,16 +45,16 @@
 
 
 
-<meta property="og:title" content="Combine estimates by Rubin's rules — pool" />
+<meta property="og:title" content="Combine estimates by pooling rules — pool" />
 <meta property="og:description" content="The pool() function combines the estimates from m
 repeated complete data analyses. The typical sequence of steps to
-do a multiple imputation analysis is:
-Impute the missing data by the mice function, resulting in
+perform a multiple imputation analysis is:
+Impute the missing data by the mice() function, resulting in
 a multiple imputed data set (class mids);
 Fit the model of interest (scientific model) on each imputed data set
 by the with() function, resulting an object of class mira;
 Pool the estimates from each model into a single set of estimates
-and standard errors, resulting is an object of class mipo;
+and standard errors, resulting in an object of class mipo;
 Optionally, compare pooled estimates from different scientific models
 by the D1() or D3() functions.
 A common error is to reverse steps 2 and 3, i.e., to pool the
@@ -93,7 +93,7 @@ this case." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -153,7 +153,7 @@ this case." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Combine estimates by Rubin's rules</h1>
+    <h1>Combine estimates by pooling rules</h1>
     <small class="dont-index">Source: <a href='https://github.com/amices/mice/blob/master/R/pool.R'><code>R/pool.R</code></a></small>
     <div class="hidden name"><code>pool.Rd</code></div>
     </div>
@@ -161,13 +161,13 @@ this case." />
     <div class="ref-description">
     <p>The <code>pool()</code> function combines the estimates from <code>m</code>
 repeated complete data analyses. The typical sequence of steps to
-do a multiple imputation analysis is:</p><ol>
-<li><p>Impute the missing data by the <code>mice</code> function, resulting in
+perform a multiple imputation analysis is:</p><ol>
+<li><p>Impute the missing data by the <code><a href='mice.html'>mice()</a></code> function, resulting in
 a multiple imputed data set (class <code>mids</code>);</p></li>
 <li><p>Fit the model of interest (scientific model) on each imputed data set
 by the <code><a href='https://rdrr.io/r/base/with.html'>with()</a></code> function, resulting an object of class <code>mira</code>;</p></li>
 <li><p>Pool the estimates from each model into a single set of estimates
-and standard errors, resulting is an object of class <code>mipo</code>;</p></li>
+and standard errors, resulting in an object of class <code>mipo</code>;</p></li>
 <li><p>Optionally, compare pooled estimates from different scientific models
 by the <code><a href='D1.html'>D1()</a></code> or <code><a href='D3.html'>D3()</a></code> functions.</p></li>
 </ol><p>A common error is to reverse steps 2 and 3, i.e., to pool the
@@ -177,7 +177,9 @@ intervals and p-values. The <code>pool()</code> function will detect
 this case.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pool</span><span class='op'>(</span><span class='va'>object</span>, dfcom <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>pool</span><span class='op'>(</span><span class='va'>object</span>, dfcom <span class='op'>=</span> <span class='cn'>NULL</span>, rule <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+
+<span class='fu'>pool.syn</span><span class='op'>(</span><span class='va'>object</span>, dfcom <span class='op'>=</span> <span class='cn'>NULL</span>, rule <span class='op'>=</span> <span class='st'>"reiter2003"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,52 +203,51 @@ In the last case, the warning <code>"Large sample assumed"</code> is printed.
 If the degrees of freedom is incorrect, specify the appropriate value
 manually.</p></td>
     </tr>
+    <tr>
+      <th>rule</th>
+      <td><p>A string indicating the pooling rule. Currently supported are
+<code>"rubin1987"</code> (default, for missing data) and <code>"reiter2003"</code>
+(for synthetic data created from a complete data set).</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>mipo</code>, which stands for 'multiple imputation
-pooled outcome'.</p>
+pooled outcome'.
+For rule <code>"reiter2003"</code> values for <code>lambda</code> and <code>fmi</code> are
+set to `NA`, as these statistics do not apply for data synthesised from
+fully observed data.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The <code>pool()</code> function averages the estimates of the complete
-data model, computes the
-total variance over the repeated analyses by Rubin's rules
-(Rubin, 1987, p. 76),
-and computes the following diagnostic statistics per estimate:</p><ol>
+data model, computes the total variance over the repeated analyses
+by Rubin's rules (Rubin, 1987, p. 76), and computes the following
+diagnostic statistics per estimate:</p><ol>
 <li><p>Relative increase in variance due to nonresponse <code>r</code>;</p></li>
 <li><p>Residual degrees of freedom for hypothesis testing <code>df</code>;</p></li>
 <li><p>Proportion of total variance due to missingness <code>lambda</code>;</p></li>
 <li><p>Fraction of missing information <code>fmi</code>.</p></li>
-</ol>
-
-<p>The function requires the following input from each fitted model:</p><ol>
-<li><p>the estimates of the model, usually obtainable by <code><a href='https://rdrr.io/r/stats/coef.html'>coef()</a></code></p></li>
+</ol><p>The degrees of freedom calculation for the pooled estimates uses the
+Barnard-Rubin adjustment for small samples (Barnard and Rubin, 1999).</p>
+<p>The <code>pool.syn()</code> function combines estimates by Reiter's partially
+synthetic data pooling rules (Reiter, 2003). This combination rule
+assumes that the data that is synthesised is completely observed.
+Pooling differs from Rubin's method in the calculation of the total
+variance and the degrees of freedom.</p>
+<p>Pooling requires the following input from each fitted model:</p><ol>
+<li><p>the estimates of the model;</p></li>
 <li><p>the standard error of each estimate;</p></li>
 <li><p>the residual degrees of freedom of the model.</p></li>
-</ol>
-
-<p>The degrees of freedom calculation for the pooled estimates uses the
-Barnard-Rubin adjustment for small samples (Barnard and Rubin, 1999).</p>
-<p>The <code>pool()</code> function relies on the <code><a href='https://generics.r-lib.org/reference/tidy.html'>broom::tidy</a></code> for
-extracting the parameters. Versions before <code>mice 3.8.5</code> failed
-when no <code><a href='https://generics.r-lib.org/reference/glance.html'>broom::glance()</a></code> function was found for extracting the
-residual degrees of freedom. The <code>pool()</code> function is now
-more forgiving.</p>
-<p>Since <code>mice 3.13.2</code> function <code>pool()</code> uses the robust
-the standard error estimate for pooling when it can extract
-<code>robust.se</code> from the <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> object.</p>
-<p>In versions prior to <code>mice 3.0</code> pooling required only that
-<code><a href='https://rdrr.io/r/stats/coef.html'>coef()</a></code> and <code><a href='https://rdrr.io/r/stats/vcov.html'>vcov()</a></code> methods were available for fitted
-objects. <em>This feature is no longer supported</em>. The reason is that <code><a href='https://rdrr.io/r/stats/vcov.html'>vcov()</a></code>
-methods are inconsistent across packages, leading to buggy behaviour
-of the <code>pool()</code> function.</p>
+</ol><p>The <code>pool()</code> and <code>pool.syn()</code> functions rely on the
+<code><a href='https://generics.r-lib.org/reference/tidy.html'>broom::tidy</a></code> and <code><a href='https://generics.r-lib.org/reference/glance.html'>broom::glance</a></code> for extracting these
+parameters.</p>
 <p>Since <code>mice 3.0+</code>, the <code>broom</code>
 package takes care of filtering out the relevant parts of the
 complete-data analysis. It may happen that you'll see the messages
 like <code>Error: No tidy method for objects of class ...</code> or
 <code>Error: No glance method for objects of class ...</code>. The message
-means that your complete-data method used in <code><a href='https://rdrr.io/r/base/with.html'>with(imp, ...)</a></code> has
+means that your complete-data method used in <code>with(imp, ...)</code> has
 no <code>tidy</code> or <code>glance</code> method defined in the <code>broom</code> package.</p>
 <p>The <code>broom.mixed</code> package contains <code>tidy</code> and <code>glance</code> methods
 for mixed models. If you are using a mixed model, first run
@@ -260,16 +261,26 @@ degrees of freedom, the relative increase in variance and the fraction of missin
 information.</p>
 <p>An alternative is to write your own <code><a href='https://generics.r-lib.org/reference/glance.html'>glance()</a></code> and <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code>
 methods and add these to <code>broom</code> according to the specifications
-given in <a href='https://broom.tidymodels.org'>https://broom.tidymodels.org</a>.</p>
+given in <a href='https://broom.tidymodels.org'>https://broom.tidymodels.org</a>.
+In versions prior to <code>mice 3.0</code> pooling required that
+<code><a href='https://rdrr.io/r/stats/coef.html'>coef()</a></code> and <code><a href='https://rdrr.io/r/stats/vcov.html'>vcov()</a></code> methods were available for fitted
+objects. <em>This feature is no longer supported</em>. The reason is that
+<code><a href='https://rdrr.io/r/stats/vcov.html'>vcov()</a></code> methods are inconsistent across packages, leading to
+buggy behaviour of the <code>pool()</code> function.</p>
+<p>Since <code>mice 3.13.2</code> function <code>pool()</code> uses the robust
+the standard error estimate for pooling when it can extract
+<code>robust.se</code> from the <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> object.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Barnard, J. and Rubin, D.B. (1999). Small sample degrees of
 freedom with multiple imputation. <em>Biometrika</em>, 86, 948-955.</p>
 <p>Rubin, D.B. (1987). <em>Multiple Imputation for Nonresponse in Surveys</em>.
 New York: John Wiley and Sons.</p>
+<p>Reiter, J.P. (2003). Inference for Partially Synthetic,
+Public Use Microdata Sets. <em>Survey Methodology</em>, <b>29</b>, 181-189.</p>
 <p>van Buuren S and Groothuis-Oudshoorn K (2011). <code>mice</code>: Multivariate
 Imputation by Chained Equations in <code>R</code>. <em>Journal of Statistical
-Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
+Software</em>, <b>45</b>(3), 1-67. doi: <a href='https://doi.org/10.18637/jss.v045.i03'>10.18637/jss.v045.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='with.mids.html'>with.mids</a></code>, <code><a href='as.mira.html'>as.mira</a></code>, <code><a href='pool.scalar.html'>pool.scalar</a></code>,
@@ -278,19 +289,36 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
 <a href='https://github.com/amices/mice/issues/274'>https://github.com/amices/mice/issues/274</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># pool using the classic MICE workflow</span>
-<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, maxit <span class='op'>=</span> <span class='fl'>2</span>, m <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt;  iter imp variable
-#&gt;   1   1  bmi  hyp  chl
-#&gt;   1   2  bmi  hyp  chl
-#&gt;   2   1  bmi  hyp  chl
-#&gt;   2   2  bmi  hyp  chl</div><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'>pool</span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;          term    estimate  std.error  statistic        df     p.value
-#&gt; 1 (Intercept) 22.24098314 4.95796107  4.4859132  9.566127 0.001304773
-#&gt; 2         hyp -1.22469599 2.22242934 -0.5510618 17.942753 0.588388172
-#&gt; 3         chl  0.03020063 0.02793246  1.0812021  4.777214 0.331139668</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># impute missing data, analyse and pool using the classic MICE workflow</span></span>
+<span class='r-in'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, maxit <span class='op'>=</span> <span class='fl'>2</span>, m <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  iter imp variable</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   2  bmi  hyp  chl</span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'>pool</span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          term    estimate  std.error statistic       df      p.value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 (Intercept) 22.23763118 4.10202768 5.4211314 12.99275 0.0001170692</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2         hyp  0.69389387 2.35374015 0.2948048 19.86401 0.7712020057</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3         chl  0.01400427 0.01881781 0.7442031 19.28297 0.4657266422</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># generate fully synthetic data, analyse and pool</span></span>
+<span class='r-in'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>cars</span>, maxit <span class='op'>=</span> <span class='fl'>2</span>, m <span class='op'>=</span> <span class='fl'>2</span>,</span>
+<span class='r-in'>            where <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>cars</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>cars</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  iter imp variable</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   1  speed  dist</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   2  speed  dist</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   1  speed  dist</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   2  speed  dist</span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>speed</span> <span class='op'>~</span> <span class='va'>dist</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'>pool.syn</span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          term    estimate  std.error statistic        df      p.value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 (Intercept) 12.61856976 1.12645701 11.201999 239.23775 0.0000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2        dist  0.08291348 0.02341726  3.540699  47.48388 0.0009057364</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -168,19 +168,19 @@
     </tr>
     <tr>
       <th>ry</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the
+      <td><p>Logical vector of length <code>length(y)</code> indicating the
 the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation
 model is fitted. The <code>ry</code> generally distinguishes the observed
 (<code>TRUE</code>) and missing values (<code>FALSE</code>) in <code>y</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for
+      <td><p>Numeric design matrix with <code>length(y)</code> rows with predictors for
 <code>y</code>. Matrix <code>x</code> may have no missing values.</p></td>
     </tr>
     <tr>
       <th>wy</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value
+      <td><p>Logical vector of length <code>length(y)</code>. A <code>TRUE</code> value
 indicates locations in <code>y</code> for which imputations are created.</p></td>
     </tr>
     <tr>
@@ -227,7 +227,7 @@ the deprecated <code>matcher</code> function only for exact reproduction.</p></t
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Vector with imputed data, same type as <code>y</code>, and of length
-<code><a href='https://rdrr.io/r/base/sum.html'>sum(wy)</a></code></p>
+<code>sum(wy)</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Imputation of <code>y</code> by predictive mean matching, based on
@@ -259,11 +259,15 @@ mean matching and local residual draws. BMC Med Res Methodol. ;14:75.</p>
 Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <p>Van Buuren, S., Groothuis-Oudshoorn, K. (2011). <code>mice</code>: Multivariate
 Imputation by Chained Equations in <code>R</code>. <em>Journal of Statistical
-Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
+Software</em>, <b>45</b>(3), 1-67. doi: <a href='https://doi.org/10.18637/jss.v045.i03'>10.18637/jss.v045.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other univariate imputation functions: 
 <code><a href='mice.impute.cart.html'>mice.impute.cart</a>()</code>,
+<code><a href='mice.impute.lasso.logreg.html'>mice.impute.lasso.logreg</a>()</code>,
+<code><a href='mice.impute.lasso.norm.html'>mice.impute.lasso.norm</a>()</code>,
+<code><a href='mice.impute.lasso.select.logreg.html'>mice.impute.lasso.select.logreg</a>()</code>,
+<code><a href='mice.impute.lasso.select.norm.html'>mice.impute.lasso.select.norm</a>()</code>,
 <code><a href='mice.impute.lda.html'>mice.impute.lda</a>()</code>,
 <code><a href='mice.impute.logreg.boot.html'>mice.impute.logreg.boot</a>()</code>,
 <code><a href='mice.impute.logreg.html'>mice.impute.logreg</a>()</code>,
@@ -284,39 +288,47 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
     <p>Stef van Buuren, Karin Groothuis-Oudshoorn</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># We normally call mice.impute.pmm() from within mice()</span>
-<span class='co'># But we may call it directly as follows (not recommended)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>53177</span><span class='op'>)</span>
-<span class='va'>xname</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"age"</span>, <span class='st'>"hgt"</span>, <span class='st'>"wgt"</span><span class='op'>)</span>
-<span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/stats/complete.cases.html'>complete.cases</a></span><span class='op'>(</span><span class='va'>boys</span><span class='op'>[</span>, <span class='va'>xname</span><span class='op'>]</span><span class='op'>)</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>boys</span><span class='op'>[</span><span class='va'>r</span>, <span class='va'>xname</span><span class='op'>]</span>
-<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>boys</span><span class='op'>[</span><span class='va'>r</span>, <span class='st'>"tv"</span><span class='op'>]</span>
-<span class='va'>ry</span> <span class='op'>&lt;-</span> <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>ry</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ry
-#&gt; FALSE  TRUE 
-#&gt;   503   224 </div><div class='input'>
-<span class='co'># percentage of missing data in tv</span>
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='op'>!</span><span class='va'>ry</span><span class='op'>)</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>ry</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.6918845</div><div class='input'>
-<span class='co'># Impute missing tv data</span>
-<span class='va'>yimp</span> <span class='op'>&lt;-</span> <span class='fu'>mice.impute.pmm</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>yimp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 503</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>yimp</span>, xlab <span class='op'>=</span> <span class='st'>"Imputed missing tv"</span><span class='op'>)</span>
-</div><div class='img'><img src='mice.impute.pmm-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Impute all tv data</span>
-<span class='va'>yimp</span> <span class='op'>&lt;-</span> <span class='fu'>mice.impute.pmm</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, wy <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>yimp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 727</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>yimp</span>, xlab <span class='op'>=</span> <span class='st'>"Imputed missing and observed tv"</span><span class='op'>)</span>
-</div><div class='img'><img src='mice.impute.pmm-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/jitter.html'>jitter</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/jitter.html'>jitter</a></span><span class='op'>(</span><span class='va'>yimp</span><span class='op'>)</span>,
-  main <span class='op'>=</span> <span class='st'>"Predictive mean matching on age, height and weight"</span>,
-  xlab <span class='op'>=</span> <span class='st'>"Observed tv (n = 224)"</span>,
-  ylab <span class='op'>=</span> <span class='st'>"Imputed tv (n = 224)"</span>
-<span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='img'><img src='mice.impute.pmm-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>yimp</span>, use <span class='op'>=</span> <span class='st'>"pair"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.7415001</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># We normally call mice.impute.pmm() from within mice()</span></span>
+<span class='r-in'><span class='co'># But we may call it directly as follows (not recommended)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>53177</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>xname</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"age"</span>, <span class='st'>"hgt"</span>, <span class='st'>"wgt"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/stats/complete.cases.html'>complete.cases</a></span><span class='op'>(</span><span class='va'>boys</span><span class='op'>[</span>, <span class='va'>xname</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>boys</span><span class='op'>[</span><span class='va'>r</span>, <span class='va'>xname</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>boys</span><span class='op'>[</span><span class='va'>r</span>, <span class='st'>"tv"</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>ry</span> <span class='op'>&lt;-</span> <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>ry</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ry</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FALSE  TRUE </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   503   224 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># percentage of missing data in tv</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='op'>!</span><span class='va'>ry</span><span class='op'>)</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>ry</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.6918845</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Impute missing tv data</span></span>
+<span class='r-in'><span class='va'>yimp</span> <span class='op'>&lt;-</span> <span class='fu'>mice.impute.pmm</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>yimp</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 503</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>yimp</span>, xlab <span class='op'>=</span> <span class='st'>"Imputed missing tv"</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='mice.impute.pmm-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Impute all tv data</span></span>
+<span class='r-in'><span class='va'>yimp</span> <span class='op'>&lt;-</span> <span class='fu'>mice.impute.pmm</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>ry</span>, <span class='va'>x</span>, wy <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>yimp</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 727</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>yimp</span>, xlab <span class='op'>=</span> <span class='st'>"Imputed missing and observed tv"</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='mice.impute.pmm-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/jitter.html'>jitter</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/jitter.html'>jitter</a></span><span class='op'>(</span><span class='va'>yimp</span><span class='op'>)</span>,</span>
+<span class='r-in'>  main <span class='op'>=</span> <span class='st'>"Predictive mean matching on age, height and weight"</span>,</span>
+<span class='r-in'>  xlab <span class='op'>=</span> <span class='st'>"Observed tv (n = 224)"</span>,</span>
+<span class='r-in'>  ylab <span class='op'>=</span> <span class='st'>"Imputed tv (n = 224)"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='mice.impute.pmm-3.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>yimp</span>, use <span class='op'>=</span> <span class='st'>"pair"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.7415001</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

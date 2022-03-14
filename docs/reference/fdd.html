@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -243,160 +243,162 @@ details, see de Roos et al (2011).  Some person covariates were reshuffled.
 The imputation methodology is explained in Chapter 9 of van Buuren (2012).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-
-<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='va'>fdd</span>
-<span class='fu'><a href='md.pattern.html'>md.pattern</a></span><span class='op'>(</span><span class='va'>fdd</span><span class='op'>)</span>
-</div><div class='img'><img src='fdd-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;   id trt pp sex etn age ypf1 ypf2 ypf3 ypp2 ypp3 ycf1 ycf2 ycf3 ycp2 ycp3 trtp
-#&gt; 8  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 2  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 8  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 9  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 2  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    0
-#&gt; 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    0
-#&gt;    0   0  0   0   0   0    0    0    0    0    0    0    0    0    0    0    2
-#&gt;   prop1 prs1 trauma ypp1 ypa1 ypb1 ypc1 yp1 prop2 prs2 ypa2 ypb2 ypc2 yp2 prop3
-#&gt; 8     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt; 2     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt; 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt; 8     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt; 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt; 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt; 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt; 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt; 9     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt; 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt; 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt; 2     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt; 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     0
-#&gt; 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     0
-#&gt; 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     0
-#&gt; 1     1    1      1    1    1    1    1   1     0    0    0    0    0   0     1
-#&gt; 1     1    1      1    1    1    1    1   1     0    0    0    0    0   0     0
-#&gt; 1     1    1      1    1    1    1    1   1     0    0    0    0    0   0     0
-#&gt; 1     1    1      1    1    1    1    1   1     0    0    0    0    0   0     0
-#&gt; 1     1    1      1    1    0    0    0   0     0    0    0    0    0   0     0
-#&gt; 1     1    1      0    0    0    0    0   0     1    1    1    1    1   1     1
-#&gt; 1     1    1      0    0    0    0    0   0     1    1    1    1    1   1     1
-#&gt; 1     1    1      0    0    0    0    0   0     0    0    0    0    0   0     0
-#&gt; 1     1    0      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt; 1     0    1      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt; 1     0    1      0    0    0    0    0   0     0    0    0    0    0   0     0
-#&gt; 1     1    1      0    0    0    0    0   0     0    0    0    0    0   0     0
-#&gt; 1     1    0      1    1    1    1    1   1     1    1    1    1    1   1     1
-#&gt;       2    2      5    5    6    6    6   6     8    8    8    8    8   8    10
-#&gt;   ypa3 ypb3 ypc3 yp3 cbcl1 cbin1 cbex1 crop1 bir1 cbcl3 cbin3 cbex3 yca1 ycb1
-#&gt; 8    1    1    1   1     1     1     1     1    1     1     1     1    1    1
-#&gt; 2    1    1    1   1     1     1     1     1    1     1     1     1    1    1
-#&gt; 1    1    1    1   1     1     1     1     1    1     1     1     1    1    1
-#&gt; 8    1    1    1   1     1     1     1     1    1     1     1     1    1    1
-#&gt; 1    1    1    1   1     1     1     1     1    1     1     1     1    1    1
-#&gt; 1    1    1    1   1     1     1     1     1    1     1     1     1    1    1
-#&gt; 1    1    1    1   1     1     1     1     1    1     1     1     1    0    0
-#&gt; 1    1    1    1   1     1     1     1     1    1     0     0     0    1    1
-#&gt; 9    1    1    1   1     1     1     1     0    0     1     1     1    0    0
-#&gt; 1    1    1    1   1     0     0     0     1    1     0     0     0    1    1
-#&gt; 1    1    1    1   1     0     0     0     1    1     0     0     0    1    1
-#&gt; 2    1    1    1   1     0     0     0     0    0     0     0     0    0    0
-#&gt; 1    0    0    0   0     1     1     1     1    1     1     1     1    1    1
-#&gt; 1    0    0    0   0     1     1     1     1    1     1     1     1    1    1
-#&gt; 1    0    0    0   0     1     1     1     1    1     0     0     0    1    1
-#&gt; 1    1    1    1   1     1     1     1     1    1     1     1     1    1    1
-#&gt; 1    0    0    0   0     1     1     1     1    1     0     0     0    1    1
-#&gt; 1    0    0    0   0     0     0     0     1    1     0     0     0    1    1
-#&gt; 1    0    0    0   0     0     0     0     1    0     0     0     0    0    0
-#&gt; 1    0    0    0   0     0     0     0     1    1     0     0     0    1    1
-#&gt; 1    1    1    1   1     1     1     1     1    1     1     1     1    1    1
-#&gt; 1    1    1    1   1     0     0     0     1    1     0     0     0    1    1
-#&gt; 1    0    0    0   0     0     0     0     1    1     1     1     1    0    0
-#&gt; 1    1    1    1   1     1     1     1     1    1     0     0     0    1    1
-#&gt; 1    1    1    1   1     1     1     1     0    0     1     1     1    0    0
-#&gt; 1    0    0    0   0     0     0     0     1    1     0     0     0    1    1
-#&gt; 1    0    0    0   0     1     1     1     1    1     0     0     0    1    1
-#&gt; 1    1    1    1   1     0     0     0     0    0     0     0     0    0    0
-#&gt;     10   10   10  10    11    11    11    13   14    15    15    15   16   16
-#&gt;   ycc1 yc1 ycp1 masc1 crop2 crop3 yca2 ycb2 ycc2 yc2 bir2 bir3 prs3 yca3 ycb3
-#&gt; 8    1   1    1     1     1     1    1    1    1   1    1    1    1    1    1
-#&gt; 2    1   1    1     1     1     1    1    1    1   1    1    1    1    1    1
-#&gt; 1    1   1    1     1     1     1    1    1    1   1    1    1    1    0    0
-#&gt; 8    1   1    1     1     1     1    1    1    1   1    1    1    0    1    1
-#&gt; 1    1   1    1     1     1     1    1    1    1   1    1    1    0    1    1
-#&gt; 1    1   1    1     1     0     1    1    1    1   1    1    1    0    1    1
-#&gt; 1    0   0    0     1     1     1    1    1    1   1    1    1    1    1    1
-#&gt; 1    1   1    1     1     1     1    1    1    1   1    1    1    0    1    1
-#&gt; 9    0   0    0     0     0     0    0    0    0   0    0    0    1    0    0
-#&gt; 1    1   1    1     1     1     1    1    1    1   1    1    1    0    1    1
-#&gt; 1    1   1    1     1     1     1    0    0    0   0    1    1    1    1    1
-#&gt; 2    0   0    0     0     0     0    0    0    0   0    0    0    1    0    0
-#&gt; 1    1   1    1     1     1     0    1    1    1   1    1    0    0    0    0
-#&gt; 1    1   1    1     0     1     0    1    1    1   1    1    0    0    0    0
-#&gt; 1    1   1    1     1     1     1    1    1    1   1    1    1    0    1    1
-#&gt; 1    1   1    1     1     0     1    0    0    0   0    0    1    0    1    1
-#&gt; 1    1   1    1     1     0     0    0    0    0   0    0    0    0    0    0
-#&gt; 1    1   1    1     1     0     0    0    0    0   0    0    0    0    0    0
-#&gt; 1    0   0    0     0     0     0    0    0    0   0    0    0    0    0    0
-#&gt; 1    1   1    1     0     0     0    0    0    0   0    0    0    0    0    0
-#&gt; 1    1   1    1     1     1     1    1    1    1   1    1    1    1    1    1
-#&gt; 1    1   1    1     1     1     1    1    1    1   1    1    1    1    1    1
-#&gt; 1    0   0    0     1     0     0    0    0    0   0    0    0    0    0    0
-#&gt; 1    1   1    1     1     1     1    1    1    1   1    0    1    1    0    0
-#&gt; 1    0   0    0     0     0     0    0    0    0   0    0    0    1    0    0
-#&gt; 1    1   1    1     0     0     0    0    0    0   0    0    0    0    0    0
-#&gt; 1    1   1    1     1     0     0    0    0    0   0    0    0    0    0    0
-#&gt; 1    0   0    0     0     0     0    0    0    0   0    0    0    1    0    0
-#&gt;     16  16   16    17    22    22   22   22   22  22   22   22   23   24   24
-#&gt;   ycc3 yc3 masc2 masc3    
-#&gt; 8    1   1     1     1   0
-#&gt; 2    1   1     0     0   2
-#&gt; 1    0   0     1     1   4
-#&gt; 8    1   1     1     1   1
-#&gt; 1    1   1     0     0   3
-#&gt; 1    1   1     1     1   2
-#&gt; 1    1   1     1     1   5
-#&gt; 1    1   1     1     1   4
-#&gt; 9    0   0     0     0  22
-#&gt; 1    1   1     1     1   7
-#&gt; 1    1   1     1     1  10
-#&gt; 2    0   0     0     0  28
-#&gt; 1    0   0     0     0  14
-#&gt; 1    0   0     0     0  15
-#&gt; 1    1   1     1     1   9
-#&gt; 1    1   1     0     0  15
-#&gt; 1    0   0     0     0  29
-#&gt; 1    0   0     0     0  32
-#&gt; 1    0   0     0     0  39
-#&gt; 1    0   0     0     0  37
-#&gt; 1    1   1     1     1   6
-#&gt; 1    1   1     1     0  13
-#&gt; 1    0   0     0     0  40
-#&gt; 1    0   0     0     1  10
-#&gt; 1    0   0     0     0  23
-#&gt; 1    0   0     0     0  40
-#&gt; 1    0   0     0     0  36
-#&gt; 1    0   0     0     0  30
-#&gt;     24  24    27    27 689</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='va'>fdd</span></span>
+<span class='r-in'><span class='fu'><a href='md.pattern.html'>md.pattern</a></span><span class='op'>(</span><span class='va'>fdd</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='fdd-1.png' alt='' width='700' height='433' /></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   id trt pp sex etn age ypf1 ypf2 ypf3 ypp2 ypp3 ycf1 ycf2 ycf3 ycp2 ycp3 trtp</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1   1  1   1   1   1    1    1    1    1    1    1    1    1    1    1    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    0   0  0   0   0   0    0    0    0    0    0    0    0    0    0    0    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   prop1 prs1 trauma ypp1 ypa1 ypb1 ypc1 yp1 prop2 prs2 ypa2 ypb2 ypc2 yp2 prop3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     1    1      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    1    1    1   1     1    1    1    1    1   1     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    1    1    1   1     0    0    0    0    0   0     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    1    1    1   1     0    0    0    0    0   0     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    1    1    1   1     0    0    0    0    0   0     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    1    1    1   1     0    0    0    0    0   0     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      1    1    0    0    0   0     0    0    0    0    0   0     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      0    0    0    0    0   0     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      0    0    0    0    0   0     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      0    0    0    0    0   0     0    0    0    0    0   0     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    0      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     0    1      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     0    1      0    0    0    0    0   0     0    0    0    0    0   0     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    1      0    0    0    0    0   0     0    0    0    0    0   0     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     1    0      1    1    1    1    1   1     1    1    1    1    1   1     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       2    2      5    5    6    6    6   6     8    8    8    8    8   8    10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ypa3 ypb3 ypc3 yp3 cbcl1 cbin1 cbex1 crop1 bir1 cbcl3 cbin3 cbex3 yca1 ycb1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8    1    1    1   1     1     1     1     1    1     1     1     1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2    1    1    1   1     1     1     1     1    1     1     1     1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1    1    1   1     1     1     1     1    1     1     1     1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8    1    1    1   1     1     1     1     1    1     1     1     1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1    1    1   1     1     1     1     1    1     1     1     1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1    1    1   1     1     1     1     1    1     1     1     1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1    1    1   1     1     1     1     1    1     1     1     1    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1    1    1   1     1     1     1     1    1     0     0     0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9    1    1    1   1     1     1     1     0    0     1     1     1    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1    1    1   1     0     0     0     1    1     0     0     0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1    1    1   1     0     0     0     1    1     0     0     0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2    1    1    1   1     0     0     0     0    0     0     0     0    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0    0    0   0     1     1     1     1    1     1     1     1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0    0    0   0     1     1     1     1    1     1     1     1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0    0    0   0     1     1     1     1    1     0     0     0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1    1    1   1     1     1     1     1    1     1     1     1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0    0    0   0     1     1     1     1    1     0     0     0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0    0    0   0     0     0     0     1    1     0     0     0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0    0    0   0     0     0     0     1    0     0     0     0    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0    0    0   0     0     0     0     1    1     0     0     0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1    1    1   1     1     1     1     1    1     1     1     1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1    1    1   1     0     0     0     1    1     0     0     0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0    0    0   0     0     0     0     1    1     1     1     1    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1    1    1   1     1     1     1     1    1     0     0     0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1    1    1   1     1     1     1     0    0     1     1     1    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0    0    0   0     0     0     0     1    1     0     0     0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0    0    0   0     1     1     1     1    1     0     0     0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1    1    1   1     0     0     0     0    0     0     0     0    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     10   10   10  10    11    11    11    13   14    15    15    15   16   16</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ycc1 yc1 ycp1 masc1 crop2 crop3 yca2 ycb2 ycc2 yc2 bir2 bir3 prs3 yca3 ycb3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8    1   1    1     1     1     1    1    1    1   1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2    1   1    1     1     1     1    1    1    1   1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     1     1    1    1    1   1    1    1    1    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8    1   1    1     1     1     1    1    1    1   1    1    1    0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     1     1    1    1    1   1    1    1    0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     0     1    1    1    1   1    1    1    0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0    0     1     1     1    1    1    1   1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     1     1    1    1    1   1    1    1    0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9    0   0    0     0     0     0    0    0    0   0    0    0    1    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     1     1    1    1    1   1    1    1    0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     1     1    0    0    0   0    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2    0   0    0     0     0     0    0    0    0   0    0    0    1    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     1     0    1    1    1   1    1    0    0    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     0     1     0    1    1    1   1    1    0    0    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     1     1    1    1    1   1    1    1    0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     0     1    0    0    0   0    0    1    0    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     0     0    0    0    0   0    0    0    0    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     0     0    0    0    0   0    0    0    0    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0    0     0     0     0    0    0    0   0    0    0    0    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     0     0     0    0    0    0   0    0    0    0    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     1     1    1    1    1   1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     1     1    1    1    1   1    1    1    1    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0    0     1     0     0    0    0    0   0    0    0    0    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     1     1    1    1    1   1    0    1    1    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0    0     0     0     0    0    0    0   0    0    0    1    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     0     0     0    0    0    0   0    0    0    0    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1    1     1     0     0    0    0    0   0    0    0    0    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0    0     0     0     0    0    0    0   0    0    0    1    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     16  16   16    17    22    22   22   22   22  22   22   22   23   24   24</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ycc3 yc3 masc2 masc3    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8    1   1     1     1   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2    1   1     0     0   2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0     1     1   4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8    1   1     1     1   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1     0     0   3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1     1     1   2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1     1     1   5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1     1     1   4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9    0   0     0     0  22</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1     1     1   7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1     1     1  10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2    0   0     0     0  28</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0     0     0  14</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0     0     0  15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1     1     1   9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1     0     0  15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0     0     0  29</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0     0     0  32</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0     0     0  39</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0     0     0  37</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1     1     1   6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1   1     1     0  13</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0     0     0  40</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0     0     1  10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0     0     0  23</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0     0     0  40</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0     0     0  36</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    0   0     0     0  30</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     24  24    27    27 689</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

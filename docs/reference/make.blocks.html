@@ -79,7 +79,7 @@ blocks argument in the [=mice]{mice} function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -173,7 +173,7 @@ whereas <code>"void"</code> produces an empty list.</p></td>
     </tr>
     <tr>
       <th>calltype</th>
-      <td><p>A character vector of <code><a href='https://rdrr.io/r/base/length.html'>length(block)</a></code> elements
+      <td><p>A character vector of <code>length(block)</code> elements
 that indicates how the imputation model is specified. If
 <code>calltype = "type"</code> (the default), the underlying imputation
 model is called by means of the <code>type</code> argument. The
@@ -216,34 +216,36 @@ imputation model is applied to such a block, then the variable is
 re-imputed each time as it appears in the block.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>make.blocks</span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $age
-#&gt; [1] "age"
-#&gt; 
-#&gt; $bmi
-#&gt; [1] "bmi"
-#&gt; 
-#&gt; $hyp
-#&gt; [1] "hyp"
-#&gt; 
-#&gt; $chl
-#&gt; [1] "chl"
-#&gt; 
-#&gt; attr(,"calltype")
-#&gt;    age    bmi    hyp    chl 
-#&gt; "type" "type" "type" "type" </div><div class='input'><span class='fu'>make.blocks</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"age"</span>, <span class='st'>"sex"</span>, <span class='st'>"edu"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $age
-#&gt; [1] "age"
-#&gt; 
-#&gt; $sex
-#&gt; [1] "sex"
-#&gt; 
-#&gt; $edu
-#&gt; [1] "edu"
-#&gt; 
-#&gt; attr(,"calltype")
-#&gt;    age    sex    edu 
-#&gt; "type" "type" "type" </div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>make.blocks</span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $age</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "age"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $bmi</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "bmi"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $hyp</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "hyp"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "chl"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> attr(,"calltype")</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    age    bmi    hyp    chl </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "type" "type" "type" "type" </span>
+<span class='r-in'><span class='fu'>make.blocks</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"age"</span>, <span class='st'>"sex"</span>, <span class='st'>"edu"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $age</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "age"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $sex</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "sex"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $edu</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "edu"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> attr(,"calltype")</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    age    sex    edu </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "type" "type" "type" </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

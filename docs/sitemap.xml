@@ -202,6 +202,9 @@
     <loc>https://amices.org/mice/reference/matchindex.html</loc>
   </url>
   <url>
+    <loc>https://amices.org/mice/reference/mcar.html</loc>
+  </url>
+  <url>
     <loc>https://amices.org/mice/reference/md.pairs.html</loc>
   </url>
   <url>
@@ -239,6 +242,18 @@
   </url>
   <url>
     <loc>https://amices.org/mice/reference/mice.impute.jomoImpute.html</loc>
+  </url>
+  <url>
+    <loc>https://amices.org/mice/reference/mice.impute.lasso.logreg.html</loc>
+  </url>
+  <url>
+    <loc>https://amices.org/mice/reference/mice.impute.lasso.norm.html</loc>
+  </url>
+  <url>
+    <loc>https://amices.org/mice/reference/mice.impute.lasso.select.logreg.html</loc>
+  </url>
+  <url>
+    <loc>https://amices.org/mice/reference/mice.impute.lasso.select.norm.html</loc>
   </url>
   <url>
     <loc>https://amices.org/mice/reference/mice.impute.lda.html</loc>

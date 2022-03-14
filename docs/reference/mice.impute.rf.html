@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -166,19 +166,19 @@
     </tr>
     <tr>
       <th>ry</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the
+      <td><p>Logical vector of length <code>length(y)</code> indicating the
 the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation
 model is fitted. The <code>ry</code> generally distinguishes the observed
 (<code>TRUE</code>) and missing values (<code>FALSE</code>) in <code>y</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for
+      <td><p>Numeric design matrix with <code>length(y)</code> rows with predictors for
 <code>y</code>. Matrix <code>x</code> may have no missing values.</p></td>
     </tr>
     <tr>
       <th>wy</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value
+      <td><p>Logical vector of length <code>length(y)</code>. A <code>TRUE</code> value
 indicates locations in <code>y</code> for which imputations are created.</p></td>
     </tr>
     <tr>
@@ -203,7 +203,7 @@ used to be the default in mice 3.13.10 and earlier.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Vector with imputed data, same type as <code>y</code>, and of length
-<code><a href='https://rdrr.io/r/base/sum.html'>sum(wy)</a></code></p>
+<code>sum(wy)</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Imputation of <code>y</code> by random forests. The method
@@ -240,6 +240,10 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <code><a href='https://rdrr.io/pkg/ranger/man/ranger.html'>ranger</a></code></p>
 <p>Other univariate imputation functions: 
 <code><a href='mice.impute.cart.html'>mice.impute.cart</a>()</code>,
+<code><a href='mice.impute.lasso.logreg.html'>mice.impute.lasso.logreg</a>()</code>,
+<code><a href='mice.impute.lasso.norm.html'>mice.impute.lasso.norm</a>()</code>,
+<code><a href='mice.impute.lasso.select.logreg.html'>mice.impute.lasso.select.logreg</a>()</code>,
+<code><a href='mice.impute.lasso.select.norm.html'>mice.impute.lasso.select.norm</a>()</code>,
 <code><a href='mice.impute.lda.html'>mice.impute.lda</a>()</code>,
 <code><a href='mice.impute.logreg.boot.html'>mice.impute.logreg.boot</a>()</code>,
 <code><a href='mice.impute.logreg.html'>mice.impute.logreg</a>()</code>,
@@ -260,37 +264,39 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
     <p>Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012; Patrick Rockenschaub, 2021</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='http://lattice.r-forge.r-project.org/'>"lattice"</a></span><span class='op'>)</span>
-
-<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span>, meth <span class='op'>=</span> <span class='st'>"rf"</span>, ntree <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt;  iter imp variable
-#&gt;   1   1  bmi  hyp  chl
-#&gt;   1   2  bmi  hyp  chl
-#&gt;   1   3  bmi  hyp  chl
-#&gt;   1   4  bmi  hyp  chl
-#&gt;   1   5  bmi  hyp  chl
-#&gt;   2   1  bmi  hyp  chl
-#&gt;   2   2  bmi  hyp  chl
-#&gt;   2   3  bmi  hyp  chl
-#&gt;   2   4  bmi  hyp  chl
-#&gt;   2   5  bmi  hyp  chl
-#&gt;   3   1  bmi  hyp  chl
-#&gt;   3   2  bmi  hyp  chl
-#&gt;   3   3  bmi  hyp  chl
-#&gt;   3   4  bmi  hyp  chl
-#&gt;   3   5  bmi  hyp  chl
-#&gt;   4   1  bmi  hyp  chl
-#&gt;   4   2  bmi  hyp  chl
-#&gt;   4   3  bmi  hyp  chl
-#&gt;   4   4  bmi  hyp  chl
-#&gt;   4   5  bmi  hyp  chl
-#&gt;   5   1  bmi  hyp  chl
-#&gt;   5   2  bmi  hyp  chl
-#&gt;   5   3  bmi  hyp  chl
-#&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
-</div><div class='img'><img src='mice.impute.rf-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='http://lattice.r-forge.r-project.org/'>"lattice"</a></span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span>, meth <span class='op'>=</span> <span class='st'>"rf"</span>, ntree <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  iter imp variable</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   5  bmi  hyp  chl</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='mice.impute.rf-1.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

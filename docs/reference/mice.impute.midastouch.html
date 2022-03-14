@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -169,19 +169,19 @@
     </tr>
     <tr>
       <th>ry</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> indicating the
+      <td><p>Logical vector of length <code>length(y)</code> indicating the
 the subset <code>y[ry]</code> of elements in <code>y</code> to which the imputation
 model is fitted. The <code>ry</code> generally distinguishes the observed
 (<code>TRUE</code>) and missing values (<code>FALSE</code>) in <code>y</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>Numeric design matrix with <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code> rows with predictors for
+      <td><p>Numeric design matrix with <code>length(y)</code> rows with predictors for
 <code>y</code>. Matrix <code>x</code> may have no missing values.</p></td>
     </tr>
     <tr>
       <th>wy</th>
-      <td><p>Logical vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(y)</a></code>. A <code>TRUE</code> value
+      <td><p>Logical vector of length <code>length(y)</code>. A <code>TRUE</code> value
 indicates locations in <code>y</code> for which imputations are created.</p></td>
     </tr>
     <tr>
@@ -232,7 +232,7 @@ is <code>midastouch.inputlist</code>.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Vector with imputed data, same type as <code>y</code>, and of
-length <code><a href='https://rdrr.io/r/base/sum.html'>sum(wy)</a></code></p>
+length <code>sum(wy)</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Imputation of <code>y</code> by predictive mean matching, based on
@@ -268,11 +268,15 @@ Fully conditional specification in multivariate imputation.
 1049--1064.</p>
 <p>Van Buuren, S., Groothuis-Oudshoorn, K. (2011), <code>mice</code>: Multivariate
 Imputation by Chained Equations in <code>R</code>. <em>Journal of
-Statistical Software</em>, <b>45</b>, 3, 1--67. <a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
+Statistical Software</em>, <b>45</b>, 3, 1--67. doi: <a href='https://doi.org/10.18637/jss.v045.i03'>10.18637/jss.v045.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other univariate imputation functions: 
 <code><a href='mice.impute.cart.html'>mice.impute.cart</a>()</code>,
+<code><a href='mice.impute.lasso.logreg.html'>mice.impute.lasso.logreg</a>()</code>,
+<code><a href='mice.impute.lasso.norm.html'>mice.impute.lasso.norm</a>()</code>,
+<code><a href='mice.impute.lasso.select.logreg.html'>mice.impute.lasso.select.logreg</a>()</code>,
+<code><a href='mice.impute.lasso.select.norm.html'>mice.impute.lasso.select.norm</a>()</code>,
 <code><a href='mice.impute.lda.html'>mice.impute.lda</a>()</code>,
 <code><a href='mice.impute.logreg.boot.html'>mice.impute.logreg.boot</a>()</code>,
 <code><a href='mice.impute.logreg.html'>mice.impute.logreg</a>()</code>,
@@ -293,125 +297,131 @@ Statistical Software</em>, <b>45</b>, 3, 1--67. <a href='https://www.jstatsoft.o
     <p>Philipp Gaffert, Florian Meinfelder, Volker Bosch 2015</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># do default multiple imputation on a numeric matrix</span>
-<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, method <span class='op'>=</span> <span class='st'>"midastouch"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt;  iter imp variable
-#&gt;   1   1  bmi  hyp  chl
-#&gt;   1   2  bmi  hyp  chl
-#&gt;   1   3  bmi  hyp  chl
-#&gt;   1   4  bmi  hyp  chl
-#&gt;   1   5  bmi  hyp  chl
-#&gt;   2   1  bmi  hyp  chl
-#&gt;   2   2  bmi  hyp  chl
-#&gt;   2   3  bmi  hyp  chl
-#&gt;   2   4  bmi  hyp  chl
-#&gt;   2   5  bmi  hyp  chl
-#&gt;   3   1  bmi  hyp  chl
-#&gt;   3   2  bmi  hyp  chl
-#&gt;   3   3  bmi  hyp  chl
-#&gt;   3   4  bmi  hyp  chl
-#&gt;   3   5  bmi  hyp  chl
-#&gt;   4   1  bmi  hyp  chl
-#&gt;   4   2  bmi  hyp  chl
-#&gt;   4   3  bmi  hyp  chl
-#&gt;   4   4  bmi  hyp  chl
-#&gt;   4   5  bmi  hyp  chl
-#&gt;   5   1  bmi  hyp  chl
-#&gt;   5   2  bmi  hyp  chl
-#&gt;   5   3  bmi  hyp  chl
-#&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='input'><span class='va'>imp</span>
-</div><div class='output co'>#&gt; Class: mids
-#&gt; Number of multiple imputations:  5 
-#&gt; Imputation methods:
-#&gt;          age          bmi          hyp          chl 
-#&gt;           "" "midastouch" "midastouch" "midastouch" 
-#&gt; PredictorMatrix:
-#&gt;     age bmi hyp chl
-#&gt; age   0   1   1   1
-#&gt; bmi   1   0   1   1
-#&gt; hyp   1   1   0   1
-#&gt; chl   1   1   1   0</div><div class='input'>
-<span class='co'># list the actual imputations for BMI</span>
-<span class='va'>imp</span><span class='op'>$</span><span class='va'>imp</span><span class='op'>$</span><span class='va'>bmi</span>
-</div><div class='output co'>#&gt;       1    2    3    4    5
-#&gt; 1  29.6 22.5 27.5 30.1 29.6
-#&gt; 3  29.6 30.1 29.6 30.1 29.6
-#&gt; 4  27.4 27.4 25.5 35.3 27.5
-#&gt; 6  24.9 27.4 25.5 22.5 27.5
-#&gt; 10 29.6 20.4 22.7 35.3 22.0
-#&gt; 11 35.3 30.1 27.5 35.3 29.6
-#&gt; 12 29.6 30.1 22.7 27.4 22.7
-#&gt; 16 22.5 20.4 33.2 20.4 22.7
-#&gt; 21 29.6 28.7 33.2 30.1 22.7</div><div class='input'>
-<span class='co'># first completed data matrix</span>
-<span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    age  bmi hyp chl
-#&gt; 1    1 29.6   1 187
-#&gt; 2    2 22.7   1 187
-#&gt; 3    1 29.6   1 187
-#&gt; 4    3 27.4   2 284
-#&gt; 5    1 20.4   1 113
-#&gt; 6    3 24.9   2 184
-#&gt; 7    1 22.5   1 118
-#&gt; 8    1 30.1   1 187
-#&gt; 9    2 22.0   1 238
-#&gt; 10   2 29.6   1 218
-#&gt; 11   1 35.3   1 218
-#&gt; 12   2 29.6   1 284
-#&gt; 13   3 21.7   1 206
-#&gt; 14   2 28.7   2 204
-#&gt; 15   1 29.6   1 187
-#&gt; 16   1 22.5   1 118
-#&gt; 17   3 27.2   2 284
-#&gt; 18   2 26.3   2 199
-#&gt; 19   1 35.3   1 218
-#&gt; 20   3 25.5   2 206
-#&gt; 21   1 29.6   1 187
-#&gt; 22   1 33.2   1 229
-#&gt; 23   1 27.5   1 131
-#&gt; 24   3 24.9   1 184
-#&gt; 25   2 27.4   1 186</div><div class='input'>
-<span class='co'># imputation on mixed data with a different method per column</span>
-<span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sample"</span>, <span class='st'>"midastouch"</span>, <span class='st'>"logreg"</span>, <span class='st'>"norm"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt;  iter imp variable
-#&gt;   1   1  bmi  hyp  chl
-#&gt;   1   2  bmi  hyp  chl
-#&gt;   1   3  bmi  hyp  chl
-#&gt;   1   4  bmi  hyp  chl
-#&gt;   1   5  bmi  hyp  chl
-#&gt;   2   1  bmi  hyp  chl
-#&gt;   2   2  bmi  hyp  chl
-#&gt;   2   3  bmi  hyp  chl
-#&gt;   2   4  bmi  hyp  chl
-#&gt;   2   5  bmi  hyp  chl
-#&gt;   3   1  bmi  hyp  chl
-#&gt;   3   2  bmi  hyp  chl
-#&gt;   3   3  bmi  hyp  chl
-#&gt;   3   4  bmi  hyp  chl
-#&gt;   3   5  bmi  hyp  chl
-#&gt;   4   1  bmi  hyp  chl
-#&gt;   4   2  bmi  hyp  chl
-#&gt;   4   3  bmi  hyp  chl
-#&gt;   4   4  bmi  hyp  chl
-#&gt;   4   5  bmi  hyp  chl
-#&gt;   5   1  bmi  hyp  chl
-#&gt;   5   2  bmi  hyp  chl
-#&gt;   5   3  bmi  hyp  chl
-#&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='output co'>#&gt; Class: mids
-#&gt; Number of multiple imputations:  5 
-#&gt; Imputation methods:
-#&gt;          age          bmi          hyp          chl 
-#&gt;           "" "midastouch"     "logreg"       "norm" 
-#&gt; PredictorMatrix:
-#&gt;     age bmi hyp chl
-#&gt; age   0   1   1   1
-#&gt; bmi   1   0   1   1
-#&gt; hyp   1   1   0   1
-#&gt; chl   1   1   1   0</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># do default multiple imputation on a numeric matrix</span></span>
+<span class='r-in'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, method <span class='op'>=</span> <span class='st'>"midastouch"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  iter imp variable</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   5  bmi  hyp  chl</span>
+<span class='r-in'><span class='va'>imp</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class: mids</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Number of multiple imputations:  5 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Imputation methods:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          age          bmi          hyp          chl </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           "" "midastouch" "midastouch" "midastouch" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PredictorMatrix:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     age bmi hyp chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age   0   1   1   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bmi   1   0   1   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hyp   1   1   0   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl   1   1   1   0</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># list the actual imputations for BMI</span></span>
+<span class='r-in'><span class='va'>imp</span><span class='op'>$</span><span class='va'>imp</span><span class='op'>$</span><span class='va'>bmi</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       1    2    3    4    5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  27.5 30.1 29.6 30.1 33.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  29.6 30.1 29.6 30.1 30.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  27.5 21.7 25.5 25.5 21.7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  20.4 24.9 29.6 25.5 25.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 25.5 22.5 27.4 26.3 27.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11 29.6 30.1 29.6 30.1 33.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12 20.4 22.5 29.6 27.2 27.4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16 29.6 33.2 25.5 30.1 33.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21 29.6 33.2 29.6 30.1 20.4</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># first completed data matrix</span></span>
+<span class='r-in'><span class='fu'><a href='complete.mids.html'>complete</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    age  bmi hyp chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    1 27.5   1 131</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2    2 22.7   1 187</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3    1 29.6   1 187</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4    3 27.5   2 187</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5    1 20.4   1 113</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6    3 20.4   1 184</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7    1 22.5   1 118</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8    1 30.1   1 187</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9    2 22.0   1 238</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10   2 25.5   1 187</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11   1 29.6   1 218</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12   2 20.4   1 238</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13   3 21.7   1 206</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14   2 28.7   2 204</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15   1 29.6   1 218</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16   1 29.6   1 229</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17   3 27.2   2 284</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18   2 26.3   2 199</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19   1 35.3   1 218</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20   3 25.5   2 206</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21   1 29.6   1 187</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22   1 33.2   1 229</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23   1 27.5   1 131</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24   3 24.9   1 204</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25   2 27.4   1 186</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># imputation on mixed data with a different method per column</span></span>
+<span class='r-in'><span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sample"</span>, <span class='st'>"midastouch"</span>, <span class='st'>"logreg"</span>, <span class='st'>"norm"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  iter imp variable</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class: mids</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Number of multiple imputations:  5 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Imputation methods:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          age          bmi          hyp          chl </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           "" "midastouch"     "logreg"       "norm" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PredictorMatrix:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     age bmi hyp chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age   0   1   1   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bmi   1   0   1   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hyp   1   1   0   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl   1   1   1   0</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

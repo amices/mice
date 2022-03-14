@@ -68,7 +68,7 @@ data according to the method of White, Daniel and Royston (2010).
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
+Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 
 Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
 multiple imputation strategies for the statistical analysis of incomplete
@@ -87,6 +87,10 @@ S-Plus (4th ed)}. Springer, Berlin.
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},
+\code{\link{mice.impute.lasso.logreg}()},
+\code{\link{mice.impute.lasso.norm}()},
+\code{\link{mice.impute.lasso.select.logreg}()},
+\code{\link{mice.impute.lasso.select.norm}()},
 \code{\link{mice.impute.lda}()},
 \code{\link{mice.impute.logreg.boot}()},
 \code{\link{mice.impute.logreg}()},

@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -196,116 +196,119 @@ Leiden: TNO Quality of Life.</p>
     <p>Stef van Buuren, Karin Groothuis-Oudshoorn, 2000</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt;  iter imp variable
-#&gt;   1   1  bmi  hyp  chl
-#&gt;   1   2  bmi  hyp  chl
-#&gt;   1   3  bmi  hyp  chl
-#&gt;   1   4  bmi  hyp  chl
-#&gt;   1   5  bmi  hyp  chl
-#&gt;   2   1  bmi  hyp  chl
-#&gt;   2   2  bmi  hyp  chl
-#&gt;   2   3  bmi  hyp  chl
-#&gt;   2   4  bmi  hyp  chl
-#&gt;   2   5  bmi  hyp  chl
-#&gt;   3   1  bmi  hyp  chl
-#&gt;   3   2  bmi  hyp  chl
-#&gt;   3   3  bmi  hyp  chl
-#&gt;   3   4  bmi  hyp  chl
-#&gt;   3   5  bmi  hyp  chl
-#&gt;   4   1  bmi  hyp  chl
-#&gt;   4   2  bmi  hyp  chl
-#&gt;   4   3  bmi  hyp  chl
-#&gt;   4   4  bmi  hyp  chl
-#&gt;   4   5  bmi  hyp  chl
-#&gt;   5   1  bmi  hyp  chl
-#&gt;   5   2  bmi  hyp  chl
-#&gt;   5   3  bmi  hyp  chl
-#&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='input'>
-<span class='co'># logistic regression on the imputed data</span>
-<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>glm.mids</span><span class='op'>(</span><span class='op'>(</span><span class='va'>hyp</span> <span class='op'>==</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>bmi</span> <span class='op'>+</span> <span class='va'>chl</span>, data <span class='op'>=</span> <span class='va'>imp</span>, family <span class='op'>=</span> <span class='va'>binomial</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Use with(imp, glm(yourmodel).</span></div><div class='input'><span class='va'>fit</span>
-</div><div class='output co'>#&gt; call :
-#&gt; glm.mids(formula = (hyp == 2) ~ bmi + chl, family = binomial, 
-#&gt;     data = imp)
-#&gt; 
-#&gt; call1 :
-#&gt; mice(data = nhanes)
-#&gt; 
-#&gt; nmis :
-#&gt; age bmi hyp chl 
-#&gt;   0   9   8  10 
-#&gt; 
-#&gt; analyses :
-#&gt; [[1]]
-#&gt; 
-#&gt; Call:  glm(formula = formula, family = family, data = complete(data, 
-#&gt;     i))
-#&gt; 
-#&gt; Coefficients:
-#&gt; (Intercept)          bmi          chl  
-#&gt;    -5.33438     -0.07760      0.03289  
-#&gt; 
-#&gt; Degrees of Freedom: 24 Total (i.e. Null);  22 Residual
-#&gt; Null Deviance:	    29.65 
-#&gt; Residual Deviance: 25.33 	AIC: 31.33
-#&gt; 
-#&gt; [[2]]
-#&gt; 
-#&gt; Call:  glm(formula = formula, family = family, data = complete(data, 
-#&gt;     i))
-#&gt; 
-#&gt; Coefficients:
-#&gt; (Intercept)          bmi          chl  
-#&gt;    -6.74772      0.06304      0.01923  
-#&gt; 
-#&gt; Degrees of Freedom: 24 Total (i.e. Null);  22 Residual
-#&gt; Null Deviance:	    27.55 
-#&gt; Residual Deviance: 25.1 	AIC: 31.1
-#&gt; 
-#&gt; [[3]]
-#&gt; 
-#&gt; Call:  glm(formula = formula, family = family, data = complete(data, 
-#&gt;     i))
-#&gt; 
-#&gt; Coefficients:
-#&gt; (Intercept)          bmi          chl  
-#&gt;    -6.73637      0.06149      0.01868  
-#&gt; 
-#&gt; Degrees of Freedom: 24 Total (i.e. Null);  22 Residual
-#&gt; Null Deviance:	    27.55 
-#&gt; Residual Deviance: 24.55 	AIC: 30.55
-#&gt; 
-#&gt; [[4]]
-#&gt; 
-#&gt; Call:  glm(formula = formula, family = family, data = complete(data, 
-#&gt;     i))
-#&gt; 
-#&gt; Coefficients:
-#&gt; (Intercept)          bmi          chl  
-#&gt;   -10.77284      0.13253      0.02943  
-#&gt; 
-#&gt; Degrees of Freedom: 24 Total (i.e. Null);  22 Residual
-#&gt; Null Deviance:	    25.02 
-#&gt; Residual Deviance: 19.83 	AIC: 25.83
-#&gt; 
-#&gt; [[5]]
-#&gt; 
-#&gt; Call:  glm(formula = formula, family = family, data = complete(data, 
-#&gt;     i))
-#&gt; 
-#&gt; Coefficients:
-#&gt; (Intercept)          bmi          chl  
-#&gt;   -6.488709    -0.008232     0.028635  
-#&gt; 
-#&gt; Degrees of Freedom: 24 Total (i.e. Null);  22 Residual
-#&gt; Null Deviance:	    31.34 
-#&gt; Residual Deviance: 25.96 	AIC: 31.96
-#&gt; 
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  iter imp variable</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   5  bmi  hyp  chl</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># logistic regression on the imputed data</span></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>glm.mids</span><span class='op'>(</span><span class='op'>(</span><span class='va'>hyp</span> <span class='op'>==</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>bmi</span> <span class='op'>+</span> <span class='va'>chl</span>, data <span class='op'>=</span> <span class='va'>imp</span>, family <span class='op'>=</span> <span class='va'>binomial</span><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>Use with(imp, glm(yourmodel).</span>
+<span class='r-in'><span class='va'>fit</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> call :</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> glm.mids(formula = (hyp == 2) ~ bmi + chl, family = binomial, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     data = imp)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> call1 :</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mice(data = nhanes)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> nmis :</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age bmi hyp chl </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   0   9   8  10 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> analyses :</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:  glm(formula = formula, family = family, data = complete(data, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     i))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)          bmi          chl  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    -1.51616     -0.19341      0.02583  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Degrees of Freedom: 24 Total (i.e. Null);  22 Residual</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Null Deviance:	    25.02 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual Deviance: 21.46 	AIC: 27.46</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:  glm(formula = formula, family = family, data = complete(data, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     i))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)          bmi          chl  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    -9.16252      0.08979      0.02680  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Degrees of Freedom: 24 Total (i.e. Null);  22 Residual</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Null Deviance:	    27.55 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual Deviance: 22.79 	AIC: 28.79</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[3]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:  glm(formula = formula, family = family, data = complete(data, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     i))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)          bmi          chl  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    -6.09981     -0.03313      0.02951  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Degrees of Freedom: 24 Total (i.e. Null);  22 Residual</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Null Deviance:	    29.65 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual Deviance: 24.84 	AIC: 30.84</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[4]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:  glm(formula = formula, family = family, data = complete(data, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     i))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)          bmi          chl  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    -3.02513     -0.10125      0.02332  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Degrees of Freedom: 24 Total (i.e. Null);  22 Residual</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Null Deviance:	    27.55 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual Deviance: 24.77 	AIC: 30.77</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[5]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:  glm(formula = formula, family = family, data = complete(data, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     i))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)          bmi          chl  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    -8.14281     -0.02479      0.03794  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Degrees of Freedom: 24 Total (i.e. Null);  22 Residual</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Null Deviance:	    27.55 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual Deviance: 21.62 	AIC: 27.62</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

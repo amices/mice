@@ -87,7 +87,7 @@ specification given in formulas." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -182,13 +182,13 @@ specifying imputation models, e.g., for specifying interaction terms.</p></td>
     </tr>
     <tr>
       <th>predictorMatrix</th>
-      <td><p>A numeric matrix of <code><a href='https://rdrr.io/r/base/length.html'>length(blocks)</a></code> rows
-and <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(data)</a></code> columns, containing 0/1 data specifying
+      <td><p>A numeric matrix of <code>length(blocks)</code> rows
+and <code>ncol(data)</code> columns, containing 0/1 data specifying
 the set of predictors to be used for each target column.
 Each row corresponds to a variable block, i.e., a set of variables
 to be imputed. A value of <code>1</code> means that the column
 variable is used as a predictor for the target block (in the rows).
-By default, the <code>predictorMatrix</code> is a square matrix of <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(data)</a></code>
+By default, the <code>predictorMatrix</code> is a square matrix of <code>ncol(data)</code>
 rows and columns with all 1's, except for the diagonal.
 Note: For two-level imputation models (which have <code>"2l"</code> in their names)
 other codes (e.g, <code>2</code> or <code>-2</code>) are also allowed.</p></td>
@@ -203,21 +203,22 @@ other codes (e.g, <code>2</code> or <code>-2</code>) are also allowed.</p></td>
     <div class='dont-index'><p><code><a href='make.blocks.html'>make.blocks</a></code>, <code><a href='name.blocks.html'>name.blocks</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>form</span> <span class='op'>&lt;-</span> <span class='fu'><a href='name.formulas.html'>name.formulas</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>~</span> <span class='va'>chl</span> <span class='op'>+</span> <span class='va'>age</span>, <span class='va'>chl</span> <span class='op'>~</span> <span class='va'>bmi</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>pred</span> <span class='op'>&lt;-</span> <span class='fu'><a href='make.predictorMatrix.html'>make.predictorMatrix</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"age"</span>, <span class='st'>"chl"</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>
-<span class='fu'>construct.blocks</span><span class='op'>(</span>formulas <span class='op'>=</span> <span class='va'>form</span>, pred <span class='op'>=</span> <span class='va'>pred</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $F1
-#&gt; [1] "bmi" "hyp"
-#&gt; 
-#&gt; $chl
-#&gt; [1] "chl"
-#&gt; 
-#&gt; $age
-#&gt; [1] "age"
-#&gt; 
-#&gt; attr(,"calltype")
-#&gt;        F1       chl       age 
-#&gt; "formula" "formula"    "type" </div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>form</span> <span class='op'>&lt;-</span> <span class='fu'><a href='name.formulas.html'>name.formulas</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>~</span> <span class='va'>chl</span> <span class='op'>+</span> <span class='va'>age</span>, <span class='va'>chl</span> <span class='op'>~</span> <span class='va'>bmi</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>pred</span> <span class='op'>&lt;-</span> <span class='fu'><a href='make.predictorMatrix.html'>make.predictorMatrix</a></span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"age"</span>, <span class='st'>"chl"</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>construct.blocks</span><span class='op'>(</span>formulas <span class='op'>=</span> <span class='va'>form</span>, pred <span class='op'>=</span> <span class='va'>pred</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $F1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "bmi" "hyp"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "chl"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $age</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "age"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> attr(,"calltype")</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        F1       chl       age </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "formula" "formula"    "type" </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

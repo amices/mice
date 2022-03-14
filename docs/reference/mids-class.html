@@ -80,7 +80,7 @@ rbind.mids() and ibind.mids()." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -199,7 +199,7 @@ equivalent <code>oldClass(obj) &lt;- "mids"</code>.</p>
    <dt><code>.Data</code>:</dt><dd><p>Object of class <code>"list"</code> containing the
    following slots:</p></dd>
    <dt><code>data</code>:</dt><dd><p>Original (incomplete) data set.</p></dd>
-   <dt><code>imp</code>:</dt><dd><p>A list of <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(data)</a></code> components with
+   <dt><code>imp</code>:</dt><dd><p>A list of <code>ncol(data)</code> components with
    the generated multiple imputations. Each list components is a
    <code>data.frame</code> (<code>nmis[j]</code> by <code>m</code>) of imputed values
    for variable <code>j</code>.</p></dd>
@@ -220,17 +220,17 @@ equivalent <code>oldClass(obj) &lt;- "mids"</code>.</p>
    can be converted into formula's by <code>as.formula</code>. List elements
    correspond to blocks. The block to which the list element applies is
    identified by its name, so list names must correspond to block names.</p></dd>
-   <dt><code>post</code>:</dt><dd><p>A vector of strings of length <code><a href='https://rdrr.io/r/base/length.html'>length(blocks)</a></code>
+   <dt><code>post</code>:</dt><dd><p>A vector of strings of length <code>length(blocks)</code>
    with commands for post-processing.</p></dd>
    <dt><code>blots</code>:</dt><dd><p>"Block dots". The <code>blots</code> argument to the <code><a href='mice.html'>mice()</a></code>
    function.</p></dd>
-   <dt><code>ignore</code>:</dt><dd><p>A logical vector of length <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(data)</a></code> indicating
+   <dt><code>ignore</code>:</dt><dd><p>A logical vector of length <code>nrow(data)</code> indicating
    the rows in <code>data</code> used to build the imputation model. (new in <code>mice 3.12.0</code>)</p></dd>
    <dt><code>seed</code>:</dt><dd><p>The seed value of the solution.</p></dd>
    <dt><code>iteration</code>:</dt><dd><p>Last Gibbs sampling iteration number.</p></dd>
    <dt><code>lastSeedValue</code>:</dt><dd><p>The most recent seed state.</p></dd>
    <dt><code>chainMean</code>:</dt><dd><p>A list of <code>m</code> components. Each
-   component is a <code><a href='https://rdrr.io/r/base/length.html'>length(visitSequence)</a></code> by <code>maxit</code> matrix
+   component is a <code>length(visitSequence)</code> by <code>maxit</code> matrix
    containing the mean of the generated multiple imputations.
    The array can be used for monitoring convergence.
    Note that observed data are not present in this mean.</p></dd>
@@ -249,7 +249,7 @@ equivalent <code>oldClass(obj) &lt;- "mids"</code>.</p>
     <p>van Buuren S and Groothuis-Oudshoorn K (2011). <code>mice</code>:
 Multivariate Imputation by Chained Equations in <code>R</code>. <em>Journal of
 Statistical Software</em>, <b>45</b>(3), 1-67.
-<a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
+doi: <a href='https://doi.org/10.18637/jss.v045.i03'>10.18637/jss.v045.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='mice.html'>mice</a></code>, <code><a href='mira-class.html'>mira</a></code>,

@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -147,7 +147,9 @@
     <p>Pools univariate estimates of m repeated complete data analysis</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pool.scalar</span><span class='op'>(</span><span class='va'>Q</span>, <span class='va'>U</span>, n <span class='op'>=</span> <span class='cn'>Inf</span>, k <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>pool.scalar</span><span class='op'>(</span><span class='va'>Q</span>, <span class='va'>U</span>, n <span class='op'>=</span> <span class='cn'>Inf</span>, k <span class='op'>=</span> <span class='fl'>1</span>, rule <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"rubin1987"</span>, <span class='st'>"reiter2003"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'>pool.scalar.syn</span><span class='op'>(</span><span class='va'>Q</span>, <span class='va'>U</span>, n <span class='op'>=</span> <span class='cn'>Inf</span>, k <span class='op'>=</span> <span class='fl'>1</span>, rule <span class='op'>=</span> <span class='st'>"reiter2003"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,6 +174,12 @@ an infinite sample <code>n = Inf</code> is assumed.</p></td>
       <td><p>A number indicating the number of parameters to be estimated.
 By default, <code>k = 1</code> is assumed.</p></td>
     </tr>
+    <tr>
+      <th>rule</th>
+      <td><p>A string indicating the pooling rule. Currently supported are
+<code>"rubin1987"</code> (default, for missing data) and <code>"reiter2003"</code>
+(for synthetic data created from a complete data set).</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -191,7 +199,7 @@ By default, <code>k = 1</code> is assumed.</p></td>
     <dt><code>df</code>:</dt><dd><p>The degrees of freedom for t reference distribution by the
     method of Barnard-Rubin (1999).</p></dd>
     <dt><code>fmi</code>:</dt><dd><p>The fraction missing information due to nonresponse,
-    formula (3.1.10) Rubin (1987).</p></dd>
+    formula (3.1.10) Rubin (1987). (Not defined for synthetic data.)</p></dd>
     
 </dl>
 
@@ -199,103 +207,197 @@ By default, <code>k = 1</code> is assumed.</p></td>
 
     <p>The function averages the univariate estimates of the complete data model,
 computes the total variance over the repeated analyses, and computes the
-relative increase in variance due to nonresponse and the fraction of missing
-information.</p>
+relative increase in variance due to missing data or data synthesisation
+and the fraction of missing information.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Rubin, D.B. (1987). Multiple Imputation for Nonresponse in
 Surveys.  New York: John Wiley and Sons.</p>
+<p>Reiter, J.P. (2003). Inference for Partially Synthetic,
+Public Use Microdata Sets. <em>Survey Methodology</em>, <b>29</b>, 181-189.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='pool.html'>pool</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Karin Groothuis-Oudshoorn and Stef van Buuren, 2009</p>
+    <p>Karin Groothuis-Oudshoorn and Stef van Buuren, 2009; Thom Volker, 2021</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># example with manual and automatic pooling</span>
-<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, maxit <span class='op'>=</span> <span class='fl'>2</span>, m <span class='op'>=</span> <span class='fl'>2</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span>, seed <span class='op'>=</span> <span class='fl'>18210</span><span class='op'>)</span>
-<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># manual pooling</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>$</span><span class='va'>analyses</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; Call:
-#&gt; lm(formula = bmi ~ age)
-#&gt; 
-#&gt; Residuals:
-#&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -6.1587 -3.0674  0.9413  2.3870  8.7413 
-#&gt; 
-#&gt; Coefficients:
-#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)  28.1043     1.8853   14.91 2.61e-13 ***
-#&gt; age          -1.5457     0.9723   -1.59    0.126    
-#&gt; ---
-#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; 
-#&gt; Residual standard error: 3.957 on 23 degrees of freedom
-#&gt; Multiple R-squared:  0.099,	Adjusted R-squared:  0.05983 
-#&gt; F-statistic: 2.527 on 1 and 23 DF,  p-value: 0.1255
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>$</span><span class='va'>analyses</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; Call:
-#&gt; lm(formula = bmi ~ age)
-#&gt; 
-#&gt; Residuals:
-#&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -7.3611 -3.6333  0.9389  2.3389  7.5389 
-#&gt; 
-#&gt; Coefficients:
-#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)   29.189      2.019  14.460 4.92e-13 ***
-#&gt; age           -1.428      1.041  -1.371    0.183    
-#&gt; ---
-#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#&gt; 
-#&gt; Residual standard error: 4.236 on 23 degrees of freedom
-#&gt; Multiple R-squared:  0.0756,	Adjusted R-squared:  0.03541 
-#&gt; F-statistic: 1.881 on 1 and 23 DF,  p-value: 0.1835
-#&gt; </div><div class='input'><span class='fu'>pool.scalar</span><span class='op'>(</span>Q <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1.5457</span>, <span class='op'>-</span><span class='fl'>1.428</span><span class='op'>)</span>, U <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.9723</span><span class='op'>^</span><span class='fl'>2</span>, <span class='fl'>1.041</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>, n <span class='op'>=</span> <span class='fl'>25</span>, k <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $m
-#&gt; [1] 2
-#&gt; 
-#&gt; $qhat
-#&gt; [1] -1.5457 -1.4280
-#&gt; 
-#&gt; $u
-#&gt; [1] 0.9453673 1.0836810
-#&gt; 
-#&gt; $qbar
-#&gt; [1] -1.48685
-#&gt; 
-#&gt; $ubar
-#&gt; [1] 1.014524
-#&gt; 
-#&gt; $b
-#&gt; [1] 0.006926645
-#&gt; 
-#&gt; $t
-#&gt; [1] 1.024914
-#&gt; 
-#&gt; $df
-#&gt; [1] 20.97025
-#&gt; 
-#&gt; $r
-#&gt; [1] 0.01024122
-#&gt; 
-#&gt; $fmi
-#&gt; [1] 0.09272831
-#&gt; </div><div class='input'>
-<span class='co'># automatic pooling using broom</span>
-<span class='fu'><a href='pool.html'>pool</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Class: mipo    m = 2 
-#&gt;          term m  estimate     ubar           b        t dfcom       df
-#&gt; 1 (Intercept) 2 28.646618 3.814682 0.588114658 4.696854    23 10.72144
-#&gt; 2         age 2 -1.486715 1.014543 0.006947187 1.024964    23 20.96937
-#&gt;         riv     lambda        fmi
-#&gt; 1 0.2312570 0.18782190 0.30620278
-#&gt; 2 0.0102714 0.01016697 0.09275848</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># missing data imputation with with manual pooling</span></span>
+<span class='r-in'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, maxit <span class='op'>=</span> <span class='fl'>2</span>, m <span class='op'>=</span> <span class='fl'>2</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span>, seed <span class='op'>=</span> <span class='fl'>18210</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># manual pooling</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>$</span><span class='va'>analyses</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lm(formula = bmi ~ age)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residuals:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Min      1Q  Median      3Q     Max </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -6.1587 -3.0674  0.9413  2.3870  8.7413 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)  28.1043     1.8853   14.91 2.61e-13 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age          -1.5457     0.9723   -1.59    0.126    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual standard error: 3.957 on 23 degrees of freedom</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Multiple R-squared:  0.099,	Adjusted R-squared:  0.05983 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> F-statistic: 2.527 on 1 and 23 DF,  p-value: 0.1255</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>$</span><span class='va'>analyses</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lm(formula = bmi ~ age)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residuals:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Min      1Q  Median      3Q     Max </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -7.3611 -3.6333  0.9389  2.3389  7.5389 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)   29.189      2.019  14.460 4.92e-13 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age           -1.428      1.041  -1.371    0.183    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual standard error: 4.236 on 23 degrees of freedom</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Multiple R-squared:  0.0756,	Adjusted R-squared:  0.03541 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> F-statistic: 1.881 on 1 and 23 DF,  p-value: 0.1835</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'>pool.scalar</span><span class='op'>(</span>Q <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1.5457</span>, <span class='op'>-</span><span class='fl'>1.428</span><span class='op'>)</span>, U <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.9723</span><span class='op'>^</span><span class='fl'>2</span>, <span class='fl'>1.041</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>, n <span class='op'>=</span> <span class='fl'>25</span>, k <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $m</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $qhat</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] -1.5457 -1.4280</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $u</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.9453673 1.0836810</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $qbar</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] -1.48685</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ubar</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1.014524</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $b</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.006926645</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $t</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1.024914</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $df</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 20.97025</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $r</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.01024122</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $fmi</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.09272831</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># check: automatic pooling using broom</span></span>
+<span class='r-in'><span class='fu'><a href='pool.html'>pool</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class: mipo    m = 2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          term m  estimate     ubar           b        t dfcom       df</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 (Intercept) 2 28.646618 3.814682 0.588114658 4.696854    23 10.72144</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2         age 2 -1.486715 1.014543 0.006947187 1.024964    23 20.96937</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         riv     lambda        fmi</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 0.2312570 0.18782190 0.30620278</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 0.0102714 0.01016697 0.09275848</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># manual pooling for synthetic data created from complete data</span></span>
+<span class='r-in'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>cars</span>, maxit <span class='op'>=</span> <span class='fl'>2</span>, m <span class='op'>=</span> <span class='fl'>2</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span>, seed <span class='op'>=</span> <span class='fl'>18210</span>,</span>
+<span class='r-in'>            where <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>cars</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>cars</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>speed</span> <span class='op'>~</span> <span class='va'>dist</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># manual pooling: extract Q and U</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>$</span><span class='va'>analyses</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lm(formula = speed ~ dist)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residuals:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Min      1Q  Median      3Q     Max </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -6.9740 -2.3144 -0.1494  3.1287  7.4115 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) 10.15208    1.06236   9.556 1.10e-12 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dist         0.12182    0.02121   5.744 6.15e-07 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual standard error: 3.618 on 48 degrees of freedom</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Multiple R-squared:  0.4074,	Adjusted R-squared:  0.395 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> F-statistic:    33 on 1 and 48 DF,  p-value: 6.147e-07</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>$</span><span class='va'>analyses</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lm(formula = speed ~ dist)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residuals:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Min      1Q  Median      3Q     Max </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -7.5830 -3.1680 -0.3479  3.3928  8.1902 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)  9.46952    1.31136   7.221 3.37e-09 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dist         0.13209    0.02516   5.250 3.43e-06 ***</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual standard error: 4.271 on 48 degrees of freedom</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Multiple R-squared:  0.3647,	Adjusted R-squared:  0.3515 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> F-statistic: 27.56 on 1 and 48 DF,  p-value: 3.428e-06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'>pool.scalar.syn</span><span class='op'>(</span>Q <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.12182</span>, <span class='fl'>0.13209</span><span class='op'>)</span>, U <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.02121</span><span class='op'>^</span><span class='fl'>2</span>, <span class='fl'>0.02516</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>, n <span class='op'>=</span> <span class='fl'>50</span>, k <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $m</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $qhat</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.12182 0.13209</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $u</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.0004498641 0.0006330256</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $qbar</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.126955</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ubar</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.0005414448</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $b</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 5.273645e-05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $t</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.0005678131</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $df</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 463.7127</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $r</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.1460992</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $fmi</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># check: automatic pooling using broom</span></span>
+<span class='r-in'><span class='fu'><a href='pool.html'>pool.syn</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Class: mipo    m = 2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          term m  estimate         ubar            b            t dfcom       df</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 (Intercept) 2 9.8108000 1.4241330840 2.329428e-01 1.5406044600    48 174.9621</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2        dist 2 0.1269552 0.0005414288 5.273011e-05 0.0005677938    48 463.7928</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         riv lambda fmi</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 0.2453522     NA  NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 0.1460860     NA  NA</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -191,13 +191,13 @@ effectively re-imputed each time that it is visited.</p></td>
     </tr>
     <tr>
       <th>predictorMatrix</th>
-      <td><p>A numeric matrix of <code><a href='https://rdrr.io/r/base/length.html'>length(blocks)</a></code> rows
-and <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(data)</a></code> columns, containing 0/1 data specifying
+      <td><p>A numeric matrix of <code>length(blocks)</code> rows
+and <code>ncol(data)</code> columns, containing 0/1 data specifying
 the set of predictors to be used for each target column.
 Each row corresponds to a variable block, i.e., a set of variables
 to be imputed. A value of <code>1</code> means that the column
 variable is used as a predictor for the target block (in the rows).
-By default, the <code>predictorMatrix</code> is a square matrix of <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(data)</a></code>
+By default, the <code>predictorMatrix</code> is a square matrix of <code>ncol(data)</code>
 rows and columns with all 1's, except for the diagonal.
 Note: For two-level imputation models (which have <code>"2l"</code> in their names)
 other codes (e.g, <code>2</code> or <code>-2</code>) are also allowed.</p></td>

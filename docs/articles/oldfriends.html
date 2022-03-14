@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Help for old friends</h1>
             
-            <h4 class="date">2021-10-05</h4>
+            <h4 class="date">2022-01-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/amices/mice/blob/master/vignettes/oldfriends.Rmd"><code>vignettes/oldfriends.Rmd</code></a></small>
       <div class="hidden name"><code>oldfriends.Rmd</code></div>
@@ -126,17 +126,17 @@
 <tbody>
 <tr class="odd">
 <td align="left">method</td>
-<td align="left">length <code><a href="https://rdrr.io/r/base/nrow.html">ncol(data)</a></code>
+<td align="left">length <code>ncol(data)</code>
 </td>
-<td align="left">length <code><a href="https://rdrr.io/r/base/length.html">length(blocks)</a></code>
+<td align="left">length <code>length(blocks)</code>
 </td>
 </tr>
 <tr class="even">
 <td align="left">predictorMatrix</td>
 <td align="left">
-<code><a href="https://rdrr.io/r/base/nrow.html">ncol(data)</a></code> rows and columns</td>
+<code>ncol(data)</code> rows and columns</td>
 <td align="left">
-<code><a href="https://rdrr.io/r/base/length.html">length(blocks)</a></code> rows, <code><a href="https://rdrr.io/r/base/nrow.html">ncol(data)</a></code> columns</td>
+<code>length(blocks)</code> rows, <code>ncol(data)</code> columns</td>
 </tr>
 <tr class="odd">
 <td align="left">blocks</td>
@@ -152,7 +152,7 @@
 </tr>
 <tr class="odd">
 <td align="left">form</td>
-<td align="left">character, length <code><a href="https://rdrr.io/r/base/nrow.html">ncol(data)</a></code>
+<td align="left">character, length <code>ncol(data)</code>
 </td>
 <td align="left">deprecated</td>
 </tr>
@@ -192,7 +192,7 @@
 </tbody>
 </table>
 <p>No changes were made for the following arguments: <code>data</code>, <code>m</code>, <code>where</code>, <code>post</code>, <code>defaultMethod</code>, <code>maxit</code>, <code>printFlag</code>, <code>seed</code> and <code>data.init</code>.</p>
-<p>If <code>blocks</code> is not specified, then each variable is allocated to a separate block. In that case, <code><a href="https://rdrr.io/r/base/length.html">length(blocks)</a></code> is identical to <code><a href="https://rdrr.io/r/base/nrow.html">ncol(data)</a></code>, and the method in <code>mice 3.0.0</code> reduces to variable-by-variable imputation, as in <code>mice 2.46.0</code> and before.</p>
+<p>If <code>blocks</code> is not specified, then each variable is allocated to a separate block. In that case, <code>length(blocks)</code> is identical to <code>ncol(data)</code>, and the method in <code>mice 3.0.0</code> reduces to variable-by-variable imputation, as in <code>mice 2.46.0</code> and before.</p>
 <p>Argument <code>visitSequence</code> may still be specified as <code>integer</code> or <code>numeric</code>, but it will internally be converted into <code>character</code> using the column names in <code>data</code>.</p>
 <p>An existing function call to <code>mice</code> using the old <code>form</code> argument may result in an error <code>Argument "formulas" not a list</code>. The advice is to specify the formula as a list, e.g.,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">

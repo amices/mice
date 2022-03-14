@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -166,86 +166,94 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 missing data patterns.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='http://lattice.r-forge.r-project.org/'>lattice</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='http://www.stats.ox.ac.uk/pub/MASS4/'>MASS</a></span><span class='op'>)</span>
-
-<span class='va'>pattern4</span>
-</div><div class='output co'>#&gt;     A  B  C
-#&gt; 25 26 88 32
-#&gt; 26 42 66 21
-#&gt; 27 86 54 NA
-#&gt; 28  9 92 NA
-#&gt; 29 20 83 NA
-#&gt; 30 89 NA 41
-#&gt; 31 NA NA 35
-#&gt; 32 NA NA 33</div><div class='input'>
-<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>pattern1</span>, <span class='va'>pattern2</span>, <span class='va'>pattern3</span>, <span class='va'>pattern4</span><span class='op'>)</span>
-<span class='va'>mdpat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cbind.html'>cbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/expand.grid.html'>expand.grid</a></span><span class='op'>(</span>rec <span class='op'>=</span> <span class='fl'>8</span><span class='op'>:</span><span class='fl'>1</span>, pat <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, var <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>, r <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='va'>types</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Univariate"</span>, <span class='st'>"Monotone"</span>, <span class='st'>"File matching"</span>, <span class='st'>"General"</span><span class='op'>)</span>
-<span class='va'>tp41</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lattice/man/levelplot.html'>levelplot</a></span><span class='op'>(</span><span class='va'>r</span> <span class='op'>~</span> <span class='va'>var</span> <span class='op'>+</span> <span class='va'>rec</span> <span class='op'>|</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>pat</span><span class='op'>)</span>,
-  data <span class='op'>=</span> <span class='va'>mdpat</span>,
-  as.table <span class='op'>=</span> <span class='cn'>TRUE</span>, aspect <span class='op'>=</span> <span class='st'>"iso"</span>,
-  shrink <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.9</span><span class='op'>)</span>,
-  col.regions <span class='op'>=</span> <span class='fu'><a href='mdc.html'>mdc</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>,
-  colorkey <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  scales <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>draw <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>,
-  xlab <span class='op'>=</span> <span class='st'>""</span>, ylab <span class='op'>=</span> <span class='st'>""</span>,
-  between <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span>, y <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,
-  strip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/lattice/man/strip.default.html'>strip.custom</a></span><span class='op'>(</span>
-    bg <span class='op'>=</span> <span class='st'>"grey95"</span>, style <span class='op'>=</span> <span class='fl'>1</span>,
-    factor.levels <span class='op'>=</span> <span class='va'>types</span>
-  <span class='op'>)</span>
-<span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>tp41</span><span class='op'>)</span>
-</div><div class='img'><img src='pattern-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='md.pattern.html'>md.pattern</a></span><span class='op'>(</span><span class='va'>pattern4</span><span class='op'>)</span>
-</div><div class='img'><img src='pattern-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;   A B C  
-#&gt; 2 1 1 1 0
-#&gt; 3 1 1 0 1
-#&gt; 1 1 0 1 1
-#&gt; 2 0 0 1 2
-#&gt;   2 3 3 8</div><div class='input'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='md.pairs.html'>md.pairs</a></span><span class='op'>(</span><span class='va'>pattern4</span><span class='op'>)</span>
-<span class='va'>p</span>
-</div><div class='output co'>#&gt; $rr
-#&gt;   A B C
-#&gt; A 6 5 3
-#&gt; B 5 5 2
-#&gt; C 3 2 5
-#&gt; 
-#&gt; $rm
-#&gt;   A B C
-#&gt; A 0 1 3
-#&gt; B 0 0 3
-#&gt; C 2 3 0
-#&gt; 
-#&gt; $mr
-#&gt;   A B C
-#&gt; A 0 0 2
-#&gt; B 1 0 3
-#&gt; C 3 3 0
-#&gt; 
-#&gt; $mm
-#&gt;   A B C
-#&gt; A 2 2 0
-#&gt; B 2 3 0
-#&gt; C 0 0 3
-#&gt; </div><div class='input'>
-<span class='co'>### proportion of usable cases</span>
-<span class='va'>p</span><span class='op'>$</span><span class='va'>mr</span> <span class='op'>/</span> <span class='op'>(</span><span class='va'>p</span><span class='op'>$</span><span class='va'>mr</span> <span class='op'>+</span> <span class='va'>p</span><span class='op'>$</span><span class='va'>mm</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;           A B C
-#&gt; A 0.0000000 0 1
-#&gt; B 0.3333333 0 1
-#&gt; C 1.0000000 1 0</div><div class='input'>
-<span class='co'>### outbound statistics</span>
-<span class='va'>p</span><span class='op'>$</span><span class='va'>rm</span> <span class='op'>/</span> <span class='op'>(</span><span class='va'>p</span><span class='op'>$</span><span class='va'>rm</span> <span class='op'>+</span> <span class='va'>p</span><span class='op'>$</span><span class='va'>rr</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     A         B   C
-#&gt; A 0.0 0.1666667 0.5
-#&gt; B 0.0 0.0000000 0.6
-#&gt; C 0.4 0.6000000 0.0</div><div class='input'>
-
-<span class='fu'><a href='fluxplot.html'>fluxplot</a></span><span class='op'>(</span><span class='va'>pattern2</span><span class='op'>)</span>
-</div><div class='img'><img src='pattern-3.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='http://lattice.r-forge.r-project.org/'>lattice</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='http://www.stats.ox.ac.uk/pub/MASS4/'>MASS</a></span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>pattern4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     A  B  C</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25 26 88 32</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26 42 66 21</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27 86 54 NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28  9 92 NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29 20 83 NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30 89 NA 41</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31 NA NA 35</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32 NA NA 33</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>pattern1</span>, <span class='va'>pattern2</span>, <span class='va'>pattern3</span>, <span class='va'>pattern4</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mdpat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cbind.html'>cbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/expand.grid.html'>expand.grid</a></span><span class='op'>(</span>rec <span class='op'>=</span> <span class='fl'>8</span><span class='op'>:</span><span class='fl'>1</span>, pat <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, var <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>, r <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>types</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Univariate"</span>, <span class='st'>"Monotone"</span>, <span class='st'>"File matching"</span>, <span class='st'>"General"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>tp41</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lattice/man/levelplot.html'>levelplot</a></span><span class='op'>(</span><span class='va'>r</span> <span class='op'>~</span> <span class='va'>var</span> <span class='op'>+</span> <span class='va'>rec</span> <span class='op'>|</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>pat</span><span class='op'>)</span>,</span>
+<span class='r-in'>  data <span class='op'>=</span> <span class='va'>mdpat</span>,</span>
+<span class='r-in'>  as.table <span class='op'>=</span> <span class='cn'>TRUE</span>, aspect <span class='op'>=</span> <span class='st'>"iso"</span>,</span>
+<span class='r-in'>  shrink <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.9</span><span class='op'>)</span>,</span>
+<span class='r-in'>  col.regions <span class='op'>=</span> <span class='fu'><a href='mdc.html'>mdc</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>,</span>
+<span class='r-in'>  colorkey <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span class='r-in'>  scales <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>draw <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>,</span>
+<span class='r-in'>  xlab <span class='op'>=</span> <span class='st'>""</span>, ylab <span class='op'>=</span> <span class='st'>""</span>,</span>
+<span class='r-in'>  between <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span>, y <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,</span>
+<span class='r-in'>  strip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/lattice/man/strip.default.html'>strip.custom</a></span><span class='op'>(</span></span>
+<span class='r-in'>    bg <span class='op'>=</span> <span class='st'>"grey95"</span>, style <span class='op'>=</span> <span class='fl'>1</span>,</span>
+<span class='r-in'>    factor.levels <span class='op'>=</span> <span class='va'>types</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>tp41</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='pattern-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='md.pattern.html'>md.pattern</a></span><span class='op'>(</span><span class='va'>pattern4</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='pattern-2.png' alt='' width='700' height='433' /></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   A B C  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 1 1 1 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 1 1 0 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 1 0 1 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 0 0 1 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2 3 3 8</span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='md.pairs.html'>md.pairs</a></span><span class='op'>(</span><span class='va'>pattern4</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>p</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $rr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   A B C</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A 6 5 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B 5 5 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> C 3 2 5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $rm</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   A B C</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A 0 1 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B 0 0 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> C 2 3 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $mr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   A B C</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A 0 0 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B 1 0 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> C 3 3 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $mm</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   A B C</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A 2 2 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B 2 3 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> C 0 0 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>### proportion of usable cases</span></span>
+<span class='r-in'><span class='va'>p</span><span class='op'>$</span><span class='va'>mr</span> <span class='op'>/</span> <span class='op'>(</span><span class='va'>p</span><span class='op'>$</span><span class='va'>mr</span> <span class='op'>+</span> <span class='va'>p</span><span class='op'>$</span><span class='va'>mm</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           A B C</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A 0.0000000 0 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B 0.3333333 0 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> C 1.0000000 1 0</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>### outbound statistics</span></span>
+<span class='r-in'><span class='va'>p</span><span class='op'>$</span><span class='va'>rm</span> <span class='op'>/</span> <span class='op'>(</span><span class='va'>p</span><span class='op'>$</span><span class='va'>rm</span> <span class='op'>+</span> <span class='va'>p</span><span class='op'>$</span><span class='va'>rr</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     A         B   C</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A 0.0 0.1666667 0.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B 0.0 0.0000000 0.6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> C 0.4 0.6000000 0.0</span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='fluxplot.html'>fluxplot</a></span><span class='op'>(</span><span class='va'>pattern2</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='pattern-3.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

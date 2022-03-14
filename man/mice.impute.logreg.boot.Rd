@@ -36,7 +36,7 @@ from the observed data \code{y[ry]} and \code{x[ry, ]}.
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 Statistical Software}, \bold{45}(3), 1-67.
-\url{https://www.jstatsoft.org/v45/i03/}
+\doi{10.18637/jss.v045.i03}
 
 Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-categorical.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
@@ -47,6 +47,10 @@ Chapman & Hall/CRC. Boca Raton, FL.
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},
+\code{\link{mice.impute.lasso.logreg}()},
+\code{\link{mice.impute.lasso.norm}()},
+\code{\link{mice.impute.lasso.select.logreg}()},
+\code{\link{mice.impute.lasso.select.norm}()},
 \code{\link{mice.impute.lda}()},
 \code{\link{mice.impute.logreg}()},
 \code{\link{mice.impute.mean}()},

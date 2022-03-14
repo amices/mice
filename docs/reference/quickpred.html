@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.13.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.14.4</span>
       </span>
     </div>
 
@@ -166,25 +166,25 @@
     <tr>
       <th>mincor</th>
       <td><p>A scalar, numeric vector (of size <code>ncol(data))</code> or numeric
-matrix (square, of size <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(data)</a></code> specifying the minimum
+matrix (square, of size <code>ncol(data)</code> specifying the minimum
 threshold(s) against which the absolute correlation in the data is compared.</p></td>
     </tr>
     <tr>
       <th>minpuc</th>
       <td><p>A scalar, vector (of size <code>ncol(data))</code> or matrix (square,
-of size <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(data)</a></code> specifying the minimum threshold(s) for the
+of size <code>ncol(data)</code> specifying the minimum threshold(s) for the
 proportion of usable cases.</p></td>
     </tr>
     <tr>
       <th>include</th>
       <td><p>A string or a vector of strings containing one or more
-variable names from <code><a href='https://rdrr.io/r/base/names.html'>names(data)</a></code>. Variables specified are always
+variable names from <code>names(data)</code>. Variables specified are always
 included as a predictor.</p></td>
     </tr>
     <tr>
       <th>exclude</th>
       <td><p>A string or a vector of strings containing one or more
-variable names from <code><a href='https://rdrr.io/r/base/names.html'>names(data)</a></code>. Variables specified are always
+variable names from <code>names(data)</code>. Variables specified are always
 excluded as a predictor.</p></td>
     </tr>
     <tr>
@@ -197,7 +197,7 @@ abbreviated.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A square binary matrix of size <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(data)</a></code>.</p>
+    <p>A square binary matrix of size <code>ncol(data)</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function creates a predictor matrix using the variable selection
@@ -239,7 +239,7 @@ imputation of missing blood pressure covariates in survival analysis.
 <em>Statistics in Medicine</em>, <b>18</b>, 681--694.</p>
 <p>van Buuren, S. and Groothuis-Oudshoorn, K. (2011). <code>mice</code>: Multivariate
 Imputation by Chained Equations in <code>R</code>. <em>Journal of Statistical
-Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>https://www.jstatsoft.org/v45/i03/</a></p>
+Software</em>, <b>45</b>(3), 1-67. doi: <a href='https://doi.org/10.18637/jss.v045.i03'>10.18637/jss.v045.i03</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='mice.html'>mice</a></code>, <code><a href='mids-class.html'>mids</a></code></p></div>
@@ -248,71 +248,77 @@ Software</em>, <b>45</b>(3), 1-67. <a href='https://www.jstatsoft.org/v45/i03/'>
     <p>Stef van Buuren, Aug 2009</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># default: include all predictors with absolute correlation over 0.1</span>
-<span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     age bmi hyp chl
-#&gt; age   0   0   0   0
-#&gt; bmi   1   0   1   1
-#&gt; hyp   1   0   0   1
-#&gt; chl   1   1   1   0</div><div class='input'>
-<span class='co'># all predictors with absolute correlation over 0.4</span>
-<span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, mincor <span class='op'>=</span> <span class='fl'>0.4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     age bmi hyp chl
-#&gt; age   0   0   0   0
-#&gt; bmi   0   0   0   0
-#&gt; hyp   1   0   0   1
-#&gt; chl   1   0   1   0</div><div class='input'>
-<span class='co'># include age and bmi, exclude chl</span>
-<span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, mincor <span class='op'>=</span> <span class='fl'>0.4</span>, inc <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"age"</span>, <span class='st'>"bmi"</span><span class='op'>)</span>, exc <span class='op'>=</span> <span class='st'>"chl"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     age bmi hyp chl
-#&gt; age   0   0   0   0
-#&gt; bmi   1   0   0   0
-#&gt; hyp   1   1   0   0
-#&gt; chl   1   1   1   0</div><div class='input'>
-<span class='co'># only include predictors with at least 30% usable cases</span>
-<span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, minpuc <span class='op'>=</span> <span class='fl'>0.3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     age bmi hyp chl
-#&gt; age   0   0   0   0
-#&gt; bmi   1   0   0   0
-#&gt; hyp   1   0   0   0
-#&gt; chl   1   1   1   0</div><div class='input'>
-<span class='co'># use low threshold for bmi, and high thresholds for hyp and chl</span>
-<span class='va'>pred</span> <span class='op'>&lt;-</span> <span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, mincor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.1</span>, <span class='fl'>0.5</span>, <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>pred</span>
-</div><div class='output co'>#&gt;     age bmi hyp chl
-#&gt; age   0   0   0   0
-#&gt; bmi   1   0   1   1
-#&gt; hyp   1   0   0   0
-#&gt; chl   1   0   0   0</div><div class='input'>
-<span class='co'># use it directly from mice</span>
-<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, pred <span class='op'>=</span> <span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, minpuc <span class='op'>=</span> <span class='fl'>0.25</span>, include <span class='op'>=</span> <span class='st'>"age"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt;  iter imp variable
-#&gt;   1   1  bmi  hyp  chl
-#&gt;   1   2  bmi  hyp  chl
-#&gt;   1   3  bmi  hyp  chl
-#&gt;   1   4  bmi  hyp  chl
-#&gt;   1   5  bmi  hyp  chl
-#&gt;   2   1  bmi  hyp  chl
-#&gt;   2   2  bmi  hyp  chl
-#&gt;   2   3  bmi  hyp  chl
-#&gt;   2   4  bmi  hyp  chl
-#&gt;   2   5  bmi  hyp  chl
-#&gt;   3   1  bmi  hyp  chl
-#&gt;   3   2  bmi  hyp  chl
-#&gt;   3   3  bmi  hyp  chl
-#&gt;   3   4  bmi  hyp  chl
-#&gt;   3   5  bmi  hyp  chl
-#&gt;   4   1  bmi  hyp  chl
-#&gt;   4   2  bmi  hyp  chl
-#&gt;   4   3  bmi  hyp  chl
-#&gt;   4   4  bmi  hyp  chl
-#&gt;   4   5  bmi  hyp  chl
-#&gt;   5   1  bmi  hyp  chl
-#&gt;   5   2  bmi  hyp  chl
-#&gt;   5   3  bmi  hyp  chl
-#&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># default: include all predictors with absolute correlation over 0.1</span></span>
+<span class='r-in'><span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     age bmi hyp chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age   0   0   0   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bmi   1   0   1   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hyp   1   0   0   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl   1   1   1   0</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># all predictors with absolute correlation over 0.4</span></span>
+<span class='r-in'><span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, mincor <span class='op'>=</span> <span class='fl'>0.4</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     age bmi hyp chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age   0   0   0   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bmi   0   0   0   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hyp   1   0   0   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl   1   0   1   0</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># include age and bmi, exclude chl</span></span>
+<span class='r-in'><span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, mincor <span class='op'>=</span> <span class='fl'>0.4</span>, inc <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"age"</span>, <span class='st'>"bmi"</span><span class='op'>)</span>, exc <span class='op'>=</span> <span class='st'>"chl"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     age bmi hyp chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age   0   0   0   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bmi   1   0   0   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hyp   1   1   0   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl   1   1   1   0</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># only include predictors with at least 30% usable cases</span></span>
+<span class='r-in'><span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, minpuc <span class='op'>=</span> <span class='fl'>0.3</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     age bmi hyp chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age   0   0   0   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bmi   1   0   0   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hyp   1   0   0   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl   1   1   1   0</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># use low threshold for bmi, and high thresholds for hyp and chl</span></span>
+<span class='r-in'><span class='va'>pred</span> <span class='op'>&lt;-</span> <span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, mincor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.1</span>, <span class='fl'>0.5</span>, <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>pred</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     age bmi hyp chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age   0   0   0   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> bmi   1   0   1   1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hyp   1   0   0   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl   1   0   0   0</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># use it directly from mice</span></span>
+<span class='r-in'><span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes</span>, pred <span class='op'>=</span> <span class='fu'>quickpred</span><span class='op'>(</span><span class='va'>nhanes</span>, minpuc <span class='op'>=</span> <span class='fl'>0.25</span>, include <span class='op'>=</span> <span class='st'>"age"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  iter imp variable</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   5  bmi  hyp  chl</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
