@@ -1,3 +1,7 @@
+# mice 3.14.5
+
+* Adds new multivariate imputation method `mice.impute.mpmm()`. (#460)
+
 # mice 3.14.4
 
 * Preserves stochastic nature of mice() by smarter random seed initialisation (#459)
