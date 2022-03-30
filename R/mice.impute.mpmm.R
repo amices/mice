@@ -1,30 +1,25 @@
 #' Imputation by multivariate predictive mean matching
-#' 
-#' Imputes multivariate incomplete data among which there are specific relations, 
+#'
+#' Imputes multivariate incomplete data among which there are specific relations,
 #' for instance, polynomials, interactions, range restrictions and sum scores.
 #' @aliases mice.impute.mpmm mpmm
-#' @param y matrix to be imputed
-#' @param ry Logical vector of length nrow(y) indicating the subset y[ry, ] of elements 
-#' in y to which the imputation model is fitted. The ry generally distinguishes the 
-#' observed (TRUE) and missing values (FALSE) in y.
-#' @param x Numeric design matrix with length(y) rows with predictors for y. 
-#' Matrix x may have no missing values.
-#' @param wy Logical vector of length length(y). A TRUE value indicates locations 
-#' in y for which imputations are created.
-#' @param ...Other named arguments.
-#' @return A matrix with imputed data, which has \code{ncol(y)} columns and 
+#' @param data matrix with exactly two missing data patterns
+#' @param format A character vector specifying the type of object that should
+#' be returned. The default is \code{format = "imputes"}.
+#' @param ... Other named arguments.
+#' @return A matrix with imputed data, which has \code{ncol(y)} columns and
 #' \code{sum(wy)} rows.
 #' @details
-#' This function implements the predictive mean matching and applies canonical 
-#' regression analysis to select donors fora set of missing variables. In general, 
-#' canonical regressionanalysis looks for a linear combination of covariates that 
-#' predicts a linear combination of outcomes (a set of missing variables) 
-#' optimally in a least-square sense (Israels, 1987). The predicted 
-#' value of the linear combination of the set of missing variables 
+#' This function implements the predictive mean matching and applies canonical
+#' regression analysis to select donors fora set of missing variables. In general,
+#' canonical regressionanalysis looks for a linear combination of covariates that
+#' predicts a linear combination of outcomes (a set of missing variables)
+#' optimally in a least-square sense (Israels, 1987). The predicted
+#' value of the linear combination of the set of missing variables
 #' would be applied to perform predictive mean matching.
-#' 
-#' @note 
-#' The function requires variables in the block have the same missingness pattern. 
+#'
+#' @note
+#' The function requires variables in the block have the same missingness pattern.
 #' If there are more than one missingness pattern, the function will return
 #' a warning.
 #' @author Mingyang Cai and Gerko Vink
@@ -54,7 +49,7 @@
 #' # Prepare data for imputation
 #' blk <- list(c("x", "xx"), "y")
 #' meth <- c("mpmm", "")
-#' 
+#'
 #' # Impute data
 #' imp <- mice(dat, blocks = blk, method = meth, print = FALSE)
 #'
@@ -67,11 +62,11 @@
 #' cmp <- complete(imp)
 #' points(cmp$x[is.na(dat$x)], cmp$xx[is.na(dat$x)], col = mdc(2))
 #' @export
-#' 
+#'
 mice.impute.mpmm <- function(data, format = "imputes", ...){
   order <- dimnames(data)[[1]]
   res <- mpmm.impute(data, ...)
-  return(mice:::single2imputes(res[order,], is.na(data)))
+  return(single2imputes(res[order,], is.na(data)))
 }
 
 
@@ -79,16 +74,17 @@ mpmm.impute <- function(data, ...){
   data <- as.data.frame(data)
   r <- !is.na(data)
   mpat <- apply(r, 1, function(x) paste(as.numeric(x), collapse=''))
-  nmpat <- length(unique(mpat)) 
+  nmpat <- length(unique(mpat))
   if (nmpat != 2) stop("There are more than one missingness patterns")
-  r <- unique(r)[2, ]
+  r <- unique(r)
+  r <- r[rowSums(r) < ncol(r), ]
   y <- data[, which(r == FALSE), drop = FALSE]
   ry <- !is.na(y)[,1]
   x <- data[, which(r == TRUE), drop = FALSE]
   wy <- !ry
-  ES <- eigen(solve(cov(y[ry, ,drop = FALSE], y[ry, ,drop = FALSE])) %*% cov(y[ry, ,drop = FALSE], x[ry, ,drop = FALSE]) 
+  ES <- eigen(solve(cov(y[ry, ,drop = FALSE], y[ry, ,drop = FALSE])) %*% cov(y[ry, ,drop = FALSE], x[ry, ,drop = FALSE])
               %*% solve(cov(x[ry, ,drop = FALSE], x[ry, ,drop = FALSE])) %*% cov(x[ry, ,drop = FALSE], y[ry, ,drop = FALSE]))
-  parm <- as.matrix(ES$vectors[, 1]) 
+  parm <- as.matrix(ES$vectors[, 1])
   z <- as.matrix(y) %*% parm
   imp <- mice.impute.pmm(z, ry, x)
   zstar <- as.matrix(imp)
