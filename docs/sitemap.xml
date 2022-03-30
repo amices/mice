@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://amices.org/mice/404.html</loc>
+  </url>
+  <url>
+    <loc>https://amices.org/mice/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://amices.org/mice/articles/articles/oldfriends.html</loc>
+  </url>
+  <url>
+    <loc>https://amices.org/mice/articles/articles/overview.html</loc>
+  </url>
+  <url>
+    <loc>https://amices.org/mice/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://amices.org/mice/articles/oldfriends.html</loc>
+  </url>
+  <url>
+    <loc>https://amices.org/mice/articles/overview.html</loc>
+  </url>
+  <url>
+    <loc>https://amices.org/mice/authors.html</loc>
+  </url>
+  <url>
     <loc>https://amices.org/mice/index.html</loc>
+  </url>
+  <url>
+    <loc>https://amices.org/mice/news/index.html</loc>
   </url>
   <url>
     <loc>https://amices.org/mice/reference/D1.html</loc>
@@ -11,9 +38,6 @@
   </url>
   <url>
     <loc>https://amices.org/mice/reference/D3.html</loc>
-  </url>
-  <url>
-    <loc>https://amices.org/mice/reference/ampute.html</loc>
   </url>
   <url>
     <loc>https://amices.org/mice/reference/ampute.continuous.html</loc>
@@ -35,6 +59,9 @@
   </url>
   <url>
     <loc>https://amices.org/mice/reference/ampute.discrete.html</loc>
+  </url>
+  <url>
+    <loc>https://amices.org/mice/reference/ampute.html</loc>
   </url>
   <url>
     <loc>https://amices.org/mice/reference/ampute.mcar.html</loc>
@@ -148,6 +175,9 @@
     <loc>https://amices.org/mice/reference/ifdo.html</loc>
   </url>
   <url>
+    <loc>https://amices.org/mice/reference/index.html</loc>
+  </url>
+  <url>
     <loc>https://amices.org/mice/reference/is.mads.html</loc>
   </url>
   <url>
@@ -259,10 +289,10 @@
     <loc>https://amices.org/mice/reference/mice.impute.lda.html</loc>
   </url>
   <url>
-    <loc>https://amices.org/mice/reference/mice.impute.logreg.html</loc>
+    <loc>https://amices.org/mice/reference/mice.impute.logreg.boot.html</loc>
   </url>
   <url>
-    <loc>https://amices.org/mice/reference/mice.impute.logreg.boot.html</loc>
+    <loc>https://amices.org/mice/reference/mice.impute.logreg.html</loc>
   </url>
   <url>
     <loc>https://amices.org/mice/reference/mice.impute.mean.html</loc>
@@ -274,10 +304,13 @@
     <loc>https://amices.org/mice/reference/mice.impute.mnar.html</loc>
   </url>
   <url>
-    <loc>https://amices.org/mice/reference/mice.impute.norm.html</loc>
+    <loc>https://amices.org/mice/reference/mice.impute.mpmm.html</loc>
   </url>
   <url>
     <loc>https://amices.org/mice/reference/mice.impute.norm.boot.html</loc>
+  </url>
+  <url>
+    <loc>https://amices.org/mice/reference/mice.impute.norm.html</loc>
   </url>
   <url>
     <loc>https://amices.org/mice/reference/mice.impute.norm.nob.html</loc>
@@ -376,10 +409,10 @@
     <loc>https://amices.org/mice/reference/pmm.match.html</loc>
   </url>
   <url>
-    <loc>https://amices.org/mice/reference/pool.html</loc>
+    <loc>https://amices.org/mice/reference/pool.compare.html</loc>
   </url>
   <url>
-    <loc>https://amices.org/mice/reference/pool.compare.html</loc>
+    <loc>https://amices.org/mice/reference/pool.html</loc>
   </url>
   <url>
     <loc>https://amices.org/mice/reference/pool.r.squared.html</loc>
@@ -455,11 +488,5 @@
   </url>
   <url>
     <loc>https://amices.org/mice/reference/xyplot.mids.html</loc>
-  </url>
-  <url>
-    <loc>https://amices.org/mice/articles/oldfriends.html</loc>
-  </url>
-  <url>
-    <loc>https://amices.org/mice/articles/overview.html</loc>
   </url>
 </urlset>

@@ -1,10 +1,10 @@
 pandoc: 2.14.0.3
-pkgdown: 1.6.1
+pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   oldfriends: oldfriends.html
   overview: overview.html
-last_built: 2022-01-04T11:57Z
+last_built: 2022-03-30T21:44Z
 urls:
   reference: https://amices.org/mice/reference
   article: https://amices.org/mice/articles
