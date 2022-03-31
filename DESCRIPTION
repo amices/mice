@@ -88,7 +88,6 @@ Description: Multiple imputation using Fully Conditional Specification (FCS)
     Various diagnostic plots are available to inspect the quality of the
     imputations.
 Encoding: UTF-8
-License: GPL-2 | GPL-3
 LazyLoad: yes
 LazyData: yes
 URL: https://github.com/amices/mice, https://amices.org/mice/, https://stefvanbuuren.name/fimd/
@@ -96,3 +95,4 @@ BugReports: https://github.com/amices/mice/issues
 LinkingTo: cpp11, Rcpp
 SystemRequirements: C++11
 RoxygenNote: 7.1.2
+License: GPL (>= 2)
