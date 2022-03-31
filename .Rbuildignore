@@ -20,3 +20,4 @@ vignettes/
 ^docs$
 ^pkgdown$
 ^LICENSE\.md$
+^\.github$

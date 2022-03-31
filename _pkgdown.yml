@@ -1,13 +1,9 @@
 title: mice
 url: https://amices.org/mice
 template:
+  bootstrap: 5
   params:
-    bootswatch: flatly
-    docsearch:
-      api_key: '491b6c2ead7f15b8c26c513b923dd6a0'
-      index_name: 'mice'
-navbar:
-  type: inverse
+    bootswatch: lumen
 reference:
   - title: "Missing data exploration"
     desc: >
