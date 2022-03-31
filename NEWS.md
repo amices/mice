@@ -1,3 +1,9 @@
+# mice 3.14.6
+
+* Fixes problems with `ampute()`
+* Adapt `prop`, `patterns` and `weights` matrices for pattern with only 1's
+* Adds warnings when patterns cannot be generated (#449, #317, #451)
+
 # mice 3.14.5
 
 * Adds new multivariate imputation method `mice.impute.mpmm()`. (#460)
