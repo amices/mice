@@ -23,6 +23,11 @@ be done, the procedure assumes (perhaps incorrectly) a large sample.}
 \description{
 The D1-statistics is the multivariate Wald test.
 }
+\note{
+Warning: `D1()` assumes that the order of the variables is the
+same in different models. See
+\url{https://github.com/amices/mice/issues/420} for details.
+}
 \examples{
 # Compare two linear models:
 imp <- mice(nhanes2, seed = 51009, print = FALSE)

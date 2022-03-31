@@ -2,7 +2,8 @@
 
 * Fixes problems with `ampute()`
 * Adapt `prop`, `patterns` and `weights` matrices for pattern with only 1's
-* Adds warnings when patterns cannot be generated (#449, #317, #451)
+* Adds warning when patterns cannot be generated (#449, #317, #451)
+* Adds warning on the order of model terms in `D1()` and `D2()` (#420)
 
 # mice 3.14.5
 
