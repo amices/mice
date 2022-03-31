@@ -59,19 +59,22 @@ ampute.continuous <- function(P, scores, prop, type) {
       shift <- shift[1]
     }
     scores.temp <- scores[[i]]
+    # empty candidate group
     if (length(scores.temp) == 1 && scores.temp == 0) {
-      R[[i]] <- 0
+      R[[i]] <- 0 
     } else {
       if (length(scores.temp) == 1) {
+        warning(paste("There is only 1 candidate for pattern", i, ",it will be amputed with probability", prop), call. = FALSE)
         probs <- prop
       } else if (length(unique(scores.temp)) == 1) {
+        warning(paste("The weighted sum scores of all candidates in pattern", i, "are the same, they will be amputed with probability", prop), call. = FALSE)
         probs <- prop
       } else {
         probs <- formula(x = scores.temp, b = shift)
       }
 
       # Based on the probabilities, each candidate will receive a missing data
-      # indicator 0, meaning he will be made missing or missing data indicator 1,
+      # indicator 0, meaning it will be made missing or missing data indicator 1,
       # meaning the candidate will remain complete.
 
       R.temp <- 1 - rbinom(n = length(scores.temp), size = 1, prob = probs)

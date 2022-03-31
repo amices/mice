@@ -229,7 +229,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (is.null(patterns)) {
     patterns <- ampute.default.patterns(n = ncol(data))
   } else if (is.vector(patterns) && (length(patterns) / ncol(data)) %% 1 == 0) {
-    patterns <- matrix(patterns, length(patterns) / ncol(data), byrow = TRUE)
+    patterns <- matrix(patterns, nrow = length(patterns) / ncol(data), byrow = TRUE)
     if (nrow(patterns) == 1 && all(patterns[1, ] %in% 1)) {
       stop("One pattern with merely ones results to no amputation at all, the procedure is therefore stopped", call. = FALSE)
     }
@@ -255,14 +255,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (sum(freq) != 1) {
     freq <- recalculate.freq(freq = freq)
   }
-  if (!bycases) {
-    prop <- recalculate.prop(
-      prop = prop,
-      freq = freq,
-      patterns = patterns,
-      n = ncol(data)
-    )
-  }
   check.pat <- check.patterns(
     patterns = patterns,
     freq = freq,
@@ -271,6 +263,17 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   patterns.new <- check.pat[["patterns"]]
   freq <- check.pat[["freq"]]
   prop <- check.pat[["prop"]]
+  
+  if (!bycases) {
+    prop <- recalculate.prop(
+      prop = prop,
+      freq = freq,
+      patterns = patterns.new,
+      k = ncol(data),
+      n = nrow(data)
+    )
+  }
+  
   if (any(!mech %in% c("MCAR", "MAR", "MNAR"))) {
     stop("Mechanism should be either MCAR, MAR or MNAR", call. = FALSE)
   }
@@ -299,7 +302,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   }
   if (mech != "MCAR" && !is.null(weights)) {
     if (is.vector(weights) && (length(weights) / ncol(data)) %% 1 == 0) {
-      weights <- matrix(weights, length(weights) / ncol(data), byrow = TRUE)
+      weights <- matrix(weights, nrow = length(weights) / ncol(data), byrow = TRUE)
     } else if (is.vector(weights)) {
       stop("Length of weight vector does not match #variables", call. = FALSE)
     } else if (!is.matrix(weights) && !is.data.frame(weights)) {
@@ -311,11 +314,18 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       patterns = patterns.new,
       mech = mech
     )
-  }
+  } 
   weights <- as.data.frame(weights)
-  if (!nrow(weights) %in% c(nrow(patterns), nrow(patterns.new))) {
+  if (!nrow(weights) == nrow(patterns.new)){
+    if (!is.null(check.pat[['row.one']])){
+      weights <- weights[-check.pat[['row.one']],]
+    }
+  }
+  if (!nrow(weights) == nrow(patterns.new)){
     stop("The objects patterns and weights are not matching", call. = FALSE)
   }
+  
+  
   if (!is.vector(cont)) {
     cont <- as.vector(cont)
     warning("Continuous should contain merely TRUE or FALSE", call. = FALSE)
@@ -390,6 +400,13 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       n = nrow(patterns.new), size = nrow(data),
       replace = TRUE, prob = freq
     ) + 1
+    
+    # Check whether cases are assigned to all patterns
+    non.used.patterns <- c(2:(nrow(patterns.new)+1))[!c(2:(nrow(patterns.new)+1)) %in% unique(P)]
+    if (length(non.used.patterns) > 0){
+      warning(paste0("No records are assigned to patterns ", toString(non.used.patterns - 1), ". These patterns will not be generated. Consider reducing the number of patterns or increasing the dataset size."), call. = FALSE)
+    }
+    
     # Calculate missingness according MCAR or calculate weighted sum scores
     # Standardized data is used to calculate weighted sum scores
     if (mech == "MCAR") {
@@ -468,7 +485,7 @@ sum.scores <- function(P, data, std, weights, patterns) {
   weights <- as.matrix(weights)
   f <- function(i) {
     if (length(P[P == (i + 1)]) == 0) {
-      return(0)
+      return(0) # this will ensure length 1 which is used in ampute.continuous
     } else {
       candidates <- as.matrix(data[P == (i + 1), ])
       # For each candidate in the pattern, a weighted sum score is calculated
@@ -495,8 +512,8 @@ sum.scores <- function(P, data, std, weights, patterns) {
 # This is an underlying function of multivariate amputation function ampute().
 # The function recalculates the proportion of missing cases for the desired
 # #missing cells.
-recalculate.prop <- function(prop, n, patterns, freq) {
-  miss <- prop * n^2 # Desired #missing cells
+recalculate.prop <- function(prop, n, k, patterns, freq) {
+  miss <- prop * n * k # Desired #missing cells
   # Calculate #cases according prop and #zeros in patterns
   cases <- vapply(
     seq_len(nrow(patterns)),
@@ -539,8 +556,8 @@ check.patterns <- function(patterns, freq, prop) {
     }
   }
   if (prop.one != 0) {
-    warning(paste("Proportion of missingness has changed from", prop, "to", prop.one, "because of pattern(s) with merely ones"), call. = FALSE)
-    prop <- prop.one
+    warning(paste("Proportion of missingness has changed from", prop, "to", (1-prop.one)*prop, "because of pattern(s) with merely ones"), call. = FALSE)
+    prop <- (1-prop.one)*prop
     freq <- freq[-row.one]
     freq <- recalculate.freq(freq)
     patterns <- patterns[-row.one, ]
@@ -558,6 +575,7 @@ check.patterns <- function(patterns, freq, prop) {
     patterns = patterns,
     prop = prop,
     freq = freq,
+    row.one = row.one,
     row.zero = row.zero
   )
   objects
