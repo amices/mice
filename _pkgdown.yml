@@ -164,6 +164,7 @@ reference:
       - fdgs
       - leiden85
       - mammalsleep
+      - mnar_demo_data
       - nhanes
       - nhanes2
       - pattern
@@ -173,6 +174,7 @@ reference:
       - selfreport
       - tbc
       - toenail
+      - toenail2
       - walking
       - windspeed
   - title: "Miscellaneous functions"
@@ -182,6 +184,7 @@ reference:
       - extractBS
       - glm.mids
       - lm.mids
+      - matchindex
       - mdc
       - mice.theme
       - supports.transparent
