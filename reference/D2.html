@@ -76,6 +76,12 @@ model <code>fit0 = NULL</code> compares <code>fit1</code> to the intercept-only 
 <dd><p>A character string denoting Wald- or likelihood-based based tests. Can be either <code>"wald"</code> or <code>"likelihood"</code>. Only used if <code>method = "D2"</code>.</p></dd>
 </dl></div>
     <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>Warning: `D2()` assumes that the order of the variables is the
+same in different models. See
+<a href="https://github.com/amices/mice/issues/420" class="external-link">https://github.com/amices/mice/issues/420</a> for details.</p>
+    </div>
+    <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Li, K. H., X. L. Meng, T. E. Raghunathan, and D. B. Rubin. 1991.
 Significance Levels from Repeated p-Values with Multiply-Imputed Data.
@@ -102,8 +108,8 @@ Significance Levels from Repeated p-Values with Multiply-Imputed Data.
 <span class="r-in"><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">gen</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">gen</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">~</span> <span class="va">hgt</span> <span class="op">+</span> <span class="va">hc</span> <span class="op">+</span> <span class="va">reg</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">fit0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">gen</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">gen</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">~</span> <span class="va">hgt</span> <span class="op">+</span> <span class="va">hc</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">D2</span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit0</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    test statistic df1      df2 dfcom    p.value        riv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1 ~~ 2  2.661203   4 350.0282    NA 0.03257732 0.07587944</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    test statistic df1      df2 dfcom   p.value      riv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1 ~~ 2 0.6757751   4 5.450589    NA 0.6351356 1.299826</span>
 <span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
     </div>
