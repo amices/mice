@@ -18,7 +18,7 @@ The method is less powerful than the D1- and D3-statistics."><!-- mathjax --><sc
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.14.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.14.6</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@ Significance Levels from Repeated p-Values with Multiply-Imputed Data.
 <span class="r-in"><span class="va">fit0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">gen</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">gen</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">~</span> <span class="va">hgt</span> <span class="op">+</span> <span class="va">hc</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">D2</span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit0</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    test statistic df1      df2 dfcom   p.value       riv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1 ~~ 2  1.750966   4 14.25115    NA 0.1939557 0.5373549</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1 ~~ 2  1.258995   4 39.86432    NA 0.3021055 0.2642021</span>
 <span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
     </div>

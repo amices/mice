@@ -21,7 +21,7 @@ pan package."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/lib
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mice</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.14.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.14.6</span>
       </span>
     </div>
 
@@ -215,36 +215,32 @@ Mathematics Education, Kiel, Germany), <a href="mailto:robitzsch@ipn.uni-kiel.de
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     expand, pack, unpack</span>
 <span class="r-in"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">x</span> <span class="op">|</span> <span class="va">group</span><span class="op">)</span> <span class="op">+</span> <span class="va">x</span>, data <span class="op">=</span> <span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> boundary (singular) fit: see help('isSingular')</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Linear mixed model fit by REML ['lmerMod']</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: y ~ (1 + x | group) + x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Data: complete(imp1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> REML criterion at convergence: 12937.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> REML criterion at convergence: 12756</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Scaled residuals: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Min      1Q  Median      3Q     Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -3.4360 -0.6730 -0.0179  0.6601  3.8546 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -3.5551 -0.6687  0.0004  0.6478  3.5411 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random effects:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Groups   Name        Variance  Std.Dev. Corr </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  group    (Intercept) 2.772e-01 0.526504      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           x           9.057e-05 0.009517 -1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Residual             6.962e-01 0.834391      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Groups   Name        Variance Std.Dev. Corr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  group    (Intercept) 0.27221  0.52173      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           x           0.00399  0.06317  0.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Residual             0.66711  0.81677      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of obs: 5000, groups:  group, 250</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.01430    0.03533  -0.405</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x            0.30961    0.01202  25.763</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.03257    0.03497  -0.931</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x            0.30912    0.01246  24.813</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Correlation of Fixed Effects:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   (Intr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x -0.046</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimizer (nloptwrap) convergence code: 0 (OK)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> boundary (singular) fit: see help('isSingular')</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x 0.023 </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Examples of predictorMatrix specification</span></span>
 <span class="r-in"></span>
