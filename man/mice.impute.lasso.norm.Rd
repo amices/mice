@@ -63,6 +63,7 @@ high-dimensional data. Statistical Methods in Medical Research, 25(5),
 \seealso{
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},
+\code{\link{mice.impute.heckman.ipd}()},
 \code{\link{mice.impute.lasso.logreg}()},
 \code{\link{mice.impute.lasso.select.logreg}()},
 \code{\link{mice.impute.lasso.select.norm}()},
