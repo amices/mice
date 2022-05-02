@@ -53,7 +53,7 @@ convergence <- function(data, diagnostic = "all", parameter = "mean", ...) {
     stop("no convergence diagnostics found", call. = FALSE)
   if (parameter != "mean" & parameter != "sd")
     stop("'parameter' not recognized, please use 'mean' or 'sd'")
-  vrbs <- names(data$data) #TODO: filter out character variables? names(data$data)[colSums(data$where)>0] 
+  vrbs <- names(data$data)
   p <- length(vrbs)
   m <- as.integer(data$m)
   t <- as.integer(data$iteration)
