@@ -11,6 +11,9 @@
 #' for the interpretation.
 #' The default is \code{diagnostic = "all"} which returns both the
 #' autocorrelation and potential scale reduction factor per iteration.
+#' @param parameter A keyword. One of the following keywords: \code{"mean"}
+#' or \code{"sd"} to evaluate chain means or chain standard deviations,
+#' respectively.
 #' @param \dots Additional arguments. Not used.
 #' @return A \code{data.frame} with the autocorrelation and/or potential
 #' scale reduction factor per iteration of the MICE algorithm.
@@ -18,8 +21,9 @@
 #' The argument \code{diagnostic} can be length-1 character, which is
 #' matched to one of the following keywords:
 #' \describe{
-#' \item{\code{"all"}}{computes both the autocorrelation as well as the
-#' potential scale reduction factor per iteration;}
+#' \item{\code{"all"}}{computes both the lag-1 autocorrelation as well as 
+#' the potential scale reduction factor (cf. Vehtari et al., 2021) per 
+#' iteration of the MICE algorithm;}
 #' \item{\code{"ac"}}{computes only the autocorrelation per iteration;}
 #' \item{\code{"psrf"}}{computes only the potential scale reduction factor
 #' per iteration;}
@@ -28,6 +32,10 @@
 #' }
 #' @seealso \code{\link{mice}}, \code{\link[=mids-class]{mids}}
 #' @keywords none
+#' @references Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., & Burkner, 
+#' P.-C. (2021). Rank-Normalization, Folding, and Localization: An Improved 
+#' R for Assessing Convergence of MCMC. Bayesian Analysis, 1(1), 1-38. 
+#' https://doi.org/10.1214/20-BA1221
 #' @examples
 #'
 #' # obtain imputed data set
@@ -35,27 +43,30 @@
 #' # compute convergence diagnostics
 #' convergence(imp)
 #' @export
-convergence <- function(data, diagnostic = "all", ...) {
+convergence <- function(data, diagnostic = "all", parameter = "mean", ...) {
   # process inputs
   install.on.demand("rstan", ...)
   install.on.demand("purrr", ...)
   if (!is.mids(data))
     stop("'data' not of class 'mids'")
-  if (is.null(data$chainMean)) {
+  if (is.null(data$chainMean)) 
     stop("no convergence diagnostics found", call. = FALSE)
-  }
-
-  # parameters
+  if (parameter != "mean" & parameter != "sd")
+    stop("'parameter' not recognized, please use 'mean' or 'sd'")
   vrbs <- names(data$data) #TODO: filter out character variables? names(data$data)[colSums(data$where)>0] 
   p <- length(vrbs)
   m <- as.integer(data$m)
   t <- as.integer(data$iteration)
   out <- expand.grid(.it = seq_len(t), vrb = vrbs)
     
-  # extract chain means and chain standard deviations
-  mn <- lapply(seq(p), function(x) aperm(data$chainMean[vrbs, , , drop = FALSE], c(2, 3, 1))[ , , x])
-  names(mn) <- vrbs
-  # sm <- lapply(seq(p), function(x) aperm(sqrt(data$chainVar)[vrbs, , , drop = FALSE], c(2, 3, 1))[ , , x])
+  # extract chain means or chain standard deviations
+  if (parameter == "mean") {
+    param <- lapply(seq(p), function(x) aperm(data$chainMean[vrbs, , , drop = FALSE], c(2, 3, 1))[ , , x]) 
+  }
+  if (parameter == "sd") {
+    param <- lapply(seq(p), function(x) aperm(sqrt(data$chainVar)[vrbs, , , drop = FALSE], c(2, 3, 1))[ , , x])
+  }
+  names(param) <- vrbs
   
   # compute autocorrelation
   if (diagnostic == "all" | diagnostic == "ac") {
@@ -63,7 +74,7 @@ convergence <- function(data, diagnostic = "all", ...) {
       purrr::map_dfr(vrbs, function(.vrb) {
         base::rbind(NA, NA, purrr::map_dfr(3:t, function(.itr) {
           data.frame(ac = max(purrr::map_dbl(1:m, function(.imp) {
-            suppressWarnings(stats::cor(mn[[.vrb]][1:.itr - 1, .imp], mn[[.vrb]][2:.itr, .imp]))
+            suppressWarnings(stats::cor(param[[.vrb]][1:.itr - 1, .imp], param[[.vrb]][2:.itr, .imp]))
           })))
         }))
       })
@@ -72,7 +83,7 @@ convergence <- function(data, diagnostic = "all", ...) {
   
   # compute potential scale reduction factor
   if (diagnostic == "all" | diagnostic == "psrf" | diagnostic == "gr") {
-    psrf <- purrr::map_dfr(mn, ~ {
+    psrf <- purrr::map_dfr(param, ~ {
       purrr::map_dfr(1:t, function(.itr) {
         data.frame(psrf = rstan::Rhat(.[1:.itr,]))
       })
@@ -83,40 +94,3 @@ convergence <- function(data, diagnostic = "all", ...) {
   return(out)
 }
 
-# m <- data$m
-# it <- data$iteration
-# long <- cbind(
-#   expand.grid(.it = seq_len(it), .m = seq_len(m)),
-#   data.frame(
-#     .ms = rep(c("mean", "sd"), each = m * it * p),
-#     vrb = rep(vrb, each = m * it, times = 2),
-#     val = c(
-#       matrix(aperm(mn[vrb, , , drop = FALSE], c(2, 3, 1)), nrow = m * it * p),
-#       matrix(aperm(sm[vrb, , , drop = FALSE], c(2, 3, 1)), nrow = m * it * p)
-#     )
-#   )
-# )
-# a <- aperm(data$chainMean[vrb, , , drop = FALSE], c(2, 3, 1))
-# sapply(mn, rstan::Rhat)
-# 
-
-# %>%
-#   stats::setNames(., paste0("ac_", vars)) %>%
-#   as.data.frame() %>%
-#   base::rbind(NA, NA, .)
-# out <- base::cbind(out, ac)
-
-# vars <- names(data$data)
-# out <- data.frame(it = 1:t)
-#stats::setNames(., paste0("psrf_", vars)) %>%
-
-# # reshape into list per imputation
-# per_m <-
-#   lapply(1:m, function(x)
-#     as.data.frame(t(data$chainMean[, , x])))
-# 
-# # reshape into list per variable
-# per_v <- purrr::map(vars, ~ {
-#     purrr::map(per_m) %>%
-#     do.call(base::cbind, .)
-# })

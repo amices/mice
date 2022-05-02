@@ -4,7 +4,7 @@
 \alias{convergence}
 \title{Computes convergence diagnostics for a \code{mids} object}
 \usage{
-convergence(data, diagnostic = "all", ...)
+convergence(data, diagnostic = "all", parameter = "mean", ...)
 }
 \arguments{
 \item{data}{An object of class \code{mids} as created by the function
@@ -15,6 +15,10 @@ convergence(data, diagnostic = "all", ...)
 for the interpretation.
 The default is \code{diagnostic = "all"} which returns both the
 autocorrelation and potential scale reduction factor per iteration.}
+
+\item{parameter}{A keyword. One of the following keywords: \code{"mean"}
+or \code{"sd"} to evaluate chain means or chain standard deviations,
+respectively.}
 
 \item{\dots}{Additional arguments. Not used.}
 }
@@ -31,8 +35,9 @@ with the specified diagnostic(s) per iteration.
 The argument \code{diagnostic} can be length-1 character, which is
 matched to one of the following keywords:
 \describe{
-\item{\code{"all"}}{computes both the autocorrelation as well as the
-potential scale reduction factor per iteration;}
+\item{\code{"all"}}{computes both the lag-1 autocorrelation as well as 
+the potential scale reduction factor (cf. Vehtari et al., 2021) per 
+iteration of the MICE algorithm;}
 \item{\code{"ac"}}{computes only the autocorrelation per iteration;}
 \item{\code{"psrf"}}{computes only the potential scale reduction factor
 per iteration;}
@@ -46,6 +51,12 @@ factor is colloquially called the Gelman-Rubin diagnostic.}
 imp <- mice(nhanes2, print = FALSE)
 # compute convergence diagnostics
 convergence(imp)
+}
+\references{
+Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., & Burkner, 
+P.-C. (2021). Rank-Normalization, Folding, and Localization: An Improved 
+R for Assessing Convergence of MCMC. Bayesian Analysis, 1(1), 1-38. 
+https://doi.org/10.1214/20-BA1221
 }
 \seealso{
 \code{\link{mice}}, \code{\link[=mids-class]{mids}}
