@@ -70,10 +70,12 @@ Suggests:
     miceadds,
     nnet,
     pan,
+    purrr,
     randomForest,
     ranger,
     rmarkdown,
     rpart,
+    rstan,
     survival,
     testthat
 Description: Multiple imputation using Fully Conditional Specification (FCS)
