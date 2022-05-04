@@ -1,3 +1,7 @@
+# mice 3.14.7
+
+* Adds function for convergence evaluation (#484)
+
 # mice 3.14.6
 
 * Fixes problems with `ampute()`
