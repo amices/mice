@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.14.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,8 +126,8 @@ Performing Likelihood Ratio Tests with Multiply-Imputed Data Sets.
 <span class="r-in"><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">gen</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">gen</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">~</span> <span class="va">hgt</span> <span class="op">+</span> <span class="va">hc</span> <span class="op">+</span> <span class="va">reg</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">fit0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">gen</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">gen</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">~</span> <span class="va">hgt</span> <span class="op">+</span> <span class="va">hc</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">D3</span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit0</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    test statistic df1      df2 dfcom   p.value       riv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1 ~~ 2  1.425824   4 56.98339   741 0.2371561 0.7945463</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    test statistic df1      df2 dfcom  p.value       riv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1 ~~ 2  1.710263   4 55.53047   741 0.160717 0.8160437</span>
 <span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
     </div>
@@ -140,7 +140,7 @@ Performing Likelihood Ratio Tests with Multiply-Imputed Data Sets.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

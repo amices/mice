@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.14.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,6 +52,9 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.14.7" id="mice-3147">mice 3.14.7<a class="anchor" aria-label="anchor" href="#mice-3147"></a></h2>
+<ul><li>Adds function for convergence evaluation (<a href="https://github.com/amices/mice/issues/484" class="external-link">#484</a>)</li></ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.14.6" id="mice-3146">mice 3.14.6<a class="anchor" aria-label="anchor" href="#mice-3146"></a></h2>
 <ul><li>Fixes problems with <code><a href="../reference/ampute.html">ampute()</a></code>
 </li>
@@ -61,12 +64,10 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.14.5" id="mice-3145">mice 3.14.5<a class="anchor" aria-label="anchor" href="#mice-3145"></a></h2>
-<ul><li>Adds new multivariate imputation method <code><a href="../reference/mice.impute.mpmm.html">mice.impute.mpmm()</a></code>. (<a href="https://github.com/amices/mice/issues/460" class="external-link">#460</a>)</li>
-</ul></div>
+<ul><li>Adds new multivariate imputation method <code><a href="../reference/mice.impute.mpmm.html">mice.impute.mpmm()</a></code>. (<a href="https://github.com/amices/mice/issues/460" class="external-link">#460</a>)</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.14.4" id="mice-3144">mice 3.14.4<a class="anchor" aria-label="anchor" href="#mice-3144"></a></h2>
-<ul><li>Preserves stochastic nature of mice() by smarter random seed initialisation (<a href="https://github.com/amices/mice/issues/459" class="external-link">#459</a>)</li>
-</ul></div>
+<ul><li>Preserves stochastic nature of mice() by smarter random seed initialisation (<a href="https://github.com/amices/mice/issues/459" class="external-link">#459</a>)</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.14.3" id="mice-3143">mice 3.14.3<a class="anchor" aria-label="anchor" href="#mice-3143"></a></h2>
 <ul><li>Adds example code to fit model on train data and apply to test data to <code><a href="../reference/mice.html">mice()</a></code>
@@ -81,14 +82,12 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.14.1" id="mice-3141">mice 3.14.1<a class="anchor" aria-label="anchor" href="#mice-3141"></a></h2>
-<ul><li>@str-amg reported that the new dependency on <code>withr</code> package should have version 2.4.0 (published in January 2021) or higher. Versions <code>withr 2.3.0</code> and before may give <code>Error: object 'local_seed' is not exported by 'namespace:withr'</code>. Either update manually, or install the patched version <code>mice 3.14.1</code> from GitHub. (<a href="https://github.com/amices/mice/issues/445" class="external-link">#445</a>)</li>
-</ul></div>
+<ul><li>@str-amg reported that the new dependency on <code>withr</code> package should have version 2.4.0 (published in January 2021) or higher. Versions <code>withr 2.3.0</code> and before may give <code>Error: object 'local_seed' is not exported by 'namespace:withr'</code>. Either update manually, or install the patched version <code>mice 3.14.1</code> from GitHub. (<a href="https://github.com/amices/mice/issues/445" class="external-link">#445</a>)</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.14.0" id="mice-3140">mice 3.14.0<a class="anchor" aria-label="anchor" href="#mice-3140"></a></h2><p class="text-muted">CRAN release: 2021-11-24</p>
 <div class="section level4">
 <h4 id="major-changes-3-14-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-3-14-0"></a></h4>
-<ul><li>Adds four new univariate functions using the lasso for automatic variable selection:</li>
-</ul><table class="table"><thead><tr class="header"><th>Function</th>
+<ul><li>Adds four new univariate functions using the lasso for automatic variable selection:</li></ul><table class="table"><thead><tr class="header"><th>Function</th>
 <th>Description</th>
 </tr></thead><tbody><tr class="odd"><td><code><a href="../reference/mice.impute.lasso.norm.html">mice.impute.lasso.norm()</a></code></td>
 <td>Lasso linear regression</td>
@@ -136,8 +135,7 @@
 <h2 class="pkg-version" data-toc-text="3.13.0" id="mice-3130">mice 3.13.0<a class="anchor" aria-label="anchor" href="#mice-3130"></a></h2><p class="text-muted">CRAN release: 2021-01-27</p>
 <div class="section level4">
 <h4 id="major-changes-3-13-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-3-13-0"></a></h4>
-<ul><li>Updated <code><a href="../reference/mids2spss.html">mids2spss()</a></code> replaces the <code>foreign</code> by <code>haven</code> package. Contributed Gerko Vink (<a href="https://github.com/amices/mice/issues/291" class="external-link">#291</a>)</li>
-</ul></div>
+<ul><li>Updated <code><a href="../reference/mids2spss.html">mids2spss()</a></code> replaces the <code>foreign</code> by <code>haven</code> package. Contributed Gerko Vink (<a href="https://github.com/amices/mice/issues/291" class="external-link">#291</a>)</li></ul></div>
 <div class="section level4">
 <h4 id="minor-changes-3-13-0">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-3-13-0"></a></h4>
 <ul><li>Repairs an error in <code>tests\testhat\test-D1.R</code> that failed on <code>mitml 0.4-0</code>
@@ -150,22 +148,18 @@
 <h2 class="pkg-version" data-toc-text="3.12.0" id="mice-3120">mice 3.12.0<a class="anchor" aria-label="anchor" href="#mice-3120"></a></h2><p class="text-muted">CRAN release: 2020-11-14</p>
 <div class="section level4">
 <h4 id="much-faster-predictive-mean-matching-3-12-0">Much faster predictive mean matching<a class="anchor" aria-label="anchor" href="#much-faster-predictive-mean-matching-3-12-0"></a></h4>
-<ul><li>The new <code>matchindex</code> C function makes predictive mean matching <strong>50 to 600 times faster</strong>. The speed of <code>pmm</code> is now on par with normal imputation (<code><a href="../reference/mice.impute.norm.html">mice.impute.norm()</a></code>) and with the <code>miceFast</code> package, without compromising on the statistical quality of the imputations. Thanks to Polkas <a href="https://github.com/Polkas/miceFast/issues/10" class="external-link uri">https://github.com/Polkas/miceFast/issues/10</a> and suggestions by Alexander Robitzsch. See <a href="https://github.com/amices/mice/issues/236" class="external-link">#236</a> for more details.</li>
-</ul></div>
+<ul><li>The new <code>matchindex</code> C function makes predictive mean matching <strong>50 to 600 times faster</strong>. The speed of <code>pmm</code> is now on par with normal imputation (<code><a href="../reference/mice.impute.norm.html">mice.impute.norm()</a></code>) and with the <code>miceFast</code> package, without compromising on the statistical quality of the imputations. Thanks to Polkas <a href="https://github.com/Polkas/miceFast/issues/10" class="external-link uri">https://github.com/Polkas/miceFast/issues/10</a> and suggestions by Alexander Robitzsch. See <a href="https://github.com/amices/mice/issues/236" class="external-link">#236</a> for more details.</li></ul></div>
 <div class="section level4">
 <h4 id="new-ignore-argument-to-mice-3-12-0">New <code>ignore</code> argument to <code>mice</code>
 <a class="anchor" aria-label="anchor" href="#new-ignore-argument-to-mice-3-12-0"></a></h4>
-<ul><li>New <code>ignore</code> argument to <code><a href="../reference/mice.html">mice()</a></code>. This argument is a logical vector of <code>nrow(data)</code> elements indicating which rows are ignored when creating the imputation model. We may use the <code>ignore</code> argument to split the data into a training set (on which the imputation model is built) and a test set (that does not influence the imputation model estimates). The argument is based on the suggestion in <a href="https://github.com/amices/mice/issues/32#issuecomment-355600365" class="external-link uri">https://github.com/amices/mice/issues/32#issuecomment-355600365</a>. See <a href="https://github.com/amices/mice/issues/32" class="external-link">#32</a> for more background and techniques. Crafted by Patrick Rockenschaub</li>
-</ul></div>
+<ul><li>New <code>ignore</code> argument to <code><a href="../reference/mice.html">mice()</a></code>. This argument is a logical vector of <code>nrow(data)</code> elements indicating which rows are ignored when creating the imputation model. We may use the <code>ignore</code> argument to split the data into a training set (on which the imputation model is built) and a test set (that does not influence the imputation model estimates). The argument is based on the suggestion in <a href="https://github.com/amices/mice/issues/32#issuecomment-355600365" class="external-link uri">https://github.com/amices/mice/issues/32#issuecomment-355600365</a>. See <a href="https://github.com/amices/mice/issues/32" class="external-link">#32</a> for more background and techniques. Crafted by Patrick Rockenschaub</li></ul></div>
 <div class="section level4">
 <h4 id="new-filter-function-for-mids-objects-3-12-0">New <code>filter()</code> function for <code>mids</code> objects<a class="anchor" aria-label="anchor" href="#new-filter-function-for-mids-objects-3-12-0"></a></h4>
-<ul><li>New <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> method that subsets a <code>mids</code> object (multiply-imputed data set). The method accepts a logical vector of length <code>nrow(data)</code>, or an expression to construct such a vector from the incomplete data. (<a href="https://github.com/amices/mice/issues/269" class="external-link">#269</a>). Crafted by Patrick Rockenschaub.</li>
-</ul></div>
+<ul><li>New <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> method that subsets a <code>mids</code> object (multiply-imputed data set). The method accepts a logical vector of length <code>nrow(data)</code>, or an expression to construct such a vector from the incomplete data. (<a href="https://github.com/amices/mice/issues/269" class="external-link">#269</a>). Crafted by Patrick Rockenschaub.</li></ul></div>
 <div class="section level4">
 <h4 id="changes-affecting-reproducibility-3-12-0">Changes affecting reproducibility<a class="anchor" aria-label="anchor" href="#changes-affecting-reproducibility-3-12-0"></a></h4>
 <ul><li>
-<strong>Breaking change:</strong> The <code>matcher</code> algorithm in <code>pmm</code> has changed to <code>matchindex</code> for speed improvements. If you want the old behavior, specify <code>mice(..., use.matcher = TRUE)</code>.</li>
-</ul></div>
+<strong>Breaking change:</strong> The <code>matcher</code> algorithm in <code>pmm</code> has changed to <code>matchindex</code> for speed improvements. If you want the old behavior, specify <code>mice(..., use.matcher = TRUE)</code>.</li></ul></div>
 <div class="section level4">
 <h4 id="minor-changes-3-12-0">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-3-12-0"></a></h4>
 <ul><li>Corrected installation problem related to <code>cpp11</code> package (<a href="https://github.com/amices/mice/issues/286" class="external-link">#286</a>)</li>
@@ -209,12 +203,10 @@
 <h2 class="pkg-version" data-toc-text="3.10.0" id="mice-3100">mice 3.10.0<a class="anchor" aria-label="anchor" href="#mice-3100"></a></h2><p class="text-muted">CRAN release: 2020-07-13</p>
 <div class="section level3">
 <h3 id="major-changes-3-10-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-3-10-0"></a></h3>
-<ul><li>New functions <code><a href="../reference/tidy.mipo.html">tidy.mipo()</a></code> and <code><a href="../reference/glance.mipo.html">glance.mipo()</a></code> return standardized output that conforms to <code>broom</code> specifications. Kindly contributed by Vincent Arel Bundock (<a href="https://github.com/amices/mice/issues/240" class="external-link">#240</a>).</li>
-</ul></div>
+<ul><li>New functions <code><a href="../reference/tidy.mipo.html">tidy.mipo()</a></code> and <code><a href="../reference/glance.mipo.html">glance.mipo()</a></code> return standardized output that conforms to <code>broom</code> specifications. Kindly contributed by Vincent Arel Bundock (<a href="https://github.com/amices/mice/issues/240" class="external-link">#240</a>).</li></ul></div>
 <div class="section level3">
 <h3 id="minor-changes-3-10-0">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-3-10-0"></a></h3>
-<ul><li>Solves a problem with the <code>D3</code> testing script that produced an error on CRAN (<a href="https://github.com/amices/mice/issues/244" class="external-link">#244</a>).</li>
-</ul></div>
+<ul><li>Solves a problem with the <code>D3</code> testing script that produced an error on CRAN (<a href="https://github.com/amices/mice/issues/244" class="external-link">#244</a>).</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.9.0" id="mice-390">mice 3.9.0<a class="anchor" aria-label="anchor" href="#mice-390"></a></h2><p class="text-muted">CRAN release: 2020-05-14</p>
@@ -365,25 +357,20 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.46" id="mice-246-2017-10-22">mice 2.46 (2017-10-22)<a class="anchor" aria-label="anchor" href="#mice-246-2017-10-22"></a></h2>
-<ul><li>Allow for capitals in imputation methods</li>
-</ul></div>
+<ul><li>Allow for capitals in imputation methods</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.45" id="mice-245-2017-10-21">mice 2.45 (2017-10-21)<a class="anchor" aria-label="anchor" href="#mice-245-2017-10-21"></a></h2>
-<ul><li>Reorganized vignettes to land on GitHUB pages</li>
-</ul></div>
+<ul><li>Reorganized vignettes to land on GitHUB pages</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.44" id="mice-244-2017-10-18">mice 2.44 (2017-10-18)<a class="anchor" aria-label="anchor" href="#mice-244-2017-10-18"></a></h2>
-<ul><li>Code changes for robustness, style and efficiency (Bernie Gray)</li>
-</ul></div>
+<ul><li>Code changes for robustness, style and efficiency (Bernie Gray)</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.43" id="mice-243-2017-07-20">mice 2.43 (2017-07-20)<a class="anchor" aria-label="anchor" href="#mice-243-2017-07-20"></a></h2>
-<ul><li>Updates the <code>ampute</code> function and vignettes (Rianne Schouten)</li>
-</ul></div>
+<ul><li>Updates the <code>ampute</code> function and vignettes (Rianne Schouten)</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.42" id="mice-242-2017-07-11">mice 2.42 (2017-07-11)<a class="anchor" aria-label="anchor" href="#mice-242-2017-07-11"></a></h2>
 <ul><li>Rename <code>mice.impute.2l.sys</code> to <code>mice.impute.2l.lmer</code>
-</li>
-</ul></div>
+</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.41" id="mice-241-2017-07-10">mice 2.41 (2017-07-10)<a class="anchor" aria-label="anchor" href="#mice-241-2017-07-10"></a></h2>
 <ul><li>Add new feature: <code>where</code>argument to mice</li>
@@ -428,12 +415,10 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.29" id="mice-229-2016-10-05">mice 2.29 (2016-10-05)<a class="anchor" aria-label="anchor" href="#mice-229-2016-10-05"></a></h2>
-<ul><li>Add <code>midastouch</code>: predictive mean matching for small samples (thanks Philip Gaffert, Florian Meinfelder)</li>
-</ul></div>
+<ul><li>Add <code>midastouch</code>: predictive mean matching for small samples (thanks Philip Gaffert, Florian Meinfelder)</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.28" id="mice-228-2016-10-05">mice 2.28 (2016-10-05)<a class="anchor" aria-label="anchor" href="#mice-228-2016-10-05"></a></h2>
-<ul><li>Repaired dots problem in <code>rpart</code> call</li>
-</ul></div>
+<ul><li>Repaired dots problem in <code>rpart</code> call</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.27" id="mice-227-2016-07-27">mice 2.27 (2016-07-27)<a class="anchor" aria-label="anchor" href="#mice-227-2016-07-27"></a></h2>
 <ul><li>Add <code>ridge</code> to <code>2l.norm()</code>
@@ -443,8 +428,7 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.25" id="mice-225-2015-11-09">mice 2.25 (2015-11-09)<a class="anchor" aria-label="anchor" href="#mice-225-2015-11-09"></a></h2><p class="text-muted">CRAN release: 2015-11-09</p>
 <ul><li>Fix <code><a href="../reference/as.mids.html">as.mids()</a></code> bug that crashed <code><a href="https://rdrr.io/pkg/miceadds/man/mice.1chain.html" class="external-link">miceadds::mice.1chain()</a></code>
-</li>
-</ul></div>
+</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.23" id="mice-223-2015-11-04">mice 2.23 (2015-11-04)<a class="anchor" aria-label="anchor" href="#mice-223-2015-11-04"></a></h2>
 <ul><li><p>Update of example code on /doc</p></li>
@@ -478,8 +462,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.21" id="mice-221-02-05-2014-svb">mice 2.21 02-05-2014 SvB<a class="anchor" aria-label="anchor" href="#mice-221-02-05-2014-svb"></a></h2><p class="text-muted">CRAN release: 2014-02-05</p>
-<ul><li>FIXED: compilation problem in match.cpp on solaris CC</li>
-</ul></div>
+<ul><li>FIXED: compilation problem in match.cpp on solaris CC</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.20" id="mice-220-02-02-2014-svb">mice 2.20 02-02-2014 SvB<a class="anchor" aria-label="anchor" href="#mice-220-02-02-2014-svb"></a></h2><p class="text-muted">CRAN release: 2014-02-04</p>
 <ul><li>ADDED: experimental fastpmm() function using Rcpp</li>
@@ -595,8 +578,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.8" id="mice-28---24-03-2011--svb">mice 2.8 - 24-03-2011 / SvB<a class="anchor" aria-label="anchor" href="#mice-28---24-03-2011--svb"></a></h2><p class="text-muted">CRAN release: 2011-03-26</p>
-<ul><li>FIXED: bug fixed in find.collinear() that bombed when only one variable was left</li>
-</ul></div>
+<ul><li>FIXED: bug fixed in find.collinear() that bombed when only one variable was left</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.7" id="mice-27---16-03-2011--svb">mice 2.7 - 16-03-2011 / SvB<a class="anchor" aria-label="anchor" href="#mice-27---16-03-2011--svb"></a></h2><p class="text-muted">CRAN release: 2011-03-16</p>
 <ul><li>CHANGED: check.data(), remove.lindep(): fully missing variables are imputed if allow.na=TRUE (Alexander Robitzsch)</li>
@@ -702,12 +684,10 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.16" id="mice-116---6252007">mice 1.16 - 6/25/2007<a class="anchor" aria-label="anchor" href="#mice-116---6252007"></a></h2><p class="text-muted">CRAN release: 2009-02-19</p>
-<ul><li>FIXED: The impution function impute.logreg used convergence criteria that were too optimistic when fitting a GLM with glm.fit. Thanks to Ulrike Gromping.</li>
-</ul></div>
+<ul><li>FIXED: The impution function impute.logreg used convergence criteria that were too optimistic when fitting a GLM with glm.fit. Thanks to Ulrike Gromping.</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.15" id="mice-115---01092006">mice 1.15 - 01/09/2006<a class="anchor" aria-label="anchor" href="#mice-115---01092006"></a></h2><p class="text-muted">CRAN release: 2007-01-09</p>
-<ul><li>FIXED: In the lm.mids and glm.mids functions, parameters were not passed through to glm and lm.</li>
-</ul></div>
+<ul><li>FIXED: In the lm.mids and glm.mids functions, parameters were not passed through to glm and lm.</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.14" id="mice-114r---9262005-1144am">mice 1.14R - 9/26/2005 11:44AM<a class="anchor" aria-label="anchor" href="#mice-114r---9262005-1144am"></a></h2><p class="text-muted">CRAN release: 2006-04-04</p>
 <ul><li>FIXED: Passive imputation works again. (Roel de Jong)</li>
@@ -718,20 +698,16 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.13" id="mice-113">mice 1.13<a class="anchor" aria-label="anchor" href="#mice-113"></a></h2>
-<ul><li>Changed function checkImputationMethod, Feb 6, 2004</li>
-</ul></div>
+<ul><li>Changed function checkImputationMethod, Feb 6, 2004</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.12" id="mice-112">mice 1.12<a class="anchor" aria-label="anchor" href="#mice-112"></a></h2>
-<ul><li>Maintainance, S-Plus 6.1 and R 1.8 unicode, January 2004</li>
-</ul></div>
+<ul><li>Maintainance, S-Plus 6.1 and R 1.8 unicode, January 2004</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1" id="mice-11">mice 1.1<a class="anchor" aria-label="anchor" href="#mice-11"></a></h2>
-<ul><li>R version (with help of Peter Malewski and Frank Harrell), Feb 2001</li>
-</ul></div>
+<ul><li>R version (with help of Peter Malewski and Frank Harrell), Feb 2001</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0" id="mice-10">mice 1.0<a class="anchor" aria-label="anchor" href="#mice-10"></a></h2>
-<ul><li>Original S-PLUS release, June 14 2000</li>
-</ul></div>
+<ul><li>Original S-PLUS release, June 14 2000</li></ul></div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -741,7 +717,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

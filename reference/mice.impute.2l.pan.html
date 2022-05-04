@@ -18,7 +18,7 @@ pan package."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/lib
     
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.14.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -136,7 +136,7 @@ linear mixed-effects models with missing values.  <em>Journal of
 Computational and Graphical Statistics</em>. <b>11</b>, 437-457.</p>
 <p>Van Buuren, S., Groothuis-Oudshoorn, K. (2011). <code>mice</code>: Multivariate
 Imputation by Chained Equations in <code>R</code>. <em>Journal of Statistical
-Software</em>, <b>45</b>(3), 1-67. doi: <a href="https://doi.org/10.18637/jss.v045.i03" class="external-link">10.18637/jss.v045.i03</a></p>
+Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i03" class="external-link">doi:10.18637/jss.v045.i03</a></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -206,35 +206,35 @@ Mathematics Education, Kiel, Germany), <a href="mailto:robitzsch@ipn.uni-kiel.de
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     expand, pack, unpack</span>
 <span class="r-in"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">x</span> <span class="op">|</span> <span class="va">group</span><span class="op">)</span> <span class="op">+</span> <span class="va">x</span>, data <span class="op">=</span> <span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> boundary (singular) fit: see help('isSingular')</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Model failed to converge with max|grad| = 0.00279243 (tol = 0.002, component 1)</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Linear mixed model fit by REML ['lmerMod']</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: y ~ (1 + x | group) + x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Data: complete(imp1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> REML criterion at convergence: 12813.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> REML criterion at convergence: 12826.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Scaled residuals: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Min      1Q  Median      3Q     Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -3.9979 -0.6587  0.0064  0.6725  3.6098 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -3.3888 -0.6482  0.0017  0.6703  3.4679 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random effects:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Groups   Name        Variance  Std.Dev. Corr </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  group    (Intercept) 0.2709037 0.52048       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           x           0.0002378 0.01542  -1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Residual             0.6791400 0.82410       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Groups   Name        Variance  Std.Dev. Corr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  group    (Intercept) 2.454e-01 0.495372     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           x           7.164e-06 0.002677 1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Residual             6.841e-01 0.827109     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of obs: 5000, groups:  group, 250</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate Std. Error t value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.0007194  0.0349207   0.021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x           0.3107623  0.0120820  25.721</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.00714    0.03344   0.213</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x            0.32130    0.01209  26.587</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Correlation of Fixed Effects:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   (Intr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x -0.078</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x 0.012 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> optimizer (nloptwrap) convergence code: 0 (OK)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> boundary (singular) fit: see help('isSingular')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model failed to converge with max|grad| = 0.00279243 (tol = 0.002, component 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Examples of predictorMatrix specification</span></span>
@@ -258,7 +258,7 @@ Mathematics Education, Kiel, Germany), <a href="mailto:robitzsch@ipn.uni-kiel.de
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>
