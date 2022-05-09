@@ -56,7 +56,13 @@ Imports:
     stats,
     tidyr,
     utils,
-    withr (>= 2.4.0)
+    withr (>= 2.4.0),
+    GJRM,
+    lqmm,
+    mixmeta,
+    mvtnorm,
+    pbivnorm,
+    mgcv
 Suggests:
     broom.mixed,
     decor,
@@ -76,7 +82,8 @@ Suggests:
     rmarkdown,
     rpart,
     survival,
-    testthat
+    testthat,
+    gam
 Description: Multiple imputation using Fully Conditional Specification (FCS)
     implemented by the MICE algorithm as described in Van Buuren and
     Groothuis-Oudshoorn (2011) <doi:10.18637/jss.v045.i03>. Each variable has

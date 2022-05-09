@@ -33,10 +33,11 @@ model is fitted. The \code{ry} generally distinguishes the observed
 indicates locations in \code{y} for which imputations are created.}
 
 \item{type}{type of the variable in the prediction model {0: No predictor,
-1: Predictor in the outcome model,-2: Cluster id (study id),
--3: Exclusion restriction}}
+1: Predictor in both the outcome and selection,-2: Cluster id (study id),
+-3: Predictor only in the selection model, -4: Predictor only in the outcome 
+model}}
 
-\item{family}{family of the missing variable {"gaussian","probit"}}
+\item{family}{family of the missing variable {"normal","probit"}}
 
 \item{full}{If full=TRUE all parameters are fully correlated otherwise the
 correlation is given within each of the following parameter sets: selection
