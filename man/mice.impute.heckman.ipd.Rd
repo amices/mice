@@ -47,7 +47,7 @@ coefficient parameters, outcome coefficient parameters, rho and sigma}
 imputed result: "TRUE","FALSE"}
 
 \item{meta_method}{meta_analysis estimation method for random effects :
-"ml" (maximum likelihood), "reml" (restricted maximul likelihood) or "mm"
+"ml" (maximum likelihood), "reml" (restricted maximum likelihood) or "mm"
 method of moments.}
 
 \item{...}{Other named arguments. Not used.}

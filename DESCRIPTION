@@ -48,7 +48,6 @@ Imports:
     generics,
     graphics,
     grDevices,
-    Matrix,
     lattice,
     methods,
     Rcpp,
@@ -79,6 +78,7 @@ Suggests:
     testthat,
     gam,
     GJRM,
+    Matrix,
     mixmeta,
     mvtnorm,
     pbivnorm
