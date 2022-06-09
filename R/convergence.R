@@ -30,6 +30,13 @@
 #' \item{\code{"gr"}}{same as \code{psrf}, the potential scale reduction
 #' factor is colloquially called the Gelman-Rubin diagnostic.}
 #' }
+#' In the unlikely event of perfect convergence, the autocorrelation equals
+#' zero and the potential scale reduction factor equals one. To interpret 
+#' the convergence diagnostic(s) in the output of the function, it is 
+#' recommended to plot the diagnostics (ac and/or psrf) against the 
+#' iteration number (.it) per imputed variable (vrb). A persistently 
+#' decreasing trend across iterations indicates potential non-convergence.
+#' 
 #' @seealso \code{\link{mice}}, \code{\link[=mids-class]{mids}}
 #' @keywords none
 #' @references Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., & Burkner, 
@@ -49,6 +56,10 @@ convergence <- function(data, diagnostic = "all", parameter = "mean", ...) {
   install.on.demand("purrr", ...)
   if (!is.mids(data))
     stop("'data' not of class 'mids'")
+  if (data$m < 2)
+    stop("the number of imputations should be at least two (m > 1)")
+  if (data$iteration < 3)
+    stop("the number of iterations should be at least three (maxit > 2)")
   if (is.null(data$chainMean)) 
     stop("no convergence diagnostics found", call. = FALSE)
   if (parameter != "mean" & parameter != "sd")
