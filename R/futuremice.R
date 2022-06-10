@@ -45,15 +45,15 @@
 #' @param future.plan A character indicating how \code{future}s are resolved. 
 #' The default \code{multisession} resolves futures asynchronously (in parallel)
 #' in separate \code{R} sessions running in the background. See 
-#' \link{\code{plan}} for more information on future plans.
+#' \link{\code{future::plan}} for more information on future plans.
 #' @param ... Named arguments that are passed down to function 
 #' \code{\link{mice}}.
 #'
 #' @return A mids object as defined by \code{\link{mids-class}}
 #'
 #' @author Thom Benjamin Volker, Gerko Vink
-#' @seealso \code{\link{future}}, \code{\link{furrr}}, \code{\link{future_map}},
-#' \code{\link{plan}}, \code{\link{mice}}, \code{\link{mids-class}}
+#' @seealso \code{\link{future}}, \code{\link{furrr}}, \code{\link{future::future_map}},
+#' \code{\link{future::plan}}, \code{\link{mice}}, \code{\link{mids-class}}
 #' @references
 #' Volker, T.B. and Vink, G. (2022). futuremice: The future starts today.
 #' \url{https://www.gerkovink.com/futuremice/Vignette_futuremice.html}
@@ -78,9 +78,9 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
                        use.logical = TRUE, future.plan = "multisession", ...) {
   
   # check if pacakages available
-  mice:::install.on.demand("parallelly", ...)
-  mice:::install.on.demand("furrr", ...)
-  mice:::install.on.demand("future", ...)
+  install.on.demand("parallelly", ...)
+  install.on.demand("furrr", ...)
+  install.on.demand("future", ...)
   
   # check form of data and m
   data <- check.dataform(data)
@@ -155,7 +155,7 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
     
     mice(data = data,
          m = x,
-         print = F, 
+         printFlag = F, 
          seed = seed,
          ...)
     

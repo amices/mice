@@ -40,7 +40,7 @@ physical (\code{FALSE}) CPU's on machine should be used.}
 \item{future.plan}{A character indicating how \code{future}s are resolved. 
 The default \code{multisession} resolves futures asynchronously (in parallel)
 in separate \code{R} sessions running in the background. See 
-\link{\code{plan}} for more information on future plans.}
+\link{\code{future::plan}} for more information on future plans.}
 
 \item{...}{Named arguments that are passed down to function 
 \code{\link{mice}}.}
@@ -97,8 +97,8 @@ Volker, T.B. and Vink, G. (2022). futuremice: The future starts today.
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
-\code{\link{future}}, \code{\link{furrr}}, \code{\link{future_map}},
-\code{\link{plan}}, \code{\link{mice}}, \code{\link{mids-class}}
+\code{\link{future}}, \code{\link{furrr}}, \code{\link{future::future_map}},
+\code{\link{future::plan}}, \code{\link{mice}}, \code{\link{mids-class}}
 }
 \author{
 Thom Benjamin Volker, Gerko Vink
