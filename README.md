@@ -166,6 +166,8 @@ these through Github’s issues facility.
     `mice`](https://gerkovink.github.io/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html)
 7.  [Generate missing values with
     `ampute`](https://rianneschouten.github.io/mice_ampute/vignette/ampute.html)
+8.  [`futuremice`: Wrapper for parallel MICE imputation through
+    futures](https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremice.html)
 
 ### Code from publications
 
