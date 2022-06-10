@@ -84,7 +84,7 @@ convergence <- function(data, diagnostic = "all", parameter = "mean", ...) {
     ac <-
       purrr::map_dfr(vrbs, function(.vrb) {
         base::rbind(NA, NA, purrr::map_dfr(3:t, function(.itr) {
-          data.frame(ac = max(purrr::map_dbl(1:m, function(.imp) {
+          data.frame(ac = max_or_NA(purrr::map_dbl(1:m, function(.imp) {
             suppressWarnings(stats::cor(param[[.vrb]][1:.itr - 1, .imp], param[[.vrb]][2:.itr, .imp]))
           })))
         }))
@@ -105,3 +105,11 @@ convergence <- function(data, diagnostic = "all", parameter = "mean", ...) {
   return(out)
 }
 
+# function to calculate the maximum unless all are NA
+max_or_NA <- function(x) {
+  if(all(is.na(x))) {
+    return(NA) 
+  } else {
+    return(max(x, na.rm = TRUE))
+  }
+}
