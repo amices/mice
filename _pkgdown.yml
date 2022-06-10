@@ -32,6 +32,7 @@ reference:
       - mice
       - mice.mids
       - parlmice
+      - futuremice
   - title: "Elementary imputation functions"
     desc: >
       The elementary imputation function is the workhorse that creates
