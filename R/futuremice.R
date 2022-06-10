@@ -6,13 +6,13 @@
 #' \code{\link{futuremice}} distributes the number of imputations \code{m}
 #' about equally over the cores.
 #'
-#' This function relies on package \code{\link{furrr}}, which is a
+#' This function relies on package \code{\link[furrr]{furrr}}, which is a
 #' package for R versions 3.2.0 and later. We have chosen to use furrr function
 #' \code{future_map} to allow the use of \code{futuremice} on Mac, Linux and 
 #' Windows systems.
 #'
 #'
-#' This wrapper function combines the output of \code{\link{future_map}} with
+#' This wrapper function combines the output of \code{\link[furrr]{future_map}} with
 #' function \code{\link{ibind}} from the \code{\link{mice}} package. A 
 #' \code{mids} object is returned and can be used for further analyses.
 #'
@@ -45,15 +45,15 @@
 #' @param future.plan A character indicating how \code{future}s are resolved. 
 #' The default \code{multisession} resolves futures asynchronously (in parallel)
 #' in separate \code{R} sessions running in the background. See 
-#' \link{\code{future::plan}} for more information on future plans.
+#' \code{\link[future]{plan}} for more information on future plans.
 #' @param ... Named arguments that are passed down to function 
 #' \code{\link{mice}}.
 #'
 #' @return A mids object as defined by \code{\link{mids-class}}
 #'
 #' @author Thom Benjamin Volker, Gerko Vink
-#' @seealso \code{\link{future}}, \code{\link{furrr}}, \code{\link{future::future_map}},
-#' \code{\link{future::plan}}, \code{\link{mice}}, \code{\link{mids-class}}
+#' @seealso \code{\link[future]{future}}, \code{\link[furrr]{furrr}}, \code{\link[furrr]{future_map}},
+#' \code{\link[future]{plan}}, \code{\link{mice}}, \code{\link{mids-class}}
 #' @references
 #' Volker, T.B. and Vink, G. (2022). futuremice: The future starts today.
 #' \url{https://www.gerkovink.com/futuremice/Vignette_futuremice.html}
