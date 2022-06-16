@@ -72,24 +72,28 @@ convergence <- function(data, diagnostic = "all", parameter = "mean", ...) {
     
   # extract chain means or chain standard deviations
   if (parameter == "mean") {
-    param <- lapply(seq(p), function(x) aperm(data$chainMean[vrbs, , , drop = FALSE], c(2, 3, 1))[ , , x]) 
+    param <- lapply(seq(p), function(x) 
+      aperm(data$chainMean[vrbs, , , drop = FALSE], c(2, 3, 1))[ , , x]) 
   }
   if (parameter == "sd") {
-    param <- lapply(seq(p), function(x) aperm(sqrt(data$chainVar)[vrbs, , , drop = FALSE], c(2, 3, 1))[ , , x])
+    param <- lapply(seq(p), function(x) 
+      aperm(sqrt(data$chainVar)[vrbs, , , drop = FALSE], c(2, 3, 1))[ , , x])
   }
   names(param) <- vrbs
   
   # compute autocorrelation
   if (diagnostic == "all" | diagnostic == "ac") {
     ac <-
-      purrr::map_dfr(vrbs, function(.vrb) {
-        base::rbind(NA, NA, purrr::map_dfr(3:t, function(.itr) {
-          data.frame(ac = max_or_NA(purrr::map_dbl(1:m, function(.imp) {
-            suppressWarnings(stats::cor(param[[.vrb]][1:.itr - 1, .imp], param[[.vrb]][2:.itr, .imp]))
-          })))
-        }))
+      purrr::map(vrbs, function(.vrb) {
+        c(NA, dplyr::cummean(dplyr::coalesce(
+          purrr::map_dbl(2:t, function(.itr) {
+          suppressWarnings(stats::cor(
+            param[[.vrb]][.itr - 1, ], 
+            param[[.vrb]][.itr, ], 
+            use = "pairwise.complete.obs"))
+        }), 0))) + 0 * param[[.vrb]][ , 1]
       })
-    out <- base::cbind(out, ac)
+    out <- base::cbind(out, ac = unlist(ac))
   }
   
   # compute potential scale reduction factor
@@ -101,15 +105,9 @@ convergence <- function(data, diagnostic = "all", parameter = "mean", ...) {
     })
     out <- base::cbind(out, psrf)
   }
-  
+  out[is.nan(out)] <- NA
   return(out)
 }
 
-# function to calculate the maximum unless all are NA
-max_or_NA <- function(x) {
-  if(all(is.na(x))) {
-    return(NA) 
-  } else {
-    return(max(x, na.rm = TRUE))
-  }
-}
+# function to extend is.nan() to data.frame objects
+is.nan.data.frame <- function(x) do.call(cbind, lapply(x, is.nan))
