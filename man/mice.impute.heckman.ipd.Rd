@@ -11,10 +11,9 @@ mice.impute.heckman.ipd(
   x,
   wy = NULL,
   type,
-  family,
   full = FALSE,
   pmm = FALSE,
-  meta_method,
+  meta_method = "reml",
   ...
 )
 }
@@ -36,8 +35,6 @@ indicates locations in \code{y} for which imputations are created.}
 1: Predictor in both the outcome and selection,-2: Cluster id (study id),
 -3: Predictor only in the selection model, -4: Predictor only in the outcome 
 model}}
-
-\item{family}{family of the missing variable {"normal","probit"}}
 
 \item{full}{If full=TRUE all parameters are fully correlated otherwise the
 correlation is given within each of the following parameter sets: selection
@@ -73,9 +70,11 @@ The individual-level parameters are drawn and missing values are imputed
 using Heckman's conditional expectation.
 }
 \note{
-In case the Heckman model cannot be estimated for a given cluster, missing
-values in this cluster will be imputed without using the selection bias
-correction, i.e. a MAR mechanism is assumed for this cluster.
+Binary missing variables should be included as two-level factor type variables,
+numerical missing variables will be assumed normally distributed.
+In case the Heckman model cannot be estimated at the study level, the 
+imputation model is based on the Heckman model without taking into account 
+the cluster variable.
 Added:
 }
 \seealso{

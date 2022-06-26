@@ -76,9 +76,9 @@ Suggests:
     rpart,
     survival,
     testthat,
-    gam,
     GJRM,
     Matrix,
+    mgcv,
     mixmeta,
     mvtnorm,
     pbivnorm
