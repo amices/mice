@@ -330,7 +330,7 @@ hawkins <- function(x, grouping){
     i_centered <- i_centered * nrow(i)
     ((n - g - p) * i_centered)/(p * ((nrow(i) - 1) * (n - g) - i_centered))
   })
-  a <- lapply(f, function(thisf){ 1 - pf(thisf, p, (n-g - p)) })
+  a <- lapply(f, function(thisf){ pf(thisf, p, (n-g - p), lower.tail = FALSE) })
   list(fij = f, a = a, ni = matrix(sapply(x, nrow), ncol = 1))
 }
 

@@ -172,7 +172,7 @@ pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"),
     ubar1 = est1$pooled$ubar, ubar0 = est0$pooled$ubar,
     deviances = deviances,
     Dm = Dm, rm = rm, df1 = dimQ2, df2 = w,
-    pvalue = 1 - pf(Dm, dimQ2, w)
+    pvalue = pf(Dm, dimQ2, w, lower.tail = FALSE)
   )
   statistic
 }
