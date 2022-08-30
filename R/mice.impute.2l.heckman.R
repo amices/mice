@@ -1,9 +1,9 @@
-#' Imputation based on Heckman model for Individual Patient Data.
+#' Imputation based on Heckman model for multilevel data.
 #'
 #' Imputes outcome and predictor variables that follow an MNAR mechanism
-#' according to Heckman's model and come from a clustered database such as
+#' according to Heckman's model and come from a multilevel database such as
 #' individual participant data.
-#' @aliases mice.impute.heckman.ipd heckman.ipd
+#' @aliases mice.impute.2l.heckman 2l.heckman
 #' @param y Vector to be imputed
 #' @param ry Logical vector of length \code{length(y)} indicating the
 #' the subset \code{y[ry]} of elements in \code{y} to which the imputation
@@ -17,16 +17,12 @@
 #' 1: Predictor in both the outcome and selection,-2: Cluster id (study id),
 #' -3: Predictor only in the selection model, -4: Predictor only in the outcome 
 #' model}
-#' @param full If full=TRUE all parameters are fully correlated otherwise the
-#' correlation is given within each of the following parameter sets: selection
-#' coefficient parameters, outcome coefficient parameters, rho and sigma
-#' @param pmm for gaussian variables if applies predictive mean matching to
-#' imputed result: "TRUE","FALSE"
+#' @param pmm  predictive mean matching can be applied only for for missing continuous variables: "TRUE","FALSE"
 #' @param meta_method meta_analysis estimation method for random effects :
 #' "ml" (maximum likelihood), "reml" (restricted maximum likelihood) or "mm"
 #' method of moments.
 #' @param ... Other named arguments. Not used.
-#' @name mice.impute.heckman.ipd
+#' @name mice.impute.2l.heckman
 #' @return Vector with imputed data, of type binary or continuous
 #' @details Imputation of binary and continuous variables by Heckman model.
 #' This function uses information at the marginal and cluster level to impute
@@ -55,7 +51,7 @@
 
 
 
-mice.impute.heckman.ipd <-function(y,ry,x,wy = NULL, type, full = FALSE, pmm = FALSE, meta_method ="reml",...) {
+mice.impute.2l.heckman <-function(y,ry,x,wy = NULL, type, pmm = FALSE, meta_method ="reml",...) {
 
   install.on.demand("GJRM", ...)
   install.on.demand("Matrix", ...)
@@ -63,7 +59,6 @@ mice.impute.heckman.ipd <-function(y,ry,x,wy = NULL, type, full = FALSE, pmm = F
   install.on.demand("mixmeta", ...)
   install.on.demand("mvtnorm", ...)
   install.on.demand("pbivnorm", ...)
-  
   
   
    # 1. Define variables and dataset----
@@ -76,17 +71,17 @@ mice.impute.heckman.ipd <-function(y,ry,x,wy = NULL, type, full = FALSE, pmm = F
   
   # # Define y type
   if (class(y) == "factor" & nlevels(y) == 2){
-    warning("the missing variable is considered binomially distributed")
+    message("the missing variable is assumed to be binomially distributed")
     family <- "binomial"
   }else{
-    warning("the missing variable is considered normally distributed")
+    message("the missing variable is assumed to be normally distributed")
     family <- "gaussian"
   }
   
   
   # Check if group variable is defined
   if (length(colnames(x)[type == -2]) == 0) {
-    warning("No group variable has been provided, the Heckman imputation model will be applied globally to the dataset.")
+    message("No group variable has been provided, the Heckman imputation model will be applied globally to the dataset.")
     Grp_est <- 0 # Group indicator 0: Heckman on full dataset, 1: Heckman at cluster level
   } else {
     group_name <- colnames(x)[type == -2]
@@ -128,14 +123,14 @@ mice.impute.heckman.ipd <-function(y,ry,x,wy = NULL, type, full = FALSE, pmm = F
     if( length(studytype[studytype != 0]) < 2 ){
       Grp_est <- 0
     }else{
-      Heck_mod <- get_marginal(coef_mat_s, Vb_list, full = full, selnam, outnam, meta_method)
+      Heck_mod <- get_marginal(coef_mat_s, Vb_list, selnam, outnam, meta_method)
       Heck_est <- Heck_mod$Mvma_est}
     Sys.nest <-as.numeric(length(studytype[studytype == 0])==0)
     
   } 
   
   if (Grp_est == 0 | Heck_est == 0){ # Heckman on full dataset or Heckman model no estimable
-    warning("The Heckman model cannot be estimated marginally, so systematically missing groups will be imputed with the Heckman model based on the full dataset.")
+    message("The Heckman model cannot be estimated marginally, so systematically missing groups will be imputed with the Heckman model based on the full dataset.")
     Heck_mod <- copulaIPD( data = data, sel = sel, out = out, family = family, send = send)
     
     if(Heck_mod[[2]] == 0 &(Grp_est==0|Syst_nest==0)){
@@ -163,7 +158,7 @@ mice.impute.heckman.ipd <-function(y,ry,x,wy = NULL, type, full = FALSE, pmm = F
         y.star <- gen_y_star( Xm= Xm, sel_name = sel_name, bos_name = bos_name,
                               out_name =out_name, beta_s_star = star$beta_s_star,
                               beta_o_star = star$beta_o_star, sigma_star = star$sigma_star,
-                              rho_star = star$rho_star,pmm = pmm, y = y, ry = ry)
+                              rho_star = star$rho_star, pmm = pmm, y = y, ry = ry)
         
         y[!ry & x[, group_name] == as.numeric(i)] <- y.star
       }
@@ -209,7 +204,7 @@ copulaIPD <- function(data, sel, out, family, send) {
     # model is estimable
     ev <- eigen(fit$fit$hessian, symmetric = TRUE, only.values = TRUE)$values
     convh <- min(ev) > 0 # convergence based on hessian positive definiteness
-    convg <- max(abs(fit$fit$gradient)) < 0.01 # convergence based on abs max gradient
+    convg <- max(abs(fit$fit$gradient)) < 10 # convergence based on abs max gradient
     
     #MAR indication 
     CIcon<-summary(fit)$ CItheta 
@@ -347,32 +342,12 @@ draw_cond_theta <- function(theta_mar, theta_k, var_theta_k, vnames) {
 
 
 # F 0.5 Get marginal draws
-get_marginal <- function(coef_mat_s, Vb_list, full, selnam, outnam, meta_method ){
+get_marginal <- function(coef_mat_s, Vb_list, selnam, outnam, meta_method ){
   
   beta_s = beta_o = rho_t = sigma_t = NA
   Mvma_est <- 1
-  # Draw thetas from the universe of populations
-  if (full == TRUE) { # use the entire set of parameters
-    
-    total_mar <- draw_theta_psi_mar( coef_mat_s = coef_mat_s,
-                                     Vb_list = Vb_list,
-                                     meta_method = meta_method,
-                                     Mvma_est = Mvma_est) # if mvma was estimable on previous parameters (applicable mainly Full=F)
-    Mvma_est <- total_mar[[3]]
-    
-    if (Mvma_est == 1) {# if marginal parameters where estimated proceed with Heckman cluster estimation otherwise opt for the Heckman full model
-      
-      beta_s <- list(total_mar[[1]][selnam], total_mar[[2]][selnam, selnam])
-      beta_o <- list(total_mar[[1]][outnam], total_mar[[2]][outnam, outnam])
-      rho_t <- list(total_mar[[1]]["theta.star"],
-                    total_mar[[2]]["theta.star", "theta.star"])
-      if ("sigma.star"%in%colnames(coef_mat_s)) {
-        sigma_t <- list(total_mar[[1]]["sigma.star"],
-                        total_mar[[2]]["sigma.star", "sigma.star"])
-      }
-    }
-    
-  } else{ # separate the set of parameters in beta_out, beta_s and rho
+  
+  # separate the set of parameters in beta_out, beta_s and rho
     
     beta_o <- draw_theta_psi_mar( coef_mat_s = coef_mat_s,
                                   Vb_list = Vb_list,
@@ -399,7 +374,7 @@ get_marginal <- function(coef_mat_s, Vb_list, full, selnam, outnam, meta_method 
       Mvma_est <- sigma_t[[3]]
     }
     
-  }
+  
   
   return (list ( beta_s = beta_s,
                  beta_o = beta_o,

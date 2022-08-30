@@ -66,8 +66,8 @@ Computational Statistics and Data Analysis, 54:22672275.
 \code{\link{mice}}, \code{\link{glm}}, \code{\link{glm.fit}}
 
 Other univariate imputation functions: 
+\code{\link{mice.impute.2l.heckman}()},
 \code{\link{mice.impute.cart}()},
-\code{\link{mice.impute.heckman.ipd}()},
 \code{\link{mice.impute.lasso.logreg}()},
 \code{\link{mice.impute.lasso.norm}()},
 \code{\link{mice.impute.lasso.select.logreg}()},
