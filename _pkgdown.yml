@@ -120,6 +120,7 @@ reference:
       Helpers to extract and print information from objects of
       specific classes.
     contents:
+      - convergence
       - getfit
       - getqbar
       - glance.mipo

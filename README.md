@@ -4,7 +4,7 @@
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
 [![](https://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice)
-[![](https://img.shields.io/badge/github%20version-3.14.6-orange.svg)](https://amices.github.io/mice/)
+[![](https://img.shields.io/badge/github%20version-3.14.7-orange.svg)](https://amices.github.io/mice/)
 
 ## [Multivariate Imputation by Chained Equations](https://amices.github.io/mice/)
 
@@ -170,7 +170,7 @@ these through Github’s issues facility.
 ### Code from publications
 
 1.  [Flexible Imputation of Missing Data. Second
-    edition.](https://github.com/stefvanbuuren/FIMD2/tree/master/R)
+    edition.](https://github.com/stefvanbuuren/fimdbook)
 
 ## Acknowledgement
 
