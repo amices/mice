@@ -166,11 +166,12 @@ pool.fitlist <- function(fitlist, dfcom = NULL,
   rule <- match.arg(rule)
 
   w <- summary(fitlist, type = "tidy", exponentiate = FALSE)
-  grp <- intersect(names(w), c("parameter", "term", "y.level", "component"))
+  grp <- intersect(names(w), c("parameter", "term", "contrast", "y.level", "component"))
 
   # Note: group_by() changes the order of the terms, which is undesirable
   # We convert any parameter terms to factor to preserve ordering
   if ("term" %in% names(w)) w$term <- factor(w$term, levels = unique(w$term))
+  if ("contrast" %in% names(w)) w$contrast <- factor(w$contrast, levels = unique(w$contrast))
   if ("y.level" %in% names(w)) w$y.level <- factor(w$y.level, levels = unique(w$y.level))
   if ("component" %in% names(w)) w$component <- factor(w$component, levels = unique(w$component))
 

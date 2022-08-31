@@ -37,6 +37,10 @@ tidy.mipo <- function(x, conf.int = FALSE, conf.level = .95, ...) {
     conf.level = conf.level,
     ...
   )
+
+  if ("term" %in% names(out)) out$term <- as.character(out$term)
+  if ("contrast" %in% names(out)) out$contrast <- as.character(out$contrast)
+
   out$term <- as.character(out$term)
 
   # needed for broom <= 0.5.6
