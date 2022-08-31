@@ -24,23 +24,19 @@
 #' @param ... Other named arguments. Not used.
 #' @name mice.impute.2l.heckman
 #' @return Vector with imputed data, of type binary or continuous
-#' @details Imputation of binary and continuous variables by Heckman model.
-#' This function uses information at the marginal and cluster level to impute
-#' both outcome and predictor variables that are sporadically or systematically
-#' missing in a cluster.
-#' Initially, the function estimates the parameters of the Heckman model for
-#' each cluster in the database using the copula method, and then estimates the
-#' parameters at the marginal level with the help of a random intercept
-#' meta-analysis model.
-#' The individual-level parameters are drawn and missing values are imputed
-#' using Heckman's conditional expectation.
+#' @details Imputes systematically and sporadically missing binary and continuous
+#'  univariate variables that follow a MNAR mechanism according to the Heckman 
+#'  selection model and come from a clustered dataset. 
+#'  The imputation method uses a two-stage approach in which the Heckman model 
+#'  parameters at the cluster level are estimated using the copula method.
 #'
 #' @note
-#' Binary missing variables should be included as two-level factor type variables,
-#' numerical missing variables will be assumed normally distributed.
-#' In case the Heckman model cannot be estimated at the study level, the 
-#' imputation model is based on the Heckman model without taking into account 
-#' the cluster variable.
+#'Missing binary variables should be included as two-level factor type variables. 
+#'When the cluster variable is not defined in the predictor matrix as "-2", the imputation
+#' method is based on a simple Heckman model, i.e. without taking into account 
+#' the hierarchical structure.
+#' In case the Heckman model cannot be estimated at the study level, the imputation 
+#' method will be based on the simple Heckman model.
 #' Added:
 #' @author Julius Center Methods Group UMC, 2022
 #' @family univariate imputation functions
