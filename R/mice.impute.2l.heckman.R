@@ -50,7 +50,6 @@
 mice.impute.2l.heckman <-function(y,ry,x,wy = NULL, type, pmm = FALSE, meta_method ="reml",...) {
 
   install.on.demand("GJRM", ...)
-  install.on.demand("Matrix", ...)
   install.on.demand("mixmeta", ...)
   install.on.demand("mvtnorm", ...)
   install.on.demand("pbivnorm", ...)
