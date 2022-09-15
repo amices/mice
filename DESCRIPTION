@@ -81,8 +81,6 @@ Suggests:
     survival,
     testthat,
     GJRM,
-    Matrix,
-    mgcv,
     mixmeta,
     mvtnorm,
     pbivnorm
