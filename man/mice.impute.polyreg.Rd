@@ -86,6 +86,7 @@ S-Plus (4th ed)}. Springer, Berlin.
 \code{\link[MASS]{polr}}
 
 Other univariate imputation functions: 
+\code{\link{mice.impute.2l.heckman}()},
 \code{\link{mice.impute.cart}()},
 \code{\link{mice.impute.lasso.logreg}()},
 \code{\link{mice.impute.lasso.norm}()},

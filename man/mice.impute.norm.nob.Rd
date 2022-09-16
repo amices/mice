@@ -64,6 +64,7 @@ Ph.D. Thesis, TNO Prevention and Health/Erasmus University Rotterdam.
 \code{\link{mice}}, \code{\link{mice.impute.norm}}
 
 Other univariate imputation functions: 
+\code{\link{mice.impute.2l.heckman}()},
 \code{\link{mice.impute.cart}()},
 \code{\link{mice.impute.lasso.logreg}()},
 \code{\link{mice.impute.lasso.norm}()},

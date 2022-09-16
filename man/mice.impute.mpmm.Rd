@@ -75,6 +75,7 @@ Van Buuren, S. (2018).
 Chapman & Hall/CRC. Boca Raton, FL.
 
 Other univariate imputation functions: 
+\code{\link{mice.impute.2l.heckman}()},
 \code{\link{mice.impute.cart}()},
 \code{\link{mice.impute.lasso.logreg}()},
 \code{\link{mice.impute.lasso.norm}()},

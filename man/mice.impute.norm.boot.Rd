@@ -42,6 +42,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 }
 \seealso{
 Other univariate imputation functions: 
+\code{\link{mice.impute.2l.heckman}()},
 \code{\link{mice.impute.cart}()},
 \code{\link{mice.impute.lasso.logreg}()},
 \code{\link{mice.impute.lasso.norm}()},

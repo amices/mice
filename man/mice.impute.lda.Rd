@@ -70,6 +70,7 @@ Venables, W.N. & Ripley, B.D. (1997). Modern applied statistics with S-PLUS
 \code{\link[MASS]{lda}}
 
 Other univariate imputation functions: 
+\code{\link{mice.impute.2l.heckman}()},
 \code{\link{mice.impute.cart}()},
 \code{\link{mice.impute.lasso.logreg}()},
 \code{\link{mice.impute.lasso.norm}()},

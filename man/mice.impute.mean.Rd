@@ -52,6 +52,7 @@ Chapman & Hall/CRC. Boca Raton, FL.
 \code{\link{mice}}, \code{\link{mean}}
 
 Other univariate imputation functions: 
+\code{\link{mice.impute.2l.heckman}()},
 \code{\link{mice.impute.cart}()},
 \code{\link{mice.impute.lasso.logreg}()},
 \code{\link{mice.impute.lasso.norm}()},

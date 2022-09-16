@@ -137,6 +137,7 @@ Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
 Other univariate imputation functions: 
+\code{\link{mice.impute.2l.heckman}()},
 \code{\link{mice.impute.cart}()},
 \code{\link{mice.impute.lasso.logreg}()},
 \code{\link{mice.impute.lasso.norm}()},

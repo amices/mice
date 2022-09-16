@@ -103,6 +103,7 @@ Vink, G., van Buuren, S. (2013). Multiple Imputation of Squared Terms.
 \emph{Sociological Methods & Research}, 42:598-607.
 
 Other univariate imputation functions: 
+\code{\link{mice.impute.2l.heckman}()},
 \code{\link{mice.impute.cart}()},
 \code{\link{mice.impute.lasso.logreg}()},
 \code{\link{mice.impute.lasso.norm}()},
