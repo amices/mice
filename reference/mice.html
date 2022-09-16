@@ -8,7 +8,7 @@ unordered categorical and ordered categorical data. In addition, MICE
 can impute continuous two-level data, and maintain consistency between
 imputations by means of passive imputation. Many diagnostic plots are
 implemented to inspect the quality of the imputations.
-Generates Multivariate Imputations by Chained Equations (MICE)"><title>mice: Multivariate Imputation by Chained Equations — mice • mice</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="mice: Multivariate Imputation by Chained Equations — mice"><meta property="og:description" content="The mice package implements a method to deal with missing data.
+Generates Multivariate Imputations by Chained Equations (MICE)"><title>mice: Multivariate Imputation by Chained Equations — mice • mice</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="mice: Multivariate Imputation by Chained Equations — mice"><meta property="og:description" content="The mice package implements a method to deal with missing data.
 The package creates multiple imputations (replacement values) for
 multivariate missing data. The method is based on Fully Conditional
 Specification, where each incomplete variable is imputed by a separate
@@ -85,25 +85,25 @@ implemented to inspect the quality of the imputations.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">mice</span><span class="op">(</span>
-  <span class="va">data</span>,
-  m <span class="op">=</span> <span class="fl">5</span>,
-  method <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">predictorMatrix</span>,
-  ignore <span class="op">=</span> <span class="cn">NULL</span>,
-  where <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">blocks</span>,
-  visitSequence <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">formulas</span>,
-  blots <span class="op">=</span> <span class="cn">NULL</span>,
-  post <span class="op">=</span> <span class="cn">NULL</span>,
-  defaultMethod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pmm"</span>, <span class="st">"logreg"</span>, <span class="st">"polyreg"</span>, <span class="st">"polr"</span><span class="op">)</span>,
-  maxit <span class="op">=</span> <span class="fl">5</span>,
-  printFlag <span class="op">=</span> <span class="cn">TRUE</span>,
-  seed <span class="op">=</span> <span class="cn">NA</span>,
-  data.init <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mice</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  m <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  method <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">predictorMatrix</span>,</span>
+<span>  ignore <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  where <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">blocks</span>,</span>
+<span>  visitSequence <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">formulas</span>,</span>
+<span>  blots <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  post <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  defaultMethod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pmm"</span>, <span class="st">"logreg"</span>, <span class="st">"polyreg"</span>, <span class="st">"polr"</span><span class="op">)</span>,</span>
+<span>  maxit <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  printFlag <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  data.init <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -111,8 +111,12 @@ implemented to inspect the quality of the imputations.</p>
     <dl><dt>data</dt>
 <dd><p>A data frame or a matrix containing the incomplete data.  Missing
 values are coded as <code>NA</code>.</p></dd>
+
+
 <dt>m</dt>
 <dd><p>Number of multiple imputations. The default is <code>m=5</code>.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>Can be either a single string, or a vector of strings with
 length <code>length(blocks)</code>, specifying the imputation method to be
@@ -121,6 +125,8 @@ method will be used for all blocks. The default imputation method (when no
 argument is specified) depends on the measurement level of the target column,
 as regulated by the <code>defaultMethod</code> argument. Columns that need
 not be imputed have the empty method <code>""</code>. See details.</p></dd>
+
+
 <dt>predictorMatrix</dt>
 <dd><p>A numeric matrix of <code>length(blocks)</code> rows
 and <code>ncol(data)</code> columns, containing 0/1 data specifying
@@ -132,6 +138,8 @@ By default, the <code>predictorMatrix</code> is a square matrix of <code>ncol(da
 rows and columns with all 1's, except for the diagonal.
 Note: For two-level imputation models (which have <code>"2l"</code> in their names)
 other codes (e.g, <code>2</code> or <code>-2</code>) are also allowed.</p></dd>
+
+
 <dt>ignore</dt>
 <dd><p>A logical vector of <code>nrow(data)</code> elements indicating
 which rows are ignored when creating the imputation model. The default
@@ -143,12 +151,16 @@ imputation model is built) and a test set (that does not influence the
 imputation model estimates).
 Note: Multivariate imputation methods, like <code><a href="mice.impute.jomoImpute.html">mice.impute.jomoImpute()</a></code>
 or <code><a href="mice.impute.panImpute.html">mice.impute.panImpute()</a></code>, do not honour the <code>ignore</code> argument.</p></dd>
+
+
 <dt>where</dt>
 <dd><p>A data frame or matrix with logicals of the same dimensions
 as <code>data</code> indicating where in the data the imputations should be
 created. The default, <code>where = is.na(data)</code>, specifies that the
 missing data should be imputed. The <code>where</code> argument may be used to
 overimpute observed data, or to skip imputations for selected missing values.</p></dd>
+
+
 <dt>blocks</dt>
 <dd><p>List of vectors with variable names per block. List elements
 may be named to identify blocks. Variables within a block are
@@ -161,6 +173,8 @@ fully conditional specification (FCS) by univariate models
 matrix are set to <code>FALSE</code> of variables that are not block members.
 A variable may appear in multiple blocks. In that case, it is
 effectively re-imputed each time that it is visited.</p></dd>
+
+
 <dt>visitSequence</dt>
 <dd><p>A vector of block names of arbitrary length, specifying the
 sequence of blocks that are imputed during one iteration of the Gibbs
@@ -178,6 +192,8 @@ of missing data) and <code>"revmonotone"</code> (reverse of monotone).
 to conform to the monotone pattern. Realize that convergence in one
 iteration is only guaranteed if the missing data pattern is actually
 monotone. The procedure does not check this.</p></dd>
+
+
 <dt>formulas</dt>
 <dd><p>A named list of formula's, or expressions that
 can be converted into formula's by <code>as.formula</code>. List elements
@@ -186,11 +202,15 @@ identified by its name, so list names must correspond to block names.
 The <code>formulas</code> argument is an alternative to the
 <code>predictorMatrix</code> argument that allows for more flexibility in
 specifying imputation models, e.g., for specifying interaction terms.</p></dd>
+
+
 <dt>blots</dt>
 <dd><p>A named <code>list</code> of <code>alist</code>'s that can be used
 to pass down arguments to lower level imputation function. The entries
 of element <code>blots[[blockname]]</code> are passed down to the function
 called for block <code>blockname</code>.</p></dd>
+
+
 <dt>post</dt>
 <dd><p>A vector of strings with length <code>ncol(data)</code> specifying
 expressions as strings. Each string is parsed and
@@ -198,6 +218,8 @@ executed within the <code>sampler()</code> function to post-process
 imputed values during the iterations.
 The default is a vector of empty strings, indicating no post-processing.
 Multivariate (block) imputation methods ignore the <code>post</code> parameter.</p></dd>
+
+
 <dt>defaultMethod</dt>
 <dd><p>A vector of length 4 containing the default
 imputation methods for 1) numeric data, 2) factor data with 2 levels, 3)
@@ -207,17 +229,25 @@ ordered levels. By default, the method uses
 regression imputation (binary data, factor with 2 levels) <code>polyreg</code>,
 polytomous regression imputation for unordered categorical data (factor &gt; 2
 levels) <code>polr</code>, proportional odds model for (ordered, &gt; 2 levels).</p></dd>
+
+
 <dt>maxit</dt>
 <dd><p>A scalar giving the number of iterations. The default is 5.</p></dd>
+
+
 <dt>printFlag</dt>
 <dd><p>If <code>TRUE</code>, <code>mice</code> will print history on console.
 Use <code>print=FALSE</code> for silent computation.</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>An integer that is used as argument by the <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code> for
 offsetting the random number generator. Default is to leave the random number
 generator alone. Versions later than 3.13.11 reset the random generator to the
 state before calling <code>mice()</code>. This effectively isolates the <code>mice</code>
 random generator from the calling environment.</p></dd>
+
+
 <dt>data.init</dt>
 <dd><p>A data frame of the same size and type as <code>data</code>,
 without missing data, used to initialize imputations before the start of the
@@ -225,13 +255,21 @@ iterative process.  The default <code>NULL</code> implies that starting imputati
 are created by a simple random draw from the data. Note that specification of
 <code>data.init</code> will start all <code>m</code> Gibbs sampling streams from the same
 imputation.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Named arguments that are passed down to the univariate imputation
 functions.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns an S3 object of class <code><a href="mids-class.html">mids</a></code>       (multiply imputed data set)</p>
+    
+
+<p>Returns an S3 object of class <code><a href="mids-class.html">mids</a></code></p>
+
+
+<p>(multiply imputed data set)</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -431,8 +469,8 @@ John Fox, Frank E. Harrell, and Peter Malewski.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># do default multiple imputation on a numeric matrix</span></span>
-<span class="r-in"><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="op">(</span><span class="va">nhanes</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># do default multiple imputation on a numeric matrix</span></span></span>
+<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="op">(</span><span class="va">nhanes</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  iter imp variable</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1   1  bmi  hyp  chl</span>
@@ -460,7 +498,7 @@ John Fox, Frank E. Harrell, and Peter Malewski.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   5   3  bmi  hyp  chl</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   5   4  bmi  hyp  chl</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   5   5  bmi  hyp  chl</span>
-<span class="r-in"><span class="va">imp</span></span>
+<span class="r-in"><span><span class="va">imp</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class: mids</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of multiple imputations:  5 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Imputation methods:</span>
@@ -472,51 +510,51 @@ John Fox, Frank E. Harrell, and Peter Malewski.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> bmi   1   0   1   1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hyp   1   1   0   1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> chl   1   1   1   0</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># list the actual imputations for BMI</span></span>
-<span class="r-in"><span class="va">imp</span><span class="op">$</span><span class="va">imp</span><span class="op">$</span><span class="va">bmi</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># list the actual imputations for BMI</span></span></span>
+<span class="r-in"><span><span class="va">imp</span><span class="op">$</span><span class="va">imp</span><span class="op">$</span><span class="va">bmi</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       1    2    3    4    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  35.3 35.3 30.1 30.1 29.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  33.2 22.0 30.1 28.7 28.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  27.4 22.5 22.5 20.4 21.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  25.5 21.7 22.5 20.4 21.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 30.1 27.5 22.0 20.4 22.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 27.2 35.3 27.4 29.6 22.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 20.4 27.4 28.7 27.5 22.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 27.5 30.1 33.2 27.2 26.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 28.7 22.0 22.5 30.1 26.3</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># first completed data matrix</span></span>
-<span class="r-in"><span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  30.1 25.5 27.2 28.7 30.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  22.0 35.3 26.3 27.2 22.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  21.7 25.5 22.5 25.5 24.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  27.4 21.7 25.5 20.4 20.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 26.3 28.7 30.1 20.4 22.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 28.7 22.0 25.5 33.2 22.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 27.2 27.4 22.0 26.3 22.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 30.1 26.3 35.3 30.1 30.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 30.1 30.1 22.7 24.9 25.5</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># first completed data matrix</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    age  bmi hyp chl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1 35.3   1 218</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1 30.1   1 118</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2    2 22.7   1 187</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    1 33.2   1 187</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3 27.4   1 186</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    1 22.0   1 187</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3 21.7   2 238</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5    1 20.4   1 113</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    3 25.5   2 184</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    3 27.4   2 184</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7    1 22.5   1 118</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8    1 30.1   1 187</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9    2 22.0   1 238</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   2 30.1   2 206</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11   1 27.2   1 238</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12   2 20.4   1 113</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   2 26.3   2 131</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11   1 28.7   1 118</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12   2 27.2   1 199</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13   3 21.7   1 206</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 14   2 28.7   2 204</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15   1 29.6   1 187</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16   1 27.5   1 131</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15   1 29.6   1 131</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16   1 30.1   1 238</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 17   3 27.2   2 284</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 18   2 26.3   2 199</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 19   1 35.3   1 218</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20   3 25.5   2 284</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21   1 28.7   1 238</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20   3 25.5   2 204</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21   1 30.1   2 113</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 22   1 33.2   1 229</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 23   1 27.5   1 131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24   3 24.9   1 284</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24   3 24.9   1 186</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 25   2 27.4   1 186</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># imputation on mixed data with a different method per column</span></span>
-<span class="r-in"><span class="fu">mice</span><span class="op">(</span><span class="va">nhanes2</span>, meth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample"</span>, <span class="st">"pmm"</span>, <span class="st">"logreg"</span>, <span class="st">"norm"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># imputation on mixed data with a different method per column</span></span></span>
+<span class="r-in"><span><span class="fu">mice</span><span class="op">(</span><span class="va">nhanes2</span>, meth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample"</span>, <span class="st">"pmm"</span>, <span class="st">"logreg"</span>, <span class="st">"norm"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  iter imp variable</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1   1  bmi  hyp  chl</span>
@@ -555,28 +593,28 @@ John Fox, Frank E. Harrell, and Peter Malewski.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> bmi   1   0   1   1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hyp   1   1   0   1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> chl   1   1   1   0</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># example where we fit the imputation model on the train data</span></span>
-<span class="r-in"><span class="co"># and apply the model to impute the test data</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">ignore</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">25</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">0.7</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># scenario 1: train and test in the same dataset</span></span>
-<span class="r-in"><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="op">(</span><span class="va">nhanes2</span>, m <span class="op">=</span> <span class="fl">2</span>, ignore <span class="op">=</span> <span class="va">ignore</span>, print <span class="op">=</span> <span class="cn">FALSE</span>, seed <span class="op">=</span> <span class="fl">22112</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">imp.test1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">imp</span>, <span class="va">ignore</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">imp.test1</span><span class="op">$</span><span class="va">data</span></span>
-<span class="r-in"><span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp.test1</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp.test1</span>, <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># scenario 2: train and test in separate datasets</span></span>
-<span class="r-in"><span class="va">traindata</span> <span class="op">&lt;-</span> <span class="va">nhanes2</span><span class="op">[</span><span class="op">!</span><span class="va">ignore</span>, <span class="op">]</span></span>
-<span class="r-in"><span class="va">testdata</span> <span class="op">&lt;-</span> <span class="va">nhanes2</span><span class="op">[</span><span class="va">ignore</span>, <span class="op">]</span></span>
-<span class="r-in"><span class="va">imp.train</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="op">(</span><span class="va">traindata</span>, m <span class="op">=</span> <span class="fl">2</span>, print <span class="op">=</span> <span class="cn">FALSE</span>, seed <span class="op">=</span> <span class="fl">22112</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">imp.test2</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.mids.html">mice.mids</a></span><span class="op">(</span><span class="va">imp.train</span>, newdata <span class="op">=</span> <span class="va">testdata</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp.test2</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp.test2</span>, <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># example where we fit the imputation model on the train data</span></span></span>
+<span class="r-in"><span><span class="co"># and apply the model to impute the test data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ignore</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">25</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">0.7</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># scenario 1: train and test in the same dataset</span></span></span>
+<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="op">(</span><span class="va">nhanes2</span>, m <span class="op">=</span> <span class="fl">2</span>, ignore <span class="op">=</span> <span class="va">ignore</span>, print <span class="op">=</span> <span class="cn">FALSE</span>, seed <span class="op">=</span> <span class="fl">22112</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imp.test1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">imp</span>, <span class="va">ignore</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imp.test1</span><span class="op">$</span><span class="va">data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp.test1</span>, <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp.test1</span>, <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># scenario 2: train and test in separate datasets</span></span></span>
+<span class="r-in"><span><span class="va">traindata</span> <span class="op">&lt;-</span> <span class="va">nhanes2</span><span class="op">[</span><span class="op">!</span><span class="va">ignore</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">testdata</span> <span class="op">&lt;-</span> <span class="va">nhanes2</span><span class="op">[</span><span class="va">ignore</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">imp.train</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="op">(</span><span class="va">traindata</span>, m <span class="op">=</span> <span class="fl">2</span>, print <span class="op">=</span> <span class="cn">FALSE</span>, seed <span class="op">=</span> <span class="fl">22112</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imp.test2</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.mids.html">mice.mids</a></span><span class="op">(</span><span class="va">imp.train</span>, newdata <span class="op">=</span> <span class="va">testdata</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp.test2</span>, <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp.test2</span>, <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -588,7 +626,7 @@ John Fox, Frank E. Harrell, and Peter Malewski.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

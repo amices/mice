@@ -18,8 +18,8 @@
     imputations.">
 <title>Multivariate Imputation by Chained Equations • mice</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Multivariate Imputation by Chained Equations">
 <meta property="og:description" content="Multiple imputation using Fully Conditional Specification (FCS)
@@ -103,20 +103,20 @@
 </h2>
 <p>The <code>mice</code> package can be installed from CRAN as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"mice"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"mice"</span><span class="op">)</span></span></code></pre></div>
 <p>The latest version can be installed from GitHub as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"amices/mice"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"amices/mice"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="minimal-example">Minimal example<a class="anchor" aria-label="anchor" href="#minimal-example"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice" class="external-link">mice</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># show the missing data pattern</span>
-<span class="fu"><a href="reference/md.pattern.html">md.pattern</a></span><span class="op">(</span><span class="va">nhanes</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice" class="external-link">mice</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># show the missing data pattern</span></span>
+<span><span class="fu"><a href="reference/md.pattern.html">md.pattern</a></span><span class="op">(</span><span class="va">nhanes</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="reference/figures/README-pattern-1.png" alt=""><p class="caption">Missing data pattern of <code>nhanes</code> data. Blue is observed, red is missing.</p>
 </div>
@@ -129,31 +129,31 @@
 <span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt;      0   8   9  10 27</span></span></code></pre></div>
 <p>The table and the graph summarize where the missing data occur in the <code>nhanes</code> dataset.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># multiple impute the missing values</span>
-<span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, maxit <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">2</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;  iter imp variable</span>
-<span class="co">#&gt;   1   1  bmi  hyp  chl</span>
-<span class="co">#&gt;   1   2  bmi  hyp  chl</span>
-<span class="co">#&gt;   2   1  bmi  hyp  chl</span>
-<span class="co">#&gt;   2   2  bmi  hyp  chl</span>
-
-<span class="co"># inspect quality of imputations</span>
-<span class="fu"><a href="reference/stripplot.mids.html">stripplot</a></span><span class="op">(</span><span class="va">imp</span>, <span class="va">chl</span>, pch <span class="op">=</span> <span class="fl">19</span>, xlab <span class="op">=</span> <span class="st">"Imputation number"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># multiple impute the missing values</span></span>
+<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, maxit <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">2</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  iter imp variable</span></span>
+<span><span class="co">#&gt;   1   1  bmi  hyp  chl</span></span>
+<span><span class="co">#&gt;   1   2  bmi  hyp  chl</span></span>
+<span><span class="co">#&gt;   2   1  bmi  hyp  chl</span></span>
+<span><span class="co">#&gt;   2   2  bmi  hyp  chl</span></span>
+<span></span>
+<span><span class="co"># inspect quality of imputations</span></span>
+<span><span class="fu"><a href="reference/stripplot.mids.html">stripplot</a></span><span class="op">(</span><span class="va">imp</span>, <span class="va">chl</span>, pch <span class="op">=</span> <span class="fl">19</span>, xlab <span class="op">=</span> <span class="st">"Imputation number"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="reference/figures/README-stripplot-1.png" alt=""><p class="caption">Distribution of <code>chl</code> per imputed data set.</p>
 </div>
 <p>In general, we would like the imputations to be plausible, i.e., values that could have been observed if they had not been missing.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># fit complete-data model</span>
-<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">chl</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">bmi</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># pool and summarize the results</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="reference/pool.html">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;          term estimate std.error statistic    df p.value</span>
-<span class="co">#&gt; 1 (Intercept)     9.08     73.09     0.124  4.50  0.9065</span>
-<span class="co">#&gt; 2         age    35.23     17.46     2.017  1.36  0.2377</span>
-<span class="co">#&gt; 3         bmi     4.69      1.94     2.417 15.25  0.0286</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># fit complete-data model</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">chl</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">bmi</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># pool and summarize the results</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="reference/pool.html">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          term estimate std.error statistic    df p.value</span></span>
+<span><span class="co">#&gt; 1 (Intercept)     9.08     73.09     0.124  4.50  0.9065</span></span>
+<span><span class="co">#&gt; 2         age    35.23     17.46     2.017  1.36  0.2377</span></span>
+<span><span class="co">#&gt; 3         bmi     4.69      1.94     2.417 15.25  0.0286</span></span></code></pre></div>
 <p>The complete-data is fit to each imputed dataset, and the results are combined to arrive at estimates that properly account for the missing data.</p>
 </div>
 <div class="section level2">
@@ -279,7 +279,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
