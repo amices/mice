@@ -67,6 +67,22 @@ In case the Heckman model cannot be estimated at the study level, the imputation
 method will be based on the simple Heckman model.
 Added:
 }
+\examples{
+\dontrun{
+library(GJRM)
+data(hiv) # load and subset dataset
+hivdata <- hiv[c("hiv","age","marital","condom","smoke","region")]
+hivdata$region <- as.integer(hivdata$region) # Study/group variable has to be recoded as integer
+hivdata$hiv <- as.factor(hivdata$hiv) # Binary missing variables should be recorded as factors
+ini <- mice(hivdata, maxit = 0)
+meth <- ini$method
+meth["hiv"] <- "2l.heckman" 
+pred <- ini$predictorMatrix
+pred["hiv","region"] <- -2 # Cluster variable
+pred["hiv","smoke"]  <- -3 # Exclusion restriction
+imp <- mice(data = hivdata, meth = meth, pred = pred, maxit = 1, m = 1, seed = 1)
+}
+}
 \seealso{
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},

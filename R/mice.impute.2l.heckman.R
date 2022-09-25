@@ -41,11 +41,23 @@
 #' @author Julius Center Methods Group UMC, 2022
 #' @family univariate imputation functions
 #' @keywords datagen
-#'
+#' @examples
+#' \dontrun{
+#' library(GJRM)
+#' data(hiv) # load and subset dataset
+#' hivdata <- hiv[c("hiv","age","marital","condom","smoke","region")]
+#' hivdata$region <- as.integer(hivdata$region) # Study/group variable has to be recoded as integer
+#' hivdata$hiv <- as.factor(hivdata$hiv) # Binary missing variables should be recorded as factors
+#' ini <- mice(hivdata, maxit = 0)
+#' meth <- ini$method
+#' meth["hiv"] <- "2l.heckman" 
+#' pred <- ini$predictorMatrix
+#' pred["hiv","region"] <- -2 # Cluster variable
+#' pred["hiv","smoke"]  <- -3 # Exclusion restriction
+#' imp <- mice(data = hivdata, meth = meth, pred = pred, maxit = 1, m = 1, seed = 1)
+#' }
 #' @export
 #'
-
-
 
 mice.impute.2l.heckman <-function(y,ry,x,wy = NULL, type, pmm = FALSE, meta_method ="reml",...) {
 
@@ -216,7 +228,7 @@ copulaIPD <- function(data, sel, out, family, send) {
   }
   
   if( fit_ind ==2){
-    fit<-NULL
+    fit <- NULL
     gam1 <- try(mgcv::gam(formula=sel,data = data,family = "binomial", method ="REML"))
     gam2 <- try(mgcv::gam(formula=out,data = data,family = family, method ="REML"))
     
