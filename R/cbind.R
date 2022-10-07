@@ -367,7 +367,7 @@ cbind.mids.mids <- function(x, y, call) {
     ignore = ignore,
     seed = seed,
     iteration = iteration,
-    lastSeedValue = .Random.seed,
+    lastSeedValue = x$lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
     loggedEvents = loggedEvents,
