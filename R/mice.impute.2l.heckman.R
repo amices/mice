@@ -61,13 +61,6 @@
 
 mice.impute.2l.heckman <-function(y,ry,x,wy = NULL, type, pmm = FALSE, meta_method ="reml",...) {
 
-  install.on.demand("GJRM", ...)
-  install.on.demand("Matrix", ...)
-  install.on.demand("mgcv", ...)
-  install.on.demand("mixmeta", ...)
-  install.on.demand("mvtnorm", ...)
-  install.on.demand("pbivnorm", ...)
-  
   
    # 1. Define variables and dataset----
   
@@ -141,7 +134,7 @@ mice.impute.2l.heckman <-function(y,ry,x,wy = NULL, type, pmm = FALSE, meta_meth
     message("The Heckman model cannot be estimated marginally, so systematically missing groups will be imputed with the Heckman model based on the full dataset.")
     Heck_mod <- copulaIPD( data = data, sel = sel, out = out, family = family, send = send)
     
-    if(Heck_mod[[2]] == 0 &(Grp_est==0|Syst_nest==0)){
+    if(Heck_mod[[3]] == 0 &(Grp_est==0|Syst_nest==0)){
       stop("There is insufficient information to impute the Heckman model at the marginal or study level.")
     }
   }
