@@ -209,7 +209,7 @@ copulaIPD <- function(data, sel, out, family, send) {
     
     #MAR indication 
     CIcon<-summary(fit)$ CItheta 
-    MNAR_ind<-!(abs(CIcon[[1]]-CIcon[[2]])<0.001&CIcon[[1]]<0&CIcon[[2]]>0) # exclusion of cases that blow up variance
+    MNAR_ind<-!(CIcon[[1]]>-0.001&CIcon[[2]]<0.001) # exclusion of cases that blow up variance
     
     if (MNAR_ind){
       fit_ind <- 2
