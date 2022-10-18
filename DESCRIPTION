@@ -98,5 +98,5 @@ URL: https://github.com/amices/mice, https://amices.org/mice/, https://stefvanbu
 BugReports: https://github.com/amices/mice/issues
 LinkingTo: cpp11, Rcpp
 SystemRequirements: C++11
-RoxygenNote: 7.1.2
 License: GPL (>= 2)
+RoxygenNote: 7.2.1
