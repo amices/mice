@@ -86,7 +86,7 @@ mice.impute.2l.norm <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
 
     ## Draw mu
     mu <- colMeans(bees) + drop(rnorm(n = n.rc) %*%
-      chol(chol2inv(chol(symridge(inv.psi, ...))) / n.class))
+                                  chol(chol2inv(chol(symridge(inv.psi, ...))) / n.class))
 
     ## Draw psi
     inv.psi <- rwishart(
@@ -132,7 +132,7 @@ force.chol <- function(x, warn = TRUE) {
     XT <- x + diag(x = lambda, nrow = nrow(x))
     XT <- (XT + t(XT)) / 2
     s <- try(expr = chol(XT), silent = TRUE)
-    if (class(s) != "try-error") {
+    if (!inherits(s, "try-error")) {
       break
     }
     z <- z + 1

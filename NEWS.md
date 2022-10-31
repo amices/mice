@@ -1,3 +1,8 @@
+# mice 3.14.8
+
+* Applies edits to autocorrelation function (#491)
+* Uses `inherits()` to check on class membership
+
 # mice 3.14.7
 
 * Adds function for convergence evaluation (#484)
@@ -15,7 +20,7 @@
 
 # mice 3.14.4
 
-* Preserves stochastic nature of mice() by smarter random seed initialisation (#459)
+* Preserves stochastic nature of `mice()` by smarter random seed initialisation (#459)
 
 # mice 3.14.3
 
