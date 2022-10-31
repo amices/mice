@@ -1,12 +1,14 @@
 # mice 3.14.8
 
-* Applies edits to autocorrelation function (#491)
-* Changes p-value calculation to more robust alternative (#494)
+* Edit test broken on R<4 (#501). Contributed @MichaelChirico
+* Adds support for models reporting contrasts rather than terms (#498). Contributed @LukasWallrich
+* Applies edits to autocorrelation function (#491). Contributed @hanneoberman
+* Changes p-value calculation to more robust alternative (#494). Contributed @AndrewLawrence
 * Uses `inherits()` to check on class membership
 
 # mice 3.14.7
 
-* Adds function for convergence evaluation (#484)
+* Adds function for convergence evaluation (#484). Contributed @hanneoberman
 
 # mice 3.14.6
 
