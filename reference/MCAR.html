@@ -224,11 +224,13 @@ missing completely at random for incomplete multivariate data. Psychometrika,
 <span class="r-out co"><span class="r-pr">#&gt;</span> Missing data patterns: 2 used, 3 removed.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Cases used: 20 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Hawkins' test: median chi^2 (4) = 2.623283, median p = 0.6227042</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hawkins' test: median chi^2 (4) = 2.334893, median p = 0.6744236. Some p-values for Hawkins' test were significant; please inspect their values, e.g., using `plot(x)`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Anderson-Darling rank test: median T = 0.6241214, median p = 0.473431</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Interpretation of results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Hawkins' test is not significant; there is no evidence to reject the assumptions of multivariate normality and MCAR.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Anderson-Darling test is not significant. There is thus evidence against multivariate normality, but not against MCAR.</span>
 <span class="r-in"><span><span class="co"># Plot p-values across imputed data sets</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Plot md patterns used for the test</span></span></span>
