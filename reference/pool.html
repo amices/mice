@@ -228,9 +228,9 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">pool</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          term    estimate  std.error  statistic        df      p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 20.64290151 4.12073380  5.0095208 20.223735 6.515855e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         hyp -1.00097139 2.90829496 -0.3441781  2.505626 7.575175e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         chl  0.03668137 0.02589582  1.4164978  3.153784 2.474041e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 21.28345575 4.37141901 4.86877504 17.573307 0.0001317801</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         hyp  0.06625942 3.74287306 0.01770282  1.333002 0.9881496381</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         chl  0.02798462 0.03493312 0.80109118  1.900722 0.5108930554</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># generate fully synthetic data, analyse and pool</span></span></span>
 <span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">cars</span>, maxit <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">2</span>,</span></span>
@@ -243,9 +243,9 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2   2  speed  dist</span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">speed</span> <span class="op">~</span> <span class="va">dist</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">pool.syn</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term estimate  std.error statistic           df      p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 9.929705 1.09236689  9.090082 5.963118e+02 0.000000e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        dist 0.112906 0.01977358  5.709944 7.548625e+08 1.130132e-08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term    estimate  std.error statistic        df      p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 11.51112397 1.33720043  8.608376  92.60777 1.842970e-13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        dist  0.08553431 0.02556791  3.345377 165.84923 1.016267e-03</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
