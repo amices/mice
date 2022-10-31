@@ -23,7 +23,7 @@ set.seed(123)
 imps <- mice.impute.lasso.logreg(y, ry, x)
 
 test_that("Returns a matrix of dimensionality sum(wy) x 1", {
-  expect_equal(class(imps), c("matrix", "array"))
+  expect_true(is.matrix(imps))
   expect_equal(dim(imps), c(sum(wy), 1))
 })
 
