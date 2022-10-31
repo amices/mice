@@ -72,19 +72,19 @@ parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL,
   # check form of data and m
   data <- check.dataform(data)
   m <- check.m(m)
-
+  
   # check if data complete
   if (sum(is.na(data)) == 0) {
     stop("Data has no missing values")
   }
-
+  
   # check if arguments match CPU specifications
   if (!is.null(n.core)) {
     if (n.core > parallel::detectCores()) {
       stop("Number of cores specified is greater than the number of logical cores in your CPU")
     }
   }
-
+  
   # determine course of action when not all arguments specified
   if (!is.null(n.core) & is.null(n.imp.core)) {
     n.imp.core <- m
@@ -104,34 +104,34 @@ parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL,
       warning("Be careful; the specified seed is equal for all imputations. Please consider specifying cluster.seed instead.")
     }
   }
-
+  
   # create arguments to export to cluster
   args <- match.call(mice, expand.dots = TRUE)
   args[[1]] <- NULL
   args$m <- n.imp.core
-
+  
   # make computing cluster
   cl <- parallel::makeCluster(n.core, type = cl.type)
   parallel::clusterExport(cl,
-    varlist = c(
-      "data", "m", "seed", "cluster.seed",
-      "n.core", "n.imp.core", "cl.type",
-      ls(parent.frame())
-    ),
-    envir = environment()
+                          varlist = c(
+                            "data", "m", "seed", "cluster.seed",
+                            "n.core", "n.imp.core", "cl.type",
+                            ls(parent.frame())
+                          ),
+                          envir = environment()
   )
   parallel::clusterExport(cl,
-    varlist = "do.call"
+                          varlist = "do.call"
   )
   parallel::clusterEvalQ(cl, library(mice))
   if (!is.na(cluster.seed)) {
     parallel::clusterSetRNGStream(cl, cluster.seed)
   }
-
+  
   # generate imputations
   imps <- parallel::parLapply(cl = cl, X = 1:n.core, function(x) do.call(mice, as.list(args), envir = environment()))
   parallel::stopCluster(cl)
-
+  
   # postprocess clustered imputation into a mids object
   imp <- imps[[1]]
   if (length(imps) > 1) {
@@ -143,7 +143,7 @@ parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL,
   for (i in 1:length(imp$imp)) {
     colnames(imp$imp[[i]]) <- 1:imp$m
   }
-
+  
   imp
 }
 
