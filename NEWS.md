@@ -1,5 +1,6 @@
 # mice 3.14.8
 
+* New function `futuremice()` adds improved support for parallel imputation (#504). Contributed @thomvolker, @gerkovink
 * Edit test broken on R<4 (#501). Contributed @MichaelChirico
 * Adds support for models reporting contrasts rather than terms (#498). Contributed @LukasWallrich
 * Applies edits to autocorrelation function (#491). Contributed @hanneoberman
