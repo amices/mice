@@ -138,7 +138,7 @@ Performing Likelihood Ratio Tests with Multiply-Imputed Data Sets.
 <span class="r-in"><span><span class="va">fit0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">gen</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">gen</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">~</span> <span class="va">hgt</span> <span class="op">+</span> <span class="va">hc</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">D3</span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit0</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    test statistic df1      df2 dfcom   p.value       riv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1 ~~ 2  1.256593   4 56.45796   741 0.2978167 0.8021544</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1 ~~ 2  1.199124   4 46.65652   741 0.3238057 0.9882608</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
