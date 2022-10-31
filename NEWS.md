@@ -1,6 +1,7 @@
 # mice 3.14.8
 
 * Applies edits to autocorrelation function (#491)
+* Changes p-value calculation to more robust alternative (#494)
 * Uses `inherits()` to check on class membership
 
 # mice 3.14.7
