@@ -227,10 +227,10 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2   2  bmi  hyp  chl</span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">pool</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term    estimate  std.error  statistic        df      p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 21.28345575 4.37141901 4.86877504 17.573307 0.0001317801</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         hyp  0.06625942 3.74287306 0.01770282  1.333002 0.9881496381</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         chl  0.02798462 0.03493312 0.80109118  1.900722 0.5108930554</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term    estimate  std.error  statistic       df   p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 21.05234121 6.99668645 3.00890162 1.664942 0.1180451</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         hyp  0.05482549 2.70372787 0.02027774 4.296539 0.9847290</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         chl  0.02955032 0.02699708 1.09457461 3.223837 0.3486670</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># generate fully synthetic data, analyse and pool</span></span></span>
 <span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">cars</span>, maxit <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">2</span>,</span></span>
@@ -243,9 +243,9 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2   2  speed  dist</span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">speed</span> <span class="op">~</span> <span class="va">dist</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">pool.syn</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term    estimate  std.error statistic        df      p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 11.51112397 1.33720043  8.608376  92.60777 1.842970e-13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        dist  0.08553431 0.02556791  3.345377 165.84923 1.016267e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term   estimate std.error statistic       df    p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 10.2530241 1.9001528  5.395895 1.868723 0.03777374</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        dist  0.1259839 0.0284717  4.424881 4.139517 0.01061241</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
