@@ -30,6 +30,13 @@
 #' \item{\code{"gr"}}{same as \code{psrf}, the potential scale reduction
 #' factor is colloquially called the Gelman-Rubin diagnostic.}
 #' }
+#' In the unlikely event of perfect convergence, the autocorrelation equals
+#' zero and the potential scale reduction factor equals one. To interpret 
+#' the convergence diagnostic(s) in the output of the function, it is 
+#' recommended to plot the diagnostics (ac and/or psrf) against the 
+#' iteration number (.it) per imputed variable (vrb). A persistently 
+#' decreasing trend across iterations indicates potential non-convergence.
+#' 
 #' @seealso \code{\link{mice}}, \code{\link[=mids-class]{mids}}
 #' @keywords none
 #' @references Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., & Burkner, 
@@ -49,6 +56,10 @@ convergence <- function(data, diagnostic = "all", parameter = "mean", ...) {
   install.on.demand("purrr", ...)
   if (!is.mids(data))
     stop("'data' not of class 'mids'")
+  if (data$m < 2)
+    stop("the number of imputations should be at least two (m > 1)")
+  if (data$iteration < 3)
+    stop("the number of iterations should be at least three (maxit > 2)")
   if (is.null(data$chainMean)) 
     stop("no convergence diagnostics found", call. = FALSE)
   if (parameter != "mean" & parameter != "sd")
@@ -61,24 +72,28 @@ convergence <- function(data, diagnostic = "all", parameter = "mean", ...) {
     
   # extract chain means or chain standard deviations
   if (parameter == "mean") {
-    param <- lapply(seq(p), function(x) aperm(data$chainMean[vrbs, , , drop = FALSE], c(2, 3, 1))[ , , x]) 
+    param <- lapply(seq(p), function(x) 
+      aperm(data$chainMean[vrbs, , , drop = FALSE], c(2, 3, 1))[ , , x]) 
   }
   if (parameter == "sd") {
-    param <- lapply(seq(p), function(x) aperm(sqrt(data$chainVar)[vrbs, , , drop = FALSE], c(2, 3, 1))[ , , x])
+    param <- lapply(seq(p), function(x) 
+      aperm(sqrt(data$chainVar)[vrbs, , , drop = FALSE], c(2, 3, 1))[ , , x])
   }
   names(param) <- vrbs
   
   # compute autocorrelation
   if (diagnostic == "all" | diagnostic == "ac") {
     ac <-
-      purrr::map_dfr(vrbs, function(.vrb) {
-        base::rbind(NA, NA, purrr::map_dfr(3:t, function(.itr) {
-          data.frame(ac = max(purrr::map_dbl(1:m, function(.imp) {
-            suppressWarnings(stats::cor(param[[.vrb]][1:.itr - 1, .imp], param[[.vrb]][2:.itr, .imp]))
-          })))
-        }))
+      purrr::map(vrbs, function(.vrb) {
+        c(NA, dplyr::cummean(dplyr::coalesce(
+          purrr::map_dbl(2:t, function(.itr) {
+          suppressWarnings(stats::cor(
+            param[[.vrb]][.itr - 1, ], 
+            param[[.vrb]][.itr, ], 
+            use = "pairwise.complete.obs"))
+        }), 0))) + 0 * param[[.vrb]][ , 1]
       })
-    out <- base::cbind(out, ac)
+    out <- base::cbind(out, ac = unlist(ac))
   }
   
   # compute potential scale reduction factor
@@ -90,7 +105,9 @@ convergence <- function(data, diagnostic = "all", parameter = "mean", ...) {
     })
     out <- base::cbind(out, psrf)
   }
-  
+  out[is.nan(out)] <- NA
   return(out)
 }
 
+# function to extend is.nan() to data.frame objects
+is.nan.data.frame <- function(x) do.call(cbind, lapply(x, is.nan))

@@ -44,6 +44,12 @@ per iteration;}
 \item{\code{"gr"}}{same as \code{psrf}, the potential scale reduction
 factor is colloquially called the Gelman-Rubin diagnostic.}
 }
+In the unlikely event of perfect convergence, the autocorrelation equals
+zero and the potential scale reduction factor equals one. To interpret 
+the convergence diagnostic(s) in the output of the function, it is 
+recommended to plot the diagnostics (ac and/or psrf) against the 
+iteration number (.it) per imputed variable (vrb). A persistently 
+decreasing trend across iterations indicates potential non-convergence.
 }
 \examples{
 
