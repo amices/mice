@@ -100,9 +100,11 @@
 #' \code{"rubin1987"} (default, for missing data) and \code{"reiter2003"}
 #' (for synthetic data created from a complete data set).
 #' @param custom.t A custom character string to be parsed as a calculation rule 
-#' for the total variance \code{t}. The custom rule  must use the other calculated 
-#' pooling statistics. The default \code{t} calculation would have the form 
-#' \code{".data$ubar + (1 + 1 / .data$m) * .data$b"}. See examples for an example.
+#' for the total variance \code{t}. The custom rule  can use the other calculated 
+#' pooling statistics where the dimensions must come from \code{.data$}. The 
+#' default \code{t} calculation would have the form 
+#' \code{".data$ubar + (1 + 1 / .data$m) * .data$b"}. 
+#' See examples for an example.
 #' @return An object of class \code{mipo}, which stands for 'multiple imputation
 #' pooled outcome'.
 #' For rule \code{"reiter2003"} values for \code{lambda} and \code{fmi} are

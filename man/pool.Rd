@@ -30,9 +30,11 @@ manually.}
 (for synthetic data created from a complete data set).}
 
 \item{custom.t}{A custom character string to be parsed as a calculation rule 
-for the total variance \code{t}. The custom rule  must use the other calculated 
-pooling statistics. The default \code{t} calculation would have the form 
-\code{".data$ubar + (1 + 1 / .data$m) * .data$b"}. See examples for an example.}
+for the total variance \code{t}. The custom rule  can use the other calculated 
+pooling statistics where the dimensions must come from \code{.data$}. The 
+default \code{t} calculation would have the form 
+\code{".data$ubar + (1 + 1 / .data$m) * .data$b"}. 
+See examples for an example.}
 }
 \value{
 An object of class \code{mipo}, which stands for 'multiple imputation
