@@ -139,12 +139,11 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
       }
     }
   }
-  if (is.na(parallelseed)) {
-    parallelseed <- round(runif(1, -999999999, 999999999))
+  if (!is.na(parallelseed)) {
+    set.seed(parallelseed)
+  } else {
+    parallelseed <- .Random.seed
   }
-
-  ### set seed, either user-specified or randomly drawn
-  withr::local_seed(parallelseed)
 
   # start multisession
   future::plan(future.plan,
