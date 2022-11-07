@@ -1,8 +1,7 @@
 #' Wrapper function that runs MICE in parallel
 #'
-#' This is a wrapper function for \code{\link{mice}}, using multiple cores to
-#' execute \code{\link{mice}} in parallel. As a result, the imputation
-#' procedure can be sped up, which may be useful in general.
+#' This function is included for backward compatibility. The function
+#' is superseded by \code{\link{futuremice}}.
 #'
 #' This function relies on package \code{\link{parallel}}, which is a base
 #' package for R versions 2.14.0 and later. We have chosen to use parallel function
@@ -69,6 +68,8 @@
 #' @export
 parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL,
                      n.imp.core = NULL, cl.type = "PSOCK", ...) {
+  
+  .Deprecated("futuremice")
   # check form of data and m
   data <- check.dataform(data)
   m <- check.m(m)
