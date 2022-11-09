@@ -329,7 +329,6 @@ mice <- function(data,
     # restores .Random.seed on exiting scope
     withr::local_preserve_seed()
     # reinitialize .Random.seed
-    set.seed(NULL)
   } else {
     # take specified seed to set local seed
     withr::local_seed(seed)
