@@ -1,3 +1,8 @@
+# mice 3.14.9
+
+* Adds decprecation notices to `parlmice()`
+* Changes `seed` behavior in `futuremice()` so that we do not need `withr::local_seed()` anymore
+
 # mice 3.14.8
 
 * New function `futuremice()` adds improved support for parallel imputation (#504). Contributed @thomvolker, @gerkovink
