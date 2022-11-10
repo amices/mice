@@ -8,6 +8,7 @@
 #' (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.
 #' @param x Numeric design matrix with \code{length(y)} rows with predictors for
 #' \code{y}. Matrix \code{x} may have no missing values.
+#' @param exclude Value or vector of values to exclude from the imputation donor pool in \code{y}
 #' @param wy Logical vector of length \code{length(y)}. A \code{TRUE} value
 #' indicates locations in \code{y} for which imputations are created.
 #' @param donors The size of the donor pool among which a draw is made.
@@ -36,7 +37,7 @@
 #' @param \dots Other named arguments.
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #' \code{sum(wy)}
-#' @author Stef van Buuren, Karin Groothuis-Oudshoorn
+#' @author Gerko Vink, Stef van Buuren, Karin Groothuis-Oudshoorn
 #' @details
 #' Imputation of \code{y} by predictive mean matching, based on
 #' van Buuren (2012, p. 73). The procedure is as follows:
@@ -105,12 +106,18 @@
 #' abline(0, 1)
 #' cor(y, yimp, use = "pair")
 #' @export
-mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
+mice.impute.pmm <- function(y, ry, x, exclude = -Inf, wy = NULL, donors = 5L,
                             matchtype = 1L, ridge = 1e-05,
                             use.matcher = FALSE, ...) {
+  id.ex <- !ry | !y %in% exclude # id vector for exclusion
+  y <- y[id.ex] # leave out the exclude vector y's
+  x <- x[id.ex, ] # leave out the exclude vector x's
+  ry <- ry[id.ex] # leave out the exclude vector indicator
   {
     if (is.null(wy)) {
       wy <- !ry
+    } else {
+      wy <- wy[id.ex] # if applicable adjust wy to match exclude
     }
   }
   x <- cbind(1, as.matrix(x))
