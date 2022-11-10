@@ -19,3 +19,7 @@ test_that("Returns requested length", {
   expect_equal(length(mice.impute.pmm(y, ry, x, wy = wy3)), sum(wy3))
   expect_equal(length(mice.impute.pmm(y, ry, x, wy = wy4)), sum(wy4))
 })
+
+test_that("Excludes donors", {
+  expect_false(all(c(15:25) %in% mice.impute.pmm(y, ry, x, exclude = c(15:25))))
+})
