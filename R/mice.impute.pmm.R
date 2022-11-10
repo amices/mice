@@ -105,6 +105,14 @@
 #' )
 #' abline(0, 1)
 #' cor(y, yimp, use = "pair")
+#' 
+#' # Use blots to exclude different values per column
+#' blots <- make.blots(boys)
+#' blots$tv$exclude <- c(1:5)
+#' blots$hgt$exclude <- unique(boys$hgt) %>% sample(100)
+#' imp <- mice(boys, method = "pmm", print = FALSE, blots = blots, seed=123)
+#' blots$hgt$exclude %in% unlist(c(imp$imp$hgt)) # MUST be all FALSE 
+#' blots$tv$exclude %in% unlist(c(imp$imp$tv)) # MUST be all FALSE 
 #' @export
 mice.impute.pmm <- function(y, ry, x, exclude = -Inf, wy = NULL, donors = 5L,
                             matchtype = 1L, ridge = 1e-05,
