@@ -9,6 +9,7 @@ mice.impute.pmm(
   y,
   ry,
   x,
+  exclude = -Inf,
   wy = NULL,
   donors = 5L,
   matchtype = 1L,
@@ -27,6 +28,8 @@ model is fitted. The \code{ry} generally distinguishes the observed
 
 \item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
+
+\item{exclude}{Value or vector of values to exclude from the imputation donor pool in \code{y}}
 
 \item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
@@ -119,6 +122,14 @@ plot(jitter(y), jitter(yimp),
 )
 abline(0, 1)
 cor(y, yimp, use = "pair")
+
+# Use blots to exclude different values per column
+blots <- make.blots(boys)
+blots$tv$exclude <- c(1:5)
+blots$hgt$exclude <- unique(boys$hgt) \%>\% sample(100)
+imp <- mice(boys, method = "pmm", print = FALSE, blots = blots, seed=123)
+blots$hgt$exclude \%in\% unlist(c(imp$imp$hgt)) # MUST be all FALSE 
+blots$tv$exclude \%in\% unlist(c(imp$imp$tv)) # MUST be all FALSE 
 }
 \references{
 Little, R.J.A. (1988), Missing data adjustments in large surveys
@@ -160,7 +171,7 @@ Other univariate imputation functions:
 \code{\link{mice.impute.ri}()}
 }
 \author{
-Stef van Buuren, Karin Groothuis-Oudshoorn
+Gerko Vink, Stef van Buuren, Karin Groothuis-Oudshoorn
 }
 \concept{univariate imputation functions}
 \keyword{datagen}
