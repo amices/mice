@@ -23,3 +23,9 @@ test_that("Returns requested length", {
 test_that("Excludes donors", {
   expect_false(all(c(15:25) %in% mice.impute.pmm(y, ry, x, exclude = c(15:25))))
 })
+
+imp1 <- mice(nhanes, printFlag = FALSE, seed = 123)
+imp2 <- mice(nhanes, printFlag = FALSE, seed = 123, exclude = c(-1, 1032))
+test_that("excluding unobserved values does not impact pmm", {
+  expect_identical(imp1$imp, imp2$imp)
+})
