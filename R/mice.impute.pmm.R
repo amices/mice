@@ -117,7 +117,7 @@
 #' blots$hgt$exclude %in% unlist(c(imp$imp$hgt)) # MUST be all FALSE 
 #' blots$tv$exclude %in% unlist(c(imp$imp$tv)) # MUST be all FALSE 
 #' @export
-mice.impute.pmm <- function(y, ry, x, exclude = -Inf, wy = NULL, donors = 5L,
+mice.impute.pmm <- function(y, ry, x, exclude = -99999999, wy = NULL, donors = 5L,
                             matchtype = 1L, ridge = 1e-05,
                             use.matcher = FALSE, ...) {
   id.ex <- !ry | !y %in% exclude # id vector for exclusion
