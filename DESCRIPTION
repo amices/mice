@@ -1,8 +1,8 @@
 Package: mice
 Type: Package
-Version: 3.13.7
+Version: 3.14.9
 Title: Multivariate Imputation by Chained Equations
-Date: 2021-04-15
+Date: 2022-11-09
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -30,7 +30,17 @@ Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     person("Bernie","Gray", role = "ctb",
     email = "bfgray3@gmail.com"),
     person("Vincent", "Arel-Bundock", role = "ctb",
-    email = "vincent.arel-bundock@umontreal.ca"))
+    email = "vincent.arel-bundock@umontreal.ca"),
+    person("Mingyang", "Cai", role = "ctb",
+    email = "m.cai@uu.nl"),
+    person("Thom", "Volker", role = "ctb",
+    email = "t.b.volker@uu.nl"),
+    person("Edoardo", "Costantini", role = "ctb",
+    email = "e.costantini@tilburguniversity.edu"),
+    person("Caspar", "van Lissa", role = "ctb", 
+    email = "c.j.vanlissa@uu.nl"),
+    person("Hanne", "Oberman", role = "ctb",
+    email = "h.i.oberman@uu.nl"))
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
     R (>= 2.10.0)
@@ -39,30 +49,40 @@ Imports:
     dplyr,
     generics,
     graphics,
+    grDevices,
     lattice,
     methods,
     Rcpp,
     rlang,
     stats,
     tidyr,
-    utils
+    utils,
+    withr (>= 2.4.0)
 Suggests:
     broom.mixed,
+    decor,
+    future, 
+    furrr,
+    glmnet,
     haven,
     knitr,
     lme4,
+    lmtest,
     MASS,
     metafor,
     mitml,
     miceadds,
     nnet,
     pan,
+    parallelly,
+    purrr,
     randomForest,
+    ranger,
     rmarkdown,
     rpart,
+    rstan,
     survival,
-    testthat,
-    lmtest
+    testthat
 Description: Multiple imputation using Fully Conditional Specification (FCS)
     implemented by the MICE algorithm as described in Van Buuren and
     Groothuis-Oudshoorn (2011) <doi:10.18637/jss.v045.i03>. Each variable has
@@ -75,11 +95,11 @@ Description: Multiple imputation using Fully Conditional Specification (FCS)
     Various diagnostic plots are available to inspect the quality of the
     imputations.
 Encoding: UTF-8
-License: GPL-2 | GPL-3
 LazyLoad: yes
 LazyData: yes
 URL: https://github.com/amices/mice, https://amices.org/mice/, https://stefvanbuuren.name/fimd/
 BugReports: https://github.com/amices/mice/issues
-RoxygenNote: 7.1.1
 LinkingTo: cpp11, Rcpp
 SystemRequirements: C++11
+RoxygenNote: 7.2.1
+License: GPL (>= 2)

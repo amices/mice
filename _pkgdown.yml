@@ -1,13 +1,9 @@
 title: mice
 url: https://amices.org/mice
 template:
+  bootstrap: 5
   params:
-    bootswatch: flatly
-    docsearch:
-      api_key: '491b6c2ead7f15b8c26c513b923dd6a0'
-      index_name: 'mice'
-navbar:
-  type: inverse
+    bootswatch: lumen
 reference:
   - title: "Missing data exploration"
     desc: >
@@ -19,6 +15,7 @@ reference:
       - cci
       - ic
       - ici
+      - mcar
       - ncc
       - nic
       - nimp
@@ -35,6 +32,7 @@ reference:
       - mice
       - mice.mids
       - parlmice
+      - futuremice
   - title: "Elementary imputation functions"
     desc: >
       The elementary imputation function is the workhorse that creates
@@ -123,6 +121,7 @@ reference:
       Helpers to extract and print information from objects of
       specific classes.
     contents:
+      - convergence
       - getfit
       - getqbar
       - glance.mipo
@@ -167,6 +166,7 @@ reference:
       - fdgs
       - leiden85
       - mammalsleep
+      - mnar_demo_data
       - nhanes
       - nhanes2
       - pattern
@@ -176,6 +176,7 @@ reference:
       - selfreport
       - tbc
       - toenail
+      - toenail2
       - walking
       - windspeed
   - title: "Miscellaneous functions"
@@ -185,6 +186,7 @@ reference:
       - extractBS
       - glm.mids
       - lm.mids
+      - matchindex
       - mdc
       - mice.theme
       - supports.transparent

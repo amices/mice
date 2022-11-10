@@ -268,6 +268,122 @@ test_that("error messages work properly", {
   )
 })
 
+# The following tests were created to evaluate the patterns and weights matrices in case of a pattern with only 1's (#449)
+
+test_that("patterns and weights matrices have right dimensions", {
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0))$patterns == c(0, 1, 0)
+    ))
+  )
+  
+  suppressWarnings(
+  expect_true(all(
+      ampute(data = complete.data, patterns = c(0, 1, 0, 1, 1, 1))$patterns == c(0, 1, 0)
+    ))
+  )
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1))$patterns == c(0, 1, 0)
+    ))
+  )
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0),
+            weights = c(1, 0, 0, 0, 1, 0))$weights == c(0, 1, 0)
+    ))
+  )
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(0, 1, 0, 1, 1, 1),
+            weights = c(1, 0, 0, 0, 1, 0))$weights == c(1, 0, 0)
+    ))
+  )
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(0, 1, 0, 1, 1, 1),
+            weights = c(1, 0, 0))$weights == c(1, 0, 0)
+    ))
+  )
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1),
+            weights = c(1, 0, 0))$weights == c(1, 0, 0)
+    ))
+  )
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1),
+            weights = c(1, 0, 0, 0, 1, 0, 0, 0, 1))$weights == c(0, 1, 0)
+    ))
+  )
+  
+})
+
+test_that("prop and freq are properly adjusted when patterns contain only 1's", {
+  
+  suppressWarnings(
+    expect_equal(ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0))$prop, 0.25)
+  )
+  
+  suppressWarnings(
+    expect_equal(ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0))$freq, 1)
+  )
+  
+  suppressWarnings(
+    expect_equal(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 0, 1, 0))$prop, 1/3)
+  )
+  
+  suppressWarnings(
+    expect_true(all(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 0, 1, 0))$freq == c(0.5, 0.5)))
+  )
+  
+  suppressWarnings(
+    expect_equal(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1))$prop, 1/3*0.5)
+  )
+  
+  suppressWarnings(
+    expect_equal(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1))$freq, 1)
+  )
+    
+})
+
+# The following test was created to evaluate warnings when not all patterns can be generated (#317)
+
+test_that("warnings appear when not all patterns can be generated", {
+  
+  set.seed(12032021)
+  binary.data <- lapply(
+    runif(10, 0.05, 0.15),
+    function(p, n) rbinom(n, 1, p),
+    n = 10
+  ) %>%
+    do.call(what = "data.frame") %>%
+    rlang::set_names(paste0("type", LETTERS[1:ncol(.)]))
+  expect_warning(
+    ampute(
+      data = binary.data
+    )
+  )
+  
+  df <- matrix(c(runif(1000, 0.5, 1), rep(0, 1000)), nrow = 1000, byrow = FALSE)
+  expect_warning(
+    ampute(df, pattern = c(0, 1)),
+    "The weighted sum scores of all candidates in pattern 1 are the same, they will be amputed with probability 0.5"
+    )
+})
+  
 
 # The following test was contributed by Shangzhi-hong (#216) Dec 2019
 context("ampute robust version")
@@ -316,15 +432,17 @@ bycases <- TRUE
 # run <- TRUE
 
 test_that("ampute() works under extreme condition", {
-  ampDf <- ampute(
-    data = data,
-    prop = prop,
-    mech = mech,
-    type = type,
-    bycases = bycases,
-    patterns = patterns,
-    weights = weights
-  )$amp
+  expect_warning(
+    ampDf <- ampute(
+      data = data,
+      prop = prop,
+      mech = mech,
+      type = type,
+      bycases = bycases,
+      patterns = patterns,
+      weights = weights
+    )$amp
+  )
   outProp <- sum(complete.cases(ampDf)) / NUM_OBS_DF
   expect_true(outProp > 0.3 & outProp < 0.7)
 })

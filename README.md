@@ -1,10 +1,10 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# mice <a href='https://amices.github.io/mice/'><img src='MICE_sticker_SMALL.png' align="right" height="139" /></a>
+# mice <a href='https://amices.github.io/mice/'><img src='man/figures/MICE_sticker_SMALL.png' align="right" height="139" /></a>
 
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
 [![](https://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice)
-[![](https://img.shields.io/badge/github%20version-3.13.7-orange.svg)](https://amices.github.io/mice/)
+[![](https://img.shields.io/badge/github%20version-3.14.9-orange.svg)](https://amices.github.io/mice/)
 
 ## [Multivariate Imputation by Chained Equations](https://amices.github.io/mice/)
 
@@ -44,7 +44,7 @@ md.pattern(nhanes)
 ```
 
 ![Missing data pattern of `nhanes` data. Blue is observed, red is
-missing.](README-pattern-1.png)
+missing.](man/figures/README-pattern-1.png)
 
     #>    age hyp bmi chl   
     #> 13   1   1   1   1  0
@@ -71,7 +71,8 @@ imp <- mice(nhanes, maxit = 2, m = 2, seed = 1)
 stripplot(imp, chl, pch = 19, xlab = "Imputation number")
 ```
 
-![Distribution of `chl` per imputed data set.](README-stripplot-1.png)
+![Distribution of `chl` per imputed data
+set.](man/figures/README-stripplot-1.png)
 
 In general, we would like the imputations to be plausible, i.e., values
 that could have been observed if they had not been missing.
@@ -165,6 +166,8 @@ these through Github’s issues facility.
     `mice`](https://gerkovink.github.io/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html)
 7.  [Generate missing values with
     `ampute`](https://rianneschouten.github.io/mice_ampute/vignette/ampute.html)
+8.  [`futuremice`: Wrapper for parallel MICE imputation through
+    futures](https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremice.html)
 
 ### Code from publications
 

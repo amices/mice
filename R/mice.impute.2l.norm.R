@@ -38,7 +38,7 @@
 #'
 #' Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 #' Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-#' Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
+#' Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 #'
 #' Van Buuren, S. (2011) Multiple imputation of multilevel data. In Hox, J.J.
 #' and and Roberts, J.K. (Eds.), \emph{The Handbook of Advanced Multilevel
@@ -86,7 +86,7 @@ mice.impute.2l.norm <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
 
     ## Draw mu
     mu <- colMeans(bees) + drop(rnorm(n = n.rc) %*%
-      chol(chol2inv(chol(symridge(inv.psi, ...))) / n.class))
+                                  chol(chol2inv(chol(symridge(inv.psi, ...))) / n.class))
 
     ## Draw psi
     inv.psi <- rwishart(
@@ -132,7 +132,7 @@ force.chol <- function(x, warn = TRUE) {
     XT <- x + diag(x = lambda, nrow = nrow(x))
     XT <- (XT + t(XT)) / 2
     s <- try(expr = chol(XT), silent = TRUE)
-    if (class(s) != "try-error") {
+    if (!inherits(s, "try-error")) {
       break
     }
     z <- z + 1

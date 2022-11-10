@@ -5,6 +5,9 @@
 #'
 #' @inheritParams D1
 #' @inheritParams mitml::testModels
+#' @note Warning: `D2()` assumes that the order of the variables is the
+#' same in different models. See
+#' \url{https://github.com/amices/mice/issues/420} for details.
 #' @references
 #' Li, K. H., X. L. Meng, T. E. Raghunathan, and D. B. Rubin. 1991.
 #' Significance Levels from Repeated p-Values with Multiply-Imputed Data.

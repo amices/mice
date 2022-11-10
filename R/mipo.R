@@ -45,7 +45,7 @@
 #' @references van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 #' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #' Statistical Software}, \bold{45}(3), 1-67.
-#' \url{https://www.jstatsoft.org/v45/i03/}
+#' \doi{10.18637/jss.v045.i03}
 #' @keywords classes
 #' @name mipo
 NULL
@@ -68,7 +68,7 @@ summary.mipo <- function(object, type = c("tests", "all"),
   x <- object$pooled
   std.error <- sqrt(x$t)
   statistic <- x$estimate / std.error
-  p.value <- 2 * (1 - pt(abs(statistic), pmax(x$df, 0.001)))
+  p.value <- 2 * (pt(abs(statistic), pmax(x$df, 0.001), lower.tail = FALSE))
 
   z <- data.frame(x,
     std.error = std.error,

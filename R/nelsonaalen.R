@@ -37,7 +37,6 @@
 #' plot(x = time, y = ch, ylab = "Cumulative hazard", xlab = "Time")
 #' @export
 nelsonaalen <- function(data, timevar, statusvar) {
-  install.on.demand("survival")
   if (!is.data.frame(data)) {
     stop("Data must be a data frame")
   }

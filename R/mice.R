@@ -26,30 +26,34 @@
 #' Built-in univariate imputation methods are:
 #'
 #' \tabular{lll}{
-#' \code{pmm}          \tab any     \tab Predictive mean matching\cr
-#' \code{midastouch}   \tab any     \tab Weighted predictive mean matching\cr
-#' \code{sample}       \tab any     \tab Random sample from observed values\cr
-#' \code{cart}         \tab any     \tab Classification and regression trees\cr
-#' \code{rf}           \tab any     \tab Random forest imputations\cr
-#' \code{mean}         \tab numeric \tab Unconditional mean imputation\cr
-#' \code{norm}         \tab numeric \tab Bayesian linear regression\cr
-#' \code{norm.nob}     \tab numeric \tab Linear regression ignoring model error\cr
-#' \code{norm.boot}    \tab numeric \tab Linear regression using bootstrap\cr
-#' \code{norm.predict} \tab numeric \tab Linear regression, predicted values\cr
-#' \code{quadratic}    \tab numeric \tab Imputation of quadratic terms\cr
-#' \code{ri}           \tab numeric \tab Random indicator for nonignorable data\cr
-#' \code{logreg}       \tab binary  \tab Logistic regression\cr
-#' \code{logreg.boot}  \tab binary  \tab Logistic regression with bootstrap\cr
-#' \code{polr}         \tab ordered \tab Proportional odds model\cr
-#' \code{polyreg}      \tab unordered\tab Polytomous logistic regression\cr
-#' \code{lda}          \tab unordered\tab Linear discriminant analysis\cr
-#' \code{2l.norm}      \tab numeric  \tab Level-1 normal heteroscedastic\cr
-#' \code{2l.lmer}      \tab numeric  \tab Level-1 normal homoscedastic, lmer\cr
-#' \code{2l.pan}       \tab numeric  \tab Level-1 normal homoscedastic, pan\cr
-#' \code{2l.bin}       \tab binary   \tab Level-1 logistic, glmer\cr
-#' \code{2lonly.mean}  \tab numeric  \tab Level-2 class mean\cr
-#' \code{2lonly.norm}  \tab numeric  \tab Level-2 class normal\cr
-#' \code{2lonly.pmm}   \tab any      \tab Level-2 class predictive mean matching
+#' \code{pmm}               \tab any     \tab Predictive mean matching\cr
+#' \code{midastouch}        \tab any     \tab Weighted predictive mean matching\cr
+#' \code{sample}            \tab any     \tab Random sample from observed values\cr
+#' \code{cart}              \tab any     \tab Classification and regression trees\cr
+#' \code{rf}                \tab any     \tab Random forest imputations\cr
+#' \code{mean}              \tab numeric \tab Unconditional mean imputation\cr
+#' \code{norm}              \tab numeric \tab Bayesian linear regression\cr
+#' \code{norm.nob}          \tab numeric \tab Linear regression ignoring model error\cr
+#' \code{norm.boot}         \tab numeric \tab Linear regression using bootstrap\cr
+#' \code{norm.predict}      \tab numeric \tab Linear regression, predicted values\cr
+#' \code{lasso.norm}        \tab numeric \tab Lasso linear regression\cr
+#' \code{lasso.select.norm} \tab numeric \tab Lasso select + linear regression\cr
+#' \code{quadratic}         \tab numeric \tab Imputation of quadratic terms\cr
+#' \code{ri}                \tab numeric \tab Random indicator for nonignorable data\cr
+#' \code{logreg}            \tab binary  \tab Logistic regression\cr
+#' \code{logreg.boot}       \tab binary  \tab Logistic regression with bootstrap\cr
+#' \code{lasso.logreg}      \tab binary  \tab Lasso logistic regression\cr
+#' \code{lasso.select.logreg}\tab binary  \tab Lasso select + logistic regression\cr
+#' \code{polr}              \tab ordered \tab Proportional odds model\cr
+#' \code{polyreg}           \tab unordered\tab Polytomous logistic regression\cr
+#' \code{lda}               \tab unordered\tab Linear discriminant analysis\cr
+#' \code{2l.norm}           \tab numeric  \tab Level-1 normal heteroscedastic\cr
+#' \code{2l.lmer}           \tab numeric  \tab Level-1 normal homoscedastic, lmer\cr
+#' \code{2l.pan}            \tab numeric  \tab Level-1 normal homoscedastic, pan\cr
+#' \code{2l.bin}            \tab binary   \tab Level-1 logistic, glmer\cr
+#' \code{2lonly.mean}       \tab numeric  \tab Level-2 class mean\cr
+#' \code{2lonly.norm}       \tab numeric  \tab Level-2 class normal\cr
+#' \code{2lonly.pmm}        \tab any      \tab Level-2 class predictive mean matching
 #' }
 #'
 #' These corresponding functions are coded in the \code{mice} library under
@@ -218,7 +222,9 @@
 #' Use \code{print=FALSE} for silent computation.
 #' @param seed An integer that is used as argument by the \code{set.seed()} for
 #' offsetting the random number generator. Default is to leave the random number
-#' generator alone.
+#' generator alone. Versions later than 3.13.11 reset the random generator to the
+#' state before calling \code{mice()}. This effectively isolates the \code{mice}
+#' random generator from the calling environment.
 #' @param data.init A data frame of the same size and type as \code{data},
 #' without missing data, used to initialize imputations before the start of the
 #' iterative process.  The default \code{NULL} implies that starting imputation
@@ -240,7 +246,7 @@
 #' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 #' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #' Statistical Software}, \bold{45}(3), 1-67.
-#' \url{https://www.jstatsoft.org/v45/i03/}
+#' \doi{10.18637/jss.v045.i03}
 #'
 #' Van Buuren, S. (2018).
 #' \href{https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
@@ -275,6 +281,28 @@
 #'
 #' # imputation on mixed data with a different method per column
 #' mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"))
+#'
+#' \dontrun{
+#' # example where we fit the imputation model on the train data
+#' # and apply the model to impute the test data
+#' set.seed(123)
+#' ignore <- sample(c(TRUE, FALSE), size = 25, replace = TRUE, prob = c(0.3, 0.7))
+#'
+#' # scenario 1: train and test in the same dataset
+#' imp <- mice(nhanes2, m = 2, ignore = ignore, print = FALSE, seed = 22112)
+#' imp.test1 <- filter(imp, ignore)
+#' imp.test1$data
+#' complete(imp.test1, 1)
+#' complete(imp.test1, 2)
+#'
+#' # scenario 2: train and test in separate datasets
+#' traindata <- nhanes2[!ignore, ]
+#' testdata <- nhanes2[ignore, ]
+#' imp.train <- mice(traindata, m = 2, print = FALSE, seed = 22112)
+#' imp.test2 <- mice.mids(imp.train, newdata = testdata)
+#' complete(imp.test2, 1)
+#' complete(imp.test2, 2)
+#' }
 #' @export
 mice <- function(data,
                  m = 5,
@@ -295,7 +323,17 @@ mice <- function(data,
                  ...) {
   call <- match.call()
   check.deprecated(...)
-  if (!is.na(seed)) set.seed(seed)
+
+  # set local seed, reset random state generator after function aborts
+  if (is.na(seed)) {
+    # restores .Random.seed on exiting scope
+    withr::local_preserve_seed()
+    # reinitialize .Random.seed
+    set.seed(NULL)
+  } else {
+    # take specified seed to set local seed
+    withr::local_seed(seed)
+  }
 
   # check form of data and m
   data <- check.dataform(data)
@@ -447,7 +485,8 @@ mice <- function(data,
     ignore = ignore,
     seed = seed,
     iteration = q$iteration,
-    lastSeedValue = .Random.seed,
+    lastSeedValue = get(".Random.seed", envir = globalenv(), mode = "integer",
+                        inherits = FALSE),
     chainMean = q$chainMean,
     chainVar = q$chainVar,
     loggedEvents = loggedEvents,

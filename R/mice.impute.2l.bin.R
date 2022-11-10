@@ -37,7 +37,6 @@
 #' @export
 mice.impute.2l.bin <- function(y, ry, x, type,
                                wy = NULL, intercept = TRUE, ...) {
-  install.on.demand("MASS", ...)
   install.on.demand("lme4", ...)
 
   if (is.null(wy)) wy <- !ry

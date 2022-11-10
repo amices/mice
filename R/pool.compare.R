@@ -63,7 +63,7 @@
 #'
 #' van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}: Multivariate
 #' Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-#' Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
+#' Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 #' @keywords htest
 #' @export
 pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"),
@@ -172,7 +172,7 @@ pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"),
     ubar1 = est1$pooled$ubar, ubar0 = est0$pooled$ubar,
     deviances = deviances,
     Dm = Dm, rm = rm, df1 = dimQ2, df2 = w,
-    pvalue = 1 - pf(Dm, dimQ2, w)
+    pvalue = pf(Dm, dimQ2, w, lower.tail = FALSE)
   )
   statistic
 }

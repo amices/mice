@@ -5,6 +5,8 @@ install.on.demand <- function(pkg, quiet = FALSE, ...) {
   if (requireNamespace(pkg, quietly = TRUE)) {
     return()
   }
-  answer <- askYesNo(paste("Package", pkg, "needed. Install from CRAN?"))
-  if (answer) install.packages(pkg, repos = "https://cloud.r-project.org/", quiet = quiet)
+  if (interactive()) {
+    answer <- askYesNo(paste("Package", pkg, "needed. Install from CRAN?"))
+    if (answer) install.packages(pkg, repos = "https://cloud.r-project.org/", quiet = quiet)
+  }
 }

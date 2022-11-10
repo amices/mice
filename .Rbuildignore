@@ -8,7 +8,6 @@ _cache$
 ^revdep$
 cran-comments.md
 cran-comments.Rmd
-README-*
 changes_mice*
 ^data-raw$
 .png
@@ -19,3 +18,5 @@ vignettes/
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^LICENSE\.md$
+^\.github$

@@ -42,7 +42,7 @@
 #'    the rows in \code{data} used to build the imputation model. (new in \code{mice 3.12.0})}
 #'    \item{\code{seed}:}{The seed value of the solution.}
 #'    \item{\code{iteration}:}{Last Gibbs sampling iteration number.}
-#'    \item{\code{lastSeedValue}:}{The most recent seed value.}
+#'    \item{\code{lastSeedValue}:}{The most recent seed state.}
 #'    \item{\code{chainMean}:}{A list of \code{m} components. Each
 #'    component is a \code{length(visitSequence)} by \code{maxit} matrix
 #'    containing the mean of the generated multiple imputations.
@@ -99,6 +99,6 @@
 #' @references van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 #' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #' Statistical Software}, \bold{45}(3), 1-67.
-#' \url{https://www.jstatsoft.org/v45/i03/}
+#' \doi{10.18637/jss.v045.i03}
 #' @keywords classes
 NULL

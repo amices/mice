@@ -47,7 +47,7 @@
 #'
 #' Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 #' Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-#' Software}, \bold{45}(3), 1-67. \url{https://www.jstatsoft.org/v45/i03/}
+#' Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 #'
 #' Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
 #' multiple imputation strategies for the statistical analysis of incomplete
@@ -65,8 +65,6 @@
 mice.impute.polr <- function(y, ry, x, wy = NULL, nnet.maxit = 100,
                              nnet.trace = FALSE, nnet.MaxNWts = 1500,
                              polr.to.loggedEvents = FALSE, ...) {
-  install.on.demand("MASS", ...)
-  install.on.demand("nnet", ...)
   if (is.null(wy)) wy <- !ry
 
   # augment data to evade issues with perfect prediction

@@ -11,6 +11,9 @@
 #' it is set equal to \code{df.residual} of model \code{fit1}. If that cannot
 #' be done, the procedure assumes (perhaps incorrectly) a large sample.
 #' @param df.com Deprecated
+#' @note Warning: `D1()` assumes that the order of the variables is the
+#' same in different models. See
+#' \url{https://github.com/amices/mice/issues/420} for details.
 #' @references
 #' Li, K. H., T. E. Raghunathan, and D. B. Rubin. 1991.
 #' Large-Sample Significance Levels from Multiply Imputed Data Using

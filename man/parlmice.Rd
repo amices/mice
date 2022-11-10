@@ -44,9 +44,8 @@ generally benefit from much faster cluster computation if \code{type} is set to 
 A mids object as defined by \code{\link{mids-class}}
 }
 \description{
-This is a wrapper function for \code{\link{mice}}, using multiple cores to
-execute \code{\link{mice}} in parallel. As a result, the imputation
-procedure can be sped up, which may be useful in general.
+This function is included for backward compatibility. The function
+is superseded by \code{\link{futuremice}}.
 }
 \details{
 This function relies on package \code{\link{parallel}}, which is a base

@@ -70,24 +70,22 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
 
   # create formula
   fr <- ifelse(length(rande) > 1,
-    paste("+ ( 1 +", paste(rande[-1L], collapse = "+")),
-    "+ ( 1 "
+               paste("+ ( 1 +", paste(rande[-1L], collapse = "+")),
+               "+ ( 1 "
   )
   randmodel <- paste(
     "yobs ~ ", paste(fixe[-1L], collapse = "+"),
     fr, "|", clust, ")"
   )
   suppressWarnings(fit <- try(lme4::lmer(formula(randmodel),
-    data = data.frame(yobs, xobs),
-    ...
+                                         data = data.frame(yobs, xobs),
+                                         ...
   ),
   silent = TRUE
   ))
-  if (!is.null(attr(fit, "class"))) {
-    if (attr(fit, "class") == "try-error") {
-      warning("lmer does not run. Simplify imputation model")
-      return(y[wy])
-    }
+  if (inherits(fit, "try-error")) {
+    warning("lmer does not run. Simplify imputation model")
+    return(y[wy])
   }
 
   # taken from lme4
@@ -132,7 +130,7 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
     psi.star <- MASS::ginv(deco %*% temp.psi.star %*% t(deco))
   } else {
     try(temp.svd <- svd(lambda))
-    if (class(temp.svd) != "try-error") {
+    if (!inherits(temp.svd, "try-error")) {
       deco <- temp.svd$u %*% diag(sqrt(temp.svd$d), nrow = length(temp.svd$d))
       psi.star <- MASS::ginv(deco %*% temp.psi.star %*% t(deco))
     } else {
@@ -165,7 +163,7 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
     } else {
       # generating bi.star using svd
       try(deco1 <- svd(vyi))
-      if (class(deco1) != "try-error") {
+      if (!inherits(deco1, "try-error")) {
         A <- deco1$u %*% sqrt(diag(deco1$d, nrow = length(deco1$d)))
         bi.star <- myi + A %*% rnorm(length(myi))
       } else {
