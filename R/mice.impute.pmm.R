@@ -122,7 +122,13 @@ mice.impute.pmm <- function(y, ry, x, exclude = -99999999, wy = NULL, donors = 5
                             use.matcher = FALSE, ...) {
   id.ex <- !ry | !y %in% exclude # id vector for exclusion
   y <- y[id.ex] # leave out the exclude vector y's
-  x <- x[id.ex, ] # leave out the exclude vector x's
+  # allow for one-dimensional x-space
+  if(!is.null(dim(x))){
+    x <- x[id.ex, ]
+  } else {
+    x <- x[id.ex]
+  }
+  # leave out the exclude vector x's
   ry <- ry[id.ex] # leave out the exclude vector indicator
   {
     if (is.null(wy)) {
