@@ -56,8 +56,7 @@ Imports:
     rlang,
     stats,
     tidyr,
-    utils,
-    withr (>= 2.4.0)
+    utils
 Suggests:
     broom.mixed,
     decor,
