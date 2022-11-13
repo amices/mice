@@ -1,3 +1,7 @@
+# mice 3.14.10
+
+* Adds a `custom.t` argument to `pool()` that allows the advanced user to specify a custom rule for calculating the total variance $T$
+
 # mice 3.14.9
 
 * Adds decprecation notices to `parlmice()`
