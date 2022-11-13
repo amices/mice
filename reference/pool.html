@@ -102,7 +102,7 @@ this case.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pool</span><span class="op">(</span><span class="va">object</span>, dfcom <span class="op">=</span> <span class="cn">NULL</span>, rule <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pool</span><span class="op">(</span><span class="va">object</span>, dfcom <span class="op">=</span> <span class="cn">NULL</span>, rule <span class="op">=</span> <span class="cn">NULL</span>, custom.t <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">pool.syn</span><span class="op">(</span><span class="va">object</span>, dfcom <span class="op">=</span> <span class="cn">NULL</span>, rule <span class="op">=</span> <span class="st">"reiter2003"</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -132,6 +132,15 @@ manually.</p></dd>
 <dd><p>A string indicating the pooling rule. Currently supported are
 <code>"rubin1987"</code> (default, for missing data) and <code>"reiter2003"</code>
 (for synthetic data created from a complete data set).</p></dd>
+
+
+<dt>custom.t</dt>
+<dd><p>A custom character string to be parsed as a calculation rule 
+for the total variance <code>t</code>. The custom rule  can use the other calculated 
+pooling statistics where the dimensions must come from <code>.data$</code>. The 
+default <code>t</code> calculation would have the form 
+<code>".data$ubar + (1 + 1 / .data$m) * .data$b"</code>. 
+See examples for an example.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -227,10 +236,10 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2   2  bmi  hyp  chl</span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">pool</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term    estimate  std.error statistic       df     p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 21.30959199 5.09893417  4.179225 8.040917 0.003048371</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         hyp -1.38631987 2.92318992 -0.474249 4.324149 0.658287371</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         chl  0.03730334 0.03493948  1.067656 2.142099 0.391088756</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term    estimate  std.error statistic        df     p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 20.95021625 4.52944020  4.625343  9.474356 0.001087084</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         hyp -2.81661154 1.86128863 -1.513259 14.418006 0.151822979</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         chl  0.04727914 0.02228883  2.121204 13.692217 0.052666878</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># generate fully synthetic data, analyse and pool</span></span></span>
 <span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">cars</span>, maxit <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">2</span>,</span></span>
@@ -243,9 +252,31 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2   2  speed  dist</span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">speed</span> <span class="op">~</span> <span class="va">dist</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">pool.syn</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term    estimate  std.error statistic           df      p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 11.94419478 1.15563586 10.335604 10645.931253 6.378305e-25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        dist  0.07278083 0.03092487  2.353473     6.542751 5.331445e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term   estimate  std.error statistic        df      p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 10.5376321 1.12625652  9.356334   181.108 3.191016e-17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        dist  0.1088903 0.02057239  5.293028 67396.879 1.206830e-07</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># use a custom pooling rule for the total variance about the estimate</span></span></span>
+<span class="r-in"><span><span class="co"># e.g. use t = b + b/m instead of t = ubar + b + b/m</span></span></span>
+<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, maxit <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  iter imp variable</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1   1  bmi  hyp  chl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1   2  bmi  hyp  chl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2   1  bmi  hyp  chl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2   2  bmi  hyp  chl</span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">pool</span><span class="op">(</span><span class="va">fit</span>, custom.t <span class="op">=</span> <span class="st">".data$b + .data$b / .data$m"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class: mipo    m = 2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term m    estimate         ubar            b            t dfcom df</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2 21.64965556 1.662233e+01 7.769009e-02 1.165351e-01    22  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         hyp 2 -0.97981411 4.054965e+00 5.980933e-01 8.971399e-01    22  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         chl 2  0.03057719 4.454733e-04 1.956694e-05 2.935042e-05    22  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          riv lambda       fmi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.00701076      1 0.6689873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.22124480      1 0.7270544</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.06588592      1 0.6872711</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
