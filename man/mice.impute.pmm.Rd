@@ -9,10 +9,10 @@ mice.impute.pmm(
   y,
   ry,
   x,
-  exclude = -99999999,
   wy = NULL,
   donors = 5L,
   matchtype = 1L,
+  exclude = -99999999,
   ridge = 1e-05,
   use.matcher = FALSE,
   ...
@@ -29,8 +29,6 @@ model is fitted. The \code{ry} generally distinguishes the observed
 \item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
 \code{y}. Matrix \code{x} may have no missing values.}
 
-\item{exclude}{Value or vector of values to exclude from the imputation donor pool in \code{y}}
-
 \item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
@@ -46,6 +44,8 @@ the \emph{drawn} values of \code{ymis} (called type-1 matching).
 Other choices are \code{matchtype = 0L}
 (distance between predicted values) and \code{matchtype = 2L}
 (distance between drawn values).}
+
+\item{exclude}{Value or vector of values to exclude from the imputation donor pool in \code{y}}
 
 \item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent
 problems with multicollinearity. The default is \code{ridge = 1e-05},
