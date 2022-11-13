@@ -99,6 +99,12 @@
 #' @param rule A string indicating the pooling rule. Currently supported are
 #' \code{"rubin1987"} (default, for missing data) and \code{"reiter2003"}
 #' (for synthetic data created from a complete data set).
+#' @param custom.t A custom character string to be parsed as a calculation rule 
+#' for the total variance \code{t}. The custom rule  can use the other calculated 
+#' pooling statistics where the dimensions must come from \code{.data$}. The 
+#' default \code{t} calculation would have the form 
+#' \code{".data$ubar + (1 + 1 / .data$m) * .data$b"}. 
+#' See examples for an example.
 #' @return An object of class \code{mipo}, which stands for 'multiple imputation
 #' pooled outcome'.
 #' For rule \code{"reiter2003"} values for \code{lambda} and \code{fmi} are
@@ -132,8 +138,15 @@
 #'             where = matrix(TRUE, nrow(cars), ncol(cars)))
 #' fit <- with(data = imp, exp = lm(speed ~ dist))
 #' summary(pool.syn(fit))
+#' 
+#' # use a custom pooling rule for the total variance about the estimate
+#' # e.g. use t = b + b/m instead of t = ubar + b + b/m
+#' imp <- mice(nhanes, maxit = 2, m = 2)
+#' fit <- with(data = imp, exp = lm(bmi ~ hyp + chl))
+#' pool(fit, custom.t = ".data$b + .data$b / .data$m")
+#' 
 #' @export
-pool <- function(object, dfcom = NULL, rule = NULL) {
+pool <- function(object, dfcom = NULL, rule = NULL, custom.t = NULL) {
   call <- match.call()
 
   if (!is.list(object)) stop("Argument 'object' not a list", call. = FALSE)
@@ -146,7 +159,7 @@ pool <- function(object, dfcom = NULL, rule = NULL) {
   }
 
   dfcom <- get.dfcom(object, dfcom)
-  pooled <- pool.fitlist(getfit(object), dfcom = dfcom, rule = rule)
+  pooled <- pool.fitlist(getfit(object), dfcom = dfcom, rule = rule, custom.t = custom.t)
 
   # mipo object
   rr <- list(
@@ -159,7 +172,7 @@ pool <- function(object, dfcom = NULL, rule = NULL) {
 }
 
 pool.fitlist <- function(fitlist, dfcom = NULL,
-                         rule = c("rubin1987", "reiter2003")) {
+                         rule = c("rubin1987", "reiter2003"), custom.t = NULL) {
 
   # rubin1987: Rubin's rules for scalar estimates
   # reiter2003: Reiter's rules for partially synthetic data
@@ -187,7 +200,9 @@ pool.fitlist <- function(fitlist, dfcom = NULL,
         qbar = mean(.data$estimate),
         ubar = mean(.data$std.error^2),
         b = var(.data$estimate),
-        t = .data$ubar + (1 + 1 / .data$m) * .data$b,
+        t = ifelse(is.null(custom.t), 
+                   .data$ubar + (1 + 1 / .data$m) * .data$b, 
+                   eval(parse(text = custom.t))),
         dfcom = dfcom,
         df = barnard.rubin(.data$m, .data$b, .data$t, .data$dfcom),
         riv = (1 + 1 / .data$m) * .data$b / .data$ubar,
@@ -204,7 +219,9 @@ pool.fitlist <- function(fitlist, dfcom = NULL,
         qbar = mean(.data$estimate),
         ubar = mean(.data$std.error^2),
         b = var(.data$estimate),
-        t = .data$ubar + (1 / .data$m) * .data$b,
+        t = ifelse(is.null(custom.t), 
+                   .data$ubar + (1 / .data$m) * .data$b, 
+                   eval(parse(text = custom.t))),
         dfcom = dfcom,
         df = (.data$m - 1) * (1 + (.data$ubar / (.data$b/.data$m)))^2,
         riv = (1 + 1 / .data$m) * .data$b / .data$ubar,
