@@ -1,5 +1,3 @@
-# mice 3.14.10
-
 # mice 3.14.9
 
 * Adds decprecation notices to `parlmice()`
