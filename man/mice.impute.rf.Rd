@@ -72,7 +72,7 @@ plot(imp)
 \references{
 Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning
 for missing data imputation in the presence of interaction Effects.
-Computational Statistics \& Data Analysis, 72, 92-104.
+Computational Statistics & Data Analysis, 72, 92-104.
 
 Shah, A.D., Bartlett, J.W., Carpenter, J., Nicholas, O., Hemingway, H. (2014),
 Comparison of random forest and parametric imputation models for

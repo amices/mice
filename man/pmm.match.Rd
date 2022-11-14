@@ -38,7 +38,7 @@ function calls the faster \code{C} function \code{matcher} instead of
 \code{.pmm.match()}.
 }
 \references{
-Schenker N \& Taylor JMG (1996) Partially parametric techniques
+Schenker N & Taylor JMG (1996) Partially parametric techniques
 for multiple imputation. \emph{Computational Statistics and Data Analysis}, 22, 425-446.
 
 Little RJA (1988) Missing-data adjustments in large surveys (with discussion).

@@ -25,7 +25,7 @@ growth studies in 1980, 1997 and 2009.  \emph{PLoS ONE}, \emph{6}(11),
 e27608.
 
 Schonbeck, Y., Talma, H., van Dommelen, P., Bakker, B., Buitendijk, S. E.,
-Hirasing, R. A., \& van Buuren, S. (2013). The world's tallest nation has
+Hirasing, R. A., van Buuren, S. (2013). The world's tallest nation has
 stopped growing taller: the height of Dutch children from 1955 to 2009.
 \emph{Pediatric Research}, \emph{73}(3), 371-377.
 

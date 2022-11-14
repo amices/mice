@@ -105,17 +105,17 @@
 #' )
 #' abline(0, 1)
 #' cor(y, yimp, use = "pair")
-#' 
+#'
 #' # Use blots to exclude different values per column
 #' # Create blots object
 #' blots <- make.blots(boys)
 #' # Exclude ml 1 through 5 from tv donor pool
 #' blots$tv$exclude <- c(1:5)
 #' # Exclude 100 random observed heights from tv donor pool
-#' blots$hgt$exclude <- sample(unique(boys$hgt), 100) 
+#' blots$hgt$exclude <- sample(unique(boys$hgt), 100)
 #' imp <- mice(boys, method = "pmm", print = FALSE, blots = blots, seed=123)
-#' blots$hgt$exclude %in% unlist(c(imp$imp$hgt)) # MUST be all FALSE 
-#' blots$tv$exclude %in% unlist(c(imp$imp$tv)) # MUST be all FALSE 
+#' blots$hgt$exclude %in% unlist(c(imp$imp$hgt)) # MUST be all FALSE
+#' blots$tv$exclude %in% unlist(c(imp$imp$tv)) # MUST be all FALSE
 #' @export
 mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
                             matchtype = 1L, exclude = -99999999, ridge = 1e-05,
@@ -190,7 +190,7 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
 #' @author Stef van Buuren
 #' @rdname pmm.match
 #' @references
-#' Schenker N \& Taylor JMG (1996) Partially parametric techniques
+#' Schenker N & Taylor JMG (1996) Partially parametric techniques
 #' for multiple imputation. \emph{Computational Statistics and Data Analysis}, 22, 425-446.
 #'
 #' Little RJA (1988) Missing-data adjustments in large surveys (with discussion).

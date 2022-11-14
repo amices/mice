@@ -1,12 +1,12 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# mice <a href='https://amices.github.io/mice/'><img src='man/figures/MICE_sticker_SMALL.png' align="right" height="139" /></a>
+# mice <a href='https://amices.org/mice/'><img src='man/figures/MICE_sticker_SMALL.png' align="right" height="139" /></a>
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
 [![](https://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice)
-[![](https://img.shields.io/badge/github%20version-3.14.13-orange.svg)](https://amices.github.io/mice/)
+[![](https://img.shields.io/badge/github%20version-3.14.13-orange.svg)](https://amices.org/mice/)
 
-## [Multivariate Imputation by Chained Equations](https://amices.github.io/mice/)
+## [Multivariate Imputation by Chained Equations](https://amices.org/mice/)
 
 The [`mice`](https://cran.r-project.org/package=mice) package implements
 a method to deal with missing data. The package creates multiple
@@ -130,7 +130,7 @@ features:
     Edition.](https://stefvanbuuren.name/fimd/)
 
 See [MICE: Multivariate Imputation by Chained
-Equations](https://amices.github.io/mice/) for more resources.
+Equations](https://amices.org/mice/) for more resources.
 
 I’ll be happy to take feedback and discuss suggestions. Please submit
 these through Github’s issues facility.
@@ -146,24 +146,24 @@ these through Github’s issues facility.
 ### Course materials
 
 1.  [Handling Missing Data in `R` with
-    `mice`](https://amices.github.io/Winnipeg/)
+    `mice`](https://amices.org/Winnipeg/)
 2.  [Statistical Methods for combined data
-    sets](https://stefvanbuuren.github.io/RECAPworkshop/)
+    sets](https://stefvanbuuren.name/RECAPworkshop/)
 
 ### Vignettes
 
 1.  [Ad hoc methods and the MICE
-    algorithm](https://gerkovink.github.io/miceVignettes/Ad_hoc_and_mice/Ad_hoc_methods.html)
+    algorithm](https://www.gerkovink.com/miceVignettes/Ad_hoc_and_mice/Ad_hoc_methods.html)
 2.  [Convergence and
-    pooling](https://gerkovink.github.io/miceVignettes/Convergence_pooling/Convergence_and_pooling.html)
+    pooling](https://www.gerkovink.com/miceVignettes/Convergence_pooling/Convergence_and_pooling.html)
 3.  [Inspecting how the observed data and missingness are
-    related](https://gerkovink.github.io/miceVignettes/Missingness_inspection/Missingness_inspection.html)
+    related](https://www.gerkovink.com/miceVignettes/Missingness_inspection/Missingness_inspection.html)
 4.  [Passive imputation and
-    post-processing](https://gerkovink.github.io/miceVignettes/Passive_Post_processing/Passive_imputation_post_processing.html)
+    post-processing](https://www.gerkovink.com/miceVignettes/Passive_Post_processing/Passive_imputation_post_processing.html)
 5.  [Imputing multilevel
-    data](https://gerkovink.github.io/miceVignettes/Multi_level/Multi_level_data.html)
+    data](https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html)
 6.  [Sensitivity analysis with
-    `mice`](https://gerkovink.github.io/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html)
+    `mice`](https://www.gerkovink.com/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html)
 7.  [Generate missing values with
     `ampute`](https://rianneschouten.github.io/mice_ampute/vignette/ampute.html)
 8.  [`futuremice`: Wrapper for parallel MICE imputation through
@@ -172,7 +172,7 @@ these through Github’s issues facility.
 ### Code from publications
 
 1.  [Flexible Imputation of Missing Data. Second
-    edition.](https://github.com/stefvanbuuren/FIMD2/tree/master/R)
+    edition.](https://github.com/stefvanbuuren/fimdbook/tree/master/R)
 
 ## Acknowledgement
 
@@ -181,5 +181,5 @@ The cute mice sticker was designed by Jaden M. Walters. Thanks Jaden!
 ## Code of Conduct
 
 Please note that the mice project is released with a [Contributor Code
-of Conduct](https://amices.github.io/mice/CODE_OF_CONDUCT.html). By
+of Conduct](https://amices.org/mice/CODE_OF_CONDUCT.html). By
 contributing to this project, you agree to abide by its terms.
