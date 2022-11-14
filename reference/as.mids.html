@@ -92,7 +92,11 @@ or by other software.</p></dd>
 as <code>data</code> indicating where in the data the imputations should be
 created. The default, <code>where = is.na(data)</code>, specifies that the
 missing data should be imputed. The <code>where</code> argument may be used to
-overimpute observed data, or to skip imputations for selected missing values.</p></dd>
+overimpute observed data, or to skip imputations for selected missing values. 
+Note: Imputation methods that generate imptutations outside of 
+<code>mice</code>, like <code><a href="mice.impute.panImpute.html">mice.impute.panImpute()</a></code> may depend on a complete 
+predictor space. In that case, a custom <code>where</code> matrix can not be 
+specified.</p></dd>
 
 
 <dt>.imp</dt>

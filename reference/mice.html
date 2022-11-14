@@ -158,7 +158,11 @@ or <code><a href="mice.impute.panImpute.html">mice.impute.panImpute()</a></code>
 as <code>data</code> indicating where in the data the imputations should be
 created. The default, <code>where = is.na(data)</code>, specifies that the
 missing data should be imputed. The <code>where</code> argument may be used to
-overimpute observed data, or to skip imputations for selected missing values.</p></dd>
+overimpute observed data, or to skip imputations for selected missing values. 
+Note: Imputation methods that generate imptutations outside of 
+<code>mice</code>, like <code><a href="mice.impute.panImpute.html">mice.impute.panImpute()</a></code> may depend on a complete 
+predictor space. In that case, a custom <code>where</code> matrix can not be 
+specified.</p></dd>
 
 
 <dt>blocks</dt>
@@ -243,9 +247,7 @@ Use <code>print=FALSE</code> for silent computation.</p></dd>
 <dt>seed</dt>
 <dd><p>An integer that is used as argument by the <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code> for
 offsetting the random number generator. Default is to leave the random number
-generator alone. Versions later than 3.13.11 reset the random generator to the
-state before calling <code>mice()</code>. This effectively isolates the <code>mice</code>
-random generator from the calling environment.</p></dd>
+generator alone.</p></dd>
 
 
 <dt>data.init</dt>
@@ -514,43 +516,43 @@ John Fox, Frank E. Harrell, and Peter Malewski.</p>
 <span class="r-in"><span><span class="co"># list the actual imputations for BMI</span></span></span>
 <span class="r-in"><span><span class="va">imp</span><span class="op">$</span><span class="va">imp</span><span class="op">$</span><span class="va">bmi</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       1    2    3    4    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  26.3 27.2 35.3 22.0 27.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  26.3 29.6 26.3 29.6 22.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  24.9 21.7 22.5 21.7 22.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  22.5 24.9 22.5 22.5 20.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 27.4 30.1 33.2 26.3 22.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 20.4 30.1 27.2 30.1 33.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 27.5 22.5 22.5 27.5 22.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 30.1 35.3 28.7 29.6 20.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 29.6 26.3 22.5 35.3 33.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  29.6 25.5 22.0 30.1 25.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  28.7 27.2 29.6 26.3 28.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  22.5 21.7 22.5 20.4 25.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  25.5 24.9 25.5 25.5 22.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 20.4 22.5 28.7 21.7 30.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 27.5 27.2 35.3 30.1 27.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 27.5 27.2 27.5 22.5 27.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 29.6 33.2 28.7 22.0 28.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 20.4 22.7 30.1 30.1 33.2</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># first completed data matrix</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    age  bmi hyp chl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1 26.3   1 187</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1 29.6   1 238</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2    2 22.7   1 187</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    1 26.3   1 187</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3 24.9   1 184</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    1 28.7   1 187</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3 22.5   2 186</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5    1 20.4   1 113</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    3 22.5   2 184</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    3 25.5   2 184</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7    1 22.5   1 118</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8    1 30.1   1 187</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9    2 22.0   1 238</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   2 27.4   2 186</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11   1 20.4   1 187</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12   2 27.5   1 199</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   2 20.4   1 187</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11   1 27.5   1 187</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12   2 27.5   1 218</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13   3 21.7   1 206</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 14   2 28.7   2 204</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15   1 29.6   1 131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16   1 30.1   1 131</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15   1 29.6   1 238</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16   1 29.6   1 238</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 17   3 27.2   2 284</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 18   2 26.3   2 199</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 19   1 35.3   1 218</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20   3 25.5   2 206</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21   1 29.6   1 187</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21   1 20.4   1 187</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 22   1 33.2   1 229</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 23   1 27.5   1 131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24   3 24.9   1 206</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24   3 24.9   1 186</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 25   2 27.4   1 186</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># imputation on mixed data with a different method per column</span></span></span>
