@@ -166,7 +166,7 @@
 #'
 #' Schouten, R.M. and Vink, G. (2018) \href{https://journals.sagepub.com/doi/full/10.1177/0049124118799376}{The Dance of the Mechanisms: How Observed Information Influences the Validity of Missingness Assumptions}.
 #' \emph{Sociological Methods and Research}, 50(3): 1243-1258.
-#' 
+#'
 #' Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn, C.G.M., Rubin, D.B. (2006)
 #' \href{https://www.tandfonline.com/doi/abs/10.1080/10629360600810434}{Fully conditional specification in multivariate imputation.}
 #' \emph{Journal of Statistical Computation and Simulation}, 76(12): 1049-1064.
@@ -263,7 +263,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   patterns.new <- check.pat[["patterns"]]
   freq <- check.pat[["freq"]]
   prop <- check.pat[["prop"]]
-  
+
   if (!bycases) {
     prop <- recalculate.prop(
       prop = prop,
@@ -273,7 +273,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       n = nrow(data)
     )
   }
-  
+
   if (any(!mech %in% c("MCAR", "MAR", "MNAR"))) {
     stop("Mechanism should be either MCAR, MAR or MNAR", call. = FALSE)
   }
@@ -314,18 +314,18 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       patterns = patterns.new,
       mech = mech
     )
-  } 
+  }
   weights <- as.data.frame(weights)
-  if (!nrow(weights) == nrow(patterns.new)){
-    if (!is.null(check.pat[['row.one']])){
-      weights <- weights[-check.pat[['row.one']],]
+  if (!nrow(weights) == nrow(patterns.new)) {
+    if (!is.null(check.pat[["row.one"]])) {
+      weights <- weights[-check.pat[["row.one"]], ]
     }
   }
-  if (!nrow(weights) == nrow(patterns.new)){
+  if (!nrow(weights) == nrow(patterns.new)) {
     stop("The objects patterns and weights are not matching", call. = FALSE)
   }
-  
-  
+
+
   if (!is.vector(cont)) {
     cont <- as.vector(cont)
     warning("Continuous should contain merely TRUE or FALSE", call. = FALSE)
@@ -400,13 +400,13 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       n = nrow(patterns.new), size = nrow(data),
       replace = TRUE, prob = freq
     ) + 1
-    
+
     # Check whether cases are assigned to all patterns
-    non.used.patterns <- c(2:(nrow(patterns.new)+1))[!c(2:(nrow(patterns.new)+1)) %in% unique(P)]
-    if (length(non.used.patterns) > 0){
+    non.used.patterns <- c(2:(nrow(patterns.new) + 1))[!c(2:(nrow(patterns.new) + 1)) %in% unique(P)]
+    if (length(non.used.patterns) > 0) {
       warning(paste0("No records are assigned to patterns ", toString(non.used.patterns - 1), ". These patterns will not be generated. Consider reducing the number of patterns or increasing the dataset size."), call. = FALSE)
     }
-    
+
     # Calculate missingness according MCAR or calculate weighted sum scores
     # Standardized data is used to calculate weighted sum scores
     if (mech == "MCAR") {
@@ -556,8 +556,8 @@ check.patterns <- function(patterns, freq, prop) {
     }
   }
   if (prop.one != 0) {
-    warning(paste("Proportion of missingness has changed from", prop, "to", (1-prop.one)*prop, "because of pattern(s) with merely ones"), call. = FALSE)
-    prop <- (1-prop.one)*prop
+    warning(paste("Proportion of missingness has changed from", prop, "to", (1 - prop.one) * prop, "because of pattern(s) with merely ones"), call. = FALSE)
+    prop <- (1 - prop.one) * prop
     freq <- freq[-row.one]
     freq <- recalculate.freq(freq)
     patterns <- patterns[-row.one, ]

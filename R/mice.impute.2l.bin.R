@@ -65,11 +65,12 @@ mice.impute.2l.bin <- function(y, ry, x, type,
     fr, "|", clust, ")"
   )
 
-  suppressWarnings(fit <- try(lme4::glmer(formula(randmodel),
-    data = data.frame(yobs, xobs),
-    family = binomial, ...
-  ),
-  silent = TRUE
+  suppressWarnings(fit <- try(
+    lme4::glmer(formula(randmodel),
+      data = data.frame(yobs, xobs),
+      family = binomial, ...
+    ),
+    silent = TRUE
   ))
   if (!is.null(attr(fit, "class"))) {
     if (attr(fit, "class") == "try-error") {

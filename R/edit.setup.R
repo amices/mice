@@ -17,8 +17,8 @@ edit.setup <- function(data, setup,
   post <- setup$post
 
   # FIXME: this function is not yet adapted to blocks
-  if (ncol(pred) != nrow(pred) || length(meth) != nrow(pred)
-  || ncol(data) != nrow(pred)) {
+  if (ncol(pred) != nrow(pred) || length(meth) != nrow(pred) ||
+    ncol(data) != nrow(pred)) {
     return(setup)
   }
 

@@ -66,8 +66,7 @@ D3 <- function(fit1, fit0 = NULL, dfcom = NULL, df.com = NULL) {
     beta <- rep(0, length(qbar1))
     names(beta) <- names(qbar1)
     fit0 <- lapply(fit1, fix.coef, beta = beta)
-  }
-  else {
+  } else {
     fit0 <- getfit(fit0)
   }
 

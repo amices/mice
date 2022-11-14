@@ -40,11 +40,12 @@ check.predictorMatrix <- function(predictorMatrix,
   # if we have no blocks, restrict to square predictorMatrix
   if (is.null(blocks)) {
     if (nrow(predictorMatrix) != ncol(predictorMatrix)) {
-      stop(paste(
-        "If no blocks are specified, predictorMatrix must",
-        "have same number of rows and columns"
-      ),
-      call. = FALSE
+      stop(
+        paste(
+          "If no blocks are specified, predictorMatrix must",
+          "have same number of rows and columns"
+        ),
+        call. = FALSE
       )
     }
     if (is.null(dimnames(predictorMatrix))) {
@@ -62,11 +63,12 @@ check.predictorMatrix <- function(predictorMatrix,
 
   # check conforming arguments
   if (nrow(predictorMatrix) > length(blocks)) {
-    stop(paste0(
-      "predictorMatrix has more rows (", nrow(predictorMatrix),
-      ") than blocks (", length(blocks), ")"
-    ),
-    call. = FALSE
+    stop(
+      paste0(
+        "predictorMatrix has more rows (", nrow(predictorMatrix),
+        ") than blocks (", length(blocks), ")"
+      ),
+      call. = FALSE
     )
   }
 

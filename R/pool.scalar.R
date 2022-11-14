@@ -56,8 +56,10 @@
 #' pool(fit)
 #'
 #' # manual pooling for synthetic data created from complete data
-#' imp <- mice(cars, maxit = 2, m = 2, print = FALSE, seed = 18210,
-#'             where = matrix(TRUE, nrow(cars), ncol(cars)))
+#' imp <- mice(cars,
+#'   maxit = 2, m = 2, print = FALSE, seed = 18210,
+#'   where = matrix(TRUE, nrow(cars), ncol(cars))
+#' )
 #' fit <- with(data = imp, lm(speed ~ dist))
 #'
 #' # manual pooling: extract Q and U
@@ -89,8 +91,10 @@ pool.scalar <- function(Q, U, n = Inf, k = 1, rule = c("rubin1987", "reiter2003"
     fmi <- NA_real_
   }
 
-  list(m = m, qhat = Q, u = U, qbar = qbar, ubar = ubar, b = b, t = t,
-       df = df, r = r, fmi = fmi)
+  list(
+    m = m, qhat = Q, u = U, qbar = qbar, ubar = ubar, b = b, t = t,
+    df = df, r = r, fmi = fmi
+  )
 }
 
 #' @rdname pool.scalar

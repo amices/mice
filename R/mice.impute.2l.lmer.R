@@ -70,18 +70,19 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
 
   # create formula
   fr <- ifelse(length(rande) > 1,
-               paste("+ ( 1 +", paste(rande[-1L], collapse = "+")),
-               "+ ( 1 "
+    paste("+ ( 1 +", paste(rande[-1L], collapse = "+")),
+    "+ ( 1 "
   )
   randmodel <- paste(
     "yobs ~ ", paste(fixe[-1L], collapse = "+"),
     fr, "|", clust, ")"
   )
-  suppressWarnings(fit <- try(lme4::lmer(formula(randmodel),
-                                         data = data.frame(yobs, xobs),
-                                         ...
-  ),
-  silent = TRUE
+  suppressWarnings(fit <- try(
+    lme4::lmer(formula(randmodel),
+      data = data.frame(yobs, xobs),
+      ...
+    ),
+    silent = TRUE
   ))
   if (inherits(fit, "try-error")) {
     warning("lmer does not run. Simplify imputation model")

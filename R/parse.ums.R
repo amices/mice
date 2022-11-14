@@ -9,14 +9,12 @@ parse.ums <- function(x, ums = NULL, umx = NULL, ...) {
   if (mnar0[1L] == "") mnar0 <- mnar0[-1L]
   if (sum(!grepl("*", mnar0, fixed = TRUE)) == 0L) {
     stop("An intercept (constant) term must be included in the expression")
-  } else
-  if (sum(!grepl("*", mnar0, fixed = TRUE)) == 1L) {
+  } else if (sum(!grepl("*", mnar0, fixed = TRUE)) == 1L) {
     mnar0[!grepl("*", mnar0, fixed = TRUE)] <- paste(
       mnar0[!grepl("*", mnar0, fixed = TRUE)], "*intercept",
       sep = ""
     )
-  } else
-  if (sum(!grepl("*", mnar0, fixed = TRUE)) > 1L) {
+  } else if (sum(!grepl("*", mnar0, fixed = TRUE)) > 1L) {
     stop("Only one intercept term allowed")
   }
   mnar <- strsplit(mnar0, "*", fixed = TRUE)

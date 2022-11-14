@@ -67,8 +67,7 @@ make.blocks <- function(data,
       ct <- rep(calltype, length(v))
       names(ct) <- names(v)
       attr(v, "calltype") <- ct
-    }
-    else {
+    } else {
       ct <- calltype
       names(ct) <- names(v)
       attr(v, "calltype") <- ct
@@ -98,8 +97,7 @@ make.blocks <- function(data,
     ct <- rep(calltype, length(v))
     names(ct) <- names(v)
     attr(v, "calltype") <- ct
-  }
-  else {
+  } else {
     ct <- calltype
     names(ct) <- names(v)
     attr(v, "calltype") <- ct
@@ -163,8 +161,7 @@ check.blocks <- function(blocks, data, calltype = "type") {
     ct <- rep(calltype, length(blocks))
     names(ct) <- names(blocks)
     attr(blocks, "calltype") <- ct
-  }
-  else {
+  } else {
     ct <- calltype
     names(ct) <- names(blocks)
     attr(blocks, "calltype") <- ct

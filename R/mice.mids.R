@@ -159,8 +159,10 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
     ignore = obj$ignore,
     seed = obj$seed,
     iteration = sumIt,
-    lastSeedValue = get(".Random.seed", envir = globalenv(), mode = "integer",
-                        inherits = FALSE),
+    lastSeedValue = get(".Random.seed",
+      envir = globalenv(), mode = "integer",
+      inherits = FALSE
+    ),
     chainMean = chainMean,
     chainVar = chainVar,
     loggedEvents = loggedEvents,

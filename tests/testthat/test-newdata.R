@@ -48,5 +48,3 @@ test_that("`newdata` returns filtered mids object", {
 test_that("`newdata` uses a common seed", {
   expect_true(identical(complete(imp2), complete(imp2b)))
 })
-
-

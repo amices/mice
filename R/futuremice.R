@@ -76,7 +76,6 @@
 #' @export
 futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
                        use.logical = TRUE, future.plan = "multisession", ...) {
-
   # check if pacakages available
   install.on.demand("parallelly", ...)
   install.on.demand("furrr", ...)
@@ -84,7 +83,7 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
 
   # check form of data and m
   data <- check.dataform(data)
-  m    <- check.m(m)
+  m <- check.m(m)
 
   # check if data complete
   if (sum(is.na(data)) == 0) {
@@ -101,7 +100,7 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
       n.core <- available
     }
     if (n.core > m) {
-      warning(paste("The number of cores exceeds the number of imputations. The number of cores used is set equal to the number of imputations (m =", m,")."))
+      warning(paste("The number of cores exceeds the number of imputations. The number of cores used is set equal to the number of imputations (m =", m, ")."))
       n.core <- m
     }
   } else {
@@ -121,17 +120,15 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
     if (n.core > 1) {
       if (interactive()) {
         msg <- "Be careful; specifying seed rather than parallelseed results in duplicate imputations.\nDo you want to continue?\n"
-        ask <- askYesNo(msg, prompts = getOption("askYesNo", gettext(c("Yes", "No, ignore seed","Cancel"))))
+        ask <- askYesNo(msg, prompts = getOption("askYesNo", gettext(c("Yes", "No, ignore seed", "Cancel"))))
 
         if (isTRUE(ask)) {
           seed <- seed
           warning("Be careful; the imputations will be the same over the cores.")
-        }
-        else if (isFALSE(ask)) {
+        } else if (isFALSE(ask)) {
           seed <- NA
           message("Parallelseed is specified for you, and is accessible in the output object under $parallelseed.")
-        }
-        else if (is.na(ask)) {
+        } else if (is.na(ask)) {
           stop("You stopped futuremice. To obtain unique, but reproducible imputations, specify parallelseed.")
         }
       } else {
@@ -142,23 +139,26 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
   if (!is.na(parallelseed)) {
     set.seed(parallelseed)
   } else {
-    parallelseed <- get(".Random.seed", envir = globalenv(), mode = "integer",
-                        inherits = FALSE)
+    parallelseed <- get(".Random.seed",
+      envir = globalenv(), mode = "integer",
+      inherits = FALSE
+    )
   }
 
   # start multisession
   future::plan(future.plan,
-               workers = n.core)
+    workers = n.core
+  )
 
   # begin future
   imps <- furrr::future_map(n.imp.core, function(x) {
-
-    mice(data = data,
-         m = x,
-         printFlag = FALSE,
-         seed = seed,
-         ...)
-
+    mice(
+      data = data,
+      m = x,
+      printFlag = FALSE,
+      seed = seed,
+      ...
+    )
   }, .options = furrr::furrr_options(seed = TRUE))
 
   # end multisession
@@ -167,7 +167,7 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
   # stitch future into mids
 
   # postprocess clustered imputation into a mids object
-  imp   <- imps[[1]]
+  imp <- imps[[1]]
   if (length(imps) > 1) {
     for (i in 2:length(imps)) {
       imp <- ibind(imp, imps[[i]])

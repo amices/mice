@@ -2,7 +2,6 @@
 #' @export
 mice.impute.mnar.logreg <- function(y, ry, x, wy = NULL,
                                     ums = NULL, umx = NULL, ...) {
-
   ## Undentifiable part:
   u <- parse.ums(x, ums = ums, umx = umx, ...)
 

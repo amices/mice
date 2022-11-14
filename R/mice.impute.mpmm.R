@@ -24,7 +24,7 @@
 #' a warning.
 #' @author Mingyang Cai and Gerko Vink
 
-#@author Mingyang Cai (University of Utrecht), \email{g.vink#uu.nl}
+# @author Mingyang Cai (University of Utrecht), \email{g.vink#uu.nl}
 #' @seealso \code{\link{mice.impute.pmm}}
 #' Van Buuren, S. (2018).
 #' \href{https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
@@ -63,32 +63,32 @@
 #' points(cmp$x[is.na(dat$x)], cmp$xx[is.na(dat$x)], col = mdc(2))
 #' @export
 #'
-mice.impute.mpmm <- function(data, format = "imputes", ...){
+mice.impute.mpmm <- function(data, format = "imputes", ...) {
   order <- dimnames(data)[[1]]
   res <- mpmm.impute(data, ...)
-  return(single2imputes(res[order,], is.na(data)))
+  return(single2imputes(res[order, ], is.na(data)))
 }
 
 
-mpmm.impute <- function(data, ...){
+mpmm.impute <- function(data, ...) {
   data <- as.data.frame(data)
   r <- !is.na(data)
-  mpat <- apply(r, 1, function(x) paste(as.numeric(x), collapse=''))
+  mpat <- apply(r, 1, function(x) paste(as.numeric(x), collapse = ""))
   nmpat <- length(unique(mpat))
   if (nmpat != 2) stop("There are more than one missingness patterns")
   r <- unique(r)
   r <- r[rowSums(r) < ncol(r), ]
   y <- data[, which(r == FALSE), drop = FALSE]
-  ry <- !is.na(y)[,1]
+  ry <- !is.na(y)[, 1]
   x <- data[, which(r == TRUE), drop = FALSE]
   wy <- !ry
-  ES <- eigen(solve(cov(y[ry, ,drop = FALSE], y[ry, ,drop = FALSE])) %*% cov(y[ry, ,drop = FALSE], x[ry, ,drop = FALSE])
-              %*% solve(cov(x[ry, ,drop = FALSE], x[ry, ,drop = FALSE])) %*% cov(x[ry, ,drop = FALSE], y[ry, ,drop = FALSE]))
+  ES <- eigen(solve(cov(y[ry, , drop = FALSE], y[ry, , drop = FALSE])) %*% cov(y[ry, , drop = FALSE], x[ry, , drop = FALSE])
+    %*% solve(cov(x[ry, , drop = FALSE], x[ry, , drop = FALSE])) %*% cov(x[ry, , drop = FALSE], y[ry, , drop = FALSE]))
   parm <- as.matrix(ES$vectors[, 1])
   z <- as.matrix(y) %*% parm
   imp <- mice.impute.pmm(z, ry, x)
   zstar <- as.matrix(imp)
-  y[wy, ] <- y[ry, ,drop = FALSE][match(zstar, z[ry]), ]
+  y[wy, ] <- y[ry, , drop = FALSE][match(zstar, z[ry]), ]
   data <- cbind(y, x)
   data <- as.data.frame(data)
   return(data)

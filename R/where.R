@@ -16,8 +16,10 @@
 #'
 #' # create & analyse synthetic data
 #' where <- make.where(nhanes2, "all")
-#' imp <- mice(nhanes2, m = 10, where = where,
-#'             print = FALSE, seed = 123)
+#' imp <- mice(nhanes2,
+#'   m = 10, where = where,
+#'   print = FALSE, seed = 123
+#' )
 #' fit <- with(imp, lm(chl ~ bmi + age + hyp))
 #' summary(pool.syn(fit))
 #' @export

@@ -74,8 +74,7 @@ rbind.mids <- function(x, y = NULL, ...) {
   # Combine y and dots into data.frame
   if (is.null(y)) {
     y <- rbind.data.frame(...)
-  }
-  else {
+  } else {
     y <- rbind.data.frame(y, ...)
   }
 

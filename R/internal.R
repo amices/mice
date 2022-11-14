@@ -96,7 +96,6 @@ find.collinear <- function(x, threshold = 0.999, ...) {
 
 
 updateLog <- function(out = NULL, meth = NULL, frame = 1) {
-
   # find structures defined a mice() level
   pos_state <- ma_exists("state", frame)$pos
   pos_loggedEvents <- ma_exists("loggedEvents", frame)$pos

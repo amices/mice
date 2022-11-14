@@ -108,11 +108,9 @@
 mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
                             matchtype = 1L, ridge = 1e-05,
                             use.matcher = FALSE, ...) {
-  {
-    if (is.null(wy)) {
-      wy <- !ry
-    }
-  }
+  {    if (is.null(wy)) {
+    wy <- !ry
+  }  }
   x <- cbind(1, as.matrix(x))
   ynum <- y
   if (is.factor(y)) {
