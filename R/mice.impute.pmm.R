@@ -8,6 +8,7 @@
 #' (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.
 #' @param x Numeric design matrix with \code{length(y)} rows with predictors for
 #' \code{y}. Matrix \code{x} may have no missing values.
+#' @param exclude Value or vector of values to exclude from the imputation donor pool in \code{y}
 #' @param wy Logical vector of length \code{length(y)}. A \code{TRUE} value
 #' indicates locations in \code{y} for which imputations are created.
 #' @param donors The size of the donor pool among which a draw is made.
@@ -36,7 +37,7 @@
 #' @param \dots Other named arguments.
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #' \code{sum(wy)}
-#' @author Stef van Buuren, Karin Groothuis-Oudshoorn
+#' @author Gerko Vink, Stef van Buuren, Karin Groothuis-Oudshoorn
 #' @details
 #' Imputation of \code{y} by predictive mean matching, based on
 #' van Buuren (2012, p. 73). The procedure is as follows:
@@ -104,13 +105,38 @@
 #' )
 #' abline(0, 1)
 #' cor(y, yimp, use = "pair")
+#' 
+#' # Use blots to exclude different values per column
+#' # Create blots object
+#' blots <- make.blots(boys)
+#' # Exclude ml 1 through 5 from tv donor pool
+#' blots$tv$exclude <- c(1:5)
+#' # Exclude 100 random observed heights from tv donor pool
+#' blots$hgt$exclude <- sample(unique(boys$hgt), 100) 
+#' imp <- mice(boys, method = "pmm", print = FALSE, blots = blots, seed=123)
+#' blots$hgt$exclude %in% unlist(c(imp$imp$hgt)) # MUST be all FALSE 
+#' blots$tv$exclude %in% unlist(c(imp$imp$tv)) # MUST be all FALSE 
 #' @export
 mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
-                            matchtype = 1L, ridge = 1e-05,
+                            matchtype = 1L, exclude = -99999999, ridge = 1e-05,
                             use.matcher = FALSE, ...) {
-  {    if (is.null(wy)) {
-    wy <- !ry
-  }  }
+  id.ex <- !ry | !y %in% exclude # id vector for exclusion
+  y <- y[id.ex] # leave out the exclude vector y's
+  # allow for one-dimensional x-space
+  if(!is.null(dim(x))){
+    x <- x[id.ex, ]
+  } else {
+    x <- x[id.ex]
+  }
+  # leave out the exclude vector x's
+  ry <- ry[id.ex] # leave out the exclude vector indicator
+  {
+    if (is.null(wy)) {
+      wy <- !ry
+    } else {
+      wy <- wy[id.ex] # if applicable adjust wy to match exclude
+    }
+  }
   x <- cbind(1, as.matrix(x))
   ynum <- y
   if (is.factor(y)) {

@@ -12,6 +12,7 @@ mice.impute.pmm(
   wy = NULL,
   donors = 5L,
   matchtype = 1L,
+  exclude = -99999999,
   ridge = 1e-05,
   use.matcher = FALSE,
   ...
@@ -43,6 +44,8 @@ the \emph{drawn} values of \code{ymis} (called type-1 matching).
 Other choices are \code{matchtype = 0L}
 (distance between predicted values) and \code{matchtype = 2L}
 (distance between drawn values).}
+
+\item{exclude}{Value or vector of values to exclude from the imputation donor pool in \code{y}}
 
 \item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent
 problems with multicollinearity. The default is \code{ridge = 1e-05},
@@ -119,6 +122,17 @@ plot(jitter(y), jitter(yimp),
 )
 abline(0, 1)
 cor(y, yimp, use = "pair")
+
+# Use blots to exclude different values per column
+# Create blots object
+blots <- make.blots(boys)
+# Exclude ml 1 through 5 from tv donor pool
+blots$tv$exclude <- c(1:5)
+# Exclude 100 random observed heights from tv donor pool
+blots$hgt$exclude <- sample(unique(boys$hgt), 100) 
+imp <- mice(boys, method = "pmm", print = FALSE, blots = blots, seed=123)
+blots$hgt$exclude \%in\% unlist(c(imp$imp$hgt)) # MUST be all FALSE 
+blots$tv$exclude \%in\% unlist(c(imp$imp$tv)) # MUST be all FALSE 
 }
 \references{
 Little, R.J.A. (1988), Missing data adjustments in large surveys
@@ -160,7 +174,7 @@ Other univariate imputation functions:
 \code{\link{mice.impute.ri}()}
 }
 \author{
-Stef van Buuren, Karin Groothuis-Oudshoorn
+Gerko Vink, Stef van Buuren, Karin Groothuis-Oudshoorn
 }
 \concept{univariate imputation functions}
 \keyword{datagen}
