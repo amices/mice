@@ -226,9 +226,7 @@
 #' Use \code{print=FALSE} for silent computation.
 #' @param seed An integer that is used as argument by the \code{set.seed()} for
 #' offsetting the random number generator. Default is to leave the random number
-#' generator alone. Versions later than 3.13.11 reset the random generator to the
-#' state before calling \code{mice()}. This effectively isolates the \code{mice}
-#' random generator from the calling environment.
+#' generator alone.
 #' @param data.init A data frame of the same size and type as \code{data},
 #' without missing data, used to initialize imputations before the start of the
 #' iterative process.  The default \code{NULL} implies that starting imputation
@@ -328,16 +326,7 @@ mice <- function(data,
   call <- match.call()
   check.deprecated(...)
 
-  # set local seed, reset random state generator after function aborts
-  if (is.na(seed)) {
-    # restores .Random.seed on exiting scope
-    withr::local_preserve_seed()
-    # reinitialize .Random.seed
-    set.seed(NULL)
-  } else {
-    # take specified seed to set local seed
-    withr::local_seed(seed)
-  }
+  if (!is.na(seed)) set.seed(seed)
 
   # check form of data and m
   data <- check.dataform(data)
@@ -489,8 +478,7 @@ mice <- function(data,
     ignore = ignore,
     seed = seed,
     iteration = q$iteration,
-    lastSeedValue = get(".Random.seed", envir = globalenv(), mode = "integer",
-                        inherits = FALSE),
+    lastSeedValue = .Random.seed,
     chainMean = q$chainMean,
     chainVar = q$chainVar,
     loggedEvents = loggedEvents,
