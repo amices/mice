@@ -1,3 +1,7 @@
+# mice 3.14.14
+
+* Repairs URLs and latex glitches
+
 # mice 3.14.13
 
 * Adds new argument `exclude` to `mice.impute.pmm()` that excludes a user-specified vector of values from matching. Excluded values will not appear in the imputations. Since the observed values are not imputed, the user-specified values are still being used to fit the imputation model (#392, #519). Contributed by @gerkovink
