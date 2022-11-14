@@ -119,7 +119,7 @@ rbind.mids <- function(x, y = NULL, ...) {
   # Only x contributes imputations
   imp <- x$imp
 
-  # seed, lastSeedvalue, number of iterations, chainMean and chainVar is taken as in mids object x.
+  # seed, lastSeedValue, number of iterations, chainMean and chainVar is taken as in mids object x.
   seed <- x$seed
   lastSeedValue <- x$lastSeedValue
   iteration <- x$iteration
@@ -204,7 +204,7 @@ rbind.mids.mids <- function(x, y, call) {
   }
   names(imp) <- varnames
 
-  # seed, lastSeedvalue, number of iterations
+  # seed, lastSeedValue, number of iterations
   seed <- x$seed
   lastSeedValue <- x$lastSeedValue
   iteration <- x$iteration

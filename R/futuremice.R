@@ -142,7 +142,8 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
   if (!is.na(parallelseed)) {
     set.seed(parallelseed)
   } else {
-    parallelseed <- .Random.seed
+    parallelseed <- get(".Random.seed", envir = globalenv(), mode = "integer",
+                        inherits = FALSE)
   }
 
   # start multisession
