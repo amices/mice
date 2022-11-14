@@ -35,8 +35,8 @@ with the specified diagnostic(s) per iteration.
 The argument \code{diagnostic} can be length-1 character, which is
 matched to one of the following keywords:
 \describe{
-\item{\code{"all"}}{computes both the lag-1 autocorrelation as well as 
-the potential scale reduction factor (cf. Vehtari et al., 2021) per 
+\item{\code{"all"}}{computes both the lag-1 autocorrelation as well as
+the potential scale reduction factor (cf. Vehtari et al., 2021) per
 iteration of the MICE algorithm;}
 \item{\code{"ac"}}{computes only the autocorrelation per iteration;}
 \item{\code{"psrf"}}{computes only the potential scale reduction factor
@@ -45,10 +45,10 @@ per iteration;}
 factor is colloquially called the Gelman-Rubin diagnostic.}
 }
 In the unlikely event of perfect convergence, the autocorrelation equals
-zero and the potential scale reduction factor equals one. To interpret 
-the convergence diagnostic(s) in the output of the function, it is 
-recommended to plot the diagnostics (ac and/or psrf) against the 
-iteration number (.it) per imputed variable (vrb). A persistently 
+zero and the potential scale reduction factor equals one. To interpret
+the convergence diagnostic(s) in the output of the function, it is
+recommended to plot the diagnostics (ac and/or psrf) against the
+iteration number (.it) per imputed variable (vrb). A persistently
 decreasing trend across iterations indicates potential non-convergence.
 }
 \examples{
@@ -59,9 +59,9 @@ imp <- mice(nhanes2, print = FALSE)
 convergence(imp)
 }
 \references{
-Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., & Burkner, 
-P.-C. (2021). Rank-Normalization, Folding, and Localization: An Improved 
-R for Assessing Convergence of MCMC. Bayesian Analysis, 1(1), 1-38. 
+Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., & Burkner,
+P.-C. (2021). Rank-Normalization, Folding, and Localization: An Improved
+R for Assessing Convergence of MCMC. Bayesian Analysis, 1(1), 1-38.
 https://doi.org/10.1214/20-BA1221
 }
 \seealso{

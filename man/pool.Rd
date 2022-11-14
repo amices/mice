@@ -29,11 +29,11 @@ manually.}
 \code{"rubin1987"} (default, for missing data) and \code{"reiter2003"}
 (for synthetic data created from a complete data set).}
 
-\item{custom.t}{A custom character string to be parsed as a calculation rule 
-for the total variance \code{t}. The custom rule  can use the other calculated 
-pooling statistics where the dimensions must come from \code{.data$}. The 
-default \code{t} calculation would have the form 
-\code{".data$ubar + (1 + 1 / .data$m) * .data$b"}. 
+\item{custom.t}{A custom character string to be parsed as a calculation rule
+for the total variance \code{t}. The custom rule  can use the other calculated
+pooling statistics where the dimensions must come from \code{.data$}. The
+default \code{t} calculation would have the form
+\code{".data$ubar + (1 + 1 / .data$m) * .data$b"}.
 See examples for an example.}
 }
 \value{
@@ -133,8 +133,10 @@ fit <- with(data = imp, exp = lm(bmi ~ hyp + chl))
 summary(pool(fit))
 
 # generate fully synthetic data, analyse and pool
-imp <- mice(cars, maxit = 2, m = 2,
-            where = matrix(TRUE, nrow(cars), ncol(cars)))
+imp <- mice(cars,
+  maxit = 2, m = 2,
+  where = matrix(TRUE, nrow(cars), ncol(cars))
+)
 fit <- with(data = imp, exp = lm(speed ~ dist))
 summary(pool.syn(fit))
 
