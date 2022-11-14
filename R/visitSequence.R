@@ -38,8 +38,7 @@ check.visitSequence <- function(visitSequence = NULL,
     code <- match.arg(visitSequence,
       choices = c("roman", "arabic", "monotone", "revmonotone")
     )
-    visitSequence <- switch(
-      code,
+    visitSequence <- switch(code,
       roman = names(blocks)[nimp > 0],
       arabic = rev(names(blocks)[nimp > 0]),
       monotone = names(blocks)[order(nimp)],

@@ -5,7 +5,7 @@
 \alias{pool.syn}
 \title{Combine estimates by pooling rules}
 \usage{
-pool(object, dfcom = NULL, rule = NULL)
+pool(object, dfcom = NULL, rule = NULL, custom.t = NULL)
 
 pool.syn(object, dfcom = NULL, rule = "reiter2003")
 }
@@ -28,6 +28,13 @@ manually.}
 \item{rule}{A string indicating the pooling rule. Currently supported are
 \code{"rubin1987"} (default, for missing data) and \code{"reiter2003"}
 (for synthetic data created from a complete data set).}
+
+\item{custom.t}{A custom character string to be parsed as a calculation rule
+for the total variance \code{t}. The custom rule  can use the other calculated
+pooling statistics where the dimensions must come from \code{.data$}. The
+default \code{t} calculation would have the form
+\code{".data$ubar + (1 + 1 / .data$m) * .data$b"}.
+See examples for an example.}
 }
 \value{
 An object of class \code{mipo}, which stands for 'multiple imputation
@@ -126,10 +133,19 @@ fit <- with(data = imp, exp = lm(bmi ~ hyp + chl))
 summary(pool(fit))
 
 # generate fully synthetic data, analyse and pool
-imp <- mice(cars, maxit = 2, m = 2,
-            where = matrix(TRUE, nrow(cars), ncol(cars)))
+imp <- mice(cars,
+  maxit = 2, m = 2,
+  where = matrix(TRUE, nrow(cars), ncol(cars))
+)
 fit <- with(data = imp, exp = lm(speed ~ dist))
 summary(pool.syn(fit))
+
+# use a custom pooling rule for the total variance about the estimate
+# e.g. use t = b + b/m instead of t = ubar + b + b/m
+imp <- mice(nhanes, maxit = 2, m = 2)
+fit <- with(data = imp, exp = lm(bmi ~ hyp + chl))
+pool(fit, custom.t = ".data$b + .data$b / .data$m")
+
 }
 \references{
 Barnard, J. and Rubin, D.B. (1999). Small sample degrees of

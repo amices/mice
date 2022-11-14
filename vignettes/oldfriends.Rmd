@@ -62,11 +62,14 @@ is to specify the formula as a list, e.g.,
 
 ```{r}
 library(mice, warn.conflicts = FALSE)
-imp <- mice(nhanes, 
-            formulas = list(hyp ~ bmi, 
-                            chl ~ age + hyp + bmi,
-                            bmi ~ age + hyp + chl),
-            print = FALSE, m = 1, maxit = 1, seed = 1)
+imp <- mice(nhanes,
+  formulas = list(
+    hyp ~ bmi,
+    chl ~ age + hyp + bmi,
+    bmi ~ age + hyp + chl
+  ),
+  print = FALSE, m = 1, maxit = 1, seed = 1
+)
 imp$formulas
 ```
 

@@ -125,10 +125,10 @@ mcar.data.frame <- function(x,
                             use_chisq = 30,
                             alpha = 0.05) {
   anyfact <- sapply(x, inherits, what = "factor")
-  if(any(anyfact)){
+  if (any(anyfact)) {
     stop("Be advised that this MCAR test has not been validated for categorical variables.")
   }
-  if(min_n < 1){
+  if (min_n < 1) {
     stop("Argument 'min_n' must be greater than 1.")
   }
   out <-
@@ -144,40 +144,42 @@ mcar.data.frame <- function(x,
       removed_rows = NULL,
       removed_patterns = NULL
     )
-  if(inherits(imputed, "mids")){
+  if (inherits(imputed, "mids")) {
     imputed <- mice::complete(imputed, action = "all")
-  } else if(inherits(imputed, "list")){
-    if(!inherits(imputed[[1]], "data.frame")){
-      imputed <- tryCatch(lapply(imputed, data.frame), error = function(e){
+  } else if (inherits(imputed, "list")) {
+    if (!inherits(imputed[[1]], "data.frame")) {
+      imputed <- tryCatch(lapply(imputed, data.frame), error = function(e) {
         stop("Argument 'imputed' must be a list of data.frames or an object of class 'mids'. Could not coerce argument 'imputed' to class 'data.frame'.")
       })
       message("Argument 'imputed' must be an object of class 'mids', or a list of 'data.frame's. Coerced argument 'imputed' to data.frame.")
     }
   }
-  if(!all(dim(x) == dim(imputed[[1]]))){
+  if (!all(dim(x) == dim(imputed[[1]]))) {
     stop("Imputed data must have the same dimensions as the incomplete data.")
   }
-  if(any(is.na(imputed[[1]]))){
+  if (any(is.na(imputed[[1]]))) {
     stop("Imputed data contain missing values.")
   }
   missings <- is.na(x)
   rowmis <- rowSums(missings)
   colmis <- colSums(missings)
-  if(any(rowmis == ncol(x))) {
+  if (any(rowmis == ncol(x))) {
     warning("Note that there were some rows with all missing data. Tests may be invalid for these rows. Consider removing them.")
-    #x <- x[!rowmis == ncol(x), , drop = FALSE]
+    # x <- x[!rowmis == ncol(x), , drop = FALSE]
   }
-  if(any(colmis == nrow(x))) {
+  if (any(colmis == nrow(x))) {
     stop("Some columns contain all missing data. This will result in invalid results.")
   }
-  univals <- sapply(x, function(i){length(unique(i))})
-  if(any(univals < 2)){
+  univals <- sapply(x, function(i) {
+    length(unique(i))
+  })
+  if (any(univals < 2)) {
     stop("Some columns are constant, not variable. This will result in invalid results.")
   }
   newdata <- x
   missings <- is.na(x)
   pats <- mice::md.pattern(x, plot = FALSE)
-  if(nrow(pats) < 4L){
+  if (nrow(pats) < 4L) {
     stop("Two or more missing data patterns are required.")
   }
   remove_pats <- as.numeric(rownames(pats))[-nrow(pats)] <= min_n
@@ -202,39 +204,42 @@ mcar.data.frame <- function(x,
   which_pat <- apply(sapply(idpats, `==`, idmiss), 1, which)
   numpat <- length(pat_n)
 
-  if (nrow(newdata) == 0)
+  if (nrow(newdata) == 0) {
     stop("No valid rows of data left.")
-  if (numpat == 1)
+  }
+  if (numpat == 1) {
     stop("Only one missing data pattern.")
-  if (any(pat_n < 2))
+  }
+  if (any(pat_n < 2)) {
     stop("At least 2 cases needed in each missing data pattern.")
+  }
 
-# Perform Hawkins test ----------------------------------------------------
+  # Perform Hawkins test ----------------------------------------------------
 
-  hawklist <- lapply(imputed, function(thisimp){
+  hawklist <- lapply(imputed, function(thisimp) {
     hawkins(thisimp, which_pat)
   })
 
-  if(method %in% c("auto", "hawkins")) {
-    pvalsn <- sapply(hawklist, function(thisimp){
-      sapply(thisimp[["a"]], function(thistail){
-        ni = length(thistail)
+  if (method %in% c("auto", "hawkins")) {
+    pvalsn <- sapply(hawklist, function(thisimp) {
+      sapply(thisimp[["a"]], function(thistail) {
+        ni <- length(thistail)
         pn <- p_neyman(thistail, replications, use_chisq)
-        pn + (pn == 0)/replications
-        })
+        pn + (pn == 0) / replications
+      })
     })
     out$hawk_chisq <- -2 * colSums(log(pvalsn))
     out$hawk_df <- 2 * numpat
     out$hawk_p <- pchisq(out$hawk_chisq, out$hawk_df, lower.tail = FALSE)
   }
 
-# Perform Anderson-Darling test -------------------------------------------
+  # Perform Anderson-Darling test -------------------------------------------
 
-  if((method == "auto" & any(out$hawk_p < alpha)) | method == "nonparametric"){
-    adout <- sapply(hawklist, function(thisimp){
+  if ((method == "auto" & any(out$hawk_p < alpha)) | method == "nonparametric") {
+    adout <- sapply(hawklist, function(thisimp) {
       anderson_darling(thisimp[["fij"]]) # First row is p
     })
-    out$ad_value  <- colSums(adout[-1, , drop = FALSE])
+    out$ad_value <- colSums(adout[-1, , drop = FALSE])
     out$ad_p <- adout[1, ]
   }
   class(out) <- c("mcar_object", class(out))
@@ -248,42 +253,50 @@ mcar.data.frame <- function(x,
 print.mcar_object <- function(x, ...) {
   ni <- x$pat_n
   out <- "\nInterpretation of results:\n"
-  cat("\nMissing data patterns:", (nrow(x$md.pattern)-1))
-  if(!is.null(x$removed_patterns)) cat(" used,", nrow(x$removed_patterns), "removed.")
+  cat("\nMissing data patterns:", (nrow(x$md.pattern) - 1))
+  if (!is.null(x$removed_patterns)) cat(" used,", nrow(x$removed_patterns), "removed.")
   cat("\nCases used:", sum(!x$removed_rows), "\n\n")
-  if (!is.null(x$hawk_p)){
-    if(length(x$hawk_p) > 1){
+  if (!is.null(x$hawk_p)) {
+    if (length(x$hawk_p) > 1) {
       hawkp <- median(x$hawk_p)
       cat("Hawkins' test: median chi^2 (", x$hawk_df, ") = ", median(x$hawk_chisq), ", median p = ", hawkp, sep = "")
-      if(any(x$hawk_p < x$alpha) & !hawkp < x$alpha) cat(". Some p-values for Hawkins' test were significant; please inspect their values, e.g., using `plot(", deparse(substitute(x)), ")`", sep = "")
+      if (any(x$hawk_p < x$alpha) & !hawkp < x$alpha) cat(". Some p-values for Hawkins' test were significant; please inspect their values, e.g., using `plot(", deparse(substitute(x)), ")`", sep = "")
     } else {
       hawkp <- x$hawk_p
       cat("Hawkins' test: chi^2 (", x$hawk_df, ") = ", x$hawk_chisq, ", p = ", x$hawk_p, sep = "")
     }
     cat("\n\n")
-    if(x$method == "auto"){
-      out <- c(out,
-               c("Hawkins' test is not significant; there is no evidence to reject the assumptions of multivariate normality and MCAR.\n",
-                 "Hawkins' test is significant; if multivariate normality can be assumed, then reject the assumption that missingness is MCAR.\n")[(hawkp < x$alpha)+1])
+    if (x$method == "auto") {
+      out <- c(
+        out,
+        c(
+          "Hawkins' test is not significant; there is no evidence to reject the assumptions of multivariate normality and MCAR.\n",
+          "Hawkins' test is significant; if multivariate normality can be assumed, then reject the assumption that missingness is MCAR.\n"
+        )[(hawkp < x$alpha) + 1]
+      )
     }
   }
-  if (!is.null(x$ad_p)){
-    if(length(x$ad_p) > 1){
+  if (!is.null(x$ad_p)) {
+    if (length(x$ad_p) > 1) {
       adp <- median(x$ad_p)
       cat("Anderson-Darling rank test: median T = ", median(x$ad_value), ", median p = ", median(x$ad_p), sep = "")
-      if(any(x$ad_p < x$alpha) & !median(x$ad_p) < x$alpha) cat(". Some p-values for the Anderson-Darling test were significant; please inspect their values, e.g., using `plot(", deparse(substitute(x)), ")`", sep = "")
+      if (any(x$ad_p < x$alpha) & !median(x$ad_p) < x$alpha) cat(". Some p-values for the Anderson-Darling test were significant; please inspect their values, e.g., using `plot(", deparse(substitute(x)), ")`", sep = "")
     } else {
       adp <- x$ad_p
       cat("Anderson-Darling rank test: T = ", x$ad_value, ", p = ", x$ad_p, sep = "")
     }
     cat("\n")
-    if(x$method == "auto"){
-      out <- c(out,
-               c("Anderson-Darling test is not significant. There is thus evidence against multivariate normality, but not against MCAR.\n",
-                 "Anderson-Darling test is significant. Reject the assumption that missingness is MCAR.")[(adp < x$alpha)+1])
+    if (x$method == "auto") {
+      out <- c(
+        out,
+        c(
+          "Anderson-Darling test is not significant. There is thus evidence against multivariate normality, but not against MCAR.\n",
+          "Anderson-Darling test is significant. Reject the assumption that missingness is MCAR."
+        )[(adp < x$alpha) + 1]
+      )
     }
   }
-  if(x$method == "auto"){
+  if (x$method == "auto") {
     cat(out)
   }
 }
@@ -292,69 +305,69 @@ print.mcar_object <- function(x, ...) {
 #' @importFrom grDevices dev.off
 #' @method plot mcar_object
 #' @export
-plot.mcar_object <- function(x, y, type = NULL, ...){
-  if(isTRUE(type == "md.pattern")){
+plot.mcar_object <- function(x, y, type = NULL, ...) {
+  if (isTRUE(type == "md.pattern")) {
     plot(x[["md.pattern"]])
   } else {
     op <- par(mar = rep(0, 4))
     on.exit(par(op))
     dev.off()
-    if(!is.null(x$hawk_p) & !is.null(x$ad_p)) par(mfrow=c(2,1))
-    if(!is.null(x$hawk_p)){
-      pct <- sum(x$hawk_p < x$alpha)/length(x$hawk_p)
-      hist(x$hawk_p, main = NULL, xlab = paste0("Hawkins p-values, ", round(pct*100), "% significant"), ylab = NULL)
+    if (!is.null(x$hawk_p) & !is.null(x$ad_p)) par(mfrow = c(2, 1))
+    if (!is.null(x$hawk_p)) {
+      pct <- sum(x$hawk_p < x$alpha) / length(x$hawk_p)
+      hist(x$hawk_p, main = NULL, xlab = paste0("Hawkins p-values, ", round(pct * 100), "% significant"), ylab = NULL)
       abline(v = x$alpha, col = "red")
     }
-    if(!is.null(x$ad_p)){
-      pct <- sum(x$ad_p < x$alpha)/length(x$ad_p)
-      hist(x$ad_p, main = NULL, xlab = paste0("Anderson-Darling p-values, ", round(pct*100), "% significant"), ylab = NULL)
+    if (!is.null(x$ad_p)) {
+      pct <- sum(x$ad_p < x$alpha) / length(x$ad_p)
+      hist(x$ad_p, main = NULL, xlab = paste0("Anderson-Darling p-values, ", round(pct * 100), "% significant"), ylab = NULL)
       abline(v = x$alpha, col = "red")
     }
   }
 }
 
-hawkins <- function(x, grouping){
+hawkins <- function(x, grouping) {
   p <- ncol(x)
   n <- nrow(x)
   x <- split(x, factor(grouping))
   g <- length(x)
-  S_pooled <- lapply(x, function(i){
+  S_pooled <- lapply(x, function(i) {
     (nrow(i) - 1) * cov(i, use = "complete.obs")
   })
   S_pooled <- Reduce("+", S_pooled)
-  S_pooled <- S_pooled/(n - g)
+  S_pooled <- S_pooled / (n - g)
   S_pooled <- solve(S_pooled)
-  f <- lapply(x, function(i){
+  f <- lapply(x, function(i) {
     i_centered <- scale(i, center = TRUE, scale = FALSE)
     i_centered <- apply(i_centered %*% S_pooled * i_centered, 1, sum)
     i_centered <- i_centered * nrow(i)
-    ((n - g - p) * i_centered)/(p * ((nrow(i) - 1) * (n - g) - i_centered))
+    ((n - g - p) * i_centered) / (p * ((nrow(i) - 1) * (n - g) - i_centered))
   })
-  a <- lapply(f, function(thisf){ pf(thisf, p, (n-g - p), lower.tail = FALSE) })
+  a <- lapply(f, function(thisf) {
+    pf(thisf, p, (n - g - p), lower.tail = FALSE)
+  })
   list(fij = f, a = a, ni = matrix(sapply(x, nrow), ncol = 1))
 }
 
-p_neyman <- function(x, replications = 10000, use_chisq = 30)
-{
+p_neyman <- function(x, replications = 10000, use_chisq = 30) {
   n <- length(x)
-  n4 <- sum(colSums(legendre(x, 4))^2)/n
+  n4 <- sum(colSums(legendre(x, 4))^2) / n
   if (n < use_chisq) {
-    sum(sim_neyman(n, replications) > n4)/replications
+    sum(sim_neyman(n, replications) > n4) / replications
   } else {
     pchisq(n4, 4, lower.tail = FALSE)
   }
 }
 
-sim_neyman <- function (n, replications)
-{
+sim_neyman <- function(n, replications) {
   x <- matrix(runif(replications * n), ncol = replications)
-  pi <- apply(x, 2, function(i){
-    sum(colSums(legendre(i, 4))^2)/n
+  pi <- apply(x, 2, function(i) {
+    sum(colSums(legendre(i, 4))^2) / n
   })
   sort(pi)
 }
 
-anderson_darling <- function (fij){
+anderson_darling <- function(fij) {
   x <- unlist(fij)
   ni <- sapply(fij, length)
   if (length(ni) < 2) {
@@ -366,7 +379,7 @@ anderson_darling <- function (fij){
   hj <- rle(x.sort)$lengths
   hn <- cumsum(hj)
   zj <- x.sort[which(!duplicated(x.sort))]
-  adk.all <- sapply(fij, function(fi){
+  adk.all <- sapply(fij, function(fi) {
     ni <- length(fi)
     combs <- expand.grid(zj, fi)
     b <- combs[, 1] == combs[, 2]
@@ -374,14 +387,14 @@ anderson_darling <- function (fij){
     mij <- cumsum(thisfij)
     num <- (n * mij - ni * hn)^2
     den <- hn * (n - hn)
-    (1/ni * sum(hj * (num/den)))
+    (1 / ni * sum(hj * (num / den)))
   })
-  adk <- sum(adk.all)/n
-  adk.all <- adk.all/n
-  j <- sum(1/ni)
-  h <- sum(1/seq(1:(n - 1)))
-  g <- sum(sapply(1:(n - 2), function(i){
-    (1/(n - i)) * sum(1/seq((i + 1), (n - 1)))
+  adk <- sum(adk.all) / n
+  adk.all <- adk.all / n
+  j <- sum(1 / ni)
+  h <- sum(1 / seq(1:(n - 1)))
+  g <- sum(sapply(1:(n - 2), function(i) {
+    (1 / (n - i)) * sum(1 / seq((i + 1), (n - 1)))
   }))
   a <- (4 * g - 6) * (k - 1) + (10 - 6 * g) * j
   b <- (2 * g - 4) * k^2 + 8 * h * k + (2 * g - 14 * h - 4) *
@@ -389,22 +402,24 @@ anderson_darling <- function (fij){
   c <- (6 * h + 2 * g - 2) * k^2 + (4 * h - 4 * g + 6) * k +
     (2 * h - 6) * j + 4 * h
   d <- (2 * h + 6) * k^2 - 4 * h * k
-  var.adk <- max(((a * n^3) + (b * n^2) + (c * n) + d)/((n - 1) *
-                                                          (n - 2) * (n - 3)), 0)
-  adk.s <- (adk - (k - 1))/sqrt(var.adk)
+  var.adk <- max(((a * n^3) + (b * n^2) + (c * n) + d) / ((n - 1) *
+    (n - 2) * (n - 3)), 0)
+  adk.s <- (adk - (k - 1)) / sqrt(var.adk)
   b0 <- c(0.675, 1.281, 1.645, 1.96, 2.326)
   b1 <- c(-0.245, 0.25, 0.678, 1.149, 1.822)
   b2 <- c(-0.105, -0.305, -0.362, -0.391, -0.396)
-  c0 <- c(1.09861228866811, 2.19722457733622, 2.94443897916644, 3.66356164612965,
-          4.59511985013459)
-  qnt <- b0 + b1/sqrt(k - 1) + b2/(k - 1)
+  c0 <- c(
+    1.09861228866811, 2.19722457733622, 2.94443897916644, 3.66356164612965,
+    4.59511985013459
+  )
+  qnt <- b0 + b1 / sqrt(k - 1) + b2 / (k - 1)
   ind <- seq(1:4) + (adk.s <= qnt[3])
   yy <- spline(qnt[ind], c0[ind], xout = adk.s)$y
-  p <- 1/(1 + exp(yy))
+  p <- 1 / (1 + exp(yy))
   c(p, adk.all)
 }
 
-ad <- function (fij){
+ad <- function(fij) {
   x <- unlist(fij)
   ni <- sapply(fij, length)
   if (length(ni) < 2) {
@@ -416,7 +431,7 @@ ad <- function (fij){
   hj <- rle(x.sort)$lengths
   hn <- cumsum(hj)
   zj <- x.sort[which(!duplicated(x.sort))]
-  adk.all <- sapply(fij, function(fi){
+  adk.all <- sapply(fij, function(fi) {
     ni <- length(fi)
     combs <- expand.grid(zj, fi)
     b <- combs[, 1] == combs[, 2]
@@ -424,14 +439,14 @@ ad <- function (fij){
     mij <- cumsum(thisfij)
     num <- (n * mij - ni * hn)^2
     den <- hn * (n - hn)
-    (1/ni * sum(hj * (num/den)))
+    (1 / ni * sum(hj * (num / den)))
   })
-  adk <- sum(adk.all)/n
-  adk.all <- adk.all/n
-  j <- sum(1/ni)
-  h <- sum(1/seq(1:(n - 1)))
-  g <- sum(sapply(1:(n - 2), function(i){
-    (1/(n - i)) * sum(1/seq((i + 1), (n - 1)))
+  adk <- sum(adk.all) / n
+  adk.all <- adk.all / n
+  j <- sum(1 / ni)
+  h <- sum(1 / seq(1:(n - 1)))
+  g <- sum(sapply(1:(n - 2), function(i) {
+    (1 / (n - i)) * sum(1 / seq((i + 1), (n - 1)))
   }))
   a <- (4 * g - 6) * (k - 1) + (10 - 6 * g) * j
   b <- (2 * g - 4) * k^2 + 8 * h * k + (2 * g - 14 * h - 4) *
@@ -439,18 +454,20 @@ ad <- function (fij){
   c <- (6 * h + 2 * g - 2) * k^2 + (4 * h - 4 * g + 6) * k +
     (2 * h - 6) * j + 4 * h
   d <- (2 * h + 6) * k^2 - 4 * h * k
-  var.adk <- max(((a * n^3) + (b * n^2) + (c * n) + d)/((n - 1) *
-                                                      (n - 2) * (n - 3)), 0)
-  adk.s <- (adk - (k - 1))/sqrt(var.adk)
+  var.adk <- max(((a * n^3) + (b * n^2) + (c * n) + d) / ((n - 1) *
+    (n - 2) * (n - 3)), 0)
+  adk.s <- (adk - (k - 1)) / sqrt(var.adk)
   b0 <- c(0.675, 1.281, 1.645, 1.96, 2.326)
   b1 <- c(-0.245, 0.25, 0.678, 1.149, 1.822)
   b2 <- c(-0.105, -0.305, -0.362, -0.391, -0.396)
-  c0 <- c(1.09861228866811, 2.19722457733622, 2.94443897916644, 3.66356164612965,
-          4.59511985013459)
-  qnt <- b0 + b1/sqrt(k - 1) + b2/(k - 1)
+  c0 <- c(
+    1.09861228866811, 2.19722457733622, 2.94443897916644, 3.66356164612965,
+    4.59511985013459
+  )
+  qnt <- b0 + b1 / sqrt(k - 1) + b2 / (k - 1)
   ind <- seq(1:4) + (adk.s <= qnt[3])
   yy <- spline(qnt[ind], c0[ind], xout = adk.s)$y
-  p <- 1/(1 + exp(yy))
+  p <- 1 / (1 + exp(yy))
   list(pn = p, adk.all = adk.all, adk = adk, var.sdk = var.adk)
 }
 
@@ -481,19 +498,20 @@ plot.md.pattern <- function(x, y, rotate.names = FALSE, ...) {
     )
   }
   M <- cbind(c(row(R)), c(col(R))) - 1
-  shade <- ifelse(R[nrow(R):1,], mdc(1), mdc(2))
+  shade <- ifelse(R[nrow(R):1, ], mdc(1), mdc(2))
   rect(M[, 2], M[, 1], M[, 2] + 1, M[, 1] + 1, col = shade)
   for (i in 1:ncol(R)) {
     text(i - .5,
-         nrow(R) + .3,
-         colnames(x)[i],
-         adj = adj,
-         srt = srt)
-    text(i - .5,-.3, nmis[order(nmis)][i])
+      nrow(R) + .3,
+      colnames(x)[i],
+      adj = adj,
+      srt = srt
+    )
+    text(i - .5, -.3, nmis[order(nmis)][i])
   }
   for (i in 1:nrow(R)) {
     text(ncol(R) + .3, i - .5, x[(nrow(x) - 1):1, ncol(x)][i], adj = 0)
     text(-.3, i - .5, rownames(x)[(nrow(x) - 1):1][i], adj = 1)
   }
-  text(ncol(R) + .3,-.3, x[nrow(x), ncol(x)])
+  text(ncol(R) + .3, -.3, x[nrow(x), ncol(x)])
 }

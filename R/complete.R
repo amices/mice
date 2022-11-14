@@ -86,13 +86,11 @@ complete.mids <- function(data, action = 1L, include = FALSE,
     idx <- action[action >= 0L & action <= m]
     if (include && all(idx != 0L)) idx <- c(0L, idx)
     shape <- ifelse(mild, "mild", "stacked")
-  }
-  else if (is.character(action)) {
+  } else if (is.character(action)) {
     if (include) idx <- 0L:m else idx <- 1L:m
     shape <- match.arg(action, c("all", "long", "broad", "repeated", "stacked"))
     shape <- ifelse(shape == "all" || mild, "mild", shape)
-  }
-  else {
+  } else {
     stop("'action' not recognized")
   }
 

@@ -61,7 +61,7 @@ ampute.continuous <- function(P, scores, prop, type) {
     scores.temp <- scores[[i]]
     # empty candidate group
     if (length(scores.temp) == 1 && scores.temp == 0) {
-      R[[i]] <- 0 
+      R[[i]] <- 0
     } else {
       if (length(scores.temp) == 1) {
         warning(paste("There is only 1 candidate for pattern", i, ",it will be amputed with probability", prop), call. = FALSE)
@@ -126,12 +126,10 @@ bin.search <- function(fun, range = c(-8, 8), ..., target = 0,
       val.lo <- val.hi <- val
       lo <- hi <- center
       break
-    }
-    else if (sign * val < sign * target) {
+    } else if (sign * val < sign * target) {
       lo <- center
       val.lo <- val
-    }
-    else {
+    } else {
       hi <- center
       val.hi <- val
     }
@@ -148,30 +146,25 @@ bin.search <- function(fun, range = c(-8, 8), ..., target = 0,
       retval$flag <- "Lower Boundary"
       retval$where <- lo
       retval$value <- val.lo
-    }
-    else {
+    } else {
       warning("The desired proportion of ", target, " is too large; ", val.hi, " is used instead.")
       retval$flag <- "Upper Boundary"
       retval$where <- hi
       retval$value <- val.hi
     }
-  }
-  else if (counter >= maxiter) {
+  } else if (counter >= maxiter) {
     retval$flag <- "Maximum number of iterations reached"
     retval$where <- (lo + hi) / 2
     retval$value <- (val.lo + val.hi) / 2
-  }
-  else if (val.lo == target) {
+  } else if (val.lo == target) {
     retval$flag <- "Found"
     retval$where <- lo
     retval$value <- val.lo
-  }
-  else if (val.hi == target) {
+  } else if (val.hi == target) {
     retval$flag <- "Found"
     retval$where <- hi
     retval$value <- val.hi
-  }
-  else {
+  } else {
     retval$flag <- "Between Elements"
     retval$where <- (lo + hi) / 2
     retval$value <- (val.lo + val.hi) / 2

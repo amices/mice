@@ -186,9 +186,10 @@ cbind.mids <- function(x, y = NULL, ...) {
   blots <- x$blots
   ignore <- x$ignore
 
-  # seed, lastSeedvalue, number of iterations, chainMean and chainVar
+  # seed, lastSeedValue, number of iterations, chainMean and chainVar
   # is taken as in mids object x.
   seed <- x$seed
+  lastSeedValue <- x$lastSeedValue
   iteration <- x$iteration
   chainMean <- x$chainMean
   chainVar <- x$chainVar
@@ -209,7 +210,7 @@ cbind.mids <- function(x, y = NULL, ...) {
     ignore = ignore,
     seed = seed,
     iteration = iteration,
-    lastSeedValue = x$lastSeedValue,
+    lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
     loggedEvents = loggedEvents,
@@ -306,10 +307,10 @@ cbind.mids.mids <- function(x, y, call) {
   names(blots) <- blocknames
   ignore <- x$ignore
 
-  # For the elements seed, lastSeedvalue and iteration the values
+  # For the elements seed, lastSeedValue and iteration the values
   # from midsobject x are copied.
   seed <- x$seed
-  lastSeedvalue <- x$lastSeedvalue
+  lastSeedValue <- x$lastSeedValue
   iteration <- x$iteration
 
   # the chainMean and chainVar vectors for x and y are combined.
@@ -367,7 +368,7 @@ cbind.mids.mids <- function(x, y, call) {
     ignore = ignore,
     seed = seed,
     iteration = iteration,
-    lastSeedValue = .Random.seed,
+    lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
     loggedEvents = loggedEvents,

@@ -21,7 +21,6 @@
 #' @importFrom utils    askYesNo flush.console head install.packages methods
 #'                      packageDescription packageVersion
 #'                      tail write.table
-#' @importFrom withr    local_preserve_seed local_seed
 #' @export bwplot
 #' @export densityplot
 #' @export stripplot

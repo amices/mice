@@ -93,7 +93,7 @@ ibind <- function(x, y) {
     blots = x$blots,
     seed = x$seed,
     iteration = iteration,
-    lastSeedValue = y$lastSeedValue,
+    lastSeedValue = x$lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
     loggedEvents = x$loggedEvents,

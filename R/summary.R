@@ -72,7 +72,6 @@ summary.mads <- function(object, ...) {
 #' @method summary mice.anova
 #' @export
 summary.mice.anova <- function(object, ...) {
-
   # handle objects from anova
   out <- object$out
 
@@ -104,10 +103,11 @@ summary.mice.anova <- function(object, ...) {
     formula = as.character(formulas)
   )
 
-  structure(list(
-    models = ff, comparisons = rf,
-    m = object$m, method = object$method, use = object$use
-  ),
-  class = c("mice.anova.summary", class(object))
+  structure(
+    list(
+      models = ff, comparisons = rf,
+      m = object$m, method = object$method, use = object$use
+    ),
+    class = c("mice.anova.summary", class(object))
   )
 }

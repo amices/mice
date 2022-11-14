@@ -47,9 +47,8 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
     stop("Object should be of type mids.")
   }
 
-  # Temporarily set random generator state from previous imputation
-  withr::local_preserve_seed()
-  assign(".Random.seed", obj$lastSeedValue, envir = globalenv())
+  # Set seed to last seed after previous imputation
+  assign(".Random.seed", obj$lastSeedValue, pos = 1)
 
   # obj contains training data, newdata contains test data
   # overwrite obj with combined obj + imp.newdata
@@ -160,8 +159,10 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
     ignore = obj$ignore,
     seed = obj$seed,
     iteration = sumIt,
-    lastSeedValue = get(".Random.seed", envir = globalenv(), mode = "integer",
-                        inherits = FALSE),
+    lastSeedValue = get(".Random.seed",
+      envir = globalenv(), mode = "integer",
+      inherits = FALSE
+    ),
     chainMean = chainMean,
     chainVar = chainVar,
     loggedEvents = loggedEvents,

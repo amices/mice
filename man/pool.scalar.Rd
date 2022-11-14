@@ -69,8 +69,10 @@ pool.scalar(Q = c(-1.5457, -1.428), U = c(0.9723^2, 1.041^2), n = 25, k = 2)
 pool(fit)
 
 # manual pooling for synthetic data created from complete data
-imp <- mice(cars, maxit = 2, m = 2, print = FALSE, seed = 18210,
-            where = matrix(TRUE, nrow(cars), ncol(cars)))
+imp <- mice(cars,
+  maxit = 2, m = 2, print = FALSE, seed = 18210,
+  where = matrix(TRUE, nrow(cars), ncol(cars))
+)
 fit <- with(data = imp, lm(speed ~ dist))
 
 # manual pooling: extract Q and U

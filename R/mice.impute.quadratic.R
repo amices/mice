@@ -5,8 +5,8 @@
 #'
 #' @aliases mice.impute.quadratic quadratic
 #' @inheritParams mice.impute.pmm
-#' @param quad.outcome The name of the outcome in the quadratic analysis as a 
-#' character string. For example, if the substantive model of interest is 
+#' @param quad.outcome The name of the outcome in the quadratic analysis as a
+#' character string. For example, if the substantive model of interest is
 #' \code{y ~ x + xx}, then \code{"y"} would be the \code{quad.outcome}
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #' \code{sum(wy)}
@@ -76,16 +76,17 @@
 #' cmp <- complete(imp)
 #' points(cmp$x[is.na(dat$x)], cmp$xx[is.na(dat$x)], col = mdc(2))
 #' @export
-mice.impute.quadratic <- function (y, ry, x, wy = NULL, quad.outcome = NULL, ...){
+mice.impute.quadratic <- function(y, ry, x, wy = NULL, quad.outcome = NULL, ...) {
   if (is.null(quad.outcome)) stop("Argument 'quad.outcome' for mice.impute.quadratic has not been specified")
   if (!quad.outcome %in% colnames(x)) stop("The name specified for the outcome in 'quad.outcome' can not be found in the data")
-  if (is.null(wy)) 
+  if (is.null(wy)) {
     wy <- !ry
+  }
   x <- cbind(1, as.matrix(x))
   # create the square of y
   y2 <- y^2
   # create z based on B1 * y + B2 * y^2
-  parm  <- .norm.draw(x[, quad.outcome], ry, cbind(1, y, y2))	
+  parm <- .norm.draw(x[, quad.outcome], ry, cbind(1, y, y2))
   zobs <- cbind(y, y2) %*% parm$coef[-1]
   # impute z
   zmis <- mice.impute.pmm(zobs, ry, x[, -1])
@@ -95,35 +96,44 @@ mice.impute.quadratic <- function (y, ry, x, wy = NULL, quad.outcome = NULL, ...
   # decompositions of z into roots
   b1 <- parm$coef[2]
   b2 <- parm$coef[3]
-  y.low <- -(1/(2 * b2)) * (sqrt(4 * b2 * zstar + b1^2) + b1)
-  y.up <- (1/(2 * b2)) * (sqrt(4 * b2 * zstar + b1^2) - b1)
+  y.low <- -(1 / (2 * b2)) * (sqrt(4 * b2 * zstar + b1^2) + b1)
+  y.up <- (1 / (2 * b2)) * (sqrt(4 * b2 * zstar + b1^2) - b1)
   # calculate the abscissa at the parabolic minimum/maximum
-  y.min <- -b1/(2 * b2)
+  y.min <- -b1 / (2 * b2)
   # data augmentation
-  data.augment <- data.frame(V = c((y > y.min)[ry] * 1, 1, 1, 0, 0, 1, 1, 0, 0),
-                             q = c(x[ry, quad.outcome], 
-                                   mean(x[ry, quad.outcome]) + sd(x[ry, quad.outcome]), 
-                                   mean(x[ry, quad.outcome]) - sd(x[ry, quad.outcome]),
-                                   mean(x[ry, quad.outcome]) + sd(x[ry, quad.outcome]), 
-                                   mean(x[ry, quad.outcome]) - sd(x[ry, quad.outcome]),
-                                   mean(x[ry, quad.outcome]), mean(x[ry, quad.outcome]), 
-                                   mean(x[ry, quad.outcome]), mean(x[ry, quad.outcome])),
-                             zstar = c(zstar[ry], 
-                                       mean(zstar[ry]), mean(zstar[ry]),
-                                       mean(zstar[ry]), mean(zstar[ry]),
-                                       mean(zstar[ry]) + sd(zstar[ry]), 
-                                       mean(zstar[ry]) - sd(zstar[ry]),
-                                       mean(zstar[ry]) + sd(zstar[ry]), 
-                                       mean(zstar[ry]) - sd(zstar[ry]))
+  data.augment <- data.frame(
+    V = c((y > y.min)[ry] * 1, 1, 1, 0, 0, 1, 1, 0, 0),
+    q = c(
+      x[ry, quad.outcome],
+      mean(x[ry, quad.outcome]) + sd(x[ry, quad.outcome]),
+      mean(x[ry, quad.outcome]) - sd(x[ry, quad.outcome]),
+      mean(x[ry, quad.outcome]) + sd(x[ry, quad.outcome]),
+      mean(x[ry, quad.outcome]) - sd(x[ry, quad.outcome]),
+      mean(x[ry, quad.outcome]), mean(x[ry, quad.outcome]),
+      mean(x[ry, quad.outcome]), mean(x[ry, quad.outcome])
+    ),
+    zstar = c(
+      zstar[ry],
+      mean(zstar[ry]), mean(zstar[ry]),
+      mean(zstar[ry]), mean(zstar[ry]),
+      mean(zstar[ry]) + sd(zstar[ry]),
+      mean(zstar[ry]) - sd(zstar[ry]),
+      mean(zstar[ry]) + sd(zstar[ry]),
+      mean(zstar[ry]) - sd(zstar[ry])
+    )
   )
-  w <- c(rep(1, nrow(data.augment) - 8), rep(3/8, 8))
+  w <- c(rep(1, nrow(data.augment) - 8), rep(3 / 8, 8))
   # calculate regression parameters for
-  vobs <- glm(V ~ q + zstar + q * zstar, family = quasibinomial, 
-              data = data.augment, weights = w)
+  vobs <- glm(V ~ q + zstar + q * zstar,
+    family = quasibinomial,
+    data = data.augment, weights = w
+  )
   # impute Vmis
   newdata <- data.frame(q = x[wy, quad.outcome], zstar = zstar[wy])
-  prob <- predict(vobs, newdata = newdata, type = "response", 
-                  na.action = na.exclude)
+  prob <- predict(vobs,
+    newdata = newdata, type = "response",
+    na.action = na.exclude
+  )
   idy <- rbinom(sum(wy), 1, prob = prob)
   # create final imputation
   ystar <- y.low[wy]

@@ -44,8 +44,7 @@ D2 <- function(fit1, fit0 = NULL, use = "wald") {
     names(beta) <- names(qbar1)
     fit0 <- lapply(fit1, fix.coef, beta = beta)
     fit0 <- as.mitml.result(fit0)
-  }
-  else if (is.mira(fit0)) {
+  } else if (is.mira(fit0)) {
     fit0 <- as.mitml.result(fit0)
   }
 

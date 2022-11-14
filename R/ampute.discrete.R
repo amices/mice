@@ -49,8 +49,8 @@ ampute.discrete <- function(P, scores, prop, odds) {
       # For each candidate the quantile number is specified
       R.temp <- rep.int(NA, length(scores[[i]]))
       for (k in seq_len(ng)) {
-        R.temp <- replace(R.temp, scores[[i]] >= quantiles[k]
-        & scores[[i]] <= quantiles[k + 1], k)
+        R.temp <- replace(R.temp, scores[[i]] >= quantiles[k] &
+          scores[[i]] <= quantiles[k + 1], k)
       }
       # For each candidate, a random value between 0 and 1 is compared with the
       # odds probability of being missing. If random value <= prob, the candidate
