@@ -1,3 +1,7 @@
+# mice 3.14.11
+
+* Reverts the internal seed behaviour back to `mice 3.13.10` (#515). #432 introduced new local seed in response to #426. However, various issues arose with this facility (#459, #492, #502, #505). This version restores the old behaviour using global `.Random.seed`. Contributed @gerkovink 
+
 # mice 3.14.10
 
 * Adds a `custom.t` argument to `pool()` that allows the advanced user to specify a custom rule for calculating the total variance $T$
