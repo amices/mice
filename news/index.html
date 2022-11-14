@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.14.12</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.14.13</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,6 +51,9 @@
       <small>Source: <a href="https://github.com/amices/mice/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.14.13" id="mice-31413">mice 3.14.13<a class="anchor" aria-label="anchor" href="#mice-31413"></a></h2>
+<ul><li>Adds new argument <code>exclude</code> to <code><a href="../reference/mice.impute.pmm.html">mice.impute.pmm()</a></code> that excludes a user-specified vector of values from matching. Excluded values will not appear in the imputations. Since the observed values are not imputed, the user-specified values are still being used to fit the imputation model (<a href="https://github.com/amices/mice/issues/392" class="external-link">#392</a>, <a href="https://github.com/amices/mice/issues/519" class="external-link">#519</a>). Contributed by <a href="https://github.com/gerkovink" class="external-link">@gerkovink</a></li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.14.12" id="mice-31412">mice 3.14.12<a class="anchor" aria-label="anchor" href="#mice-31412"></a></h2>
 <ul><li>Replaces <code>.Random.seed</code> reads from the <code>.GlobalEnv</code> by <code>get(".Random.seed", envir = globalenv(), mode = "integer", inherits = FALSE)</code>
