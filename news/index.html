@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.14.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.14.12</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,6 +51,14 @@
       <small>Source: <a href="https://github.com/amices/mice/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.14.12" id="mice-31412">mice 3.14.12<a class="anchor" aria-label="anchor" href="#mice-31412"></a></h2>
+<ul><li>Replaces <code>.Random.seed</code> reads from the <code>.GlobalEnv</code> by <code>get(".Random.seed", envir = globalenv(), mode = "integer", inherits = FALSE)</code>
+</li>
+<li>Repairs capitalisation problems with <code>lastSeedValue</code> variable name</li>
+<li>Solves <code>x$lastSeedValue</code> problem in <code><a href="../reference/cbind.mids.html">cbind.mids()</a></code> (<a href="https://github.com/amices/mice/issues/502" class="external-link">#502</a>)</li>
+<li>Styles all <code>.R</code> and <code>.Rmd</code> files</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.14.11" id="mice-31411">mice 3.14.11<a class="anchor" aria-label="anchor" href="#mice-31411"></a></h2>
 <ul><li>Reverts the internal seed behaviour back to <code>mice 3.13.10</code> (<a href="https://github.com/amices/mice/issues/515" class="external-link">#515</a>). <a href="https://github.com/amices/mice/issues/432" class="external-link">#432</a> introduced new local seed in response to <a href="https://github.com/amices/mice/issues/426" class="external-link">#426</a>. However, various issues arose with this facility (<a href="https://github.com/amices/mice/issues/459" class="external-link">#459</a>, <a href="https://github.com/amices/mice/issues/492" class="external-link">#492</a>, <a href="https://github.com/amices/mice/issues/502" class="external-link">#502</a>, <a href="https://github.com/amices/mice/issues/505" class="external-link">#505</a>). This version restores the old behaviour using global <code>.Random.seed</code>. Contributed <a href="https://github.com/gerkovink" class="external-link">@gerkovink</a></li></ul></div>

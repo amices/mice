@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.14.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.14.12</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -175,11 +175,14 @@
 <p>An existing function call to <code>mice</code> using the old <code>form</code> argument may result in an error <code>Argument "formulas" not a list</code>. The advice is to specify the formula as a list, e.g.,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice" class="external-link">mice</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, </span>
-<span>            formulas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">hyp</span> <span class="op">~</span> <span class="va">bmi</span>, </span>
-<span>                            <span class="va">chl</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">bmi</span>,</span>
-<span>                            <span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span>,</span>
-<span>            print <span class="op">=</span> <span class="cn">FALSE</span>, m <span class="op">=</span> <span class="fl">1</span>, maxit <span class="op">=</span> <span class="fl">1</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>,</span>
+<span>  formulas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="va">hyp</span> <span class="op">~</span> <span class="va">bmi</span>,</span>
+<span>    <span class="va">chl</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">bmi</span>,</span>
+<span>    <span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  print <span class="op">=</span> <span class="cn">FALSE</span>, m <span class="op">=</span> <span class="fl">1</span>, maxit <span class="op">=</span> <span class="fl">1</span>, seed <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">imp</span><span class="op">$</span><span class="va">formulas</span></span>
 <span><span class="co">#&gt; $hyp</span></span>
 <span><span class="co">#&gt; hyp ~ bmi</span></span>
