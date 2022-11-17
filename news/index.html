@@ -52,78 +52,50 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.15" id="mice-31415">mice 3.14.15<a class="anchor" aria-label="anchor" href="#mice-31415"></a></h2>
-<ul><li>Makes post-processing assignment consistent with lines 85/86 in <code>sampler.R</code> (<a href="https://github.com/amices/mice/issues/511" class="external-link">#511</a>)</li>
-<li>Updates test scripts</li>
+<h2 class="pkg-version" data-toc-text="3.15.0" id="mice-3150">mice 3.15.0<a class="anchor" aria-label="anchor" href="#mice-3150"></a></h2>
+<div class="section level4">
+<h4 id="major-changes-3-15-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-3-15-0"></a></h4>
+<ul><li><p>Adds a function <code><a href="../reference/futuremice.html">futuremice()</a></code> with support for parallel imputation using the <code>future</code> package (<a href="https://github.com/amices/mice/issues/504" class="external-link">#504</a>). Contributed <a href="https://github.com/thomvolker" class="external-link">@thomvolker</a>, <a href="https://github.com/gerkovink" class="external-link">@gerkovink</a></p></li>
+<li><p>Adds multivariate predictive mean matching <code><a href="../reference/mice.impute.mpmm.html">mice.impute.mpmm()</a></code>. (<a href="https://github.com/amices/mice/issues/460" class="external-link">#460</a>). Contributed <a href="https://github.com/Mingyang-Cai" class="external-link">@Mingyang-Cai</a></p></li>
+<li><p>Adds <code><a href="../reference/convergence.html">convergence()</a></code> for convergence evaluation (<a href="https://github.com/amices/mice/issues/484" class="external-link">#484</a>). Contributed <a href="https://github.com/hanneoberman" class="external-link">@hanneoberman</a></p></li>
+<li><p>Reverts the internal seed behaviour back to <code>mice 3.13.10</code> (<a href="https://github.com/amices/mice/issues/515" class="external-link">#515</a>). <a href="https://github.com/amices/mice/issues/432" class="external-link">#432</a> introduced new local seed in response to <a href="https://github.com/amices/mice/issues/426" class="external-link">#426</a>. However, various issues arose with this facility (<a href="https://github.com/amices/mice/issues/459" class="external-link">#459</a>, <a href="https://github.com/amices/mice/issues/492" class="external-link">#492</a>, <a href="https://github.com/amices/mice/issues/502" class="external-link">#502</a>, <a href="https://github.com/amices/mice/issues/505" class="external-link">#505</a>). This version restores the old behaviour using global <code>.Random.seed</code>. Contributed <a href="https://github.com/gerkovink" class="external-link">@gerkovink</a></p></li>
+<li><p>Adds a <code>custom.t</code> argument to <code><a href="../reference/pool.html">pool()</a></code> that allows the advanced user to specify a custom rule for calculating the total variance <span class="math inline"><em>T</em></span>. Contributed <a href="https://github.com/gerkovink" class="external-link">@gerkovink</a></p></li>
+<li><p>Adds new argument <code>exclude</code> to <code><a href="../reference/mice.impute.pmm.html">mice.impute.pmm()</a></code> that excludes a user-specified vector of values from matching. Excluded values will not appear in the imputations. Since the observed values are not imputed, the user-specified values are still being used to fit the imputation model (<a href="https://github.com/amices/mice/issues/392" class="external-link">#392</a>, <a href="https://github.com/amices/mice/issues/519" class="external-link">#519</a>). Contributed <a href="https://github.com/gerkovink" class="external-link">@gerkovink</a></p></li>
 </ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.14" id="mice-31414">mice 3.14.14<a class="anchor" aria-label="anchor" href="#mice-31414"></a></h2>
-<ul><li>Repairs URLs and latex glitches</li></ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.13" id="mice-31413">mice 3.14.13<a class="anchor" aria-label="anchor" href="#mice-31413"></a></h2>
-<ul><li>Adds new argument <code>exclude</code> to <code><a href="../reference/mice.impute.pmm.html">mice.impute.pmm()</a></code> that excludes a user-specified vector of values from matching. Excluded values will not appear in the imputations. Since the observed values are not imputed, the user-specified values are still being used to fit the imputation model (<a href="https://github.com/amices/mice/issues/392" class="external-link">#392</a>, <a href="https://github.com/amices/mice/issues/519" class="external-link">#519</a>). Contributed by <a href="https://github.com/gerkovink" class="external-link">@gerkovink</a></li></ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.12" id="mice-31412">mice 3.14.12<a class="anchor" aria-label="anchor" href="#mice-31412"></a></h2>
-<ul><li>Replaces <code>.Random.seed</code> reads from the <code>.GlobalEnv</code> by <code>get(".Random.seed", envir = globalenv(), mode = "integer", inherits = FALSE)</code>
-</li>
-<li>Repairs capitalisation problems with <code>lastSeedValue</code> variable name</li>
-<li>Solves <code>x$lastSeedValue</code> problem in <code><a href="../reference/cbind.mids.html">cbind.mids()</a></code> (<a href="https://github.com/amices/mice/issues/502" class="external-link">#502</a>)</li>
-<li>Styles all <code>.R</code> and <code>.Rmd</code> files</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.11" id="mice-31411">mice 3.14.11<a class="anchor" aria-label="anchor" href="#mice-31411"></a></h2>
-<ul><li>Reverts the internal seed behaviour back to <code>mice 3.13.10</code> (<a href="https://github.com/amices/mice/issues/515" class="external-link">#515</a>). <a href="https://github.com/amices/mice/issues/432" class="external-link">#432</a> introduced new local seed in response to <a href="https://github.com/amices/mice/issues/426" class="external-link">#426</a>. However, various issues arose with this facility (<a href="https://github.com/amices/mice/issues/459" class="external-link">#459</a>, <a href="https://github.com/amices/mice/issues/492" class="external-link">#492</a>, <a href="https://github.com/amices/mice/issues/502" class="external-link">#502</a>, <a href="https://github.com/amices/mice/issues/505" class="external-link">#505</a>). This version restores the old behaviour using global <code>.Random.seed</code>. Contributed <a href="https://github.com/gerkovink" class="external-link">@gerkovink</a></li></ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.10" id="mice-31410">mice 3.14.10<a class="anchor" aria-label="anchor" href="#mice-31410"></a></h2>
-<ul><li>Adds a <code>custom.t</code> argument to <code><a href="../reference/pool.html">pool()</a></code> that allows the advanced user to specify a custom rule for calculating the total variance <span class="math inline"><em>T</em></span>
-</li></ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.9" id="mice-3149">mice 3.14.9<a class="anchor" aria-label="anchor" href="#mice-3149"></a></h2>
-<ul><li>Adds decprecation notices to <code><a href="../reference/parlmice.html">parlmice()</a></code>
-</li>
-<li>Changes <code>seed</code> behavior in <code><a href="../reference/futuremice.html">futuremice()</a></code> so that we do not need <code><a href="https://withr.r-lib.org/reference/with_seed.html" class="external-link">withr::local_seed()</a></code> anymore</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.8" id="mice-3148">mice 3.14.8<a class="anchor" aria-label="anchor" href="#mice-3148"></a></h2>
-<ul><li>New function <code><a href="../reference/futuremice.html">futuremice()</a></code> adds improved support for parallel imputation (<a href="https://github.com/amices/mice/issues/504" class="external-link">#504</a>). Contributed <a href="https://github.com/thomvolker" class="external-link">@thomvolker</a>, <a href="https://github.com/gerkovink" class="external-link">@gerkovink</a></li>
+<div class="section level4">
+<h4 id="minor-changes-3-15-0">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-3-15-0"></a></h4>
+<ul><li>Styles all <code>.R</code> and <code>.Rmd</code> files</li>
+<li>Makes post-processing assignment consistent with lines 85/86 in <code>sampler.R</code> (<a href="https://github.com/amices/mice/issues/511" class="external-link">#511</a>)</li>
 <li>Edit test broken on R&lt;4 (<a href="https://github.com/amices/mice/issues/501" class="external-link">#501</a>). Contributed <a href="https://github.com/MichaelChirico" class="external-link">@MichaelChirico</a></li>
 <li>Adds support for models reporting contrasts rather than terms (<a href="https://github.com/amices/mice/issues/498" class="external-link">#498</a>). Contributed <a href="https://github.com/LukasWallrich" class="external-link">@LukasWallrich</a></li>
 <li>Applies edits to autocorrelation function (<a href="https://github.com/amices/mice/issues/491" class="external-link">#491</a>). Contributed <a href="https://github.com/hanneoberman" class="external-link">@hanneoberman</a></li>
 <li>Changes p-value calculation to more robust alternative (<a href="https://github.com/amices/mice/issues/494" class="external-link">#494</a>). Contributed <a href="https://github.com/AndrewLawrence" class="external-link">@AndrewLawrence</a></li>
 <li>Uses <code><a href="https://rdrr.io/r/base/class.html" class="external-link">inherits()</a></code> to check on class membership</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.7" id="mice-3147">mice 3.14.7<a class="anchor" aria-label="anchor" href="#mice-3147"></a></h2>
-<ul><li>Adds function for convergence evaluation (<a href="https://github.com/amices/mice/issues/484" class="external-link">#484</a>). Contributed <a href="https://github.com/hanneoberman" class="external-link">@hanneoberman</a></li></ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.6" id="mice-3146">mice 3.14.6<a class="anchor" aria-label="anchor" href="#mice-3146"></a></h2>
-<ul><li>Fixes problems with <code><a href="../reference/ampute.html">ampute()</a></code>
+<li>Adds decprecation notices to <code><a href="../reference/parlmice.html">parlmice()</a></code>
 </li>
 <li>Adapt <code>prop</code>, <code>patterns</code> and <code>weights</code> matrices for pattern with only 1’s</li>
 <li>Adds warning when patterns cannot be generated (<a href="https://github.com/amices/mice/issues/449" class="external-link">#449</a>, <a href="https://github.com/amices/mice/issues/317" class="external-link">#317</a>, <a href="https://github.com/amices/mice/issues/451" class="external-link">#451</a>)</li>
 <li>Adds warning on the order of model terms in <code><a href="../reference/D1.html">D1()</a></code> and <code><a href="../reference/D2.html">D2()</a></code> (<a href="https://github.com/amices/mice/issues/420" class="external-link">#420</a>)</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.5" id="mice-3145">mice 3.14.5<a class="anchor" aria-label="anchor" href="#mice-3145"></a></h2>
-<ul><li>Adds new multivariate imputation method <code><a href="../reference/mice.impute.mpmm.html">mice.impute.mpmm()</a></code>. (<a href="https://github.com/amices/mice/issues/460" class="external-link">#460</a>)</li></ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.4" id="mice-3144">mice 3.14.4<a class="anchor" aria-label="anchor" href="#mice-3144"></a></h2>
-<ul><li>Preserves stochastic nature of <code><a href="../reference/mice.html">mice()</a></code> by smarter random seed initialisation (<a href="https://github.com/amices/mice/issues/459" class="external-link">#459</a>)</li></ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.3" id="mice-3143">mice 3.14.3<a class="anchor" aria-label="anchor" href="#mice-3143"></a></h2>
-<ul><li>Adds example code to fit model on train data and apply to test data to <code><a href="../reference/mice.html">mice()</a></code>
+<li>Adds example code to fit model on train data and apply to test data to <code><a href="../reference/mice.html">mice()</a></code>
 </li>
 <li>Adds example code on synthetic data generation and analysis in <code><a href="../reference/make.where.html">make.where()</a></code>
 </li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.2" id="mice-3142">mice 3.14.2<a class="anchor" aria-label="anchor" href="#mice-3142"></a></h2>
-<ul><li>Repairs a <code>drop = FALSE</code> buglet in <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> (<a href="https://github.com/amices/mice/issues/447" class="external-link">#447</a>, <a href="https://github.com/amices/mice/issues/448" class="external-link">#448</a>)</li>
 <li>Adds testfile <code>test-mice.impute.rf.R</code>(<a href="https://github.com/amices/mice/issues/448" class="external-link">#448</a>)</li>
 </ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.14.1" id="mice-3141">mice 3.14.1<a class="anchor" aria-label="anchor" href="#mice-3141"></a></h2>
-<ul><li>@str-amg reported that the new dependency on <code>withr</code> package should have version 2.4.0 (published in January 2021) or higher. Versions <code>withr 2.3.0</code> and before may give <code>Error: object 'local_seed' is not exported by 'namespace:withr'</code>. Either update manually, or install the patched version <code>mice 3.14.1</code> from GitHub. (<a href="https://github.com/amices/mice/issues/445" class="external-link">#445</a>)</li></ul></div>
+<div class="section level4">
+<h4 id="bug-fixes-3-15-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-15-0"></a></h4>
+<ul><li>Replaces <code>.Random.seed</code> reads from the <code>.GlobalEnv</code> by <code>get(".Random.seed", envir = globalenv(), mode = "integer", inherits = FALSE)</code>
+</li>
+<li>Repairs capitalisation problems with <code>lastSeedValue</code> variable name</li>
+<li>Solves <code>x$lastSeedValue</code> problem in <code><a href="../reference/cbind.mids.html">cbind.mids()</a></code> (<a href="https://github.com/amices/mice/issues/502" class="external-link">#502</a>)</li>
+<li>Fixes problems with <code><a href="../reference/ampute.html">ampute()</a></code>
+</li>
+<li>Preserves stochastic nature of <code><a href="../reference/mice.html">mice()</a></code> by smarter random seed initialisation (<a href="https://github.com/amices/mice/issues/459" class="external-link">#459</a>)</li>
+<li>Repairs a <code>drop = FALSE</code> buglet in <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> (<a href="https://github.com/amices/mice/issues/447" class="external-link">#447</a>, <a href="https://github.com/amices/mice/issues/448" class="external-link">#448</a>)</li>
+<li>@str-amg reported that the new dependency on <code>withr</code> package should have version 2.4.0 (published in January 2021) or higher. Versions <code>withr 2.3.0</code> and before may give <code>Error: object 'local_seed' is not exported by 'namespace:withr'</code>. Either update manually, or install the patched version <code>mice 3.14.1</code> from GitHub. (<a href="https://github.com/amices/mice/issues/445" class="external-link">#445</a>). NOTE: <code>withr</code> is no longer needed in <code>mice 3.15.0</code>
+</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.14.0" id="mice-3140">mice 3.14.0<a class="anchor" aria-label="anchor" href="#mice-3140"></a></h2><p class="text-muted">CRAN release: 2021-11-24</p>
 <div class="section level4">
