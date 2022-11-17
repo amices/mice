@@ -26,6 +26,7 @@ test_that("all examples work", {
 })
 
 test_that("all arguments work", {
+  set.seed(123)
   # empty run
   expect_error(ampute(data = complete.data, run = FALSE), NA)
   # missingness by cells
@@ -84,7 +85,7 @@ test_that("all arguments work", {
     0, 0, 0, 1, 0, 0, 0, 0, 0,
     1, 0, 0, 0, 0, 0, 0, 0, 0
   ), ncol = 2, byrow = FALSE)
-  wss <- ampute(data = dich.data, mech = "MNAR")$scores
+  wss <- expect_warning(ampute(data = dich.data, mech = "MNAR")$scores)
   check_na <- function(x) {
     return(any(is.na(x)))
   }
