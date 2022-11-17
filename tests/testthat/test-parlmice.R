@@ -10,14 +10,14 @@ test_that("Warning and Imputations between mice and parlmice are unequal", {
 # Same seed - single core -
 # Result: Imputations equal between mice and parlmice
 test_that("Imputations are equal between mice and parlmice", {
-  C <- parlmice(nhanes, n.core = 1, n.imp.core = 5, seed = 123)
+  expect_warning(C <- parlmice(nhanes, n.core = 1, n.imp.core = 5, seed = 123))
   D <- mice(nhanes, m = 5, print = FALSE, seed = 123)
   expect_identical(complete(C, "long"), complete(D, "long"))
 })
 
 # Should return m = 8
-I <- parlmice(nhanes, n.core = 2, n.imp.core = 4)
 test_that("Cores and n.imp.core specified. Override m", {
+  expect_warning(I <- parlmice(nhanes, n.core = 2, n.imp.core = 4))
   expect_identical(I$m, 2 * 4)
 })
 
@@ -35,7 +35,7 @@ test_that("n.imp.core not specified", {
 
 # Should return error
 test_that("n.core larger than logical CPU cores", {
-  expect_error(parlmice(nhanes, n.core = parallel::detectCores() + 1))
+  expect_error(suppresWarnings(parlmice(nhanes, n.core = parallel::detectCores() + 1)))
 })
 
 # # NOT RUN ON R CMD CHECK AND CRAN CHECK - TOO MANY PARALLEL PROCESSES SPAWNED
