@@ -7,19 +7,25 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## mice 3.14.0
+## mice 3.15.0
 
 New submission. 
 
 ## Reason
 
-A report from CRAN indicates that `install.on.demand()` breaks the CRAN work flow, so an urgent update is needed. In addition, there are many changes and improvements since the last CRAN version 3.13.0 published in Jan 2021.
+`mice 3.15.0` contains many changes and enhancements over `mice 3.14.0`
 
 ## Test environments
 
-* local OS X install, 11.6, R 4.1.2
-* win-builder
-* Rhub
+### Local
+
+```{r}
+R.Version()
+```
+
+### win-builder
+
+### * Rhub
 
 ## Local check
 
@@ -31,7 +37,7 @@ build()
 ```
 
 ```{bash eval=FALSE}
-R CMD CHECK mice_3.14.0.tar.gz
+R CMD CHECK mice_3.14.15.tar.gz
 ```
 
 Status: OK
@@ -42,7 +48,7 @@ Status: OK
 devtools::check_win_devel()
 ```
 
-Status: OK
+Status: 1 NOTE
 
 
 ## Rhub checks
@@ -53,9 +59,10 @@ devtools::check_rhub()
 
 Results:
 
-1. Debian Linux, R-devel, GCC ASAN/UBSAN: Success
-3. Ubuntu Linux 20.04.1 LTS, R-release, GCC: Success
-4. Fedora Linux, R-devel, clang, gfortran: Success
+1. Debian Linux, R-devel, GCC ASAN/UBSAN: 
+2. Windows Server 2022, R-devel, 64 bit: **Success**
+3. Ubuntu Linux 20.04.1 LTS, R-release, GCC: 
+4. Fedora Linux, R-devel, clang, gfortran: 
 
 
 ## Downstream dependencies
