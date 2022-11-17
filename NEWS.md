@@ -17,6 +17,7 @@
 ### Minor changes
 
 * Styles all `.R` and `.Rmd` files
+* Makes post-processing assignment consistent with lines 85/86 in `sampler.R` (#511)
 * Edit test broken on R<4 (#501). Contributed @MichaelChirico
 * Adds support for models reporting contrasts rather than terms (#498). Contributed @LukasWallrich
 * Applies edits to autocorrelation function (#491). Contributed @hanneoberman
