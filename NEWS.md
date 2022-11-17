@@ -1,77 +1,44 @@
-# mice 3.14.15
+# mice 3.15.0
 
-* Makes post-processing assignment consistent with lines 85/86 in `sampler.R` (#511)
-* Updates test scripts
+### Major changes
 
-# mice 3.14.14
+* Adds a function `futuremice()` with support for parallel imputation using the `future` package (#504). Contributed @thomvolker, @gerkovink
 
-* Repairs URLs and latex glitches
+* Adds multivariate predictive mean matching `mice.impute.mpmm()`. (#460). Contributed @Mingyang-Cai
 
-# mice 3.14.13
-
-* Adds new argument `exclude` to `mice.impute.pmm()` that excludes a user-specified vector of values from matching. Excluded values will not appear in the imputations. Since the observed values are not imputed, the user-specified values are still being used to fit the imputation model (#392, #519). Contributed by @gerkovink
-
-# mice 3.14.12
-
-* Replaces `.Random.seed` reads from the `.GlobalEnv` by `get(".Random.seed", envir = globalenv(), mode = "integer", inherits = FALSE)`
-* Repairs capitalisation problems with `lastSeedValue` variable name
-* Solves `x$lastSeedValue` problem in `cbind.mids()` (#502)
-* Styles all `.R` and `.Rmd` files
-
-# mice 3.14.11
+* Adds `convergence()` for convergence evaluation (#484). Contributed @hanneoberman
 
 * Reverts the internal seed behaviour back to `mice 3.13.10` (#515). #432 introduced new local seed in response to #426. However, various issues arose with this facility (#459, #492, #502, #505). This version restores the old behaviour using global `.Random.seed`. Contributed @gerkovink 
 
-# mice 3.14.10
+* Adds a `custom.t` argument to `pool()` that allows the advanced user to specify a custom rule for calculating the total variance $T$. Contributed @gerkovink
 
-* Adds a `custom.t` argument to `pool()` that allows the advanced user to specify a custom rule for calculating the total variance $T$
+* Adds new argument `exclude` to `mice.impute.pmm()` that excludes a user-specified vector of values from matching. Excluded values will not appear in the imputations. Since the observed values are not imputed, the user-specified values are still being used to fit the imputation model (#392, #519). Contributed @gerkovink
 
-# mice 3.14.9
+### Minor changes
 
-* Adds decprecation notices to `parlmice()`
-* Changes `seed` behavior in `futuremice()` so that we do not need `withr::local_seed()` anymore
-
-# mice 3.14.8
-
-* New function `futuremice()` adds improved support for parallel imputation (#504). Contributed @thomvolker, @gerkovink
+* Styles all `.R` and `.Rmd` files
 * Edit test broken on R<4 (#501). Contributed @MichaelChirico
 * Adds support for models reporting contrasts rather than terms (#498). Contributed @LukasWallrich
 * Applies edits to autocorrelation function (#491). Contributed @hanneoberman
 * Changes p-value calculation to more robust alternative (#494). Contributed @AndrewLawrence
 * Uses `inherits()` to check on class membership
-
-# mice 3.14.7
-
-* Adds function for convergence evaluation (#484). Contributed @hanneoberman
-
-# mice 3.14.6
-
-* Fixes problems with `ampute()`
+* Adds decprecation notices to `parlmice()`
 * Adapt `prop`, `patterns` and `weights` matrices for pattern with only 1's
 * Adds warning when patterns cannot be generated (#449, #317, #451)
 * Adds warning on the order of model terms in `D1()` and `D2()` (#420)
-
-# mice 3.14.5
-
-* Adds new multivariate imputation method `mice.impute.mpmm()`. (#460)
-
-# mice 3.14.4
-
-* Preserves stochastic nature of `mice()` by smarter random seed initialisation (#459)
-
-# mice 3.14.3
-
 * Adds example code to fit model on train data and apply to test data to `mice()`
 * Adds example code on synthetic data generation and analysis in `make.where()`
-
-# mice 3.14.2
-
-* Repairs a `drop = FALSE` buglet in `mice.impute.rf()` (#447, #448)
 * Adds testfile `test-mice.impute.rf.R`(#448)
 
-# mice 3.14.1
+### Bug fixes
 
-* @str-amg reported that the new dependency on `withr` package should have version 2.4.0  (published in January 2021) or higher. Versions `withr 2.3.0` and before may give `Error: object 'local_seed' is not exported by 'namespace:withr'`. Either update manually, or install the patched version `mice 3.14.1` from GitHub. (#445)
+* Replaces `.Random.seed` reads from the `.GlobalEnv` by `get(".Random.seed", envir = globalenv(), mode = "integer", inherits = FALSE)`
+* Repairs capitalisation problems with `lastSeedValue` variable name
+* Solves `x$lastSeedValue` problem in `cbind.mids()` (#502)
+* Fixes problems with `ampute()`
+* Preserves stochastic nature of `mice()` by smarter random seed initialisation (#459)
+* Repairs a `drop = FALSE` buglet in `mice.impute.rf()` (#447, #448)
+* @str-amg reported that the new dependency on `withr` package should have version 2.4.0  (published in January 2021) or higher. Versions `withr 2.3.0` and before may give `Error: object 'local_seed' is not exported by 'namespace:withr'`. Either update manually, or install the patched version `mice 3.14.1` from GitHub. (#445). NOTE: `withr` is no longer needed in `mice 3.15.0`
 
 # mice 3.14.0
 
