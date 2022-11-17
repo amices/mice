@@ -1,3 +1,8 @@
+# mice 3.14.15
+
+* Makes post-processing assignment consistent with lines 85/86 in `sampler.R` (#511)
+* Updates test scripts
+
 # mice 3.14.14
 
 * Repairs URLs and latex glitches

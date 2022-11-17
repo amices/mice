@@ -1,8 +1,8 @@
 Package: mice
 Type: Package
-Version: 3.14.14
+Version: 3.14.15
 Title: Multivariate Imputation by Chained Equations
-Date: 2022-11-14
+Date: 2022-11-17
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
