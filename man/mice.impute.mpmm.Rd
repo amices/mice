@@ -38,35 +38,25 @@ If there are more than one missingness pattern, the function will return
 a warning.
 }
 \examples{
-require(lattice)
-
-# Create Data
-B1 <- .5
-B2 <- .5
-X <- rnorm(1000)
-XX <- X^2
+# simulate data
+beta2 <- beta1 <- .5
+x <- rnorm(1000)
 e <- rnorm(1000, 0, 1)
-Y <- B1 * X + B2 * XX + e
-dat <- data.frame(x = X, xx = XX, y = Y)
+y <- beta1 * x + beta2 * x^2 + e
+dat <- data.frame(y = y, x = x, x2 = x^2)
+m <- as.logical(rbinom(1000, 1, 0.25))
+dat[m, c("x", "x2")] <- NA
 
-# Impose 25 percent MCAR Missingness
-dat[0 == rbinom(1000, 1, 1 - .25), 1:2] <- NA
+# impute
+blk <- list("y", c("x", "x2"))
+meth <- c("", "mpmm")
+imp <- mice(dat, blocks = blk, method = meth, print = FALSE,
+    m = 2, maxit = 2)
 
-# Prepare data for imputation
-blk <- list(c("x", "xx"), "y")
-meth <- c("mpmm", "")
-
-# Impute data
-imp <- mice(dat, blocks = blk, method = meth, print = FALSE)
-
-# Pool results
-pool(with(imp, lm(y ~ x + xx)))
-
-# Plot results
-stripplot(imp)
-plot(dat$x, dat$xx, col = mdc(1), xlab = "x", ylab = "xx")
-cmp <- complete(imp)
-points(cmp$x[is.na(dat$x)], cmp$xx[is.na(dat$x)], col = mdc(2))
+# analyse and check
+summary(pool(with(imp, lm(y ~ x + x2))))
+with(dat, plot(x, x2, col = mdc(1)))
+with(complete(imp), points(x[m], x2[m], col = mdc(2)))
 }
 \seealso{
 \code{\link{mice.impute.pmm}}
