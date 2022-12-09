@@ -1,3 +1,8 @@
+# mice 3.15.1
+
+* Solves a bug in `mice.impute.mpmm()` that changed the column order of the data
+* Polishes `mice.impute.mpmm()` example code
+
 # mice 3.15.0
 
 ### Major changes
