@@ -89,7 +89,6 @@ mpmm.impute <- function(data, ...) {
   imp <- mice.impute.pmm(z, ry, x)
   zstar <- as.matrix(imp)
   y[wy, ] <- y[ry, , drop = FALSE][match(zstar, z[ry]), ]
-  data <- cbind(y, x)
-  data <- as.data.frame(data)
+  data[colnames(y)] <- y
   return(data)
 }
