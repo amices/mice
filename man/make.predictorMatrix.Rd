@@ -4,13 +4,16 @@
 \alias{make.predictorMatrix}
 \title{Creates a \code{predictorMatrix} argument}
 \usage{
-make.predictorMatrix(data, blocks = make.blocks(data))
+make.predictorMatrix(data, blocks = make.blocks(data), predictorMatrix = NULL)
 }
 \arguments{
 \item{data}{A \code{data.frame} with the source data}
 
 \item{blocks}{An optional specification for blocks of variables in
 the rows. The default assigns each variable in its own block.}
+
+\item{predictorMatrix}{A predictor matrix from which rows with the same
+names are copied into the output predictor matrix.}
 }
 \value{
 A matrix

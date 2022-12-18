@@ -256,3 +256,4 @@ test_that("MICE does not accept data.frames with embedded matrix ", {
     "Cannot handle columns with class matrix: hyp"
   )
 })
+

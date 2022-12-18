@@ -44,7 +44,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
           b <- blocks[[h]]
           if (calltype == "formula") ff <- formulas[[h]] else ff <- NULL
-          if (calltype == "type") type <- predictorMatrix[h, ] else type <- NULL
+          type <- predictorMatrix[h, ]
 
           user <- blots[[h]]
 
