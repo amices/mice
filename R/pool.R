@@ -148,7 +148,7 @@
 #' pool(fit, custom.t = ".data$b + .data$b / .data$m")
 #'
 #' @export
-pool <- function(object, dfcom = NULL, rule = NULL, custom.t = NULL) {
+pool <- function(object, dfcom = NULL, rule = NULL, custom.t = NULL, custom.df = NULL) {
   call <- match.call()
 
   if (!is.list(object)) stop("Argument 'object' not a list", call. = FALSE)
@@ -161,7 +161,7 @@ pool <- function(object, dfcom = NULL, rule = NULL, custom.t = NULL) {
   }
 
   dfcom <- get.dfcom(object, dfcom)
-  pooled <- pool.fitlist(getfit(object), dfcom = dfcom, rule = rule, custom.t = custom.t)
+  pooled <- pool.fitlist(getfit(object), dfcom = dfcom, rule = rule, custom.t = custom.t, custom.df = custom.df)
 
   # mipo object
   rr <- list(
@@ -174,7 +174,7 @@ pool <- function(object, dfcom = NULL, rule = NULL, custom.t = NULL) {
 }
 
 pool.fitlist <- function(fitlist, dfcom = NULL,
-                         rule = c("rubin1987", "reiter2003"), custom.t = NULL) {
+                         rule = c("rubin1987", "reiter2003"), custom.t = NULL, custom.df = NULL) {
   # rubin1987: Rubin's rules for scalar estimates
   # reiter2003: Reiter's rules for partially synthetic data
   rule <- match.arg(rule)
@@ -206,7 +206,10 @@ pool.fitlist <- function(fitlist, dfcom = NULL,
           eval(parse(text = custom.t))
         ),
         dfcom = dfcom,
-        df = barnard.rubin(.data$m, .data$b, .data$t, .data$dfcom),
+        df = ifelse(is.null(custom.df),
+                    barnard.rubin(.data$m, .data$b, .data$t, .data$dfcom),
+                    eval(parse(text = custom.df))
+        ),
         riv = (1 + 1 / .data$m) * .data$b / .data$ubar,
         lambda = (1 + 1 / .data$m) * .data$b / .data$t,
         fmi = (.data$riv + 2 / (.data$df + 3)) / (.data$riv + 1)
@@ -226,7 +229,10 @@ pool.fitlist <- function(fitlist, dfcom = NULL,
           eval(parse(text = custom.t))
         ),
         dfcom = dfcom,
-        df = (.data$m - 1) * (1 + (.data$ubar / (.data$b / .data$m)))^2,
+        df = ifelse(is.null(custom.df),
+                    (.data$m - 1) * (1 + (.data$ubar / (.data$b / .data$m)))^2,
+                    eval(parse(text = custom.df))
+        ),
         riv = (1 + 1 / .data$m) * .data$b / .data$ubar,
         lambda = NA_real_,
         fmi = NA_real_
