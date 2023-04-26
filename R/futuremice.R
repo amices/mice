@@ -97,20 +97,8 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
   # number of available cores
   available <- parallelly::availableCores(logical = use.logical)
 
-  if (!is.null(n.core)) {
-    # check if arguments match CPU specifications
-    if (n.core > available) {
-      warning(paste("Number of cores specified is greater than the number of logical cores in your CPU, futuremice falls back to", available, "cores."))
-      n.core <- available
-    }
-    if (n.core > m) {
-      warning(paste("The number of cores exceeds the number of imputations. The number of cores used is set equal to the number of imputations (m =", m, ")."))
-      n.core <- m
-    }
-  } else {
-    n.core <- available - 1
-    message(paste("Number of cores not specified. Based on your machine a value of n.core =", n.core, "is chosen; the imputations are distributed about equally over the cores."))
-  }
+  # set the number of cores
+  n.core <- check.cores(n.core, available, m)
 
   if (n.core > 1) {
     dist.core <- cut(1:m, n.core, labels = paste0("core", 1:n.core))
@@ -191,4 +179,16 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
   imp$parallelseed <- parallelseed
 
   return(imp)
+}
+
+check.cores <- function(n.core, available, m) {
+  if (is.null(n.core)) {
+    n.core <- min(available - 1, m)
+  } else {
+    if (n.core > available | n.core > m) {
+      warning(paste("'n.core' exceeds the maximum number of available cores on your machine or the number of imputations, and is set to", min(available - 1, m)))
+    }
+    n.core <- min(available - 1, m, n.core)
+  }
+  n.core
 }
