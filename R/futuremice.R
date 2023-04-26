@@ -131,8 +131,13 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
   if (!is.na(parallelseed)) {
     set.seed(parallelseed)
   } else {
-    parallelseed <- get(".Random.seed",
-      envir = globalenv(), mode = "integer",
+    if(!exists(".Random.seed")) {
+      set.seed(NULL)
+    }
+    parallelseed <- get(
+      ".Random.seed",
+      envir = globalenv(), 
+      mode = "integer",
       inherits = FALSE
     )
   }
