@@ -1,3 +1,9 @@
+# mice 3.15.2
+
+* Expand `futuremice()` functionality by allowing for external packages and user-written functions.
+* Fix small bug in `futuremice()` that throws an error when the number of cores is not specified, but the number of available cores is greater than the number of imputations.
+* Initialize random number generator in `futuremice()` if there is no `.Random.seed` yet.
+
 # mice 3.15.1
 
 * Solves a bug in `mice.impute.mpmm()` that changed the column order of the data
