@@ -46,8 +46,11 @@
 #' The default \code{multisession} resolves futures asynchronously (in parallel)
 #' in separate \code{R} sessions running in the background. See
 #' \code{\link[future]{plan}} for more information on future plans.
-#' @param ... Named arguments that are passed down to function
-#' \code{\link{mice}}.
+#' @param packages A character vector with additional packages to be used in 
+#' \code{mice} (e.g., for using external imputation functions).
+#' @param globals A character string with additional functions to be exported to
+#' each future (e.g., user-written imputation functions).
+#' @param ... Named arguments that are passed down to function \code{\link{mice}}.
 #'
 #' @return A mids object as defined by \code{\link{mids-class}}
 #'
@@ -75,7 +78,8 @@
 #'
 #' @export
 futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
-                       use.logical = TRUE, future.plan = "multisession", ...) {
+                       use.logical = TRUE, future.plan = "multisession", 
+                       packages = NULL, globals = NULL, ...) {
   # check if pacakages available
   install.on.demand("parallelly", ...)
   install.on.demand("furrr", ...)
@@ -151,15 +155,21 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
   )
 
   # begin future
-  imps <- furrr::future_map(n.imp.core, function(x) {
-    mice(
-      data = data,
-      m = x,
-      printFlag = FALSE,
-      seed = seed,
-      ...
+  imps <- furrr::future_map(
+    n.imp.core, 
+    function(x) {
+      mice(data = data,
+           m = x,
+           printFlag = FALSE,
+           seed = seed,
+           ...
+      )},
+    .options = furrr::furrr_options(
+      seed = TRUE,
+      globals = globals,
+      packages = packages
     )
-  }, .options = furrr::furrr_options(seed = TRUE))
+  )
 
   # end multisession
   future::plan(future::sequential)
