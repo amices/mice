@@ -1,3 +1,8 @@
+# mice 3.15.2 
+
+* Updates GitHub actions for package checking and site building
+* Preserves user settings in `predictorMatrix` for case F by adding a `predictorMatrix` argument to `make.predictorMatrix()`
+
 # mice 3.15.1
 
 * Solves a bug in `mice.impute.mpmm()` that changed the column order of the data
