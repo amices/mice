@@ -46,8 +46,11 @@
 #' The default \code{multisession} resolves futures asynchronously (in parallel)
 #' in separate \code{R} sessions running in the background. See
 #' \code{\link[future]{plan}} for more information on future plans.
-#' @param ... Named arguments that are passed down to function
-#' \code{\link{mice}}.
+#' @param packages A character vector with additional packages to be used in 
+#' \code{mice} (e.g., for using external imputation functions).
+#' @param globals A character string with additional functions to be exported to
+#' each future (e.g., user-written imputation functions).
+#' @param ... Named arguments that are passed down to function \code{\link{mice}}.
 #'
 #' @return A mids object as defined by \code{\link{mids-class}}
 #'
@@ -75,7 +78,8 @@
 #'
 #' @export
 futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
-                       use.logical = TRUE, future.plan = "multisession", ...) {
+                       use.logical = TRUE, future.plan = "multisession", 
+                       packages = NULL, globals = NULL, ...) {
   # check if pacakages available
   install.on.demand("parallelly", ...)
   install.on.demand("furrr", ...)
@@ -93,20 +97,8 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
   # number of available cores
   available <- parallelly::availableCores(logical = use.logical)
 
-  if (!is.null(n.core)) {
-    # check if arguments match CPU specifications
-    if (n.core > available) {
-      warning(paste("Number of cores specified is greater than the number of logical cores in your CPU, futuremice falls back to", available, "cores."))
-      n.core <- available
-    }
-    if (n.core > m) {
-      warning(paste("The number of cores exceeds the number of imputations. The number of cores used is set equal to the number of imputations (m =", m, ")."))
-      n.core <- m
-    }
-  } else {
-    n.core <- available - 1
-    message(paste("Number of cores not specified. Based on your machine a value of n.core =", n.core, "is chosen; the imputations are distributed about equally over the cores."))
-  }
+  # set the number of cores
+  n.core <- check.cores(n.core, available, m)
 
   if (n.core > 1) {
     dist.core <- cut(1:m, n.core, labels = paste0("core", 1:n.core))
@@ -139,8 +131,13 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
   if (!is.na(parallelseed)) {
     set.seed(parallelseed)
   } else {
-    parallelseed <- get(".Random.seed",
-      envir = globalenv(), mode = "integer",
+    if(!exists(".Random.seed")) {
+      set.seed(NULL)
+    }
+    parallelseed <- get(
+      ".Random.seed",
+      envir = globalenv(), 
+      mode = "integer",
       inherits = FALSE
     )
   }
@@ -151,15 +148,21 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
   )
 
   # begin future
-  imps <- furrr::future_map(n.imp.core, function(x) {
-    mice(
-      data = data,
-      m = x,
-      printFlag = FALSE,
-      seed = seed,
-      ...
+  imps <- furrr::future_map(
+    n.imp.core, 
+    function(x) {
+      mice(data = data,
+           m = x,
+           printFlag = FALSE,
+           seed = seed,
+           ...
+      )},
+    .options = furrr::furrr_options(
+      seed = TRUE,
+      globals = globals,
+      packages = packages
     )
-  }, .options = furrr::furrr_options(seed = TRUE))
+  )
 
   # end multisession
   future::plan(future::sequential)
@@ -181,4 +184,16 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
   imp$parallelseed <- parallelseed
 
   return(imp)
+}
+
+check.cores <- function(n.core, available, m) {
+  if (is.null(n.core)) {
+    n.core <- min(available - 1, m)
+  } else {
+    if (n.core > available | n.core > m) {
+      warning(paste("'n.core' exceeds the maximum number of available cores on your machine or the number of imputations, and is set to", min(available - 1, m)))
+    }
+    n.core <- min(available - 1, m, n.core)
+  }
+  n.core
 }

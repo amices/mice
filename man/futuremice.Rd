@@ -12,6 +12,8 @@ futuremice(
   seed = NA,
   use.logical = TRUE,
   future.plan = "multisession",
+  packages = NULL,
+  globals = NULL,
   ...
 )
 }
@@ -42,8 +44,13 @@ The default \code{multisession} resolves futures asynchronously (in parallel)
 in separate \code{R} sessions running in the background. See
 \code{\link[future]{plan}} for more information on future plans.}
 
-\item{...}{Named arguments that are passed down to function
-\code{\link{mice}}.}
+\item{packages}{A character vector with additional packages to be used in 
+\code{mice} (e.g., for using external imputation functions).}
+
+\item{globals}{A character string with additional functions to be exported to
+each future (e.g., user-written imputation functions).}
+
+\item{...}{Named arguments that are passed down to function \code{\link{mice}}.}
 }
 \value{
 A mids object as defined by \code{\link{mids-class}}
