@@ -384,6 +384,7 @@ mice <- function(data,
     formulas <- check.formulas(formulas, data)
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
     blocks <- construct.blocks(formulas, predictorMatrix)
+    predictorMatrix <- make.predictorMatrix(data, blocks, predictorMatrix)
   }
 
   # case G

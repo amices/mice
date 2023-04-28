@@ -220,11 +220,13 @@ construct.blocks <- function(formulas = NULL, predictorMatrix = NULL) {
 
   # combine into unique blocks
   blocknames <- unique(c(names(blocks.f), names(blocks.p)))
-  keep <- setdiff(blocknames, names(blocks.f))
-  blocks <- c(blocks.f, blocks.p[keep])
+  vars.f <- unlist(lapply(formulas, lhs))
+  keep <- setdiff(blocknames, vars.f)
+  add.p <- blocks.p[names(blocks.p) %in% keep]
+  blocks <- c(blocks.f, add.p)
   ct <- c(
     rep("formula", length(formulas)),
-    rep("type", length(keep))
+    rep("type", length(add.p))
   )
   names(ct) <- names(blocks)
   attr(blocks, "calltype") <- ct

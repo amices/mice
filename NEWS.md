@@ -1,8 +1,13 @@
-# mice 3.15.2
 
 * Expand `futuremice()` functionality by allowing for external packages and user-written functions.
 * Fix small bug in `futuremice()` that throws an error when the number of cores is not specified, but the number of available cores is greater than the number of imputations.
 * Initialize random number generator in `futuremice()` if there is no `.Random.seed` yet.
+
+# mice 3.15.2 
+
+* Updates GitHub actions for package checking and site building
+* Preserves user settings in `predictorMatrix` for case F by adding a `predictorMatrix` argument to `make.predictorMatrix()`
+>>>>>>> d76db78a6fd3961c76e4ee0d737bf3cd7dd791ad
 
 # mice 3.15.1
 

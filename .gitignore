@@ -11,3 +11,4 @@ inst/doc
 /revdep/data.sqlite
 /revdep/*.html
 script
+docs
