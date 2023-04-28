@@ -2,10 +2,7 @@
 
 * Updates GitHub actions for package checking and site building
 * Preserves user settings in `predictorMatrix` for case F by adding a `predictorMatrix` argument to `make.predictorMatrix()`
-<<<<<<< HEAD
->>>>>>> d76db78a6fd3961c76e4ee0d737bf3cd7dd791ad
-=======
->>>>>>> master
+
 
 # mice 3.15.1
 
