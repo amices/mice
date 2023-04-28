@@ -2,7 +2,7 @@ Package: mice
 Type: Package
 Version: 3.15.2
 Title: Multivariate Imputation by Chained Equations
-Date: 2023-04-26
+Date: 2023-04-28
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -96,7 +96,9 @@ Description: Multiple imputation using Fully Conditional Specification (FCS)
 Encoding: UTF-8
 LazyLoad: yes
 LazyData: yes
-URL: https://github.com/amices/mice, https://amices.org/mice/, https://stefvanbuuren.name/fimd/
+URL: https://github.com/amices/mice,
+    https://amices.org/mice/,
+    https://stefvanbuuren.name/fimd/
 BugReports: https://github.com/amices/mice/issues
 LinkingTo: cpp11, Rcpp
 SystemRequirements: C++11
