@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.15.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.15.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,6 +51,12 @@
       <small>Source: <a href="https://github.com/amices/mice/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.15.3" id="mice-3153">mice 3.15.3<a class="anchor" aria-label="anchor" href="#mice-3153"></a></h2>
+<ul><li>Expand <code><a href="../reference/futuremice.html">futuremice()</a></code> functionality by allowing for external packages and user-written functions (<a href="https://github.com/amices/mice/issues/550" class="external-link">#550</a>). Contributed <a href="https://github.com/thomvolker" class="external-link">@thomvolker</a></li>
+<li>Fix small bug in <code><a href="../reference/futuremice.html">futuremice()</a></code> that throws an error when the number of cores is not specified, but the number of available cores is greater than the number of imputations.</li>
+<li>Initialize random number generator in <code><a href="../reference/futuremice.html">futuremice()</a></code> if there is no <code>.Random.seed</code> yet.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.15.2" id="mice-3152">mice 3.15.2<a class="anchor" aria-label="anchor" href="#mice-3152"></a></h2>
 <ul><li>Updates GitHub actions for package checking and site building</li>
