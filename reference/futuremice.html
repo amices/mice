@@ -78,6 +78,8 @@ about equally over the cores.</p>
 <span>  seed <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  use.logical <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  future.plan <span class="op">=</span> <span class="st">"multisession"</span>,</span>
+<span>  packages <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  globals <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -124,9 +126,18 @@ in separate <code>R</code> sessions running in the background. See
 <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></code> for more information on future plans.</p></dd>
 
 
+<dt>packages</dt>
+<dd><p>A character vector with additional packages to be used in 
+<code>mice</code> (e.g., for using external imputation functions).</p></dd>
+
+
+<dt>globals</dt>
+<dd><p>A character string with additional functions to be exported to
+each future (e.g., user-written imputation functions).</p></dd>
+
+
 <dt>...</dt>
-<dd><p>Named arguments that are passed down to function
-<code><a href="mice.html">mice</a></code>.</p></dd>
+<dd><p>Named arguments that are passed down to function <code><a href="mice.html">mice</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
