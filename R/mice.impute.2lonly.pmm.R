@@ -110,7 +110,11 @@ mice.impute.2lonly.pmm <- function(y, ry, x, type, wy = NULL, ...) {
   if (is.null(wy)) wy <- !ry
 
   # handle categorical data
-  if (is.factor(y)) y <- as.integer(y)
+  ylev <- NULL
+  if (is.factor(y)) {
+    ylev <- levels(y)
+    y <- as.integer(y)
+  }
 
   # extract cluster index
   clusterx <- x[, type == -2L]
@@ -164,5 +168,13 @@ mice.impute.2lonly.pmm <- function(y, ry, x, type, wy = NULL, ...) {
   cly2 <- a1[wy2, 1L]
   i1 <- match(clusterx, cly2)
   ximp <- (ximp2[i1])[wy]
+
+  # turn back into factor
+  if (!is.null(ylev)) {
+    ximp <- factor(as.integer(ximp),
+                   levels = 1L:length(ylev),
+                   labels = ylev)
+  }
+
   ximp
 }
