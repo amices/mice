@@ -123,11 +123,11 @@ name.formulas <- function(formulas, prefix = "F") {
   formulas
 }
 
-
+# we need a blocks argument to solve case G
 check.formulas <- function(formulas, data) {
   formulas <- name.formulas(formulas)
   formulas <- handle.oldstyle.formulas(formulas, data)
-  formulas <- lapply(formulas, expand.dots, data)
+  formulas <- lapply(formulas, expand.dots, data = data)
   # escape if formula is list of two formula's
   if (any(sapply(formulas, is.list))) {
     return(formulas)
@@ -248,6 +248,6 @@ expand.dots <- function(formula, data) {
 
   y <- lhs(formula)
   x <- setdiff(colnames(data), y)
-  fs <- paste(paste(y, collapse = "+"), "~", paste(x, collapse = "+"))
+  fs <- paste(paste(y, collapse = " + "), "~", paste(x, collapse = " + "))
   as.formula(fs)
 }

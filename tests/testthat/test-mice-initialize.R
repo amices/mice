@@ -244,8 +244,33 @@ test_that("Case F generates error if it cannot handle non-square predictor", {
 })
 
 ## Error in formulas[[h]] : subscript out of bounds
+## Solved 18/12/22 SvB
 imp3 <- mice(data, formulas = form3, pred = pred1, m = 1, maxit = 0, print = FALSE, seed = 3)
 imp3a <- mice(data, formulas = form3, pred = pred1, m = 1, maxit = 1, print = FALSE, seed = 3)
+
+
+
+# Case G: blocks and formulas
+
+# blocks1 and form1 are compatible
+imp1 <- mice(data, blocks = blocks1, formulas = form1, m = 1, maxit = 1, print = FALSE, seed = 3)
+test_that("Case G combines forms and blocks", {
+  expect_identical(unname(attr(imp1$blocks, "calltype")), c(rep("formula", 4)))
+})
+
+# DOES NOT YET WORK
+# # dots and unnamed predictorMatrix
+# imp2 <- mice(data, blocks = blocks2, formulas = form2, m = 1, maxit = 1, print = FALSE, seed = 3)
+# test_that("Case G dots and specified form produce same imputes", {
+#   expect_identical(complete(imp1), complete(imp2))
+# })
+
+
+# Case H: predictorMatrix, blocks and formulas
+
+
+
+# --- misc
 
 # err on matrix columns
 nh <- nhanes
