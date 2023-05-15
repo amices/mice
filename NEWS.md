@@ -1,3 +1,7 @@
+# mice 3.15.4
+
+* Adds proper support for factors to `mice.impute.2lonly.pmm()` (#555)
+
 # mice 3.15.3
 
  * Expand `futuremice()` functionality by allowing for external packages and user-written functions (#550). Contributed @thomvolker
