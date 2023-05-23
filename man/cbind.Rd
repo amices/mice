@@ -10,12 +10,19 @@ cbind(...)
 rbind(...)
 }
 \arguments{
-\item{...}{(generalized) vectors or matrices.  These can be given as named
-    arguments.  Other \R objects may be coerced as appropriate, or S4
-    methods may be used: see sections \sQuote{Details} and
-    \sQuote{Value}.  (For the \code{"data.frame"} method of \code{cbind}
-    these can be further arguments to \code{\link[base]{data.frame}} such as
-    \code{stringsAsFactors}.)}
+\item{...}{
+  Arguments passed on to \code{\link[base:cbind]{base::cbind}}
+  \describe{
+    \item{\code{deparse.level}}{integer controlling the construction of labels in
+    the case of non-matrix-like arguments (for the default method):\cr
+    \code{deparse.level = 0} constructs no labels;\cr
+    the default \code{deparse.level = 1} typically and
+    \code{deparse.level = 2} always construct labels from the argument
+    names, see the \sQuote{Value} section below.}
+  }}
+}
+\value{
+An S3 object of class \code{mids}
 }
 \description{
 Functions \code{cbind()} and \code{rbind()} are defined in
@@ -34,9 +41,152 @@ and test whether the first argument has class \code{"mids"}. If so,
 function calls \code{cbind.mids()}, respectively \code{rbind.mids()}. In
 all other cases, the call is forwarded to standard functions in the
 \code{base} package.
+
+
+The \code{cbind.mids()} function combines two \code{mids} objects
+columnwise into a single
+object of class \code{mids}, or combines a single \code{mids} object with
+a \code{vector}, \code{matrix}, \code{factor} or \code{data.frame}
+columnwise into a \code{mids} object.
+
+If both arguments of \code{cbind.mids()} are \code{mids}-objects, the
+\code{data} list components should have the same number of rows. Also, the
+number of imputations (\code{m}) should be identical.
+If the second argument is a \code{matrix},
+\code{factor} or \code{vector}, it is transformed into a
+\code{data.frame}. The number of rows should match with the \code{data}
+component of the first argument.
+
+The  \code{cbind.mids()} function renames any duplicated variable or block names by
+appending \code{".1"}, \code{".2"} to duplicated names.
+
+The \code{rbind.mids()} function combines two \code{mids} objects rowwise into a single
+\code{mids} object, or combines a \code{mids} object with a vector, matrix,
+factor or data frame rowwise into a \code{mids} object.
+
+If both arguments of \code{rbind.mids()} are \code{mids} objects,
+then \code{rbind.mids()} requires that both have the same number of multiple
+imputations. In addition, their \code{data} components should match.
+
+If the second argument of \code{rbind.mids()} is not a \code{mids} object,
+the columns of the arguments should match. The \code{where} matrix for the
+second argument is set to \code{FALSE}, signalling that any missing values in
+that argument were not imputed. The \code{ignore} vector for the second argument is
+set to \code{FALSE}. Rows inherited from the second argument will therefore
+influence the parameter estimation of the imputation model in any future
+iterations.
+}
+\note{
+The \code{cbind.mids()} function constructs the elements of the new \code{mids} object as follows:
+\tabular{ll}{
+\code{data}     \tab Columnwise combination of the data in \code{x} and \code{y}\cr
+\code{imp}      \tab Combines the imputed values from \code{x} and \code{y}\cr
+\code{m}        \tab Taken from \code{x$m}\cr
+\code{where}    \tab Columnwise combination of \code{x$where} and \code{y$where}\cr
+\code{blocks}   \tab Combines \code{x$blocks} and \code{y$blocks}\cr
+\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]}
+is call to \code{cbind.mids()}\cr
+\code{nmis}     \tab Equals \code{c(x$nmis, y$nmis)}\cr
+\code{method}   \tab Combines \code{x$method} and \code{y$method}\cr
+\code{predictorMatrix} \tab Combination with zeroes on the off-diagonal blocks\cr
+\code{visitSequence}   \tab Combined as \code{c(x$visitSequence, y$visitSequence)}\cr
+\code{formulas}  \tab Combined as \code{c(x$formulas, y$formulas)}\cr
+\code{post}      \tab Combined as \code{c(x$post, y$post)}\cr
+\code{blots}     \tab Combined as \code{c(x$blots, y$blots)}\cr
+\code{ignore}    \tab Taken from \code{x$ignore}\cr
+\code{seed}            \tab Taken from \code{x$seed}\cr
+\code{iteration}       \tab Taken from \code{x$iteration}\cr
+\code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
+\code{chainMean}       \tab Combined from \code{x$chainMean} and \code{y$chainMean}\cr
+\code{chainVar}        \tab Combined from \code{x$chainVar} and \code{y$chainVar}\cr
+\code{loggedEvents}    \tab Taken from \code{x$loggedEvents}\cr
+\code{version}    \tab Current package version\cr
+\code{date}       \tab Current date\cr
+}
+
+The  \code{rbind.mids()} function constructs the elements of the new \code{mids} object as follows:
+\tabular{ll}{
+\code{data}     \tab Rowwise combination of the (incomplete) data in \code{x} and \code{y}\cr
+\code{imp}      \tab Equals \code{rbind(x$imp[[j]], y$imp[[j]])} if \code{y} is \code{mids} object; otherwise
+the data of \code{y} will be copied\cr
+\code{m}        \tab Equals \code{x$m}\cr
+\code{where}    \tab Rowwise combination of \code{where} arguments\cr
+\code{blocks}   \tab Equals \code{x$blocks}\cr
+\code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{rbind.mids}\cr
+\code{nmis}     \tab \code{x$nmis} + \code{y$nmis}\cr
+\code{method}   \tab Taken from \code{x$method}\cr
+\code{predictorMatrix} \tab Taken from \code{x$predictorMatrix}\cr
+\code{visitSequence}   \tab Taken from \code{x$visitSequence}\cr
+\code{formulas}  \tab Taken from \code{x$formulas}\cr
+\code{post}      \tab Taken from \code{x$post}\cr
+\code{blots}     \tab Taken from \code{x$blots}\cr
+\code{ignore}    \tab Concatenate \code{x$ignore} and \code{y$ignore}\cr
+\code{seed}            \tab Taken from \code{x$seed}\cr
+\code{iteration}       \tab Taken from \code{x$iteration}\cr
+\code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
+\code{chainMean}       \tab Set to \code{NA}\cr
+\code{chainVar}        \tab Set to \code{NA}\cr
+\code{loggedEvents}    \tab Taken from \code{x$loggedEvents}\cr
+\code{version}    \tab Taken from \code{x$version}\cr
+\code{date}       \tab Taken from \code{x$date}
+}
+}
+\examples{
+# --- cbind ---
+# impute four variables at once (default)
+imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE)
+imp$predictorMatrix
+
+# impute two by two
+data1 <- nhanes[, c("age", "bmi")]
+data2 <- nhanes[, c("hyp", "chl")]
+imp1 <- mice(data1, m = 2, maxit = 1, print = FALSE)
+imp2 <- mice(data2, m = 2, maxit = 1, print = FALSE)
+
+# Append two solutions
+imp12 <- cbind(imp1, imp2)
+
+# This is a different imputation model
+imp12$predictorMatrix
+
+# Append the other way around
+imp21 <- cbind(imp2, imp1)
+imp21$predictorMatrix
+
+# Append 'forgotten' variable chl
+data3 <- nhanes[, 1:3]
+imp3 <- mice(data3, maxit = 1, m = 2, print = FALSE)
+imp4 <- cbind(imp3, chl = nhanes$chl)
+
+# Of course, chl was not imputed
+head(complete(imp4))
+
+# Combine mids object with data frame
+imp5 <- cbind(imp3, nhanes2)
+head(complete(imp5))
+
+# --- rbind ---
+imp1 <- mice(nhanes[1:13, ], m = 2, maxit = 1, print = FALSE)
+imp5 <- mice(nhanes[1:13, ], m = 2, maxit = 2, print = FALSE)
+mylist <- list(age = NA, bmi = NA, hyp = NA, chl = NA)
+
+nrow(complete(rbind(imp1, imp5)))
+nrow(complete(rbind(imp1, mylist)))
+
+nrow(complete(rbind(imp1, data.frame(mylist))))
+nrow(complete(rbind(imp1, complete(imp5))))
+}
+\references{
+van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
+Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
+Statistical Software}, \bold{45}(3), 1-67.
+\doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link[base:cbind]{cbind}}, \code{\link[base:cbind]{rbind}},
-\code{\link{cbind.mids}}, \code{\link{rbind.mids}}
+\code{\link[base:cbind]{cbind}}, \code{\link{ibind}},
+\code{\link[=mids-class]{mids}}
 }
-\keyword{internal}
+\author{
+Karin Groothuis-Oudshoorn, Stef van Buuren
+}
+\keyword{manip}

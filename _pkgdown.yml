@@ -83,8 +83,6 @@ reference:
   - as.mids
   - as.mira
   - as.mitml.result
-  - cbind.mids
-  - rbind.mids
   - ibind
   - filter.mids
   - mids2mplus

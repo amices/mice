@@ -39,7 +39,7 @@ imp12$m
 plot(imp12)
 }
 \seealso{
-\code{\link[=mids-class]{mids}}, \code{\link{rbind.mids}}, \code{\link{cbind.mids}}
+\code{\link[=mids-class]{mids}}
 }
 \author{
 Karin Groothuis-Oudshoorn, Stef van Buuren

@@ -1,3 +1,5 @@
+* Removes documentation files for `rbind.mids()` and `cbind.mids()` to conform to CRAN policy
+
 # mice 3.15.4
 
 * Adds proper support for factors to `mice.impute.2lonly.pmm()` (#555)

@@ -14,7 +14,7 @@
 #' @param y A \code{mids} object.
 #' @return An S3 object of class \code{mids}
 #' @author Karin Groothuis-Oudshoorn, Stef van Buuren
-#' @seealso \code{\link[=mids-class]{mids}}, \code{\link{rbind.mids}}, \code{\link{cbind.mids}}
+#' @seealso \code{\link[=mids-class]{mids}}
 #' @keywords manip
 #' @examples
 #' data(nhanes)
