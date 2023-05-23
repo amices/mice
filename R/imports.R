@@ -5,6 +5,7 @@
 #' @importFrom graphics abline axis box par plot plot.new plot.window
 #'                      points rect text
 #' @importFrom lattice  bwplot densityplot stripplot xyplot
+#' @importFrom mitml    jomoImpute mitmlComplete panImpute testModels
 #' @importFrom Rcpp     evalCpp
 #' @importFrom rlang    .data syms
 #' @importFrom stats    C aggregate as.formula binomial coef
