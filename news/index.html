@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.15.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,38 +52,34 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.15.5" id="mice-3155">mice 3.15.5<a class="anchor" aria-label="anchor" href="#mice-3155"></a></h2>
-<ul><li>Solves function naming problems for S3 generic functions <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code>, <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code>, <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> and <code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum()</a></code>
-</li>
-<li>Adds GH issue templates <code>bug_report</code>, <code>feature_request</code> and <code>help_wanted</code>
-</li>
-<li>Removes documentation files for <code>rbind.mids()</code> and <code>cbind.mids()</code> to conform to CRAN policy</li>
+<h2 class="pkg-version" data-toc-text="3.16.0" id="mice-3160">mice 3.16.0<a class="anchor" aria-label="anchor" href="#mice-3160"></a></h2>
+<div class="section level4">
+<h4 id="major-changes-3-16-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-3-16-0"></a></h4>
+<ul><li><p>Expands <code><a href="../reference/futuremice.html">futuremice()</a></code> functionality by allowing for external packages and user-written functions (<a href="https://github.com/amices/mice/issues/550" class="external-link">#550</a>). Contributed <a href="https://github.com/thomvolker" class="external-link">@thomvolker</a></p></li>
+<li><p>Adds GH issue templates <code>bug_report</code>, <code>feature_request</code> and <code>help_wanted</code> (<a href="https://github.com/amices/mice/issues/560" class="external-link">#560</a>). Contributed <a href="https://github.com/hanneoberman" class="external-link">@hanneoberman</a></p></li>
+</ul></div>
+<div class="section level4">
+<h4 id="minor-changes-3-16-0">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-3-16-0"></a></h4>
+<ul><li>Removes documentation files for <code>rbind.mids()</code> and <code>cbind.mids()</code> to conform to CRAN policy</li>
 <li>Adds <code>mitml</code> and <code>glmnet</code> to imports so that test code conforms to <code>_R_CHECK_DEPENDS_ONLY=true</code> flag in <code>R CMD check</code>
+</li>
+<li>Initializes random number generator in <code><a href="../reference/futuremice.html">futuremice()</a></code> if there is no <code>.Random.seed</code> yet.</li>
+<li>Updates GitHub actions for package checking and site building</li>
+<li>Preserves user settings in <code>predictorMatrix</code> for case F by adding a <code>predictorMatrix</code> argument to <code><a href="../reference/make.predictorMatrix.html">make.predictorMatrix()</a></code>
+</li>
+<li>Polishes <code><a href="../reference/mice.impute.mpmm.html">mice.impute.mpmm()</a></code> example code</li>
+</ul></div>
+<div class="section level4">
+<h4 id="bug-fixes-3-16-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-16-0"></a></h4>
+<ul><li>Adds proper support for factors to <code><a href="../reference/mice.impute.2lonly.pmm.html">mice.impute.2lonly.pmm()</a></code> (<a href="https://github.com/amices/mice/issues/555" class="external-link">#555</a>)</li>
+<li>Solves function naming problems for S3 generic functions <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code>, <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code>, <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> and <code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum()</a></code>
 </li>
 <li>Out-comments and weeds example&amp;test code to silence <code>R CMD check</code> with <code>_R_CHECK_DEPENDS_ONLY=true</code>
 </li>
+<li>Fixes small bug in <code><a href="../reference/futuremice.html">futuremice()</a></code> that throws an error when the number of cores is not specified, but the number of available cores is greater than the number of imputations.</li>
+<li>Solves a bug in <code><a href="../reference/mice.impute.mpmm.html">mice.impute.mpmm()</a></code> that changed the column order of the data</li>
 </ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.15.4" id="mice-3154">mice 3.15.4<a class="anchor" aria-label="anchor" href="#mice-3154"></a></h2>
-<ul><li>Adds proper support for factors to <code><a href="../reference/mice.impute.2lonly.pmm.html">mice.impute.2lonly.pmm()</a></code> (<a href="https://github.com/amices/mice/issues/555" class="external-link">#555</a>)</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.15.3" id="mice-3153">mice 3.15.3<a class="anchor" aria-label="anchor" href="#mice-3153"></a></h2>
-<ul><li>Expand <code><a href="../reference/futuremice.html">futuremice()</a></code> functionality by allowing for external packages and user-written functions (<a href="https://github.com/amices/mice/issues/550" class="external-link">#550</a>). Contributed <a href="https://github.com/thomvolker" class="external-link">@thomvolker</a></li>
-<li>Fix small bug in <code><a href="../reference/futuremice.html">futuremice()</a></code> that throws an error when the number of cores is not specified, but the number of available cores is greater than the number of imputations.</li>
-<li>Initialize random number generator in <code><a href="../reference/futuremice.html">futuremice()</a></code> if there is no <code>.Random.seed</code> yet.</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.15.2" id="mice-3152">mice 3.15.2<a class="anchor" aria-label="anchor" href="#mice-3152"></a></h2>
-<ul><li>Updates GitHub actions for package checking and site building</li>
-<li>Preserves user settings in <code>predictorMatrix</code> for case F by adding a <code>predictorMatrix</code> argument to <code><a href="../reference/make.predictorMatrix.html">make.predictorMatrix()</a></code>
-</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.15.1" id="mice-3151">mice 3.15.1<a class="anchor" aria-label="anchor" href="#mice-3151"></a></h2>
-<ul><li>Solves a bug in <code><a href="../reference/mice.impute.mpmm.html">mice.impute.mpmm()</a></code> that changed the column order of the data</li>
-<li>Polishes <code><a href="../reference/mice.impute.mpmm.html">mice.impute.mpmm()</a></code> example code</li>
-</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.15.0" id="mice-3150">mice 3.15.0<a class="anchor" aria-label="anchor" href="#mice-3150"></a></h2><p class="text-muted">CRAN release: 2022-11-19</p>
 <div class="section level4">
