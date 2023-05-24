@@ -1,4 +1,8 @@
+# mice 3.15.5
+
 * Removes documentation files for `rbind.mids()` and `cbind.mids()` to conform to CRAN policy
+* Adds `mitml` and `glmnet` to imports so that test code conforms to `_R_CHECK_DEPENDS_ONLY=true` flag in `R CMD check`
+* Out-comments and weeds example&test code to silence `R CMD check` with `_R_CHECK_DEPENDS_ONLY=true`
 
 # mice 3.15.4
 
