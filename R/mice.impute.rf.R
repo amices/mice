@@ -49,10 +49,11 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @examples
+#' \dontrun{
 #' library("lattice")
-#'
 #' imp <- mice(nhanes2, meth = "rf", ntree = 3)
 #' plot(imp)
+#' }
 #' @export
 mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
                            rfPackage = c("ranger", "randomForest"), ...) {

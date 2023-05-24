@@ -64,10 +64,11 @@ so mice 2.22 changed the default number of trees from \code{ntree = 100} to
 \code{ntree = 10}.
 }
 \examples{
+\dontrun{
 library("lattice")
-
 imp <- mice(nhanes2, meth = "rf", ntree = 3)
 plot(imp)
+}
 }
 \references{
 Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning
