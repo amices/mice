@@ -1,30 +1,27 @@
-# mice 3.15.5
+# mice 3.16.0
 
-* Solves function naming problems for S3 generic functions `tidy()`, `update()`, `format()` and `sum()`
-* Adds GH issue templates `bug_report`, `feature_request` and `help_wanted`
+### Major changes
+
+* Expands `futuremice()` functionality by allowing for external packages and user-written functions (#550). Contributed @thomvolker
+
+* Adds GH issue templates `bug_report`, `feature_request` and `help_wanted` (#560). Contributed @hanneoberman
+
+### Minor changes
+
 * Removes documentation files for `rbind.mids()` and `cbind.mids()` to conform to CRAN policy
 * Adds `mitml` and `glmnet` to imports so that test code conforms to `_R_CHECK_DEPENDS_ONLY=true` flag in `R CMD check`
-* Out-comments and weeds example&test code to silence `R CMD check` with `_R_CHECK_DEPENDS_ONLY=true`
-
-# mice 3.15.4
-
-* Adds proper support for factors to `mice.impute.2lonly.pmm()` (#555)
-
-# mice 3.15.3
-
- * Expand `futuremice()` functionality by allowing for external packages and user-written functions (#550). Contributed @thomvolker
- * Fix small bug in `futuremice()` that throws an error when the number of cores is not specified, but the number of available cores is greater than the number of imputations.
- * Initialize random number generator in `futuremice()` if there is no `.Random.seed` yet.
-
-# mice 3.15.2 
-
+* Initializes random number generator in `futuremice()` if there is no `.Random.seed` yet.
 * Updates GitHub actions for package checking and site building
 * Preserves user settings in `predictorMatrix` for case F by adding a `predictorMatrix` argument to `make.predictorMatrix()`
-
-# mice 3.15.1
-
-* Solves a bug in `mice.impute.mpmm()` that changed the column order of the data
 * Polishes `mice.impute.mpmm()` example code
+
+### Bug fixes
+
+* Adds proper support for factors to `mice.impute.2lonly.pmm()` (#555)
+* Solves function naming problems for S3 generic functions `tidy()`, `update()`, `format()` and `sum()`
+* Out-comments and weeds example&test code to silence `R CMD check` with `_R_CHECK_DEPENDS_ONLY=true`
+* Fixes small bug in `futuremice()` that throws an error when the number of cores is not specified, but the number of available cores is greater than the number of imputations.
+* Solves a bug in `mice.impute.mpmm()` that changed the column order of the data
 
 # mice 3.15.0
 
