@@ -1,17 +1,31 @@
 cran-comments
 ================
 
-## mice 3.15.0
-
-New submission.
+## mice 3.16.0
 
 ## Reason
 
-`mice 3.15.0` contains many changes and enhancements over `mice 3.14.0`
+New submission in response to mail of CRAN team:
+
+    Dear maintainer,
+
+    Please see the problems shown on
+    <https://cran.r-project.org/web/checks/check_results_mice.html>.
+
+    Please correct before 2023-05-31 to safely retain your package on CRAN.
+
+    Packages in Suggests should be used conditionally: see 'Writing R Extensions'.
+    This needs to be corrected even if the missing package(s) become available.
+    It can be tested by checking with _R_CHECK_DEPENDS_ONLY_=true.
+
+    The CRAN Team
+
+## Actions
+
+- All issues noted in mail resolved
+- Several changes and enhancements since `mice 3.15.0`
 
 ## Test environments
-
-### Local
 
 ``` r
 R.Version()
@@ -36,34 +50,50 @@ R.Version()
     ## [1] "4"
     ## 
     ## $minor
-    ## [1] "2.2"
+    ## [1] "3.0"
     ## 
     ## $year
-    ## [1] "2022"
+    ## [1] "2023"
     ## 
     ## $month
-    ## [1] "10"
+    ## [1] "04"
     ## 
     ## $day
-    ## [1] "31"
+    ## [1] "21"
     ## 
     ## $`svn rev`
-    ## [1] "83211"
+    ## [1] "84292"
     ## 
     ## $language
     ## [1] "R"
     ## 
     ## $version.string
-    ## [1] "R version 4.2.2 (2022-10-31)"
+    ## [1] "R version 4.3.0 (2023-04-21)"
     ## 
     ## $nickname
-    ## [1] "Innocent and Trusting"
+    ## [1] "Already Tomorrow"
+
+## Checks
 
 ### win-builder
 
-### \* Rhub
+``` r
+devtools::check_win_devel()
+...
+WARNING   Requires (indirectly) orphaned package: 'ucminf'
+```
 
-## Local check
+Solving this is beyond my powers.
+
+### Rhub
+
+``` r
+devtools::check_rhub()
+```
+
+Everything OK except for the orphaned package: ‘ucminf’
+
+### Local check
 
 Package built by
 
@@ -73,49 +103,16 @@ build()
 ```
 
 ``` bash
-R CMD CHECK mice_3.15.0.tar.gz
+R CMD CHECK mice_3.16.0.tar.gz
 ```
 
 Status: OK
 
-## win-builder
-
-``` r
-devtools::check_win_devel()
-```
-
-Status: 1 NOTE
-
-    Found the following (possibly) invalid URLs:
-      URL: https://journals.sagepub.com/doi/10.1177/0049124118799376
-        From: man/ampute.Rd
-        Status: 503
-        Message: Service Unavailable
-      URL: https://journals.sagepub.com/doi/full/10.1177/0049124118799376
-        From: man/ampute.Rd
-        Status: 503
-        Message: Service Unavailable
-
-SvB: The URLs exist. I believe the NOTE is caused by blocking by SAGE.
-
-## Rhub checks
-
-``` r
-devtools::check_rhub()
-```
-
-Results:
-
-1.  Debian Linux, R-devel, GCC ASAN/UBSAN: Build timed out (after 20
-    minutes). Marking the build as failed.
-2.  Windows Server 2022, R-devel, 64 bit: 0 errors ✔ \| 0 warnings ✔ \|
-    0 notes ✔
-3.  Ubuntu Linux 20.04.1 LTS, R-release, GCC: SUCCESS
-4.  Fedora Linux, R-devel, clang, gfortran: SUCCES
-
 ## Downstream dependencies
 
-`mice` has 110 downstream dependencies
+### Overview
+
+`mice` has 113 downstream dependencies
 
 ``` r
 library(revdepcheck)
@@ -123,291 +120,161 @@ revdep_reset()
 revdep_check(num_workers = 10)
 ```
 
-    OK: 108                                                                                                                                                    
-    BROKEN: 2
-    Total time: 22 min
-    ── REPORT ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-    Writing summary to 'revdep/README.md'
-    Writing problems to 'revdep/problems.md'
-    Writing failures to 'revdep/failures.md'
-    Writing CRAN report to 'revdep/cran.md'
-
-### `failures.md`
-
-    # dynr
-
-    <details>
-
-    * Version: 0.1.16-91
-    * GitHub: https://github.com/mhunter1/dynr
-    * Source code: https://github.com/cran/dynr
-    * Date/Publication: 2022-10-17 07:02:35 UTC
-    * Number of recursive dependencies: 120
-
-    Run `revdepcheck::revdep_details(, "dynr")` for more info
-
-    </details>
-
-    ## In both
-
-    *   checking whether package ‘dynr’ can be installed ... ERROR
-
-        Installation failed.
-        See ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/dynr/new/dynr.Rcheck/00install.out’ for details.
-
-    ## Installation
-
-    ### Devel
-
-    * installing *source* package ‘dynr’ ...
-    ** package ‘dynr’ successfully unpacked and MD5 sums checked
-    ** using staged installation
-    checking for gsl-config... no
-    configure: error: gsl-config not found, is GSL installed?
-    ERROR: configuration failed for package ‘dynr’
-    * removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/dynr/new/dynr.Rcheck/dynr’
-
-
-    ### CRAN
-
-    * installing *source* package ‘dynr’ ...
-    ** package ‘dynr’ successfully unpacked and MD5 sums checked
-    ** using staged installation
-    checking for gsl-config... no
-    configure: error: gsl-config not found, is GSL installed?
-    ERROR: configuration failed for package ‘dynr’
-    * removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/dynr/old/dynr.Rcheck/dynr’
-
-
-    # pguIMP
-
-    <details>
-
-    * Version: 0.0.0.3
-    * GitHub: https://github.com/SMLMS/pguIMP
-    * Source code: https://github.com/cran/pguIMP
-    * Date/Publication: 2021-09-30 11:50:02 UTC
-    * Number of recursive dependencies: 221
-
-    Run `revdepcheck::revdep_details(, "pguIMP")` for more info
-
-    </details>
-
-    ## In both
-
-    *   checking whether package ‘pguIMP’ can be installed ... ERROR
-
-        Installation failed.
-        See ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/pguIMP/new/pguIMP.Rcheck/00install.out’ for details.
-
-    ## Installation
-
-    ### Devel
-
-    * installing *source* package ‘pguIMP’ ...
-    ** package ‘pguIMP’ successfully unpacked and MD5 sums checked
-    ** using staged installation
-    ** R
-    ** inst
-    ** byte-compile and prepare package for lazy loading
-    Error: .onLoad failed in loadNamespace() for 'rJava', details:
-      call: dyn.load(jli, FALSE)
-      error: unable to load shared object '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib':
-      dlopen(/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib, 0x000A): tried: '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (no such file), '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64'))
-    Execution halted
-    ERROR: lazy loading failed for package ‘pguIMP’
-    * removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/pguIMP/new/pguIMP.Rcheck/pguIMP’
-
-
-    ### CRAN
-
-    * installing *source* package ‘pguIMP’ ...
-    ** package ‘pguIMP’ successfully unpacked and MD5 sums checked
-    ** using staged installation
-    ** R
-    ** inst
-    ** byte-compile and prepare package for lazy loading
-    Error: .onLoad failed in loadNamespace() for 'rJava', details:
-      call: dyn.load(jli, FALSE)
-      error: unable to load shared object '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib':
-      dlopen(/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib, 0x000A): tried: '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (no such file), '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64'))
-    Execution halted
-    ERROR: lazy loading failed for package ‘pguIMP’
-    * removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/pguIMP/old/pguIMP.Rcheck/pguIMP’
-
-
-    # Replication
-
-    <details>
-
-    * Version: 0.1.2
-    * GitHub: NA
-    * Source code: https://github.com/cran/Replication
-    * Date/Publication: 2020-04-09 12:10:02 UTC
-    * Number of recursive dependencies: 90
-
-    Run `revdepcheck::revdep_details(, "Replication")` for more info
-
-    </details>
-
-    ## In both
-
-    *   checking whether package ‘Replication’ can be installed ... ERROR
-        Installation failed.
-        See ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/Replication/new/Replication.Rcheck/00install.out’ for details.
-
-    ## Installation
-
-    ### Devel
-
-    * installing *source* package ‘Replication’ ...
-    ** package ‘Replication’ successfully unpacked and MD5 sums checked
-    ** using staged installation
-    ** R
-    ** byte-compile and prepare package for lazy loading
-    Error: .onLoad failed in loadNamespace() for 'rjags', details:
-      call: dyn.load(file, DLLpath = DLLpath, ...)
-      error: unable to load shared object '/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/Replication/rjags/libs/rjags.so':
-      dlopen(/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/Replication/rjags/libs/rjags.so, 0x000A): Library not loaded: /usr/local/lib/libjags.4.dylib
-      Referenced from: <82D1D1F8-CC85-3273-A9BC-B86843329438> /Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/Replication/rjags/libs/rjags.so
-      Reason: tried: '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/lib/libjags.4.dylib' (no such file), '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64')), '/Library/Frameworks/R.framework/Resources/lib/libjags.4.dylib' (no such file), '/Library/Java/Jav
-    Execution halted
-    ERROR: lazy loading failed for package ‘Replication’
-    * removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/Replication/new/Replication.Rcheck/Replication’
-
-
-    ### CRAN
-
-    * installing *source* package ‘Replication’ ...
-    ** package ‘Replication’ successfully unpacked and MD5 sums checked
-    ** using staged installation
-    ** R
-    ** byte-compile and prepare package for lazy loading
-    Error: .onLoad failed in loadNamespace() for 'rjags', details:
-      call: dyn.load(file, DLLpath = DLLpath, ...)
-      error: unable to load shared object '/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/Replication/rjags/libs/rjags.so':
-      dlopen(/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/Replication/rjags/libs/rjags.so, 0x000A): Library not loaded: /usr/local/lib/libjags.4.dylib
-      Referenced from: <82D1D1F8-CC85-3273-A9BC-B86843329438> /Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/Replication/rjags/libs/rjags.so
-      Reason: tried: '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/lib/libjags.4.dylib' (no such file), '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64')), '/Library/Frameworks/R.framework/Resources/lib/libjags.4.dylib' (no such file), '/Library/Java/Jav
-    Execution halted
-    ERROR: lazy loading failed for package ‘Replication’
-    * removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/Replication/old/Replication.Rcheck/Replication’
-
-SvB: I believe that none of these issues are attributable to `mice`.
-
-### `problems.md`
-
-    # adjustedCurves
-
-    <details>
-
-    * Version: 0.9.0
-    * GitHub: https://github.com/RobinDenz1/adjustedCurves
-    * Source code: https://github.com/cran/adjustedCurves
-    * Date/Publication: 2022-09-22 08:40:13 UTC
-    * Number of recursive dependencies: 167
-
-    Run `revdepcheck::revdep_details(, "adjustedCurves")` for more info
-
-    </details>
-
-    ## Newly broken
-
-    *   checking tests ...
-          Running ‘testthat.R’
-         ERROR
-        Running the tests in ‘tests/testthat.R’ failed.
-        Last 13 lines of output:
-            5. ├─dplyr:::summarise.grouped_df(...)
-            6. │ └─dplyr:::summarise_cols(.data, dplyr_quosures(...), caller_env = caller_env())
-            7. │   ├─base::withCallingHandlers(...)
-            8. │   └─dplyr:::map(quosures, summarise_eval_one, mask = mask)
-            9. │     └─base::lapply(.x, .f, ...)
-           10. │       └─dplyr (local) FUN(X[[i]], ...)
-           11. │         └─mask$eval_all_summarise(quo)
-           12. ├─adjustedCurves:::pool_p_values(p_val)
-           13. └─base::.handleSimpleError(...)
-           14.   └─dplyr (local) h(simpleError(msg, call))
-           15.     └─rlang::abort(bullets, call = error_call, parent = skip_internal_condition(e))
-          
-          [ FAIL 7 | WARN 126 | SKIP 125 | PASS 1579 ]
-          Error: Test failures
-          Execution halted
-
-    # bipd
-
-    <details>
-
-    * Version: 0.3
-    * GitHub: NA
-    * Source code: https://github.com/cran/bipd
-    * Date/Publication: 2022-06-05 16:10:05 UTC
-    * Number of recursive dependencies: 107
-
-    Run `revdepcheck::revdep_details(, "bipd")` for more info
-
-    </details>
-
-    ## Newly broken
-
-    *   checking dependencies in R code ...sh: line 1: 26776 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpKRyE8b/file66d821b07fdc'
-         NOTE
-        
-         *** caught segfault ***
-        address 0x6c6c65432f6c6163, cause 'invalid permissions'
-        
-        Traceback:
-         1: dyn.load(file, DLLpath = DLLpath, ...)
-         2: library.dynam(lib, package, package.lib)
-         3: loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]])
-         4: asNamespace(ns)
-        ...
-         7: withCallingHandlers(expr, message = function(c) if (inherits(c,     classes)) tryInvokeRestart("muffleMessage"))
-         8: suppressMessages(loadNamespace(p))
-         9: withCallingHandlers(expr, warning = function(w) if (inherits(w,     classes)) tryInvokeRestart("muffleWarning"))
-        10: suppressWarnings(suppressMessages(loadNamespace(p)))
-        11: doTryCatch(return(expr), name, parentenv, handler)
-        12: tryCatchOne(expr, names, parentenv, handlers[[1L]])
-        13: tryCatchList(expr, classes, parentenv, handlers)
-        14: tryCatch(suppressWarnings(suppressMessages(loadNamespace(p))),     error = function(e) e)
-        15: tools:::.check_packages_used(package = "bipd")
-        An irrecoverable exception occurred. R is aborting now ...
-
-    ## Newly fixed
-
-    *   checking dependencies in R code ...sh: line 1: 26657 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//Rtmpi8gCya/file6689272a04f8'
-         NOTE
-        
-         *** caught segfault ***
-        address 0x6c6c65432f6c6163, cause 'invalid permissions'
-        
-        Traceback:
-         1: dyn.load(file, DLLpath = DLLpath, ...)
-         2: library.dynam(lib, package, package.lib)
-         3: loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]])
-         4: asNamespace(ns)
-        ...
-         7: withCallingHandlers(expr, message = function(c) if (inherits(c,     classes)) tryInvokeRestart("muffleMessage"))
-         8: suppressMessages(loadNamespace(p))
-         9: withCallingHandlers(expr, warning = function(w) if (inherits(w,     classes)) tryInvokeRestart("muffleWarning"))
-        10: suppressWarnings(suppressMessages(loadNamespace(p)))
-        11: doTryCatch(return(expr), name, parentenv, handler)
-        12: tryCatchOne(expr, names, parentenv, handlers[[1L]])
-        13: tryCatchList(expr, classes, parentenv, handlers)
-        14: tryCatch(suppressWarnings(suppressMessages(loadNamespace(p))),     error = function(e) e)
-        15: tools:::.check_packages_used(package = "bipd")
-        An irrecoverable exception occurred. R is aborting now ...
-
-#### Action taken
-
-##### adjustedCurves
-
-SvB: I contacted the maintainer on 14/11 and he explained that the error
-is due to hard-coded values in some of the tests in `adjustedCurves`.
-Since the random generator has changed in `mice 3.15.0`, these tests now
-fail. I interpret the error as expected behaviour.
-
-##### bipd
-
-SvB: This problem seems to be a configuration or memory issue, not
-related to `mice`. I took no further action.
+``` r
+revdepcheck::revdep_summary()
+```
+
+    ## ✔ accelmissing 1.4                       ── E: 0     | W: 0     | N: 0    
+    ## ✔ adjustedCurves 0.10.1                  ── E: 0     | W: 0     | N: 0    
+    ## ✔ alookr 0.3.7                           ── E: 0     | W: 0     | N: 0    
+    ## ✔ autoReg 0.3.2                          ── E: 0     | W: 0     | N: 0    
+    ## ✔ BaM 1.0.3                              ── E: 0     | W: 0     | N: 0    
+    ## ✔ basecamb 1.1.2                         ── E: 0     | W: 0     | N: 0    
+    ## ✔ BGGM 2.0.4                             ── E: 0     | W: 0     | N: 2    
+    ## ✔ binaryTimeSeries 1.0.2                 ── E: 0     | W: 0     | N: 0    
+    ## ✔ biokNN 0.1.0                           ── E: 0     | W: 0     | N: 1    
+    ## ✖ bipd 0.3                               ── E: 0     | W: 0     | N: 0-1+1
+    ## ✔ bootImpute 1.2.0                       ── E: 0     | W: 0     | N: 0    
+    ## ✔ brms 2.19.0                            ── E: 0     | W: 0     | N: 2    
+    ## ✔ brokenstick 2.5.0                      ── E: 0     | W: 0     | N: 0    
+    ## ✔ broom.helpers 1.13.0                   ── E: 0     | W: 0     | N: 0    
+    ## ✔ bucky 1.0.7                            ── E: 0     | W: 0     | N: 2    
+    ## ✔ CALIBERrfimpute 1.0.7                  ── E: 0     | W: 0     | N: 0    
+    ## ✔ cati 0.99.4                            ── E: 0     | W: 0     | N: 0    
+    ## ✔ censcyt 1.8.0                          ── E: 0     | W: 0     | N: 2    
+    ## ✔ cobalt 4.5.1                           ── E: 0     | W: 0     | N: 0    
+    ## ✔ dlookr 0.6.1                           ── E: 0     | W: 0     | N: 0    
+    ## I dynr 0.1.16.91                         ── E: 1     | W: 0     | N: 0    
+    ## ✔ eatRep 0.14.7                          ── E: 0     | W: 0     | N: 0    
+    ## ✔ finalfit 1.0.6                         ── E: 0     | W: 0     | N: 2    
+    ## ✔ FLAME 2.1.1                            ── E: 0     | W: 0     | N: 0    
+    ## ✔ gerbil 0.1.9                           ── E: 0     | W: 0     | N: 0    
+    ## ✔ ggeffects 1.2.2                        ── E: 0     | W: 0     | N: 0    
+    ## ✔ ggmice 0.0.1                           ── E: 0     | W: 0     | N: 0    
+    ## ✔ gtsummary 1.7.1                        ── E: 0     | W: 0     | N: 0    
+    ## ✔ HardyWeinberg 1.7.5                    ── E: 0     | W: 0     | N: 1    
+    ## ✔ hhsmm 0.3.5                            ── E: 0     | W: 0     | N: 0    
+    ## ✔ Hmisc 5.1.0                            ── E: 0     | W: 0     | N: 1    
+    ## ✔ holodeck 0.2.1                         ── E: 0     | W: 0     | N: 1    
+    ## ✔ hot.deck 1.2                           ── E: 0     | W: 0     | N: 0    
+    ## ✔ howManyImputations 0.2.4               ── E: 0     | W: 0     | N: 0    
+    ## ✔ HSAUR3 1.0.14                          ── E: 0     | W: 0     | N: 0    
+    ## ✔ idem 5.1                               ── E: 0     | W: 0     | N: 2    
+    ## ✔ ImputeRobust 1.3.1                     ── E: 0     | W: 0     | N: 0    
+    ## ✔ insight 0.19.2                         ── E: 0     | W: 0     | N: 0    
+    ## ✔ intmed 0.1.2                           ── E: 0     | W: 0     | N: 0    
+    ## ✔ IPWboxplot 0.1.1                       ── E: 0     | W: 0     | N: 0    
+    ## ✔ JWileymisc 1.4.0                       ── E: 0     | W: 0     | N: 0    
+    ## ✔ konfound 0.4.0                         ── E: 0     | W: 0     | N: 1    
+    ## ✔ lavaan.survey 1.1.3.1                  ── E: 1     | W: 0     | N: 0    
+    ## ✔ LMMstar 0.9.0                          ── E: 0     | W: 0     | N: 1    
+    ## ✔ logistf 1.25.0                         ── E: 0     | W: 0     | N: 0    
+    ## ✔ LSAmitR 1.0.3                          ── E: 0     | W: 0     | N: 2    
+    ## ✔ manydata 0.8.2                         ── E: 0     | W: 0     | N: 1    
+    ## ✔ marginaleffects 0.12.0                 ── E: 0     | W: 0     | N: 1    
+    ## ✖ MatchThem 1.0.1                        ── E: 0     | W: 0  +1 | N: 0    
+    ## ✔ mdapack 0.0.2                          ── E: 0     | W: 0     | N: 2    
+    ## ✔ medflex 0.6.7                          ── E: 1     | W: 1     | N: 0    
+    ## ✔ metavcov 2.1.4                         ── E: 0     | W: 0     | N: 0    
+    ## ✔ mi4p 1.1                               ── E: 0     | W: 0     | N: 0    
+    ## ✔ micd 1.1.1                             ── E: 0     | W: 0     | N: 0    
+    ## ✔ miceadds 3.16.18                       ── E: 0     | W: 0     | N: 3    
+    ## ✔ miceafter 0.5.0                        ── E: 0     | W: 0     | N: 0    
+    ## ✔ miceFast 0.8.2                         ── E: 0     | W: 0     | N: 1    
+    ## ✔ micemd 1.8.0                           ── E: 0     | W: 0     | N: 1    
+    ## ✔ microeco 0.17.0                        ── E: 0     | W: 0     | N: 0    
+    ## ✔ midastouch 1.3                         ── E: 0     | W: 0     | N: 1    
+    ## ✔ mifa 0.2.0                             ── E: 0     | W: 0     | N: 1    
+    ## ✔ MIIPW 0.1.1                            ── E: 0     | W: 0     | N: 0    
+    ## ✔ misaem 1.0.1                           ── E: 0     | W: 0     | N: 0    
+    ## ✔ miselect 0.9.0                         ── E: 0     | W: 0     | N: 0    
+    ## ✔ missCompare 1.0.3                      ── E: 0     | W: 0     | N: 0    
+    ## ✔ missDiag 1.0.1                         ── E: 0     | W: 0     | N: 0    
+    ## ✔ missMDA 1.18                           ── E: 0     | W: 0     | N: 0    
+    ## ✔ mitml 0.4.5                            ── E: 0     | W: 0     | N: 0    
+    ## ✔ miWQS 0.4.4                            ── E: 0     | W: 0     | N: 0    
+    ## ✔ mixgb 1.0.2                            ── E: 0     | W: 0     | N: 0    
+    ## ✔ MixtureMissing 2.0.0                   ── E: 0     | W: 0     | N: 0    
+    ## ✔ MKinfer 1.1                            ── E: 0     | W: 0     | N: 0    
+    ## ✔ mlim 0.3.0                             ── E: 0     | W: 0     | N: 0    
+    ## ✔ modelsummary 1.4.1                     ── E: 0     | W: 0     | N: 0    
+    ## ✔ monoClust 1.2.1                        ── E: 0     | W: 0     | N: 0    
+    ## ✔ MRPC 3.1.0                             ── E: 0     | W: 0     | N: 0    
+    ## ✔ MSiP 1.3.7                             ── E: 0     | W: 0     | N: 1    
+    ## ✔ mvnimpute 1.0.1                        ── E: 0     | W: 0     | N: 0    
+    ## ✔ NADIA 0.4.2                            ── E: 0     | W: 0     | N: 1    
+    ## ✔ NIMAA 0.2.1                            ── E: 0     | W: 0     | N: 2    
+    ## ✔ nncc 1.0.1                             ── E: 0     | W: 0     | N: 0    
+    ## ✔ ordbetareg 0.7.1                       ── E: 0     | W: 0     | N: 2    
+    ## ✔ OTrecod 0.1.2                          ── E: 0     | W: 0     | N: 0    
+    ## ✔ parameters 0.21.0                      ── E: 0     | W: 0     | N: 0    
+    ## ✔ pema 0.1.3                             ── E: 0     | W: 0     | N: 2    
+    ## I pguIMP 0.0.0.3                         ── E: 1     | W: 0     | N: 0    
+    ## ✔ pre 1.0.6                              ── E: 0     | W: 0     | N: 0    
+    ## ✔ psfmi 1.1.0                            ── E: 0     | W: 0     | N: 0    
+    ## ✔ qgcomp 2.10.1                          ── E: 0     | W: 0     | N: 0    
+    ## ✔ Qtools 1.5.6                           ── E: 0     | W: 0     | N: 0    
+    ## ✔ rattle 5.5.1                           ── E: 0     | W: 0     | N: 3    
+    ## ✔ RBtest 1.1                             ── E: 0     | W: 0     | N: 1    
+    ## ✔ RefBasedMI 0.1.0                       ── E: 0     | W: 0     | N: 0    
+    ## ✔ regmedint 1.0.0                        ── E: 0     | W: 0     | N: 1    
+    ## ✔ RegularizedSCA 0.5.4                   ── E: 0     | W: 0     | N: 0    
+    ## I Replication 0.1.2                      ── E: 1     | W: 0     | N: 0    
+    ## ✔ rexposome 1.22.0                       ── E: 1     | W: 5     | N: 2    
+    ## ✔ RfEmpImp 2.1.8                         ── E: 0     | W: 0     | N: 0    
+    ## ✔ rms 6.7.0                              ── E: 0     | W: 0     | N: 0    
+    ## ✔ rmsb 0.1.0                             ── E: 0     | W: 0     | N: 3    
+    ## ✔ semTools 0.5.6                         ── E: 0     | W: 0     | N: 0    
+    ## ✔ seqimpute 1.8                          ── E: 0     | W: 0     | N: 0    
+    ## ✔ shapeNA 0.0.2                          ── E: 0     | W: 0     | N: 2    
+    ## ✔ sjmisc 2.8.9                           ── E: 0     | W: 0     | N: 0    
+    ## ✔ SLOPE 0.5.0                            ── E: 0     | W: 0     | N: 2    
+    ## ✔ sociome 2.2.1                          ── E: 0     | W: 0     | N: 0    
+    ## ✔ StackImpute 0.1.0                      ── E: 0     | W: 0     | N: 1    
+    ## ✔ superMICE 1.1.1                        ── E: 0     | W: 0     | N: 1    
+    ## ✔ svyweight 0.1.0                        ── E: 0     | W: 0     | N: 0    
+    ## ✔ SynDI 0.1.0                            ── E: 0     | W: 0     | N: 1    
+    ## ✔ synergyfinder 3.8.2                    ── E: 0     | W: 1     | N: 3    
+    ## ✔ TestDataImputation 2.3                 ── E: 0     | W: 0     | N: 0    
+    ## ✔ weights 1.0.4                          ── E: 0     | W: 0     | N: 0
+
+### New issues
+
+There is one new warning, for the `MatchThem` package:
+
+``` r
+revdepcheck::revdep_details(revdep = "MatchThem")
+```
+
+    ## ══ Reverse dependency check ═════════════════════════════════ MatchThem 1.0.1 ══
+    ## 
+    ## Status: BROKEN
+    ## 
+    ## ── Newly failing
+    ## 
+    ## ✖ checking Rd cross-references ... WARNING
+    ## 
+    ## ── Before ──────────────────────────────────────────────────────────────────────
+    ## 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+    ## 
+    ## ── After ───────────────────────────────────────────────────────────────────────
+    ## ❯ checking Rd cross-references ... WARNING
+    ##   Missing link or links in documentation object 'cbind.Rd':
+    ##     ‘[mice:cbind.mids]{mice::cbind.mids}’
+    ##   
+    ##   See section 'Cross-references' in the 'Writing R Extensions' manual.
+    ## 
+    ## 0 errors ✔ | 1 warning ✖ | 0 notes ✔
+
+### Actions taken
+
+- I alerted the maintainer of the `MatchThem` package that the
+  documentation for `cbind.mids()` was removed from the `mice` package
+  to conform to CRAN guidelines.
+
+- The novel issue for `bipd` is equivalent to the old one. I contacted
+  the maintainer previously. Did not repeat it now.
+
+- In the past, I alerted/contacted the maintainers of the packages with
+  existing reverse dependencies issues. I did not repeat for this
+  release of `mice`.

@@ -6,7 +6,7 @@
 * GitHub: https://github.com/mhunter1/dynr
 * Source code: https://github.com/cran/dynr
 * Date/Publication: 2022-10-17 07:02:35 UTC
-* Number of recursive dependencies: 120
+* Number of recursive dependencies: 122
 
 Run `revdepcheck::revdep_details(, "dynr")` for more info
 
@@ -56,7 +56,7 @@ ERROR: configuration failed for package ‘dynr’
 * GitHub: https://github.com/SMLMS/pguIMP
 * Source code: https://github.com/cran/pguIMP
 * Date/Publication: 2021-09-30 11:50:02 UTC
-* Number of recursive dependencies: 221
+* Number of recursive dependencies: 217
 
 Run `revdepcheck::revdep_details(, "pguIMP")` for more info
 
@@ -146,7 +146,7 @@ Error: .onLoad failed in loadNamespace() for 'rjags', details:
   call: dyn.load(file, DLLpath = DLLpath, ...)
   error: unable to load shared object '/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/Replication/rjags/libs/rjags.so':
   dlopen(/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/Replication/rjags/libs/rjags.so, 0x000A): Library not loaded: /usr/local/lib/libjags.4.dylib
-  Referenced from: <82D1D1F8-CC85-3273-A9BC-B86843329438> /Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/Replication/rjags/libs/rjags.so
+  Referenced from: <7F6B5629-D6B5-35D1-BEDC-76C09B11A283> /Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/Replication/rjags/libs/rjags.so
   Reason: tried: '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/lib/libjags.4.dylib' (no such file), '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64')), '/Library/Frameworks/R.framework/Resources/lib/libjags.4.dylib' (no such file), '/Library/Java/Jav
 Execution halted
 ERROR: lazy loading failed for package ‘Replication’
@@ -166,7 +166,7 @@ Error: .onLoad failed in loadNamespace() for 'rjags', details:
   call: dyn.load(file, DLLpath = DLLpath, ...)
   error: unable to load shared object '/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/Replication/rjags/libs/rjags.so':
   dlopen(/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/Replication/rjags/libs/rjags.so, 0x000A): Library not loaded: /usr/local/lib/libjags.4.dylib
-  Referenced from: <82D1D1F8-CC85-3273-A9BC-B86843329438> /Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/Replication/rjags/libs/rjags.so
+  Referenced from: <7F6B5629-D6B5-35D1-BEDC-76C09B11A283> /Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/Replication/rjags/libs/rjags.so
   Reason: tried: '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/lib/libjags.4.dylib' (no such file), '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64')), '/Library/Frameworks/R.framework/Resources/lib/libjags.4.dylib' (no such file), '/Library/Java/Jav
 Execution halted
 ERROR: lazy loading failed for package ‘Replication’
