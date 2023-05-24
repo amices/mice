@@ -1,5 +1,7 @@
 # mice 3.15.5
 
+* Solves function naming problems for S3 generic functions `tidy()`, `update()`, `format()` and `sum()`
+* Adds GH issue templates `bug_report`, `feature_request` and `help_wanted`
 * Removes documentation files for `rbind.mids()` and `cbind.mids()` to conform to CRAN policy
 * Adds `mitml` and `glmnet` to imports so that test code conforms to `_R_CHECK_DEPENDS_ONLY=true` flag in `R CMD check`
 * Out-comments and weeds example&test code to silence `R CMD check` with `_R_CHECK_DEPENDS_ONLY=true`

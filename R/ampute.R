@@ -419,7 +419,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
         prop = prop
       )
     } else {
-      scores <- sum.scores(
+      scores <- sumscores(
         P = P,
         data = data,
         std = std,
@@ -484,7 +484,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
 # will obtain a certain score that will define his probability to be made missing.
 # The calculation of the probabilities occur in the function ampute.mcar(),
 # ampute.continuous() or ampute.discrete(), based on the kind of missingness.
-sum.scores <- function(P, data, std, weights, patterns) {
+sumscores <- function(P, data, std, weights, patterns) {
   weights <- as.matrix(weights)
   f <- function(i) {
     if (length(P[P == (i + 1)]) == 0) {

@@ -164,7 +164,7 @@ confint.mipo <- function(object, parm, level = 0.95, ...) {
   a <- (1 - level) / 2
   a <- c(a, 1 - a)
   fac <- qt(a, df)
-  pct <- format.perc(a, 3)
+  pct <- fmt.perc(a, 3)
   ci <- array(NA,
     dim = c(length(parm), 2L),
     dimnames = list(parm, pct)
@@ -179,7 +179,7 @@ unrowname <- function(x) {
   x
 }
 
-format.perc <- function(probs, digits) {
+fmt.perc <- function(probs, digits) {
   paste(
     format(100 * probs, trim = TRUE, scientific = FALSE, digits = digits),
     "%"
