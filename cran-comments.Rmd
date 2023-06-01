@@ -9,29 +9,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## mice 3.16.0
 
-## Reason
+## Overview
 
-New submission in response to mail of CRAN team:
+This submission 
 
-```
-Dear maintainer,
-
-Please see the problems shown on
-<https://cran.r-project.org/web/checks/check_results_mice.html>.
-
-Please correct before 2023-05-31 to safely retain your package on CRAN.
-
-Packages in Suggests should be used conditionally: see 'Writing R Extensions'.
-This needs to be corrected even if the missing package(s) become available.
-It can be tested by checking with _R_CHECK_DEPENDS_ONLY_=true.
-
-The CRAN Team
-``` 
-
-## Actions
-
-- All issues noted in mail resolved
-- Several changes and enhancements since `mice 3.15.0`
+- is a resubmission of `mice 3.16.0` after the orphaned `ucminf` CRAN package got a new maintainer;
+- is tested with the `_R_CHECK_DEPENDS_ONLY_=true` flag, as requested;
+- solves the problems at `https://cran.r-project.org/web/checks/check_results_mice.html`;
+- contains new features and bug fixes, as described in the `NEWS.md`.
 
 ## Test environments
 
@@ -45,11 +30,10 @@ R.Version()
 
 ```{r eval=FALSE}
 devtools::check_win_devel()
-...
-WARNING   Requires (indirectly) orphaned package: 'ucminf'
+
+Status: OK
 ```
 
-Solving this is beyond my powers.
 
 ### Rhub
 
@@ -57,9 +41,80 @@ Solving this is beyond my powers.
 devtools::check_rhub()
 ```
 
-Everything OK except for the orphaned package: 'ucminf'
+#### Windows
 
-### Local check
+```
+── mice 3.16.0: NOTE
+
+  Build ID:   mice_3.16.0.tar.gz-018f40fa4cdc492d8c9f43b7e5f5e0e7
+  Platform:   Windows Server 2022, R-devel, 64 bit
+  Submitted:  11m 27s ago
+  Build time: 11m 25s
+
+❯ checking HTML version of manual ... [27s] NOTE
+  Skipping checking math rendering: package 'V8' unavailable
+
+❯ checking for non-standard things in the check directory ... NOTE
+  Found the following files/directories:
+    ''NULL''
+
+❯ checking for detritus in the temp directory ... NOTE
+  Found the following files/directories:
+    'lastMiKTeXException'
+
+0 errors ✔ | 0 warnings ✔ | 3 notes ✖
+```
+
+I believe these NOTES are benign.
+
+#### Fedora Linux
+
+```
+Status: succes
+```
+
+#### Ubuntu 20.04
+
+```
+Status: succes
+```
+
+#### Debian
+
+```
+FAILURE 
+
+Running `R CMD build`...
+* checking for file ‘/tmp/Rtmp5Lhzhn/remotes13171d81356/mice/DESCRIPTION’ ... OK
+* preparing ‘mice’:
+* checking DESCRIPTION meta-information ... OK
+* cleaning src
+* checking for LF line-endings in source and make files and shell scripts
+* checking for empty or unneeded directories
+* building ‘mice_3.16.0.tar.gz’
+Installing package into ‘/home/docker/R’
+(as ‘lib’ is unspecified)
+Error : Bioconductor does not yet build and check packages for R version 4.4; see
+  https://bioconductor.org/install
+ERROR: dependency ‘mitml’ is not available for package ‘mice’
+* removing ‘/home/docker/R/mice’
+> There were 20 warnings (use warnings() to see them)
+
+> 
+Error : Bioconductor does not yet build and check packages for R version 4.4; see
+  https://bioconductor.org/install
+> library(mice)
+Error in library(mice) : there is no package called ‘mice’
+Execution halted
+Build step 'Execute shell' marked build as failure
+Pinging https://builder.r-hub.io/build/FAILURE/mice_3.16.0.tar.gz-82dc7cda08814b25ac48be4b5c9c940b/2023-06-01T11:37:52Z
+{"status":"ok"}
+Finished: FAILURE
+```
+
+I believe I cannot do something to make this problem disappear.
+
+### Local checks
 
 Package built by
 
@@ -70,20 +125,33 @@ build()
 
 ```{bash eval=FALSE}
 R CMD CHECK mice_3.16.0.tar.gz
-```
 
 Status: OK
+```
+
+
+### Local check using `_R_CHECK_DEPENDS_ONLY=true` flag. 
+
+NOTE: Run in OSX terminal, not in Rstudio terminal.
+
+```{bash eval=FALSE}
+env _R_CHECK_DEPENDS_ONLY=true R CMD check mice_3.16.0.tar.gz
+
+Status: OK
+```
+
 
 ## Downstream dependencies
 
 ### Overview
 
-`mice` has 113 downstream dependencies
+`mice` has 114 downstream dependencies
 
 ```{r eval=FALSE}
+# NOTE: Temporarily remove credentials line from .Rprofile
 library(revdepcheck)
 revdep_reset()
-revdep_check(num_workers = 10)
+revdep_check(pkg = ".", num_workers = 10, quiet = FALSE)
 ```
 
 ```{r}
@@ -92,19 +160,36 @@ revdepcheck::revdep_summary()
 
 ### New issues
 
+#### `MatchThem`
+
 There is one new warning, for the `MatchThem` package:
 
 ```{r}
 revdepcheck::revdep_details(revdep = "MatchThem")
 ```
 
-### Actions taken
-
 - I alerted the maintainer of the `MatchThem` package that the
   documentation for `cbind.mids()` was removed from the `mice` package
-  to conform to CRAN guidelines.
+  to conform to CRAN guidelines. The maintainer responded this will be fixed
+  in the next release.
 
-- The novel issue for `bipd` is equivalent to the old one. I contacted the maintainer previously. Did not repeat it now.
+#### `bipd`
 
-- In the past, I alerted/contacted the maintainers of the packages with existing reverse dependencies issues. I did not repeat for this
-  release of `mice`.
+```{r}
+revdepcheck::revdep_details(revdep = "bipd")
+```
+
+- The novel NOTE for `bipd` is equivalent to the old one. I contacted the maintainer previously. Did not repeat it now.
+
+#### `pre`
+
+- There is a new error generated by `test_pre_misc.R` of the `pre` package (`mice` is on `pre` Suggests):
+
+```{r}
+revdepcheck::revdep_details(revdep = "pre")
+```
+
+- I tried reproducing the error but stopped my attempt due to the complex structure 
+  of the testing script. I contacted the `pre` maintainer by means of 
+  issue <https://github.com/marjoleinF/pre/issues/30>.
+
