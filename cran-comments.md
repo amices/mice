@@ -7,6 +7,8 @@ cran-comments
 
 This submission
 
+- is a second resubmission, with `\donttest` changed in `\dontrun` to
+  evade `_R_CHECK_DEPENDS_ONLY_=true` errors;
 - is a resubmission of `mice 3.16.0` after the orphaned `ucminf` CRAN
   package got a new maintainer;
 - is tested with the `_R_CHECK_DEPENDS_ONLY_=true` flag, as requested;
@@ -158,12 +160,12 @@ R CMD CHECK mice_3.16.0.tar.gz
 Status: OK
 ```
 
-### Local check using `_R_CHECK_DEPENDS_ONLY=true` flag.
+### Local check using `_R_CHECK_DEPENDS_ONLY_=true` flag.
 
 NOTE: Run in OSX terminal, not in Rstudio terminal.
 
 ``` bash
-env _R_CHECK_DEPENDS_ONLY=true R CMD check mice_3.16.0.tar.gz
+env _R_CHECK_DEPENDS_ONLY_=true R CMD check mice_3.16.0.tar.gz
 
 Status: OK
 ```

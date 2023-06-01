@@ -62,7 +62,7 @@ iteration scheme.
 This is a multivariate imputation function using a joint model.
 }
 \examples{
-\donttest{
+\dontrun{
 # Note: Requires mitml 0.3-5.7
 blocks <- list(c("bmi", "chl", "hyp"), "age")
 method <- c("jomoImpute", "pmm")
