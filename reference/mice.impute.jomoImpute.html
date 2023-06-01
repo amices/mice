@@ -172,7 +172,7 @@ and Quartagno and Carpenter (authors of <code>jomo</code> package).</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># Note: Requires mitml 0.3-5.7</span></span></span>
 <span class="r-in"><span><span class="va">blocks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bmi"</span>, <span class="st">"chl"</span>, <span class="st">"hyp"</span><span class="op">)</span>, <span class="st">"age"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">method</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"jomoImpute"</span>, <span class="st">"pmm"</span><span class="op">)</span></span></span>
@@ -180,14 +180,7 @@ and Quartagno and Carpenter (authors of <code>jomo</code> package).</p>
 <span class="r-in"><span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">ini</span><span class="op">$</span><span class="va">pred</span></span></span>
 <span class="r-in"><span><span class="va">pred</span><span class="op">[</span><span class="st">"B1"</span>, <span class="st">"hyp"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, blocks <span class="op">=</span> <span class="va">blocks</span>, method <span class="op">=</span> <span class="va">method</span>, pred <span class="op">=</span> <span class="va">pred</span>, maxit <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  iter imp variable</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1   1  bmi chl hyp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1   2  bmi chl hyp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1   3  bmi chl hyp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1   4  bmi chl hyp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1   5  bmi chl hyp</span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
