@@ -14,7 +14,7 @@ Run `revdepcheck::revdep_details(, "bipd")` for more info
 
 ## Newly broken
 
-*   checking dependencies in R code ...sh: line 1: 69552 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpLrr3Tc/file10d343b141914'
+*   checking dependencies in R code ...sh: line 1: 64105 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpcESnnw/filef7d530e954ed'
     ```
      NOTE
     
@@ -41,7 +41,7 @@ Run `revdepcheck::revdep_details(, "bipd")` for more info
 
 ## Newly fixed
 
-*   checking dependencies in R code ...sh: line 1: 69510 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpwXaix2/file10cf9db24eb7'
+*   checking dependencies in R code ...sh: line 1: 64022 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpPAGHHl/filef76c784da58a'
     ```
      NOTE
     
@@ -88,5 +88,44 @@ Run `revdepcheck::revdep_details(, "MatchThem")` for more info
       ‘[mice:cbind.mids]{mice::cbind.mids}’
     
     See section 'Cross-references' in the 'Writing R Extensions' manual.
+    ```
+
+# pre
+
+<details>
+
+* Version: 1.0.6
+* GitHub: https://github.com/marjoleinF/pre
+* Source code: https://github.com/cran/pre
+* Date/Publication: 2023-02-12 22:50:02 UTC
+* Number of recursive dependencies: 137
+
+Run `revdepcheck::revdep_details(, "pre")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      > test_check("pre")
+      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 122 ]
+      
+      ══ Failed tests ════════════════════════════════════════════════════════════════
+      ── Error ('test_pre_misc.R:94:3'): cvpre gives previous results with airquality data ──
+      Error in `serverSocket(port = port)`: creation of server socket failed: port 11471 cannot be opened
+      Backtrace:
+          ▆
+       1. └─parallel::makeCluster(2L) at test_pre_misc.R:94:2
+       2.   └─parallel::makePSOCKcluster(names = spec, ...)
+       3.     └─base::serverSocket(port = port)
+      
+      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 122 ]
+      Error: Test failures
+      Execution halted
     ```
 

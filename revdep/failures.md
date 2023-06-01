@@ -48,6 +48,84 @@ ERROR: configuration failed for package ‘dynr’
 
 
 ```
+# idem
+
+<details>
+
+* Version: 5.1
+* GitHub: https://github.com/olssol/idem
+* Source code: https://github.com/cran/idem
+* Date/Publication: 2021-01-27 09:40:02 UTC
+* Number of recursive dependencies: 104
+
+Run `revdepcheck::revdep_details(, "idem")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘idem’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/idem/new/idem.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘idem’ ...
+** package ‘idem’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C compiler: ‘Apple clang version 14.0.3 (clang-1403.0.22.14.1)’
+using C++ compiler: ‘Apple clang version 14.0.3 (clang-1403.0.22.14.1)’
+using C++14
+using SDK: ‘’
+"/Library/Frameworks/R.framework/Resources/bin/Rscript" -e "source(file.path('..', 'tools', 'make_cc.R')); make_cc(commandArgs(TRUE))" stan_files/idem.stan
+Wrote C++ file "stan_files/idem.cc"
+...
+In file included from /Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/idem/StanHeaders/include/stan/math/rev/core/Eigen_NumTraits.hpp:5:
+In file included from /Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/idem/StanHeaders/include/stan/math/prim/core.hpp:4:
+/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/idem/StanHeaders/include/stan/math/prim/core/init_threadpool_tbb.hpp:12:10: fatal error: 'tbb/task_scheduler_init.h' file not found
+#include <tbb/task_scheduler_init.h>
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+22 warnings and 1 error generated.
+make: *** [stan_files/idem.o] Error 1
+rm stan_files/idem.cc
+ERROR: compilation failed for package ‘idem’
+* removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/idem/new/idem.Rcheck/idem’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘idem’ ...
+** package ‘idem’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C compiler: ‘Apple clang version 14.0.3 (clang-1403.0.22.14.1)’
+using C++ compiler: ‘Apple clang version 14.0.3 (clang-1403.0.22.14.1)’
+using C++14
+using SDK: ‘’
+"/Library/Frameworks/R.framework/Resources/bin/Rscript" -e "source(file.path('..', 'tools', 'make_cc.R')); make_cc(commandArgs(TRUE))" stan_files/idem.stan
+Wrote C++ file "stan_files/idem.cc"
+...
+In file included from /Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/idem/StanHeaders/include/stan/math/rev/core/Eigen_NumTraits.hpp:5:
+In file included from /Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/idem/StanHeaders/include/stan/math/prim/core.hpp:4:
+/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/idem/StanHeaders/include/stan/math/prim/core/init_threadpool_tbb.hpp:12:10: fatal error: 'tbb/task_scheduler_init.h' file not found
+#include <tbb/task_scheduler_init.h>
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+22 warnings and 1 error generated.
+make: *** [stan_files/idem.o] Error 1
+rm stan_files/idem.cc
+ERROR: compilation failed for package ‘idem’
+* removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/idem/old/idem.Rcheck/idem’
+
+
+```
 # pguIMP
 
 <details>
