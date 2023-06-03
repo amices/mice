@@ -50,8 +50,6 @@ draw as the imputation.
 }
 }
 \examples{
-require(rpart)
-
 imp <- mice(nhanes2, meth = "cart", minbucket = 4)
 plot(imp)
 }

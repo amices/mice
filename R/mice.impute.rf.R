@@ -50,7 +50,6 @@
 #' @keywords datagen
 #' @examples
 #' \dontrun{
-#' library("lattice")
 #' imp <- mice(nhanes2, meth = "rf", ntree = 3)
 #' plot(imp)
 #' }

@@ -7,8 +7,10 @@
 #'                      points rect text
 #' @importFrom lattice  bwplot densityplot stripplot xyplot
 #' @importFrom mitml    jomoImpute mitmlComplete panImpute testModels
+#' @importFrom nnet     multinom
 #' @importFrom Rcpp     evalCpp
 #' @importFrom rlang    .data syms
+#' @importFrom rpart    rpart rpart.control
 #' @importFrom stats    C aggregate as.formula binomial coef
 #'                      complete.cases confint
 #'                      contr.treatment cor df.residual fitted

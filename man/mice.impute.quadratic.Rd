@@ -61,8 +61,6 @@ we need to preserve quadratic relations between \code{YY} and any third
 variables in the multivariate incomplete data that we might wish to impute.
 }
 \examples{
-require(lattice)
-
 # Create Data
 B1 <- .5
 B2 <- .5
