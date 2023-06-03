@@ -125,7 +125,7 @@ generally benefit from much faster cluster computation if <code>type</code> is s
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function relies on package <code><a href="https://rdrr.io/pkg/lattice/man/splom.html" class="external-link">parallel</a></code>, which is a base
+    <p>This function relies on package <code>parallel</code>, which is a base
 package for R versions 2.14.0 and later. We have chosen to use parallel function
 <code>parLapply</code> to allow the use of <code>parlmice</code> on Mac, Linux and Windows
 systems. For the same reason, we use the Parallel Socket Cluster (PSOCK) type by default.</p>
@@ -140,7 +140,7 @@ and can be used for further analyses.</p>
 <p>Note that if a seed value is desired, the seed should be entered to this function
 with argument <code>seed</code>. Seed values outside the wrapper function (in an
 R-script or passed to <code><a href="mice.html">mice</a></code>) will not result to reproducible results.
-We refer to the manual of <code><a href="https://rdrr.io/pkg/lattice/man/splom.html" class="external-link">parallel</a></code> for an explanation on this matter.</p>
+We refer to the manual of <code>parallel</code> for an explanation on this matter.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -152,7 +152,7 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/lattice/man/splom.html" class="external-link">parallel</a></code>, <code>parLapply</code>, <code>makeCluster</code>,
+    <div class="dont-index"><p><code>parallel</code>, <code>parLapply</code>, <code>makeCluster</code>,
 <code><a href="mice.html">mice</a></code>, <code><a href="mids-class.html">mids-class</a></code></p></div>
     </div>
     <div class="section level2">
