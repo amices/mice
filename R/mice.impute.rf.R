@@ -106,12 +106,7 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
   install.on.demand("ranger", ...)
 
   # Fit all trees at once
-  extra_ranger_args <- list(...)
-  extra_ranger_args[["type"]] <- NULL # avoids unused argument warnings
-  fit <- do.call(
-    what = ranger::ranger,
-    args = c(list("x" = xobs, "y" = yobs, "num.trees" = ntree), extra_ranger_args)
-  )
+  fit <- suppressWarnings(ranger::ranger(x = xobs, y = yobs, num.trees = ntree, ...))
 
   nodes <- predict(
     object = fit, data = rbind(xobs, xmis),
