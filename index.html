@@ -46,7 +46,7 @@
     
     <a class="navbar-brand me-2" href="index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -118,10 +118,9 @@
 <span></span>
 <span><span class="co"># show the missing data pattern</span></span>
 <span><span class="fu"><a href="reference/md.pattern.html">md.pattern</a></span><span class="op">(</span><span class="va">nhanes</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-pattern-1.png" alt=""><p class="caption">Missing data pattern of <code>nhanes</code> data. Blue is observed, red is missing.</p>
-</div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    age hyp bmi chl   </span></span>
+<figure><img src="reference/figures/README-pattern-1.png" alt="Missing data pattern of nhanes data. Blue is observed, red is missing."><figcaption aria-hidden="true">
+Missing data pattern of <code>nhanes</code> data. Blue is observed, red is missing.
+</figcaption></figure><div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    age hyp bmi chl   </span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13   1   1   1   1  0</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    1   1   1   0  1</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    1   1   0   1  1</span></span>
@@ -141,10 +140,9 @@
 <span></span>
 <span><span class="co"># inspect quality of imputations</span></span>
 <span><span class="fu"><a href="reference/stripplot.mids.html">stripplot</a></span><span class="op">(</span><span class="va">imp</span>, <span class="va">chl</span>, pch <span class="op">=</span> <span class="fl">19</span>, xlab <span class="op">=</span> <span class="st">"Imputation number"</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-stripplot-1.png" alt=""><p class="caption">Distribution of <code>chl</code> per imputed data set.</p>
-</div>
-<p>In general, we would like the imputations to be plausible, i.e., values that could have been observed if they had not been missing.</p>
+<figure><img src="reference/figures/README-stripplot-1.png" alt="Distribution of chl per imputed data set."><figcaption aria-hidden="true">
+Distribution of <code>chl</code> per imputed data set.
+</figcaption></figure><p>In general, we would like the imputations to be plausible, i.e., values that could have been observed if they had not been missing.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># fit complete-data model</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">chl</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">bmi</span><span class="op">)</span><span class="op">)</span></span>
@@ -271,7 +269,7 @@
 <li><a href="https://cran.r-project.org/package=mice" class="external-link"><img src="https://www.r-pkg.org/badges/version/mice" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://cran.r-project.org/package=mice" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/mice"></a></li>
 <li><a href="https://github.com/amices/mice/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/amices/mice/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://amices.org/mice/"><img src="https://img.shields.io/badge/github%20version-3.16.0-orange.svg"></a></li>
+<li><a href="https://amices.org/mice/"><img src="https://img.shields.io/badge/github%20version-3.16.1-orange.svg"></a></li>
 </ul>
 </div>
 
