@@ -50,12 +50,12 @@ test_that("as.mids() produces a `mids` object", {
 })
 
 test_that("complete() reproduces the original data", {
-  expect_true(all(complete(test1, action = "long", include = TRUE) == X, na.rm = TRUE))
-  expect_true(all(complete(test2, action = "long", include = TRUE) == X, na.rm = TRUE))
-  expect_true(all(complete(test3, action = "long", include = TRUE) == X, na.rm = TRUE))
-  expect_true(all(complete(test4, action = "long", include = TRUE) == X, na.rm = TRUE))
-  expect_true(all(complete(test5, action = "long", include = TRUE)[, -2] == X[, -2], na.rm = TRUE))
-  expect_true(all(complete(test6, action = "long", include = TRUE)[, -(1:2)] == X[, rev][, -(5:6)], na.rm = TRUE))
+  expect_true(identical(complete(test1, action = "long", include = TRUE), X))
+  expect_true(identical(complete(test2, action = "long", include = TRUE), X))
+  expect_true(identical(complete(test3, action = "long", include = TRUE), X))
+  expect_true(identical(complete(test4, action = "long", include = TRUE), X))
+  expect_true(identical(complete(test5, action = "long", include = TRUE)[, -2], X[, -2]))
+  expect_true(identical(complete(test6, action = "long", include = TRUE)[, -(1:2)], X[, rev][, -(5:6)]))
 })
 
 # works with dplyr
@@ -67,3 +67,4 @@ X3 <- X %>%
 test_that("handles grouped_df", {
   expect_silent(as.mids(X3))
 })
+

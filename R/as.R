@@ -108,9 +108,16 @@ as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id") {
     remove.collinear = FALSE, allow.na = TRUE
   )
 
-  # store any .id as row names
-  if (!is.na(.id)) {
-    rownames(ini$data) <- unlist(long[imps == 0, .id], use.names = FALSE)
+  # create default .id when .id using type from input data
+  # otherwise store provided .id as row names
+  if (!.id %in% names(long)) {
+    if (typeof(attr(long, "row.names")) == "integer") {
+      row.names(ini$data) <- seq_len(nrow(ini$data))
+    } else {
+      row.names(ini$data) <- as.character(seq_len(nrow(ini$data)))
+    }
+  } else {
+    row.names(ini$data) <- unlist(long[imps == 0, .id], use.names = FALSE)
   }
 
   # copy imputations from long into proper ini$imp elements

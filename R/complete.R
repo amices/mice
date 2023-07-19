@@ -111,10 +111,10 @@ complete.mids <- function(data, action = 1L, include = FALSE,
     cmp <- bind_rows(mylist)
     cmp <- data.frame(
       .imp = rep(idx, each = nrow(data$data)),
-      .id = rep.int(1L:nrow(data$data), length(idx)),
+      .id = rep.int(attr(data$data, "row.names"), length(idx)),
       cmp
     )
-    if (is.integer(attr(data$data, "row.names"))) {
+    if (typeof(attr(data$data, "row.names")) == "integer") {
       row.names(cmp) <- seq_len(nrow(cmp))
     } else {
       row.names(cmp) <- as.character(seq_len(nrow(cmp)))
