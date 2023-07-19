@@ -1,3 +1,7 @@
+# mice 3.16.1
+
+* Adds support for the `dots` argument to `ranger::ranger(...)` in `mice.impute.rf()` (#563). Contributed @edbonneville
+
 # mice 3.16.0
 
 ### Major changes

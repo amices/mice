@@ -7,7 +7,7 @@
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
 [![](https://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice)
 [![R-CMD-check](https://github.com/amices/mice/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/amices/mice/actions/workflows/R-CMD-check.yaml)
-[![](https://img.shields.io/badge/github%20version-3.16.0-orange.svg)](https://amices.org/mice/)
+[![](https://img.shields.io/badge/github%20version-3.16.1-orange.svg)](https://amices.org/mice/)
 <!-- badges: end -->
 
 ## [Multivariate Imputation by Chained Equations](https://amices.org/mice/)
@@ -47,8 +47,12 @@ library(mice, warn.conflicts = FALSE)
 md.pattern(nhanes)
 ```
 
-![Missing data pattern of `nhanes` data. Blue is observed, red is
-missing.](man/figures/README-pattern-1.png)
+<figure>
+<img src="man/figures/README-pattern-1.png"
+alt="Missing data pattern of nhanes data. Blue is observed, red is missing." />
+<figcaption aria-hidden="true">Missing data pattern of
+<code>nhanes</code> data. Blue is observed, red is missing.</figcaption>
+</figure>
 
     #>    age hyp bmi chl   
     #> 13   1   1   1   1  0
@@ -75,8 +79,12 @@ imp <- mice(nhanes, maxit = 2, m = 2, seed = 1)
 stripplot(imp, chl, pch = 19, xlab = "Imputation number")
 ```
 
-![Distribution of `chl` per imputed data
-set.](man/figures/README-stripplot-1.png)
+<figure>
+<img src="man/figures/README-stripplot-1.png"
+alt="Distribution of chl per imputed data set." />
+<figcaption aria-hidden="true">Distribution of <code>chl</code> per
+imputed data set.</figcaption>
+</figure>
 
 In general, we would like the imputations to be plausible, i.e., values
 that could have been observed if they had not been missing.
