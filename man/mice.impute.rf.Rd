@@ -36,8 +36,8 @@ alternative currently implemented is the \code{randomForest} package, which
 used to be the default in mice 3.13.10 and earlier.}
 
 \item{\dots}{Other named arguments passed down to
-\code{mice:::install.on.demand()}, \code{randomForest::randomForest()} and
-\code{randomForest:::randomForest.default()}.}
+\code{mice:::install.on.demand()}, \code{randomForest::randomForest()},
+\code{randomForest:::randomForest.default()}, and \code{ranger::ranger()}.}
 }
 \value{
 Vector with imputed data, same type as \code{y}, and of length
