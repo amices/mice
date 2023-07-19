@@ -230,8 +230,8 @@ stripplot.mids <- function(x,
   )
 
   ## create formula if not given (in call$data !)
-  vnames <- names(cd)[-seq_len(2)]
-  allfactors <- unlist(lapply(cd, is.factor))[-seq_len(2)]
+  vnames <- setdiff(names(cd), c(".id", ".imp"))
+  allfactors <- unlist(lapply(cd[vnames], is.factor))
   if (missing(data)) {
     vnames <- vnames[!allfactors]
     formula <- as.formula(paste0(paste0(vnames, collapse = "+"), "~ as.factor(.imp)"))

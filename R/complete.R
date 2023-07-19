@@ -108,12 +108,12 @@ complete.mids <- function(data, action = 1L, include = FALSE,
     return(mylist)
   }
   if (shape == "long") {
-    cmp <- bind_rows(mylist)
-    cmp <- data.frame(
-      .imp = rep(idx, each = nrow(data$data)),
-      .id = rep.int(attr(data$data, "row.names"), length(idx)),
-      cmp
-    )
+    cmp <- mylist %>%
+      bind_rows() %>%
+      mutate(
+        .imp = rep(idx, each = nrow(data$data)),
+        .id = rep.int(attr(data$data, "row.names"), length(idx)),
+      )
     if (typeof(attr(data$data, "row.names")) == "integer") {
       row.names(cmp) <- seq_len(nrow(cmp))
     } else {
@@ -124,8 +124,8 @@ complete.mids <- function(data, action = 1L, include = FALSE,
   # must be broad or repeated
   cmp <- bind_cols(mylist)
   names(cmp) <- paste(rep.int(names(data$data), m),
-    rep.int(idx, rep.int(ncol(data$data), length(idx))),
-    sep = "."
+                      rep.int(idx, rep.int(ncol(data$data), length(idx))),
+                      sep = "."
   )
   if (shape == "broad") {
     return(cmp)

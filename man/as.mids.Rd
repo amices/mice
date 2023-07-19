@@ -75,21 +75,21 @@ is.mids(test3)
 identical(complete(test3, action = "long", include = TRUE), X)
 
 # nhanes example with .id where .imp is numeric
-test4 <- as.mids(X2, .id = 2)
+test4 <- as.mids(X2, .id = 6)
 is.mids(test4)
 identical(complete(test4, action = "long", include = TRUE), X)
 
 # example without an .id variable
 # variable .id not preserved
-X3 <- X[, -2]
+X3 <- X[, -6]
 test5 <- as.mids(X3)
 is.mids(test5)
-identical(complete(test5, action = "long", include = TRUE)[, -2], X[, -2])
+identical(complete(test5, action = "long", include = TRUE)[, -6], X[, -6])
 
 # as() syntax has fewer options
 test7 <- as(X, "mids")
 test8 <- as(X2, "mids")
-test9 <- as(X2[, -2], "mids")
+test9 <- as(X2[, -6], "mids")
 rev <- ncol(X):1
 test10 <- as(X[, rev], "mids")
 
