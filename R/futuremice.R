@@ -80,7 +80,7 @@
 futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
                        use.logical = TRUE, future.plan = "multisession", 
                        packages = NULL, globals = NULL, ...) {
-  # check if pacakages available
+  # check if packages available
   install.on.demand("parallelly", ...)
   install.on.demand("furrr", ...)
   install.on.demand("future", ...)
