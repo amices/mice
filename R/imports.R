@@ -1,7 +1,7 @@
 #' @import              methods
 #' @importFrom broom    glance tidy
-#' @importFrom dplyr    %>% bind_cols bind_rows filter group_by lead
-#'                      mutate n pull row_number select summarize
+#' @importFrom dplyr    %>% any_of bind_cols bind_rows filter group_by lead
+#'                      mutate n pull relocate row_number select summarize
 #' @importFrom glmnet   cv.glmnet
 #' @importFrom graphics abline axis box par plot plot.new plot.window
 #'                      points rect text

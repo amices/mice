@@ -5,7 +5,14 @@
 \alias{complete}
 \title{Extracts the completed data from a \code{mids} object}
 \usage{
-\method{complete}{mids}(data, action = 1L, include = FALSE, mild = FALSE, ...)
+\method{complete}{mids}(
+  data,
+  action = 1L,
+  include = FALSE,
+  mild = FALSE,
+  order = c("last", "first"),
+  ...
+)
 }
 \arguments{
 \item{data}{An object of class \code{mids} as created by the function
@@ -27,6 +34,11 @@ values should be included.}
 always be an object of class \code{mild}. Setting \code{mild = TRUE}
 overrides \code{action} keywords \code{"long"}, \code{"broad"}
 and \code{"repeated"}. The default is \code{FALSE}.}
+
+\item{order}{Either \code{"first"} or \code{"last"}. Only relevant when
+\code{action == "long"}. Writes the \code{".imp"} and \code{".id"}
+in columns 1 and 2. The default is \code{order = "last"}.
+Included for backward compatibility with \code{"< mice 3.16.0"}.}
 
 \item{\dots}{Additional arguments. Not used.}
 }

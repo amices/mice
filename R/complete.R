@@ -20,6 +20,10 @@
 #' always be an object of class \code{mild}. Setting \code{mild = TRUE}
 #' overrides \code{action} keywords \code{"long"}, \code{"broad"}
 #' and \code{"repeated"}. The default is \code{FALSE}.
+#' @param order Either \code{"first"} or \code{"last"}. Only relevant when
+#' \code{action == "long"}. Writes the \code{".imp"} and \code{".id"}
+#' in columns 1 and 2. The default is \code{order = "last"}.
+#' Included for backward compatibility with \code{"< mice 3.16.0"}.
 #' @param \dots Additional arguments. Not used.
 #' @return Complete data set with missing values replaced by imputations.
 #' A \code{data.frame}, or a list of data frames of class \code{mild}.
@@ -77,8 +81,10 @@
 #' names(dslist)
 #' @export
 complete.mids <- function(data, action = 1L, include = FALSE,
-                          mild = FALSE, ...) {
+                          mild = FALSE, order = c("last", "first"),
+                          ...) {
   if (!is.mids(data)) stop("'data' not of class 'mids'")
+  order <- match.arg(order)
 
   m <- as.integer(data$m)
   if (is.numeric(action)) {
@@ -114,6 +120,9 @@ complete.mids <- function(data, action = 1L, include = FALSE,
         .imp = rep(idx, each = nrow(data$data)),
         .id = rep.int(attr(data$data, "row.names"), length(idx)),
       )
+    if (order == "first") {
+      cmp <- relocate(cmp, any_of(c(".imp", ".id")))
+    }
     if (typeof(attr(data$data, "row.names")) == "integer") {
       row.names(cmp) <- seq_len(nrow(cmp))
     } else {
