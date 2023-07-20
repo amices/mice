@@ -79,7 +79,7 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
   apply(forest, MARGIN = 1, FUN = function(s) sample(unlist(s), 1))
 }
 
-# Find eligible donors using the randomForest package (default)
+# Find eligible donors using the randomForest package
 .randomForest.donors <- function(xobs, xmis, yobs, ntree, ...) {
   install.on.demand("randomForest", ...)
 
@@ -101,7 +101,7 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
   sapply(seq_len(ntree), FUN = function(s) onetree(xobs, xmis, yobs, ...))
 }
 
-# Find eligible donors using the ranger package
+# Find eligible donors using the ranger package (default)
 .ranger.donors <- function(xobs, xmis, yobs, ntree, ...) {
   install.on.demand("ranger", ...)
 
