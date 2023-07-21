@@ -1,3 +1,5 @@
+* **Breaking change:** The `complete(..., action = "long", ...)` command puts the columns named `".imp"` and `".id"` in the last two positions of the long data (instead of first two positions).  In this way, the columns of the imputed data will have the same positions as in the original data, which is more user-friendly and easier to work with. Note that any existing code that assumes that variables `".imp"` and `".id"` are in columns 1 and 2 will need to be modified. The advice is to modify the code using the variable names `".imp"` and `".id"`. If you want the old behaviour, specify the argument `order = "first"`. (#569). Contributed @stefvanbuuren
+
 # mice 3.16.1
 
 * Adds support for the `dots` argument to `ranger::ranger(...)` in `mice.impute.rf()` (#563). Contributed @edbonneville
