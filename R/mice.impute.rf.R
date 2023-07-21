@@ -10,8 +10,8 @@
 #' alternative currently implemented is the \code{randomForest} package, which
 #' used to be the default in mice 3.13.10 and earlier.
 #' @param \dots Other named arguments passed down to
-#' \code{mice:::install.on.demand()}, \code{randomForest::randomForest()} and
-#' \code{randomForest:::randomForest.default()}.
+#' \code{mice:::install.on.demand()}, \code{randomForest::randomForest()},
+#' \code{randomForest:::randomForest.default()}, and \code{ranger::ranger()}.
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #' \code{sum(wy)}
 #' @details
@@ -79,7 +79,7 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
   apply(forest, MARGIN = 1, FUN = function(s) sample(unlist(s), 1))
 }
 
-# Find eligible donors using the randomForest package (default)
+# Find eligible donors using the randomForest package
 .randomForest.donors <- function(xobs, xmis, yobs, ntree, ...) {
   install.on.demand("randomForest", ...)
 
@@ -101,12 +101,12 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
   sapply(seq_len(ntree), FUN = function(s) onetree(xobs, xmis, yobs, ...))
 }
 
-# Find eligible donors using the ranger package
+# Find eligible donors using the ranger package (default)
 .ranger.donors <- function(xobs, xmis, yobs, ntree, ...) {
   install.on.demand("ranger", ...)
 
   # Fit all trees at once
-  fit <- ranger::ranger(x = xobs, y = yobs, num.trees = ntree)
+  fit <- suppressWarnings(ranger::ranger(x = xobs, y = yobs, num.trees = ntree, ...))
 
   nodes <- predict(
     object = fit, data = rbind(xobs, xmis),
