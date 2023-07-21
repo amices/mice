@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,6 +51,11 @@
       <small>Source: <a href="https://github.com/amices/mice/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.16.2" id="mice-3162">mice 3.16.2<a class="anchor" aria-label="anchor" href="#mice-3162"></a></h2>
+<ul><li>
+<strong>Breaking change:</strong> The <code>complete(..., action = "long", ...)</code> command puts the columns named <code>".imp"</code> and <code>".id"</code> in the last two positions of the long data (instead of first two positions). In this way, the columns of the imputed data will have the same positions as in the original data, which is more user-friendly and easier to work with. Note that any existing code that assumes that variables <code>".imp"</code> and <code>".id"</code> are in columns 1 and 2 will need to be modified. The advice is to modify the code using the variable names <code>".imp"</code> and <code>".id"</code>. If you want the old behaviour, specify the argument <code>order = "first"</code>. (<a href="https://github.com/amices/mice/issues/569" class="external-link">#569</a>). Contributed <a href="https://github.com/stefvanbuuren" class="external-link">@stefvanbuuren</a></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.16.1" id="mice-3161">mice 3.16.1<a class="anchor" aria-label="anchor" href="#mice-3161"></a></h2>
 <ul><li>Adds support for the <code>dots</code> argument to <code>ranger::ranger(...)</code> in <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> (<a href="https://github.com/amices/mice/issues/563" class="external-link">#563</a>). Contributed <a href="https://github.com/edbonneville" class="external-link">@edbonneville</a></li>
