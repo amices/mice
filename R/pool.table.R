@@ -1,0 +1,65 @@
+#' Combines estimates from a tidy table
+#'
+#' @param w A \code{data.frame} with parameter estimates
+#' in tidy format (see details).
+#' @param dfcom A positive number representing the degrees of freedom of the
+#' residuals in the complete-data analysis. The \code{dfcom} argument is
+#' used for the Barnard-Rubin adjustment. In a linear regression, \code{dfcom}
+#' would be equivalent to the number of independent observation minus the number
+#' of fitted parameters, but the expression becomes more complex for
+#' regularized, proportional hazards, or other semi-parametric
+#' techniques. Only used if \code{w} lacks a column named \code{"df.residual"}.
+#' @param rule A string indicating the pooling rule. Currently supported are
+#' \code{"rubin1987"} (default, for analyses applied to multiply-imputed
+#' incomplete data) and \code{"reiter2003"} (for analyses applied to
+#' synthetic data created from complete data).
+#' @param custom.t A custom character string to be parsed as a calculation
+#' rule for the total variance \code{t}. The custom rule can use the
+#' other calculated pooling statistics. The default \code{t} calculation
+#' has the form \code{".data$ubar + (1 + 1 / .data$m) * .data$b"}.
+#' @details
+#' The input data \code{w} is a \code{data.frame} with columns named:
+#'
+#' \tabular{ll}{
+#' \code{term}        \tab a character or factor with the parameter names\cr
+#' \code{estimate}    \tab a numeric vector with parameter estimates\cr
+#' \code{std.error}   \tab a numeric vector with standard errors of \code{estimate}\cr
+#' \code{residual.df} \tab a numeric vector with the degrees of freedom
+#' }
+#'
+#' Columns 1-3 are obligatory. Column 4 is optional. Usually,
+#' all entries in column 4 are the same. The user can omit column 4,
+#' and specify argument \code{pool.table(..., dfcom = ...)} instead.
+#' If both are given, then column \code{residual.df} takes precedence.
+#' If neither are specified, then \code{mice} tries to calculate the
+#' residual degrees of freedom. If that fails (e.g. because there is
+#' no information on sample size), \code{mice} sets \code{dfcom = Inf}.
+#' The value \code{dfcom = Inf} is acceptable for large samples
+#' (n > 1000) and relatively concise parametric models.
+#'
+#' @return \code{pool.table()} return a \code{data.frame} with aggregated
+#' estimates, standard errors, confidence intervals and statistical tests.
+#'
+#' @examples
+#' # conventional mice workflow
+#' imp <- mice(nhanes2, m = 2, maxit = 2, seed = 1, print = FALSE)
+#' fit <- with(imp, lm(chl ~ age + bmi + hyp))
+#' est <- pool(fit)
+#' est$pooled
+#'
+#' # using pool.table() on tidy table
+#' tbl <- summary(fit)[, c("term", "estimate", "std.error", "df.residual")]
+#' tbl
+#' pooled <- pool.table(tbl)
+#' pooled
+#'
+#' identical(est$pooled, pooled)
+#'
+#'
+#' @export
+pool.table <- function(w, dfcom = Inf, custom.t = NULL,
+                       rule = c("rubin1987", "reiter2003")) {
+  pooled <- pool.vector(w, dfcom = dfcom, custom.t = custom.t, rule = rule)
+  pooled
+}
+
