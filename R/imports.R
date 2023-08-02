@@ -22,8 +22,8 @@
 #'                      rbinom rchisq reformulate rgamma rnorm runif
 #'                      sd summary.glm terms update var vcov
 #' @importFrom tidyr    complete
-#' @importFrom utils    askYesNo flush.console head install.packages methods
-#'                      packageDescription packageVersion
+#' @importFrom utils    askYesNo flush.console hasName head install.packages
+#'                      methods packageDescription packageVersion
 #'                      tail write.table
 #' @export bwplot
 #' @export densityplot

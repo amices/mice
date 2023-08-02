@@ -32,6 +32,11 @@ summary.mira <- function(object,
       error = function(e) NULL
     )
   }
+  # get df.residuals
+  if (!"df.residuals" %in% colnames(v)) {
+    v$df.residual <- get.dfcom(object)
+  }
+
   if (type == "summary") {
     v <- lapply(fitlist, summary, ...)
   }
