@@ -53,6 +53,8 @@
 #' @export
 pool.vector <- function(w, dfcom = Inf, custom.t = NULL,
                         rule = c("rubin1987", "reiter2003")) {
+  # rubin1987: Rubin's rules for scalar estimates
+  # reiter2003: Reiter's rules for partially synthetic data
   rule <- match.arg(rule)
 
   present <- hasName(w, c("estimate", "std.error"))
