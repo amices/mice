@@ -9,8 +9,6 @@
 #' of fitted parameters, but the expression becomes more complex for
 #' regularized, proportional hazards, or other semi-parametric
 #' techniques. Only used if \code{w} lacks a column named \code{"df.residual"}.
-#' The default \code{dfcom = Inf} is appropriate for large samples
-#' (n > 1000) and relatively concise parametric models.
 #' @param rule A string indicating the pooling rule. Currently supported are
 #' \code{"rubin1987"} (default, for analyses applied to multiply-imputed
 #' incomplete data) and \code{"reiter2003"} (for analyses applied to
@@ -23,16 +21,22 @@
 #' @details
 #' The input data \code{w} is a \code{data.frame} with columns named:
 #'
-#' 1. `term`, a character or factor with the parameter names
-#' 2. `estimate`, a numeric vector with parameter estimates
-#' 3. `std.error`, a numeric vector with standard errors of `estimate`
-#' 4. `residual.df`, a numeric vector with the degrees of freedom
+#' \tabular{ll}{
+#' \code{term}        \tab a character or factor with the parameter names\cr
+#' \code{estimate}    \tab a numeric vector with parameter estimates\cr
+#' \code{std.error}   \tab a numeric vector with standard errors of \code{estimate}\cr
+#' \code{residual.df} \tab a numeric vector with the degrees of freedom
+#' }
 #'
 #' Columns 1-3 are obligatory. Column 4 is optional. Usually,
 #' all entries in column 4 are the same. The user can omit column 4,
-#' and specify `dfcom` instead. If both are specified, then column
-#' `residual.df` takes precedence. If neither are specified, then
-#' `mice` tries to calculate the residual degrees of freedom.
+#' and specify argument \code{pool.vector(..., dfcom = ...)} instead.
+#' If both are given, then column \code{residual.df} takes precedence.
+#' If neither are specified, then \code{mice} tries to calculate the
+#' residual degrees of freedom. If that fails (e.g. because there is
+#' no information on sample size), \code{mice} sets \code{dfcom = Inf}.
+#' The value \code{dfcom = Inf} is acceptable for large samples
+#' (n > 1000) and relatively concise parametric models.
 #'
 #' @return A data.frame with aggregated parameters estimates,
 #' standard errors, confidence intervals and statistical tests.
