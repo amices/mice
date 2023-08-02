@@ -34,7 +34,8 @@ summary.mira <- function(object,
   }
   # get df.residuals
   if (!"df.residuals" %in% colnames(v)) {
-    v$df.residual <- get.dfcom(object)
+    model <- getfit(object, 1L)
+    v$df.residual <- get.dfcom(model)
   }
 
   if (type == "summary") {

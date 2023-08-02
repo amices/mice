@@ -1,5 +1,5 @@
-get.dfcom <- function(object, dfcom = NULL) {
-  # Input: mira object of fitlist
+get.dfcom <- function(model, dfcom = NULL) {
+  # Input: a fitted model
   # residual degrees of freedom of model fitted on hypothetically complete data
   # assumed to be the same across imputations
 
@@ -8,12 +8,11 @@ get.dfcom <- function(object, dfcom = NULL) {
   }
 
   # first, try the standard df.residual() function
-  dfcom <- tryCatch(stats::df.residual(getfit(object)[[1]]),
+  dfcom <- tryCatch(stats::df.residual(model),
                     error = function(e) NULL)
   if (!is.null(dfcom)) return(as.numeric(dfcom))
 
   # coxph model: nevent - p
-  model <- getfit(object, 1L)
   if (inherits(model, "coxph")) {
     return(as.numeric(max(model$nevent - length(coef(model)), 1)))
   }

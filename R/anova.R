@@ -19,7 +19,10 @@ anova.mira <- function(object, ..., method = "D1", use = "wald") {
 
   # order by model complexity
   dfcom <- rep(NA, ncol(first))
-  for (j in 1:ncol(first)) dfcom[j] <- get.dfcom(modlist[[j]])
+  for (j in 1:ncol(first)) {
+    model <- getfit(modlist[[j]], 1L)
+    dfcom[j] <- get.dfcom(model)
+  }
   idx <- order(dfcom, decreasing = FALSE)
   modlist <- modlist[idx]
   dfcom <- dfcom[idx]

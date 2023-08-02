@@ -160,8 +160,10 @@ pool <- function(object, dfcom = NULL, rule = NULL, custom.t = NULL) {
     return(getfit(object, 1))
   }
 
-  dfcom <- get.dfcom(object, dfcom)
-  pooled <- pool.fitlist(getfit(object), dfcom = dfcom, rule = rule, custom.t = custom.t)
+  model <- getfit(object, 1L)
+  dfcom <- get.dfcom(model, dfcom)
+  w <- summary(getfit(object), type = "tidy", exponentiate = FALSE)
+  pooled <- pool.vector(w, dfcom = dfcom, custom.t = custom.t, rule = rule)
 
   # mipo object
   rr <- list(
@@ -171,13 +173,6 @@ pool <- function(object, dfcom = NULL, rule = NULL, custom.t = NULL) {
   )
   class(rr) <- c("mipo", "data.frame")
   rr
-}
-
-pool.fitlist <- function(fitlist, dfcom = NULL,
-                         rule = c("rubin1987", "reiter2003"), custom.t = NULL) {
-  w <- summary(fitlist, type = "tidy", exponentiate = FALSE)
-  pooled <- pool.vector(w, dfcom = dfcom, custom.t = custom.t, rule = rule)
-  return(pooled)
 }
 
 #' @rdname pool
