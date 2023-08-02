@@ -6,14 +6,33 @@
 \usage{
 pool.table(
   w,
+  type = c("all", "minimal", "tests"),
+  conf.int = TRUE,
+  conf.level = 0.95,
+  exponentiate = FALSE,
   dfcom = Inf,
   custom.t = NULL,
-  rule = c("rubin1987", "reiter2003")
+  rule = c("rubin1987", "reiter2003"),
+  ...
 )
 }
 \arguments{
 \item{w}{A \code{data.frame} with parameter estimates
 in tidy format (see details).}
+
+\item{type}{A string, either \code{"minimal"}, \code{"tests"} or \code{"all"}.
+Use minimal to mimick the output of \code{summary(pool(fit))}. The default
+is \code{"all"}.}
+
+\item{conf.int}{Logical indicating whether to include
+a confidence interval.}
+
+\item{conf.level}{Confidence level of the interval, used only if
+\code{conf.int = TRUE}. Number between 0 and 1.}
+
+\item{exponentiate}{Flag indicating whether to exponentiate the
+coefficient estimates and confidence intervals (typical for
+logistic regression).}
 
 \item{dfcom}{A positive number representing the degrees of freedom of the
 residuals in the complete-data analysis. The \code{dfcom} argument is
@@ -32,10 +51,32 @@ has the form \code{".data$ubar + (1 + 1 / .data$m) * .data$b"}.}
 \code{"rubin1987"} (default, for analyses applied to multiply-imputed
 incomplete data) and \code{"reiter2003"} (for analyses applied to
 synthetic data created from complete data).}
+
+\item{\dots}{Arguments passed down}
 }
 \value{
-\code{pool.table()} return a \code{data.frame} with aggregated
+\code{pool.table()} returns a \code{data.frame} with aggregated
 estimates, standard errors, confidence intervals and statistical tests.
+
+The meaning of the columns is as follows:
+
+\tabular{ll}{
+\code{term}      \tab Parameter name\cr
+\code{m}         \tab Number of multiple imputations\cr
+\code{estimate}  \tab Pooled complete data estimate\cr
+\code{std.error} \tab Standard error of \code{estimate}\cr
+\code{statistic} \tab t-statistic = \code{estimate} / \code{std.error}\cr
+\code{df}        \tab Degrees of freedom for \code{statistic}\cr
+\code{p.value}   \tab One-sided P-value under null hypothesis\cr
+\code{conf.low}  \tab Lower bound of c.i. (default 95 pct)\cr
+\code{conf.high} \tab Upper bound of c.i. (default 95 pct)\cr
+\code{riv}       \tab Relative increase in variance\cr
+\code{fmi}       \tab Fraction of missing information\cr
+\code{ubar}      \tab Within-imputation variance of \code{estimate}\cr
+\code{b}         \tab Between-imputation variance of \code{estimate}\cr
+\code{t}         \tab Total variance, of \code{estimate}\cr
+\code{dfcom}     \tab Residual degrees of freedom in complete data\cr
+}
 }
 \description{
 Combines estimates from a tidy table
@@ -64,16 +105,24 @@ The value \code{dfcom = Inf} is acceptable for large samples
 # conventional mice workflow
 imp <- mice(nhanes2, m = 2, maxit = 2, seed = 1, print = FALSE)
 fit <- with(imp, lm(chl ~ age + bmi + hyp))
-est <- pool(fit)
-est$pooled
+pld1 <- pool(fit)
+pld1$pooled
 
 # using pool.table() on tidy table
 tbl <- summary(fit)[, c("term", "estimate", "std.error", "df.residual")]
 tbl
-pooled <- pool.table(tbl)
-pooled
+pld2 <- pool.table(tbl, type = "minimal")
+pld2
 
-identical(est$pooled, pooled)
+identical(pld1$pooled, pld2)
 
+# conventional workflow: all numerical output
+all1 <- summary(pld1, type = "all", conf.int = TRUE)
+all1
 
+# pool.table workflow: all numerical output
+all2 <- pool.table(tbl)
+all2
+
+identical(data.frame(all1), all2)
 }
