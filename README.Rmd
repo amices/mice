@@ -14,9 +14,10 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-"
 )
 options(width = 60, digits = 3)
+set.seed(1)
 ```
 
-# mice <a href='https://amices.org/mice/'><img src='man/figures/MICE_sticker_SMALL.png' align="right" height="139" /></a>
+# mice <a href="https://amices.org/mice/"><img src="man/figures/logo.png" align="right" height="139" /></a>
 
 <!-- badges: start -->
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)

@@ -1,6 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# mice <a href='https://amices.org/mice/'><img src='man/figures/MICE_sticker_SMALL.png' align="right" height="139" /></a>
+# mice <a href="https://amices.org/mice/"><img src="man/figures/logo.png" align="right" height="139" /></a>
 
 <!-- badges: start -->
 
