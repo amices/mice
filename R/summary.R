@@ -27,11 +27,16 @@ summary.mira <- function(object,
   }
   # nobs is needed for pool.r.squared
   # not supplied by broom <= 0.5.6
+  model <- getfit(object, 1L)
   if (!"nobs" %in% colnames(v)) {
-    v$nobs <- tryCatch(length(stats::residuals(getfit(object)[[1]])),
-      error = function(e) NULL
-    )
+    v$nobs <- tryCatch(length(stats::residuals(model)),
+      error = function(e) {NULL})
   }
+  # get df.residuals
+  if (!"df.residuals" %in% colnames(v)) {
+    v$df.residual <- get.dfcom(model)
+  }
+
   if (type == "summary") {
     v <- lapply(fitlist, summary, ...)
   }

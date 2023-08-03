@@ -68,6 +68,7 @@ reference:
   - pool
   - pool.r.squared
   - pool.scalar
+  - pool.table
   - nelsonaalen
   - pool.compare
   - anova.mira
