@@ -1,7 +1,7 @@
 # mice 3.16.3
 
-* **New system-independent method for pooling**: This version introduces a new function `pool.table()` that takes a tidy table of parameter estimates stemming from `m` repeated analyses. The input data must consist of three columns (parameter name, estimate, standard error) and a specification of the degrees of freedom of the model fitted to the complete data. The `pool.table()` function outputs 14 pooled statistics in a tidy form. The primary use of `pool.table()` is to support parameter pooling for techiques that have no `tidy()` or `glance()` methods, either within `R` or outside `R`. The `pool.table()` function also allows for a novel workflows that 1) break apart the traditional `pool()` function into a data-wrangling part and a parameters-reducing part, and 2) does not necessarily depend on classed R objects.
-* Fixes the "large logo" problem
+* **New system-independent method for pooling**: This version introduces a new function `pool.table()` that takes a tidy table of parameter estimates stemming from `m` repeated analyses. The input data must consist of three columns (parameter name, estimate, standard error) and a specification of the degrees of freedom of the model fitted to the complete data. The `pool.table()` function outputs 14 pooled statistics in a tidy form. The primary use of `pool.table()` is to support parameter pooling for techiques that have no `tidy()` or `glance()` methods, either within `R` or outside `R`. The `pool.table()` function also allows for a novel workflows that 1) break apart the traditional `pool()` function into a data-wrangling part and a parameters-reducing part, and 2) does not necessarily depend on classed R objects. (#574). Contributed @stefvanbuuren
+* Fixes the "large logo" problem. (#574). Contributed @hanneoberman
 
 # mice 3.16.2
 
