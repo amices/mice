@@ -8,7 +8,8 @@
 #' (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.
 #' @param x Numeric design matrix with \code{length(y)} rows with predictors for
 #' \code{y}. Matrix \code{x} may have no missing values.
-#' @param exclude Value or vector of values to exclude from the imputation donor pool in \code{y}
+#' @param exclude Dependent values to exclude from the imputation model
+#' and the collection of donor values
 #' @param wy Logical vector of length \code{length(y)}. A \code{TRUE} value
 #' indicates locations in \code{y} for which imputations are created.
 #' @param donors The size of the donor pool among which a draw is made.
@@ -118,24 +119,18 @@
 #' blots$tv$exclude %in% unlist(c(imp$imp$tv)) # MUST be all FALSE
 #' @export
 mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
-                            matchtype = 1L, exclude = -99999999, ridge = 1e-05,
+                            matchtype = 1L, exclude = NULL, ridge = 1e-05,
                             use.matcher = FALSE, ...) {
-  id.ex <- !ry | !y %in% exclude # id vector for exclusion
-  y <- y[id.ex] # leave out the exclude vector y's
-  # allow for one-dimensional x-space
-  if(!is.null(dim(x))){
-    x <- x[id.ex, ]
-  } else {
-    x <- x[id.ex]
-  }
-  # leave out the exclude vector x's
-  ry <- ry[id.ex] # leave out the exclude vector indicator
-  {
-    if (is.null(wy)) {
-      wy <- !ry
-    } else {
-      wy <- wy[id.ex] # if applicable adjust wy to match exclude
-    }
+  if (is.null(wy)) wy <- !ry
+  if (!is.null(exclude)) {
+    # Reformulate the imputation problem such that
+    # 1. the imputation model disregards records with excluded y-values
+    # 2. the donor set does not contain excluded y-values
+    idx <- !ry | !y %in% exclude
+    y <- y[idx]
+    ry <- ry[idx]
+    x <- x[idx, , drop = FALSE]
+    wy <- wy[idx]
   }
   x <- cbind(1, as.matrix(x))
   ynum <- y
@@ -210,4 +205,17 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
   ds <- sort.int(d, partial = donors)
   m <- sample(y[d <= ds[donors]], 1)
   return(m)
+}
+
+
+excluder <- function(y, ry, x, wy, exclude) {
+  # Reformulate the imputation problem such that
+  # 1) the imputation model disregards records with excluded y-values
+  # 2) for pmm, the donor set will not contain excluded y-values
+  idx <- !ry | !y %in% exclude
+  return(list(
+    y = y[idx],
+    ry = ry[idx],
+    x = x[idx, , drop = FALSE],
+    wy = wy[idx]))
 }

@@ -12,7 +12,7 @@ mice.impute.pmm(
   wy = NULL,
   donors = 5L,
   matchtype = 1L,
-  exclude = -99999999,
+  exclude = NULL,
   ridge = 1e-05,
   use.matcher = FALSE,
   ...
@@ -45,7 +45,8 @@ Other choices are \code{matchtype = 0L}
 (distance between predicted values) and \code{matchtype = 2L}
 (distance between drawn values).}
 
-\item{exclude}{Value or vector of values to exclude from the imputation donor pool in \code{y}}
+\item{exclude}{Dependent values to exclude from the imputation model
+and the collection of donor values}
 
 \item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent
 problems with multicollinearity. The default is \code{ridge = 1e-05},
