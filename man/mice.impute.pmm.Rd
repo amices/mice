@@ -13,6 +13,8 @@ mice.impute.pmm(
   donors = 5L,
   matchtype = 1L,
   exclude = NULL,
+  quantify = TRUE,
+  trim = 1L,
   ridge = 1e-05,
   use.matcher = FALSE,
   ...
@@ -47,6 +49,16 @@ Other choices are \code{matchtype = 0L}
 
 \item{exclude}{Dependent values to exclude from the imputation model
 and the collection of donor values}
+
+\item{quantify}{Logical. If \code{TRUE}, factor levels are replaced
+by the first canonical variate before fitting the imputation model.
+If false, the procedure reverts to the old behaviour and takes the
+integer codes (which may lack a sensible interpretation).
+Relevant only of \code{y} is a factor.}
+
+\item{trim}{Scalar integer. Minimum number of observations required in a
+category in order to be considered as a potential donor value.
+Relevant only of \code{y} is a factor.}
 
 \item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent
 problems with multicollinearity. The default is \code{ridge = 1e-05},

@@ -10,6 +10,14 @@
 #' \code{y}. Matrix \code{x} may have no missing values.
 #' @param exclude Dependent values to exclude from the imputation model
 #' and the collection of donor values
+#' @param quantify Logical. If \code{TRUE}, factor levels are replaced
+#' by the first canonical variate before fitting the imputation model.
+#' If false, the procedure reverts to the old behaviour and takes the
+#' integer codes (which may lack a sensible interpretation).
+#' Relevant only of \code{y} is a factor.
+#' @param trim Scalar integer. Minimum number of observations required in a
+#' category in order to be considered as a potential donor value.
+#' Relevant only of \code{y} is a factor.
 #' @param wy Logical vector of length \code{length(y)}. A \code{TRUE} value
 #' indicates locations in \code{y} for which imputations are created.
 #' @param donors The size of the donor pool among which a draw is made.
@@ -119,25 +127,49 @@
 #' blots$tv$exclude %in% unlist(c(imp$imp$tv)) # MUST be all FALSE
 #' @export
 mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
-                            matchtype = 1L, exclude = NULL, ridge = 1e-05,
-                            use.matcher = FALSE, ...) {
-  if (is.null(wy)) wy <- !ry
-  if (!is.null(exclude)) {
-    # Reformulate the imputation problem such that
-    # 1. the imputation model disregards records with excluded y-values
-    # 2. the donor set does not contain excluded y-values
-    idx <- !ry | !y %in% exclude
-    y <- y[idx]
-    ry <- ry[idx]
-    x <- x[idx, , drop = FALSE]
-    wy <- wy[idx]
+                            matchtype = 1L, exclude = NULL,
+                            quantify = TRUE, trim = 1L,
+                            ridge = 1e-05, use.matcher = FALSE, ...) {
+  if (is.null(wy)) {
+    wy <- !ry
   }
+
+  # Reformulate the imputation problem such that
+  # 1. the imputation model disregards records with excluded y-values
+  # 2. the donor set does not contain excluded y-values
+
+  # Keep sparse categories out of the imputation model
+  if (is.factor(y)) {
+    active <- !ry | y %in% (levels(y)[table(y) >= trim])
+    y <- y[active]
+    ry <- ry[active]
+    x <- x[active, , drop = FALSE]
+    wy <- wy[active]
+  }
+  # Keep excluded values out of the imputation model
+  if (!is.null(exclude)) {
+    active <- !ry | !y %in% exclude
+    y <- y[active]
+    ry <- ry[active]
+    x <- x[active, , drop = FALSE]
+    wy <- wy[active]
+  }
+
   x <- cbind(1, as.matrix(x))
+
+  # quantify categories for factors
   ynum <- y
   if (is.factor(y)) {
-    ynum <- as.integer(y)
+    if (quantify) {
+      ynum <- quantify(y, ry, x)
+    } else {
+      ynum <- as.integer(y)
+    }
   }
+
+  # parameter estimation
   parm <- .norm.draw(ynum, ry, x, ridge = ridge, ...)
+
   if (matchtype == 0L) {
     yhatobs <- x[ry, , drop = FALSE] %*% parm$coef
     yhatmis <- x[wy, , drop = FALSE] %*% parm$coef
@@ -155,6 +187,7 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
   } else {
     idx <- matchindex(yhatobs, yhatmis, donors)
   }
+
   return(y[ry][idx])
 }
 
@@ -207,15 +240,13 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
   return(m)
 }
 
-
-excluder <- function(y, ry, x, wy, exclude) {
-  # Reformulate the imputation problem such that
-  # 1) the imputation model disregards records with excluded y-values
-  # 2) for pmm, the donor set will not contain excluded y-values
-  idx <- !ry | !y %in% exclude
-  return(list(
-    y = y[idx],
-    ry = ry[idx],
-    x = x[idx, , drop = FALSE],
-    wy = wy[idx]))
+quantify <- function(y, ry, x) {
+  # replaces (reduced set of) categories by optimal scaling
+  yf <- factor(y[ry], exclude = NULL)
+  yd <- model.matrix(~ 0 + yf)
+  xd <- x[ry, , drop = FALSE]
+  cca <- cancor(yd, xd, xcenter = FALSE, ycenter = FALSE)
+  ynum <- as.integer(y)
+  ynum[ry] <- scale(as.vector(yd %*% cca$xcoef[, 2L]))
+  return(ynum)
 }

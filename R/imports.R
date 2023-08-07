@@ -11,7 +11,7 @@
 #' @importFrom Rcpp     evalCpp
 #' @importFrom rlang    .data syms
 #' @importFrom rpart    rpart rpart.control
-#' @importFrom stats    C aggregate as.formula binomial coef
+#' @importFrom stats    C aggregate as.formula binomial cancor coef
 #'                      complete.cases confint
 #'                      contr.treatment cor df.residual fitted
 #'                      formula gaussian getCall
