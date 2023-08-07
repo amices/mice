@@ -146,6 +146,27 @@ blots$hgt$exclude <- sample(unique(boys$hgt), 100)
 imp <- mice(boys, method = "pmm", print = FALSE, blots = blots, seed=123)
 blots$hgt$exclude \%in\% unlist(c(imp$imp$hgt)) # MUST be all FALSE
 blots$tv$exclude \%in\% unlist(c(imp$imp$tv)) # MUST be all FALSE
+
+# Factor quantification
+xname <- c("age", "hgt", "wgt")
+br <- boys[c(1:10, 101:110, 501:510, 601:620, 701:710), ]
+r <- stats::complete.cases(br[, xname])
+x <- br[r, xname]
+y <- factor(br[r, "tv"])
+ry <- !is.na(y)
+table(y)
+
+# impute factor by optimizing canonical correlation y, x
+mice.impute.pmm(y, ry, x)
+
+# only categories with at least 2 cases can be donor
+mice.impute.pmm(y, ry, x, trim = 2L)
+
+# in addition, eliminate category 20
+mice.impute.pmm(y, ry, x, trim = 2L, exclude = 20)
+
+# to get old behavior: as.integer(y))
+mice.impute.pmm(y, ry, x, quantify = FALSE)
 }
 \references{
 Little, R.J.A. (1988), Missing data adjustments in large surveys
