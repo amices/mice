@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,6 +51,18 @@
       <small>Source: <a href="https://github.com/amices/mice/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.16.4" id="mice-3164">mice 3.16.4<a class="anchor" aria-label="anchor" href="#mice-3164"></a></h2>
+<p><strong>Imputing categorical data by predictive mean matching</strong>. Predictive mean matching (PMM) is the default method of <code><a href="../reference/mice.html">mice()</a></code> for imputing numerical variables, but it has long been possible to impute factors. This enhancement introduces better support to work with categorical variables in PMM. The <strong>former system</strong> translated factors into integers by <code>ynum &lt;- as.integer(f)</code>. However, the order of integers in <code>ynum</code> may have no sensible interpretation for an unordered factor. The <strong>new system</strong> quantifies <code>ynum</code> and could yield better results because of higher <span class="math inline"><em>R</em><sup>2</sup></span>. The method calculates the canonical correlation between <code>y</code> (as dummy matrix) and a linear combination of imputation model predictors <code>x</code>. The algorithm then replaces each category of <code>y</code> by a single number taken from the first canonical variate. After this step, the imputation model is fitted, and the predicted values from that model are extracted to function as the similarity measure for the matching step.</p>
+<p>The method works for both ordered and unordered factors. No special precautions are taken to ensure monotonicity between the category numbers and the quantifications, so the method should be able to preserve quadratic and other non-monotone relations of the predicted metric. It may be beneficial to remove very sparsely filled categories, for which there is a new <code>trim</code> argument.</p>
+<p>All you have to use the new technique is specify to <code>mice(..., method = "pmm", ...)</code>. Both numerical and categorical variables will then be imputed by PMM.</p>
+<p>Potential advantages are:</p>
+<ul><li>Simpler and faster than fitting a generalised linear model, e.g., logistic regression or the proportional odds model;</li>
+<li>Should be insensitive to the order of categories;</li>
+<li>No need to solve problems with perfect prediction;</li>
+<li>Should inherit the good statistical properties of predictive mean matching.</li>
+</ul><p>Note that we still lack solid evidence for these claims. (<a href="https://github.com/amices/mice/issues/576" class="external-link">#576</a>). Contributed <a href="https://github.com/stefvanbuuren" class="external-link">@stefvanbuuren</a></p>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.16.3" id="mice-3163">mice 3.16.3<a class="anchor" aria-label="anchor" href="#mice-3163"></a></h2>
 <ul><li>

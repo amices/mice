@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,9 @@
 <span>  wy <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  donors <span class="op">=</span> <span class="fl">5L</span>,</span>
 <span>  matchtype <span class="op">=</span> <span class="fl">1L</span>,</span>
-<span>  exclude <span class="op">=</span> <span class="op">-</span><span class="fl">99999999</span>,</span>
+<span>  exclude <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  quantify <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  trim <span class="op">=</span> <span class="fl">1L</span>,</span>
 <span>  ridge <span class="op">=</span> <span class="fl">1e-05</span>,</span>
 <span>  use.matcher <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -113,7 +115,22 @@ Other choices are <code>matchtype = 0L</code>
 
 
 <dt>exclude</dt>
-<dd><p>Value or vector of values to exclude from the imputation donor pool in <code>y</code></p></dd>
+<dd><p>Dependent values to exclude from the imputation model
+and the collection of donor values</p></dd>
+
+
+<dt>quantify</dt>
+<dd><p>Logical. If <code>TRUE</code>, factor levels are replaced
+by the first canonical variate before fitting the imputation model.
+If false, the procedure reverts to the old behaviour and takes the
+integer codes (which may lack a sensible interpretation).
+Relevant only of <code>y</code> is a factor.</p></dd>
+
+
+<dt>trim</dt>
+<dd><p>Scalar integer. Minimum number of observations required in a
+category in order to be considered as a potential donor value.
+Relevant only of <code>y</code> is a factor.</p></dd>
 
 
 <dt>ridge</dt>
@@ -271,6 +288,42 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [97] FALSE FALSE FALSE FALSE</span>
 <span class="r-in"><span><span class="va">blots</span><span class="op">$</span><span class="va">tv</span><span class="op">$</span><span class="va">exclude</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">imp</span><span class="op">$</span><span class="va">imp</span><span class="op">$</span><span class="va">tv</span><span class="op">)</span><span class="op">)</span> <span class="co"># MUST be all FALSE</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE FALSE FALSE FALSE FALSE</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Factor quantification</span></span></span>
+<span class="r-in"><span><span class="va">xname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"hgt"</span>, <span class="st">"wgt"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">br</span> <span class="op">&lt;-</span> <span class="va">boys</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">101</span><span class="op">:</span><span class="fl">110</span>, <span class="fl">501</span><span class="op">:</span><span class="fl">510</span>, <span class="fl">601</span><span class="op">:</span><span class="fl">620</span>, <span class="fl">701</span><span class="op">:</span><span class="fl">710</span><span class="op">)</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html" class="external-link">complete.cases</a></span><span class="op">(</span><span class="va">br</span><span class="op">[</span>, <span class="va">xname</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">br</span><span class="op">[</span><span class="va">r</span>, <span class="va">xname</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">br</span><span class="op">[</span><span class="va">r</span>, <span class="st">"tv"</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ry</span> <span class="op">&lt;-</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6  8 10 12 13 15 16 20 25 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1  2  1  1  1  4  1  4  7 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># impute factor by optimizing canonical correlation y, x</span></span></span>
+<span class="r-in"><span><span class="fu">mice.impute.pmm</span><span class="op">(</span><span class="va">y</span>, <span class="va">ry</span>, <span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 25 25 25 20 25 25 20 25 25 25 15 25 25 25 25 25 15 15 25 15 20 15 8  25 8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] 25 20 20 15 25 25 15 15 25 25 15 20 8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 6 8 10 12 13 15 16 20 25</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># only categories with at least 2 cases can be donor</span></span></span>
+<span class="r-in"><span><span class="fu">mice.impute.pmm</span><span class="op">(</span><span class="va">y</span>, <span class="va">ry</span>, <span class="va">x</span>, trim <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 8  25 25 8  8  20 15 20 20 8  8  8  15 8  20 20 15 8  20 25 20 25 20 15 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] 20 20 20 15 20 15 25 20 25 25 20 20 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 6 8 10 12 13 15 16 20 25</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># in addition, eliminate category 20</span></span></span>
+<span class="r-in"><span><span class="fu">mice.impute.pmm</span><span class="op">(</span><span class="va">y</span>, <span class="va">ry</span>, <span class="va">x</span>, trim <span class="op">=</span> <span class="fl">2L</span>, exclude <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 8  25 15 25 15 8  8  25 25 25 8  15 15 8  8  8  25 25 25 25 15 8  8  15 15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] 25 15 8  15 15 25 25 15 25 25 15 25 25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 6 8 10 12 13 15 16 20 25</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># to get old behavior: as.integer(y))</span></span></span>
+<span class="r-in"><span><span class="fu">mice.impute.pmm</span><span class="op">(</span><span class="va">y</span>, <span class="va">ry</span>, <span class="va">x</span>, quantify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 8  6  10 15 12 8  6  15 15 10 10 6  8  10 8  15 8  15 8  15 15 12 15 8  20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] 25 12 25 15 25 25 13 8  20 16 20 20 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 6 8 10 12 13 15 16 20 25</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
