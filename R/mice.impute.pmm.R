@@ -269,5 +269,6 @@ quantify <- function(y, ry, x) {
   cca <- cancor(yd, xd, xcenter = FALSE, ycenter = FALSE)
   ynum <- as.integer(y)
   ynum[ry] <- scale(as.vector(yd %*% cca$xcoef[, 2L]))
+  # plot(y[ry], ynum[ry])
   return(ynum)
 }
