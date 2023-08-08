@@ -12,7 +12,9 @@ mice.impute.pmm(
   wy = NULL,
   donors = 5L,
   matchtype = 1L,
-  exclude = -99999999,
+  exclude = NULL,
+  quantify = TRUE,
+  trim = 1L,
   ridge = 1e-05,
   use.matcher = FALSE,
   ...
@@ -45,7 +47,18 @@ Other choices are \code{matchtype = 0L}
 (distance between predicted values) and \code{matchtype = 2L}
 (distance between drawn values).}
 
-\item{exclude}{Value or vector of values to exclude from the imputation donor pool in \code{y}}
+\item{exclude}{Dependent values to exclude from the imputation model
+and the collection of donor values}
+
+\item{quantify}{Logical. If \code{TRUE}, factor levels are replaced
+by the first canonical variate before fitting the imputation model.
+If false, the procedure reverts to the old behaviour and takes the
+integer codes (which may lack a sensible interpretation).
+Relevant only of \code{y} is a factor.}
+
+\item{trim}{Scalar integer. Minimum number of observations required in a
+category in order to be considered as a potential donor value.
+Relevant only of \code{y} is a factor.}
 
 \item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent
 problems with multicollinearity. The default is \code{ridge = 1e-05},
@@ -133,6 +146,27 @@ blots$hgt$exclude <- sample(unique(boys$hgt), 100)
 imp <- mice(boys, method = "pmm", print = FALSE, blots = blots, seed=123)
 blots$hgt$exclude \%in\% unlist(c(imp$imp$hgt)) # MUST be all FALSE
 blots$tv$exclude \%in\% unlist(c(imp$imp$tv)) # MUST be all FALSE
+
+# Factor quantification
+xname <- c("age", "hgt", "wgt")
+br <- boys[c(1:10, 101:110, 501:510, 601:620, 701:710), ]
+r <- stats::complete.cases(br[, xname])
+x <- br[r, xname]
+y <- factor(br[r, "tv"])
+ry <- !is.na(y)
+table(y)
+
+# impute factor by optimizing canonical correlation y, x
+mice.impute.pmm(y, ry, x)
+
+# only categories with at least 2 cases can be donor
+mice.impute.pmm(y, ry, x, trim = 2L)
+
+# in addition, eliminate category 20
+mice.impute.pmm(y, ry, x, trim = 2L, exclude = 20)
+
+# to get old behavior: as.integer(y))
+mice.impute.pmm(y, ry, x, quantify = FALSE)
 }
 \references{
 Little, R.J.A. (1988), Missing data adjustments in large surveys

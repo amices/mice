@@ -1,3 +1,18 @@
+**Imputing categorical data by predictive mean matching**. Predictive mean matching (PMM) is the default method of `mice()` for imputing numerical variables, but it has long been possible to impute factors. This enhancement introduces better support to work with categorical variables in PMM. The **former system** translated factors into integers by `ynum <- as.integer(f)`. However, the order of integers in `ynum` may have no sensible interpretation for an unordered factor. The **new system** quantifies `ynum` and could yield better results because of higher $R^2$. The method calculates the canonical correlation between `y` (as dummy matrix) and a linear combination of imputation model predictors `x`. The algorithm then replaces each category of `y` by a single number taken from the first canonical variate. After this step, the imputation model is fitted, and the predicted values from that model are extracted to function as the similarity measure for the matching step.
+
+The method works for both ordered and unordered factors. No special precautions are taken to ensure monotonicity between the category numbers and the quantifications, so the method should be able to preserve quadratic and other non-monotone relations of the predicted metric. It may be beneficial to remove very sparsely filled categories, for which there is a new `trim` argument. 
+
+All you have to use the new technique is specify to `mice(..., method = "pmm", ...)`. Both numerical and categorical variables will then be imputed by PMM.
+
+Potential advantages are:
+
+- Simpler and faster than fitting a generalised linear model, e.g., logistic regression or the proportional odds model;
+- Should be insensitive to the order of categories;
+- No need to solve problems with perfect prediction;
+- Should inherit the good statistical properties of predictive mean matching.
+
+Note that we still lack solid evidence for these claims. (#576). Contributed @stefvanbuuren
+
 # mice 3.16.3
 
 * **New system-independent method for pooling**: This version introduces a new function `pool.table()` that takes a tidy table of parameter estimates stemming from `m` repeated analyses. The input data must consist of three columns (parameter name, estimate, standard error) and a specification of the degrees of freedom of the model fitted to the complete data. The `pool.table()` function outputs 14 pooled statistics in a tidy form. The primary use of `pool.table()` is to support parameter pooling for techiques that have no `tidy()` or `glance()` methods, either within `R` or outside `R`. The `pool.table()` function also allows for a novel workflows that 1) break apart the traditional `pool()` function into a data-wrangling part and a parameters-reducing part, and 2) does not necessarily depend on classed R objects. (#574). Contributed @stefvanbuuren
