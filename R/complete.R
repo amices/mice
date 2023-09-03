@@ -155,7 +155,13 @@ single.complete <- function(data, where, imp, ell) {
     if (is.null(imp[[j]])) {
       data[where[, j], j] <- NA
     } else {
-      data[where[, j], j] <- imp[[j]][, ell]
+      if (sum(where[, j]) == nrow(imp[[j]])) {
+        # assume equal length
+        data[where[, j], j] <- imp[[j]][, ell]
+      } else {
+        # index by rowname
+        data[as.numeric(rownames(imp[[j]])), j] <- imp[[j]][, ell]
+      }
     }
   }
   data
