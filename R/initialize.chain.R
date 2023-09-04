@@ -1,8 +1,7 @@
-initialize.chain <- function(blocks, maxit, m) {
-  vars <- unique(unlist(blocks))
-  chain <- array(NA, dim = c(length(vars), maxit, m))
+initialize.chain <- function(varnames, maxit, m) {
+  chain <- array(NA, dim = c(length(varnames), maxit, m))
   dimnames(chain) <- list(
-    vars,
+    varnames,
     seq_len(maxit),
     paste("Chain", seq_len(m))
   )

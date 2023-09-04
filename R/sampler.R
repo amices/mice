@@ -9,7 +9,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
   r <- !is.na(data)
 
   # set up array for convergence checking
-  chainMean <- chainVar <- initialize.chain(blocks, maxit, m)
+  chainMean <- chainVar <- initialize.chain(names(data), maxit, m)
 
   ## THE MAIN LOOP: GIBBS SAMPLER ##
   if (maxit < 1) iteration <- 0
