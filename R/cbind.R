@@ -45,7 +45,7 @@ cbind.mids <- function(x, y = NULL, ...) {
   blocknames <- make.unique(xynames)
   names(blocknames) <- xynames
   names(blocks) <- blocknames
-  ct <- c(attr(x$blocks, "calltype"), rep("type", ncol(y)))
+  ct <- c(attr(x$blocks, "calltype"), rep("pred", ncol(y)))
   names(ct) <- blocknames
   attr(blocks, "calltype") <- ct
 

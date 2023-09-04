@@ -11,7 +11,7 @@
 #' whereas \code{"void"} produces an empty list.
 #' @param calltype A character vector of \code{length(block)} elements
 #' that indicates how the imputation model is specified. If
-#' \code{calltype = "type"} (the default), the underlying imputation
+#' \code{calltype = "pred"} (the default), the underlying imputation
 #' model is called by means of the \code{type} argument. The
 #' \code{type} argument for block \code{h} is equivalent to
 #' row \code{h} in the \code{predictorMatrix}.
@@ -20,7 +20,7 @@
 #' function for block \code{h}, together with the current data.
 #' The \code{calltype} of a block is set automatically during
 #' initialization. Where a choice is possible, calltype
-#' \code{"formula"} is preferred over \code{"type"} since this is
+#' \code{"formula"} is preferred over \code{"pred"} since this is
 #' more flexible and extendable. However, what precisely happens
 #' depends also on the capabilities of the imputation
 #' function that is called.
@@ -52,7 +52,7 @@
 #' @export
 make.blocks <- function(data,
                         partition = c("scatter", "collect", "void"),
-                        calltype = "type") {
+                        calltype = "pred") {
   if (is.vector(data) && !is.list(data)) {
     v <- as.list(as.character(data))
     names(v) <- as.character(data)
@@ -143,7 +143,7 @@ name.blocks <- function(blocks, prefix = "B") {
   blocks
 }
 
-check.blocks <- function(blocks, data, calltype = "type") {
+check.blocks <- function(blocks, data, calltype = "pred") {
   data <- check.dataform(data)
   blocks <- name.blocks(blocks)
 
@@ -186,7 +186,7 @@ check.blocks <- function(blocks, data, calltype = "type") {
 #' @return A \code{blocks} object.
 #' @seealso \code{\link{make.blocks}}, \code{\link{name.blocks}}
 #' @examples
-#' form <- name.formulas(list(bmi + hyp ~ chl + age, chl ~ bmi))
+#' form <- list(bmi + hyp ~ chl + age, chl ~ bmi)
 #' pred <- make.predictorMatrix(nhanes[, c("age", "chl")])
 #' construct.blocks(formulas = form, pred = pred)
 #' @export
@@ -210,7 +210,7 @@ construct.blocks <- function(formulas = NULL, predictorMatrix = NULL) {
       stop("No row names in predictorMatrix", call. = FALSE)
     }
     blocks.p <- name.blocks(row.names(predictorMatrix))
-    ct <- rep("type", length(blocks.p))
+    ct <- rep("pred", length(blocks.p))
     names(ct) <- names(blocks.p)
     attr(blocks.p, "calltype") <- ct
     if (is.null(formulas)) {
@@ -226,7 +226,7 @@ construct.blocks <- function(formulas = NULL, predictorMatrix = NULL) {
   blocks <- c(blocks.f, add.p)
   ct <- c(
     rep("formula", length(formulas)),
-    rep("type", length(add.p))
+    rep("pred", length(add.p))
   )
   names(ct) <- names(blocks)
   attr(blocks, "calltype") <- ct
