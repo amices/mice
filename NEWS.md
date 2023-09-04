@@ -1,3 +1,8 @@
+# mice 3.16.5
+
+* Patches a bug in `complete()` that auto-repeated imputed values into cells that should NOT be imputed (occurred as a special case of `rbind()`, where the first set of rows was imputed and the second was not).
+* Replaces the internal variable `type` by the more informative `pred` (currently active row of `predictorMatrix`)
+
 # mice 3.16.4
 
 **Imputing categorical data by predictive mean matching**. Predictive mean matching (PMM) is the default method of `mice()` for imputing numerical variables, but it has long been possible to impute factors. This enhancement introduces better support to work with categorical variables in PMM. The **former system** translated factors into integers by `ynum <- as.integer(f)`. However, the order of integers in `ynum` may have no sensible interpretation for an unordered factor. The **new system** quantifies `ynum` and could yield better results because of higher $R^2$. The method calculates the canonical correlation between `y` (as dummy matrix) and a linear combination of imputation model predictors `x`. The algorithm then replaces each category of `y` by a single number taken from the first canonical variate. After this step, the imputation model is fitted, and the predicted values from that model are extracted to function as the similarity measure for the matching step.
