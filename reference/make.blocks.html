@@ -12,7 +12,7 @@ blocks argument in the [=mice]{mice} function."><meta property="og:image" conten
     
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@ blocks argument in the [=mice]{mice} function."><meta property="og:image" conten
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">make.blocks</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
 <span>  partition <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"scatter"</span>, <span class="st">"collect"</span>, <span class="st">"void"</span><span class="op">)</span>,</span>
-<span>  calltype <span class="op">=</span> <span class="st">"type"</span></span>
+<span>  calltype <span class="op">=</span> <span class="st">"pred"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -86,7 +86,7 @@ whereas <code>"void"</code> produces an empty list.</p></dd>
 <dt>calltype</dt>
 <dd><p>A character vector of <code>length(block)</code> elements
 that indicates how the imputation model is specified. If
-<code>calltype = "type"</code> (the default), the underlying imputation
+<code>calltype = "pred"</code> (the default), the underlying imputation
 model is called by means of the <code>type</code> argument. The
 <code>type</code> argument for block <code>h</code> is equivalent to
 row <code>h</code> in the <code>predictorMatrix</code>.
@@ -95,7 +95,7 @@ The alternative is <code>calltype = "formula"</code>. This will pass
 function for block <code>h</code>, together with the current data.
 The <code>calltype</code> of a block is set automatically during
 initialization. Where a choice is possible, calltype
-<code>"formula"</code> is preferred over <code>"type"</code> since this is
+<code>"formula"</code> is preferred over <code>"pred"</code> since this is
 more flexible and extendable. However, what precisely happens
 depends also on the capabilities of the imputation
 function that is called.</p></dd>
@@ -146,7 +146,7 @@ re-imputed each time as it appears in the block.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"calltype")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    age    bmi    hyp    chl </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "type" "type" "type" "type" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "pred" "pred" "pred" "pred" </span>
 <span class="r-in"><span><span class="fu">make.blocks</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"sex"</span>, <span class="st">"edu"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $age</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "age"</span>
@@ -159,7 +159,7 @@ re-imputed each time as it appears in the block.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"calltype")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    age    sex    edu </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "type" "type" "type" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "pred" "pred" "pred" </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
