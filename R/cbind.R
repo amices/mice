@@ -60,9 +60,9 @@ cbind.mids <- function(x, y = NULL, ...) {
   r <- (!is.na(y))
   f <- function(j) {
     m <- matrix(NA,
-      nrow = sum(!r[, j]),
-      ncol = x$m,
-      dimnames = list(row.names(y)[!r[, j]], seq_len(m))
+                nrow = sum(!r[, j]),
+                ncol = x$m,
+                dimnames = list(row.names(y)[!r[, j]], seq_len(m))
     )
     as.data.frame(m)
   }
@@ -79,15 +79,15 @@ cbind.mids <- function(x, y = NULL, ...) {
   predictorMatrix <- rbind(
     x$predictorMatrix,
     matrix(0,
-      ncol = ncol(x$predictorMatrix),
-      nrow = ncol(y)
+           ncol = ncol(x$predictorMatrix),
+           nrow = ncol(y)
     )
   )
   predictorMatrix <- cbind(
     predictorMatrix,
     matrix(0,
-      ncol = ncol(y),
-      nrow = nrow(x$predictorMatrix) + ncol(y)
+           ncol = ncol(y),
+           nrow = nrow(x$predictorMatrix) + ncol(y)
     )
   )
   rownames(predictorMatrix) <- blocknames
@@ -185,21 +185,37 @@ cbind.mids.mids <- function(x, y, call) {
   method <- c(x$method, y$method)
   names(method) <- blocknames
 
+  # Concatenate formulas, rename variables if needed
+  if (all(names(ynew) == unname(ynew)) && all(names(xnew) == unname(xnew))) {
+    formulas <- c(x$formulas, y$formulas)
+  } else {
+    xformulas <- x$formulas
+    yformulas <- y$formulas
+    for (i in names(xformulas)) {
+      xformulas[[i]] <- renf(xformulas[[i]], xnew)
+    }
+    for (i in names(yformulas)) {
+      yformulas[[i]] <- renf(yformulas[[i]], ynew)
+    }
+    formulas <- c(xformulas, yformulas)
+  }
+  names(formulas) <- blocknames
+
   # The predictorMatrices of x and y are combined with zero matrices
   # on the off diagonal blocks.
   predictorMatrix <- rbind(
     x$predictorMatrix,
     matrix(0,
-      ncol = ncol(x$predictorMatrix),
-      nrow = nrow(y$predictorMatrix)
+           ncol = ncol(x$predictorMatrix),
+           nrow = nrow(y$predictorMatrix)
     )
   )
   predictorMatrix <- cbind(
     predictorMatrix,
     rbind(
       matrix(0,
-        ncol = ncol(y$predictorMatrix),
-        nrow = nrow(x$predictorMatrix)
+             ncol = ncol(y$predictorMatrix),
+             nrow = nrow(x$predictorMatrix)
       ),
       y$predictorMatrix
     )
@@ -212,9 +228,6 @@ cbind.mids.mids <- function(x, y, call) {
   xnew <- blocknames[1:length(x$blocks)]
   ynew <- blocknames[-(1:length(x$blocks))]
   visitSequence <- unname(c(xnew[x$visitSequence], ynew[y$visitSequence]))
-
-  formulas <- c(x$formulas, y$formulas)
-  names(formulas) <- blocknames
   post <- c(x$post, y$post)
   names(post) <- varnames
   blots <- c(x$blots, y$blots)
@@ -291,4 +304,14 @@ cbind.mids.mids <- function(x, y, call) {
   )
   oldClass(midsobj) <- "mids"
   midsobj
+}
+
+renf <- function(f, nn) {
+  # rename variables in formula f
+  z <- as.character(f)
+  for (i in seq_along(nn)) {
+    z <- gsub(names(nn)[i], unname(nn)[i], z)
+  }
+  nf <- formula(paste(z[2], z[1], z[3], collapse = " "))
+  return(nf)
 }
