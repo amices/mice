@@ -42,7 +42,7 @@ specify models for the same block, the model for the
 specification given in \code{formulas}.
 }
 \examples{
-form <- name.formulas(list(bmi + hyp ~ chl + age, chl ~ bmi))
+form <- list(bmi + hyp ~ chl + age, chl ~ bmi)
 pred <- make.predictorMatrix(nhanes[, c("age", "chl")])
 construct.blocks(formulas = form, pred = pred)
 }
