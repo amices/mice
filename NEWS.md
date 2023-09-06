@@ -1,3 +1,10 @@
+* Prepares for the deprecation of the `blocks` argument at various places
+* Removes the need for `blocks` in `initialize_chain()`
+* In `rbind()`, when formulas are concatenated and duplicate names are found, also rename the duplicated variables in formulas by their new name
+* Fixes a bug in `filter.mids()` that incorrectly removed empty components in the `imp` object
+* Fixes a bug in `ibind()` that incorrectly used `length(blocks)` as the first dimension of the `chainMean` and `chainVar` objects
+* Corrects the description `visitSequence`, `chainMean` and `chainVar` components of the `mids` object
+
 # mice 3.16.5
 
 * Patches a bug in `complete()` that auto-repeated imputed values into cells that should NOT be imputed (occurred as a special case of `rbind()`, where the first set of rows was imputed and the second was not).
