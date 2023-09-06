@@ -94,8 +94,8 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
   for (i in names(.data$imp)) {
     wy <- .data$where[, i]
     iy <- .data$where[, i] & include
-
-    imp[[i]] <- .data$imp[[i]][iy[wy], , drop = FALSE]
+    impi <- .data$imp[[i]][iy[wy], , drop = FALSE]
+    if (!is.null(impi)) imp[[i]] <- impi
   }
 
   # Components that need to be recalculated/reset
