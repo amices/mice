@@ -55,9 +55,10 @@ equivalent \code{oldClass(obj) <- "mids"}.
    following slots:}
    \item{\code{data}:}{Original (incomplete) data set.}
    \item{\code{imp}:}{A list of \code{ncol(data)} components with
-   the generated multiple imputations. Each list components is a
+   the generated multiple imputations. Each list component is a
    \code{data.frame} (\code{nmis[j]} by \code{m}) of imputed values
-   for variable \code{j}.}
+   for variable \code{j}. A \code{NULL} component is used for
+   variables for which not imputations are generated.}
    \item{\code{m}:}{Number of imputations.}
    \item{\code{where}:}{The \code{where} argument of the
    \code{mice()} function.}
@@ -70,7 +71,9 @@ equivalent \code{oldClass(obj) <- "mids"}.
    specifying the imputation method per block.}
    \item{\code{predictorMatrix}:}{A numerical matrix of containing
    integers specifying the predictor set.}
-   \item{\code{visitSequence}:}{The sequence in which columns are visited.}
+   \item{\code{visitSequence}:}{A vector of variable and block names that
+    specifies how variables and blocks are visited in one iteration throuh
+    the data.}
    \item{\code{formulas}:}{A named list of formula's, or expressions that
    can be converted into formula's by \code{as.formula}. List elements
    correspond to blocks. The block to which the list element applies is
@@ -84,13 +87,13 @@ equivalent \code{oldClass(obj) <- "mids"}.
    \item{\code{seed}:}{The seed value of the solution.}
    \item{\code{iteration}:}{Last Gibbs sampling iteration number.}
    \item{\code{lastSeedValue}:}{The most recent seed value.}
-   \item{\code{chainMean}:}{A list of \code{m} components. Each
-   component is a \code{length(visitSequence)} by \code{maxit} matrix
-   containing the mean of the generated multiple imputations.
+   \item{\code{chainMean}:}{An array of dimensions \code{ncol} by
+   \code{maxit} by \code{m} elements containing the mean of
+   the generated multiple imputations.
    The array can be used for monitoring convergence.
    Note that observed data are not present in this mean.}
-   \item{\code{chainVar}:}{A list with similar structure of \code{chainMean},
-   containing the covariances of the imputed values.}
+   \item{\code{chainVar}:}{An array with similar structure as
+   \code{chainMean}, containing the variance of the imputed values.}
    \item{\code{loggedEvents}:}{A \code{data.frame} with five columns
    containing warnings, corrective actions, and other inside info.}
    \item{\code{version}:}{Version number of \code{mice} package that
