@@ -1,3 +1,5 @@
+# mice 3.16.6
+
 * Prepares for the deprecation of the `blocks` argument at various places
 * Removes the need for `blocks` in `initialize_chain()`
 * In `rbind()`, when formulas are concatenated and duplicate names are found, also rename the duplicated variables in formulas by their new name
