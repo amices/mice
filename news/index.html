@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,6 +51,16 @@
       <small>Source: <a href="https://github.com/amices/mice/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.16.6" id="mice-3166">mice 3.16.6<a class="anchor" aria-label="anchor" href="#mice-3166"></a></h2>
+<ul><li>Prepares for the deprecation of the <code>blocks</code> argument at various places</li>
+<li>Removes the need for <code>blocks</code> in <code>initialize_chain()</code>
+</li>
+<li>In <code><a href="../reference/cbind.html">rbind()</a></code>, when formulas are concatenated and duplicate names are found, also rename the duplicated variables in formulas by their new name</li>
+<li>Fixes a bug in <code><a href="../reference/filter.mids.html">filter.mids()</a></code> that incorrectly removed empty components in the <code>imp</code> object</li>
+<li>Fixes a bug in <code><a href="../reference/ibind.html">ibind()</a></code> that incorrectly used <code>length(blocks)</code> as the first dimension of the <code>chainMean</code> and <code>chainVar</code> objects</li>
+<li>Corrects the description <code>visitSequence</code>, <code>chainMean</code> and <code>chainVar</code> components of the <code>mids</code> object</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.16.5" id="mice-3165">mice 3.16.5<a class="anchor" aria-label="anchor" href="#mice-3165"></a></h2>
 <ul><li>Patches a bug in <code><a href="../reference/complete.mids.html">complete()</a></code> that auto-repeated imputed values into cells that should NOT be imputed (occurred as a special case of <code><a href="../reference/cbind.html">rbind()</a></code>, where the first set of rows was imputed and the second was not).</li>
