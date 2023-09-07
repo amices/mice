@@ -65,14 +65,14 @@ ibind <- function(x, y) {
   visitSequence <- x$visitSequence
   imp <- vector("list", ncol(x$data))
   names(imp) <- names(x$data)
-  for (j in visitSequence) {
+  for (j in names(imp)) {
     imp[[j]] <- cbind(x$imp[[j]], y$imp[[j]])
   }
 
   m <- (x$m + y$m)
   iteration <- max(x$iteration, y$iteration)
 
-  chainMean <- chainVar <- initialize.chain(x$blocks, iteration, m)
+  chainMean <- chainVar <- initialize.chain(names(x$data), iteration, m)
   for (j in seq_len(x$m)) {
     chainMean[, seq_len(x$iteration), j] <- x$chainMean[, , j]
     chainVar[, seq_len(x$iteration), j] <- x$chainVar[, , j]
