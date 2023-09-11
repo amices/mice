@@ -16,11 +16,11 @@ quickpred(
 \arguments{
 \item{data}{Matrix or data frame with incomplete data.}
 
-\item{mincor}{A scalar, numeric vector (of size \code{ncol(data))} or numeric
+\item{mincor}{A scalar, numeric vector (of size \verb{ncol(data))} or numeric
 matrix (square, of size \code{ncol(data)} specifying the minimum
 threshold(s) against which the absolute correlation in the data is compared.}
 
-\item{minpuc}{A scalar, vector (of size \code{ncol(data))} or matrix (square,
+\item{minpuc}{A scalar, vector (of size \verb{ncol(data))} or matrix (square,
 of size \code{ncol(data)} specifying the minimum threshold(s) for the
 proportion of usable cases.}
 
@@ -76,7 +76,7 @@ relatively small. Using a square matrix extends the idea to the columns, so
 that one can also apply cellwise thresholds.
 }
 \note{
-\code{quickpred()} uses \code{\link[base]{data.matrix}} to convert
+\code{quickpred()} uses \code{\link[base:data.matrix]{base::data.matrix()}} to convert
 factors to numbers through their internal codes. Especially for unordered
 factors the resulting quantification may not make sense.
 }
@@ -103,14 +103,14 @@ imp <- mice(nhanes, pred = quickpred(nhanes, minpuc = 0.25, include = "age"))
 \references{
 van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple
 imputation of missing blood pressure covariates in survival analysis.
-\emph{Statistics in Medicine}, \bold{18}, 681--694.
+\emph{Statistics in Medicine}, \strong{18}, 681--694.
 
 van Buuren, S. and Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link{mice}}, \code{\link[=mids-class]{mids}}
+\code{\link[=mice]{mice()}}, \code{\link[=mids-class]{mids()}}
 }
 \author{
 Stef van Buuren, Aug 2009

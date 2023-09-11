@@ -1,6 +1,6 @@
 #' Conditional imputation helper
 #'
-#' Sorry, the \code{ifdo()} function is not yet implemented.
+#' Sorry, the `ifdo()` function is not yet implemented.
 #' @aliases ifdo
 #' @param cond a condition
 #' @param action the action to do
@@ -16,11 +16,11 @@ ifdo <- function(cond, action) {
 #'
 #' A custom function to insert rows in long data with new pseudo-observations
 #' that are being done on the specified break ages. There should be a
-#' column called \code{first} in \code{data} with logical data that codes whether
-#' the current row is the first for subject \code{id}. Furthermore,
-#' the function assumes that columns \code{age}, \code{occ},
-#' \code{hgt.z}, \code{wgt.z} and
-#' \code{bmi.z} are available. This function is used on the \code{tbc}
+#' column called `first` in `data` with logical data that codes whether
+#' the current row is the first for subject `id`. Furthermore,
+#' the function assumes that columns `age`, `occ`,
+#' `hgt.z`, `wgt.z` and
+#' `bmi.z` are available. This function is used on the `tbc`
 #' data in FIMD chapter 9. Check that out to see it in action.
 #' @aliases appendbreak
 #' @param data A data frame in the long long format
@@ -62,9 +62,9 @@ appendbreak <- function(data, brk, warp.model = warp.model, id = NULL, typ = "pr
   app[order(app$id, app$age), ]
 }
 
-#' Extract broken stick estimates from a \code{lmer} object
+#' Extract broken stick estimates from a `lmer` object
 #'
-#' @param fit An object of class \code{lmer}
+#' @param fit An object of class `lmer`
 #' @return A matrix containing broken stick estimates
 #' @author Stef van Buuren, 2012
 #' @export

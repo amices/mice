@@ -19,7 +19,7 @@ observation minus the number of fitted parameters. The default
 (\code{dfcom = NULL}) extract this information in the following
 order: 1) the component
 \code{residual.df} returned by \code{glance()} if a \code{glance()}
-function is found, 2) the result of \code{df.residual(} applied to
+function is found, 2) the result of \verb{df.residual(} applied to
 the first fitted model, and 3) as \code{999999}.
 In the last case, the warning \code{"Large sample assumed"} is printed.
 If the degrees of freedom is incorrect, specify the appropriate value
@@ -31,7 +31,7 @@ manually.}
 
 \item{custom.t}{A custom character string to be parsed as a calculation rule
 for the total variance \code{t}. The custom rule  can use the other calculated
-pooling statistics where the dimensions must come from \code{.data$}. The
+pooling statistics where the dimensions must come from \verb{.data$}. The
 default \code{t} calculation would have the form
 \code{".data$ubar + (1 + 1 / .data$m) * .data$b"}.
 See examples for an example.}
@@ -40,7 +40,7 @@ See examples for an example.}
 An object of class \code{mipo}, which stands for 'multiple imputation
 pooled outcome'.
 For rule \code{"reiter2003"} values for \code{lambda} and \code{fmi} are
-set to `NA`, as these statistics do not apply for data synthesised from
+set to \code{NA}, as these statistics do not apply for data synthesised from
 fully observed data.
 }
 \description{
@@ -93,11 +93,11 @@ The \code{pool()} and \code{pool.syn()} functions rely on the
 \code{broom::tidy} and \code{broom::glance} for extracting these
 parameters.
 
-Since \code{mice 3.0+}, the \code{broom}
+Since \verb{mice 3.0+}, the \code{broom}
 package takes care of filtering out the relevant parts of the
 complete-data analysis. It may happen that you'll see the messages
-like \code{Error: No tidy method for objects of class ...} or
-\code{Error: No glance method for objects of class ...}. The message
+like \verb{Error: No tidy method for objects of class ...} or
+\verb{Error: No glance method for objects of class ...}. The message
 means that your complete-data method used in \code{with(imp, ...)} has
 no \code{tidy} or \code{glance} method defined in the \code{broom} package.
 
@@ -109,20 +109,20 @@ If no \code{tidy} or \code{glance} methods are defined for your analysis
 tabulate the \code{m} parameter estimates and their variance
 estimates (the square of the standard errors) from the \code{m} fitted
 models stored in \code{fit$analyses}. For each parameter, run
-\code{\link{pool.scalar}} to obtain the pooled parameters estimate, its variance, the
+\code{\link[=pool.scalar]{pool.scalar()}} to obtain the pooled parameters estimate, its variance, the
 degrees of freedom, the relative increase in variance and the fraction of missing
 information.
 
 An alternative is to write your own \code{glance()} and \code{tidy()}
 methods and add these to \code{broom} according to the specifications
 given in \url{https://broom.tidymodels.org}.
-In versions prior to \code{mice 3.0} pooling required that
+In versions prior to \verb{mice 3.0} pooling required that
 \code{coef()} and \code{vcov()} methods were available for fitted
 objects. \emph{This feature is no longer supported}. The reason is that
 \code{vcov()} methods are inconsistent across packages, leading to
 buggy behaviour of the \code{pool()} function.
 
-Since \code{mice 3.13.2} function \code{pool()} uses the robust
+Since \verb{mice 3.13.2} function \code{pool()} uses the robust
 the standard error estimate for pooling when it can extract
 \code{robust.se} from the \code{tidy()} object.
 }
@@ -155,15 +155,15 @@ Rubin, D.B. (1987). \emph{Multiple Imputation for Nonresponse in Surveys}.
 New York: John Wiley and Sons.
 
 Reiter, J.P. (2003). Inference for Partially Synthetic,
-Public Use Microdata Sets. \emph{Survey Methodology}, \bold{29}, 181-189.
+Public Use Microdata Sets. \emph{Survey Methodology}, \strong{29}, 181-189.
 
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link{with.mids}}, \code{\link{as.mira}}, \code{\link{pool.scalar}},
-\code{\link[broom:reexports]{glance}}, \code{\link[broom:reexports]{tidy}}
+\code{\link[=with.mids]{with.mids()}}, \code{\link[=as.mira]{as.mira()}}, \code{\link[=pool.scalar]{pool.scalar()}},
+\code{\link[broom:reexports]{glance()}}, \code{\link[broom:reexports]{tidy()}}
 \url{https://github.com/amices/mice/issues/142},
 \url{https://github.com/amices/mice/issues/274}
 }

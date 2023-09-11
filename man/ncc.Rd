@@ -21,7 +21,7 @@ Calculates the number of complete cases.
 ncc(nhanes) # 13 complete cases
 }
 \seealso{
-\code{\link{nic}}, \code{\link{cci}}
+\code{\link[=nic]{nic()}}, \code{\link[=cci]{cci()}}
 }
 \author{
 Stef van Buuren, 2017

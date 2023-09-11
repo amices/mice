@@ -27,7 +27,7 @@ compared with complete-case analysis for missing covariate values.
 \emph{Statistics in Medicine}, \emph{29}, 2920-2931.
 }
 \seealso{
-\code{\link{fluxplot}}, \code{\link{flux}}, \code{\link{md.pattern}}
+\code{\link[=fluxplot]{fluxplot()}}, \code{\link[=flux]{flux()}}, \code{\link[=md.pattern]{md.pattern()}}
 }
 \author{
 Stef van Buuren, 2012

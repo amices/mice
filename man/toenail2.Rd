@@ -6,14 +6,14 @@
 \title{Toenail data}
 \format{
 A data frame with 1908 observations on the following 5 variables:
-  \describe{
-  \item{\code{patientID}}{a numeric vector giving the ID of patient}
-  \item{\code{outcome}}{a factor with 2 levels giving the response}
-  \item{\code{treatment}}{a factor with 2 levels giving the treatment group}
-  \item{\code{time}}{a numeric vector giving the time of the visit
-  (not exactly monthly intervals hence not round numbers)}
-  \item{\code{visit}}{an integer giving the number of the visit}
-  }
+\describe{
+\item{\code{patientID}}{a numeric vector giving the ID of patient}
+\item{\code{outcome}}{a factor with 2 levels giving the response}
+\item{\code{treatment}}{a factor with 2 levels giving the treatment group}
+\item{\code{time}}{a numeric vector giving the time of the visit
+(not exactly monthly intervals hence not round numbers)}
+\item{\code{visit}}{an integer giving the number of the visit}
+}
 }
 \source{
 De Backer, M., De Vroey, C., Lesaffre, E., Scheys, I., and De
@@ -45,11 +45,10 @@ G. Fitzmaurice, N. Laird and J. Ware (2004) Applied Longitudinal Analysis,
 Wiley and Sons, New York, USA.
 
 Van Buuren, S. (2018).
-\href{https://stefvanbuuren.name/fimd/sec-catoutcome.html#example}{\emph{Flexible
-Imputation of Missing Data. Second Edition.}} Chapman & Hall/CRC.
+\href{https://stefvanbuuren.name/fimd/sec-catoutcome.html#example}{\emph{Flexible Imputation of Missing Data. Second Edition.}} Chapman & Hall/CRC.
 Boca Raton, FL.
 }
 \seealso{
-\code{\link{toenail}}
+\code{\link[=toenail]{toenail()}}
 }
 \keyword{datasets}

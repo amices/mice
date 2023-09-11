@@ -4,19 +4,19 @@
 #'
 #' @aliases mice.impute.polyreg
 #' @inheritParams mice.impute.pmm
-#' @param nnet.maxit Tuning parameter for \code{nnet()}.
-#' @param nnet.trace Tuning parameter for \code{nnet()}.
-#' @param nnet.MaxNWts Tuning parameter for \code{nnet()}.
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @param nnet.maxit Tuning parameter for `nnet()`.
+#' @param nnet.trace Tuning parameter for `nnet()`.
+#' @param nnet.MaxNWts Tuning parameter for `nnet()`.
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000-2010
 #' @details
-#' The function \code{mice.impute.polyreg()} imputes categorical response
+#' The function `mice.impute.polyreg()` imputes categorical response
 #' variables by the Bayesian polytomous regression model. See J.P.L. Brand
 #' (1999), Chapter 4, Appendix B.
 #'
 #' By default, unordered factors with more than two levels are imputed by
-#' \code{mice.impute.polyreg()}.
+#' `mice.impute.polyreg()`.
 #'
 #' The method consists of the following steps:
 #' \enumerate{
@@ -25,29 +25,29 @@
 #' \item Add appropriate noise to predictions
 #' }
 #'
-#' The algorithm of \code{mice.impute.polyreg} uses the function
-#' \code{multinom()} from the \code{nnet} package.
+#' The algorithm of `mice.impute.polyreg` uses the function
+#' `multinom()` from the `nnet` package.
 #'
 #' In order to avoid bias due to perfect prediction, the algorithm augment the
 #' data according to the method of White, Daniel and Royston (2010).
-#' @seealso \code{\link{mice}}, \code{\link[nnet]{multinom}},
-#' \code{\link[MASS]{polr}}
+#' @seealso [mice()], [nnet::multinom()],
+#' [MASS::polr()]
 #' @references
 #'
-#' Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
-#' Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-#' Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+#' Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`: Multivariate
+#' Imputation by Chained Equations in `R`. *Journal of Statistical
+#' Software*, **45**(3), 1-67. \doi{10.18637/jss.v045.i03}
 #'
-#' Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
+#' Brand, J.P.L. (1999) *Development, implementation and evaluation of
 #' multiple imputation strategies for the statistical analysis of incomplete
-#' data sets.} Dissertation. Rotterdam: Erasmus University.
+#' data sets.* Dissertation. Rotterdam: Erasmus University.
 #'
 #' White, I.R., Daniel, R. Royston, P. (2010). Avoiding bias due to perfect
 #' prediction in multiple imputation of incomplete categorical variables.
-#' \emph{Computational Statistics and Data Analysis}, 54, 2267-2275.
+#' *Computational Statistics and Data Analysis*, 54, 2267-2275.
 #'
-#' Venables, W.N. & Ripley, B.D. (2002). \emph{Modern applied statistics with
-#' S-Plus (4th ed)}. Springer, Berlin.
+#' Venables, W.N. & Ripley, B.D. (2002). *Modern applied statistics with
+#' S-Plus (4th ed)*. Springer, Berlin.
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export

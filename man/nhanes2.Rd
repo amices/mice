@@ -32,6 +32,6 @@ imp <- mice(nhanes2)
 complete(imp)
 }
 \seealso{
-\code{\link{nhanes}}
+\code{\link[=nhanes]{nhanes()}}
 }
 \keyword{datasets}

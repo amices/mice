@@ -6,17 +6,17 @@
 #'
 #' Infux and outflux have been proposed by Van Buuren (2018), chapter 4.
 #'
-#' Influx is equal to the number of variable pairs \code{(Yj , Yk)} with
-#' \code{Yj} missing and \code{Yk} observed, divided by the total number of
+#' Influx is equal to the number of variable pairs `(Yj , Yk)` with
+#' `Yj` missing and `Yk` observed, divided by the total number of
 #' observed data cells. Influx depends on the proportion of missing data of the
 #' variable. Influx of a completely observed variable is equal to 0, whereas for
 #' completely missing variables we have influx = 1. For two variables with the
 #' same proportion of missing data, the variable with higher influx is better
 #' connected to the observed data, and might thus be easier to impute.
 #'
-#' Outflux is equal to the number of variable pairs with \code{Yj} observed and
-#' \code{Yk} missing, divided by the total number of incomplete data cells.
-#' Outflux is an indicator of the potential usefulness of \code{Yj} for imputing
+#' Outflux is equal to the number of variable pairs with `Yj` observed and
+#' `Yk` missing, divided by the total number of incomplete data cells.
+#' Outflux is an indicator of the potential usefulness of `Yj` for imputing
 #' other variables. Outflux depends on the proportion of missing data of the
 #' variable. Outflux of a completely observed variable is equal to 1, whereas
 #' outflux of a completely missing variable is equal to 0. For two variables
@@ -25,30 +25,30 @@
 #' imputing other variables.
 #'
 #' FICO is an outbound statistic defined by the fraction of incomplete cases
-#' among cases with \code{Yj} observed (White and Carlin, 2010).
+#' among cases with `Yj` observed (White and Carlin, 2010).
 #'
 #' @aliases flux
 #' @param data A data frame or a matrix containing the incomplete data.  Missing
 #' values are coded as NA's.
-#' @param local A vector of names of columns of \code{data}. The default is to
+#' @param local A vector of names of columns of `data`. The default is to
 #' include all columns in the calculations.
-#' @return A data frame with \code{ncol(data)} rows and six columns:
+#' @return A data frame with `ncol(data)` rows and six columns:
 #' pobs = Proportion observed,
 #' influx = Influx
 #' outflux = Outflux
 #' ainb = Average inbound statistic
 #' aout = Average outbound statistic
-#' fico = Fraction of incomplete cases among cases with \code{Yj} observed
-#' @seealso \code{\link{fluxplot}}, \code{\link{md.pattern}}, \code{\link{fico}}
+#' fico = Fraction of incomplete cases among cases with `Yj` observed
+#' @seealso [fluxplot()], [md.pattern()], [fico()]
 #' @author Stef van Buuren, 2012
 #' @references
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #' White, I.R., Carlin, J.B. (2010). Bias and efficiency of multiple imputation
 #' compared with complete-case analysis for missing covariate values.
-#' \emph{Statistics in Medicine}, \emph{29}, 2920-2931.
+#' *Statistics in Medicine*, *29*, 2920-2931.
 #' @keywords misc
 #' @export
 flux <- function(data, local = names(data)) {
@@ -78,17 +78,17 @@ flux <- function(data, local = names(data)) {
 #'
 #' Infux and outflux have been proposed by Van Buuren (2012), chapter 4.
 #'
-#' Influx is equal to the number of variable pairs \code{(Yj , Yk)} with
-#' \code{Yj} missing and \code{Yk} observed, divided by the total number of
+#' Influx is equal to the number of variable pairs `(Yj , Yk)` with
+#' `Yj` missing and `Yk` observed, divided by the total number of
 #' observed data cells. Influx depends on the proportion of missing data of the
 #' variable. Influx of a completely observed variable is equal to 0, whereas for
 #' completely missing variables we have influx = 1. For two variables with the
 #' same proportion of missing data, the variable with higher influx is better
 #' connected to the observed data, and might thus be easier to impute.
 #'
-#' Outflux is equal to the number of variable pairs with \code{Yj} observed and
-#' \code{Yk} missing, divided by the total number of incomplete data cells.
-#' Outflux is an indicator of the potential usefulness of \code{Yj} for imputing
+#' Outflux is equal to the number of variable pairs with `Yj` observed and
+#' `Yk` missing, divided by the total number of incomplete data cells.
+#' Outflux is an indicator of the potential usefulness of `Yj` for imputing
 #' other variables. Outflux depends on the proportion of missing data of the
 #' variable. Outflux of a completely observed variable is equal to 1, whereas
 #' outflux of a completely missing variable is equal to 0. For two variables
@@ -99,37 +99,37 @@ flux <- function(data, local = names(data)) {
 #' @aliases fluxplot
 #' @param data A data frame or a matrix containing the incomplete data.  Missing
 #' values are coded as NA's.
-#' @param local A vector of names of columns of \code{data}. The default is to
+#' @param local A vector of names of columns of `data`. The default is to
 #' include all columns in the calculations.
 #' @param plot Should a graph be produced?
 #' @param labels Should the points be labeled?
-#' @param xlim See \code{par}.
-#' @param ylim See \code{par}.
-#' @param las See \code{par}.
-#' @param xlab See \code{par}.
-#' @param ylab See \code{par}.
-#' @param main See \code{par}.
+#' @param xlim See `par`.
+#' @param ylim See `par`.
+#' @param las See `par`.
+#' @param xlab See `par`.
+#' @param ylab See `par`.
+#' @param main See `par`.
 #' @param eqscplot Should a square plot be produced?
-#' @param pty See \code{par}.
-#' @param lwd See \code{par}. Controls axis line thickness and diagonal
-#' @param \dots Further arguments passed to \code{plot()} or \code{eqscplot()}.
-#' @return An invisible data frame with \code{ncol(data)} rows and six columns:
+#' @param pty See `par`.
+#' @param lwd See `par`. Controls axis line thickness and diagonal
+#' @param \dots Further arguments passed to `plot()` or `eqscplot()`.
+#' @return An invisible data frame with `ncol(data)` rows and six columns:
 #' pobs = Proportion observed,
 #' influx = Influx
 #' outflux = Outflux
 #' ainb = Average inbound statistic
 #' aout = Average outbound statistic
-#' fico = Fraction of incomplete cases among cases with \code{Yj} observed
-#' @seealso \code{\link{flux}}, \code{\link{md.pattern}}, \code{\link{fico}}
+#' fico = Fraction of incomplete cases among cases with `Yj` observed
+#' @seealso [flux()], [md.pattern()], [fico()]
 #' @author Stef van Buuren, 2012
 #' @references
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #' White, I.R., Carlin, J.B. (2010). Bias and efficiency of multiple imputation
 #' compared with complete-case analysis for missing covariate values.
-#' \emph{Statistics in Medicine}, \emph{29}, 2920-2931.
+#' *Statistics in Medicine*, *29*, 2920-2931.
 #' @keywords misc
 #' @export
 fluxplot <- function(data, local = names(data),
@@ -175,22 +175,22 @@ fluxplot <- function(data, local = names(data),
 #' Fraction of incomplete cases among cases with observed
 #'
 #' FICO is an outbound statistic defined by the fraction of incomplete cases
-#' among cases with \code{Yj} observed (White and Carlin, 2010).
+#' among cases with `Yj` observed (White and Carlin, 2010).
 #'
 #' @aliases fico
 #' @param data A data frame or a matrix containing the incomplete data.  Missing
 #' values are coded as NA's.
-#' @return A vector of length \code{ncol(data)} of FICO statistics.
-#' @seealso \code{\link{fluxplot}}, \code{\link{flux}}, \code{\link{md.pattern}}
+#' @return A vector of length `ncol(data)` of FICO statistics.
+#' @seealso [fluxplot()], [flux()], [md.pattern()]
 #' @author Stef van Buuren, 2012
 #' @references
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #' White, I.R., Carlin, J.B. (2010). Bias and efficiency of multiple imputation
 #' compared with complete-case analysis for missing covariate values.
-#' \emph{Statistics in Medicine}, \emph{29}, 2920-2931.
+#' *Statistics in Medicine*, *29*, 2920-2931.
 #' @keywords misc
 #' @export
 fico <- function(data) {

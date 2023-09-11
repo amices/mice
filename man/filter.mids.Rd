@@ -69,7 +69,7 @@ imp_f2 <- filter(imp, age >= 2 & hyp == 1)
 nrow(complete(imp_f2)) # should be 5
 }
 \seealso{
-\code{\link[dplyr]{filter}}
+\code{\link[dplyr:filter]{dplyr::filter()}}
 }
 \author{
 Patrick Rockenschaub

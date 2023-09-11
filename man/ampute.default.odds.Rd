@@ -9,7 +9,7 @@ ampute.default.odds(patterns)
 \arguments{
 \item{patterns}{A matrix of size #patterns by #variables where 0 indicates a
 variable should have missing values and 1 indicates a variable should remain
-complete. Could be the result of \code{\link{ampute.default.patterns}}.}
+complete. Could be the result of \code{\link[=ampute.default.patterns]{ampute.default.patterns()}}.}
 }
 \value{
 A matrix where #rows equals #patterns. Default is 4 quantiles with odds
@@ -20,7 +20,7 @@ Defines the default odds matrix for the multivariate amputation function
 \code{ampute}.
 }
 \seealso{
-\code{\link{ampute}}, \code{\link{ampute.default.patterns}}
+\code{\link[=ampute]{ampute()}}, \code{\link[=ampute.default.patterns]{ampute.default.patterns()}}
 }
 \author{
 Rianne Schouten, 2016

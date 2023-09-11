@@ -68,7 +68,7 @@ data according to the method of White, Daniel and Royston (2010).
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 
 Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
 multiple imputation strategies for the statistical analysis of incomplete
@@ -82,8 +82,8 @@ Venables, W.N. & Ripley, B.D. (2002). \emph{Modern applied statistics with
 S-Plus (4th ed)}. Springer, Berlin.
 }
 \seealso{
-\code{\link{mice}}, \code{\link[nnet]{multinom}},
-\code{\link[MASS]{polr}}
+\code{\link[=mice]{mice()}}, \code{\link[nnet:multinom]{nnet::multinom()}},
+\code{\link[MASS:polr]{MASS::polr()}}
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},

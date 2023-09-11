@@ -1,17 +1,17 @@
 #' Select complete cases
 #'
-#' Extracts the complete cases, also known as \emph{listwise deletion}.
-#' \code{cc(x)} is similar to
-#' \code{na.omit(x)}, but returns an object of the same class
+#' Extracts the complete cases, also known as *listwise deletion*.
+#' `cc(x)` is similar to
+#' `na.omit(x)`, but returns an object of the same class
 #' as the input data. Dimensions are not dropped. For extracting
-#' incomplete cases, use \code{\link{ici}}.
+#' incomplete cases, use [ici()].
 #'
-#' @param x An \code{R} object. Methods are available for classes
-#' \code{mids}, \code{data.frame} and \code{matrix}. Also, \code{x}
+#' @param x An `R` object. Methods are available for classes
+#' `mids`, `data.frame` and `matrix`. Also, `x`
 #' could be a vector.
-#' @return A \code{vector}, \code{matrix} or \code{data.frame} containing the data of the complete cases.
+#' @return A `vector`, `matrix` or `data.frame` containing the data of the complete cases.
 #' @author Stef van Buuren, 2017.
-#' @seealso \code{\link{na.omit}}, \code{\link{cci}}, \code{\link{ici}}
+#' @seealso [na.omit()], [cci()], [ici()]
 #' @keywords univar
 #' @examples
 #'
@@ -44,14 +44,14 @@ cc.default <- function(x) {
 #' Select incomplete cases
 #'
 #' Extracts incomplete cases from a data set.
-#' The companion function for selecting the complete cases is \code{\link{cc}}.
+#' The companion function for selecting the complete cases is [cc()].
 #'
-#' @param x An \code{R} object. Methods are available for classes
-#' \code{mids}, \code{data.frame} and \code{matrix}. Also, \code{x}
+#' @param x An `R` object. Methods are available for classes
+#' `mids`, `data.frame` and `matrix`. Also, `x`
 #' could be a vector.
-#' @return A \code{vector}, \code{matrix} or \code{data.frame} containing the data of the complete cases.
+#' @return A `vector`, `matrix` or `data.frame` containing the data of the complete cases.
 #' @author Stef van Buuren, 2017.
-#' @seealso \code{\link{cc}}, \code{\link{ici}}
+#' @seealso [cc()], [ici()]
 #' @keywords univar
 #' @examples
 #'

@@ -14,7 +14,6 @@ The \code{mids}
 class of objects has methods for the following generic functions:
 \code{print}, \code{summary}, \code{plot}.
 
-
 The \code{loggedEvents} entry is a matrix with five columns containing a
 record of automatic removal actions. It is \code{NULL} is no action was
 made.  At initialization the program does the following three actions:
@@ -50,67 +49,67 @@ equivalent \code{oldClass(obj) <- "mids"}.
 }
 \section{Slots}{
 
- \describe{
-   \item{\code{.Data}:}{Object of class \code{"list"} containing the
-   following slots:}
-   \item{\code{data}:}{Original (incomplete) data set.}
-   \item{\code{imp}:}{A list of \code{ncol(data)} components with
-   the generated multiple imputations. Each list component is a
-   \code{data.frame} (\code{nmis[j]} by \code{m}) of imputed values
-   for variable \code{j}. A \code{NULL} component is used for
-   variables for which not imputations are generated.}
-   \item{\code{m}:}{Number of imputations.}
-   \item{\code{where}:}{The \code{where} argument of the
-   \code{mice()} function.}
-   \item{\code{blocks}:}{The \code{blocks} argument of the
-   \code{mice()} function.}
-   \item{\code{call}:}{Call that created the object.}
-   \item{\code{nmis}:}{An array containing the number of missing
-   observations per column.}
-   \item{\code{method}:}{A vector of strings of \code{length(blocks}
-   specifying the imputation method per block.}
-   \item{\code{predictorMatrix}:}{A numerical matrix of containing
-   integers specifying the predictor set.}
-   \item{\code{visitSequence}:}{A vector of variable and block names that
-    specifies how variables and blocks are visited in one iteration throuh
-    the data.}
-   \item{\code{formulas}:}{A named list of formula's, or expressions that
-   can be converted into formula's by \code{as.formula}. List elements
-   correspond to blocks. The block to which the list element applies is
-   identified by its name, so list names must correspond to block names.}
-   \item{\code{post}:}{A vector of strings of length \code{length(blocks)}
-   with commands for post-processing.}
-   \item{\code{blots}:}{"Block dots". The \code{blots} argument to the \code{mice()}
-   function.}
-   \item{\code{ignore}:}{A logical vector of length \code{nrow(data)} indicating
-   the rows in \code{data} used to build the imputation model. (new in \code{mice 3.12.0})}
-   \item{\code{seed}:}{The seed value of the solution.}
-   \item{\code{iteration}:}{Last Gibbs sampling iteration number.}
-   \item{\code{lastSeedValue}:}{The most recent seed value.}
-   \item{\code{chainMean}:}{An array of dimensions \code{ncol} by
-   \code{maxit} by \code{m} elements containing the mean of
-   the generated multiple imputations.
-   The array can be used for monitoring convergence.
-   Note that observed data are not present in this mean.}
-   \item{\code{chainVar}:}{An array with similar structure as
-   \code{chainMean}, containing the variance of the imputed values.}
-   \item{\code{loggedEvents}:}{A \code{data.frame} with five columns
-   containing warnings, corrective actions, and other inside info.}
-   \item{\code{version}:}{Version number of \code{mice} package that
-   created the object.}
-   \item{\code{date}:}{Date at which the object was created.}
+\describe{
+\item{\code{.Data}:}{Object of class \code{"list"} containing the
+following slots:}
+\item{\code{data}:}{Original (incomplete) data set.}
+\item{\code{imp}:}{A list of \code{ncol(data)} components with
+the generated multiple imputations. Each list component is a
+\code{data.frame} (\code{nmis[j]} by \code{m}) of imputed values
+for variable \code{j}. A \code{NULL} component is used for
+variables for which not imputations are generated.}
+\item{\code{m}:}{Number of imputations.}
+\item{\code{where}:}{The \code{where} argument of the
+\code{mice()} function.}
+\item{\code{blocks}:}{The \code{blocks} argument of the
+\code{mice()} function.}
+\item{\code{call}:}{Call that created the object.}
+\item{\code{nmis}:}{An array containing the number of missing
+observations per column.}
+\item{\code{method}:}{A vector of strings of \verb{length(blocks}
+specifying the imputation method per block.}
+\item{\code{predictorMatrix}:}{A numerical matrix of containing
+integers specifying the predictor set.}
+\item{\code{visitSequence}:}{A vector of variable and block names that
+specifies how variables and blocks are visited in one iteration throuh
+the data.}
+\item{\code{formulas}:}{A named list of formula's, or expressions that
+can be converted into formula's by \code{as.formula}. List elements
+correspond to blocks. The block to which the list element applies is
+identified by its name, so list names must correspond to block names.}
+\item{\code{post}:}{A vector of strings of length \code{length(blocks)}
+with commands for post-processing.}
+\item{\code{blots}:}{"Block dots". The \code{blots} argument to the \code{mice()}
+function.}
+\item{\code{ignore}:}{A logical vector of length \code{nrow(data)} indicating
+the rows in \code{data} used to build the imputation model. (new in \verb{mice 3.12.0})}
+\item{\code{seed}:}{The seed value of the solution.}
+\item{\code{iteration}:}{Last Gibbs sampling iteration number.}
+\item{\code{lastSeedValue}:}{The most recent seed value.}
+\item{\code{chainMean}:}{An array of dimensions \code{ncol} by
+\code{maxit} by \code{m} elements containing the mean of
+the generated multiple imputations.
+The array can be used for monitoring convergence.
+Note that observed data are not present in this mean.}
+\item{\code{chainVar}:}{An array with similar structure as
+\code{chainMean}, containing the variance of the imputed values.}
+\item{\code{loggedEvents}:}{A \code{data.frame} with five columns
+containing warnings, corrective actions, and other inside info.}
+\item{\code{version}:}{Version number of \code{mice} package that
+created the object.}
+\item{\code{date}:}{Date at which the object was created.}
 }
 }
 
 \references{
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
+Statistical Software}, \strong{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link{mice}}, \code{\link[=mira-class]{mira}},
-\code{\link{mipo}}
+\code{\link[=mice]{mice()}}, \code{\link[=mira-class]{mira()}},
+\code{\link[=mipo]{mipo()}}
 }
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn, 2000

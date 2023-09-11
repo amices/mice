@@ -1,18 +1,18 @@
-#' Creates a \code{predictorMatrix} argument
+#' Creates a `predictorMatrix` argument
 #'
-#' This helper function creates a valid \code{predictMatrix}. The
-#' \code{predictorMatrix} is an argument to the \code{mice} function.
+#' This helper function creates a valid `predictMatrix`. The
+#' `predictorMatrix` is an argument to the `mice` function.
 #' It specifies the target variable or block in the rows, and the
-#' predictor variables on the columns. An entry of \code{0} means that
+#' predictor variables on the columns. An entry of `0` means that
 #' the column variable is NOT used to impute the row variable or block.
 #' A nonzero value indicates that it is used.
-#' @param data A \code{data.frame} with the source data
+#' @param data A `data.frame` with the source data
 #' @param blocks An optional specification for blocks of variables in
 #' the rows. The default assigns each variable in its own block.
 #' @param predictorMatrix A predictor matrix from which rows with the same
 #' names are copied into the output predictor matrix.
 #' @return A matrix
-#' @seealso \code{\link{make.blocks}}
+#' @seealso [make.blocks()]
 #' @examples
 #' make.predictorMatrix(nhanes)
 #' make.predictorMatrix(nhanes, blocks = make.blocks(nhanes, "collect"))

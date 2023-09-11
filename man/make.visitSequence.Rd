@@ -34,5 +34,5 @@ specifies the sequence in which blocks are imputed.
 make.visitSequence(nhanes)
 }
 \seealso{
-\code{\link{mice}}
+\code{\link[=mice]{mice()}}
 }

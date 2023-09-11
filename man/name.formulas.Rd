@@ -65,5 +65,5 @@ form5 <- name.formulas(form5)
 imp5 <- mice(nhanes, formulas = form5, print = FALSE, m = 1, seed = 71712)
 }
 \seealso{
-\code{\link{mice}}
+\code{\link[=mice]{mice()}}
 }

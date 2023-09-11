@@ -19,7 +19,7 @@ Extracts the complete cases, also known as \emph{listwise deletion}.
 \code{cc(x)} is similar to
 \code{na.omit(x)}, but returns an object of the same class
 as the input data. Dimensions are not dropped. For extracting
-incomplete cases, use \code{\link{ici}}.
+incomplete cases, use \code{\link[=ici]{ici()}}.
 }
 \examples{
 
@@ -27,7 +27,7 @@ incomplete cases, use \code{\link{ici}}.
 # cc(nhanes$bmi) # extract complete bmi
 }
 \seealso{
-\code{\link{na.omit}}, \code{\link{cci}}, \code{\link{ici}}
+\code{\link[=na.omit]{na.omit()}}, \code{\link[=cci]{cci()}}, \code{\link[=ici]{ici()}}
 }
 \author{
 Stef van Buuren, 2017.

@@ -42,5 +42,5 @@ blocks <- list(c("hyp", "chl"), AGE = "age", c("bmi", "hyp"), "edu")
 name.blocks(blocks)
 }
 \seealso{
-\code{\link{mice}}
+\code{\link[=mice]{mice()}}
 }

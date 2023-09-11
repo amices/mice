@@ -47,5 +47,5 @@ pred <- make.predictorMatrix(nhanes[, c("age", "chl")])
 construct.blocks(formulas = form, pred = pred)
 }
 \seealso{
-\code{\link{make.blocks}}, \code{\link{name.blocks}}
+\code{\link[=make.blocks]{make.blocks()}}, \code{\link[=name.blocks]{name.blocks()}}
 }

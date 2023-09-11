@@ -5,11 +5,11 @@
 #'
 #' @aliases mice.impute.norm norm
 #' @inheritParams mice.impute.pmm
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @author Stef van Buuren, Karin Groothuis-Oudshoorn
 #' @details
-#' Imputation of \code{y} by the normal model by the method defined by
+#' Imputation of `y` by the normal model by the method defined by
 #' Rubin (1987, p. 167). The procedure is as follows:
 #'
 #' \enumerate{
@@ -26,7 +26,7 @@
 #' \item{Calculate the \eqn{n_0} values \eqn{y_{imp} = X_{mis}\dot\beta + \dot z_2\dot\sigma}.}
 #' }
 #'
-#' Using \code{mice.impute.norm} for all columns emulates Schafer's NORM method (Schafer, 1997).
+#' Using `mice.impute.norm` for all columns emulates Schafer's NORM method (Schafer, 1997).
 #' @references
 #' Rubin, D.B (1987). Multiple Imputation for Nonresponse in Surveys. New York: John Wiley & Sons.
 #'
@@ -49,19 +49,19 @@ mice.impute.norm <- function(y, ry, x, wy = NULL, ...) {
 #' can be called by user-specified imputation functions.
 #'
 #' @aliases norm.draw .norm.draw
-#' @param y Incomplete data vector of length \code{n}
-#' @param ry Vector of missing data pattern (\code{FALSE}=missing,
-#' \code{TRUE}=observed)
-#' @param x Matrix (\code{n} x \code{p}) of complete covariates.
-#' @param rank.adjust Argument that specifies whether \code{NA}'s in the
-#' coefficients need to be set to zero. Only relevant when \code{ls.meth = "qr"}
+#' @param y Incomplete data vector of length `n`
+#' @param ry Vector of missing data pattern (`FALSE`=missing,
+#' `TRUE`=observed)
+#' @param x Matrix (`n` x `p`) of complete covariates.
+#' @param rank.adjust Argument that specifies whether `NA`'s in the
+#' coefficients need to be set to zero. Only relevant when `ls.meth = "qr"`
 #' AND the predictor matrix is rank-deficient.
 #' @param ... Other named arguments.
-#' @return A \code{list} containing components \code{coef} (least squares estimate),
-#' \code{beta} (drawn regression weights) and \code{sigma} (drawn value of the
+#' @return A `list` containing components `coef` (least squares estimate),
+#' `beta` (drawn regression weights) and `sigma` (drawn value of the
 #' residual standard deviation).
 #' @references
-#' Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
+#' Rubin, D.B. (1987). *Multiple imputation for nonresponse in surveys*. New York: Wiley.
 #' @author Gerko Vink, 2018, for this version, based on earlier versions written
 #' by Stef van Buuren, Karin Groothuis-Oudshoorn, 2017
 #' @export
@@ -102,20 +102,20 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...) {
 #' @note
 #' This functions adds a star to variable names in the mice iteration
 #' history to signal that a ridge penalty was added. In that case, it
-#' also adds an entry to \code{loggedEvents}.
+#' also adds an entry to `loggedEvents`.
 #'
 #' @aliases estimice
-#' @param x Matrix (\code{n} x \code{p}) of complete covariates.
-#' @param y Incomplete data vector of length \code{n}
+#' @param x Matrix (`n` x `p`) of complete covariates.
+#' @param y Incomplete data vector of length `n`
 #' @param ls.meth the method to use for obtaining the least squares estimates. By
 #' default parameters are drawn by means of QR decomposition.
 #' @param ridge A small numerical value specifying the size of the ridge used.
-#' The default value \code{ridge = 1e-05} represents a compromise between stability
-#' and unbiasedness. Decrease \code{ridge} if the data contain many junk variables.
-#' Increase \code{ridge} for highly collinear data.
+#' The default value `ridge = 1e-05` represents a compromise between stability
+#' and unbiasedness. Decrease `ridge` if the data contain many junk variables.
+#' Increase `ridge` for highly collinear data.
 #' @param ... Other named arguments.
-#' @return A \code{list} containing components \code{c} (least squares estimate),
-#' \code{r} (residuals), \code{v} (variance/covariance matrix) and \code{df}
+#' @return A `list` containing components `c` (least squares estimate),
+#' `r` (residuals), `v` (variance/covariance matrix) and `df`
 #' (degrees of freedom).
 #' @author Gerko Vink, 2018
 #' @export

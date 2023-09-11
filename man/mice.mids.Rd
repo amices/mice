@@ -51,12 +51,12 @@ identical(imp$imp, imp2$imp)
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
+Statistical Software}, \strong{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link{complete}}, \code{\link{mice}}, \code{\link{set.seed}},
-\code{\link[=mids-class]{mids}}
+\code{\link[=complete]{complete()}}, \code{\link[=mice]{mice()}}, \code{\link[=set.seed]{set.seed()}},
+\code{\link[=mids-class]{mids()}}
 }
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn, 2000

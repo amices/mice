@@ -1,40 +1,40 @@
-#' Creates a \code{blocks} argument
+#' Creates a `blocks` argument
 #'
 #' This helper function generates a list of the type needed for
-#' \code{blocks} argument in the \code{[=mice]{mice}} function.
-#' @param data A \code{data.frame}, character vector with
-#' variable names, or \code{list} with variable names.
+#' `blocks` argument in the [mice()] function.
+#' @param data A `data.frame`, character vector with
+#' variable names, or `list` with variable names.
 #' @param partition A character vector of length 1 used to assign
-#' variables to blocks when \code{data} is a \code{data.frame}. Value
-#' \code{"scatter"} (default) will assign each column to it own
-#' block. Value \code{"collect"} assigns all variables to one block,
-#' whereas \code{"void"} produces an empty list.
-#' @param calltype A character vector of \code{length(block)} elements
+#' variables to blocks when `data` is a `data.frame`. Value
+#' `"scatter"` (default) will assign each column to it own
+#' block. Value `"collect"` assigns all variables to one block,
+#' whereas `"void"` produces an empty list.
+#' @param calltype A character vector of `length(block)` elements
 #' that indicates how the imputation model is specified. If
-#' \code{calltype = "pred"} (the default), the underlying imputation
-#' model is called by means of the \code{type} argument. The
-#' \code{type} argument for block \code{h} is equivalent to
-#' row \code{h} in the \code{predictorMatrix}.
-#' The alternative is \code{calltype = "formula"}. This will pass
-#' \code{formulas[[h]]} to the underlying imputation
-#' function for block \code{h}, together with the current data.
-#' The \code{calltype} of a block is set automatically during
+#' `calltype = "pred"` (the default), the underlying imputation
+#' model is called by means of the `type` argument. The
+#' `type` argument for block `h` is equivalent to
+#' row `h` in the `predictorMatrix`.
+#' The alternative is `calltype = "formula"`. This will pass
+#' `formulas[[h]]` to the underlying imputation
+#' function for block `h`, together with the current data.
+#' The `calltype` of a block is set automatically during
 #' initialization. Where a choice is possible, calltype
-#' \code{"formula"} is preferred over \code{"pred"} since this is
+#' `"formula"` is preferred over `"pred"` since this is
 #' more flexible and extendable. However, what precisely happens
 #' depends also on the capabilities of the imputation
 #' function that is called.
 #' @return A named list of character vectors with variables names.
-#' @details Choices \code{"scatter"} and \code{"collect"} represent to two
+#' @details Choices `"scatter"` and `"collect"` represent to two
 #' extreme scenarios for assigning variables to imputation blocks.
-#' Use \code{"scatter"} to create an imputation model based on
-#' \emph{fully conditionally specification} (FCS). Use \code{"collect"} to
-#' gather all variables to be imputed by a \emph{joint model} (JM).
+#' Use `"scatter"` to create an imputation model based on
+#' *fully conditionally specification* (FCS). Use `"collect"` to
+#' gather all variables to be imputed by a *joint model* (JM).
 #' Scenario's in-between these two extremes represent
-#' \emph{hybrid} imputation models that combine FCS and JM.
+#' *hybrid* imputation models that combine FCS and JM.
 #'
 #' Any variable not listed in will not be imputed.
-#' Specification \code{"void"} represents the extreme scenario that
+#' Specification `"void"` represents the extreme scenario that
 #' skips imputation of all variables.
 #'
 #' A variable may be a member of multiple blocks. The variable will be
@@ -107,19 +107,19 @@ make.blocks <- function(data,
 
 #' Name imputation blocks
 #'
-#' This helper function names any unnamed elements in the \code{blocks}
+#' This helper function names any unnamed elements in the `blocks`
 #' specification. This is a convenience function.
 #' @inheritParams mice
 #' @param prefix A character vector of length 1 with the prefix to
 #' be using for naming any unnamed blocks with two or more variables.
 #' @return A named list of character vectors with variables names.
-#' @seealso \code{\link{mice}}
+#' @seealso [mice()]
 #' @details
 #' This function will name any unnamed list elements specified in
-#' the optional argument \code{blocks}. Unnamed blocks
+#' the optional argument `blocks`. Unnamed blocks
 #' consisting of just one variable will be named after this variable.
 #' Unnamed blocks containing more than one variables will be named
-#' by the \code{prefix} argument, padded by an integer sequence
+#' by the `prefix` argument, padded by an integer sequence
 #' stating at 1.
 #' @examples
 #' blocks <- list(c("hyp", "chl"), AGE = "age", c("bmi", "hyp"), "edu")
@@ -170,21 +170,21 @@ check.blocks <- function(blocks, data, calltype = "formula") {
   blocks
 }
 
-#' Construct blocks from \code{formulas} and \code{predictorMatrix}
+#' Construct blocks from `formulas` and `predictorMatrix`
 #'
 #' This helper function attempts to find blocks of variables in the
-#' specification of the \code{formulas} and/or \code{predictorMatrix}
-#' objects. Blocks specified by \code{formulas} may consist of
-#' multiple variables. Blocks specified by \code{predictorMatrix} are
+#' specification of the `formulas` and/or `predictorMatrix`
+#' objects. Blocks specified by `formulas` may consist of
+#' multiple variables. Blocks specified by `predictorMatrix` are
 #' assumed to consist of single variables. Any duplicates in names are
 #' removed, and the formula specification is preferred.
-#' \code{predictorMatrix} and \code{formulas}. When both arguments
+#' `predictorMatrix` and `formulas`. When both arguments
 #' specify models for the same block, the model for the
-#' \code{predictMatrix} is removed, and priority is given to the
-#' specification given in \code{formulas}.
+#' `predictMatrix` is removed, and priority is given to the
+#' specification given in `formulas`.
 #' @inheritParams mice
-#' @return A \code{blocks} object.
-#' @seealso \code{\link{make.blocks}}, \code{\link{name.blocks}}
+#' @return A `blocks` object.
+#' @seealso [make.blocks()], [name.blocks()]
 #' @examples
 #' form <- list(bmi + hyp ~ chl + age, chl ~ bmi)
 #' pred <- make.predictorMatrix(nhanes[, c("age", "chl")])

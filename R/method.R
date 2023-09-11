@@ -1,11 +1,11 @@
-#' Creates a \code{method} argument
+#' Creates a `method` argument
 #'
-#' This helper function creates a valid \code{method} vector. The
-#' \code{method} vector is an argument to the \code{mice} function that
+#' This helper function creates a valid `method` vector. The
+#' `method` vector is an argument to the `mice` function that
 #' specifies the method for each block.
 #' @inheritParams mice
-#' @return Vector of \code{length(blocks)} element with method names
-#' @seealso \code{\link{mice}}
+#' @return Vector of `length(blocks)` element with method names
+#' @seealso [mice()]
 #' @examples
 #' make.method(nhanes2)
 #' @export

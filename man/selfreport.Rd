@@ -17,7 +17,7 @@ A data frame with 2060 rows and 15 variables:
 \item{wm}{Weight measured (kg)}
 \item{hr}{Height reported (cm)}
 \item{wr}{Weight reported (kg)}
-\item{prg}{Pregnancy (factor), all \code{Not pregnant}}
+\item{prg}{Pregnancy (factor), all \verb{Not pregnant}}
 \item{edu}{Educational level (factor)}
 \item{etn}{Ethnicity (factor)}
 \item{web}{Obtained through web survey (factor)}

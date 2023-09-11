@@ -30,7 +30,7 @@ imputation model.
 \details{
 Infux and outflux have been proposed by Van Buuren (2018), chapter 4.
 
-Influx is equal to the number of variable pairs \code{(Yj , Yk)} with
+Influx is equal to the number of variable pairs \verb{(Yj , Yk)} with
 \code{Yj} missing and \code{Yk} observed, divided by the total number of
 observed data cells. Influx depends on the proportion of missing data of the
 variable. Influx of a completely observed variable is equal to 0, whereas for
@@ -61,7 +61,7 @@ compared with complete-case analysis for missing covariate values.
 \emph{Statistics in Medicine}, \emph{29}, 2920-2931.
 }
 \seealso{
-\code{\link{fluxplot}}, \code{\link{md.pattern}}, \code{\link{fico}}
+\code{\link[=fluxplot]{fluxplot()}}, \code{\link[=md.pattern]{md.pattern()}}, \code{\link[=fico]{fico()}}
 }
 \author{
 Stef van Buuren, 2012

@@ -51,6 +51,8 @@ reference:
   - construct.blocks
   - name.blocks
   - name.formulas
+  - p2f
+  - f2p
 - title: Plots comparing observed to imputed/amputed data
   desc: |
     These plots contrast the observed data with the imputed/amputed data, usually with a blue/red distinction.

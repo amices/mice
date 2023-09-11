@@ -3,9 +3,9 @@
 #' Calculates the number of cells within a block for which imputation
 #' is requested.
 #' @inheritParams mice
-#' @return  A numeric vector of length \code{length(blocks)} containing
+#' @return  A numeric vector of length `length(blocks)` containing
 #' the number of cells that need to be imputed within a block.
-#' @seealso \code{\link{mice}}
+#' @seealso [mice()]
 #' @export
 #' @examples
 #' where <- is.na(nhanes)

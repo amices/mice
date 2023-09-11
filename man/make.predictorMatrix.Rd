@@ -31,5 +31,5 @@ make.predictorMatrix(nhanes)
 make.predictorMatrix(nhanes, blocks = make.blocks(nhanes, "collect"))
 }
 \seealso{
-\code{\link{make.blocks}}
+\code{\link[=make.blocks]{make.blocks()}}
 }

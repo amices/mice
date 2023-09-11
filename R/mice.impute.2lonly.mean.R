@@ -1,43 +1,43 @@
 #' Imputation of most likely value within the class
 #'
-#' Method \code{2lonly.mean} replicates the most likely value within
+#' Method `2lonly.mean` replicates the most likely value within
 #' a class of a second-level variable. It works for numeric and
 #' factor data. The function is primarily useful as a quick fixup for
 #' data in which the second-level variable is inconsistent.
 #'
 #' @aliases 2lonly.mean
 #' @inheritParams mice.impute.pmm
-#' @param type Vector of length \code{ncol(x)} identifying random and class
-#' variables.  The class variable (only one is allowed) is coded as \code{-2}.
+#' @param type Vector of length `ncol(x)` identifying random and class
+#' variables.  The class variable (only one is allowed) is coded as `-2`.
 #' @param ... Other named arguments.
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @details
-#' Observed values in \code{y} are averaged within the class, and
-#' replicated to the missing \code{y} within that class.
+#' Observed values in `y` are averaged within the class, and
+#' replicated to the missing `y` within that class.
 #' This function is primarily useful for repairing incomplete data
 #' that are constant within the class, but vary over classes.
 #'
-#' For numeric variables, \code{mice.impute.2lonly.mean()} imputes the
-#' class mean of \code{y}. If \code{y} is a second-level variable, then
-#' conventionally all observed \code{y} will be identical within the
+#' For numeric variables, `mice.impute.2lonly.mean()` imputes the
+#' class mean of `y`. If `y` is a second-level variable, then
+#' conventionally all observed `y` will be identical within the
 #' class, and the function just provides a quick fix for any
-#' missing \code{y} by filling in the class mean.
+#' missing `y` by filling in the class mean.
 #'
-#' For factor variables, \code{mice.impute.2lonly.mean()} imputes the
+#' For factor variables, `mice.impute.2lonly.mean()` imputes the
 #' most frequently occuring category within the class.
 #'
-#' If there are no observed \code{y} in the class, all entries of the
-#' class are set to \code{NA}. Note that this may produce problems
-#' later on in \code{mice} if imputation routines are called that
+#' If there are no observed `y` in the class, all entries of the
+#' class are set to `NA`. Note that this may produce problems
+#' later on in `mice` if imputation routines are called that
 #' expects predictor data to be complete. Methods designed for
 #' imputing this type of second-level variables include
-#' \code{\link{mice.impute.2lonly.norm}} and
-#' \code{\link{mice.impute.2lonly.pmm}}.
+#' [mice.impute.2lonly.norm()] and
+#' [mice.impute.2lonly.pmm()].
 #'
 #' @references
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-level2pred.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-level2pred.html)
 #' Boca Raton, FL.: Chapman & Hall/CRC Press.
 #' @author Gerko Vink, Stef van Buuren, 2019
 #' @family univariate-2lonly

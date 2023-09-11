@@ -1,20 +1,20 @@
-#' Enlarge number of imputations by combining \code{mids} objects
+#' Enlarge number of imputations by combining `mids` objects
 #'
-#' This function combines two \code{mids} objects \code{x} and \code{y} into a
-#' single \code{mids} object, with the objective of increasing the number of
-#' imputed data sets. If the number of imputations in \code{x} and \code{y} are
-#' \code{m(x)} and \code{m(y)}, then the combined object will have
-#' \code{m(x)+m(y)} imputations.
+#' This function combines two `mids` objects `x` and `y` into a
+#' single `mids` object, with the objective of increasing the number of
+#' imputed data sets. If the number of imputations in `x` and `y` are
+#' `m(x)` and `m(y)`, then the combined object will have
+#' `m(x)+m(y)` imputations.
 #'
-#' The two \code{mids} objects are required to
+#' The two `mids` objects are required to
 #' have the same underlying multiple imputation model and should
 #' be fitted on the same data.
 #'
-#' @param x A \code{mids} object.
-#' @param y A \code{mids} object.
-#' @return An S3 object of class \code{mids}
+#' @param x A `mids` object.
+#' @param y A `mids` object.
+#' @return An S3 object of class `mids`
 #' @author Karin Groothuis-Oudshoorn, Stef van Buuren
-#' @seealso \code{\link[=mids-class]{mids}}
+#' @seealso [`mids()`][mids-class]
 #' @keywords manip
 #' @examples
 #' data(nhanes)

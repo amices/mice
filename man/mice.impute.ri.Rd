@@ -40,7 +40,7 @@ that iterates over the response and imputation models.
 This routine assumes that the response model and imputation model
 have same predictors.
 
-For an MNAR alternative see also \code{\link{mice.impute.mnar.logreg}}.
+For an MNAR alternative see also \code{\link[=mice.impute.mnar.logreg]{mice.impute.mnar.logreg()}}.
 }
 \references{
 Jolani, S. (2012).

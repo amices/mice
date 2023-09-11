@@ -16,7 +16,7 @@
 #' @name fdgs
 #' @aliases fdgs
 #' @docType data
-#' @format \code{fdgs} is a data frame with 10030 rows and 8 columns:
+#' @format `fdgs` is a data frame with 10030 rows and 8 columns:
 #' \describe{
 #' \item{id}{Person number}
 #' \item{reg}{Region (factor, 5 levels)}
@@ -30,16 +30,16 @@
 #' @source Schonbeck, Y., Talma, H., van Dommelen, P., Bakker, B., Buitendijk,
 #' S. E., Hirasing, R. A., van Buuren, S. (2011).  Increase in prevalence of
 #' overweight in Dutch children and adolescents: A comparison of nationwide
-#' growth studies in 1980, 1997 and 2009.  \emph{PLoS ONE}, \emph{6}(11),
+#' growth studies in 1980, 1997 and 2009.  *PLoS ONE*, *6*(11),
 #' e27608.
 #'
 #' Schonbeck, Y., Talma, H., van Dommelen, P., Bakker, B., Buitendijk, S. E.,
 #' Hirasing, R. A., van Buuren, S. (2013). The world's tallest nation has
 #' stopped growing taller: the height of Dutch children from 1955 to 2009.
-#' \emph{Pediatric Research}, \emph{73}(3), 371-377.
+#' *Pediatric Research*, *73*(3), 371-377.
 #'
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-nonresponse.html#fifth-dutch-growth-study}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-nonresponse.html#fifth-dutch-growth-study)
 #' Boca Raton, FL.: Chapman & Hall/CRC Press.
 #' @keywords datasets
 #' @examples

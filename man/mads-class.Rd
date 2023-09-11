@@ -62,7 +62,7 @@ pattern.}
 }
 
 \seealso{
-\code{\link{ampute}}, Vignette titled "Multivariate Amputation using
+\code{\link[=ampute]{ampute()}}, Vignette titled "Multivariate Amputation using
 Ampute".
 }
 \author{

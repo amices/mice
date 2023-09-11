@@ -6,14 +6,14 @@
 #' @inheritParams mice.impute.pmm
 #' @param nfolds The number of folds for the cross-validation of the lasso penalty.
 #' The default is 10.
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @details
 #' The method consists of the following steps:
 #' \enumerate{
 #' \item For a given y variable under imputation, draw a bootstrap version y*
-#' with replacement from the observed cases \code{y[ry]}, and stores in x* the
-#' corresponding values from \code{x[ry, ]}.
+#' with replacement from the observed cases `y[ry]`, and stores in x* the
+#' corresponding values from `x[ry, ]`.
 #' \item Fit a regularised (lasso) logistic regression with y* as the outcome,
 #' and x* as predictors.
 #' A vector of regression coefficients bhat is obtained.

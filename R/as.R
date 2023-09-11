@@ -1,31 +1,31 @@
-#' Converts an imputed dataset (long format) into a \code{mids} object
+#' Converts an imputed dataset (long format) into a `mids` object
 #'
 #' This function converts imputed data stored in long format into
-#' an object of class \code{mids}. The original incomplete dataset
+#' an object of class `mids`. The original incomplete dataset
 #' needs to be available so that we know where the missing data are.
 #' The function is useful to convert back operations applied to
-#' the imputed data back in a \code{mids} object. It may also be
+#' the imputed data back in a `mids` object. It may also be
 #' used to store multiply imputed data sets from other software
-#' into the format used by \code{mice}.
-#' @note The function expects the input data \code{long} to be sorted by
-#' imputation number (variable \code{".imp"} by default), and in the
+#' into the format used by `mice`.
+#' @note The function expects the input data `long` to be sorted by
+#' imputation number (variable `".imp"` by default), and in the
 #' same sequence within each imputation block.
 #' @param long A multiply imputed data set in long format, for example
-#' produced by a call to \code{complete(..., action = 'long', include = TRUE)},
+#' produced by a call to `complete(..., action = 'long', include = TRUE)`,
 #' or by other software.
-#' @param .imp An optional column number or column name in \code{long},
+#' @param .imp An optional column number or column name in `long`,
 #' indicating the imputation index. The values are assumed to be consecutive
-#' integers between 0 and \code{m}. Values \code{1} through \code{m}
-#' correspond to the imputation index, value \code{0} indicates
+#' integers between 0 and `m`. Values `1` through `m`
+#' correspond to the imputation index, value `0` indicates
 #' the original data (with missings).
-#' By default, the procedure will search for a variable named \code{".imp"}.
-#' @param .id An optional column number or column name in \code{long},
+#' By default, the procedure will search for a variable named `".imp"`.
+#' @param .id An optional column number or column name in `long`,
 #' indicating the subject identification. If not specified, then the
-#' function searches for a variable named \code{".id"}. If this variable
+#' function searches for a variable named `".id"`. If this variable
 #' is found, the values in the column will define the row names in
-#' the \code{data} element of the resulting \code{mids} object.
+#' the `data` element of the resulting `mids` object.
 #' @inheritParams mice
-#' @return An object of class \code{mids}
+#' @return An object of class `mids`
 #' @author Gerko Vink
 #' @examples
 #' # impute the nhanes dataset
@@ -134,14 +134,14 @@ as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id") {
   ini
 }
 
-#' Create a \code{mira} object from repeated analyses
+#' Create a `mira` object from repeated analyses
 #'
-#' The \code{as.mira()} function takes the results of repeated
+#' The `as.mira()` function takes the results of repeated
 #' complete-data analysis stored as a list, and turns it
-#' into a \code{mira} object that can be pooled.
+#' into a `mira` object that can be pooled.
 #' @param fitlist A list containing $m$ fitted analysis objects
-#' @return An S3 object of class \code{mira}.
-#' @seealso \code{\link[=mira-class]{mira}}
+#' @return An S3 object of class `mira`.
+#' @seealso [`mira()`][mira-class]
 #' @author Stef van Buuren
 #' @export
 as.mira <- function(fitlist) {
@@ -161,15 +161,15 @@ as.mira <- function(fitlist) {
   object
 }
 
-#' Converts into a \code{mitml.result} object
+#' Converts into a `mitml.result` object
 #'
-#' The \code{as.mitml.result()} function takes the results of repeated
+#' The `as.mitml.result()` function takes the results of repeated
 #' complete-data analysis stored as a list, and turns it
-#' into an object of class \code{mitml.result}.
-#' @param x An object of class \code{mira}
-#' @return An S3 object of class \code{mitml.result}, a list
+#' into an object of class `mitml.result`.
+#' @param x An object of class `mira`
+#' @return An S3 object of class `mitml.result`, a list
 #' containing $m$ fitted analysis objects.
-#' @seealso \code{\link[mitml]{with.mitml.list}}
+#' @seealso [mitml::with.mitml.list()]
 #' @author Stef van Buuren
 #' @export
 as.mitml.result <- function(x) {

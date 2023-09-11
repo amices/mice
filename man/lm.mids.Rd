@@ -9,12 +9,12 @@ lm.mids(formula, data, ...)
 \arguments{
 \item{formula}{a formula object, with the response on the left of a ~
 operator, and the terms, separated by + operators, on the right. See the
-documentation of \code{\link{lm}} and \code{\link{formula}} for details.}
+documentation of \code{\link[=lm]{lm()}} and \code{\link[=formula]{formula()}} for details.}
 
 \item{data}{An object of type 'mids', which stands for 'multiply imputed data
 set', typically created by a call to function \code{mice()}.}
 
-\item{\dots}{Additional parameters passed to \code{\link{lm}}}
+\item{\dots}{Additional parameters passed to \code{\link[=lm]{lm()}}}
 }
 \value{
 An objects of class \code{mira}, which stands for 'multiply imputed
@@ -26,7 +26,7 @@ Applies \code{lm()} to multiply imputed data set
 }
 \details{
 This function is included for backward compatibility with V1.0. The function
-is superseded by \code{\link{with.mids}}.
+is superseded by \code{\link[=with.mids]{with.mids()}}.
 }
 \examples{
 imp <- mice(nhanes)
@@ -36,11 +36,11 @@ fit
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
+Statistical Software}, \strong{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link{lm}}, \code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}
+\code{\link[=lm]{lm()}}, \code{\link[=mids-class]{mids()}}, \code{\link[=mira-class]{mira()}}
 }
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn, 2000

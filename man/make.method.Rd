@@ -58,5 +58,5 @@ specifies the method for each block.
 make.method(nhanes2)
 }
 \seealso{
-\code{\link{mice}}
+\code{\link[=mice]{mice()}}
 }

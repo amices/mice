@@ -38,5 +38,5 @@ f3 <- name.formulas(lapply(c1, as.formula))
 f3
 }
 \seealso{
-\code{\link{make.blocks}}, \code{\link{make.predictorMatrix}}
+\code{\link[=make.blocks]{make.blocks()}}, \code{\link[=make.predictorMatrix]{make.predictorMatrix()}}
 }

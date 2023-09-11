@@ -1,15 +1,15 @@
-#' Creates a \code{formulas} argument
+#' Creates a `formulas` argument
 #'
-#' This helper function creates a valid \code{formulas} object. The
-#' \code{formulas} object is an argument to the \code{mice} function.
+#' This helper function creates a valid `formulas` object. The
+#' `formulas` object is an argument to the `mice` function.
 #' It is a list of formula's that specifies the target variables and
-#' the predictors by means of the standard \code{~} operator.
-#' @param data A \code{data.frame} with the source data
+#' the predictors by means of the standard `~` operator.
+#' @param data A `data.frame` with the source data
 #' @param blocks An optional specification for blocks of variables in
 #' the rows. The default assigns each variable in its own block.
-#' @param predictorMatrix A \code{predictorMatrix} specified by the user.
+#' @param predictorMatrix A `predictorMatrix` specified by the user.
 #' @return A list of formula's.
-#' @seealso \code{\link{make.blocks}}, \code{\link{make.predictorMatrix}}
+#' @seealso [make.blocks()], [make.predictorMatrix()]
 #' @examples
 #' f1 <- make.formulas(nhanes)
 #' f1
@@ -54,19 +54,19 @@ make.formulas <- function(data, blocks = make.blocks(data),
 
 #' Name formula list elements
 #'
-#' This helper function names any unnamed elements in the \code{formula}
+#' This helper function names any unnamed elements in the `formula`
 #' list. This is a convenience function.
 #' @inheritParams mice
 #' @param prefix A character vector of length 1 with the prefix to
 #' be using for naming any unnamed blocks with two or more variables.
 #' @return Named list of formulas
-#' @seealso \code{\link{mice}}
+#' @seealso [mice()]
 #' @details
 #' This function will name any unnamed list elements specified in
-#' the optional argument \code{formula}. Unnamed formula's
+#' the optional argument `formula`. Unnamed formula's
 #' consisting with just one response variable will be named
 #' after this variable. Unnamed formula's containing more
-#' than one variable will be named by the \code{prefix}
+#' than one variable will be named by the `prefix`
 #' argument, padded by an integer sequence stating at 1.
 #' @examples
 #' # fully conditionally specified main effects model
@@ -142,8 +142,8 @@ check.formulas <- function(formulas, data) {
 #' @inheritParams mice
 #' @return A list of formula's
 #' @param auxiliary A logical that indicates whether the variables
-#' listed in \code{predictors} should be added to the formula as main
-#' effects. The default is \code{TRUE}.
+#' listed in `predictors` should be added to the formula as main
+#' effects. The default is `TRUE`.
 #' @param include.intercept A logical that indicated whether the intercept
 #' should be included in the result.
 #' @keywords internal
@@ -172,11 +172,11 @@ extend.formulas <- function(formulas, data, blocks, predictorMatrix = NULL,
 #' Extends a formula with predictors
 #'
 #' @param formula A formula. If it is
-#' not a formula, the formula is internally reset to \code{~0}.
+#' not a formula, the formula is internally reset to `~0`.
 #' @param predictors A character vector of variable names.
 #' @param auxiliary A logical that indicates whether the variables
-#' listed in \code{predictors} should be added to the formula as main
-#' effects. The default is \code{TRUE}.
+#' listed in `predictors` should be added to the formula as main
+#' effects. The default is `TRUE`.
 #' @param include.intercept A logical that indicated whether the intercept
 #' should be included in the result.
 #' @return A formula

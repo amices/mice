@@ -149,8 +149,8 @@ imputation.}
 functions.}
 }
 \value{
-Returns an S3 object of class \code{\link[=mids-class]{mids}}
-       (multiply imputed data set)
+Returns an S3 object of class \code{\link[=mids-class]{mids()}}
+(multiply imputed data set)
 }
 \description{
 The \pkg{mice} package implements a method to deal with missing data.
@@ -223,13 +223,13 @@ Built-in univariate imputation methods are:
 \code{polr}              \tab ordered \tab Proportional odds model\cr
 \code{polyreg}           \tab unordered\tab Polytomous logistic regression\cr
 \code{lda}               \tab unordered\tab Linear discriminant analysis\cr
-\code{2l.norm}           \tab numeric  \tab Level-1 normal heteroscedastic\cr
-\code{2l.lmer}           \tab numeric  \tab Level-1 normal homoscedastic, lmer\cr
-\code{2l.pan}            \tab numeric  \tab Level-1 normal homoscedastic, pan\cr
-\code{2l.bin}            \tab binary   \tab Level-1 logistic, glmer\cr
-\code{2lonly.mean}       \tab numeric  \tab Level-2 class mean\cr
-\code{2lonly.norm}       \tab numeric  \tab Level-2 class normal\cr
-\code{2lonly.pmm}        \tab any      \tab Level-2 class predictive mean matching
+\verb{2l.norm}           \tab numeric  \tab Level-1 normal heteroscedastic\cr
+\verb{2l.lmer}           \tab numeric  \tab Level-1 normal homoscedastic, lmer\cr
+\verb{2l.pan}            \tab numeric  \tab Level-1 normal homoscedastic, pan\cr
+\verb{2l.bin}            \tab binary   \tab Level-1 logistic, glmer\cr
+\verb{2lonly.mean}       \tab numeric  \tab Level-2 class mean\cr
+\verb{2lonly.norm}       \tab numeric  \tab Level-2 class normal\cr
+\verb{2lonly.pmm}        \tab any      \tab Level-2 class predictive mean matching
 }
 
 These corresponding functions are coded in the \code{mice} library under
@@ -266,8 +266,7 @@ Passive imputation maintains consistency among different transformations of
 the same data. Passive imputation is invoked if \code{~} is specified as the
 first character of the string that specifies the univariate method.
 \code{mice()} interprets the entire string, including the \code{~} character,
-as the formula argument in a call to \code{model.frame(formula,
-data[!r[,j],])}. This provides a simple mechanism for specifying deterministic
+as the formula argument in a call to \code{model.frame(formula, data[!r[,j],])}. This provides a simple mechanism for specifying deterministic
 dependencies among the columns. For example, suppose that the missing entries
 in variables \code{data$height} and \code{data$weight} are imputed. The body
 mass index (BMI) can be calculated within \code{mice} by specifying the
@@ -279,8 +278,7 @@ column make sense. An easy way to create consistency is by coding all entries
 in the target as \code{NA}, but for large data sets, this could be
 inefficient.  Note that you may also need to adapt the default
 \code{predictorMatrix} to evade linear dependencies among the predictors that
-could cause errors like \code{Error in solve.default()} or \code{Error:
-system is exactly singular}. Though not strictly needed, it is often useful
+could cause errors like \verb{Error in solve.default()} or \verb{Error: system is exactly singular}. Though not strictly needed, it is often useful
 to specify \code{visitSequence} such that the column that is imputed by the
 \code{~} mechanism is visited each time after one of its predictors was
 visited. In that way, deterministic relation between columns will always be
@@ -293,7 +291,7 @@ takes one of three inputs: \code{"qr"} for QR-decomposition, \code{"svd"} for
 singular value decomposition and \code{"ridge"} for ridge regression.
 \code{ls.meth} defaults to \code{ls.meth = "qr"}.
 
-\emph{Auxiliary predictors in formulas specification: }
+*Auxiliary predictors in formulas specification: *
 For a given block, the \code{formulas} specification takes precedence over
 the corresponding row in the \code{predictMatrix} argument. This
 precedence is, however, restricted to the subset of variables
@@ -311,11 +309,11 @@ argument \code{auxiliary = FALSE}.
 
 The main functions are:
 \tabular{ll}{
-  \code{mice()} \tab Impute the missing data *m* times\cr
-  \code{with()} \tab Analyze completed data sets\cr
-  \code{pool()} \tab Combine parameter estimates\cr
-  \code{complete()} \tab Export imputed data\cr
-  \code{ampute()} \tab Generate missing data\cr}
+\code{mice()} \tab Impute the missing data \emph{m} times\cr
+\code{with()} \tab Analyze completed data sets\cr
+\code{pool()} \tab Combine parameter estimates\cr
+\code{complete()} \tab Export imputed data\cr
+\code{ampute()} \tab Generate missing data\cr}
 }
 
 \section{Vignettes}{
@@ -400,15 +398,15 @@ complete(imp.test2, 2)
 \references{
 van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple
 imputation of missing blood pressure covariates in survival analysis.
-\emph{Statistics in Medicine}, \bold{18}, 681--694.
+\emph{Statistics in Medicine}, \strong{18}, 681--694.
 
 van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
 Fully conditional specification in multivariate imputation.  \emph{Journal of
-Statistical Computation and Simulation}, \bold{76}, 12, 1049--1064.
+Statistical Computation and Simulation}, \strong{76}, 12, 1049--1064.
 
 van Buuren, S., Groothuis-Oudshoorn, K. (2011). {\code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1--67. \doi{10.18637/jss.v045.i03}
+Statistical Software}, \strong{45}(3), 1--67. \doi{10.18637/jss.v045.i03}
 
 Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
@@ -416,7 +414,7 @@ Chapman & Hall/CRC. Boca Raton, FL.
 
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
+Statistical Software}, \strong{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 
 Van Buuren, S. (2018).
@@ -425,26 +423,26 @@ Chapman & Hall/CRC. Boca Raton, FL.
 
 Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
 Fully conditional specification in multivariate imputation.  \emph{Journal of
-Statistical Computation and Simulation}, \bold{76}, 12, 1049--1064.
+Statistical Computation and Simulation}, \strong{76}, 12, 1049--1064.
 
 Van Buuren, S. (2007) Multiple imputation of discrete and continuous data by
 fully conditional specification.  \emph{Statistical Methods in Medical
-Research}, \bold{16}, 3, 219--242.
+Research}, \strong{16}, 3, 219--242.
 
 Van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple imputation of
 missing blood pressure covariates in survival analysis.  \emph{Statistics in
-Medicine}, \bold{18}, 681--694.
+Medicine}, \strong{18}, 681--694.
 
 Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
 multiple imputation strategies for the statistical analysis of incomplete
 data sets.} Dissertation. Rotterdam: Erasmus University.
 }
 \seealso{
-\code{\link{mice}}, \code{\link{with.mids}},
-\code{\link{pool}}, \code{\link{complete}}, \code{\link{ampute}}
+\code{\link[=mice]{mice()}}, \code{\link[=with.mids]{with.mids()}},
+\code{\link[=pool]{pool()}}, \code{\link[=complete]{complete()}}, \code{\link[=ampute]{ampute()}}
 
-\code{\link[=mids-class]{mids}}, \code{\link{with.mids}},
-\code{\link{set.seed}}, \code{\link{complete}}
+\code{\link[=mids-class]{mids()}}, \code{\link[=with.mids]{with.mids()}},
+\code{\link[=set.seed]{set.seed()}}, \code{\link[=complete]{complete()}}
 }
 \author{
 Stef van Buuren \email{stef.vanbuuren@tno.nl}, Karin

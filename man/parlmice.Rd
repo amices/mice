@@ -17,7 +17,7 @@ parlmice(
 }
 \arguments{
 \item{data}{A data frame or matrix containing the incomplete data. Similar to
-the first argument of \code{\link{mice}}.}
+the first argument of \code{\link[=mice]{mice()}}.}
 
 \item{m}{The number of desired imputated datasets. By default $m=5$ as with \code{mice}}
 
@@ -37,18 +37,18 @@ will be performed with separate, random seeds.}
 \item{cl.type}{The cluster type. Default value is \code{"PSOCK"}. Posix machines (linux, Mac)
 generally benefit from much faster cluster computation if \code{type} is set to \code{type = "FORK"}.}
 
-\item{...}{Named arguments that are passed down to function \code{\link{mice}} or
-\code{\link{makeCluster}}.}
+\item{...}{Named arguments that are passed down to function \code{\link[=mice]{mice()}} or
+\code{\link[=makeCluster]{makeCluster()}}.}
 }
 \value{
-A mids object as defined by \code{\link{mids-class}}
+A mids object as defined by \code{\link[=mids-class]{mids-class()}}
 }
 \description{
 This function is included for backward compatibility. The function
-is superseded by \code{\link{futuremice}}.
+is superseded by \code{\link[=futuremice]{futuremice()}}.
 }
 \details{
-This function relies on package \code{\link{parallel}}, which is a base
+This function relies on package \code{\link[=parallel]{parallel()}}, which is a base
 package for R versions 2.14.0 and later. We have chosen to use parallel function
 \code{parLapply} to allow the use of \code{parlmice} on Mac, Linux and Windows
 systems. For the same reason, we use the Parallel Socket Cluster (PSOCK) type by default.
@@ -56,17 +56,17 @@ systems. For the same reason, we use the Parallel Socket Cluster (PSOCK) type by
 On systems other than Windows, it can be hugely beneficial to change the cluster type to
 \code{FORK}, as it generally results in improved memory handling. When memory issues
 arise on a Windows system, we advise to store the multiply imputed datasets,
-clean the memory by using \code{\link{rm}} and \code{\link{gc}} and make another
+clean the memory by using \code{\link[=rm]{rm()}} and \code{\link[=gc]{gc()}} and make another
 run using the same settings.
 
-This wrapper function combines the output of \code{\link{parLapply}} with
-function \code{\link{ibind}} in \code{\link{mice}}. A \code{mids} object is returned
+This wrapper function combines the output of \code{\link[=parLapply]{parLapply()}} with
+function \code{\link[=ibind]{ibind()}} in \code{\link[=mice]{mice()}}. A \code{mids} object is returned
 and can be used for further analyses.
 
 Note that if a seed value is desired, the seed should be entered to this function
 with argument \code{seed}. Seed values outside the wrapper function (in an
-R-script or passed to \code{\link{mice}}) will not result to reproducible results.
-We refer to the manual of \code{\link{parallel}} for an explanation on this matter.
+R-script or passed to \code{\link[=mice]{mice()}}) will not result to reproducible results.
+We refer to the manual of \code{\link[=parallel]{parallel()}} for an explanation on this matter.
 }
 \examples{
 # 150 imputations in dataset nhanes, performed by 3 cores
@@ -89,8 +89,8 @@ Schouten, R. and Vink, G. (2017). parlmice: faster, paraleller, micer.
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
-\code{\link{parallel}}, \code{\link{parLapply}}, \code{\link{makeCluster}},
-\code{\link{mice}}, \code{\link{mids-class}}
+\code{\link[=parallel]{parallel()}}, \code{\link[=parLapply]{parLapply()}}, \code{\link[=makeCluster]{makeCluster()}},
+\code{\link[=mice]{mice()}}, \code{\link[=mids-class]{mids-class()}}
 }
 \author{
 Gerko Vink, Rianne Schouten

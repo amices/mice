@@ -3,29 +3,29 @@
 #' Dataset containing height and weight data (measured, self-reported) from two
 #' studies.
 #'
-#' This dataset combines two datasets: \code{krul} data (Krul, 2010) (1257
-#' persons) and the \code{mgg} data (Van Keulen 2011; Van der Klauw 2011) (803
-#' persons). The \code{krul} dataset contains height and weight (both measures
-#' and self-reported) from 1257 Dutch adults, whereas the \code{mgg} dataset
+#' This dataset combines two datasets: `krul` data (Krul, 2010) (1257
+#' persons) and the `mgg` data (Van Keulen 2011; Van der Klauw 2011) (803
+#' persons). The `krul` dataset contains height and weight (both measures
+#' and self-reported) from 1257 Dutch adults, whereas the `mgg` dataset
 #' contains self-reported height and weight for 803 Dutch adults. Section 7.3 in
 #' Van Buuren (2012) shows how the missing measured data can be imputed in the
-#' \code{mgg} data, so corrected prevalence estimates can be calculated.
+#' `mgg` data, so corrected prevalence estimates can be calculated.
 #'
 #' @name selfreport
 #' @aliases selfreport mgg
 #' @docType data
 #' @format A data frame with 2060 rows and 15 variables:
 #' \describe{
-#' \item{src}{Study, either \code{krul} or \code{mgg} (factor)}
+#' \item{src}{Study, either `krul` or `mgg` (factor)}
 #' \item{id}{Person identification number}
-#' \item{pop}{Population, all \code{NL} (factor)}
+#' \item{pop}{Population, all `NL` (factor)}
 #' \item{age}{Age of respondent in years}
 #' \item{sex}{Sex of respondent (factor)}
 #' \item{hm}{Height measured (cm)}
 #' \item{wm}{Weight measured (kg)}
 #' \item{hr}{Height reported (cm)}
 #' \item{wr}{Weight reported (kg)}
-#' \item{prg}{Pregnancy (factor), all \code{Not pregnant}}
+#' \item{prg}{Pregnancy (factor), all `Not pregnant`}
 #' \item{edu}{Educational level (factor)}
 #' \item{etn}{Ethnicity (factor)}
 #' \item{web}{Obtained through web survey (factor)}
@@ -34,21 +34,21 @@
 #' }
 #' @source Krul, A., Daanen, H. A. M., Choi, H. (2010). Self-reported and
 #' measured weight, height and body mass index (BMI) in Italy, The Netherlands
-#' and North America. \emph{European Journal of Public Health}, \emph{21}(4),
+#' and North America. *European Journal of Public Health*, *21*(4),
 #' 414-419.
 #'
-#' Van Keulen, H.M.,, Chorus, A.M.J., Verheijden, M.W. (2011).  \emph{Monitor
+#' Van Keulen, H.M.,, Chorus, A.M.J., Verheijden, M.W. (2011).  *Monitor
 #' Convenant Gezond Gewicht Nulmeting (determinanten van) beweeg- en eetgedrag
-#' van kinderen (4-11 jaar), jongeren (12-17 jaar) en volwassenen (18+ jaar)}.
+#' van kinderen (4-11 jaar), jongeren (12-17 jaar) en volwassenen (18+ jaar)*.
 #' TNO/LS 2011.016. Leiden: TNO.
 #'
-#' Van der Klauw, M., Van Keulen, H.M., Verheijden, M.W. (2011).  \emph{Monitor
+#' Van der Klauw, M., Van Keulen, H.M., Verheijden, M.W. (2011).  *Monitor
 #' Convenant Gezond Gewicht Beweeg- en eetgedrag van kinderen (4-11 jaar),
-#' jongeren (12-17 jaar) en volwassenen (18+ jaar) in 2010 en 2011.} TNO/LS
+#' jongeren (12-17 jaar) en volwassenen (18+ jaar) in 2010 en 2011.* TNO/LS
 #' 2011.055. Leiden: TNO. (in Dutch)
 #'
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-prevalence.html#sec:srcdata}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-prevalence.html#sec:srcdata)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @keywords datasets
 #' @examples

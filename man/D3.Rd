@@ -68,5 +68,5 @@ Performing Likelihood Ratio Tests with Multiply-Imputed Data Sets.
 \url{http://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#setting-residual-variances-to-a-fixed-value-zero-or-other}
 }
 \seealso{
-\code{\link{fix.coef}}
+\code{\link[=fix.coef]{fix.coef()}}
 }

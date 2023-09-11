@@ -51,7 +51,7 @@ The \code{summary} method returns a data frame with summary statistics of the po
 }
 \description{
 The \code{mipo} object contains the results of the pooling step.
-The function \code{\link{pool}} generates an object of class \code{mipo}.
+The function \code{\link[=pool]{pool()}} generates an object of class \code{mipo}.
 }
 \details{
 An object class \code{mipo} is a \code{list} with
@@ -82,12 +82,12 @@ It adds a confidence interval, and optionally exponentiates, the result.
 \references{
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
+Statistical Software}, \strong{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link{pool}},
-\code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}
+\code{\link[=pool]{pool()}},
+\code{\link[=mids-class]{mids()}}, \code{\link[=mira-class]{mira()}}
 }
 \keyword{classes}
 \keyword{internal}

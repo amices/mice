@@ -36,7 +36,7 @@ identifier at level 2 must be indicated by \code{type = -2} in the
 \code{predictorMatrix}.
 }
 \details{
-This function allows in combination with \code{\link{mice.impute.2l.pan}}
+This function allows in combination with \code{\link[=mice.impute.2l.pan]{mice.impute.2l.pan()}}
 switching regression imputation between level 1 and level 2 as described in
 Yucel (2008) or Gelman and Hill (2007, p. 541).
 
@@ -45,7 +45,7 @@ are assumed to be constant within the same cluster. If one or more
 entries are missing, then the procedure aborts with an error
 message that identifies the cluster with incomplete level-2 data.
 In such cases, one may first fill in the cluster mean (or mode) by
-the \code{2lonly.mean} method to remove inconsistencies.
+the \verb{2lonly.mean} method to remove inconsistencies.
 }
 \note{
 For a more general approach, see
@@ -138,16 +138,16 @@ University Press.
 
 Yucel, RM (2008). Multiple imputation inference for multivariate multilevel
 continuous data with ignorable non-response.  \emph{Philosophical
-Transactions of the Royal Society A}, \bold{366}, 2389-2404.
+Transactions of the Royal Society A}, \strong{366}, 2389-2404.
 
 Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-level2pred.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
-\code{\link{mice.impute.norm}},
-\code{\link{mice.impute.2lonly.pmm}}, \code{\link{mice.impute.2l.pan}},
-\code{\link{mice.impute.2lonly.mean}}
+\code{\link[=mice.impute.norm]{mice.impute.norm()}},
+\code{\link[=mice.impute.2lonly.pmm]{mice.impute.2lonly.pmm()}}, \code{\link[=mice.impute.2l.pan]{mice.impute.2l.pan()}},
+\code{\link[=mice.impute.2lonly.mean]{mice.impute.2lonly.mean()}}
 
 Other univariate-2lonly: 
 \code{\link{mice.impute.2lonly.mean}()},

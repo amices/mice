@@ -11,10 +11,10 @@ md.pattern(x, plot = TRUE, rotate.names = FALSE)
 values are coded as NA's.}
 
 \item{plot}{Should the missing data pattern be made into a plot. Default is
-`plot = TRUE`.}
+\code{plot = TRUE}.}
 
 \item{rotate.names}{Whether the variable names in the plot should be placed
-horizontally or vertically. Default is `rotate.names = FALSE`.}
+horizontally or vertically. Default is \code{rotate.names = FALSE}.}
 }
 \value{
 A matrix with \code{ncol(x)+1} columns, in which each row corresponds
@@ -48,7 +48,7 @@ London: Chapman&Hall.
 
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \author{
 Gerko Vink, 2018, based on an earlier version of the same function by

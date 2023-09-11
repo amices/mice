@@ -13,7 +13,7 @@
 #' pattern} \item{list("pattern3")}{Data with a file matching missing data
 #' pattern} \item{list("pattern4")}{Data with a general missing data pattern} }
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/missing-data-pattern.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/missing-data-pattern.html)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @keywords datasets
 #' @examples

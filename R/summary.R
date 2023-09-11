@@ -1,17 +1,17 @@
-#' Summary of a \code{mira} object
+#' Summary of a `mira` object
 #'
 #' @rdname summary
-#' @param object A \code{mira} object
+#' @param object A `mira` object
 #' @param type A length-1 character vector indicating the
-#' type of summary. There are three choices: \code{type = "tidy"}
+#' type of summary. There are three choices: `type = "tidy"`
 #' return the parameters estimates of each analyses as a data frame.
-#' \code{type = "glance"} return the fit statistics of each analysis
-#' as a data frame. \code{type = "summary"} returns a list of
-#' length \code{m} with the analysis results. The default is
-#' \code{"tidy"}.
-#' @param ... Other parameters passed down to \code{print()} and \code{summary()}
-#' @return \code{NULL}
-#' @seealso \code{\link[=mira-class]{mira}}
+#' `type = "glance"` return the fit statistics of each analysis
+#' as a data frame. `type = "summary"` returns a list of
+#' length `m` with the analysis results. The default is
+#' `"tidy"`.
+#' @param ... Other parameters passed down to `print()` and `summary()`
+#' @return `NULL`
+#' @seealso [`mira()`][mira-class]
 #' @method summary mira
 #' @export
 summary.mira <- function(object,
@@ -44,11 +44,11 @@ summary.mira <- function(object,
 }
 
 
-#' Summary of a \code{mids} object
+#' Summary of a `mids` object
 #'
 #' @rdname summary
-#' @return \code{NULL}
-#' @seealso \code{\link[=mids-class]{mids}}
+#' @return `NULL`
+#' @seealso [`mids()`][mids-class]
 #' @method summary mids
 #' @export
 summary.mids <- function(object, ...) {
@@ -57,11 +57,11 @@ summary.mids <- function(object, ...) {
 }
 
 
-#' Summary of a \code{mads} object
+#' Summary of a `mads` object
 #'
 #' @rdname summary
-#' @return \code{NULL}
-#' @seealso \code{\link[=mads-class]{mads}}
+#' @return `NULL`
+#' @seealso [`mads()`][mads-class]
 #' @export
 summary.mads <- function(object, ...) {
   print(object, ...)
@@ -69,11 +69,11 @@ summary.mads <- function(object, ...) {
 }
 
 
-#' Print a \code{mice.anova} object
+#' Print a `mice.anova` object
 #'
 #' @rdname summary
-#' @return \code{NULL}
-#' @seealso \code{\link{mipo}}
+#' @return `NULL`
+#' @seealso [mipo()]
 #' @method summary mice.anova
 #' @export
 summary.mice.anova <- function(object, ...) {

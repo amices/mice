@@ -26,13 +26,13 @@ If omitted, all streams, variables and iterations are plotted.}
 \item{layout}{A vector of length 2 given the number of columns and rows in the plot.
 The default is \code{c(2, 3)}.}
 
-\item{type}{Parameter \code{type} of \code{\link{panel.xyplot}}.}
+\item{type}{Parameter \code{type} of \code{\link[=panel.xyplot]{panel.xyplot()}}.}
 
-\item{col}{Parameter \code{col} of \code{\link{panel.xyplot}}.}
+\item{col}{Parameter \code{col} of \code{\link[=panel.xyplot]{panel.xyplot()}}.}
 
-\item{lty}{Parameter \code{lty} of \code{\link{panel.xyplot}}.}
+\item{lty}{Parameter \code{lty} of \code{\link[=panel.xyplot]{panel.xyplot()}}.}
 
-\item{...}{Extra arguments for \code{\link{xyplot}}.}
+\item{...}{Extra arguments for \code{\link[=xyplot]{xyplot()}}.}
 }
 \value{
 An object of class \code{"trellis"}.
@@ -51,8 +51,8 @@ imp <- mice(nhanes, print = FALSE)
 plot(imp, bmi + chl ~ .it | .ms, layout = c(2, 1))
 }
 \seealso{
-\code{\link{mice}}, \code{\link[=mids-class]{mids}},
-\code{\link{xyplot}}
+\code{\link[=mice]{mice()}}, \code{\link[=mids-class]{mids()}},
+\code{\link[=xyplot]{xyplot()}}
 }
 \author{
 Stef van Buuren 2011

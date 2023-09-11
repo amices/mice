@@ -22,5 +22,5 @@ specifies post-processing for a variable after each iteration of imputation.
 make.post(nhanes2)
 }
 \seealso{
-\code{\link{mice}}
+\code{\link[=mice]{mice()}}
 }

@@ -39,7 +39,7 @@ This function can be called from within the Gibbs sampler by specifying
 \code{"lda"} in the \code{method} argument of \code{mice()}. This method is usually
 faster and uses fewer resources than calling the function, but the statistical
 properties may not be as good (Brand, 1999).
-\code{\link{mice.impute.polyreg}}.
+\code{\link[=mice.impute.polyreg]{mice.impute.polyreg()}}.
 }
 \section{Warning}{
  The function does not incorporate the variability of the
@@ -54,7 +54,7 @@ bootstrapping may easily lead to constant variables within groups.
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
+Statistical Software}, \strong{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 
 Brand, J.P.L. (1999). Development, Implementation and Evaluation of Multiple
@@ -66,8 +66,7 @@ Venables, W.N. & Ripley, B.D. (1997). Modern applied statistics with S-PLUS
 (2nd ed). Springer, Berlin.
 }
 \seealso{
-\code{\link{mice}}, \code{link{mice.impute.polyreg}},
-\code{\link[MASS]{lda}}
+\code{\link[=mice]{mice()}}, \code{\link[=mice.impute.polyreg]{mice.impute.polyreg()}}, \code{\link[MASS:lda]{MASS::lda()}}
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},

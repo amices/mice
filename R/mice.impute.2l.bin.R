@@ -1,7 +1,7 @@
-#' Imputation by a two-level logistic model using \code{glmer}
+#' Imputation by a two-level logistic model using `glmer`
 #'
 #' Imputes univariate systematically and sporadically missing data
-#' using a two-level logistic model using \code{lme4::glmer()}
+#' using a two-level logistic model using `lme4::glmer()`
 #'
 #' Data are missing systematically if they have not been measured, e.g., in the
 #' case where we combine data from different sources. Data are missing sporadically
@@ -10,15 +10,15 @@
 #' @inheritParams mice.impute.2l.lmer
 #' @param intercept Logical determining whether the intercept is automatically
 #' added.
-#' @param \dots Arguments passed down to \code{glmer}
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @param \dots Arguments passed down to `glmer`
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @author Shahab Jolani, 2015; adapted to mice, SvB, 2018
 #' @references
 #' Jolani S., Debray T.P.A., Koffijberg H., van Buuren S., Moons K.G.M. (2015).
 #' Imputation of systematically missing predictors in an individual
 #' participant data meta-analysis: a generalized approach using MICE.
-#' \emph{Statistics in Medicine}, 34:1841-1863.
+#' *Statistics in Medicine*, 34:1841-1863.
 #' @family univariate-2l
 #' @keywords datagen
 #' @examples

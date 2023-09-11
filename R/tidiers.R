@@ -8,7 +8,7 @@ generics::glance
 
 #' Tidy method to extract results from a `mipo` object
 #'
-#' @param x An object of class \code{mipo}
+#' @param x An object of class `mipo`
 #' @param conf.int Logical. Should confidence intervals be returned?
 #' @param conf.level Confidence level for intervals. Defaults to .95
 #' @param ... extra arguments (not used)

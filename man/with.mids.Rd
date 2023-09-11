@@ -16,7 +16,7 @@ containing a dot (notation for "all other variables") do not work.}
 \item{\dots}{Not used}
 }
 \value{
-An object of S3 class \code{\link[=mira-class]{mira}}
+An object of S3 class \code{\link[=mira-class]{mira()}}
 }
 \description{
 Performs a computation of each of imputed datasets in data.
@@ -41,12 +41,12 @@ fit3 <- with(imp, anova(lm(bmi ~ age + chl)))
 \references{
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
+Statistical Software}, \strong{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}, \code{\link{pool}},
-\code{\link{D1}}, \code{\link{D3}}, \code{\link{pool.r.squared}}
+\code{\link[=mids-class]{mids()}}, \code{\link[=mira-class]{mira()}}, \code{\link[=pool]{pool()}},
+\code{\link[=D1]{D1()}}, \code{\link[=D3]{D3()}}, \code{\link[=pool.r.squared]{pool.r.squared()}}
 }
 \author{
 Karin Oudshoorn, Stef van Buuren 2009, 2012, 2020

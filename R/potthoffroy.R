@@ -17,7 +17,7 @@
 #'
 #' @name potthoffroy
 #' @docType data
-#' @format \code{tbs} is a data frame with 27 rows and 6 columns:
+#' @format `tbs` is a data frame with 27 rows and 6 columns:
 #' \describe{
 #' \item{id}{Person number}
 #' \item{sex}{Sex M/F}
@@ -28,13 +28,13 @@
 #' }
 #' @source Potthoff, R. F., Roy, S. N. (1964).  A generalized multivariate
 #' analysis of variance model usefully especially for growth curve problems.
-#' \emph{Biometrika}, \emph{51}(3), 313-326.
+#' *Biometrika*, *51*(3), 313-326.
 #'
-#' Little, R. J. A., Rubin, D. B. (1987).  \emph{Statistical Analysis with
-#' Missing Data.} New York: John Wiley & Sons.
+#' Little, R. J. A., Rubin, D. B. (1987).  *Statistical Analysis with
+#' Missing Data.* New York: John Wiley & Sons.
 #'
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/ex-ch-longitudinal.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/ex-ch-longitudinal.html)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @keywords datasets
 #' @examples

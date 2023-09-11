@@ -1,33 +1,33 @@
-#' Computes convergence diagnostics for a \code{mids} object
+#' Computes convergence diagnostics for a `mids` object
 #'
-#' Takes an object of class \code{mids}, computes the autocorrelation
-#' and/or potential scale reduction factor, and returns a \code{data.frame}
+#' Takes an object of class `mids`, computes the autocorrelation
+#' and/or potential scale reduction factor, and returns a `data.frame`
 #' with the specified diagnostic(s) per iteration.
 #'
-#' @param data An object of class \code{mids} as created by the function
-#' \code{mice()}.
-#' @param diagnostic A keyword. One of the following keywords: \code{"ac"},
-#' \code{"all"}, \code{"gr"} and \code{"psrf"}. See the Details section
+#' @param data An object of class `mids` as created by the function
+#' `mice()`.
+#' @param diagnostic A keyword. One of the following keywords: `"ac"`,
+#' `"all"`, `"gr"` and `"psrf"`. See the Details section
 #' for the interpretation.
-#' The default is \code{diagnostic = "all"} which returns both the
+#' The default is `diagnostic = "all"` which returns both the
 #' autocorrelation and potential scale reduction factor per iteration.
-#' @param parameter A keyword. One of the following keywords: \code{"mean"}
-#' or \code{"sd"} to evaluate chain means or chain standard deviations,
+#' @param parameter A keyword. One of the following keywords: `"mean"`
+#' or `"sd"` to evaluate chain means or chain standard deviations,
 #' respectively.
 #' @param \dots Additional arguments. Not used.
-#' @return A \code{data.frame} with the autocorrelation and/or potential
+#' @return A `data.frame` with the autocorrelation and/or potential
 #' scale reduction factor per iteration of the MICE algorithm.
 #' @details
-#' The argument \code{diagnostic} can be length-1 character, which is
+#' The argument `diagnostic` can be length-1 character, which is
 #' matched to one of the following keywords:
 #' \describe{
-#' \item{\code{"all"}}{computes both the lag-1 autocorrelation as well as
+#' \item{`"all"`}{computes both the lag-1 autocorrelation as well as
 #' the potential scale reduction factor (cf. Vehtari et al., 2021) per
 #' iteration of the MICE algorithm;}
-#' \item{\code{"ac"}}{computes only the autocorrelation per iteration;}
-#' \item{\code{"psrf"}}{computes only the potential scale reduction factor
+#' \item{`"ac"`}{computes only the autocorrelation per iteration;}
+#' \item{`"psrf"`}{computes only the potential scale reduction factor
 #' per iteration;}
-#' \item{\code{"gr"}}{same as \code{psrf}, the potential scale reduction
+#' \item{`"gr"`}{same as `psrf`, the potential scale reduction
 #' factor is colloquially called the Gelman-Rubin diagnostic.}
 #' }
 #' In the unlikely event of perfect convergence, the autocorrelation equals
@@ -37,7 +37,7 @@
 #' iteration number (.it) per imputed variable (vrb). A persistently
 #' decreasing trend across iterations indicates potential non-convergence.
 #'
-#' @seealso \code{\link{mice}}, \code{\link[=mids-class]{mids}}
+#' @seealso [mice()], [`mids()`][mids-class]
 #' @keywords none
 #' @references Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., & Burkner,
 #' P.-C. (2021). Rank-Normalization, Folding, and Localization: An Improved

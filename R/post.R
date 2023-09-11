@@ -1,11 +1,11 @@
-#' Creates a \code{post} argument
+#' Creates a `post` argument
 #'
-#' This helper function creates a valid \code{post} vector. The
-#' \code{post} vector is an argument to the \code{mice} function that
+#' This helper function creates a valid `post` vector. The
+#' `post` vector is an argument to the `mice` function that
 #' specifies post-processing for a variable after each iteration of imputation.
 #' @inheritParams mice
-#' @return Character vector of \code{ncol(data)} element
-#' @seealso \code{\link{mice}}
+#' @return Character vector of `ncol(data)` element
+#' @seealso [mice()]
 #' @examples
 #' make.post(nhanes2)
 #' @export

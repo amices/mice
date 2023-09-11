@@ -42,7 +42,6 @@ function calls \code{cbind.mids()}, respectively \code{rbind.mids()}. In
 all other cases, the call is forwarded to standard functions in the
 \code{base} package.
 
-
 The \code{cbind.mids()} function combines two \code{mids} objects
 columnwise into a single
 object of class \code{mids}, or combines a single \code{mids} object with
@@ -179,12 +178,12 @@ nrow(complete(rbind(imp1, complete(imp5))))
 \references{
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
+Statistical Software}, \strong{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link[base:cbind]{cbind}}, \code{\link{ibind}},
-\code{\link[=mids-class]{mids}}
+\code{\link[base:cbind]{base::cbind()}}, \code{\link[=ibind]{ibind()}},
+\code{\link[=mids-class]{mids()}}
 }
 \author{
 Karin Groothuis-Oudshoorn, Stef van Buuren

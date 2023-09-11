@@ -1,11 +1,11 @@
-#' Impute multilevel missing data using \code{pan}
+#' Impute multilevel missing data using `pan`
 #'
-#' This function is a wrapper around the \code{panImpute} function
-#' from the \code{mitml} package so that it can be called to
-#' impute blocks of variables in \code{mice}. The \code{mitml::panImpute}
-#' function provides an interface to the \code{pan} package for
+#' This function is a wrapper around the `panImpute` function
+#' from the `mitml` package so that it can be called to
+#' impute blocks of variables in `mice`. The `mitml::panImpute`
+#' function provides an interface to the `pan` package for
 #' multiple imputation of multilevel data (Schafer & Yucel, 2002).
-#' Imputations can be generated using \code{type} or \code{formula},
+#' Imputations can be generated using `type` or `formula`,
 #' which offer different options for model specification.
 #'
 #' @name mice.impute.panImpute
@@ -14,33 +14,33 @@
 #' the cluster indicator variable, and any other variables that should be
 #' present in the imputed datasets.
 #' @param type An integer vector specifying the role of each variable
-#' in the imputation model (see \code{\link[mitml]{panImpute}})
+#' in the imputation model (see [mitml::panImpute()])
 #' @param formula A formula specifying the role of each variable
 #' in the imputation model. The basic model is constructed
-#' by \code{model.matrix}, thus allowing to include derived variables
-#' in the imputation model using \code{I()}. See
-#' \code{\link[mitml]{panImpute}}.
+#' by `model.matrix`, thus allowing to include derived variables
+#' in the imputation model using `I()`. See
+#' [mitml::panImpute()].
 #' @param format A character vector specifying the type of object that should
-#' be returned. The default is \code{format = "list"}. No other formats are
+#' be returned. The default is `format = "list"`. No other formats are
 #' currently supported.
-#' @param ... Other named arguments: \code{n.burn}, \code{n.iter},
-#' \code{group}, \code{prior}, \code{silent} and others.
+#' @param ... Other named arguments: `n.burn`, `n.iter`,
+#' `group`, `prior`, `silent` and others.
 #' @return A list of imputations for all incomplete variables in the model,
-#' that can be stored in the the \code{imp} component of the \code{mids}
+#' that can be stored in the the `imp` component of the `mids`
 #' object.
-#' @seealso \code{\link[mitml]{panImpute}}
-#' @note The number of imputations \code{m} is set to 1, and the function
-#' is called \code{m} times so that it fits within the \code{mice}
+#' @seealso [mitml::panImpute()]
+#' @note The number of imputations `m` is set to 1, and the function
+#' is called `m` times so that it fits within the `mice`
 #' iteration scheme.
 #'
 #' This is a multivariate imputation function using a joint model.
 #' @author Stef van Buuren, 2018, building on work of Simon Grund,
-#' Alexander Robitzsch and Oliver Luedtke (authors of \code{mitml} package)
-#' and Joe Schafer (author of \code{pan} package).
+#' Alexander Robitzsch and Oliver Luedtke (authors of `mitml` package)
+#' and Joe Schafer (author of `pan` package).
 #' @references
 #' Grund S, Luedtke O, Robitzsch A (2016). Multiple
 #' Imputation of Multilevel Missing Data: An Introduction to the R
-#' Package \code{pan}. SAGE Open.
+#' Package `pan`. SAGE Open.
 #'
 #' Schafer JL (1997). Analysis of Incomplete Multivariate Data. London:
 #' Chapman & Hall.

@@ -43,8 +43,8 @@ likely value according to the model. However, it ignores the uncertainty
 of the missing values and artificially
 amplifies the relations between the columns of the data. Application of
 richer models having more parameters does not help to evade these issues.
-Stochastic regression methods, like \code{\link{mice.impute.pmm}} or
-\code{\link{mice.impute.norm}}, are generally preferred.
+Stochastic regression methods, like \code{\link[=mice.impute.pmm]{mice.impute.pmm()}} or
+\code{\link[=mice.impute.norm]{mice.impute.norm()}}, are generally preferred.
 
 At best, prediction can give reasonable estimates of the mean, especially
 if normality assumptions are plausible. See Little and Rubin (2002, p. 62-64)

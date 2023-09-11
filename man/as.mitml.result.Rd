@@ -19,7 +19,7 @@ complete-data analysis stored as a list, and turns it
 into an object of class \code{mitml.result}.
 }
 \seealso{
-\code{\link[mitml]{with.mitml.list}}
+\code{\link[mitml:with.mitml.list]{mitml::with.mitml.list()}}
 }
 \author{
 Stef van Buuren

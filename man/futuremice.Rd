@@ -19,7 +19,7 @@ futuremice(
 }
 \arguments{
 \item{data}{A data frame or matrix containing the incomplete data. Similar to
-the first argument of \code{\link{mice}}.}
+the first argument of \code{\link[=mice]{mice()}}.}
 
 \item{m}{The number of desired imputated datasets. By default $m=5$ as with
 \code{mice}}
@@ -42,42 +42,41 @@ physical (\code{FALSE}) CPU's on machine should be used.}
 \item{future.plan}{A character indicating how \code{future}s are resolved.
 The default \code{multisession} resolves futures asynchronously (in parallel)
 in separate \code{R} sessions running in the background. See
-\code{\link[future]{plan}} for more information on future plans.}
+\code{\link[future:plan]{future::plan()}} for more information on future plans.}
 
-\item{packages}{A character vector with additional packages to be used in 
+\item{packages}{A character vector with additional packages to be used in
 \code{mice} (e.g., for using external imputation functions).}
 
 \item{globals}{A character string with additional functions to be exported to
 each future (e.g., user-written imputation functions).}
 
-\item{...}{Named arguments that are passed down to function \code{\link{mice}}.}
+\item{...}{Named arguments that are passed down to function \code{\link[=mice]{mice()}}.}
 }
 \value{
-A mids object as defined by \code{\link{mids-class}}
+A mids object as defined by \code{\link[=mids-class]{mids-class()}}
 }
 \description{
-This is a wrapper function for \code{\link{mice}}, using multiple cores to
-execute \code{\link{mice}} in parallel. As a result, the imputation
+This is a wrapper function for \code{\link[=mice]{mice()}}, using multiple cores to
+execute \code{\link[=mice]{mice()}} in parallel. As a result, the imputation
 procedure can be sped up, which may be useful in general. By default,
-\code{\link{futuremice}} distributes the number of imputations \code{m}
+\code{\link[=futuremice]{futuremice()}} distributes the number of imputations \code{m}
 about equally over the cores.
 }
 \details{
-This function relies on package \code{\link[furrr]{furrr}}, which is a
+This function relies on package \code{\link[furrr:furrr-package]{furrr::furrr()}}, which is a
 package for R versions 3.2.0 and later. We have chosen to use furrr function
 \code{future_map} to allow the use of \code{futuremice} on Mac, Linux and
 Windows systems.
 
-
-This wrapper function combines the output of \code{\link[furrr]{future_map}} with
-function \code{\link{ibind}} from the \code{\link{mice}} package. A
+This wrapper function combines the output of \code{\link[furrr:future_map]{furrr::future_map()}} with
+function \code{\link[=ibind]{ibind()}} from the \code{\link[=mice]{mice()}} package. A
 \code{mids} object is returned and can be used for further analyses.
 
 A seed value can be specified in the global environment, which will yield
 reproducible results. A seed value can also be specified within the
-\code{\link{futuremice}} call, through specifying the argument
+\code{\link[=futuremice]{futuremice()}} call, through specifying the argument
 \code{parallelseed}. If \code{parallelseed} is not specified, a seed value is
-drawn randomly by default, and accessible through \code{$parallelseed} in the
+drawn randomly by default, and accessible through \verb{$parallelseed} in the
 output object. Hence, results will always be reproducible, regardless of
 whether the seed is specified in the global environment, or by setting the
 same seed within the function (potentially by extracting the seed from the
@@ -104,8 +103,8 @@ Volker, T.B. and Vink, G. (2022). futuremice: The future starts today.
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
-\code{\link[future]{future}}, \code{\link[furrr]{furrr}}, \code{\link[furrr]{future_map}},
-\code{\link[future]{plan}}, \code{\link{mice}}, \code{\link{mids-class}}
+\code{\link[future:future]{future::future()}}, \code{\link[furrr:furrr-package]{furrr::furrr()}}, \code{\link[furrr:future_map]{furrr::future_map()}},
+\code{\link[future:plan]{future::plan()}}, \code{\link[=mice]{mice()}}, \code{\link[=mids-class]{mids-class()}}
 }
 \author{
 Thom Benjamin Volker, Gerko Vink

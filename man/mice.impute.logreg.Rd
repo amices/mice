@@ -47,7 +47,7 @@ method.
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
+Statistical Software}, \strong{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 
 Brand, J.P.L. (1999). Development, Implementation and Evaluation of Multiple
@@ -63,7 +63,7 @@ prediction in multiple imputation of incomplete categorical variables.
 Computational Statistics and Data Analysis, 54:22672275.
 }
 \seealso{
-\code{\link{mice}}, \code{\link{glm}}, \code{\link{glm.fit}}
+\code{\link[=mice]{mice()}}, \code{\link[=glm]{glm()}}, \code{\link[=glm.fit]{glm.fit()}}
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},

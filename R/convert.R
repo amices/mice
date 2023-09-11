@@ -36,7 +36,6 @@ p2f <- function(predictorMatrix, blocks = NULL, silent = TRUE) {
 #' Convert predictorMatrix into roles
 #'
 #' @rdname convertmodels
-#' @export
 p2c <- function(predictorMatrix) {
   # exports special predictorMatrix roles, not 0 or 1
   blks <- row.names(predictorMatrix)
@@ -56,10 +55,10 @@ p2c <- function(predictorMatrix) {
 #' Convert formulas into predictorMatrix
 #'
 #' @rdname convertmodels
-#' @param roles A list with \code{ncol(data)} elements, each with a row of the
-#' \code{predictorMatrix} when it contains values other than 0 or 1.
+#' @param roles A list with `ncol(data)` elements, each with a row of the
+#' `predictorMatrix` when it contains values other than 0 or 1.
 #' The argument is only needed if the model contains non-standard
-#'values in the \code{predictorMatrix}.
+#'values in the `predictorMatrix`.
 #' @export
 f2p <- function(formulas, blocks = NULL, roles = NULL) {
   # converts formulas and roles into predictorMatrix

@@ -23,10 +23,10 @@ present in the imputed datasets.}
 in the imputation model. The basic model is constructed
 by \code{model.matrix}, thus allowing to include derived variables
 in the imputation model using \code{I()}. See
-\code{\link[mitml]{panImpute}}.}
+\code{\link[mitml:panImpute]{mitml::panImpute()}}.}
 
 \item{type}{An integer vector specifying the role of each variable
-in the imputation model (see \code{\link[mitml]{panImpute}})}
+in the imputation model (see \code{\link[mitml:panImpute]{mitml::panImpute()}})}
 
 \item{m}{The number of imputed data sets to generate.}
 
@@ -81,7 +81,7 @@ multivariate linear mixed-effects models with missing values.
 Journal of Computational and Graphical Statistics, 11, 437-457.
 }
 \seealso{
-\code{\link[mitml]{panImpute}}
+\code{\link[mitml:panImpute]{mitml::panImpute()}}
 
 Other multivariate-2l: 
 \code{\link{mice.impute.jomoImpute}()}
