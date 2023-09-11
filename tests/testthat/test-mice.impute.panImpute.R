@@ -13,14 +13,26 @@ test_that("panImpute returns native class", {
 blocks <- make.blocks(list(c("bmi", "chl", "hyp"), "age"))
 method <- c("panImpute", "pmm")
 pred <- make.predictorMatrix(nhanes, blocks)
-pred["B1", "hyp"] <- -2
-imp <- mice(nhanes,
-  blocks = blocks, method = method, pred = pred,
-  maxit = 1, seed = 1, print = FALSE
+pred[c("bmi", "chl", "hyp"), "hyp"] <- -2
+imp1 <- mice(nhanes,
+             blocks = blocks, method = method, pred = pred,
+             maxit = 1, seed = 1, print = TRUE
 )
-z <- complete(imp)
+z <- complete(imp1)
 
-test_that("mice can call panImpute", {
+test_that("mice can call panImpute with type argument", {
+  expect_equal(sum(is.na(z$bmi)), 0)
+  expect_equal(sum(is.na(z$chl)), 0)
+})
+
+method <- c("panImpute", "pmm")
+formulas <- list(bmi + chl + hyp ~ 1 | age,
+                 age ~ bmi + chl + hyp)
+formulas <- name.formulas(formulas)
+imp2 <- mice(nhanes, formulas = formulas, method = method, maxit = 1, seed = 1, print = TRUE)
+z <- complete(imp2)
+
+test_that("mice can call panImpute with formula argument", {
   expect_equal(sum(is.na(z$bmi)), 0)
   expect_equal(sum(is.na(z$chl)), 0)
 })

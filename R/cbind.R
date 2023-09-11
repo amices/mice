@@ -90,7 +90,7 @@ cbind.mids <- function(x, y = NULL, ...) {
            nrow = nrow(x$predictorMatrix) + ncol(y)
     )
   )
-  rownames(predictorMatrix) <- blocknames
+  rownames(predictorMatrix) <- varnames
   colnames(predictorMatrix) <- varnames
 
   visitSequence <- x$visitSequence
@@ -220,7 +220,7 @@ cbind.mids.mids <- function(x, y, call) {
       y$predictorMatrix
     )
   )
-  rownames(predictorMatrix) <- blocknames
+  rownames(predictorMatrix) <- varnames
   colnames(predictorMatrix) <- varnames
 
   # As visitSequence is taken first the order for x and after that from y.

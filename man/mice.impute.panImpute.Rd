@@ -61,11 +61,11 @@ iteration scheme.
 This is a multivariate imputation function using a joint model.
 }
 \examples{
-blocks <- list(c("bmi", "chl", "hyp"), "age")
+blocks <- make.blocks(list(c("bmi", "chl", "hyp"), "age"))
 method <- c("panImpute", "pmm")
 ini <- mice(nhanes, blocks = blocks, method = method, maxit = 0)
 pred <- ini$pred
-pred["B1", "hyp"] <- -2
+pred[c("bmi", "chl", "hyp"), "hyp"] <- -2
 imp <- mice(nhanes, blocks = blocks, method = method, pred = pred, maxit = 1)
 }
 \references{

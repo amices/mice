@@ -47,7 +47,7 @@ variable is used as a predictor for the target block (in the rows).
 By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
 rows and columns with all 1's, except for the diagonal.
 Note: For two-level imputation models (which have \code{"2l"} in their names)
-other codes (e.g, \code{2} or \code{-2}) are also allowed.}
+other roles (e.g, \code{2} or \code{-2}) are also allowed.}
 
 \item{auxiliary}{A logical that indicates whether the variables
 listed in \code{predictors} should be added to the formula as main

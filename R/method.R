@@ -23,7 +23,7 @@ make.method <- function(data,
     method[j] <- defaultMethod[k]
   }
   nimp <- nimp(where, blocks)
-  method[nimp == 0] <- ""
+  # method[nimp == 0] <- ""
   method
 }
 
@@ -46,7 +46,7 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
       stop("Cannot have a passive imputation method for every column.")
     }
     method <- rep(method, length(blocks))
-    method[nimp == 0] <- ""
+    # method[nimp == 0] <- ""
   }
 
   # check the length of the argument
@@ -113,7 +113,7 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
       )
     }
   }
-  method[nimp == 0] <- ""
+  # method[nimp == 0] <- ""
   unlist(method)
 }
 

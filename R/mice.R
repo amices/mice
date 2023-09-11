@@ -149,7 +149,7 @@
 #' By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
 #' rows and columns with all 1's, except for the diagonal.
 #' Note: For two-level imputation models (which have \code{"2l"} in their names)
-#' other codes (e.g, \code{2} or \code{-2}) are also allowed.
+#' other roles (e.g, \code{2} or \code{-2}) are also allowed.
 #' @param ignore A logical vector of \code{nrow(data)} elements indicating
 #' which rows are ignored when creating the imputation model. The default
 #' \code{NULL} includes all rows that have an observed value of the variable
@@ -339,10 +339,10 @@ mice <- function(data,
 
   # case A
   if (mp & mb & mf) {
-    # blocks lead
-    blocks <- make.blocks(colnames(data))
-    predictorMatrix <- make.predictorMatrix(data, blocks)
-    formulas <- make.formulas(data, blocks)
+    # formulas leads
+    formulas <- make.formulas(data)
+    predictorMatrix <- f2p(formulas)
+    blocks <- construct.blocks(formulas)
   }
   # case B
   if (!mp & mb & mf) {
@@ -365,21 +365,22 @@ mice <- function(data,
     # formulas leads
     formulas <- check.formulas(formulas, data)
     blocks <- construct.blocks(formulas)
-    predictorMatrix <- make.predictorMatrix(data, blocks)
+    predictorMatrix <- f2p(formulas, blocks)
   }
 
   # case E
   if (!mp & !mb & mf) {
     # predictor leads
-    blocks <- check.blocks(blocks, data)
+    blocks <- check.blocks(blocks, data, calltype = "pred")
     z <- check.predictorMatrix(predictorMatrix, data, blocks)
     predictorMatrix <- z$predictorMatrix
     blocks <- z$blocks
-    formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix)
+    formulas <- p2f(predictorMatrix, blocks)
   }
 
   # case F
   if (!mp & mb & !mf) {
+    # it is better to forbid this case
     # formulas lead
     formulas <- check.formulas(formulas, data)
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
@@ -389,14 +390,16 @@ mice <- function(data,
 
   # case G
   if (mp & !mb & !mf) {
+    # it is better to forbid this case
     # blocks lead
-    blocks <- check.blocks(blocks, data, calltype = "formula")
+    blocks <- check.blocks(blocks, data)
     formulas <- check.formulas(formulas, blocks)
     predictorMatrix <- make.predictorMatrix(data, blocks)
   }
 
   # case H
   if (!mp & !mb & !mf) {
+    # it is better to forbid this case
     # blocks lead
     blocks <- check.blocks(blocks, data)
     formulas <- check.formulas(formulas, data)
@@ -432,15 +435,24 @@ mice <- function(data,
   # edit imputation setup
   setup <- list(
     method = method,
+    formulas = formulas,
+    blots = blots,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     post = post
   )
   setup <- edit.setup(data, setup, ...)
   method <- setup$method
+  formulas <- setup$formulas
+  blots <- setup$blots
   predictorMatrix <- setup$predictorMatrix
   visitSequence <- setup$visitSequence
   post <- setup$post
+
+  # update model
+#  formulas <- p2f(predictorMatrix, blocks)
+#  roles <- p2c(predictorMatrix)
+#  blots <- paste.roles(blots, roles)
 
   # initialize imputations
   nmis <- apply(is.na(data), 2, sum)

@@ -27,7 +27,7 @@
 make.formulas <- function(data, blocks = make.blocks(data),
                           predictorMatrix = NULL) {
   data <- check.dataform(data)
-  formulas <- as.list(rep("~ 0", length(blocks)))
+  formulas <- as.list(rep("~ 1", length(blocks)))
   names(formulas) <- names(blocks)
 
   for (h in names(blocks)) {
@@ -40,7 +40,7 @@ make.formulas <- function(data, blocks = make.blocks(data),
     }
     x <- setdiff(predictors, y)
     if (length(x) == 0) {
-      x <- "0"
+      x <- "1"
     }
     formulas[[h]] <- paste(
       paste(y, collapse = "+"), "~",

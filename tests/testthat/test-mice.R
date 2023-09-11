@@ -16,23 +16,23 @@ context("mice: blocks")
 
 test_that("blocks run as expected", {
   expect_silent(imp1b <<- mice(nhanes,
-    blocks = list(c("age", "hyp"), chl = "chl", "bmi"),
-    print = FALSE, m = 1, maxit = 1, seed = 1
+                               blocks = list(c("age", "hyp"), chl = "chl", "bmi"),
+                               print = FALSE, m = 1, maxit = 1, seed = 1
   ))
   expect_silent(imp2b <<- mice(nhanes2,
-    blocks = list(c("age", "hyp", "bmi"), "chl", "bmi"),
-    print = FALSE, m = 1, maxit = 1, seed = 1
+                               blocks = list(c("age", "hyp", "bmi"), "chl", "bmi"),
+                               print = FALSE, m = 1, maxit = 1, seed = 1
   ))
   # expect_silent(imp3b <<- mice(nhanes2,
   #                             blocks = list(c("hyp", "hyp", "hyp"), "chl", "bmi"),
   #                             print = FALSE, m = 1, maxit = 1, seed = 1))
   expect_silent(imp4b <<- mice(boys,
-    blocks = list(c("gen", "phb"), "tv"),
-    print = FALSE, m = 1, maxit = 1, seed = 1
+                               blocks = list(c("gen", "phb"), "tv"),
+                               print = FALSE, m = 1, maxit = 1, seed = 1
   ))
   expect_silent(imp5b <<- mice(nhanes,
-    blocks = list(c("age", "hyp")),
-    print = FALSE, m = 1, maxit = 1, seed = 1
+                               blocks = list(c("age", "hyp")),
+                               print = FALSE, m = 1, maxit = 1, seed = 1
   ))
 })
 
@@ -56,21 +56,47 @@ test_that("Method `polr` works with one block", {
 # check for equality of `scatter` and `collect` for univariate models
 # the following models yield the same imputations
 imp1 <- mice(nhanes,
-  blocks = make.blocks(nhanes, "scatter"),
-  print = FALSE, m = 1, maxit = 1, seed = 123
-)
+             blocks = make.blocks(nhanes, "scatter"),
+             print = FALSE, m = 1, maxit = 1, seed = 123)
+imp1a <- mice(nhanes,
+              blocks = list("age", "bmi", "hyp", "chl"),
+              print = FALSE, m = 1, maxit = 1, seed = 123)
+test_that("make.blocks() and list() yield same imputes for `scatter`", {
+  expect_identical(complete(imp1), complete(imp1a))
+})
+
 imp2 <- mice(nhanes,
-  blocks = make.blocks(nhanes, "collect"),
-  print = FALSE, m = 1, maxit = 1, seed = 123
-)
+             blocks = make.blocks(nhanes, "collect"),
+             print = FALSE, m = 1, maxit = 1, seed = 123)
+imp2a <- mice(nhanes,
+              blocks = list(c("age", "bmi", "hyp", "chl")),
+              print = FALSE, m = 1, maxit = 1, seed = 123)
+
+test_that("make.blocks() and list() yield same imputes for `collect`", {
+  expect_identical(complete(imp2), complete(imp2a))
+})
+
 imp3 <- mice(nhanes,
-  blocks = list("age", c("bmi", "hyp", "chl")),
-  print = FALSE, m = 1, maxit = 1, seed = 123
-)
+             blocks = list("age", c("bmi", "hyp", "chl")),
+             print = FALSE, m = 1, maxit = 1, seed = 123)
+imp3a <- mice(nhanes,
+             blocks = name.blocks(list("age", c("bmi", "hyp", "chl"))),
+             print = FALSE, m = 1, maxit = 1, seed = 123)
+
+test_that("make.blocks() and list() yield same imputes for imp3-model", {
+  expect_identical(complete(imp3), complete(imp3a))
+})
+
 imp4 <- mice(nhanes,
-  blocks = list(c("bmi", "hyp", "chl"), "age"),
-  print = FALSE, m = 1, maxit = 1, seed = 123
-)
+             blocks = list(c("bmi", "hyp", "chl"), "age"),
+             print = FALSE, m = 1, maxit = 1, seed = 123)
+imp4a <- mice(nhanes,
+             blocks = name.blocks(list(c("bmi", "hyp", "chl"), "age")),
+             print = FALSE, m = 1, maxit = 1, seed = 123)
+
+test_that("make.blocks() and list() yield same imputes for imp4-model", {
+  expect_identical(complete(imp4), complete(imp4a))
+})
 
 test_that("Univariate yield same imputes for `scatter` and `collect`", {
   expect_identical(complete(imp1), complete(imp2))
@@ -91,36 +117,36 @@ context("mice: formulas")
 
 test_that("formulas run as expected", {
   expect_silent(imp1f <<- mice(nhanes,
-    formulas = list(
-      age + hyp ~ chl + bmi,
-      chl ~ age + hyp + bmi,
-      bmi ~ age + hyp + chl
-    ),
-    print = FALSE, m = 1, maxit = 1, seed = 1
+                               formulas = list(
+                                 age + hyp ~ chl + bmi,
+                                 chl ~ age + hyp + bmi,
+                                 bmi ~ age + hyp + chl
+                               ),
+                               print = FALSE, m = 1, maxit = 1, seed = 1
   ))
   expect_warning(imp2f <<- mice(nhanes2,
-    formulas = list(
-      age + hyp + bmi ~ chl + bmi,
-      chl ~ age + hyp + bmi + bmi,
-      bmi ~ age + hyp + bmi + chl
-    ),
-    print = FALSE, m = 1, maxit = 1, seed = 1
+                                formulas = list(
+                                  age + hyp + bmi ~ chl + bmi,
+                                  chl ~ age + hyp + bmi + bmi,
+                                  bmi ~ age + hyp + bmi + chl
+                                ),
+                                print = FALSE, m = 1, maxit = 1, seed = 1
   ))
-  # expect_silent(imp3f <<- mice(nhanes2,
-  #                             formulas = list( hyp + hyp + hyp ~ chl + bmi,
-  #                                              chl ~ hyp + hyp + hyp + bmi,
-  #                                              bmi ~ hyp + hyp + hyp + chl),
-  #                             print = FALSE, m = 1, maxit = 1, seed = 1))
+  expect_silent(imp3f <<- mice(nhanes2,
+                              formulas = list( hyp + hyp + hyp ~ chl + bmi,
+                                               chl ~ hyp + hyp + hyp + bmi,
+                                               bmi ~ hyp + hyp + hyp + chl),
+                              print = FALSE, m = 1, maxit = 1, seed = 1))
   expect_silent(imp4f <<- mice(boys,
-    formulas = list(
-      gen + phb ~ tv,
-      tv ~ gen + phb
-    ),
-    print = FALSE, m = 1, maxit = 1, seed = 1
+                               formulas = list(
+                                 gen + phb ~ tv,
+                                 tv ~ gen + phb
+                               ),
+                               print = FALSE, m = 1, maxit = 1, seed = 1
   ))
   expect_silent(imp5f <<- mice(nhanes,
-    formulas = list(age + hyp ~ 1),
-    print = FALSE, m = 1, maxit = 1, seed = 1
+                               formulas = list(age + hyp ~ 1),
+                               print = FALSE, m = 1, maxit = 1, seed = 1
   ))
 })
 
@@ -130,9 +156,9 @@ test_that("Formula names are generated automatically", {
 test_that("Method `pmm` is used for mixed variable types", {
   expect_identical(unname(imp2f$method[1]), "pmm")
 })
-# test_that("Method `logreg` if all are binary", {
-#   expect_identical(unname(imp3f$method[1]), "logreg")
-# })
+test_that("Method `logreg` if all are binary", {
+  expect_identical(unname(imp3f$method[1]), "logreg")
+})
 test_that("Method `polr` if all are ordered", {
   expect_identical(unname(imp4f$method[1]), "polr")
 })
@@ -145,27 +171,27 @@ context("mice: where")
 
 # # all TRUE
 imp1 <- mice(nhanes,
-  where = matrix(TRUE, nrow = 25, ncol = 4), maxit = 1,
-  m = 1, print = FALSE
+             where = matrix(TRUE, nrow = 25, ncol = 4), maxit = 1,
+             m = 1, print = FALSE
 )
 
 # # all FALSE
 imp2 <- mice(nhanes,
-  where = matrix(FALSE, nrow = 25, ncol = 4), maxit = 1,
-  m = 1, print = FALSE
+             where = matrix(FALSE, nrow = 25, ncol = 4), maxit = 1,
+             m = 1, print = FALSE
 )
 
 # # alternate
 imp3 <- mice(nhanes,
-  where = matrix(c(FALSE, TRUE), nrow = 25, ncol = 4),
-  maxit = 1, m = 1, print = FALSE
+             where = matrix(c(FALSE, TRUE), nrow = 25, ncol = 4),
+             maxit = 1, m = 1, print = FALSE
 )
 
 # # whacky situation where we expect no imputes for the incomplete cases
 imp4 <- mice(nhanes2,
-  where = matrix(TRUE, nrow = 25, ncol = 4),
-  maxit = 1,
-  meth = c("pmm", "", "", ""), m = 1, print = FALSE
+             where = matrix(TRUE, nrow = 25, ncol = 4),
+             maxit = 1,
+             meth = c("pmm", "", "", ""), m = 1, print = FALSE
 )
 
 test_that("`where` produces correct number of imputes", {
@@ -190,8 +216,8 @@ test_that("`ignore` throws appropriate errors and warnings", {
   )
   expect_warning(
     mice(nhanes,
-      maxit = 1, m = 1, print = FALSE, seed = 1,
-      ignore = c(rep(FALSE, 9), rep(TRUE, nrow(nhanes) - 9))
+         maxit = 1, m = 1, print = FALSE, seed = 1,
+         ignore = c(rep(FALSE, 9), rep(TRUE, nrow(nhanes) - 9))
     ),
     "Fewer than 10 rows"
   )
@@ -202,8 +228,8 @@ test_that("`ignore` throws appropriate errors and warnings", {
 # calculating the results
 # # all FALSE
 imp1 <- mice(nhanes,
-  maxit = 1, m = 1, print = FALSE, seed = 1,
-  ignore = rep(FALSE, nrow(nhanes))
+             maxit = 1, m = 1, print = FALSE, seed = 1,
+             ignore = rep(FALSE, nrow(nhanes))
 )
 
 # # NULL
@@ -212,8 +238,8 @@ imp2 <- mice(nhanes, maxit = 1, m = 1, print = FALSE, seed = 1)
 # # alternate
 alternate <- rep(c(TRUE, FALSE), nrow(nhanes))[1:nrow(nhanes)]
 imp3 <- mice(nhanes,
-  maxit = 0, m = 1, print = FALSE, seed = 1,
-  ignore = alternate
+             maxit = 0, m = 1, print = FALSE, seed = 1,
+             ignore = alternate
 )
 
 test_that("`ignore` changes the imputation results", {

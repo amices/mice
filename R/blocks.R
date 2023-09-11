@@ -143,7 +143,7 @@ name.blocks <- function(blocks, prefix = "B") {
   blocks
 }
 
-check.blocks <- function(blocks, data, calltype = "pred") {
+check.blocks <- function(blocks, data, calltype = "formula") {
   data <- check.dataform(data)
   blocks <- name.blocks(blocks)
 
