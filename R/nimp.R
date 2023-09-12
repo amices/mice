@@ -8,17 +8,23 @@
 #' @seealso [mice()]
 #' @export
 #' @examples
-#' where <- is.na(nhanes)
-#'
 #' # standard FCS
-#' nimp(where)
+#' nimp(nhanes2)
 #'
 #' # user-defined blocks
-#' nimp(where, blocks = name.blocks(list(c("bmi", "hyp"), "age", "chl")))
-nimp <- function(where, blocks = make.blocks(where)) {
+#' where <- is.na(nhanes)
+#' blocks <- list(c("bmi", "hyp"), "age", "chl")
+#' nimp(where = where, blocks = blocks)
+nimp <- function(data = NULL, where = is.na(data), blocks = make.blocks(where)) {
+  # legacy handling
+  waswhere <- is.matrix(data) && all(is.logical(data))
+  if (waswhere) {
+    stop("Please call 'nimp()' as 'nimp(where = .. , blocks = ..'")
+  }
+
   nwhere <- apply(where, 2, sum)
   nimp <- vector("integer", length = length(blocks))
   names(nimp) <- names(blocks)
   for (i in seq_along(blocks)) nimp[i] <- sum(nwhere[blocks[[i]]])
-  nimp
+  return(nimp)
 }

@@ -4,9 +4,12 @@
 \alias{nimp}
 \title{Number of imputations per block}
 \usage{
-nimp(where, blocks = make.blocks(where))
+nimp(data = NULL, where = is.na(data), blocks = make.blocks(where))
 }
 \arguments{
+\item{data}{Data frame with \eqn{n} rows and \eqn{p} columns with
+incomplete data.  Missing values are coded as \code{NA}.}
+
 \item{where}{A data frame or matrix with logicals of the same dimensions
 as \code{data} indicating where in the data the imputations should be
 created. The default, \code{where = is.na(data)}, specifies that the
@@ -38,13 +41,13 @@ Calculates the number of cells within a block for which imputation
 is requested.
 }
 \examples{
-where <- is.na(nhanes)
-
 # standard FCS
-nimp(where)
+nimp(nhanes2)
 
 # user-defined blocks
-nimp(where, blocks = name.blocks(list(c("bmi", "hyp"), "age", "chl")))
+where <- is.na(nhanes)
+blocks <- list(c("bmi", "hyp"), "age", "chl")
+nimp(where = where, blocks = blocks)
 }
 \seealso{
 \code{\link[=mice]{mice()}}

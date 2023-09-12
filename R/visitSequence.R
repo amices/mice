@@ -31,16 +31,16 @@ check.visitSequence <- function(visitSequence = NULL,
   }
 
   if (is.null(where)) where <- is.na(data)
-  nimp <- nimp(where, blocks)
-  if (length(nimp) == 0) visitSequence <- nimp
+  nimp <- nimp(where = where, blocks = blocks)
+  if (!length(nimp)) visitSequence <- nimp
 
   if (length(visitSequence) == 1 && is.character(visitSequence)) {
     code <- match.arg(visitSequence,
       choices = c("roman", "arabic", "monotone", "revmonotone")
     )
     visitSequence <- switch(code,
-      roman = names(blocks)[nimp > 0],
-      arabic = rev(names(blocks)[nimp > 0]),
+      roman = names(blocks)[nimp > 0L],
+      arabic = rev(names(blocks)[nimp > 0L]),
       monotone = names(blocks)[order(nimp)],
       revmonotone = rev(names(blocks)[order(nimp)])
     )

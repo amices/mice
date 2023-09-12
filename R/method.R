@@ -15,15 +15,15 @@ make.method <- function(data,
                         defaultMethod = c("pmm", "logreg", "polyreg", "polr")) {
   method <- rep("", length(blocks))
   names(method) <- names(blocks)
-  for (j in names(blocks)) {
+  for (j in seq_along(blocks)) {
     yvar <- blocks[[j]]
-    y <- data[, yvar]
-    def <- sapply(y, assign.method)
-    k <- ifelse(all(diff(def) == 0), k <- def[1], 1)
+    y <- data[, yvar, drop = FALSE]
+    k <- assign.method(y)
     method[j] <- defaultMethod[k]
   }
-  nimp <- nimp(where, blocks)
-  # method[nimp == 0] <- ""
+
+  nimp <- nimp(where = where, blocks = blocks)
+  method[nimp == 0L] <- ""
   method
 }
 
@@ -37,16 +37,16 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
       defaultMethod = defaultMethod
     ))
   }
-  nimp <- nimp(where, blocks)
+  nimp <- nimp(where = where, blocks = blocks)
 
   # expand user's imputation method to all visited columns
   # single string supplied by user (implicit assumption of two columns)
-  if (length(method) == 1) {
+  if (length(method) == 1L) {
     if (is.passive(method)) {
       stop("Cannot have a passive imputation method for every column.")
     }
     method <- rep(method, length(blocks))
-    # method[nimp == 0] <- ""
+    method[nimp == 0L] <- ""
   }
 
   # check the length of the argument
@@ -58,14 +58,14 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
   names(method) <- names(blocks)
 
   # check whether the requested imputation methods are on the search path
-  active.check <- !is.passive(method) & nimp > 0 & method != ""
-  passive.check <- is.passive(method) & nimp > 0 & method != ""
+  active.check <- !is.passive(method) & nimp > 0L & method != ""
+  passive.check <- is.passive(method) & nimp > 0L & method != ""
   check <- all(active.check) & any(passive.check)
   if (check) {
     fullNames <- rep.int("mice.impute.passive", length(method[passive.check]))
   } else {
     fullNames <- paste("mice.impute", method[active.check], sep = ".")
-    if (length(method[active.check]) == 0) fullNames <- character(0)
+    if (length(method[active.check]) == 0L) fullNames <- character(0)
   }
 
   # type checks on built-in imputation methods
@@ -89,8 +89,8 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
       )
     )
     cond1 <- sapply(y, is.numeric)
-    cond2 <- sapply(y, is.factor) & sapply(y, nlevels) == 2
-    cond3 <- sapply(y, is.factor) & sapply(y, nlevels) > 2
+    cond2 <- sapply(y, is.factor) & sapply(y, nlevels) == 2L
+    cond3 <- sapply(y, is.factor) & sapply(y, nlevels) > 2L
     if (any(cond1) && mj %in% mlist$m1) {
       warning("Type mismatch for variable(s): ",
         paste(vname[cond1], collapse = ", "),
@@ -113,28 +113,28 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
       )
     }
   }
-  # method[nimp == 0] <- ""
+  method[nimp == 0L] <- ""
   unlist(method)
 }
 
 
 # assign methods based on type,
-# use method 1 if there is no single method within the block
+# use method 1 if block is of heterogeneous type
 assign.method <- function(y) {
-  if (is.numeric(y)) {
-    return(1)
+  if (all(sapply(y, is.numeric))) {
+    return(1L)
   }
-  if (nlevels(y) == 2) {
-    return(2)
+  if (all(sapply(y, is.factor)) && all(sapply(y, nlevels) == 2L)) {
+    return(2L)
   }
-  if (is.ordered(y) && nlevels(y) > 2) {
-    return(4)
+  if (all(sapply(y, is.ordered)) && all(sapply(y, nlevels) > 2L)) {
+    return(4L)
   }
-  if (nlevels(y) > 2) {
-    return(3)
+  if (all(sapply(y, nlevels) > 2L)) {
+    return(3L)
   }
-  if (is.logical(y)) {
-    return(2)
+  if (all(sapply(y, is.logical))) {
+    return(2L)
   }
-  1
+  return(1L)
 }

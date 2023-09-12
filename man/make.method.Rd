@@ -12,8 +12,8 @@ make.method(
 )
 }
 \arguments{
-\item{data}{A data frame or a matrix containing the incomplete data.  Missing
-values are coded as \code{NA}.}
+\item{data}{Data frame with \eqn{n} rows and \eqn{p} columns with
+incomplete data.  Missing values are coded as \code{NA}.}
 
 \item{where}{A data frame or matrix with logicals of the same dimensions
 as \code{data} indicating where in the data the imputations should be
