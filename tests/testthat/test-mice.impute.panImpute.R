@@ -14,6 +14,8 @@ blocks <- make.blocks(list(c("bmi", "chl", "hyp"), "age"))
 method <- c("panImpute", "pmm")
 pred <- make.predictorMatrix(nhanes, blocks)
 pred[c("bmi", "chl", "hyp"), "hyp"] <- -2
+diag(pred) <- 0
+
 imp1 <- mice(nhanes,
              blocks = blocks, method = method, pred = pred,
              maxit = 1, seed = 1, print = FALSE)

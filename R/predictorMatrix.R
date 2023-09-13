@@ -34,6 +34,8 @@ make.predictorMatrix <- function(data, blocks = make.blocks(data),
       }
     }
   }
+  # but insist on zero diagonal
+  diag(predictorMatrix) <- 0
   valid <- validate.predictorMatrix(predictorMatrix)
   if (!valid) {
     warning("Malformed predictorMatrix. See ?make.predictorMatrix")
@@ -192,6 +194,9 @@ validate.predictorMatrix <- function(predictorMatrix, silent = FALSE) {
   if (is.null(dimnames(predictorMatrix))) {
     if (!silent) warning("predictorMatrix has no row/column names")
     return(FALSE)
+  }
+  if (any(diag(predictorMatrix) != 0)) {
+    if (!silent) warning("predictorMatrix has no zero diagonal")
   }
 
   return(TRUE)

@@ -44,17 +44,17 @@ test_that("Case B tests the predictorMatrix", {
 
 pred <- imp3$predictorMatrix
 blocks <- imp3$blocks
-# test_that("Case B finds blocks", {
-#   expect_identical(names(blocks), c("bmi", "hyp"))
-# })
+test_that("Case B finds blocks", {
+  expect_identical(names(blocks), c("age", "bmi", "hyp", "chl"))
+})
 
 form <- imp3$formulas
-# test_that("Case B finds formulas", {
-#   expect_identical(
-#     attr(terms(form[["bmi"]]), "term.labels"),
-#     names(pred["bmi", ])[pred["bmi", ] == 1]
-#   )
-# })
+test_that("Case B finds formulas", {
+  expect_identical(
+    attr(terms(form[["bmi"]]), "term.labels"),
+    names(pred["bmi", ])[pred["bmi", ] == 1]
+  )
+})
 
 
 # Case C: Only blocks argument
