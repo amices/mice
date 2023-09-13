@@ -35,7 +35,7 @@ from the observed data \code{y[ry]} and \code{x[ry, ]}.
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
+Statistical Software}, \strong{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 
 Van Buuren, S. (2018).
@@ -43,7 +43,7 @@ Van Buuren, S. (2018).
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
-\code{\link{mice}}, \code{\link{glm}}, \code{\link{glm.fit}}
+\code{\link[=mice]{mice()}}, \code{\link[=glm]{glm()}}, \code{\link[=glm.fit]{glm.fit()}}
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},

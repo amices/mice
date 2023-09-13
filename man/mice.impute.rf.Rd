@@ -84,9 +84,9 @@ Van Buuren, S. (2018).
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
-\code{\link{mice}}, \code{\link{mice.impute.cart}},
-\code{\link[randomForest]{randomForest}}
-\code{\link[ranger]{ranger}}
+\code{\link[=mice]{mice()}}, \code{\link[=mice.impute.cart]{mice.impute.cart()}},
+\code{\link[randomForest:randomForest]{randomForest::randomForest()}}
+\code{\link[ranger:ranger]{ranger::ranger()}}
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},

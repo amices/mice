@@ -1,17 +1,17 @@
 #' Imputation by simple random sampling
 #'
-#' Imputes a random sample from the observed \code{y} data
+#' Imputes a random sample from the observed `y` data
 #'
 #' This function takes a simple random sample from the observed values in
-#' \code{y}, and returns these as imputations.
+#' `y`, and returns these as imputations.
 #'
 #' @inheritParams mice.impute.pmm
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2017
-#' @references van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
-#' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-#' Statistical Software}, \bold{45}(3), 1-67.
+#' @references van Buuren S and Groothuis-Oudshoorn K (2011). `mice`:
+#' Multivariate Imputation by Chained Equations in `R`. *Journal of
+#' Statistical Software*, **45**(3), 1-67.
 #' \doi{10.18637/jss.v045.i03}
 #' @keywords datagen
 #' @export

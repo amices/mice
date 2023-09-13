@@ -66,6 +66,6 @@ R for Assessing Convergence of MCMC. Bayesian Analysis, 1(1), 1-38.
 https://doi.org/10.1214/20-BA1221
 }
 \seealso{
-\code{\link{mice}}, \code{\link[=mids-class]{mids}}
+\code{\link[=mice]{mice()}}, \code{\link[=mids-class]{mids()}}
 }
 \keyword{none}

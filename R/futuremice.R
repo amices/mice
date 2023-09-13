@@ -1,68 +1,68 @@
 #' Wrapper function that runs MICE in parallel
 #'
-#' This is a wrapper function for \code{\link{mice}}, using multiple cores to
-#' execute \code{\link{mice}} in parallel. As a result, the imputation
+#' This is a wrapper function for [mice()], using multiple cores to
+#' execute [mice()] in parallel. As a result, the imputation
 #' procedure can be sped up, which may be useful in general. By default,
-#' \code{\link{futuremice}} distributes the number of imputations \code{m}
+#' [futuremice()] distributes the number of imputations `m`
 #' about equally over the cores.
 #'
-#' This function relies on package \code{\link[furrr]{furrr}}, which is a
+#' This function relies on package [furrr::furrr()], which is a
 #' package for R versions 3.2.0 and later. We have chosen to use furrr function
-#' \code{future_map} to allow the use of \code{futuremice} on Mac, Linux and
+#' `future_map` to allow the use of `futuremice` on Mac, Linux and
 #' Windows systems.
 #'
 #'
-#' This wrapper function combines the output of \code{\link[furrr]{future_map}} with
-#' function \code{\link{ibind}} from the \code{\link{mice}} package. A
-#' \code{mids} object is returned and can be used for further analyses.
+#' This wrapper function combines the output of [furrr::future_map()] with
+#' function [ibind()] from the [mice()] package. A
+#' `mids` object is returned and can be used for further analyses.
 #'
 #' A seed value can be specified in the global environment, which will yield
 #' reproducible results. A seed value can also be specified within the
-#' \code{\link{futuremice}} call, through specifying the argument
-#' \code{parallelseed}. If \code{parallelseed} is not specified, a seed value is
-#' drawn randomly by default, and accessible through \code{$parallelseed} in the
+#' [futuremice()] call, through specifying the argument
+#' `parallelseed`. If `parallelseed` is not specified, a seed value is
+#' drawn randomly by default, and accessible through `$parallelseed` in the
 #' output object. Hence, results will always be reproducible, regardless of
 #' whether the seed is specified in the global environment, or by setting the
 #' same seed within the function (potentially by extracting the seed from the
-#' \code{futuremice} output object.
+#' `futuremice` output object.
 #'
 #' @aliases futuremice
 #' @param data A data frame or matrix containing the incomplete data. Similar to
-#' the first argument of \code{\link{mice}}.
+#' the first argument of [mice()].
 #' @param m The number of desired imputated datasets. By default $m=5$ as with
-#' \code{mice}
+#' `mice`
 #' @param parallelseed A scalar to be used to obtain reproducible results over
-#' the futures. The default \code{parallelseed = NA} will result in a seed value
+#' the futures. The default `parallelseed = NA` will result in a seed value
 #' that is randomly drawn between -999999999 and 999999999.
 #' @param n.core A scalar indicating the number of cores that should be used.
 #' @param seed A scalar to be used as the seed value for the mice algorithm
 #' within each parallel stream. Please note that the imputations will be the
 #' same for all streams and, hence, this should be used if and only if
-#' \code{n.core = 1} and if it is desired to obtain the same output as under
-#' \code{mice}.
-#' @param use.logical A logical indicating whether logical (\code{TRUE}) or
-#' physical (\code{FALSE}) CPU's on machine should be used.
-#' @param future.plan A character indicating how \code{future}s are resolved.
-#' The default \code{multisession} resolves futures asynchronously (in parallel)
-#' in separate \code{R} sessions running in the background. See
-#' \code{\link[future]{plan}} for more information on future plans.
+#' `n.core = 1` and if it is desired to obtain the same output as under
+#' `mice`.
+#' @param use.logical A logical indicating whether logical (`TRUE`) or
+#' physical (`FALSE`) CPU's on machine should be used.
+#' @param future.plan A character indicating how `future`s are resolved.
+#' The default `multisession` resolves futures asynchronously (in parallel)
+#' in separate `R` sessions running in the background. See
+#' [future::plan()] for more information on future plans.
 #' @param packages A character vector with additional packages to be used in 
-#' \code{mice} (e.g., for using external imputation functions).
+#' `mice` (e.g., for using external imputation functions).
 #' @param globals A character string with additional functions to be exported to
 #' each future (e.g., user-written imputation functions).
-#' @param ... Named arguments that are passed down to function \code{\link{mice}}.
+#' @param ... Named arguments that are passed down to function [mice()].
 #'
-#' @return A mids object as defined by \code{\link{mids-class}}
+#' @return A mids object as defined by [mids-class()]
 #'
 #' @author Thom Benjamin Volker, Gerko Vink
-#' @seealso \code{\link[future]{future}}, \code{\link[furrr]{furrr}}, \code{\link[furrr]{future_map}},
-#' \code{\link[future]{plan}}, \code{\link{mice}}, \code{\link{mids-class}}
+#' @seealso [future::future()], [furrr::furrr()], [furrr::future_map()],
+#' [future::plan()], [mice()], [mids-class()]
 #' @references
 #' Volker, T.B. and Vink, G. (2022). futuremice: The future starts today.
-#' \url{https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremice.html}
+#' <https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremice.html>
 #'
 #' #'Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/parallel-computation.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/parallel-computation.html)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #' @examples

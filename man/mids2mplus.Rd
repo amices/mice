@@ -47,7 +47,7 @@ names, so in principle it should run and read the data without alteration.
 do automatic pooling in procedures where that is supported.
 }
 \seealso{
-\code{\link[=mids-class]{mids}}, \code{\link{mids2spss}}
+\code{\link[=mids-class]{mids()}}, \code{\link[=mids2spss]{mids2spss()}}
 }
 \author{
 Gerko Vink, 2011.

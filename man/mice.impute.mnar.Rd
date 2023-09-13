@@ -69,8 +69,7 @@ the corresponding element in \code{blots} is a list with
 at least one argument \code{ums} and, optionally, a second
 argument \code{umx}.
 For example, the high-level call might like something like
-\code{mice(nhanes[, c(2, 4)], method = c("pmm", "mnar.norm"),
-blots = list(chl = list(ums = "-3+2*bmi")))}.
+\code{mice(nhanes[, c(2, 4)], method = c("pmm", "mnar.norm"), blots = list(chl = list(ums = "-3+2*bmi")))}.
 
 The \code{ums} parameter is required, and might look like this:
 \code{"-4+1*Y"}. The \code{ums} specifcation must have the
@@ -87,7 +86,7 @@ parameter;}
 value comes first and the predictor variable comes second, and these
 must be separated by a \code{"*"} sign;}
 \item{For categorical predictors, for example a variable \code{Z}
-with K + 1 categories \code{("Cat0","Cat1", ...,"CatK")}, K
+with K + 1 categories \verb{("Cat0","Cat1", ...,"CatK")}, K
 category-specific terms are needed, and those not in \code{umx}
 (see below) must be specified by concatenating the variable name
 with the name of the category (e.g. \code{ZCat1}) as this is how
@@ -117,7 +116,7 @@ in complete auxiliary variables passed on via the \code{umx} argument.
 It is not possible to specify models where the offset depends on
 incomplete auxiliary variables.
 
-For an MNAR alternative see also \code{\link{mice.impute.ri}}.
+For an MNAR alternative see also \code{\link[=mice.impute.ri]{mice.impute.ri()}}.
 }
 \examples{
 # 1: Example with no auxiliary data: only pass unidentifiable model specification (ums)
@@ -164,12 +163,12 @@ pool(with(impNARFCS, lm(Y ~ X + Z)))$pooled$estimate
 Tompsett, D. M., Leacy, F., Moreno-Betancur, M., Heron, J., &
 White, I. R. (2018). On the use of the not-at-random fully
 conditional specification (NARFCS) procedure in practice.
-\emph{Statistics in Medicine}, \bold{37}(15), 2338-2353.
+\emph{Statistics in Medicine}, \strong{37}(15), 2338-2353.
 \doi{10.1002/sim.7643}.
 
 Van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple
 imputation of missing blood pressure covariates in survival analysis.
-\emph{Statistics in Medicine}, \bold{18}, 681--694.
+\emph{Statistics in Medicine}, \strong{18}, 681--694.
 }
 \seealso{
 Other univariate imputation functions: 

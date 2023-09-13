@@ -58,12 +58,12 @@ factor levels codes.
 \code{SPSS} will recognize the data set as a multiply imputed data set, and
 do automatic pooling in procedures where that is supported. Note however that
 pooling is an extra option only available to those who license the
-\code{MISSING VALUES} module. Without this license, \code{SPSS} will still
+\verb{MISSING VALUES} module. Without this license, \code{SPSS} will still
 recognize the structure of the data, but it will not pool the multiply imputed
 estimates into a single inference.
 }
 \seealso{
-\code{\link[=mids-class]{mids}}
+\code{\link[=mids-class]{mids()}}
 }
 \author{
 Gerko Vink, dec 2020.

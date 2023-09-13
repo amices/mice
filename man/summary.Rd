@@ -47,11 +47,11 @@ Summary of a \code{mads} object
 Print a \code{mice.anova} object
 }
 \seealso{
-\code{\link[=mira-class]{mira}}
+\code{\link[=mira-class]{mira()}}
 
-\code{\link[=mids-class]{mids}}
+\code{\link[=mids-class]{mids()}}
 
-\code{\link[=mads-class]{mads}}
+\code{\link[=mads-class]{mads()}}
 
-\code{\link{mipo}}
+\code{\link[=mipo]{mipo()}}
 }

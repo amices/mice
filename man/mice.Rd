@@ -26,50 +26,64 @@ mice(
 )
 }
 \arguments{
-\item{data}{A data frame or a matrix containing the incomplete data.  Missing
-values are coded as \code{NA}.}
+\item{data}{Data frame with \eqn{n} rows and \eqn{p} columns with
+incomplete data.  Missing values are coded as \code{NA}.}
 
-\item{m}{Number of multiple imputations. The default is \code{m=5}.}
+\item{m}{Number of multiple imputations. The default is \code{m = 5}.
+Setting \code{m = 1} produces a single imputation per cell
+(not recommended in general).}
 
-\item{method}{Can be either a single string, or a vector of strings with
-length \code{length(blocks)}, specifying the imputation method to be
-used for each column in data. If specified as a single string, the same
-method will be used for all blocks. The default imputation method (when no
-argument is specified) depends on the measurement level of the target column,
-as regulated by the \code{defaultMethod} argument. Columns that need
-not be imputed have the empty method \code{""}. See details.}
+\item{method}{Character vector of length \eqn{q} specifying imputation
+methods for (groups of) variables. In the special case
+\code{length(method) == 1}, the specified method applies to all
+variables. When \code{method} is not specified, \code{mice()} will
+select a method based on the variable type as regulated
+by the \code{defaultMethod} argument. See details
+on \emph{skipping imputation}.}
 
-\item{predictorMatrix}{A numeric matrix of \code{length(blocks)} rows
-and \code{ncol(data)} columns, containing 0/1 data specifying
-the set of predictors to be used for each target column.
-Each row corresponds to a variable block, i.e., a set of variables
-to be imputed. A value of \code{1} means that the column
-variable is used as a predictor for the target block (in the rows).
-By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
-rows and columns with all 1's, except for the diagonal.
-Note: For two-level imputation models (which have \code{"2l"} in their names)
-other codes (e.g, \code{2} or \code{-2}) are also allowed.}
+\item{predictorMatrix}{A square numeric matrix of \eqn{p} rows
+and columns. Row- and column names are \code{colnames(data)}.
+Each row corresponds to a variable to be imputed.
+A value of \code{1} means that the column variable is a
+predictor for the row variable, while a \code{0} means that
+the column variable is not a predictor. The default
+\code{predictorMatrix} is \code{1} everywhere, except for a zero
+diagonal. For variables that need no be imputed,
+\code{mice()} automatically sets the corresponding rows in the
+\code{predictorMatrix} to zero. See details
+on \emph{skipping imputation}.
+Two-level imputation models (which have \code{"2l"} in their
+names) other codes than \code{0} and \code{1}, e.g, \code{2} or \code{-2},
+are also used.}
 
-\item{ignore}{A logical vector of \code{nrow(data)} elements indicating
-which rows are ignored when creating the imputation model. The default
-\code{NULL} includes all rows that have an observed value of the variable
-to imputed. Rows with \code{ignore} set to \code{TRUE} do not influence the
-parameters of the imputation model, but are still imputed. We may use the
-\code{ignore} argument to split \code{data} into a training set (on which the
-imputation model is built) and a test set (that does not influence the
-imputation model estimates).
-Note: Multivariate imputation methods, like \code{mice.impute.jomoImpute()}
-or \code{mice.impute.panImpute()}, do not honour the \code{ignore} argument.}
+\item{ignore}{A logical vector of \eqn{n} elements indicating
+which rows are ignored for estimating the parameters of
+the imputation model.
+Rows with \code{ignore} set to \code{TRUE} do not influence the
+parameters of the imputation model.
+The \code{ignore} argument allows splitting \code{data} into a
+training set (on which we fit the imputation model)
+and a test set (that does not influence the imputation
+model parameter estimates).
+The default \code{NULL} corresponds to all \code{FALSE}, thus
+including all rows into the imputation models.
+Note: Multivariate imputation methods,
+like \code{mice.impute.jomoImpute()} or
+\code{mice.impute.panImpute()}, do not honour the \code{ignore}
+argument.}
 
-\item{where}{A data frame or matrix with logicals of the same dimensions
-as \code{data} indicating where in the data the imputations should be
-created. The default, \code{where = is.na(data)}, specifies that the
-missing data should be imputed. The \code{where} argument may be used to
-overimpute observed data, or to skip imputations for selected missing values.
-Note: Imputation methods that generate imptutations outside of
-\code{mice}, like \code{mice.impute.panImpute()} may depend on a complete
-predictor space. In that case, a custom \code{where} matrix can not be
-specified.}
+\item{where}{A data frame or matrix of logicals with \eqn{n} rows
+and \eqn{p} columns, indicating the cells of \code{data} for
+which imputations are generated.
+The default \code{where = is.na(data)} specifies that all
+missing data are imputed.
+The \code{where} argument can overimpute cells
+with observed data, or skip imputation of specific missing
+cells. Be aware that the latter option could propagate
+missing values to other variables. See details.
+Note: Methods that generate multivariate imputations
+(e.g. \code{mice.impute.panImpute()}) do not honour the
+\code{where} argument.}
 
 \item{blocks}{List of vectors with variable names per block. List elements
 may be named to identify blocks. Variables within a block are
@@ -149,8 +163,8 @@ imputation.}
 functions.}
 }
 \value{
-Returns an S3 object of class \code{\link[=mids-class]{mids}}
-       (multiply imputed data set)
+Returns an S3 object of class \code{\link[=mids-class]{mids()}}
+(multiply imputed data set)
 }
 \description{
 The \pkg{mice} package implements a method to deal with missing data.
@@ -223,13 +237,13 @@ Built-in univariate imputation methods are:
 \code{polr}              \tab ordered \tab Proportional odds model\cr
 \code{polyreg}           \tab unordered\tab Polytomous logistic regression\cr
 \code{lda}               \tab unordered\tab Linear discriminant analysis\cr
-\code{2l.norm}           \tab numeric  \tab Level-1 normal heteroscedastic\cr
-\code{2l.lmer}           \tab numeric  \tab Level-1 normal homoscedastic, lmer\cr
-\code{2l.pan}            \tab numeric  \tab Level-1 normal homoscedastic, pan\cr
-\code{2l.bin}            \tab binary   \tab Level-1 logistic, glmer\cr
-\code{2lonly.mean}       \tab numeric  \tab Level-2 class mean\cr
-\code{2lonly.norm}       \tab numeric  \tab Level-2 class normal\cr
-\code{2lonly.pmm}        \tab any      \tab Level-2 class predictive mean matching
+\verb{2l.norm}           \tab numeric  \tab Level-1 normal heteroscedastic\cr
+\verb{2l.lmer}           \tab numeric  \tab Level-1 normal homoscedastic, lmer\cr
+\verb{2l.pan}            \tab numeric  \tab Level-1 normal homoscedastic, pan\cr
+\verb{2l.bin}            \tab binary   \tab Level-1 logistic, glmer\cr
+\verb{2lonly.mean}       \tab numeric  \tab Level-2 class mean\cr
+\verb{2lonly.norm}       \tab numeric  \tab Level-2 class normal\cr
+\verb{2lonly.pmm}        \tab any      \tab Level-2 class predictive mean matching
 }
 
 These corresponding functions are coded in the \code{mice} library under
@@ -243,17 +257,30 @@ mechanism allows uses to write customized imputation function,
 \code{method='myfunc'}.  To call it only for, say, column 2 specify
 \code{method=c('norm','myfunc','logreg',\dots{})}.
 
-\emph{Skipping imputation:} The user may skip imputation of a column by
-setting its entry to the empty method: \code{""}. For complete columns without
-missing data \code{mice} will automatically set the empty method. Setting t
-he empty method does not produce imputations for the column, so any missing
-cells remain \code{NA}. If column A contains \code{NA}'s and is used as
-predictor in the imputation model for column B, then \code{mice} produces no
-imputations for the rows in B where A is missing. The imputed data
-for B may thus contain \code{NA}'s. The remedy is to remove column A from
-the imputation model for the other columns in the data. This can be done
-by setting the entire column for variable A in the \code{predictorMatrix}
-equal to zero.
+\emph{Skipping imputation:} Imputation of variable (or variable block)
+\eqn{j} can be skipped by setting the empty method, \code{method[j] = ""}.
+On start-up, \code{mice()} will test whether variables within
+block \eqn{j} need imputation. If not, \code{mice()} takes two actions:
+It sets \code{method[j] <- ""} and it sets the rows of the \code{predictorMatrix} of
+the variables within block \eqn{j} to zero.
+
+\emph{BEWARE: Propagation of \code{NA}s}: Setting the empty method
+for an incomplete variable is legal and prevent \code{mice()}  from generating
+imputations for its missing cells. Sometimes this is wanted, but
+it may have a surprising side effect to due missing value propagation.
+For example, if column \code{"A"} contains \code{NA}'s and is a predictor in the
+imputation model for column \code{"B"}, then setting \code{method["A"] = ""} will
+propagate the missing data of \code{"A"} into \code{"B"} for the rows in \code{"B"}
+where \code{"A"} is missing. The imputed data for \code{"B"} thus contain \code{NA}'s.
+If this is not desired, apply one of the following two remedies:
+\enumerate{
+\item Remove column \code{"A"} as predictor from all imputation models, e.g.,
+by setting \code{predictorMatrix[, "A"] <- 0}, and re-impute.
+Or 2) Specify an imputation method for \code{"A"} and impute \code{"A"}. Optionally,
+after convergence manually replace any imputations for \code{"A"} by \code{NA}
+using \code{imp$imp$A[] <- NA}. In that case, \code{complete(imp, 1)} produces a
+dataset that is complete, except for column \code{"A"}.
+}
 
 \emph{Passive imputation:} \code{mice()} supports a special built-in method,
 called passive imputation. This method can be used to ensure that a data
@@ -266,8 +293,7 @@ Passive imputation maintains consistency among different transformations of
 the same data. Passive imputation is invoked if \code{~} is specified as the
 first character of the string that specifies the univariate method.
 \code{mice()} interprets the entire string, including the \code{~} character,
-as the formula argument in a call to \code{model.frame(formula,
-data[!r[,j],])}. This provides a simple mechanism for specifying deterministic
+as the formula argument in a call to \code{model.frame(formula, data[!r[,j],])}. This provides a simple mechanism for specifying deterministic
 dependencies among the columns. For example, suppose that the missing entries
 in variables \code{data$height} and \code{data$weight} are imputed. The body
 mass index (BMI) can be calculated within \code{mice} by specifying the
@@ -279,8 +305,7 @@ column make sense. An easy way to create consistency is by coding all entries
 in the target as \code{NA}, but for large data sets, this could be
 inefficient.  Note that you may also need to adapt the default
 \code{predictorMatrix} to evade linear dependencies among the predictors that
-could cause errors like \code{Error in solve.default()} or \code{Error:
-system is exactly singular}. Though not strictly needed, it is often useful
+could cause errors like \verb{Error in solve.default()} or \verb{Error: system is exactly singular}. Though not strictly needed, it is often useful
 to specify \code{visitSequence} such that the column that is imputed by the
 \code{~} mechanism is visited each time after one of its predictors was
 visited. In that way, deterministic relation between columns will always be
@@ -293,7 +318,7 @@ takes one of three inputs: \code{"qr"} for QR-decomposition, \code{"svd"} for
 singular value decomposition and \code{"ridge"} for ridge regression.
 \code{ls.meth} defaults to \code{ls.meth = "qr"}.
 
-\emph{Auxiliary predictors in formulas specification: }
+*Auxiliary predictors in formulas specification: *
 For a given block, the \code{formulas} specification takes precedence over
 the corresponding row in the \code{predictMatrix} argument. This
 precedence is, however, restricted to the subset of variables
@@ -311,11 +336,11 @@ argument \code{auxiliary = FALSE}.
 
 The main functions are:
 \tabular{ll}{
-  \code{mice()} \tab Impute the missing data *m* times\cr
-  \code{with()} \tab Analyze completed data sets\cr
-  \code{pool()} \tab Combine parameter estimates\cr
-  \code{complete()} \tab Export imputed data\cr
-  \code{ampute()} \tab Generate missing data\cr}
+\code{mice()} \tab Impute the missing data \emph{m} times\cr
+\code{with()} \tab Analyze completed data sets\cr
+\code{pool()} \tab Combine parameter estimates\cr
+\code{complete()} \tab Export imputed data\cr
+\code{ampute()} \tab Generate missing data\cr}
 }
 
 \section{Vignettes}{
@@ -400,15 +425,15 @@ complete(imp.test2, 2)
 \references{
 van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple
 imputation of missing blood pressure covariates in survival analysis.
-\emph{Statistics in Medicine}, \bold{18}, 681--694.
+\emph{Statistics in Medicine}, \strong{18}, 681--694.
 
 van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
 Fully conditional specification in multivariate imputation.  \emph{Journal of
-Statistical Computation and Simulation}, \bold{76}, 12, 1049--1064.
+Statistical Computation and Simulation}, \strong{76}, 12, 1049--1064.
 
 van Buuren, S., Groothuis-Oudshoorn, K. (2011). {\code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1--67. \doi{10.18637/jss.v045.i03}
+Statistical Software}, \strong{45}(3), 1--67. \doi{10.18637/jss.v045.i03}
 
 Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
@@ -416,7 +441,7 @@ Chapman & Hall/CRC. Boca Raton, FL.
 
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
+Statistical Software}, \strong{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 
 Van Buuren, S. (2018).
@@ -425,26 +450,26 @@ Chapman & Hall/CRC. Boca Raton, FL.
 
 Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
 Fully conditional specification in multivariate imputation.  \emph{Journal of
-Statistical Computation and Simulation}, \bold{76}, 12, 1049--1064.
+Statistical Computation and Simulation}, \strong{76}, 12, 1049--1064.
 
 Van Buuren, S. (2007) Multiple imputation of discrete and continuous data by
 fully conditional specification.  \emph{Statistical Methods in Medical
-Research}, \bold{16}, 3, 219--242.
+Research}, \strong{16}, 3, 219--242.
 
 Van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple imputation of
 missing blood pressure covariates in survival analysis.  \emph{Statistics in
-Medicine}, \bold{18}, 681--694.
+Medicine}, \strong{18}, 681--694.
 
 Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
 multiple imputation strategies for the statistical analysis of incomplete
 data sets.} Dissertation. Rotterdam: Erasmus University.
 }
 \seealso{
-\code{\link{mice}}, \code{\link{with.mids}},
-\code{\link{pool}}, \code{\link{complete}}, \code{\link{ampute}}
+\code{\link[=mice]{mice()}}, \code{\link[=with.mids]{with.mids()}},
+\code{\link[=pool]{pool()}}, \code{\link[=complete]{complete()}}, \code{\link[=ampute]{ampute()}}
 
-\code{\link[=mids-class]{mids}}, \code{\link{with.mids}},
-\code{\link{set.seed}}, \code{\link{complete}}
+\code{\link[=mids-class]{mids()}}, \code{\link[=with.mids]{with.mids()}},
+\code{\link[=set.seed]{set.seed()}}, \code{\link[=complete]{complete()}}
 }
 \author{
 Stef van Buuren \email{stef.vanbuuren@tno.nl}, Karin

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tidiers.R
 \name{tidy.mipo}
 \alias{tidy.mipo}
-\title{Tidy method to extract results from a `mipo` object}
+\title{Tidy method to extract results from a \code{mipo} object}
 \usage{
 \method{tidy}{mipo}(x, conf.int = FALSE, conf.level = 0.95, ...)
 }
@@ -18,22 +18,22 @@
 \value{
 A dataframe withh these columns:
 \itemize{
-     \item term
-     \item estimate
-     \item ubar
-     \item b
-     \item t
-     \item dfcom
-     \item df
-     \item riv
-     \item lambda
-     \item fmi
-     \item p.value
-     \item conf.low (if called with conf.int = TRUE)
-     \item conf.high (if called with conf.int = TRUE)
+\item term
+\item estimate
+\item ubar
+\item b
+\item t
+\item dfcom
+\item df
+\item riv
+\item lambda
+\item fmi
+\item p.value
+\item conf.low (if called with conf.int = TRUE)
+\item conf.high (if called with conf.int = TRUE)
 }
 }
 \description{
-Tidy method to extract results from a `mipo` object
+Tidy method to extract results from a \code{mipo} object
 }
 \keyword{internal}

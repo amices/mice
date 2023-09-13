@@ -34,7 +34,7 @@ The formula is evaluated on the complete data set in the \code{long} form.
 Legal variable names for the formula include \code{names(x$data)} plus the
 two administrative factors \code{.imp} and \code{.id}.
 
-\bold{Extended formula interface:} The primary variable terms (both the LHS
+\strong{Extended formula interface:} The primary variable terms (both the LHS
 \code{y} and RHS \code{x}) may consist of multiple terms separated by a
 \sQuote{+} sign, e.g., \code{y1 + y2 ~ x | a * b}.  This formula would be
 taken to mean that the user wants to plot both \code{y1 ~ x | a * b} and
@@ -60,11 +60,11 @@ in the LHS \code{y} variable of the display, i.e. groups created by
 differs from \code{na.groups} because it evaluates in the completed data
 \code{data.frame(complete(x, "long", inc=TRUE))} (as usual), whereas
 \code{na.groups} evaluates in the response indicator. See
-\code{\link{xyplot}} for more details. When both \code{na.groups} and
+\code{\link[=xyplot]{xyplot()}} for more details. When both \code{na.groups} and
 \code{groups} are specified, \code{na.groups} takes precedence, and
 \code{groups} is ignored.}
 
-\item{as.table}{See \code{\link[lattice:xyplot]{xyplot}}.}
+\item{as.table}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
 
 \item{theme}{A named list containing the graphical parameters. The default
 function \code{mice.theme} produces a short list of default colors, line
@@ -76,26 +76,26 @@ the global parameters. Many setting consists of a pair. For example,
 data, the second for the imputed data. The theme settings only exist during
 the call, and do not affect the trellis graphical parameters.}
 
-\item{allow.multiple}{See \code{\link[lattice:xyplot]{xyplot}}.}
+\item{allow.multiple}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
 
-\item{outer}{See \code{\link[lattice:xyplot]{xyplot}}.}
+\item{outer}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
 
-\item{drop.unused.levels}{See \code{\link[lattice:xyplot]{xyplot}}.}
+\item{drop.unused.levels}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
 
 \item{\dots}{Further arguments, usually not directly processed by the
 high-level functions documented here, but instead passed on to other
 functions.}
 
-\item{subscripts}{See \code{\link[lattice:xyplot]{xyplot}}.}
+\item{subscripts}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
 
-\item{subset}{See \code{\link[lattice:xyplot]{xyplot}}.}
+\item{subset}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
 }
 \value{
 The high-level functions documented here, as well as other high-level
 Lattice functions, return an object of class \code{"trellis"}.  The
-\code{\link[lattice:update.trellis]{update}} method can be used to
+\code{\link[lattice:update.trellis]{update()}} method can be used to
 subsequently update components of the object, and the
-\code{\link[lattice:print.trellis]{print}} method (usually called by default)
+\code{\link[lattice:print.trellis]{print()}} method (usually called by default)
 will plot it on an appropriate plotting device.
 }
 \description{
@@ -122,7 +122,7 @@ missing groups. \code{col[1]} is the color of the 'observed' data,
 \code{col[2]} is the color of the missing or imputed data. A convenient color
 choice is \code{col=mdc(1:2)}, a transparent blue color for the observed
 data, and a transparent red color for the imputed data. A good choice is
-\code{col=mdc(1:2), pch=20, cex=1.5}. These choices can be set for the
+\verb{col=mdc(1:2), pch=20, cex=1.5}. These choices can be set for the
 duration of the session by running \code{mice.theme()}.
 }
 \note{
@@ -155,15 +155,15 @@ Visualization with R}, Springer.
 
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link{mice}}, \code{\link{stripplot}}, \code{\link{densityplot}},
-\code{\link{bwplot}}, \code{\link{lattice}} for an overview of the
-package, as well as \code{\link[lattice:xyplot]{xyplot}},
-\code{\link[lattice:panel.xyplot]{panel.xyplot}},
-\code{\link[lattice:print.trellis]{print.trellis}},
-\code{\link[lattice:trellis.par.get]{trellis.par.set}}
+\code{\link[=mice]{mice()}}, \code{\link[=stripplot]{stripplot()}}, \code{\link[=densityplot]{densityplot()}},
+\code{\link[=bwplot]{bwplot()}}, \code{\link[=lattice]{lattice()}} for an overview of the
+package, as well as \code{\link[lattice:xyplot]{lattice::xyplot()}},
+\code{\link[lattice:panel.xyplot]{lattice::panel.xyplot()}},
+\code{\link[lattice:print.trellis]{lattice::print.trellis()}},
+\code{\link[lattice:trellis.par.get]{trellis.par.set()}}
 }
 \author{
 Stef van Buuren

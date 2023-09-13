@@ -1,117 +1,117 @@
 #' Combine R objects by rows and columns
 #'
-#' Functions \code{cbind()} and \code{rbind()} are defined in
-#' the \code{mice} package in order to
-#' enable dispatch to \code{cbind.mids()} and \code{rbind.mids()}
-#' when one of the arguments is a \code{data.frame}.
+#' Functions `cbind()` and `rbind()` are defined in
+#' the `mice` package in order to
+#' enable dispatch to `cbind.mids()` and `rbind.mids()`
+#' when one of the arguments is a `data.frame`.
 #'
-#' The standard \code{base::cbind()} and \code{base::rbind()}
+#' The standard `base::cbind()` and `base::rbind()`
 #' always dispatch to
-#' \code{base::cbind.data.frame()} or \code{base::rbind.data.frame()}
+#' `base::cbind.data.frame()` or `base::rbind.data.frame()`
 #' if one of the arguments is a
-#' \code{data.frame}. The versions defined in the \code{mice}
+#' `data.frame`. The versions defined in the `mice`
 #' package intercept the user command
-#' and test whether the first argument has class \code{"mids"}. If so,
-#' function calls \code{cbind.mids()}, respectively \code{rbind.mids()}. In
+#' and test whether the first argument has class `"mids"`. If so,
+#' function calls `cbind.mids()`, respectively `rbind.mids()`. In
 #' all other cases, the call is forwarded to standard functions in the
-#' \code{base} package.
+#' `base` package.
 #'
 #' @inheritDotParams base::cbind
 #' @details
-#' The \code{cbind.mids()} function combines two \code{mids} objects
+#' The `cbind.mids()` function combines two `mids` objects
 #' columnwise into a single
-#' object of class \code{mids}, or combines a single \code{mids} object with
-#' a \code{vector}, \code{matrix}, \code{factor} or \code{data.frame}
-#' columnwise into a \code{mids} object.
+#' object of class `mids`, or combines a single `mids` object with
+#' a `vector`, `matrix`, `factor` or `data.frame`
+#' columnwise into a `mids` object.
 #'
-#' If both arguments of \code{cbind.mids()} are \code{mids}-objects, the
-#' \code{data} list components should have the same number of rows. Also, the
-#' number of imputations (\code{m}) should be identical.
-#' If the second argument is a \code{matrix},
-#' \code{factor} or \code{vector}, it is transformed into a
-#' \code{data.frame}. The number of rows should match with the \code{data}
+#' If both arguments of `cbind.mids()` are `mids`-objects, the
+#' `data` list components should have the same number of rows. Also, the
+#' number of imputations (`m`) should be identical.
+#' If the second argument is a `matrix`,
+#' `factor` or `vector`, it is transformed into a
+#' `data.frame`. The number of rows should match with the `data`
 #' component of the first argument.
 #'
-#' The  \code{cbind.mids()} function renames any duplicated variable or block names by
-#' appending \code{".1"}, \code{".2"} to duplicated names.
+#' The  `cbind.mids()` function renames any duplicated variable or block names by
+#' appending `".1"`, `".2"` to duplicated names.
 #'
-#' The \code{rbind.mids()} function combines two \code{mids} objects rowwise into a single
-#' \code{mids} object, or combines a \code{mids} object with a vector, matrix,
-#' factor or data frame rowwise into a \code{mids} object.
+#' The `rbind.mids()` function combines two `mids` objects rowwise into a single
+#' `mids` object, or combines a `mids` object with a vector, matrix,
+#' factor or data frame rowwise into a `mids` object.
 #'
-#' If both arguments of \code{rbind.mids()} are \code{mids} objects,
-#' then \code{rbind.mids()} requires that both have the same number of multiple
-#' imputations. In addition, their \code{data} components should match.
+#' If both arguments of `rbind.mids()` are `mids` objects,
+#' then `rbind.mids()` requires that both have the same number of multiple
+#' imputations. In addition, their `data` components should match.
 #'
-#' If the second argument of \code{rbind.mids()} is not a \code{mids} object,
-#' the columns of the arguments should match. The \code{where} matrix for the
-#' second argument is set to \code{FALSE}, signalling that any missing values in
-#' that argument were not imputed. The \code{ignore} vector for the second argument is
-#' set to \code{FALSE}. Rows inherited from the second argument will therefore
+#' If the second argument of `rbind.mids()` is not a `mids` object,
+#' the columns of the arguments should match. The `where` matrix for the
+#' second argument is set to `FALSE`, signalling that any missing values in
+#' that argument were not imputed. The `ignore` vector for the second argument is
+#' set to `FALSE`. Rows inherited from the second argument will therefore
 #' influence the parameter estimation of the imputation model in any future
 #' iterations.
 #
 #' @note
-#' The \code{cbind.mids()} function constructs the elements of the new \code{mids} object as follows:
+#' The `cbind.mids()` function constructs the elements of the new `mids` object as follows:
 #' \tabular{ll}{
-#' \code{data}     \tab Columnwise combination of the data in \code{x} and \code{y}\cr
-#' \code{imp}      \tab Combines the imputed values from \code{x} and \code{y}\cr
-#' \code{m}        \tab Taken from \code{x$m}\cr
-#' \code{where}    \tab Columnwise combination of \code{x$where} and \code{y$where}\cr
-#' \code{blocks}   \tab Combines \code{x$blocks} and \code{y$blocks}\cr
-#' \code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]}
-#' is call to \code{cbind.mids()}\cr
-#' \code{nmis}     \tab Equals \code{c(x$nmis, y$nmis)}\cr
-#' \code{method}   \tab Combines \code{x$method} and \code{y$method}\cr
-#' \code{predictorMatrix} \tab Combination with zeroes on the off-diagonal blocks\cr
-#' \code{visitSequence}   \tab Combined as \code{c(x$visitSequence, y$visitSequence)}\cr
-#' \code{formulas}  \tab Combined as \code{c(x$formulas, y$formulas)}\cr
-#' \code{post}      \tab Combined as \code{c(x$post, y$post)}\cr
-#' \code{blots}     \tab Combined as \code{c(x$blots, y$blots)}\cr
-#' \code{ignore}    \tab Taken from \code{x$ignore}\cr
-#' \code{seed}            \tab Taken from \code{x$seed}\cr
-#' \code{iteration}       \tab Taken from \code{x$iteration}\cr
-#' \code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
-#' \code{chainMean}       \tab Combined from \code{x$chainMean} and \code{y$chainMean}\cr
-#' \code{chainVar}        \tab Combined from \code{x$chainVar} and \code{y$chainVar}\cr
-#' \code{loggedEvents}    \tab Taken from \code{x$loggedEvents}\cr
-#' \code{version}    \tab Current package version\cr
-#' \code{date}       \tab Current date\cr
+#' `data`     \tab Columnwise combination of the data in `x` and `y`\cr
+#' `imp`      \tab Combines the imputed values from `x` and `y`\cr
+#' `m`        \tab Taken from `x$m`\cr
+#' `where`    \tab Columnwise combination of `x$where` and `y$where`\cr
+#' `blocks`   \tab Combines `x$blocks` and `y$blocks`\cr
+#' `call`     \tab Vector, `call[1]` creates `x`, `call[2]`
+#' is call to `cbind.mids()`\cr
+#' `nmis`     \tab Equals `c(x$nmis, y$nmis)`\cr
+#' `method`   \tab Combines `x$method` and `y$method`\cr
+#' `predictorMatrix` \tab Combination with zeroes on the off-diagonal blocks\cr
+#' `visitSequence`   \tab Combined as `c(x$visitSequence, y$visitSequence)`\cr
+#' `formulas`  \tab Combined as `c(x$formulas, y$formulas)`\cr
+#' `post`      \tab Combined as `c(x$post, y$post)`\cr
+#' `blots`     \tab Combined as `c(x$blots, y$blots)`\cr
+#' `ignore`    \tab Taken from `x$ignore`\cr
+#' `seed`            \tab Taken from `x$seed`\cr
+#' `iteration`       \tab Taken from `x$iteration`\cr
+#' `lastSeedValue`   \tab Taken from `x$lastSeedValue`\cr
+#' `chainMean`       \tab Combined from `x$chainMean` and `y$chainMean`\cr
+#' `chainVar`        \tab Combined from `x$chainVar` and `y$chainVar`\cr
+#' `loggedEvents`    \tab Taken from `x$loggedEvents`\cr
+#' `version`    \tab Current package version\cr
+#' `date`       \tab Current date\cr
 #' }
 #'
-#' The  \code{rbind.mids()} function constructs the elements of the new \code{mids} object as follows:
+#' The  `rbind.mids()` function constructs the elements of the new `mids` object as follows:
 #' \tabular{ll}{
-#' \code{data}     \tab Rowwise combination of the (incomplete) data in \code{x} and \code{y}\cr
-#' \code{imp}      \tab Equals \code{rbind(x$imp[[j]], y$imp[[j]])} if \code{y} is \code{mids} object; otherwise
-#' the data of \code{y} will be copied\cr
-#' \code{m}        \tab Equals \code{x$m}\cr
-#' \code{where}    \tab Rowwise combination of \code{where} arguments\cr
-#' \code{blocks}   \tab Equals \code{x$blocks}\cr
-#' \code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]} is call to \code{rbind.mids}\cr
-#' \code{nmis}     \tab \code{x$nmis} + \code{y$nmis}\cr
-#' \code{method}   \tab Taken from \code{x$method}\cr
-#' \code{predictorMatrix} \tab Taken from \code{x$predictorMatrix}\cr
-#' \code{visitSequence}   \tab Taken from \code{x$visitSequence}\cr
-#' \code{formulas}  \tab Taken from \code{x$formulas}\cr
-#' \code{post}      \tab Taken from \code{x$post}\cr
-#' \code{blots}     \tab Taken from \code{x$blots}\cr
-#' \code{ignore}    \tab Concatenate \code{x$ignore} and \code{y$ignore}\cr
-#' \code{seed}            \tab Taken from \code{x$seed}\cr
-#' \code{iteration}       \tab Taken from \code{x$iteration}\cr
-#' \code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
-#' \code{chainMean}       \tab Set to \code{NA}\cr
-#' \code{chainVar}        \tab Set to \code{NA}\cr
-#' \code{loggedEvents}    \tab Taken from \code{x$loggedEvents}\cr
-#' \code{version}    \tab Taken from \code{x$version}\cr
-#' \code{date}       \tab Taken from \code{x$date}
+#' `data`     \tab Rowwise combination of the (incomplete) data in `x` and `y`\cr
+#' `imp`      \tab Equals `rbind(x$imp[[j]], y$imp[[j]])` if `y` is `mids` object; otherwise
+#' the data of `y` will be copied\cr
+#' `m`        \tab Equals `x$m`\cr
+#' `where`    \tab Rowwise combination of `where` arguments\cr
+#' `blocks`   \tab Equals `x$blocks`\cr
+#' `call`     \tab Vector, `call[1]` creates `x`, `call[2]` is call to `rbind.mids`\cr
+#' `nmis`     \tab `x$nmis` + `y$nmis`\cr
+#' `method`   \tab Taken from `x$method`\cr
+#' `predictorMatrix` \tab Taken from `x$predictorMatrix`\cr
+#' `visitSequence`   \tab Taken from `x$visitSequence`\cr
+#' `formulas`  \tab Taken from `x$formulas`\cr
+#' `post`      \tab Taken from `x$post`\cr
+#' `blots`     \tab Taken from `x$blots`\cr
+#' `ignore`    \tab Concatenate `x$ignore` and `y$ignore`\cr
+#' `seed`            \tab Taken from `x$seed`\cr
+#' `iteration`       \tab Taken from `x$iteration`\cr
+#' `lastSeedValue`   \tab Taken from `x$lastSeedValue`\cr
+#' `chainMean`       \tab Set to `NA`\cr
+#' `chainVar`        \tab Set to `NA`\cr
+#' `loggedEvents`    \tab Taken from `x$loggedEvents`\cr
+#' `version`    \tab Taken from `x$version`\cr
+#' `date`       \tab Taken from `x$date`
 #' }
-#' @return An S3 object of class \code{mids}
+#' @return An S3 object of class `mids`
 #' @author Karin Groothuis-Oudshoorn, Stef van Buuren
-#' @seealso \code{\link[base:cbind]{cbind}}, \code{\link{ibind}},
-#' \code{\link[=mids-class]{mids}}
-#' @references van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
-#' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-#' Statistical Software}, \bold{45}(3), 1-67.
+#' @seealso [base::cbind()], [ibind()],
+#' [`mids()`][mids-class]
+#' @references van Buuren S and Groothuis-Oudshoorn K (2011). `mice`:
+#' Multivariate Imputation by Chained Equations in `R`. *Journal of
+#' Statistical Software*, **45**(3), 1-67.
 #' \doi{10.18637/jss.v045.i03}
 #' @keywords manip
 #' @examples

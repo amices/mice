@@ -12,7 +12,7 @@ For each case, a value between 1 and #patterns is given. For example, a
 case with value 2 is candidate for missing data pattern 2.}
 
 \item{scores}{A list containing vectors with the candidates's weighted sum scores,
-the result of an underlying function in \code{\link{ampute}}.}
+the result of an underlying function in \code{\link[=ampute]{ampute()}}.}
 
 \item{prop}{A scalar specifying the proportion of missingness. Should be a value
 between 0 and 1. Default is a missingness proportion of 0.5.}
@@ -22,7 +22,7 @@ pattern. Either \code{"LEFT"}, \code{"MID"}, \code{"TAIL"} or '\code{"RIGHT"}.
 If a single missingness type is entered, all patterns will be created by the same
 type. If missingness types should differ over patterns, a vector of missingness
 types should be entered. Default is RIGHT for all patterns and is the result of
-\code{\link{ampute.default.type}}.}
+\code{\link[=ampute.default.type]{ampute.default.type()}}.}
 }
 \value{
 A list containing vectors with \code{0} if a case should be made missing
@@ -33,7 +33,7 @@ first pattern, the second vector to the second pattern, etcetera.
 This function creates a missing data indicator for each pattern. The continuous
 probability distributions (Van Buuren, 2012, pp. 63, 64) will be induced on the
 weighted sum scores, calculated earlier in the multivariate amputation function
-\code{\link{ampute}}.
+\code{\link[=ampute]{ampute()}}.
 }
 \references{
 #'Van Buuren, S. (2018).
@@ -41,9 +41,9 @@ weighted sum scores, calculated earlier in the multivariate amputation function
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
-\code{\link{ampute}}, \code{\link{ampute.default.type}}
+\code{\link[=ampute]{ampute()}}, \code{\link[=ampute.default.type]{ampute.default.type()}}
 }
 \author{
-Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
+Rianne Schouten (aut, cre), Gerko Vink (aut), Peter Lugtig (ctb), 2016
 }
 \keyword{internal}

@@ -2,22 +2,22 @@
 #'
 #' Performs a computation of each of imputed datasets in data.
 #'
-#' @param data An object of type \code{mids}, which stands for 'multiply imputed
-#' data set', typically created by a call to function \code{mice()}.
+#' @param data An object of type `mids`, which stands for 'multiply imputed
+#' data set', typically created by a call to function `mice()`.
 #' @param expr An expression to evaluate for each imputed data set. Formula's
 #' containing a dot (notation for "all other variables") do not work.
 #' @param \dots Not used
-#' @return An object of S3 class \code{\link[=mira-class]{mira}}
+#' @return An object of S3 class [`mira()`][mira-class]
 #' @note Version 3.11.10 changed to tidy evaluation on a quosure. This change
 #' should not affect any code that worked on previous versions.
 #' It turned out that the latter statement was not true (#292).
-#' Version 3.12.2 reverts to the old \code{with()} function.
+#' Version 3.12.2 reverts to the old `with()` function.
 #' @author Karin Oudshoorn, Stef van Buuren 2009, 2012, 2020
-#' @seealso \code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}, \code{\link{pool}},
-#' \code{\link{D1}}, \code{\link{D3}}, \code{\link{pool.r.squared}}
-#' @references van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
-#' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-#' Statistical Software}, \bold{45}(3), 1-67.
+#' @seealso [`mids()`][mids-class], [`mira()`][mira-class], [pool()],
+#' [D1()], [D3()], [pool.r.squared()]
+#' @references van Buuren S and Groothuis-Oudshoorn K (2011). `mice`:
+#' Multivariate Imputation by Chained Equations in `R`. *Journal of
+#' Statistical Software*, **45**(3), 1-67.
 #' \doi{10.18637/jss.v045.i03}
 #' @keywords multivariate
 #' @examples

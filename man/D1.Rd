@@ -24,7 +24,7 @@ be done, the procedure assumes (perhaps incorrectly) a large sample.}
 The D1-statistics is the multivariate Wald test.
 }
 \note{
-Warning: `D1()` assumes that the order of the variables is the
+Warning: \code{D1()} assumes that the order of the variables is the
 same in different models. See
 \url{https://github.com/amices/mice/issues/420} for details.
 }
@@ -51,5 +51,5 @@ Moment-Based Statistics and an F Reference Distribution.
 \url{https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:wald}
 }
 \seealso{
-\code{\link[mitml]{testModels}}
+\code{\link[mitml:testModels]{mitml::testModels()}}
 }

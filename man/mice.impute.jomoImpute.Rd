@@ -23,10 +23,10 @@ present in the imputed datasets.}
 in the imputation model. The basic model is constructed
 by \code{model.matrix}, thus allowing to include derived variables
 in the imputation model using \code{I()}. See
-\code{\link[mitml]{jomoImpute}}.}
+\code{\link[mitml:jomoImpute]{mitml::jomoImpute()}}.}
 
 \item{type}{An integer vector specifying the role of each variable
-in the imputation model (see \code{\link[mitml]{jomoImpute}})}
+in the imputation model (see \code{\link[mitml:jomoImpute]{mitml::jomoImpute()}})}
 
 \item{m}{The number of imputed data sets to generate. Default is 10.}
 
@@ -83,7 +83,7 @@ and studies with missing covariates. Statistics in Medicine,
 35:2938-2954, 2015.
 }
 \seealso{
-\code{\link[mitml]{jomoImpute}}
+\code{\link[mitml:jomoImpute]{mitml::jomoImpute()}}
 
 Other multivariate-2l: 
 \code{\link{mice.impute.panImpute}()}

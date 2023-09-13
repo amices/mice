@@ -39,11 +39,11 @@ Print a \code{mice.anova} object
 Print a \code{summary.mice.anova} object
 }
 \seealso{
-\code{\link[=mids-class]{mids}}
+\code{\link[=mids-class]{mids()}}
 
-\code{\link[=mira-class]{mira}}
+\code{\link[=mira-class]{mira()}}
 
-\code{\link{mipo}}
+\code{\link[=mipo]{mipo()}}
 
-\code{\link{mipo}}
+\code{\link[=mipo]{mipo()}}
 }

@@ -2,46 +2,46 @@
 #' @export
 dplyr::filter
 
-#' Subset rows of a \code{mids} object
+#' Subset rows of a `mids` object
 #'
-#' This function takes a \code{mids} object and returns a new
-#' \code{mids} object that pertains to the subset of the data
+#' This function takes a `mids` object and returns a new
+#' `mids` object that pertains to the subset of the data
 #' identified by the expression in \dots. The expression may use
-#' column values from the incomplete data in \code{.data$data}.
+#' column values from the incomplete data in `.data$data`.
 #'
-#' @param .data A \code{mids} object.
+#' @param .data A `mids` object.
 #' @param ... Expressions that return a
-#'   logical value, and are defined in terms of the variables in \code{.data$data}.
-#'   If multiple expressions are specified, they are combined with the \code{&} operator.
-#'   Only rows for which all conditions evaluate to \code{TRUE} are kept.
+#'   logical value, and are defined in terms of the variables in `.data$data`.
+#'   If multiple expressions are specified, they are combined with the `&` operator.
+#'   Only rows for which all conditions evaluate to `TRUE` are kept.
 #' @inheritParams dplyr::filter
-#' @seealso \code{\link[dplyr]{filter}}
-#' @return An S3 object of class \code{mids}
-#' @note The function calculates a logical vector \code{include} of length \code{nrow(.data$data)}.
-#' The function constructs the elements of the filtered \code{mids} object as follows:
+#' @seealso [dplyr::filter()]
+#' @return An S3 object of class `mids`
+#' @note The function calculates a logical vector `include` of length `nrow(.data$data)`.
+#' The function constructs the elements of the filtered `mids` object as follows:
 #' \tabular{ll}{
-#' \code{data}     \tab Select rows in \code{.data$data} for which \code{include == TRUE}\cr
-#' \code{imp}      \tab Select rows each imputation \code{data.frame} in \code{.data$imp} for which \code{include == TRUE}\cr
-#' \code{m}        \tab Equals \code{.data$m}\cr
-#' \code{where}    \tab Select rows in \code{.data$where} for which \code{include == TRUE}\cr
-#' \code{blocks}   \tab Equals \code{.data$blocks}\cr
-#' \code{call}     \tab Equals \code{.data$call}\cr
-#' \code{nmis}     \tab Recalculate \code{nmis} based on the selected \code{data} rows\cr
-#' \code{method}   \tab Equals \code{.data$method}\cr
-#' \code{predictorMatrix} \tab Equals \code{.data$predictorMatrix}\cr
-#' \code{visitSequence}   \tab Equals \code{.data$visitSequence}\cr
-#' \code{formulas}  \tab Equals \code{.data$formulas}\cr
-#' \code{post}      \tab Equals \code{.data$post}\cr
-#' \code{blots}     \tab Equals \code{.data$blots}\cr
-#' \code{ignore}    \tab Select positions in \code{.data$ignore} for which \code{include == TRUE}\cr
-#' \code{seed}            \tab Equals \code{.data$seed}\cr
-#' \code{iteration}       \tab Equals \code{.data$iteration}\cr
-#' \code{lastSeedValue}   \tab Equals \code{.data$lastSeedValue}\cr
-#' \code{chainMean}       \tab Set to \code{NULL}\cr
-#' \code{chainVar}        \tab Set to \code{NULL}\cr
-#' \code{loggedEvents}    \tab Equals \code{.data$loggedEvents}\cr
-#' \code{version}    \tab Replaced with current version\cr
-#' \code{date}       \tab Replaced with current date
+#' `data`     \tab Select rows in `.data$data` for which `include == TRUE`\cr
+#' `imp`      \tab Select rows each imputation `data.frame` in `.data$imp` for which `include == TRUE`\cr
+#' `m`        \tab Equals `.data$m`\cr
+#' `where`    \tab Select rows in `.data$where` for which `include == TRUE`\cr
+#' `blocks`   \tab Equals `.data$blocks`\cr
+#' `call`     \tab Equals `.data$call`\cr
+#' `nmis`     \tab Recalculate `nmis` based on the selected `data` rows\cr
+#' `method`   \tab Equals `.data$method`\cr
+#' `predictorMatrix` \tab Equals `.data$predictorMatrix`\cr
+#' `visitSequence`   \tab Equals `.data$visitSequence`\cr
+#' `formulas`  \tab Equals `.data$formulas`\cr
+#' `post`      \tab Equals `.data$post`\cr
+#' `blots`     \tab Equals `.data$blots`\cr
+#' `ignore`    \tab Select positions in `.data$ignore` for which `include == TRUE`\cr
+#' `seed`            \tab Equals `.data$seed`\cr
+#' `iteration`       \tab Equals `.data$iteration`\cr
+#' `lastSeedValue`   \tab Equals `.data$lastSeedValue`\cr
+#' `chainMean`       \tab Set to `NULL`\cr
+#' `chainVar`        \tab Set to `NULL`\cr
+#' `loggedEvents`    \tab Equals `.data$loggedEvents`\cr
+#' `version`    \tab Replaced with current version\cr
+#' `date`       \tab Replaced with current date
 #' }
 #' @author Patrick Rockenschaub
 #' @keywords manip

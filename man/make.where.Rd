@@ -36,5 +36,5 @@ fit <- with(imp, lm(chl ~ bmi + age + hyp))
 summary(pool.syn(fit))
 }
 \seealso{
-\code{\link{make.blocks}}, \code{\link{make.predictorMatrix}}
+\code{\link[=make.blocks]{make.blocks()}}, \code{\link[=make.predictorMatrix]{make.predictorMatrix()}}
 }

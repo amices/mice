@@ -16,7 +16,7 @@ A \code{vector}, \code{matrix} or \code{data.frame} containing the data of the c
 }
 \description{
 Extracts incomplete cases from a data set.
-The companion function for selecting the complete cases is \code{\link{cc}}.
+The companion function for selecting the complete cases is \code{\link[=cc]{cc()}}.
 }
 \examples{
 
@@ -25,7 +25,7 @@ ic(nhanes[1:10, ]) # incomplete cases within the first ten rows
 ic(nhanes[, c("bmi", "hyp")]) # restrict extraction to variables bmi and hyp
 }
 \seealso{
-\code{\link{cc}}, \code{\link{ici}}
+\code{\link[=cc]{cc()}}, \code{\link[=ici]{ici()}}
 }
 \author{
 Stef van Buuren, 2017.

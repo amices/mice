@@ -68,20 +68,20 @@ The call to \code{polr} might fail, usually because the data are very sparse.
 In that case, \code{multinom} is tried as a fallback.
 If the local flag \code{polr.to.loggedEvents} is set to TRUE,
 a record is written
-to the \code{loggedEvents} component of the \code{\link{mids}} object.
+to the \code{loggedEvents} component of the \code{\link[=mids]{mids()}} object.
 Use \code{mice(data, polr.to.loggedEvents = TRUE)} to set the flag.
 }
 \note{
 In December 2019 Simon White alerted that the
 \code{polr} could always fail silently. I can confirm this behaviour for
-versions \code{mice 3.0.0 - mice 3.6.6}, so any method requests
+versions \verb{mice 3.0.0 - mice 3.6.6}, so any method requests
 for \code{polr} in these versions were in fact handled by \code{multinom}.
 See \url{https://github.com/amices/mice/issues/206} for details.
 }
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 
 Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
 multiple imputation strategies for the statistical analysis of incomplete
@@ -95,8 +95,8 @@ Venables, W.N. & Ripley, B.D. (2002). \emph{Modern applied statistics with
 S-Plus (4th ed)}. Springer, Berlin.
 }
 \seealso{
-\code{\link{mice}}, \code{\link[nnet]{multinom}},
-\code{\link[MASS]{polr}}
+\code{\link[=mice]{mice()}}, \code{\link[nnet:multinom]{nnet::multinom()}},
+\code{\link[MASS:polr]{MASS::polr()}}
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},

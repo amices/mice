@@ -1,6 +1,6 @@
 #' Multivariate Imputation by Chained Equations (Iteration Step)
 #'
-#' Takes a \code{mids} object, and produces a new object of class \code{mids}.
+#' Takes a `mids` object, and produces a new object of class `mids`.
 #'
 #' This function enables the user to split up the computations of the Gibbs
 #' sampler into smaller parts. This is useful for the following reasons:
@@ -9,26 +9,26 @@
 #' problems.  \item The user can compute customized convergence statistics at
 #' specific points, e.g. after each iteration, for monitoring convergence.  -
 #' For computing a 'few extra iterations'.  } Note: The imputation model itself
-#' is specified in the \code{mice()} function and cannot be changed with
-#' \code{mice.mids}.  The state of the random generator is saved with the
-#' \code{mids} object.
+#' is specified in the `mice()` function and cannot be changed with
+#' `mice.mids`.  The state of the random generator is saved with the
+#' `mids` object.
 #'
-#' @param obj An object of class \code{mids}, typically produces by a previous
-#' call to \code{mice()} or \code{mice.mids()}
-#' @param newdata An optional \code{data.frame} for which multiple imputations
-#' are generated according to the model in \code{obj}.
+#' @param obj An object of class `mids`, typically produces by a previous
+#' call to `mice()` or `mice.mids()`
+#' @param newdata An optional `data.frame` for which multiple imputations
+#' are generated according to the model in `obj`.
 #' @param maxit The number of additional Gibbs sampling iterations.
-#' @param printFlag A Boolean flag. If \code{TRUE}, diagnostic information
+#' @param printFlag A Boolean flag. If `TRUE`, diagnostic information
 #' during the Gibbs sampling iterations will be written to the command window.
-#' The default is \code{TRUE}.
+#' The default is `TRUE`.
 #' @param ... Named arguments that are passed down to the univariate imputation
 #' functions.
 #' @author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-#' @seealso \code{\link{complete}}, \code{\link{mice}}, \code{\link{set.seed}},
-#' \code{\link[=mids-class]{mids}}
-#' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
-#' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-#' Statistical Software}, \bold{45}(3), 1-67.
+#' @seealso [complete()], [mice()], [set.seed()],
+#' [`mids()`][mids-class]
+#' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`:
+#' Multivariate Imputation by Chained Equations in `R`. *Journal of
+#' Statistical Software*, **45**(3), 1-67.
 #' \doi{10.18637/jss.v045.i03}
 #' @keywords iteration
 #' @examples

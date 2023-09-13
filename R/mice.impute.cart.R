@@ -5,26 +5,26 @@
 #' @aliases mice.impute.cart cart
 #'
 #' @inheritParams mice.impute.pmm
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @param minbucket The minimum number of observations in any terminal node used.
-#' See \code{\link{rpart.control}} for details.
+#' See [rpart.control()] for details.
 #' @param cp Complexity parameter. Any split that does not decrease the overall
-#' lack of fit by a factor of cp is not attempted. See \code{\link{rpart.control}}
+#' lack of fit by a factor of cp is not attempted. See [rpart.control()]
 #' for details.
-#' @param ... Other named arguments passed down to \code{rpart()}.
-#' @return Numeric vector of length \code{sum(!ry)} with imputations
+#' @param ... Other named arguments passed down to `rpart()`.
+#' @return Numeric vector of length `sum(!ry)` with imputations
 #' @details
-#' Imputation of \code{y} by classification and regression trees. The procedure
+#' Imputation of `y` by classification and regression trees. The procedure
 #' is as follows:
 #' \enumerate{
 #' \item Fit a classification or regression tree by recursive partitioning;
-#' \item For each \code{ymis}, find the terminal node they end up according to the fitted tree;
+#' \item For each `ymis`, find the terminal node they end up according to the fitted tree;
 #' \item Make a random draw among the member in the node, and take the observed value from that
 #' draw as the imputation.
 #' }
-#' @seealso \code{\link{mice}}, \code{\link{mice.impute.rf}},
-#' \code{\link[rpart]{rpart}}, \code{\link[rpart]{rpart.control}}
+#' @seealso [mice()], [mice.impute.rf()],
+#' [rpart::rpart()], [rpart::rpart.control()]
 #' @author Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012
 #' @references
 #'
@@ -37,7 +37,7 @@
 #' Brooks/Cole Advanced Books & Software.
 #'
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-cart.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-cart.html)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #' @family univariate imputation functions

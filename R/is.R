@@ -1,40 +1,40 @@
-#' Check for \code{mids} object
+#' Check for `mids` object
 #'
 #' @aliases is.mids
 #' @param x An object
-#' @return A logical indicating whether \code{x} is an object of class \code{mids}
+#' @return A logical indicating whether `x` is an object of class `mids`
 #' @export
 is.mids <- function(x) {
   inherits(x, "mids")
 }
 
-#' Check for \code{mira} object
+#' Check for `mira` object
 #'
 #' @aliases is.mira
 #' @param x An object
-#' @return A logical indicating whether \code{x} is an object of class \code{mira}
+#' @return A logical indicating whether `x` is an object of class `mira`
 #' @export
 is.mira <- function(x) {
   inherits(x, "mira")
 }
 
 
-#' Check for \code{mipo} object
+#' Check for `mipo` object
 #'
 #' @aliases is.mipo
 #' @param x An object
-#' @return A logical indicating whether \code{x} is an object of class \code{mipo}
+#' @return A logical indicating whether `x` is an object of class `mipo`
 #' @export
 is.mipo <- function(x) {
   inherits(x, "mipo")
 }
 
 
-#' Check for \code{mitml.result} object
+#' Check for `mitml.result` object
 #'
 #' @aliases is.mitml.result
 #' @param x An object
-#' @return A logical indicating whether \code{x} is an object of class \code{mitml.result}
+#' @return A logical indicating whether `x` is an object of class `mitml.result`
 #' @export
 is.mitml.result <- function(x) {
   inherits(x, "mitml.result")
@@ -46,11 +46,11 @@ is.passive <- function(string) {
 }
 
 
-#' Check for \code{mads} object
+#' Check for `mads` object
 #'
 #' @aliases is.mads
 #' @param x An object
-#' @return A logical indicating whether \code{x} is an object of class \code{mads}
+#' @return A logical indicating whether `x` is an object of class `mads`
 #' @export
 is.mads <- function(x) {
   inherits(x, "mads")

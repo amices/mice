@@ -11,13 +11,13 @@
 #' @docType data
 #' @format A data frame with 1908 observations on the following 5 variables:
 #'   \describe{
-#'   \item{\code{ID}}{a numeric vector giving the ID of patient}
-#'   \item{\code{outcome}}{a numeric vector giving the response
+#'   \item{`ID`}{a numeric vector giving the ID of patient}
+#'   \item{`outcome`}{a numeric vector giving the response
 #'   (0=none or mild seperation, 1=moderate or severe)}
-#'   \item{\code{treatment}}{a numeric vector giving the treatment group}
-#'   \item{\code{month}}{a numeric vector giving the time of the visit
+#'   \item{`treatment`}{a numeric vector giving the treatment group}
+#'   \item{`month`}{a numeric vector giving the time of the visit
 #'   (not exactly monthly intervals hence not round numbers)}
-#'   \item{\code{visit}}{a numeric vector giving the number of the visit}
+#'   \item{`visit`}{a numeric vector giving the number of the visit}
 #'   }
 #' @source
 #' De Backer, M., De Vroey, C., Lesaffre, E., Scheys, I., and De
@@ -34,11 +34,11 @@
 #' Wiley and Sons, New York, USA.
 #'
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-catoutcome.html#example}{\emph{Flexible
-#' Imputation of Missing Data. Second Edition.}} Chapman & Hall/CRC.
+#' [*Flexible
+#' Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-catoutcome.html#example) Chapman & Hall/CRC.
 #' Boca Raton, FL.
 #' @keywords datasets
-#' @seealso \code{\link{toenail2}}
-#' @details This dataset was copied from the \code{DPpackage}, which is
+#' @seealso [toenail2()]
+#' @details This dataset was copied from the `DPpackage`, which is
 #' scheduled to be discontinued from CRAN in August 2019.
 NULL

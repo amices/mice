@@ -24,6 +24,6 @@ current device is unknown.
 supports.transparent()
 }
 \seealso{
-\code{\link{mdc}} \code{\link{dev.capabilities}}
+\code{\link[=mdc]{mdc()}} \code{\link[=dev.capabilities]{dev.capabilities()}}
 }
 \keyword{hplot}

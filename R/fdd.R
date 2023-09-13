@@ -14,7 +14,7 @@
 #' @name fdd
 #' @aliases fdd fdd.pred
 #' @docType data
-#' @format \code{fdd} is a data frame with 52 rows and 65 columns:
+#' @format `fdd` is a data frame with 52 rows and 65 columns:
 #' \describe{
 #' \item{id}{Client number}
 #' \item{trt}{Treatment (E=EMDR, C=CBT)}
@@ -82,16 +82,16 @@
 #' \item{bir2}{Birlison T2}
 #' \item{bir3}{Birlison T3}
 #' }
-#' \code{fdd.pred} is the 65 by 65 binary
-#' predictor matrix used to impute \code{fdd}.
+#' `fdd.pred` is the 65 by 65 binary
+#' predictor matrix used to impute `fdd`.
 #' @source de Roos, C., Greenwald, R., den Hollander-Gijsman, M., Noorthoorn,
 #' E., van Buuren, S., de Jong, A. (2011). A Randomised Comparison of Cognitive
 #' Behavioral Therapy (CBT) and Eye Movement Desensitisation and Reprocessing
-#' (EMDR) in disaster-exposed children. \emph{European Journal of
-#' Psychotraumatology}, \emph{2}, 5694.
+#' (EMDR) in disaster-exposed children. *European Journal of
+#' Psychotraumatology*, *2*, 5694.
 #'
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-fdd.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-fdd.html)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' Boca Raton, FL.: Chapman & Hall/CRC Press.
 #' @keywords datasets

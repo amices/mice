@@ -3,29 +3,29 @@
 #' This function creates a missing data indicator for each pattern. The continuous
 #' probability distributions (Van Buuren, 2012, pp. 63, 64) will be induced on the
 #' weighted sum scores, calculated earlier in the multivariate amputation function
-#' \code{\link{ampute}}.
+#' [ampute()].
 #'
 #' @param P A vector containing the pattern numbers of the cases's candidacies.
 #' For each case, a value between 1 and #patterns is given. For example, a
 #' case with value 2 is candidate for missing data pattern 2.
 #' @param scores A list containing vectors with the candidates's weighted sum scores,
-#' the result of an underlying function in \code{\link{ampute}}.
+#' the result of an underlying function in [ampute()].
 #' @param prop A scalar specifying the proportion of missingness. Should be a value
 #' between 0 and 1. Default is a missingness proportion of 0.5.
 #' @param type A vector of strings containing the type of missingness for each
-#' pattern. Either \code{"LEFT"}, \code{"MID"}, \code{"TAIL"} or '\code{"RIGHT"}.
+#' pattern. Either `"LEFT"`, `"MID"`, `"TAIL"` or '`"RIGHT"`.
 #' If a single missingness type is entered, all patterns will be created by the same
 #' type. If missingness types should differ over patterns, a vector of missingness
 #' types should be entered. Default is RIGHT for all patterns and is the result of
-#' \code{\link{ampute.default.type}}.
-#' @return A list containing vectors with \code{0} if a case should be made missing
-#' and \code{1} if a case should remain complete. The first vector refers to the
+#' [ampute.default.type()].
+#' @return A list containing vectors with `0` if a case should be made missing
+#' and `1` if a case should remain complete. The first vector refers to the
 #' first pattern, the second vector to the second pattern, etcetera.
-#' @author Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
-#' @seealso \code{\link{ampute}}, \code{\link{ampute.default.type}}
+#' @author Rianne Schouten (aut, cre), Gerko Vink (aut), Peter Lugtig (ctb), 2016
+#' @seealso [ampute()], [ampute.default.type()]
 #' @references
 #' #'Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @keywords internal
 #' @export

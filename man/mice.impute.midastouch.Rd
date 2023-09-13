@@ -108,22 +108,22 @@ Statistics, 6, 287--301.
 
 Parzen, M., Lipsitz, S. R., Fitzmaurice, G. M. (2005), A note on reducing
 the bias of the approximate Bayesian bootstrap imputation variance estimator.
-Biometrika \bold{92}, 4, 971--974.
+Biometrika \strong{92}, 4, 971--974.
 
 Rubin, D.B. (1987), Multiple imputation for nonresponse in surveys. New York: Wiley.
 
 Siddique, J., Belin, T.R. (2008), Multiple imputation using an iterative
 hot-deck with distance-based donor selection. Statistics in medicine,
-\bold{27}, 1, 83--102
+\strong{27}, 1, 83--102
 
 Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006),
 Fully conditional specification in multivariate imputation.
-\emph{Journal of Statistical Computation and Simulation}, \bold{76}, 12,
+\emph{Journal of Statistical Computation and Simulation}, \strong{76}, 12,
 1049--1064.
 
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011), \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}, 3, 1--67. \doi{10.18637/jss.v045.i03}
+Statistical Software}, \strong{45}, 3, 1--67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
 Other univariate imputation functions: 

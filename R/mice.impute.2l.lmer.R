@@ -1,7 +1,7 @@
-#' Imputation by a two-level normal model using \code{lmer}
+#' Imputation by a two-level normal model using `lmer`
 #'
 #' Imputes univariate systematically and sporadically missing data using a
-#' two-level normal model using \code{lme4::lmer()}.
+#' two-level normal model using `lme4::lmer()`.
 #'
 #' Data are missing systematically if they have not been measured, e.g., in the
 #' case where we combine data from different sources. Data are missing sporadically
@@ -12,22 +12,22 @@
 #' value in cases where creating draws from the posterior is not
 #' possible. The procedure throws a warning when this happens.
 #'
-#' If \code{lme4::lmer()} fails, the procedure prints the warning
-#' \code{"lmer does not run. Simplify imputation model"} and returns the
+#' If `lme4::lmer()` fails, the procedure prints the warning
+#' `"lmer does not run. Simplify imputation model"` and returns the
 #' current imputation.  If that happens we see flat lines in the
 #' trace line plots. Thus, the appearance of flat trace lines should be taken
 #' as an additional alert to a problem with imputation model fitting.
 #' @name mice.impute.2l.lmer
 #' @inheritParams mice.impute.pmm
-#' @param type Vector of length \code{ncol(x)} identifying random and class
+#' @param type Vector of length `ncol(x)` identifying random and class
 #' variables.  Random variables are identified by a '2'. The class variable
 #' (only one is allowed) is coded as '-2'. Fixed effects are indicated by
 #' a '1'.
 #' @param intercept Logical determining whether the intercept is automatically
 #' added.
-#' @param \dots Arguments passed down to \code{lmer}
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @param \dots Arguments passed down to `lmer`
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @author Shahab Jolani, 2017
 #' @references
 #' Jolani S. (2017) Hierarchical imputation of systematically and
@@ -37,11 +37,11 @@
 #' Jolani S., Debray T.P.A., Koffijberg H., van Buuren S., Moons K.G.M. (2015).
 #' Imputation of systematically missing predictors in an individual
 #' participant data meta-analysis: a generalized approach using MICE.
-#' \emph{Statistics in Medicine}, 34:1841-1863.
+#' *Statistics in Medicine*, 34:1841-1863.
 #'
 #' Van Buuren, S. (2011) Multiple imputation of multilevel data. In Hox, J.J.
-#' and and Roberts, J.K. (Eds.), \emph{The Handbook of Advanced Multilevel
-#' Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
+#' and and Roberts, J.K. (Eds.), *The Handbook of Advanced Multilevel
+#' Analysis*, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
 #' @family univariate-2l
 #' @keywords datagen
 #' @export

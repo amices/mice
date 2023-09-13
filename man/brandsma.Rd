@@ -24,7 +24,7 @@
 }
 }
 \source{
-Constructed from \code{MLbook_2nded_total_4106-99.sav} from
+Constructed from \verb{MLbook_2nded_total_4106-99.sav} from
 \url{https://www.stats.ox.ac.uk/~snijders/mlbook.htm} by function
 \code{data-raw/R/brandsma.R}
 }

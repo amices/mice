@@ -5,8 +5,8 @@
 #' @aliases mice.impute.ri ri
 #' @inheritParams mice.impute.pmm
 #' @param ri.maxit Number of inner iterations
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @author Shahab Jolani (University of Utrecht)
 #' @details
 #' The random indicator method estimates an offset between the
@@ -16,9 +16,9 @@
 #' This routine assumes that the response model and imputation model
 #' have same predictors.
 #'
-#' For an MNAR alternative see also \code{\link{mice.impute.mnar.logreg}}.
+#' For an MNAR alternative see also [mice.impute.mnar.logreg()].
 #' @references Jolani, S. (2012).
-#' \emph{Dual Imputation Strategies for Analyzing Incomplete Data}.
+#' *Dual Imputation Strategies for Analyzing Incomplete Data*.
 #' Dissertation. University of Utrecht, Dec 7 2012.
 #' @family univariate imputation functions
 #' @keywords datagen

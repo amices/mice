@@ -20,7 +20,8 @@ Number of observations per variable pair.
 }
 \details{
 The four components in the output value is have the following interpretation:
-\describe{ \item{list('rr')}{response-response, both variables are observed}
+\describe{
+\item{list('rr')}{response-response, both variables are observed}
 \item{list('rm')}{response-missing, row observed, column missing}
 \item{list('mr')}{missing -response, row missing, column observed}
 \item{list('mm')}{missing -missing, both variables are missing} }
@@ -39,7 +40,7 @@ round(100 * pat$mr / (pat$mr + pat$mm))
 \references{
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
+Statistical Software}, \strong{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 }
 \author{

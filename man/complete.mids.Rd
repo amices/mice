@@ -71,7 +71,7 @@ columns in a different order.}
 }
 }
 \note{
-Technical note: \code{mice 3.7.5} renamed the \code{complete()} function
+Technical note: \verb{mice 3.7.5} renamed the \code{complete()} function
 to \code{complete.mids()} and exported it as an S3 method of the
 generic \code{tidyr::complete()}. Name clashes between
 \code{mice::complete()} and \code{tidyr::complete()} should no
@@ -104,6 +104,6 @@ dslist <- complete(imp, c(0, 3, 5), mild = TRUE)
 names(dslist)
 }
 \seealso{
-\code{\link{mice}}, \code{\link[=mids-class]{mids}}
+\code{\link[=mice]{mice()}}, \code{\link[=mids-class]{mids()}}
 }
 \keyword{manip}

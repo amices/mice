@@ -5,8 +5,8 @@
 #' @aliases mice.impute.logreg
 #' @inheritParams mice.impute.pmm
 #' @param ... Other named arguments.
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @author Stef van Buuren, Karin Groothuis-Oudshoorn
 #' @details
 #' Imputation for binary response variables by the Bayesian logistic regression
@@ -19,14 +19,14 @@
 #' \item Compare the score to a random (0,1) deviate, and impute.
 #' }
 #' The method relies on the
-#' standard \code{glm.fit} function. Warnings from \code{glm.fit} are
+#' standard `glm.fit` function. Warnings from `glm.fit` are
 #' suppressed. Perfect prediction is handled by the data augmentation
 #' method.
 #'
-#' @seealso \code{\link{mice}}, \code{\link{glm}}, \code{\link{glm.fit}}
-#' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
-#' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-#' Statistical Software}, \bold{45}(3), 1-67.
+#' @seealso [mice()], [glm()], [glm.fit()]
+#' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`:
+#' Multivariate Imputation by Chained Equations in `R`. *Journal of
+#' Statistical Software*, **45**(3), 1-67.
 #' \doi{10.18637/jss.v045.i03}
 #'
 #' Brand, J.P.L. (1999). Development, Implementation and Evaluation of Multiple
@@ -84,22 +84,22 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL, ...) {
 #' Imputes univariate missing data using logistic regression
 #' by a bootstrapped logistic regression model.
 #' The bootstrap method draws a simple bootstrap sample with replacement
-#' from the observed data \code{y[ry]} and \code{x[ry, ]}.
+#' from the observed data `y[ry]` and `x[ry, ]`.
 #'
 #' @aliases mice.impute.logreg.boot
 #' @inheritParams mice.impute.pmm
 #' @param ... Other named arguments.
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000, 2011
-#' @seealso \code{\link{mice}}, \code{\link{glm}}, \code{\link{glm.fit}}
-#' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
-#' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-#' Statistical Software}, \bold{45}(3), 1-67.
+#' @seealso [mice()], [glm()], [glm.fit()]
+#' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`:
+#' Multivariate Imputation by Chained Equations in `R`. *Journal of
+#' Statistical Software*, **45**(3), 1-67.
 #' \doi{10.18637/jss.v045.i03}
 #'
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-categorical.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-categorical.html)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @family univariate imputation functions
 #' @keywords datagen

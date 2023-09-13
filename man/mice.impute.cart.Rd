@@ -22,10 +22,10 @@ model is fitted. The \code{ry} generally distinguishes the observed
 indicates locations in \code{y} for which imputations are created.}
 
 \item{minbucket}{The minimum number of observations in any terminal node used.
-See \code{\link{rpart.control}} for details.}
+See \code{\link[=rpart.control]{rpart.control()}} for details.}
 
 \item{cp}{Complexity parameter. Any split that does not decrease the overall
-lack of fit by a factor of cp is not attempted. See \code{\link{rpart.control}}
+lack of fit by a factor of cp is not attempted. See \code{\link[=rpart.control]{rpart.control()}}
 for details.}
 
 \item{...}{Other named arguments passed down to \code{rpart()}.}
@@ -67,8 +67,8 @@ Van Buuren, S. (2018).
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
-\code{\link{mice}}, \code{\link{mice.impute.rf}},
-\code{\link[rpart]{rpart}}, \code{\link[rpart]{rpart.control}}
+\code{\link[=mice]{mice()}}, \code{\link[=mice.impute.rf]{mice.impute.rf()}},
+\code{\link[rpart:rpart]{rpart::rpart()}}, \code{\link[rpart:rpart.control]{rpart::rpart.control()}}
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.lasso.logreg}()},

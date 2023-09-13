@@ -29,22 +29,19 @@ neighbours in \code{d}, randomly draws one of these neighbours, and
 returns its position in vector \code{d}.
 
 Fast predictive mean matching algorithm in seven steps:
-
-1. Shuffle records to remove effects of ties
-
-2. Obtain sorting order on shuffled data
-
-3. Calculate index on input data and sort it
-
-4. Pre-sample vector \code{h} with values between 1 and \code{k}
+\enumerate{
+\item Shuffle records to remove effects of ties
+\item Obtain sorting order on shuffled data
+\item Calculate index on input data and sort it
+\item Pre-sample vector \code{h} with values between 1 and \code{k}
+}
 
 For each of the \code{n0} elements in \code{t}:
-
-  5. find the two adjacent neighbours
-
-  6. find the \code{h_i}'th nearest neighbour
-
-  7. store the index of that neighbour
+\enumerate{
+\item find the two adjacent neighbours
+\item find the \code{h_i}'th nearest neighbour
+\item store the index of that neighbour
+}
 
 Return vector of \code{n0} positions in \code{d}.
 

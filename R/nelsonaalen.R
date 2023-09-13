@@ -9,17 +9,17 @@
 #'
 #' @aliases nelsonaalen hazard
 #' @param data A data frame containing the data.
-#' @param timevar The name of the time variable in \code{data}.
-#' @param statusvar The name of the event variable, e.g. death in \code{data}.
-#' @return A vector with \code{nrow(data)} elements containing the Nelson-Aalen
+#' @param timevar The name of the time variable in `data`.
+#' @param statusvar The name of the event variable, e.g. death in `data`.
+#' @return A vector with `nrow(data)` elements containing the Nelson-Aalen
 #' estimates of the cumulative hazard function.
 #' @author Stef van Buuren, 2012
 #' @references White, I. R., Royston, P. (2009). Imputing missing covariate
-#' values for the Cox model.  \emph{Statistics in Medicine}, \emph{28}(15),
+#' values for the Cox model.  *Statistics in Medicine*, *28*(15),
 #' 1982-1998.
 #'
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-toomany.html#a-further-improvement-survival-as-predictor-variable}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-toomany.html#a-further-improvement-survival-as-predictor-variable)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @keywords misc
 #' @examples

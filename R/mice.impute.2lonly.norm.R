@@ -2,22 +2,22 @@
 #'
 #' Imputes univariate missing data at level 2 using Bayesian linear regression
 #' analysis.  Variables are level 1 are aggregated at level 2. The group
-#' identifier at level 2 must be indicated by \code{type = -2} in the
-#' \code{predictorMatrix}.
+#' identifier at level 2 must be indicated by `type = -2` in the
+#' `predictorMatrix`.
 #'
 #' @aliases 2lonly.norm
 #' @inheritParams mice.impute.pmm
 #' @param type Group identifier must be specified by '-2'. Predictors must be
 #' specified by '1'.
 #' @param ... Other named arguments.
-#' @return A vector of length \code{nmis} with imputations.
+#' @return A vector of length `nmis` with imputations.
 #' @author Alexander Robitzsch (IPN - Leibniz Institute for Science and
 #' Mathematics Education, Kiel, Germany), \email{robitzsch@@ipn.uni-kiel.de}
-#' @seealso \code{\link{mice.impute.norm}},
-#' \code{\link{mice.impute.2lonly.pmm}}, \code{\link{mice.impute.2l.pan}},
-#' \code{\link{mice.impute.2lonly.mean}}
+#' @seealso [mice.impute.norm()],
+#' [mice.impute.2lonly.pmm()], [mice.impute.2l.pan()],
+#' [mice.impute.2lonly.mean()]
 #' @details
-#' This function allows in combination with \code{\link{mice.impute.2l.pan}}
+#' This function allows in combination with [mice.impute.2l.pan()]
 #' switching regression imputation between level 1 and level 2 as described in
 #' Yucel (2008) or Gelman and Hill (2007, p. 541).
 #'
@@ -26,23 +26,23 @@
 #' entries are missing, then the procedure aborts with an error
 #' message that identifies the cluster with incomplete level-2 data.
 #' In such cases, one may first fill in the cluster mean (or mode) by
-#' the \code{2lonly.mean} method to remove inconsistencies.
+#' the `2lonly.mean` method to remove inconsistencies.
 #'
-#' @references Gelman, A. and Hill, J. (2007). \emph{Data analysis using
-#' regression and multilevel/hierarchical models}. Cambridge, Cambridge
+#' @references Gelman, A. and Hill, J. (2007). *Data analysis using
+#' regression and multilevel/hierarchical models*. Cambridge, Cambridge
 #' University Press.
 #'
 #' Yucel, RM (2008). Multiple imputation inference for multivariate multilevel
-#' continuous data with ignorable non-response.  \emph{Philosophical
-#' Transactions of the Royal Society A}, \bold{366}, 2389-2404.
+#' continuous data with ignorable non-response.  *Philosophical
+#' Transactions of the Royal Society A*, **366**, 2389-2404.
 #'
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-level2pred.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-level2pred.html)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @family univariate-2lonly
 #' @note
 #' For a more general approach, see
-#' \code{miceadds::mice.impute.2lonly.function()}.
+#' `miceadds::mice.impute.2lonly.function()`.
 #' @examples
 #' # simulate some data
 #' # x,y ... level 1 variables

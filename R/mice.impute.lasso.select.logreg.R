@@ -7,13 +7,13 @@
 #' @inheritParams mice.impute.pmm
 #' @param nfolds The number of folds for the cross-validation of the lasso penalty.
 #' The default is 10.
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @details
 #' The method consists of the following steps:
 #' \enumerate{
-#' \item For a given \code{y} variable under imputation, fit a linear regression with lasso
-#' penalty using \code{y[ry]} as dependent variable and \code{x[ry, ]} as predictors.
+#' \item For a given `y` variable under imputation, fit a linear regression with lasso
+#' penalty using `y[ry]` as dependent variable and `x[ry, ]` as predictors.
 #' The coefficients that are not shrunk to 0 define the active set of predictors
 #' that will be used for imputation.
 #' \item Fit a logit with the active set of predictors, and find (bhat, V(bhat))
@@ -21,12 +21,12 @@
 #' \item Compute predicted scores for m.d., i.e. logit-1(X BETA)
 #' \item Compare the score to a random (0,1) deviate, and impute.
 #' }
-#' The user can specify a \code{predictorMatrix} in the \code{mice} call
+#' The user can specify a `predictorMatrix` in the `mice` call
 #' to define which predictors are provided to this univariate imputation method.
 #' The lasso regularization will select, among the variables indicated by
 #' the user, the ones that are important for imputation at any given iteration.
 #' Therefore, users may force the exclusion of a predictor from a given
-#' imputation model by speficing a \code{0} entry.
+#' imputation model by speficing a `0` entry.
 #' However, a non-zero entry does not guarantee the variable will be used,
 #' as this decision is ultimately made by the lasso variable selection
 #' procedure.

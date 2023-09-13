@@ -4,8 +4,8 @@
 #' the amputed data. The function shows how the amputed values are related
 #' to the variable values.
 #'
-#' @param x A \code{mads} (\code{\link{mads-class}}) object, typically created by
-#' \code{\link{ampute}}.
+#' @param x A `mads` ([mads-class()]) object, typically created by
+#' [ampute()].
 #' @param data A string or vector of variable names that needs to be plotted. As
 #' a default, all variables will be plotted.
 #' @param which.pat A scalar or vector indicating which patterns need to be plotted.
@@ -16,19 +16,19 @@
 #' need to be printed. This is useful to examine the effect of the amputation.
 #' Default is TRUE.
 #' @param layout A vector of two values indicating how the boxplots of one pattern
-#' should be divided over the plot. For example, \code{c(2, 3)} indicates that the
+#' should be divided over the plot. For example, `c(2, 3)` indicates that the
 #' boxplots of six variables need to be placed on 3 rows and 2 columns. Default
 #' is 1 row and an amount of columns equal to #variables. Note that for more than
 #' 6 variables, multiple plots will be created automatically.
 #' @param \dots Not used, but for consistency with generic
 #' @return A list containing the box-and-whisker plots. Note that a new pattern
 #' will always be shown in a new plot.
-#' @note The \code{mads} object contains all the information you need to
-#' make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate
-#' Amputation using Ampute} to understand the contents of class object \code{mads}.
+#' @note The `mads` object contains all the information you need to
+#' make any desired plots. Check [mads-class()] or the vignette *Multivariate
+#' Amputation using Ampute* to understand the contents of class object `mads`.
 #' @author Rianne Schouten, 2016
-#' @seealso \code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for
-#' an overview of the package, \code{\link{mads-class}}
+#' @seealso [ampute()], [bwplot()], [Lattice()] for
+#' an overview of the package, [mads-class()]
 #' @export
 bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
                         descriptives = TRUE, layout = NULL, ...) {

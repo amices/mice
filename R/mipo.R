@@ -1,50 +1,50 @@
-#' \code{mipo}: Multiple imputation pooled object
+#' `mipo`: Multiple imputation pooled object
 #'
-#' The \code{mipo} object contains the results of the pooling step.
-#' The function \code{\link{pool}} generates an object of class \code{mipo}.
+#' The `mipo` object contains the results of the pooling step.
+#' The function [pool()] generates an object of class `mipo`.
 #'
-#' @param x An object of class \code{mipo}
-#' @param object An object of class \code{mipo}
-#' @param mira.obj An object of class \code{mira}
+#' @param x An object of class `mipo`
+#' @param object An object of class `mipo`
+#' @param mira.obj An object of class `mira`
 #' @inheritParams broom::lm_tidiers
 #' @param z Data frame with a tidied version of a coefficient matrix
 #' @param conf.int Logical indicating whether to include
 #' a confidence interval.
 #' @param conf.level Confidence level of the interval, used only if
-#' \code{conf.int = TRUE}. Number between 0 and 1.
+#' `conf.int = TRUE`. Number between 0 and 1.
 #' @param exponentiate Flag indicating whether to exponentiate the
 #' coefficient estimates and confidence intervals (typical for
 #' logistic regression).
 #' @param \dots Arguments passed down
-#' @details An object class \code{mipo} is a \code{list} with
-#' elements: \code{call}, \code{m}, \code{pooled} and \code{glanced}.
+#' @details An object class `mipo` is a `list` with
+#' elements: `call`, `m`, `pooled` and `glanced`.
 #'
-#' The \code{pooled} elements is a data frame with columns:
+#' The `pooled` elements is a data frame with columns:
 #' \tabular{ll}{
-#' \code{estimate}\tab Pooled complete data estimate\cr
-#' \code{ubar}    \tab Within-imputation variance of \code{estimate}\cr
-#' \code{b}       \tab Between-imputation variance of \code{estimate}\cr
-#' \code{t}       \tab Total variance, of \code{estimate}\cr
-#' \code{dfcom}   \tab Degrees of freedom in complete data\cr
-#' \code{df}      \tab Degrees of freedom of $t$-statistic\cr
-#' \code{riv}     \tab Relative increase in variance\cr
-#' \code{lambda}  \tab Proportion attributable to the missingness\cr
-#' \code{fmi}     \tab Fraction of missing information\cr
+#' `estimate`\tab Pooled complete data estimate\cr
+#' `ubar`    \tab Within-imputation variance of `estimate`\cr
+#' `b`       \tab Between-imputation variance of `estimate`\cr
+#' `t`       \tab Total variance, of `estimate`\cr
+#' `dfcom`   \tab Degrees of freedom in complete data\cr
+#' `df`      \tab Degrees of freedom of $t$-statistic\cr
+#' `riv`     \tab Relative increase in variance\cr
+#' `lambda`  \tab Proportion attributable to the missingness\cr
+#' `fmi`     \tab Fraction of missing information\cr
 #' }
-#' The names of the terms are stored as \code{row.names(pooled)}.
+#' The names of the terms are stored as `row.names(pooled)`.
 #'
-#' The \code{glanced} elements is a \code{data.frame} with \code{m} rows.
+#' The `glanced` elements is a `data.frame` with `m` rows.
 #' The precise composition depends on the class of the complete-data analysis.
-#' At least field \code{nobs} is expected to be present.
+#' At least field `nobs` is expected to be present.
 #'
-#' The \code{process_mipo} is a helper function to process a
+#' The `process_mipo` is a helper function to process a
 #' tidied mipo object, and is normally not called directly.
 #' It adds a confidence interval, and optionally exponentiates, the result.
-#' @seealso \code{\link{pool}},
-#' \code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}
-#' @references van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
-#' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-#' Statistical Software}, \bold{45}(3), 1-67.
+#' @seealso [pool()],
+#' [`mids()`][mids-class], [`mira()`][mira-class]
+#' @references van Buuren S and Groothuis-Oudshoorn K (2011). `mice`:
+#' Multivariate Imputation by Chained Equations in `R`. *Journal of
+#' Statistical Software*, **45**(3), 1-67.
 #' \doi{10.18637/jss.v045.i03}
 #' @keywords classes
 #' @name mipo
@@ -57,7 +57,7 @@ mipo <- function(mira.obj, ...) {
   structure(pool(mira.obj, ...), class = c("mipo"))
 }
 
-#' @return The \code{summary} method returns a data frame with summary statistics of the pooled analysis.
+#' @return The `summary` method returns a data frame with summary statistics of the pooled analysis.
 #' @rdname mipo
 #' @export
 summary.mipo <- function(object, type = c("tests", "all"),

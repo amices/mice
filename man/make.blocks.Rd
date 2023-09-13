@@ -41,7 +41,7 @@ A named list of character vectors with variables names.
 }
 \description{
 This helper function generates a list of the type needed for
-\code{blocks} argument in the \code{[=mice]{mice}} function.
+\code{blocks} argument in the \code{\link[=mice]{mice()}} function.
 }
 \details{
 Choices \code{"scatter"} and \code{"collect"} represent to two

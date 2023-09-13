@@ -31,8 +31,8 @@ between 0 and 1. Default is a missingness proportion of 0.5.}
 that a variable should remain complete. The user may specify as many patterns as
 desired. One pattern (a vector) is possible as well. Default
 is a square matrix of size #variables where each pattern has missingness on one
-variable only (created with \code{\link{ampute.default.patterns}}). After the
-amputation procedure, \code{\link{md.pattern}} can be used to investigate the
+variable only (created with \code{\link[=ampute.default.patterns]{ampute.default.patterns()}}). After the
+amputation procedure, \code{\link[=md.pattern]{md.pattern()}} can be used to investigate the
 missing data patterns in the data.}
 
 \item{freq}{A vector of length #patterns containing the relative frequency with
@@ -40,7 +40,7 @@ which the patterns should occur. For example, for three missing data patterns,
 the vector could be \code{c(0.4, 0.4, 0.2)}, meaning that of all cases with
 missing values, 40 percent should have pattern 1, 40 percent pattern 2 and 20
 percent pattern 3. The vector should sum to 1. Default is an equal probability
-for each pattern, created with \code{\link{ampute.default.freq}}.}
+for each pattern, created with \code{\link[=ampute.default.freq]{ampute.default.freq()}}.}
 
 \item{mech}{A string specifying the missingness mechanism, either "MCAR"
 (Missing Completely At Random), "MAR" (Missing At Random) or "MNAR" (Missing Not At
@@ -52,7 +52,7 @@ a MAR mechanism, the weights of the variables that will be made incomplete shoul
 zero. For a MNAR mechanism, these weights could have any possible value. Furthermore,
 the weights may differ between patterns and between variables. They may be negative
 as well. Within each pattern, the relative size of the values are of importance.
-The default weights matrix is made with \code{\link{ampute.default.weights}} and
+The default weights matrix is made with \code{\link[=ampute.default.weights]{ampute.default.weights()}} and
 returns a matrix with equal weights for all variables. In case of MAR, variables
 that will be amputed will be weighted with \code{0}. For MNAR, variables
 that will be observed will be weighted with \code{0}. If the mechanism is MCAR, the
@@ -64,10 +64,10 @@ making use of train and test sets in order to prevent leakage.}
 
 \item{cont}{Logical. Whether the probabilities should be based on a continuous
 or a discrete distribution. If TRUE, the probabilities of being missing are based
-on a continuous logistic distribution function. \code{\link{ampute.continuous}}
+on a continuous logistic distribution function. \code{\link[=ampute.continuous]{ampute.continuous()}}
 will be used to calculate and assign the probabilities. These probabilities will then
 be based on the argument \code{type}. If FALSE, the probabilities of being missing are
-based on a discrete distribution (\code{\link{ampute.discrete}}) based on the \code{odds}
+based on a discrete distribution (\code{\link[=ampute.discrete]{ampute.discrete()}}) based on the \code{odds}
 argument. Default is TRUE.}
 
 \item{type}{A string or vector of strings containing the type of missingness for each
@@ -75,7 +75,7 @@ pattern. Either \code{"LEFT"}, \code{"MID"}, \code{"TAIL"} or '\code{"RIGHT"}.
 If a single missingness type is given, all patterns will be created with the same
 type. If the missingness types should differ between patterns, a vector of missingness
 types should be given. Default is RIGHT for all patterns and is the result of
-\code{\link{ampute.default.type}}.}
+\code{\link[=ampute.default.type]{ampute.default.type()}}.}
 
 \item{odds}{A matrix where #patterns defines the #rows. Each row should contain
 the odds of being missing for the corresponding pattern. The number of odds values
@@ -84,7 +84,7 @@ relative probabilities: a quantile with odds value 4 will have a probability of
 being missing that is four times higher than a quantile with odds 1. The
 number of quantiles may differ between the patterns, specify NA for cells remaining empty.
 Default is 4 quantiles with odds values 1, 2, 3 and 4 and is created by
-\code{\link{ampute.default.odds}}.}
+\code{\link[=ampute.default.odds]{ampute.default.odds()}}.}
 
 \item{bycases}{Logical. If TRUE, the proportion of missingness is defined in
 terms of cases. If FALSE, the proportion of missingness is defined in terms of
@@ -94,18 +94,18 @@ cells. Default is TRUE.}
 return object will contain everything except for the amputed data set.}
 }
 \value{
-Returns an S3 object of class \code{\link{mads-class}} (multivariate
+Returns an S3 object of class \code{\link[=mads-class]{mads-class()}} (multivariate
 amputed data set)
 }
 \description{
 This function generates multivariate missing data under a MCAR, MAR or MNAR
 missing data mechanism. Imputation of data sets containing missing values can
-be performed with \code{\link{mice}}.
+be performed with \code{\link[=mice]{mice()}}.
 }
 \details{
 This function generates missing values in complete data sets. Amputation of complete
 data sets is useful for the evaluation of imputation techniques, such as multiple
-imputation (performed with function \code{\link{mice}} in this package).
+imputation (performed with function \code{\link[=mice]{mice()}} in this package).
 
 The basic strategy underlying multivariate imputation was suggested by
 Don Rubin during discussions in the 90's. Brand (1997) created one particular
@@ -126,7 +126,7 @@ The idea behind the function is the specification of several missingness
 patterns. Each pattern is a combination of variables with and without missing
 values (denoted by \code{0} and \code{1} respectively). For example, one might
 want to create two missingness patterns on a data set with four variables. The
-patterns could be something like: \code{0,0,1,1} and \code{1,0,1,0}.
+patterns could be something like: \verb{0,0,1,1} and \verb{1,0,1,0}.
 Each combination of zeros and ones may occur.
 
 Furthermore, the researcher specifies the proportion of missingness, either the
@@ -140,7 +140,7 @@ mechanisms: the missingness depends completely on chance (MCAR), the missingness
 depends on the values of the observed variables (i.e. the variables that remain
 complete) (MAR) or on the values of the variables that will be made incomplete (MNAR).
 For a discussion on how missingness mechanisms are related to the observed data,
-we refer to \doi{10.1177/0049124118799376}{Schouten and Vink, 2018}.
+we refer to \doi{10.1177/0049124118799376}.
 
 When the user specifies the missingness mechanism to be \code{"MCAR"}, the candidates
 have an equal probability of becoming incomplete. For a \code{"MAR"} or \code{"MNAR"} mechanism,
@@ -184,8 +184,7 @@ The user can specify the type of missingness, which, again, may differ between p
 For an example and more explanation about how the arguments interact with each other,
 we refer to the vignette
 \href{https://rianneschouten.github.io/mice_ampute/vignette/ampute.html}{Generate missing values with ampute}
-The amputation methodology is published in
-\doi{10.1080/00949655.2018.1491577}{Schouten, Lugtig and Vink, 2018}.
+The amputation methodology is published in \doi{10.1080/00949655.2018.1491577}.
 }
 \examples{
 # start with a complete data set
@@ -229,15 +228,16 @@ Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn, C.G.M., Rubin, D.B. (2006)
 \emph{Journal of Statistical Computation and Simulation}, 76(12): 1049-1064.
 \doi{10.1080/10629360600810434}
 
-Van Buuren, S. (2018) \href{https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+Van Buuren, S. (2018)
+\href{https://stefvanbuuren.name/fimd}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.
 
 Vink, G. (2016) Towards a standardized evaluation of multiple imputation routines.
 }
 \seealso{
-\code{\link{mads-class}}, \code{\link{bwplot}}, \code{\link{xyplot}},
-\code{\link{mice}}
+\code{\link[=mads-class]{mads-class()}}, \code{\link[=bwplot]{bwplot()}}, \code{\link[=xyplot]{xyplot()}},
+\code{\link[=mice]{mice()}}
 }
 \author{
-Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
+Rianne Schouten (aut, cre), Gerko Vink (aut), Peter Lugtig (ctb), 2016
 }

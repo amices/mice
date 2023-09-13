@@ -15,8 +15,8 @@
 )
 }
 \arguments{
-\item{x}{A \code{mads} (\code{\link{mads-class}}) object, typically created by
-\code{\link{ampute}}.}
+\item{x}{A \code{mads} (\code{\link[=mads-class]{mads-class()}}) object, typically created by
+\code{\link[=ampute]{ampute()}}.}
 
 \item{data}{A string or vector of variable names that needs to be plotted. As
 a default, all variables will be plotted.}
@@ -50,12 +50,12 @@ to the variable values.
 }
 \note{
 The \code{mads} object contains all the information you need to
-make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate
+make any desired plots. Check \code{\link[=mads-class]{mads-class()}} or the vignette \emph{Multivariate
 Amputation using Ampute} to understand the contents of class object \code{mads}.
 }
 \seealso{
-\code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for
-an overview of the package, \code{\link{mads-class}}
+\code{\link[=ampute]{ampute()}}, \code{\link[=bwplot]{bwplot()}}, \code{\link[=Lattice]{Lattice()}} for
+an overview of the package, \code{\link[=mads-class]{mads-class()}}
 }
 \author{
 Rianne Schouten, 2016

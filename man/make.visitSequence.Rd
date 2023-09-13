@@ -7,8 +7,8 @@
 make.visitSequence(data = NULL, blocks = NULL)
 }
 \arguments{
-\item{data}{A data frame or a matrix containing the incomplete data.  Missing
-values are coded as \code{NA}.}
+\item{data}{Data frame with \eqn{n} rows and \eqn{p} columns with
+incomplete data.  Missing values are coded as \code{NA}.}
 
 \item{blocks}{List of vectors with variable names per block. List elements
 may be named to identify blocks. Variables within a block are
@@ -34,5 +34,5 @@ specifies the sequence in which blocks are imputed.
 make.visitSequence(nhanes)
 }
 \seealso{
-\code{\link{mice}}
+\code{\link[=mice]{mice()}}
 }

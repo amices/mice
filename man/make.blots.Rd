@@ -28,5 +28,5 @@ make.predictorMatrix(nhanes)
 make.blots(nhanes, blocks = name.blocks(c("age", "hyp"), "xxx"))
 }
 \seealso{
-\code{\link{make.blocks}}
+\code{\link[=make.blocks]{make.blocks()}}
 }

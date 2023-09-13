@@ -8,15 +8,15 @@ glm.mids(formula, family = gaussian, data, ...)
 }
 \arguments{
 \item{formula}{a formula expression as for other regression models, of the
-form response ~ predictors. See the documentation of \code{\link{lm}} and
-\code{\link{formula}} for details.}
+form response ~ predictors. See the documentation of \code{\link[=lm]{lm()}} and
+\code{\link[=formula]{formula()}} for details.}
 
 \item{family}{The family of the glm model}
 
 \item{data}{An object of type \code{mids}, which stands for 'multiply imputed
 data set', typically created by function \code{mice()}.}
 
-\item{\dots}{Additional parameters passed to \code{\link{glm}}.}
+\item{\dots}{Additional parameters passed to \code{\link[=glm]{glm()}}.}
 }
 \value{
 An objects of class \code{mira}, which stands for 'multiply imputed
@@ -28,7 +28,7 @@ Applies \code{glm()} to a multiply imputed data set
 }
 \details{
 This function is included for backward compatibility with V1.0. The function
-is superseded by \code{\link{with.mids}}.
+is superseded by \code{\link[=with.mids]{with.mids()}}.
 }
 \examples{
 
@@ -44,8 +44,8 @@ Van Buuren, S., Groothuis-Oudshoorn, C.G.M. (2000)
 Leiden: TNO Quality of Life.
 }
 \seealso{
-\code{\link{with.mids}}, \code{\link{glm}}, \code{\link[=mids-class]{mids}},
-\code{\link[=mira-class]{mira}}
+\code{\link[=with.mids]{with.mids()}}, \code{\link[=glm]{glm()}}, \code{\link[=mids-class]{mids()}},
+\code{\link[=mira-class]{mira()}}
 }
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn, 2000

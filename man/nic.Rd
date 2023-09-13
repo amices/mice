@@ -22,7 +22,7 @@ nic(nhanes) # the remaining 12 rows
 nic(nhanes[, c("bmi", "hyp")]) # number of cases with incomplete bmi and hyp
 }
 \seealso{
-\code{\link{ncc}}, \code{\link{cci}}
+\code{\link[=ncc]{ncc()}}, \code{\link[=cci]{cci()}}
 }
 \author{
 Stef van Buuren, 2017

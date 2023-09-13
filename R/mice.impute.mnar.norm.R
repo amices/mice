@@ -16,10 +16,10 @@
 #' corresponding deltas (sensitivity parameters). See details.
 #' @param umx An auxiliary data matrix containing variables that do
 #' not appear in the identifiable part of the imputation procedure
-#' but that have been specified via \code{ums} as being predictors
+#' but that have been specified via `ums` as being predictors
 #' in the unidentifiable part of the imputation model. See details.
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @details
 #' This function imputes data that are thought to be Missing Not at
 #' Random (MNAR) by the NARFCS method. The NARFCS procedure
@@ -28,79 +28,79 @@
 #' Boshuizen & Knook (1999) to the case with multiple incomplete
 #' variables within the FCS framework. In practical terms, the
 #' NARFCS procedure shifts the imputations drawn at each
-#' iteration of \code{mice} by a user-specified quantity that can
+#' iteration of `mice` by a user-specified quantity that can
 #' vary across subjects, to reflect systematic departures of the
 #' missing data from the data distribution imputed under MAR.
 #'
-#' Specification of the NARFCS model is done by the \code{blots}
-#' argument of \code{mice()}. The \code{blots} parameter is a named
+#' Specification of the NARFCS model is done by the `blots`
+#' argument of `mice()`. The `blots` parameter is a named
 #' list. For each variable to be imputed by
-#' \code{mice.impute.mnar.norm()} or \code{mice.impute.mnar.logreg()}
-#' the corresponding element in \code{blots} is a list with
-#' at least one argument \code{ums} and, optionally, a second
-#' argument \code{umx}.
+#' `mice.impute.mnar.norm()` or `mice.impute.mnar.logreg()`
+#' the corresponding element in `blots` is a list with
+#' at least one argument `ums` and, optionally, a second
+#' argument `umx`.
 #' For example, the high-level call might like something like
-#' \code{mice(nhanes[, c(2, 4)], method = c("pmm", "mnar.norm"),
-#' blots = list(chl = list(ums = "-3+2*bmi")))}.
+#' `mice(nhanes[, c(2, 4)], method = c("pmm", "mnar.norm"),
+#' blots = list(chl = list(ums = "-3+2*bmi")))`.
 #'
-#' The \code{ums} parameter is required, and might look like this:
-#' \code{"-4+1*Y"}. The \code{ums} specifcation must have the
+#' The `ums` parameter is required, and might look like this:
+#' `"-4+1*Y"`. The `ums` specifcation must have the
 #' following characteristics:
 #' \enumerate{
 #' \item{A single term corresponding to the intercept (constant) term,
 #' not multiplied by any variable name, must be included in the
 #' expression;}
 #' \item{Each term in the expression (corresponding to the intercept
-#' or a predictor variable) must be separated by either a \code{"+"}
-#' or \code{"-"} sign, depending on the sign of the sensitivity
+#' or a predictor variable) must be separated by either a `"+"`
+#' or `"-"` sign, depending on the sign of the sensitivity
 #' parameter;}
 #' \item{Within each non-intercept term, the sensitivity parameter
 #' value comes first and the predictor variable comes second, and these
-#' must be separated by a \code{"*"} sign;}
-#' \item{For categorical predictors, for example a variable \code{Z}
-#' with K + 1 categories \code{("Cat0","Cat1", ...,"CatK")}, K
-#' category-specific terms are needed, and those not in \code{umx}
+#' must be separated by a `"*"` sign;}
+#' \item{For categorical predictors, for example a variable `Z`
+#' with K + 1 categories `("Cat0","Cat1", ...,"CatK")`, K
+#' category-specific terms are needed, and those not in `umx`
 #' (see below) must be specified by concatenating the variable name
-#' with the name of the category (e.g. \code{ZCat1}) as this is how
-#' they are named in the design matrix (argument \code{x}) passed
+#' with the name of the category (e.g. `ZCat1`) as this is how
+#' they are named in the design matrix (argument `x`) passed
 #' to the univariate imputation function. An example is
-#' \code{"2+1*ZCat1-3*ZCat2"}.}
+#' `"2+1*ZCat1-3*ZCat2"`.}
 #' }
 #'
-#' If given, the \code{umx} specification must have the following
+#' If given, the `umx` specification must have the following
 #' characteristics:
 #' \enumerate{
 #' \item{It contains only complete variables, with no missing values;}
 #' \item{It is a numeric matrix. In particular, categorical variables
 #' must be represented as dummy indicators with names corresponding
-#' to what is used in \code{ums} to refer to the category-specific terms
+#' to what is used in `ums` to refer to the category-specific terms
 #' (see above);}
-#' \item{It has the same number of rows as the \code{data} argument
-#' passed on to the main \code{mice} function;}
+#' \item{It has the same number of rows as the `data` argument
+#' passed on to the main `mice` function;}
 #' \item{It does not contain variables that were already predictors
 #' in the identifiable part of the model for the variable under
 #' imputation.}
 #' }
 #'
 #' Limitation: The present implementation can only condition on variables
-#' that appear in the identifiable part of the imputation model (\code{x}) or
-#' in complete auxiliary variables passed on via the \code{umx} argument.
+#' that appear in the identifiable part of the imputation model (`x`) or
+#' in complete auxiliary variables passed on via the `umx` argument.
 #' It is not possible to specify models where the offset depends on
 #' incomplete auxiliary variables.
 #'
-#' For an MNAR alternative see also \code{\link{mice.impute.ri}}.
+#' For an MNAR alternative see also [mice.impute.ri()].
 #'
 #' @author Margarita Moreno-Betancur, Stef van Buuren, Ian R. White, 2020.
 #' @references
 #' Tompsett, D. M., Leacy, F., Moreno-Betancur, M., Heron, J., &
 #' White, I. R. (2018). On the use of the not-at-random fully
 #' conditional specification (NARFCS) procedure in practice.
-#' \emph{Statistics in Medicine}, \bold{37}(15), 2338-2353.
+#' *Statistics in Medicine*, **37**(15), 2338-2353.
 #' \doi{10.1002/sim.7643}.
 #'
 #' Van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple
 #' imputation of missing blood pressure covariates in survival analysis.
-#' \emph{Statistics in Medicine}, \bold{18}, 681--694.
+#' *Statistics in Medicine*, **18**, 681--694.
 #'
 #' @family univariate imputation functions
 #' @keywords datagen

@@ -39,7 +39,7 @@ The formula is evaluated on the complete data set in the \code{long} form.
 Legal variable names for the formula include \code{names(x$data)} plus the
 two administrative factors \code{.imp} and \code{.id}.
 
-\bold{Extended formula interface:} The primary variable terms (both the LHS
+\strong{Extended formula interface:} The primary variable terms (both the LHS
 \code{y} and RHS \code{x}) may consist of multiple terms separated by a
 \sQuote{+} sign, e.g., \code{y1 + y2 ~ x | a * b}.  This formula would be
 taken to mean that the user wants to plot both \code{y1 ~ x | a * b} and
@@ -50,8 +50,7 @@ numerical variables. Mixing numerical and categorical data occasionally
 produces odds labeling of vertical axis.
 
 The function \code{densityplot} does not use the \code{y} terms in the
-formula. Density plots for \code{x1} and \code{x2} are requested as \code{~
-x1 + x2}.}
+formula. Density plots for \code{x1} and \code{x2} are requested as \code{~ x1 + x2}.}
 
 \item{na.groups}{An expression evaluating to a logical vector indicating
 which two groups are distinguished (e.g. using different colors) in the
@@ -69,11 +68,11 @@ in the LHS \code{y} variable of the display, i.e. groups created by
 differs from \code{na.groups} because it evaluates in the completed data
 \code{data.frame(complete(x, "long", inc=TRUE))} (as usual), whereas
 \code{na.groups} evaluates in the response indicator. See
-\code{\link{xyplot}} for more details. When both \code{na.groups} and
+\code{\link[=xyplot]{xyplot()}} for more details. When both \code{na.groups} and
 \code{groups} are specified, \code{na.groups} takes precedence, and
 \code{groups} is ignored.}
 
-\item{as.table}{See \code{\link[lattice:xyplot]{xyplot}}.}
+\item{as.table}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
 
 \item{plot.points}{A logical used in \code{densityplot} that signals whether
 the points should be plotted.}
@@ -99,30 +98,30 @@ to allow the user to gain full control.}
 width of the observed density. \code{thicker=1} uses the same thickness for
 the observed and imputed data.}
 
-\item{allow.multiple}{See \code{\link[lattice:xyplot]{xyplot}}.}
+\item{allow.multiple}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
 
-\item{outer}{See \code{\link[lattice:xyplot]{xyplot}}.}
+\item{outer}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
 
-\item{drop.unused.levels}{See \code{\link[lattice:xyplot]{xyplot}}.}
+\item{drop.unused.levels}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
 
-\item{panel}{See \code{\link{xyplot}}.}
+\item{panel}{See \code{\link[=xyplot]{xyplot()}}.}
 
-\item{default.prepanel}{See \code{\link[lattice:xyplot]{xyplot}}.}
+\item{default.prepanel}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
 
 \item{\dots}{Further arguments, usually not directly processed by the
 high-level functions documented here, but instead passed on to other
 functions.}
 
-\item{subscripts}{See \code{\link[lattice:xyplot]{xyplot}}.}
+\item{subscripts}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
 
-\item{subset}{See \code{\link[lattice:xyplot]{xyplot}}.}
+\item{subset}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
 }
 \value{
 The high-level functions documented here, as well as other high-level
 Lattice functions, return an object of class \code{"trellis"}.  The
-\code{\link[lattice:update.trellis]{update}} method can be used to
+\code{\link[lattice:update.trellis]{update()}} method can be used to
 subsequently update components of the object, and the
-\code{\link[lattice:print.trellis]{print}} method (usually called by default)
+\code{\link[lattice:print.trellis]{print()}} method (usually called by default)
 will plot it on an appropriate plotting device.
 }
 \description{
@@ -149,7 +148,7 @@ missing groups. \code{col[1]} is the color of the 'observed' data,
 \code{col[2]} is the color of the missing or imputed data. A convenient color
 choice is \code{col=mdc(1:2)}, a transparent blue color for the observed
 data, and a transparent red color for the imputed data. A good choice is
-\code{col=mdc(1:2), pch=20, cex=1.5}. These choices can be set for the
+\verb{col=mdc(1:2), pch=20, cex=1.5}. These choices can be set for the
 duration of the session by running \code{mice.theme()}.
 }
 \note{
@@ -166,9 +165,7 @@ In \pkg{mice} the argument \code{data} is always a formula object, whereas in
 All other arguments have identical interpretation.
 
 \code{densityplot} errs on empty groups, which occurs if all observations in
-the subgroup contain \code{NA}. The relevant error message is: \code{Error in
-density.default: ... need at least 2 points to select a bandwidth
-automatically}. There is yet no workaround for this problem. Use the more
+the subgroup contain \code{NA}. The relevant error message is: \verb{Error in density.default: ... need at least 2 points to select a bandwidth automatically}. There is yet no workaround for this problem. Use the more
 robust \code{bwplot} or \code{stripplot} as a replacement.
 }
 \examples{
@@ -187,15 +184,15 @@ Visualization with R}, Springer.
 
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link{mice}}, \code{\link{xyplot}}, \code{\link{stripplot}},
-\code{\link{bwplot}}, \code{\link{lattice}} for an overview of the
-package, as well as \code{\link[lattice:histogram]{densityplot}},
-\code{\link[lattice:panel.densityplot]{panel.densityplot}},
-\code{\link[lattice:print.trellis]{print.trellis}},
-\code{\link[lattice:trellis.par.get]{trellis.par.set}}
+\code{\link[=mice]{mice()}}, \code{\link[=xyplot]{xyplot()}}, \code{\link[=stripplot]{stripplot()}},
+\code{\link[=bwplot]{bwplot()}}, \code{\link[=lattice]{lattice()}} for an overview of the
+package, as well as \code{\link[lattice:histogram]{densityplot()}},
+\code{\link[lattice:panel.densityplot]{lattice::panel.densityplot()}},
+\code{\link[lattice:print.trellis]{lattice::print.trellis()}},
+\code{\link[lattice:trellis.par.get]{trellis.par.set()}}
 }
 \author{
 Stef van Buuren

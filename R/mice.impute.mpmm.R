@@ -5,10 +5,10 @@
 #' @aliases mice.impute.mpmm mpmm
 #' @param data matrix with exactly two missing data patterns
 #' @param format A character vector specifying the type of object that should
-#' be returned. The default is \code{format = "imputes"}.
+#' be returned. The default is `format = "imputes"`.
 #' @param ... Other named arguments.
-#' @return A matrix with imputed data, which has \code{ncol(y)} columns and
-#' \code{sum(wy)} rows.
+#' @return A matrix with imputed data, which has `ncol(y)` columns and
+#' `sum(wy)` rows.
 #' @details
 #' This function implements the predictive mean matching and applies canonical
 #' regression analysis to select donors fora set of missing variables. In general,
@@ -25,9 +25,9 @@
 #' @author Mingyang Cai and Gerko Vink
 
 # @author Mingyang Cai (University of Utrecht), \email{g.vink#uu.nl}
-#' @seealso \code{\link{mice.impute.pmm}}
+#' @seealso [mice.impute.pmm()]
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @family univariate imputation functions
 #' @keywords datagen

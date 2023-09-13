@@ -59,7 +59,7 @@ with(dat, plot(x, x2, col = mdc(1)))
 with(complete(imp), points(x[m], x2[m], col = mdc(2)))
 }
 \seealso{
-\code{\link{mice.impute.pmm}}
+\code{\link[=mice.impute.pmm]{mice.impute.pmm()}}
 Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.

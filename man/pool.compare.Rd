@@ -49,8 +49,8 @@ Component \code{pvalue} is the P-value of testing whether the model \code{fit1} 
 statistically different from the smaller \code{fit0}.
 }
 \description{
-This function is deprecated in V3. Use \code{\link{D1}} or
-\code{\link{D3}} instead.
+This function is deprecated in V3. Use \code{\link[=D1]{D1()}} or
+\code{\link[=D3]{D3()}} instead.
 }
 \details{
 Compares two nested models after m repeated complete data analysis
@@ -77,10 +77,10 @@ multiple-imputed data sets.  Biometrika, 79, 103-111.
 
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link{lm.mids}}, \code{\link{glm.mids}}
+\code{\link[=lm.mids]{lm.mids()}}, \code{\link[=glm.mids]{glm.mids()}}
 }
 \author{
 Karin Groothuis-Oudshoorn and Stef van Buuren, 2009

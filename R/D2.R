@@ -7,13 +7,13 @@
 #' @inheritParams mitml::testModels
 #' @note Warning: `D2()` assumes that the order of the variables is the
 #' same in different models. See
-#' \url{https://github.com/amices/mice/issues/420} for details.
+#' <https://github.com/amices/mice/issues/420> for details.
 #' @references
 #' Li, K. H., X. L. Meng, T. E. Raghunathan, and D. B. Rubin. 1991.
 #' Significance Levels from Repeated p-Values with Multiply-Imputed Data.
-#' \emph{Statistica Sinica} 1 (1): 65–92.
+#' *Statistica Sinica* 1 (1): 65–92.
 #'
-#' \url{https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:chi}
+#' <https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:chi>
 #' @examples
 #' # Compare two linear models:
 #' imp <- mice(nhanes2, seed = 51009, print = FALSE)
@@ -27,7 +27,7 @@
 #' fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
 #' D2(fit1, fit0)
 #' }
-#' @seealso \code{\link[mitml]{testModels}}
+#' @seealso [mitml::testModels()]
 #' @export
 D2 <- function(fit1, fit0 = NULL, use = "wald") {
   install.on.demand("mitml")

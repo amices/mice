@@ -92,7 +92,7 @@ cmp <- complete(imp)
 points(cmp$x[is.na(dat$x)], cmp$xx[is.na(dat$x)], col = mdc(2))
 }
 \seealso{
-\code{\link{mice.impute.pmm}}
+\code{\link[=mice.impute.pmm]{mice.impute.pmm()}}
 Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 Chapman & Hall/CRC. Boca Raton, FL.

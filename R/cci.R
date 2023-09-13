@@ -2,15 +2,15 @@
 #'
 #'
 #' The complete case indicator is useful for extracting the subset of complete cases. The function
-#' \code{cci(x)} calls \code{complete.cases(x)}.
-#' The companion function \code{ici()} selects the incomplete cases.
+#' `cci(x)` calls `complete.cases(x)`.
+#' The companion function `ici()` selects the incomplete cases.
 #'
 #' @name cci
-#' @param x An \code{R} object. Currently supported are methods for the
-#' following classes: \code{mids}.
+#' @param x An `R` object. Currently supported are methods for the
+#' following classes: `mids`.
 #' @return Logical vector indicating the complete cases.
 #' @author Stef van Buuren, 2017.
-#' @seealso \code{\link{complete.cases}}, \code{\link{ici}}, \code{\link{cc}}
+#' @seealso [complete.cases()], [ici()], [cc()]
 #' @keywords univar
 #' @examples
 #' cci(nhanes) # indicator for 13 complete cases
@@ -33,15 +33,15 @@ cci.default <- function(x) {
 #' Incomplete case indicator
 #'
 #' This array is useful for extracting the subset of incomplete cases.
-#' The companion function  \code{cci()} selects the complete cases.
+#' The companion function  `cci()` selects the complete cases.
 #'
 #' @name ici
 #' @aliases ici ici,data.frame-method ici,matrix-method ici,mids-method
-#' @param x An \code{R} object. Currently supported are methods for the
-#' following classes: \code{mids}.
+#' @param x An `R` object. Currently supported are methods for the
+#' following classes: `mids`.
 #' @return Logical vector indicating the incomplete cases,
 #' @author Stef van Buuren, 2017.
-#' @seealso \code{\link{cci}}, \code{\link{ic}}
+#' @seealso [cci()], [ic()]
 #' @keywords univar
 #' @examples
 #'

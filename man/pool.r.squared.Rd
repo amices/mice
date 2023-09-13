@@ -15,8 +15,8 @@ calculated.  The default value is FALSE.}
 }
 \value{
 Returns a 1x4 table with components. Component \code{est} is the
-pooled R^2 estimate. Component \code{lo95} is the 95 \% lower bound of the pooled R^2.
-Component \code{hi95} is the 95 \% upper bound of the pooled R^2.
+pooled R^2 estimate. Component \code{lo95} is the 95 \\% lower bound of the pooled R^2.
+Component \code{hi95} is the 95 \\% upper bound of the pooled R^2.
 Component \code{fmi} is the fraction of missing information due to nonresponse.
 }
 \description{
@@ -47,10 +47,10 @@ York: John Wiley and Sons.
 
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link{pool}},\code{\link{pool.scalar}}
+\code{\link[=pool]{pool()}},\code{\link[=pool.scalar]{pool.scalar()}}
 }
 \author{
 Karin Groothuis-Oudshoorn and Stef van Buuren, 2009

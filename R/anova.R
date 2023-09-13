@@ -1,12 +1,12 @@
 #' Compare several nested models
 #'
 #' @rdname anova
-#' @param object Two or more objects of class \code{mira}
-#' @param method Either \code{"D1"}, \code{"D2"} or \code{"D3"}
+#' @param object Two or more objects of class `mira`
+#' @param method Either `"D1"`, `"D2"` or `"D3"`
 #' @param use An character indicating the test statistic
-#' @param ... Other parameters passed down to \code{D1()}, \code{D2()},
-#' \code{D3()} and \code{mitml::testModels}.
-#' @return Object of class \code{mice.anova}
+#' @param ... Other parameters passed down to `D1()`, `D2()`,
+#' `D3()` and `mitml::testModels`.
+#' @return Object of class `mice.anova`
 #' @export
 anova.mira <- function(object, ..., method = "D1", use = "wald") {
   modlist <- list(object, ...)

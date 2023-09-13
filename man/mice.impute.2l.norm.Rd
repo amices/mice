@@ -44,8 +44,7 @@ are drawn as an extra step to the algorithm. For simulation work see Van
 Buuren (2011).
 
 The random intercept is automatically added in \code{mice.impute.2L.norm()}.
-A model within a random intercept can be specified by \code{mice(...,
-intercept = FALSE)}.
+A model within a random intercept can be specified by \code{mice(..., intercept = FALSE)}.
 }
 \note{
 Added June 25, 2012: The currently implemented algorithm does not
@@ -63,7 +62,7 @@ of Educational and Behavioral Statistics, 23(2), 93--116.
 
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 
 Van Buuren, S. (2011) Multiple imputation of multilevel data. In Hox, J.J.
 and and Roberts, J.K. (Eds.), \emph{The Handbook of Advanced Multilevel
