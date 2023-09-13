@@ -63,6 +63,8 @@ check.where <- function(where, data, blocks) {
 
   where <- matrix(where, nrow = nrow(data), ncol = ncol(data))
   dimnames(where) <- dimnames(data)
+  # #583
+  # where[, !colnames(where) %in% unlist(blocks)] <- FALSE
   where[, !colnames(where) %in% unlist(blocks)] <- FALSE
   where
 }

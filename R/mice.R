@@ -261,6 +261,7 @@
 #' imputation.
 #' @param \dots Named arguments that are passed down to the univariate imputation
 #' functions.
+#' @param nest experimental variable grouping input
 #'
 #' @return Returns an S3 object of class [`mids()`][mids-class]
 #'        (multiply imputed data set)
@@ -336,6 +337,7 @@ mice <- function(data,
                  m = 5,
                  method = NULL,
                  predictorMatrix,
+                 nest = NULL,
                  ignore = NULL,
                  where = NULL,
                  blocks,
@@ -358,6 +360,11 @@ mice <- function(data,
   data <- check.dataform(data)
   m <- check.m(m)
 
+  # add support nest
+  if (!is.null(nest)) {
+    blocks <- n2b(nest, silent = FALSE)
+  }
+
   # determine input combination: predictorMatrix, blocks, formulas
   mp <- missing(predictorMatrix)
   mb <- missing(blocks)
@@ -373,7 +380,8 @@ mice <- function(data,
   # case B
   if (!mp & mb & mf) {
     # predictorMatrix leads
-    predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
+    # predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
+    predictorMatrix <- make.predictorMatrix(data, predictorMatrix = predictorMatrix)
     blocks <- make.blocks(colnames(predictorMatrix), partition = "scatter")
     formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix)
   }
@@ -444,6 +452,7 @@ mice <- function(data,
     method = method, data = data, where = where,
     blocks = blocks, defaultMethod = defaultMethod
   )
+
   # edit predictorMatrix for monotone, set zero rows for empty methods
   predictorMatrix <- edit.predictorMatrix(
     predictorMatrix = predictorMatrix,
@@ -454,6 +463,20 @@ mice <- function(data,
     user.visitSequence = user.visitSequence,
     maxit = maxit
   )
+
+  # for variables not in model, set predictorMatrix column to zero
+  # and update formulas (#583)
+  # nomissings <- colnames(data)[!apply(is.na(data), 2, sum)]
+  # notinmodel <- setdiff(colnames(data), unlist(blocks))
+  # setrowzero <- intersect(nomissings, notinmodel)
+  # setcolzero <- setdiff(notinmodel, nomissings)
+  # predictorMatrix[, setcolzero] <- 0
+  # predictorMatrix[setrowzero, ] <- 0
+  # formulas <- p2f(predictorMatrix,
+  #                 blocks = construct.blocks(formulas, predictorMatrix))
+  # formulas[notinmodel] <- NULL
+
+  # other checks
   post <- check.post(post, data)
   blots <- check.blots(blots, data, blocks)
   ignore <- check.ignore(ignore, data)

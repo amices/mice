@@ -93,7 +93,13 @@ f2p <- function(formulas, blocks = NULL, roles = NULL) {
 n2b <- function(nest, silent = FALSE) {
   # nest to block
   stopifnot(validate.nest(nest, silent = silent))
-  nf <- factor(nest)
+  if (all(nest == "")) {
+    nest[1L:length(nest)] <- names(nest)
+  }
+  if (any(nest == "")) {
+    stop("Cannot convert a partially named nest to blocks")
+  }
+  nf <- factor(nest, levels = unique(nest))
   blocknames <- levels(nf)
   blocks <- vector("list", length = length(blocknames))
   names(blocks) <- blocknames
@@ -108,8 +114,13 @@ b2n <- function(blocks, silent = FALSE) {
   stopifnot(validate.blocks(blocks, silent = silent))
   vars <- unlist(blocks)
   nest <- rep(names(blocks), sapply(blocks, length))
+  if (any(duplicated(vars))) {
+    warning("Duplicated name(s) removed: ",
+            paste(vars[duplicated(vars)], collapse = ", "))
+  }
   names(nest) <- vars
   nest <- nest[!duplicated(names(nest))]
+  stopifnot(validate.nest(nest))
   return(nest)
 }
 
@@ -137,6 +148,14 @@ validate.nest <- function(nest, silent = FALSE) {
     if (!silent) warning("nest has no names", call. = FALSE)
     return(FALSE)
   }
+  if (any(duplicated(names(nest)))) {
+    if (!silent) warning(
+      "duplicated names in nest: ",
+      paste({names(nest)}[duplicated(names(nest))], collapse = ", "),
+      call. = FALSE)
+    return(FALSE)
+  }
+
   return(TRUE)
 }
 

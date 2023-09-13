@@ -30,12 +30,12 @@ make.method <- function(data,
 
 check.method <- function(method, data, where, blocks, defaultMethod) {
   if (is.null(method)) {
-    return(make.method(
+    method <- make.method(
       data = data,
       where = where,
       blocks = blocks,
-      defaultMethod = defaultMethod
-    ))
+      defaultMethod = defaultMethod)
+    return(method)
   }
   nimp <- nimp(where = where, blocks = blocks)
 

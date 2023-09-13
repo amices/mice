@@ -10,6 +10,7 @@ mice(
   m = 5,
   method = NULL,
   predictorMatrix,
+  nest = NULL,
   ignore = NULL,
   where = NULL,
   blocks,
@@ -55,6 +56,8 @@ on \emph{skipping imputation}.
 Two-level imputation models (which have \code{"2l"} in their
 names) other codes than \code{0} and \code{1}, e.g, \code{2} or \code{-2},
 are also used.}
+
+\item{nest}{experimental variable grouping input}
 
 \item{ignore}{A logical vector of \eqn{n} elements indicating
 which rows are ignored for estimating the parameters of

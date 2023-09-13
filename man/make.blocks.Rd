@@ -4,19 +4,14 @@
 \alias{make.blocks}
 \title{Creates a \code{blocks} argument}
 \usage{
-make.blocks(
-  data,
-  partition = c("scatter", "collect", "void"),
-  calltype = "pred"
-)
+make.blocks(x, partition = c("scatter", "collect", "void"), calltype = "pred")
 }
 \arguments{
-\item{data}{A \code{data.frame}, character vector with
+\item{x}{A \code{data.frame}, character vector with
 variable names, or \code{list} with variable names.}
 
-\item{partition}{A character vector of length 1 used to assign
-variables to blocks when \code{data} is a \code{data.frame}. Value
-\code{"scatter"} (default) will assign each column to it own
+\item{partition}{Only relevant when \code{x} is a \code{data.frame}. Value
+\code{"scatter"} (default) will assign each column to a separate
 block. Value \code{"collect"} assigns all variables to one block,
 whereas \code{"void"} produces an empty list.}
 
