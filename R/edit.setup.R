@@ -7,18 +7,25 @@ edit.setup <- function(data, setup,
   # legacy handling
   if (!remove_collinear) remove.collinear <- FALSE
 
-  # edits the imputation model setup
-  # When it detec constant or collinear variables, write in loggedEvents
-  # and continues imputation with reduced model
+  # Procedure to detect constant or collinear variables
+  #
+  # If found:
+  # - writes to loggedEvents
+  # - edits predictorMatrix, method, formulas, visitSequence and post
+  # - continues with reduced imputation model
+  #
+  # Specify remove.constant = FALSE and remove.collinear = FALSE to bypass
+  # these checks and edits
 
   pred <- setup$predictorMatrix
   meth <- setup$method
   form <- setup$formulas
-  blots <- setup$blots
+  blots <- setup$blots  # not used
   vis <- setup$visitSequence
   post <- setup$post
 
-  # FIXME: this function is not yet adapted to blocks
+  # FIXME: need to generalise indexing and updating of meth, vis and post to blocks
+
   if (!validate.predictorMatrix(pred)) {
     warning("Problem with predictorMatrix detected in edit.setup()")
     return(setup)
@@ -40,12 +47,6 @@ edit.setup <- function(data, setup,
       # inactivate j as predictor
       out <- varnames[j]
       pred[, j] <- 0
-      # remove out from RHS
-      #for (fn in names(form)) {
-      #  tt <- terms(form[[fn]])
-      #  ff <- drop.terms(tt, which(labels(tt) %in% out))
-      #  form[[fn]] <- ff
-      #}
       updateLog(out = out, meth = "constant")
       didlog <- TRUE
     }
@@ -53,14 +54,11 @@ edit.setup <- function(data, setup,
       # inactivate j as dependent
       out <- varnames[j]
       pred[j, ] <- 0
-      # remove LHS formula
-      #if (hasName(form, out)) {
-      #  form[out] <- NULL
-      #}
       if (!didlog) {
         updateLog(out = out, meth = "constant")
       }
       form <- p2f(pred, blocks = construct.blocks(form, pred))
+      # this following three statements do not work for blocks
       meth[j] <- ""
       vis <- vis[vis != j]
       post[j] <- ""
@@ -99,22 +97,9 @@ edit.setup <- function(data, setup,
     }
   }
 
-  # Set predictorMatrix row to zero
-
-  # if (all(pred == 0L)) {
-  #   stop("`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
-  # }
-
   if (!validate.predictorMatrix(pred)) {
     stop("Problem with predictorMatrix detected after edit.setup()")
   }
-
-  # for (j in seq_len(ncol(data))) {
-  #   if (meth[j] == "")
-  #     if (!all(pred[j, ] == 0)) {
-  #       stop("Inconsistent j: ", j, " pred[j, ]: ", pred[j, ])
-  #     }
-  # }
 
   setup$predictorMatrix <- pred
   setup$formulas <- form
