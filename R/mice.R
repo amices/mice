@@ -67,17 +67,28 @@
 #' `method='myfunc'`.  To call it only for, say, column 2 specify
 #' \code{method=c('norm','myfunc','logreg',\dots{})}.
 #'
-#' *Skipping imputation:* The user may skip imputation of a column by
-#' setting its entry to the empty method: `""`. For complete columns without
-#' missing data `mice` will automatically set the empty method. Setting t
-#' he empty method does not produce imputations for the column, so any missing
-#' cells remain `NA`. If column A contains `NA`'s and is used as
-#' predictor in the imputation model for column B, then `mice` produces no
-#' imputations for the rows in B where A is missing. The imputed data
-#' for B may thus contain `NA`'s. The remedy is to remove column A from
-#' the imputation model for the other columns in the data. This can be done
-#' by setting the entire column for variable A in the `predictorMatrix`
-#' equal to zero.
+#' *Skipping imputation:* Imputation of variable (or variable block)
+#' \eqn{j} can be skipped by setting the empty method, `method[j] = ""`.
+#' On start-up, `mice()` will test whether variables within
+#' block \eqn{j} need imputation. If not, `mice()` takes two actions:
+#' It sets `method[j] <- ""` and it sets the rows of the `predictorMatrix` of
+#' the variables within block \eqn{j} to zero.
+#'
+#' *BEWARE: Propagation of `NA`s*: Setting the empty method
+#' for an incomplete variable is legal and prevent `mice()`  from generating
+#' imputations for its missing cells. Sometimes this is wanted, but
+#' it may have a surprising side effect to due missing value propagation.
+#' For example, if column `"A"` contains `NA`'s and is a predictor in the
+#' imputation model for column `"B"`, then setting `method["A"] = ""` will
+#' propagate the missing data of `"A"` into `"B"` for the rows in `"B"`
+#' where `"A"` is missing. The imputed data for `"B"` thus contain `NA`'s.
+#' If this is not desired, apply one of the following two remedies:
+#' 1) Remove column `"A"` as predictor from all imputation models, e.g.,
+#' by setting `predictorMatrix[, "A"] <- 0`, and re-impute.
+#' Or 2) Specify an imputation method for `"A"` and impute `"A"`. Optionally,
+#' after convergence manually replace any imputations for `"A"` by `NA`
+#' using `imp$imp$A[] <- NA`. In that case, `complete(imp, 1)` produces a
+#' dataset that is complete, except for column `"A"`.
 #'
 #' *Passive imputation:* `mice()` supports a special built-in method,
 #' called passive imputation. This method can be used to ensure that a data
@@ -130,45 +141,60 @@
 #' to turn off this behavior by specifying the
 #' argument `auxiliary = FALSE`.
 #'
-#' @param data A data frame or a matrix containing the incomplete data.  Missing
-#' values are coded as `NA`.
-#' @param m Number of multiple imputations. The default is `m=5`.
-#' @param method Can be either a single string, or a vector of strings with
-#' length `length(blocks)`, specifying the imputation method to be
-#' used for each column in data. If specified as a single string, the same
-#' method will be used for all blocks. The default imputation method (when no
-#' argument is specified) depends on the measurement level of the target column,
-#' as regulated by the `defaultMethod` argument. Columns that need
-#' not be imputed have the empty method `""`. See details.
-#' @param predictorMatrix A numeric matrix of `length(blocks)` rows
-#' and `ncol(data)` columns, containing 0/1 data specifying
-#' the set of predictors to be used for each target column.
-#' Each row corresponds to a variable block, i.e., a set of variables
-#' to be imputed. A value of `1` means that the column
-#' variable is used as a predictor for the target block (in the rows).
-#' By default, the `predictorMatrix` is a square matrix of `ncol(data)`
-#' rows and columns with all 1's, except for the diagonal.
-#' Note: For two-level imputation models (which have `"2l"` in their names)
-#' other roles (e.g, `2` or `-2`) are also allowed.
-#' @param ignore A logical vector of `nrow(data)` elements indicating
-#' which rows are ignored when creating the imputation model. The default
-#' `NULL` includes all rows that have an observed value of the variable
-#' to imputed. Rows with `ignore` set to `TRUE` do not influence the
-#' parameters of the imputation model, but are still imputed. We may use the
-#' `ignore` argument to split `data` into a training set (on which the
-#' imputation model is built) and a test set (that does not influence the
-#' imputation model estimates).
-#' Note: Multivariate imputation methods, like `mice.impute.jomoImpute()`
-#' or `mice.impute.panImpute()`, do not honour the `ignore` argument.
-#' @param where A data frame or matrix with logicals of the same dimensions
-#' as `data` indicating where in the data the imputations should be
-#' created. The default, `where = is.na(data)`, specifies that the
-#' missing data should be imputed. The `where` argument may be used to
-#' overimpute observed data, or to skip imputations for selected missing values.
-#' Note: Imputation methods that generate imptutations outside of
-#' `mice`, like `mice.impute.panImpute()` may depend on a complete
-#' predictor space. In that case, a custom `where` matrix can not be
-#' specified.
+#' @param data      Data frame with \eqn{n} rows and \eqn{p} columns with
+#'                  incomplete data.  Missing values are coded as `NA`.
+#' @param m         Number of multiple imputations. The default is `m = 5`.
+#'                  Setting `m = 1` produces a single imputation per cell
+#'                  (not recommended in general).
+#' @param method    Character vector of length \eqn{q} specifying imputation
+#'                  methods for (groups of) variables. In the special case
+#'                  `length(method) == 1`, the specified method applies to all
+#'                  variables. When `method` is not specified, `mice()` will
+#'                  select a method based on the variable type as regulated
+#'                  by the `defaultMethod` argument. See details
+#'                  on *skipping imputation*.
+#' @param predictorMatrix
+#'                  A square numeric matrix of \eqn{p} rows
+#'                  and columns. Row- and column names are `colnames(data)`.
+#'                  Each row corresponds to a variable to be imputed.
+#'                  A value of `1` means that the column variable is a
+#'                  predictor for the row variable, while a `0` means that
+#'                  the column variable is not a predictor. The default
+#'                  `predictorMatrix` is `1` everywhere, except for a zero
+#'                  diagonal. For variables that need no be imputed,
+#'                  `mice()` automatically sets the corresponding rows in the
+#'                  `predictorMatrix` to zero. See details
+#'                  on *skipping imputation*.
+#'                  Two-level imputation models (which have `"2l"` in their
+#'                  names) other codes than `0` and `1`, e.g, `2` or `-2`,
+#'                  are also used.
+#' @param ignore    A logical vector of \eqn{n} elements indicating
+#'                  which rows are ignored for estimating the parameters of
+#'                  the imputation model.
+#'                  Rows with `ignore` set to `TRUE` do not influence the
+#'                  parameters of the imputation model.
+#'                  The `ignore` argument allows splitting `data` into a
+#'                  training set (on which we fit the imputation model)
+#'                  and a test set (that does not influence the imputation
+#'                  model parameter estimates).
+#'                  The default `NULL` corresponds to all `FALSE`, thus
+#'                  including all rows into the imputation models.
+#'                  Note: Multivariate imputation methods,
+#'                  like `mice.impute.jomoImpute()` or
+#'                  `mice.impute.panImpute()`, do not honour the `ignore`
+#'                  argument.
+#' @param where     A data frame or matrix of logicals with \eqn{n} rows
+#'                  and \eqn{p} columns, indicating the cells of `data` for
+#'                  which imputations are generated.
+#'                  The default `where = is.na(data)` specifies that all
+#'                  missing data are imputed.
+#'                  The `where` argument can overimpute cells
+#'                  with observed data, or skip imputation of specific missing
+#'                  cells. Be aware that the latter option could propagate
+#'                  missing values to other variables. See details.
+#'                  Note: Methods that generate multivariate imputations
+#'                  (e.g. `mice.impute.panImpute()`) do not honour the
+#'                  `where` argument.
 #' @param blocks List of vectors with variable names per block. List elements
 #' may be named to identify blocks. Variables within a block are
 #' imputed by a multivariate imputation method
@@ -409,20 +435,24 @@ mice <- function(data,
   chk <- check.cluster(data, predictorMatrix)
   where <- check.where(where, data, blocks)
 
-  # check visitSequence, edit predictorMatrix for monotone
+  # check visitSequence,
   user.visitSequence <- visitSequence
   visitSequence <- check.visitSequence(visitSequence,
-    data = data, where = where, blocks = blocks
-  )
-  predictorMatrix <- edit.predictorMatrix(
-    predictorMatrix = predictorMatrix,
-    visitSequence = visitSequence,
-    user.visitSequence = user.visitSequence,
-    maxit = maxit
+                                       data = data, where = where, blocks = blocks
   )
   method <- check.method(
     method = method, data = data, where = where,
     blocks = blocks, defaultMethod = defaultMethod
+  )
+  # edit predictorMatrix for monotone, set zero rows for empty methods
+  predictorMatrix <- edit.predictorMatrix(
+    predictorMatrix = predictorMatrix,
+    method = method,
+    blocks = blocks,
+    where = where,
+    visitSequence = visitSequence,
+    user.visitSequence = user.visitSequence,
+    maxit = maxit
   )
   post <- check.post(post, data)
   blots <- check.blots(blots, data, blocks)
@@ -450,9 +480,9 @@ mice <- function(data,
   post <- setup$post
 
   # update model
-#  formulas <- p2f(predictorMatrix, blocks)
-#  roles <- p2c(predictorMatrix)
-#  blots <- paste.roles(blots, roles)
+  #  formulas <- p2f(predictorMatrix, blocks)
+  #  roles <- p2c(predictorMatrix)
+  #  blots <- paste.roles(blots, roles)
 
   # initialize imputations
   nmis <- apply(is.na(data), 2, sum)
@@ -492,8 +522,8 @@ mice <- function(data,
     seed = seed,
     iteration = q$iteration,
     lastSeedValue = get(".Random.seed",
-      envir = globalenv(), mode = "integer",
-      inherits = FALSE
+                        envir = globalenv(), mode = "integer",
+                        inherits = FALSE
     ),
     chainMean = q$chainMean,
     chainVar = q$chainVar,
@@ -505,7 +535,7 @@ mice <- function(data,
 
   if (!is.null(midsobj$loggedEvents)) {
     warning("Number of logged events: ", nrow(midsobj$loggedEvents),
-      call. = FALSE
+            call. = FALSE
     )
   }
   midsobj

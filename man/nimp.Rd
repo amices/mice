@@ -10,15 +10,18 @@ nimp(data = NULL, where = is.na(data), blocks = make.blocks(where))
 \item{data}{Data frame with \eqn{n} rows and \eqn{p} columns with
 incomplete data.  Missing values are coded as \code{NA}.}
 
-\item{where}{A data frame or matrix with logicals of the same dimensions
-as \code{data} indicating where in the data the imputations should be
-created. The default, \code{where = is.na(data)}, specifies that the
-missing data should be imputed. The \code{where} argument may be used to
-overimpute observed data, or to skip imputations for selected missing values.
-Note: Imputation methods that generate imptutations outside of
-\code{mice}, like \code{mice.impute.panImpute()} may depend on a complete
-predictor space. In that case, a custom \code{where} matrix can not be
-specified.}
+\item{where}{A data frame or matrix of logicals with \eqn{n} rows
+and \eqn{p} columns, indicating the cells of \code{data} for
+which imputations are generated.
+The default \code{where = is.na(data)} specifies that all
+missing data are imputed.
+The \code{where} argument can overimpute cells
+with observed data, or skip imputation of specific missing
+cells. Be aware that the latter option could propagate
+missing values to other variables. See details.
+Note: Methods that generate multivariate imputations
+(e.g. \code{mice.impute.panImpute()}) do not honour the
+\code{where} argument.}
 
 \item{blocks}{List of vectors with variable names per block. List elements
 may be named to identify blocks. Variables within a block are

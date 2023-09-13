@@ -148,9 +148,20 @@ check.predictorMatrix <- function(predictorMatrix,
 }
 
 edit.predictorMatrix <- function(predictorMatrix,
+                                 method,
+                                 blocks,
+                                 where,
                                  visitSequence,
                                  user.visitSequence,
                                  maxit) {
+  # for empty method, set predictorMatrix row to zero
+  nimp <- nimp(where = where, blocks = blocks)
+  for (j in seq_along(blocks)) {
+    if (!nimp[j]) {
+      predictorMatrix[blocks[[j]], ] <- 0
+    }
+  }
+
   # edit predictorMatrix to a monotone pattern
   if (maxit == 1L && !is.null(user.visitSequence) && user.visitSequence == "monotone") {
     for (i in 1L:length(visitSequence)) {

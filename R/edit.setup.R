@@ -20,7 +20,7 @@ edit.setup <- function(data, setup,
 
   # FIXME: this function is not yet adapted to blocks
   if (!validate.predictorMatrix(pred)) {
-    stop("Problem with predictorMatrix detected in edit.setup")
+    warning("Problem with predictorMatrix detected in edit.setup()")
     return(setup)
   }
 
@@ -37,6 +37,7 @@ edit.setup <- function(data, setup,
     }
     didlog <- FALSE
     if (constant && any(pred[, j] != 0) && remove.constant) {
+      # inactivate j as predictor
       out <- varnames[j]
       pred[, j] <- 0
       # remove out from RHS
@@ -49,6 +50,7 @@ edit.setup <- function(data, setup,
       didlog <- TRUE
     }
     if (constant && meth[j] != "" && remove.constant) {
+      # inactivate j as dependent
       out <- varnames[j]
       pred[j, ] <- 0
       # remove LHS formula
@@ -97,9 +99,22 @@ edit.setup <- function(data, setup,
     }
   }
 
-  if (all(pred == 0L)) {
-    stop("`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
+  # Set predictorMatrix row to zero
+
+  # if (all(pred == 0L)) {
+  #   stop("`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
+  # }
+
+  if (!validate.predictorMatrix(pred)) {
+    stop("Problem with predictorMatrix detected after edit.setup()")
   }
+
+  # for (j in seq_len(ncol(data))) {
+  #   if (meth[j] == "")
+  #     if (!all(pred[j, ] == 0)) {
+  #       stop("Inconsistent j: ", j, " pred[j, ]: ", pred[j, ])
+  #     }
+  # }
 
   setup$predictorMatrix <- pred
   setup$formulas <- form

@@ -16,8 +16,7 @@ pred <- make.predictorMatrix(nhanes, blocks)
 pred[c("bmi", "chl", "hyp"), "hyp"] <- -2
 imp1 <- mice(nhanes,
              blocks = blocks, method = method, pred = pred,
-             maxit = 1, seed = 1, print = TRUE
-)
+             maxit = 1, seed = 1, print = FALSE)
 z <- complete(imp1)
 
 test_that("mice can call panImpute with type argument", {
@@ -29,7 +28,7 @@ method <- c("panImpute", "pmm")
 formulas <- list(bmi + chl + hyp ~ 1 | age,
                  age ~ bmi + chl + hyp)
 formulas <- name.formulas(formulas)
-imp2 <- mice(nhanes, formulas = formulas, method = method, maxit = 1, seed = 1, print = TRUE)
+imp2 <- mice(nhanes, formulas = formulas, method = method, maxit = 1, seed = 1, print = FALSE)
 z <- complete(imp2)
 
 test_that("mice can call panImpute with formula argument", {

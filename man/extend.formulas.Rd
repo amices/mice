@@ -23,8 +23,8 @@ The \code{formulas} argument is an alternative to the
 \code{predictorMatrix} argument that allows for more flexibility in
 specifying imputation models, e.g., for specifying interaction terms.}
 
-\item{data}{A data frame or a matrix containing the incomplete data.  Missing
-values are coded as \code{NA}.}
+\item{data}{Data frame with \eqn{n} rows and \eqn{p} columns with
+incomplete data.  Missing values are coded as \code{NA}.}
 
 \item{blocks}{List of vectors with variable names per block. List elements
 may be named to identify blocks. Variables within a block are
@@ -38,16 +38,20 @@ matrix are set to \code{FALSE} of variables that are not block members.
 A variable may appear in multiple blocks. In that case, it is
 effectively re-imputed each time that it is visited.}
 
-\item{predictorMatrix}{A numeric matrix of \code{length(blocks)} rows
-and \code{ncol(data)} columns, containing 0/1 data specifying
-the set of predictors to be used for each target column.
-Each row corresponds to a variable block, i.e., a set of variables
-to be imputed. A value of \code{1} means that the column
-variable is used as a predictor for the target block (in the rows).
-By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
-rows and columns with all 1's, except for the diagonal.
-Note: For two-level imputation models (which have \code{"2l"} in their names)
-other roles (e.g, \code{2} or \code{-2}) are also allowed.}
+\item{predictorMatrix}{A square numeric matrix of \eqn{p} rows
+and columns. Row- and column names are \code{colnames(data)}.
+Each row corresponds to a variable to be imputed.
+A value of \code{1} means that the column variable is a
+predictor for the row variable, while a \code{0} means that
+the column variable is not a predictor. The default
+\code{predictorMatrix} is \code{1} everywhere, except for a zero
+diagonal. For variables that need no be imputed,
+\code{mice()} automatically sets the corresponding rows in the
+\code{predictorMatrix} to zero. See details
+on \emph{skipping imputation}.
+Two-level imputation models (which have \code{"2l"} in their
+names) other codes than \code{0} and \code{1}, e.g, \code{2} or \code{-2},
+are also used.}
 
 \item{auxiliary}{A logical that indicates whether the variables
 listed in \code{predictors} should be added to the formula as main

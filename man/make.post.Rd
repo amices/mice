@@ -7,8 +7,8 @@
 make.post(data)
 }
 \arguments{
-\item{data}{A data frame or a matrix containing the incomplete data.  Missing
-values are coded as \code{NA}.}
+\item{data}{Data frame with \eqn{n} rows and \eqn{p} columns with
+incomplete data.  Missing values are coded as \code{NA}.}
 }
 \value{
 Character vector of \code{ncol(data)} element
