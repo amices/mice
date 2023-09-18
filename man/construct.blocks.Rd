@@ -53,7 +53,7 @@ sets the corresponding rows in the \code{predictorMatrix} to
 zero. See details on \emph{skipping imputation}.
 Two-level imputation models (which have \code{"2l"} in their
 names) support other codes than \code{0} and \code{1}, e.g, \code{2}
-or \code{-2} to signal variable with special roles.}
+or \code{-2} that assign special roles to some variables.}
 }
 \value{
 A \code{blocks} object.

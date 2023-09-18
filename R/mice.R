@@ -40,6 +40,7 @@
 #' `lasso.select.norm` \tab numeric \tab Lasso select + linear regression\cr
 #' `quadratic`         \tab numeric \tab Imputation of quadratic terms\cr
 #' `ri`                \tab numeric \tab Random indicator for nonignorable data\cr
+#' `mnar.norm`         \tab numeric \tab NARFCS under user-specified MNAR\cr
 #' `logreg`            \tab binary  \tab Logistic regression\cr
 #' `logreg.boot`       \tab binary  \tab Logistic regression with bootstrap\cr
 #' `lasso.logreg`      \tab binary  \tab Lasso logistic regression\cr
@@ -54,6 +55,14 @@
 #' `2lonly.mean`       \tab numeric  \tab Level-2 class mean\cr
 #' `2lonly.norm`       \tab numeric  \tab Level-2 class normal\cr
 #' `2lonly.pmm`        \tab any      \tab Level-2 class predictive mean matching
+#' }
+#'
+#' Built-in multivariate imputation methods are:
+#'
+#' \tabular{lll}{
+#' `mpmm`               \tab any     \tab Multivariate PMM\cr
+#' `jomoImpute`         \tab any     \tab `jomo::jomo()` through `mitml::jomoImpute()`\cr
+#' `panImpute`          \tab numeric \tab `pan::pan()` through `mitml::panImpute()`
 #' }
 #'
 #' These corresponding functions are coded in the `mice` library under
@@ -171,7 +180,7 @@
 #'                  zero. See details on *skipping imputation*.
 #'                  Two-level imputation models (which have `"2l"` in their
 #'                  names) support other codes than `0` and `1`, e.g, `2`
-#'                  or `-2` to signal variable with special roles.
+#'                  or `-2` that assign special roles to some variables.
 #' @param ignore    A logical vector of \eqn{n} elements indicating
 #'                  which rows are ignored for estimating the parameters of
 #'                  the imputation model.

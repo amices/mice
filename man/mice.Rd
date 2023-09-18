@@ -59,7 +59,7 @@ sets the corresponding rows in the \code{predictorMatrix} to
 zero. See details on \emph{skipping imputation}.
 Two-level imputation models (which have \code{"2l"} in their
 names) support other codes than \code{0} and \code{1}, e.g, \code{2}
-or \code{-2} to signal variable with special roles.}
+or \code{-2} that assign special roles to some variables.}
 
 \item{nest}{A character vector with \eqn{p} elements identifying the
 variable group (or block) to which each variable is
@@ -283,6 +283,7 @@ Built-in univariate imputation methods are:
 \code{lasso.select.norm} \tab numeric \tab Lasso select + linear regression\cr
 \code{quadratic}         \tab numeric \tab Imputation of quadratic terms\cr
 \code{ri}                \tab numeric \tab Random indicator for nonignorable data\cr
+\code{mnar.norm}         \tab numeric \tab NARFCS under user-specified MNAR\cr
 \code{logreg}            \tab binary  \tab Logistic regression\cr
 \code{logreg.boot}       \tab binary  \tab Logistic regression with bootstrap\cr
 \code{lasso.logreg}      \tab binary  \tab Lasso logistic regression\cr
@@ -297,6 +298,14 @@ Built-in univariate imputation methods are:
 \verb{2lonly.mean}       \tab numeric  \tab Level-2 class mean\cr
 \verb{2lonly.norm}       \tab numeric  \tab Level-2 class normal\cr
 \verb{2lonly.pmm}        \tab any      \tab Level-2 class predictive mean matching
+}
+
+Built-in multivariate imputation methods are:
+
+\tabular{lll}{
+\code{mpmm}               \tab any     \tab Multivariate PMM\cr
+\code{jomoImpute}         \tab any     \tab \code{jomo::jomo()} through \code{mitml::jomoImpute()}\cr
+\code{panImpute}          \tab numeric \tab \code{pan::pan()} through \code{mitml::panImpute()}
 }
 
 These corresponding functions are coded in the \code{mice} library under
