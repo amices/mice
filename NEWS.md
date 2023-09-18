@@ -9,6 +9,7 @@
 
 ## Changes 
 
+- Performs stricter checks on zero rows in predictorMatrix under empty imputation method
 - Adds supports a tiny predictorMatrix
 - Solves bug in f2p()
 - Adds new function `remove.rhs.variables()`
