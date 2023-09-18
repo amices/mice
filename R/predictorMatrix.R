@@ -119,6 +119,16 @@ edit.predictorMatrix <- function(predictorMatrix,
                                  user.visitSequence,
                                  maxit) {
   # for empty method, set predictorMatrix row to zero
+  for (b in names(method)) {
+    ynames <- blocks[[b]]
+    for (j in ynames) {
+      if (method[b] == "") {
+        predictorMatrix[j, ] <- 0
+      }
+    }
+  }
+
+  # for variables that will not be imputed, set predictorMatrix row to zero
   nimp <- nimp(where = where, blocks = blocks)
   for (j in seq_along(blocks)) {
     if (!nimp[j]) {
@@ -132,6 +142,7 @@ edit.predictorMatrix <- function(predictorMatrix,
       predictorMatrix[visitSequence[i], visitSequence[i:length(visitSequence)]] <- 0
     }
   }
+
   valid <- validate.predictorMatrix(predictorMatrix)
   if (!valid) {
     warning("Malformed predictorMatrix. See ?make.predictorMatrix")

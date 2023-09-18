@@ -156,6 +156,13 @@ check.blocks <- function(blocks, data, calltype = "formula") {
     ))
   }
 
+  # add blocks for unspecified variables
+  ynames <- unique(as.vector(unname(unlist(blocks))))
+  notimputed <- setdiff(colnames(data), ynames)
+  for (y in notimputed) {
+    blocks[[y]] <- y
+  }
+
   if (length(calltype) == 1L) {
     ct <- rep(calltype, length(blocks))
     names(ct) <- names(blocks)

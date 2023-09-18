@@ -9,7 +9,8 @@ make.method(
   where = make.where(data),
   blocks = make.blocks(data),
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-  user.predictorMatrix = NULL
+  user.predictorMatrix = NULL,
+  user.blocks = NULL
 )
 }
 \arguments{
@@ -51,6 +52,9 @@ polytomous regression imputation for unordered categorical data (factor > 2
 levels) \code{polr}, proportional odds model for (ordered, > 2 levels).}
 
 \item{user.predictorMatrix}{the unedited \code{predictorMatrix} specified by the
+user in the call to \code{mice()}}
+
+\item{user.blocks}{the unedited \code{blocks} specified by the
 user in the call to \code{mice()}}
 }
 \value{

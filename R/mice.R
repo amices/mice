@@ -375,6 +375,10 @@ mice <- function(data,
   if (!mp) {
     user.predictorMatrix <- predictorMatrix
   }
+  user.blocks <- NULL
+  if (!mb) {
+    user.blocks <- blocks
+  }
 
   # case A
   if (mp & mb & mf) {
@@ -456,7 +460,8 @@ mice <- function(data,
   method <- check.method(
     method = method, data = data, where = where,
     blocks = blocks, defaultMethod = defaultMethod,
-    user.predictorMatrix = user.predictorMatrix
+    user.predictorMatrix = user.predictorMatrix,
+    user.blocks = user.blocks
   )
 
   # edit predictorMatrix for monotone, set zero rows for empty methods
@@ -470,6 +475,13 @@ mice <- function(data,
     maxit = maxit
   )
 
+  # update formulas to ~ 1 if method = ""
+  for (b in names(method)) {
+    if (hasName(formulas, b) && method[[b]] == "") {
+      formulas[[b]] <- as.formula(paste(b, "~ 1"))
+    }
+  }
+
   # evasion of NA propagation by inactivating unimputed incomplete predictors
   # issue #583
   # 1) find unimputed incomplete predictors
@@ -477,8 +489,8 @@ mice <- function(data,
   # 3) update formulas
 
   # step 1: uip = unimputed incomplete predictors
-  nomissings <- colnames(data)[!apply(is.na(data), 2, sum)]
-  uip <- setdiff(colnames(data), unlist(blocks))
+  # nomissings <- colnames(data)[!apply(is.na(data), 2, sum)]
+  # uip <- setdiff(colnames(data), unlist(blocks))
 
   # step 2: update predictorMatrix
   # setrowzero <- intersect(nomissings, uip)

@@ -5,6 +5,8 @@
 #' specifies the method for each block.
 #' @param user.predictorMatrix the unedited `predictorMatrix` specified by the
 #' user in the call to `mice()`
+#' @param user.blocks the unedited `blocks` specified by the
+#' user in the call to `mice()`
 #' @inheritParams mice
 #' @return Vector of `length(blocks)` element with method names
 #' @seealso [mice()]
@@ -15,14 +17,22 @@ make.method <- function(data,
                         where = make.where(data),
                         blocks = make.blocks(data),
                         defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-                        user.predictorMatrix = NULL) {
+                        user.predictorMatrix = NULL,
+                        user.blocks = NULL) {
   # support tiny predictorMatrix
-  if (is.null(user.predictorMatrix) ||
-      ncol(user.predictorMatrix) == ncol(data)) {
-    include <- colnames(data)
-  } else {
-    include <- colnames(user.predictorMatrix)
+  include <- colnames(data)
+  if (!is.null(user.predictorMatrix)) {
+    if (!is.null(dimnames(user.predictorMatrix))) {
+      include <- colnames(user.predictorMatrix)
+    } else {
+      include <- colnames(data)
+    }
   }
+  # support tiny blocks
+  if (!is.null(user.blocks)) {
+    include <- unique(as.vector(unname(unlist(blocks))))
+  }
+
   method <- rep("", length(blocks))
   names(method) <- names(blocks)
   for (j in seq_along(blocks)) {
@@ -41,14 +51,15 @@ make.method <- function(data,
 
 
 check.method <- function(method, data, where, blocks, defaultMethod,
-                         user.predictorMatrix) {
+                         user.predictorMatrix, user.blocks) {
   if (is.null(method)) {
     method <- make.method(
       data = data,
       where = where,
       blocks = blocks,
       defaultMethod = defaultMethod,
-      user.predictorMatrix = user.predictorMatrix)
+      user.predictorMatrix = user.predictorMatrix,
+      user.blocks)
     return(method)
   }
   nimp <- nimp(where = where, blocks = blocks)

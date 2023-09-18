@@ -135,6 +135,15 @@ validate.mids <- function(x, silent = FALSE) {
     if (!silent) warning("length of imp differs from the number of variables", call. = FALSE)
     return(FALSE)
   }
+  for (b in names(x$method)) {
+    ynames <- x$blocks[[b]]
+    for (j in ynames) {
+      if (x$method[b] != "") next
+      if (all(x$predictorMatrix[j, ] == 0)) next
+      warning(paste("predictorMatrix row not zero for variable", j), call. = FALSE)
+      return(FALSE)
+    }
+  }
 
   return(TRUE)
 }

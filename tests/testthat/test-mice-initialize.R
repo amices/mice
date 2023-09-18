@@ -73,8 +73,8 @@ imp2 <- mice(data, blocks = list(c("bmi", "chl"), "hyp"), print = FALSE, m = 1, 
 imp3 <- mice(data, blocks = list(all = c("bmi", "chl", "hyp")), print = FALSE, m = 1, maxit = 1, seed = 11)
 
 test_that("Case C finds blocks", {
-  expect_identical(names(imp2$blocks), c("B1", "hyp"))
-  expect_identical(names(imp3$blocks), c("all"))
+  expect_identical(names(imp2$blocks), c("B1", "hyp", "age"))
+  expect_identical(names(imp3$blocks), c("all", "age"))
 })
 
 test_that("Case C finds predictorMatrix", {
@@ -88,6 +88,8 @@ test_that("Case C finds formulas", {
 
 test_that("Case C yields same imputations for FCS and multivariate", {
   expect_identical(complete(imp1), complete(imp2))
+  # NOTE: next comparison will not work for nhanes2, because pmm instead
+  # of logreg is used to impute hyp
   expect_identical(complete(imp1), complete(imp3))
 })
 
