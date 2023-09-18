@@ -42,22 +42,28 @@ select a method based on the variable type as regulated
 by the \code{defaultMethod} argument. See details
 on \emph{skipping imputation}.}
 
-\item{predictorMatrix}{A square numeric matrix of \eqn{p} rows
-and columns. Row- and column names are \code{colnames(data)}.
+\item{predictorMatrix}{A square numeric matrix of maximal \eqn{p} rows and
+maximal \eqn{p} columns. Row- and column names are
+\code{colnames(data)}.
 Each row corresponds to a variable to be imputed.
 A value of \code{1} means that the column variable is a
 predictor for the row variable, while a \code{0} means that
 the column variable is not a predictor. The default
 \code{predictorMatrix} is \code{1} everywhere, except for a zero
-diagonal. For variables that need no be imputed,
-\code{mice()} automatically sets the corresponding rows in the
-\code{predictorMatrix} to zero. See details
-on \emph{skipping imputation}.
+diagonal. Row- and column-names are optional for the
+maximum \eqn{p} by \eqn{p} size. The user may specify a
+smaller \code{predictorMatrix}, but column and row names are
+then mandatory and should match be part of \code{colnames(data)}.
+For variables that are not imputed, \code{mice()} automatically
+sets the corresponding rows in the \code{predictorMatrix} to
+zero. See details on \emph{skipping imputation}.
 Two-level imputation models (which have \code{"2l"} in their
-names) other codes than \code{0} and \code{1}, e.g, \code{2} or \code{-2},
-are also used.}
+names) support other codes than \code{0} and \code{1}, e.g, \code{2}
+or \code{-2} to signal variable with special roles.}
 
-\item{nest}{experimental variable grouping input}
+\item{nest}{A character vector with \eqn{p} elements identifying the
+variable group (or block) to which each variable is
+allocated.}
 
 \item{ignore}{A logical vector of \eqn{n} elements indicating
 which rows are ignored for estimating the parameters of
@@ -65,15 +71,14 @@ the imputation model.
 Rows with \code{ignore} set to \code{TRUE} do not influence the
 parameters of the imputation model.
 The \code{ignore} argument allows splitting \code{data} into a
-training set (on which we fit the imputation model)
+training set (on which \code{mice()} fits the imputation model)
 and a test set (that does not influence the imputation
 model parameter estimates).
 The default \code{NULL} corresponds to all \code{FALSE}, thus
 including all rows into the imputation models.
-Note: Multivariate imputation methods,
-like \code{mice.impute.jomoImpute()} or
-\code{mice.impute.panImpute()}, do not honour the \code{ignore}
-argument.}
+Note: Not all imputation methods may support the \code{ignore}
+argument (e.g., \code{mice.impute.jomoImpute()} or
+\code{mice.impute.panImpute()}).}
 
 \item{where}{A data frame or matrix of logicals with \eqn{n} rows
 and \eqn{p} columns, indicating the cells of \code{data} for
@@ -84,86 +89,131 @@ The \code{where} argument can overimpute cells
 with observed data, or skip imputation of specific missing
 cells. Be aware that the latter option could propagate
 missing values to other variables. See details.
-Note: Methods that generate multivariate imputations
-(e.g. \code{mice.impute.panImpute()}) do not honour the
-\code{where} argument.}
+Note: Not all imputation methods may support the \code{where}
+argument (e.g., \code{mice.impute.jomoImpute()} or
+\code{mice.impute.panImpute()}).}
 
-\item{blocks}{List of vectors with variable names per block. List elements
-may be named to identify blocks. Variables within a block are
-imputed by a multivariate imputation method
-(see \code{method} argument). By default each variable is placed
-into its own block, which is effectively
-fully conditional specification (FCS) by univariate models
-(variable-by-variable imputation). Only variables whose names appear in
-\code{blocks} are imputed. The relevant columns in the \code{where}
-matrix are set to \code{FALSE} of variables that are not block members.
-A variable may appear in multiple blocks. In that case, it is
-effectively re-imputed each time that it is visited.}
+\item{blocks}{List of \eqn{q} character vectors that identifies the
+variable names per block. The name of list elements
+identify blocks. \code{mice()} will provide default names
+(\code{"B1"}, \code{"B2"}, ...) for blocks containing multiple
+variables. Variables within a block are imputed as a
+block, e.g. by a multivariate imputation method, or
+by an iterated version of the same univariate imputation
+method. By default each variable is allocated to a
+separate block, which is effectively fully conditional
+specification (FCS) by univariate models
+(variable-by-variable imputation).
+All data variables are assigned to a block.
+A variable can belong to only one block, so there are
+at most \eqn{p} blocks.
+See the \code{nest} argument for an easier alternative to
+the \code{blocks} argument.}
 
-\item{visitSequence}{A vector of block names of arbitrary length, specifying the
-sequence of blocks that are imputed during one iteration of the Gibbs
-sampler. A block is a collection of variables. All variables that are
-members of the same block are imputed
-when the block is visited. A variable that is a member of multiple blocks
-is re-imputed within the same iteration.
-The default \code{visitSequence = "roman"} visits the blocks (left to right)
-in the order in which they appear in \code{blocks}.
-One may also use one of the following keywords: \code{"arabic"}
-(right to left), \code{"monotone"} (ordered low to high proportion
-of missing data) and \code{"revmonotone"} (reverse of monotone).
-\emph{Special case}: If you specify both \code{visitSequence = "monotone"} and
-\code{maxit = 1}, then the procedure will edit the \code{predictorMatrix}
-to conform to the monotone pattern. Realize that convergence in one
-iteration is only guaranteed if the missing data pattern is actually
-monotone. The procedure does not check this.}
+\item{visitSequence}{A vector of block names of arbitrary length, specifying
+the sequence of blocks in which blocks are imputed.
+The \code{visitSequence} defines one iteration through the
+data. A given block may be visited multiple times
+within one iteration.
+Variables that are members of the same block
+are imputed togeteher when the block is visited.
+The default \code{visitSequence = "roman"} visits the blocks
+(left to right) in the order in which they appear
+in \code{blocks}. One may also use one of the following
+keywords: \code{"arabic"} (right to left), \code{"monotone"}
+(ordered low to high proportion of missing data) and
+\code{"revmonotone"} (reverse of monotone).
+\emph{Special case}: If you specify both
+\code{visitSequence = "monotone"} and \code{maxit = 1}, then the
+procedure will edit the \code{predictorMatrix} to conform to
+the monotone pattern, so convergence is then immediate.
+Realize that convergence in one iteration is only
+guaranteed if the missing data pattern is actually
+monotone. \code{mice()} does not check for monotonicity.}
 
-\item{formulas}{A named list of formula's, or expressions that
-can be converted into formula's by \code{as.formula}. List elements
-correspond to blocks. The block to which the list element applies is
-identified by its name, so list names must correspond to block names.
+\item{formulas}{A named list with \eqn{q} component, each containing
+one formula. The left hand side (LHS) specifies the
+variables to be imputed, and the right hand side (RHS)
+specifies the predictors used for imputation. For example,
+model \code{y1 + y2 ~ x1 + x2} imputes \code{y1} and \code{y2} using \code{x1}
+and \code{x2} as predictors. Imputation by a multivariate
+imputation model imputes \code{y1} and \code{y2} simultaneously
+by a joint model, whereas \code{mice()} can also impute
+\code{y1} and \code{y2} by a repeated univariate model as
+\code{y1 ~ y2 + x1 + x2} and \code{y2 ~ y1 + x1 + x2}.
 The \code{formulas} argument is an alternative to the
-\code{predictorMatrix} argument that allows for more flexibility in
-specifying imputation models, e.g., for specifying interaction terms.}
+combination of the \code{predictorMatrix} and
+\code{blocks} arguments. It is more compact and allows for
+more flexibility in specifying imputation models,
+e.g., for adding
+interaction terms (\code{y1 + y2 ~ x1 * x2} ),
+logical variables (\code{y1 + y2 ~ x1 + (x2 > 20)}),
+three-level categories (\code{y1 + y2 ~ x1 + cut(age, 3)}),
+polytomous terms (\code{y1 + y2 ~ x1 + poly(age, 3)},
+smoothing terms (\code{y1 + y2 ~ x1 + bs(age)}),
+sum scores (\code{y1 + y2 ~ I(x1 + x2)}) or
+quotients (\code{y1 + y2 ~ I(x1 / x2)})
+on the fly.
+Optionally, the user can name formulas. If not named,
+\code{mice()} will name formulas with multiple variables
+as \code{F1}, \code{F2}, and so on. Formulas with one
+dependent (e.g. \code{ses ~ x1 + x2}) will be named
+after the dependent variable \code{"ses"}.}
 
-\item{blots}{A named \code{list} of \code{alist}'s that can be used
-to pass down arguments to lower level imputation function. The entries
-of element \code{blots[[blockname]]} are passed down to the function
-called for block \code{blockname}.}
+\item{blots}{A named \code{list} with maximally \eqn{q} \code{alist} used to
+pass down optional arguments to lower level imputation
+functions.
+The entries of element \code{blots[[h]]} are passed down to
+the method called on block \code{h} or formula \code{h}.
+For example, \code{blots = list(age = alist(donor = 20))}
+specifies that imputation of \code{age} should draw from
+imputations using 20 (instead of the default five) nearest
+neighbours.}
 
-\item{post}{A vector of strings with length \code{ncol(data)} specifying
-expressions as strings. Each string is parsed and
-executed within the \code{sampler()} function to post-process
-imputed values during the iterations.
-The default is a vector of empty strings, indicating no post-processing.
-Multivariate (block) imputation methods ignore the \code{post} parameter.}
+\item{post}{A vector of length \eqn{p}, each specifying an expression
+as a string. The string is parsed and executed within
+the \code{sampler()} function to post-process imputed
+values during the iterations. The default is a vector
+of empty strings, indicating no post-processing.
+Multivariate imputation methods ignore the \code{post}
+parameter.}
 
-\item{defaultMethod}{A vector of length 4 containing the default
-imputation methods for 1) numeric data, 2) factor data with 2 levels, 3)
-factor data with > 2 unordered levels, and 4) factor data with > 2
-ordered levels. By default, the method uses
-\code{pmm}, predictive mean matching (numeric data) \code{logreg}, logistic
-regression imputation (binary data, factor with 2 levels) \code{polyreg},
-polytomous regression imputation for unordered categorical data (factor > 2
-levels) \code{polr}, proportional odds model for (ordered, > 2 levels).}
+\item{defaultMethod}{A vector of length 4 containing the default imputation
+methods for
+1) numeric data (\code{"pmm"})
+2) factor data with 2 levels, (\code{"logreg"})
+3) factor data with > 2 unordered levels, (\code{"polyreg"}) and
+4) factor data with > 2 ordered levels (\code{"polr"}).
+The \code{defaultMethod} can be used to alter to default mapping
+of variable type to imputation method.}
 
-\item{maxit}{A scalar giving the number of iterations. The default is 5.}
+\item{maxit}{A scalar giving the number of iterations. The default is 5.
+In general, the user should study the convergence of the
+algorithm, e.g., by \code{plot(imp)}.}
 
-\item{printFlag}{If \code{TRUE}, \code{mice} will print history on console.
-Use \code{print=FALSE} for silent computation.}
+\item{printFlag}{If \code{printFlag = TRUE} (default) then \code{mice()} will
+print iteration history on the console. This is useful for
+checking how far the algorithm is. Use \code{print = FALSE}
+for silent computation, simulations, and to suppress
+iteration output on the console.}
 
-\item{seed}{An integer that is used as argument by the \code{set.seed()} for
-offsetting the random number generator. Default is to leave the random number
-generator alone.}
+\item{seed}{An integer that is used as argument by the \code{set.seed()}
+for offsetting the random number generator. Default is
+to leave the random number generator alone. Use \code{seed} to
+be reproduce a given imputation.}
 
-\item{data.init}{A data frame of the same size and type as \code{data},
-without missing data, used to initialize imputations before the start of the
-iterative process.  The default \code{NULL} implies that starting imputation
-are created by a simple random draw from the data. Note that specification of
-\code{data.init} will start all \code{m} Gibbs sampling streams from the same
-imputation.}
+\item{data.init}{A data frame of the same size and type as \code{data}, but
+without missing data, used to initialize imputations
+before the start of the iterative process.
+The default \code{data.init = NULL} generates starting
+imputations by a simple random draw from marginal
+of the observed data.
+Note that specification of \code{data.init} will start all
+\code{m} Gibbs sampling streams from the same imputation.}
 
-\item{\dots}{Named arguments that are passed down to the univariate imputation
-functions.}
+\item{\dots}{Named arguments that are passed down to the univariate
+imputation functions. Use \code{blots} for a more fine-grained
+alternative.}
 }
 \value{
 Returns an S3 object of class \code{\link[=mids-class]{mids()}}

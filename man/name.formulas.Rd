@@ -7,13 +7,34 @@
 name.formulas(formulas, prefix = "F")
 }
 \arguments{
-\item{formulas}{A named list of formula's, or expressions that
-can be converted into formula's by \code{as.formula}. List elements
-correspond to blocks. The block to which the list element applies is
-identified by its name, so list names must correspond to block names.
+\item{formulas}{A named list with \eqn{q} component, each containing
+one formula. The left hand side (LHS) specifies the
+variables to be imputed, and the right hand side (RHS)
+specifies the predictors used for imputation. For example,
+model \code{y1 + y2 ~ x1 + x2} imputes \code{y1} and \code{y2} using \code{x1}
+and \code{x2} as predictors. Imputation by a multivariate
+imputation model imputes \code{y1} and \code{y2} simultaneously
+by a joint model, whereas \code{mice()} can also impute
+\code{y1} and \code{y2} by a repeated univariate model as
+\code{y1 ~ y2 + x1 + x2} and \code{y2 ~ y1 + x1 + x2}.
 The \code{formulas} argument is an alternative to the
-\code{predictorMatrix} argument that allows for more flexibility in
-specifying imputation models, e.g., for specifying interaction terms.}
+combination of the \code{predictorMatrix} and
+\code{blocks} arguments. It is more compact and allows for
+more flexibility in specifying imputation models,
+e.g., for adding
+interaction terms (\code{y1 + y2 ~ x1 * x2} ),
+logical variables (\code{y1 + y2 ~ x1 + (x2 > 20)}),
+three-level categories (\code{y1 + y2 ~ x1 + cut(age, 3)}),
+polytomous terms (\code{y1 + y2 ~ x1 + poly(age, 3)},
+smoothing terms (\code{y1 + y2 ~ x1 + bs(age)}),
+sum scores (\code{y1 + y2 ~ I(x1 + x2)}) or
+quotients (\code{y1 + y2 ~ I(x1 / x2)})
+on the fly.
+Optionally, the user can name formulas. If not named,
+\code{mice()} will name formulas with multiple variables
+as \code{F1}, \code{F2}, and so on. Formulas with one
+dependent (e.g. \code{ses ~ x1 + x2}) will be named
+after the dependent variable \code{"ses"}.}
 
 \item{prefix}{A character vector of length 1 with the prefix to
 be using for naming any unnamed blocks with two or more variables.}

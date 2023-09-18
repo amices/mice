@@ -19,21 +19,26 @@ The \code{where} argument can overimpute cells
 with observed data, or skip imputation of specific missing
 cells. Be aware that the latter option could propagate
 missing values to other variables. See details.
-Note: Methods that generate multivariate imputations
-(e.g. \code{mice.impute.panImpute()}) do not honour the
-\code{where} argument.}
+Note: Not all imputation methods may support the \code{where}
+argument (e.g., \code{mice.impute.jomoImpute()} or
+\code{mice.impute.panImpute()}).}
 
-\item{blocks}{List of vectors with variable names per block. List elements
-may be named to identify blocks. Variables within a block are
-imputed by a multivariate imputation method
-(see \code{method} argument). By default each variable is placed
-into its own block, which is effectively
-fully conditional specification (FCS) by univariate models
-(variable-by-variable imputation). Only variables whose names appear in
-\code{blocks} are imputed. The relevant columns in the \code{where}
-matrix are set to \code{FALSE} of variables that are not block members.
-A variable may appear in multiple blocks. In that case, it is
-effectively re-imputed each time that it is visited.}
+\item{blocks}{List of \eqn{q} character vectors that identifies the
+variable names per block. The name of list elements
+identify blocks. \code{mice()} will provide default names
+(\code{"B1"}, \code{"B2"}, ...) for blocks containing multiple
+variables. Variables within a block are imputed as a
+block, e.g. by a multivariate imputation method, or
+by an iterated version of the same univariate imputation
+method. By default each variable is allocated to a
+separate block, which is effectively fully conditional
+specification (FCS) by univariate models
+(variable-by-variable imputation).
+All data variables are assigned to a block.
+A variable can belong to only one block, so there are
+at most \eqn{p} blocks.
+See the \code{nest} argument for an easier alternative to
+the \code{blocks} argument.}
 }
 \value{
 A numeric vector of length \code{length(blocks)} containing

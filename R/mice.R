@@ -154,35 +154,38 @@
 #'                  by the `defaultMethod` argument. See details
 #'                  on *skipping imputation*.
 #' @param predictorMatrix
-#'                  A square numeric matrix of \eqn{p} rows
-#'                  and columns. Row- and column names are `colnames(data)`.
+#'                  A square numeric matrix of maximal \eqn{p} rows and
+#'                  maximal \eqn{p} columns. Row- and column names are
+#'                  `colnames(data)`.
 #'                  Each row corresponds to a variable to be imputed.
 #'                  A value of `1` means that the column variable is a
 #'                  predictor for the row variable, while a `0` means that
 #'                  the column variable is not a predictor. The default
 #'                  `predictorMatrix` is `1` everywhere, except for a zero
-#'                  diagonal. For variables that need no be imputed,
-#'                  `mice()` automatically sets the corresponding rows in the
-#'                  `predictorMatrix` to zero. See details
-#'                  on *skipping imputation*.
+#'                  diagonal. Row- and column-names are optional for the
+#'                  maximum \eqn{p} by \eqn{p} size. The user may specify a
+#'                  smaller `predictorMatrix`, but column and row names are
+#'                  then mandatory and should match be part of `colnames(data)`.
+#'                  For variables that are not imputed, `mice()` automatically
+#'                  sets the corresponding rows in the `predictorMatrix` to
+#'                  zero. See details on *skipping imputation*.
 #'                  Two-level imputation models (which have `"2l"` in their
-#'                  names) other codes than `0` and `1`, e.g, `2` or `-2`,
-#'                  are also used.
+#'                  names) support other codes than `0` and `1`, e.g, `2`
+#'                  or `-2` to signal variable with special roles.
 #' @param ignore    A logical vector of \eqn{n} elements indicating
 #'                  which rows are ignored for estimating the parameters of
 #'                  the imputation model.
 #'                  Rows with `ignore` set to `TRUE` do not influence the
 #'                  parameters of the imputation model.
 #'                  The `ignore` argument allows splitting `data` into a
-#'                  training set (on which we fit the imputation model)
+#'                  training set (on which `mice()` fits the imputation model)
 #'                  and a test set (that does not influence the imputation
 #'                  model parameter estimates).
 #'                  The default `NULL` corresponds to all `FALSE`, thus
 #'                  including all rows into the imputation models.
-#'                  Note: Multivariate imputation methods,
-#'                  like `mice.impute.jomoImpute()` or
-#'                  `mice.impute.panImpute()`, do not honour the `ignore`
-#'                  argument.
+#'                  Note: Not all imputation methods may support the `ignore`
+#'                  argument (e.g., `mice.impute.jomoImpute()` or
+#'                  `mice.impute.panImpute()`).
 #' @param where     A data frame or matrix of logicals with \eqn{n} rows
 #'                  and \eqn{p} columns, indicating the cells of `data` for
 #'                  which imputations are generated.
@@ -192,76 +195,125 @@
 #'                  with observed data, or skip imputation of specific missing
 #'                  cells. Be aware that the latter option could propagate
 #'                  missing values to other variables. See details.
-#'                  Note: Methods that generate multivariate imputations
-#'                  (e.g. `mice.impute.panImpute()`) do not honour the
-#'                  `where` argument.
-#' @param blocks List of vectors with variable names per block. List elements
-#' may be named to identify blocks. Variables within a block are
-#' imputed by a multivariate imputation method
-#' (see `method` argument). By default each variable is placed
-#' into its own block, which is effectively
-#' fully conditional specification (FCS) by univariate models
-#' (variable-by-variable imputation). Only variables whose names appear in
-#' `blocks` are imputed. The relevant columns in the `where`
-#' matrix are set to `FALSE` of variables that are not block members.
-#' A variable may appear in multiple blocks. In that case, it is
-#' effectively re-imputed each time that it is visited.
-#' @param visitSequence A vector of block names of arbitrary length, specifying the
-#' sequence of blocks that are imputed during one iteration of the Gibbs
-#' sampler. A block is a collection of variables. All variables that are
-#' members of the same block are imputed
-#' when the block is visited. A variable that is a member of multiple blocks
-#' is re-imputed within the same iteration.
-#' The default `visitSequence = "roman"` visits the blocks (left to right)
-#' in the order in which they appear in `blocks`.
-#' One may also use one of the following keywords: `"arabic"`
-#' (right to left), `"monotone"` (ordered low to high proportion
-#' of missing data) and `"revmonotone"` (reverse of monotone).
-#' *Special case*: If you specify both `visitSequence = "monotone"` and
-#' `maxit = 1`, then the procedure will edit the `predictorMatrix`
-#' to conform to the monotone pattern. Realize that convergence in one
-#' iteration is only guaranteed if the missing data pattern is actually
-#' monotone. The procedure does not check this.
-#' @param formulas A named list of formula's, or expressions that
-#' can be converted into formula's by `as.formula`. List elements
-#' correspond to blocks. The block to which the list element applies is
-#' identified by its name, so list names must correspond to block names.
-#' The `formulas` argument is an alternative to the
-#' `predictorMatrix` argument that allows for more flexibility in
-#' specifying imputation models, e.g., for specifying interaction terms.
-#' @param blots A named `list` of `alist`'s that can be used
-#' to pass down arguments to lower level imputation function. The entries
-#' of element `blots[[blockname]]` are passed down to the function
-#' called for block `blockname`.
-#' @param post A vector of strings with length `ncol(data)` specifying
-#' expressions as strings. Each string is parsed and
-#' executed within the `sampler()` function to post-process
-#' imputed values during the iterations.
-#' The default is a vector of empty strings, indicating no post-processing.
-#' Multivariate (block) imputation methods ignore the `post` parameter.
-#' @param defaultMethod A vector of length 4 containing the default
-#' imputation methods for 1) numeric data, 2) factor data with 2 levels, 3)
-#' factor data with > 2 unordered levels, and 4) factor data with > 2
-#' ordered levels. By default, the method uses
-#' `pmm`, predictive mean matching (numeric data) `logreg`, logistic
-#' regression imputation (binary data, factor with 2 levels) `polyreg`,
-#' polytomous regression imputation for unordered categorical data (factor > 2
-#' levels) `polr`, proportional odds model for (ordered, > 2 levels).
-#' @param maxit A scalar giving the number of iterations. The default is 5.
-#' @param printFlag If `TRUE`, `mice` will print history on console.
-#' Use `print=FALSE` for silent computation.
-#' @param seed An integer that is used as argument by the `set.seed()` for
-#' offsetting the random number generator. Default is to leave the random number
-#' generator alone.
-#' @param data.init A data frame of the same size and type as `data`,
-#' without missing data, used to initialize imputations before the start of the
-#' iterative process.  The default `NULL` implies that starting imputation
-#' are created by a simple random draw from the data. Note that specification of
-#' `data.init` will start all `m` Gibbs sampling streams from the same
-#' imputation.
-#' @param \dots Named arguments that are passed down to the univariate imputation
-#' functions.
-#' @param nest experimental variable grouping input
+#'                  Note: Not all imputation methods may support the `where`
+#'                  argument (e.g., `mice.impute.jomoImpute()` or
+#'                  `mice.impute.panImpute()`).
+#' @param blocks    List of \eqn{q} character vectors that identifies the
+#'                  variable names per block. The name of list elements
+#'                  identify blocks. `mice()` will provide default names
+#'                  (`"B1"`, `"B2"`, ...) for blocks containing multiple
+#'                  variables. Variables within a block are imputed as a
+#'                  block, e.g. by a multivariate imputation method, or
+#'                  by an iterated version of the same univariate imputation
+#'                  method. By default each variable is allocated to a
+#'                  separate block, which is effectively fully conditional
+#'                  specification (FCS) by univariate models
+#'                  (variable-by-variable imputation).
+#'                  All data variables are assigned to a block.
+#'                  A variable can belong to only one block, so there are
+#'                  at most \eqn{p} blocks.
+#'                  See the `nest` argument for an easier alternative to
+#'                  the `blocks` argument.
+#' @param visitSequence
+#'                  A vector of block names of arbitrary length, specifying
+#'                  the sequence of blocks in which blocks are imputed.
+#'                  The `visitSequence` defines one iteration through the
+#'                  data. A given block may be visited multiple times
+#'                  within one iteration.
+#'                  Variables that are members of the same block
+#'                  are imputed togeteher when the block is visited.
+#'                  The default `visitSequence = "roman"` visits the blocks
+#'                  (left to right) in the order in which they appear
+#'                  in `blocks`. One may also use one of the following
+#'                  keywords: `"arabic"` (right to left), `"monotone"`
+#'                  (ordered low to high proportion of missing data) and
+#'                  `"revmonotone"` (reverse of monotone).
+#'                  *Special case*: If you specify both
+#'                  `visitSequence = "monotone"` and `maxit = 1`, then the
+#'                  procedure will edit the `predictorMatrix` to conform to
+#'                  the monotone pattern, so convergence is then immediate.
+#'                  Realize that convergence in one iteration is only
+#'                  guaranteed if the missing data pattern is actually
+#'                  monotone. `mice()` does not check for monotonicity.
+#' @param formulas  A named list with \eqn{q} component, each containing
+#'                  one formula. The left hand side (LHS) specifies the
+#'                  variables to be imputed, and the right hand side (RHS)
+#'                  specifies the predictors used for imputation. For example,
+#'                  model `y1 + y2 ~ x1 + x2` imputes `y1` and `y2` using `x1`
+#'                  and `x2` as predictors. Imputation by a multivariate
+#'                  imputation model imputes `y1` and `y2` simultaneously
+#'                  by a joint model, whereas `mice()` can also impute
+#'                  `y1` and `y2` by a repeated univariate model as
+#'                  `y1 ~ y2 + x1 + x2` and `y2 ~ y1 + x1 + x2`.
+#'                  The `formulas` argument is an alternative to the
+#'                  combination of the `predictorMatrix` and
+#'                  `blocks` arguments. It is more compact and allows for
+#'                  more flexibility in specifying imputation models,
+#'                  e.g., for adding
+#'                  interaction terms (`y1 + y2 ~ x1 * x2` ),
+#'                  logical variables (`y1 + y2 ~ x1 + (x2 > 20)`),
+#'                  three-level categories (`y1 + y2 ~ x1 + cut(age, 3)`),
+#'                  polytomous terms (`y1 + y2 ~ x1 + poly(age, 3)`,
+#'                  smoothing terms (`y1 + y2 ~ x1 + bs(age)`),
+#'                  sum scores (`y1 + y2 ~ I(x1 + x2)`) or
+#'                  quotients (`y1 + y2 ~ I(x1 / x2)`)
+#'                  on the fly.
+#'                  Optionally, the user can name formulas. If not named,
+#'                  `mice()` will name formulas with multiple variables
+#'                  as `F1`, `F2`, and so on. Formulas with one
+#'                  dependent (e.g. `ses ~ x1 + x2`) will be named
+#'                  after the dependent variable `"ses"`.
+#' @param blots     A named `list` with maximally \eqn{q} `alist` used to
+#'                  pass down optional arguments to lower level imputation
+#'                  functions.
+#'                  The entries of element `blots[[h]]` are passed down to
+#'                  the method called on block `h` or formula `h`.
+#'                  For example, `blots = list(age = alist(donor = 20))`
+#'                  specifies that imputation of `age` should draw from
+#'                  imputations using 20 (instead of the default five) nearest
+#'                  neighbours.
+#' @param post      A vector of length \eqn{p}, each specifying an expression
+#'                  as a string. The string is parsed and executed within
+#'                  the `sampler()` function to post-process imputed
+#'                  values during the iterations. The default is a vector
+#'                  of empty strings, indicating no post-processing.
+#'                  Multivariate imputation methods ignore the `post`
+#'                  parameter.
+#' @param defaultMethod
+#'                  A vector of length 4 containing the default imputation
+#'                  methods for
+#'                  1) numeric data (`"pmm"`)
+#'                  2) factor data with 2 levels, (`"logreg"`)
+#'                  3) factor data with > 2 unordered levels, (`"polyreg"`) and
+#'                  4) factor data with > 2 ordered levels (`"polr"`).
+#'                  The `defaultMethod` can be used to alter to default mapping
+#'                  of variable type to imputation method.
+#' @param maxit     A scalar giving the number of iterations. The default is 5.
+#'                  In general, the user should study the convergence of the
+#'                  algorithm, e.g., by `plot(imp)`.
+#' @param printFlag If `printFlag = TRUE` (default) then `mice()` will
+#'                  print iteration history on the console. This is useful for
+#'                  checking how far the algorithm is. Use `print = FALSE`
+#'                  for silent computation, simulations, and to suppress
+#'                  iteration output on the console.
+#' @param seed      An integer that is used as argument by the `set.seed()`
+#'                  for offsetting the random number generator. Default is
+#'                  to leave the random number generator alone. Use `seed` to
+#'                  be reproduce a given imputation.
+#' @param data.init A data frame of the same size and type as `data`, but
+#'                  without missing data, used to initialize imputations
+#'                  before the start of the iterative process.
+#'                  The default `data.init = NULL` generates starting
+#'                  imputations by a simple random draw from marginal
+#'                  of the observed data.
+#'                  Note that specification of `data.init` will start all
+#'                  `m` Gibbs sampling streams from the same imputation.
+#' @param \dots     Named arguments that are passed down to the univariate
+#'                  imputation functions. Use `blots` for a more fine-grained
+#'                  alternative.
+#' @param nest      A character vector with \eqn{p} elements identifying the
+#'                  variable group (or block) to which each variable is
+#'                  allocated.
 #'
 #' @return Returns an S3 object of class [`mids()`][mids-class]
 #'        (multiply imputed data set)

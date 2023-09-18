@@ -7,28 +7,53 @@
 construct.nest(formulas = NULL, predictorMatrix = NULL)
 }
 \arguments{
-\item{formulas}{A named list of formula's, or expressions that
-can be converted into formula's by \code{as.formula}. List elements
-correspond to blocks. The block to which the list element applies is
-identified by its name, so list names must correspond to block names.
+\item{formulas}{A named list with \eqn{q} component, each containing
+one formula. The left hand side (LHS) specifies the
+variables to be imputed, and the right hand side (RHS)
+specifies the predictors used for imputation. For example,
+model \code{y1 + y2 ~ x1 + x2} imputes \code{y1} and \code{y2} using \code{x1}
+and \code{x2} as predictors. Imputation by a multivariate
+imputation model imputes \code{y1} and \code{y2} simultaneously
+by a joint model, whereas \code{mice()} can also impute
+\code{y1} and \code{y2} by a repeated univariate model as
+\code{y1 ~ y2 + x1 + x2} and \code{y2 ~ y1 + x1 + x2}.
 The \code{formulas} argument is an alternative to the
-\code{predictorMatrix} argument that allows for more flexibility in
-specifying imputation models, e.g., for specifying interaction terms.}
+combination of the \code{predictorMatrix} and
+\code{blocks} arguments. It is more compact and allows for
+more flexibility in specifying imputation models,
+e.g., for adding
+interaction terms (\code{y1 + y2 ~ x1 * x2} ),
+logical variables (\code{y1 + y2 ~ x1 + (x2 > 20)}),
+three-level categories (\code{y1 + y2 ~ x1 + cut(age, 3)}),
+polytomous terms (\code{y1 + y2 ~ x1 + poly(age, 3)},
+smoothing terms (\code{y1 + y2 ~ x1 + bs(age)}),
+sum scores (\code{y1 + y2 ~ I(x1 + x2)}) or
+quotients (\code{y1 + y2 ~ I(x1 / x2)})
+on the fly.
+Optionally, the user can name formulas. If not named,
+\code{mice()} will name formulas with multiple variables
+as \code{F1}, \code{F2}, and so on. Formulas with one
+dependent (e.g. \code{ses ~ x1 + x2}) will be named
+after the dependent variable \code{"ses"}.}
 
-\item{predictorMatrix}{A square numeric matrix of \eqn{p} rows
-and columns. Row- and column names are \code{colnames(data)}.
+\item{predictorMatrix}{A square numeric matrix of maximal \eqn{p} rows and
+maximal \eqn{p} columns. Row- and column names are
+\code{colnames(data)}.
 Each row corresponds to a variable to be imputed.
 A value of \code{1} means that the column variable is a
 predictor for the row variable, while a \code{0} means that
 the column variable is not a predictor. The default
 \code{predictorMatrix} is \code{1} everywhere, except for a zero
-diagonal. For variables that need no be imputed,
-\code{mice()} automatically sets the corresponding rows in the
-\code{predictorMatrix} to zero. See details
-on \emph{skipping imputation}.
+diagonal. Row- and column-names are optional for the
+maximum \eqn{p} by \eqn{p} size. The user may specify a
+smaller \code{predictorMatrix}, but column and row names are
+then mandatory and should match be part of \code{colnames(data)}.
+For variables that are not imputed, \code{mice()} automatically
+sets the corresponding rows in the \code{predictorMatrix} to
+zero. See details on \emph{skipping imputation}.
 Two-level imputation models (which have \code{"2l"} in their
-names) other codes than \code{0} and \code{1}, e.g, \code{2} or \code{-2},
-are also used.}
+names) support other codes than \code{0} and \code{1}, e.g, \code{2}
+or \code{-2} to signal variable with special roles.}
 }
 \value{
 A \code{blocks} object.

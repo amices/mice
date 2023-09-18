@@ -20,9 +20,9 @@ The \code{where} argument can overimpute cells
 with observed data, or skip imputation of specific missing
 cells. Be aware that the latter option could propagate
 missing values to other variables. See details.
-Note: Methods that generate multivariate imputations
-(e.g. \code{mice.impute.panImpute()}) do not honour the
-\code{where} argument.}
+Note: Not all imputation methods may support the \code{where}
+argument (e.g., \code{mice.impute.jomoImpute()} or
+\code{mice.impute.panImpute()}).}
 
 \item{.imp}{An optional column number or column name in \code{long},
 indicating the imputation index. The values are assumed to be consecutive
