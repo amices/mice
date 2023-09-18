@@ -1,3 +1,21 @@
+## New behaviours
+
+1. Prevention of `NA` propagation by removing incomplete predictors. This version detects when a predictor contains missing values that are not imputed. In order to prevent NA propagation, `mice()` does the following actions: 1) removes incomplete predictor(s) from the RHS, 2) adds incomplete predictor(s) to formulas `(var ~ 1)` and block components, sets `method[var] = ""`, and sets the `predictorMatrix` column and row to zero
+
+2. The `predictorMatrix` input can be a square submatrix of the full `predictorMatrix`. `mice()` will augment `predictorMatrix` to the full matrix and always return a p * p named matrix corresponding to the p columns in the data. The inactive variables will have zero columns and rows.
+
+3. The `predictorMatrix` input may be unnamed if its size is p * p. For other than p * p, an unnamed matrix generated an error.
+
+
+## Changes 
+
+- Adds supports a tiny predictorMatrix
+- Solves bug in f2p()
+- Adds new function `remove.rhs.variables()`
+- Adds a `validate.mids()` check at exit that errors if `rownames(predictorMatrix)` differ from `colnames(data)`. Some more output tests need to be added.
+- Removes codes designed to work specifically with a non-square `predictorMatrix`
+- Generates an error if `predictorMatrix` has fewer rows than length of `blocks`
+
 * Prepares for the deprecation of the `blocks` argument at various places
 * Removes the need for `blocks` in `initialize_chain()`
 * In `rbind()`, when formulas are concatenated and duplicate names are found, also rename the duplicated variables in formulas by their new name

@@ -20,7 +20,7 @@ test_that("Case A finds formulas", {
 # case B: only predictorMatrix argument
 
 pred1 <- matrix(1, nrow = 4, ncol = 4)
-pred2 <- matrix(1, nrow = 2, ncol = 2)
+pred2 <- matrix(0, nrow = 2, ncol = 2)
 pred3 <- matrix(1,
                 nrow = 2, ncol = 2,
                 dimnames = list(c("bmi", "hyp"), c("bmi", "hyp"))
@@ -29,17 +29,17 @@ pred4 <- matrix(1,
                 nrow = 2, ncol = 3,
                 dimnames = list(c("bmi", "hyp"), c("bmi", "hyp", "chl"))
 )
-imp1 <- mice(data, predictorMatrix = pred1, print = FALSE, m = 1, maxit = 1)
-imp3 <- mice(data, predictorMatrix = pred3, print = FALSE, m = 1, maxit = 1)
 
-test_that("Case B tests the predictorMatrix", {
+imp1 <- mice(data, predictorMatrix = pred1, print = FALSE, m = 1, maxit = 1)
+expect_error(mice(data, predictorMatrix = pred2, print = FALSE, m = 1, maxit = 1),
+             "Missing row/column names in predictorMatrix")
+imp3 <- mice(data, predictorMatrix = pred3, print = FALSE, m = 1, maxit = 1)
+expect_error(mice(data, predictorMatrix = pred4, print = FALSE, m = 1, maxit = 1),
+             "predictorMatrix must have same number of rows and columns")
+
+test_that("Case B yields four rows of the predictorMatrix", {
   expect_equal(nrow(imp1$predictorMatrix), 4L)
-  expect_error(mice(data,
-                    predictorMatrix = pred2,
-                    "Missing row/column names in `predictorMatrix`."
-  ))
   expect_equal(nrow(imp3$predictorMatrix), 4L)
-  expect_error(mice(data, predictorMatrix = pred4))
 })
 
 pred <- imp3$predictorMatrix
@@ -160,11 +160,11 @@ pred2 <- make.predictorMatrix(data, blocks = blocks2)
 pred3 <- make.predictorMatrix(data, blocks = blocks3)
 
 imp1 <- mice(data, blocks = blocks1, pred = pred1, m = 1, maxit = 1, print = FALSE)
-expect_error(
-  suppressWarnings(imp1a <- mice(data, blocks = blocks1, pred = matrix(1, nr = 4, nc = 4), m = 1, maxit = 1, print = FALSE)))
+imp1a <- mice(data, blocks = blocks1, pred = matrix(1, nr = 4, nc = 4), m = 1, maxit = 1, print = FALSE)
 imp2 <- mice(data, blocks = blocks2, pred = pred2, m = 1, maxit = 1, print = FALSE)
 expect_error(
-  suppressWarnings(imp2a <- mice(data, blocks = blocks2, pred = matrix(1, nr = 2, nc = 4), m = 1, maxit = 1, print = FALSE)))
+  suppressWarnings(imp2a <- mice(data, blocks = blocks2, pred = matrix(1, nr = 2, nc = 4), m = 1, maxit = 1, print = FALSE)),
+  "predictorMatrix must have same number of rows and columns")
 imp3 <- mice(data, blocks = blocks3, pred = pred3, m = 1, maxit = 1, print = FALSE)
 expect_error(
  suppressWarnings(imp3a <- mice(data, blocks = blocks3, pred = matrix(1, nr = 1, nc = 4), m = 1, maxit = 1, print = FALSE)))
@@ -185,15 +185,12 @@ expect_error(
 test_that("Case E name setting fails on incompatible sizes", {
   expect_error(
     suppressWarnings(mice(data, blocks = blocks2, pred = matrix(1, nr = 2, nc = 2))),
-    "Malformed predictorMatrix"
-  )
+    "Missing row/column names in predictorMatrix")
   expect_error(
-    suppressWarnings(mice(data, blocks = blocks2, pred = matrix(1, nr = 1, nc = 4))),
-    "Malformed predictorMatrix"
-  )
-  expect_error(
-    suppressWarnings(mice(data, blocks = blocks2, pred = matrix(1, nr = 4, nc = 4))),
-    "Malformed predictorMatrix")
+    mice(data, blocks = blocks2, pred = matrix(1, nr = 1, nc = 4)),
+    regexp = "predictorMatrix must have same number of rows and columns")
+  expect_silent(mice(data, blocks = blocks2, pred = matrix(1, nr = 4, nc = 4),
+                     maxit = 1, m = 1, print = FALSE))
 })
 
 colnames(pred1) <- c("A", "B", "chl", "bmi")
@@ -203,8 +200,6 @@ test_that("Case E detects incompatible arguments", {
   expect_error(
     mice(data, blocks = blocks1, pred = pred1),
     "Names not found in data: A, B")
-
-  expect_error(suppressWarnings(mice(data, blocks = blocks2, pred = matrix(1, nr = 4, nc = 4))))
 
   expect_error(
     mice(data, blocks = blocks2, pred = pred2a),

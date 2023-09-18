@@ -55,83 +55,26 @@ check.predictorMatrix <- function(predictorMatrix,
     stop("predictorMatrix has no rows or columns", call. = FALSE)
   }
 
-  # if we have no blocks, restrict to square predictorMatrix
-  if (is.null(blocks)) {
-    if (nrow(predictorMatrix) != ncol(predictorMatrix)) {
-      stop(
-        paste(
-          "If no blocks are specified, predictorMatrix must",
-          "have same number of rows and columns"
-        ),
-        call. = FALSE
-      )
-    }
-    if (is.null(dimnames(predictorMatrix))) {
-      if (ncol(predictorMatrix) == ncol(data)) {
-        dimnames(predictorMatrix) <- list(colnames(data), colnames(data))
-      } else {
-        stop("Missing row/column names in predictorMatrix", call. = FALSE)
-      }
-    }
-    for (i in row.names(predictorMatrix)) {
-      predictorMatrix[i, grep(paste0("^", i, "$"), colnames(predictorMatrix))] <- 0
-    }
-    valid <- validate.predictorMatrix(predictorMatrix)
-    if (!valid) {
-      warning("Malformed predictorMatrix. See ?make.predictorMatrix")
-    }
-    return(predictorMatrix)
+  # restrict to square predictorMatrix
+  if (nrow(predictorMatrix) != ncol(predictorMatrix)) {
+    stop("predictorMatrix must have same number of rows and columns",
+         call. = FALSE
+    )
   }
 
-  # # check conforming arguments
-  # if (nrow(predictorMatrix) > length(blocks)) {
-  #   stop(
-  #     paste0(
-  #       "predictorMatrix has more rows (", nrow(predictorMatrix),
-  #       ") than blocks (", length(blocks), ")"
-  #     ),
-  #     call. = FALSE
-  #   )
-  # }
-  #
-  # # borrow rownames from blocks if needed
-  # if (is.null(rownames(predictorMatrix)) &&
-  #     nrow(predictorMatrix) == length(blocks)) {
-  #   rownames(predictorMatrix) <- names(blocks)
-  # }
-  # if (is.null(rownames(predictorMatrix))) {
-  #   stop("Unable to set row names of predictorMatrix", call. = FALSE)
-  # }
-  #
-  # # borrow blocknames from predictorMatrix if needed
-  # if (is.null(names(blocks)) &&
-  #     nrow(predictorMatrix) == length(blocks)) {
-  #   names(blocks) <- rownames(predictorMatrix)
-  # }
-  # if (is.null(names(blocks))) {
-  #   stop("Unable to set names of blocks", call. = FALSE)
-  # }
-  #
-  # # check existence of row names in blocks
-  # found <- rownames(predictorMatrix) %in% names(blocks)
-  # if (!all(found)) {
-  #   stop("Names not found in blocks: ",
-  #        paste(rownames(predictorMatrix)[!found], collapse = ", "),
-  #        call. = FALSE
-  #   )
-  # }
-  #
-  # # borrow colnames from data if needed
-  # if (is.null(colnames(predictorMatrix)) &&
-  #     ncol(predictorMatrix) == ncol(data)) {
-  #   colnames(predictorMatrix) <- names(data)
-  # }
-  # if (is.null(colnames(predictorMatrix))) {
-  #   stop("Unable to set column names of predictorMatrix", call. = FALSE)
-  # }
+  if (is.null(dimnames(predictorMatrix))) {
+    if (ncol(predictorMatrix) == ncol(data)) {
+      dimnames(predictorMatrix) <- list(colnames(data), colnames(data))
+    } else {
+      stop("Missing row/column names in predictorMatrix", call. = FALSE)
+    }
+  }
 
-  # check existence of variable names on data
-  found <- colnames(predictorMatrix) %in% names(data)
+  # set diagonal to zero
+  diag(predictorMatrix) <- 0
+
+  # check existence of variable names in data
+  found <- colnames(predictorMatrix) %in% colnames(data)
   if (!all(found)) {
     stop("Names not found in data: ",
          paste(colnames(predictorMatrix)[!found], collapse = ", "),
@@ -139,14 +82,33 @@ check.predictorMatrix <- function(predictorMatrix,
     )
   }
 
+  # grow predictorMatrix to all variables in data
+  if (ncol(predictorMatrix) < ncol(data)) {
+    p <- matrix(0, nrow = ncol(data), ncol = ncol(data),
+                dimnames = list(colnames(data), colnames(data)))
+    p[row.names(predictorMatrix), colnames(predictorMatrix)] <- predictorMatrix
+    predictorMatrix <- p
+  }
+
+  # needed for cases E and H
+  if (!is.null(blocks)) {
+    if (nrow(predictorMatrix) < length(blocks)) {
+      stop(
+        paste0(
+          "predictorMatrix has fewer rows (", nrow(predictorMatrix),
+          ") than blocks (", length(blocks), ")"
+        ),
+        call. = FALSE
+      )
+    }
+  }
+
   valid <- validate.predictorMatrix(predictorMatrix)
+
   if (!valid) {
     warning("Malformed predictorMatrix. See ?make.predictorMatrix")
   }
-  list(
-    predictorMatrix = predictorMatrix,
-    blocks = blocks
-  )
+  return(predictorMatrix)
 }
 
 edit.predictorMatrix <- function(predictorMatrix,

@@ -20,7 +20,7 @@
 #'                      na.exclude na.omit na.pass
 #'                      pf predict pt qt quantile quasibinomial
 #'                      rbinom rchisq reformulate rgamma rnorm runif
-#'                      sd summary.glm terms update var vcov
+#'                      sd summary.glm terms update update.formula var vcov
 #' @importFrom tidyr    complete
 #' @importFrom utils    askYesNo flush.console hasName head install.packages
 #'                      methods packageDescription packageVersion

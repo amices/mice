@@ -55,15 +55,16 @@ p2c <- function(predictorMatrix) {
 #' Convert formulas into predictorMatrix
 #'
 #' @rdname convertmodels
+#' @inheritParams mice
 #' @param roles A list with `ncol(data)` elements, each with a row of the
 #' `predictorMatrix` when it contains values other than 0 or 1.
 #' The argument is only needed if the model contains non-standard
 #'values in the `predictorMatrix`.
 #' @export
-f2p <- function(formulas, blocks = NULL, roles = NULL) {
+f2p <- function(formulas, data, blocks = NULL, roles = NULL) {
   # converts formulas and roles into predictorMatrix
   blks <- names(formulas)
-  vars <- unique(as.vector(unlist(sapply(formulas, all.vars))))
+  vars <- colnames(data)
   predictorMatrix <- matrix(0, nrow = length(vars), ncol = length(vars))
   dimnames(predictorMatrix) <- list(vars, vars)
   for (b in blks) {
@@ -72,7 +73,6 @@ f2p <- function(formulas, blocks = NULL, roles = NULL) {
     ynames <- lhs(f)
     for (yname in ynames) {
       xn <- setdiff(fv, yname)
-      # xn <- union(setdiff(ynames, yname), xnames)
       if (is.null(roles[[yname]])) {
         # code all variables in same block as 1
         predictorMatrix[yname, xn] <- 1

@@ -3,6 +3,8 @@
 #' This helper function creates a valid `method` vector. The
 #' `method` vector is an argument to the `mice` function that
 #' specifies the method for each block.
+#' @param user.predictorMatrix the unedited `predictorMatrix` specified by the
+#' user in the call to `mice()`
 #' @inheritParams mice
 #' @return Vector of `length(blocks)` element with method names
 #' @seealso [mice()]
@@ -12,14 +14,24 @@
 make.method <- function(data,
                         where = make.where(data),
                         blocks = make.blocks(data),
-                        defaultMethod = c("pmm", "logreg", "polyreg", "polr")) {
+                        defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+                        user.predictorMatrix = NULL) {
+  # support tiny predictorMatrix
+  if (is.null(user.predictorMatrix) ||
+      ncol(user.predictorMatrix) == ncol(data)) {
+    include <- colnames(data)
+  } else {
+    include <- colnames(user.predictorMatrix)
+  }
   method <- rep("", length(blocks))
   names(method) <- names(blocks)
   for (j in seq_along(blocks)) {
     yvar <- blocks[[j]]
     y <- data[, yvar, drop = FALSE]
     k <- assign.method(y)
-    method[j] <- defaultMethod[k]
+    if (all(yvar %in% include)) {
+      method[j] <- defaultMethod[k]
+    }
   }
 
   nimp <- nimp(where = where, blocks = blocks)
@@ -28,13 +40,15 @@ make.method <- function(data,
 }
 
 
-check.method <- function(method, data, where, blocks, defaultMethod) {
+check.method <- function(method, data, where, blocks, defaultMethod,
+                         user.predictorMatrix) {
   if (is.null(method)) {
     method <- make.method(
       data = data,
       where = where,
       blocks = blocks,
-      defaultMethod = defaultMethod)
+      defaultMethod = defaultMethod,
+      user.predictorMatrix = user.predictorMatrix)
     return(method)
   }
   nimp <- nimp(where = where, blocks = blocks)
@@ -93,23 +107,23 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
     cond3 <- sapply(y, is.factor) & sapply(y, nlevels) > 2L
     if (any(cond1) && mj %in% mlist$m1) {
       warning("Type mismatch for variable(s): ",
-        paste(vname[cond1], collapse = ", "),
-        "\nImputation method ", mj, " is for categorical data.",
-        call. = FALSE
+              paste(vname[cond1], collapse = ", "),
+              "\nImputation method ", mj, " is for categorical data.",
+              call. = FALSE
       )
     }
     if (any(cond2) && mj %in% mlist$m2) {
       warning("Type mismatch for variable(s): ",
-        paste(vname[cond2], collapse = ", "),
-        "\nImputation method ", mj, " is not for factors.",
-        call. = FALSE
+              paste(vname[cond2], collapse = ", "),
+              "\nImputation method ", mj, " is not for factors.",
+              call. = FALSE
       )
     }
     if (any(cond3) && mj %in% mlist$m3) {
       warning("Type mismatch for variable(s): ",
-        paste(vname[cond3], collapse = ", "),
-        "\nImputation method ", mj, " is not for factors with >2 levels.",
-        call. = FALSE
+              paste(vname[cond3], collapse = ", "),
+              "\nImputation method ", mj, " is not for factors with >2 levels.",
+              call. = FALSE
       )
     }
   }

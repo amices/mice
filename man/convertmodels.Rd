@@ -10,7 +10,7 @@ p2f(predictorMatrix, blocks = NULL, silent = TRUE)
 
 p2c(predictorMatrix)
 
-f2p(formulas, blocks = NULL, roles = NULL)
+f2p(formulas, data, blocks = NULL, roles = NULL)
 }
 \arguments{
 \item{predictorMatrix}{A square numeric matrix of \eqn{p} rows
@@ -49,6 +49,9 @@ identified by its name, so list names must correspond to block names.
 The \code{formulas} argument is an alternative to the
 \code{predictorMatrix} argument that allows for more flexibility in
 specifying imputation models, e.g., for specifying interaction terms.}
+
+\item{data}{Data frame with \eqn{n} rows and \eqn{p} columns with
+incomplete data.  Missing values are coded as \code{NA}.}
 
 \item{roles}{A list with \code{ncol(data)} elements, each with a row of the
 \code{predictorMatrix} when it contains values other than 0 or 1.

@@ -35,8 +35,8 @@ make.formulas <- function(data, blocks = make.blocks(data),
     if (is.null(predictorMatrix)) {
       predictors <- colnames(data)
     } else {
-      type <- predictorMatrix[h, ]
-      predictors <- names(type)[type != 0]
+      type <- predictorMatrix[y, , drop = FALSE]
+      predictors <- colnames(type)[apply(type != 0, 2, any)]
     }
     x <- setdiff(predictors, y)
     if (length(x) == 0) {
@@ -133,9 +133,59 @@ check.formulas <- function(formulas, data) {
     return(formulas)
   }
   formulas <- lapply(formulas, as.formula)
+
+  # find dependent variables
+  # find variables in data that are not imputed
+  # add components y ~ 1 for y to formulas
+  ynames <- unique(as.vector(unlist(sapply(formulas, lhs))))
+  notimputed <- setdiff(colnames(data), ynames)
+  for (y in notimputed) {
+    formulas[[y]] <- as.formula(paste(y, "~ 1"))
+  }
   formulas
 }
 
+
+# remove variables for RHS
+
+
+#' Remove RHS terms involving specified variable names
+#'
+#' @param ff a formula
+#' @param vars a vector with varianble names to be removed from rhs
+#' @details
+#' If all variable are removed, the function return the intercept only model.
+#' @examples
+#' f1 <- y1 + y2 ~ 1 | z + x1 + x2 + x1 * x2
+#' remove.rhs.variables(f1, c("x1", "z"))
+#'
+#' # do not touch lhs
+#' f2 <- bmi + chl + hyp ~ 1 | age
+#' remove.rhs.variables(f2, "bmi")
+#' @export
+remove.rhs.variables <- function(ff, vars) {
+  stopifnot(is.formula(ff))
+  pattern <- paste(vars, collapse = "|")
+  if (pattern == "") {
+    return(ff)
+  }
+  tt <- terms(ff)
+  rhs.old <- attr(tt, "term.labels")
+  xp <- strsplit(rhs.old, "[+]") |> unlist()
+  loc <- grep(pattern, xp)
+  if (length(loc)) {
+    xn <- xp[-loc]
+  } else {
+    xn <- xp
+  }
+  rhs.new <- paste(xn, collapse = "+")
+  if (rhs.new != "") {
+    ff.new <- reformulate(rhs.new, response = ff[[2]])
+  } else {
+    ff.new <- update.formula(ff, . ~ 1)
+  }
+  return(ff.new)
+}
 
 #' Extends formula's with predictor matrix settings
 #'

@@ -65,6 +65,5 @@ check.where <- function(where, data, blocks) {
   dimnames(where) <- dimnames(data)
   # #583
   # where[, !colnames(where) %in% unlist(blocks)] <- FALSE
-  where[, !colnames(where) %in% unlist(blocks)] <- FALSE
   where
 }

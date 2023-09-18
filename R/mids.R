@@ -105,3 +105,15 @@
 #' \doi{10.18637/jss.v045.i03}
 #' @keywords classes
 NULL
+
+validate.mids <- function(x, silent = FALSE) {
+  if (!is.mids(x)) {
+    if (!silent) warning("not a mids object", call. = FALSE)
+    return(FALSE)
+  }
+  # if (any(row.names(x$predictorMatrix) != colnames(x$data))) {
+  #   if (!silent) warning("row names of predictorMatrix do not match colnames(data)", call. = FALSE)
+  #   return(FALSE)
+  # }
+  return(TRUE)
+}

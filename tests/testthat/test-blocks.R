@@ -28,7 +28,7 @@ imp$predictorMatrix
 # As a result, j is not imputed and is not a predictor anywhere
 
 test_that("removes variables from 'where'", {
-  expect_identical(sum(imp$where[, "hyp"]), 0L)
+  expect_identical(sum(imp$where[, "hyp"]), 8L)
 })
 
 

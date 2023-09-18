@@ -8,7 +8,8 @@ make.method(
   data,
   where = make.where(data),
   blocks = make.blocks(data),
-  defaultMethod = c("pmm", "logreg", "polyreg", "polr")
+  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+  user.predictorMatrix = NULL
 )
 }
 \arguments{
@@ -48,6 +49,9 @@ ordered levels. By default, the method uses
 regression imputation (binary data, factor with 2 levels) \code{polyreg},
 polytomous regression imputation for unordered categorical data (factor > 2
 levels) \code{polr}, proportional odds model for (ordered, > 2 levels).}
+
+\item{user.predictorMatrix}{the unedited \code{predictorMatrix} specified by the
+user in the call to \code{mice()}}
 }
 \value{
 Vector of \code{length(blocks)} element with method names

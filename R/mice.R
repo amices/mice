@@ -370,18 +370,23 @@ mice <- function(data,
   mb <- missing(blocks)
   mf <- missing(formulas)
 
+  # store unedited user predictorMatrix
+  user.predictorMatrix <- NULL
+  if (!mp) {
+    user.predictorMatrix <- predictorMatrix
+  }
+
   # case A
   if (mp & mb & mf) {
     # formulas leads
     formulas <- make.formulas(data)
-    predictorMatrix <- f2p(formulas)
+    predictorMatrix <- f2p(formulas, data)
     blocks <- construct.blocks(formulas)
   }
   # case B
   if (!mp & mb & mf) {
     # predictorMatrix leads
-    # predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
-    predictorMatrix <- make.predictorMatrix(data, predictorMatrix = predictorMatrix)
+    predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
     blocks <- make.blocks(colnames(predictorMatrix), partition = "scatter")
     formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix)
   }
@@ -399,17 +404,15 @@ mice <- function(data,
     # formulas leads
     formulas <- check.formulas(formulas, data)
     blocks <- construct.blocks(formulas)
-    predictorMatrix <- f2p(formulas, blocks)
+    predictorMatrix <- f2p(formulas, data, blocks)
   }
 
   # case E
   if (!mp & !mb & mf) {
-    # predictor leads
+    # predictor leads (use for multivariate imputation)
+    predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
     blocks <- check.blocks(blocks, data, calltype = "pred")
-    z <- check.predictorMatrix(predictorMatrix, data, blocks)
-    predictorMatrix <- z$predictorMatrix
-    blocks <- z$blocks
-    formulas <- p2f(predictorMatrix, blocks)
+    formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix)
   }
 
   # case F
@@ -448,9 +451,12 @@ mice <- function(data,
   visitSequence <- check.visitSequence(visitSequence,
                                        data = data, where = where, blocks = blocks
   )
+
+  # derive method vector
   method <- check.method(
     method = method, data = data, where = where,
-    blocks = blocks, defaultMethod = defaultMethod
+    blocks = blocks, defaultMethod = defaultMethod,
+    user.predictorMatrix = user.predictorMatrix
   )
 
   # edit predictorMatrix for monotone, set zero rows for empty methods
@@ -464,17 +470,24 @@ mice <- function(data,
     maxit = maxit
   )
 
-  # for variables not in model, set predictorMatrix column to zero
-  # and update formulas (#583)
-  # nomissings <- colnames(data)[!apply(is.na(data), 2, sum)]
-  # notinmodel <- setdiff(colnames(data), unlist(blocks))
-  # setrowzero <- intersect(nomissings, notinmodel)
-  # setcolzero <- setdiff(notinmodel, nomissings)
+  # evasion of NA propagation by inactivating unimputed incomplete predictors
+  # issue #583
+  # 1) find unimputed incomplete predictors
+  # 2) set predictorMatrix entries to zero
+  # 3) update formulas
+
+  # step 1: uip = unimputed incomplete predictors
+  nomissings <- colnames(data)[!apply(is.na(data), 2, sum)]
+  uip <- setdiff(colnames(data), unlist(blocks))
+
+  # step 2: update predictorMatrix
+  # setrowzero <- intersect(nomissings, uip)
+  # setcolzero <- setdiff(uip, nomissings)
   # predictorMatrix[, setcolzero] <- 0
   # predictorMatrix[setrowzero, ] <- 0
-  # formulas <- p2f(predictorMatrix,
-  #                 blocks = construct.blocks(formulas, predictorMatrix))
-  # formulas[notinmodel] <- NULL
+
+  # step 3: update formulas
+  # formulas <- lapply(formulas, remove.rhs.variables, vars = uip)
 
   # other checks
   post <- check.post(post, data)
@@ -555,6 +568,8 @@ mice <- function(data,
     date = Sys.Date()
   )
   oldClass(midsobj) <- "mids"
+
+  stopifnot(validate.mids(midsobj))
 
   if (!is.null(midsobj$loggedEvents)) {
     warning("Number of logged events: ", nrow(midsobj$loggedEvents),
