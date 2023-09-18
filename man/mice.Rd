@@ -11,11 +11,11 @@ mice(
   method = NULL,
   predictorMatrix,
   nest = NULL,
+  blocks,
+  formulas,
   ignore = NULL,
   where = NULL,
-  blocks,
   visitSequence = NULL,
-  formulas,
   blots = NULL,
   post = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -65,34 +65,6 @@ or \code{-2} that assign special roles to some variables.}
 variable group (or block) to which each variable is
 allocated.}
 
-\item{ignore}{A logical vector of \eqn{n} elements indicating
-which rows are ignored for estimating the parameters of
-the imputation model.
-Rows with \code{ignore} set to \code{TRUE} do not influence the
-parameters of the imputation model.
-The \code{ignore} argument allows splitting \code{data} into a
-training set (on which \code{mice()} fits the imputation model)
-and a test set (that does not influence the imputation
-model parameter estimates).
-The default \code{NULL} corresponds to all \code{FALSE}, thus
-including all rows into the imputation models.
-Note: Not all imputation methods may support the \code{ignore}
-argument (e.g., \code{mice.impute.jomoImpute()} or
-\code{mice.impute.panImpute()}).}
-
-\item{where}{A data frame or matrix of logicals with \eqn{n} rows
-and \eqn{p} columns, indicating the cells of \code{data} for
-which imputations are generated.
-The default \code{where = is.na(data)} specifies that all
-missing data are imputed.
-The \code{where} argument can overimpute cells
-with observed data, or skip imputation of specific missing
-cells. Be aware that the latter option could propagate
-missing values to other variables. See details.
-Note: Not all imputation methods may support the \code{where}
-argument (e.g., \code{mice.impute.jomoImpute()} or
-\code{mice.impute.panImpute()}).}
-
 \item{blocks}{List of \eqn{q} character vectors that identifies the
 variable names per block. The name of list elements
 identify blocks. \code{mice()} will provide default names
@@ -109,27 +81,6 @@ A variable can belong to only one block, so there are
 at most \eqn{p} blocks.
 See the \code{nest} argument for an easier alternative to
 the \code{blocks} argument.}
-
-\item{visitSequence}{A vector of block names of arbitrary length, specifying
-the sequence of blocks in which blocks are imputed.
-The \code{visitSequence} defines one iteration through the
-data. A given block may be visited multiple times
-within one iteration.
-Variables that are members of the same block
-are imputed togeteher when the block is visited.
-The default \code{visitSequence = "roman"} visits the blocks
-(left to right) in the order in which they appear
-in \code{blocks}. One may also use one of the following
-keywords: \code{"arabic"} (right to left), \code{"monotone"}
-(ordered low to high proportion of missing data) and
-\code{"revmonotone"} (reverse of monotone).
-\emph{Special case}: If you specify both
-\code{visitSequence = "monotone"} and \code{maxit = 1}, then the
-procedure will edit the \code{predictorMatrix} to conform to
-the monotone pattern, so convergence is then immediate.
-Realize that convergence in one iteration is only
-guaranteed if the missing data pattern is actually
-monotone. \code{mice()} does not check for monotonicity.}
 
 \item{formulas}{A named list with \eqn{q} component, each containing
 one formula. The left hand side (LHS) specifies the
@@ -159,6 +110,55 @@ Optionally, the user can name formulas. If not named,
 as \code{F1}, \code{F2}, and so on. Formulas with one
 dependent (e.g. \code{ses ~ x1 + x2}) will be named
 after the dependent variable \code{"ses"}.}
+
+\item{ignore}{A logical vector of \eqn{n} elements indicating
+which rows are ignored for estimating the parameters of
+the imputation model.
+Rows with \code{ignore} set to \code{TRUE} do not influence the
+parameters of the imputation model.
+The \code{ignore} argument allows splitting \code{data} into a
+training set (on which \code{mice()} fits the imputation model)
+and a test set (that does not influence the imputation
+model parameter estimates).
+The default \code{NULL} corresponds to all \code{FALSE}, thus
+including all rows into the imputation models.
+Note: Not all imputation methods may support the \code{ignore}
+argument (e.g., \code{mice.impute.jomoImpute()} or
+\code{mice.impute.panImpute()}).}
+
+\item{where}{A data frame or matrix of logicals with \eqn{n} rows
+and \eqn{p} columns, indicating the cells of \code{data} for
+which imputations are generated.
+The default \code{where = is.na(data)} specifies that all
+missing data are imputed.
+The \code{where} argument can overimpute cells
+with observed data, or skip imputation of specific missing
+cells. Be aware that the latter option could propagate
+missing values to other variables. See details.
+Note: Not all imputation methods may support the \code{where}
+argument (e.g., \code{mice.impute.jomoImpute()} or
+\code{mice.impute.panImpute()}).}
+
+\item{visitSequence}{A vector of block names of arbitrary length, specifying
+the sequence of blocks in which blocks are imputed.
+The \code{visitSequence} defines one iteration through the
+data. A given block may be visited multiple times
+within one iteration.
+Variables that are members of the same block
+are imputed togeteher when the block is visited.
+The default \code{visitSequence = "roman"} visits the blocks
+(left to right) in the order in which they appear
+in \code{blocks}. One may also use one of the following
+keywords: \code{"arabic"} (right to left), \code{"monotone"}
+(ordered low to high proportion of missing data) and
+\code{"revmonotone"} (reverse of monotone).
+\emph{Special case}: If you specify both
+\code{visitSequence = "monotone"} and \code{maxit = 1}, then the
+procedure will edit the \code{predictorMatrix} to conform to
+the monotone pattern, so convergence is then immediate.
+Realize that convergence in one iteration is only
+guaranteed if the missing data pattern is actually
+monotone. \code{mice()} does not check for monotonicity.}
 
 \item{blots}{A named \code{list} with maximally \eqn{q} \code{alist} used to
 pass down optional arguments to lower level imputation
