@@ -111,9 +111,30 @@ validate.mids <- function(x, silent = FALSE) {
     if (!silent) warning("not a mids object", call. = FALSE)
     return(FALSE)
   }
-  # if (any(row.names(x$predictorMatrix) != colnames(x$data))) {
-  #   if (!silent) warning("row names of predictorMatrix do not match colnames(data)", call. = FALSE)
+  if (any(row.names(x$predictorMatrix) != colnames(x$data))) {
+    if (!silent) warning("row names of predictorMatrix do not match colnames(data)", call. = FALSE)
+    return(FALSE)
+  }
+  if (length(x$formulas) != length(x$blocks)) {
+    if (!silent) warning("lengths of formulas and blocks differ", call. = FALSE)
+    return(FALSE)
+  }
+  if (length(x$formulas) != length(x$method)) {
+    if (!silent) warning("lengths of formulas and method differ", call. = FALSE)
+    return(FALSE)
+  }
+  # if (length(x$blots) != length(x$method)) {
+  #   if (!silent) warning("lengths of blots and method differ", call. = FALSE)
   #   return(FALSE)
   # }
+  if (length(x$method) > ncol(x$data)) {
+    if (!silent) warning("method vector is longer than number of variables", call. = FALSE)
+    return(FALSE)
+  }
+  if (length(x$imp) != ncol(x$data)) {
+    if (!silent) warning("length of imp differs from the number of variables", call. = FALSE)
+    return(FALSE)
+  }
+
   return(TRUE)
 }

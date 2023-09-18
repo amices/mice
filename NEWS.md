@@ -16,6 +16,17 @@
 - Removes codes designed to work specifically with a non-square `predictorMatrix`
 - Generates an error if `predictorMatrix` has fewer rows than length of `blocks`
 
+## New exit checks
+
+- `rownames(predictorMatrix)` must match `colnames(data)`
+- length of `formulas` and `blocks` must be equal
+- length of `formulas` and `method` must be equal
+- length of `blots` and `method` must be equal
+- length of `method` vector cannot exceed number of variables
+- length of `imp` and number of variables must be equal
+
+## Other fixes
+
 * Prepares for the deprecation of the `blocks` argument at various places
 * Removes the need for `blocks` in `initialize_chain()`
 * In `rbind()`, when formulas are concatenated and duplicate names are found, also rename the duplicated variables in formulas by their new name
