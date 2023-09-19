@@ -135,6 +135,10 @@ validate.mids <- function(x, silent = FALSE) {
     if (!silent) warning("length of imp differs from the number of variables", call. = FALSE)
     return(FALSE)
   }
+  if (length(x$nest) != ncol(x$data)) {
+    if (!silent) warning("length of nest differs from the number of variables", call. = FALSE)
+    return(FALSE)
+  }
   for (b in names(x$method)) {
     ynames <- x$blocks[[b]]
     for (j in ynames) {

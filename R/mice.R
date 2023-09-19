@@ -588,10 +588,9 @@ mice <- function(data,
   visitSequence <- setup$visitSequence
   post <- setup$post
 
-  # update model
-  #  formulas <- p2f(predictorMatrix, blocks)
-  #  roles <- p2c(predictorMatrix)
-  #  blots <- paste.roles(blots, roles)
+  # update nest
+  nest <- b2n(blocks)
+  nest <- reorder.nest(nest, data)
 
   # initialize imputations
   nmis <- apply(is.na(data), 2, sum)
@@ -618,6 +617,7 @@ mice <- function(data,
     imp = q$imp,
     m = m,
     where = where,
+    nest = nest,
     blocks = blocks,
     call = call,
     nmis = nmis,

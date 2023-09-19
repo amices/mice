@@ -4,7 +4,7 @@
 \alias{make.nest}
 \title{Creates a \code{nest} argument}
 \usage{
-make.nest(x, partition = c("scatter", "collect", "void"), prefix = "A")
+make.nest(x, partition = c("scatter", "collect", "void"), prefix = "b")
 }
 \arguments{
 \item{x}{A \code{data.frame}, an unnamed character vector, a named

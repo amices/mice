@@ -44,7 +44,7 @@
 #' @export
 make.nest <- function(x,
                       partition = c("scatter", "collect", "void"),
-                      prefix = "A") {
+                      prefix = "b") {
 
   # unnamed vector
   if (is.vector(x) && is.null(names(x)) && !is.list(x)) {
@@ -175,4 +175,10 @@ construct.nest <- function(formulas = NULL, predictorMatrix = NULL) {
   names(ct) <- names(blocks)
   attr(blocks, "calltype") <- ct
   blocks
+}
+
+
+reorder.nest <- function(nest, data) {
+  idx <- colnames(data)
+  return(nest[idx])
 }

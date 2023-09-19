@@ -11,7 +11,7 @@ context("blocks")
 #
 
 library(mice)   # branch support_blocks
-imp <- mice(nhanes, blocks = make.blocks(list(c("bmi", "chl"), "bmi", "age")), m = 1, print = FALSE)
+expect_warning(imp <<- mice(nhanes, blocks = make.blocks(list(c("bmi", "chl"), "bmi", "age")), m = 1, print = FALSE))
 
 head(complete(imp))
 imp$blocks
