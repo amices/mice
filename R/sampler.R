@@ -238,11 +238,13 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
     if (length(ymove) > 0L) {
       formula <- update(formula, paste("~ . + ", paste(ymove, collapse = "+")))
     }
-    s <- unlist(strsplit(format(formula), "[~]"))
-    xp <- sort(unlist(strsplit(s[2], "[+]")))
-    xp <- sort(gsub(" ", "", xp))
-    formula <- reformulate(paste(xp, collapse = "+"), j, env = environment(formula))
   }
+
+  # sort terms in alphabetic order to obtain exact reproducibility
+  s <- unlist(strsplit(format(formula), "[~]"))
+  xp <- sort(unlist(strsplit(s[2], "[+]")))
+  xp <- sort(gsub(" ", "", xp))
+  formula <- reformulate(paste(xp, collapse = "+"), j, env = environment(formula))
 
   # get the model matrix
   x <- obtain.design(data, formula)
