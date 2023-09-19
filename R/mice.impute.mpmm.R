@@ -65,15 +65,20 @@ mpmm.impute <- function(data, ...) {
   r <- !is.na(data)
   mpat <- apply(r, 1, function(x) paste(as.numeric(x), collapse = ""))
   nmpat <- length(unique(mpat))
-  if (nmpat != 2) stop("There are more than one missingness patterns")
+  if (nmpat != 2) {
+    stop("mpmm does not support more than one missing data pattern",
+         call. = FALSE)
+  }
   r <- unique(r)
   r <- r[rowSums(r) < ncol(r), ]
   y <- data[, which(r == FALSE), drop = FALSE]
   ry <- !is.na(y)[, 1]
   x <- data[, which(r == TRUE), drop = FALSE]
   wy <- !ry
-  ES <- eigen(solve(cov(y[ry, , drop = FALSE], y[ry, , drop = FALSE])) %*% cov(y[ry, , drop = FALSE], x[ry, , drop = FALSE])
-    %*% solve(cov(x[ry, , drop = FALSE], x[ry, , drop = FALSE])) %*% cov(x[ry, , drop = FALSE], y[ry, , drop = FALSE]))
+  ES <- eigen(solve(cov(y[ry, , drop = FALSE], y[ry, , drop = FALSE])) %*%
+                cov(y[ry, , drop = FALSE], x[ry, , drop = FALSE])
+    %*% solve(cov(x[ry, , drop = FALSE], x[ry, , drop = FALSE])) %*%
+      cov(x[ry, , drop = FALSE], y[ry, , drop = FALSE]))
   parm <- as.matrix(ES$vectors[, 1])
   z <- as.matrix(y) %*% parm
   imp <- mice.impute.pmm(z, ry, x)
