@@ -73,7 +73,7 @@ imp2 <- mice(data, blocks = list(c("bmi", "chl"), "hyp"), print = FALSE, m = 1, 
 imp3 <- mice(data, blocks = list(all = c("bmi", "chl", "hyp")), print = FALSE, m = 1, maxit = 1, seed = 11)
 
 test_that("Case C finds blocks", {
-  expect_identical(names(imp2$blocks), c("B1", "hyp", "age"))
+  expect_identical(names(imp2$blocks), c("b1", "hyp", "age"))
   expect_identical(names(imp3$blocks), c("all", "age"))
 })
 
@@ -83,7 +83,7 @@ test_that("Case C finds predictorMatrix", {
 })
 
 test_that("Case C finds formulas", {
-  expect_identical(sort(all.vars(imp2$formulas[["B1"]])), sort(colnames(data)))
+  expect_identical(sort(all.vars(imp2$formulas[["b1"]])), sort(colnames(data)))
 })
 
 test_that("Case C yields same imputations for FCS and multivariate", {

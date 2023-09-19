@@ -4,7 +4,7 @@
 \alias{name.blocks}
 \title{Name imputation blocks}
 \usage{
-name.blocks(blocks, prefix = "B")
+name.blocks(blocks, prefix = "b")
 }
 \arguments{
 \item{blocks}{List of \eqn{q} character vectors that identifies the

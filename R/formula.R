@@ -99,7 +99,7 @@ make.formulas <- function(data, blocks = make.blocks(data),
 #' form5 <- name.formulas(form5)
 #' imp5 <- mice(nhanes, formulas = form5, print = FALSE, m = 1, seed = 71712)
 #' @export
-name.formulas <- function(formulas, prefix = "F") {
+name.formulas <- function(formulas, prefix = "f") {
   if (!is.list(formulas)) {
     stop("Argument `formulas` not a list", call. = FALSE)
   }

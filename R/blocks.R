@@ -124,7 +124,7 @@ make.blocks <- function(x,
 #' blocks <- list(c("hyp", "chl"), AGE = "age", c("bmi", "hyp"), "edu")
 #' name.blocks(blocks)
 #' @export
-name.blocks <- function(blocks, prefix = "B") {
+name.blocks <- function(blocks, prefix = "b") {
   if (!is.list(blocks)) {
     return(make.blocks(blocks))
   }

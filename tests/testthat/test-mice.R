@@ -19,7 +19,7 @@ test_that("blocks run as expected", {
                                blocks = list(c("age", "hyp"), chl = "chl", "bmi"),
                                print = FALSE, m = 1, maxit = 1, seed = 1
   ))
-  expect_silent(imp2b <<- mice(nhanes2,
+  expect_warning(imp2b <<- mice(nhanes2,
                                blocks = list(c("age", "hyp", "bmi"), "chl", "bmi"),
                                print = FALSE, m = 1, maxit = 1, seed = 1
   ))
@@ -37,7 +37,7 @@ test_that("blocks run as expected", {
 })
 
 test_that("Block names are generated automatically", {
-  expect_identical(names(imp1b$blocks), c("B1", "chl", "bmi"))
+  expect_identical(names(imp1b$blocks), c("b1", "chl", "bmi"))
 })
 test_that("Method `pmm` is used for mixed variable types", {
   expect_identical(unname(imp2b$method[1]), "pmm")
@@ -151,7 +151,7 @@ test_that("formulas run as expected", {
 })
 
 test_that("Formula names are generated automatically", {
-  expect_identical(names(imp1f$blocks), c("F1", "chl", "bmi"))
+  expect_identical(names(imp1f$blocks), c("f1", "chl", "bmi"))
 })
 test_that("Method `pmm` is used for mixed variable types", {
   expect_identical(unname(imp2f$method[1]), "pmm")

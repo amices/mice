@@ -48,7 +48,7 @@ imp <- cbind(imp1, imp2)
 impc <- mice.mids(imp, max = 2, print = FALSE)
 
 test_that("duplicate blocks names renames block", {
-  expect_identical(names(impc$blocks)[3], "B1.1")
+  expect_identical(names(impc$blocks)[3], "b1.1")
 })
 
 

@@ -4,7 +4,7 @@
 \alias{name.formulas}
 \title{Name formula list elements}
 \usage{
-name.formulas(formulas, prefix = "F")
+name.formulas(formulas, prefix = "f")
 }
 \arguments{
 \item{formulas}{A named list with \eqn{q} component, each containing
