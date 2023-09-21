@@ -12,7 +12,6 @@
 #' @return A matrix
 #' @seealso [make.blocks()]
 #' @examples
-#' make.predictorMatrix(nhanes)
 #' make.dots(nhanes, blocks = name.blocks(c("age", "hyp"), "xxx"))
 #' @export
 make.dots <- function(data, blocks = make.blocks(data)) {
@@ -37,4 +36,12 @@ check.dots <- function(dots, data, blocks = NULL) {
     names(dots) <- names(blocks)
   }
   dots
+}
+
+#' Creates a `blots` argument
+#' @inheritParams make.dots
+#' @export
+make.blots <- function(data, blocks = make.blocks(data)) {
+  .Deprecated("make.dots")
+  make.dots(data = data, blocks = make.blocks(data))
 }

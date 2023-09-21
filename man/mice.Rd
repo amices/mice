@@ -23,6 +23,7 @@ mice(
   printFlag = TRUE,
   seed = NA,
   data.init = NULL,
+  blots = NULL,
   ...
 )
 }
@@ -210,6 +211,8 @@ imputations by a simple random draw from marginal
 of the observed data.
 Note that specification of \code{data.init} will start all
 \code{m} Gibbs sampling streams from the same imputation.}
+
+\item{blots}{Deprecated. Replaced by \code{dots}.}
 
 \item{\dots}{Named arguments that are passed down to the univariate
 imputation functions. Use \code{dots} for a more fine-grained

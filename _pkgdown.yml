@@ -42,8 +42,10 @@ reference:
   - squeeze
   - make.blocks
   - make.blots
+  - make.dots
   - make.formulas
   - make.method
+  - make.parcel
   - make.post
   - make.predictorMatrix
   - make.visitSequence

@@ -24,7 +24,6 @@ arguments that are specifically passed down to the lowest level
 imputation function.
 }
 \examples{
-make.predictorMatrix(nhanes)
 make.dots(nhanes, blocks = name.blocks(c("age", "hyp"), "xxx"))
 }
 \seealso{

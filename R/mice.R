@@ -323,6 +323,7 @@
 #' @param parcel      A character vector with \eqn{p} elements identifying the
 #'                  variable group (or block) to which each variable is
 #'                  allocated.
+#' @param blots     Deprecated. Replaced by `dots`.
 #'
 #' @return Returns an S3 object of class [`mids()`][mids-class]
 #'        (multiply imputed data set)
@@ -411,9 +412,17 @@ mice <- function(data,
                  printFlag = TRUE,
                  seed = NA,
                  data.init = NULL,
+                 blots = NULL,
                  ...) {
   call <- match.call()
+
+  # legacy handling
   check.deprecated(...)
+  if (!missing(blots)) {
+    warning("argument 'blots' is deprecated; please use 'dots' instead.",
+            call. = FALSE)
+    dots <- blots
+  }
 
   if (!is.na(seed)) set.seed(seed)
 
