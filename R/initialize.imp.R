@@ -8,7 +8,13 @@ initialize.imp <- function(data, m, ignore, where, blocks, visitSequence,
       y <- data[, j]
       ry <- r[, j] & !ignore
       wy <- where[, j]
-      imp[[j]] <- as.data.frame(matrix(NA, nrow = sum(wy), ncol = m))
+      type <- typeof(y)
+      na.type <- switch(type,
+                        double = NA_real_,
+                        integer = NA_integer_,
+                        character = NA_character_,
+                        NA)
+      imp[[j]] <- as.data.frame(matrix(na.type, nrow = sum(wy), ncol = m))
       dimnames(imp[[j]]) <- list(row.names(data)[wy], 1:m)
       if (method[h] != "") {
         for (i in seq_len(m)) {
