@@ -103,10 +103,8 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
             fm <- paste("mice.impute", theMethod, sep = ".")
             if (calltype == "formula") {
-              imputes <- do.call(fm, args = list(
-                data = data,
-                formula = ff, ...
-              ))
+              args <- c(list(data = data, formula = ff), user, list(...))
+              imputes <- do.call(fm, args = args)
             } else if (calltype == "pred") {
               typecodes <- function(x) {
                 # jomoImpute type codes
@@ -134,9 +132,8 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
                 return(as.vector(type))
               }
               type <- typecodes(predictorMatrix[blocks[[h]], ])
-              imputes <- do.call(fm, args = list(
-                data = data,
-                type = type, ...))
+              args <- c(list(data = data, type = type), user, list(...))
+              imputes <- do.call(fm, args = args)
             } else {
               stop("Cannot call function of type ", calltype,
                    call. = FALSE
@@ -204,7 +201,8 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 }
 
 sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
-                         calltype = "pred", user, ignore, ...) {
+                         calltype = "pred", user, ignore,
+                         sort.terms = TRUE, ...) {
   j <- yname[1L]
 
   if (calltype == "pred") {
@@ -241,10 +239,13 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
   }
 
   # sort terms in alphabetic order to obtain exact reproducibility
-  s <- unlist(strsplit(format(formula), "[~]"))
-  xp <- sort(unlist(strsplit(s[2], "[+]")))
-  xp <- sort(gsub(" ", "", xp))
-  formula <- reformulate(paste(xp, collapse = "+"), j, env = environment(formula))
+  # FIXME Is this sort really needed? It can crash with more complex formulas
+  if (sort.terms) {
+    s <- unlist(strsplit(format(formula), "[~]"))
+    xp <- sort(unlist(strsplit(s[2], "[+]")))
+    xp <- sort(gsub(" ", "", xp))
+    formula <- reformulate(paste(xp, collapse = "+"), j, env = environment(formula))
+  }
 
   # get the model matrix
   x <- obtain.design(data, formula)
