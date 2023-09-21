@@ -61,15 +61,15 @@ iteration of \code{mice} by a user-specified quantity that can
 vary across subjects, to reflect systematic departures of the
 missing data from the data distribution imputed under MAR.
 
-Specification of the NARFCS model is done by the \code{blots}
-argument of \code{mice()}. The \code{blots} parameter is a named
+Specification of the NARFCS model is done by the \code{dots}
+argument of \code{mice()}. The \code{dots} parameter is a named
 list. For each variable to be imputed by
 \code{mice.impute.mnar.norm()} or \code{mice.impute.mnar.logreg()}
-the corresponding element in \code{blots} is a list with
+the corresponding element in \code{dots} is a list with
 at least one argument \code{ums} and, optionally, a second
 argument \code{umx}.
 For example, the high-level call might like something like
-\code{mice(nhanes[, c(2, 4)], method = c("pmm", "mnar.norm"), blots = list(chl = list(ums = "-3+2*bmi")))}.
+\code{mice(nhanes[, c(2, 4)], method = c("pmm", "mnar.norm"), dots = list(chl = list(ums = "-3+2*bmi")))}.
 
 The \code{ums} parameter is required, and might look like this:
 \code{"-4+1*Y"}. The \code{ums} specifcation must have the
@@ -121,13 +121,13 @@ For an MNAR alternative see also \code{\link[=mice.impute.ri]{mice.impute.ri()}}
 \examples{
 # 1: Example with no auxiliary data: only pass unidentifiable model specification (ums)
 
-# Specify argument to pass on to mnar imputation functions via "blots" argument
+# Specify argument to pass on to mnar imputation functions via "dots" argument
 mnar.blot <- list(X = list(ums = "-4"), Y = list(ums = "2+1*ZCat1-3*ZCat2"))
 
-# Run NARFCS by using mnar imputation methods and passing argument via blots
+# Run NARFCS by using mnar imputation methods and passing argument via dots
 impNARFCS <- mice(mnar_demo_data,
   method = c("mnar.logreg", "mnar.norm", ""),
-  blots = mnar.blot, seed = 234235, print = FALSE
+  dots = mnar.blot, seed = 234235, print = FALSE
 )
 
 # Obtain MI results: Note they coincide with those from old version at
@@ -141,7 +141,7 @@ pool(with(impNARFCS, lm(Y ~ X + Z)))$pooled$estimate
 # - Auxiliary data have same number of rows as x
 # - Auxiliary data have no overlapping variable names with x
 
-# Specify argument to pass on to mnar imputation functions via "blots" argument
+# Specify argument to pass on to mnar imputation functions via "dots" argument
 aux <- matrix(0:1, nrow = nrow(mnar_demo_data))
 dimnames(aux) <- list(NULL, "even")
 mnar.blot <- list(
@@ -149,10 +149,10 @@ mnar.blot <- list(
   Y = list(ums = "2+1*ZCat1-3*ZCat2+0.5*even", umx = aux)
 )
 
-# Run NARFCS by using mnar imputation methods and passing argument via blots
+# Run NARFCS by using mnar imputation methods and passing argument via dots
 impNARFCS <- mice(mnar_demo_data,
   method = c("mnar.logreg", "mnar.norm", ""),
-  blots = mnar.blot, seed = 234235, print = FALSE
+  dots = mnar.blot, seed = 234235, print = FALSE
 )
 
 # Obtain MI results: As expected they differ (slightly) from those

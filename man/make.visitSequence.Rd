@@ -13,7 +13,7 @@ incomplete data.  Missing values are coded as \code{NA}.}
 \item{blocks}{List of \eqn{q} character vectors that identifies the
 variable names per block. The name of list elements
 identify blocks. \code{mice()} will provide default names
-(\code{"B1"}, \code{"B2"}, ...) for blocks containing multiple
+(\code{"b1"}, \code{"b2"}, ...) for blocks containing multiple
 variables. Variables within a block are imputed as a
 block, e.g. by a multivariate imputation method, or
 by an iterated version of the same univariate imputation

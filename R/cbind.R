@@ -97,7 +97,7 @@ cbind.mids <- function(x, y = NULL, ...) {
   formulas <- x$formulas
   post <- c(x$post, rep.int("", ncol(y)))
   names(post) <- varnames
-  blots <- x$blots
+  dots <- x$dots
   ignore <- x$ignore
 
   # seed, lastSeedValue, number of iterations, chainMean and chainVar
@@ -120,7 +120,7 @@ cbind.mids <- function(x, y = NULL, ...) {
     visitSequence = visitSequence,
     formulas = formulas,
     post = post,
-    blots = blots,
+    dots = dots,
     ignore = ignore,
     seed = seed,
     iteration = iteration,
@@ -230,8 +230,8 @@ cbind.mids.mids <- function(x, y, call) {
   visitSequence <- unname(c(xnew[x$visitSequence], ynew[y$visitSequence]))
   post <- c(x$post, y$post)
   names(post) <- varnames
-  blots <- c(x$blots, y$blots)
-  names(blots) <- blocknames
+  dots <- c(x$dots, y$dots)
+  names(dots) <- blocknames
   ignore <- x$ignore
 
   # For the elements seed, lastSeedValue and iteration the values
@@ -291,7 +291,7 @@ cbind.mids.mids <- function(x, y, call) {
     visitSequence = visitSequence,
     formulas = formulas,
     post = post,
-    blots = blots,
+    dots = dots,
     ignore = ignore,
     seed = seed,
     iteration = iteration,

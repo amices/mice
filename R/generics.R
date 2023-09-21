@@ -67,7 +67,7 @@
 #' `visitSequence`   \tab Combined as `c(x$visitSequence, y$visitSequence)`\cr
 #' `formulas`  \tab Combined as `c(x$formulas, y$formulas)`\cr
 #' `post`      \tab Combined as `c(x$post, y$post)`\cr
-#' `blots`     \tab Combined as `c(x$blots, y$blots)`\cr
+#' `dots`     \tab Combined as `c(x$dots, y$dots)`\cr
 #' `ignore`    \tab Taken from `x$ignore`\cr
 #' `seed`            \tab Taken from `x$seed`\cr
 #' `iteration`       \tab Taken from `x$iteration`\cr
@@ -94,7 +94,7 @@
 #' `visitSequence`   \tab Taken from `x$visitSequence`\cr
 #' `formulas`  \tab Taken from `x$formulas`\cr
 #' `post`      \tab Taken from `x$post`\cr
-#' `blots`     \tab Taken from `x$blots`\cr
+#' `dots`     \tab Taken from `x$dots`\cr
 #' `ignore`    \tab Concatenate `x$ignore` and `y$ignore`\cr
 #' `seed`            \tab Taken from `x$seed`\cr
 #' `iteration`       \tab Taken from `x$iteration`\cr

@@ -1,9 +1,9 @@
-#' Creates a `blots` argument
+#' Creates a `dots` argument
 #'
-#' This helper function creates a valid `blots` object. The
-#' `blots` object is an argument to the `mice` function.
-#' The name `blots` is a contraction of blocks-dots.
-#' Through `blots`, the user can specify any additional
+#' This helper function creates a valid `dots` object. The
+#' `dots` object is an argument to the `mice` function.
+#' The name `dots` is a contraction of blocks-dots.
+#' Through `dots`, the user can specify any additional
 #' arguments that are specifically passed down to the lowest level
 #' imputation function.
 #' @param data A `data.frame` with the source data
@@ -13,28 +13,28 @@
 #' @seealso [make.blocks()]
 #' @examples
 #' make.predictorMatrix(nhanes)
-#' make.blots(nhanes, blocks = name.blocks(c("age", "hyp"), "xxx"))
+#' make.dots(nhanes, blocks = name.blocks(c("age", "hyp"), "xxx"))
 #' @export
-make.blots <- function(data, blocks = make.blocks(data)) {
+make.dots <- function(data, blocks = make.blocks(data)) {
   data <- check.dataform(data)
-  blots <- vector("list", length(blocks))
-  for (i in seq_along(blots)) blots[[i]] <- alist()
-  names(blots) <- names(blocks)
-  blots
+  dots <- vector("list", length(blocks))
+  for (i in seq_along(dots)) dots[[i]] <- alist()
+  names(dots) <- names(blocks)
+  dots
 }
 
-check.blots <- function(blots, data, blocks = NULL) {
+check.dots <- function(dots, data, blocks = NULL) {
   data <- check.dataform(data)
 
-  if (is.null(blots)) {
-    return(make.blots(data, blocks))
+  if (is.null(dots)) {
+    return(make.dots(data, blocks))
   }
 
-  blots <- as.list(blots)
-  for (i in seq_along(blots)) blots[[i]] <- as.list(blots[[i]])
+  dots <- as.list(dots)
+  for (i in seq_along(dots)) dots[[i]] <- as.list(dots[[i]])
 
-  if (length(blots) == length(blocks) && is.null(names(blots))) {
-    names(blots) <- names(blocks)
+  if (length(dots) == length(blocks) && is.null(names(dots))) {
+    names(dots) <- names(blocks)
   }
-  blots
+  dots
 }

@@ -16,7 +16,7 @@ mice(
   ignore = NULL,
   where = NULL,
   visitSequence = NULL,
-  blots = NULL,
+  dots = NULL,
   post = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
   maxit = 5,
@@ -68,7 +68,7 @@ allocated.}
 \item{blocks}{List of \eqn{q} character vectors that identifies the
 variable names per block. The name of list elements
 identify blocks. \code{mice()} will provide default names
-(\code{"B1"}, \code{"B2"}, ...) for blocks containing multiple
+(\code{"b1"}, \code{"b2"}, ...) for blocks containing multiple
 variables. Variables within a block are imputed as a
 block, e.g. by a multivariate imputation method, or
 by an iterated version of the same univariate imputation
@@ -160,12 +160,12 @@ Realize that convergence in one iteration is only
 guaranteed if the missing data pattern is actually
 monotone. \code{mice()} does not check for monotonicity.}
 
-\item{blots}{A named \code{list} with maximally \eqn{q} \code{alist} used to
+\item{dots}{A named \code{list} with maximally \eqn{q} \code{alist} used to
 pass down optional arguments to lower level imputation
 functions.
-The entries of element \code{blots[[h]]} are passed down to
+The entries of element \code{dots[[h]]} are passed down to
 the method called on block \code{h} or formula \code{h}.
-For example, \code{blots = list(age = alist(donor = 20))}
+For example, \code{dots = list(age = alist(donor = 20))}
 specifies that imputation of \code{age} should draw from
 imputations using 20 (instead of the default five) nearest
 neighbours.}
@@ -212,7 +212,7 @@ Note that specification of \code{data.init} will start all
 \code{m} Gibbs sampling streams from the same imputation.}
 
 \item{\dots}{Named arguments that are passed down to the univariate
-imputation functions. Use \code{blots} for a more fine-grained
+imputation functions. Use \code{dots} for a more fine-grained
 alternative.}
 }
 \value{

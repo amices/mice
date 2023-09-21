@@ -43,7 +43,7 @@ The function constructs the elements of the filtered \code{mids} object as follo
 \code{visitSequence}   \tab Equals \code{.data$visitSequence}\cr
 \code{formulas}  \tab Equals \code{.data$formulas}\cr
 \code{post}      \tab Equals \code{.data$post}\cr
-\code{blots}     \tab Equals \code{.data$blots}\cr
+\code{dots}     \tab Equals \code{.data$dots}\cr
 \code{ignore}    \tab Select positions in \code{.data$ignore} for which \code{include == TRUE}\cr
 \code{seed}            \tab Equals \code{.data$seed}\cr
 \code{iteration}       \tab Equals \code{.data$iteration}\cr

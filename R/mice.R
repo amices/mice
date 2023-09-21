@@ -272,12 +272,12 @@
 #'                  as `F1`, `F2`, and so on. Formulas with one
 #'                  dependent (e.g. `ses ~ x1 + x2`) will be named
 #'                  after the dependent variable `"ses"`.
-#' @param blots     A named `list` with maximally \eqn{q} `alist` used to
+#' @param dots     A named `list` with maximally \eqn{q} `alist` used to
 #'                  pass down optional arguments to lower level imputation
 #'                  functions.
-#'                  The entries of element `blots[[h]]` are passed down to
+#'                  The entries of element `dots[[h]]` are passed down to
 #'                  the method called on block `h` or formula `h`.
-#'                  For example, `blots = list(age = alist(donor = 20))`
+#'                  For example, `dots = list(age = alist(donor = 20))`
 #'                  specifies that imputation of `age` should draw from
 #'                  imputations using 20 (instead of the default five) nearest
 #'                  neighbours.
@@ -318,7 +318,7 @@
 #'                  Note that specification of `data.init` will start all
 #'                  `m` Gibbs sampling streams from the same imputation.
 #' @param \dots     Named arguments that are passed down to the univariate
-#'                  imputation functions. Use `blots` for a more fine-grained
+#'                  imputation functions. Use `dots` for a more fine-grained
 #'                  alternative.
 #' @param parcel      A character vector with \eqn{p} elements identifying the
 #'                  variable group (or block) to which each variable is
@@ -404,7 +404,7 @@ mice <- function(data,
                  ignore = NULL,
                  where = NULL,
                  visitSequence = NULL,
-                 blots = NULL,
+                 dots = NULL,
                  post = NULL,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
                  maxit = 5,
@@ -559,7 +559,7 @@ mice <- function(data,
 
   # other checks
   post <- check.post(post, data)
-  blots <- check.blots(blots, data, blocks)
+  dots <- check.dots(dots, data, blocks)
   ignore <- check.ignore(ignore, data)
 
   # data frame for storing the event log
@@ -570,7 +570,7 @@ mice <- function(data,
   setup <- list(
     method = method,
     formulas = formulas,
-    blots = blots,
+    dots = dots,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     post = post
@@ -578,7 +578,7 @@ mice <- function(data,
   setup <- edit.setup(data, setup, ...)
   method <- setup$method
   formulas <- setup$formulas
-  blots <- setup$blots
+  dots <- setup$dots
   predictorMatrix <- setup$predictorMatrix
   visitSequence <- setup$visitSequence
   post <- setup$post
@@ -599,7 +599,7 @@ mice <- function(data,
   to <- from + maxit - 1
   q <- sampler(
     data, m, ignore, where, imp, blocks, method,
-    visitSequence, predictorMatrix, formulas, blots,
+    visitSequence, predictorMatrix, formulas, dots,
     post, c(from, to), printFlag, ...
   )
 
@@ -621,7 +621,7 @@ mice <- function(data,
     visitSequence = visitSequence,
     formulas = formulas,
     post = post,
-    blots = blots,
+    dots = dots,
     ignore = ignore,
     seed = seed,
     iteration = q$iteration,

@@ -20,7 +20,7 @@ edit.setup <- function(data, setup,
   pred <- setup$predictorMatrix
   meth <- setup$method
   form <- setup$formulas
-  blots <- setup$blots  # not used
+  dots <- setup$dots  # not used
   vis <- setup$visitSequence
   post <- setup$post
 
@@ -103,7 +103,7 @@ edit.setup <- function(data, setup,
 
   setup$predictorMatrix <- pred
   setup$formulas <- form
-  setup$blots <- blots
+  setup$dots <- dots
   setup$visitSequence <- vis
   setup$post <- post
   setup$method <- meth

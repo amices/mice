@@ -3,7 +3,7 @@ parse.ums <- function(x, ums = NULL, umx = NULL, ...) {
   if (!is.null(umx)) x <- base::cbind(x, umx)
 
   ## Unidentifiable part
-  # e.g. specified in blots as list(X = list(ums = "-3+2*bmi"))
+  # e.g. specified in dots as list(X = list(ums = "-3+2*bmi"))
   mnar0 <- gsub("-", "+-", ums)
   mnar0 <- unlist(strsplit(mnar0, "+", fixed = TRUE))
   if (mnar0[1L] == "") mnar0 <- mnar0[-1L]

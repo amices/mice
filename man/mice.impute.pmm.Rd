@@ -136,16 +136,16 @@ plot(jitter(y), jitter(yimp),
 abline(0, 1)
 cor(y, yimp, use = "pair")
 
-# Use blots to exclude different values per column
-# Create blots object
-blots <- make.blots(boys)
+# Use dots to exclude different values per column
+# Create dots object
+dots <- make.dots(boys)
 # Exclude ml 1 through 5 from tv donor pool
-blots$tv$exclude <- c(1:5)
+dots$tv$exclude <- c(1:5)
 # Exclude 100 random observed heights from tv donor pool
-blots$hgt$exclude <- sample(unique(boys$hgt), 100)
-imp <- mice(boys, method = "pmm", print = FALSE, blots = blots, seed=123)
-blots$hgt$exclude \%in\% unlist(c(imp$imp$hgt)) # MUST be all FALSE
-blots$tv$exclude \%in\% unlist(c(imp$imp$tv)) # MUST be all FALSE
+dots$hgt$exclude <- sample(unique(boys$hgt), 100)
+imp <- mice(boys, method = "pmm", print = FALSE, dots = dots, seed=123)
+dots$hgt$exclude \%in\% unlist(c(imp$imp$hgt)) # MUST be all FALSE
+dots$tv$exclude \%in\% unlist(c(imp$imp$tv)) # MUST be all FALSE
 
 # Factor quantification
 xname <- c("age", "hgt", "wgt")

@@ -79,7 +79,7 @@ correspond to blocks. The block to which the list element applies is
 identified by its name, so list names must correspond to block names.}
 \item{\code{post}:}{A vector of strings of length \code{length(blocks)}
 with commands for post-processing.}
-\item{\code{blots}:}{"Block dots". The \code{blots} argument to the \code{mice()}
+\item{\code{dots}:}{"Block dots". The \code{dots} argument to the \code{mice()}
 function.}
 \item{\code{ignore}:}{A logical vector of length \code{nrow(data)} indicating
 the rows in \code{data} used to build the imputation model. (new in \verb{mice 3.12.0})}

@@ -39,7 +39,7 @@
 #'    identified by its name, so list names must correspond to block names.}
 #'    \item{`post`:}{A vector of strings of length `length(blocks)`
 #'    with commands for post-processing.}
-#'    \item{`blots`:}{"Block dots". The `blots` argument to the `mice()`
+#'    \item{`dots`:}{"Block dots". The `dots` argument to the `mice()`
 #'    function.}
 #'    \item{`ignore`:}{A logical vector of length `nrow(data)` indicating
 #'    the rows in `data` used to build the imputation model. (new in `mice 3.12.0`)}
@@ -123,8 +123,8 @@ validate.mids <- function(x, silent = FALSE) {
     if (!silent) warning("lengths of formulas and method differ", call. = FALSE)
     return(FALSE)
   }
-  # if (length(x$blots) != length(x$method)) {
-  #   if (!silent) warning("lengths of blots and method differ", call. = FALSE)
+  # if (length(x$dots) != length(x$method)) {
+  #   if (!silent) warning("lengths of dots and method differ", call. = FALSE)
   #   return(FALSE)
   # }
   if (length(x$method) > ncol(x$data)) {

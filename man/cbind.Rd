@@ -91,7 +91,7 @@ is call to \code{cbind.mids()}\cr
 \code{visitSequence}   \tab Combined as \code{c(x$visitSequence, y$visitSequence)}\cr
 \code{formulas}  \tab Combined as \code{c(x$formulas, y$formulas)}\cr
 \code{post}      \tab Combined as \code{c(x$post, y$post)}\cr
-\code{blots}     \tab Combined as \code{c(x$blots, y$blots)}\cr
+\code{dots}     \tab Combined as \code{c(x$dots, y$dots)}\cr
 \code{ignore}    \tab Taken from \code{x$ignore}\cr
 \code{seed}            \tab Taken from \code{x$seed}\cr
 \code{iteration}       \tab Taken from \code{x$iteration}\cr
@@ -118,7 +118,7 @@ the data of \code{y} will be copied\cr
 \code{visitSequence}   \tab Taken from \code{x$visitSequence}\cr
 \code{formulas}  \tab Taken from \code{x$formulas}\cr
 \code{post}      \tab Taken from \code{x$post}\cr
-\code{blots}     \tab Taken from \code{x$blots}\cr
+\code{dots}     \tab Taken from \code{x$dots}\cr
 \code{ignore}    \tab Concatenate \code{x$ignore} and \code{y$ignore}\cr
 \code{seed}            \tab Taken from \code{x$seed}\cr
 \code{iteration}       \tab Taken from \code{x$iteration}\cr

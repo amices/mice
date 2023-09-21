@@ -32,7 +32,7 @@ dplyr::filter
 #' `visitSequence`   \tab Equals `.data$visitSequence`\cr
 #' `formulas`  \tab Equals `.data$formulas`\cr
 #' `post`      \tab Equals `.data$post`\cr
-#' `blots`     \tab Equals `.data$blots`\cr
+#' `dots`     \tab Equals `.data$dots`\cr
 #' `ignore`    \tab Select positions in `.data$ignore` for which `include == TRUE`\cr
 #' `seed`            \tab Equals `.data$seed`\cr
 #' `iteration`       \tab Equals `.data$iteration`\cr
@@ -77,7 +77,7 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
   predictorMatrix <- .data$predictorMatrix
   visitSequence <- .data$visitSequence
   formulas <- .data$formulas
-  blots <- .data$blots
+  dots <- .data$dots
   post <- .data$post
   seed <- .data$seed
   iteration <- .data$iteration
@@ -113,7 +113,7 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
     visitSequence = visitSequence,
     formulas = formulas,
     post = post,
-    blots = blots,
+    dots = dots,
     ignore = ignore,
     seed = seed,
     iteration = iteration,

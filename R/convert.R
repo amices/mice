@@ -124,11 +124,11 @@ b2n <- function(blocks, silent = FALSE) {
   return(parcel)
 }
 
-paste.roles <- function(blots, roles, blocks) {
+paste.roles <- function(dots, roles, blocks) {
   # FIXME
   # flat <- unlist(unname(roles))
   # flat[unique(names(flat))]
-  return(blots)
+  return(dots)
 }
 
 validate.parcel <- function(parcel, silent = FALSE) {
