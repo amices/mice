@@ -82,6 +82,10 @@ check.predictorMatrix <- function(predictorMatrix,
     )
   }
 
+  # calculate ynames (variables to impute) for use in check.method()
+  hit <- apply(predictorMatrix, 1, function(x) any(x != 0))
+  ynames <- row.names(predictorMatrix)[hit]
+
   # grow predictorMatrix to all variables in data
   if (ncol(predictorMatrix) < ncol(data)) {
     p <- matrix(0, nrow = ncol(data), ncol = ncol(data),
@@ -89,6 +93,9 @@ check.predictorMatrix <- function(predictorMatrix,
     p[row.names(predictorMatrix), colnames(predictorMatrix)] <- predictorMatrix
     predictorMatrix <- p
   }
+
+  # save calculated ynames
+  attr(predictorMatrix, "ynames") <- ynames
 
   # needed for cases E and H
   if (!is.null(blocks)) {

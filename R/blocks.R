@@ -156,8 +156,11 @@ check.blocks <- function(blocks, data, calltype = "formula") {
     ))
   }
 
-  # add blocks for unspecified variables
+  # save ynames (variables to impute) for use in check.method()
   ynames <- unique(as.vector(unname(unlist(blocks))))
+  attr(blocks, "ynames") <- ynames
+
+  # add blocks for unspecified variables
   notimputed <- setdiff(colnames(data), ynames)
   for (y in notimputed) {
     blocks[[y]] <- y

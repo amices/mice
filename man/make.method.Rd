@@ -9,8 +9,7 @@ make.method(
   where = make.where(data),
   blocks = make.blocks(data),
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-  user.predictorMatrix = NULL,
-  user.blocks = NULL
+  ynames = NULL
 )
 }
 \arguments{
@@ -56,11 +55,7 @@ methods for
 The \code{defaultMethod} can be used to alter to default mapping
 of variable type to imputation method.}
 
-\item{user.predictorMatrix}{the unedited \code{predictorMatrix} specified by the
-user in the call to \code{mice()}}
-
-\item{user.blocks}{the unedited \code{blocks} specified by the
-user in the call to \code{mice()}}
+\item{ynames}{vector of names of variables to be imputed}
 }
 \value{
 Vector of \code{length(blocks)} element with method names

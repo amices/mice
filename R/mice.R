@@ -431,20 +431,11 @@ mice <- function(data,
   mb <- missing(blocks)
   mf <- missing(formulas)
 
-  # store unedited user predictorMatrix
-  user.predictorMatrix <- NULL
-  if (!mp) {
-    user.predictorMatrix <- predictorMatrix
-  }
-  user.blocks <- NULL
-  if (!mb) {
-    user.blocks <- blocks
-  }
-
   # case A
   if (mp & mb & mf) {
     # formulas leads
     formulas <- make.formulas(data)
+    attr(formulas, "ynames") <- colnames(data)
     predictorMatrix <- f2p(formulas, data)
     blocks <- construct.blocks(formulas)
   }
@@ -517,13 +508,17 @@ mice <- function(data,
                                        data = data, where = where, blocks = blocks
   )
 
+  # collect the ynames (variables to impute) from the model and clean
+  ynames <- collect.ynames(predictorMatrix, blocks, formulas)
+  attr(predictorMatrix, "ynames") <- NULL
+  attr(blocks, "ynames") <- NULL
+  attr(formulas, "ynames") <- NULL
+
   # derive method vector
   method <- check.method(
     method = method, data = data, where = where,
     blocks = blocks, defaultMethod = defaultMethod,
-    user.predictorMatrix = user.predictorMatrix,
-    user.blocks = user.blocks
-  )
+    ynames)
 
   # edit predictorMatrix for monotone, set zero rows for empty methods
   predictorMatrix <- edit.predictorMatrix(

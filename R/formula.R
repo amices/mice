@@ -134,17 +134,28 @@ check.formulas <- function(formulas, data) {
   }
   formulas <- lapply(formulas, as.formula)
 
-  # find dependent variables
-  # find variables in data that are not imputed
-  # add components y ~ 1 for y to formulas
+  # NA-propagation prevention
+  # find all dependent (imputed) variables
   ynames <- unique(as.vector(unlist(sapply(formulas, lhs))))
+  # find all variables in data that are not imputed
   notimputed <- setdiff(colnames(data), ynames)
+  # select uip: unimputed incomplete predictors
+  completevars <- colnames(data)[!apply(is.na(data), 2, sum)]
+  uip <- setdiff(notimputed, completevars)
+  # if any of these are in RHS for formulas, remove them
+  formulas <- lapply(formulas, remove.rhs.variables, vars = uip)
+  # add components y ~ 1 for y to formulas
   for (y in notimputed) {
     formulas[[y]] <- as.formula(paste(y, "~ 1"))
   }
-  formulas
-}
 
+  # backdoor communication to check.method
+  # settoempty <- setNames(rep(FALSE, ncol(data)), colnames(data))
+  # settoempty[notimputed] <- TRUE
+  attr(formulas, "ynames") <- ynames
+
+  return(formulas)
+}
 
 # remove variables for RHS
 
@@ -296,8 +307,16 @@ expand.dots <- function(formula, data) {
     return(formula)
   }
 
-  y <- lhs(formula)
-  x <- setdiff(colnames(data), y)
+  if (any(lhs(formula) == ".")) {
+    newvars <- setdiff(colnames(data), all.vars(formula))
+    yold <- setdiff(lhs(formula), ".")
+    xold <- attr(terms(formula, data = data), "term.labels")
+    y <- union(yold, setdiff(newvars, xold))
+    x <- ifelse(length(xold), xold, "1")
+  } else {
+    y <- lhs(formula)
+    x <- setdiff(colnames(data), y)
+  }
   fs <- paste(paste(y, collapse = "+"), "~", paste(x, collapse = "+"))
   as.formula(fs)
 }

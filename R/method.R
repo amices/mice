@@ -3,10 +3,7 @@
 #' This helper function creates a valid `method` vector. The
 #' `method` vector is an argument to the `mice` function that
 #' specifies the method for each block.
-#' @param user.predictorMatrix the unedited `predictorMatrix` specified by the
-#' user in the call to `mice()`
-#' @param user.blocks the unedited `blocks` specified by the
-#' user in the call to `mice()`
+#' @param ynames vector of names of variables to be imputed
 #' @inheritParams mice
 #' @return Vector of `length(blocks)` element with method names
 #' @seealso [mice()]
@@ -17,21 +14,34 @@ make.method <- function(data,
                         where = make.where(data),
                         blocks = make.blocks(data),
                         defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-                        user.predictorMatrix = NULL,
-                        user.blocks = NULL) {
-  # support tiny predictorMatrix
-  include <- colnames(data)
-  if (!is.null(user.predictorMatrix)) {
-    if (!is.null(dimnames(user.predictorMatrix))) {
-      include <- colnames(user.predictorMatrix)
-    } else {
-      include <- colnames(data)
-    }
+                        ynames = NULL) {
+  # support tiny predictorMatrix, blocks and formulas
+  if (is.null(ynames)) {
+    ynames <- colnames(data)
   }
-  # support tiny blocks
-  if (!is.null(user.blocks)) {
-    include <- unique(as.vector(unname(unlist(blocks))))
-  }
+  # FIXME colnames(data) may be too large if user specifies blocks argument
+  #       to make.method()
+
+  # if (!is.null(user.predictorMatrix)) {
+  #   if (!is.null(dimnames(user.predictorMatrix))) {
+  #     include <- colnames(user.predictorMatrix)
+  #   } else {
+  #     include1 <- colnames(data)
+  #   }
+  # }
+  # # support tiny blocks
+  # if (!is.null(user.blocks)) {
+  #   include2 <- unique(as.vector(unname(unlist(user.blocks))))
+  # }
+  #
+  # support tiny formulas
+  # if (!is.null(user.formulas)) {
+  #   include <- unique(as.vector(sapply(user.formulas, all.vars)))
+  # }
+  # support tiny formulas
+  # if (!is.null(formulas)) {
+  #   include3 <- attr(formulas, "ynames")
+  # }
 
   method <- rep("", length(blocks))
   names(method) <- names(blocks)
@@ -39,11 +49,12 @@ make.method <- function(data,
     yvar <- blocks[[j]]
     y <- data[, yvar, drop = FALSE]
     k <- assign.method(y)
-    if (all(yvar %in% include)) {
+    if (all(yvar %in% ynames)) {
       method[j] <- defaultMethod[k]
     }
   }
 
+  # FIXME do we really need this here?
   nimp <- nimp(where = where, blocks = blocks)
   method[nimp == 0L] <- ""
   method
@@ -51,15 +62,14 @@ make.method <- function(data,
 
 
 check.method <- function(method, data, where, blocks, defaultMethod,
-                         user.predictorMatrix, user.blocks) {
+                         ynames) {
   if (is.null(method)) {
     method <- make.method(
       data = data,
       where = where,
       blocks = blocks,
       defaultMethod = defaultMethod,
-      user.predictorMatrix = user.predictorMatrix,
-      user.blocks)
+      ynames = ynames)
     return(method)
   }
   nimp <- nimp(where = where, blocks = blocks)
