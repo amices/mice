@@ -124,7 +124,8 @@ name.formulas <- function(formulas, prefix = "f") {
 }
 
 
-check.formulas <- function(formulas, data) {
+check.formulas <- function(formulas, data,
+                           autoremove = TRUE) {
   formulas <- name.formulas(formulas)
   formulas <- handle.oldstyle.formulas(formulas, data)
   formulas <- lapply(formulas, expand.dots, data)
@@ -143,7 +144,14 @@ check.formulas <- function(formulas, data) {
   completevars <- colnames(data)[!apply(is.na(data), 2, sum)]
   uip <- setdiff(notimputed, completevars)
   # if any of these are in RHS for formulas, remove them
-  formulas <- lapply(formulas, remove.rhs.variables, vars = uip)
+  removeme <- intersect(uip, as.vector(sapply(formulas, all.vars)))
+  if (length(removeme) && autoremove) {
+    formulas <- lapply(formulas, remove.rhs.variables, vars = removeme)
+    vars <- paste(removeme, collapse = ",")
+    updateLog(out = paste("incomplete predictor(s)", vars),
+              meth = "check", frame = 1)
+  }
+
   # add components y ~ 1 for y to formulas
   for (y in notimputed) {
     formulas[[y]] <- as.formula(paste(y, "~ 1"))

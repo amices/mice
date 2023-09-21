@@ -24,6 +24,7 @@ mice(
   seed = NA,
   data.init = NULL,
   blots = NULL,
+  autoremove = TRUE,
   ...
 )
 }
@@ -213,6 +214,9 @@ Note that specification of \code{data.init} will start all
 \code{m} Gibbs sampling streams from the same imputation.}
 
 \item{blots}{Deprecated. Replaced by \code{dots}.}
+
+\item{autoremove}{Logical. Should unimputed incomplete predictors be removed
+to prevent NA propagation?}
 
 \item{\dots}{Named arguments that are passed down to the univariate
 imputation functions. Use \code{dots} for a more fine-grained

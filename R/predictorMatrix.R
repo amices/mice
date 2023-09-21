@@ -45,7 +45,8 @@ make.predictorMatrix <- function(data, blocks = make.blocks(data),
 
 check.predictorMatrix <- function(predictorMatrix,
                                   data,
-                                  blocks = NULL) {
+                                  blocks = NULL,
+                                  autoremove = TRUE) {
   data <- check.dataform(data)
 
   if (!is.matrix(predictorMatrix)) {
@@ -82,9 +83,23 @@ check.predictorMatrix <- function(predictorMatrix,
     )
   }
 
-  # calculate ynames (variables to impute) for use in check.method()
+  # NA-propagation prevention
+  # find all dependent (imputed) variables
   hit <- apply(predictorMatrix, 1, function(x) any(x != 0))
   ynames <- row.names(predictorMatrix)[hit]
+  # find all variables in data that are not imputed
+  notimputed <- setdiff(colnames(data), ynames)
+  # select uip: unimputed incomplete predictors
+  completevars <- colnames(data)[!apply(is.na(data), 2, sum)]
+  uip <- setdiff(notimputed, completevars)
+  # if any of these are predictors, remove them
+  removeme <- intersect(uip, colnames(predictorMatrix))
+  if (length(removeme) && autoremove) {
+    predictorMatrix[, removeme] <- 0
+    vars <- paste(removeme, collapse = ",")
+    updateLog(out = paste("incomplete predictor(s)", vars),
+              meth = "check", frame = 1)
+  }
 
   # grow predictorMatrix to all variables in data
   if (ncol(predictorMatrix) < ncol(data)) {

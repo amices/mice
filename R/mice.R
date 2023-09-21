@@ -324,6 +324,8 @@
 #'                  variable group (or block) to which each variable is
 #'                  allocated.
 #' @param blots     Deprecated. Replaced by `dots`.
+#' @param autoremove Logical. Should unimputed incomplete predictors be removed
+#'                  to prevent NA propagation?
 #'
 #' @return Returns an S3 object of class [`mids()`][mids-class]
 #'        (multiply imputed data set)
@@ -413,6 +415,7 @@ mice <- function(data,
                  seed = NA,
                  data.init = NULL,
                  blots = NULL,
+                 autoremove = TRUE,
                  ...) {
   call <- match.call()
 
@@ -423,6 +426,10 @@ mice <- function(data,
             call. = FALSE)
     dots <- blots
   }
+
+  # data frame for storing the event log
+  state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
+  loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
 
   if (!is.na(seed)) set.seed(seed)
 
@@ -451,7 +458,8 @@ mice <- function(data,
   # case B
   if (!mp & mb & mf) {
     # predictorMatrix leads
-    predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
+    predictorMatrix <- check.predictorMatrix(predictorMatrix, data,
+                                             autoremove = autoremove)
     blocks <- make.blocks(colnames(predictorMatrix), partition = "scatter")
     formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix)
   }
@@ -467,7 +475,7 @@ mice <- function(data,
   # case D
   if (mp & mb & !mf) {
     # formulas leads
-    formulas <- check.formulas(formulas, data)
+    formulas <- check.formulas(formulas, data, autoremove = autoremove)
     blocks <- construct.blocks(formulas)
     predictorMatrix <- f2p(formulas, data, blocks)
   }
@@ -475,7 +483,8 @@ mice <- function(data,
   # case E
   if (!mp & !mb & mf) {
     # predictor leads (use for multivariate imputation)
-    predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
+    predictorMatrix <- check.predictorMatrix(predictorMatrix, data,
+                                             autoremove = autoremove)
     blocks <- check.blocks(blocks, data, calltype = "pred")
     formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix)
   }
@@ -570,10 +579,6 @@ mice <- function(data,
   post <- check.post(post, data)
   dots <- check.dots(dots, data, blocks)
   ignore <- check.ignore(ignore, data)
-
-  # data frame for storing the event log
-  state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
-  loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
 
   # edit imputation setup
   setup <- list(
