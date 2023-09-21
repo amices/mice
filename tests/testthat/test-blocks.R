@@ -6,7 +6,7 @@ context("blocks")
 #
 # The current policy is not satisfying:
 # Currently, where[, "hyp"] is set to FALSE, so hyp is not imputed.
-# However, it is still is predictor for block B1, bmi and age, thus
+# However, it is still is predictor for block b1, bmi and age, thus
 # leading to missing data propagation
 #
 
