@@ -221,7 +221,7 @@
 #'                  All data variables are assigned to a block.
 #'                  A variable can belong to only one block, so there are
 #'                  at most \eqn{p} blocks.
-#'                  See the `nest` argument for an easier alternative to
+#'                  See the `parcel` argument for an easier alternative to
 #'                  the `blocks` argument.
 #' @param visitSequence
 #'                  A vector of block names of arbitrary length, specifying
@@ -320,7 +320,7 @@
 #' @param \dots     Named arguments that are passed down to the univariate
 #'                  imputation functions. Use `blots` for a more fine-grained
 #'                  alternative.
-#' @param nest      A character vector with \eqn{p} elements identifying the
+#' @param parcel      A character vector with \eqn{p} elements identifying the
 #'                  variable group (or block) to which each variable is
 #'                  allocated.
 #'
@@ -398,7 +398,7 @@ mice <- function(data,
                  m = 5,
                  method = NULL,
                  predictorMatrix,
-                 nest = NULL,
+                 parcel = NULL,
                  blocks,
                  formulas,
                  ignore = NULL,
@@ -421,9 +421,9 @@ mice <- function(data,
   data <- check.dataform(data)
   m <- check.m(m)
 
-  # add support nest
-  if (!is.null(nest)) {
-    blocks <- n2b(nest, silent = FALSE)
+  # add support parcel
+  if (!is.null(parcel)) {
+    blocks <- n2b(parcel, silent = FALSE)
   }
 
   # determine input combination: predictorMatrix, blocks, formulas
@@ -583,9 +583,9 @@ mice <- function(data,
   visitSequence <- setup$visitSequence
   post <- setup$post
 
-  # update nest
-  nest <- b2n(blocks)
-  nest <- reorder.nest(nest, data)
+  # update parcel
+  parcel <- b2n(blocks)
+  parcel <- reorder.parcel(parcel, data)
 
   # initialize imputations
   nmis <- apply(is.na(data), 2, sum)
@@ -612,7 +612,7 @@ mice <- function(data,
     imp = q$imp,
     m = m,
     where = where,
-    nest = nest,
+    parcel = parcel,
     blocks = blocks,
     call = call,
     nmis = nmis,

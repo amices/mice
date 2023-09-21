@@ -61,7 +61,7 @@ specification (FCS) by univariate models
 All data variables are assigned to a block.
 A variable can belong to only one block, so there are
 at most \eqn{p} blocks.
-See the \code{nest} argument for an easier alternative to
+See the \code{parcel} argument for an easier alternative to
 the \code{blocks} argument.}
 
 \item{predictorMatrix}{A square numeric matrix of maximal \eqn{p} rows and

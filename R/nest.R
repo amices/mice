@@ -1,21 +1,21 @@
-#' Creates a `nest` argument
+#' Creates a `parcel` argument
 #'
 #' This helper function generates a character vector for the
-#' `nest` argument in the [mice()] function.
+#' `parcel` argument in the [mice()] function.
 #'
 #' @param x A `data.frame`, an unnamed character vector, a named
 #' character vector or a `list`.
 #' @param partition Only relevant if `x` is a `data.frame`. Value
 #' `"scatter"` (default) will assign each variable to a separate
-#' nest. Value `"collect"` assigns all variables to one nest,
-#' whereas `"void"` does not assign any variable to a nest.
+#' parcel. Value `"collect"` assigns all variables to one parcel,
+#' whereas `"void"` does not assign any variable to a parcel.
 #' @param prefix A character vector of length 1 with the prefix to
 #' be using for naming any unnamed blocks with two or more variables.
 #' @return A character vector of length `ncol(data)` that specifies
-#' the nest name per variable
+#' the parcel name per variable
 #'
 #' @details Choices `"scatter"` and `"collect"` represent to two
-#' extreme scenarios for assigning variables to imputation nests.
+#' extreme scenarios for assigning variables to imputation parcels.
 #' Use `"scatter"` to create an imputation model based on
 #' *fully conditionally specification* (FCS). Use `"collect"` to
 #' gather all variables to be imputed by a *joint model* (JM).
@@ -24,85 +24,85 @@
 #' Specification `"void"` represents the extreme scenario where
 #' nothing is imputed.
 #'
-#' Unlike blocks, a variable cannot be allocated to multiple nests.
+#' Unlike blocks, a variable cannot be allocated to multiple parcels.
 #' @examples
 #'
-#' # default nest creation (scatter)
-#' make.nest(nhanes)
+#' # default parcel creation (scatter)
+#' make.parcel(nhanes)
 #'
-#' # make nest from variable names
-#' make.nest(c("age", "sex", "edu"))
+#' # make parcel from variable names
+#' make.parcel(c("age", "sex", "edu"))
 #'
-#' # put hgt, wgt and bmi into one nest, automatic naming
-#' make.nest(list("age", "sex", c("hgt", "wgt", "bmi")))
+#' # put hgt, wgt and bmi into one parcel, automatic naming
+#' make.parcel(list("age", "sex", c("hgt", "wgt", "bmi")))
 #'
-#' # same, but with custom nest names
-#' make.nest(list("age", "sex", anthro = c("hgt", "wgt", "bmi")))
+#' # same, but with custom parcel names
+#' make.parcel(list("age", "sex", anthro = c("hgt", "wgt", "bmi")))
 #'
-#' # all variables into one nest
-#' make.nest(nhanes, partition = "collect", prefix = "myblock")
+#' # all variables into one parcel
+#' make.parcel(nhanes, partition = "collect", prefix = "myblock")
 #' @export
-make.nest <- function(x,
+make.parcel <- function(x,
                       partition = c("scatter", "collect", "void"),
                       prefix = "b") {
 
   # unnamed vector
   if (is.vector(x) && is.null(names(x)) && !is.list(x)) {
-    nest <- as.character(x)
-    names(nest) <- as.character(x)
-    return(nest)
+    parcel <- as.character(x)
+    names(parcel) <- as.character(x)
+    return(parcel)
   }
 
   # named vector, preserve name order
   if (is.vector(x) && !is.null(names(x)) && !is.list(x)) {
-    nest <- as.character(x)
-    names(nest) <- names(x)
-    return(nest)
+    parcel <- as.character(x)
+    names(parcel) <- names(x)
+    return(parcel)
   }
 
   # unnamed list
   if (is.list(x) && is.null(names(x)) && !is.data.frame(x)) {
-    nest <- b2n(name.blocks(x, prefix = prefix))
-    return(nest)
+    parcel <- b2n(name.blocks(x, prefix = prefix))
+    return(parcel)
   }
 
   # named list
   if (is.list(x) && !is.null(names(x)) && !is.data.frame(x)) {
-    nest <- b2n(x)
-    return(nest)
+    parcel <- b2n(x)
+    return(parcel)
   }
 
   x <- as.data.frame(x)
   partition <- match.arg(partition)
   switch(partition,
          scatter = {
-           nest <- colnames(x)
-           names(nest) <- names(x)
+           parcel <- colnames(x)
+           names(parcel) <- names(x)
          },
          collect = {
-           nest <- rep(prefix, ncol(x))
-           names(nest) <- names(x)
+           parcel <- rep(prefix, ncol(x))
+           names(parcel) <- names(x)
          },
          void = {
-           nest <- rep("", ncol(x))
-           names(nest) <- names(x)
+           parcel <- rep("", ncol(x))
+           names(parcel) <- names(x)
          },
          {
-           nest <- names(x)
-           names(nest) <- names(x)
+           parcel <- names(x)
+           names(parcel) <- names(x)
          }
   )
-  return(nest)
+  return(parcel)
 }
 
-name.nest <- function(x) x
+name.parcel <- function(x) x
 
-check.nest <- function(nest, data) {
+check.parcel <- function(parcel, data) {
   data <- check.dataform(data)
-  nest <- name.nest(nest)
+  parcel <- name.parcel(parcel)
 
   # check that all variable names exists in data
-  nv <- names(nest)
+  nv <- names(parcel)
   notFound <- !nv %in% colnames(data)
   if (any(notFound)) {
     stop(paste(
@@ -111,7 +111,7 @@ check.nest <- function(nest, data) {
     ))
   }
 
-  nest
+  parcel
 }
 
 #' Construct blocks from `formulas` and `predictorMatrix`
@@ -134,7 +134,7 @@ check.nest <- function(nest, data) {
 #' pred <- make.predictorMatrix(nhanes[, c("age", "chl")])
 #' construct.blocks(formulas = form, pred = pred)
 #' @export
-construct.nest <- function(formulas = NULL, predictorMatrix = NULL) {
+construct.parcel <- function(formulas = NULL, predictorMatrix = NULL) {
   blocks.f <- blocks.p <- NULL
   if (!is.null(formulas)) {
     if (!all(sapply(formulas, is.formula))) {
@@ -178,7 +178,7 @@ construct.nest <- function(formulas = NULL, predictorMatrix = NULL) {
 }
 
 
-reorder.nest <- function(nest, data) {
+reorder.parcel <- function(parcel, data) {
   idx <- colnames(data)
-  return(nest[idx])
+  return(parcel[idx])
 }

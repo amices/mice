@@ -14,9 +14,9 @@ print.mids <- function(x, ...) {
   print(x$method, ...)
   cat("predictorMatrix:\n")
   print(head(x$predictorMatrix), ...)
-  if (any(x$nest != colnames(x$data))) {
-    cat("Variable nest:\n")
-    print(x$nest, ...)
+  if (any(x$parcel != colnames(x$data))) {
+    cat("parcel:\n")
+    print(x$parcel, ...)
   }
   if (!is.null(x$loggedEvents)) {
     cat("Number of logged events: ", nrow(x$loggedEvents), "\n")

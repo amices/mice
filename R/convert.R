@@ -90,38 +90,38 @@ f2p <- function(formulas, data, blocks = NULL, roles = NULL) {
   return(predictorMatrix)
 }
 
-n2b <- function(nest, silent = FALSE) {
-  # nest to block
-  stopifnot(validate.nest(nest, silent = silent))
-  if (all(nest == "")) {
-    nest[1L:length(nest)] <- names(nest)
+n2b <- function(parcel, silent = FALSE) {
+  # parcel to block
+  stopifnot(validate.parcel(parcel, silent = silent))
+  if (all(parcel == "")) {
+    parcel[1L:length(parcel)] <- names(parcel)
   }
-  if (any(nest == "")) {
-    stop("Cannot convert a partially named nest to blocks")
+  if (any(parcel == "")) {
+    stop("Cannot convert a partially named parcel to blocks")
   }
-  nf <- factor(nest, levels = unique(nest))
+  nf <- factor(parcel, levels = unique(parcel))
   blocknames <- levels(nf)
   blocks <- vector("list", length = length(blocknames))
   names(blocks) <- blocknames
   for (b in names(blocks)) {
-    blocks[[b]] <- names(nest)[nest == b]
+    blocks[[b]] <- names(parcel)[parcel == b]
   }
   return(blocks)
 }
 
 b2n <- function(blocks, silent = FALSE) {
-  # block to nest
+  # block to parcel
   stopifnot(validate.blocks(blocks, silent = silent))
   vars <- unlist(blocks)
-  nest <- rep(names(blocks), sapply(blocks, length))
+  parcel <- rep(names(blocks), sapply(blocks, length))
   if (any(duplicated(vars))) {
     warning("Duplicated name(s) removed: ",
             paste(vars[duplicated(vars)], collapse = ", "))
   }
-  names(nest) <- vars
-  nest <- nest[!duplicated(names(nest))]
-  stopifnot(validate.nest(nest))
-  return(nest)
+  names(parcel) <- vars
+  parcel <- parcel[!duplicated(names(parcel))]
+  stopifnot(validate.parcel(parcel))
+  return(parcel)
 }
 
 paste.roles <- function(blots, roles, blocks) {
@@ -131,27 +131,27 @@ paste.roles <- function(blots, roles, blocks) {
   return(blots)
 }
 
-validate.nest <- function(nest, silent = FALSE) {
-  if (!is.vector(nest)) {
-    if (!silent) warning("nest is not a vector", call. = FALSE)
+validate.parcel <- function(parcel, silent = FALSE) {
+  if (!is.vector(parcel)) {
+    if (!silent) warning("parcel is not a vector", call. = FALSE)
     return(FALSE)
   }
-  if (!is.character(nest)) {
-    if (!silent) warning("nest is not of type character", call. = FALSE)
+  if (!is.character(parcel)) {
+    if (!silent) warning("parcel is not of type character", call. = FALSE)
     return(FALSE)
   }
-  if (!length(nest)) {
-    if (!silent) warning("nest has length zero", call. = FALSE)
+  if (!length(parcel)) {
+    if (!silent) warning("parcel has length zero", call. = FALSE)
     return(FALSE)
   }
-  if (is.null(names(nest))) {
-    if (!silent) warning("nest has no names", call. = FALSE)
+  if (is.null(names(parcel))) {
+    if (!silent) warning("parcel has no names", call. = FALSE)
     return(FALSE)
   }
-  if (any(duplicated(names(nest)))) {
+  if (any(duplicated(names(parcel)))) {
     if (!silent) warning(
-      "duplicated names in nest: ",
-      paste({names(nest)}[duplicated(names(nest))], collapse = ", "),
+      "duplicated names in parcel: ",
+      paste({names(parcel)}[duplicated(names(parcel))], collapse = ", "),
       call. = FALSE)
     return(FALSE)
   }

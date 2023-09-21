@@ -10,7 +10,7 @@ mice(
   m = 5,
   method = NULL,
   predictorMatrix,
-  nest = NULL,
+  parcel = NULL,
   blocks,
   formulas,
   ignore = NULL,
@@ -61,7 +61,7 @@ Two-level imputation models (which have \code{"2l"} in their
 names) support other codes than \code{0} and \code{1}, e.g, \code{2}
 or \code{-2} that assign special roles to some variables.}
 
-\item{nest}{A character vector with \eqn{p} elements identifying the
+\item{parcel}{A character vector with \eqn{p} elements identifying the
 variable group (or block) to which each variable is
 allocated.}
 
@@ -79,7 +79,7 @@ specification (FCS) by univariate models
 All data variables are assigned to a block.
 A variable can belong to only one block, so there are
 at most \eqn{p} blocks.
-See the \code{nest} argument for an easier alternative to
+See the \code{parcel} argument for an easier alternative to
 the \code{blocks} argument.}
 
 \item{formulas}{A named list with \eqn{q} component, each containing
