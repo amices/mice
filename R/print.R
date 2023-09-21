@@ -12,10 +12,12 @@ print.mids <- function(x, ...) {
   cat("Number of multiple imputations: ", x$m, "\n")
   cat("Imputation methods:\n")
   print(x$method, ...)
-  cat("PredictorMatrix:\n")
+  cat("predictorMatrix:\n")
   print(head(x$predictorMatrix), ...)
-  cat("Variable nests:\n")
-  print(x$nest, ...)
+  if (any(x$nest != colnames(x$data))) {
+    cat("Variable nest:\n")
+    print(x$nest, ...)
+  }
   if (!is.null(x$loggedEvents)) {
     cat("Number of logged events: ", nrow(x$loggedEvents), "\n")
     print(head(x$loggedEvents), ...)
