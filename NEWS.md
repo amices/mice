@@ -1,3 +1,10 @@
+# mice 3.16.7
+
+### Minor changes
+
+* Solves problem with the package documentation link
+* Simplifies `NEWS.md` formatting to get correct version sequence on CRAN and in-package NEWS
+
 # mice 3.16.6
 
 ### Minor changes
