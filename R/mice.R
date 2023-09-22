@@ -491,6 +491,8 @@ mice <- function(data,
 
   # case F
   if (!mp & mb & !mf) {
+    stop("cannot process mix of 'predictorMatrix' and 'formulas' arguments",
+        call. = FALSE)
     # it is better to forbid this case
     # formulas lead
     formulas <- check.formulas(formulas, data)
@@ -503,6 +505,8 @@ mice <- function(data,
   if (mp & !mb & !mf) {
     # it is better to forbid this case
     # blocks lead
+    stop("cannot process mix of 'parcel', 'blocks' or 'formulas' arguments",
+         call. = FALSE)
     blocks <- check.blocks(blocks, data)
     formulas <- check.formulas(formulas, blocks)
     predictorMatrix <- make.predictorMatrix(data, blocks)
@@ -512,6 +516,8 @@ mice <- function(data,
   if (!mp & !mb & !mf) {
     # it is better to forbid this case
     # blocks lead
+    stop("cannot process mix of 'predictorMatrix' and 'formulas' arguments",
+         call. = FALSE)
     blocks <- check.blocks(blocks, data)
     formulas <- check.formulas(formulas, data)
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data, blocks)
