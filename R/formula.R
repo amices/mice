@@ -147,9 +147,10 @@ check.formulas <- function(formulas, data,
   removeme <- intersect(uip, as.vector(sapply(formulas, all.vars)))
   if (length(removeme) && autoremove) {
     formulas <- lapply(formulas, remove.rhs.variables, vars = removeme)
-    vars <- paste(removeme, collapse = ",")
-    updateLog(out = paste("incomplete predictor(s)", vars),
-              meth = "check", frame = 1)
+    for (j in removeme) {
+      updateLog(out = paste("removed incomplete predictor", j),
+                meth = "check", frame = 1)
+    }
   }
 
   # add components y ~ 1 for y to formulas

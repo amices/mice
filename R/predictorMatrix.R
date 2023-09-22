@@ -96,9 +96,10 @@ check.predictorMatrix <- function(predictorMatrix,
   removeme <- intersect(uip, colnames(predictorMatrix))
   if (length(removeme) && autoremove) {
     predictorMatrix[, removeme] <- 0
-    vars <- paste(removeme, collapse = ",")
-    updateLog(out = paste("incomplete predictor(s)", vars),
+    for (j in removeme) {
+    updateLog(out = paste("removed incomplete predictor", j),
               meth = "check", frame = 1)
+    }
   }
 
   # grow predictorMatrix to all variables in data
