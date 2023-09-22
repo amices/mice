@@ -3,6 +3,7 @@
 \docType{package}
 \name{mice}
 \alias{mice}
+\alias{mice-package}
 \title{\pkg{mice}: Multivariate Imputation by Chained Equations}
 \usage{
 mice(

@@ -71,6 +71,8 @@
 #' "R Installation and Administration" guide for further information.
 #'
 #' @docType package
+#' @aliases mice-package
+#'
 #' @name mice
 #' @seealso \code{\link{mice}}, \code{\link{with.mids}},
 #' \code{\link{pool}}, \code{\link{complete}}, \code{\link{ampute}}
