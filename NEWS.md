@@ -1,28 +1,40 @@
-## New behaviours
+## New behaviours and features
 
-1. Prevention of `NA` propagation by removing incomplete predictors. This version detects when a predictor contains missing values that are not imputed. In order to prevent NA propagation, `mice()` does the following actions: 1) removes incomplete predictor(s) from the RHS, 2) adds incomplete predictor(s) to formulas `(var ~ 1)` and block components, sets `method[var] = ""`, and sets the `predictorMatrix` column and row to zero
+1. TWO SEPARATE INTERFACES FOR MODEL SPECIFICATION: This version promotes two interfaces to specify imputations models: predictor (`predictorMatrix` + `parcel` + `method`) and formula (`formulas + method`). This version does not accept anymore accept mixes of `predictorMatrix` and `formulas` arguments in the call to `mice()`.
 
-2. The `predictorMatrix` input can be a square submatrix of the full `predictorMatrix`. `mice()` will augment `predictorMatrix` to the full matrix and always return a p * p named matrix corresponding to the p columns in the data. The inactive variables will have zero columns and rows.
+2. NA-PROPAGATION PREVENTION. This version detects when a predictor contains missing values that are not imputed. In order to prevent NA propagation, `mice()` can follow two strategies: "Autoremove" (remove incomplete predictor(s) from the RHS, set `method` to `""`, adapt `predictorMatrix`, `formulas` and `blocks`, write to loggedEvents), or "Autoimpute" (Impute incomplete predictor and adapt `method`, `predictorMatrix`, `formulas`, and so on). "Autoremove" is implemented and current default. Use `mice(..., autoremove = FALSE)` to revert to old behavior (NA propagation).
 
-3. The `predictorMatrix` input may be unnamed if its size is p * p. For other than p * p, an unnamed matrix generated an error.
+3. SUBMODELS: The `predictorMatrix` input can be a square submatrix of the full `predictorMatrix` when its dimensions are named. `mice()` will augment the tiny `predictorMatrix` to the full matrix and always return a p * p named matrix corresponding to the p columns in the data. Unmentioned variables not be imputed, and the `predictorMatrix`, `formulas` and `method` are adapted accordingly.
+
+4. DROP NON-SQUARE PREDICTOR MATRIX: Version 3.0 introduced non-square versions, but its interpretation turned out to be complex and ambiguous. For clarity, this update works with a predictor matrix that is square with both dimensions identically named with the names of the variables in the data. Variable groups are now specified through the `parcel` argument.
+
+5. NEW PARCEL ARGUMENT. There is a new `parcel` argument that is easier to use. The print of the `mids` object shows `parcel` when it is different from the default. 
+`parcel` can take over the role of `blocks` in specification. `blocks` is soft-deprecated, but still widely used within the program code.
+
+6. NEW DOTS ARGUMENT. The `blots` argument is renamed to `dots`
+
+7. EXIT VALIDATION: Adds a new `validate.mids()` checks the `mids` object before exit.
 
 
 ## Changes 
 
+- Adds functions to convert between `predictorMatrix` and `formulas` specification
+- Adds support to pass down user-specified options to multivariate imputation methods
+- Now uses lowercase default block names
+- The `predictorMatrix` input may be unnamed if its size is p * p. For other than p * p, an unnamed matrix generated an error.
 - Performs stricter checks on zero rows in predictorMatrix under empty imputation method
-- Adds supports a tiny predictorMatrix
-- Solves bug in f2p()
 - Adds new function `remove.rhs.variables()`
-- Adds a `validate.mids()` check at exit that errors if `rownames(predictorMatrix)` differ from `colnames(data)`. Some more output tests need to be added.
 - Removes codes designed to work specifically with a non-square `predictorMatrix`
 - Generates an error if `predictorMatrix` has fewer rows than length of `blocks`
+- Better initialization using typed `NA`s in `initialize.imp()`
+- Rewritten the documentation of all `mice()` arguments to be precise and consistent
 
 ## New exit checks
 
 - `rownames(predictorMatrix)` must match `colnames(data)`
 - length of `formulas` and `blocks` must be equal
 - length of `formulas` and `method` must be equal
-- length of `blots` and `method` must be equal
+- length of `dots` and `method` must be equal
 - length of `method` vector cannot exceed number of variables
 - length of `imp` and number of variables must be equal
 
