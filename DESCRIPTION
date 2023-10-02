@@ -1,6 +1,6 @@
 Package: mice
 Type: Package
-Version: 3.16.5
+Version: 3.16.5.9001
 Title: Multivariate Imputation by Chained Equations
 Date: 2023-09-04
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
@@ -101,3 +101,4 @@ LinkingTo: cpp11, Rcpp
 License: GPL (>= 2)
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr

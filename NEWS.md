@@ -1,3 +1,5 @@
+# mice 3.16.5.9001
+
 ## New behaviours and features
 
 1. TWO SEPARATE INTERFACES FOR MODEL SPECIFICATION: This version promotes two interfaces to specify imputations models: predictor (`predictorMatrix` + `parcel` + `method`) and formula (`formulas + method`). This version does not accept anymore accept mixes of `predictorMatrix` and `formulas` arguments in the call to `mice()`.
