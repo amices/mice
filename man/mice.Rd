@@ -8,23 +8,23 @@
 mice(
   data,
   m = 5,
-  method = NULL,
   predictorMatrix,
   parcel = NULL,
-  blocks,
   formulas,
-  ignore = NULL,
-  where = NULL,
-  visitSequence = NULL,
-  dots = NULL,
-  post = NULL,
+  method = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+  dots = NULL,
+  visitSequence = NULL,
   maxit = 5,
-  printFlag = TRUE,
   seed = NA,
   data.init = NULL,
-  blots = NULL,
+  where = NULL,
+  ignore = NULL,
+  post = NULL,
+  printFlag = TRUE,
   autoremove = TRUE,
+  blocks,
+  blots = NULL,
   ...
 )
 }
@@ -35,14 +35,6 @@ incomplete data.  Missing values are coded as \code{NA}.}
 \item{m}{Number of multiple imputations. The default is \code{m = 5}.
 Setting \code{m = 1} produces a single imputation per cell
 (not recommended in general).}
-
-\item{method}{Character vector of length \eqn{q} specifying imputation
-methods for (groups of) variables. In the special case
-\code{length(method) == 1}, the specified method applies to all
-variables. When \code{method} is not specified, \code{mice()} will
-select a method based on the variable type as regulated
-by the \code{defaultMethod} argument. See details
-on \emph{skipping imputation}.}
 
 \item{predictorMatrix}{A square numeric matrix of maximal \eqn{p} rows and
 maximal \eqn{p} columns. Row- and column names are
@@ -66,23 +58,6 @@ or \code{-2} that assign special roles to some variables.}
 \item{parcel}{A character vector with \eqn{p} elements identifying the
 variable group (or block) to which each variable is
 allocated.}
-
-\item{blocks}{List of \eqn{q} character vectors that identifies the
-variable names per block. The name of list elements
-identify blocks. \code{mice()} will provide default names
-(\code{"b1"}, \code{"b2"}, ...) for blocks containing multiple
-variables. Variables within a block are imputed as a
-block, e.g. by a multivariate imputation method, or
-by an iterated version of the same univariate imputation
-method. By default each variable is allocated to a
-separate block, which is effectively fully conditional
-specification (FCS) by univariate models
-(variable-by-variable imputation).
-All data variables are assigned to a block.
-A variable can belong to only one block, so there are
-at most \eqn{p} blocks.
-See the \code{parcel} argument for an easier alternative to
-the \code{blocks} argument.}
 
 \item{formulas}{A named list with \eqn{q} component, each containing
 one formula. The left hand side (LHS) specifies the
@@ -113,33 +88,32 @@ as \code{F1}, \code{F2}, and so on. Formulas with one
 dependent (e.g. \code{ses ~ x1 + x2}) will be named
 after the dependent variable \code{"ses"}.}
 
-\item{ignore}{A logical vector of \eqn{n} elements indicating
-which rows are ignored for estimating the parameters of
-the imputation model.
-Rows with \code{ignore} set to \code{TRUE} do not influence the
-parameters of the imputation model.
-The \code{ignore} argument allows splitting \code{data} into a
-training set (on which \code{mice()} fits the imputation model)
-and a test set (that does not influence the imputation
-model parameter estimates).
-The default \code{NULL} corresponds to all \code{FALSE}, thus
-including all rows into the imputation models.
-Note: Not all imputation methods may support the \code{ignore}
-argument (e.g., \code{mice.impute.jomoImpute()} or
-\code{mice.impute.panImpute()}).}
+\item{method}{Character vector of length \eqn{q} specifying imputation
+methods for (groups of) variables. In the special case
+\code{length(method) == 1}, the specified method applies to all
+variables. When \code{method} is not specified, \code{mice()} will
+select a method based on the variable type as regulated
+by the \code{defaultMethod} argument. See details
+on \emph{skipping imputation}.}
 
-\item{where}{A data frame or matrix of logicals with \eqn{n} rows
-and \eqn{p} columns, indicating the cells of \code{data} for
-which imputations are generated.
-The default \code{where = is.na(data)} specifies that all
-missing data are imputed.
-The \code{where} argument can overimpute cells
-with observed data, or skip imputation of specific missing
-cells. Be aware that the latter option could propagate
-missing values to other variables. See details.
-Note: Not all imputation methods may support the \code{where}
-argument (e.g., \code{mice.impute.jomoImpute()} or
-\code{mice.impute.panImpute()}).}
+\item{defaultMethod}{A vector of length 4 containing the default imputation
+methods for
+1) numeric data (\code{"pmm"})
+2) factor data with 2 levels, (\code{"logreg"})
+3) factor data with > 2 unordered levels, (\code{"polyreg"}) and
+4) factor data with > 2 ordered levels (\code{"polr"}).
+The \code{defaultMethod} can be used to alter to default mapping
+of variable type to imputation method.}
+
+\item{dots}{A named \code{list} with maximally \eqn{q} \code{alist} used to
+pass down optional arguments to lower level imputation
+functions.
+The entries of element \code{dots[[h]]} are passed down to
+the method called on block \code{h} or formula \code{h}.
+For example, \code{dots = list(age = alist(donor = 20))}
+specifies that imputation of \code{age} should draw from
+imputations using 20 (instead of the default five) nearest
+neighbours.}
 
 \item{visitSequence}{A vector of block names of arbitrary length, specifying
 the sequence of blocks in which blocks are imputed.
@@ -162,42 +136,9 @@ Realize that convergence in one iteration is only
 guaranteed if the missing data pattern is actually
 monotone. \code{mice()} does not check for monotonicity.}
 
-\item{dots}{A named \code{list} with maximally \eqn{q} \code{alist} used to
-pass down optional arguments to lower level imputation
-functions.
-The entries of element \code{dots[[h]]} are passed down to
-the method called on block \code{h} or formula \code{h}.
-For example, \code{dots = list(age = alist(donor = 20))}
-specifies that imputation of \code{age} should draw from
-imputations using 20 (instead of the default five) nearest
-neighbours.}
-
-\item{post}{A vector of length \eqn{p}, each specifying an expression
-as a string. The string is parsed and executed within
-the \code{sampler()} function to post-process imputed
-values during the iterations. The default is a vector
-of empty strings, indicating no post-processing.
-Multivariate imputation methods ignore the \code{post}
-parameter.}
-
-\item{defaultMethod}{A vector of length 4 containing the default imputation
-methods for
-1) numeric data (\code{"pmm"})
-2) factor data with 2 levels, (\code{"logreg"})
-3) factor data with > 2 unordered levels, (\code{"polyreg"}) and
-4) factor data with > 2 ordered levels (\code{"polr"}).
-The \code{defaultMethod} can be used to alter to default mapping
-of variable type to imputation method.}
-
 \item{maxit}{A scalar giving the number of iterations. The default is 5.
 In general, the user should study the convergence of the
 algorithm, e.g., by \code{plot(imp)}.}
-
-\item{printFlag}{If \code{printFlag = TRUE} (default) then \code{mice()} will
-print iteration history on the console. This is useful for
-checking how far the algorithm is. Use \code{print = FALSE}
-for silent computation, simulations, and to suppress
-iteration output on the console.}
 
 \item{seed}{An integer that is used as argument by the \code{set.seed()}
 for offsetting the random number generator. Default is
@@ -213,10 +154,69 @@ of the observed data.
 Note that specification of \code{data.init} will start all
 \code{m} Gibbs sampling streams from the same imputation.}
 
-\item{blots}{Deprecated. Replaced by \code{dots}.}
+\item{where}{A data frame or matrix of logicals with \eqn{n} rows
+and \eqn{p} columns, indicating the cells of \code{data} for
+which imputations are generated.
+The default \code{where = is.na(data)} specifies that all
+missing data are imputed.
+The \code{where} argument can overimpute cells
+with observed data, or skip imputation of specific missing
+cells. Be aware that the latter option could propagate
+missing values to other variables. See details.
+Note: Not all imputation methods may support the \code{where}
+argument (e.g., \code{mice.impute.jomoImpute()} or
+\code{mice.impute.panImpute()}).}
+
+\item{ignore}{A logical vector of \eqn{n} elements indicating
+which rows are ignored for estimating the parameters of
+the imputation model.
+Rows with \code{ignore} set to \code{TRUE} do not influence the
+parameters of the imputation model.
+The \code{ignore} argument allows splitting \code{data} into a
+training set (on which \code{mice()} fits the imputation model)
+and a test set (that does not influence the imputation
+model parameter estimates).
+The default \code{NULL} corresponds to all \code{FALSE}, thus
+including all rows into the imputation models.
+Note: Not all imputation methods may support the \code{ignore}
+argument (e.g., \code{mice.impute.jomoImpute()} or
+\code{mice.impute.panImpute()}).}
+
+\item{post}{A vector of length \eqn{p}, each specifying an expression
+as a string. The string is parsed and executed within
+the \code{sampler()} function to post-process imputed
+values during the iterations. The default is a vector
+of empty strings, indicating no post-processing.
+Multivariate imputation methods ignore the \code{post}
+parameter.}
+
+\item{printFlag}{If \code{printFlag = TRUE} (default) then \code{mice()} will
+print iteration history on the console. This is useful for
+checking how far the algorithm is. Use \code{print = FALSE}
+for silent computation, simulations, and to suppress
+iteration output on the console.}
 
 \item{autoremove}{Logical. Should unimputed incomplete predictors be removed
 to prevent NA propagation?}
+
+\item{blocks}{List of \eqn{q} character vectors that identifies the
+variable names per block. The name of list elements
+identify blocks. \code{mice()} will provide default names
+(\code{"b1"}, \code{"b2"}, ...) for blocks containing multiple
+variables. Variables within a block are imputed as a
+block, e.g. by a multivariate imputation method, or
+by an iterated version of the same univariate imputation
+method. By default each variable is allocated to a
+separate block, which is effectively fully conditional
+specification (FCS) by univariate models
+(variable-by-variable imputation).
+All data variables are assigned to a block.
+A variable can belong to only one block, so there are
+at most \eqn{p} blocks.
+See the \code{parcel} argument for an easier alternative to
+the \code{blocks} argument.}
+
+\item{blots}{Deprecated. Replaced by \code{dots}.}
 
 \item{\dots}{Named arguments that are passed down to the univariate
 imputation functions. Use \code{dots} for a more fine-grained
