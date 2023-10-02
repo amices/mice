@@ -18,6 +18,7 @@ Remove RHS terms involving specified variable names
 If all variable are removed, the function return the intercept only model.
 }
 \examples{
+\dontrun{
 f1 <- y1 + y2 ~ 1 | z + x1 + x2 + x1 * x2
 remove.rhs.variables(f1, c("x1", "z"))
 
@@ -25,3 +26,5 @@ remove.rhs.variables(f1, c("x1", "z"))
 f2 <- bmi + chl + hyp ~ 1 | age
 remove.rhs.variables(f2, "bmi")
 }
+}
+\keyword{internal}

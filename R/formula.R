@@ -175,14 +175,16 @@ check.formulas <- function(formulas, data,
 #' @param vars a vector with varianble names to be removed from rhs
 #' @details
 #' If all variable are removed, the function return the intercept only model.
+#' @keywords internal
 #' @examples
+#' \dontrun{
 #' f1 <- y1 + y2 ~ 1 | z + x1 + x2 + x1 * x2
 #' remove.rhs.variables(f1, c("x1", "z"))
 #'
 #' # do not touch lhs
 #' f2 <- bmi + chl + hyp ~ 1 | age
 #' remove.rhs.variables(f2, "bmi")
-#' @export
+#' }
 remove.rhs.variables <- function(ff, vars) {
   stopifnot(is.formula(ff))
   pattern <- paste(vars, collapse = "|")
