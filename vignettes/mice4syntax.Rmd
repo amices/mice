@@ -1,0 +1,638 @@
+---
+title: "MICE 4 Syntax Documentation - CONCEPT -"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MICE 4 Syntax Documentation - CONCEPT -}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library("mice")
+```
+
+## Objectives
+
+- Here are calls to the `mice()` package demonstrating by to use the `mice()` argument `predictorMatrix`, `parcel`, `blocks` and `formulas` to specify imputation models.
+- Based on commit <https://github.com/amices/mice/pull/582/commits/e1c475f7e5188f14c3403ad4eb88c36582021535>
+
+## Basic MICE model
+
+### Why
+
+- Imputation using the basic MICE model requires minimal typing and thinking
+- MICE defaults are chosen to provide "reasonable" imputations for a wide variety of cases
+- However, blindly trusting the defaults may be far from optimal to solve specific issues with the data at hand
+
+### Examples
+
+```{r dataset}
+library(mice, warn.conflicts = FALSE)
+df <- mice::nhanes
+```
+
+- The minimal call, let `mice()` do the thinking
+
+```{r}
+imp1 <- mice(df, print = FALSE, seed = 1)
+```
+
+- Output: `mice()` detects that `age` is complete, and needs not be imputed
+
+```{r}
+imp1$method
+```
+
+- Output: we always have $p$ rows and $p$ columns in `predictorMatrix`
+
+```{r}
+dim(imp1$predictorMatrix)
+```
+
+- Output: `predictorMatrix` contains rows with all zeroes for unimputed variables
+- Unimputed variables could be complete (no `NA`s) or incomplete (with `NA`s)
+- By default, an unimputed incomplete variable `zz` will have all `NA`s in `imp$imp$zz`
+- An incomplete variable `zz` is unimputed if `method["zz"] == ""`
+- Beware: a row of zeroes in `predictorMatrix` does not imply that the variable is unimputed. It may be imputed by the intercept-only model (not good in general)
+
+```{r}
+imp1$predictorMatrix
+```
+
+- Output: there are `ncol(data)` variable groups
+- A "parcel" or "block" is a group of variables jointly imputed
+- `mice()` has two ways to specify parcels: `parcel` and `blocks`
+- Parcels can be univariate (holding one variable) or multivariate (holding multiple variables)
+- The default parcel name for a univariate parcel is the variable name
+
+```{r}
+unique(imp1$parcel)
+imp1$parcel
+```
+
+- Two distinct ways to define an imputation method:
+  1. `predictorMatrix` + `parcel` + `method`
+  2. `formulas` + `method`
+- Both yield the same result, but have different user interfaces
+- `predictorMatrix` and `formulas` specifications cannot be mixed
+
+- The `formulas` representation mimmicks the `predictorMatrix`
+- In addition, `formulas` defines parcels
+
+```{r}
+imp1$formulas
+```
+
+## Selecting predictors by `predictorMatrix`
+
+### Why
+
+- The `predictorMatrix` matrix is a simple and intuitive way to represent the main effects of the imputation model
+- The `predictorMatrix` allows for easy addition and removal of predictors
+- One can add/remove a predictor from all submodels by changing relevant column entries
+- One can add/remove specific predictors for a dependent variable by changing relevant row entries
+
+### Examples
+
+- Setting the default `predictorMatrix`
+- Rows and columns of the `predictorMatrix` are ordered in the data sequence
+
+```{r}
+pred <- make.predictorMatrix(df)
+imp2 <- mice(df, pred = pred, print = FALSE, seed = 1)
+```
+
+- Check whether the imputations are identical
+
+```{r}
+identical(imp1$imp, imp2$imp)
+```
+
+- Removing `hyp` from all submodels
+- Removing `age` and `bmi` from `hyp` imputation submodel
+
+```{r}
+pred[, "hyp"] <- 0
+pred["hyp", c("age", "bmi")] <- 0
+pred
+```
+
+- Imputation with custom main effect submodels
+
+```{r}
+imp <- mice(df, pred = pred, print = FALSE, seed = 1)
+```
+
+- MICE edited the first row of the custom `pred`
+
+```{r}
+imp$predictorMatrix
+```
+
+- When the dataset contains many variables, the `predictorMatrix` can become large and difficult to work with
+- We can tackle a complex `predictorMatrix` in Excel with conditional formatting
+- The user can input a subset of the full `predictorMatrix`
+
+```{r}
+subset <- c("bmi", "chl")
+pred <- make.predictorMatrix(df[, subset])
+pred
+```
+
+- The subset ignores all variables in the data that are not in the subset
+- Effectively, this trick cuts out a portion of the variables
+
+```{r}
+imp <- mice(df, pred = pred, print = FALSE)
+imp$predictorMatrix
+```
+
+- NA-propagation
+- Suppose we change to an asymmetric submodel: impute `bmi` from `chl`, but specify no imputation model for `chl`
+- `chl` has missing data, but these are not imputed (technically they are imputed by `NA`)
+- As a result, `bmi` will have missing values in rows where `chl` has missing values. This is called missing data propagation (NA-propagation)
+
+```{r}
+pred <- matrix(c(0, 0, 1, 0), nrow = 2, dimnames = list(c("bmi", "chl"), c("bmi", "chl")))
+imp <- mice(df, pred = pred, print = FALSE, maxit = 1, m = 1, seed = 1, autoremove = FALSE)
+imp$imp$bmi
+```
+
+- Prevention of NA-propagation by "autoremove"
+- Autoremove prevents NA-propagation by removing `chl` as predictor for `bmi` and sets `method["chl"] <- ""`
+- Removal is written to `loggedEvents`
+- `bmi` is now imputed using the intercept-only model (since no predictors were left)
+- `bmi` is complete
+
+```{r}
+pred <- matrix(c(0, 0, 1, 0), nrow = 2, dimnames = list(c("bmi", "chl"), c("bmi", "chl")))
+imp <- mice(df, pred = pred, print = FALSE, maxit = 1, m = 1, seed = 1, autoremove = TRUE)
+imp$loggedEvents
+imp$imp$bmi
+```
+
+- NOTE: A second prevention strategy is "autoimpute" `chl`. This is not yet implemented.
+
+- `predictorMatrix` subsets only work if `pred` has row- and column names
+
+```{r error=TRUE, eval=FALSE}
+dimnames(pred) <- NULL
+imp <- mice(df, pred = pred, print = FALSE)
+```
+
+- All names should be map to variables in the data
+
+```{r error=TRUE, eval=FALSE}
+pred <- matrix(1, nrow = 4, ncol = 4)
+dimnames(pred) <- list(c("edu", "bmi", "ses", "chl"), c("edu", "bmi", "ses", "chl"))
+imp <- mice(df, pred = pred, print = FALSE)
+```
+
+- Setting a `predictorMatrix` without names only works for the full matrix
+- Not recommended in general, but is convenient quick hack
+
+```{r}
+pred <- matrix(1, nrow = 4, ncol = 4)
+imp3 <- mice(df, pred = pred, print = FALSE, seed = 1)
+imp3$predictorMatrix
+imp3$method
+```
+
+- Check that imputations are the same
+
+```{r}
+identical(imp2$imp, imp3$imp)
+```
+
+
+- We cannot work with a non-square `predictorMatrix`
+
+```{r error=TRUE,eval=FALSE}
+pred <- make.predictorMatrix(df)
+pred <- pred[2:3, 1:4]
+imp <- mice(df, pred = pred, print = FALSE)
+```
+
+- Univariate imputation methods for two-level data use other codes than 0 and 1
+- `2l.bin`, `2l.lmer`, `2l.norm`, `2l.pan`, `2lonly.mean`, `2lonly.norm` and `2lonly.pmm` use code `-2` to indicate the class variable
+- `2l.bin`, `2l.lmer`, `2l.norm` and `2l.pan` use code 2 to indicate the random effects
+- `2l.pan` uses codes 3 and 4 to add class means to codes 1 and 2 respectively
+
+- The following example is a two-level dataset with two incomplete level-1 variables
+- Code `-2` specifies `patientID` as the class variable
+
+```{r}
+nail <- tidyr::complete(mice::toenail2, patientID, visit) |> 
+  tidyr::fill(treatment) |> 
+  dplyr::mutate(patientID = as.integer(patientID))
+pred <- make.predictorMatrix(nail)
+pred[, "patientID"] <- -2
+meth <- c("", "", "2l.bin", "", "2l.norm")
+imp <- mice(nail, meth = meth, pred = pred, maxit = 1, m = 1, seed = 1)
+imp
+```
+
+
+## Clustering variables into groups by `parcel` or `blocks`
+
+### Why
+
+- Clustering variables into groups ("blocks") can improve the quality of imputation
+- Example 1: missing blocks occur when linking dataset (Mitra 2022, Learning from data with structured
+missingness)
+- Example 2: fixed relations between variables, e.g., transformations, sum scores, compositions
+- Block-oriented imputation methods borrow relations within the block
+- Block-oriented PMM yields within-block values that are actually observed
+
+### Examples: `parcel` argument
+
+- `parcel` is a simple way to define a blocks of variables
+- By default, `make.parcel()` places every variable in a separate block
+- By convention, the name of a univariate block is the variable's name
+
+```{r}
+parcel <- make.parcel(df)
+parcel
+```
+
+- Placing `bmi`, `hyp` and `chl` into one group named `risk`
+
+```{r}
+parcel[c("bmi", "hyp", "chl")] <- "risk"
+parcel
+```
+
+- Imputation using default `pmm` will apply univariate `pmm` sequentially to all variables in `risk`
+
+
+```{r}
+imp4 <- mice(df, parcel = parcel, print = FALSE, seed = 1)
+```
+
+- With the same seed and variable sequence, the solutions are the same
+- Check whether imputations are identical
+
+```{r}
+identical(imp1$imp, imp4$imp)
+```
+
+- `print.mids(imp4)` also prints `parcel` when it differs from the default
+
+```{r}
+imp4
+```
+
+- `mice()` pads any unmentioned variables to `parcel`
+- each unmentioned variable lives in a univariate parcel
+
+```{r}
+parcel_short <- setNames(c("risk", "risk"), nm = c("bmi", "chl"))
+parcel_short
+imp <- mice(df, parcel = parcel_short, print = FALSE, seed = 1)
+imp$parcel
+imp$method
+```
+
+- Use multivariate imputation methods to reap the added benefit of parcels
+- Multivariate PMM (method `mpmm`) imputes vectors instead of scalars
+- To demonstrate `mpmm`, filter the data to just one missing data pattern
+
+```{r}
+df2 <- df[-c(3, 6, 15, 20, 24), ]
+imp <- mice(df2, parcel = parcel, method = c("", "mpmm"), print = FALSE, seed = 1)
+head(complete(imp), 10)
+```
+
+- Rows 1 and 11 borrows from row 8, row 10 borrows from row 9
+- Within-block relationships between the imputations are preserved
+- Unfortunately, current `mpmm` does not work for multiple missing data patterns
+
+```{r error = TRUE, eval=FALSE}
+imp <- mice(df, parcel = parcel, method = c("", "mpmm"), print = FALSE, seed = 1)
+```
+
+- Also, current `mpmm` does not work with factors
+
+```{r error = TRUE, eval=FALSE}
+df2 <- nhanes2[-c(3, 6, 15, 20, 24), ]
+imp <- mice(df2, parcel = parcel, method = c("", "mpmm"), print = FALSE, seed = 1)
+```
+
+- Other multivariate methods in `mice` include `jomoImpute` and `panImpute`
+- These methods depend on additional codes in the `predictorMatrix` and will be treated later
+
+### Examples: `blocks` argument
+
+- The `blocks` argument is the older way to define groups of variables 
+- `blocks` were introduced in mice 3.0
+- There are two principal differences with `parcel`:
+  1. Using `blocks` one may allocate the same variable to multiple blocks
+  2. `blocks` defines the engine used for imputation
+- Both differences are not relevant to the end user
+- The use of the `blocks` argument is soft-deprecated in favour of `parcel`
+
+- By default, the `make.blocks()` function allocates each variable into a separate block
+
+```{r}
+blocks <- make.blocks(df)
+blocks
+```
+
+- `blocks` is a named list (with block names) with of arbitrary length
+- Each element is a character vector with variable names
+- By convention, the block name and the variable name are identical for univariate blocks
+- The `calltype` attribute sets the internal imputation engine (`calltype`, either `pred` or `formula`) used for the block
+
+
+- One may allocate the same variable to multiple blocks (but its added value is dubious)
+- `mice()` warns for duplicate variables (= variables present in more than one block)
+
+```{r}
+blocks <- make.blocks(list(c("bmi", "chl"), "bmi", "age"))
+imp <- mice(df, blocks = blocks, m = 1, print = FALSE)
+```
+
+- When both `parcel` and `blocks` are specified, `parcel` overwrites `blocks`
+
+```{r}
+imp <- mice(df, parcel = parcel, blocks = blocks, m = 1, print = FALSE)
+imp$parcel
+imp$blocks
+```
+
+- The internal function `mice:::b2n()` converts `blocks` to `parcel`
+- Conversion is not perfect: `mice:::b2n()` removes duplicates and loses the `calltype` attribute
+
+```{r}
+blocks
+mice:::b2n(blocks)
+```
+
+- The internal function `mice:::n2b()` converts `parcel` to `blocks`
+
+```{r}
+parcel
+mice:::n2b(parcel)
+```
+
+## Selecting predictors and grouping variables by `predictorMatrix` and `parcel`
+
+### Why
+
+- To select predictors and group variables simultaneously 
+- To build upon the mice `predictorMatrix` and `parcel` arguments
+- To extend the `predictorMatrix` to multivariate, block-wise imputation
+
+### Examples: `predictorMatrix` and `parcel`
+
+- Multivariate imputation by the `predictorMatrix` is done through the `calltype = "pred"` engine
+- Multivariate methods supporting the "pred" engine are `panImpute` and `jomoImpute`
+- `predictorMatrix` settings pass down as the `type` argument of `mitml::panImpute()` and `mitml::jomoImpute()`
+
+- The following example simultaneously imputes `outcome` and `time` of the missed visits
+- `jomoImpute` allows for mixes of categorical (`outcome`) and continuous (`time`) variables
+- `parcel` defines jointly imputed level-1 variables
+
+```{r}
+pred <- make.predictorMatrix(nail)
+pred[, "patientID"] <- -2
+parcel <- make.parcel(nail)
+parcel[c("visit", "outcome", "time")] <- "level1"
+imp <- mice(nail, meth = "jomoImpute", pred = pred, parcel = parcel, maxit = 1, m = 1, seed = 1, print = FALSE)
+imp
+```
+
+- Note that imputed `time` can sometimes be negative or in-between visits
+
+```{r}
+stripplot(imp, time ~ .imp, pch = c(1, 20), cex = c(0.7, 1.2))
+```
+
+- As an alternative, `mpmm` borrows `outcome`-`time` pairs
+- Since `mpmm` fails to deal with factors, we code them as integers
+
+```{r}
+nail$outcome <- as.integer(nail$outcome)
+nail$treatment <- as.integer(nail$treatment)
+parcel[c("visit", "outcome", "time")] <- "level1"
+impa <- mice(nail, meth = "mpmm", parcel = parcel, maxit = 1, m = 1, seed = 1, print = FALSE)
+impa
+```
+
+- Imputed `time` is now one of the observed times
+- Time distribution looks more plausible
+
+```{r}
+stripplot(impa, time ~ .imp, pch = c(1, 20), cex = c(0.7, 1.2))
+```
+
+- Note that `mpmm` did not use the `predictorMatrix`
+- But we can use it to remove variables
+- For example, it is nonsensical to include `patientID` for imputation
+- The following code takes out `patientID`
+
+```{r}
+pred <- make.predictorMatrix(nail)
+pred[, "patientID"] <- 0
+impb <- mice(nail, meth = "mpmm", parcel = parcel, pred = pred, maxit = 1, m = 1, seed = 1, print = FALSE)
+```
+
+- [SIDE NOTE: the solutions with and without patientID are (incorrectly) identical since mpmm does not honour the type vector or formula.]
+
+
+
+```{r eval=FALSE, echo=FALSE}
+# NOTE: this one won't work
+parcel <- setNames(rep("risk", 3), nm = c("bmi", "hyp", "chl"))
+meth <- setNames("mpmm", nm = "risk")
+pred <- make.predictorMatrix(df2)
+# pred[, "age"] <- 0
+imp <- mice(df2, parcel = parcel, pred =  pred, meth = meth, print = FALSE, seed = 1)
+head(complete(imp), 10)
+```
+
+
+```{r eval=FALSE, echo=FALSE}
+# NOTE: this one won't work
+parcel <- setNames(c(rep("risk", 3), "age"), nm = c("bmi", "hyp", "chl", "age"))
+meth <- setNames(c("mpmm", "age"), nm = c("risk", "age"))
+pred <- make.predictorMatrix(df2)
+pred[, "age"] <- 0
+imp <- mice(df2, parcel = parcel, pred =  pred, meth = meth, print = FALSE, seed = 1)
+head(complete(imp), 10)
+```
+
+
+## Selecting predictors and grouping variables by `formulas`
+
+### Why
+
+- To select predictors and specify groups of variables by one argument
+- To leverage the base R `formula` class
+- To provide native access to imputation methods for complex data
+
+### Examples: `formulas`
+
+- The `formulas` argument is a list. 
+- Each list element is a `formula` and defines a block
+- The standard full variable-to-variable imputation is specified as
+
+```{r}
+fm <- make.formulas(df)
+fm
+```
+
+- Fitting the default model with `mice()` edits the `fm` object
+- The order of the list elements in `formulas` defines the `visitSequence`
+
+```{r}
+imp6 <- mice(df, formulas = fm, print = FALSE, seed = 1)
+imp6$formulas
+```
+
+- Imputations are identical to the `imp1`
+
+```{r}
+identical(imp1$imp, imp6$imp)
+```
+
+- Another way to specify the same model: All incomplete variables as dependents, all complete as predictors
+
+```{r}
+fm2 <- list(bmi + hyp + chl ~ age)
+imp7 <- mice(df, formulas = fm2, print = FALSE, seed = 1)
+identical(imp1$imp, imp7$imp)
+```
+
+- A compact way to write the model
+- Note that we can even write `list(. ~ 1)`, though that differs in the `predictorMatrix`
+
+```{r}
+imp8 <- mice(df, formulas = list(. ~ age), print = FALSE, seed = 1)
+identical(imp1$imp, imp8$imp)
+```
+
+- The left hand side (LHS) can contain multiple variables, seperated by a `+`
+- Unnamed input formulas are named by `mice()`
+- The default name for a univariate `formula` is the name of the dependent variable
+- The default name for a multivariate `formula` is `f1`, `f2` and so on
+
+```{r}
+fm3 <- list(
+  bmi + hyp ~ age + chl,
+  chl ~ age + bmi + hyp
+)
+imp9 <- mice(df, formulas = fm3, print = FALSE, seed = 1)
+imp9$formulas
+```
+
+- When the `formula` is multivariate and the imputation `method` is univariate, imputation proceeds as follows:
+- 1) `mice()` select the first variable in the block (`bmi`) as dependent for the imputation model, and uses all other terms as predictor
+- 2) `mice()` repeats the process for the next dependent in the block (`hyp`), and so on
+- 3) when all variables on the LHS have been processed, `mice()` moves to the next block, and so on
+- As long as the variables are visited in the same order, imputations are identical to the base model
+
+```{r}
+identical(imp1$imp, imp9$imp)
+```
+
+
+- Tiny formulas: Impute `bmi` from `chl`, and `chl` from `bmi`
+- `hyp` and `age` play no role for imputing `bmi` and `chl`
+- `hyp` and `age` are not mentioned, so not imputed (`age` wasn't imputed anyway because it is complete)
+
+```{r}
+fm4 <- list(bmi + chl ~ 1)
+imp <- mice(df, formulas = fm4, print = FALSE, maxit = 1, m = 1, seed = 1)
+imp
+```
+
+- NA-propagation
+- Suppose we impute by an a-symmetric submodel: impute `bmi` from `chl`, but specify no imputation model for `chl`
+- `chl` has missing data, but these are not imputed
+- Current version uses "autoremove" NA-propagation prevention
+- `bmi` is now imputed using the intercept-only model
+
+```{r}
+fm5 <- list(bmi ~ chl)
+imp <- mice(df, formulas = fm5, print = FALSE, maxit = 1, m = 1, seed = 1)
+imp$loggedEvents
+imp$imp$bmi
+```
+
+
+- Using built-in support for formula 
+- Adding transformations to predictors
+- `mice()` ignores transformations made on the LHS
+
+```{r}
+library(splines)
+fm6 <- list(
+  bmi + sqrt(hyp) ~ poly(age, 2) + sqrt(chl),
+  log(chl) ~ age + cut(bmi, 3) + hyp
+)
+imp <- mice(df, formulas = fm6, print = FALSE, m = 1, maxit = 1, seed = 1)
+```
+
+- Adding interaction terms to the imputation model
+- Symbol `*` adds main effects plus interaction
+- Symbol `:` adds the specific interaction
+
+```{r}
+fm7 <- list(
+  bmi + hyp ~ age * chl,
+  chl ~ age + bmi + hyp + bmi:hyp:age
+)
+imp <- mice(df, formulas = fm7, print = FALSE, m = 1, maxit = 1, seed = 1)
+```
+
+- Calculate variables on the fly 
+- We need to set the experimental `sort.terms = FALSE` to evade formula processing problems
+
+```{r}
+fm8 <- list(
+  bmi ~ I(chl / age) + hyp,
+  hyp ~ age + (bmi > 30),
+  chl ~ I(bmi + hyp / age)
+)
+imp <- mice(df, formulas = fm8, print = FALSE, m = 1, maxit = 1, seed = 1, sort.terms = FALSE)
+```
+
+
+- Univariate imputation with `panImpute`
+- Example 2.1 from `mitml::panImpute()`
+- Imputation of `ReadDis` by `ReadAchiev` plus a random intercept
+- We use `dots` to pass down options for imputing block `ReadDis`
+
+```{r}
+# Example from ?mitml::panImpute
+vars <- c("ReadDis", "SES", "ReadAchiev", "ID")
+stud <- mitml::studentratings[, vars]
+fml <- list(ReadDis ~ ReadAchiev + (1|ID))
+meth <- setNames(c("panImpute", "", "", ""), nm = vars)
+dots <- list(ReadDis = alist(n.burn = 1000, n.iter = 100))
+imp <- mice(stud, formulas = fml, meth = meth, dots = dots, m = 2, print = FALSE)
+```
+
+- The random slope version `fml <- list(ReadDis ~ ReadAchiev + (1 + ReadAchieve|ID))` does not yet work due to improper formula processing by `mice()`
+
+- Multivariate imputation with `jomoImpute`
+- Similar model, but now for two outcomes: `ReadDis` and `SES`  
+
+```{r}
+# Example from ?mitml::jomoImpute
+fml <- list(read_ses = ReadDis + SES ~ ReadAchiev + (1|ID))
+meth <- setNames(c("jomoImpute", "", ""), c("read_ses", "ReadAchieve", "ID"))
+dots <- list(read_ses = alist(n.burn = 100, n.iter = 10))
+imp <- mice(stud, formulas = fml, meth = meth, dots = dots, m = 2, print = FALSE)
+```
+
+
+--- THAT'S IT FOR NOW ---
