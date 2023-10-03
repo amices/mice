@@ -85,7 +85,7 @@ edit.setup <- function(data, setup,
     }
   }
 
-  if (all(pred == 0L)) {
+  if (all(pred == 0L) && didlog) {
     stop("`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
   }
 

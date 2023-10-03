@@ -186,7 +186,7 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
   if (calltype == "pred") {
     vars <- colnames(data)[pred != 0]
     xnames <- setdiff(vars, j)
-    if (length(pred) > 0L) {
+    if (length(xnames) > 0L) {
       formula <- reformulate(xnames, response = j)
       formula <- update(formula, ". ~ . ")
     } else {
