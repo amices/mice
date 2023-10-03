@@ -1,3 +1,7 @@
+# mice 3.16.8
+
+* Fixes problems with zero predictors (#588)
+
 # mice 3.16.7
 
 ### Minor changes
