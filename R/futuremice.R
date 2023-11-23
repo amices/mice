@@ -61,7 +61,7 @@
 #' Volker, T.B. and Vink, G. (2022). futuremice: The future starts today.
 #' \url{https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremice.html}
 #'
-#' #'Van Buuren, S. (2018).
+#' Van Buuren, S. (2018).
 #' \href{https://stefvanbuuren.name/fimd/parallel-computation.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #'
