@@ -25,7 +25,7 @@ way to solve this problem is to write your own \code{glance()} and \code{tidy()}
 methods and add these to \code{broom} according to the specifications
 given in \url{https://broom.tidymodels.org}.
 
-#'The \code{mira} class of objects has methods for the
+The \code{mira} class of objects has methods for the
 following generic functions: \code{print}, \code{summary}.
 
 Many of the functions of the \code{mice} package do not use the

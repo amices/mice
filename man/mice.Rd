@@ -287,7 +287,7 @@ to specify \code{visitSequence} such that the column that is imputed by the
 visited. In that way, deterministic relation between columns will always be
 synchronized.
 
-#'A new argument \code{ls.meth} can be parsed to the lower level
+A new argument \code{ls.meth} can be parsed to the lower level
 \code{.norm.draw} to specify the method for generating the least squares
 estimates and any subsequently derived estimates. Argument \code{ls.meth}
 takes one of three inputs: \code{"qr"} for QR-decomposition, \code{"svd"} for
@@ -335,8 +335,7 @@ We suggest going through these vignettes in the following order
 \item \href{https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html}{Imputing multilevel data}
 \item \href{https://www.gerkovink.com/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html}{Sensitivity analysis with \pkg{mice}}
 }
-
-#'Van Buuren, S. (2018).
+Van Buuren, S. (2018).
 Boca Raton, FL.: Chapman & Hall/CRC Press.
 The book
 \href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
