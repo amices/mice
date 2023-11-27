@@ -47,8 +47,7 @@
 #' \item \href{https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html}{Imputing multilevel data}
 #' \item \href{https://www.gerkovink.com/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html}{Sensitivity analysis with \pkg{mice}}
 #' }
-#'
-#' #'Van Buuren, S. (2018).
+#' Van Buuren, S. (2018).
 #' Boca Raton, FL.: Chapman & Hall/CRC Press.
 
 #' The book
