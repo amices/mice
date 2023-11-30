@@ -184,11 +184,12 @@ mcar.data.frame <- function(x,
   }
   remove_pats <- as.numeric(rownames(pats))[-nrow(pats)] <= min_n
   if (any(remove_pats)) {
-    out$removed_patterns <- pats[remove_pats, ]
+    out$removed_patterns <- pats[which(remove_pats), ]
     pats <- pats[-nrow(pats), colnames(missings)]
     idmiss <- do.call(paste, as.data.frame(missings))
     idpats <- do.call(paste, as.data.frame(pats == 0))
     remove_these <- idmiss %in% idpats[remove_pats]
+    if(all(remove_these)) stop("After dropping missing data patterns with fewer than ", min_n, " cases, there were no remaining valid cases in the dataset. Consider lowering 'min_n', and be cautious about interpreting the results; these data might not be suitable for an MCAR test.")
     out$removed_rows <- remove_these
     newdata <- x[!remove_these, , drop = FALSE]
     imputed <- lapply(imputed, `[`, i = !remove_these, j = colnames(newdata), drop = FALSE)
