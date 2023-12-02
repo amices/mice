@@ -84,6 +84,12 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
   install.on.demand("parallelly", ...)
   install.on.demand("furrr", ...)
   install.on.demand("future", ...)
+  
+  # force 1 thread per future for most methods
+  Sys.setenv(OMP_NUM_THREADS = 1) # openmp
+  Sys.setenv(OPENBLAS_NUM_THREADS = 1) # openblas
+  Sys.setenv(MKL_NUM_THREADS = 1) # Intel MKL
+  Sys.setenv(VECLIB_MAXIMUM_THREADS = 1) # Mac
 
   # check form of data and m
   data <- check.dataform(data)
