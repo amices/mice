@@ -14,14 +14,14 @@ get.dfcom <- function(model, dfcom = NULL) {
 
   # coxph model: nevent - p
   if (inherits(model, "coxph")) {
-    return(as.numeric(max(model$nevent - length(coef(model)), 1)))
+    return(as.numeric(max(model$nevent - length(stats::coef(model)), 1)))
   }
 
   # other model: n - p
   nobs <- tryCatch(length(stats::residuals(model)),
                    error = function(e) NULL)
   if (!is.null(nobs)) {
-    return(as.numeric(max(nobs - length(coef(model)), 1)))
+    return(as.numeric(max(nobs - length(stats::coef(model)), 1)))
   }
 
   # nothing found
