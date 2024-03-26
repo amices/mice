@@ -43,8 +43,8 @@ make.formulas <- function(data, blocks = make.blocks(data),
       x <- "0"
     }
     formulas[[h]] <- paste(
-      paste(y, collapse = "+"), "~",
-      paste(x, collapse = "+")
+      paste(backticks(y), collapse = "+"), "~",
+      paste(backticks(x), collapse = "+")
     )
   }
 
@@ -190,12 +190,12 @@ extend.formula <- function(formula = ~0,
   # handle dot in RHS
   if (hasdot(formula)) {
     if (length(predictors) > 1) {
-      fr <- as.formula(c("~", paste(predictors, collapse = "+")))
+      fr <- as.formula(c("~", paste(backticks(predictors), collapse = "+")))
     } else {
       fr <- ~0
     }
   } else {
-    fr <- reformulate(c(".", predictors))
+    fr <- reformulate(c(".", backticks(predictors)))
   }
 
   if (auxiliary) formula <- update(formula, fr, ...)
