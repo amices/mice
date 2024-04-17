@@ -1,6 +1,7 @@
 # mice 3.16.9
 
 * Fixes a problem with the `minpuc` argument in `quickpred()` (#634)
+* Fixes `coef() not available on S4 object` when using with `lavaan` (#615, #616)
 
 # mice 3.16.8
 
