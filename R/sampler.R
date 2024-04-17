@@ -187,7 +187,7 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
     vars <- colnames(data)[pred != 0]
     xnames <- setdiff(vars, j)
     if (length(xnames) > 0L) {
-      formula <- reformulate(xnames, response = j)
+      formula <- reformulate(backticks(xnames), response = backticks(j))
       formula <- update(formula, ". ~ . ")
     } else {
       formula <- as.formula(paste0(j, " ~ 1"))
@@ -199,7 +199,7 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
     ymove <- setdiff(lhs(formula), j)
     formula <- update(formula, paste(j, " ~ . "))
     if (length(ymove) > 0L) {
-      formula <- update(formula, paste("~ . + ", paste(ymove, collapse = "+")))
+      formula <- update(formula, paste("~ . + ", paste(backticks(ymove), collapse = "+")))
     }
   }
 

@@ -149,3 +149,7 @@ ma_exists <- function(x, pos, n_index = 1:8) {
   res <- list(is_there = is_there, obj = obj, pos = pos)
   return(res)
 }
+
+backticks <- function(varname) {
+  sprintf("`%s`", varname)
+}
