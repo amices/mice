@@ -114,7 +114,7 @@ check.parcel <- function(parcel, data) {
   parcel
 }
 
-reorder.parcel <- function(parcel, data) {
+mice.reorder.parcel <- function(parcel, data) {
   idx <- colnames(data)
   return(parcel[idx])
 }

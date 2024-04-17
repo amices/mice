@@ -208,6 +208,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (is.null(data)) {
     stop("Argument data is missing, with no default", call. = FALSE)
   }
+  data.in <- data # preserve an original set to inject the NA's in later
   data <- check.dataform(data)
   if (anyNA(data)) {
     stop("Data cannot contain NAs", call. = FALSE)
@@ -218,7 +219,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   data <- data.frame(data)
   if (any(vapply(data, Negate(is.numeric), logical(1))) && mech != "MCAR") {
     data <- as.data.frame(sapply(data, as.numeric))
-    warning("Data is made numeric because the calculation of weights requires numeric data",
+    warning("Data is made numeric internally, because the calculation of weights requires numeric data",
       call. = FALSE
     )
   }
@@ -454,7 +455,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   names(patterns.new) <- names(data)
   names(weights) <- names(data)
   call <- match.call()
-  missing.data <- data.frame(missing.data)
+  data.in[is.na(data.frame(missing.data))] <- NA
   result <- list(
     call = call,
     prop = prop,
@@ -466,7 +467,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     std = std,
     type = type,
     odds = odds,
-    amp = missing.data,
+    amp = data.in,
     cand = P - 1,
     scores = scores,
     data = as.data.frame(data)

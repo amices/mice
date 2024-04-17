@@ -130,7 +130,7 @@
 #' visited. In that way, deterministic relation between columns will always be
 #' synchronized.
 #'
-#' #'A new argument `ls.meth` can be parsed to the lower level
+#' A new argument `ls.meth` can be parsed to the lower level
 #' `.norm.draw` to specify the method for generating the least squares
 #' estimates and any subsequently derived estimates. Argument `ls.meth`
 #' takes one of three inputs: `"qr"` for QR-decomposition, `"svd"` for
@@ -545,7 +545,7 @@ mice <- function(data,
     ynames)
 
   # edit predictorMatrix for monotone, set zero rows for empty methods
-  predictorMatrix <- edit.predictorMatrix(
+  predictorMatrix <- mice.edit.predictorMatrix(
     predictorMatrix = predictorMatrix,
     method = method,
     blocks = blocks,
@@ -595,7 +595,7 @@ mice <- function(data,
     visitSequence = visitSequence,
     post = post
   )
-  setup <- edit.setup(data, setup, ...)
+  setup <- mice.edit.setup(data, setup, ...)
   method <- setup$method
   formulas <- setup$formulas
   dots <- setup$dots
@@ -605,7 +605,7 @@ mice <- function(data,
 
   # update parcel
   parcel <- b2n(blocks)
-  parcel <- reorder.parcel(parcel, data)
+  parcel <- mice.reorder.parcel(parcel, data)
 
   # initialize imputations
   nmis <- apply(is.na(data), 2, sum)

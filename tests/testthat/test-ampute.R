@@ -99,7 +99,7 @@ test_that("function works around unusual arguments", {
   # when data is categorical and mech != mcar, warning is expected
   expect_warning(
     ampute(data = nasty.data),
-    "Data is made numeric because the calculation of weights requires numeric data"
+    "Data is made numeric internally, because the calculation of weights requires numeric data"
   )
   # when data is categorical and mech = mcar, function can continue
   expect_warning(ampute(data = nasty.data, mech = "MCAR"), NA)

@@ -151,6 +151,7 @@ process_mipo <- function(z, x, conf.int = FALSE, conf.level = .95,
   z
 }
 
+#' @export
 vcov.mipo <- function(object, ...) {
   so <- diag(object$t)
   dimnames(so) <- list(object$term, object$term)

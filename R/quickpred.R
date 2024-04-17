@@ -106,9 +106,11 @@ quickpred <- function(data, mincor = 0.1, minpuc = 0, include = "",
   predictorMatrix[maxc > mincor] <- 1
 
   # exclude predictors with a percentage usable cases below minpuc
-  p <- md.pairs(data)
-  puc <- p$mr / (p$mr + p$mm)
-  predictorMatrix[puc < minpuc] <- 0
+  if (any(minpuc != 0)) {
+    p <- md.pairs(data)
+    puc <- p$mr / (p$mr + p$mm)
+    predictorMatrix[puc < minpuc] <- 0
+  }
 
   # exclude predictors listed in the exclude argument
   yz <- pmatch(exclude, names(data))

@@ -1,4 +1,4 @@
-edit.setup <- function(data, setup,
+mice.edit.setup <- function(data, setup,
                        allow.na = FALSE,
                        remove.constant = TRUE,
                        remove.collinear = TRUE,

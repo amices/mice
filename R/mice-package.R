@@ -47,8 +47,7 @@
 #' \item [Imputing multilevel data](https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html)
 #' \item \href{https://www.gerkovink.com/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html}{Sensitivity analysis with \pkg{mice}}
 #' }
-#'
-#' #'Van Buuren, S. (2018).
+#' Van Buuren, S. (2018).
 #' Boca Raton, FL.: Chapman & Hall/CRC Press.
 
 #' The book
@@ -70,7 +69,8 @@
 #' depend on the operating system. See the discussion in the
 #' "R Installation and Administration" guide for further information.
 #'
-#' @docType package
+#' @aliases mice-package
+#'
 #' @name mice
 #' @seealso [mice()], [with.mids()],
 #' [pool()], [complete()], [ampute()]
@@ -91,4 +91,5 @@
 #' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @useDynLib mice, .registration = TRUE
-NULL
+#' @keywords internal
+"_PACKAGE"

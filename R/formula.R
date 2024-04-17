@@ -43,8 +43,8 @@ make.formulas <- function(data, blocks = make.blocks(data),
       x <- "1"
     }
     formulas[[h]] <- paste(
-      paste(y, collapse = "+"), "~",
-      paste(x, collapse = "+")
+      paste(backticks(y), collapse = "+"), "~",
+      paste(backticks(x), collapse = "+")
     )
   }
 
@@ -128,7 +128,7 @@ check.formulas <- function(formulas, data,
                            autoremove = TRUE) {
   formulas <- name.formulas(formulas)
   formulas <- handle.oldstyle.formulas(formulas, data)
-  formulas <- lapply(formulas, expand.dots, data)
+  formulas <- lapply(formulas, mice.expand.dots, data)
   # escape if formula is list of two formula's
   if (any(sapply(formulas, is.list))) {
     return(formulas)
@@ -262,12 +262,12 @@ extend.formula <- function(formula = ~0,
   # handle dot in RHS
   if (hasdot(formula)) {
     if (length(predictors) > 1) {
-      fr <- as.formula(c("~", paste(predictors, collapse = "+")))
+      fr <- as.formula(c("~", paste(backticks(predictors), collapse = "+")))
     } else {
       fr <- ~0
     }
   } else {
-    fr <- reformulate(c(".", predictors))
+    fr <- reformulate(c(".", backticks(predictors)))
   }
 
   if (auxiliary) formula <- update(formula, fr, ...)
@@ -310,7 +310,7 @@ hasdot <- function(f) {
   }
 }
 
-expand.dots <- function(formula, data) {
+mice.expand.dots <- function(formula, data) {
   if (!is.formula(formula)) {
     return(formula)
   }
