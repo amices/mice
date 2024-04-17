@@ -1,3 +1,7 @@
+# mice 3.16.9
+
+* Fixes a problem with the `minpuc` argument in `quickpred()` (#634)
+
 # mice 3.16.8
 
 * Fixes problems with zero predictors (#588)
