@@ -2,6 +2,7 @@
 
 * Fixes a problem with the `minpuc` argument in `quickpred()` (#634)
 * Fixes `coef() not available on S4 object` when using with `lavaan` (#615, #616)
+* Adds `.github/dependabot.yml` configuration to automate daily check (#598)
 
 # mice 3.16.8
 
