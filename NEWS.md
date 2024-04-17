@@ -1,3 +1,7 @@
+# mice 3.16.10
+
+* Adds support for non-syntactic variables names with backticks (#631)
+
 # mice 3.16.9
 
 * Fixes a problem with the `minpuc` argument in `quickpred()` (#634)
