@@ -69,7 +69,6 @@
 #' depend on the operating system. See the discussion in the
 #' "R Installation and Administration" guide for further information.
 #'
-#' @docType package
 #' @aliases mice-package
 #'
 #' @name mice
@@ -92,4 +91,5 @@
 #' \href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @useDynLib mice, .registration = TRUE
-NULL
+#' @keywords internal
+"_PACKAGE"

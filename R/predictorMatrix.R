@@ -135,7 +135,7 @@ check.predictorMatrix <- function(predictorMatrix,
   )
 }
 
-edit.predictorMatrix <- function(predictorMatrix,
+mice.edit.predictorMatrix <- function(predictorMatrix,
                                  visitSequence,
                                  user.visitSequence,
                                  maxit) {

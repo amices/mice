@@ -127,7 +127,7 @@ name.formulas <- function(formulas, prefix = "F") {
 check.formulas <- function(formulas, data) {
   formulas <- name.formulas(formulas)
   formulas <- handle.oldstyle.formulas(formulas, data)
-  formulas <- lapply(formulas, expand.dots, data)
+  formulas <- lapply(formulas, mice.expand.dots, data)
   # escape if formula is list of two formula's
   if (any(sapply(formulas, is.list))) {
     return(formulas)
@@ -238,7 +238,7 @@ hasdot <- function(f) {
   }
 }
 
-expand.dots <- function(formula, data) {
+mice.expand.dots <- function(formula, data) {
   if (!is.formula(formula)) {
     return(formula)
   }

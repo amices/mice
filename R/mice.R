@@ -411,7 +411,7 @@ mice <- function(data,
   visitSequence <- check.visitSequence(visitSequence,
     data = data, where = where, blocks = blocks
   )
-  predictorMatrix <- edit.predictorMatrix(
+  predictorMatrix <- mice.edit.predictorMatrix(
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     user.visitSequence = user.visitSequence,
@@ -436,7 +436,7 @@ mice <- function(data,
     visitSequence = visitSequence,
     post = post
   )
-  setup <- edit.setup(data, setup, ...)
+  setup <- mice.edit.setup(data, setup, ...)
   method <- setup$method
   predictorMatrix <- setup$predictorMatrix
   visitSequence <- setup$visitSequence

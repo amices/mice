@@ -447,10 +447,40 @@ data sets.} Dissertation. Rotterdam: Erasmus University.
 \code{\link{set.seed}}, \code{\link{complete}}
 }
 \author{
+\strong{Maintainer}: Stef van Buuren \email{stef.vanbuuren@tno.nl}
+
+Authors:
+\itemize{
+  \item Karin Groothuis-Oudshoorn \email{c.g.m.oudshoorn@utwente.nl}
+}
+
+Other contributors:
+\itemize{
+  \item Gerko Vink \email{g.vink@uu.nl} [contributor]
+  \item Rianne Schouten \email{R.M.Schouten@uu.nl} [contributor]
+  \item Alexander Robitzsch \email{robitzsch@ipn.uni-kiel.de} [contributor]
+  \item Patrick Rockenschaub \email{rockenschaub.patrick@gmail.com} [contributor]
+  \item Lisa Doove \email{lisa.doove@ppw.kuleuven.be} [contributor]
+  \item Shahab Jolani \email{s.jolani@maastrichtuniversity.nl} [contributor]
+  \item Margarita Moreno-Betancur \email{margarita.moreno@mcri.edu.au} [contributor]
+  \item Ian White \email{ian.white@ucl.ac.uk} [contributor]
+  \item Philipp Gaffert \email{philipp.gaffert@gfk.com} [contributor]
+  \item Florian Meinfelder \email{florian.meinfelder@uni-bamberg.de} [contributor]
+  \item Bernie Gray \email{bfgray3@gmail.com} [contributor]
+  \item Vincent Arel-Bundock \email{vincent.arel-bundock@umontreal.ca} [contributor]
+  \item Mingyang Cai \email{m.cai@uu.nl} [contributor]
+  \item Thom Volker \email{t.b.volker@uu.nl} [contributor]
+  \item Edoardo Costantini \email{e.costantini@tilburguniversity.edu} [contributor]
+  \item Caspar van Lissa \email{c.j.vanlissa@uu.nl} [contributor]
+  \item Hanne Oberman \email{h.i.oberman@uu.nl} [contributor]
+}
+
+
 Stef van Buuren \email{stef.vanbuuren@tno.nl}, Karin
 Groothuis-Oudshoorn \email{c.g.m.oudshoorn@utwente.nl}, 2000-2010, with
 contributions of Alexander Robitzsch, Gerko Vink, Shahab Jolani,
 Roel de Jong, Jason Turner, Lisa Doove,
 John Fox, Frank E. Harrell, and Peter Malewski.
 }
+\keyword{internal}
 \keyword{iteration}
