@@ -20,8 +20,8 @@ test_that("blocks run as expected", {
                                print = FALSE, m = 1, maxit = 1, seed = 1
   ))
   expect_warning(imp2b <<- mice(nhanes2,
-                               blocks = list(c("age", "hyp", "bmi"), "chl", "bmi"),
-                               print = FALSE, m = 1, maxit = 1, seed = 1
+                                blocks = list(c("age", "hyp", "bmi"), "chl", "bmi"),
+                                print = FALSE, m = 1, maxit = 1, seed = 1
   ))
   # expect_silent(imp3b <<- mice(nhanes2,
   #                             blocks = list(c("hyp", "hyp", "hyp"), "chl", "bmi"),
@@ -80,8 +80,8 @@ imp3 <- mice(nhanes,
              blocks = list("age", c("bmi", "hyp", "chl")),
              print = FALSE, m = 1, maxit = 1, seed = 123)
 imp3a <- mice(nhanes,
-             blocks = name.blocks(list("age", c("bmi", "hyp", "chl"))),
-             print = FALSE, m = 1, maxit = 1, seed = 123)
+              blocks = name.blocks(list("age", c("bmi", "hyp", "chl"))),
+              print = FALSE, m = 1, maxit = 1, seed = 123)
 
 test_that("make.blocks() and list() yield same imputes for imp3-model", {
   expect_identical(complete(imp3), complete(imp3a))
@@ -91,8 +91,8 @@ imp4 <- mice(nhanes,
              blocks = list(c("bmi", "hyp", "chl"), "age"),
              print = FALSE, m = 1, maxit = 1, seed = 123)
 imp4a <- mice(nhanes,
-             blocks = name.blocks(list(c("bmi", "hyp", "chl"), "age")),
-             print = FALSE, m = 1, maxit = 1, seed = 123)
+              blocks = name.blocks(list(c("bmi", "hyp", "chl"), "age")),
+              print = FALSE, m = 1, maxit = 1, seed = 123)
 
 test_that("make.blocks() and list() yield same imputes for imp4-model", {
   expect_identical(complete(imp4), complete(imp4a))
@@ -133,10 +133,10 @@ test_that("formulas run as expected", {
                                 print = FALSE, m = 1, maxit = 1, seed = 1
   ))
   expect_silent(imp3f <<- mice(nhanes2,
-                              formulas = list( hyp + hyp + hyp ~ chl + bmi,
-                                               chl ~ hyp + hyp + hyp + bmi,
-                                               bmi ~ hyp + hyp + hyp + chl),
-                              print = FALSE, m = 1, maxit = 1, seed = 1))
+                               formulas = list( hyp + hyp + hyp ~ chl + bmi,
+                                                chl ~ hyp + hyp + hyp + bmi,
+                                                bmi ~ hyp + hyp + hyp + chl),
+                               print = FALSE, m = 1, maxit = 1, seed = 1))
   expect_silent(imp4f <<- mice(boys,
                                formulas = list(
                                  gen + phb ~ tv,
@@ -272,4 +272,12 @@ imp2 <- mice(
 test_that("`ignore` works with pmm", {
   expect_equal(complete(imp1)["a1", "bmi"], 40.0)
   expect_failure(expect_equal(complete(imp2)["a1", "bmi"], 40.0))
+})
+
+
+# check for character variable
+nh3 <- nhanes2
+nh3$chl <- as.character(nh3$chl)
+test_that("handles character variable", {
+  expect_silent(mice(nh3))
 })
