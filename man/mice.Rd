@@ -345,8 +345,9 @@ contains a lot of \href{https://github.com/stefvanbuuren/fimdbook/tree/master/R}
 \section{Methodology}{
 
 
-The \pkg{mice} software was published in the {Journal of Statistical Software} (Van Buuren and Groothuis-Oudshoorn, 2011). \doi{10.18637/jss.v045.i03}
-The first application of the method
+The \pkg{mice} software was published in the
+\emph{Journal of Statistical Software} (Van Buuren and Groothuis-Oudshoorn, 2011).
+\doi{10.18637/jss.v045.i03}. The first application of the method
 concerned missing blood pressure data (Van Buuren et. al., 1999).
 The term \emph{Fully Conditional Specification} was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Van Buuren et. al., 2006). Further details on mixes of variables and applications can be found in the book
 \href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
@@ -420,7 +421,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 
 Van Buuren, S. (2018).
-\href{https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+\emph{Flexible Imputation of Missing Data. Second Edition.}
 Chapman & Hall/CRC. Boca Raton, FL.
 
 Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
@@ -432,8 +433,8 @@ fully conditional specification.  \emph{Statistical Methods in Medical
 Research}, \bold{16}, 3, 219--242.
 
 Van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple imputation of
-missing blood pressure covariates in survival analysis.  \emph{Statistics in
-Medicine}, \bold{18}, 681--694.
+missing blood pressure covariates in survival analysis.
+\emph{Statistics in Medicine}, \bold{18}, 681--694.
 
 Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
 multiple imputation strategies for the statistical analysis of incomplete
