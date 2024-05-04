@@ -1,3 +1,7 @@
+# mice 3.16.11
+
+* Repairs lost braces in the documentation
+
 # mice 3.16.10
 
 * Adds support for non-syntactic variables names with backticks (#631)
