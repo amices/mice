@@ -153,3 +153,18 @@ ma_exists <- function(x, pos, n_index = 1:8) {
 backticks <- function(varname) {
   sprintf("`%s`", varname)
 }
+
+sweep_operator <- function(S, k) {
+  A <- S[k, k]
+  B <- matrix(S[-k, k], ncol = 1L)
+  C <- matrix(S[k, -k], nrow = 1L)
+  D <- S[-k, -k] - B %*% C / A
+
+  # Update the matrix S in place
+  S[-k, -k] <- D
+  S[-k, k] <- -B / A
+  S[k, -k] <- -t(C) / A
+  S[k, k] <- 1 / A
+
+  return(S)
+}
