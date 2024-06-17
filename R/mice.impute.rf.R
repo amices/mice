@@ -6,12 +6,15 @@
 #' @inheritParams mice.impute.pmm
 #' @param ntree The number of trees to grow. The default is 10.
 #' @param rfPackage A single string specifying the backend for estimating the
-#' random forest. The default backend is the \code{ranger} package. The only
-#' alternative currently implemented is the \code{randomForest} package, which
-#' used to be the default in mice 3.13.10 and earlier.
+#' random forest. The default backend is the \code{ranger} package. An
+#' alternative is \code{literanger} which predicts faster but does not support
+#' all forest types and split rules from \code{ranger}. Also implemented as
+#' an alternative is the \code{randomForest} package, which used to be the
+#' default in mice 3.13.10 and earlier.
 #' @param \dots Other named arguments passed down to
 #' \code{mice:::install.on.demand()}, \code{randomForest::randomForest()},
-#' \code{randomForest:::randomForest.default()}, and \code{ranger::ranger()}.
+#' \code{randomForest:::randomForest.default()}, \code{ranger::ranger()}, and
+#' \code{literanger::train()}.
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #' \code{sum(wy)}
 #' @details
@@ -44,8 +47,9 @@
 #' \href{https://stefvanbuuren.name/fimd/sec-cart.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @seealso \code{\link{mice}}, \code{\link{mice.impute.cart}},
-#' \code{\link[randomForest]{randomForest}}
-#' \code{\link[ranger]{ranger}}
+#' \code{\link[randomForest]{randomForest}},
+#' \code{\link[ranger]{ranger}},
+#' \code{\link[literanger]{train}}
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @examples
@@ -55,7 +59,8 @@
 #' }
 #' @export
 mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
-                           rfPackage = c("ranger", "randomForest"), ...) {
+                           rfPackage = c("ranger", "randomForest", "literanger"),
+                           ...) {
   rfPackage <- match.arg(rfPackage)
 
   if (is.null(wy)) wy <- !ry
@@ -69,11 +74,14 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
   # Find eligible donors
   f <- switch(rfPackage,
     randomForest = .randomForest.donors,
-    ranger = .ranger.donors
+    ranger = .ranger.donors,
+    literanger = .literanger.donor
   )
 
   forest <- f(xobs, xmis, yobs, ntree, ...)
 
+  # Short-circuit when using literanger interface
+  if (rfPackage == "literanger") return(forest)
   # Sample from donors
   if (nmis == 1) forest <- array(forest, dim = c(1, ntree))
   apply(forest, MARGIN = 1, FUN = function(s) sample(unlist(s), 1))
@@ -123,4 +131,18 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
   }
 
   sapply(seq_len(ntree), FUN = select_donors)
+}
+
+# Find eligible donors using the literanger package
+.literanger.donor <- function(xobs, xmis, yobs, ntree, ...) {
+  install.on.demand("literanger", ...)
+
+  lr_formals <- names(formals(literanger::train))
+  dots <- list(...)
+  dots <- dots[intersect(names(dots), setdiff(lr_formals, c('x', 'y')))]
+
+  fit <- do.call(
+    literanger::train, c(list(x = xobs, y = yobs, n_tree = ntree), dots)
+  )
+  predict(object = fit, newdata = xmis, prediction_type = "inbag")$values
 }
