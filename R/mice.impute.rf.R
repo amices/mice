@@ -80,6 +80,8 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
 
   forest <- f(xobs, xmis, yobs, ntree, ...)
 
+  # Short-circuit when using literanger interface
+  if (rfPackage == "literanger") return(forest)
   # Sample from donors
   if (nmis == 1) forest <- array(forest, dim = c(1, ntree))
   apply(forest, MARGIN = 1, FUN = function(s) sample(unlist(s), 1))
@@ -142,9 +144,5 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
   fit <- do.call(
     literanger::train, c(list(x = xobs, y = yobs, n_tree = ntree), dots)
   )
-  values <- predict(
-    object = fit, newdata = xmis,
-    prediction_type = "inbag"
-  )$values
-  array(values, dim = c(nrow(xmis), 1L))
+  predict(object = fit, newdata = xmis, prediction_type = "inbag")$values
 }
