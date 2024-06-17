@@ -6,12 +6,15 @@
 #' @inheritParams mice.impute.pmm
 #' @param ntree The number of trees to grow. The default is 10.
 #' @param rfPackage A single string specifying the backend for estimating the
-#' random forest. The default backend is the \code{ranger} package. The only
-#' alternative currently implemented is the \code{randomForest} package, which
-#' used to be the default in mice 3.13.10 and earlier.
+#' random forest. The default backend is the \code{ranger} package. An
+#' alternative is \code{literanger} which predicts faster but does not support
+#' all forest types and split rules from \code{ranger}. Also implemented as
+#' an alternative is the \code{randomForest} package, which used to be the
+#' default in mice 3.13.10 and earlier.
 #' @param \dots Other named arguments passed down to
 #' \code{mice:::install.on.demand()}, \code{randomForest::randomForest()},
-#' \code{randomForest:::randomForest.default()}, and \code{ranger::ranger()}.
+#' \code{randomForest:::randomForest.default()}, \code{ranger::ranger()}, and
+#' \code{literanger::train()}.
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #' \code{sum(wy)}
 #' @details
@@ -44,8 +47,9 @@
 #' \href{https://stefvanbuuren.name/fimd/sec-cart.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @seealso \code{\link{mice}}, \code{\link{mice.impute.cart}},
-#' \code{\link[randomForest]{randomForest}}
-#' \code{\link[ranger]{ranger}}
+#' \code{\link[randomForest]{randomForest}},
+#' \code{\link[ranger]{ranger}},
+#' \code{\link[literanger]{train}}
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @examples
