@@ -55,7 +55,8 @@
 #' }
 #' @export
 mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
-                           rfPackage = c("ranger", "randomForest"), ...) {
+                           rfPackage = c("ranger", "randomForest", "literanger"),
+                           ...) {
   rfPackage <- match.arg(rfPackage)
 
   if (is.null(wy)) wy <- !ry
@@ -69,7 +70,8 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
   # Find eligible donors
   f <- switch(rfPackage,
     randomForest = .randomForest.donors,
-    ranger = .ranger.donors
+    ranger = .ranger.donors,
+    literanger = .literanger.donor
   )
 
   forest <- f(xobs, xmis, yobs, ntree, ...)
@@ -123,4 +125,22 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
   }
 
   sapply(seq_len(ntree), FUN = select_donors)
+}
+
+# Find eligible donors using the literanger package
+.literanger.donor <- function(xobs, xmis, yobs, ntree, ...) {
+  install.on.demand("literanger", ...)
+
+  lr_formals <- names(formals(literanger::train))
+  dots <- list(...)
+  dots <- dots[intersect(names(dots), setdiff(lr_formals, c('x', 'y')))]
+
+  fit <- do.call(
+    literanger::train, c(list(x = xobs, y = yobs, n_tree = ntree), dots)
+  )
+  values <- predict(
+    object = fit, newdata = xmis,
+    prediction_type = "inbag"
+  )$values
+  array(values, dim = c(nrow(xmis), 1L))
 }
