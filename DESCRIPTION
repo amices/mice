@@ -67,6 +67,7 @@ Suggests:
     furrr,
     haven,
     knitr,
+    literanger,
     lme4,
     MASS,
     miceadds,

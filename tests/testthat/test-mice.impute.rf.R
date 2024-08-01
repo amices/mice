@@ -26,5 +26,6 @@
 #   {
 #     expect_visible(do.call(mice.impute.rf, c(par, list(rfPackage = "ranger"))))
 #     expect_visible(do.call(mice.impute.rf, c(par, list(rfPackage = "randomForest"))))
+#     expect_visible(do.call(mice.impute.rf, c(par, list(rfPackage = "literanger"))))
 #   }
 # )
