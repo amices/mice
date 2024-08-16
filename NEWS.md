@@ -1,3 +1,7 @@
+# mice 3.16.12
+
+* Fixes an installation problem when `Rprofile` prints to `stdout` on Fedora, R version 4.1.3 (#646, #647). Thanks @brookslogan for the fix.
+
 # mice 3.16.11
 
 * Repairs lost braces in the documentation
