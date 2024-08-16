@@ -1,8 +1,8 @@
 Package: mice
 Type: Package
-Version: 3.16.12
+Version: 3.16.13
 Title: Multivariate Imputation by Chained Equations
-Date: 2024-07-29
+Date: 2024-08-16
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -40,7 +40,9 @@ Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     person("Caspar", "van Lissa", role = "ctb", 
     email = "c.j.vanlissa@uu.nl"),
     person("Hanne", "Oberman", role = "ctb",
-    email = "h.i.oberman@uu.nl"))
+    email = "h.i.oberman@uu.nl"),
+    person("Stephen", "Wade", role = "ctb",
+    email = "stephematician@gmail.com"))
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
     R (>= 2.10.0)
@@ -100,4 +102,4 @@ URL: https://github.com/amices/mice,
 BugReports: https://github.com/amices/mice/issues
 LinkingTo: cpp11, Rcpp
 License: GPL (>= 2)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
