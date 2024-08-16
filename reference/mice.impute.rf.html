@@ -49,7 +49,7 @@
 <span>  <span class="va">x</span>,</span>
 <span>  wy <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ntree <span class="op">=</span> <span class="fl">10</span>,</span>
-<span>  rfPackage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ranger"</span>, <span class="st">"randomForest"</span><span class="op">)</span>,</span>
+<span>  rfPackage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ranger"</span>, <span class="st">"randomForest"</span>, <span class="st">"literanger"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -85,15 +85,18 @@ indicates locations in <code>y</code> for which imputations are created.</p></dd
 
 <dt id="arg-rfpackage">rfPackage<a class="anchor" aria-label="anchor" href="#arg-rfpackage"></a></dt>
 <dd><p>A single string specifying the backend for estimating the
-random forest. The default backend is the <code>ranger</code> package. The only
-alternative currently implemented is the <code>randomForest</code> package, which
-used to be the default in mice 3.13.10 and earlier.</p></dd>
+random forest. The default backend is the <code>ranger</code> package. An
+alternative is <code>literanger</code> which predicts faster but does not support
+all forest types and split rules from <code>ranger</code>. Also implemented as
+an alternative is the <code>randomForest</code> package, which used to be the
+default in mice 3.13.10 and earlier.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Other named arguments passed down to
 <code>mice:::install.on.demand()</code>, <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html" class="external-link">randomForest::randomForest()</a></code>,
-<code>randomForest:::randomForest.default()</code>, and <code><a href="http://imbs-hl.github.io/ranger/reference/ranger.html" class="external-link">ranger::ranger()</a></code>.</p></dd>
+<code>randomForest:::randomForest.default()</code>, <code><a href="http://imbs-hl.github.io/ranger/reference/ranger.html" class="external-link">ranger::ranger()</a></code>, and
+<code><a href="https://rdrr.io/pkg/literanger/man/train.html" class="external-link">literanger::train()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -137,8 +140,9 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="mice.html">mice</a></code>, <code><a href="mice.impute.cart.html">mice.impute.cart</a></code>,
-<code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html" class="external-link">randomForest</a></code>
-<code><a href="http://imbs-hl.github.io/ranger/reference/ranger.html" class="external-link">ranger</a></code></p>
+<code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html" class="external-link">randomForest</a></code>,
+<code><a href="http://imbs-hl.github.io/ranger/reference/ranger.html" class="external-link">ranger</a></code>,
+<code><a href="https://rdrr.io/pkg/literanger/man/train.html" class="external-link">train</a></code></p>
 <p>Other univariate imputation functions:
 <code><a href="mice.impute.cart.html">mice.impute.cart</a>()</code>,
 <code><a href="mice.impute.lasso.logreg.html">mice.impute.lasso.logreg</a>()</code>,
