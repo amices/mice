@@ -1,3 +1,7 @@
+# mice 3.16.14
+
+* Fixes a bug during initialization of factor values
+
 # mice 3.16.13
 
 * Adds support for the `literanger` package for `rf` imputation that is about twice as fast as `ranger` (#648). Thanks @stephematician for the contribution.
