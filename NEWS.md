@@ -1,3 +1,11 @@
+# mice 3.16.13
+
+* Adds support for the `literanger` package for `rf` imputation that is about twice as fast as `ranger` (#648). Thanks @stephematician for the contribution.
+
+# mice 3.16.12
+
+* Fixes an installation problem when `Rprofile` prints to `stdout` on Fedora, R version 4.1.3 (#646, #647). Thanks @brookslogan for the fix.
+
 # mice 3.16.11
 
 * Repairs lost braces in the documentation

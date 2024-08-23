@@ -474,6 +474,7 @@ Other contributors:
   \item Edoardo Costantini \email{e.costantini@tilburguniversity.edu} [contributor]
   \item Caspar van Lissa \email{c.j.vanlissa@uu.nl} [contributor]
   \item Hanne Oberman \email{h.i.oberman@uu.nl} [contributor]
+  \item Stephen Wade \email{stephematician@gmail.com} [contributor]
 }
 
 
