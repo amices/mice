@@ -37,10 +37,11 @@
 #' @param data Matrix or data frame with incomplete data.
 #' @param type A string specifying the type of LARS algorithm. Use
 #' \code{'lar'} (default) or \code{'lasso'}. Can be abbreviated.
-#' @param s See \code{\link{lars::predict.lars}} for details.
-#' @param max.steps See \code{\link{lars::predict.lars}} for details.
-#' @param ... Passed down to the \code{\link{lars::lars}} and
-#' \code{\link{lars::coef.lars}} functions.
+#' @param s See \code{\link[lars:predict.lars]{predict.lars}} for details.
+#' @param max.steps See \code{\link[lars:predict.lars]{predict.lars}} for
+#' details.
+#' @param ... Passed down to the \code{\link[lars:lars]{lars}} and
+#' \code{\link[lars:coef.lars]{coef.lars}} functions.
 #' @return A square binary matrix of size \code{ncol(data)}.
 #' @author Stef van Buuren, June 2024
 #' @examples

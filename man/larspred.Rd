@@ -18,12 +18,13 @@ larspred(
 \item{type}{A string specifying the type of LARS algorithm. Use
 \code{'lar'} (default) or \code{'lasso'}. Can be abbreviated.}
 
-\item{s}{See \code{\link{lars::predict.lars}} for details.}
+\item{s}{See \code{\link[lars:predict.lars]{predict.lars}} for details.}
 
-\item{max.steps}{See \code{\link{lars::predict.lars}} for details.}
+\item{max.steps}{See \code{\link[lars:predict.lars]{predict.lars}} for
+details.}
 
-\item{...}{Passed down to the \code{\link{lars::lars}} and
-\code{\link{lars::coef.lars}} functions.}
+\item{...}{Passed down to the \code{\link[lars:lars]{lars}} and
+\code{\link[lars:coef.lars]{coef.lars}} functions.}
 }
 \value{
 A square binary matrix of size \code{ncol(data)}.
