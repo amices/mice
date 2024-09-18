@@ -97,17 +97,19 @@ lars.filter <- function(x, y, ry, eps = 1e-04, allow.na = TRUE, ...) {
 #' become negative for small samples. `minimal_cp` is the minimum "Cp" value
 #' that is is used as to define the threshold for the filter. Higher value
 #' select more predictors. The default is 1.
+#' @param \dots Further arguments passed to `lars`. Nothing passed down.
 #' @return A logical vector of length `ncol(x)` indicating which predictors
 #' to keep.
 #' @export
 lars.internal <- function(x, y, type = "lar", intercept = TRUE,
-                          lars.relax = 5, minimal.cp = 1) {
+                          lars.relax = 5, minimal.cp = 1, ...) {
   model <- lars(x = x, y = y, type = type, intercept = intercept)
   cp <- model$Cp
   min_cp <- max(min(cp), minimal.cp) # SvB small sample adjustment
   threshold <- min_cp + (lars.relax * min_cp) / 100
   step <- tail(which(cp <= threshold), n = 1L)
-  coef_step <- coef(model, s = min(step, 1L))
+  step <- ifelse(length(step), step, 1L)
+  coef_step <- coef(model, s = step)
   return(coef_step != 0)
 }
 

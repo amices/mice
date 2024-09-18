@@ -10,7 +10,8 @@ lars.internal(
   type = "lar",
   intercept = TRUE,
   lars.relax = 5,
-  minimal.cp = 1
+  minimal.cp = 1,
+  ...
 )
 }
 \arguments{
@@ -41,6 +42,8 @@ filter.}
 become negative for small samples. `minimal_cp` is the minimum "Cp" value
 that is is used as to define the threshold for the filter. Higher value
 select more predictors. The default is 1.}
+
+\item{\dots}{Further arguments passed to `lars`. Nothing passed down.}
 }
 \value{
 A logical vector of length `ncol(x)` indicating which predictors
