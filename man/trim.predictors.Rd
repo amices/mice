@@ -2,50 +2,144 @@
 % Please edit documentation in R/trim.predictors.R
 \name{trim.predictors}
 \alias{trim.predictors}
-\title{Trim predictors of the imputation model}
+\alias{lars.filter}
+\alias{lars.internal}
+\alias{remove.lindep}
+\title{Trim the predictor set before univariate imputation}
 \usage{
-trim.predictors(
+trim.predictors(x, y, ry, trimmer = "lars.filter", allow.na = TRUE, ...)
+
+lars.filter(x, y, ry, ...)
+
+lars.internal(
   x,
   y,
-  ry,
-  trimmer = c("lars.filter", "remove.lindep", "none"),
+  type = "lar",
+  intercept = TRUE,
+  max.predictors = 20,
+  eps = 1e-12,
+  lars.relax = 5,
+  minimal.cp = 1,
   ...
 )
+
+remove.lindep(x, y, ry, eps = 1e-04, maxcor = 0.99, frame = 4, ...)
 }
 \arguments{
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with predictors, for example, as produced
+by \code{model.matrix()}. The matrix must have the same number of rows as
+\code{length(y)} and \code{length(ry)}.}
 
-\item{y}{Vector to be imputed}
+\item{y}{Numeric vector of length \code{length(y)} with the target variable.
+If not numeric, it will be converted to numeric.}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length \code{length(ry)} indicating which
+observations are observed for the target variable.}
 
 \item{trimmer}{A character vector of length 1 specifying the name of the
-trimming function. The default is "lars.filter". The other options are
-"remove.lindep" and "none". The user can also specify a custom trimming
-function.}
+trimming function. The default is \code{"lars.filter"}. Other options are
+\code{"remove.lindep"} or \code{""}. The user can also specify the name of a
+custom trimming function.}
 
-\item{...}{further arguments passed to the trimming function.}
+\item{allow.na}{Logical. If \code{TRUE}, allow imputation of fully
+missing \code{y}. This typically only occurs for passive imputation.
+The default is \code{TRUE}.}
+
+\item{...}{Further arguments passed to \code{lars::lars}, like standard
+LARS arguments \code{type}, \code{intercept}, \code{eps} and
+\code{max.steps}, or tuning parameters \code{lars.relax} and
+\code{minimal.cp}.}
+
+\item{type}{Character. The type of LARS model to fit. The default is "lar".}
+
+\item{intercept}{
+if TRUE, an intercept is included in the model (and not penalized),
+otherwise no intercept is included. Default is TRUE.
+}
+
+\item{max.predictors}{Integer. The maximum number of variables to include
+in the LARS model. The default is 20.}
+
+\item{eps}{Numeric. Used by \code{remove.lindep()} as the threshold for
+the ratio of the smallest to the largest eigenvalue of the correlation
+matrix. The default is 1e-04. If the user sets \code{eps = 0},
+all variables are returned (for backward compatibility). Used by
+\code{lars.internal()} as an argument to the \code{lars::lars()} function.}
+
+\item{lars.relax}{Numeric. The percentage of the minimum Cp value that is
+added to the minimum Cp to relax the inclusion threshold. The default is 5.
+Use 1-5 percent for a slightly more permissive filter, 5-10 percent
+for a moderate permissive filter, and 10-20 percent for very permissive.}
+
+\item{minimal.cp}{Numeric. The minimum "Cp" value to consider. "Cp" may
+become negative for small samples. \code{minimal_cp} is the minimum "Cp" value
+that is is used as to define the threshold for the filter. Higher values
+select more predictors. The default is 1.}
+
+\item{maxcor}{Numeric. The maximum correlation between a predictor and the
+target variable. The default is 0.99.}
+
+\item{frame}{Integer. The frame number for logging. Do not alter.}
 }
 \value{
 A logical vector of length \code{ncol(x)} indicating which predictors
 to keep.
 }
 \description{
-The function \code{trim.predictors()} filters out predictors before imputation
-of univariate incomplete variables. The function is called by
-\code{mice:::sampler.univ()}. The function is a wrapper for the trimming
-functions \code{lars.filter()}, \code{remove.lindep()}, and a user-specified
+The function \code{trim.predictors()} filters out predictors before
+univariate imputation. The function is a wrapper for the trimming
+functions \code{lars.filter()}, \code{remove.lindep()}, or a user-specified
 trimming function. The default method is \code{trimmer = "lars.filter"}.
+The function is called by \code{mice:::sampler.univ()} and not intended
+for direct application by the user.
+
+\code{lars.filter()} is a fast way to filter out predictors by
+least angle regression (LARS).
+
+\code{remove.lindep()} prevents multicollinearity
+in the imputation model. It removes predictors that are constant or have
+too high correlation with the target variable. The function
+uses the eigenvalues of the correlation matrix to detect multicollinearity.
 }
 \details{
 The function \code{lars.filter()} changes the behavior of the MICE algorithm.
 It is far more agressive in removing predictors than the classic
-\code{remove.lindep()} function. The feature is experimental and may be
-subject to change in future versions. For backward compatibility,
+\code{remove.lindep()} function. For backward compatibility,
 add \code{trimmer = "remove.lindep"} to your call
 \code{mice(..., trimmer = "remove.lindep")}.
+
+Observe that filtering works on the design matrix \code{x}. If this
+matrix contains dummy codings of categorical variables, the filter
+will test the contribution of separate dummy variables to the model.
+Implicitly, this practice changes the categories of the ancestor
+factors. A neater approach that avoids this problem would be to include
+all dummy codings of a categorical variable as a block. This is currently
+not implemented.
+
+The current implementation only supports a global trimmer that applies
+to all variables.
+
+\code{lars.filter} fits the LARS model to the elements of the design matrix
+\code{x} and the target variable \code{y}, as indicated by \code{ry}.
+If these data contain missing data, the function will remove the relevant
+rows before calling \code{lars()}.
+
+\code{remove.lindep()} is the classic MICE safety net to prevent
+multicollinearity and other numerical problems. It is a far more
+conservative filter than \code{lars.filter()}. The function is called
+by \code{trim.predictors()}. The function is not the default anymore, but
+will remain part of the package for backward compatibility.
+}
+\examples{
+# Impute using the default (LARS filter)
+imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE)
+
+# LARS with no more than two predictors per variable
+imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, max.predictors = 2)
+
+# Impute using the remove.lindep filter (classic MICE)
+imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, trimmer = "remove.lindep")
+
+# Impute without a filter
+imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, trimmer = "")
 }
