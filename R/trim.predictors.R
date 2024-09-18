@@ -20,15 +20,18 @@ trim.predictors <- function(
     trimmer = c("lars.filter", "remove.lindep", "none"), ...) {
 
   if (trimmer == "lars.filter") {
-    return(lars.filter(x, y, ry, ...))
+    keep <- lars.filter(x, y, ry, ...)
+    return(keep)
   }
 
   if (trimmer == "remove.lindep") {
-    return(remove.lindep(x, y, ry, ...))
+    keep <- remove.lindep(x, y, ry, ...)
+    return(keep)
   }
 
   if (trimmer == "none") {
-    return(rep.int(TRUE, ncol(x)))
+    keep <- rep.int(TRUE, ncol(x))
+    return(keep)
   }
 
   # handle user-specified trimmer
@@ -104,12 +107,18 @@ lars.filter <- function(x, y, ry, eps = 1e-04, allow.na = TRUE, ...) {
 lars.internal <- function(x, y, type = "lar", intercept = TRUE,
                           lars.relax = 5, minimal.cp = 1, ...) {
   model <- lars(x = x, y = y, type = type, intercept = intercept)
-  cp <- model$Cp
-  min_cp <- max(min(cp), minimal.cp) # SvB small sample adjustment
-  threshold <- min_cp + (lars.relax * min_cp) / 100
-  step <- tail(which(cp <= threshold), n = 1L)
-  step <- ifelse(length(step), step, 1L)
-  coef_step <- coef(model, s = step)
+  if (any(model$R2 == 1)) {
+    # we need a work-around because Cp gives NaN
+    coef_step <- coef(model, s = which(model$R2 == 1))
+  } else {
+    # find the step where Cp is minimal
+    cp <- model$Cp
+    min_cp <- max(min(cp), minimal.cp) # SvB small sample adjustment
+    threshold <- min_cp + (lars.relax * min_cp) / 100
+    step <- tail(which(cp <= threshold), n = 1L)
+    step <- ifelse(length(step), step, 1L)
+    coef_step <- coef(model, s = step)
+  }
   return(coef_step != 0)
 }
 
