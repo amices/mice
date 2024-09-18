@@ -181,7 +181,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
 sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
                          calltype = "pred", user, ignore,
-                         trimmer = "remove.lindep", ...) {
+                         trimmer = "lars.filter", ...) {
   j <- yname[1L]
 
   if (calltype == "pred") {
