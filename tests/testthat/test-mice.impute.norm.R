@@ -64,9 +64,9 @@ test_that("Correct estimation method used", {
 # TEST 3: correct imputation model   #
 #####################################
 
-expect_warning(imp.qr <- mice(mammalsleep[, -1], ls.meth = "qr", seed = 123, print = FALSE, use.matcher = TRUE))
-expect_warning(imp.svd <- mice(mammalsleep[, -1], ls.meth = "svd", seed = 123, print = FALSE, use.matcher = TRUE))
-expect_warning(imp.ridge <- mice(mammalsleep[, -1], ls.meth = "ridge", seed = 123, print = FALSE, use.matcher = TRUE))
+expect_warning(imp.qr <- mice(mammalsleep[, -1], ls.meth = "qr", seed = 123, print = FALSE, use.matcher = TRUE, trimmer = "remove.lindep"))
+expect_warning(imp.svd <- mice(mammalsleep[, -1], ls.meth = "svd", seed = 123, print = FALSE, use.matcher = TRUE, trimmer = "remove.lindep"))
+expect_warning(imp.ridge <- mice(mammalsleep[, -1], ls.meth = "ridge", seed = 123, print = FALSE, use.matcher = TRUE, trimmer = "remove.lindep"))
 
 test_that("Imputations are equal", {
   expect_equal(imp.qr$imp, imp.svd$imp)
