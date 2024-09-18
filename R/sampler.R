@@ -180,7 +180,8 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
 
 sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
-                         calltype = "pred", user, ignore, ...) {
+                         calltype = "pred", user, ignore,
+                         trimmer = "remove.lindep", ...) {
   j <- yname[1L]
 
   if (calltype == "pred") {
@@ -231,8 +232,8 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
   cc <- wy[where[, j]]
   if (k == 1L) check.df(x, y, ry)
 
-  # remove linear dependencies
-  keep <- remove.lindep(x, y, ry, ...)
+  # select the features to feed into the imputation method
+  keep <- trim.predictors(x, y, ry, trimmer = trimmer, ...)
   x <- x[, keep, drop = FALSE]
   type <- type[keep]
   if (ncol(x) != length(type)) {

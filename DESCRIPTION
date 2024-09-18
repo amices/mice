@@ -53,6 +53,7 @@ Imports:
     glmnet,
     graphics,
     grDevices,
+    lars,
     lattice,
     methods,
     mitml,

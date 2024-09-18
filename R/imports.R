@@ -5,6 +5,7 @@
 #' @importFrom glmnet   cv.glmnet
 #' @importFrom graphics abline axis box par plot plot.new plot.window
 #'                      points rect text
+#' @importFrom lars     lars
 #' @importFrom lattice  bwplot densityplot stripplot xyplot
 #' @importFrom mitml    jomoImpute mitmlComplete panImpute testModels
 #' @importFrom nnet     multinom
