@@ -1,10 +1,10 @@
 #' Trim predictors of the imputation model
 #'
-#' The function `trim.predictors()` filters out predictors before imputation
+#' The function \code{trim.predictors()} filters out predictors before imputation
 #' of univariate incomplete variables. The function is called by
-#' `mice:::sampler.univ()`. The function is a wrapper for the trimming
-#' functions `lars.filter()`, `remove.lindep()`, and a user-specified
-#' trimming function. The default method is `"lars.filter"`.
+#' \code{mice:::sampler.univ()}. The function is a wrapper for the trimming
+#' functions \code{lars.filter()}, \code{remove.lindep()}, and a user-specified
+#' trimming function. The default method is \code{trimmer = "lars.filter"}.
 #'
 #' @inheritParams mice.impute.pmm
 #' @param trimmer A character vector of length 1 specifying the name of the
@@ -12,8 +12,15 @@
 #' "remove.lindep" and "none". The user can also specify a custom trimming
 #' function.
 #' @param ... further arguments passed to the trimming function.
-#' @return A logical vector of length `ncol(x)` indicating which predictors
+#' @return A logical vector of length \code{ncol(x)} indicating which predictors
 #' to keep.
+#' @details
+#' The function \code{lars.filter()} changes the behavior of the MICE algorithm.
+#' It is far more agressive in removing predictors than the classic
+#' \code{remove.lindep()} function. The feature is experimental and may be
+#' subject to change in future versions. For backward compatibility,
+#' add \code{trimmer = "remove.lindep"} to your call
+#' \code{mice(..., trimmer = "remove.lindep")}.
 #' @export
 trim.predictors <- function(
     x, y, ry,
@@ -44,16 +51,18 @@ trim.predictors <- function(
 #'
 #' @inheritParams mice.impute.pmm
 #' @param eps numeric. Criteriom for removing predictors with zero variance.
-#' If `eps` is zero, the filter is bypassed. The default is 1e-04.
-#' @param allow.na logical. If `TRUE`, allow imputation of fully missing `y`.
-#' This typically only occurs for passive imputation. The default is `TRUE`.
-#' @param ... further arguments passed to `lars`, like standard arguments
-#' `type` and `intercept`, or custom tuning parameters like `lars.relax` and
-#' `minimal.cp`.
-#' @return A logical vector of length `ncol(x)` indicating which predictors
+#' If \code{eps} is zero, the filter is bypassed. The default is 1e-04.
+#' Not passed down to \code{lars::lars}.
+#' @param allow.na logical. If \code{TRUE}, allow imputation of fully
+#' missing \code{y}. This typically only occurs for passive imputation.
+#' The default is \code{TRUE}.
+#' @param ... further arguments passed to \code{lars::lars}, like standard
+#' arguments \code{type} and \code{intercept}, or custom tuning parameters
+#' like \code{lars.relax} and \code{minimal.cp}.
+#' @return A logical vector of length \code{ncol(x)} indicating which predictors
 #' to keep.
 #' @details
-#' In the following conditions, the function skips the filter
+#' In the following conditions, the function skips the filter:
 #' 1. if there are no or only one predictors
 #' 2. if user imputes a fully missing y accept all predictors
 #' 3. if eps == 0 (for backward compatibility)
@@ -97,11 +106,11 @@ lars.filter <- function(x, y, ry, eps = 1e-04, allow.na = TRUE, ...) {
 #' Use 1-5 percent for a more stringent filter, and 5-10 percent for a moderate
 #' filter.
 #' @param minimal.cp numeric. The minimum "Cp" value to consider. "Cp" may
-#' become negative for small samples. `minimal_cp` is the minimum "Cp" value
+#' become negative for small samples. \code{minimal_cp} is the minimum "Cp" value
 #' that is is used as to define the threshold for the filter. Higher value
 #' select more predictors. The default is 1.
-#' @param \dots Further arguments passed to `lars`. Nothing passed down.
-#' @return A logical vector of length `ncol(x)` indicating which predictors
+#' @param \dots Further arguments passed to \code{lars::lars}. Nothing passed down.
+#' @return A logical vector of length \code{ncol(x)} indicating which predictors
 #' to keep.
 #' @export
 lars.internal <- function(x, y, type = "lar", intercept = TRUE,
@@ -124,7 +133,7 @@ lars.internal <- function(x, y, type = "lar", intercept = TRUE,
 
 #' Filter out constant and multicollinear predictors before imputations
 #'
-#' `remove.lindep()` prevents multicollinearity
+#' \code{remove.lindep()} prevents multicollinearity
 #' in the imputation model. It removes predictors that are constant or have
 #' too high correlation with the target variable. The function
 #' uses the eigenvalues of the correlation matrix to detect multicollinearity.
@@ -132,19 +141,20 @@ lars.internal <- function(x, y, type = "lar", intercept = TRUE,
 #' @inheritParams mice.impute.pmm
 #' @param eps numeric. The threshold for the ratio of the smallest to the
 #' largest eigenvalue of the correlation matrix. The default is 1e-04. If the
-#' user sets `eps = 0`, the function bypasses the filter.
+#' user sets \code{eps = 0}, the function bypasses the filter.
 #' @param maxcor numeric. The maximum correlation between a predictor and the
 #' target variable. The default is 0.99.
-#' @param allow.na logical. If `TRUE`, allow imputation of fully missing `y`.
-#' This typically only occurs for passive imputation. The default is `TRUE`.
+#' @param allow.na logical. If \code{TRUE}, allow imputation of fully
+#' missing \code{y}. This typically only occurs for passive imputation.
+#' The default is \code{TRUE}.
 #' @param frame integer. The frame number for logging. The default is 4.
-#' @return A logical vector of length `ncol(x)` indicating which predictors
+#' @return A logical vector of length \code{ncol(x)} indicating which predictors
 #' to keep.
 #' @details
-#' This function is the classic MICE safety net to prevent multicollinearity
-#' and other numerical problems. It is a far more conservative filter than
-#' `lars.filter()`. The function is called by `trim.predictors()` with the
-#' default method `"remove.lindep"`. The function is now deprecated, but
+#' \code{remove.lindep()} is the classic MICE safety net to prevent
+#' multicollinearity and other numerical problems. It is a far more
+#' conservative filter than \code{lars.filter()}. The function is called
+#' by \code{trim.predictors()}. The function is now deprecated, but
 #' will remain part of the package for backward compatibility.
 #' @export
 remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99,

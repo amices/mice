@@ -18,24 +18,26 @@ model is fitted. The \code{ry} generally distinguishes the observed
 (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
 
 \item{eps}{numeric. Criteriom for removing predictors with zero variance.
-If `eps` is zero, the filter is bypassed. The default is 1e-04.}
+If \code{eps} is zero, the filter is bypassed. The default is 1e-04.
+Not passed down to \code{lars::lars}.}
 
-\item{allow.na}{logical. If `TRUE`, allow imputation of fully missing `y`.
-This typically only occurs for passive imputation. The default is `TRUE`.}
+\item{allow.na}{logical. If \code{TRUE}, allow imputation of fully
+missing \code{y}. This typically only occurs for passive imputation.
+The default is \code{TRUE}.}
 
-\item{...}{further arguments passed to `lars`, like standard arguments
-`type` and `intercept`, or custom tuning parameters like `lars.relax` and
-`minimal.cp`.}
+\item{...}{further arguments passed to \code{lars::lars}, like standard
+arguments \code{type} and \code{intercept}, or custom tuning parameters
+like \code{lars.relax} and \code{minimal.cp}.}
 }
 \value{
-A logical vector of length `ncol(x)` indicating which predictors
+A logical vector of length \code{ncol(x)} indicating which predictors
 to keep.
 }
 \description{
 Filter out predictors by least angular regression
 }
 \details{
-In the following conditions, the function skips the filter
+In the following conditions, the function skips the filter:
 1. if there are no or only one predictors
 2. if user imputes a fully missing y accept all predictors
 3. if eps == 0 (for backward compatibility)

@@ -31,13 +31,21 @@ function.}
 \item{...}{further arguments passed to the trimming function.}
 }
 \value{
-A logical vector of length `ncol(x)` indicating which predictors
+A logical vector of length \code{ncol(x)} indicating which predictors
 to keep.
 }
 \description{
-The function `trim.predictors()` filters out predictors before imputation
+The function \code{trim.predictors()} filters out predictors before imputation
 of univariate incomplete variables. The function is called by
-`mice:::sampler.univ()`. The function is a wrapper for the trimming
-functions `lars.filter()`, `remove.lindep()`, and a user-specified
-trimming function. The default method is `"lars.filter"`.
+\code{mice:::sampler.univ()}. The function is a wrapper for the trimming
+functions \code{lars.filter()}, \code{remove.lindep()}, and a user-specified
+trimming function. The default method is \code{trimmer = "lars.filter"}.
+}
+\details{
+The function \code{lars.filter()} changes the behavior of the MICE algorithm.
+It is far more agressive in removing predictors than the classic
+\code{remove.lindep()} function. The feature is experimental and may be
+subject to change in future versions. For backward compatibility,
+add \code{trimmer = "remove.lindep"} to your call
+\code{mice(..., trimmer = "remove.lindep")}.
 }

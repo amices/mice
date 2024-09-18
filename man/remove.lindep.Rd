@@ -28,32 +28,33 @@ model is fitted. The \code{ry} generally distinguishes the observed
 
 \item{eps}{numeric. The threshold for the ratio of the smallest to the
 largest eigenvalue of the correlation matrix. The default is 1e-04. If the
-user sets `eps = 0`, the function bypasses the filter.}
+user sets \code{eps = 0}, the function bypasses the filter.}
 
 \item{maxcor}{numeric. The maximum correlation between a predictor and the
 target variable. The default is 0.99.}
 
-\item{allow.na}{logical. If `TRUE`, allow imputation of fully missing `y`.
-This typically only occurs for passive imputation. The default is `TRUE`.}
+\item{allow.na}{logical. If \code{TRUE}, allow imputation of fully
+missing \code{y}. This typically only occurs for passive imputation.
+The default is \code{TRUE}.}
 
 \item{frame}{integer. The frame number for logging. The default is 4.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-A logical vector of length `ncol(x)` indicating which predictors
+A logical vector of length \code{ncol(x)} indicating which predictors
 to keep.
 }
 \description{
-`remove.lindep()` prevents multicollinearity
+\code{remove.lindep()} prevents multicollinearity
 in the imputation model. It removes predictors that are constant or have
 too high correlation with the target variable. The function
 uses the eigenvalues of the correlation matrix to detect multicollinearity.
 }
 \details{
-This function is the classic MICE safety net to prevent multicollinearity
-and other numerical problems. It is a far more conservative filter than
-`lars.filter()`. The function is called by `trim.predictors()` with the
-default method `"remove.lindep"`. The function is now deprecated, but
+\code{remove.lindep()} is the classic MICE safety net to prevent
+multicollinearity and other numerical problems. It is a far more
+conservative filter than \code{lars.filter()}. The function is called
+by \code{trim.predictors()}. The function is now deprecated, but
 will remain part of the package for backward compatibility.
 }

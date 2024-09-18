@@ -39,14 +39,14 @@ Use 1-5 percent for a more stringent filter, and 5-10 percent for a moderate
 filter.}
 
 \item{minimal.cp}{numeric. The minimum "Cp" value to consider. "Cp" may
-become negative for small samples. `minimal_cp` is the minimum "Cp" value
+become negative for small samples. \code{minimal_cp} is the minimum "Cp" value
 that is is used as to define the threshold for the filter. Higher value
 select more predictors. The default is 1.}
 
-\item{\dots}{Further arguments passed to `lars`. Nothing passed down.}
+\item{\dots}{Further arguments passed to \code{lars::lars}. Nothing passed down.}
 }
 \value{
-A logical vector of length `ncol(x)` indicating which predictors
+A logical vector of length \code{ncol(x)} indicating which predictors
 to keep.
 }
 \description{
