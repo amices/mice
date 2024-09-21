@@ -42,21 +42,18 @@
 #' to all variables.
 #' @rdname trim.predictors
 #' @examples
-#' # Impute using the default (LARS filter)
+#' # Impute using the default
 #' imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE)
 #'
-#' # LARS with no more than two predictors per variable
-#' imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, max.predictors = 2)
-#'
-#' # Impute using the remove.lindep filter (classic MICE)
-#' imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, trimmer = "remove.lindep")
+#' # Impute using LARS
+#' imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, trimmer = "lars")
 #'
 #' # Impute without a filter
 #' imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, trimmer = "")
 #' @export
 trim.predictors <- function(
     x, y, ry,
-    trimmer = "lars.filter",
+    trimmer = "remove.lindep",
     allow.na = TRUE,
     ...) {
   stopifnot(is.matrix(x), is.logical(ry))
@@ -71,8 +68,12 @@ trim.predictors <- function(
     # Exception 3: Keep all if there is only zero or one predictor
     # Exception 4: Keep all if the user specifies trimmer = ""
     keep <- rep.int(TRUE, ncol(x))
-  } else if (trimmer == "lars.filter") {
-    keep <- lars.filter(x, y, ry, ...)
+  } else if (trimmer == "lars") {
+    keep <- lars.filter(x, y, ry, method = "lars", ...)
+  } else if (trimmer == "glmnet") {
+    keep <- lars.filter(x, y, ry, method = "glmnet", ...)
+  } else if (trimmer == "cv.glmnet") {
+    keep <- lars.filter(x, y, ry, method = "cv.glmnet", ...)
   } else if (trimmer == "remove.lindep") {
     keep <- remove.lindep(x, y, ry, ...)
   } else {
@@ -90,6 +91,7 @@ trim.predictors <- function(
 #' least angle regression (LARS).
 #'
 #' @inheritParams mice.impute.pmm
+#' @param method The selection method
 #' @param ... Further arguments passed to \code{lars::lars}, like standard
 #' LARS arguments \code{type}, \code{intercept}, \code{eps} and
 #' \code{max.steps}, or tuning parameters \code{lars.relax} and
@@ -101,7 +103,8 @@ trim.predictors <- function(
 #' rows before calling \code{lars()}.
 #' @rdname trim.predictors
 #' @export
-lars.filter <- function(x, y, ry,  ...) {
+lars.filter <- function(x, y, ry,
+                        method = c("lars", "glmnet", "cv.glmnet"), ...) {
 
   # If y is constant, predict from an intercept-only model
   yobs <- as.numeric(y[ry])
@@ -114,14 +117,21 @@ lars.filter <- function(x, y, ry,  ...) {
   if (anyNA(xobs) || anyNA(yobs)) {
     idx <- complete.cases(xobs, yobs)
     if (sum(idx) == 0L) {
-      stop("The lars filter requires complete cases, but none were found.")
+      stop("The filter requires complete cases, but none were found.")
     }
     xobs <- xobs[idx, , drop = FALSE]
     yobs <- yobs[idx]
   }
 
-  # Call the lars filter
-  keep <- lars.internal(x = xobs, y = yobs, ...)
+  # Call the filter
+  if (method == "lars") {
+    keep <- lars.internal(x = xobs, y = yobs, ...)
+  } else if (method == "glmnet") {
+    keep <- glmnet.internal(x = xobs, y = yobs, method = "glmnet", ...)
+  } else if (method == "cv.glmnet") {
+    keep <- glmnet.internal(x = xobs, y = yobs, method = "cv.glmnet", ...)
+  }
+
   return(keep)
 }
 
@@ -142,10 +152,11 @@ lars.filter <- function(x, y, ry,  ...) {
 #' @rdname trim.predictors
 #' @export
 lars.internal <- function(
-    x, y, type = "lar", intercept = TRUE, max.predictors = 20, eps = 1e-12,
-    lars.relax = 5, minimal.cp = 1, ...) {
+    x, y, type = "lar", intercept = TRUE, eps = 1e-12,
+    max.predictors = NULL, lars.relax = 5, minimal.cp = 1, ...) {
+  max.steps <- ifelse(is.null(max.predictors), ncol(x), max.predictors)
   model <- lars(x = x, y = y, type = type, intercept = intercept,
-                eps = eps, max.steps = min(ncol(x), max.predictors))
+                eps = eps, max.steps = max.steps)
   if (any(model$R2 == 1)) {
     # work-around because Cp gives NaN for perfect fits
     coef_step <- coef(model, s = which(model$R2 == 1))
@@ -158,7 +169,44 @@ lars.internal <- function(
     step <- ifelse(length(step), step, 1L)
     coef_step <- coef(model, s = step)
   }
-  return(coef_step != 0)
+  keep <- coef_step != 0
+
+  # ind <- which(keep)
+  # cat("length indices: ", length(ind), "\n")
+  return(keep)
+}
+
+#' Filter out predictors by glmnet
+#'
+#' @inheritParams glmnet::glmnet
+#' @rdname trim.predictors
+#' @export
+glmnet.internal <- function(x, y, method = "cv.glmnet",
+                            dfmax = NULL, ...) {
+
+  dfmax <- ifelse(is.null(dfmax), ncol(x), dfmax)
+
+  if (method == "glmnet") {
+    # select max.predictors predictors with LASSO
+    fit <- glmnet::glmnet(x = x, y = y, dfmax = dfmax, ...)
+    valid_indices <- which(fit$df <= dfmax)
+    closest_index <- valid_indices[which.max(fit$df[valid_indices])]
+    lambda <- fit$lambda[closest_index]
+  } else if (method == "cv.glmnet") {
+    # select predictors with cross-validation
+    fit <- glmnet::cv.glmnet(x = x, y = y, dfmax = dfmax, ...)
+    lambda <- fit$lambda.min
+  } else {
+    stop("Unknown method.")
+  }
+
+  # select predictors
+  coefs <- coef(fit, s = lambda)
+  keep <- as.logical(coefs[-1, ] != 0)
+
+  # ind <- which(keep)
+  # cat("length indices: ", length(ind), "\n")
+  return(keep)
 }
 
 #' Filter out constant and multi-collinear predictors before imputation

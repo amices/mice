@@ -4,24 +4,27 @@
 \alias{trim.predictors}
 \alias{lars.filter}
 \alias{lars.internal}
+\alias{glmnet.internal}
 \alias{remove.lindep}
 \title{Trim the predictor set before univariate imputation}
 \usage{
-trim.predictors(x, y, ry, trimmer = "lars.filter", allow.na = TRUE, ...)
+trim.predictors(x, y, ry, trimmer = "remove.lindep", allow.na = TRUE, ...)
 
-lars.filter(x, y, ry, ...)
+lars.filter(x, y, ry, method = c("lars", "glmnet", "cv.glmnet"), ...)
 
 lars.internal(
   x,
   y,
   type = "lar",
   intercept = TRUE,
-  max.predictors = 20,
   eps = 1e-12,
+  max.predictors = NULL,
   lars.relax = 5,
   minimal.cp = 1,
   ...
 )
+
+glmnet.internal(x, y, method = "cv.glmnet", dfmax = NULL, ...)
 
 remove.lindep(x, y, ry, eps = 1e-04, maxcor = 0.99, frame = 4, ...)
 }
@@ -50,6 +53,8 @@ LARS arguments \code{type}, \code{intercept}, \code{eps} and
 \code{max.steps}, or tuning parameters \code{lars.relax} and
 \code{minimal.cp}.}
 
+\item{method}{The selection method}
+
 \item{type}{Character. The type of LARS model to fit. The default is "lar".}
 
 \item{intercept}{
@@ -57,14 +62,14 @@ if TRUE, an intercept is included in the model (and not penalized),
 otherwise no intercept is included. Default is TRUE.
 }
 
-\item{max.predictors}{Integer. The maximum number of variables to include
-in the LARS model. The default is 20.}
-
 \item{eps}{Numeric. Used by \code{remove.lindep()} as the threshold for
 the ratio of the smallest to the largest eigenvalue of the correlation
 matrix. The default is 1e-04. If the user sets \code{eps = 0},
 all variables are returned (for backward compatibility). Used by
 \code{lars.internal()} as an argument to the \code{lars::lars()} function.}
+
+\item{max.predictors}{Integer. The maximum number of variables to include
+in the LARS model. The default is 20.}
 
 \item{lars.relax}{Numeric. The percentage of the minimum Cp value that is
 added to the minimum Cp to relax the inclusion threshold. The default is 5.
@@ -75,6 +80,9 @@ for a moderate permissive filter, and 10-20 percent for very permissive.}
 become negative for small samples. \code{minimal_cp} is the minimum "Cp" value
 that is is used as to define the threshold for the filter. Higher values
 select more predictors. The default is 1.}
+
+\item{dfmax}{Limit the maximum number of variables in the model. Useful for
+very large \code{nvars}, if a partial path is desired.}
 
 \item{maxcor}{Numeric. The maximum correlation between a predictor and the
 target variable. The default is 0.99.}
@@ -131,14 +139,11 @@ by \code{trim.predictors()}. The function is not the default anymore, but
 will remain part of the package for backward compatibility.
 }
 \examples{
-# Impute using the default (LARS filter)
+# Impute using the default
 imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE)
 
-# LARS with no more than two predictors per variable
-imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, max.predictors = 2)
-
-# Impute using the remove.lindep filter (classic MICE)
-imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, trimmer = "remove.lindep")
+# Impute using LARS
+imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, trimmer = "lars")
 
 # Impute without a filter
 imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, trimmer = "")
