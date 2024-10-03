@@ -1,3 +1,7 @@
+# mice 3.16.15
+
+* Initialize single-variables blocks in `make.method()` in a more efficient way (resolves #672)
+
 # mice 3.16.14
 
 * Fixes a bug during initialization of factor values
