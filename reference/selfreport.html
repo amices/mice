@@ -9,7 +9,7 @@ studies."><meta property="og:image" content="https://amices.org/mice/logo.png"><
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.14</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.15</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -152,40 +152,40 @@ Van Buuren (2012) shows how the missing measured data can be imputed in the
 <span class="r-in"><span><span class="co">### Like FIMD Figure 7.6</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">cd</span> <span class="op">&lt;-</span> <span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'imp' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'imp' not found</span>
 <span class="r-in"><span><span class="va">xy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/xy.coords.html" class="external-link">xy.coords</a></span><span class="op">(</span><span class="va">cd</span><span class="op">$</span><span class="va">bm</span>, <span class="va">cd</span><span class="op">$</span><span class="va">br</span> <span class="op">-</span> <span class="va">cd</span><span class="op">$</span><span class="va">bm</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'cd' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'cd' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">xy</span>,</span></span>
 <span class="r-in"><span>  col <span class="op">=</span> <span class="fu"><a href="mdc.html">mdc</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, xlab <span class="op">=</span> <span class="st">"Measured BMI"</span>, ylab <span class="op">=</span> <span class="st">"Reported - Measured BMI"</span>,</span></span>
 <span class="r-in"><span>  xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">17</span>, <span class="fl">45</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"n"</span>, lwd <span class="op">=</span> <span class="fl">0.7</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'xy' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'xy' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">polygon</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">20</span>, <span class="fl">30</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"grey95"</span>, border <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">polygon</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">40</span>, <span class="fl">30</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="op">-</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">10</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"grey95"</span>, border <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, lty <span class="op">=</span> <span class="fl">2</span>, lwd <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">idx</span> <span class="op">&lt;-</span> <span class="va">cd</span><span class="op">$</span><span class="va">src</span> <span class="op">==</span> <span class="st">"krul"</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'cd' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'cd' not found</span>
 <span class="r-in"><span><span class="va">xyc</span> <span class="op">&lt;-</span> <span class="va">xy</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'xy' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'xy' not found</span>
 <span class="r-in"><span><span class="va">xyc</span><span class="op">$</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">xy</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'xy' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'xy' not found</span>
 <span class="r-in"><span><span class="va">xyc</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">xy</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'xy' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'xy' not found</span>
 <span class="r-in"><span><span class="va">xys</span> <span class="op">&lt;-</span> <span class="va">xy</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'xy' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'xy' not found</span>
 <span class="r-in"><span><span class="va">xys</span><span class="op">$</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">xy</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="op">!</span><span class="va">idx</span><span class="op">]</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'xy' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'xy' not found</span>
 <span class="r-in"><span><span class="va">xys</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">xy</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="op">!</span><span class="va">idx</span><span class="op">]</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'xy' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'xy' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">xyc</span>, col <span class="op">=</span> <span class="fu"><a href="mdc.html">mdc</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'xyc' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'xyc' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">xys</span>, col <span class="op">=</span> <span class="fu"><a href="mdc.html">mdc</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'xys' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'xys' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lowess.html" class="external-link">lowess</a></span><span class="op">(</span><span class="va">xyc</span><span class="op">)</span>, col <span class="op">=</span> <span class="fu"><a href="mdc.html">mdc</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'xyc' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'xyc' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lowess.html" class="external-link">lowess</a></span><span class="op">(</span><span class="va">xys</span><span class="op">)</span>, col <span class="op">=</span> <span class="fu"><a href="mdc.html">mdc</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'xys' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'xys' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">28</span>, <span class="fl">20</span>, <span class="fl">32</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">4</span>, <span class="op">-</span><span class="fl">4</span>, <span class="op">-</span><span class="fl">4</span><span class="op">)</span>, cex <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/box.html" class="external-link">box</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="selfreport-1.png" alt="" width="700" height="433"></span>
@@ -200,7 +200,7 @@ Van Buuren (2012) shows how the missing measured data can be imputed in the
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>
