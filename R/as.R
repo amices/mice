@@ -124,7 +124,7 @@ as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id") {
   names <- names(ini$imp)
   for (i in seq_along(names)) {
     varname <- names[i]
-    if (!is.null(ini$imp[[varname]])) {
+    if (nrow(ini$imp[[varname]])) {
       for (j in seq_len(m)) {
         idx <- imps == j & where[, varname]
         ini$imp[[varname]][j] <- long[idx, varname]

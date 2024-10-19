@@ -1,5 +1,13 @@
 * Adds a new method to filter features from the design matrix just before fitting the imputation model. A new function `lars.filter()` takes over duties of old `remove.lindep()` that has acted as a safety net for many years. The new method fits a LARS model, and keep the subset of variables that contribute to the model. The method is more robust and faster than `remove.lindep()` and can handle more complex situations.
 
+# mice 3.16.16
+
+* Prevent `as.mids()` from filling the `imp` object for complete variables
+
+# mice 3.16.15
+
+* Initialize single-variables blocks in `make.method()` in a more efficient way (resolves #672)
+
 # mice 3.16.14
 
 * Fixes a bug during initialization of factor values
