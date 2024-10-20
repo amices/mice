@@ -7,7 +7,7 @@ test_that("Constant variables are not imputed by default", {
 
 test_that("Constant variables are imputed for remove.constant = FALSE", {
   expect_warning(imp1b <<- mice(nhanes[1:13, ], m = 2, maxit = 1, print = FALSE,
-                                remove.constant = FALSE, trimmer = "remove.lindep"))
+                                remove.constant = FALSE, trimmer = "lindep"))
   expect_equal(sum(is.na(complete(imp1b))), 0L)
 })
 

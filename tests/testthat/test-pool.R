@@ -8,7 +8,7 @@ context("pool")
 # https://stefvanbuuren.name/fimd/
 suppressWarnings(RNGversion("3.5.0"))
 
-imp <- mice(nhanes2, print = FALSE, maxit = 2, seed = 121, use.matcher = TRUE, trimmer = "remove.lindep")
+imp <- mice(nhanes2, print = FALSE, maxit = 2, seed = 121, use.matcher = TRUE, trimmer = "lindep")
 fit <- with(imp, lm(bmi ~ chl + age + hyp))
 est <- pool(fit)
 # fitlist <- fit$analyses
