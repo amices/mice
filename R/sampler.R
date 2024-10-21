@@ -114,13 +114,13 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
               ))
             } else {
               stop("Cannot call function of type ", calltype,
-                   call. = FALSE
+                call. = FALSE
               )
             }
             if (is.null(imputes)) {
               stop("No imputations from ", theMethod,
-                   h,
-                   call. = FALSE
+                h,
+                call. = FALSE
               )
             }
             for (j in names(imputes)) {
@@ -135,8 +135,10 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
             for (j in b) {
               wy <- where[, j]
               ry <- r[, j]
-              imp[[j]][, i] <- model.frame(as.formula(theMethod), data[wy, ],
-                                           na.action = na.pass
+              imp[[j]][, i] <- model.frame(
+                as.formula(theMethod),
+                data[wy, ],
+                na.action = na.pass
               )
               data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
             }
@@ -225,34 +227,35 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
   }
 
   # select the features to feed into the imputation method
-  keep <- trim.data(y = data[, j],
-                    ry = r[, j] & !ignore,
-                    x = x,
-                    trimmer = trimmer, ...)
-  # set up the data for the imputation method
-  cx <- names(keep$cols)[keep$cols]
-  wy <- complete.cases(x) & where[, j]
-  type <- type[cx]
-  if (ncol(x[, cx, drop = FALSE]) != length(type)) {
-    stop("Internal error: length(type) != number of predictors")
-  }
+  keep <- trim.data(
+    y = data[, j],
+    ry = r[, j] & !ignore,
+    x = x,
+    trimmer = trimmer, ...
+  )
 
-  cc <- wy[where[, j]]
-  if (k == 1L) check.df(x = x[, cx, drop = FALSE],
-                        y = data[, j],
-                        ry = keep$rows)
+  # set up univariate imputation method
+  # wy: entries we wish to impute (length(y) elements)
+  # iy: entries we will impute (sum(wy) elements)
+  wy <- complete.cases(x) & where[, j]
+  iy <- wy[where[, j]]
+
+  # wipe out previous values
+  imputes <- data[wy, j]
+  imputes[!iy] <- NA
 
   # here we go
   f <- paste("mice.impute", method, sep = ".")
-  imputes <- data[wy, j]
-  imputes[!cc] <- NA
-
-  args <- c(list(y = data[, j],
-                 ry = keep$rows,
-                 x = x[, cx, drop = FALSE],
-                 wy = wy,
-                 type = type),
-            user, list(...))
-  imputes[cc] <- do.call(f, args = args)
-  imputes
+  args <- c(
+    list(
+      y = data[, j],
+      ry = keep$rows,
+      x = x[, keep$cols, drop = FALSE],
+      wy = wy,
+      type = type[keep$cols]
+    ),
+    user, list(...)
+  )
+  imputes[iy] <- do.call(f, args = args)
+  return(imputes)
 }
