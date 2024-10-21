@@ -18,6 +18,7 @@ mice.trim.lars(
   ry,
   x,
   lars.type = c("lar", "lasso", "forward.stagewise", "stepwise"),
+  lars.eps = 1e-12,
   max.predictors = NULL,
   lars.relax = 5,
   minimal.cp = 1,
@@ -51,13 +52,13 @@ by \code{model.matrix()}. The matrix must have the same number of rows as
 \code{length(y)} and \code{length(ry)}.}
 
 \item{trimmer}{A string identifying the trimming function. The default is
-\code{"lindep"}, which call \code{mice.trim.lindep()}. Other trimmers
-include \code{"lars"}, \code{"glmnet"}, \code{"cv.glmnet"} or a custom
-trimming function. Turn off trimming by \code{trimmer = ""}.}
+\code{"lindep"}. Other trimmers include \code{"lars"}, \code{"glmnet"},
+\code{"cv.glmnet"} or a custom trimming function. Turn off all trimming
+by \code{trimmer = ""}.}
 
 \item{allow.na}{Logical. If \code{TRUE}, allow imputation of fully
-missing \code{y}. Typically, this only occurs for passive imputation.
-The default is \code{TRUE}.}
+missing \code{y} (typically only useful for passive imputation).
+The default is \code{allow.na = TRUE}.}
 
 \item{...}{Other named arguments.}
 
@@ -66,6 +67,8 @@ The default is \code{TRUE}.}
 \item{lars.type}{Character. The type of model to fit. Could be
 \code{"lar"}, \code{"lasso"}, \code{"forward.stagewise"} or
 \code{"stepwise"}.}
+
+\item{lars.eps}{Numeric. An effective zero, with default 1e-12.}
 
 \item{max.predictors}{Integer. The maximum number of variables to include.
 The default \code{NULL} does not use a maximum.}
@@ -87,9 +90,7 @@ very large \code{nvars}, if a partial path is desired.}
 \item{eps}{Numeric. Used by \code{remove.lindep()} as the threshold for
 the ratio of the smallest to the largest eigenvalue of the correlation
 matrix. The default is 1e-04. Setting \code{eps = 0} bypasses
-\code{remove.lindep()} and returns all variables.
-Note: In \code{lars.trimmer()} the \code{eps} argument has a different
-meaning.}
+\code{remove.lindep()} and returns all variables.}
 
 \item{maxcor}{Numeric. The maximum correlation between a predictor and the
 target variable. The default is 0.99.}
@@ -100,8 +101,8 @@ If \code{FALSE}, the function uses only the observed values to calculate
 (co)variances from incomplete data in \code{x}.}
 }
 \value{
-A list with elements named \code{"rows"} and \code{"cols"},
-logical vectors of lengths \code{nrow(x)} and \code{ncol(x)}, respectively.
+A list with two elements named \code{"rows"} and \code{"cols"},
+logical vectors of lengths \code{nrow(x)} and \code{ncol(x)}.
 
 A logical vector of length \code{ncol(x)} indicating the predictors
 to keep.
@@ -110,13 +111,19 @@ A logical vector of length \code{ncol(x)} indicating which predictors
 to keep.
 }
 \description{
-\code{trim.data()} returns two array of logicals, one for rows and one
-for columns. The function filters out predictors that do not contribute to
-the prediction of the target variable.
-The user can select one of the following trimming functions:
-\code{mice.trim.lindep()} (a wrapper of \code{remove.lindep()}),
-\code{mice.trim.lars()}, \code{mice.trim.glmnet()},
-\code{mice.trim.cv.glmnet()} or call a custom trimming function.
+\code{trim.data()} filters out predictors that do not contribute to
+the prediction of the target variable. It is called from within the
+MICE algorithm. The user can select one of the following trimming functions
+using the `trimmer` argument of the `mice()` function:
+\describe{
+  \item{\code{"lindep"}}{Remove constant and multi-collinear predictors.}
+  \item{\code{"lars"}}{Include predictors by least angle regression (LARS).}
+  \item{\code{"glmnet"}}{Filter out predictors by elastic net.}
+  \item{\code{"cv.glmnet"}}{Filter out predictors by cross validated elastic net.}
+}
+The relevant functions are \code{mice.trim.lindep()}, \code{mice.trim.lars()},
+\code{mice.trim.glmnet()} and \code{mice.trim.cv.glmnet()}. The user can
+also specify and call a custom trimming function.
 
 \code{mice.trim.lindep()} is a wrapper of \code{remove.lindep()}, the
 classic MICE safety net to prevent multicollinearity and other numerical
@@ -140,15 +147,15 @@ The function bypasses the column trimmer in the following cases:
 \describe{
   \item{1}{If \code{y} is allowed to be fully missing.}
   \item{2}{If there are zero entries of \code{y} observed.}
-  \item{3}{If there are zero or 1 predictors.}
+  \item{3}{If there are zero predictors.}
   \item{4}{If the user specifies \code{trimmer = ""}.}
 }
 
 Trimmers like \code{mice.trim.lars()} change the behaviour of the
 MICE algorithm. They are more aggressive in removing predictors than
-the classic \code{remove.lindep()} function. For backward compatibility,
-set \code{trimmer = "lindep"} to your call like
-\code{mice(..., trimmer = "lindep")}.
+the classic \code{remove.lindep()} method. For datasets with many
+columns, our current recommendation is \code{trimmer = "lars"} in
+combination with the `max.predictors` argument.
 
 \code{mice.trim.lars()} fits a LARS model to the elements of the design
 matrix \code{x} and the target variable \code{y[ry]}. The procedure
@@ -159,12 +166,16 @@ multicollinearity and other numerical problems. It is a more
 conservative filter than \code{trim.lars()}.
 }
 \examples{
-# Impute according to old baheviour (remove.lindep())
+# Remove only linear dependencies (remove.lindep())
 imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, trimmer = "lindep")
 
-# Trim predictors using LARS
-imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, trimmer = "lars")
+# Filter predictors using LARS
+imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, trimmer = "lars",
+max.predictors = 2)
 
-# Impute without a trim function
+# No trimming
 imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, trimmer = "")
+}
+\author{
+Stef van Buuren, Oct 2024
 }
