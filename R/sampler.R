@@ -230,14 +230,15 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
                     x = x,
                     trimmer = trimmer, ...)
   # set up the data for the imputation method
+  cx <- names(keep$cols)[keep$cols]
   wy <- complete.cases(x) & where[, j]
-  type <- type[keep$cols]
-  if (ncol(x) != length(type)) {
+  type <- type[cx]
+  if (ncol(x[, cx, drop = FALSE]) != length(type)) {
     stop("Internal error: length(type) != number of predictors")
   }
 
   cc <- wy[where[, j]]
-  if (k == 1L) check.df(x = x[, names(keep$cols), drop = FALSE],
+  if (k == 1L) check.df(x = x[, cx, drop = FALSE],
                         y = data[, j],
                         ry = keep$rows)
 
@@ -248,7 +249,7 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
 
   args <- c(list(y = data[, j],
                  ry = keep$rows,
-                 x = x[, names(keep$cols), drop = FALSE],
+                 x = x[, cx, drop = FALSE],
                  wy = wy,
                  type = type),
             user, list(...))
