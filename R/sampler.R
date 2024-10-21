@@ -231,21 +231,26 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
                     trimmer = trimmer, ...)
   # set up the data for the imputation method
   wy <- complete.cases(x) & where[, j]
-  xt <- x[, names(keep$cols), drop = FALSE]
-  type <- type[names(keep$cols)]
+  type <- type[keep$cols]
   if (ncol(x) != length(type)) {
     stop("Internal error: length(type) != number of predictors")
   }
 
   cc <- wy[where[, j]]
-  if (k == 1L) check.df(x = xt, y = data[, j], ry = r[, j])
+  if (k == 1L) check.df(x = x[, names(keep$cols), drop = FALSE],
+                        y = data[, j],
+                        ry = keep$rows)
 
   # here we go
   f <- paste("mice.impute", method, sep = ".")
   imputes <- data[wy, j]
   imputes[!cc] <- NA
 
-  args <- c(list(y = data[, j], ry = r[, j], x = xt, wy = wy, type = type),
+  args <- c(list(y = data[, j],
+                 ry = keep$rows,
+                 x = x[, names(keep$cols), drop = FALSE],
+                 wy = wy,
+                 type = type),
             user, list(...))
   imputes[cc] <- do.call(f, args = args)
   imputes
