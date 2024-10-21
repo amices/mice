@@ -28,7 +28,16 @@ mice.trim.glmnet(y, ry, x, dfmax = NULL, ...)
 
 mice.trim.cv.glmnet(y, ry, x, dfmax = NULL, ...)
 
-remove.lindep(x, y, ry, eps = 1e-04, maxcor = 0.99, frame = 4, ...)
+remove.lindep(
+  x,
+  y,
+  ry,
+  eps = 1e-04,
+  maxcor = 0.99,
+  frame = 4,
+  expects.complete.x = TRUE,
+  ...
+)
 }
 \arguments{
 \item{y}{Numeric vector of length \code{length(y)} with the target variable.
@@ -50,10 +59,7 @@ trimming function. Turn off trimming by \code{trimmer = ""}.}
 missing \code{y}. Typically, this only occurs for passive imputation.
 The default is \code{TRUE}.}
 
-\item{...}{Further arguments passed to \code{lars::lars}, like standard
-LARS arguments \code{type}, \code{intercept}, \code{eps} and
-\code{max.steps}, or tuning parameters \code{lars.relax} and
-\code{minimal.cp}.}
+\item{...}{Other named arguments.}
 
 \item{frame}{Integer. The frame number for logging. Do not alter.}
 
@@ -87,6 +93,11 @@ meaning.}
 
 \item{maxcor}{Numeric. The maximum correlation between a predictor and the
 target variable. The default is 0.99.}
+
+\item{expects.complete.x}{Logical. If \code{TRUE}, the function expects
+the data in \code{x} to be complete (used in mice <= 3.17.0).
+If \code{FALSE}, the function uses only the observed values to calculate
+(co)variances from incomplete data in \code{x}.}
 }
 \value{
 A list with elements named \code{"rows"} and \code{"cols"},
@@ -111,6 +122,9 @@ The user can select one of the following trimming functions:
 classic MICE safety net to prevent multicollinearity and other numerical
 problems.
 
+\code{trim.lars()} is a fast way to filter predictors by least angle
+regression (LARS).
+
 \code{remove.lindep()} prevents multicollinearity
 in the imputation model. It removes predictors that are constant or have
 too high correlation with the target variable. The function
@@ -125,7 +139,7 @@ level is equivalent to collapsing that level to the reference category.
 The function bypasses the column trimmer in the following cases:
 \describe{
   \item{1}{If \code{y} is allowed to be fully missing.}
-  \item{2}{If there are zero or 1 entries of \code{y} observed.}
+  \item{2}{If there are zero entries of \code{y} observed.}
   \item{3}{If there are zero or 1 predictors.}
   \item{4}{If the user specifies \code{trimmer = ""}.}
 }

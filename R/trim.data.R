@@ -98,20 +98,11 @@ mice.trim.lindep <- function(y, ry, x, frame = 5, ...) {
 
   keep <- list(
     rows = complete.cases(x, y) & ry,
-    cols = remove.lindep(x, y, ry, frame = frame, ...)
+    cols = remove.lindep(x, y, ry, frame = frame,
+                         expects.complete.x = FALSE, ...)
   )
   return(keep)
 }
-
-#'
-#' @inheritParams mice.impute.pmm
-#' @param ... Further arguments passed to \code{lars::lars}, like standard
-#' LARS arguments \code{type}, \code{intercept}, \code{eps} and
-#' \code{max.steps}, or tuning parameters \code{lars.relax} and
-#' \code{minimal.cp}.
-#' @details
-#' @rdname trim.data
-#' @export
 
 #' Include predictors by least angle regression (LARS)
 #'
@@ -119,7 +110,7 @@ mice.trim.lindep <- function(y, ry, x, frame = 5, ...) {
 #' regression (LARS).
 #'
 #' @inheritParams lars::lars
-#' @inheritParams mice::mice.impute.pmm
+#' @inheritParams mice.impute.pmm
 #' @param lars.type Character. The type of model to fit. Could be
 #' \code{"lar"}, \code{"lasso"}, \code{"forward.stagewise"} or
 #' \code{"stepwise"}.
@@ -262,6 +253,10 @@ trim.preprocess <- function(y, ry, x) {
 #' @param maxcor Numeric. The maximum correlation between a predictor and the
 #' target variable. The default is 0.99.
 #' @param frame Integer. The frame number for logging. Do not alter.
+#' @param expects.complete.x Logical. If \code{TRUE}, the function expects
+#' the data in \code{x} to be complete (used in mice <= 3.17.0).
+#' If \code{FALSE}, the function uses only the observed values to calculate
+#' (co)variances from incomplete data in \code{x}.
 #' @details
 #' \code{remove.lindep()} is the classic MICE safety net to prevent
 #' multicollinearity and other numerical problems. It is a more
@@ -269,7 +264,21 @@ trim.preprocess <- function(y, ry, x) {
 #' @rdname trim.data
 #' @export
 remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99,
-                          frame = 4, ...) {
+                          frame = 4, expects.complete.x = TRUE, ...) {
+
+  # handle.incomplete is a flag to indicate what to do with incomplete x
+  if (expects.complete.x) {
+    # classic remove.lindep
+    na.rm <- FALSE
+    use1 <- "everything"
+    use2 <- "all.obs"
+  } else {
+    # more permissive remove.lindep
+    na.rm <- TRUE
+    use1 <- "pairwise.complete.obs"
+    use2 <- "pairwise.complete.obs"
+  }
+
   # setting eps = 0 bypasses remove.lindep()
   # for compatibility with previous versions
   if (eps == 0) {
@@ -282,9 +291,9 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99,
     return(rep(FALSE, ncol(xobs)))
   }
 
-  cols <- unlist(apply(xobs, 2, var) > 1000 * .Machine$double.eps)
+  cols <- apply(xobs, 2, var, na.rm = na.rm) > 1000 * .Machine$double.eps
   cols[is.na(cols)] <- FALSE
-  highcor <- suppressWarnings(unlist(apply(xobs, 2, cor, yobs) < maxcor))
+  highcor <- suppressWarnings(apply(xobs, 2, cor, yobs, use = use1) < maxcor)
   cols <- cols & highcor
   if (all(!cols)) {
     updateLog(
@@ -300,7 +309,7 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99,
   } # at most one TRUE
 
   # correlation between x's
-  cx <- cor(xobs[, cols, drop = FALSE], use = "all.obs")
+  cx <- cor(xobs[, cols, drop = FALSE], use = use2)
   eig <- eigen(cx, symmetric = TRUE)
   ncx <- cx
   while (eig$values[k] / eig$values[1] < abs(eps)) {
