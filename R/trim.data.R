@@ -33,7 +33,7 @@
 #' The function bypasses the column trimmer in the following cases:
 #' \describe{
 #'   \item{1}{If \code{y} is allowed to be fully missing.}
-#'   \item{2}{If there are zero or 1 entries of \code{y} observed.}
+#'   \item{2}{If there are zero entries of \code{y} observed.}
 #'   \item{3}{If there are zero or 1 predictors.}
 #'   \item{4}{If the user specifies \code{trimmer = ""}.}
 #' }
@@ -62,7 +62,7 @@ trim.data <- function(
   # handle exceptions to bypass trimming
   if (allow.na && sum(ry) == 0L ||
       sum(ry) <= 1L ||
-      ncol(x) <= 1L ||
+      ncol(x) < 1L ||
       trimmer == "") {
     keep <- list(rows = ry & complete.cases(x, y),
                  cols = !logical(ncol(x)))
