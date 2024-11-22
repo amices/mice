@@ -12,7 +12,8 @@ library(revdepcheck)
 revdep_reset()
 
 # the following takes two hours
-revdep_check(num_workers = 10)
+revdep_check(pkg = "/Users/buurensv/Dropbox/Package/mice/mice",
+             num_workers = 10, quiet = FALSE)
 
 # print out results
 revdep_summary()
