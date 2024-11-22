@@ -351,7 +351,7 @@ mice <- function(data,
   if (mp & mb & mf) {
     # blocks lead
     blocks <- make.blocks(colnames(data))
-    predictorMatrix <- make.predictorMatrix(data, blocks)
+    predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     formulas <- make.formulas(data, blocks)
   }
   # case B
@@ -366,7 +366,7 @@ mice <- function(data,
   if (mp & !mb & mf) {
     # blocks leads
     blocks <- check.blocks(blocks, data)
-    predictorMatrix <- make.predictorMatrix(data, blocks)
+    predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     formulas <- make.formulas(data, blocks)
   }
 
@@ -375,7 +375,7 @@ mice <- function(data,
     # formulas leads
     formulas <- check.formulas(formulas, data)
     blocks <- construct.blocks(formulas)
-    predictorMatrix <- make.predictorMatrix(data, blocks)
+    predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
   }
 
   # case E
@@ -394,7 +394,9 @@ mice <- function(data,
     formulas <- check.formulas(formulas, data)
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
     blocks <- construct.blocks(formulas, predictorMatrix)
-    predictorMatrix <- make.predictorMatrix(data, blocks, predictorMatrix)
+    predictorMatrix <- make.predictorMatrix(data,
+                                            blocks = blocks,
+                                            predictorMatrix = predictorMatrix)
   }
 
   # case G
@@ -402,7 +404,7 @@ mice <- function(data,
     # blocks lead
     blocks <- check.blocks(blocks, data, calltype = "formula")
     formulas <- check.formulas(formulas, blocks)
-    predictorMatrix <- make.predictorMatrix(data, blocks)
+    predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
   }
 
   # case H

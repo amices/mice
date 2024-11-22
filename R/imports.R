@@ -7,6 +7,7 @@
 #'                      points rect text
 #' @importFrom lars     lars
 #' @importFrom lattice  bwplot densityplot stripplot xyplot
+#' @importFrom Matrix   nearPD
 #' @importFrom mitml    jomoImpute mitmlComplete panImpute testModels
 #' @importFrom nnet     multinom
 #' @importFrom Rcpp     evalCpp
