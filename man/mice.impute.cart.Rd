@@ -22,11 +22,11 @@ model is fitted. The \code{ry} generally distinguishes the observed
 indicates locations in \code{y} for which imputations are created.}
 
 \item{minbucket}{The minimum number of observations in any terminal node used.
-See \code{\link{rpart.control}} for details.}
+See \code{\link[rpart]{rpart.control}} for details.}
 
 \item{cp}{Complexity parameter. Any split that does not decrease the overall
-lack of fit by a factor of cp is not attempted. See \code{\link{rpart.control}}
-for details.}
+lack of fit by a factor of cp is not attempted. See
+\code{\link[rpart]{rpart.control}} for details.}
 
 \item{...}{Other named arguments passed down to \code{rpart()}.}
 }

@@ -149,8 +149,8 @@
 #' @return Returns an S3 object of class \code{\link{mads-class}} (multivariate
 #' amputed data set)
 #' @author Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
-#' @seealso \code{\link{mads-class}}, \code{\link{bwplot}}, \code{\link{xyplot}},
-#' \code{\link{mice}}
+#' @seealso \code{\link{mads-class}}, \code{\link[lattice]{bwplot}},
+#' \code{\link[lattice]{xyplot}}, \code{\link{mice}}
 #'
 #' @references
 #' Brand, J.P.L. (1999) \emph{Development, implementation and

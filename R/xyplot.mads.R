@@ -19,7 +19,8 @@
 #' There are several defaults for different #variables. Note that for more than
 #' 9 variables, multiple plots will be created automatically.
 #' @param colors A vector of two RGB values defining the colors of the non-amputed and
-#' amputed data respectively. RGB values can be obtained with \code{\link{hcl}}.
+#' amputed data respectively. RGB values can be obtained with
+#' \code{\link[grDevices]{hcl}}.
 #' @param \dots Not used, but for consistency with generic
 #' @return A list containing the scatterplots. Note that a new pattern
 #' will always be shown in a new plot.
@@ -27,7 +28,8 @@
 #' make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate
 #' Amputation using Ampute} to understand the contents of class object \code{mads}.
 #' @author Rianne Schouten, 2016
-#' @seealso \code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for
+#' @seealso \code{\link{ampute}}, \code{\link[lattice]{bwplot}},
+#' \code{\link{lattice}} for
 #' an overview of the package, \code{\link{mads-class}}
 #' @export
 xyplot.mads <- function(x, data, which.pat = NULL,

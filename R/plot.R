@@ -14,14 +14,14 @@
 #' @param theme  The trellis theme to applied to the graphs. The default is \code{mice.theme()}.
 #' @param layout A vector of length 2 given the number of columns and rows in the plot.
 #'               The default is \code{c(2, 3)}.
-#' @param type   Parameter \code{type} of \code{\link{panel.xyplot}}.
-#' @param col    Parameter \code{col} of \code{\link{panel.xyplot}}.
-#' @param lty    Parameter \code{lty} of \code{\link{panel.xyplot}}.
-#' @param ...    Extra arguments for \code{\link{xyplot}}.
+#' @param type   Parameter \code{type} of \code{\link[lattice]{panel.xyplot}}.
+#' @param col    Parameter \code{col} of \code{\link[lattice]{panel.xyplot}}.
+#' @param lty    Parameter \code{lty} of \code{\link[lattice]{panel.xyplot}}.
+#' @param ...    Extra arguments for \code{\link[lattice]{xyplot}}.
 #' @return An object of class \code{"trellis"}.
 #' @author Stef van Buuren 2011
 #' @seealso \code{\link{mice}}, \code{\link[=mids-class]{mids}},
-#' \code{\link{xyplot}}
+#' \code{\link[lattice]{xyplot}}
 #' @method plot mids
 #' @examples
 #' imp <- mice(nhanes, print = FALSE)

@@ -27,8 +27,7 @@
 #' make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate
 #' Amputation using Ampute} to understand the contents of class object \code{mads}.
 #' @author Rianne Schouten, 2016
-#' @seealso \code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for
-#' an overview of the package, \code{\link{mads-class}}
+#' @seealso \code{\link{ampute}}, \code{\link[lattice]{bwplot}}, \code{\link{mads-class}}
 #' @export
 bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
                         descriptives = TRUE, layout = NULL, ...) {

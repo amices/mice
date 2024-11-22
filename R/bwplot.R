@@ -1,6 +1,6 @@
 #' Box-and-whisker plot of observed and imputed data
 #'
-#' Plotting methods for imputed data using \pkg{lattice}. \code{bwplot}
+#' Plotting methods for imputed data using \pkg{lattice}. \code{bwplot()}
 #' produces box-and-whisker plots. The function
 #' automatically separates the observed and imputed data. The
 #' functions extend the usual features of \pkg{lattice}.
@@ -48,9 +48,9 @@
 #' numerical variables. Mixing numerical and categorical data occasionally
 #' produces odds labeling of vertical axis.
 #'
-#' For convenience, in \code{stripplot()} and \code{bwplot} the formula
+#' For convenience, in \code{stripplot()} and \code{bwplot()} the formula
 #' \code{y~.imp} may be abbreviated as \code{y}. This applies only to a single
-#' \code{y}, and does not (yet) work for \code{y1+y2~.imp}.
+#' \code{y}, and does not work for \code{y1+y2~.imp}.
 #'
 #' @param na.groups An expression evaluating to a logical vector indicating
 #' which two groups are distinguished (e.g. using different colors) in the
@@ -67,7 +67,7 @@
 #' differs from \code{na.groups} because it evaluates in the completed data
 #' \code{data.frame(complete(x, "long", inc=TRUE))} (as usual), whereas
 #' \code{na.groups} evaluates in the response indicator. See
-#' \code{\link{xyplot}} for more details. When both \code{na.groups} and
+#' \code{\link[lattice]{xyplot}} for more details. When both \code{na.groups} and
 #' \code{groups} are specified, \code{na.groups} takes precedence, and
 #' \code{groups} is ignored.
 #' @param theme A named list containing the graphical parameters. The default
@@ -85,20 +85,20 @@
 #' replicated for different element, e.g. use all reds for the imputed data.
 #' Replication may be switched off by setting the flag to \code{FALSE}, in order
 #' to allow the user to gain full control.
-#' @param as.table See \code{\link[lattice:xyplot]{xyplot}}.
-#' @param outer See \code{\link[lattice:xyplot]{xyplot}}.
-#' @param allow.multiple See \code{\link[lattice:xyplot]{xyplot}}.
-#' @param drop.unused.levels See \code{\link[lattice:xyplot]{xyplot}}.
-#' @param subscripts See \code{\link[lattice:xyplot]{xyplot}}.
-#' @param subset See \code{\link[lattice:xyplot]{xyplot}}.
+#' @param as.table See \code{\link[lattice]{xyplot}}.
+#' @param outer See \code{\link[lattice]{xyplot}}.
+#' @param allow.multiple See \code{\link[lattice]{xyplot}}.
+#' @param drop.unused.levels See \code{\link[lattice]{xyplot}}.
+#' @param subscripts See \code{\link[lattice]{xyplot}}.
+#' @param subset See \code{\link[lattice]{xyplot}}.
 #' @param \dots Further arguments, usually not directly processed by the
 #' high-level functions documented here, but instead passed on to other
 #' functions.
 #' @return The high-level functions documented here, as well as other high-level
 #' Lattice functions, return an object of class \code{"trellis"}.  The
-#' \code{\link[lattice:update.trellis]{update}} method can be used to
+#' \code{\link[lattice]{update}} method can be used to
 #' subsequently update components of the object, and the
-#' \code{\link[lattice:print.trellis]{print}} method (usually called by default)
+#' \code{\link[lattice]{print}} method (usually called by default)
 #' will plot it on an appropriate plotting device.
 #' @note The first two arguments (\code{x} and \code{data}) are reversed
 #' compared to the standard Trellis syntax implemented in \pkg{lattice}. This
@@ -113,12 +113,11 @@
 #' All other arguments have identical interpretation.
 #'
 #' @author Stef van Buuren
-#' @seealso \code{\link{mice}}, \code{\link{xyplot}}, \code{\link{densityplot}},
-#' \code{\link{stripplot}}, \code{\link{lattice}} for an overview of the
-#' package, as well as \code{\link[lattice:xyplot]{bwplot}},
-#' \code{\link[lattice:panel.xyplot]{panel.bwplot}},
-#' \code{\link[lattice:print.trellis]{print.trellis}},
-#' \code{\link[lattice:trellis.par.get]{trellis.par.set}}
+#' @seealso \code{\link{mice}}, \code{\link[lattice]{xyplot}},
+#' \code{\link[lattice]{densityplot}},\code{\link[lattice]{stripplot}},
+#'  \code{\link{lattice}} for an overview of the package, as well
+#'  as \code{\link[lattice]{bwplot}}, \code{\link[lattice]{panel.bwplot}},
+#' \code{\link[lattice]{print.trellis}}, \code{\link[lattice]{trellis.par.set}}
 #' @references Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
 #' Visualization with R}, Springer.
 #'

@@ -33,7 +33,8 @@ There are several defaults for different #variables. Note that for more than
 9 variables, multiple plots will be created automatically.}
 
 \item{colors}{A vector of two RGB values defining the colors of the non-amputed and
-amputed data respectively. RGB values can be obtained with \code{\link{hcl}}.}
+amputed data respectively. RGB values can be obtained with
+\code{\link[grDevices]{hcl}}.}
 
 \item{\dots}{Not used, but for consistency with generic}
 }
@@ -54,7 +55,8 @@ make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Mul
 Amputation using Ampute} to understand the contents of class object \code{mads}.
 }
 \seealso{
-\code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for
+\code{\link{ampute}}, \code{\link[lattice]{bwplot}},
+\code{\link{lattice}} for
 an overview of the package, \code{\link{mads-class}}
 }
 \author{

@@ -98,9 +98,8 @@ complete(imp)
 mice(nhanes2, method = c("sample", "midastouch", "logreg", "norm"))
 }
 \references{
-Gaffert, P., Meinfelder, F., Bosch V. (2015) Towards an MI-proper
-Predictive Mean Matching, Discussion Paper.
-\url{https://www.uni-bamberg.de/fileadmin/uni/fakultaeten/sowi_lehrstuehle/statistik/Personen/Dateien_Florian/properPMM.pdf}
+Gaffert, P., Meinfelder, F., Bosch V. (2018) Towards an MI-proper
+Predictive Mean Matching, JSM 2018. Discussion Paper.
 
 Little, R.J.A. (1988), Missing data adjustments in large
 surveys (with discussion), Journal of Business Economics and
