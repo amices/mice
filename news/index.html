@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.16.17</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.17.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,84 +37,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.17" id="mice-31617">mice 3.16.17<a class="anchor" aria-label="anchor" href="#mice-31617"></a></h2>
-<ul><li>Create version to perform reverse dependency checks</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.16" id="mice-31616">mice 3.16.16<a class="anchor" aria-label="anchor" href="#mice-31616"></a></h2>
-<ul><li>Prevent <code><a href="../reference/as.mids.html">as.mids()</a></code> from filling the <code>imp</code> object for complete variables</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.15" id="mice-31615">mice 3.16.15<a class="anchor" aria-label="anchor" href="#mice-31615"></a></h2>
-<ul><li>Initialize single-variables blocks in <code><a href="../reference/make.method.html">make.method()</a></code> in a more efficient way (resolves <a href="https://github.com/amices/mice/issues/672" class="external-link">#672</a>)</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.14" id="mice-31614">mice 3.16.14<a class="anchor" aria-label="anchor" href="#mice-31614"></a></h2>
-<ul><li>Fixes a bug during initialization of factor values</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.13" id="mice-31613">mice 3.16.13<a class="anchor" aria-label="anchor" href="#mice-31613"></a></h2>
-<ul><li>Adds support for the <code>literanger</code> package for <code>rf</code> imputation that is about twice as fast as <code>ranger</code> (<a href="https://github.com/amices/mice/issues/648" class="external-link">#648</a>). Thanks <a href="https://github.com/stephematician" class="external-link">@stephematician</a> for the contribution.</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.12" id="mice-31612">mice 3.16.12<a class="anchor" aria-label="anchor" href="#mice-31612"></a></h2>
-<ul><li>Fixes an installation problem when <code>Rprofile</code> prints to <code>stdout</code> on Fedora, R version 4.1.3 (<a href="https://github.com/amices/mice/issues/646" class="external-link">#646</a>, <a href="https://github.com/amices/mice/issues/647" class="external-link">#647</a>). Thanks <a href="https://github.com/brookslogan" class="external-link">@brookslogan</a> for the fix.</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.11" id="mice-31611">mice 3.16.11<a class="anchor" aria-label="anchor" href="#mice-31611"></a></h2>
-<ul><li>Repairs lost braces in the documentation</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.10" id="mice-31610">mice 3.16.10<a class="anchor" aria-label="anchor" href="#mice-31610"></a></h2>
-<ul><li>Adds support for non-syntactic variables names with backticks (<a href="https://github.com/amices/mice/issues/631" class="external-link">#631</a>)</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.9" id="mice-3169">mice 3.16.9<a class="anchor" aria-label="anchor" href="#mice-3169"></a></h2>
-<ul><li>Fixes a problem with the <code>minpuc</code> argument in <code><a href="../reference/quickpred.html">quickpred()</a></code> (<a href="https://github.com/amices/mice/issues/634" class="external-link">#634</a>)</li>
-<li>Fixes <code>coef() not available on S4 object</code> when using with <code>lavaan</code> (<a href="https://github.com/amices/mice/issues/615" class="external-link">#615</a>, <a href="https://github.com/amices/mice/issues/616" class="external-link">#616</a>)</li>
-<li>Adds <code>.github/dependabot.yml</code> configuration to automate daily check (<a href="https://github.com/amices/mice/issues/598" class="external-link">#598</a>)</li>
-<li>Update documentation tags to <code>roxygen2 7.3.1</code> requirements</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.8" id="mice-3168">mice 3.16.8<a class="anchor" aria-label="anchor" href="#mice-3168"></a></h2>
-<ul><li>Fixes problems with zero predictors (<a href="https://github.com/amices/mice/issues/588" class="external-link">#588</a>)</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.7" id="mice-3167">mice 3.16.7<a class="anchor" aria-label="anchor" href="#mice-3167"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.17.0" id="mice-3170">mice 3.17.0<a class="anchor" aria-label="anchor" href="#mice-3170"></a></h2>
 <div class="section level4">
-<h4 id="minor-changes-3-16-7">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-3-16-7"></a></h4>
-<ul><li>Solves problem with the package documentation link</li>
-<li>Simplifies <code>NEWS.md</code> formatting to get correct version sequence on CRAN and in-package NEWS</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.6" id="mice-3166">mice 3.16.6<a class="anchor" aria-label="anchor" href="#mice-3166"></a></h2>
-<div class="section level4">
-<h4 id="minor-changes-3-16-6">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-3-16-6"></a></h4>
-<ul><li>Prepares for the deprecation of the <code>blocks</code> argument at various places</li>
-<li>Removes the need for <code>blocks</code> in <code>initialize_chain()</code>
-</li>
-<li>In <code><a href="../reference/cbind.html">rbind()</a></code>, when formulas are concatenated and duplicate names are found, also rename the duplicated variables in formulas by their new name</li>
-</ul></div>
-<div class="section level4">
-<h4 id="bug-fixes-3-16-6">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-16-6"></a></h4>
-<ul><li>Fixes a bug in <code><a href="../reference/filter.mids.html">filter.mids()</a></code> that incorrectly removed empty components in the <code>imp</code> object</li>
-<li>Fixes a bug in <code><a href="../reference/ibind.html">ibind()</a></code> that incorrectly used <code>length(blocks)</code> as the first dimension of the <code>chainMean</code> and <code>chainVar</code> objects</li>
-<li>Corrects the description <code>visitSequence</code>, <code>chainMean</code> and <code>chainVar</code> components of the <code>mids</code> object</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.5" id="mice-3165">mice 3.16.5<a class="anchor" aria-label="anchor" href="#mice-3165"></a></h2>
-<div class="section level4">
-<h4 id="bug-fixes-3-16-5">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-16-5"></a></h4>
-<ul><li>Patches a bug in <code><a href="../reference/complete.mids.html">complete()</a></code> that auto-repeated imputed values into cells that should NOT be imputed (occurred as a special case of <code><a href="../reference/cbind.html">rbind()</a></code>, where the first set of rows was imputed and the second was not).</li>
-<li>Replaces the internal variable <code>type</code> by the more informative <code>pred</code> (currently active row of <code>predictorMatrix</code>)</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.4" id="mice-3164">mice 3.16.4<a class="anchor" aria-label="anchor" href="#mice-3164"></a></h2>
-<div class="section level4">
-<h4 id="major-changes-3-16-4">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-3-16-4"></a></h4>
+<h4 id="major-changes-3-17-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-3-17-0"></a></h4>
 <ul><li><p><strong>Imputing categorical data by predictive mean matching</strong>. Predictive mean matching (PMM) is the default method of <code><a href="../reference/mice.html">mice()</a></code> for imputing numerical variables, but it has long been possible to impute factors. This enhancement introduces better support to work with categorical variables in PMM. The <strong>former system</strong> translated factors into integers by <code>ynum &lt;- as.integer(f)</code>. However, the order of integers in <code>ynum</code> may have no sensible interpretation for an unordered factor. The <strong>new system</strong> quantifies <code>ynum</code> and could yield better results because of higher <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>R</mi><mn>2</mn></msup><annotation encoding="application/x-tex">R^2</annotation></semantics></math>. The method calculates the canonical correlation between <code>y</code> (as dummy matrix) and a linear combination of imputation model predictors <code>x</code>. The algorithm then replaces each category of <code>y</code> by a single number taken from the first canonical variate. After this step, the imputation model is fitted, and the predicted values from that model are extracted to function as the similarity measure for the matching step.</p></li>
 <li><p>The method works for both ordered and unordered factors. No special precautions are taken to ensure monotonicity between the category numbers and the quantifications, so the method should be able to preserve quadratic and other non-monotone relations of the predicted metric. It may be beneficial to remove very sparsely filled categories, for which there is a new <code>trim</code> argument. All you have to use the new technique is specify to <code>mice(..., method = "pmm", ...)</code>. Both numerical and categorical variables will then be imputed by PMM.</p></li>
 <li>
@@ -125,33 +50,41 @@
 <li>Should inherit the good statistical properties of predictive mean matching.</li>
 </ul></li>
 <li><p>Note that we still lack solid evidence for these claims. (<a href="https://github.com/amices/mice/issues/576" class="external-link">#576</a>). Contributed <a href="https://github.com/stefvanbuuren" class="external-link">@stefvanbuuren</a></p></li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.3" id="mice-3163">mice 3.16.3<a class="anchor" aria-label="anchor" href="#mice-3163"></a></h2>
-<div class="section level4">
-<h4 id="major-changes-3-16-3">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-3-16-3"></a></h4>
-<ul><li>
-<strong>New system-independent method for pooling</strong>: This version introduces a new function <code><a href="../reference/pool.table.html">pool.table()</a></code> that takes a tidy table of parameter estimates stemming from <code>m</code> repeated analyses. The input data must consist of three columns (parameter name, estimate, standard error) and a specification of the degrees of freedom of the model fitted to the complete data. The <code><a href="../reference/pool.table.html">pool.table()</a></code> function outputs 14 pooled statistics in a tidy form. The primary use of <code><a href="../reference/pool.table.html">pool.table()</a></code> is to support parameter pooling for techiques that have no <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> or <code><a href="https://generics.r-lib.org/reference/glance.html" class="external-link">glance()</a></code> methods, either within <code>R</code> or outside <code>R</code>. The <code><a href="../reference/pool.table.html">pool.table()</a></code> function also allows for a novel workflows that 1) break apart the traditional <code><a href="../reference/pool.html">pool()</a></code> function into a data-wrangling part and a parameters-reducing part, and 2) does not necessarily depend on classed R objects. (<a href="https://github.com/amices/mice/issues/574" class="external-link">#574</a>). Contributed <a href="https://github.com/stefvanbuuren" class="external-link">@stefvanbuuren</a></li>
+<li><p><strong>New system-independent method for pooling</strong>: This version introduces a new function <code><a href="../reference/pool.table.html">pool.table()</a></code> that takes a tidy table of parameter estimates stemming from <code>m</code> repeated analyses. The input data must consist of three columns (parameter name, estimate, standard error) and a specification of the degrees of freedom of the model fitted to the complete data. The <code><a href="../reference/pool.table.html">pool.table()</a></code> function outputs 14 pooled statistics in a tidy form. The primary use of <code><a href="../reference/pool.table.html">pool.table()</a></code> is to support parameter pooling for techiques that have no <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> or <code><a href="https://generics.r-lib.org/reference/glance.html" class="external-link">glance()</a></code> methods, either within <code>R</code> or outside <code>R</code>. The <code><a href="../reference/pool.table.html">pool.table()</a></code> function also allows for a novel workflows that 1) break apart the traditional <code><a href="../reference/pool.html">pool()</a></code> function into a data-wrangling part and a parameters-reducing part, and 2) does not necessarily depend on classed R objects. (<a href="https://github.com/amices/mice/issues/574" class="external-link">#574</a>). Contributed <a href="https://github.com/stefvanbuuren" class="external-link">@stefvanbuuren</a></p></li>
+<li><p><strong>literanger</strong>: Adds support for the <code>literanger</code> package for <code>rf</code> imputation that is about twice as fast as <code>ranger</code> (<a href="https://github.com/amices/mice/issues/648" class="external-link">#648</a>). Thanks <a href="https://github.com/stephematician" class="external-link">@stephematician</a> for the contribution.</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="bug-fixes-3-16-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-16-3"></a></h4>
-<ul><li>Fixes the “large logo” problem. (<a href="https://github.com/amices/mice/issues/574" class="external-link">#574</a>). Contributed <a href="https://github.com/hanneoberman" class="external-link">@hanneoberman</a></li>
+<h4 id="breaking-changes-3-17-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-17-0"></a></h4>
+<ul><li>The <code>complete(..., action = "long", ...)</code> command puts the columns named <code>".imp"</code> and <code>".id"</code> in the last two positions of the long data (instead of first two positions). In this way, the columns of the imputed data will have the same positions as in the original data, which is more user-friendly and easier to work with. Note that any existing code that assumes that variables <code>".imp"</code> and <code>".id"</code> are in columns 1 and 2 will need to be modified. The advice is to modify the code using the variable names <code>".imp"</code> and <code>".id"</code>. If you want the old behaviour, specify the argument <code>order = "first"</code>. (<a href="https://github.com/amices/mice/issues/569" class="external-link">#569</a>). Contributed <a href="https://github.com/stefvanbuuren" class="external-link">@stefvanbuuren</a></li>
 </ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.2" id="mice-3162">mice 3.16.2<a class="anchor" aria-label="anchor" href="#mice-3162"></a></h2>
 <div class="section level4">
-<h4 id="major-changes-3-16-2">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-3-16-2"></a></h4>
-<ul><li>
-<strong>Breaking change:</strong> The <code>complete(..., action = "long", ...)</code> command puts the columns named <code>".imp"</code> and <code>".id"</code> in the last two positions of the long data (instead of first two positions). In this way, the columns of the imputed data will have the same positions as in the original data, which is more user-friendly and easier to work with. Note that any existing code that assumes that variables <code>".imp"</code> and <code>".id"</code> are in columns 1 and 2 will need to be modified. The advice is to modify the code using the variable names <code>".imp"</code> and <code>".id"</code>. If you want the old behaviour, specify the argument <code>order = "first"</code>. (<a href="https://github.com/amices/mice/issues/569" class="external-link">#569</a>). Contributed <a href="https://github.com/stefvanbuuren" class="external-link">@stefvanbuuren</a></li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.16.1" id="mice-3161">mice 3.16.1<a class="anchor" aria-label="anchor" href="#mice-3161"></a></h2>
-<div class="section level4">
-<h4 id="minor-changes-3-16-1">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-3-16-1"></a></h4>
+<h4 id="minor-changes-3-17-0">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-3-17-0"></a></h4>
 <ul><li>Adds support for the <code>dots</code> argument to <code>ranger::ranger(...)</code> in <code><a href="../reference/mice.impute.rf.html">mice.impute.rf()</a></code> (<a href="https://github.com/amices/mice/issues/563" class="external-link">#563</a>). Contributed <a href="https://github.com/edbonneville" class="external-link">@edbonneville</a></li>
+<li>Prepares for the deprecation of the <code>blocks</code> argument at various places</li>
+<li>Removes the need for <code>blocks</code> in <code>initialize_chain()</code>
+</li>
+<li>In <code><a href="../reference/cbind.html">rbind()</a></code>, when formulas are concatenated and duplicate names are found, also rename the duplicated variables in formulas by their new name</li>
+<li>Solves problem with the package documentation link</li>
+<li>Simplifies <code>NEWS.md</code> formatting to get correct version sequence on CRAN and in-package NEWS</li>
+<li>Initialize single-variables blocks in <code><a href="../reference/make.method.html">make.method()</a></code> in a more efficient way (resolves <a href="https://github.com/amices/mice/issues/672" class="external-link">#672</a>)</li>
+<li>Prevent <code><a href="../reference/as.mids.html">as.mids()</a></code> from filling the <code>imp</code> object for complete variables</li>
+</ul></div>
+<div class="section level4">
+<h4 id="bug-fixes-3-17-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-17-0"></a></h4>
+<ul><li>Fixes the “large logo” problem. (<a href="https://github.com/amices/mice/issues/574" class="external-link">#574</a>). Contributed <a href="https://github.com/hanneoberman" class="external-link">@hanneoberman</a></li>
+<li>Patches a bug in <code><a href="../reference/complete.mids.html">complete()</a></code> that auto-repeated imputed values into cells that should NOT be imputed (occurred as a special case of <code><a href="../reference/cbind.html">rbind()</a></code>, where the first set of rows was imputed and the second was not).</li>
+<li>Replaces the internal variable <code>type</code> by the more informative <code>pred</code> (currently active row of <code>predictorMatrix</code>)</li>
+<li>Fixes a bug in <code><a href="../reference/filter.mids.html">filter.mids()</a></code> that incorrectly removed empty components in the <code>imp</code> object</li>
+<li>Fixes a bug in <code><a href="../reference/ibind.html">ibind()</a></code> that incorrectly used <code>length(blocks)</code> as the first dimension of the <code>chainMean</code> and <code>chainVar</code> objects</li>
+<li>Corrects the description <code>visitSequence</code>, <code>chainMean</code> and <code>chainVar</code> components of the <code>mids</code> object</li>
+<li>Fixes problems with zero predictors (<a href="https://github.com/amices/mice/issues/588" class="external-link">#588</a>)</li>
+<li>Fixes a problem with the <code>minpuc</code> argument in <code><a href="../reference/quickpred.html">quickpred()</a></code> (<a href="https://github.com/amices/mice/issues/634" class="external-link">#634</a>)</li>
+<li>Fixes <code>coef() not available on S4 object</code> when using with <code>lavaan</code> (<a href="https://github.com/amices/mice/issues/615" class="external-link">#615</a>, <a href="https://github.com/amices/mice/issues/616" class="external-link">#616</a>)</li>
+<li>Adds <code>.github/dependabot.yml</code> configuration to automate daily check (<a href="https://github.com/amices/mice/issues/598" class="external-link">#598</a>)</li>
+<li>Update documentation tags to <code>roxygen2 7.3.1</code> requirements</li>
+<li>Repairs lost braces in the documentation</li>
+<li>Fixes an installation problem when <code>Rprofile</code> prints to <code>stdout</code> on Fedora, R version 4.1.3 (<a href="https://github.com/amices/mice/issues/646" class="external-link">#646</a>, <a href="https://github.com/amices/mice/issues/647" class="external-link">#647</a>). Thanks <a href="https://github.com/brookslogan" class="external-link">@brookslogan</a> for the fix.</li>
+<li>Fixes a bug during initialization of factor values</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -171,6 +104,7 @@
 <li>Preserves user settings in <code>predictorMatrix</code> for case F by adding a <code>predictorMatrix</code> argument to <code><a href="../reference/make.predictorMatrix.html">make.predictorMatrix()</a></code>
 </li>
 <li>Polishes <code><a href="../reference/mice.impute.mpmm.html">mice.impute.mpmm()</a></code> example code</li>
+<li>Adds support for non-syntactic variables names with backticks (<a href="https://github.com/amices/mice/issues/631" class="external-link">#631</a>)</li>
 </ul></div>
 <div class="section level4">
 <h4 id="bug-fixes-3-16-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-16-0"></a></h4>
