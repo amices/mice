@@ -7,16 +7,16 @@
 cci(x)
 }
 \arguments{
-\item{x}{An \code{R} object. Currently supported are methods for the
-following classes: \code{mids}.}
+\item{x}{An `R` object. Currently supported are methods for the
+following classes: `mids`.}
 }
 \value{
 Logical vector indicating the complete cases.
 }
 \description{
 The complete case indicator is useful for extracting the subset of complete cases. The function
-\code{cci(x)} calls \code{complete.cases(x)}.
-The companion function \code{ici()} selects the incomplete cases.
+`cci(x)` calls `complete.cases(x)`.
+The companion function `ici()` selects the incomplete cases.
 }
 \examples{
 cci(nhanes) # indicator for 13 complete cases
@@ -25,7 +25,7 @@ f <- cci(nhanes[, c("bmi", "hyp")]) # complete data for bmi and hyp
 nhanes[f, ] # obtain all data from those with complete bmi and hyp
 }
 \seealso{
-\code{\link[=complete.cases]{complete.cases()}}, \code{\link[=ici]{ici()}}, \code{\link[=cc]{cc()}}
+[complete.cases()], [ici()], [cc()]
 }
 \author{
 Stef van Buuren, 2017.

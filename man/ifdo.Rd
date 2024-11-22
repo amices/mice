@@ -15,7 +15,7 @@ ifdo(cond, action)
 Currently returns an error message.
 }
 \description{
-Sorry, the \code{ifdo()} function is not yet implemented.
+Sorry, the `ifdo()` function is not yet implemented.
 }
 \author{
 Stef van Buuren, 2012

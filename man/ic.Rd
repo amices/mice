@@ -7,16 +7,16 @@
 ic(x)
 }
 \arguments{
-\item{x}{An \code{R} object. Methods are available for classes
-\code{mids}, \code{data.frame} and \code{matrix}. Also, \code{x}
+\item{x}{An `R` object. Methods are available for classes
+`mids`, `data.frame` and `matrix`. Also, `x`
 could be a vector.}
 }
 \value{
-A \code{vector}, \code{matrix} or \code{data.frame} containing the data of the complete cases.
+A `vector`, `matrix` or `data.frame` containing the data of the complete cases.
 }
 \description{
 Extracts incomplete cases from a data set.
-The companion function for selecting the complete cases is \code{\link[=cc]{cc()}}.
+The companion function for selecting the complete cases is [cc()].
 }
 \examples{
 
@@ -25,7 +25,7 @@ ic(nhanes[1:10, ]) # incomplete cases within the first ten rows
 ic(nhanes[, c("bmi", "hyp")]) # restrict extraction to variables bmi and hyp
 }
 \seealso{
-\code{\link[=cc]{cc()}}, \code{\link[=ici]{ici()}}
+[cc()], [ici()]
 }
 \author{
 Stef van Buuren, 2017.

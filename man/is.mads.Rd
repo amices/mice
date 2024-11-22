@@ -2,7 +2,7 @@
 % Please edit documentation in R/is.R
 \name{is.mads}
 \alias{is.mads}
-\title{Check for \code{mads} object}
+\title{Check for `mads` object}
 \usage{
 is.mads(x)
 }
@@ -10,8 +10,8 @@ is.mads(x)
 \item{x}{An object}
 }
 \value{
-A logical indicating whether \code{x} is an object of class \code{mads}
+A logical indicating whether `x` is an object of class `mads`
 }
 \description{
-Check for \code{mads} object
+Check for `mads` object
 }

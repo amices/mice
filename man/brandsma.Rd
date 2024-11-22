@@ -5,28 +5,28 @@
 \alias{brandsma}
 \title{Brandsma school data used Snijders and Bosker (2012)}
 \format{
-\code{brandsma} is a data frame with 4106 rows and 14 columns:
+`brandsma` is a data frame with 4106 rows and 14 columns:
 \describe{
-\item{\code{sch}}{School number}
-\item{\code{pup}}{Pupil ID}
-\item{\code{iqv}}{IQ verbal}
-\item{\code{iqp}}{IQ performal}
-\item{\code{sex}}{Sex of pupil}
-\item{\code{ses}}{SES score of pupil}
-\item{\code{min}}{Minority member 0/1}
-\item{\code{rpg}}{Number of repeated groups, 0, 1, 2}
-\item{\code{lpr}}{language score PRE}
-\item{\code{lpo}}{language score POST}
-\item{\code{apr}}{Arithmetic score PRE}
-\item{\code{apo}}{Arithmetic score POST}
-\item{\code{den}}{Denomination classification 1-4 - at school level}
-\item{\code{ssi}}{School SES indicator - at school level}
+\item{`sch`}{School number}
+\item{`pup`}{Pupil ID}
+\item{`iqv`}{IQ verbal}
+\item{`iqp`}{IQ performal}
+\item{`sex`}{Sex of pupil}
+\item{`ses`}{SES score of pupil}
+\item{`min`}{Minority member 0/1}
+\item{`rpg`}{Number of repeated groups, 0, 1, 2}
+\item{`lpr`}{language score PRE}
+\item{`lpo`}{language score POST}
+\item{`apr`}{Arithmetic score PRE}
+\item{`apo`}{Arithmetic score POST}
+\item{`den`}{Denomination classification 1-4 - at school level}
+\item{`ssi`}{School SES indicator - at school level}
 }
 }
 \source{
-Constructed from \verb{MLbook_2nded_total_4106-99.sav} from
-\url{https://www.stats.ox.ac.uk/~snijders/mlbook.htm} by function
-\code{data-raw/R/brandsma.R}
+Constructed from `MLbook_2nded_total_4106-99.sav` from
+<https://www.stats.ox.ac.uk/~snijders/mlbook.htm> by function
+`data-raw/R/brandsma.R`
 }
 \description{
 Dataset with raw data from Snijders and Bosker (2012) containing
@@ -39,11 +39,11 @@ a few differences with the data set used in Chapter 4 and 5
 of Snijders and Bosker:
 \enumerate{
 \item All schools are included, including the five school with
-missing values on \code{langpost}.
-\item Missing \code{denomina} codes are left as missing.
+missing values on `langpost`.
+\item Missing `denomina` codes are left as missing.
 \item Aggregates are undefined in the presence of missing data
 in the underlying values.
-Variables \code{ses}, \code{iqv} and \code{iqp} are in their
+Variables `ses`, `iqv` and `iqp` are in their
 original scale, and not globally centered.
 No aggregate variables at the school level are included.
 \item There is a wider selection of original variables. Note

@@ -2,7 +2,7 @@
 % Please edit documentation in R/is.R
 \name{is.mipo}
 \alias{is.mipo}
-\title{Check for \code{mipo} object}
+\title{Check for `mipo` object}
 \usage{
 is.mipo(x)
 }
@@ -10,8 +10,8 @@ is.mipo(x)
 \item{x}{An object}
 }
 \value{
-A logical indicating whether \code{x} is an object of class \code{mipo}
+A logical indicating whether `x` is an object of class `mipo`
 }
 \description{
-Check for \code{mipo} object
+Check for `mipo` object
 }

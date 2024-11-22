@@ -2,16 +2,16 @@
 % Please edit documentation in R/dots.R
 \name{make.blots}
 \alias{make.blots}
-\title{Creates a \code{blots} argument}
+\title{Creates a `blots` argument}
 \usage{
 make.blots(data, blocks = make.blocks(data))
 }
 \arguments{
-\item{data}{A \code{data.frame} with the source data}
+\item{data}{A `data.frame` with the source data}
 
 \item{blocks}{An optional specification for blocks of variables in
 the rows. The default assigns each variable in its own block.}
 }
 \description{
-Creates a \code{blots} argument
+Creates a `blots` argument
 }

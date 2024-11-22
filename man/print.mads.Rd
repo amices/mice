@@ -2,21 +2,21 @@
 % Please edit documentation in R/print.R
 \name{print.mads}
 \alias{print.mads}
-\title{Print a \code{mads} object}
+\title{Print a `mads` object}
 \usage{
 \method{print}{mads}(x, ...)
 }
 \arguments{
-\item{x}{Object of class \code{mads}}
+\item{x}{Object of class `mads`}
 
-\item{...}{Other parameters passed down to \code{print.default()}}
+\item{...}{Other parameters passed down to `print.default()`}
 }
 \value{
-\code{NULL}
+`NULL`
 }
 \description{
-Print a \code{mads} object
+Print a `mads` object
 }
 \seealso{
-\code{\link[=mads-class]{mads()}}
+[`mads()`][mads-class]
 }

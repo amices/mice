@@ -21,120 +21,120 @@
 )
 }
 \arguments{
-\item{x}{A \code{mids} object, typically created by \code{mice()} or
-\code{mice.mids()}.}
+\item{x}{A `mids` object, typically created by `mice()` or
+`mice.mids()`.}
 
 \item{data}{Formula that selects the data to be plotted.  This argument
-follows the \pkg{lattice} rules for \emph{formulas}, describing the primary
+follows the \pkg{lattice} rules for *formulas*, describing the primary
 variables (used for the per-panel display) and the optional conditioning
 variables (which define the subsets plotted in different panels) to be used
 in the plot.
 
-The formula is evaluated on the complete data set in the \code{long} form.
-Legal variable names for the formula include \code{names(x$data)} plus the
-two administrative factors \code{.imp} and \code{.id}.
+The formula is evaluated on the complete data set in the `long` form.
+Legal variable names for the formula include `names(x$data)` plus the
+two administrative factors `.imp` and `.id`.
 
-\strong{Extended formula interface:} The primary variable terms (both the LHS
-\code{y} and RHS \code{x}) may consist of multiple terms separated by a
-\sQuote{+} sign, e.g., \code{y1 + y2 ~ x | a * b}.  This formula would be
-taken to mean that the user wants to plot both \code{y1 ~ x | a * b} and
-\code{y2 ~ x | a * b}, but with the \code{y1 ~ x} and \code{y2 ~ x} in
-\emph{separate panels}. This behavior differs from standard \pkg{lattice}.
-\emph{Only combine terms of the same type}, i.e. only factors or only
+**Extended formula interface:** The primary variable terms (both the LHS
+`y` and RHS `x`) may consist of multiple terms separated by a
+\sQuote{+} sign, e.g., `y1 + y2 ~ x | a * b`.  This formula would be
+taken to mean that the user wants to plot both `y1 ~ x | a * b` and
+`y2 ~ x | a * b`, but with the `y1 ~ x` and `y2 ~ x` in
+*separate panels*. This behavior differs from standard \pkg{lattice}.
+*Only combine terms of the same type*, i.e. only factors or only
 numerical variables. Mixing numerical and categorical data occasionally
 produces odds labeling of vertical axis.}
 
 \item{na.groups}{An expression evaluating to a logical vector indicating
 which two groups are distinguished (e.g. using different colors) in the
 display. The environment in which this expression is evaluated in the
-response indicator \code{is.na(x$data)}.
+response indicator `is.na(x$data)`.
 
-The default \code{na.group = NULL} contrasts the observed and missing data
-in the LHS \code{y} variable of the display, i.e. groups created by
-\code{is.na(y)}. The expression \code{y} creates the groups according to
-\code{is.na(y)}. The expression \code{y1 & y2} creates groups by
-\code{is.na(y1) & is.na(y2)}, and \code{y1 | y2} creates groups as
-\code{is.na(y1) | is.na(y2)}, and so on.}
+The default `na.group = NULL` contrasts the observed and missing data
+in the LHS `y` variable of the display, i.e. groups created by
+`is.na(y)`. The expression `y` creates the groups according to
+`is.na(y)`. The expression `y1 & y2` creates groups by
+`is.na(y1) & is.na(y2)`, and `y1 | y2` creates groups as
+`is.na(y1) | is.na(y2)`, and so on.}
 
-\item{groups}{This is the usual \code{groups} arguments in \pkg{lattice}. It
-differs from \code{na.groups} because it evaluates in the completed data
-\code{data.frame(complete(x, "long", inc=TRUE))} (as usual), whereas
-\code{na.groups} evaluates in the response indicator. See
-\code{\link[=xyplot]{xyplot()}} for more details. When both \code{na.groups} and
-\code{groups} are specified, \code{na.groups} takes precedence, and
-\code{groups} is ignored.}
+\item{groups}{This is the usual `groups` arguments in \pkg{lattice}. It
+differs from `na.groups` because it evaluates in the completed data
+`data.frame(complete(x, "long", inc=TRUE))` (as usual), whereas
+`na.groups` evaluates in the response indicator. See
+[xyplot()] for more details. When both `na.groups` and
+`groups` are specified, `na.groups` takes precedence, and
+`groups` is ignored.}
 
-\item{as.table}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
+\item{as.table}{See [lattice::xyplot()].}
 
 \item{theme}{A named list containing the graphical parameters. The default
-function \code{mice.theme} produces a short list of default colors, line
+function `mice.theme` produces a short list of default colors, line
 width, and so on. The extensive list may be obtained from
-\code{trellis.par.get()}. Global graphical parameters like \code{col} or
-\code{cex} in high-level calls are still honored, so first experiment with
+`trellis.par.get()`. Global graphical parameters like `col` or
+`cex` in high-level calls are still honored, so first experiment with
 the global parameters. Many setting consists of a pair. For example,
-\code{mice.theme} defines two symbol colors. The first is for the observed
+`mice.theme` defines two symbol colors. The first is for the observed
 data, the second for the imputed data. The theme settings only exist during
 the call, and do not affect the trellis graphical parameters.}
 
-\item{allow.multiple}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
+\item{allow.multiple}{See [lattice::xyplot()].}
 
-\item{outer}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
+\item{outer}{See [lattice::xyplot()].}
 
-\item{drop.unused.levels}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
+\item{drop.unused.levels}{See [lattice::xyplot()].}
 
 \item{\dots}{Further arguments, usually not directly processed by the
 high-level functions documented here, but instead passed on to other
 functions.}
 
-\item{subscripts}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
+\item{subscripts}{See [lattice::xyplot()].}
 
-\item{subset}{See \code{\link[lattice:xyplot]{lattice::xyplot()}}.}
+\item{subset}{See [lattice::xyplot()].}
 }
 \value{
 The high-level functions documented here, as well as other high-level
-Lattice functions, return an object of class \code{"trellis"}.  The
-\code{\link[lattice:update.trellis]{update()}} method can be used to
+Lattice functions, return an object of class `"trellis"`.  The
+[`update()`][lattice::update.trellis] method can be used to
 subsequently update components of the object, and the
-\code{\link[lattice:print.trellis]{print()}} method (usually called by default)
+[`print()`][lattice::print.trellis] method (usually called by default)
 will plot it on an appropriate plotting device.
 }
 \description{
 Plotting methods for imputed data using \pkg{lattice}.
-\code{xyplot()} produces a conditional scatterplots. The function
+`xyplot()` produces a conditional scatterplots. The function
 automatically separates the observed (blue) and imputed (red) data. The
 function extends the usual features of \pkg{lattice}.
 }
 \details{
-The argument \code{na.groups} may be used to specify (combinations of)
-missingness in any of the variables. The argument \code{groups} can be used
+The argument `na.groups` may be used to specify (combinations of)
+missingness in any of the variables. The argument `groups` can be used
 to specify groups based on the variable values themselves. Only one of both
-may be active at the same time. When both are specified, \code{na.groups}
-takes precedence over \code{groups}.
+may be active at the same time. When both are specified, `na.groups`
+takes precedence over `groups`.
 
-Use the \code{subset} and \code{na.groups} together to plots parts of the
+Use the `subset` and `na.groups` together to plots parts of the
 data. For example, select the first imputed data set by by
-\code{subset=.imp==1}.
+`subset=.imp==1`.
 
-Graphical parameters like \code{col}, \code{pch} and \code{cex} can be
+Graphical parameters like `col`, `pch` and `cex` can be
 specified in the arguments list to alter the plotting symbols. If
-\code{length(col)==2}, the color specification to define the observed and
-missing groups. \code{col[1]} is the color of the 'observed' data,
-\code{col[2]} is the color of the missing or imputed data. A convenient color
-choice is \code{col=mdc(1:2)}, a transparent blue color for the observed
+`length(col)==2`, the color specification to define the observed and
+missing groups. `col[1]` is the color of the 'observed' data,
+`col[2]` is the color of the missing or imputed data. A convenient color
+choice is `col=mdc(1:2)`, a transparent blue color for the observed
 data, and a transparent red color for the imputed data. A good choice is
-\verb{col=mdc(1:2), pch=20, cex=1.5}. These choices can be set for the
-duration of the session by running \code{mice.theme()}.
+`col=mdc(1:2), pch=20, cex=1.5`. These choices can be set for the
+duration of the session by running `mice.theme()`.
 }
 \note{
-The first two arguments (\code{x} and \code{data}) are reversed
+The first two arguments (`x` and `data`) are reversed
 compared to the standard Trellis syntax implemented in \pkg{lattice}. This
 reversal was necessary in order to benefit from automatic method dispatch.
 
-In \pkg{mice} the argument \code{x} is always a \code{mids} object, whereas
-in \pkg{lattice} the argument \code{x} is always a formula.
+In \pkg{mice} the argument `x` is always a `mids` object, whereas
+in \pkg{lattice} the argument `x` is always a formula.
 
-In \pkg{mice} the argument \code{data} is always a formula object, whereas in
-\pkg{lattice} the argument \code{data} is usually a data frame.
+In \pkg{mice} the argument `data` is always a formula object, whereas in
+\pkg{lattice} the argument `data` is usually a data frame.
 
 All other arguments have identical interpretation.
 }
@@ -150,20 +150,20 @@ xyplot(imp, hgt ~ age | .imp, pch = c(1, 20), cex = c(1, 1.5))
 xyplot(imp, hgt ~ age | .imp, na.group = wgt, pch = c(1, 20), cex = c(1, 1.5))
 }
 \references{
-Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
-Visualization with R}, Springer.
+Sarkar, Deepayan (2008) *Lattice: Multivariate Data
+Visualization with R*, Springer.
 
-van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}: Multivariate
-Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+van Buuren S and Groothuis-Oudshoorn K (2011). `mice`: Multivariate
+Imputation by Chained Equations in `R`. *Journal of Statistical
+Software*, **45**(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link[=mice]{mice()}}, \code{\link[=stripplot]{stripplot()}}, \code{\link[=densityplot]{densityplot()}},
-\code{\link[=bwplot]{bwplot()}}, \code{\link[=lattice]{lattice()}} for an overview of the
-package, as well as \code{\link[lattice:xyplot]{lattice::xyplot()}},
-\code{\link[lattice:panel.xyplot]{lattice::panel.xyplot()}},
-\code{\link[lattice:print.trellis]{lattice::print.trellis()}},
-\code{\link[lattice:trellis.par.get]{trellis.par.set()}}
+[mice()], [stripplot()], [densityplot()],
+[bwplot()], [lattice()] for an overview of the
+package, as well as [lattice::xyplot()],
+[lattice::panel.xyplot()],
+[lattice::print.trellis()],
+[`trellis.par.set()`][lattice::trellis.par.get]
 }
 \author{
 Stef van Buuren

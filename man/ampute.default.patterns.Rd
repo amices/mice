@@ -2,7 +2,7 @@
 % Please edit documentation in R/ampute.default.R
 \name{ampute.default.patterns}
 \alias{ampute.default.patterns}
-\title{Default \code{patterns} in \code{ampute}}
+\title{Default `patterns` in `ampute`}
 \usage{
 ampute.default.patterns(n)
 }
@@ -10,14 +10,14 @@ ampute.default.patterns(n)
 \item{n}{A scalar specifying the number of variables in the data.}
 }
 \value{
-A square matrix of size \code{n} where \code{0} indicates a variable
+A square matrix of size `n` where `0` indicates a variable
 }
 \description{
 This function creates a default pattern matrix for the multivariate
-amputation function \code{ampute()}.
+amputation function `ampute()`.
 }
 \seealso{
-\code{\link[=ampute]{ampute()}}, \code{\link[=md.pattern]{md.pattern()}}
+[ampute()], [md.pattern()]
 }
 \author{
 Rianne Schouten, 2016

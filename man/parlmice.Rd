@@ -17,14 +17,14 @@ parlmice(
 }
 \arguments{
 \item{data}{A data frame or matrix containing the incomplete data. Similar to
-the first argument of \code{\link[=mice]{mice()}}.}
+the first argument of [mice()].}
 
-\item{m}{The number of desired imputated datasets. By default $m=5$ as with \code{mice}}
+\item{m}{The number of desired imputated datasets. By default $m=5$ as with `mice`}
 
 \item{seed}{A scalar to be used as the seed value for the mice algorithm within
 each parallel stream. Please note that the imputations will be the same for all
-streams and, hence, this should be used if and only if \code{n.core = 1} and
-if it is desired to obtain the same output as under \code{mice}.}
+streams and, hence, this should be used if and only if `n.core = 1` and
+if it is desired to obtain the same output as under `mice`.}
 
 \item{cluster.seed}{A scalar to be used as the seed value. It is recommended to put the
 seed value here and not outside this function, as otherwise the parallel processes
@@ -34,39 +34,39 @@ will be performed with separate, random seeds.}
 
 \item{n.imp.core}{A scalar indicating the number of imputations per core.}
 
-\item{cl.type}{The cluster type. Default value is \code{"PSOCK"}. Posix machines (linux, Mac)
-generally benefit from much faster cluster computation if \code{type} is set to \code{type = "FORK"}.}
+\item{cl.type}{The cluster type. Default value is `"PSOCK"`. Posix machines (linux, Mac)
+generally benefit from much faster cluster computation if `type` is set to `type = "FORK"`.}
 
-\item{...}{Named arguments that are passed down to function \code{\link[=mice]{mice()}} or
-\code{\link[=makeCluster]{makeCluster()}}.}
+\item{...}{Named arguments that are passed down to function [mice()] or
+[makeCluster()].}
 }
 \value{
-A mids object as defined by \code{\link[=mids-class]{mids-class()}}
+A mids object as defined by [mids-class()]
 }
 \description{
 This function is included for backward compatibility. The function
-is superseded by \code{\link[=futuremice]{futuremice()}}.
+is superseded by [futuremice()].
 }
 \details{
-This function relies on package \code{\link[=parallel]{parallel()}}, which is a base
+This function relies on package [parallel()], which is a base
 package for R versions 2.14.0 and later. We have chosen to use parallel function
-\code{parLapply} to allow the use of \code{parlmice} on Mac, Linux and Windows
+`parLapply` to allow the use of `parlmice` on Mac, Linux and Windows
 systems. For the same reason, we use the Parallel Socket Cluster (PSOCK) type by default.
 
 On systems other than Windows, it can be hugely beneficial to change the cluster type to
-\code{FORK}, as it generally results in improved memory handling. When memory issues
+`FORK`, as it generally results in improved memory handling. When memory issues
 arise on a Windows system, we advise to store the multiply imputed datasets,
-clean the memory by using \code{\link[=rm]{rm()}} and \code{\link[=gc]{gc()}} and make another
+clean the memory by using [rm()] and [gc()] and make another
 run using the same settings.
 
-This wrapper function combines the output of \code{\link[=parLapply]{parLapply()}} with
-function \code{\link[=ibind]{ibind()}} in \code{\link[=mice]{mice()}}. A \code{mids} object is returned
+This wrapper function combines the output of [parLapply()] with
+function [ibind()] in [mice()]. A `mids` object is returned
 and can be used for further analyses.
 
 Note that if a seed value is desired, the seed should be entered to this function
-with argument \code{seed}. Seed values outside the wrapper function (in an
-R-script or passed to \code{\link[=mice]{mice()}}) will not result to reproducible results.
-We refer to the manual of \code{\link[=parallel]{parallel()}} for an explanation on this matter.
+with argument `seed`. Seed values outside the wrapper function (in an
+R-script or passed to [mice()]) will not result to reproducible results.
+We refer to the manual of [parallel()] for an explanation on this matter.
 }
 \examples{
 # 150 imputations in dataset nhanes, performed by 3 cores
@@ -82,15 +82,15 @@ pool(fit)
 }
 \references{
 Schouten, R. and Vink, G. (2017). parlmice: faster, paraleller, micer.
-\url{https://www.gerkovink.com/parlMICE/Vignette_parlMICE.html}
+<https://www.gerkovink.com/parlMICE/Vignette_parlMICE.html>
 
 #'Van Buuren, S. (2018).
-\href{https://stefvanbuuren.name/fimd/parallel-computation.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+[*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/parallel-computation.html)
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
-\code{\link[=parallel]{parallel()}}, \code{\link[=parLapply]{parLapply()}}, \code{\link[=makeCluster]{makeCluster()}},
-\code{\link[=mice]{mice()}}, \code{\link[=mids-class]{mids-class()}}
+[parallel()], [parLapply()], [makeCluster()],
+[mice()], [mids-class()]
 }
 \author{
 Gerko Vink, Rianne Schouten

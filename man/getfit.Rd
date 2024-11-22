@@ -7,29 +7,29 @@
 getfit(x, i = -1L, simplify = FALSE)
 }
 \arguments{
-\item{x}{An object of class \code{mira}, typically produced by a call
-to \code{with()}.}
+\item{x}{An object of class `mira`, typically produced by a call
+to `with()`.}
 
-\item{i}{An integer between 1 and \code{x$m} signalling the index of the
-repeated analysis. The default \code{i= -1} return a list with all analyses.}
+\item{i}{An integer between 1 and `x$m` signalling the index of the
+repeated analysis. The default `i= -1` return a list with all analyses.}
 
 \item{simplify}{Should the return value be unlisted?}
 }
 \value{
-If \code{i = -1} an object of class \code{mira} containing
-all analyses. If \code{i} selects one of the analyses, then it return
+If `i = -1` an object of class `mira` containing
+all analyses. If `i` selects one of the analyses, then it return
 an object whose with class inherited from that element.
 }
 \description{
-Function \code{getfit()} returns the list of objects containing the repeated analysis
+Function `getfit()` returns the list of objects containing the repeated analysis
 results, or optionally, one of these fitted objects. The function looks for
-a list element called \code{analyses}, and return this component as a list with
-\code{mira} class. If element \code{analyses} is not found in \code{x}, then
-it returns \code{x} as a \code{mira} object.
+a list element called `analyses`, and return this component as a list with
+`mira` class. If element `analyses` is not found in `x`, then
+it returns `x` as a `mira` object.
 }
 \details{
 No checking is done for validity of objects. The function also processes
-objects of class \code{mitml.result} from the \code{mitml} package.
+objects of class `mitml.result` from the `mitml` package.
 }
 \examples{
 imp <- mice(nhanes, print = FALSE, seed = 21443)
@@ -40,7 +40,7 @@ f2 <- getfit(fit, 2)
 class(f2)
 }
 \seealso{
-\code{\link[=mira-class]{mira()}}, \code{\link[=with.mids]{with.mids()}}
+[`mira()`][mira-class], [with.mids()]
 }
 \author{
 Stef van Buuren, 2012, 2020

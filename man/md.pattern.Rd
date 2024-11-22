@@ -11,13 +11,13 @@ md.pattern(x, plot = TRUE, rotate.names = FALSE)
 values are coded as NA's.}
 
 \item{plot}{Should the missing data pattern be made into a plot. Default is
-\code{plot = TRUE}.}
+`plot = TRUE`.}
 
 \item{rotate.names}{Whether the variable names in the plot should be placed
-horizontally or vertically. Default is \code{rotate.names = FALSE}.}
+horizontally or vertically. Default is `rotate.names = FALSE`.}
 }
 \value{
-A matrix with \code{ncol(x)+1} columns, in which each row corresponds
+A matrix with `ncol(x)+1` columns, in which each row corresponds
 to a missing data pattern (1=observed, 0=missing).  Rows and columns are
 sorted in increasing amounts of missing information. The last column and row
 contain row and column counts, respectively.
@@ -46,9 +46,9 @@ md.pattern(nhanes)
 Schafer, J.L. (1997), Analysis of multivariate incomplete data.
 London: Chapman&Hall.
 
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
-Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`: Multivariate
+Imputation by Chained Equations in `R`. *Journal of Statistical
+Software*, **45**(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \author{
 Gerko Vink, 2018, based on an earlier version of the same function by

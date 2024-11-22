@@ -2,7 +2,7 @@
 % Please edit documentation in R/as.R
 \name{as.mira}
 \alias{as.mira}
-\title{Create a \code{mira} object from repeated analyses}
+\title{Create a `mira` object from repeated analyses}
 \usage{
 as.mira(fitlist)
 }
@@ -10,15 +10,15 @@ as.mira(fitlist)
 \item{fitlist}{A list containing $m$ fitted analysis objects}
 }
 \value{
-An S3 object of class \code{mira}.
+An S3 object of class `mira`.
 }
 \description{
-The \code{as.mira()} function takes the results of repeated
+The `as.mira()` function takes the results of repeated
 complete-data analysis stored as a list, and turns it
-into a \code{mira} object that can be pooled.
+into a `mira` object that can be pooled.
 }
 \seealso{
-\code{\link[=mira-class]{mira()}}
+[`mira()`][mira-class]
 }
 \author{
 Stef van Buuren

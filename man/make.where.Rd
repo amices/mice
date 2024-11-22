@@ -2,26 +2,26 @@
 % Please edit documentation in R/where.R
 \name{make.where}
 \alias{make.where}
-\title{Creates a \code{where} argument}
+\title{Creates a `where` argument}
 \usage{
 make.where(data, keyword = c("missing", "all", "none", "observed"))
 }
 \arguments{
-\item{data}{A \code{data.frame} with the source data}
+\item{data}{A `data.frame` with the source data}
 
-\item{keyword}{An optional keyword, one of \code{"missing"} (missing
-values are imputed), \code{"observed"} (observed values are imputed),
-\code{"all"} and \code{"none"}. The default
-is \code{keyword = "missing"}}
+\item{keyword}{An optional keyword, one of `"missing"` (missing
+values are imputed), `"observed"` (observed values are imputed),
+`"all"` and `"none"`. The default
+is `keyword = "missing"`}
 }
 \value{
 A matrix with logical
 }
 \description{
-This helper function creates a valid \code{where} matrix. The
-\code{where} matrix is an argument to the \code{mice} function.
-It has the same size as \code{data} and specifies which values
-are to be imputed (\code{TRUE}) or nor (\code{FALSE}).
+This helper function creates a valid `where` matrix. The
+`where` matrix is an argument to the `mice` function.
+It has the same size as `data` and specifies which values
+are to be imputed (`TRUE`) or nor (`FALSE`).
 }
 \examples{
 head(make.where(nhanes), 3)
@@ -36,5 +36,5 @@ fit <- with(imp, lm(chl ~ bmi + age + hyp))
 summary(pool.syn(fit))
 }
 \seealso{
-\code{\link[=make.blocks]{make.blocks()}}, \code{\link[=make.predictorMatrix]{make.predictorMatrix()}}
+[make.blocks()], [make.predictorMatrix()]
 }

@@ -10,31 +10,31 @@ mice.impute.norm.predict(y, ry, x, wy = NULL, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length `length(y)` indicating the
+the subset `y[ry]` of elements in `y` to which the imputation
+model is fitted. The `ry` generally distinguishes the observed
+(`TRUE`) and missing values (`FALSE`) in `y`.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with `length(y)` rows with predictors for
+`y`. Matrix `x` may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
-indicates locations in \code{y} for which imputations are created.}
+\item{wy}{Logical vector of length `length(y)`. A `TRUE` value
+indicates locations in `y` for which imputations are created.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length
-\code{sum(wy)}
+Vector with imputed data, same type as `y`, and of length
+`sum(wy)`
 }
 \description{
 Imputes the "best value" according to the linear regression model, also
-known as \emph{regression imputation}.
+known as *regression imputation*.
 }
 \details{
 Calculates regression weights from the observed data and returns predicted
 values to as imputations. This
-method is known as \emph{regression imputation}.
+method is known as *regression imputation*.
 }
 \section{Warning}{
  THIS METHOD SHOULD NOT BE USED FOR DATA ANALYSIS.
@@ -43,8 +43,8 @@ likely value according to the model. However, it ignores the uncertainty
 of the missing values and artificially
 amplifies the relations between the columns of the data. Application of
 richer models having more parameters does not help to evade these issues.
-Stochastic regression methods, like \code{\link[=mice.impute.pmm]{mice.impute.pmm()}} or
-\code{\link[=mice.impute.norm]{mice.impute.norm()}}, are generally preferred.
+Stochastic regression methods, like [mice.impute.pmm()] or
+[mice.impute.norm()], are generally preferred.
 
 At best, prediction can give reasonable estimates of the mean, especially
 if normality assumptions are plausible. See Little and Rubin (2002, p. 62-64)
@@ -56,7 +56,7 @@ Little, R.J.A. and Rubin, D.B. (2002). Statistical Analysis with Missing
 Data.  New York: John Wiley and Sons.
 
 Van Buuren, S. (2018).
-\href{https://stefvanbuuren.name/fimd/sec-linearnormal.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+[*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-linearnormal.html)
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{

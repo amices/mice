@@ -8,19 +8,19 @@ mice.theme(transparent = TRUE, alpha.fill = 0.3)
 }
 \arguments{
 \item{transparent}{A logical indicating whether alpha-transparency is
-allowed. The default is \code{TRUE}.}
+allowed. The default is `TRUE`.}
 
 \item{alpha.fill}{A numerical values between 0 and 1 that indicates the
 default alpha value for fills.}
 }
 \value{
-\code{mice.theme()} returns a named list that can be used as a theme in the functions in
-\pkg{lattice}. By default, the \code{mice.theme()} function sets
-\code{transparent <- TRUE} if the current device \code{.Device} supports
+`mice.theme()` returns a named list that can be used as a theme in the functions in
+\pkg{lattice}. By default, the `mice.theme()` function sets
+`transparent <- TRUE` if the current device `.Device` supports
 semi-transparent colors.
 }
 \description{
-The \code{mice.theme()} function sets default choices for
+The `mice.theme()` function sets default choices for
 Trellis plots that are built into \pkg{mice}.
 }
 \author{

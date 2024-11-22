@@ -2,12 +2,12 @@
 % Please edit documentation in R/predictorMatrix.R
 \name{make.predictorMatrix}
 \alias{make.predictorMatrix}
-\title{Creates a \code{predictorMatrix} argument}
+\title{Creates a `predictorMatrix` argument}
 \usage{
 make.predictorMatrix(data, blocks = make.blocks(data), predictorMatrix = NULL)
 }
 \arguments{
-\item{data}{A \code{data.frame} with the source data}
+\item{data}{A `data.frame` with the source data}
 
 \item{blocks}{An optional specification for blocks of variables in
 the rows. The default assigns each variable in its own block.}
@@ -19,10 +19,10 @@ names are copied into the output predictor matrix.}
 A matrix
 }
 \description{
-This helper function creates a valid \code{predictMatrix}. The
-\code{predictorMatrix} is an argument to the \code{mice} function.
+This helper function creates a valid `predictMatrix`. The
+`predictorMatrix` is an argument to the `mice` function.
 It specifies the target variable or block in the rows, and the
-predictor variables on the columns. An entry of \code{0} means that
+predictor variables on the columns. An entry of `0` means that
 the column variable is NOT used to impute the row variable or block.
 A nonzero value indicates that it is used.
 }
@@ -31,5 +31,5 @@ make.predictorMatrix(nhanes)
 make.predictorMatrix(nhanes, blocks = make.blocks(nhanes, "collect"))
 }
 \seealso{
-\code{\link[=make.blocks]{make.blocks()}}
+[make.blocks()]
 }

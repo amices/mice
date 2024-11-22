@@ -8,25 +8,25 @@ nimp(data = NULL, where = is.na(data), blocks = make.blocks(where))
 }
 \arguments{
 \item{data}{Data frame with \eqn{n} rows and \eqn{p} columns with
-incomplete data.  Missing values are coded as \code{NA}.}
+incomplete data.  Missing values are coded as `NA`.}
 
 \item{where}{A data frame or matrix of logicals with \eqn{n} rows
-and \eqn{p} columns, indicating the cells of \code{data} for
+and \eqn{p} columns, indicating the cells of `data` for
 which imputations are generated.
-The default \code{where = is.na(data)} specifies that all
+The default `where = is.na(data)` specifies that all
 missing data are imputed.
-The \code{where} argument can overimpute cells
+The `where` argument can overimpute cells
 with observed data, or skip imputation of specific missing
 cells. Be aware that the latter option could propagate
 missing values to other variables. See details.
-Note: Not all imputation methods may support the \code{where}
-argument (e.g., \code{mice.impute.jomoImpute()} or
-\code{mice.impute.panImpute()}).}
+Note: Not all imputation methods may support the `where`
+argument (e.g., `mice.impute.jomoImpute()` or
+`mice.impute.panImpute()`).}
 
 \item{blocks}{List of \eqn{q} character vectors that identifies the
 variable names per block. The name of list elements
-identify blocks. \code{mice()} will provide default names
-(\code{"b1"}, \code{"b2"}, ...) for blocks containing multiple
+identify blocks. `mice()` will provide default names
+(`"b1"`, `"b2"`, ...) for blocks containing multiple
 variables. Variables within a block are imputed as a
 block, e.g. by a multivariate imputation method, or
 by an iterated version of the same univariate imputation
@@ -37,11 +37,11 @@ specification (FCS) by univariate models
 All data variables are assigned to a block.
 A variable can belong to only one block, so there are
 at most \eqn{p} blocks.
-See the \code{parcel} argument for an easier alternative to
-the \code{blocks} argument.}
+See the `parcel` argument for an easier alternative to
+the `blocks` argument.}
 }
 \value{
-A numeric vector of length \code{length(blocks)} containing
+A numeric vector of length `length(blocks)` containing
 the number of cells that need to be imputed within a block.
 }
 \description{
@@ -58,5 +58,5 @@ blocks <- list(c("bmi", "hyp"), "age", "chl")
 nimp(where = where, blocks = blocks)
 }
 \seealso{
-\code{\link[=mice]{mice()}}
+[mice()]
 }

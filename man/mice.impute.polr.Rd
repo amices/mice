@@ -19,84 +19,84 @@ mice.impute.polr(
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length `length(y)` indicating the
+the subset `y[ry]` of elements in `y` to which the imputation
+model is fitted. The `ry` generally distinguishes the observed
+(`TRUE`) and missing values (`FALSE`) in `y`.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with `length(y)` rows with predictors for
+`y`. Matrix `x` may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
-indicates locations in \code{y} for which imputations are created.}
+\item{wy}{Logical vector of length `length(y)`. A `TRUE` value
+indicates locations in `y` for which imputations are created.}
 
-\item{nnet.maxit}{Tuning parameter for \code{nnet()}.}
+\item{nnet.maxit}{Tuning parameter for `nnet()`.}
 
-\item{nnet.trace}{Tuning parameter for \code{nnet()}.}
+\item{nnet.trace}{Tuning parameter for `nnet()`.}
 
-\item{nnet.MaxNWts}{Tuning parameter for \code{nnet()}.}
+\item{nnet.MaxNWts}{Tuning parameter for `nnet()`.}
 
 \item{polr.to.loggedEvents}{A logical indicating whether each fallback
-to the \code{multinom()} function should be written to \code{loggedEvents}.
-The default is \code{FALSE}.}
+to the `multinom()` function should be written to `loggedEvents`.
+The default is `FALSE`.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length
-\code{sum(wy)}
+Vector with imputed data, same type as `y`, and of length
+`sum(wy)`
 }
 \description{
 Imputes missing data in a categorical variable using polytomous regression
 }
 \details{
-The function \code{mice.impute.polr()} imputes for ordered categorical response
+The function `mice.impute.polr()` imputes for ordered categorical response
 variables by the proportional odds logistic regression (polr) model. The
 function repeatedly applies logistic regression on the successive splits. The
 model is also known as the cumulative link model.
 
 By default, ordered factors with more than two levels are imputed by
-\code{mice.impute.polr}.
+`mice.impute.polr`.
 
-The algorithm of \code{mice.impute.polr} uses the function \code{polr()} from
-the \code{MASS} package.
+The algorithm of `mice.impute.polr` uses the function `polr()` from
+the `MASS` package.
 
 In order to avoid bias due to perfect prediction, the algorithm augment the
 data according to the method of White, Daniel and Royston (2010).
 
-The call to \code{polr} might fail, usually because the data are very sparse.
-In that case, \code{multinom} is tried as a fallback.
-If the local flag \code{polr.to.loggedEvents} is set to TRUE,
+The call to `polr` might fail, usually because the data are very sparse.
+In that case, `multinom` is tried as a fallback.
+If the local flag `polr.to.loggedEvents` is set to TRUE,
 a record is written
-to the \code{loggedEvents} component of the \code{\link[=mids]{mids()}} object.
-Use \code{mice(data, polr.to.loggedEvents = TRUE)} to set the flag.
+to the `loggedEvents` component of the [mids()] object.
+Use `mice(data, polr.to.loggedEvents = TRUE)` to set the flag.
 }
 \note{
 In December 2019 Simon White alerted that the
-\code{polr} could always fail silently. I can confirm this behaviour for
-versions \verb{mice 3.0.0 - mice 3.6.6}, so any method requests
-for \code{polr} in these versions were in fact handled by \code{multinom}.
-See \url{https://github.com/amices/mice/issues/206} for details.
+`polr` could always fail silently. I can confirm this behaviour for
+versions `mice 3.0.0 - mice 3.6.6`, so any method requests
+for `polr` in these versions were in fact handled by `multinom`.
+See <https://github.com/amices/mice/issues/206> for details.
 }
 \references{
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
-Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`: Multivariate
+Imputation by Chained Equations in `R`. *Journal of Statistical
+Software*, **45**(3), 1-67. \doi{10.18637/jss.v045.i03}
 
-Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
+Brand, J.P.L. (1999) *Development, implementation and evaluation of
 multiple imputation strategies for the statistical analysis of incomplete
-data sets.} Dissertation. Rotterdam: Erasmus University.
+data sets.* Dissertation. Rotterdam: Erasmus University.
 
 White, I.R., Daniel, R. Royston, P. (2010). Avoiding bias due to perfect
 prediction in multiple imputation of incomplete categorical variables.
-\emph{Computational Statistics and Data Analysis}, 54, 2267-2275.
+*Computational Statistics and Data Analysis*, 54, 2267-2275.
 
-Venables, W.N. & Ripley, B.D. (2002). \emph{Modern applied statistics with
-S-Plus (4th ed)}. Springer, Berlin.
+Venables, W.N. & Ripley, B.D. (2002). *Modern applied statistics with
+S-Plus (4th ed)*. Springer, Berlin.
 }
 \seealso{
-\code{\link[=mice]{mice()}}, \code{\link[nnet:multinom]{nnet::multinom()}},
-\code{\link[MASS:polr]{MASS::polr()}}
+[mice()], [nnet::multinom()],
+[MASS::polr()]
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},

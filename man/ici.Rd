@@ -10,22 +10,22 @@
 ici(x)
 }
 \arguments{
-\item{x}{An \code{R} object. Currently supported are methods for the
-following classes: \code{mids}.}
+\item{x}{An `R` object. Currently supported are methods for the
+following classes: `mids`.}
 }
 \value{
 Logical vector indicating the incomplete cases,
 }
 \description{
 This array is useful for extracting the subset of incomplete cases.
-The companion function  \code{cci()} selects the complete cases.
+The companion function  `cci()` selects the complete cases.
 }
 \examples{
 
 ici(nhanes) # indicator for 12 rows with incomplete cases
 }
 \seealso{
-\code{\link[=cci]{cci()}}, \code{\link[=ic]{ic()}}
+[cci()], [ic()]
 }
 \author{
 Stef van Buuren, 2017.

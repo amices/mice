@@ -2,14 +2,14 @@
 % Please edit documentation in R/ampute.default.R
 \name{ampute.default.weights}
 \alias{ampute.default.weights}
-\title{Default \code{weights} in \code{ampute}}
+\title{Default `weights` in `ampute`}
 \usage{
 ampute.default.weights(patterns, mech)
 }
 \arguments{
-\item{patterns}{A matrix of size #patterns by #variables where \code{0} indicates
-a variable should have missing values and \code{1} indicates a variable should
-remain complete. Could be the result of \code{\link[=ampute.default.patterns]{ampute.default.patterns()}}.}
+\item{patterns}{A matrix of size #patterns by #variables where `0` indicates
+a variable should have missing values and `1` indicates a variable should
+remain complete. Could be the result of [ampute.default.patterns()].}
 
 \item{mech}{A string specifying the missingness mechanism.}
 }
@@ -17,16 +17,16 @@ remain complete. Could be the result of \code{\link[=ampute.default.patterns]{am
 A matrix of size #patterns by #variables containing the weights that
 will be used to calculate the weighted sum scores. Equal weights are given to
 all variables. When mechanism is MAR, variables that will be amputed will be
-weighted with \code{0}. If it is MNAR, variables that will be observed
-will be weighted with \code{0}. If mechanism is MCAR, the weights matrix will
+weighted with `0`. If it is MNAR, variables that will be observed
+will be weighted with `0`. If mechanism is MCAR, the weights matrix will
 not be used. A default MAR matrix will be returned.
 }
 \description{
 Defines the default weights matrix for the multivariate amputation function
-\code{ampute}.
+`ampute`.
 }
 \seealso{
-\code{\link[=ampute]{ampute()}}, \code{\link[=ampute.default.patterns]{ampute.default.patterns()}}
+[ampute()], [ampute.default.patterns()]
 }
 \author{
 Rianne Schouten, 2016

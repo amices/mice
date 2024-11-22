@@ -2,12 +2,12 @@
 % Please edit documentation in R/dots.R
 \name{make.dots}
 \alias{make.dots}
-\title{Creates a \code{dots} argument}
+\title{Creates a `dots` argument}
 \usage{
 make.dots(data, blocks = make.blocks(data))
 }
 \arguments{
-\item{data}{A \code{data.frame} with the source data}
+\item{data}{A `data.frame` with the source data}
 
 \item{blocks}{An optional specification for blocks of variables in
 the rows. The default assigns each variable in its own block.}
@@ -16,10 +16,10 @@ the rows. The default assigns each variable in its own block.}
 A matrix
 }
 \description{
-This helper function creates a valid \code{dots} object. The
-\code{dots} object is an argument to the \code{mice} function.
-The name \code{dots} is a contraction of blocks-dots.
-Through \code{dots}, the user can specify any additional
+This helper function creates a valid `dots` object. The
+`dots` object is an argument to the `mice` function.
+The name `dots` is a contraction of blocks-dots.
+Through `dots`, the user can specify any additional
 arguments that are specifically passed down to the lowest level
 imputation function.
 }
@@ -27,5 +27,5 @@ imputation function.
 make.dots(nhanes, blocks = name.blocks(c("age", "hyp"), "xxx"))
 }
 \seealso{
-\code{\link[=make.blocks]{make.blocks()}}
+[make.blocks()]
 }

@@ -18,16 +18,16 @@ mdc(
 }
 \arguments{
 \item{r}{A numerical or character vector. The numbers 1-6 request colors as
-follows: 1=\code{cso}, 2=\code{csi}, 3=\code{csc}, 4=\code{clo}, 5=\code{cli}
-and 6=\code{clc}. Alternatively, \code{r} may contain the strings
-' \code{observed}', '\code{missing}', or '\code{both}', or abbreviations
+follows: 1=`cso`, 2=`csi`, 3=`csc`, 4=`clo`, 5=`cli`
+and 6=`clc`. Alternatively, `r` may contain the strings
+' `observed`', '`missing`', or '`both`', or abbreviations
 thereof.}
 
-\item{s}{A character vector containing the strings '\code{symbol}' or
-' \code{line}', or abbreviations thereof.}
+\item{s}{A character vector containing the strings '`symbol`' or
+' `line`', or abbreviations thereof.}
 
 \item{transparent}{A logical indicating whether alpha-transparency is
-allowed. The default is \code{TRUE}.}
+allowed. The default is `TRUE`.}
 
 \item{cso}{The symbol color for the observed data. The default is a
 transparent blue.}
@@ -48,15 +48,15 @@ slightly darker transparent red.}
 default is a grey color.}
 }
 \value{
-\code{mdc()} returns a vector containing color definitions. The length
-of the output vector is calculate from the length of \code{r} and \code{s}.
+`mdc()` returns a vector containing color definitions. The length
+of the output vector is calculate from the length of `r` and `s`.
 Elements of the input vectors are repeated if needed.
 }
 \description{
-\code{mdc} returns colors used to distinguish observed, missing and combined
-data in plotting. \code{mice.theme} return a partial list of named objects
-that can be used as a theme in \code{stripplot}, \code{bwplot},
-\code{densityplot} and \code{xyplot}.
+`mdc` returns colors used to distinguish observed, missing and combined
+data in plotting. `mice.theme` return a partial list of named objects
+that can be used as a theme in `stripplot`, `bwplot`,
+`densityplot` and `xyplot`.
 }
 \details{
 This function eases consistent use of colors in plots. The default follows
@@ -71,13 +71,13 @@ mdc(1:6)
 mdc(c("obs", "mis"), "lin")
 }
 \references{
-Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
-Visualization with R}, Springer.
+Sarkar, Deepayan (2008) *Lattice: Multivariate Data
+Visualization with R*, Springer.
 }
 \seealso{
-\code{\link[=hcl]{hcl()}}, \code{\link[=rgb]{rgb()}},
-\code{\link[=xyplot.mids]{xyplot.mids()}}, \code{\link[lattice:xyplot]{lattice::xyplot()}},
-\code{\link[lattice:trellis.par.get]{trellis.par.set()}}
+[hcl()], [rgb()],
+[xyplot.mids()], [lattice::xyplot()],
+[`trellis.par.set()`][lattice::trellis.par.get]
 }
 \author{
 Stef van Buuren, sept 2012.

@@ -3,7 +3,7 @@
 \name{complete.mids}
 \alias{complete.mids}
 \alias{complete}
-\title{Extracts the completed data from a \code{mids} object}
+\title{Extracts the completed data from a `mids` object}
 \usage{
 \method{complete}{mids}(
   data,
@@ -15,66 +15,66 @@
 )
 }
 \arguments{
-\item{data}{An object of class \code{mids} as created by the function
-\code{mice()}.}
+\item{data}{An object of class `mids` as created by the function
+`mice()`.}
 
 \item{action}{A numeric vector or a keyword. Numeric
-values between 1 and \code{data$m} return the data with
-imputation number \code{action} filled in. The value of \code{action = 0}
-return the original data, with missing values. \code{action} can
-also be one of the following keywords: \code{"all"}, \code{"long"},
-\code{"broad"} and \code{"repeated"}. See the Details section
+values between 1 and `data$m` return the data with
+imputation number `action` filled in. The value of `action = 0`
+return the original data, with missing values. `action` can
+also be one of the following keywords: `"all"`, `"long"`,
+`"broad"` and `"repeated"`. See the Details section
 for the interpretation.
-The default is \code{action = 1L} returns the first imputed data set.}
+The default is `action = 1L` returns the first imputed data set.}
 
 \item{include}{A logical to indicate whether the original data with the missing
 values should be included.}
 
 \item{mild}{A logical indicating whether the return value should
-always be an object of class \code{mild}. Setting \code{mild = TRUE}
-overrides \code{action} keywords \code{"long"}, \code{"broad"}
-and \code{"repeated"}. The default is \code{FALSE}.}
+always be an object of class `mild`. Setting `mild = TRUE`
+overrides `action` keywords `"long"`, `"broad"`
+and `"repeated"`. The default is `FALSE`.}
 
-\item{order}{Either \code{"first"} or \code{"last"}. Only relevant when
-\code{action == "long"}. Writes the \code{".imp"} and \code{".id"}
-in columns 1 and 2. The default is \code{order = "last"}.
-Included for backward compatibility with \code{"< mice 3.16.0"}.}
+\item{order}{Either `"first"` or `"last"`. Only relevant when
+`action == "long"`. Writes the `".imp"` and `".id"`
+in columns 1 and 2. The default is `order = "last"`.
+Included for backward compatibility with `"< mice 3.16.0"`.}
 
 \item{\dots}{Additional arguments. Not used.}
 }
 \value{
 Complete data set with missing values replaced by imputations.
-A \code{data.frame}, or a list of data frames of class \code{mild}.
+A `data.frame`, or a list of data frames of class `mild`.
 }
 \description{
-Takes an object of class \code{mids}, fills in the missing data, and returns
+Takes an object of class `mids`, fills in the missing data, and returns
 the completed data in a specified format.
 }
 \details{
-The argument \code{action} can be length-1 character, which is
+The argument `action` can be length-1 character, which is
 matched to one of the following keywords:
 \describe{
-\item{\code{"all"}}{produces a \code{mild} object of imputed data sets. When
-\code{include = TRUE}, then the original data are appended as the first list
+\item{`"all"`}{produces a `mild` object of imputed data sets. When
+`include = TRUE`, then the original data are appended as the first list
 element;}
-\item{\code{"long"}}{ produces a data set where imputed data sets
-are stacked vertically. The columns are added: 1) \code{.imp}, integer,
-referring the imputation number, and 2) \code{.id}, character, the row
-names of \code{data$data};}
-\item{\code{"stacked"}}{ same as \code{"long"} but without the two
+\item{`"long"`}{ produces a data set where imputed data sets
+are stacked vertically. The columns are added: 1) `.imp`, integer,
+referring the imputation number, and 2) `.id`, character, the row
+names of `data$data`;}
+\item{`"stacked"`}{ same as `"long"` but without the two
 additional columns;}
-\item{\code{"broad"}}{ produces a data set with where imputed data sets
+\item{`"broad"`}{ produces a data set with where imputed data sets
 are stacked horizontally. Columns are ordered as in the original data.
 The imputation number is appended to each column name;}
-\item{\code{"repeated"}}{ same as \code{"broad"}, but with
+\item{`"repeated"`}{ same as `"broad"`, but with
 columns in a different order.}
 }
 }
 \note{
-Technical note: \verb{mice 3.7.5} renamed the \code{complete()} function
-to \code{complete.mids()} and exported it as an S3 method of the
-generic \code{tidyr::complete()}. Name clashes between
-\code{mice::complete()} and \code{tidyr::complete()} should no
+Technical note: `mice 3.7.5` renamed the `complete()` function
+to `complete.mids()` and exported it as an S3 method of the
+generic `tidyr::complete()`. Name clashes between
+`mice::complete()` and `tidyr::complete()` should no
 longer occur.
 }
 \examples{
@@ -104,6 +104,6 @@ dslist <- complete(imp, c(0, 3, 5), mild = TRUE)
 names(dslist)
 }
 \seealso{
-\code{\link[=mice]{mice()}}, \code{\link[=mids-class]{mids()}}
+[mice()], [`mids()`][mids-class]
 }
 \keyword{manip}

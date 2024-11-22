@@ -2,27 +2,27 @@
 % Please edit documentation in R/ibind.R
 \name{ibind}
 \alias{ibind}
-\title{Enlarge number of imputations by combining \code{mids} objects}
+\title{Enlarge number of imputations by combining `mids` objects}
 \usage{
 ibind(x, y)
 }
 \arguments{
-\item{x}{A \code{mids} object.}
+\item{x}{A `mids` object.}
 
-\item{y}{A \code{mids} object.}
+\item{y}{A `mids` object.}
 }
 \value{
-An S3 object of class \code{mids}
+An S3 object of class `mids`
 }
 \description{
-This function combines two \code{mids} objects \code{x} and \code{y} into a
-single \code{mids} object, with the objective of increasing the number of
-imputed data sets. If the number of imputations in \code{x} and \code{y} are
-\code{m(x)} and \code{m(y)}, then the combined object will have
-\code{m(x)+m(y)} imputations.
+This function combines two `mids` objects `x` and `y` into a
+single `mids` object, with the objective of increasing the number of
+imputed data sets. If the number of imputations in `x` and `y` are
+`m(x)` and `m(y)`, then the combined object will have
+`m(x)+m(y)` imputations.
 }
 \details{
-The two \code{mids} objects are required to
+The two `mids` objects are required to
 have the same underlying multiple imputation model and should
 be fitted on the same data.
 }
@@ -39,7 +39,7 @@ imp12$m
 plot(imp12)
 }
 \seealso{
-\code{\link[=mids-class]{mids()}}
+[`mids()`][mids-class]
 }
 \author{
 Karin Groothuis-Oudshoorn, Stef van Buuren

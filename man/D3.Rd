@@ -7,41 +7,41 @@
 D3(fit1, fit0 = NULL, dfcom = NULL, df.com = NULL)
 }
 \arguments{
-\item{fit1}{An object of class \code{mira}, produced by \code{with()}.}
+\item{fit1}{An object of class `mira`, produced by `with()`.}
 
-\item{fit0}{An object of class \code{mira}, produced by \code{with()}. The
-model in \code{fit0} is a nested within \code{fit1}. The default null
-model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.}
+\item{fit0}{An object of class `mira`, produced by `with()`. The
+model in `fit0` is a nested within `fit1`. The default null
+model `fit0 = NULL` compares `fit1` to the intercept-only model.}
 
 \item{dfcom}{A single number denoting the
-complete-data degrees of freedom of model \code{fit1}. If not specified,
-it is set equal to \code{df.residual} of model \code{fit1}. If that cannot
+complete-data degrees of freedom of model `fit1`. If not specified,
+it is set equal to `df.residual` of model `fit1`. If that cannot
 be done, the procedure assumes (perhaps incorrectly) a large sample.}
 
 \item{df.com}{Deprecated}
 }
 \value{
-An object of class \code{mice.anova}
+An object of class `mice.anova`
 }
 \description{
 The D3-statistic is a likelihood-ratio test statistic.
 }
 \details{
-The \code{D3()} function implement the LR-method by
+The `D3()` function implement the LR-method by
 Meng and Rubin (1992). The implementation of the method relies
-on the \code{broom} package, the standard \code{update} mechanism
-for statistical models in \code{R} and the \code{offset} function.
+on the `broom` package, the standard `update` mechanism
+for statistical models in `R` and the `offset` function.
 
-The function calculates \code{m} repetitions of the full
+The function calculates `m` repetitions of the full
 (or null) models, calculates the mean of the estimates of the
 (fixed) parameter coefficients \eqn{\beta}. For each imputed
 imputed dataset, it calculates the likelihood for the model with
 the parameters constrained to \eqn{\beta}.
 
-The \code{mitml::testModels()} function offers similar functionality
-for a subset of statistical models. Results of \code{mice::D3()} and
-\code{mitml::testModels()} differ in multilevel models because the
-\code{testModels()} also constrains the variance components parameters.
+The `mitml::testModels()` function offers similar functionality
+for a subset of statistical models. Results of `mice::D3()` and
+`mitml::testModels()` differ in multilevel models because the
+`testModels()` also constrains the variance components parameters.
 For more details on
 }
 \examples{
@@ -61,12 +61,12 @@ D3(fit1, fit0)
 \references{
 Meng, X. L., and D. B. Rubin. 1992.
 Performing Likelihood Ratio Tests with Multiply-Imputed Data Sets.
-\emph{Biometrika}, 79 (1): 103–11.
+*Biometrika*, 79 (1): 103–11.
 
-\url{https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:likelihoodratio}
+<https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:likelihoodratio>
 
-\url{http://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#setting-residual-variances-to-a-fixed-value-zero-or-other}
+<http://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#setting-residual-variances-to-a-fixed-value-zero-or-other>
 }
 \seealso{
-\code{\link[=fix.coef]{fix.coef()}}
+[fix.coef()]
 }

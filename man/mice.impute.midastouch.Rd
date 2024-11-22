@@ -20,32 +20,32 @@ mice.impute.midastouch(
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length `length(y)` indicating the
+the subset `y[ry]` of elements in `y` to which the imputation
+model is fitted. The `ry` generally distinguishes the observed
+(`TRUE`) and missing values (`FALSE`) in `y`.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with `length(y)` rows with predictors for
+`y`. Matrix `x` may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
-indicates locations in \code{y} for which imputations are created.}
+\item{wy}{Logical vector of length `length(y)`. A `TRUE` value
+indicates locations in `y` for which imputations are created.}
 
-\item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent
-problems with multicollinearity. The default is \code{ridge = 1e-05},
+\item{ridge}{The ridge penalty used in `.norm.draw()` to prevent
+problems with multicollinearity. The default is `ridge = 1e-05`,
 which means that 0.01 percent of the diagonal is added to the cross-product.
 Larger ridges may result in more biased estimates. For highly noisy data
-(e.g. many junk variables), set \code{ridge = 1e-06} or even lower to
-reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
+(e.g. many junk variables), set `ridge = 1e-06` or even lower to
+reduce bias. For highly collinear data, set `ridge = 1e-04` or higher.}
 
-\item{midas.kappa}{Scalar. If \code{NULL} (default) then the
-optimal \code{kappa} gets selected automatically. Alternatively, the user
-may specify a scalar. Siddique and Belin 2008 find \code{midas.kappa = 3}
+\item{midas.kappa}{Scalar. If `NULL` (default) then the
+optimal `kappa` gets selected automatically. Alternatively, the user
+may specify a scalar. Siddique and Belin 2008 find `midas.kappa = 3`
 to be sensible.}
 
-\item{outout}{Logical. If \code{TRUE} (default) one model is estimated
+\item{outout}{Logical. If `TRUE` (default) one model is estimated
 for each donor (leave-one-out principle). For speedup choose
-\code{outout = FALSE}, which estimates one model for all observations
+`outout = FALSE`, which estimates one model for all observations
 leading to in-sample predictions for the donors and out-of-sample
 predictions for the recipients. Mind the inappropriateness, though.}
 
@@ -54,33 +54,33 @@ environment in which the effective sample size of the donors for each
 loop (CE iterations times multiple imputations) is supposed to be written.
 The effective sample size is necessary to compute the correction for the
 total variance as originally suggested by Parzen, Lipsitz and
-Fitzmaurice 2005. The objectname is \code{midastouch.neff}.}
+Fitzmaurice 2005. The objectname is `midastouch.neff`.}
 
 \item{debug}{FOR EXPERTS. Null or character string. The name of an existing
 environment in which the input is supposed to be written. The objectname
-is \code{midastouch.inputlist}.}
+is `midastouch.inputlist`.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of
-length \code{sum(wy)}
+Vector with imputed data, same type as `y`, and of
+length `sum(wy)`
 }
 \description{
 Imputes univariate missing data using predictive mean matching.
 }
 \details{
-Imputation of \code{y} by predictive mean matching, based on
+Imputation of `y` by predictive mean matching, based on
 Rubin (1987, p. 168, formulas a and b) and Siddique and Belin 2008.
 The procedure is as follows:
 \enumerate{
 \item Draw a bootstrap sample from the donor pool.
 \item Estimate a beta matrix on the bootstrap sample by the leave one out principle.
-\item Compute type II predicted values for \code{yobs} (nobs x 1) and \code{ymis} (nmis x nobs).
-\item Calculate the distance between all \code{yobs} and the corresponding \code{ymis}.
+\item Compute type II predicted values for `yobs` (nobs x 1) and `ymis` (nmis x nobs).
+\item Calculate the distance between all `yobs` and the corresponding `ymis`.
 \item Convert the distances in drawing probabilities.
 \item For each recipient draw a donor from the entire pool while considering the probabilities from the model.
-\item Take its observed value in \code{y} as the imputation.
+\item Take its observed value in `y` as the imputation.
 }
 }
 \examples{
@@ -100,7 +100,7 @@ mice(nhanes2, method = c("sample", "midastouch", "logreg", "norm"))
 \references{
 Gaffert, P., Meinfelder, F., Bosch V. (2015) Towards an MI-proper
 Predictive Mean Matching, Discussion Paper.
-\url{https://www.uni-bamberg.de/fileadmin/uni/fakultaeten/sowi_lehrstuehle/statistik/Personen/Dateien_Florian/properPMM.pdf}
+<https://www.uni-bamberg.de/fileadmin/uni/fakultaeten/sowi_lehrstuehle/statistik/Personen/Dateien_Florian/properPMM.pdf>
 
 Little, R.J.A. (1988), Missing data adjustments in large
 surveys (with discussion), Journal of Business Economics and
@@ -108,22 +108,22 @@ Statistics, 6, 287--301.
 
 Parzen, M., Lipsitz, S. R., Fitzmaurice, G. M. (2005), A note on reducing
 the bias of the approximate Bayesian bootstrap imputation variance estimator.
-Biometrika \strong{92}, 4, 971--974.
+Biometrika **92**, 4, 971--974.
 
 Rubin, D.B. (1987), Multiple imputation for nonresponse in surveys. New York: Wiley.
 
 Siddique, J., Belin, T.R. (2008), Multiple imputation using an iterative
 hot-deck with distance-based donor selection. Statistics in medicine,
-\strong{27}, 1, 83--102
+**27**, 1, 83--102
 
 Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006),
 Fully conditional specification in multivariate imputation.
-\emph{Journal of Statistical Computation and Simulation}, \strong{76}, 12,
+*Journal of Statistical Computation and Simulation*, **76**, 12,
 1049--1064.
 
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011), \code{mice}: Multivariate
-Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \strong{45}, 3, 1--67. \doi{10.18637/jss.v045.i03}
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011), `mice`: Multivariate
+Imputation by Chained Equations in `R`. *Journal of
+Statistical Software*, **45**, 3, 1--67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
 Other univariate imputation functions: 

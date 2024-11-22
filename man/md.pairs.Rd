@@ -8,11 +8,11 @@ md.pairs(data)
 }
 \arguments{
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing
-values are coded as \code{NA}.}
+values are coded as `NA`.}
 }
 \value{
-A list of four components named \code{rr}, \code{rm}, \code{mr} and
-\code{mm}.  Each component is square numerical matrix containing the number
+A list of four components named `rr`, `rm`, `mr` and
+`mm`.  Each component is square numerical matrix containing the number
 observations within four missing data pattern.
 }
 \description{
@@ -38,9 +38,9 @@ pat$rr + pat$rm + pat$mr + pat$mm
 round(100 * pat$mr / (pat$mr + pat$mm))
 }
 \references{
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
-Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \strong{45}(3), 1-67.
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`:
+Multivariate Imputation by Chained Equations in `R`. *Journal of
+Statistical Software*, **45**(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 }
 \author{

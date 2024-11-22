@@ -2,25 +2,25 @@
 % Please edit documentation in R/post.R
 \name{make.post}
 \alias{make.post}
-\title{Creates a \code{post} argument}
+\title{Creates a `post` argument}
 \usage{
 make.post(data)
 }
 \arguments{
 \item{data}{Data frame with \eqn{n} rows and \eqn{p} columns with
-incomplete data.  Missing values are coded as \code{NA}.}
+incomplete data.  Missing values are coded as `NA`.}
 }
 \value{
-Character vector of \code{ncol(data)} element
+Character vector of `ncol(data)` element
 }
 \description{
-This helper function creates a valid \code{post} vector. The
-\code{post} vector is an argument to the \code{mice} function that
+This helper function creates a valid `post` vector. The
+`post` vector is an argument to the `mice` function that
 specifies post-processing for a variable after each iteration of imputation.
 }
 \examples{
 make.post(nhanes2)
 }
 \seealso{
-\code{\link[=mice]{mice()}}
+[mice()]
 }

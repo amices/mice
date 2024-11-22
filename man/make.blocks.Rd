@@ -2,31 +2,31 @@
 % Please edit documentation in R/blocks.R
 \name{make.blocks}
 \alias{make.blocks}
-\title{Creates a \code{blocks} argument}
+\title{Creates a `blocks` argument}
 \usage{
 make.blocks(x, partition = c("scatter", "collect", "void"), calltype = "pred")
 }
 \arguments{
-\item{x}{A \code{data.frame}, character vector with
-variable names, or \code{list} with variable names.}
+\item{x}{A `data.frame`, character vector with
+variable names, or `list` with variable names.}
 
-\item{partition}{Only relevant when \code{x} is a \code{data.frame}. Value
-\code{"scatter"} (default) will assign each column to a separate
-block. Value \code{"collect"} assigns all variables to one block,
-whereas \code{"void"} produces an empty list.}
+\item{partition}{Only relevant when `x` is a `data.frame`. Value
+`"scatter"` (default) will assign each column to a separate
+block. Value `"collect"` assigns all variables to one block,
+whereas `"void"` produces an empty list.}
 
-\item{calltype}{A character vector of \code{length(block)} elements
+\item{calltype}{A character vector of `length(block)` elements
 that indicates how the imputation model is specified. If
-\code{calltype = "pred"} (the default), the underlying imputation
-model is called by means of the \code{type} argument. The
-\code{type} argument for block \code{h} is equivalent to
-row \code{h} in the \code{predictorMatrix}.
-The alternative is \code{calltype = "formula"}. This will pass
-\code{formulas[[h]]} to the underlying imputation
-function for block \code{h}, together with the current data.
-The \code{calltype} of a block is set automatically during
+`calltype = "pred"` (the default), the underlying imputation
+model is called by means of the `type` argument. The
+`type` argument for block `h` is equivalent to
+row `h` in the `predictorMatrix`.
+The alternative is `calltype = "formula"`. This will pass
+`formulas[[h]]` to the underlying imputation
+function for block `h`, together with the current data.
+The `calltype` of a block is set automatically during
 initialization. Where a choice is possible, calltype
-\code{"formula"} is preferred over \code{"pred"} since this is
+`"formula"` is preferred over `"pred"` since this is
 more flexible and extendable. However, what precisely happens
 depends also on the capabilities of the imputation
 function that is called.}
@@ -36,19 +36,19 @@ A named list of character vectors with variables names.
 }
 \description{
 This helper function generates a list of the type needed for
-\code{blocks} argument in the \code{\link[=mice]{mice()}} function.
+`blocks` argument in the [mice()] function.
 }
 \details{
-Choices \code{"scatter"} and \code{"collect"} represent to two
+Choices `"scatter"` and `"collect"` represent to two
 extreme scenarios for assigning variables to imputation blocks.
-Use \code{"scatter"} to create an imputation model based on
-\emph{fully conditionally specification} (FCS). Use \code{"collect"} to
-gather all variables to be imputed by a \emph{joint model} (JM).
+Use `"scatter"` to create an imputation model based on
+*fully conditionally specification* (FCS). Use `"collect"` to
+gather all variables to be imputed by a *joint model* (JM).
 Scenario's in-between these two extremes represent
-\emph{hybrid} imputation models that combine FCS and JM.
+*hybrid* imputation models that combine FCS and JM.
 
 Any variable not listed in will not be imputed.
-Specification \code{"void"} represents the extreme scenario that
+Specification `"void"` represents the extreme scenario that
 skips imputation of all variables.
 
 A variable may be a member of multiple blocks. The variable will be

@@ -2,31 +2,31 @@
 % Please edit documentation in R/lm.R
 \name{lm.mids}
 \alias{lm.mids}
-\title{Linear regression for \code{mids} object}
+\title{Linear regression for `mids` object}
 \usage{
 lm.mids(formula, data, ...)
 }
 \arguments{
 \item{formula}{a formula object, with the response on the left of a ~
 operator, and the terms, separated by + operators, on the right. See the
-documentation of \code{\link[=lm]{lm()}} and \code{\link[=formula]{formula()}} for details.}
+documentation of [lm()] and [formula()] for details.}
 
 \item{data}{An object of type 'mids', which stands for 'multiply imputed data
-set', typically created by a call to function \code{mice()}.}
+set', typically created by a call to function `mice()`.}
 
-\item{\dots}{Additional parameters passed to \code{\link[=lm]{lm()}}}
+\item{\dots}{Additional parameters passed to [lm()]}
 }
 \value{
-An objects of class \code{mira}, which stands for 'multiply imputed
-repeated analysis'.  This object contains \code{data$m} distinct
-\code{lm.objects}, plus some descriptive information.
+An objects of class `mira`, which stands for 'multiply imputed
+repeated analysis'.  This object contains `data$m` distinct
+`lm.objects`, plus some descriptive information.
 }
 \description{
-Applies \code{lm()} to multiply imputed data set
+Applies `lm()` to multiply imputed data set
 }
 \details{
 This function is included for backward compatibility with V1.0. The function
-is superseded by \code{\link[=with.mids]{with.mids()}}.
+is superseded by [with.mids()].
 }
 \examples{
 imp <- mice(nhanes)
@@ -34,13 +34,13 @@ fit <- lm.mids(bmi ~ hyp + chl, data = imp)
 fit
 }
 \references{
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
-Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \strong{45}(3), 1-67.
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`:
+Multivariate Imputation by Chained Equations in `R`. *Journal of
+Statistical Software*, **45**(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link[=lm]{lm()}}, \code{\link[=mids-class]{mids()}}, \code{\link[=mira-class]{mira()}}
+[lm()], [`mids()`][mids-class], [`mira()`][mira-class]
 }
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn, 2000

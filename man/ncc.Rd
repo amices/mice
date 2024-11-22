@@ -7,12 +7,12 @@
 ncc(x)
 }
 \arguments{
-\item{x}{An \code{R} object. Currently supported are methods for the
-following classes: \code{mids}, \code{data.frame} and \code{matrix}. Also,
-\code{x} can be a vector.}
+\item{x}{An `R` object. Currently supported are methods for the
+following classes: `mids`, `data.frame` and `matrix`. Also,
+`x` can be a vector.}
 }
 \value{
-Number of elements in \code{x} with complete data.
+Number of elements in `x` with complete data.
 }
 \description{
 Calculates the number of complete cases.
@@ -21,7 +21,7 @@ Calculates the number of complete cases.
 ncc(nhanes) # 13 complete cases
 }
 \seealso{
-\code{\link[=nic]{nic()}}, \code{\link[=cci]{cci()}}
+[nic()], [cci()]
 }
 \author{
 Stef van Buuren, 2017

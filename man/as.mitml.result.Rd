@@ -2,24 +2,24 @@
 % Please edit documentation in R/as.R
 \name{as.mitml.result}
 \alias{as.mitml.result}
-\title{Converts into a \code{mitml.result} object}
+\title{Converts into a `mitml.result` object}
 \usage{
 as.mitml.result(x)
 }
 \arguments{
-\item{x}{An object of class \code{mira}}
+\item{x}{An object of class `mira`}
 }
 \value{
-An S3 object of class \code{mitml.result}, a list
+An S3 object of class `mitml.result`, a list
 containing $m$ fitted analysis objects.
 }
 \description{
-The \code{as.mitml.result()} function takes the results of repeated
+The `as.mitml.result()` function takes the results of repeated
 complete-data analysis stored as a list, and turns it
-into an object of class \code{mitml.result}.
+into an object of class `mitml.result`.
 }
 \seealso{
-\code{\link[mitml:with.mitml.list]{mitml::with.mitml.list()}}
+[mitml::with.mitml.list()]
 }
 \author{
 Stef van Buuren

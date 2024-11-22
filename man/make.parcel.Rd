@@ -2,39 +2,39 @@
 % Please edit documentation in R/parcel.R
 \name{make.parcel}
 \alias{make.parcel}
-\title{Creates a \code{parcel} argument}
+\title{Creates a `parcel` argument}
 \usage{
 make.parcel(x, partition = c("scatter", "collect", "void"), prefix = "b")
 }
 \arguments{
-\item{x}{A \code{data.frame}, an unnamed character vector, a named
-character vector or a \code{list}.}
+\item{x}{A `data.frame`, an unnamed character vector, a named
+character vector or a `list`.}
 
-\item{partition}{Only relevant if \code{x} is a \code{data.frame}. Value
-\code{"scatter"} (default) will assign each variable to a separate
-parcel. Value \code{"collect"} assigns all variables to one parcel,
-whereas \code{"void"} does not assign any variable to a parcel.}
+\item{partition}{Only relevant if `x` is a `data.frame`. Value
+`"scatter"` (default) will assign each variable to a separate
+parcel. Value `"collect"` assigns all variables to one parcel,
+whereas `"void"` does not assign any variable to a parcel.}
 
 \item{prefix}{A character vector of length 1 with the prefix to
 be using for naming any unnamed blocks with two or more variables.}
 }
 \value{
-A character vector of length \code{ncol(data)} that specifies
+A character vector of length `ncol(data)` that specifies
 the parcel name per variable
 }
 \description{
 This helper function generates a character vector for the
-\code{parcel} argument in the \code{\link[=mice]{mice()}} function.
+`parcel` argument in the [mice()] function.
 }
 \details{
-Choices \code{"scatter"} and \code{"collect"} represent to two
+Choices `"scatter"` and `"collect"` represent to two
 extreme scenarios for assigning variables to imputation parcels.
-Use \code{"scatter"} to create an imputation model based on
-\emph{fully conditionally specification} (FCS). Use \code{"collect"} to
-gather all variables to be imputed by a \emph{joint model} (JM).
+Use `"scatter"` to create an imputation model based on
+*fully conditionally specification* (FCS). Use `"collect"` to
+gather all variables to be imputed by a *joint model* (JM).
 
 Any variable not listed in the result will not be imputed.
-Specification \code{"void"} represents the extreme scenario where
+Specification `"void"` represents the extreme scenario where
 nothing is imputed.
 
 Unlike blocks, a variable cannot be allocated to multiple parcels.

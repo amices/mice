@@ -10,16 +10,16 @@ mice.impute.lasso.norm(y, ry, x, wy = NULL, nfolds = 10, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length `length(y)` indicating the
+the subset `y[ry]` of elements in `y` to which the imputation
+model is fitted. The `ry` generally distinguishes the observed
+(`TRUE`) and missing values (`FALSE`) in `y`.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with `length(y)` rows with predictors for
+`y`. Matrix `x` may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
-indicates locations in \code{y} for which imputations are created.}
+\item{wy}{Logical vector of length `length(y)`. A `TRUE` value
+indicates locations in `y` for which imputations are created.}
 
 \item{nfolds}{The number of folds for the cross-validation of the lasso penalty.
 The default is 10.}
@@ -27,8 +27,8 @@ The default is 10.}
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length
-\code{sum(wy)}
+Vector with imputed data, same type as `y`, and of length
+`sum(wy)`
 }
 \description{
 Imputes univariate missing normal data using lasso linear regression with bootstrap.
@@ -37,8 +37,8 @@ Imputes univariate missing normal data using lasso linear regression with bootst
 The method consists of the following steps:
 \enumerate{
 \item For a given y variable under imputation, draw a bootstrap version y*
-with replacement from the observed cases \code{y[ry]}, and stores in x* the
-corresponding values from \code{x[ry, ]}.
+with replacement from the observed cases `y[ry]`, and stores in x* the
+corresponding values from `x[ry, ]`.
 \item Fit a regularised (lasso) linear regression with y* as the outcome,
 and x* as predictors.
 A vector of regression coefficients bhat is obtained.

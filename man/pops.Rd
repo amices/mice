@@ -6,8 +6,8 @@
 \alias{pops.pred}
 \title{Project on preterm and small for gestational age infants (POPS)}
 \format{
-\code{pops} is a data frame with 959 rows and 86 columns.
-\code{pops.pred} is the 86 by 86 binary predictor matrix used for specifying
+`pops` is a data frame with 959 rows and 86 columns.
+`pops.pred` is the 86 by 86 binary predictor matrix used for specifying
 the multiple imputation model.
 }
 \source{
@@ -24,7 +24,7 @@ very low birth weight infants: The Dutch project on preterm and small for
 gestational age infants at 19 years of age. Pediatrics, 120(3):587595.
 
 Van Buuren, S. (2018).
-\href{https://stefvanbuuren.name/fimd/sec-selective.html#pops-study-19-years-follow-up}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+[*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-selective.html#pops-study-19-years-follow-up)
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 \description{
@@ -51,7 +51,7 @@ Multiple imputation of this data set has been described in Hille et al (2007)
 and Van Buuren (2012), chapter 8.
 }
 \note{
-This dataset is not part of \code{mice}.
+This dataset is not part of `mice`.
 }
 \examples{
 pops <- data(pops)

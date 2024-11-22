@@ -10,26 +10,26 @@ mice.impute.quadratic(y, ry, x, wy = NULL, quad.outcome = NULL, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length `length(y)` indicating the
+the subset `y[ry]` of elements in `y` to which the imputation
+model is fitted. The `ry` generally distinguishes the observed
+(`TRUE`) and missing values (`FALSE`) in `y`.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with `length(y)` rows with predictors for
+`y`. Matrix `x` may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
-indicates locations in \code{y} for which imputations are created.}
+\item{wy}{Logical vector of length `length(y)`. A `TRUE` value
+indicates locations in `y` for which imputations are created.}
 
 \item{quad.outcome}{The name of the outcome in the quadratic analysis as a
 character string. For example, if the substantive model of interest is
-\code{y ~ x + xx}, then \code{"y"} would be the \code{quad.outcome}}
+`y ~ x + xx`, then `"y"` would be the `quad.outcome`}
 
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length
-\code{sum(wy)}
+Vector with imputed data, same type as `y`, and of length
+`sum(wy)`
 }
 \description{
 Imputes incomplete variable that appears as both
@@ -50,14 +50,14 @@ estimates of the regression weights in a complete-data linear regression that
 use both \eqn{Y} and \eqn{Y^2}.
 }
 \note{
-There are two situations to consider. If only the linear term \code{Y}
-is present in the data, calculate the quadratic term \code{YY} after
-imputation. If both the linear term \code{Y} and the the quadratic term
-\code{YY} are variables in the data, then first impute \code{Y} by calling
-\code{mice.impute.quadratic()} on \code{Y}, and then impute \code{YY} by
-passive imputation as \code{meth["YY"] <- "~I(Y^2)"}.  See example section
-for details.  Generally, we would like \code{YY} to be present in the data if
-we need to preserve quadratic relations between \code{YY} and any third
+There are two situations to consider. If only the linear term `Y`
+is present in the data, calculate the quadratic term `YY` after
+imputation. If both the linear term `Y` and the the quadratic term
+`YY` are variables in the data, then first impute `Y` by calling
+`mice.impute.quadratic()` on `Y`, and then impute `YY` by
+passive imputation as `meth["YY"] <- "~I(Y^2)"`.  See example section
+for details.  Generally, we would like `YY` to be present in the data if
+we need to preserve quadratic relations between `YY` and any third
 variables in the multivariate incomplete data that we might wish to impute.
 }
 \examples{
@@ -92,13 +92,13 @@ cmp <- complete(imp)
 points(cmp$x[is.na(dat$x)], cmp$xx[is.na(dat$x)], col = mdc(2))
 }
 \seealso{
-\code{\link[=mice.impute.pmm]{mice.impute.pmm()}}
+[mice.impute.pmm()]
 Van Buuren, S. (2018).
-\href{https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+[*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic)
 Chapman & Hall/CRC. Boca Raton, FL.
 
 Vink, G., van Buuren, S. (2013). Multiple Imputation of Squared Terms.
-\emph{Sociological Methods & Research}, 42:598-607.
+*Sociological Methods & Research*, 42:598-607.
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},

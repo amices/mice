@@ -9,21 +9,21 @@ mice.impute.2l.norm(y, ry, x, type, wy = NULL, intercept = TRUE, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length `length(y)` indicating the
+the subset `y[ry]` of elements in `y` to which the imputation
+model is fitted. The `ry` generally distinguishes the observed
+(`TRUE`) and missing values (`FALSE`) in `y`.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with `length(y)` rows with predictors for
+`y`. Matrix `x` may have no missing values.}
 
-\item{type}{Vector of length \code{ncol(x)} identifying random and class
+\item{type}{Vector of length `ncol(x)` identifying random and class
 variables.  Random variables are identified by a '2'. The class variable
 (only one is allowed) is coded as '-2'. Random variables also include the
 fixed effect.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
-indicates locations in \code{y} for which imputations are created.}
+\item{wy}{Logical vector of length `length(y)`. A `TRUE` value
+indicates locations in `y` for which imputations are created.}
 
 \item{intercept}{Logical determining whether the intercept is automatically
 added.}
@@ -31,8 +31,8 @@ added.}
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length
-\code{sum(wy)}
+Vector with imputed data, same type as `y`, and of length
+`sum(wy)`
 }
 \description{
 Imputes univariate missing data using a two-level normal model
@@ -43,30 +43,31 @@ heterogeneous with-class variance (Kasim and Raudenbush, 1998). Imputations
 are drawn as an extra step to the algorithm. For simulation work see Van
 Buuren (2011).
 
-The random intercept is automatically added in \code{mice.impute.2L.norm()}.
-A model within a random intercept can be specified by \code{mice(..., intercept = FALSE)}.
+The random intercept is automatically added in `mice.impute.2L.norm()`.
+A model within a random intercept can be specified by `mice(...,
+intercept = FALSE)`.
 }
 \note{
 Added June 25, 2012: The currently implemented algorithm does not
 handle predictors that are specified as fixed effects (type=1). When using
-\code{mice.impute.2l.norm()}, the current advice is to specify all predictors
+`mice.impute.2l.norm()`, the current advice is to specify all predictors
 as random effects (type=2).
 
 Warning: The assumption of heterogeneous variances requires that in every
-class at least one observation has a response in \code{y}.
+class at least one observation has a response in `y`.
 }
 \references{
 Kasim RM, Raudenbush SW. (1998). Application of Gibbs sampling to nested
 variance components models with heterogeneous within-group variance. Journal
 of Educational and Behavioral Statistics, 23(2), 93--116.
 
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
-Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`: Multivariate
+Imputation by Chained Equations in `R`. *Journal of Statistical
+Software*, **45**(3), 1-67. \doi{10.18637/jss.v045.i03}
 
 Van Buuren, S. (2011) Multiple imputation of multilevel data. In Hox, J.J.
-and and Roberts, J.K. (Eds.), \emph{The Handbook of Advanced Multilevel
-Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
+and and Roberts, J.K. (Eds.), *The Handbook of Advanced Multilevel
+Analysis*, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
 }
 \seealso{
 Other univariate-2l: 

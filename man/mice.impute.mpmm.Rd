@@ -11,13 +11,13 @@ mice.impute.mpmm(data, format = "imputes", ...)
 \item{data}{matrix with exactly two missing data patterns}
 
 \item{format}{A character vector specifying the type of object that should
-be returned. The default is \code{format = "imputes"}.}
+be returned. The default is `format = "imputes"`.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-A matrix with imputed data, which has \code{ncol(y)} columns and
-\code{sum(wy)} rows.
+A matrix with imputed data, which has `ncol(y)` columns and
+`sum(wy)` rows.
 }
 \description{
 Imputes multivariate incomplete data among which there are specific relations,
@@ -59,9 +59,9 @@ with(dat, plot(x, x2, col = mdc(1)))
 with(complete(imp), points(x[m], x2[m], col = mdc(2)))
 }
 \seealso{
-\code{\link[=mice.impute.pmm]{mice.impute.pmm()}}
+[mice.impute.pmm()]
 Van Buuren, S. (2018).
-\href{https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+[*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic)
 Chapman & Hall/CRC. Boca Raton, FL.
 
 Other univariate imputation functions: 

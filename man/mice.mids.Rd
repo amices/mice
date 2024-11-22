@@ -7,23 +7,23 @@
 mice.mids(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...)
 }
 \arguments{
-\item{obj}{An object of class \code{mids}, typically produces by a previous
-call to \code{mice()} or \code{mice.mids()}}
+\item{obj}{An object of class `mids`, typically produces by a previous
+call to `mice()` or `mice.mids()`}
 
-\item{newdata}{An optional \code{data.frame} for which multiple imputations
-are generated according to the model in \code{obj}.}
+\item{newdata}{An optional `data.frame` for which multiple imputations
+are generated according to the model in `obj`.}
 
 \item{maxit}{The number of additional Gibbs sampling iterations.}
 
-\item{printFlag}{A Boolean flag. If \code{TRUE}, diagnostic information
+\item{printFlag}{A Boolean flag. If `TRUE`, diagnostic information
 during the Gibbs sampling iterations will be written to the command window.
-The default is \code{TRUE}.}
+The default is `TRUE`.}
 
 \item{...}{Named arguments that are passed down to the univariate imputation
 functions.}
 }
 \description{
-Takes a \code{mids} object, and produces a new object of class \code{mids}.
+Takes a `mids` object, and produces a new object of class `mids`.
 }
 \details{
 This function enables the user to split up the computations of the Gibbs
@@ -33,9 +33,9 @@ iterations is large. Returning to prompt/session level may alleviate these
 problems.  \item The user can compute customized convergence statistics at
 specific points, e.g. after each iteration, for monitoring convergence.  -
 For computing a 'few extra iterations'.  } Note: The imputation model itself
-is specified in the \code{mice()} function and cannot be changed with
-\code{mice.mids}.  The state of the random generator is saved with the
-\code{mids} object.
+is specified in the `mice()` function and cannot be changed with
+`mice.mids`.  The state of the random generator is saved with the
+`mids` object.
 }
 \examples{
 imp1 <- mice(nhanes, maxit = 1, seed = 123)
@@ -49,14 +49,14 @@ identical(imp$imp, imp2$imp)
 #
 }
 \references{
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
-Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \strong{45}(3), 1-67.
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`:
+Multivariate Imputation by Chained Equations in `R`. *Journal of
+Statistical Software*, **45**(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link[=complete]{complete()}}, \code{\link[=mice]{mice()}}, \code{\link[=set.seed]{set.seed()}},
-\code{\link[=mids-class]{mids()}}
+[complete()], [mice()], [set.seed()],
+[`mids()`][mids-class]
 }
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn, 2000

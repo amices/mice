@@ -43,6 +43,30 @@
 ## -----------------------------------------------------------
 
 
+# mice 3.16.16
+
+* Prevent `as.mids()` from filling the `imp` object for complete variables
+
+# mice 3.16.15
+
+* Initialize single-variables blocks in `make.method()` in a more efficient way (resolves #672)
+
+# mice 3.16.14
+
+* Fixes a bug during initialization of factor values
+
+# mice 3.16.13
+
+* Adds support for the `literanger` package for `rf` imputation that is about twice as fast as `ranger` (#648). Thanks @stephematician for the contribution.
+
+# mice 3.16.12
+
+* Fixes an installation problem when `Rprofile` prints to `stdout` on Fedora, R version 4.1.3 (#646, #647). Thanks @brookslogan for the fix.
+
+# mice 3.16.11
+
+* Repairs lost braces in the documentation
+
 # mice 3.16.10
 
 * Adds support for non-syntactic variables names with backticks (#631)

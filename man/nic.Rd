@@ -7,12 +7,12 @@
 nic(x)
 }
 \arguments{
-\item{x}{An \code{R} object. Currently supported are methods for the
-following classes: \code{mids}, \code{data.frame} and \code{matrix}. Also,
-\code{x} can be a vector.}
+\item{x}{An `R` object. Currently supported are methods for the
+following classes: `mids`, `data.frame` and `matrix`. Also,
+`x` can be a vector.}
 }
 \value{
-Number of elements in \code{x} with incomplete data.
+Number of elements in `x` with incomplete data.
 }
 \description{
 Calculates the number of incomplete cases.
@@ -22,7 +22,7 @@ nic(nhanes) # the remaining 12 rows
 nic(nhanes[, c("bmi", "hyp")]) # number of cases with incomplete bmi and hyp
 }
 \seealso{
-\code{\link[=ncc]{ncc()}}, \code{\link[=cci]{cci()}}
+[ncc()], [cci()]
 }
 \author{
 Stef van Buuren, 2017

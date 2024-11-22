@@ -7,8 +7,8 @@
 \method{with}{mids}(data, expr, ...)
 }
 \arguments{
-\item{data}{An object of type \code{mids}, which stands for 'multiply imputed
-data set', typically created by a call to function \code{mice()}.}
+\item{data}{An object of type `mids`, which stands for 'multiply imputed
+data set', typically created by a call to function `mice()`.}
 
 \item{expr}{An expression to evaluate for each imputed data set. Formula's
 containing a dot (notation for "all other variables") do not work.}
@@ -16,7 +16,7 @@ containing a dot (notation for "all other variables") do not work.}
 \item{\dots}{Not used}
 }
 \value{
-An object of S3 class \code{\link[=mira-class]{mira()}}
+An object of S3 class [`mira()`][mira-class]
 }
 \description{
 Performs a computation of each of imputed datasets in data.
@@ -25,7 +25,7 @@ Performs a computation of each of imputed datasets in data.
 Version 3.11.10 changed to tidy evaluation on a quosure. This change
 should not affect any code that worked on previous versions.
 It turned out that the latter statement was not true (#292).
-Version 3.12.2 reverts to the old \code{with()} function.
+Version 3.12.2 reverts to the old `with()` function.
 }
 \examples{
 imp <- mice(nhanes2, m = 2, print = FALSE, seed = 14221)
@@ -39,14 +39,14 @@ fit2 <- with(imp, glm(hyp ~ age + chl, family = binomial))
 fit3 <- with(imp, anova(lm(bmi ~ age + chl)))
 }
 \references{
-van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
-Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \strong{45}(3), 1-67.
+van Buuren S and Groothuis-Oudshoorn K (2011). `mice`:
+Multivariate Imputation by Chained Equations in `R`. *Journal of
+Statistical Software*, **45**(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link[=mids-class]{mids()}}, \code{\link[=mira-class]{mira()}}, \code{\link[=pool]{pool()}},
-\code{\link[=D1]{D1()}}, \code{\link[=D3]{D3()}}, \code{\link[=pool.r.squared]{pool.r.squared()}}
+[`mids()`][mids-class], [`mira()`][mira-class], [pool()],
+[D1()], [D3()], [pool.r.squared()]
 }
 \author{
 Karin Oudshoorn, Stef van Buuren 2009, 2012, 2020

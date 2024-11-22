@@ -10,22 +10,22 @@ norm.draw(y, ry, x, rank.adjust = TRUE, ...)
 .norm.draw(y, ry, x, rank.adjust = TRUE, ...)
 }
 \arguments{
-\item{y}{Incomplete data vector of length \code{n}}
+\item{y}{Incomplete data vector of length `n`}
 
-\item{ry}{Vector of missing data pattern (\code{FALSE}=missing,
-\code{TRUE}=observed)}
+\item{ry}{Vector of missing data pattern (`FALSE`=missing,
+`TRUE`=observed)}
 
-\item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
+\item{x}{Matrix (`n` x `p`) of complete covariates.}
 
-\item{rank.adjust}{Argument that specifies whether \code{NA}'s in the
-coefficients need to be set to zero. Only relevant when \code{ls.meth = "qr"}
+\item{rank.adjust}{Argument that specifies whether `NA`'s in the
+coefficients need to be set to zero. Only relevant when `ls.meth = "qr"`
 AND the predictor matrix is rank-deficient.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-A \code{list} containing components \code{coef} (least squares estimate),
-\code{beta} (drawn regression weights) and \code{sigma} (drawn value of the
+A `list` containing components `coef` (least squares estimate),
+`beta` (drawn regression weights) and `sigma` (drawn value of the
 residual standard deviation).
 }
 \description{
@@ -34,7 +34,7 @@ linear regression model as described in Rubin (1987, p. 167). This function
 can be called by user-specified imputation functions.
 }
 \references{
-Rubin, D.B. (1987). \emph{Multiple imputation for nonresponse in surveys}. New York: Wiley.
+Rubin, D.B. (1987). *Multiple imputation for nonresponse in surveys*. New York: Wiley.
 }
 \author{
 Gerko Vink, 2018, for this version, based on earlier versions written

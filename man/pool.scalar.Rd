@@ -10,41 +10,41 @@ pool.scalar(Q, U, n = Inf, k = 1, rule = c("rubin1987", "reiter2003"))
 pool.scalar.syn(Q, U, n = Inf, k = 1, rule = "reiter2003")
 }
 \arguments{
-\item{Q}{A vector of univariate estimates of \code{m} repeated complete data
+\item{Q}{A vector of univariate estimates of `m` repeated complete data
 analyses.}
 
-\item{U}{A vector containing the corresponding \code{m} variances of the univariate
+\item{U}{A vector containing the corresponding `m` variances of the univariate
 estimates.}
 
 \item{n}{A number providing the sample size. If nothing is specified,
-an infinite sample \code{n = Inf} is assumed.}
+an infinite sample `n = Inf` is assumed.}
 
 \item{k}{A number indicating the number of parameters to be estimated.
-By default, \code{k = 1} is assumed.}
+By default, `k = 1` is assumed.}
 
 \item{rule}{A string indicating the pooling rule. Currently supported are
-\code{"rubin1987"} (default, for missing data) and \code{"reiter2003"}
+`"rubin1987"` (default, for missing data) and `"reiter2003"`
 (for synthetic data created from a complete data set).}
 }
 \value{
 Returns a list with components.
-\describe{
-\item{\code{m}:}{Number of imputations.}
-\item{\code{qhat}:}{The \code{m} univariate estimates of repeated complete-data analyses.}
-\item{\code{u}:}{The corresponding \code{m} variances of the univariate estimates.}
-\item{\code{qbar}:}{The pooled univariate estimate, formula (3.1.2) Rubin (1987).}
-\item{\code{ubar}:}{The mean of the variances (i.e. the pooled within-imputation variance),
-formula (3.1.3) Rubin (1987).}
-\item{\code{b}:}{The between-imputation variance, formula (3.1.4) Rubin (1987).}
-\item{\code{t}:}{The total variance of the pooled estimated, formula (3.1.5)
-Rubin (1987).}
-\item{\code{r}:}{The relative increase in variance due to nonresponse, formula
-(3.1.7) Rubin (1987).}
-\item{\code{df}:}{The degrees of freedom for t reference distribution by the
-method of Barnard-Rubin (1999).}
-\item{\code{fmi}:}{The fraction missing information due to nonresponse,
-formula (3.1.10) Rubin (1987). (Not defined for synthetic data.)}
-}
+  \describe{
+    \item{`m`:}{Number of imputations.}
+    \item{`qhat`:}{The `m` univariate estimates of repeated complete-data analyses.}
+    \item{`u`:}{The corresponding `m` variances of the univariate estimates.}
+    \item{`qbar`:}{The pooled univariate estimate, formula (3.1.2) Rubin (1987).}
+    \item{`ubar`:}{The mean of the variances (i.e. the pooled within-imputation variance),
+    formula (3.1.3) Rubin (1987).}
+    \item{`b`:}{The between-imputation variance, formula (3.1.4) Rubin (1987).}
+    \item{`t`:}{The total variance of the pooled estimated, formula (3.1.5)
+    Rubin (1987).}
+    \item{`r`:}{The relative increase in variance due to nonresponse, formula
+    (3.1.7) Rubin (1987).}
+    \item{`df`:}{The degrees of freedom for t reference distribution by the
+    method of Barnard-Rubin (1999).}
+    \item{`fmi`:}{The fraction missing information due to nonresponse,
+    formula (3.1.10) Rubin (1987). (Not defined for synthetic data.)}
+    }
 }
 \description{
 Pools univariate estimates of m repeated complete data analysis
@@ -88,10 +88,10 @@ Rubin, D.B. (1987). Multiple Imputation for Nonresponse in
 Surveys.  New York: John Wiley and Sons.
 
 Reiter, J.P. (2003). Inference for Partially Synthetic,
-Public Use Microdata Sets. \emph{Survey Methodology}, \strong{29}, 181-189.
+Public Use Microdata Sets. *Survey Methodology*, **29**, 181-189.
 }
 \seealso{
-\code{\link[=pool]{pool()}}
+[pool()]
 }
 \author{
 Karin Groothuis-Oudshoorn and Stef van Buuren, 2009; Thom Volker, 2021

@@ -2,7 +2,7 @@
 % Please edit documentation in R/mids2spss.R
 \name{mids2spss}
 \alias{mids2spss}
-\title{Export \code{mids} object to SPSS}
+\title{Export `mids` object to SPSS}
 \usage{
 mids2spss(
   imp,
@@ -13,57 +13,57 @@ mids2spss(
 )
 }
 \arguments{
-\item{imp}{The \code{imp} argument is an object of class \code{mids},
-typically produced by the \code{mice()} function.}
+\item{imp}{The `imp` argument is an object of class `mids`,
+typically produced by the `mice()` function.}
 
 \item{filename}{A character string describing the name of the output data
 file and its extension.}
 
 \item{path}{A character string containing the path of the output file. The
-value in \code{path} is appended to \code{filedat}. By
-default, files are written to the current \code{R} working directory. If
-\code{path=NULL} then no file path appending is done.}
+value in `path` is appended to `filedat`. By
+default, files are written to the current `R` working directory. If
+`path=NULL` then no file path appending is done.}
 
 \item{compress}{A logical flag stating whether the resulting SPSS set should
-be a compressed \code{.zsav} file.}
+be a compressed `.zsav` file.}
 
 \item{silent}{A logical flag stating whether the location of the saved file should be
 printed.}
 }
 \value{
-The return value is \code{NULL}.
+The return value is `NULL`.
 }
 \description{
-Converts a \code{mids} object into a format recognized by SPSS, and writes
+Converts a `mids` object into a format recognized by SPSS, and writes
 the data and the SPSS syntax files.
 }
 \details{
-This function automates most of the work needed to export a \code{mids}
-object to SPSS. It uses \code{haven::write_sav()} to facilitate the export to an
-SPSS \code{.sav} or \code{.zsav} file.
+This function automates most of the work needed to export a `mids`
+object to SPSS. It uses `haven::write_sav()` to facilitate the export to an
+SPSS `.sav` or `.zsav` file.
 
 Below are some things to pay attention to.
 
-The \code{SPSS} syntax file has the proper file names and separators set, so
-in principle it should run and read the data without alteration. \code{SPSS}
-is more strict than \code{R} with respect to the paths. Always use the full
-path, otherwise \code{SPSS} may not be able to find the data file.
+The `SPSS` syntax file has the proper file names and separators set, so
+in principle it should run and read the data without alteration. `SPSS`
+is more strict than `R` with respect to the paths. Always use the full
+path, otherwise `SPSS` may not be able to find the data file.
 
-Factors in \code{R} translate into categorical variables in \code{SPSS}. The
-internal coding of factor levels used in \code{R} is exported. This is
-generally acceptable for \code{SPSS}. However, when the data are to be
-combined with existing \code{SPSS} data, watch out for any changes in the
+Factors in `R` translate into categorical variables in `SPSS`. The
+internal coding of factor levels used in `R` is exported. This is
+generally acceptable for `SPSS`. However, when the data are to be
+combined with existing `SPSS` data, watch out for any changes in the
 factor levels codes.
 
-\code{SPSS} will recognize the data set as a multiply imputed data set, and
+`SPSS` will recognize the data set as a multiply imputed data set, and
 do automatic pooling in procedures where that is supported. Note however that
 pooling is an extra option only available to those who license the
-\verb{MISSING VALUES} module. Without this license, \code{SPSS} will still
+`MISSING VALUES` module. Without this license, `SPSS` will still
 recognize the structure of the data, but it will not pool the multiply imputed
 estimates into a single inference.
 }
 \seealso{
-\code{\link[=mids-class]{mids()}}
+[`mids()`][mids-class]
 }
 \author{
 Gerko Vink, dec 2020.

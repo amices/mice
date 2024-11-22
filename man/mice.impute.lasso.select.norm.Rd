@@ -10,16 +10,16 @@ mice.impute.lasso.select.norm(y, ry, x, wy = NULL, nfolds = 10, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length `length(y)` indicating the
+the subset `y[ry]` of elements in `y` to which the imputation
+model is fitted. The `ry` generally distinguishes the observed
+(`TRUE`) and missing values (`FALSE`) in `y`.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with `length(y)` rows with predictors for
+`y`. Matrix `x` may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
-indicates locations in \code{y} for which imputations are created.}
+\item{wy}{Logical vector of length `length(y)`. A `TRUE` value
+indicates locations in `y` for which imputations are created.}
 
 \item{nfolds}{The number of folds for the cross-validation of the lasso penalty.
 The default is 10.}
@@ -27,8 +27,8 @@ The default is 10.}
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length
-\code{sum(wy)}
+Vector with imputed data, same type as `y`, and of length
+`sum(wy)`
 }
 \description{
 Imputes univariate missing data using Bayesian linear regression following a
@@ -37,23 +37,23 @@ preprocessing lasso variable selection step.
 \details{
 The method consists of the following steps:
 \enumerate{
-\item For a given \code{y} variable under imputation, fit a linear regression with lasso
-penalty using \code{y[ry]} as dependent variable and \code{x[ry, ]} as predictors.
+\item For a given `y` variable under imputation, fit a linear regression with lasso
+penalty using `y[ry]` as dependent variable and `x[ry, ]` as predictors.
 Coefficients that are not shrunk to 0 define an active set of predictors
 that will be used for imputation
-\item Define a Bayesian linear model using \code{y[ry]} as the
-dependent variable, the active set of \code{x[ry, ]} as predictors, and standard
+\item Define a Bayesian linear model using `y[ry]` as the
+dependent variable, the active set of `x[ry, ]` as predictors, and standard
 non-informative priors
 \item Draw parameter values for the intercept, regression weights, and error
 variance from their posterior distribution
 \item Draw imputations from the posterior predictive distribution
 }
-The user can specify a \code{predictorMatrix} in the \code{mice} call
+The user can specify a `predictorMatrix` in the `mice` call
 to define which predictors are provided to this univariate imputation method.
 The lasso regularization will select, among the variables indicated by
 the user, the ones that are important for imputation at any given iteration.
 Therefore, users may force the exclusion of a predictor from a given
-imputation model by specifying a \code{0} entry.
+imputation model by specifying a `0` entry.
 However, a non-zero entry does not guarantee the variable will be used,
 as this decision is ultimately made by the lasso variable selection
 procedure.

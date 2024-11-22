@@ -8,15 +8,15 @@
 supports.transparent()
 }
 \value{
-\code{TRUE} or \code{FALSE}
+`TRUE` or `FALSE`
 }
 \description{
-This function is used by \code{mdc()} to find out whether the current device
+This function is used by `mdc()` to find out whether the current device
 supports semi-transparent foreground colors.
 }
 \details{
-The function calls the function \code{dev.capabilities()} from the package
-\code{grDevices}. The function return \code{FALSE} if the status of the
+The function calls the function `dev.capabilities()` from the package
+`grDevices`. The function return `FALSE` if the status of the
 current device is unknown.
 }
 \examples{
@@ -24,6 +24,6 @@ current device is unknown.
 supports.transparent()
 }
 \seealso{
-\code{\link[=mdc]{mdc()}} \code{\link[=dev.capabilities]{dev.capabilities()}}
+[mdc()] [dev.capabilities()]
 }
 \keyword{hplot}

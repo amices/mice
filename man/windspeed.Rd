@@ -29,14 +29,14 @@ the influence of extreme MAR mechanisms on the quality of imputation.
 windspeed[1:3, ]
 }
 \references{
-Haslett, J. and Raftery, A. E. (1989).  \emph{Space-time
+Haslett, J. and Raftery, A. E. (1989).  *Space-time
 Modeling with Long-memory Dependence: Assessing Ireland's Wind Power
-Resource (with Discussion)}. Applied Statistics 38, 1-50.
-\url{http://lib.stat.cmu.edu/datasets/wind.desc} and
-\url{http://lib.stat.cmu.edu/datasets/wind.data}
+Resource (with Discussion)*. Applied Statistics 38, 1-50.
+<http://lib.stat.cmu.edu/datasets/wind.desc> and
+<http://lib.stat.cmu.edu/datasets/wind.data>
 
 van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
-Fully conditional specification in multivariate imputation.  \emph{Journal of
-Statistical Computation and Simulation}, \strong{76}, 12, 1049--1064.
+Fully conditional specification in multivariate imputation.  *Journal of
+Statistical Computation and Simulation*, **76**, 12, 1049--1064.
 }
 \keyword{datasets}

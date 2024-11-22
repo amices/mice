@@ -2,26 +2,26 @@
 % Please edit documentation in R/formula.R
 \name{make.formulas}
 \alias{make.formulas}
-\title{Creates a \code{formulas} argument}
+\title{Creates a `formulas` argument}
 \usage{
 make.formulas(data, blocks = make.blocks(data), predictorMatrix = NULL)
 }
 \arguments{
-\item{data}{A \code{data.frame} with the source data}
+\item{data}{A `data.frame` with the source data}
 
 \item{blocks}{An optional specification for blocks of variables in
 the rows. The default assigns each variable in its own block.}
 
-\item{predictorMatrix}{A \code{predictorMatrix} specified by the user.}
+\item{predictorMatrix}{A `predictorMatrix` specified by the user.}
 }
 \value{
 A list of formula's.
 }
 \description{
-This helper function creates a valid \code{formulas} object. The
-\code{formulas} object is an argument to the \code{mice} function.
+This helper function creates a valid `formulas` object. The
+`formulas` object is an argument to the `mice` function.
 It is a list of formula's that specifies the target variables and
-the predictors by means of the standard \code{~} operator.
+the predictors by means of the standard `~` operator.
 }
 \examples{
 f1 <- make.formulas(nhanes)
@@ -38,5 +38,5 @@ f3 <- name.formulas(lapply(c1, as.formula))
 f3
 }
 \seealso{
-\code{\link[=make.blocks]{make.blocks()}}, \code{\link[=make.predictorMatrix]{make.predictorMatrix()}}
+[make.blocks()], [make.predictorMatrix()]
 }

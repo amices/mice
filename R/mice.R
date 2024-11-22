@@ -342,7 +342,7 @@
 #' \doi{10.18637/jss.v045.i03}
 #'
 #' Van Buuren, S. (2018).
-#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE)
+#' \emph{Flexible Imputation of Missing Data. Second Edition.}
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #' Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
@@ -354,8 +354,8 @@
 #' Research*, **16**, 3, 219--242.
 #'
 #' Van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple imputation of
-#' missing blood pressure covariates in survival analysis.  *Statistics in
-#' Medicine*, **18**, 681--694.
+#' missing blood pressure covariates in survival analysis.
+#' \emph{Statistics in Medicine}, \bold{18}, 681--694.
 #'
 #' Brand, J.P.L. (1999) *Development, implementation and evaluation of
 #' multiple imputation strategies for the statistical analysis of incomplete

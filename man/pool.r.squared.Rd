@@ -7,22 +7,22 @@
 pool.r.squared(object, adjusted = FALSE)
 }
 \arguments{
-\item{object}{An object of class 'mira' or 'mipo', produced by \code{lm.mids},
-\code{with.mids}, or \code{pool} with \code{lm} as modeling function.}
+\item{object}{An object of class 'mira' or 'mipo', produced by `lm.mids`,
+`with.mids`, or `pool` with `lm` as modeling function.}
 
 \item{adjusted}{A logical value. If adjusted=TRUE then the adjusted R^2 is
 calculated.  The default value is FALSE.}
 }
 \value{
-Returns a 1x4 table with components. Component \code{est} is the
-pooled R^2 estimate. Component \code{lo95} is the 95 \\% lower bound of the pooled R^2.
-Component \code{hi95} is the 95 \\% upper bound of the pooled R^2.
-Component \code{fmi} is the fraction of missing information due to nonresponse.
+Returns a 1x4 table with components. Component `est` is the
+pooled R^2 estimate. Component `lo95` is the 95 \% lower bound of the pooled R^2.
+Component `hi95` is the 95 \% upper bound of the pooled R^2.
+Component `fmi` is the fraction of missing information due to nonresponse.
 }
 \description{
 The function pools the coefficients of determination R^2 or the adjusted
-coefficients of determination (R^2_a) obtained with the \code{lm} modeling
-function. For pooling it uses the Fisher \emph{z}-transformation.
+coefficients of determination (R^2_a) obtained with the `lm` modeling
+function. For pooling it uses the Fisher *z*-transformation.
 }
 \examples{
 imp <- mice(nhanes, print = FALSE, seed = 16117)
@@ -45,12 +45,12 @@ incomplete data sets using multiple imputation, Journal of Applied Statistics,
 Rubin, D.B. (1987). Multiple Imputation for Nonresponse in Surveys.  New
 York: John Wiley and Sons.
 
-van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}: Multivariate
-Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+van Buuren S and Groothuis-Oudshoorn K (2011). `mice`: Multivariate
+Imputation by Chained Equations in `R`. *Journal of Statistical
+Software*, **45**(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link[=pool]{pool()}},\code{\link[=pool.scalar]{pool.scalar()}}
+[pool()],[pool.scalar()]
 }
 \author{
 Karin Groothuis-Oudshoorn and Stef van Buuren, 2009

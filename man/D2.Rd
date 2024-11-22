@@ -7,11 +7,11 @@
 D2(fit1, fit0 = NULL, use = "wald")
 }
 \arguments{
-\item{fit1}{An object of class \code{mira}, produced by \code{with()}.}
+\item{fit1}{An object of class `mira`, produced by `with()`.}
 
-\item{fit0}{An object of class \code{mira}, produced by \code{with()}. The
-model in \code{fit0} is a nested within \code{fit1}. The default null
-model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.}
+\item{fit0}{An object of class `mira`, produced by `with()`. The
+model in `fit0` is a nested within `fit1`. The default null
+model `fit0 = NULL` compares `fit1` to the intercept-only model.}
 
 \item{use}{A character string denoting Wald- or likelihood-based based tests. Can be either \code{"wald"} or \code{"likelihood"}. Only used if \code{method = "D2"}.}
 }
@@ -20,9 +20,9 @@ The D2-statistic pools test statistics from the repeated analyses.
 The method is less powerful than the D1- and D3-statistics.
 }
 \note{
-Warning: \code{D2()} assumes that the order of the variables is the
+Warning: `D2()` assumes that the order of the variables is the
 same in different models. See
-\url{https://github.com/amices/mice/issues/420} for details.
+<https://github.com/amices/mice/issues/420> for details.
 }
 \examples{
 # Compare two linear models:
@@ -41,10 +41,10 @@ D2(fit1, fit0)
 \references{
 Li, K. H., X. L. Meng, T. E. Raghunathan, and D. B. Rubin. 1991.
 Significance Levels from Repeated p-Values with Multiply-Imputed Data.
-\emph{Statistica Sinica} 1 (1): 65–92.
+*Statistica Sinica* 1 (1): 65–92.
 
-\url{https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:chi}
+<https://stefvanbuuren.name/fimd/sec-multiparameter.html#sec:chi>
 }
 \seealso{
-\code{\link[mitml:testModels]{mitml::testModels()}}
+[mitml::testModels()]
 }

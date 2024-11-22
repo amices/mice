@@ -84,8 +84,9 @@
 #'
 #' For an example and more explanation about how the arguments interact with each other,
 #' we refer to the vignette
-#' [Generate missing values with ampute](https://rianneschouten.github.io/mice_ampute/vignette/ampute.html)
-#' The amputation methodology is published in \doi{10.1080/00949655.2018.1491577}.
+#' \href{https://rianneschouten.github.io/mice_ampute/vignette/ampute.html}{Generate missing values with ampute}
+#' The amputation methodology is published in
+#' \doi{10.1080/00949655.2018.1491577}
 #'
 #' @param data A complete data matrix or data frame. Values should be numeric.
 #' Categorical variables should have been transformed to dummies.
@@ -160,21 +161,23 @@
 #' incomplete data sets.* pp. 110-113. Dissertation. Rotterdam: Erasmus University.
 #'
 #' Schouten, R.M., Lugtig, P and Vink, G. (2018)
-#' {Generating missing values for simulation purposes: A multivariate amputation procedure.}.
-#' *Journal of Statistical Computation and Simulation*, 88(15): 1909-1930.
+#' Generating missing values for simulation purposes: A multivariate
+#' amputation procedure.
+#' \emph{Journal of Statistical Computation and Simulation}, 88(15): 1909-1930.
 #' \doi{10.1080/00949655.2018.1491577}
 #'
-#' Schouten, R.M. and Vink, G. (2018){The Dance of the Mechanisms: How Observed Information Influences the Validity of Missingness Assumptions}.
-#' *Sociological Methods and Research*, 50(3): 1243-1258.
+#' Schouten, R.M. and Vink, G. (2018) The Dance of the Mechanisms: How Observed
+#' Information Influences the Validity of Missingness Assumptions.
+#' \emph{Sociological Methods and Research}, 50(3): 1243-1258.
 #' \doi{10.1177/0049124118799376}
 #'
 #' Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn, C.G.M., Rubin, D.B. (2006)
-#' {Fully conditional specification in multivariate imputation.}
-#' *Journal of Statistical Computation and Simulation*, 76(12): 1049-1064.
+#' Fully conditional specification in multivariate imputation.
+#' \emph{Journal of Statistical Computation and Simulation}, 76(12): 1049-1064.
 #' \doi{10.1080/10629360600810434}
 #'
-#' Van Buuren, S. (2018)
-#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd)
+#' Van Buuren, S. (2018).
+#' \emph{Flexible Imputation of Missing Data. Second Edition.}
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #' Vink, G. (2016) Towards a standardized evaluation of multiple imputation routines.

@@ -9,34 +9,34 @@ mice.impute.sample(y, ry, x = NULL, wy = NULL, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length `length(y)` indicating the
+the subset `y[ry]` of elements in `y` to which the imputation
+model is fitted. The `ry` generally distinguishes the observed
+(`TRUE`) and missing values (`FALSE`) in `y`.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with `length(y)` rows with predictors for
+`y`. Matrix `x` may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
-indicates locations in \code{y} for which imputations are created.}
+\item{wy}{Logical vector of length `length(y)`. A `TRUE` value
+indicates locations in `y` for which imputations are created.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length
-\code{sum(wy)}
+Vector with imputed data, same type as `y`, and of length
+`sum(wy)`
 }
 \description{
-Imputes a random sample from the observed \code{y} data
+Imputes a random sample from the observed `y` data
 }
 \details{
 This function takes a simple random sample from the observed values in
-\code{y}, and returns these as imputations.
+`y`, and returns these as imputations.
 }
 \references{
-van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
-Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \strong{45}(3), 1-67.
+van Buuren S and Groothuis-Oudshoorn K (2011). `mice`:
+Multivariate Imputation by Chained Equations in `R`. *Journal of
+Statistical Software*, **45**(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 }
 \author{

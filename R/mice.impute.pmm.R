@@ -61,7 +61,9 @@
 #' \item{Calculate \eqn{\dot\beta = \hat\beta + \dot\sigma\dot z_1 V^{1/2}}.}
 #' \item{Calculate \eqn{\dot\eta(i,j)=|X_{{obs},[i]|}\hat\beta-X_{{mis},[j]}\dot\beta}
 #' with \eqn{i=1,\dots,n_1} and \eqn{j=1,\dots,n_0}.}
-#' \item{Construct \eqn{n_0} sets \eqn{Z_j}, each containing \eqn{d} candidate donors, from Y_{obs} such that \eqn{\sum_d\dot\eta(i,j)} is minimum for all \eqn{j=1,\dots,n_0}. Break ties randomly.}
+#' \item{Construct \eqn{n_0} sets \eqn{Z_j}, each containing \eqn{d}
+#' candidate donors, from \eqn{y_{obs}} such that \eqn{\sum_d\dot\eta(i,j)} is
+#' minimum for all \eqn{j=1,\dots,n_0}. Break ties randomly.}
 #' \item{Draw one donor \eqn{i_j} from \eqn{Z_j} randomly for \eqn{j=1,\dots,n_0}.}
 #' \item{Calculate imputations \eqn{\dot y_j = y_{i_j}} for \eqn{j=1,\dots,n_0}.}
 #' }

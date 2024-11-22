@@ -7,19 +7,19 @@
 cc(x)
 }
 \arguments{
-\item{x}{An \code{R} object. Methods are available for classes
-\code{mids}, \code{data.frame} and \code{matrix}. Also, \code{x}
+\item{x}{An `R` object. Methods are available for classes
+`mids`, `data.frame` and `matrix`. Also, `x`
 could be a vector.}
 }
 \value{
-A \code{vector}, \code{matrix} or \code{data.frame} containing the data of the complete cases.
+A `vector`, `matrix` or `data.frame` containing the data of the complete cases.
 }
 \description{
-Extracts the complete cases, also known as \emph{listwise deletion}.
-\code{cc(x)} is similar to
-\code{na.omit(x)}, but returns an object of the same class
+Extracts the complete cases, also known as *listwise deletion*.
+`cc(x)` is similar to
+`na.omit(x)`, but returns an object of the same class
 as the input data. Dimensions are not dropped. For extracting
-incomplete cases, use \code{\link[=ici]{ici()}}.
+incomplete cases, use [ici()].
 }
 \examples{
 
@@ -27,7 +27,7 @@ incomplete cases, use \code{\link[=ici]{ici()}}.
 # cc(nhanes$bmi) # extract complete bmi
 }
 \seealso{
-\code{\link[=na.omit]{na.omit()}}, \code{\link[=cci]{cci()}}, \code{\link[=ici]{ici()}}
+[na.omit()], [cci()], [ici()]
 }
 \author{
 Stef van Buuren, 2017.

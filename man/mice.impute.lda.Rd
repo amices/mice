@@ -9,42 +9,42 @@ mice.impute.lda(y, ry, x, wy = NULL, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length `length(y)` indicating the
+the subset `y[ry]` of elements in `y` to which the imputation
+model is fitted. The `ry` generally distinguishes the observed
+(`TRUE`) and missing values (`FALSE`) in `y`.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with `length(y)` rows with predictors for
+`y`. Matrix `x` may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
-indicates locations in \code{y} for which imputations are created.}
+\item{wy}{Logical vector of length `length(y)`. A `TRUE` value
+indicates locations in `y` for which imputations are created.}
 
 \item{...}{Other named arguments. Not used.}
 }
 \value{
 Vector with imputed data, of type factor, and of length
-\code{sum(wy)}
+`sum(wy)`
 }
 \description{
 Imputes univariate missing data using linear discriminant analysis
 }
 \details{
 Imputation of categorical response variables by linear discriminant analysis.
-This function uses the Venables/Ripley functions \code{lda()} and
-\code{predict.lda()} to compute posterior probabilities for each incomplete
+This function uses the Venables/Ripley functions `lda()` and
+`predict.lda()` to compute posterior probabilities for each incomplete
 case, and draws the imputations from this posterior.
 
 This function can be called from within the Gibbs sampler by specifying
-\code{"lda"} in the \code{method} argument of \code{mice()}. This method is usually
+`"lda"` in the `method` argument of `mice()`. This method is usually
 faster and uses fewer resources than calling the function, but the statistical
 properties may not be as good (Brand, 1999).
-\code{\link[=mice.impute.polyreg]{mice.impute.polyreg()}}.
+[mice.impute.polyreg()].
 }
 \section{Warning}{
  The function does not incorporate the variability of the
 discriminant weight, so it is not 'proper' in the sense of Rubin. For small
-samples and rare categories in the \code{y}, variability of the imputed data
+samples and rare categories in the `y`, variability of the imputed data
 could therefore be underestimated.
 
 Added: SvB June 2009 Tried to include bootstrap, but disabled since
@@ -52,9 +52,9 @@ bootstrapping may easily lead to constant variables within groups.
 }
 
 \references{
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
-Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \strong{45}(3), 1-67.
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`:
+Multivariate Imputation by Chained Equations in `R`. *Journal of
+Statistical Software*, **45**(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 
 Brand, J.P.L. (1999). Development, Implementation and Evaluation of Multiple
@@ -66,7 +66,7 @@ Venables, W.N. & Ripley, B.D. (1997). Modern applied statistics with S-PLUS
 (2nd ed). Springer, Berlin.
 }
 \seealso{
-\code{\link[=mice]{mice()}}, \code{\link[=mice.impute.polyreg]{mice.impute.polyreg()}}, \code{\link[MASS:lda]{MASS::lda()}}
+[mice()], [mice.impute.polyreg()], [MASS::lda()]
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},

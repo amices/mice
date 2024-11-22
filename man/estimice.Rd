@@ -7,23 +7,23 @@
 estimice(x, y, ls.meth = "qr", ridge = 1e-05, ...)
 }
 \arguments{
-\item{x}{Matrix (\code{n} x \code{p}) of complete covariates.}
+\item{x}{Matrix (`n` x `p`) of complete covariates.}
 
-\item{y}{Incomplete data vector of length \code{n}}
+\item{y}{Incomplete data vector of length `n`}
 
 \item{ls.meth}{the method to use for obtaining the least squares estimates. By
 default parameters are drawn by means of QR decomposition.}
 
 \item{ridge}{A small numerical value specifying the size of the ridge used.
-The default value \code{ridge = 1e-05} represents a compromise between stability
-and unbiasedness. Decrease \code{ridge} if the data contain many junk variables.
-Increase \code{ridge} for highly collinear data.}
+The default value `ridge = 1e-05` represents a compromise between stability
+and unbiasedness. Decrease `ridge` if the data contain many junk variables.
+Increase `ridge` for highly collinear data.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-A \code{list} containing components \code{c} (least squares estimate),
-\code{r} (residuals), \code{v} (variance/covariance matrix) and \code{df}
+A `list` containing components `c` (least squares estimate),
+`r` (residuals), `v` (variance/covariance matrix) and `df`
 (degrees of freedom).
 }
 \description{
@@ -43,7 +43,7 @@ crossproduct to allow for proper calculation of the inverse.
 \note{
 This functions adds a star to variable names in the mice iteration
 history to signal that a ridge penalty was added. In that case, it
-also adds an entry to \code{loggedEvents}.
+also adds an entry to `loggedEvents`.
 }
 \author{
 Gerko Vink, 2018

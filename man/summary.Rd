@@ -5,7 +5,7 @@
 \alias{summary.mids}
 \alias{summary.mads}
 \alias{summary.mice.anova}
-\title{Summary of a \code{mira} object}
+\title{Summary of a `mira` object}
 \usage{
 \method{summary}{mira}(object, type = c("tidy", "glance", "summary"), ...)
 
@@ -16,42 +16,42 @@
 \method{summary}{mice.anova}(object, ...)
 }
 \arguments{
-\item{object}{A \code{mira} object}
+\item{object}{A `mira` object}
 
 \item{type}{A length-1 character vector indicating the
-type of summary. There are three choices: \code{type = "tidy"}
+type of summary. There are three choices: `type = "tidy"`
 return the parameters estimates of each analyses as a data frame.
-\code{type = "glance"} return the fit statistics of each analysis
-as a data frame. \code{type = "summary"} returns a list of
-length \code{m} with the analysis results. The default is
-\code{"tidy"}.}
+`type = "glance"` return the fit statistics of each analysis
+as a data frame. `type = "summary"` returns a list of
+length `m` with the analysis results. The default is
+`"tidy"`.}
 
-\item{...}{Other parameters passed down to \code{print()} and \code{summary()}}
+\item{...}{Other parameters passed down to `print()` and `summary()`}
 }
 \value{
-\code{NULL}
+`NULL`
 
-\code{NULL}
+`NULL`
 
-\code{NULL}
+`NULL`
 
-\code{NULL}
+`NULL`
 }
 \description{
-Summary of a \code{mira} object
+Summary of a `mira` object
 
-Summary of a \code{mids} object
+Summary of a `mids` object
 
-Summary of a \code{mads} object
+Summary of a `mads` object
 
-Print a \code{mice.anova} object
+Print a `mice.anova` object
 }
 \seealso{
-\code{\link[=mira-class]{mira()}}
+[`mira()`][mira-class]
 
-\code{\link[=mids-class]{mids()}}
+[`mids()`][mids-class]
 
-\code{\link[=mads-class]{mads()}}
+[`mads()`][mads-class]
 
-\code{\link[=mipo]{mipo()}}
+[mipo()]
 }

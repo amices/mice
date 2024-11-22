@@ -18,39 +18,39 @@ mice.impute.polyreg(
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length `length(y)` indicating the
+the subset `y[ry]` of elements in `y` to which the imputation
+model is fitted. The `ry` generally distinguishes the observed
+(`TRUE`) and missing values (`FALSE`) in `y`.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with `length(y)` rows with predictors for
+`y`. Matrix `x` may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
-indicates locations in \code{y} for which imputations are created.}
+\item{wy}{Logical vector of length `length(y)`. A `TRUE` value
+indicates locations in `y` for which imputations are created.}
 
-\item{nnet.maxit}{Tuning parameter for \code{nnet()}.}
+\item{nnet.maxit}{Tuning parameter for `nnet()`.}
 
-\item{nnet.trace}{Tuning parameter for \code{nnet()}.}
+\item{nnet.trace}{Tuning parameter for `nnet()`.}
 
-\item{nnet.MaxNWts}{Tuning parameter for \code{nnet()}.}
+\item{nnet.MaxNWts}{Tuning parameter for `nnet()`.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length
-\code{sum(wy)}
+Vector with imputed data, same type as `y`, and of length
+`sum(wy)`
 }
 \description{
 Imputes missing data in a categorical variable using polytomous regression
 }
 \details{
-The function \code{mice.impute.polyreg()} imputes categorical response
+The function `mice.impute.polyreg()` imputes categorical response
 variables by the Bayesian polytomous regression model. See J.P.L. Brand
 (1999), Chapter 4, Appendix B.
 
 By default, unordered factors with more than two levels are imputed by
-\code{mice.impute.polyreg()}.
+`mice.impute.polyreg()`.
 
 The method consists of the following steps:
 \enumerate{
@@ -59,31 +59,31 @@ The method consists of the following steps:
 \item Add appropriate noise to predictions
 }
 
-The algorithm of \code{mice.impute.polyreg} uses the function
-\code{multinom()} from the \code{nnet} package.
+The algorithm of `mice.impute.polyreg` uses the function
+`multinom()` from the `nnet` package.
 
 In order to avoid bias due to perfect prediction, the algorithm augment the
 data according to the method of White, Daniel and Royston (2010).
 }
 \references{
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
-Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \strong{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`: Multivariate
+Imputation by Chained Equations in `R`. *Journal of Statistical
+Software*, **45**(3), 1-67. \doi{10.18637/jss.v045.i03}
 
-Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
+Brand, J.P.L. (1999) *Development, implementation and evaluation of
 multiple imputation strategies for the statistical analysis of incomplete
-data sets.} Dissertation. Rotterdam: Erasmus University.
+data sets.* Dissertation. Rotterdam: Erasmus University.
 
 White, I.R., Daniel, R. Royston, P. (2010). Avoiding bias due to perfect
 prediction in multiple imputation of incomplete categorical variables.
-\emph{Computational Statistics and Data Analysis}, 54, 2267-2275.
+*Computational Statistics and Data Analysis*, 54, 2267-2275.
 
-Venables, W.N. & Ripley, B.D. (2002). \emph{Modern applied statistics with
-S-Plus (4th ed)}. Springer, Berlin.
+Venables, W.N. & Ripley, B.D. (2002). *Modern applied statistics with
+S-Plus (4th ed)*. Springer, Berlin.
 }
 \seealso{
-\code{\link[=mice]{mice()}}, \code{\link[nnet:multinom]{nnet::multinom()}},
-\code{\link[MASS:polr]{MASS::polr()}}
+[mice()], [nnet::multinom()],
+[MASS::polr()]
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},

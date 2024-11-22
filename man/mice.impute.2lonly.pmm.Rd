@@ -10,32 +10,32 @@ mice.impute.2lonly.pmm(y, ry, x, type, wy = NULL, ...)
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length `length(y)` indicating the
+the subset `y[ry]` of elements in `y` to which the imputation
+model is fitted. The `ry` generally distinguishes the observed
+(`TRUE`) and missing values (`FALSE`) in `y`.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with `length(y)` rows with predictors for
+`y`. Matrix `x` may have no missing values.}
 
 \item{type}{Group identifier must be specified by '-2'. Predictors must be
 specified by '1'.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
-indicates locations in \code{y} for which imputations are created.}
+\item{wy}{Logical vector of length `length(y)`. A `TRUE` value
+indicates locations in `y` for which imputations are created.}
 
 \item{...}{Other named arguments.}
 }
 \value{
-A vector of length \code{nmis} with imputations.
+A vector of length `nmis` with imputations.
 }
 \description{
 Imputes univariate missing data at level 2 using predictive mean matching.
 Variables are level 1 are aggregated at level 2. The group identifier at
-level 2 must be indicated by \code{type = -2} in the \code{predictorMatrix}.
+level 2 must be indicated by `type = -2` in the `predictorMatrix`.
 }
 \details{
-This function allows in combination with \code{\link[=mice.impute.2l.pan]{mice.impute.2l.pan()}}
+This function allows in combination with [mice.impute.2l.pan()]
 switching regression imputation between level 1 and level 2 as described in
 Yucel (2008) or Gelman and Hill (2007, p. 541).
 
@@ -44,16 +44,16 @@ are assumed to be constant within the same cluster. If one or more
 entries are missing, then the procedure aborts with an error
 message that identifies the cluster with incomplete level-2 data.
 In such cases, one may first fill in the cluster mean (or mode) by
-the \verb{2lonly.mean} method to remove inconsistencies.
+the `2lonly.mean` method to remove inconsistencies.
 }
 \note{
 The extension to categorical variables transforms
-a dependent factor variable by means of the \code{as.integer()}
+a dependent factor variable by means of the `as.integer()`
 function. This may make sense for categories that are
 approximately ordered, but less so for pure nominal measures.
 
 For a more general approach, see
-\code{miceadds::mice.impute.2lonly.function()}.
+`miceadds::mice.impute.2lonly.function()`.
 }
 \examples{
 # simulate some data
@@ -106,22 +106,22 @@ if (!is.solaris()) {
 }
 }
 \references{
-Gelman, A. and Hill, J. (2007). \emph{Data analysis using
-regression and multilevel/hierarchical models}. Cambridge, Cambridge
+Gelman, A. and Hill, J. (2007). *Data analysis using
+regression and multilevel/hierarchical models*. Cambridge, Cambridge
 University Press.
 
 Yucel, RM (2008). Multiple imputation inference for multivariate multilevel
-continuous data with ignorable non-response.  \emph{Philosophical
-Transactions of the Royal Society A}, \strong{366}, 2389-2404.
+continuous data with ignorable non-response.  *Philosophical
+Transactions of the Royal Society A*, **366**, 2389-2404.
 
 Van Buuren, S. (2018).
-\href{https://stefvanbuuren.name/fimd/sec-level2pred.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+[*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-level2pred.html)
 Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
-\code{\link[=mice.impute.pmm]{mice.impute.pmm()}},
-\code{\link[=mice.impute.2lonly.norm]{mice.impute.2lonly.norm()}}, \code{\link[=mice.impute.2l.pan]{mice.impute.2l.pan()}},
-\code{\link[=mice.impute.2lonly.mean]{mice.impute.2lonly.mean()}}
+[mice.impute.pmm()],
+[mice.impute.2lonly.norm()], [mice.impute.2l.pan()],
+[mice.impute.2lonly.mean()]
 
 Other univariate-2lonly: 
 \code{\link{mice.impute.2lonly.mean}()},

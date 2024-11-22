@@ -15,8 +15,8 @@
 )
 }
 \arguments{
-\item{x}{A \code{mads} (\code{\link[=mads-class]{mads-class()}}) object, typically created by
-\code{\link[=ampute]{ampute()}}.}
+\item{x}{A `mads` ([mads-class()]) object, typically created by
+[ampute()].}
 
 \item{data}{A string or vector of variable names that needs to be plotted. As
 a default, all variables will be plotted.}
@@ -32,7 +32,7 @@ need to be printed. This is useful to examine the effect of the amputation.
 Default is TRUE.}
 
 \item{layout}{A vector of two values indicating how the boxplots of one pattern
-should be divided over the plot. For example, \code{c(2, 3)} indicates that the
+should be divided over the plot. For example, `c(2, 3)` indicates that the
 boxplots of six variables need to be placed on 3 rows and 2 columns. Default
 is 1 row and an amount of columns equal to #variables. Note that for more than
 6 variables, multiple plots will be created automatically.}
@@ -49,13 +49,13 @@ the amputed data. The function shows how the amputed values are related
 to the variable values.
 }
 \note{
-The \code{mads} object contains all the information you need to
-make any desired plots. Check \code{\link[=mads-class]{mads-class()}} or the vignette \emph{Multivariate
-Amputation using Ampute} to understand the contents of class object \code{mads}.
+The `mads` object contains all the information you need to
+make any desired plots. Check [mads-class()] or the vignette *Multivariate
+Amputation using Ampute* to understand the contents of class object `mads`.
 }
 \seealso{
-\code{\link[=ampute]{ampute()}}, \code{\link[=bwplot]{bwplot()}}, \code{\link[=Lattice]{Lattice()}} for
-an overview of the package, \code{\link[=mads-class]{mads-class()}}
+[ampute()], [bwplot()], [Lattice()] for
+an overview of the package, [mads-class()]
 }
 \author{
 Rianne Schouten, 2016

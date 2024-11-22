@@ -13,15 +13,15 @@ A data frame with 25 observations on the following 4 variables.
 \item{chl}{Total serum cholesterol (mg/dL)} }
 }
 \source{
-Schafer, J.L. (1997).  \emph{Analysis of Incomplete Multivariate
-Data.} London: Chapman & Hall. Table 6.14.
+Schafer, J.L. (1997).  *Analysis of Incomplete Multivariate
+Data.* London: Chapman & Hall. Table 6.14.
 }
 \description{
 A small data set with non-monotone missing values.
 }
 \details{
 A small data set with missing data and mixed numerical and discrete
-variables. The data set \code{nhanes} is the same data set, but with all data
+variables. The data set `nhanes` is the same data set, but with all data
 treated as numerical.
 }
 \examples{
@@ -32,6 +32,6 @@ imp <- mice(nhanes2)
 complete(imp)
 }
 \seealso{
-\code{\link[=nhanes]{nhanes()}}
+[nhanes()]
 }
 \keyword{datasets}

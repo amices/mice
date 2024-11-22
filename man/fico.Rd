@@ -11,23 +11,23 @@ fico(data)
 values are coded as NA's.}
 }
 \value{
-A vector of length \code{ncol(data)} of FICO statistics.
+A vector of length `ncol(data)` of FICO statistics.
 }
 \description{
 FICO is an outbound statistic defined by the fraction of incomplete cases
-among cases with \code{Yj} observed (White and Carlin, 2010).
+among cases with `Yj` observed (White and Carlin, 2010).
 }
 \references{
 Van Buuren, S. (2018).
-\href{https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+[*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/missing-data-pattern.html#sec:flux)
 Chapman & Hall/CRC. Boca Raton, FL.
 
 White, I.R., Carlin, J.B. (2010). Bias and efficiency of multiple imputation
 compared with complete-case analysis for missing covariate values.
-\emph{Statistics in Medicine}, \emph{29}, 2920-2931.
+*Statistics in Medicine*, *29*, 2920-2931.
 }
 \seealso{
-\code{\link[=fluxplot]{fluxplot()}}, \code{\link[=flux]{flux()}}, \code{\link[=md.pattern]{md.pattern()}}
+[fluxplot()], [flux()], [md.pattern()]
 }
 \author{
 Stef van Buuren, 2012
