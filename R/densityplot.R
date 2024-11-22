@@ -102,9 +102,9 @@
 #' functions.
 #' @return The high-level functions documented here, as well as other high-level
 #' Lattice functions, return an object of class \code{"trellis"}.  The
-#' \code{\link[lattice]{update}} method can be used to
+#' \code{\link[lattice]{update.trellis}} method can be used to
 #' subsequently update components of the object, and the
-#' \code{\link[lattice]{print}} method (usually called by default)
+#' \code{\link[lattice]{print.trellis}} method (usually called by default)
 #' will plot it on an appropriate plotting device.
 #' @note The first two arguments (\code{x} and \code{data}) are reversed
 #' compared to the standard Trellis syntax implemented in \pkg{lattice}. This
