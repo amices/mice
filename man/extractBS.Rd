@@ -2,18 +2,18 @@
 % Please edit documentation in R/auxiliary.R
 \name{extractBS}
 \alias{extractBS}
-\title{Extract broken stick estimates from a \code{lmer} object}
+\title{Extract broken stick estimates from a `lmer` object}
 \usage{
 extractBS(fit)
 }
 \arguments{
-\item{fit}{An object of class \code{lmer}}
+\item{fit}{An object of class `lmer`}
 }
 \value{
 A matrix containing broken stick estimates
 }
 \description{
-Extract broken stick estimates from a \code{lmer} object
+Extract broken stick estimates from a `lmer` object
 }
 \author{
 Stef van Buuren, 2012

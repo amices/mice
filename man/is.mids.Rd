@@ -2,7 +2,7 @@
 % Please edit documentation in R/is.R
 \name{is.mids}
 \alias{is.mids}
-\title{Check for \code{mids} object}
+\title{Check for `mids` object}
 \usage{
 is.mids(x)
 }
@@ -10,8 +10,8 @@ is.mids(x)
 \item{x}{An object}
 }
 \value{
-A logical indicating whether \code{x} is an object of class \code{mids}
+A logical indicating whether `x` is an object of class `mids`
 }
 \description{
-Check for \code{mids} object
+Check for `mids` object
 }

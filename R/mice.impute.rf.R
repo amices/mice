@@ -18,19 +18,19 @@
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #' \code{sum(wy)}
 #' @details
-#' Imputation of \code{y} by random forests. The method
-#' calls \code{randomForrest()} which implements Breiman's random forest
+#' Imputation of `y` by random forests. The method
+#' calls `randomForrest()` which implements Breiman's random forest
 #' algorithm (based on Breiman and Cutler's original Fortran code)
 #' for classification and regression. See Appendix A.1 of Doove et al.
 #' (2014) for the definition of the algorithm used.
 #' @note An alternative implementation was independently
 #' developed by Shah et al (2014). This were available as
-#' functions \code{CALIBERrfimpute::mice.impute.rfcat} and
-#' \code{CALIBERrfimpute::mice.impute.rfcont} (now archived).
+#' functions `CALIBERrfimpute::mice.impute.rfcat` and
+#' `CALIBERrfimpute::mice.impute.rfcont` (now archived).
 #' Simulations by Shah (Feb 13, 2014) suggested that
 #' the quality of the imputation for 10 and 100 trees was identical,
-#' so mice 2.22 changed the default number of trees from \code{ntree = 100} to
-#' \code{ntree = 10}.
+#' so mice 2.22 changed the default number of trees from `ntree = 100` to
+#' `ntree = 10`.
 #' @author Lisa Doove, Stef van Buuren, Elise Dusseldorp, 2012; Patrick Rockenschaub, 2021
 #' @references
 #'
@@ -44,7 +44,7 @@
 #' of Epidemiology, \doi{10.1093/aje/kwt312}.
 #'
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-cart.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-cart.html)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @seealso \code{\link{mice}}, \code{\link{mice.impute.cart}},
 #' \code{\link[randomForest]{randomForest}},

@@ -1,15 +1,15 @@
-#' Creates a \code{formulas} argument
+#' Creates a `formulas` argument
 #'
-#' This helper function creates a valid \code{formulas} object. The
-#' \code{formulas} object is an argument to the \code{mice} function.
+#' This helper function creates a valid `formulas` object. The
+#' `formulas` object is an argument to the `mice` function.
 #' It is a list of formula's that specifies the target variables and
-#' the predictors by means of the standard \code{~} operator.
-#' @param data A \code{data.frame} with the source data
+#' the predictors by means of the standard `~` operator.
+#' @param data A `data.frame` with the source data
 #' @param blocks An optional specification for blocks of variables in
 #' the rows. The default assigns each variable in its own block.
-#' @param predictorMatrix A \code{predictorMatrix} specified by the user.
+#' @param predictorMatrix A `predictorMatrix` specified by the user.
 #' @return A list of formula's.
-#' @seealso \code{\link{make.blocks}}, \code{\link{make.predictorMatrix}}
+#' @seealso [make.blocks()], [make.predictorMatrix()]
 #' @examples
 #' f1 <- make.formulas(nhanes)
 #' f1
@@ -27,7 +27,7 @@
 make.formulas <- function(data, blocks = make.blocks(data),
                           predictorMatrix = NULL) {
   data <- check.dataform(data)
-  formulas <- as.list(rep("~ 0", length(blocks)))
+  formulas <- as.list(rep("~ 1", length(blocks)))
   names(formulas) <- names(blocks)
 
   for (h in names(blocks)) {
@@ -35,12 +35,12 @@ make.formulas <- function(data, blocks = make.blocks(data),
     if (is.null(predictorMatrix)) {
       predictors <- colnames(data)
     } else {
-      type <- predictorMatrix[h, ]
-      predictors <- names(type)[type != 0]
+      type <- predictorMatrix[y, , drop = FALSE]
+      predictors <- colnames(type)[apply(type != 0, 2, any)]
     }
     x <- setdiff(predictors, y)
     if (length(x) == 0) {
-      x <- "0"
+      x <- "1"
     }
     formulas[[h]] <- paste(
       paste(backticks(y), collapse = "+"), "~",
@@ -54,19 +54,19 @@ make.formulas <- function(data, blocks = make.blocks(data),
 
 #' Name formula list elements
 #'
-#' This helper function names any unnamed elements in the \code{formula}
+#' This helper function names any unnamed elements in the `formula`
 #' list. This is a convenience function.
 #' @inheritParams mice
 #' @param prefix A character vector of length 1 with the prefix to
 #' be using for naming any unnamed blocks with two or more variables.
 #' @return Named list of formulas
-#' @seealso \code{\link{mice}}
+#' @seealso [mice()]
 #' @details
 #' This function will name any unnamed list elements specified in
-#' the optional argument \code{formula}. Unnamed formula's
+#' the optional argument `formula`. Unnamed formula's
 #' consisting with just one response variable will be named
 #' after this variable. Unnamed formula's containing more
-#' than one variable will be named by the \code{prefix}
+#' than one variable will be named by the `prefix`
 #' argument, padded by an integer sequence stating at 1.
 #' @examples
 #' # fully conditionally specified main effects model
@@ -99,7 +99,7 @@ make.formulas <- function(data, blocks = make.blocks(data),
 #' form5 <- name.formulas(form5)
 #' imp5 <- mice(nhanes, formulas = form5, print = FALSE, m = 1, seed = 71712)
 #' @export
-name.formulas <- function(formulas, prefix = "F") {
+name.formulas <- function(formulas, prefix = "f") {
   if (!is.list(formulas)) {
     stop("Argument `formulas` not a list", call. = FALSE)
   }
@@ -124,7 +124,8 @@ name.formulas <- function(formulas, prefix = "F") {
 }
 
 
-check.formulas <- function(formulas, data) {
+check.formulas <- function(formulas, data,
+                           autoremove = TRUE) {
   formulas <- name.formulas(formulas)
   formulas <- handle.oldstyle.formulas(formulas, data)
   formulas <- lapply(formulas, mice.expand.dots, data)
@@ -133,17 +134,88 @@ check.formulas <- function(formulas, data) {
     return(formulas)
   }
   formulas <- lapply(formulas, as.formula)
-  formulas
+
+  # NA-propagation prevention
+  # find all dependent (imputed) variables
+  ynames <- unique(as.vector(unlist(sapply(formulas, lhs))))
+  # find all variables in data that are not imputed
+  notimputed <- setdiff(colnames(data), ynames)
+  # select uip: unimputed incomplete predictors
+  completevars <- colnames(data)[!apply(is.na(data), 2, sum)]
+  uip <- setdiff(notimputed, completevars)
+  # if any of these are in RHS for formulas, remove them
+  removeme <- intersect(uip, as.vector(sapply(formulas, all.vars)))
+  if (length(removeme) && autoremove) {
+    formulas <- lapply(formulas, remove.rhs.variables, vars = removeme)
+    for (j in removeme) {
+      updateLog(out = paste("removed incomplete predictor", j),
+                meth = "check", frame = 1)
+    }
+  }
+
+  # add components y ~ 1 for y to formulas
+  for (y in notimputed) {
+    formulas[[y]] <- as.formula(paste(y, "~ 1"))
+  }
+
+  # backdoor communication to check.method
+  # settoempty <- setNames(rep(FALSE, ncol(data)), colnames(data))
+  # settoempty[notimputed] <- TRUE
+  attr(formulas, "ynames") <- ynames
+
+  return(formulas)
 }
 
+# remove variables for RHS
+
+
+#' Remove RHS terms involving specified variable names
+#'
+#' @param ff a formula
+#' @param vars a vector with varianble names to be removed from rhs
+#' @details
+#' If all variable are removed, the function return the intercept only model.
+#' @keywords internal
+#' @examples
+#' \dontrun{
+#' f1 <- y1 + y2 ~ 1 | z + x1 + x2 + x1 * x2
+#' remove.rhs.variables(f1, c("x1", "z"))
+#'
+#' # do not touch lhs
+#' f2 <- bmi + chl + hyp ~ 1 | age
+#' remove.rhs.variables(f2, "bmi")
+#' }
+remove.rhs.variables <- function(ff, vars) {
+  stopifnot(is.formula(ff))
+  pattern <- paste(vars, collapse = "|")
+  if (pattern == "") {
+    return(ff)
+  }
+  tt <- terms(ff)
+  rhs.old <- attr(tt, "term.labels")
+  xp <- strsplit(rhs.old, "[+]") |> unlist()
+  loc <- grep(pattern, xp)
+  if (length(loc)) {
+    xn <- xp[-loc]
+  } else {
+    xn <- xp
+  }
+  rhs.new <- paste(xn, collapse = "+")
+  if (rhs.new != "") {
+    ff.new <- reformulate(rhs.new, response = ff[[2]])
+  } else {
+    ff.new <- update.formula(ff, . ~ 1)
+  }
+  return(ff.new)
+}
 
 #' Extends formula's with predictor matrix settings
 #'
 #' @inheritParams mice
 #' @return A list of formula's
 #' @param auxiliary A logical that indicates whether the variables
-#' listed in \code{predictors} should be added to the formula as main
-#' effects. The default is \code{TRUE}.
+#' listed in `predictors` should be added to the formula as main
+#' effects. The default is `TRUE`.
 #' @param include.intercept A logical that indicated whether the intercept
 #' should be included in the result.
 #' @keywords internal
@@ -172,11 +244,11 @@ extend.formulas <- function(formulas, data, blocks, predictorMatrix = NULL,
 #' Extends a formula with predictors
 #'
 #' @param formula A formula. If it is
-#' not a formula, the formula is internally reset to \code{~0}.
+#' not a formula, the formula is internally reset to `~0`.
 #' @param predictors A character vector of variable names.
 #' @param auxiliary A logical that indicates whether the variables
-#' listed in \code{predictors} should be added to the formula as main
-#' effects. The default is \code{TRUE}.
+#' listed in `predictors` should be added to the formula as main
+#' effects. The default is `TRUE`.
 #' @param include.intercept A logical that indicated whether the intercept
 #' should be included in the result.
 #' @return A formula
@@ -246,8 +318,16 @@ mice.expand.dots <- function(formula, data) {
     return(formula)
   }
 
-  y <- lhs(formula)
-  x <- setdiff(colnames(data), y)
+  if (any(lhs(formula) == ".")) {
+    newvars <- setdiff(colnames(data), all.vars(formula))
+    yold <- setdiff(lhs(formula), ".")
+    xold <- attr(terms(formula, data = data), "term.labels")
+    y <- union(yold, setdiff(newvars, xold))
+    x <- ifelse(length(xold), xold, "1")
+  } else {
+    y <- lhs(formula)
+    x <- setdiff(colnames(data), y)
+  }
   fs <- paste(paste(y, collapse = "+"), "~", paste(x, collapse = "+"))
   as.formula(fs)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/is.R
 \name{is.mitml.result}
 \alias{is.mitml.result}
-\title{Check for \code{mitml.result} object}
+\title{Check for `mitml.result` object}
 \usage{
 is.mitml.result(x)
 }
@@ -10,8 +10,8 @@ is.mitml.result(x)
 \item{x}{An object}
 }
 \value{
-A logical indicating whether \code{x} is an object of class \code{mitml.result}
+A logical indicating whether `x` is an object of class `mitml.result`
 }
 \description{
-Check for \code{mitml.result} object
+Check for `mitml.result` object
 }

@@ -15,49 +15,84 @@ extend.formulas(
 )
 }
 \arguments{
-\item{formulas}{A named list of formula's, or expressions that
-can be converted into formula's by \code{as.formula}. List elements
-correspond to blocks. The block to which the list element applies is
-identified by its name, so list names must correspond to block names.
-The \code{formulas} argument is an alternative to the
-\code{predictorMatrix} argument that allows for more flexibility in
-specifying imputation models, e.g., for specifying interaction terms.}
+\item{formulas}{A named list with \eqn{q} component, each containing
+one formula. The left hand side (LHS) specifies the
+variables to be imputed, and the right hand side (RHS)
+specifies the predictors used for imputation. For example,
+model `y1 + y2 ~ x1 + x2` imputes `y1` and `y2` using `x1`
+and `x2` as predictors. Imputation by a multivariate
+imputation model imputes `y1` and `y2` simultaneously
+by a joint model, whereas `mice()` can also impute
+`y1` and `y2` by a repeated univariate model as
+`y1 ~ y2 + x1 + x2` and `y2 ~ y1 + x1 + x2`.
+The `formulas` argument is an alternative to the
+combination of the `predictorMatrix` and
+`blocks` arguments. It is more compact and allows for
+more flexibility in specifying imputation models,
+e.g., for adding
+interaction terms (`y1 + y2 ~ x1 * x2` ),
+logical variables (`y1 + y2 ~ x1 + (x2 > 20)`),
+three-level categories (`y1 + y2 ~ x1 + cut(age, 3)`),
+polytomous terms (`y1 + y2 ~ x1 + poly(age, 3)`,
+smoothing terms (`y1 + y2 ~ x1 + bs(age)`),
+sum scores (`y1 + y2 ~ I(x1 + x2)`) or
+quotients (`y1 + y2 ~ I(x1 / x2)`)
+on the fly.
+Optionally, the user can name formulas. If not named,
+`mice()` will name formulas with multiple variables
+as `F1`, `F2`, and so on. Formulas with one
+dependent (e.g. `ses ~ x1 + x2`) will be named
+after the dependent variable `"ses"`.}
 
-\item{data}{A data frame or a matrix containing the incomplete data.  Missing
-values are coded as \code{NA}.}
+\item{data}{Data frame with \eqn{n} rows and \eqn{p} columns with
+incomplete data.  Missing values are coded as `NA`.}
 
-\item{blocks}{List of vectors with variable names per block. List elements
-may be named to identify blocks. Variables within a block are
-imputed by a multivariate imputation method
-(see \code{method} argument). By default each variable is placed
-into its own block, which is effectively
-fully conditional specification (FCS) by univariate models
-(variable-by-variable imputation). Only variables whose names appear in
-\code{blocks} are imputed. The relevant columns in the \code{where}
-matrix are set to \code{FALSE} of variables that are not block members.
-A variable may appear in multiple blocks. In that case, it is
-effectively re-imputed each time that it is visited.}
+\item{blocks}{List of \eqn{q} character vectors that identifies the
+variable names per block. The name of list elements
+identify blocks. `mice()` will provide default names
+(`"b1"`, `"b2"`, ...) for blocks containing multiple
+variables. Variables within a block are imputed as a
+block, e.g. by a multivariate imputation method, or
+by an iterated version of the same univariate imputation
+method. By default each variable is allocated to a
+separate block, which is effectively fully conditional
+specification (FCS) by univariate models
+(variable-by-variable imputation).
+All data variables are assigned to a block.
+A variable can belong to only one block, so there are
+at most \eqn{p} blocks.
+See the `parcel` argument for an easier alternative to
+the `blocks` argument.}
 
-\item{predictorMatrix}{A numeric matrix of \code{length(blocks)} rows
-and \code{ncol(data)} columns, containing 0/1 data specifying
-the set of predictors to be used for each target column.
-Each row corresponds to a variable block, i.e., a set of variables
-to be imputed. A value of \code{1} means that the column
-variable is used as a predictor for the target block (in the rows).
-By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
-rows and columns with all 1's, except for the diagonal.
-Note: For two-level imputation models (which have \code{"2l"} in their names)
-other codes (e.g, \code{2} or \code{-2}) are also allowed.}
+\item{predictorMatrix}{A square numeric matrix of maximal \eqn{p} rows and
+maximal \eqn{p} columns. Row- and column names are
+`colnames(data)`.
+Each row corresponds to a variable to be imputed.
+A value of `1` means that the column variable is a
+predictor for the row variable, while a `0` means that
+the column variable is not a predictor. The default
+`predictorMatrix` is `1` everywhere, except for a zero
+diagonal. Row- and column-names are optional for the
+maximum \eqn{p} by \eqn{p} size. The user may specify a
+smaller `predictorMatrix`, but column and row names are
+then mandatory and should match be part of `colnames(data)`.
+For variables that are not imputed, `mice()` automatically
+sets the corresponding rows in the `predictorMatrix` to
+zero. See details on *skipping imputation*.
+Two-level imputation models (which have `"2l"` in their
+names) support other codes than `0` and `1`, e.g, `2`
+or `-2` that assign special roles to some variables.}
 
 \item{auxiliary}{A logical that indicates whether the variables
-listed in \code{predictors} should be added to the formula as main
-effects. The default is \code{TRUE}.}
+listed in `predictors` should be added to the formula as main
+effects. The default is `TRUE`.}
 
 \item{include.intercept}{A logical that indicated whether the intercept
 should be included in the result.}
 
-\item{...}{Named arguments that are passed down to the univariate imputation
-functions.}
+\item{...}{Named arguments that are passed down to the univariate
+imputation functions. Use `dots` for a more fine-grained
+alternative.}
 }
 \value{
 A list of formula's

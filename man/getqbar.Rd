@@ -2,13 +2,13 @@
 % Please edit documentation in R/getfit.R
 \name{getqbar}
 \alias{getqbar}
-\title{Extract estimate from \code{mipo} object}
+\title{Extract estimate from `mipo` object}
 \usage{
 getqbar(x)
 }
 \arguments{
-\item{x}{An object of class \code{mipo}}
+\item{x}{An object of class `mipo`}
 }
 \description{
-\code{getqbar} returns a named vector of pooled estimates.
+`getqbar` returns a named vector of pooled estimates.
 }

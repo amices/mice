@@ -4,33 +4,44 @@
 \alias{nimp}
 \title{Number of imputations per block}
 \usage{
-nimp(where, blocks = make.blocks(where))
+nimp(data = NULL, where = is.na(data), blocks = make.blocks(where))
 }
 \arguments{
-\item{where}{A data frame or matrix with logicals of the same dimensions
-as \code{data} indicating where in the data the imputations should be
-created. The default, \code{where = is.na(data)}, specifies that the
-missing data should be imputed. The \code{where} argument may be used to
-overimpute observed data, or to skip imputations for selected missing values.
-Note: Imputation methods that generate imptutations outside of
-\code{mice}, like \code{mice.impute.panImpute()} may depend on a complete
-predictor space. In that case, a custom \code{where} matrix can not be
-specified.}
+\item{data}{Data frame with \eqn{n} rows and \eqn{p} columns with
+incomplete data.  Missing values are coded as `NA`.}
 
-\item{blocks}{List of vectors with variable names per block. List elements
-may be named to identify blocks. Variables within a block are
-imputed by a multivariate imputation method
-(see \code{method} argument). By default each variable is placed
-into its own block, which is effectively
-fully conditional specification (FCS) by univariate models
-(variable-by-variable imputation). Only variables whose names appear in
-\code{blocks} are imputed. The relevant columns in the \code{where}
-matrix are set to \code{FALSE} of variables that are not block members.
-A variable may appear in multiple blocks. In that case, it is
-effectively re-imputed each time that it is visited.}
+\item{where}{A data frame or matrix of logicals with \eqn{n} rows
+and \eqn{p} columns, indicating the cells of `data` for
+which imputations are generated.
+The default `where = is.na(data)` specifies that all
+missing data are imputed.
+The `where` argument can overimpute cells
+with observed data, or skip imputation of specific missing
+cells. Be aware that the latter option could propagate
+missing values to other variables. See details.
+Note: Not all imputation methods may support the `where`
+argument (e.g., `mice.impute.jomoImpute()` or
+`mice.impute.panImpute()`).}
+
+\item{blocks}{List of \eqn{q} character vectors that identifies the
+variable names per block. The name of list elements
+identify blocks. `mice()` will provide default names
+(`"b1"`, `"b2"`, ...) for blocks containing multiple
+variables. Variables within a block are imputed as a
+block, e.g. by a multivariate imputation method, or
+by an iterated version of the same univariate imputation
+method. By default each variable is allocated to a
+separate block, which is effectively fully conditional
+specification (FCS) by univariate models
+(variable-by-variable imputation).
+All data variables are assigned to a block.
+A variable can belong to only one block, so there are
+at most \eqn{p} blocks.
+See the `parcel` argument for an easier alternative to
+the `blocks` argument.}
 }
 \value{
-A numeric vector of length \code{length(blocks)} containing
+A numeric vector of length `length(blocks)` containing
 the number of cells that need to be imputed within a block.
 }
 \description{
@@ -38,14 +49,14 @@ Calculates the number of cells within a block for which imputation
 is requested.
 }
 \examples{
-where <- is.na(nhanes)
-
 # standard FCS
-nimp(where)
+nimp(nhanes2)
 
 # user-defined blocks
-nimp(where, blocks = name.blocks(list(c("bmi", "hyp"), "age", "chl")))
+where <- is.na(nhanes)
+blocks <- list(c("bmi", "hyp"), "age", "chl")
+nimp(where = where, blocks = blocks)
 }
 \seealso{
-\code{\link{mice}}
+[mice()]
 }

@@ -7,9 +7,9 @@
 #' @inheritParams mice.impute.pmm
 #' @param quad.outcome The name of the outcome in the quadratic analysis as a
 #' character string. For example, if the substantive model of interest is
-#' \code{y ~ x + xx}, then \code{"y"} would be the \code{quad.outcome}
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' `y ~ x + xx`, then `"y"` would be the `quad.outcome`
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @details
 #' This function implements the "polynomial combination" method.
 #' First, the polynomial
@@ -24,23 +24,23 @@
 #' estimates of the regression weights in a complete-data linear regression that
 #' use both \eqn{Y} and \eqn{Y^2}.
 #'
-#' @note There are two situations to consider. If only the linear term \code{Y}
-#' is present in the data, calculate the quadratic term \code{YY} after
-#' imputation. If both the linear term \code{Y} and the the quadratic term
-#' \code{YY} are variables in the data, then first impute \code{Y} by calling
-#' \code{mice.impute.quadratic()} on \code{Y}, and then impute \code{YY} by
-#' passive imputation as \code{meth["YY"] <- "~I(Y^2)"}.  See example section
-#' for details.  Generally, we would like \code{YY} to be present in the data if
-#' we need to preserve quadratic relations between \code{YY} and any third
+#' @note There are two situations to consider. If only the linear term `Y`
+#' is present in the data, calculate the quadratic term `YY` after
+#' imputation. If both the linear term `Y` and the the quadratic term
+#' `YY` are variables in the data, then first impute `Y` by calling
+#' `mice.impute.quadratic()` on `Y`, and then impute `YY` by
+#' passive imputation as `meth["YY"] <- "~I(Y^2)"`.  See example section
+#' for details.  Generally, we would like `YY` to be present in the data if
+#' we need to preserve quadratic relations between `YY` and any third
 #' variables in the multivariate incomplete data that we might wish to impute.
 #' @author Mingyang Cai and Gerko Vink
-#' @seealso \code{\link{mice.impute.pmm}}
+#' @seealso [mice.impute.pmm()]
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-knowledge.html#sec:quadratic)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #' Vink, G., van Buuren, S. (2013). Multiple Imputation of Squared Terms.
-#' \emph{Sociological Methods & Research}, 42:598-607.
+#' *Sociological Methods & Research*, 42:598-607.
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @examples

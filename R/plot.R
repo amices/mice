@@ -2,26 +2,26 @@
 #'
 #' Trace line plots portray the value of an estimate
 #' against the iteration number. The estimate can be anything that you can calculate, but
-#' typically are chosen as parameter of scientific interest. The \code{plot} method for
-#' a \code{mids} object plots the mean and standard deviation of the imputed (not observed)
+#' typically are chosen as parameter of scientific interest. The `plot` method for
+#' a `mids` object plots the mean and standard deviation of the imputed (not observed)
 #' values against the iteration number for each of the $m$ replications. By default,
 #' the function plot the development of the mean and standard deviation for each incomplete
 #' variable. On convergence, the streams should intermingle and be free of any trend.
 #'
-#' @param x      An object of class \code{mids}
+#' @param x      An object of class `mids`
 #' @param y      A formula that specifies which variables, stream and iterations are plotted.
 #'               If omitted, all streams, variables and iterations are plotted.
-#' @param theme  The trellis theme to applied to the graphs. The default is \code{mice.theme()}.
+#' @param theme  The trellis theme to applied to the graphs. The default is `mice.theme()`.
 #' @param layout A vector of length 2 given the number of columns and rows in the plot.
-#'               The default is \code{c(2, 3)}.
-#' @param type   Parameter \code{type} of \code{\link{panel.xyplot}}.
-#' @param col    Parameter \code{col} of \code{\link{panel.xyplot}}.
-#' @param lty    Parameter \code{lty} of \code{\link{panel.xyplot}}.
-#' @param ...    Extra arguments for \code{\link{xyplot}}.
-#' @return An object of class \code{"trellis"}.
+#'               The default is `c(2, 3)`.
+#' @param type   Parameter `type` of [panel.xyplot()].
+#' @param col    Parameter `col` of [panel.xyplot()].
+#' @param lty    Parameter `lty` of [panel.xyplot()].
+#' @param ...    Extra arguments for [xyplot()].
+#' @return An object of class `"trellis"`.
 #' @author Stef van Buuren 2011
-#' @seealso \code{\link{mice}}, \code{\link[=mids-class]{mids}},
-#' \code{\link{xyplot}}
+#' @seealso [mice()], [`mids()`][mids-class],
+#' [xyplot()]
 #' @method plot mids
 #' @examples
 #' imp <- mice(nhanes, print = FALSE)

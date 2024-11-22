@@ -2,53 +2,56 @@
 % Please edit documentation in R/as.R
 \name{as.mids}
 \alias{as.mids}
-\title{Converts an imputed dataset (long format) into a \code{mids} object}
+\title{Converts an imputed dataset (long format) into a `mids` object}
 \usage{
 as.mids(long, where = NULL, .imp = ".imp", .id = ".id")
 }
 \arguments{
 \item{long}{A multiply imputed data set in long format, for example
-produced by a call to \code{complete(..., action = 'long', include = TRUE)},
+produced by a call to `complete(..., action = 'long', include = TRUE)`,
 or by other software.}
 
-\item{where}{A data frame or matrix with logicals of the same dimensions
-as \code{data} indicating where in the data the imputations should be
-created. The default, \code{where = is.na(data)}, specifies that the
-missing data should be imputed. The \code{where} argument may be used to
-overimpute observed data, or to skip imputations for selected missing values.
-Note: Imputation methods that generate imptutations outside of
-\code{mice}, like \code{mice.impute.panImpute()} may depend on a complete
-predictor space. In that case, a custom \code{where} matrix can not be
-specified.}
+\item{where}{A data frame or matrix of logicals with \eqn{n} rows
+and \eqn{p} columns, indicating the cells of `data` for
+which imputations are generated.
+The default `where = is.na(data)` specifies that all
+missing data are imputed.
+The `where` argument can overimpute cells
+with observed data, or skip imputation of specific missing
+cells. Be aware that the latter option could propagate
+missing values to other variables. See details.
+Note: Not all imputation methods may support the `where`
+argument (e.g., `mice.impute.jomoImpute()` or
+`mice.impute.panImpute()`).}
 
-\item{.imp}{An optional column number or column name in \code{long},
+\item{.imp}{An optional column number or column name in `long`,
 indicating the imputation index. The values are assumed to be consecutive
-integers between 0 and \code{m}. Values \code{1} through \code{m}
-correspond to the imputation index, value \code{0} indicates
+integers between 0 and `m`. Values `1` through `m`
+correspond to the imputation index, value `0` indicates
 the original data (with missings).
-By default, the procedure will search for a variable named \code{".imp"}.}
+By default, the procedure will search for a variable named `".imp"`.}
 
-\item{.id}{An optional column number or column name in \code{long},
+\item{.id}{An optional column number or column name in `long`,
 indicating the subject identification. If not specified, then the
-function searches for a variable named \code{".id"}. If this variable
+function searches for a variable named `".id"`. If this variable
 is found, the values in the column will define the row names in
-the \code{data} element of the resulting \code{mids} object.}
+the `data` element of the resulting `mids` object.}
 }
 \value{
-An object of class \code{mids}
+An object of class `mids`
 }
 \description{
 This function converts imputed data stored in long format into
-an object of class \code{mids}. The original incomplete dataset
+an object of class `mids`. The original incomplete dataset
 needs to be available so that we know where the missing data are.
 The function is useful to convert back operations applied to
-the imputed data back in a \code{mids} object. It may also be
+the imputed data back in a `mids` object. It may also be
 used to store multiply imputed data sets from other software
-into the format used by \code{mice}.
+into the format used by `mice`.
 }
 \note{
-The function expects the input data \code{long} to be sorted by
-imputation number (variable \code{".imp"} by default), and in the
+The function expects the input data `long` to be sorted by
+imputation number (variable `".imp"` by default), and in the
 same sequence within each imputation block.
 }
 \examples{

@@ -1,24 +1,24 @@
 #' Imputation by linear regression through prediction
 #'
 #' Imputes the "best value" according to the linear regression model, also
-#' known as \emph{regression imputation}.
+#' known as *regression imputation*.
 #'
 #' @aliases mice.impute.norm.predict norm.predict
 #' @inheritParams mice.impute.pmm
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @details
 #' Calculates regression weights from the observed data and returns predicted
 #' values to as imputations. This
-#' method is known as \emph{regression imputation}.
+#' method is known as *regression imputation*.
 #' @section Warning: THIS METHOD SHOULD NOT BE USED FOR DATA ANALYSIS.
 #' This method is seductive because it imputes the most
 #' likely value according to the model. However, it ignores the uncertainty
 #' of the missing values and artificially
 #' amplifies the relations between the columns of the data. Application of
 #' richer models having more parameters does not help to evade these issues.
-#' Stochastic regression methods, like \code{\link{mice.impute.pmm}} or
-#' \code{\link{mice.impute.norm}}, are generally preferred.
+#' Stochastic regression methods, like [mice.impute.pmm()] or
+#' [mice.impute.norm()], are generally preferred.
 #'
 #' At best, prediction can give reasonable estimates of the mean, especially
 #' if normality assumptions are plausible. See Little and Rubin (2002, p. 62-64)
@@ -29,7 +29,7 @@
 #' Data.  New York: John Wiley and Sons.
 #'
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-linearnormal.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' [*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-linearnormal.html)
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @family univariate imputation functions
 #' @keywords datagen

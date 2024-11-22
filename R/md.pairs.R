@@ -3,20 +3,21 @@
 #' Number of observations per variable pair.
 #'
 #' The four components in the output value is have the following interpretation:
-#' \describe{ \item{list('rr')}{response-response, both variables are observed}
+#' \describe{
+#' \item{list('rr')}{response-response, both variables are observed}
 #' \item{list('rm')}{response-missing, row observed, column missing}
 #' \item{list('mr')}{missing -response, row missing, column observed}
 #' \item{list('mm')}{missing -missing, both variables are missing} }
 #'
 #' @param data A data frame or a matrix containing the incomplete data.  Missing
-#' values are coded as \code{NA}.
-#' @return A list of four components named \code{rr}, \code{rm}, \code{mr} and
-#' \code{mm}.  Each component is square numerical matrix containing the number
+#' values are coded as `NA`.
+#' @return A list of four components named `rr`, `rm`, `mr` and
+#' `mm`.  Each component is square numerical matrix containing the number
 #' observations within four missing data pattern.
 #' @author Stef van Buuren, Karin Groothuis-Oudshoorn, 2009
-#' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
-#' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-#' Statistical Software}, \bold{45}(3), 1-67.
+#' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`:
+#' Multivariate Imputation by Chained Equations in `R`. *Journal of
+#' Statistical Software*, **45**(3), 1-67.
 #' \doi{10.18637/jss.v045.i03}
 #' @keywords univar
 #' @examples

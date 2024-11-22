@@ -4,16 +4,37 @@
 \alias{name.formulas}
 \title{Name formula list elements}
 \usage{
-name.formulas(formulas, prefix = "F")
+name.formulas(formulas, prefix = "f")
 }
 \arguments{
-\item{formulas}{A named list of formula's, or expressions that
-can be converted into formula's by \code{as.formula}. List elements
-correspond to blocks. The block to which the list element applies is
-identified by its name, so list names must correspond to block names.
-The \code{formulas} argument is an alternative to the
-\code{predictorMatrix} argument that allows for more flexibility in
-specifying imputation models, e.g., for specifying interaction terms.}
+\item{formulas}{A named list with \eqn{q} component, each containing
+one formula. The left hand side (LHS) specifies the
+variables to be imputed, and the right hand side (RHS)
+specifies the predictors used for imputation. For example,
+model `y1 + y2 ~ x1 + x2` imputes `y1` and `y2` using `x1`
+and `x2` as predictors. Imputation by a multivariate
+imputation model imputes `y1` and `y2` simultaneously
+by a joint model, whereas `mice()` can also impute
+`y1` and `y2` by a repeated univariate model as
+`y1 ~ y2 + x1 + x2` and `y2 ~ y1 + x1 + x2`.
+The `formulas` argument is an alternative to the
+combination of the `predictorMatrix` and
+`blocks` arguments. It is more compact and allows for
+more flexibility in specifying imputation models,
+e.g., for adding
+interaction terms (`y1 + y2 ~ x1 * x2` ),
+logical variables (`y1 + y2 ~ x1 + (x2 > 20)`),
+three-level categories (`y1 + y2 ~ x1 + cut(age, 3)`),
+polytomous terms (`y1 + y2 ~ x1 + poly(age, 3)`,
+smoothing terms (`y1 + y2 ~ x1 + bs(age)`),
+sum scores (`y1 + y2 ~ I(x1 + x2)`) or
+quotients (`y1 + y2 ~ I(x1 / x2)`)
+on the fly.
+Optionally, the user can name formulas. If not named,
+`mice()` will name formulas with multiple variables
+as `F1`, `F2`, and so on. Formulas with one
+dependent (e.g. `ses ~ x1 + x2`) will be named
+after the dependent variable `"ses"`.}
 
 \item{prefix}{A character vector of length 1 with the prefix to
 be using for naming any unnamed blocks with two or more variables.}
@@ -22,15 +43,15 @@ be using for naming any unnamed blocks with two or more variables.}
 Named list of formulas
 }
 \description{
-This helper function names any unnamed elements in the \code{formula}
+This helper function names any unnamed elements in the `formula`
 list. This is a convenience function.
 }
 \details{
 This function will name any unnamed list elements specified in
-the optional argument \code{formula}. Unnamed formula's
+the optional argument `formula`. Unnamed formula's
 consisting with just one response variable will be named
 after this variable. Unnamed formula's containing more
-than one variable will be named by the \code{prefix}
+than one variable will be named by the `prefix`
 argument, padded by an integer sequence stating at 1.
 }
 \examples{
@@ -65,5 +86,5 @@ form5 <- name.formulas(form5)
 imp5 <- mice(nhanes, formulas = form5, print = FALSE, m = 1, seed = 71712)
 }
 \seealso{
-\code{\link{mice}}
+[mice()]
 }

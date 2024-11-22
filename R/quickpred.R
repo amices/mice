@@ -12,20 +12,20 @@
 #' The first correlation uses the values of the target and the predictor
 #' directly. The second correlation uses the (binary) response indicator of the
 #' target and the values of the predictor. If the largest (in absolute value) of
-#' these correlations exceeds \code{mincor}, the predictor will be added to the
-#' imputation set.  The default value for \code{mincor} is 0.1.
+#' these correlations exceeds `mincor`, the predictor will be added to the
+#' imputation set.  The default value for `mincor` is 0.1.
 #'
 #' In addition, the procedure eliminates predictors whose proportion of usable
-#' cases fails to meet the minimum specified by \code{minpuc}. The default value
+#' cases fails to meet the minimum specified by `minpuc`. The default value
 #' is 0, so predictors are retained even if they have no usable case.
 #'
-#' Finally, the procedure includes any predictors named in the \code{include}
+#' Finally, the procedure includes any predictors named in the `include`
 #' argument (which is useful for background variables like age and sex) and
-#' eliminates any predictor named in the \code{exclude} argument. If a variable
-#' is listed in both \code{include} and \code{exclude} arguments, the
-#' \code{include} argument takes precedence.
+#' eliminates any predictor named in the `exclude` argument. If a variable
+#' is listed in both `include` and `exclude` arguments, the
+#' `include` argument takes precedence.
 #'
-#' Advanced topic: \code{mincor} and \code{minpuc} are typically specified as
+#' Advanced topic: `mincor` and `minpuc` are typically specified as
 #' scalars, but vectors and squares matrices of appropriate size will also work.
 #' Each element of the vector corresponds to a row of the predictor matrix, so
 #' the procedure can effectively differentiate between different target
@@ -34,36 +34,36 @@
 #' relatively small. Using a square matrix extends the idea to the columns, so
 #' that one can also apply cellwise thresholds.
 #'
-#' @note \code{quickpred()} uses \code{\link[base]{data.matrix}} to convert
+#' @note `quickpred()` uses [base::data.matrix()] to convert
 #' factors to numbers through their internal codes. Especially for unordered
 #' factors the resulting quantification may not make sense.
 #'
 #' @param data Matrix or data frame with incomplete data.
-#' @param mincor A scalar, numeric vector (of size \code{ncol(data))} or numeric
-#' matrix (square, of size \code{ncol(data)} specifying the minimum
+#' @param mincor A scalar, numeric vector (of size `ncol(data))` or numeric
+#' matrix (square, of size `ncol(data)` specifying the minimum
 #' threshold(s) against which the absolute correlation in the data is compared.
-#' @param minpuc A scalar, vector (of size \code{ncol(data))} or matrix (square,
-#' of size \code{ncol(data)} specifying the minimum threshold(s) for the
+#' @param minpuc A scalar, vector (of size `ncol(data))` or matrix (square,
+#' of size `ncol(data)` specifying the minimum threshold(s) for the
 #' proportion of usable cases.
 #' @param include A string or a vector of strings containing one or more
-#' variable names from \code{names(data)}. Variables specified are always
+#' variable names from `names(data)`. Variables specified are always
 #' included as a predictor.
 #' @param exclude A string or a vector of strings containing one or more
-#' variable names from \code{names(data)}. Variables specified are always
+#' variable names from `names(data)`. Variables specified are always
 #' excluded as a predictor.
 #' @param method A string specifying the type of correlation. Use
-#' \code{'pearson'} (default), \code{'kendall'} or \code{'spearman'}. Can be
+#' `'pearson'` (default), `'kendall'` or `'spearman'`. Can be
 #' abbreviated.
-#' @return A square binary matrix of size \code{ncol(data)}.
+#' @return A square binary matrix of size `ncol(data)`.
 #' @author Stef van Buuren, Aug 2009
-#' @seealso \code{\link{mice}}, \code{\link[=mids-class]{mids}}
+#' @seealso [mice()], [`mids()`][mids-class]
 #' @references van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple
 #' imputation of missing blood pressure covariates in survival analysis.
-#' \emph{Statistics in Medicine}, \bold{18}, 681--694.
+#' *Statistics in Medicine*, **18**, 681--694.
 #'
-#' van Buuren, S. and Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
-#' Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-#' Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+#' van Buuren, S. and Groothuis-Oudshoorn, K. (2011). `mice`: Multivariate
+#' Imputation by Chained Equations in `R`. *Journal of Statistical
+#' Software*, **45**(3), 1-67. \doi{10.18637/jss.v045.i03}
 #' @keywords misc
 #' @examples
 #' # default: include all predictors with absolute correlation over 0.1

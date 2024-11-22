@@ -1,7 +1,7 @@
 # The sampler controls the actual Gibbs sampling iteration scheme.
 # This function is called by mice and mice.mids
 sampler <- function(data, m, ignore, where, imp, blocks, method,
-                    visitSequence, predictorMatrix, formulas, blots,
+                    visitSequence, predictorMatrix, formulas, dots,
                     post, fromto, printFlag, ...) {
   from <- fromto[1]
   to <- fromto[2]
@@ -44,9 +44,8 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
           b <- blocks[[h]]
           if (calltype == "formula") ff <- formulas[[h]] else ff <- NULL
-          pred <- predictorMatrix[h, ]
 
-          user <- blots[[h]]
+          user <- dots[[h]]
 
           # univariate/multivariate logic
           theMethod <- method[h]
@@ -71,6 +70,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
           # (repeated) univariate imputation - pred method
           if (univ) {
             for (j in b) {
+              if (calltype == "pred") pred <- predictorMatrix[j, ] else pred <- NULL
               imp[[j]][, i] <-
                 sampler.univ(
                   data = data, r = r, where = where,
@@ -103,24 +103,46 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
             fm <- paste("mice.impute", theMethod, sep = ".")
             if (calltype == "formula") {
-              imputes <- do.call(fm, args = list(
-                data = data,
-                formula = ff, ...
-              ))
+              args <- c(list(data = data, formula = ff), user, list(...))
+              imputes <- do.call(fm, args = args)
             } else if (calltype == "pred") {
-              imputes <- do.call(fm, args = list(
-                data = data,
-                type = pred, ...
-              ))
+              typecodes <- function(x) {
+                # jomoImpute type codes
+                #  1: target variables containing missing data
+                #  2: predictors with fixed effect on all targets (completely observed)
+                #  3: predictors with random effect on all targets (completely observed)
+                # -1: grouping variable within which the imputation is run separately
+                # -2: cluster indicator variable
+                #  0: variables not featured in the model
+                if (nrow(x) == 1L) return(as.vector(x))
+                vars <- colnames(x)
+                type <- rep(0, length(vars))
+                names(type) <- vars
+                fm2 <- apply(x == -2, 2, any)
+                fm1 <- apply(x == -1, 2, any)
+                fp1 <- apply(x == 1, 2, any)
+                fp2 <- apply(x == 2, 2, any)
+                fp3 <- apply(x == 3, 2, any)
+                type[fp1] <- 1
+                type[fp1] <- 1
+                type[fp2] <- 2
+                type[fp3] <- 3
+                type[fm1] <- -1
+                type[fm2] <- -2
+                return(as.vector(type))
+              }
+              type <- typecodes(predictorMatrix[blocks[[h]], ])
+              args <- c(list(data = data, type = type), user, list(...))
+              imputes <- do.call(fm, args = args)
             } else {
               stop("Cannot call function of type ", calltype,
-                call. = FALSE
+                   call. = FALSE
               )
             }
             if (is.null(imputes)) {
               stop("No imputations from ", theMethod,
-                h,
-                call. = FALSE
+                   h,
+                   call. = FALSE
               )
             }
             for (j in names(imputes)) {
@@ -136,7 +158,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
               wy <- where[, j]
               ry <- r[, j]
               imp[[j]][, i] <- model.frame(as.formula(theMethod), data[wy, ],
-                na.action = na.pass
+                                           na.action = na.pass
               )
               data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
             }
@@ -178,9 +200,9 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
   list(iteration = maxit, imp = imp, chainMean = chainMean, chainVar = chainVar)
 }
 
-
 sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
-                         calltype = "pred", user, ignore, ...) {
+                         calltype = "pred", user, ignore,
+                         sort.terms = TRUE, ...) {
   j <- yname[1L]
 
   if (calltype == "pred") {
@@ -195,12 +217,34 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
   }
 
   if (calltype == "formula") {
+    # sorts formula terms
+    # should work for main factors only
+    # vars <- all.vars(formula)
+    # yname <- j
+    # xnames <- sort(setdiff(vars, j))
+    # if (length(xnames) > 0L) {
+    #   formula <- reformulate(xnames, response = j)
+    #   formula <- update(formula, ". ~ . ")
+    # } else {
+    #   formula <- as.formula(paste0(j, " ~ 1"))
+    # }
+
     # move terms other than j from lhs to rhs
+    # should work for any terms
     ymove <- setdiff(lhs(formula), j)
     formula <- update(formula, paste(j, " ~ . "))
     if (length(ymove) > 0L) {
       formula <- update(formula, paste("~ . + ", paste(backticks(ymove), collapse = "+")))
     }
+  }
+
+  # sort terms in alphabetic order to obtain exact reproducibility
+  # FIXME Is this sort really needed? It can crash with more complex formulas
+  if (sort.terms) {
+    s <- unlist(strsplit(format(formula), "[~]"))
+    xp <- sort(unlist(strsplit(s[2], "[+]")))
+    xp <- sort(gsub(" ", "", xp))
+    formula <- reformulate(paste(xp, collapse = "+"), j, env = environment(formula))
   }
 
   # get the model matrix

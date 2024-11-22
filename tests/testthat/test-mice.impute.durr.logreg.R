@@ -54,10 +54,9 @@ durr_custom <- mice(X,
   nfolds = 5,
   print = FALSE
 )
-logreg_default <- mice(X,
+suppressWarnings(logreg_default <- mice(X,
   m = 2, maxit = 2, method = "logreg",
-  print = FALSE
-)
+  print = FALSE))
 
 # Tests
 test_that("mice call works", {

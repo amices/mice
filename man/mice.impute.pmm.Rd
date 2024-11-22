@@ -23,68 +23,68 @@ mice.impute.pmm(
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length `length(y)` indicating the
+the subset `y[ry]` of elements in `y` to which the imputation
+model is fitted. The `ry` generally distinguishes the observed
+(`TRUE`) and missing values (`FALSE`) in `y`.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with `length(y)` rows with predictors for
+`y`. Matrix `x` may have no missing values.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
-indicates locations in \code{y} for which imputations are created.}
+\item{wy}{Logical vector of length `length(y)`. A `TRUE` value
+indicates locations in `y` for which imputations are created.}
 
 \item{donors}{The size of the donor pool among which a draw is made.
-The default is \code{donors = 5L}. Setting \code{donors = 1L} always selects
+The default is `donors = 5L`. Setting `donors = 1L` always selects
 the closest match, but is not recommended. Values between 3L and 10L
 provide the best results in most cases (Morris et al, 2015).}
 
 \item{matchtype}{Type of matching distance. The default choice
-(\code{matchtype = 1L}) calculates the distance between
-the \emph{predicted} value of \code{yobs} and
-the \emph{drawn} values of \code{ymis} (called type-1 matching).
-Other choices are \code{matchtype = 0L}
-(distance between predicted values) and \code{matchtype = 2L}
+(`matchtype = 1L`) calculates the distance between
+the *predicted* value of `yobs` and
+the *drawn* values of `ymis` (called type-1 matching).
+Other choices are `matchtype = 0L`
+(distance between predicted values) and `matchtype = 2L`
 (distance between drawn values).}
 
 \item{exclude}{Dependent values to exclude from the imputation model
 and the collection of donor values}
 
-\item{quantify}{Logical. If \code{TRUE}, factor levels are replaced
+\item{quantify}{Logical. If `TRUE`, factor levels are replaced
 by the first canonical variate before fitting the imputation model.
 If false, the procedure reverts to the old behaviour and takes the
 integer codes (which may lack a sensible interpretation).
-Relevant only of \code{y} is a factor.}
+Relevant only of `y` is a factor.}
 
 \item{trim}{Scalar integer. Minimum number of observations required in a
 category in order to be considered as a potential donor value.
-Relevant only of \code{y} is a factor.}
+Relevant only of `y` is a factor.}
 
-\item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent
-problems with multicollinearity. The default is \code{ridge = 1e-05},
+\item{ridge}{The ridge penalty used in `.norm.draw()` to prevent
+problems with multicollinearity. The default is `ridge = 1e-05`,
 which means that 0.01 percent of the diagonal is added to the cross-product.
 Larger ridges may result in more biased estimates. For highly noisy data
-(e.g. many junk variables), set \code{ridge = 1e-06} or even lower to
-reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
+(e.g. many junk variables), set `ridge = 1e-06` or even lower to
+reduce bias. For highly collinear data, set `ridge = 1e-04` or higher.}
 
-\item{use.matcher}{Logical. Set \code{use.matcher = TRUE} to specify
-the C function \code{matcher()}, the now deprecated matching function that
+\item{use.matcher}{Logical. Set `use.matcher = TRUE` to specify
+the C function `matcher()`, the now deprecated matching function that
 was default in versions
-\code{2.22} (June 2014) to \code{3.11.7} (Oct 2020). Since version \code{3.12.0}
-\code{mice()} uses the much faster \code{matchindex} C function. Use
-the deprecated \code{matcher} function only for exact reproduction.}
+`2.22` (June 2014) to `3.11.7` (Oct 2020). Since version `3.12.0`
+`mice()` uses the much faster `matchindex` C function. Use
+the deprecated `matcher` function only for exact reproduction.}
 
 \item{\dots}{Other named arguments.}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length
-\code{sum(wy)}
+Vector with imputed data, same type as `y`, and of length
+`sum(wy)`
 }
 \description{
 Imputation by predictive mean matching
 }
 \details{
-Imputation of \code{y} by predictive mean matching, based on
+Imputation of `y` by predictive mean matching, based on
 van Buuren (2012, p. 73). The procedure is as follows:
 
 \enumerate{
@@ -104,7 +104,7 @@ minimum for all \eqn{j=1,\dots,n_0}. Break ties randomly.}
 \item{Calculate imputations \eqn{\dot y_j = y_{i_j}} for \eqn{j=1,\dots,n_0}.}
 }
 
-The name \emph{predictive mean matching} was proposed by Little (1988).
+The name *predictive mean matching* was proposed by Little (1988).
 }
 \examples{
 # We normally call mice.impute.pmm() from within mice()
@@ -138,16 +138,16 @@ plot(jitter(y), jitter(yimp),
 abline(0, 1)
 cor(y, yimp, use = "pair")
 
-# Use blots to exclude different values per column
-# Create blots object
-blots <- make.blots(boys)
+# Use dots to exclude different values per column
+# Create dots object
+dots <- make.dots(boys)
 # Exclude ml 1 through 5 from tv donor pool
-blots$tv$exclude <- c(1:5)
+dots$tv$exclude <- c(1:5)
 # Exclude 100 random observed heights from tv donor pool
-blots$hgt$exclude <- sample(unique(boys$hgt), 100)
-imp <- mice(boys, method = "pmm", print = FALSE, blots = blots, seed=123)
-blots$hgt$exclude \%in\% unlist(c(imp$imp$hgt)) # MUST be all FALSE
-blots$tv$exclude \%in\% unlist(c(imp$imp$tv)) # MUST be all FALSE
+dots$hgt$exclude <- sample(unique(boys$hgt), 100)
+imp <- mice(boys, method = "pmm", print = FALSE, dots = dots, seed=123)
+dots$hgt$exclude \%in\% unlist(c(imp$imp$hgt)) # MUST be all FALSE
+dots$tv$exclude \%in\% unlist(c(imp$imp$tv)) # MUST be all FALSE
 
 # Factor quantification
 xname <- c("age", "hgt", "wgt")
@@ -178,12 +178,12 @@ Morris TP, White IR, Royston P (2015). Tuning multiple imputation by predictive
 mean matching and local residual draws. BMC Med Res Methodol. ;14:75.
 
 Van Buuren, S. (2018).
-\href{https://stefvanbuuren.name/fimd/sec-pmm.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+[*Flexible Imputation of Missing Data. Second Edition.*](https://stefvanbuuren.name/fimd/sec-pmm.html)
 Chapman & Hall/CRC. Boca Raton, FL.
 
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
-Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`: Multivariate
+Imputation by Chained Equations in `R`. *Journal of Statistical
+Software*, **45**(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
 Other univariate imputation functions: 

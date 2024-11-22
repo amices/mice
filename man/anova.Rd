@@ -7,17 +7,17 @@
 \method{anova}{mira}(object, ..., method = "D1", use = "wald")
 }
 \arguments{
-\item{object}{Two or more objects of class \code{mira}}
+\item{object}{Two or more objects of class `mira`}
 
-\item{...}{Other parameters passed down to \code{D1()}, \code{D2()},
-\code{D3()} and \code{mitml::testModels}.}
+\item{...}{Other parameters passed down to `D1()`, `D2()`,
+`D3()` and `mitml::testModels`.}
 
-\item{method}{Either \code{"D1"}, \code{"D2"} or \code{"D3"}}
+\item{method}{Either `"D1"`, `"D2"` or `"D3"`}
 
 \item{use}{An character indicating the test statistic}
 }
 \value{
-Object of class \code{mice.anova}
+Object of class `mice.anova`
 }
 \description{
 Compare several nested models

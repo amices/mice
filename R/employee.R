@@ -17,7 +17,7 @@
 #' is inadvertently lost.
 #'
 #' A larger version of this data set in present as
-#' \code{\link[miceadds:data.enders]{data.enders.employee}}.
+#' [`data.enders.employee()`][miceadds::data.enders].
 #'
 #' @format A data frame with 20 rows and 3 variables:
 #' \describe{

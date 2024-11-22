@@ -16,8 +16,8 @@ A data frame with 2000 rows and 7 columns:
 \item{teachpop}{Teacher popularity} }
 }
 \source{
-Hox, J. J. (2002) \emph{Multilevel analysis. Techniques and
-applications.} Mahwah, NJ: Lawrence Erlbaum.
+Hox, J. J. (2002) *Multilevel analysis. Techniques and
+applications.* Mahwah, NJ: Lawrence Erlbaum.
 }
 \description{
 Hox pupil popularity data with some missing popularity scores

@@ -1,16 +1,16 @@
-#' Creates a \code{where} argument
+#' Creates a `where` argument
 #'
-#' This helper function creates a valid \code{where} matrix. The
-#' \code{where} matrix is an argument to the \code{mice} function.
-#' It has the same size as \code{data} and specifies which values
-#' are to be imputed (\code{TRUE}) or nor (\code{FALSE}).
-#' @param data A \code{data.frame} with the source data
-#' @param keyword An optional keyword, one of \code{"missing"} (missing
-#' values are imputed), \code{"observed"} (observed values are imputed),
-#' \code{"all"} and \code{"none"}. The default
-#' is \code{keyword = "missing"}
+#' This helper function creates a valid `where` matrix. The
+#' `where` matrix is an argument to the `mice` function.
+#' It has the same size as `data` and specifies which values
+#' are to be imputed (`TRUE`) or nor (`FALSE`).
+#' @param data A `data.frame` with the source data
+#' @param keyword An optional keyword, one of `"missing"` (missing
+#' values are imputed), `"observed"` (observed values are imputed),
+#' `"all"` and `"none"`. The default
+#' is `keyword = "missing"`
 #' @return A matrix with logical
-#' @seealso \code{\link{make.blocks}}, \code{\link{make.predictorMatrix}}
+#' @seealso [make.blocks()], [make.predictorMatrix()]
 #' @examples
 #' head(make.where(nhanes), 3)
 #'
@@ -63,6 +63,7 @@ check.where <- function(where, data, blocks) {
 
   where <- matrix(where, nrow = nrow(data), ncol = ncol(data))
   dimnames(where) <- dimnames(data)
-  where[, !colnames(where) %in% unlist(blocks)] <- FALSE
+  # #583
+  # where[, !colnames(where) %in% unlist(blocks)] <- FALSE
   where
 }

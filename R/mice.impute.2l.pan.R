@@ -6,30 +6,30 @@
 #  4 ... fixed, random and aggregated effects
 
 
-#' Imputation by a two-level normal model using \code{pan}
+#' Imputation by a two-level normal model using `pan`
 #'
 #' Imputes univariate missing data using a two-level normal model with
 #' homogeneous within group variances. Aggregated group effects (i.e. group
 #' means) can be automatically created and included as predictors in the
-#' two-level regression (see argument \code{type}). This function needs the
-#' \code{pan} package.
+#' two-level regression (see argument `type`). This function needs the
+#' `pan` package.
 #'
 #' Implements the Gibbs sampler for the linear two-level model with homogeneous
 #' within group variances which is a special case of a multivariate linear mixed
 #' effects model (Schafer & Yucel, 2002).  For a two-level imputation with
-#' heterogeneous within-group variances see \code{\link{mice.impute.2l.norm}}. %
+#' heterogeneous within-group variances see [mice.impute.2l.norm()]. %
 #' The random intercept is automatically added in %
-#' \code{mice.impute.2l.norm()}.
+#' `mice.impute.2l.norm()`.
 #'
 #' @aliases mice.impute.2l.pan 2l.pan
 #' @author Alexander Robitzsch (IPN - Leibniz Institute for Science and
 #' Mathematics Education, Kiel, Germany), \email{robitzsch@@ipn.uni-kiel.de}
 #' @name mice.impute.2l.pan
-#' @param y Incomplete data vector of length \code{n}
-#' @param ry Vector of missing data pattern (\code{FALSE}=missing,
-#' \code{TRUE}=observed)
-#' @param x Matrix (\code{n} x \code{p}) of complete covariates.
-#' @param type Vector of length \code{ncol(x)} identifying random and class
+#' @param y Incomplete data vector of length `n`
+#' @param ry Vector of missing data pattern (`FALSE`=missing,
+#' `TRUE`=observed)
+#' @param x Matrix (`n` x `p`) of complete covariates.
+#' @param type Vector of length `ncol(x)` identifying random and class
 #' variables.  Random effects are identified by a '2'. The group variable (only
 #' one is allowed) is coded as '-2'. Random effects also include the fixed
 #' effect. If for a covariates X1 group means shall be calculated and included
@@ -37,27 +37,27 @@
 #' specification '4' also includes random effects of X1.
 #' @param intercept Logical determining whether the intercept is automatically
 #' added.
-#' @param paniter Number of iterations in \code{pan}. Default is 500.
-#' @param groupcenter.slope If \code{TRUE}, in case of group means (\code{type}
+#' @param paniter Number of iterations in `pan`. Default is 500.
+#' @param groupcenter.slope If `TRUE`, in case of group means (`type`
 #' is '3' or'4') group mean centering for these predictors are conducted before
-#' doing imputations. Default is \code{FALSE}.
+#' doing imputations. Default is `FALSE`.
 #' @param ... Other named arguments.
-#' @return A vector of length \code{nmis} with imputations.
+#' @return A vector of length `nmis` with imputations.
 #' @author Alexander Robitzsch (IPN - Leibniz Institute for Science and
 #' Mathematics Education, Kiel, Germany), \email{robitzsch@@ipn.uni-kiel.de}.
-#' @note This function does not implement the \code{where} functionality. It
-#' always produces \code{nmis} imputation, irrespective of the \code{where}
-#' argument of the \code{mice} function.
+#' @note This function does not implement the `where` functionality. It
+#' always produces `nmis` imputation, irrespective of the `where`
+#' argument of the `mice` function.
 #' @family univariate-2l
 #' @references
 #'
 #' Schafer J L, Yucel RM (2002). Computational strategies for multivariate
-#' linear mixed-effects models with missing values.  \emph{Journal of
-#' Computational and Graphical Statistics}. \bold{11}, 437-457.
+#' linear mixed-effects models with missing values.  *Journal of
+#' Computational and Graphical Statistics*. **11**, 437-457.
 #'
-#' Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
-#' Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-#' Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+#' Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`: Multivariate
+#' Imputation by Chained Equations in `R`. *Journal of Statistical
+#' Software*, **45**(3), 1-67. \doi{10.18637/jss.v045.i03}
 #' @examples
 #' # simulate some data
 #' # two-level regression model with fixed slope

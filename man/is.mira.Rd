@@ -2,7 +2,7 @@
 % Please edit documentation in R/is.R
 \name{is.mira}
 \alias{is.mira}
-\title{Check for \code{mira} object}
+\title{Check for `mira` object}
 \usage{
 is.mira(x)
 }
@@ -10,8 +10,8 @@ is.mira(x)
 \item{x}{An object}
 }
 \value{
-A logical indicating whether \code{x} is an object of class \code{mira}
+A logical indicating whether `x` is an object of class `mira`
 }
 \description{
-Check for \code{mira} object
+Check for `mira` object
 }

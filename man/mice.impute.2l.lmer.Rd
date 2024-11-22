@@ -2,41 +2,41 @@
 % Please edit documentation in R/mice.impute.2l.lmer.R
 \name{mice.impute.2l.lmer}
 \alias{mice.impute.2l.lmer}
-\title{Imputation by a two-level normal model using \code{lmer}}
+\title{Imputation by a two-level normal model using `lmer`}
 \usage{
 mice.impute.2l.lmer(y, ry, x, type, wy = NULL, intercept = TRUE, ...)
 }
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length `length(y)` indicating the
+the subset `y[ry]` of elements in `y` to which the imputation
+model is fitted. The `ry` generally distinguishes the observed
+(`TRUE`) and missing values (`FALSE`) in `y`.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with `length(y)` rows with predictors for
+`y`. Matrix `x` may have no missing values.}
 
-\item{type}{Vector of length \code{ncol(x)} identifying random and class
+\item{type}{Vector of length `ncol(x)` identifying random and class
 variables.  Random variables are identified by a '2'. The class variable
 (only one is allowed) is coded as '-2'. Fixed effects are indicated by
 a '1'.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
-indicates locations in \code{y} for which imputations are created.}
+\item{wy}{Logical vector of length `length(y)`. A `TRUE` value
+indicates locations in `y` for which imputations are created.}
 
 \item{intercept}{Logical determining whether the intercept is automatically
 added.}
 
-\item{\dots}{Arguments passed down to \code{lmer}}
+\item{\dots}{Arguments passed down to `lmer`}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length
-\code{sum(wy)}
+Vector with imputed data, same type as `y`, and of length
+`sum(wy)`
 }
 \description{
 Imputes univariate systematically and sporadically missing data using a
-two-level normal model using \code{lme4::lmer()}.
+two-level normal model using `lme4::lmer()`.
 }
 \details{
 Data are missing systematically if they have not been measured, e.g., in the
@@ -48,8 +48,8 @@ variance-covariance matrix or the random effects to their estimated
 value in cases where creating draws from the posterior is not
 possible. The procedure throws a warning when this happens.
 
-If \code{lme4::lmer()} fails, the procedure prints the warning
-\code{"lmer does not run. Simplify imputation model"} and returns the
+If `lme4::lmer()` fails, the procedure prints the warning
+`"lmer does not run. Simplify imputation model"` and returns the
 current imputation.  If that happens we see flat lines in the
 trace line plots. Thus, the appearance of flat trace lines should be taken
 as an additional alert to a problem with imputation model fitting.
@@ -62,11 +62,11 @@ chained equations. Forthcoming.
 Jolani S., Debray T.P.A., Koffijberg H., van Buuren S., Moons K.G.M. (2015).
 Imputation of systematically missing predictors in an individual
 participant data meta-analysis: a generalized approach using MICE.
-\emph{Statistics in Medicine}, 34:1841-1863.
+*Statistics in Medicine*, 34:1841-1863.
 
 Van Buuren, S. (2011) Multiple imputation of multilevel data. In Hox, J.J.
-and and Roberts, J.K. (Eds.), \emph{The Handbook of Advanced Multilevel
-Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
+and and Roberts, J.K. (Eds.), *The Handbook of Advanced Multilevel
+Analysis*, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
 }
 \seealso{
 Other univariate-2l: 

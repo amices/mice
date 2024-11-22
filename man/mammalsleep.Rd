@@ -6,7 +6,7 @@
 \alias{sleep}
 \title{Mammal sleep data}
 \format{
-\code{mammalsleep} is a data frame with 62 rows and 11 columns:
+`mammalsleep` is a data frame with 62 rows and 11 columns:
 \describe{
 \item{species}{Species of animal}
 \item{bw}{Body weight (kg)}

@@ -2,44 +2,73 @@
 % Please edit documentation in R/blocks.R
 \name{construct.blocks}
 \alias{construct.blocks}
-\title{Construct blocks from \code{formulas} and \code{predictorMatrix}}
+\title{Construct blocks from `formulas` and `predictorMatrix`}
 \usage{
 construct.blocks(formulas = NULL, predictorMatrix = NULL)
 }
 \arguments{
-\item{formulas}{A named list of formula's, or expressions that
-can be converted into formula's by \code{as.formula}. List elements
-correspond to blocks. The block to which the list element applies is
-identified by its name, so list names must correspond to block names.
-The \code{formulas} argument is an alternative to the
-\code{predictorMatrix} argument that allows for more flexibility in
-specifying imputation models, e.g., for specifying interaction terms.}
+\item{formulas}{A named list with \eqn{q} component, each containing
+one formula. The left hand side (LHS) specifies the
+variables to be imputed, and the right hand side (RHS)
+specifies the predictors used for imputation. For example,
+model `y1 + y2 ~ x1 + x2` imputes `y1` and `y2` using `x1`
+and `x2` as predictors. Imputation by a multivariate
+imputation model imputes `y1` and `y2` simultaneously
+by a joint model, whereas `mice()` can also impute
+`y1` and `y2` by a repeated univariate model as
+`y1 ~ y2 + x1 + x2` and `y2 ~ y1 + x1 + x2`.
+The `formulas` argument is an alternative to the
+combination of the `predictorMatrix` and
+`blocks` arguments. It is more compact and allows for
+more flexibility in specifying imputation models,
+e.g., for adding
+interaction terms (`y1 + y2 ~ x1 * x2` ),
+logical variables (`y1 + y2 ~ x1 + (x2 > 20)`),
+three-level categories (`y1 + y2 ~ x1 + cut(age, 3)`),
+polytomous terms (`y1 + y2 ~ x1 + poly(age, 3)`,
+smoothing terms (`y1 + y2 ~ x1 + bs(age)`),
+sum scores (`y1 + y2 ~ I(x1 + x2)`) or
+quotients (`y1 + y2 ~ I(x1 / x2)`)
+on the fly.
+Optionally, the user can name formulas. If not named,
+`mice()` will name formulas with multiple variables
+as `F1`, `F2`, and so on. Formulas with one
+dependent (e.g. `ses ~ x1 + x2`) will be named
+after the dependent variable `"ses"`.}
 
-\item{predictorMatrix}{A numeric matrix of \code{length(blocks)} rows
-and \code{ncol(data)} columns, containing 0/1 data specifying
-the set of predictors to be used for each target column.
-Each row corresponds to a variable block, i.e., a set of variables
-to be imputed. A value of \code{1} means that the column
-variable is used as a predictor for the target block (in the rows).
-By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
-rows and columns with all 1's, except for the diagonal.
-Note: For two-level imputation models (which have \code{"2l"} in their names)
-other codes (e.g, \code{2} or \code{-2}) are also allowed.}
+\item{predictorMatrix}{A square numeric matrix of maximal \eqn{p} rows and
+maximal \eqn{p} columns. Row- and column names are
+`colnames(data)`.
+Each row corresponds to a variable to be imputed.
+A value of `1` means that the column variable is a
+predictor for the row variable, while a `0` means that
+the column variable is not a predictor. The default
+`predictorMatrix` is `1` everywhere, except for a zero
+diagonal. Row- and column-names are optional for the
+maximum \eqn{p} by \eqn{p} size. The user may specify a
+smaller `predictorMatrix`, but column and row names are
+then mandatory and should match be part of `colnames(data)`.
+For variables that are not imputed, `mice()` automatically
+sets the corresponding rows in the `predictorMatrix` to
+zero. See details on *skipping imputation*.
+Two-level imputation models (which have `"2l"` in their
+names) support other codes than `0` and `1`, e.g, `2`
+or `-2` that assign special roles to some variables.}
 }
 \value{
-A \code{blocks} object.
+A `blocks` object.
 }
 \description{
 This helper function attempts to find blocks of variables in the
-specification of the \code{formulas} and/or \code{predictorMatrix}
-objects. Blocks specified by \code{formulas} may consist of
-multiple variables. Blocks specified by \code{predictorMatrix} are
+specification of the `formulas` and/or `predictorMatrix`
+objects. Blocks specified by `formulas` may consist of
+multiple variables. Blocks specified by `predictorMatrix` are
 assumed to consist of single variables. Any duplicates in names are
 removed, and the formula specification is preferred.
-\code{predictorMatrix} and \code{formulas}. When both arguments
+`predictorMatrix` and `formulas`. When both arguments
 specify models for the same block, the model for the
-\code{predictMatrix} is removed, and priority is given to the
-specification given in \code{formulas}.
+`predictMatrix` is removed, and priority is given to the
+specification given in `formulas`.
 }
 \examples{
 form <- list(bmi + hyp ~ chl + age, chl ~ bmi)
@@ -47,5 +76,5 @@ pred <- make.predictorMatrix(nhanes[, c("age", "chl")])
 construct.blocks(formulas = form, pred = pred)
 }
 \seealso{
-\code{\link{make.blocks}}, \code{\link{name.blocks}}
+[make.blocks()], [name.blocks()]
 }

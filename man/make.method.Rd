@@ -2,61 +2,72 @@
 % Please edit documentation in R/method.R
 \name{make.method}
 \alias{make.method}
-\title{Creates a \code{method} argument}
+\title{Creates a `method` argument}
 \usage{
 make.method(
   data,
   where = make.where(data),
   blocks = make.blocks(data),
-  defaultMethod = c("pmm", "logreg", "polyreg", "polr")
+  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+  ynames = NULL
 )
 }
 \arguments{
-\item{data}{A data frame or a matrix containing the incomplete data.  Missing
-values are coded as \code{NA}.}
+\item{data}{Data frame with \eqn{n} rows and \eqn{p} columns with
+incomplete data.  Missing values are coded as `NA`.}
 
-\item{where}{A data frame or matrix with logicals of the same dimensions
-as \code{data} indicating where in the data the imputations should be
-created. The default, \code{where = is.na(data)}, specifies that the
-missing data should be imputed. The \code{where} argument may be used to
-overimpute observed data, or to skip imputations for selected missing values.
-Note: Imputation methods that generate imptutations outside of
-\code{mice}, like \code{mice.impute.panImpute()} may depend on a complete
-predictor space. In that case, a custom \code{where} matrix can not be
-specified.}
+\item{where}{A data frame or matrix of logicals with \eqn{n} rows
+and \eqn{p} columns, indicating the cells of `data` for
+which imputations are generated.
+The default `where = is.na(data)` specifies that all
+missing data are imputed.
+The `where` argument can overimpute cells
+with observed data, or skip imputation of specific missing
+cells. Be aware that the latter option could propagate
+missing values to other variables. See details.
+Note: Not all imputation methods may support the `where`
+argument (e.g., `mice.impute.jomoImpute()` or
+`mice.impute.panImpute()`).}
 
-\item{blocks}{List of vectors with variable names per block. List elements
-may be named to identify blocks. Variables within a block are
-imputed by a multivariate imputation method
-(see \code{method} argument). By default each variable is placed
-into its own block, which is effectively
-fully conditional specification (FCS) by univariate models
-(variable-by-variable imputation). Only variables whose names appear in
-\code{blocks} are imputed. The relevant columns in the \code{where}
-matrix are set to \code{FALSE} of variables that are not block members.
-A variable may appear in multiple blocks. In that case, it is
-effectively re-imputed each time that it is visited.}
+\item{blocks}{List of \eqn{q} character vectors that identifies the
+variable names per block. The name of list elements
+identify blocks. `mice()` will provide default names
+(`"b1"`, `"b2"`, ...) for blocks containing multiple
+variables. Variables within a block are imputed as a
+block, e.g. by a multivariate imputation method, or
+by an iterated version of the same univariate imputation
+method. By default each variable is allocated to a
+separate block, which is effectively fully conditional
+specification (FCS) by univariate models
+(variable-by-variable imputation).
+All data variables are assigned to a block.
+A variable can belong to only one block, so there are
+at most \eqn{p} blocks.
+See the `parcel` argument for an easier alternative to
+the `blocks` argument.}
 
-\item{defaultMethod}{A vector of length 4 containing the default
-imputation methods for 1) numeric data, 2) factor data with 2 levels, 3)
-factor data with > 2 unordered levels, and 4) factor data with > 2
-ordered levels. By default, the method uses
-\code{pmm}, predictive mean matching (numeric data) \code{logreg}, logistic
-regression imputation (binary data, factor with 2 levels) \code{polyreg},
-polytomous regression imputation for unordered categorical data (factor > 2
-levels) \code{polr}, proportional odds model for (ordered, > 2 levels).}
+\item{defaultMethod}{A vector of length 4 containing the default imputation
+methods for
+1) numeric data (`"pmm"`)
+2) factor data with 2 levels, (`"logreg"`)
+3) factor data with > 2 unordered levels, (`"polyreg"`) and
+4) factor data with > 2 ordered levels (`"polr"`).
+The `defaultMethod` can be used to alter to default mapping
+of variable type to imputation method.}
+
+\item{ynames}{vector of names of variables to be imputed}
 }
 \value{
-Vector of \code{length(blocks)} element with method names
+Vector of `length(blocks)` element with method names
 }
 \description{
-This helper function creates a valid \code{method} vector. The
-\code{method} vector is an argument to the \code{mice} function that
+This helper function creates a valid `method` vector. The
+`method` vector is an argument to the `mice` function that
 specifies the method for each block.
 }
 \examples{
 make.method(nhanes2)
 }
 \seealso{
-\code{\link{mice}}
+[mice()]
 }

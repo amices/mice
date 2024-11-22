@@ -17,8 +17,8 @@
 #' \item{texp}{Teacher experience (years)}
 #' \item{const}{Constant intercept term}
 #' \item{teachpop}{Teacher popularity} }
-#' @source Hox, J. J. (2002) \emph{Multilevel analysis. Techniques and
-#' applications.} Mahwah, NJ: Lawrence Erlbaum.
+#' @source Hox, J. J. (2002) *Multilevel analysis. Techniques and
+#' applications.* Mahwah, NJ: Lawrence Erlbaum.
 #' @keywords datasets
 #' @examples
 #'

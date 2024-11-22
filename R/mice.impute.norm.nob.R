@@ -5,28 +5,28 @@
 #'
 #' @aliases mice.impute.norm.nob norm.nob
 #' @inheritParams mice.impute.pmm
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @details
 #' This function creates imputations using the spread around the
-#' fitted linear regression line of \code{y} given \code{x}, as
+#' fitted linear regression line of `y` given `x`, as
 #' fitted on the observed data.
 #'
 #' This function is provided mainly to allow comparison between proper (e.g.,
-#' as implemented in \code{mice.impute.norm} and improper (this function)
+#' as implemented in `mice.impute.norm` and improper (this function)
 #' normal imputation methods.
 #'
 #' For large data, having many rows, differences between proper and improper
 #' methods are small, and in those cases one may opt for speed by using
-#' \code{mice.impute.norm.nob}.
+#' `mice.impute.norm.nob`.
 #' @section Warning: The function does not incorporate the variability of the
 #' regression weights, so it is not 'proper' in the sense of Rubin. For small
 #' samples, variability of the imputed data is therefore underestimated.
 #' @author Gerko Vink, Stef van Buuren, Karin Groothuis-Oudshoorn, 2018
-#' @seealso \code{\link{mice}}, \code{\link{mice.impute.norm}}
-#' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
-#' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-#' Statistical Software}, \bold{45}(3), 1-67.
+#' @seealso [mice()], [mice.impute.norm()]
+#' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`:
+#' Multivariate Imputation by Chained Equations in `R`. *Journal of
+#' Statistical Software*, **45**(3), 1-67.
 #' \doi{10.18637/jss.v045.i03}
 #'
 #' Brand, J.P.L. (1999). Development, Implementation and Evaluation of Multiple

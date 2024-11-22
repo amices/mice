@@ -7,7 +7,7 @@
 \method{tidy}{mipo}(x, conf.int = FALSE, conf.level = 0.95, ...)
 }
 \arguments{
-\item{x}{An object of class \code{mipo}}
+\item{x}{An object of class `mipo`}
 
 \item{conf.int}{Logical. Should confidence intervals be returned?}
 

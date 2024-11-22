@@ -2,41 +2,41 @@
 % Please edit documentation in R/mice.impute.2l.bin.R
 \name{mice.impute.2l.bin}
 \alias{mice.impute.2l.bin}
-\title{Imputation by a two-level logistic model using \code{glmer}}
+\title{Imputation by a two-level logistic model using `glmer`}
 \usage{
 mice.impute.2l.bin(y, ry, x, type, wy = NULL, intercept = TRUE, ...)
 }
 \arguments{
 \item{y}{Vector to be imputed}
 
-\item{ry}{Logical vector of length \code{length(y)} indicating the
-the subset \code{y[ry]} of elements in \code{y} to which the imputation
-model is fitted. The \code{ry} generally distinguishes the observed
-(\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.}
+\item{ry}{Logical vector of length `length(y)` indicating the
+the subset `y[ry]` of elements in `y` to which the imputation
+model is fitted. The `ry` generally distinguishes the observed
+(`TRUE`) and missing values (`FALSE`) in `y`.}
 
-\item{x}{Numeric design matrix with \code{length(y)} rows with predictors for
-\code{y}. Matrix \code{x} may have no missing values.}
+\item{x}{Numeric design matrix with `length(y)` rows with predictors for
+`y`. Matrix `x` may have no missing values.}
 
-\item{type}{Vector of length \code{ncol(x)} identifying random and class
+\item{type}{Vector of length `ncol(x)` identifying random and class
 variables.  Random variables are identified by a '2'. The class variable
 (only one is allowed) is coded as '-2'. Fixed effects are indicated by
 a '1'.}
 
-\item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
-indicates locations in \code{y} for which imputations are created.}
+\item{wy}{Logical vector of length `length(y)`. A `TRUE` value
+indicates locations in `y` for which imputations are created.}
 
 \item{intercept}{Logical determining whether the intercept is automatically
 added.}
 
-\item{\dots}{Arguments passed down to \code{glmer}}
+\item{\dots}{Arguments passed down to `glmer`}
 }
 \value{
-Vector with imputed data, same type as \code{y}, and of length
-\code{sum(wy)}
+Vector with imputed data, same type as `y`, and of length
+`sum(wy)`
 }
 \description{
 Imputes univariate systematically and sporadically missing data
-using a two-level logistic model using \code{lme4::glmer()}
+using a two-level logistic model using `lme4::glmer()`
 }
 \details{
 Data are missing systematically if they have not been measured, e.g., in the
@@ -61,7 +61,7 @@ imp <- mice(data, method = "2l.bin", pred = pred, maxit = 1, m = 1, seed = 1)
 Jolani S., Debray T.P.A., Koffijberg H., van Buuren S., Moons K.G.M. (2015).
 Imputation of systematically missing predictors in an individual
 participant data meta-analysis: a generalized approach using MICE.
-\emph{Statistics in Medicine}, 34:1841-1863.
+*Statistics in Medicine*, 34:1841-1863.
 }
 \seealso{
 Other univariate-2l: 

@@ -1,10 +1,10 @@
-#' Print a \code{mids} object
+#' Print a `mids` object
 #'
 #' @rdname print
-#' @param x Object of class \code{mids}, \code{mira} or \code{mipo}
-#' @param ... Other parameters passed down to \code{print.default()}
-#' @return \code{NULL}
-#' @seealso \code{\link[=mids-class]{mids}}
+#' @param x Object of class `mids`, `mira` or `mipo`
+#' @param ... Other parameters passed down to `print.default()`
+#' @return `NULL`
+#' @seealso [`mids()`][mids-class]
 #' @method print mids
 #' @export
 print.mids <- function(x, ...) {
@@ -12,8 +12,12 @@ print.mids <- function(x, ...) {
   cat("Number of multiple imputations: ", x$m, "\n")
   cat("Imputation methods:\n")
   print(x$method, ...)
-  cat("PredictorMatrix:\n")
+  cat("predictorMatrix:\n")
   print(head(x$predictorMatrix), ...)
+  if (any(x$parcel != colnames(x$data))) {
+    cat("parcel:\n")
+    print(x$parcel, ...)
+  }
   if (!is.null(x$loggedEvents)) {
     cat("Number of logged events: ", nrow(x$loggedEvents), "\n")
     print(head(x$loggedEvents), ...)
@@ -22,11 +26,11 @@ print.mids <- function(x, ...) {
 }
 
 
-#' Print a \code{mira} object
+#' Print a `mira` object
 #'
 #' @rdname print
-#' @return \code{NULL}
-#' @seealso \code{\link[=mira-class]{mira}}
+#' @return `NULL`
+#' @seealso [`mira()`][mira-class]
 #' @method print mira
 #' @export
 print.mira <- function(x, ...) {
@@ -39,11 +43,11 @@ print.mira <- function(x, ...) {
 }
 
 
-#' Print a \code{mice.anova} object
+#' Print a `mice.anova` object
 #'
 #' @rdname print
-#' @return \code{NULL}
-#' @seealso \code{\link{mipo}}
+#' @return `NULL`
+#' @seealso [mipo()]
 #' @method print mice.anova
 #' @export
 print.mice.anova <- function(x, ...) {
@@ -53,11 +57,11 @@ print.mice.anova <- function(x, ...) {
 }
 
 
-#' Print a \code{summary.mice.anova} object
+#' Print a `summary.mice.anova` object
 #'
 #' @rdname print
-#' @return \code{NULL}
-#' @seealso \code{\link{mipo}}
+#' @return `NULL`
+#' @seealso [mipo()]
 #' @method print mice.anova.summary
 #' @export
 print.mice.anova.summary <- function(x, ...) {
@@ -75,12 +79,12 @@ print.mice.anova.summary <- function(x, ...) {
 }
 
 
-#' Print a \code{mads} object
+#' Print a `mads` object
 #'
-#' @param x Object of class \code{mads}
-#' @param ... Other parameters passed down to \code{print.default()}
-#' @return \code{NULL}
-#' @seealso \code{\link[=mads-class]{mads}}
+#' @param x Object of class `mads`
+#' @param ... Other parameters passed down to `print.default()`
+#' @return `NULL`
+#' @seealso [`mads()`][mads-class]
 #' @method print mads
 #' @export
 print.mads <- function(x, ...) {

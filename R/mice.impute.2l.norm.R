@@ -7,28 +7,28 @@
 #' are drawn as an extra step to the algorithm. For simulation work see Van
 #' Buuren (2011).
 #'
-#' The random intercept is automatically added in \code{mice.impute.2L.norm()}.
-#' A model within a random intercept can be specified by \code{mice(...,
-#' intercept = FALSE)}.
+#' The random intercept is automatically added in `mice.impute.2L.norm()`.
+#' A model within a random intercept can be specified by `mice(...,
+#' intercept = FALSE)`.
 #'
 #' @name mice.impute.2l.norm
 #' @inheritParams mice.impute.pmm
-#' @param type Vector of length \code{ncol(x)} identifying random and class
+#' @param type Vector of length `ncol(x)` identifying random and class
 #' variables.  Random variables are identified by a '2'. The class variable
 #' (only one is allowed) is coded as '-2'. Random variables also include the
 #' fixed effect.
 #' @param intercept Logical determining whether the intercept is automatically
 #' added.
 #' @param ... Other named arguments.
-#' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
+#' @return Vector with imputed data, same type as `y`, and of length
+#' `sum(wy)`
 #' @note Added June 25, 2012: The currently implemented algorithm does not
 #' handle predictors that are specified as fixed effects (type=1). When using
-#' \code{mice.impute.2l.norm()}, the current advice is to specify all predictors
+#' `mice.impute.2l.norm()`, the current advice is to specify all predictors
 #' as random effects (type=2).
 #'
 #' Warning: The assumption of heterogeneous variances requires that in every
-#' class at least one observation has a response in \code{y}.
+#' class at least one observation has a response in `y`.
 #' @author Roel de Jong, 2008
 #' @references
 #'
@@ -36,13 +36,13 @@
 #' variance components models with heterogeneous within-group variance. Journal
 #' of Educational and Behavioral Statistics, 23(2), 93--116.
 #'
-#' Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
-#' Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
-#' Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
+#' Van Buuren, S., Groothuis-Oudshoorn, K. (2011). `mice`: Multivariate
+#' Imputation by Chained Equations in `R`. *Journal of Statistical
+#' Software*, **45**(3), 1-67. \doi{10.18637/jss.v045.i03}
 #'
 #' Van Buuren, S. (2011) Multiple imputation of multilevel data. In Hox, J.J.
-#' and and Roberts, J.K. (Eds.), \emph{The Handbook of Advanced Multilevel
-#' Analysis}, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
+#' and and Roberts, J.K. (Eds.), *The Handbook of Advanced Multilevel
+#' Analysis*, Chapter 10, pp. 173--196. Milton Park, UK: Routledge.
 #' @family univariate-2l
 #' @keywords datagen
 #' @export
