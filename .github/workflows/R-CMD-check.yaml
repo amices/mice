@@ -3,7 +3,7 @@ name: R-CMD-check
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   check:
