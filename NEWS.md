@@ -1,75 +1,4 @@
-# mice 3.16.17
-
-* Create version to perform reverse dependency checks
-
-# mice 3.16.16
-
-* Prevent `as.mids()` from filling the `imp` object for complete variables
-
-# mice 3.16.15
-
-* Initialize single-variables blocks in `make.method()` in a more efficient way (resolves #672)
-
-# mice 3.16.14
-
-* Fixes a bug during initialization of factor values
-
-# mice 3.16.13
-
-* Adds support for the `literanger` package for `rf` imputation that is about twice as fast as `ranger` (#648). Thanks @stephematician for the contribution.
-
-# mice 3.16.12
-
-* Fixes an installation problem when `Rprofile` prints to `stdout` on Fedora, R version 4.1.3 (#646, #647). Thanks @brookslogan for the fix.
-
-# mice 3.16.11
-
-* Repairs lost braces in the documentation
-
-# mice 3.16.10
-
-* Adds support for non-syntactic variables names with backticks (#631)
-
-# mice 3.16.9
-
-* Fixes a problem with the `minpuc` argument in `quickpred()` (#634)
-* Fixes `coef() not available on S4 object` when using with `lavaan` (#615, #616)
-* Adds `.github/dependabot.yml` configuration to automate daily check (#598)
-* Update documentation tags to `roxygen2 7.3.1` requirements
-
-# mice 3.16.8
-
-* Fixes problems with zero predictors (#588)
-
-# mice 3.16.7
-
-### Minor changes
-
-* Solves problem with the package documentation link
-* Simplifies `NEWS.md` formatting to get correct version sequence on CRAN and in-package NEWS
-
-# mice 3.16.6
-
-### Minor changes
-
-* Prepares for the deprecation of the `blocks` argument at various places
-* Removes the need for `blocks` in `initialize_chain()`
-* In `rbind()`, when formulas are concatenated and duplicate names are found, also rename the duplicated variables in formulas by their new name
-
-### Bug fixes
-
-* Fixes a bug in `filter.mids()` that incorrectly removed empty components in the `imp` object
-* Fixes a bug in `ibind()` that incorrectly used `length(blocks)` as the first dimension of the `chainMean` and `chainVar` objects
-* Corrects the description `visitSequence`, `chainMean` and `chainVar` components of the `mids` object
-
-# mice 3.16.5
-
-### Bug fixes
-
-* Patches a bug in `complete()` that auto-repeated imputed values into cells that should NOT be imputed (occurred as a special case of `rbind()`, where the first set of rows was imputed and the second was not).
-* Replaces the internal variable `type` by the more informative `pred` (currently active row of `predictorMatrix`)
-
-# mice 3.16.4
+# mice 3.17.0
 
 ### Major changes
 
@@ -85,27 +14,42 @@
 
 * Note that we still lack solid evidence for these claims. (#576). Contributed @stefvanbuuren
 
-# mice 3.16.3
-
-### Major changes
-
 * **New system-independent method for pooling**: This version introduces a new function `pool.table()` that takes a tidy table of parameter estimates stemming from `m` repeated analyses. The input data must consist of three columns (parameter name, estimate, standard error) and a specification of the degrees of freedom of the model fitted to the complete data. The `pool.table()` function outputs 14 pooled statistics in a tidy form. The primary use of `pool.table()` is to support parameter pooling for techiques that have no `tidy()` or `glance()` methods, either within `R` or outside `R`. The `pool.table()` function also allows for a novel workflows that 1) break apart the traditional `pool()` function into a data-wrangling part and a parameters-reducing part, and 2) does not necessarily depend on classed R objects. (#574). Contributed @stefvanbuuren
 
-### Bug fixes
+* **literanger**: Adds support for the `literanger` package for `rf` imputation that is about twice as fast as `ranger` (#648). Thanks @stephematician for the contribution.
 
-* Fixes the "large logo" problem. (#574). Contributed @hanneoberman
+### Breaking changes
 
-# mice 3.16.2
-
-### Major changes
-
-* **Breaking change:** The `complete(..., action = "long", ...)` command puts the columns named `".imp"` and `".id"` in the last two positions of the long data (instead of first two positions).  In this way, the columns of the imputed data will have the same positions as in the original data, which is more user-friendly and easier to work with. Note that any existing code that assumes that variables `".imp"` and `".id"` are in columns 1 and 2 will need to be modified. The advice is to modify the code using the variable names `".imp"` and `".id"`. If you want the old behaviour, specify the argument `order = "first"`. (#569). Contributed @stefvanbuuren
-
-# mice 3.16.1
+* The `complete(..., action = "long", ...)` command puts the columns named `".imp"` and `".id"` in the last two positions of the long data (instead of first two positions).  In this way, the columns of the imputed data will have the same positions as in the original data, which is more user-friendly and easier to work with. Note that any existing code that assumes that variables `".imp"` and `".id"` are in columns 1 and 2 will need to be modified. The advice is to modify the code using the variable names `".imp"` and `".id"`. If you want the old behaviour, specify the argument `order = "first"`. (#569). Contributed @stefvanbuuren
 
 ### Minor changes
 
 * Adds support for the `dots` argument to `ranger::ranger(...)` in `mice.impute.rf()` (#563). Contributed @edbonneville
+* Prepares for the deprecation of the `blocks` argument at various places
+* Removes the need for `blocks` in `initialize_chain()`
+* In `rbind()`, when formulas are concatenated and duplicate names are found, also rename the duplicated variables in formulas by their new name
+* Solves problem with the package documentation link
+* Simplifies `NEWS.md` formatting to get correct version sequence on CRAN and in-package NEWS
+* Initialize single-variables blocks in `make.method()` in a more efficient way (resolves #672)
+* Prevent `as.mids()` from filling the `imp` object for complete variables
+
+### Bug fixes
+
+* Fixes the "large logo" problem. (#574). Contributed @hanneoberman
+* Patches a bug in `complete()` that auto-repeated imputed values into cells that should NOT be imputed (occurred as a special case of `rbind()`, where the first set of rows was imputed and the second was not).
+* Replaces the internal variable `type` by the more informative `pred` (currently active row of `predictorMatrix`)
+* Fixes a bug in `filter.mids()` that incorrectly removed empty components in the `imp` object
+* Fixes a bug in `ibind()` that incorrectly used `length(blocks)` as the first dimension of the `chainMean` and `chainVar` objects
+* Corrects the description `visitSequence`, `chainMean` and `chainVar` components of the `mids` object
+* Fixes problems with zero predictors (#588)
+* Fixes a problem with the `minpuc` argument in `quickpred()` (#634)
+* Fixes `coef() not available on S4 object` when using with `lavaan` (#615, #616)
+* Adds `.github/dependabot.yml` configuration to automate daily check (#598)
+* Update documentation tags to `roxygen2 7.3.1` requirements
+* Repairs lost braces in the documentation
+* Fixes an installation problem when `Rprofile` prints to `stdout` on Fedora, R version 4.1.3 (#646, #647). Thanks @brookslogan for the fix.
+* Fixes a bug during initialization of factor values
+
 
 # mice 3.16.0
 
@@ -123,6 +67,8 @@
 * Updates GitHub actions for package checking and site building
 * Preserves user settings in `predictorMatrix` for case F by adding a `predictorMatrix` argument to `make.predictorMatrix()`
 * Polishes `mice.impute.mpmm()` example code
+* Adds support for non-syntactic variables names with backticks (#631)
+
 
 ### Bug fixes
 
