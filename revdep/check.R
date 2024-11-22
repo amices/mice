@@ -12,13 +12,13 @@ library(revdepcheck)
 revdep_reset()
 
 # the following takes two hours
-revdep_check(num_workers = 3)
+revdep_check(num_workers = 10)
 
 # print out results
 revdep_summary()
 revdep_details(revdep = "smartdata")
 
-# commit 
+# commit
 system("git add revdep/*.md")
 system("git commit -m 'Update revdep results'")
 system("git push -u origin HEAD")
@@ -26,5 +26,5 @@ system("git push -u origin HEAD")
 # signal package authors
 
 
-# after successfully submitted to CRAN, clean up 
+# after successfully submitted to CRAN, clean up
 revdep_reset()

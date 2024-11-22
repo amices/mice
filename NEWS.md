@@ -1,3 +1,7 @@
+# mice 3.16.17
+
+* Create version to perform reverse dependency checks
+
 # mice 3.16.16
 
 * Prevent `as.mids()` from filling the `imp` object for complete variables
