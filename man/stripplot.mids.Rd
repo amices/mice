@@ -90,7 +90,7 @@ the call, and do not affect the trellis graphical parameters.}
 
 \item{drop.unused.levels}{See \code{\link[lattice]{xyplot}}.}
 
-\item{panel}{See \code{\link{xyplot}}.}
+\item{panel}{See \code{\link[lattice]{xyplot}}.}
 
 \item{default.prepanel}{See \code{\link[lattice]{xyplot}}.}
 

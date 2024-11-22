@@ -83,7 +83,7 @@
 #' @param jitter.data See \code{\link[lattice]{panel.xyplot}}.
 #' @param horizontal See \code{\link[lattice]{xyplot}}.
 #' @param as.table See \code{\link[lattice]{xyplot}}.
-#' @param panel See \code{\link{xyplot}}.
+#' @param panel See \code{\link[lattice]{xyplot}}.
 #' @param default.prepanel See \code{\link[lattice]{xyplot}}.
 #' @param outer See \code{\link[lattice]{xyplot}}.
 #' @param allow.multiple See \code{\link[lattice]{xyplot}}.
