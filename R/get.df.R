@@ -1,33 +1,30 @@
-get.dfcom <- function(object, dfcom = NULL) {
+get.dfcom <- function(model, dfcom = NULL) {
+  # Input: a fitted model
   # residual degrees of freedom of model fitted on hypothetically complete data
   # assumed to be the same across imputations
 
   if (!is.null(dfcom)) {
-    return(max(dfcom, 1L))
+    return(as.numeric(max(dfcom, 1)))
   }
 
-  glanced <- get.glanced(object)
+  # first, try the standard df.residual() function
+  dfcom <- tryCatch(stats::df.residual(model),
+                    error = function(e) NULL)
+  if (!is.null(dfcom)) return(as.numeric(dfcom))
 
-  # try to extract from df.residual
-  if (!is.null(glanced)) {
-    if ("df.residual" %in% colnames(glanced)) {
-      return(glanced$df.residual[1L])
-    }
+  # coxph model: nevent - p
+  if (inherits(model, "coxph")) {
+    return(as.numeric(max(model$nevent - length(stats::coef(model)), 1)))
   }
 
-  # try n - p (or nevent - p for Cox model)
-  if (!is.null(glanced)) {
-    if ("nobs" %in% colnames(glanced)) {
-      model <- getfit(object, 1L)
-      if (inherits(model, "coxph")) {
-        return(max(model$nevent - length(coef(model)), 1L))
-      }
-      return(max(glanced$nobs[1L] - length(coef(model)), 1L))
-    }
+  # other model: n - p
+  nobs <- tryCatch(length(stats::residuals(model)),
+                   error = function(e) NULL)
+  if (!is.null(nobs)) {
+    return(as.numeric(max(nobs - length(stats::coef(model)), 1)))
   }
 
-  # not found
-  warning("Infinite sample size assumed.")
+  # nothing found
   Inf
 }
 

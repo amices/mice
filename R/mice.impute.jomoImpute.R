@@ -51,7 +51,7 @@
 #' @family multivariate-2l
 #' @keywords datagen
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Note: Requires mitml 0.3-5.7
 #' blocks <- list(c("bmi", "chl", "hyp"), "age")
 #' method <- c("jomoImpute", "pmm")

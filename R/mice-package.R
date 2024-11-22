@@ -47,8 +47,7 @@
 #' \item \href{https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html}{Imputing multilevel data}
 #' \item \href{https://www.gerkovink.com/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html}{Sensitivity analysis with \pkg{mice}}
 #' }
-#'
-#' #'Van Buuren, S. (2018).
+#' Van Buuren, S. (2018).
 #' Boca Raton, FL.: Chapman & Hall/CRC Press.
 
 #' The book
@@ -57,8 +56,9 @@
 #'
 #' @section Methodology:
 #'
-#' The \pkg{mice} software was published in the {Journal of Statistical Software} (Van Buuren and Groothuis-Oudshoorn, 2011). \doi{10.18637/jss.v045.i03}
-#' The first application of the method
+#' The \pkg{mice} software was published in the
+#' \emph{Journal of Statistical Software} (Van Buuren and Groothuis-Oudshoorn, 2011).
+#' \doi{10.18637/jss.v045.i03}. The first application of the method
 #' concerned missing blood pressure data (Van Buuren et. al., 1999).
 #' The term \emph{Fully Conditional Specification} was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Van Buuren et. al., 2006). Further details on mixes of variables and applications can be found in the book
 #' \href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
@@ -70,7 +70,8 @@
 #' depend on the operating system. See the discussion in the
 #' "R Installation and Administration" guide for further information.
 #'
-#' @docType package
+#' @aliases mice-package
+#'
 #' @name mice
 #' @seealso \code{\link{mice}}, \code{\link{with.mids}},
 #' \code{\link{pool}}, \code{\link{complete}}, \code{\link{ampute}}
@@ -91,4 +92,5 @@
 #' \href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @useDynLib mice, .registration = TRUE
-NULL
+#' @keywords internal
+"_PACKAGE"

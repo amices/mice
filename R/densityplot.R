@@ -199,8 +199,8 @@ densityplot.mids <- function(x,
   )
 
   ## create formula if not given (in call$data !)
-  vnames <- names(cd)[-seq_len(2)]
-  allfactors <- vapply(cd, is.factor, logical(1))[-seq_len(2)]
+  vnames <- setdiff(names(cd), c(".id", ".imp"))
+  allfactors <- unlist(lapply(cd[vnames], is.factor))
   if (missing(data)) {
     vnames <- vnames[!allfactors & x$nmis > 2 & x$nmis < nrow(x$data) - 1]
     formula <- as.formula(paste("~", paste(vnames, collapse = "+", sep = ""), sep = ""))

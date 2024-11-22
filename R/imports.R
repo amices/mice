@@ -1,13 +1,17 @@
 #' @import              methods
 #' @importFrom broom    glance tidy
-#' @importFrom dplyr    %>% bind_cols bind_rows filter group_by lead
-#'                      mutate n pull row_number select summarize
+#' @importFrom dplyr    %>% any_of bind_cols bind_rows filter group_by lead
+#'                      mutate n pull relocate row_number select summarize
+#' @importFrom glmnet   cv.glmnet
 #' @importFrom graphics abline axis box par plot plot.new plot.window
 #'                      points rect text
 #' @importFrom lattice  bwplot densityplot stripplot xyplot
+#' @importFrom mitml    jomoImpute mitmlComplete panImpute testModels
+#' @importFrom nnet     multinom
 #' @importFrom Rcpp     evalCpp
 #' @importFrom rlang    .data syms
-#' @importFrom stats    C aggregate as.formula binomial coef
+#' @importFrom rpart    rpart rpart.control
+#' @importFrom stats    C aggregate as.formula binomial cancor coef
 #'                      complete.cases confint
 #'                      contr.treatment cor df.residual fitted
 #'                      formula gaussian getCall
@@ -18,8 +22,8 @@
 #'                      rbinom rchisq reformulate rgamma rnorm runif
 #'                      sd summary.glm terms update var vcov
 #' @importFrom tidyr    complete
-#' @importFrom utils    askYesNo flush.console head install.packages methods
-#'                      packageDescription packageVersion
+#' @importFrom utils    askYesNo flush.console hasName head install.packages
+#'                      methods packageDescription packageVersion
 #'                      tail write.table
 #' @export bwplot
 #' @export densityplot

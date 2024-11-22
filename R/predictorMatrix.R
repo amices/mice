@@ -135,12 +135,15 @@ check.predictorMatrix <- function(predictorMatrix,
   )
 }
 
-edit.predictorMatrix <- function(predictorMatrix,
+mice.edit.predictorMatrix <- function(predictorMatrix,
                                  visitSequence,
                                  user.visitSequence,
                                  maxit) {
   # edit predictorMatrix to a monotone pattern
-  if (maxit == 1L && !is.null(user.visitSequence) && user.visitSequence == "monotone") {
+  if (maxit == 1L &&
+      !is.null(user.visitSequence) &&
+      length(user.visitSequence) == 1 &&
+      user.visitSequence == "monotone") {
     for (i in 1L:length(visitSequence)) {
       predictorMatrix[visitSequence[i], visitSequence[i:length(visitSequence)]] <- 0
     }

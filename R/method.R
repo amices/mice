@@ -17,9 +17,14 @@ make.method <- function(data,
   names(method) <- names(blocks)
   for (j in names(blocks)) {
     yvar <- blocks[[j]]
-    y <- data[, yvar]
-    def <- sapply(y, assign.method)
-    k <- ifelse(all(diff(def) == 0), k <- def[1], 1)
+    if (length(yvar) == 1L) {
+      y <- data[, yvar]
+      k <- assign.method(y)
+    } else {
+      y <- data[, yvar]
+      def <- sapply(y, assign.method)
+      k <- ifelse(all(diff(def) == 0), k <- def[1], 1)
+    }
     method[j] <- defaultMethod[k]
   }
   nimp <- nimp(where, blocks)
@@ -93,23 +98,23 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
     cond3 <- sapply(y, is.factor) & sapply(y, nlevels) > 2
     if (any(cond1) && mj %in% mlist$m1) {
       warning("Type mismatch for variable(s): ",
-        paste(vname[cond1], collapse = ", "),
-        "\nImputation method ", mj, " is for categorical data.",
-        call. = FALSE
+              paste(vname[cond1], collapse = ", "),
+              "\nImputation method ", mj, " is for categorical data.",
+              call. = FALSE
       )
     }
     if (any(cond2) && mj %in% mlist$m2) {
       warning("Type mismatch for variable(s): ",
-        paste(vname[cond2], collapse = ", "),
-        "\nImputation method ", mj, " is not for factors.",
-        call. = FALSE
+              paste(vname[cond2], collapse = ", "),
+              "\nImputation method ", mj, " is not for factors.",
+              call. = FALSE
       )
     }
     if (any(cond3) && mj %in% mlist$m3) {
       warning("Type mismatch for variable(s): ",
-        paste(vname[cond3], collapse = ", "),
-        "\nImputation method ", mj, " is not for factors with >2 levels.",
-        call. = FALSE
+              paste(vname[cond3], collapse = ", "),
+              "\nImputation method ", mj, " is not for factors with >2 levels.",
+              call. = FALSE
       )
     }
   }

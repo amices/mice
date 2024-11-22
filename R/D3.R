@@ -37,7 +37,7 @@
 #' mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
 #' mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
 #' D3(mi1, mi0)
-#' \donttest{
+#' \dontrun{
 #' # Compare two logistic regression models
 #' imp <- mice(boys, maxit = 2, print = FALSE)
 #' fit1 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc + reg, family = binomial))
@@ -53,7 +53,8 @@ D3 <- function(fit1, fit0 = NULL, dfcom = NULL, df.com = NULL) {
     dfcom <- df.com
   }
 
-  dfcom <- get.dfcom(fit1, dfcom)
+  model <- getfit(fit1, 1L)
+  dfcom <- get.dfcom(model, dfcom)
 
   call <- match.call()
   fit1 <- getfit(fit1)

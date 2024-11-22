@@ -110,7 +110,7 @@
 #' visited. In that way, deterministic relation between columns will always be
 #' synchronized.
 #'
-#' #'A new argument \code{ls.meth} can be parsed to the lower level
+#' A new argument \code{ls.meth} can be parsed to the lower level
 #' \code{.norm.draw} to specify the method for generating the least squares
 #' estimates and any subsequently derived estimates. Argument \code{ls.meth}
 #' takes one of three inputs: \code{"qr"} for QR-decomposition, \code{"svd"} for
@@ -251,7 +251,7 @@
 #' \doi{10.18637/jss.v045.i03}
 #'
 #' Van Buuren, S. (2018).
-#' \href{https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' \emph{Flexible Imputation of Missing Data. Second Edition.}
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #' Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
@@ -263,8 +263,8 @@
 #' Research}, \bold{16}, 3, 219--242.
 #'
 #' Van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple imputation of
-#' missing blood pressure covariates in survival analysis.  \emph{Statistics in
-#' Medicine}, \bold{18}, 681--694.
+#' missing blood pressure covariates in survival analysis.
+#' \emph{Statistics in Medicine}, \bold{18}, 681--694.
 #'
 #' Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
 #' multiple imputation strategies for the statistical analysis of incomplete
@@ -411,7 +411,7 @@ mice <- function(data,
   visitSequence <- check.visitSequence(visitSequence,
     data = data, where = where, blocks = blocks
   )
-  predictorMatrix <- edit.predictorMatrix(
+  predictorMatrix <- mice.edit.predictorMatrix(
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     user.visitSequence = user.visitSequence,
@@ -436,7 +436,7 @@ mice <- function(data,
     visitSequence = visitSequence,
     post = post
   )
-  setup <- edit.setup(data, setup, ...)
+  setup <- mice.edit.setup(data, setup, ...)
   method <- setup$method
   predictorMatrix <- setup$predictorMatrix
   visitSequence <- setup$visitSequence

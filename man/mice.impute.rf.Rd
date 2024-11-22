@@ -10,7 +10,7 @@ mice.impute.rf(
   x,
   wy = NULL,
   ntree = 10,
-  rfPackage = c("ranger", "randomForest"),
+  rfPackage = c("ranger", "randomForest", "literanger"),
   ...
 )
 }
@@ -31,13 +31,16 @@ indicates locations in \code{y} for which imputations are created.}
 \item{ntree}{The number of trees to grow. The default is 10.}
 
 \item{rfPackage}{A single string specifying the backend for estimating the
-random forest. The default backend is the \code{ranger} package. The only
-alternative currently implemented is the \code{randomForest} package, which
-used to be the default in mice 3.13.10 and earlier.}
+random forest. The default backend is the \code{ranger} package. An
+alternative is \code{literanger} which predicts faster but does not support
+all forest types and split rules from \code{ranger}. Also implemented as
+an alternative is the \code{randomForest} package, which used to be the
+default in mice 3.13.10 and earlier.}
 
 \item{\dots}{Other named arguments passed down to
-\code{mice:::install.on.demand()}, \code{randomForest::randomForest()} and
-\code{randomForest:::randomForest.default()}.}
+\code{mice:::install.on.demand()}, \code{randomForest::randomForest()},
+\code{randomForest:::randomForest.default()}, \code{ranger::ranger()}, and
+\code{literanger::train()}.}
 }
 \value{
 Vector with imputed data, same type as \code{y}, and of length
@@ -64,10 +67,10 @@ so mice 2.22 changed the default number of trees from \code{ntree = 100} to
 \code{ntree = 10}.
 }
 \examples{
-library("lattice")
-
+\dontrun{
 imp <- mice(nhanes2, meth = "rf", ntree = 3)
 plot(imp)
+}
 }
 \references{
 Doove, L.L., van Buuren, S., Dusseldorp, E. (2014), Recursive partitioning
@@ -77,7 +80,7 @@ Computational Statistics & Data Analysis, 72, 92-104.
 Shah, A.D., Bartlett, J.W., Carpenter, J., Nicholas, O., Hemingway, H. (2014),
 Comparison of random forest and parametric imputation models for
 imputing missing data using MICE: A CALIBER study. American Journal
-of Epidemiology, doi: 10.1093/aje/kwt312.
+of Epidemiology, \doi{10.1093/aje/kwt312}.
 
 Van Buuren, S. (2018).
 \href{https://stefvanbuuren.name/fimd/sec-cart.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
@@ -85,8 +88,9 @@ Chapman & Hall/CRC. Boca Raton, FL.
 }
 \seealso{
 \code{\link{mice}}, \code{\link{mice.impute.cart}},
-\code{\link[randomForest]{randomForest}}
-\code{\link[ranger]{ranger}}
+\code{\link[randomForest]{randomForest}},
+\code{\link[ranger]{ranger}},
+\code{\link[literanger]{train}}
 
 Other univariate imputation functions: 
 \code{\link{mice.impute.cart}()},
@@ -95,16 +99,16 @@ Other univariate imputation functions:
 \code{\link{mice.impute.lasso.select.logreg}()},
 \code{\link{mice.impute.lasso.select.norm}()},
 \code{\link{mice.impute.lda}()},
-\code{\link{mice.impute.logreg.boot}()},
 \code{\link{mice.impute.logreg}()},
+\code{\link{mice.impute.logreg.boot}()},
 \code{\link{mice.impute.mean}()},
 \code{\link{mice.impute.midastouch}()},
 \code{\link{mice.impute.mnar.logreg}()},
 \code{\link{mice.impute.mpmm}()},
+\code{\link{mice.impute.norm}()},
 \code{\link{mice.impute.norm.boot}()},
 \code{\link{mice.impute.norm.nob}()},
 \code{\link{mice.impute.norm.predict}()},
-\code{\link{mice.impute.norm}()},
 \code{\link{mice.impute.pmm}()},
 \code{\link{mice.impute.polr}()},
 \code{\link{mice.impute.polyreg}()},

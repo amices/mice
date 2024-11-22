@@ -52,11 +52,12 @@ iteration number (.it) per imputed variable (vrb). A persistently
 decreasing trend across iterations indicates potential non-convergence.
 }
 \examples{
-
+\dontrun{
 # obtain imputed data set
 imp <- mice(nhanes2, print = FALSE)
 # compute convergence diagnostics
 convergence(imp)
+}
 }
 \references{
 Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., & Burkner,

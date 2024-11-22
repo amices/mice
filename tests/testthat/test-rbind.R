@@ -82,7 +82,8 @@ set.seed <- 818
 x <- rnorm(10)
 D <- data.frame(x = x, y = 2 * x + rnorm(10))
 D[c(2:4, 7), 1] <- NA
-expect_error(D_mids <<- mice(D[1:5, ], print = FALSE), "`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
+expect_error(D_mids <<- mice(D[1:5, ], print = FALSE),
+             "`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
 expect_warning(D_mids <<- mice(D[1:5, ], print = FALSE, remove.collinear = FALSE))
 
 D_rbind <- mice:::rbind.mids(D_mids, D[6:10, ])

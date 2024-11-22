@@ -9,7 +9,7 @@
 #' @inheritParams broom::lm_tidiers
 #' @param z Data frame with a tidied version of a coefficient matrix
 #' @param conf.int Logical indicating whether to include
-#' a confidence interval. The default is \code{FALSE}.
+#' a confidence interval.
 #' @param conf.level Confidence level of the interval, used only if
 #' \code{conf.int = TRUE}. Number between 0 and 1.
 #' @param exponentiate Flag indicating whether to exponentiate the
@@ -64,22 +64,31 @@ summary.mipo <- function(object, type = c("tests", "all"),
                          conf.int = FALSE, conf.level = .95,
                          exponentiate = FALSE, ...) {
   type <- match.arg(type)
-  m <- object$m
   x <- object$pooled
+  z <- summary_mipo.workhorse(x = x, type = type,
+                              conf.int = conf.int, conf.level = conf.level,
+                              exponentiate = exponentiate, ...)
+  class(z) <- c("mipo.summary", "data.frame")
+  z
+}
+
+summary_mipo.workhorse <- function(x, type,
+                                   conf.int, conf.level,
+                                   exponentiate, ...) {
+  m <- x$m[1L]
   std.error <- sqrt(x$t)
   statistic <- x$estimate / std.error
   p.value <- 2 * (pt(abs(statistic), pmax(x$df, 0.001), lower.tail = FALSE))
 
   z <- data.frame(x,
-    std.error = std.error,
-    statistic = statistic,
-    p.value = p.value
+                  std.error = std.error,
+                  statistic = statistic,
+                  p.value = p.value
   )
-  z <- process_mipo(z, object,
-    conf.int = conf.int,
-    conf.level = conf.level,
-    exponentiate = exponentiate
-  )
+  z <- process_mipo(z, x,
+                    conf.int = conf.int,
+                    conf.level = conf.level,
+                    exponentiate = exponentiate)
 
   parnames <- names(z)[1L:(pmatch("m", names(z)) - 1L)]
   if (type == "tests") {
@@ -88,8 +97,7 @@ summary.mipo <- function(object, type = c("tests", "all"),
     z <- z[, keep]
   }
 
-  class(z) <- c("mipo.summary", "data.frame")
-  z
+  data.frame(z)
 }
 
 #' @rdname mipo
@@ -120,8 +128,7 @@ process_mipo <- function(z, x, conf.int = FALSE, conf.level = .95,
 
   CI <- NULL
   if (conf.int) {
-    # avoid "Waiting for profiling to be done..." message
-    CI <- suppressMessages(confint(x, level = conf.level))
+    CI <- confidence(x, level = conf.level)
   }
   z$estimate <- trans(z$estimate)
 
@@ -144,15 +151,15 @@ process_mipo <- function(z, x, conf.int = FALSE, conf.level = .95,
   z
 }
 
+#' @export
 vcov.mipo <- function(object, ...) {
   so <- diag(object$t)
   dimnames(so) <- list(object$term, object$term)
   so
 }
 
-confint.mipo <- function(object, parm, level = 0.95, ...) {
-  pooled <- object$pooled
-  cf <- getqbar(object)
+confidence <- function(pooled, parm, level = 0.95, ...) {
+  cf <- pooled$estimate
   df <- pooled$df
   se <- sqrt(pooled$t)
   pnames <- names(df) <- names(se) <- names(cf) <- row.names(pooled)
@@ -164,14 +171,16 @@ confint.mipo <- function(object, parm, level = 0.95, ...) {
   a <- (1 - level) / 2
   a <- c(a, 1 - a)
   fac <- qt(a, df)
-  pct <- format.perc(a, 3)
+  pct <- fmt.perc(a, 3)
   ci <- array(NA,
-    dim = c(length(parm), 2L),
-    dimnames = list(parm, pct)
+              dim = c(length(parm), 2L),
+              dimnames = list(parm, pct)
   )
   ci[, 1] <- cf[parm] + qt(a[1], df[parm]) * se[parm]
   ci[, 2] <- cf[parm] + qt(a[2], df[parm]) * se[parm]
-  ci
+  ci <- data.frame(ci)
+  names(ci) <- c("conf.low", "conf.high")
+  return(ci)
 }
 
 unrowname <- function(x) {
@@ -179,7 +188,7 @@ unrowname <- function(x) {
   x
 }
 
-format.perc <- function(probs, digits) {
+fmt.perc <- function(probs, digits) {
   paste(
     format(100 * probs, trim = TRUE, scientific = FALSE, digits = digits),
     "%"

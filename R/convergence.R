@@ -44,11 +44,12 @@
 #' R for Assessing Convergence of MCMC. Bayesian Analysis, 1(1), 1-38.
 #' https://doi.org/10.1214/20-BA1221
 #' @examples
-#'
+#' \dontrun{
 #' # obtain imputed data set
 #' imp <- mice(nhanes2, print = FALSE)
 #' # compute convergence diagnostics
 #' convergence(imp)
+#' }
 #' @export
 convergence <- function(data, diagnostic = "all", parameter = "mean", ...) {
   # process inputs
@@ -119,4 +120,5 @@ convergence <- function(data, diagnostic = "all", parameter = "mean", ...) {
 }
 
 # function to extend is.nan() to data.frame objects
+#' @export
 is.nan.data.frame <- function(x) do.call(cbind, lapply(x, is.nan))

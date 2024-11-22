@@ -68,6 +68,7 @@ reference:
   - pool
   - pool.r.squared
   - pool.scalar
+  - pool.table
   - nelsonaalen
   - pool.compare
   - anova.mira
@@ -80,12 +81,12 @@ reference:
     The multiply-imputed data can be combined in various ways, and exported into other formats.
   contents:
   - complete
+  - cbind
+  - rbind
+  - ibind
   - as.mids
   - as.mira
   - as.mitml.result
-  - cbind.mids
-  - rbind.mids
-  - ibind
   - filter.mids
   - mids2mplus
   - mids2spss

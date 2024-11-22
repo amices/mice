@@ -1,89 +1,3 @@
-#' Combine \code{mids} objects by columns
-#'
-#' This function combines two \code{mids} objects columnwise into a single
-#' object of class \code{mids}, or combines a single \code{mids} object with
-#' a \code{vector}, \code{matrix}, \code{factor} or \code{data.frame}
-#' columnwise into a \code{mids} object.
-#'
-#' \emph{Pre-requisites:} If \code{y} is a \code{mids}-object, the rows
-#' of \code{x$data} and \code{y$data} should match, as well as the number
-#' of imputations (\code{m}). Other \code{y} are transformed into a
-#' \code{data.frame} whose rows should match with \code{x$data}.
-#'
-#' The function renames any duplicated variable or block names by
-#' appending \code{".1"}, \code{".2"} to duplicated names.
-#'
-#' @param x A \code{mids} object.
-#' @param y A \code{mids} object, or a \code{data.frame}, \code{matrix},
-#' \code{factor} or \code{vector}.
-#' @param \dots Additional \code{data.frame}, \code{matrix}, \code{vector}
-#' or \code{factor}. These can be given as named arguments.
-#' @return An S3 object of class \code{mids}
-#' @note
-#' The function constructs the elements of the new \code{mids} object as follows:
-#' \tabular{ll}{
-#' \code{data}     \tab Columnwise combination of the data in \code{x} and \code{y}\cr
-#' \code{imp}      \tab Combines the imputed values from \code{x} and \code{y}\cr
-#' \code{m}        \tab Taken from \code{x$m}\cr
-#' \code{where}    \tab Columnwise combination of \code{x$where} and \code{y$where}\cr
-#' \code{blocks}   \tab Combines \code{x$blocks} and \code{y$blocks}\cr
-#' \code{call}     \tab Vector, \code{call[1]} creates \code{x}, \code{call[2]}
-#' is call to \code{cbind.mids}\cr
-#' \code{nmis}     \tab Equals \code{c(x$nmis, y$nmis)}\cr
-#' \code{method}   \tab Combines \code{x$method} and \code{y$method}\cr
-#' \code{predictorMatrix} \tab Combination with zeroes on the off-diagonal blocks\cr
-#' \code{visitSequence}   \tab Combined as \code{c(x$visitSequence, y$visitSequence)}\cr
-#' \code{formulas}  \tab Combined as \code{c(x$formulas, y$formulas)}\cr
-#' \code{post}      \tab Combined as \code{c(x$post, y$post)}\cr
-#' \code{blots}     \tab Combined as \code{c(x$blots, y$blots)}\cr
-#' \code{ignore}    \tab Taken from \code{x$ignore}\cr
-#' \code{seed}            \tab Taken from \code{x$seed}\cr
-#' \code{iteration}       \tab Taken from \code{x$iteration}\cr
-#' \code{lastSeedValue}   \tab Taken from \code{x$lastSeedValue}\cr
-#' \code{chainMean}       \tab Combined from \code{x$chainMean} and \code{y$chainMean}\cr
-#' \code{chainVar}        \tab Combined from \code{x$chainVar} and \code{y$chainVar}\cr
-#' \code{loggedEvents}    \tab Taken from \code{x$loggedEvents}\cr
-#' \code{version}    \tab Current package version\cr
-#' \code{date}       \tab Current date\cr
-#' }
-#'
-#' @author Karin Groothuis-Oudshoorn, Stef van Buuren
-#' @seealso \code{\link[base:cbind]{cbind}}, \code{\link{rbind.mids}}, \code{\link{ibind}},
-#' \code{\link[=mids-class]{mids}}
-#' @keywords manip
-#' @examples
-#'
-#' # impute four variables at once (default)
-#' imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE)
-#' imp$predictorMatrix
-#'
-#' # impute two by two
-#' data1 <- nhanes[, c("age", "bmi")]
-#' data2 <- nhanes[, c("hyp", "chl")]
-#' imp1 <- mice(data1, m = 2, maxit = 1, print = FALSE)
-#' imp2 <- mice(data2, m = 2, maxit = 1, print = FALSE)
-#'
-#' # Append two solutions
-#' imp12 <- cbind(imp1, imp2)
-#'
-#' # This is a different imputation model
-#' imp12$predictorMatrix
-#'
-#' # Append the other way around
-#' imp21 <- cbind(imp2, imp1)
-#' imp21$predictorMatrix
-#'
-#' # Append 'forgotten' variable chl
-#' data3 <- nhanes[, 1:3]
-#' imp3 <- mice(data3, maxit = 1, m = 2, print = FALSE)
-#' imp4 <- cbind(imp3, chl = nhanes$chl)
-#'
-#' # Of course, chl was not imputed
-#' head(complete(imp4))
-#'
-#' # Combine mids object with data frame
-#' imp5 <- cbind(imp3, nhanes2)
-#' head(complete(imp5))
 cbind.mids <- function(x, y = NULL, ...) {
   call <- match.call()
   dots <- list(...)
@@ -131,7 +45,7 @@ cbind.mids <- function(x, y = NULL, ...) {
   blocknames <- make.unique(xynames)
   names(blocknames) <- xynames
   names(blocks) <- blocknames
-  ct <- c(attr(x$blocks, "calltype"), rep("type", ncol(y)))
+  ct <- c(attr(x$blocks, "calltype"), rep("pred", ncol(y)))
   names(ct) <- blocknames
   attr(blocks, "calltype") <- ct
 
@@ -146,9 +60,9 @@ cbind.mids <- function(x, y = NULL, ...) {
   r <- (!is.na(y))
   f <- function(j) {
     m <- matrix(NA,
-      nrow = sum(!r[, j]),
-      ncol = x$m,
-      dimnames = list(row.names(y)[!r[, j]], seq_len(m))
+                nrow = sum(!r[, j]),
+                ncol = x$m,
+                dimnames = list(row.names(y)[!r[, j]], seq_len(m))
     )
     as.data.frame(m)
   }
@@ -165,15 +79,15 @@ cbind.mids <- function(x, y = NULL, ...) {
   predictorMatrix <- rbind(
     x$predictorMatrix,
     matrix(0,
-      ncol = ncol(x$predictorMatrix),
-      nrow = ncol(y)
+           ncol = ncol(x$predictorMatrix),
+           nrow = ncol(y)
     )
   )
   predictorMatrix <- cbind(
     predictorMatrix,
     matrix(0,
-      ncol = ncol(y),
-      nrow = nrow(x$predictorMatrix) + ncol(y)
+           ncol = ncol(y),
+           nrow = nrow(x$predictorMatrix) + ncol(y)
     )
   )
   rownames(predictorMatrix) <- blocknames
@@ -271,21 +185,37 @@ cbind.mids.mids <- function(x, y, call) {
   method <- c(x$method, y$method)
   names(method) <- blocknames
 
+  # Concatenate formulas, rename variables if needed
+  if (all(names(ynew) == unname(ynew)) && all(names(xnew) == unname(xnew))) {
+    formulas <- c(x$formulas, y$formulas)
+  } else {
+    xformulas <- x$formulas
+    yformulas <- y$formulas
+    for (i in names(xformulas)) {
+      xformulas[[i]] <- renf(xformulas[[i]], xnew)
+    }
+    for (i in names(yformulas)) {
+      yformulas[[i]] <- renf(yformulas[[i]], ynew)
+    }
+    formulas <- c(xformulas, yformulas)
+  }
+  names(formulas) <- blocknames
+
   # The predictorMatrices of x and y are combined with zero matrices
   # on the off diagonal blocks.
   predictorMatrix <- rbind(
     x$predictorMatrix,
     matrix(0,
-      ncol = ncol(x$predictorMatrix),
-      nrow = nrow(y$predictorMatrix)
+           ncol = ncol(x$predictorMatrix),
+           nrow = nrow(y$predictorMatrix)
     )
   )
   predictorMatrix <- cbind(
     predictorMatrix,
     rbind(
       matrix(0,
-        ncol = ncol(y$predictorMatrix),
-        nrow = nrow(x$predictorMatrix)
+             ncol = ncol(y$predictorMatrix),
+             nrow = nrow(x$predictorMatrix)
       ),
       y$predictorMatrix
     )
@@ -298,9 +228,6 @@ cbind.mids.mids <- function(x, y, call) {
   xnew <- blocknames[1:length(x$blocks)]
   ynew <- blocknames[-(1:length(x$blocks))]
   visitSequence <- unname(c(xnew[x$visitSequence], ynew[y$visitSequence]))
-
-  formulas <- c(x$formulas, y$formulas)
-  names(formulas) <- blocknames
   post <- c(x$post, y$post)
   names(post) <- varnames
   blots <- c(x$blots, y$blots)
@@ -377,4 +304,14 @@ cbind.mids.mids <- function(x, y, call) {
   )
   oldClass(midsobj) <- "mids"
   midsobj
+}
+
+renf <- function(f, nn) {
+  # rename variables in formula f
+  z <- as.character(f)
+  for (i in seq_along(nn)) {
+    z <- gsub(names(nn)[i], unname(nn)[i], z)
+  }
+  nf <- formula(paste(z[2], z[1], z[3], collapse = " "))
+  return(nf)
 }

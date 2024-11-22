@@ -47,7 +47,8 @@ D1 <- function(fit1, fit0 = NULL, dfcom = NULL, df.com = NULL) {
     dfcom <- df.com
   }
 
-  dfcom <- get.dfcom(fit1, dfcom)
+  model <- getfit(fit1, 1L)
+  dfcom <- get.dfcom(model, dfcom)
 
   # fit1: a fitlist or mira-object
   # fit0: named numerical vector, character vector, or list

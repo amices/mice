@@ -12,7 +12,9 @@ mice.impute.pmm(
   wy = NULL,
   donors = 5L,
   matchtype = 1L,
-  exclude = -99999999,
+  exclude = NULL,
+  quantify = TRUE,
+  trim = 1L,
   ridge = 1e-05,
   use.matcher = FALSE,
   ...
@@ -45,7 +47,18 @@ Other choices are \code{matchtype = 0L}
 (distance between predicted values) and \code{matchtype = 2L}
 (distance between drawn values).}
 
-\item{exclude}{Value or vector of values to exclude from the imputation donor pool in \code{y}}
+\item{exclude}{Dependent values to exclude from the imputation model
+and the collection of donor values}
+
+\item{quantify}{Logical. If \code{TRUE}, factor levels are replaced
+by the first canonical variate before fitting the imputation model.
+If false, the procedure reverts to the old behaviour and takes the
+integer codes (which may lack a sensible interpretation).
+Relevant only of \code{y} is a factor.}
+
+\item{trim}{Scalar integer. Minimum number of observations required in a
+category in order to be considered as a potential donor value.
+Relevant only of \code{y} is a factor.}
 
 \item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent
 problems with multicollinearity. The default is \code{ridge = 1e-05},
@@ -84,7 +97,9 @@ parameter \eqn{\kappa}.}
 \item{Calculate \eqn{\dot\beta = \hat\beta + \dot\sigma\dot z_1 V^{1/2}}.}
 \item{Calculate \eqn{\dot\eta(i,j)=|X_{{obs},[i]|}\hat\beta-X_{{mis},[j]}\dot\beta}
 with \eqn{i=1,\dots,n_1} and \eqn{j=1,\dots,n_0}.}
-\item{Construct \eqn{n_0} sets \eqn{Z_j}, each containing \eqn{d} candidate donors, from Y_{obs} such that \eqn{\sum_d\dot\eta(i,j)} is minimum for all \eqn{j=1,\dots,n_0}. Break ties randomly.}
+\item{Construct \eqn{n_0} sets \eqn{Z_j}, each containing \eqn{d}
+candidate donors, from \eqn{y_{obs}} such that \eqn{\sum_d\dot\eta(i,j)} is
+minimum for all \eqn{j=1,\dots,n_0}. Break ties randomly.}
 \item{Draw one donor \eqn{i_j} from \eqn{Z_j} randomly for \eqn{j=1,\dots,n_0}.}
 \item{Calculate imputations \eqn{\dot y_j = y_{i_j}} for \eqn{j=1,\dots,n_0}.}
 }
@@ -133,6 +148,27 @@ blots$hgt$exclude <- sample(unique(boys$hgt), 100)
 imp <- mice(boys, method = "pmm", print = FALSE, blots = blots, seed=123)
 blots$hgt$exclude \%in\% unlist(c(imp$imp$hgt)) # MUST be all FALSE
 blots$tv$exclude \%in\% unlist(c(imp$imp$tv)) # MUST be all FALSE
+
+# Factor quantification
+xname <- c("age", "hgt", "wgt")
+br <- boys[c(1:10, 101:110, 501:510, 601:620, 701:710), ]
+r <- stats::complete.cases(br[, xname])
+x <- br[r, xname]
+y <- factor(br[r, "tv"])
+ry <- !is.na(y)
+table(y)
+
+# impute factor by optimizing canonical correlation y, x
+mice.impute.pmm(y, ry, x)
+
+# only categories with at least 2 cases can be donor
+mice.impute.pmm(y, ry, x, trim = 2L)
+
+# in addition, eliminate category 20
+mice.impute.pmm(y, ry, x, trim = 2L, exclude = 20)
+
+# to get old behavior: as.integer(y))
+mice.impute.pmm(y, ry, x, quantify = FALSE)
 }
 \references{
 Little, R.J.A. (1988), Missing data adjustments in large surveys
@@ -157,16 +193,16 @@ Other univariate imputation functions:
 \code{\link{mice.impute.lasso.select.logreg}()},
 \code{\link{mice.impute.lasso.select.norm}()},
 \code{\link{mice.impute.lda}()},
-\code{\link{mice.impute.logreg.boot}()},
 \code{\link{mice.impute.logreg}()},
+\code{\link{mice.impute.logreg.boot}()},
 \code{\link{mice.impute.mean}()},
 \code{\link{mice.impute.midastouch}()},
 \code{\link{mice.impute.mnar.logreg}()},
 \code{\link{mice.impute.mpmm}()},
+\code{\link{mice.impute.norm}()},
 \code{\link{mice.impute.norm.boot}()},
 \code{\link{mice.impute.norm.nob}()},
 \code{\link{mice.impute.norm.predict}()},
-\code{\link{mice.impute.norm}()},
 \code{\link{mice.impute.polr}()},
 \code{\link{mice.impute.polyreg}()},
 \code{\link{mice.impute.quadratic}()},

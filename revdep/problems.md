@@ -1,42 +1,3 @@
-# adjustedCurves
-
-<details>
-
-* Version: 0.9.0
-* GitHub: https://github.com/RobinDenz1/adjustedCurves
-* Source code: https://github.com/cran/adjustedCurves
-* Date/Publication: 2022-09-22 08:40:13 UTC
-* Number of recursive dependencies: 167
-
-Run `revdepcheck::revdep_details(, "adjustedCurves")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ...
-    ```
-      Running ‘testthat.R’
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-        5. ├─dplyr:::summarise.grouped_df(...)
-        6. │ └─dplyr:::summarise_cols(.data, dplyr_quosures(...), caller_env = caller_env())
-        7. │   ├─base::withCallingHandlers(...)
-        8. │   └─dplyr:::map(quosures, summarise_eval_one, mask = mask)
-        9. │     └─base::lapply(.x, .f, ...)
-       10. │       └─dplyr (local) FUN(X[[i]], ...)
-       11. │         └─mask$eval_all_summarise(quo)
-       12. ├─adjustedCurves:::pool_p_values(p_val)
-       13. └─base::.handleSimpleError(...)
-       14.   └─dplyr (local) h(simpleError(msg, call))
-       15.     └─rlang::abort(bullets, call = error_call, parent = skip_internal_condition(e))
-      
-      [ FAIL 7 | WARN 126 | SKIP 125 | PASS 1579 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # bipd
 
 <details>
@@ -45,7 +6,7 @@ Run `revdepcheck::revdep_details(, "adjustedCurves")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/bipd
 * Date/Publication: 2022-06-05 16:10:05 UTC
-* Number of recursive dependencies: 107
+* Number of recursive dependencies: 109
 
 Run `revdepcheck::revdep_details(, "bipd")` for more info
 
@@ -53,12 +14,12 @@ Run `revdepcheck::revdep_details(, "bipd")` for more info
 
 ## Newly broken
 
-*   checking dependencies in R code ...sh: line 1: 26776 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpKRyE8b/file66d821b07fdc'
+*   checking dependencies in R code ...sh: line 1: 64105 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpcESnnw/filef7d530e954ed'
     ```
      NOTE
     
      *** caught segfault ***
-    address 0x6c6c65432f6c6163, cause 'invalid permissions'
+    address 0x6c65432f6c61636f, cause 'invalid permissions'
     
     Traceback:
      1: dyn.load(file, DLLpath = DLLpath, ...)
@@ -80,12 +41,12 @@ Run `revdepcheck::revdep_details(, "bipd")` for more info
 
 ## Newly fixed
 
-*   checking dependencies in R code ...sh: line 1: 26657 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//Rtmpi8gCya/file6689272a04f8'
+*   checking dependencies in R code ...sh: line 1: 64022 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpPAGHHl/filef76c784da58a'
     ```
      NOTE
     
      *** caught segfault ***
-    address 0x6c6c65432f6c6163, cause 'invalid permissions'
+    address 0x6c65432f6c61636f, cause 'invalid permissions'
     
     Traceback:
      1: dyn.load(file, DLLpath = DLLpath, ...)
@@ -103,5 +64,68 @@ Run `revdepcheck::revdep_details(, "bipd")` for more info
     14: tryCatch(suppressWarnings(suppressMessages(loadNamespace(p))),     error = function(e) e)
     15: tools:::.check_packages_used(package = "bipd")
     An irrecoverable exception occurred. R is aborting now ...
+    ```
+
+# MatchThem
+
+<details>
+
+* Version: 1.0.1
+* GitHub: https://github.com/FarhadPishgar/MatchThem
+* Source code: https://github.com/cran/MatchThem
+* Date/Publication: 2021-08-23 07:11:42 UTC
+* Number of recursive dependencies: 63
+
+Run `revdepcheck::revdep_details(, "MatchThem")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking Rd cross-references ... WARNING
+    ```
+    Missing link or links in documentation object 'cbind.Rd':
+      ‘[mice:cbind.mids]{mice::cbind.mids}’
+    
+    See section 'Cross-references' in the 'Writing R Extensions' manual.
+    ```
+
+# pre
+
+<details>
+
+* Version: 1.0.6
+* GitHub: https://github.com/marjoleinF/pre
+* Source code: https://github.com/cran/pre
+* Date/Publication: 2023-02-12 22:50:02 UTC
+* Number of recursive dependencies: 137
+
+Run `revdepcheck::revdep_details(, "pre")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking tests ...
+    ```
+      Running ‘testthat.R’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      > test_check("pre")
+      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 122 ]
+      
+      ══ Failed tests ════════════════════════════════════════════════════════════════
+      ── Error ('test_pre_misc.R:94:3'): cvpre gives previous results with airquality data ──
+      Error in `serverSocket(port = port)`: creation of server socket failed: port 11471 cannot be opened
+      Backtrace:
+          ▆
+       1. └─parallel::makeCluster(2L) at test_pre_misc.R:94:2
+       2.   └─parallel::makePSOCKcluster(names = spec, ...)
+       3.     └─base::serverSocket(port = port)
+      
+      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 122 ]
+      Error: Test failures
+      Execution halted
     ```
 

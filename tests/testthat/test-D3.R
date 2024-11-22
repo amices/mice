@@ -2,6 +2,7 @@ context("D3")
 
 # The following test was contributed by jawitte
 # https://github.com/amices/mice/issues/226
+set.seed(1)
 A <- rnorm(100)
 B <- 0.1 * A + rnorm(100)
 fit1 <- lapply(1:5, function(m) {
@@ -10,7 +11,15 @@ fit1 <- lapply(1:5, function(m) {
 fit0 <- lapply(1:5, function(m) {
   lm(B ~ 1)
 })
-x1 <- lmtest::lrtest(fit1[[1]], fit0[[1]])
+# outcomment to evade dependency of lmtest
+# x1 <- lmtest::lrtest(fit1[[1]], fit0[[1]])
+x1 <- structure(list(`#Df` = c(3, 2),
+                     LogLik = c(-137.087912980007, -137.516434459951),
+                     Df = c(NA, -1), Chisq = c(NA, 0.857042959888474),
+                     `Pr(>Chisq)` = c(NA, 0.354567523408569)),
+                class = c("anova",  "data.frame"),
+                row.names = c("1", "2"),
+                heading = c("Likelihood ratio test\n",  "Model 1: B ~ A\nModel 2: B ~ 1"))
 x2 <- D3(fit1 = fit1, fit0 = fit0)
 x3 <- mitml::testModels(fit1, fit0, method = "D3")
 
@@ -49,7 +58,7 @@ z2 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), method = "
 # using lmer
 suppressPackageStartupMessages(library(mitml, quietly = TRUE))
 library(lme4, quietly = TRUE)
-library(broom.mixed, quietly = TRUE)
+# library(broom.mixed, quietly = TRUE)
 data(studentratings)
 fml <- ReadDis + SES ~ ReadAchiev + (1 | ID)
 set.seed(26262)
@@ -61,9 +70,10 @@ implist <- mitml::mitmlComplete(imp, print = 1:5)
 fit0 <- with(implist, lmer(ReadAchiev ~ (1 | ID), REML = FALSE))
 fit1 <- with(implist, lmer(ReadAchiev ~ ReadDis + SES + (1 | ID), REML = FALSE))
 
-# likelihood test
-z3 <- D3(fit1, fit0)
-z4 <- mitml::testModels(fit1, fit0, method = "D3")
+# outcommented to evade dependency on broom.mixed under the _R_CHECK_DEPENDS_ONLY=true flag
+# # likelihood test
+# z3 <- D3(fit1, fit0)
+# z4 <- mitml::testModels(fit1, fit0, method = "D3")
 
 # This test fails.
 # FIXME
@@ -111,3 +121,4 @@ z8 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), method = "
 # test_that("factors: mice and mitml calculate same F", {
 #  expect_equal(z7$result[1], z8$test[1])
 # })
+

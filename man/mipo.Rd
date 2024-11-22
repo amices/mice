@@ -33,7 +33,7 @@ process_mipo(z, x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE)
 \item{object}{An object of class \code{mipo}}
 
 \item{conf.int}{Logical indicating whether to include
-a confidence interval. The default is \code{FALSE}.}
+a confidence interval.}
 
 \item{conf.level}{Confidence level of the interval, used only if
 \code{conf.int = TRUE}. Number between 0 and 1.}

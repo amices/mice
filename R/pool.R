@@ -160,8 +160,10 @@ pool <- function(object, dfcom = NULL, rule = NULL, custom.t = NULL) {
     return(getfit(object, 1))
   }
 
-  dfcom <- get.dfcom(object, dfcom)
-  pooled <- pool.fitlist(getfit(object), dfcom = dfcom, rule = rule, custom.t = custom.t)
+  model <- getfit(object, 1L)
+  dfcom <- get.dfcom(model, dfcom)
+  w <- summary(getfit(object), type = "tidy", exponentiate = FALSE)
+  pooled <- pool.vector(w, dfcom = dfcom, custom.t = custom.t, rule = rule)
 
   # mipo object
   rr <- list(
@@ -171,71 +173,6 @@ pool <- function(object, dfcom = NULL, rule = NULL, custom.t = NULL) {
   )
   class(rr) <- c("mipo", "data.frame")
   rr
-}
-
-pool.fitlist <- function(fitlist, dfcom = NULL,
-                         rule = c("rubin1987", "reiter2003"), custom.t = NULL) {
-  # rubin1987: Rubin's rules for scalar estimates
-  # reiter2003: Reiter's rules for partially synthetic data
-  rule <- match.arg(rule)
-
-  w <- summary(fitlist, type = "tidy", exponentiate = FALSE)
-  grp <- intersect(names(w), c("parameter", "term", "contrast", "y.level", "component"))
-
-  # Note: group_by() changes the order of the terms, which is undesirable
-  # We convert any parameter terms to factor to preserve ordering
-  if ("term" %in% names(w)) w$term <- factor(w$term, levels = unique(w$term))
-  if ("contrast" %in% names(w)) w$contrast <- factor(w$contrast, levels = unique(w$contrast))
-  if ("y.level" %in% names(w)) w$y.level <- factor(w$y.level, levels = unique(w$y.level))
-  if ("component" %in% names(w)) w$component <- factor(w$component, levels = unique(w$component))
-
-  # https://github.com/amices/mice/issues/310
-  # Prefer using robust.se when tidy object contains it
-  if ("robust.se" %in% names(w)) w$std.error <- w$robust.se
-
-  if (rule == "rubin1987") {
-    pooled <- w %>%
-      group_by(!!!syms(grp)) %>%
-      summarize(
-        m = n(),
-        qbar = mean(.data$estimate),
-        ubar = mean(.data$std.error^2),
-        b = var(.data$estimate),
-        t = ifelse(is.null(custom.t),
-          .data$ubar + (1 + 1 / .data$m) * .data$b,
-          eval(parse(text = custom.t))
-        ),
-        dfcom = dfcom,
-        df = barnard.rubin(.data$m, .data$b, .data$t, .data$dfcom),
-        riv = (1 + 1 / .data$m) * .data$b / .data$ubar,
-        lambda = (1 + 1 / .data$m) * .data$b / .data$t,
-        fmi = (.data$riv + 2 / (.data$df + 3)) / (.data$riv + 1)
-      )
-  }
-
-  if (rule == "reiter2003") {
-    pooled <- w %>%
-      group_by(!!!syms(grp)) %>%
-      summarize(
-        m = n(),
-        qbar = mean(.data$estimate),
-        ubar = mean(.data$std.error^2),
-        b = var(.data$estimate),
-        t = ifelse(is.null(custom.t),
-          .data$ubar + (1 / .data$m) * .data$b,
-          eval(parse(text = custom.t))
-        ),
-        dfcom = dfcom,
-        df = (.data$m - 1) * (1 + (.data$ubar / (.data$b / .data$m)))^2,
-        riv = (1 + 1 / .data$m) * .data$b / .data$ubar,
-        lambda = NA_real_,
-        fmi = NA_real_
-      )
-  }
-
-  pooled <- data.frame(pooled)
-  names(pooled)[names(pooled) == "qbar"] <- "estimate"
-  pooled
 }
 
 #' @rdname pool

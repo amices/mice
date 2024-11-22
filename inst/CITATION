@@ -1,9 +1,9 @@
 citHeader("To cite mice in publications use:")
 
-citEntry(entry = "Article",
+bibentry(
+  bibtype      = "Article",
   title        = "{mice}: Multivariate Imputation by Chained Equations in R",
-  author       = personList(person("Stef", "van Buuren"),
-                   as.person("Karin Groothuis-Oudshoorn")),
+  author       = c(person("Stef", "van Buuren"), as.person("Karin Groothuis-Oudshoorn")),
   journal      = "Journal of Statistical Software",
   year         = "2011",
   volume       = "45",

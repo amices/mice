@@ -41,7 +41,7 @@
 #' depends on the values of the observed variables (i.e. the variables that remain
 #' complete) (MAR) or on the values of the variables that will be made incomplete (MNAR).
 #' For a discussion on how missingness mechanisms are related to the observed data,
-#' we refer to \href{https://journals.sagepub.com/doi/10.1177/0049124118799376}{Schouten and Vink, 2018}.
+#' we refer to \doi{10.1177/0049124118799376}.
 #'
 #' When the user specifies the missingness mechanism to be \code{"MCAR"}, the candidates
 #' have an equal probability of becoming incomplete. For a \code{"MAR"} or \code{"MNAR"} mechanism,
@@ -86,7 +86,7 @@
 #' we refer to the vignette
 #' \href{https://rianneschouten.github.io/mice_ampute/vignette/ampute.html}{Generate missing values with ampute}
 #' The amputation methodology is published in
-#' \href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{Schouten, Lugtig and Vink, 2018}.
+#' \doi{10.1080/00949655.2018.1491577}
 #'
 #' @param data A complete data matrix or data frame. Values should be numeric.
 #' Categorical variables should have been transformed to dummies.
@@ -161,17 +161,23 @@
 #' incomplete data sets.} pp. 110-113. Dissertation. Rotterdam: Erasmus University.
 #'
 #' Schouten, R.M., Lugtig, P and Vink, G. (2018)
-#' \href{https://www.tandfonline.com/doi/full/10.1080/00949655.2018.1491577}{Generating missing values for simulation purposes: A multivariate amputation procedure.}.
+#' Generating missing values for simulation purposes: A multivariate
+#' amputation procedure.
 #' \emph{Journal of Statistical Computation and Simulation}, 88(15): 1909-1930.
+#' \doi{10.1080/00949655.2018.1491577}
 #'
-#' Schouten, R.M. and Vink, G. (2018) \href{https://journals.sagepub.com/doi/full/10.1177/0049124118799376}{The Dance of the Mechanisms: How Observed Information Influences the Validity of Missingness Assumptions}.
+#' Schouten, R.M. and Vink, G. (2018) The Dance of the Mechanisms: How Observed
+#' Information Influences the Validity of Missingness Assumptions.
 #' \emph{Sociological Methods and Research}, 50(3): 1243-1258.
+#' \doi{10.1177/0049124118799376}
 #'
 #' Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn, C.G.M., Rubin, D.B. (2006)
-#' \href{https://www.tandfonline.com/doi/abs/10.1080/10629360600810434}{Fully conditional specification in multivariate imputation.}
+#' Fully conditional specification in multivariate imputation.
 #' \emph{Journal of Statistical Computation and Simulation}, 76(12): 1049-1064.
+#' \doi{10.1080/10629360600810434}
 #'
-#' Van Buuren, S. (2018) \href{https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' Van Buuren, S. (2018).
+#' \emph{Flexible Imputation of Missing Data. Second Edition.}
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #' Vink, G. (2016) Towards a standardized evaluation of multiple imputation routines.
@@ -205,6 +211,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (is.null(data)) {
     stop("Argument data is missing, with no default", call. = FALSE)
   }
+  data.in <- data # preserve an original set to inject the NA's in later
   data <- check.dataform(data)
   if (anyNA(data)) {
     stop("Data cannot contain NAs", call. = FALSE)
@@ -215,7 +222,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   data <- data.frame(data)
   if (any(vapply(data, Negate(is.numeric), logical(1))) && mech != "MCAR") {
     data <- as.data.frame(sapply(data, as.numeric))
-    warning("Data is made numeric because the calculation of weights requires numeric data",
+    warning("Data is made numeric internally, because the calculation of weights requires numeric data",
       call. = FALSE
     )
   }
@@ -416,7 +423,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
         prop = prop
       )
     } else {
-      scores <- sum.scores(
+      scores <- sumscores(
         P = P,
         data = data,
         std = std,
@@ -451,7 +458,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   names(patterns.new) <- names(data)
   names(weights) <- names(data)
   call <- match.call()
-  missing.data <- data.frame(missing.data)
+  data.in[is.na(data.frame(missing.data))] <- NA
   result <- list(
     call = call,
     prop = prop,
@@ -463,7 +470,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     std = std,
     type = type,
     odds = odds,
-    amp = missing.data,
+    amp = data.in,
     cand = P - 1,
     scores = scores,
     data = as.data.frame(data)
@@ -481,7 +488,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
 # will obtain a certain score that will define his probability to be made missing.
 # The calculation of the probabilities occur in the function ampute.mcar(),
 # ampute.continuous() or ampute.discrete(), based on the kind of missingness.
-sum.scores <- function(P, data, std, weights, patterns) {
+sumscores <- function(P, data, std, weights, patterns) {
   weights <- as.matrix(weights)
   f <- function(i) {
     if (length(P[P == (i + 1)]) == 0) {

@@ -50,8 +50,6 @@ draw as the imputation.
 }
 }
 \examples{
-require(rpart)
-
 imp <- mice(nhanes2, meth = "cart", minbucket = 4)
 plot(imp)
 }
@@ -78,16 +76,16 @@ Other univariate imputation functions:
 \code{\link{mice.impute.lasso.select.logreg}()},
 \code{\link{mice.impute.lasso.select.norm}()},
 \code{\link{mice.impute.lda}()},
-\code{\link{mice.impute.logreg.boot}()},
 \code{\link{mice.impute.logreg}()},
+\code{\link{mice.impute.logreg.boot}()},
 \code{\link{mice.impute.mean}()},
 \code{\link{mice.impute.midastouch}()},
 \code{\link{mice.impute.mnar.logreg}()},
 \code{\link{mice.impute.mpmm}()},
+\code{\link{mice.impute.norm}()},
 \code{\link{mice.impute.norm.boot}()},
 \code{\link{mice.impute.norm.nob}()},
 \code{\link{mice.impute.norm.predict}()},
-\code{\link{mice.impute.norm}()},
 \code{\link{mice.impute.pmm}()},
 \code{\link{mice.impute.polr}()},
 \code{\link{mice.impute.polyreg}()},

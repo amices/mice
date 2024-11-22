@@ -18,7 +18,7 @@ initialize.imp <- function(data, m, ignore, where, blocks, visitSequence,
             imp[[j]][, i] <- data.init[wy, j]
           } else {
             if (is.factor(y)) {
-              imp[[j]][, i] <- sample(levels(y), nrow(data))
+              imp[[j]][, i] <- sample(levels(y), nrow(data), replace = TRUE)
             } else {
               imp[[j]][, i] <- rnorm(nrow(data))
             }

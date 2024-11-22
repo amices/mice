@@ -53,7 +53,7 @@
 #' model2 <- fix.coef(model0, beta = c(15, -8, -8, 2, 0.2))
 #' @export
 fix.coef <- function(model, beta = NULL) {
-  oldcoef <- tidy.coef(model)
+  oldcoef <- clean.coef(model)
   if (is.null(beta)) beta <- oldcoef
   if (length(oldcoef) != length(beta)) {
     stop("incorrect length of 'beta'", call. = FALSE)
@@ -96,7 +96,7 @@ fix.coef <- function(model, beta = NULL) {
   upd
 }
 
-tidy.coef <- function(model) {
+clean.coef <- function(model) {
   est <- tidy(model, effects = "fixed")
   coef <- est$estimate
   names(coef) <- est$term

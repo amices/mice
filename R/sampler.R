@@ -9,7 +9,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
   r <- !is.na(data)
 
   # set up array for convergence checking
-  chainMean <- chainVar <- initialize.chain(blocks, maxit, m)
+  chainMean <- chainVar <- initialize.chain(names(data), maxit, m)
 
   ## THE MAIN LOOP: GIBBS SAMPLER ##
   if (maxit < 1) iteration <- 0
@@ -44,7 +44,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
           b <- blocks[[h]]
           if (calltype == "formula") ff <- formulas[[h]] else ff <- NULL
-          type <- predictorMatrix[h, ]
+          pred <- predictorMatrix[h, ]
 
           user <- blots[[h]]
 
@@ -68,13 +68,13 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
           )
           assign("state", newstate, pos = parent.frame(), inherits = TRUE)
 
-          # (repeated) univariate imputation - type method
+          # (repeated) univariate imputation - pred method
           if (univ) {
             for (j in b) {
               imp[[j]][, i] <-
                 sampler.univ(
                   data = data, r = r, where = where,
-                  type = type, formula = ff,
+                  pred = pred, formula = ff,
                   method = theMethod,
                   yname = j, k = k,
                   calltype = calltype,
@@ -95,7 +95,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
             }
           }
 
-          # multivariate imputation - type and formula
+          # multivariate imputation - pred and formula
           if (mult) {
             mis <- !r
             mis[, setdiff(colnames(data), b)] <- FALSE
@@ -107,10 +107,10 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
                 data = data,
                 formula = ff, ...
               ))
-            } else if (calltype == "type") {
+            } else if (calltype == "pred") {
               imputes <- do.call(fm, args = list(
                 data = data,
-                type = type, ...
+                type = pred, ...
               ))
             } else {
               stop("Cannot call function of type ", calltype,
@@ -179,15 +179,15 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 }
 
 
-sampler.univ <- function(data, r, where, type, formula, method, yname, k,
-                         calltype = "type", user, ignore, ...) {
+sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
+                         calltype = "pred", user, ignore, ...) {
   j <- yname[1L]
 
-  if (calltype == "type") {
-    vars <- colnames(data)[type != 0]
-    pred <- setdiff(vars, j)
-    if (length(pred) > 0L) {
-      formula <- reformulate(pred, response = j)
+  if (calltype == "pred") {
+    vars <- colnames(data)[pred != 0]
+    xnames <- setdiff(vars, j)
+    if (length(xnames) > 0L) {
+      formula <- reformulate(backticks(xnames), response = backticks(j))
       formula <- update(formula, ". ~ . ")
     } else {
       formula <- as.formula(paste0(j, " ~ 1"))
@@ -199,16 +199,16 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
     ymove <- setdiff(lhs(formula), j)
     formula <- update(formula, paste(j, " ~ . "))
     if (length(ymove) > 0L) {
-      formula <- update(formula, paste("~ . + ", paste(ymove, collapse = "+")))
+      formula <- update(formula, paste("~ . + ", paste(backticks(ymove), collapse = "+")))
     }
   }
 
   # get the model matrix
   x <- obtain.design(data, formula)
 
-  # expand type vector to model matrix, remove intercept
-  if (calltype == "type") {
-    type <- type[labels(terms(formula))][attr(x, "assign")]
+  # expand pred vector to model matrix, remove intercept
+  if (calltype == "pred") {
+    type <- pred[labels(terms(formula))][attr(x, "assign")]
     x <- x[, -1L, drop = FALSE]
     names(type) <- colnames(x)
   }

@@ -1,8 +1,8 @@
 Package: mice
 Type: Package
-Version: 3.15.4
+Version: 3.16.16
 Title: Multivariate Imputation by Chained Equations
-Date: 2023-05-15
+Date: 2024-10-16
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -40,7 +40,9 @@ Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     person("Caspar", "van Lissa", role = "ctb", 
     email = "c.j.vanlissa@uu.nl"),
     person("Hanne", "Oberman", role = "ctb",
-    email = "h.i.oberman@uu.nl"))
+    email = "h.i.oberman@uu.nl"),
+    person("Stephen", "Wade", role = "ctb",
+    email = "stephematician@gmail.com"))
 Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
 Depends:
     R (>= 2.10.0)
@@ -48,37 +50,35 @@ Imports:
     broom,
     dplyr,
     generics,
+    glmnet,
     graphics,
     grDevices,
     lattice,
     methods,
+    mitml,
+    nnet,
     Rcpp,
+    rpart,
     rlang,
     stats,
     tidyr,
     utils
 Suggests:
     broom.mixed,
-    decor,
     future, 
     furrr,
-    glmnet,
     haven,
     knitr,
+    literanger,
     lme4,
-    lmtest,
     MASS,
-    metafor,
-    mitml,
     miceadds,
-    nnet,
     pan,
     parallelly,
     purrr,
-    randomForest,
     ranger,
+    randomForest,
     rmarkdown,
-    rpart,
     rstan,
     survival,
     testthat
@@ -101,5 +101,5 @@ URL: https://github.com/amices/mice,
     https://stefvanbuuren.name/fimd/
 BugReports: https://github.com/amices/mice/issues
 LinkingTo: cpp11, Rcpp
-SystemRequirements: C++11
 License: GPL (>= 2)
+RoxygenNote: 7.3.2

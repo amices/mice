@@ -17,16 +17,13 @@
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @keywords datasets
 #' @examples
-#' require(lattice)
-#' require(MASS)
-#'
 #' pattern4
 #'
 #' data <- rbind(pattern1, pattern2, pattern3, pattern4)
 #' mdpat <- cbind(expand.grid(rec = 8:1, pat = 1:4, var = 1:3), r = as.numeric(as.vector(is.na(data))))
 #'
 #' types <- c("Univariate", "Monotone", "File matching", "General")
-#' tp41 <- levelplot(r ~ var + rec | as.factor(pat),
+#' tp41 <- lattice::levelplot(r ~ var + rec | as.factor(pat),
 #'   data = mdpat,
 #'   as.table = TRUE, aspect = "iso",
 #'   shrink = c(0.9),
@@ -35,7 +32,7 @@
 #'   scales = list(draw = FALSE),
 #'   xlab = "", ylab = "",
 #'   between = list(x = 1, y = 0),
-#'   strip = strip.custom(
+#'   strip = lattice::strip.custom(
 #'     bg = "grey95", style = 1,
 #'     factor.levels = types
 #'   )

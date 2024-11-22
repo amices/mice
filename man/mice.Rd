@@ -3,6 +3,7 @@
 \docType{package}
 \name{mice}
 \alias{mice}
+\alias{mice-package}
 \title{\pkg{mice}: Multivariate Imputation by Chained Equations}
 \usage{
 mice(
@@ -286,7 +287,7 @@ to specify \code{visitSequence} such that the column that is imputed by the
 visited. In that way, deterministic relation between columns will always be
 synchronized.
 
-#'A new argument \code{ls.meth} can be parsed to the lower level
+A new argument \code{ls.meth} can be parsed to the lower level
 \code{.norm.draw} to specify the method for generating the least squares
 estimates and any subsequently derived estimates. Argument \code{ls.meth}
 takes one of three inputs: \code{"qr"} for QR-decomposition, \code{"svd"} for
@@ -334,8 +335,7 @@ We suggest going through these vignettes in the following order
 \item \href{https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html}{Imputing multilevel data}
 \item \href{https://www.gerkovink.com/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html}{Sensitivity analysis with \pkg{mice}}
 }
-
-#'Van Buuren, S. (2018).
+Van Buuren, S. (2018).
 Boca Raton, FL.: Chapman & Hall/CRC Press.
 The book
 \href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
@@ -345,8 +345,9 @@ contains a lot of \href{https://github.com/stefvanbuuren/fimdbook/tree/master/R}
 \section{Methodology}{
 
 
-The \pkg{mice} software was published in the {Journal of Statistical Software} (Van Buuren and Groothuis-Oudshoorn, 2011). \doi{10.18637/jss.v045.i03}
-The first application of the method
+The \pkg{mice} software was published in the
+\emph{Journal of Statistical Software} (Van Buuren and Groothuis-Oudshoorn, 2011).
+\doi{10.18637/jss.v045.i03}. The first application of the method
 concerned missing blood pressure data (Van Buuren et. al., 1999).
 The term \emph{Fully Conditional Specification} was introduced in 2006 to describe a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (Van Buuren et. al., 2006). Further details on mixes of variables and applications can be found in the book
 \href{https://stefvanbuuren.name/fimd/}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
@@ -420,7 +421,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 
 Van Buuren, S. (2018).
-\href{https://stefvanbuuren.name/fimd/sec-FCS.html#sec:MICE}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+\emph{Flexible Imputation of Missing Data. Second Edition.}
 Chapman & Hall/CRC. Boca Raton, FL.
 
 Van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
@@ -432,8 +433,8 @@ fully conditional specification.  \emph{Statistical Methods in Medical
 Research}, \bold{16}, 3, 219--242.
 
 Van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple imputation of
-missing blood pressure covariates in survival analysis.  \emph{Statistics in
-Medicine}, \bold{18}, 681--694.
+missing blood pressure covariates in survival analysis.
+\emph{Statistics in Medicine}, \bold{18}, 681--694.
 
 Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
 multiple imputation strategies for the statistical analysis of incomplete
@@ -447,10 +448,41 @@ data sets.} Dissertation. Rotterdam: Erasmus University.
 \code{\link{set.seed}}, \code{\link{complete}}
 }
 \author{
+\strong{Maintainer}: Stef van Buuren \email{stef.vanbuuren@tno.nl}
+
+Authors:
+\itemize{
+  \item Karin Groothuis-Oudshoorn \email{c.g.m.oudshoorn@utwente.nl}
+}
+
+Other contributors:
+\itemize{
+  \item Gerko Vink \email{g.vink@uu.nl} [contributor]
+  \item Rianne Schouten \email{R.M.Schouten@uu.nl} [contributor]
+  \item Alexander Robitzsch \email{robitzsch@ipn.uni-kiel.de} [contributor]
+  \item Patrick Rockenschaub \email{rockenschaub.patrick@gmail.com} [contributor]
+  \item Lisa Doove \email{lisa.doove@ppw.kuleuven.be} [contributor]
+  \item Shahab Jolani \email{s.jolani@maastrichtuniversity.nl} [contributor]
+  \item Margarita Moreno-Betancur \email{margarita.moreno@mcri.edu.au} [contributor]
+  \item Ian White \email{ian.white@ucl.ac.uk} [contributor]
+  \item Philipp Gaffert \email{philipp.gaffert@gfk.com} [contributor]
+  \item Florian Meinfelder \email{florian.meinfelder@uni-bamberg.de} [contributor]
+  \item Bernie Gray \email{bfgray3@gmail.com} [contributor]
+  \item Vincent Arel-Bundock \email{vincent.arel-bundock@umontreal.ca} [contributor]
+  \item Mingyang Cai \email{m.cai@uu.nl} [contributor]
+  \item Thom Volker \email{t.b.volker@uu.nl} [contributor]
+  \item Edoardo Costantini \email{e.costantini@tilburguniversity.edu} [contributor]
+  \item Caspar van Lissa \email{c.j.vanlissa@uu.nl} [contributor]
+  \item Hanne Oberman \email{h.i.oberman@uu.nl} [contributor]
+  \item Stephen Wade \email{stephematician@gmail.com} [contributor]
+}
+
+
 Stef van Buuren \email{stef.vanbuuren@tno.nl}, Karin
 Groothuis-Oudshoorn \email{c.g.m.oudshoorn@utwente.nl}, 2000-2010, with
 contributions of Alexander Robitzsch, Gerko Vink, Shahab Jolani,
 Roel de Jong, Jason Turner, Lisa Doove,
 John Fox, Frank E. Harrell, and Peter Malewski.
 }
+\keyword{internal}
 \keyword{iteration}
