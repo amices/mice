@@ -322,11 +322,21 @@ mice <- function(data,
                  printFlag = TRUE,
                  seed = NA,
                  data.init = NULL,
+#                 saveDetails = FALSE,
                  ...) {
   call <- match.call()
   check.deprecated(...)
 
   if (!is.na(seed)) set.seed(seed)
+
+  # # create details environment
+  # if (saveDetails) {
+  #   details <- rlang::env(
+  #   call = call,
+  #   seed = seed,
+  #   version = packageVersion("mice"),
+  #   date = Sys.Date())
+  # assign("details", details, envir = globalenv())
 
   # check form of data and m
   data <- check.dataform(data)

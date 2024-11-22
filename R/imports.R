@@ -10,7 +10,7 @@
 #' @importFrom mitml    jomoImpute mitmlComplete panImpute testModels
 #' @importFrom nnet     multinom
 #' @importFrom Rcpp     evalCpp
-#' @importFrom rlang    .data syms
+#' @importFrom rlang    .data env syms
 #' @importFrom rpart    rpart rpart.control
 #' @importFrom stats    C aggregate as.formula binomial cancor coef
 #'                      complete.cases confint

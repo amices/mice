@@ -217,6 +217,7 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
   # expand pred vector to model matrix, remove intercept
   if (calltype == "pred") {
     type <- pred[labels(terms(formula))][attr(x, "assign")]
+    # xnames <- names(type)
     x <- x[, -1L, drop = FALSE]
     names(type) <- colnames(x)
   }
@@ -233,6 +234,10 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
     x = x,
     trimmer = trimmer, ...
   )
+
+  # store the names of the features
+  # xj <- unique(xnames[keep$cols])
+  # print(xj)
 
   # set up univariate imputation method
   # wy: entries we wish to impute (length(y) elements)
