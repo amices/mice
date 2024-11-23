@@ -57,7 +57,6 @@ Imports:
     mitml,
     nnet,
     Rcpp,
-    rpart,
     rlang,
     stats,
     tidyr,
@@ -79,6 +78,7 @@ Suggests:
     ranger,
     randomForest,
     rmarkdown,
+    rpart,
     rstan,
     survival,
     testthat
