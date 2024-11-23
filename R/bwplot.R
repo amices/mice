@@ -25,7 +25,8 @@
 #' \code{col=mdc(1:2), pch=20, cex=1.5}. These choices can be set for the
 #' duration of the session by running \code{mice.theme()}.
 #'
-#' @aliases bwplot
+#' @aliases bwplot.mids bwplot
+#'
 #' @param x A \code{mids} object, typically created by \code{mice()} or
 #' \code{mice.mids()}.
 #' @param data Formula that selects the data to be plotted.  This argument

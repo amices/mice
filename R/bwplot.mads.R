@@ -4,6 +4,7 @@
 #' the amputed data. The function shows how the amputed values are related
 #' to the variable values.
 #'
+#' @aliases bwplot.mads
 #' @param x A \code{mads} (\code{\link{mads-class}}) object, typically created by
 #' \code{\link{ampute}}.
 #' @param data A string or vector of variable names that needs to be plotted. As

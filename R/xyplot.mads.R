@@ -6,6 +6,7 @@
 #' automatically separates the amputed and non-amputed data to see the relation between
 #' the amputation and the weighted sum scores.
 #'
+#' @aliases xyplot.mads
 #' @param x A \code{mads} object, typically created by \code{\link{ampute}}.
 #' @param data A string or vector of variable names that needs to be plotted. As
 #' a default, all variables will be plotted.
