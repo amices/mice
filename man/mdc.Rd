@@ -76,7 +76,7 @@ Visualization with R}, Springer.
 }
 \seealso{
 \code{\link[grDevices]{hcl}}, \code{\link[grDevices]{rgb}},
-\code{\link[lattice]{xyplot.mids}}, \code{\link[lattice]{xyplot}},
+\code{\link[lattice]{xyplot}},
 \code{\link[lattice]{trellis.par.set}}
 }
 \author{

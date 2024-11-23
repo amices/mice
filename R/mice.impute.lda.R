@@ -24,7 +24,7 @@
 #' Added: SvB June 2009 Tried to include bootstrap, but disabled since
 #' bootstrapping may easily lead to constant variables within groups.
 #' @author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-#' @seealso \code{\link{mice}}, \code{link{mice.impute.polyreg}},
+#' @seealso \code{\link{mice}}, \code{\link{mice.impute.polyreg}},
 #' \code{\link[MASS]{lda}}
 #' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 #' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of

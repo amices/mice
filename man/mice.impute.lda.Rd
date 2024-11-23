@@ -66,7 +66,7 @@ Venables, W.N. & Ripley, B.D. (1997). Modern applied statistics with S-PLUS
 (2nd ed). Springer, Berlin.
 }
 \seealso{
-\code{\link{mice}}, \code{link{mice.impute.polyreg}},
+\code{\link{mice}}, \code{\link{mice.impute.polyreg}},
 \code{\link[MASS]{lda}}
 
 Other univariate imputation functions: 
