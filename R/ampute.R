@@ -470,10 +470,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     cand = P - 1,
     scores = scores,
     data = as.data.frame(data))
-  #
-  # Return result
-  class(result) <- "mads"
-  result
+  return(result)
 }
 
 
