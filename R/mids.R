@@ -8,10 +8,9 @@
 #' class of objects has methods for the following generic functions:
 #' \code{print}, \code{summary}, \code{plot}.
 #'
-#' @section Slots:
+#' @section Structure:
+#' Objects of class \code{"mids"} are lists with the following elements:
 #'  \describe{
-#'    \item{\code{.Data}:}{Object of class \code{"list"} containing the
-#'    following slots:}
 #'    \item{\code{data}:}{Original (incomplete) data set.}
 #'    \item{\code{imp}:}{A list of \code{ncol(data)} components with
 #'    the generated multiple imputations. Each list component is a
@@ -88,11 +87,6 @@
 #' \item{\code{out}}{a (possibly long) character vector with the
 #' names of the altered or removed predictors.}
 #' }
-#'
-#' @note The \code{mice} package does not use
-#' the S4 class definitions, and instead relies on the S3 list
-#' equivalent \code{oldClass(obj) <- "mids"}.
-#'
 #' @name mids-class
 #' @rdname mids-class
 #' @aliases mids-class mids

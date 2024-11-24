@@ -100,6 +100,6 @@ ibind <- function(x, y) {
     version = packageVersion("mice"),
     date = Sys.Date()
   )
-  oldClass(midsobj) <- "mids"
+  class(midsobj) <- "mids"
   midsobj
 }

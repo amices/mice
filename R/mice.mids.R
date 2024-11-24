@@ -169,7 +169,7 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
     version = packageVersion("mice"),
     date = Sys.Date()
   )
-  oldClass(midsobj) <- "mids"
+  class(midsobj) <- "mids"
 
   if (!is.null(newdata)) {
     include <- c(

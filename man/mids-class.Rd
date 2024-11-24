@@ -43,16 +43,10 @@ Explanation of elements in \code{loggedEvents}:
 names of the altered or removed predictors.}
 }
 }
-\note{
-The \code{mice} package does not use
-the S4 class definitions, and instead relies on the S3 list
-equivalent \code{oldClass(obj) <- "mids"}.
-}
-\section{Slots}{
+\section{Structure}{
 
+Objects of class \code{"mids"} are lists with the following elements:
  \describe{
-   \item{\code{.Data}:}{Object of class \code{"list"} containing the
-   following slots:}
    \item{\code{data}:}{Original (incomplete) data set.}
    \item{\code{imp}:}{A list of \code{ncol(data)} components with
    the generated multiple imputations. Each list component is a

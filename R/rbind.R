@@ -79,7 +79,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     version = packageVersion("mice"),
     date = Sys.Date()
   )
-  oldClass(midsobj) <- "mids"
+  class(midsobj) <- "mids"
   midsobj
 }
 
@@ -174,6 +174,6 @@ rbind.mids.mids <- function(x, y, call) {
     version = packageVersion("mice"),
     date = Sys.Date()
   )
-  oldClass(midsobj) <- "mids"
+  class(midsobj) <- "mids"
   midsobj
 }
