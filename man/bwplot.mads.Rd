@@ -2,6 +2,7 @@
 % Please edit documentation in R/bwplot.mads.R
 \name{bwplot.mads}
 \alias{bwplot.mads}
+\alias{bwplot}
 \title{Box-and-whisker plot of amputed and non-amputed data}
 \usage{
 \method{bwplot}{mads}(
@@ -15,7 +16,7 @@
 )
 }
 \arguments{
-\item{x}{A \code{mads} (\code{\link{mads-class}}) object, typically created by
+\item{x}{A \code{mads} (\code{\link{mads}}) object, typically created by
 \code{\link{ampute}}.}
 
 \item{data}{A string or vector of variable names that needs to be plotted. As
@@ -50,11 +51,11 @@ to the variable values.
 }
 \note{
 The \code{mads} object contains all the information you need to
-make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate
+make any desired plots. Check \code{\link{mads}} or the vignette \emph{Multivariate
 Amputation using Ampute} to understand the contents of class object \code{mads}.
 }
 \seealso{
-\code{\link{ampute}}, \code{\link[lattice]{bwplot}}, \code{\link{mads-class}}
+\code{\link{ampute}}, \code{\link[lattice]{bwplot}}, \code{\link{mads}}
 }
 \author{
 Rianne Schouten, 2016

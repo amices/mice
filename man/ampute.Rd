@@ -94,7 +94,7 @@ cells. Default is TRUE.}
 return object will contain everything except for the amputed data set.}
 }
 \value{
-Returns an S3 object of class \code{\link{mads-class}} (multivariate
+Returns an S3 object of class \code{\link{mads}} (multivariate
 amputed data set)
 }
 \description{
@@ -234,7 +234,7 @@ Chapman & Hall/CRC. Boca Raton, FL.
 Vink, G. (2016) Towards a standardized evaluation of multiple imputation routines.
 }
 \seealso{
-\code{\link{mads-class}}, \code{\link[lattice]{bwplot}},
+\code{\link{mads}}, \code{\link[lattice]{bwplot}},
 \code{\link[lattice]{xyplot}}, \code{\link{mice}}
 }
 \author{

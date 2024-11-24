@@ -204,8 +204,10 @@ data set. The following functions produce a \code{mids} object:
 \code{\link{cbind}()}, \code{\link{rbind}()}, and \code{\link{ibind}()}.
 The \code{mids()} function is the S3 constructor.
 The S3 class \code{mids} has the following methods:
-\code{\link{complete}()}, \code{plot()},
-\code{print()}, \code{summary()}, \code{\link{with}()}.
+\code{\link{bwplot}()}, \code{\link{complete}()},
+\code{\link{densityplot}()}, \code{plot()},
+\code{print()}, \code{\link{stripplot}()}, \code{summary()},
+\code{\link{with}()}, and \code{\link{xyplot}()}.
 }
 \section{Structure}{
 

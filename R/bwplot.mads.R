@@ -5,7 +5,7 @@
 #' to the variable values.
 #'
 #' @aliases bwplot.mads
-#' @param x A \code{mads} (\code{\link{mads-class}}) object, typically created by
+#' @param x A \code{mads} (\code{\link{mads}}) object, typically created by
 #' \code{\link{ampute}}.
 #' @param data A string or vector of variable names that needs to be plotted. As
 #' a default, all variables will be plotted.
@@ -25,10 +25,11 @@
 #' @return A list containing the box-and-whisker plots. Note that a new pattern
 #' will always be shown in a new plot.
 #' @note The \code{mads} object contains all the information you need to
-#' make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate
+#' make any desired plots. Check \code{\link{mads}} or the vignette \emph{Multivariate
 #' Amputation using Ampute} to understand the contents of class object \code{mads}.
 #' @author Rianne Schouten, 2016
-#' @seealso \code{\link{ampute}}, \code{\link[lattice]{bwplot}}, \code{\link{mads-class}}
+#' @seealso \code{\link{ampute}}, \code{\link[lattice]{bwplot}}, \code{\link{mads}}
+#' @method bwplot mads
 #' @export
 bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
                         descriptives = TRUE, layout = NULL, ...) {

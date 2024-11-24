@@ -146,11 +146,11 @@
 #' @param run Logical. If TRUE, the amputations are implemented. If FALSE, the
 #' return object will contain everything except for the amputed data set.
 #'
-#' @return Returns an S3 object of class \code{\link{mads-class}} (multivariate
+#' @return Returns an S3 object of class \code{\link{mads}} (multivariate
 #' amputed data set)
 #' @author Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
-#' @seealso \code{\link{mads-class}}, \code{\link[lattice]{bwplot}},
-#' \code{\link[lattice]{xyplot}}, \code{\link{mice}}
+#' @seealso \code{\link{mads}}, \code{\link{bwplot.mads}},
+#' \code{\link{xyplot.mads}}
 #'
 #' @references
 #' Brand, J.P.L. (1999) \emph{Development, implementation and
@@ -450,13 +450,13 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       }
     }
   }
-  #
+
   # Create return object
   names(patterns.new) <- names(data)
   names(weights) <- names(data)
   call <- match.call()
   data.in[is.na(data.frame(missing.data))] <- NA
-  result <- list(
+  result <- mads(
     call = call,
     prop = prop,
     patterns = patterns.new,
@@ -464,14 +464,12 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     mech = mech,
     weights = weights,
     cont = cont,
-    std = std,
     type = type,
     odds = odds,
     amp = data.in,
     cand = P - 1,
     scores = scores,
-    data = as.data.frame(data)
-  )
+    data = as.data.frame(data))
   #
   # Return result
   class(result) <- "mads"

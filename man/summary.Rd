@@ -2,13 +2,10 @@
 % Please edit documentation in R/summary.R
 \name{summary.mira}
 \alias{summary.mira}
-\alias{summary.mads}
 \alias{summary.mice.anova}
 \title{Summary of a \code{mira} object}
 \usage{
 \method{summary}{mira}(object, type = c("tidy", "glance", "summary"), ...)
-
-\method{summary}{mads}(object, ...)
 
 \method{summary}{mice.anova}(object, ...)
 }
@@ -29,20 +26,14 @@ length \code{m} with the analysis results. The default is
 \code{NULL}
 
 \code{NULL}
-
-\code{NULL}
 }
 \description{
 Summary of a \code{mira} object
-
-Summary of a \code{mads} object
 
 Print a \code{mice.anova} object
 }
 \seealso{
 \code{\link{mira}}
-
-\code{\link[=mads-class]{mads}}
 
 \code{\link{mipo}}
 }

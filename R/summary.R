@@ -44,18 +44,6 @@ summary.mira <- function(object,
 }
 
 
-#' Summary of a \code{mads} object
-#'
-#' @rdname summary
-#' @return \code{NULL}
-#' @seealso \code{\link[=mads-class]{mads}}
-#' @export
-summary.mads <- function(object, ...) {
-  print(object, ...)
-  invisible(object)
-}
-
-
 #' Print a \code{mice.anova} object
 #'
 #' @rdname summary

@@ -51,13 +51,13 @@ the amputation and the weighted sum scores.
 }
 \note{
 The \code{mads} object contains all the information you need to
-make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate
+make any desired plots. Check \code{\link{mads}} or the vignette \emph{Multivariate
 Amputation using Ampute} to understand the contents of class object \code{mads}.
 }
 \seealso{
 \code{\link{ampute}}, \code{\link[lattice]{bwplot}},
 \code{\link{lattice}} for
-an overview of the package, \code{\link{mads-class}}
+an overview of the package, \code{\link{mads}}
 }
 \author{
 Rianne Schouten, 2016
