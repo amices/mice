@@ -51,6 +51,6 @@ with.mids <- function(data, expr, ...) {
   # return the complete data analyses as a list of length nimp
   object <- list(call = call, call1 = data$call, nmis = data$nmis, analyses = analyses)
   # formula=formula(analyses[[1]]$terms))
-  oldClass(object) <- c("mira", "matrix")
+  class(object) <- c("mira", "matrix")
   object
 }

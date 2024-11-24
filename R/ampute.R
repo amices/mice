@@ -474,7 +474,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   )
   #
   # Return result
-  oldClass(result) <- "mads"
+  class(result) <- "mads"
   result
 }
 

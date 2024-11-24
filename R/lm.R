@@ -38,7 +38,7 @@ lm.mids <- function(formula, data, ...) {
   analyses <- lapply(seq_len(data$m), function(i) lm(formula, data = complete(data, i), ...))
   # return the complete data analyses as a list of length nimp
   object <- list(call = call, call1 = data$call, nmis = data$nmis, analyses = analyses)
-  oldClass(object) <- c("mira", "lm") ## FEH
+  class(object) <- c("mira", "lm") ## FEH
   object
 }
 
@@ -90,6 +90,6 @@ glm.mids <- function(formula, family = gaussian, data, ...) {
   )
   # return the complete data analyses as a list of length nimp
   object <- list(call = call, call1 = data$call, nmis = data$nmis, analyses = analyses)
-  oldClass(object) <- c("mira", "glm", "lm") ## FEH
+  class(object) <- c("mira", "glm", "lm")
   object
 }
