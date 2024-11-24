@@ -10,7 +10,6 @@
 #' @seealso \code{\link{ampute}}, \code{\link{md.pattern}}
 #' @author Rianne Schouten, 2016
 #' @keywords internal
-#' @export
 ampute.default.patterns <- function(n) {
   patterns.list <- lapply(
     seq_len(n),

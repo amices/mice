@@ -28,7 +28,6 @@
 #' \href{https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @keywords internal
-#' @export
 ampute.continuous <- function(P, scores, prop, type) {
   # For a test data set, the shift of the logit function is calculated
   # in order to obtain the right proportion of missingness (area beneath the curve)
