@@ -1,3 +1,9 @@
+* Removes `methods` and `rlang` from `Depends`
+* Moves `glmnet`, `mitml`, `rpart` to `Suggests`
+* Drops support for S4. Convert S4-related code to S3. Syntax `as(df, "mids")` is deprecated. Use `as.mids(df)` instead.
+* Removes export of non-user facing `ampute()` helpers
+* Defines S3 class constructor for `mids` and `mads` objects
+
 # mice 3.17.0
 
 ### Major changes
