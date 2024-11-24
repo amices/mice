@@ -100,3 +100,16 @@ single2imputes <- function(single, mis) {
   for (j in vars) z[[j]] <- single[mis[, j], j]
   z
 }
+
+syms <- function(x) {
+  if (is.null(x) || length(x) == 0) {
+    return(list())
+  }
+  if (!is.character(x)) {
+    stop("Input must be a character vector.", call. = FALSE)
+  }
+  if (anyDuplicated(x)) {
+    warning("Duplicate column names detected.")
+  }
+  lapply(x, as.name)
+}

@@ -55,7 +55,6 @@ Imports:
     methods,
     nnet,
     Rcpp,
-    rlang,
     stats,
     tidyr,
     utils
