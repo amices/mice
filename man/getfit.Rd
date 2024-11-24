@@ -40,7 +40,7 @@ f2 <- getfit(fit, 2)
 class(f2)
 }
 \seealso{
-\code{\link[=mira-class]{mira}}, \code{\link{with.mids}}
+\code{\link{mira}}, \code{\link{with.mids}}
 }
 \author{
 Stef van Buuren, 2012, 2020

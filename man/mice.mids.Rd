@@ -13,29 +13,39 @@ call to \code{mice()} or \code{mice.mids()}}
 \item{newdata}{An optional \code{data.frame} for which multiple imputations
 are generated according to the model in \code{obj}.}
 
-\item{maxit}{The number of additional Gibbs sampling iterations.}
+\item{maxit}{The number of additional Gibbs sampling iterations. The
+default is 1.}
 
 \item{printFlag}{A Boolean flag. If \code{TRUE}, diagnostic information
 during the Gibbs sampling iterations will be written to the command window.
 The default is \code{TRUE}.}
 
-\item{...}{Named arguments that are passed down to the univariate imputation
+\item{\dots}{Named arguments that are passed down to the univariate imputation
 functions.}
 }
+\value{
+\code{mice.mids} returns an object of class \code{"mids"}.
+}
 \description{
-Takes a \code{mids} object, and produces a new object of class \code{mids}.
+Takes a \code{mids} object, performs \code{maxit} iterations and
+produces a new object of class \code{"mids"}.
 }
 \details{
 This function enables the user to split up the computations of the Gibbs
 sampler into smaller parts. This is useful for the following reasons:
-\itemize{ \item RAM memory may become easily exhausted if the number of
-iterations is large. Returning to prompt/session level may alleviate these
-problems.  \item The user can compute customized convergence statistics at
-specific points, e.g. after each iteration, for monitoring convergence.  -
-For computing a 'few extra iterations'.  } Note: The imputation model itself
-is specified in the \code{mice()} function and cannot be changed with
-\code{mice.mids}.  The state of the random generator is saved with the
-\code{mids} object.
+
+\itemize{
+   \item To add a few extra iteration to an existing solution.
+   \item If RAM memory is exhausted. Returning to prompt/session
+   level may alleviate such problems.
+   \item To customize convergence statistics at specific points, e.g.,
+   after every \code{maxit} iterations to monitor convergence.
+}
+
+The imputation model itself is specified in the \code{\link{mice}()} function
+and cannot be changed in \code{mice.mids()}. The state of the random
+generator is saved with the \code{mids} object. This ensures that the
+imputations are reproducible.
 }
 \examples{
 imp1 <- mice(nhanes, maxit = 1, seed = 123)
@@ -48,17 +58,8 @@ imp <- mice(nhanes, maxit = 2, seed = 123)
 identical(imp$imp, imp2$imp)
 #
 }
-\references{
-Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
-Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
-Statistical Software}, \bold{45}(3), 1-67.
-\doi{10.18637/jss.v045.i03}
-}
 \seealso{
 \code{\link{complete}}, \code{\link{mice}}, \code{\link{set.seed}},
-\code{\link[=mids-class]{mids}}
-}
-\author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
+\code{\link{mids}}
 }
 \keyword{iteration}

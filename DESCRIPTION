@@ -52,7 +52,6 @@ Imports:
     graphics,
     grDevices,
     lattice,
-    methods,
     nnet,
     Rcpp,
     stats,

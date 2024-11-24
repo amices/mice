@@ -18,7 +18,7 @@
 #' all analyses. If \code{i} selects one of the analyses, then it return
 #' an object whose with class inherited from that element.
 #' @author Stef van Buuren, 2012, 2020
-#' @seealso \code{\link[=mira-class]{mira}}, \code{\link{with.mids}}
+#' @seealso \code{\link{mira}}, \code{\link{with.mids}}
 #' @keywords manip
 #' @examples
 #' imp <- mice(nhanes, print = FALSE, seed = 21443)

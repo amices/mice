@@ -48,25 +48,72 @@
 #' pattern.}
 #' \item{\code{data}:}{The complete data set that was entered in \code{ampute}.}
 #' }
+#' @rdname mads
+#' @name mads-class
+#' @aliases mads-class
 #' @author Rianne Schouten, 2016
 #' @seealso \code{\link{ampute}}, Vignette titled "Multivariate Amputation using
 #' Ampute".
+#' @keywords classes
+NULL
+
+#' Create an object of class "mads"
+#'
+#' Constructs an S3 object representing missing data patterns and associated analysis details.
+#'
+#' @param call The function call that created the object.
+#' @param prop A numeric vector of proportions.
+#' @param patterns A matrix of missing data patterns.
+#' @param freq A numeric vector of frequencies for each pattern.
+#' @param mech A character string describing the missing data mechanism.
+#' @param weights A matrix of weights.
+#' @param cont A logical vector indicating continuous variables.
+#' @param type A character vector describing variable types.
+#' @param odds A matrix of odds ratios.
+#' @param amp A data frame for amplitude information.
+#' @param cand An integer vector of candidate variables.
+#' @param scores A list of scores.
+#' @param data A data frame representing the original data.
+#' @return An object of class \code{"mads"}.
+#' @name mads
+#' @aliases mads
 #' @export
-setClass("mads",
-  representation(
-    call = "call",
-    prop = "numeric",
-    patterns = "matrix",
-    freq = "numeric",
-    mech = "character",
-    weights = "matrix",
-    cont = "logical",
-    type = "character",
-    odds = "matrix",
-    amp = "data.frame",
-    cand = "integer",
-    scores = "list",
-    data = "data.frame"
-  ),
-  contains = "list"
-)
+mads <- function(
+    call, prop, patterns, freq, mech, weights, cont, type,
+    odds, amp, cand, scores, data) {
+  # Validate inputs
+  if (!is.call(call)) stop("Argument 'call' must be a call.")
+  if (!is.numeric(prop)) stop("Argument 'prop' must be numeric.")
+  if (!is.matrix(patterns)) stop("Argument 'patterns' must be a matrix.")
+  if (!is.numeric(freq)) stop("Argument 'freq' must be numeric.")
+  if (!is.character(mech)) stop("Argument 'mech' must be character.")
+  if (!is.matrix(weights)) stop("Argument 'weights' must be a matrix.")
+  if (!is.logical(cont)) stop("Argument 'cont' must be logical.")
+  if (!is.character(type)) stop("Argument 'type' must be character.")
+  if (!is.matrix(odds)) stop("Argument 'odds' must be a matrix.")
+  if (!is.data.frame(amp)) stop("Argument 'amp' must be a data frame.")
+  if (!is.integer(cand)) stop("Argument 'cand' must be integer.")
+  if (!is.list(scores)) stop("Argument 'scores' must be a list.")
+  if (!is.data.frame(data)) stop("Argument 'data' must be a data frame.")
+
+  # Create the object
+  obj <- list(
+    call = call,
+    prop = prop,
+    patterns = patterns,
+    freq = freq,
+    mech = mech,
+    weights = weights,
+    cont = cont,
+    type = type,
+    odds = odds,
+    amp = amp,
+    cand = cand,
+    scores = scores,
+    data = data
+  )
+
+  # Assign the class
+  class(obj) <- "mads"
+  return(obj)
+}

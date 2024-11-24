@@ -134,7 +134,7 @@ as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id") {
 #' into a \code{mira} object that can be pooled.
 #' @param fitlist A list containing $m$ fitted analysis objects
 #' @return An S3 object of class \code{mira}.
-#' @seealso \code{\link[=mira-class]{mira}}
+#' @seealso \code{\link{mira}}
 #' @author Stef van Buuren
 #' @export
 as.mira <- function(fitlist) {

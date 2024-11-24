@@ -2,6 +2,7 @@
 % Please edit documentation in R/with.R
 \name{with.mids}
 \alias{with.mids}
+\alias{with}
 \title{Evaluate an expression in multiple imputed datasets}
 \usage{
 \method{with}{mids}(data, expr, ...)
@@ -16,7 +17,7 @@ containing a dot (notation for "all other variables") do not work.}
 \item{\dots}{Not used}
 }
 \value{
-An object of S3 class \code{\link[=mira-class]{mira}}
+An object of S3 class \code{\link{mira}}
 }
 \description{
 Performs a computation of each of imputed datasets in data.
@@ -45,7 +46,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}, \code{\link{pool}},
+\code{\link{mids}}, \code{\link{mira}}, \code{\link{pool}},
 \code{\link{D1}}, \code{\link{D3}}, \code{\link{pool.r.squared}}
 }
 \author{

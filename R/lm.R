@@ -15,7 +15,7 @@
 #' repeated analysis'.  This object contains \code{data$m} distinct
 #' \code{lm.objects}, plus some descriptive information.
 #' @author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
-#' @seealso \code{\link{lm}}, \code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}
+#' @seealso \code{\link{lm}}, \code{\link{mids}}, \code{\link{mira}}
 #' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 #' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #' Statistical Software}, \bold{45}(3), 1-67.
@@ -62,7 +62,7 @@ lm.mids <- function(formula, data, ...) {
 #' \code{glm.objects}, plus some descriptive information.
 #' @author Stef van Buuren, Karin Groothuis-Oudshoorn, 2000
 #' @seealso \code{\link{with.mids}}, \code{\link{glm}}, \code{\link[=mids-class]{mids}},
-#' \code{\link[=mira-class]{mira}}
+#' \code{\link{mira}}
 #' @references Van Buuren, S., Groothuis-Oudshoorn, C.G.M. (2000)
 #' \emph{Multivariate Imputation by Chained Equations: MICE V1.0 User's manual.}
 #' Leiden: TNO Quality of Life.

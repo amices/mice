@@ -1,4 +1,3 @@
-#' @import              methods
 #' @importFrom broom    glance tidy
 #' @importFrom dplyr    .data %>% any_of bind_cols bind_rows filter group_by lead
 #'                      mutate n pull relocate row_number select summarize

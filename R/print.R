@@ -1,32 +1,12 @@
-#' Print a \code{mids} object
-#'
-#' @rdname print
-#' @param x Object of class \code{mids}, \code{mira} or \code{mipo}
-#' @param ... Other parameters passed down to \code{print.default()}
-#' @return \code{NULL}
-#' @seealso \code{\link[=mids-class]{mids}}
-#' @method print mids
-#' @export
-print.mids <- function(x, ...) {
-  cat("Class: mids\n")
-  cat("Number of multiple imputations: ", x$m, "\n")
-  cat("Imputation methods:\n")
-  print(x$method, ...)
-  cat("PredictorMatrix:\n")
-  print(head(x$predictorMatrix), ...)
-  if (!is.null(x$loggedEvents)) {
-    cat("Number of logged events: ", nrow(x$loggedEvents), "\n")
-    print(head(x$loggedEvents), ...)
-  }
-  invisible(x)
-}
 
 
 #' Print a \code{mira} object
 #'
 #' @rdname print
+#' @param x An object of class \code{mira}
+#' @param \dots Other arguments
 #' @return \code{NULL}
-#' @seealso \code{\link[=mira-class]{mira}}
+#' @seealso \code{\link{mira}}
 #' @method print mira
 #' @export
 print.mira <- function(x, ...) {
@@ -42,6 +22,8 @@ print.mira <- function(x, ...) {
 #' Print a \code{mice.anova} object
 #'
 #' @rdname print
+#' @param x An object of class \code{mice.anova}
+#' @param \dots Other arguments
 #' @return \code{NULL}
 #' @seealso \code{\link{mipo}}
 #' @method print mice.anova

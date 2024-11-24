@@ -41,7 +41,7 @@
 #' tidied mipo object, and is normally not called directly.
 #' It adds a confidence interval, and optionally exponentiates, the result.
 #' @seealso \code{\link{pool}},
-#' \code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}
+#' \code{\link{mids}}, \code{\link{mira}}
 #' @references van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
 #' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #' Statistical Software}, \bold{45}(3), 1-67.

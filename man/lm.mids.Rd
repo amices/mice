@@ -40,7 +40,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link{lm}}, \code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}
+\code{\link{lm}}, \code{\link{mids}}, \code{\link{mira}}
 }
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn, 2000

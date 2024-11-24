@@ -18,7 +18,7 @@ complete-data analysis stored as a list, and turns it
 into a \code{mira} object that can be pooled.
 }
 \seealso{
-\code{\link[=mira-class]{mira}}
+\code{\link{mira}}
 }
 \author{
 Stef van Buuren

@@ -111,10 +111,14 @@ cbind.mids <- function(x, y = NULL, ...) {
   loggedEvents <- x$loggedEvents
 
   ## save, and return
-  midsobj <- list(
-    data = data, imp = imp, m = m,
-    where = where, blocks = blocks,
-    call = call, nmis = nmis,
+  midsobj <- mids(
+    data = data,
+    imp = imp,
+    m = m,
+    where = where,
+    blocks = blocks,
+    call = call,
+    nmis = nmis,
     method = method,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
@@ -127,12 +131,8 @@ cbind.mids <- function(x, y = NULL, ...) {
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents,
-    version = packageVersion("mice"),
-    date = Sys.Date()
-  )
-  class(midsobj) <- "mids"
-  midsobj
+    loggedEvents = loggedEvents)
+  return(midsobj)
 }
 
 
@@ -282,10 +282,14 @@ cbind.mids.mids <- function(x, y, call) {
 
   loggedEvents <- x$loggedEvents
 
-  midsobj <- list(
-    data = data, imp = imp, m = m,
-    where = where, blocks = blocks,
-    call = call, nmis = nmis,
+  midsobj <- mids(
+    data = data,
+    imp = imp,
+    m = m,
+    where = where,
+    blocks = blocks,
+    call = call,
+    nmis = nmis,
     method = method,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
@@ -298,12 +302,8 @@ cbind.mids.mids <- function(x, y, call) {
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents,
-    version = packageVersion("mice"),
-    date = Sys.Date()
-  )
-  class(midsobj) <- "mids"
-  midsobj
+    loggedEvents = loggedEvents)
+  return(midsobj)
 }
 
 renf <- function(f, nn) {
