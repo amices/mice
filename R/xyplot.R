@@ -26,6 +26,7 @@
 #' duration of the session by running \code{mice.theme()}.
 #'
 #' @aliases xyplot.mids xyplot
+#' @method xyplot mids
 #' @param x A \code{mids} object, typically created by \code{mice()} or
 #' \code{mice.mids()}.
 #' @param data Formula that selects the data to be plotted.  This argument

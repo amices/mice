@@ -234,8 +234,8 @@ Chapman & Hall/CRC. Boca Raton, FL.
 Vink, G. (2016) Towards a standardized evaluation of multiple imputation routines.
 }
 \seealso{
-\code{\link{mads}}, \code{\link[lattice]{bwplot}},
-\code{\link[lattice]{xyplot}}, \code{\link{mice}}
+\code{\link{mads}}, \code{\link{bwplot.mads}},
+\code{\link{xyplot.mads}}
 }
 \author{
 Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016

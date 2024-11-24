@@ -2,7 +2,6 @@
 % Please edit documentation in R/bwplot.mads.R
 \name{bwplot.mads}
 \alias{bwplot.mads}
-\alias{bwplot}
 \title{Box-and-whisker plot of amputed and non-amputed data}
 \usage{
 \method{bwplot}{mads}(

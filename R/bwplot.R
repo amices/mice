@@ -26,7 +26,7 @@
 #' duration of the session by running \code{mice.theme()}.
 #'
 #' @aliases bwplot.mids bwplot
-#'
+#' @method bwplot mids
 #' @param x A \code{mids} object, typically created by \code{mice()} or
 #' \code{mice.mids()}.
 #' @param data Formula that selects the data to be plotted.  This argument
