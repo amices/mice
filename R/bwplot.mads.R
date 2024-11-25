@@ -4,7 +4,7 @@
 #' the amputed data. The function shows how the amputed values are related
 #' to the variable values.
 #'
-#' @aliases bwplot.mads
+#' @method bwplot mads
 #' @param x A \code{mads} (\code{\link{mads}}) object, typically created by
 #' \code{\link{ampute}}.
 #' @param data A string or vector of variable names that needs to be plotted. As
@@ -29,7 +29,6 @@
 #' Amputation using Ampute} to understand the contents of class object \code{mads}.
 #' @author Rianne Schouten, 2016
 #' @seealso \code{\link{ampute}}, \code{\link[lattice]{bwplot}}, \code{\link{mads}}
-#' @method bwplot mads
 #' @export
 bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
                         descriptives = TRUE, layout = NULL, ...) {

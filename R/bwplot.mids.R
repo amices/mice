@@ -114,11 +114,7 @@
 #' All other arguments have identical interpretation.
 #'
 #' @author Stef van Buuren
-#' @seealso \code{\link{mice}}, \code{\link[lattice]{xyplot}},
-#' \code{\link[lattice]{densityplot}},\code{\link[lattice]{stripplot}},
-#'  \code{\link{lattice}} for an overview of the package, as well
-#'  as \code{\link[lattice]{bwplot}}, \code{\link[lattice]{panel.bwplot}},
-#' \code{\link[lattice]{print.trellis}}, \code{\link[lattice]{trellis.par.set}}
+#' @seealso \code{\link{mice}}, \code{\link[lattice]{bwplot}}
 #' @references Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
 #' Visualization with R}, Springer.
 #'

@@ -172,11 +172,7 @@ Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-\code{\link{mice}}, \code{\link[lattice]{xyplot}},
-\code{\link[lattice]{densityplot}},\code{\link[lattice]{stripplot}},
- \code{\link{lattice}} for an overview of the package, as well
- as \code{\link[lattice]{bwplot}}, \code{\link[lattice]{panel.bwplot}},
-\code{\link[lattice]{print.trellis}}, \code{\link[lattice]{trellis.par.set}}
+\code{\link{mice}}, \code{\link[lattice]{bwplot}}
 }
 \author{
 Stef van Buuren
