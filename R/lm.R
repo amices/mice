@@ -28,7 +28,7 @@
 #' @export
 lm.mids <- function(formula, data, ...) {
   .Deprecated("with",
-    msg = "Use with(imp, lm(yourmodel)."
+    msg = "Use with(imp, lm(yourmodel))."
   )
   # adapted 28/1/00 repeated complete data regression (lm) on a mids data set
   call <- match.call()
@@ -77,7 +77,7 @@ lm.mids <- function(formula, data, ...) {
 #' @export
 glm.mids <- function(formula, family = gaussian, data, ...) {
   .Deprecated("with",
-    msg = "Use with(imp, glm(yourmodel)."
+    msg = "Use with(imp, glm(yourmodel))."
   )
   # adapted 04/02/00 repeated complete data regression (glm) on a mids data set
   call <- match.call()

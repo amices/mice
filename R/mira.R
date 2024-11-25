@@ -51,7 +51,11 @@
 #' @name mira
 #' @aliases mira
 #' @export
-mira <- function(call, call1, nmis, analyses) {
+mira <- function(
+    call = match.call(),
+    call1 = match.call(),
+    nmis = integer(),
+    analyses = list()) {
   # Ensure the inputs are valid
   if (!is.call(call)) stop("Argument 'call' must be a call.")
   if (!is.call(call1)) stop("Argument 'call1' must be a call.")

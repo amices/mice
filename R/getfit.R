@@ -38,6 +38,8 @@ getfit <- function(x, i = -1L, simplify = FALSE) {
     return(ra[[i]])
   }
   if (simplify) ra <- unlist(ra)
+
+  # hack to get pool accept both mira and general list objects
   class(ra) <- c("mira", "list")
   ra
 }

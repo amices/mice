@@ -149,9 +149,8 @@ as.mira <- function(fitlist) {
     stop("Argument 'fitlist' is not a list")
   }
   class(fitlist) <- "list"
-  object <- list(call = call, call1 = NULL, nmis = NULL, analyses = fitlist)
-  class(object) <- c("mira", "matrix")
-  object
+  object <- mira(call = call, analyses = fitlist)
+  return(object)
 }
 
 #' Converts into a \code{mitml.result} object

@@ -43,7 +43,7 @@
 #'       as.numeric(YB),
 #'       method = "kendall"
 #'     ))
-#'     tau <<- rbind(tau, getfit(cors, s = TRUE)) # global assignment
+#'     tau <<- rbind(tau, unlist(cors$analyses)) # global assignment
 #'   }
 #' }
 #'

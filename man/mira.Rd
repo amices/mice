@@ -4,7 +4,12 @@
 \alias{mira}
 \title{Create an object of class "mira"}
 \usage{
-mira(call, call1, nmis, analyses)
+mira(
+  call = match.call(),
+  call1 = match.call(),
+  nmis = integer(),
+  analyses = list()
+)
 }
 \arguments{
 \item{call}{The function call that created the object.}
