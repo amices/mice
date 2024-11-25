@@ -199,15 +199,18 @@ The default is \code{c(2, 3)}.}
 }
 \description{
 The \code{mids} object is an S3 class that represents a multiply imputed
-data set. The following functions produce a \code{mids} object:
+data set. The \code{mids()} function is the S3 constructor.
+The following functions produce a \code{mids} object:
 \code{mids()}, \code{\link{mice}()}, \code{\link{mice.mids}()},
-\code{\link{cbind}()}, \code{\link{rbind}()}, and \code{\link{ibind}()}.
-The \code{mids()} function is the S3 constructor.
+\code{\link{cbind}()}, \code{\link{rbind}()}, \code{\link{ibind}()},
+\code{\link{as.mids}()} and \code{\link{filter}()}.
+}
+\details{
 The S3 class \code{mids} has the following methods:
 \code{\link{bwplot}()}, \code{\link{complete}()},
 \code{\link{densityplot}()}, \code{plot()},
 \code{print()}, \code{\link{stripplot}()}, \code{summary()},
-\code{\link{with}()}, and \code{\link{xyplot}()}.
+\code{\link{with}()} and \code{\link{xyplot}()}.
 }
 \section{Structure}{
 
