@@ -152,29 +152,29 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
   }
 
   ## save, and return
-  midsobj <- list(
-    data = obj$data, imp = imp, m = obj$m,
-    where = where, blocks = obj$blocks,
-    call = call, nmis = obj$nmis,
+  midsobj <- mids(
+    data = obj$data,
+    imp = imp,
+    m = obj$m,
+    where = where,
+    blocks = obj$blocks,
+    call = call,
+    nmis = obj$nmis,
     method = obj$method,
     predictorMatrix = obj$predictorMatrix,
     visitSequence = obj$visitSequence,
-    formulas = obj$formulas, post = obj$post,
+    formulas = obj$formulas,
+    post = obj$post,
     blots = obj$blots,
     ignore = obj$ignore,
     seed = obj$seed,
     iteration = sumIt,
     lastSeedValue = get(".Random.seed",
       envir = globalenv(), mode = "integer",
-      inherits = FALSE
-    ),
+      inherits = FALSE),
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents,
-    version = packageVersion("mice"),
-    date = Sys.Date()
-  )
-  class(midsobj) <- "mids"
+    loggedEvents = loggedEvents)
 
   if (!is.null(newdata)) {
     include <- c(
@@ -184,5 +184,5 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
     midsobj <- filter(midsobj, include)
   }
 
-  midsobj
+  return(midsobj)
 }

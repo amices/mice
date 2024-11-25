@@ -462,7 +462,7 @@ mice <- function(data,
   if (state$log) row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
 
   ## save, and return
-  midsobj <- list(
+  midsobj <- mids(
     data = data,
     imp = q$imp,
     m = m,
@@ -481,20 +481,15 @@ mice <- function(data,
     iteration = q$iteration,
     lastSeedValue = get(".Random.seed",
       envir = globalenv(), mode = "integer",
-      inherits = FALSE
-    ),
+      inherits = FALSE),
     chainMean = q$chainMean,
     chainVar = q$chainVar,
-    loggedEvents = loggedEvents,
-    version = packageVersion("mice"),
-    date = Sys.Date()
-  )
-  class(midsobj) <- "mids"
+    loggedEvents = loggedEvents)
 
   if (!is.null(midsobj$loggedEvents)) {
     warning("Number of logged events: ", nrow(midsobj$loggedEvents),
       call. = FALSE
     )
   }
-  midsobj
+  return(midsobj)
 }
