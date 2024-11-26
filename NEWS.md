@@ -1,9 +1,3 @@
-* Removes `methods` and `rlang` from `Depends`
-* Moves `glmnet`, `mitml`, `rpart` to `Suggests`
-* Drops support for S4. Convert S4-related code to S3. Syntax `as(df, "mids")` is deprecated. Use `as.mids(df)` instead.
-* Removes export of non-user facing `ampute()` helpers
-* Defines S3 class constructor for `mids` and `mads` objects
-
 # mice 3.17.0
 
 ### Major changes
@@ -28,6 +22,8 @@
 
 * The `complete(..., action = "long", ...)` command puts the columns named `".imp"` and `".id"` in the last two positions of the long data (instead of first two positions).  In this way, the columns of the imputed data will have the same positions as in the original data, which is more user-friendly and easier to work with. Note that any existing code that assumes that variables `".imp"` and `".id"` are in columns 1 and 2 will need to be modified. The advice is to modify the code using the variable names `".imp"` and `".id"`. If you want the old behaviour, specify the argument `order = "first"`. (#569). Contributed @stefvanbuuren
 
+* Drops support for S4. Convert S4-related code to S3. Syntax `as(df, "mids")` is deprecated. Use `as.mids(df)` instead.
+
 ### Minor changes
 
 * Adds support for the `dots` argument to `ranger::ranger(...)` in `mice.impute.rf()` (#563). Contributed @edbonneville
@@ -38,6 +34,7 @@
 * Simplifies `NEWS.md` formatting to get correct version sequence on CRAN and in-package NEWS
 * Initialize single-variables blocks in `make.method()` in a more efficient way (resolves #672)
 * Prevent `as.mids()` from filling the `imp` object for complete variables
+* Defines S3 class constructors for `mids`, `mads`, `mira` and `mipo` objects
 
 ### Bug fixes
 
@@ -55,6 +52,9 @@
 * Repairs lost braces in the documentation
 * Fixes an installation problem when `Rprofile` prints to `stdout` on Fedora, R version 4.1.3 (#646, #647). Thanks @brookslogan for the fix.
 * Fixes a bug during initialization of factor values
+* Removes `methods` and `rlang` from `Depends`
+* Removes export of non-user facing `ampute()` helpers
+* Clears `\link` statements that do not pass CRAN checks
 
 
 # mice 3.16.0
