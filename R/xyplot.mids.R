@@ -25,8 +25,6 @@
 #' \code{col=mdc(1:2), pch=20, cex=1.5}. These choices can be set for the
 #' duration of the session by running \code{mice.theme()}.
 #'
-#' @aliases xyplot.mids xyplot
-#' @method xyplot mids
 #' @param x A \code{mids} object, typically created by \code{mice()} or
 #' \code{mice.mids()}.
 #' @param data Formula that selects the data to be plotted.  This argument
@@ -104,11 +102,6 @@
 #' All other arguments have identical interpretation.
 #'
 #' @author Stef van Buuren
-#' @seealso \code{\link{mice}}, \code{\link[lattice]{stripplot}},
-#' \code{\link[lattice]{densityplot}}, \code{\link[lattice]{bwplot}},
-#' \code{\link{lattice}} for an overview of the package, as well as
-#' \code{\link[lattice]{xyplot}}, \code{\link[lattice]{panel.xyplot}},
-#' \code{\link[lattice]{print.trellis}}, \code{\link[lattice]{trellis.par.set}}
 #' @references Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
 #' Visualization with R}, Springer.
 #'
@@ -126,6 +119,8 @@
 #'
 #' # same, but label with missingness of wgt (four cases)
 #' xyplot(imp, hgt ~ age | .imp, na.group = wgt, pch = c(1, 20), cex = c(1, 1.5))
+#' @aliases xyplot.mids xyplot
+#' @method xyplot mids
 #' @export
 xyplot.mids <- function(x,
                         data,
@@ -217,6 +212,6 @@ xyplot.mids <- function(x,
   )
 
   ## go
-  tp <- do.call("xyplot", args)
+  tp <- do.call(lattice::xyplot, args)
   update(tp, par.settings = theme)
 }

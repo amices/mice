@@ -1,7 +1,7 @@
 #' Scatterplot of amputed and non-amputed data against weighted sum scores
 #'
 #' Plotting method to investigate relation between amputed data and the weighted sum
-#' scores. Based on \code{\link{lattice}}. \code{xyplot} produces scatterplots.
+#' scores. Based on \pkg{lattice}, \code{xyplot} produces scatterplots.
 #' The function plots the variables against the weighted sum scores. The function
 #' automatically separates the amputed and non-amputed data to see the relation between
 #' the amputation and the weighted sum scores.
@@ -29,9 +29,7 @@
 #' make any desired plots. Check \code{\link{mads}} or the vignette \emph{Multivariate
 #' Amputation using Ampute} to understand the contents of class object \code{mads}.
 #' @author Rianne Schouten, 2016
-#' @seealso \code{\link{ampute}}, \code{\link[lattice]{bwplot}},
-#' \code{\link{lattice}} for
-#' an overview of the package, \code{\link{mads}}
+#' @seealso \code{\link{ampute}}, \code{\link{mads}}
 #' @export
 xyplot.mads <- function(x, data, which.pat = NULL,
                         standardized = TRUE, layout = NULL,
@@ -106,7 +104,7 @@ xyplot.mads <- function(x, data, which.pat = NULL,
   )
   for (i in seq_len(pat)) {
     p[[paste("Scatterplot Pattern", which.pat[i])]] <-
-      xyplot(
+      lattice::xyplot(
         x = formula, data = data[data$.pat == which.pat[i], ],
         groups = data$.amp, par.settings = theme,
         multiple = TRUE, outer = TRUE, layout = layout, key = key,

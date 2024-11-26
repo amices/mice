@@ -26,8 +26,6 @@
 #' \code{col=mdc(1:2), pch=20, cex=1.5}. These choices can be set for the
 #' duration of the session by running \code{mice.theme()}.
 #'
-#' @aliases stripplot.mids stripplot
-#' @method stripplot mids
 #' @param x A \code{mids} object, typically created by \code{mice()} or
 #' \code{mice.mids()}.
 #' @param data Formula that selects the data to be plotted.  This argument
@@ -113,11 +111,6 @@
 #' All other arguments have identical interpretation.
 #'
 #' @author Stef van Buuren
-#' @seealso \code{\link{mice}}, \code{\link[lattice]{xyplot}},
-#' \code{\link[lattice]{densityplot}}, \code{\link[lattice]{bwplot}},
-#' \code{\link{lattice}} for an overview of the package, as well
-#' as \code{\link[lattice]{stripplot}}, \code{\link[lattice]{panel.stripplot}},
-#' \code{\link[lattice]{print.trellis}},\code{\link[lattice]{trellis.par.set}}
 #' @references Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
 #' Visualization with R}, Springer.
 #'
@@ -177,6 +170,8 @@
 #'   na = wgt, factor = 2, cex = c(8.6),
 #'   hor = FALSE, outer = TRUE, scales = "free", pch = c(1, 19)
 #' )
+#' @aliases stripplot.mids stripplot
+#' @method stripplot mids
 #' @export
 stripplot.mids <- function(x,
                            data,
@@ -296,6 +291,6 @@ stripplot.mids <- function(x,
   )
 
   ## go
-  tp <- do.call("stripplot", args)
+  tp <- do.call(lattice::stripplot, args)
   update(tp, par.settings = theme)
 }

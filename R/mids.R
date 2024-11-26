@@ -307,7 +307,7 @@ plot.mids <- function(x, y = NULL, theme = mice.theme(), layout = c(2, 3),
   .m <- NULL
   rm(.m)
 
-  tp <- xyplot(
+  tp <- lattice::xyplot(
     x = formula, data = data, groups = .m,
     type = type, lty = lty, col = col, layout = layout,
     scales = list(

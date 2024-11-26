@@ -25,8 +25,6 @@
 #' \code{col=mdc(1:2), pch=20, cex=1.5}. These choices can be set for the
 #' duration of the session by running \code{mice.theme()}.
 #'
-#' @aliases bwplot.mids bwplot
-#' @method bwplot mids
 #' @param x A \code{mids} object, typically created by \code{mice()} or
 #' \code{mice.mids()}.
 #' @param data Formula that selects the data to be plotted.  This argument
@@ -113,6 +111,9 @@
 #'
 #' All other arguments have identical interpretation.
 #'
+#' Generates a box-and-whisker plot for each numerical variable in a
+#' \code{mids} object. This extends the \code{\link[lattice]{bwplot}} generic.
+#'
 #' @author Stef van Buuren
 #' @seealso \code{\link{mice}}, \code{\link[lattice]{bwplot}}
 #' @references Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
@@ -123,7 +124,6 @@
 #' Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 #' @keywords hplot
 #' @examples
-#'
 #' imp <- mice(boys, maxit = 1)
 #'
 #' ### box-and-whisker plot per imputation of all numerical variables
@@ -134,6 +134,8 @@
 #'
 #' ### same data, organized in a different way
 #' bwplot(imp, tv ~ reg | .imp, theme = list())
+#' @aliases bwplot.mids bwplot
+#' @method bwplot mids
 #' @export
 bwplot.mids <- function(x,
                         data,
@@ -267,6 +269,6 @@ bwplot.mids <- function(x,
   )
 
   ## go
-  tp <- do.call("bwplot", args)
+  tp <- do.call(lattice::bwplot, args)
   update(tp, par.settings = theme)
 }

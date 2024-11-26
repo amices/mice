@@ -140,7 +140,7 @@ bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
 
   for (i in seq_len(pat)) {
     p[[paste("Boxplot pattern", which.pat[i])]] <-
-      bwplot(
+      lattice::bwplot(
         x = formula, data = data[data$.pat == which.pat[i], ],
         multiple = TRUE, outer = TRUE, layout = layout,
         ylab = "", par.settings = theme,

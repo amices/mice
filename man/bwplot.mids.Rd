@@ -149,9 +149,11 @@ In \pkg{mice} the argument \code{data} is always a formula object, whereas in
 \pkg{lattice} the argument \code{data} is usually a data frame.
 
 All other arguments have identical interpretation.
+
+Generates a box-and-whisker plot for each numerical variable in a
+\code{mids} object. This extends the \code{\link[lattice]{bwplot}} generic.
 }
 \examples{
-
 imp <- mice(boys, maxit = 1)
 
 ### box-and-whisker plot per imputation of all numerical variables

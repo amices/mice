@@ -44,7 +44,7 @@ will always be shown in a new plot.
 }
 \description{
 Plotting method to investigate relation between amputed data and the weighted sum
-scores. Based on \code{\link{lattice}}. \code{xyplot} produces scatterplots.
+scores. Based on \pkg{lattice}, \code{xyplot} produces scatterplots.
 The function plots the variables against the weighted sum scores. The function
 automatically separates the amputed and non-amputed data to see the relation between
 the amputation and the weighted sum scores.
@@ -55,9 +55,7 @@ make any desired plots. Check \code{\link{mads}} or the vignette \emph{Multivari
 Amputation using Ampute} to understand the contents of class object \code{mads}.
 }
 \seealso{
-\code{\link{ampute}}, \code{\link[lattice]{bwplot}},
-\code{\link{lattice}} for
-an overview of the package, \code{\link{mads}}
+\code{\link{ampute}}, \code{\link{mads}}
 }
 \author{
 Rianne Schouten, 2016

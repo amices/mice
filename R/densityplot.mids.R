@@ -25,8 +25,6 @@
 #' \code{col=mdc(1:2), pch=20, cex=1.5}. These choices can be set for the
 #' duration of the session by running \code{mice.theme()}.
 #'
-#' @aliases densityplot.mids densityplot
-#' @method densityplot mids
 #' @param x A \code{mids} object, typically created by \code{mice()} or
 #' \code{mice.mids()}.
 #' @param data Formula that selects the data to be plotted.  This argument
@@ -125,13 +123,6 @@
 #' automatically}. There is yet no workaround for this problem. Use the more
 #' robust \code{bwplot} or \code{stripplot} as a replacement.
 #' @author Stef van Buuren
-#' @seealso \code{\link{mice}}, \code{\link[lattice]{xyplot}},
-#' \code{\link[lattice]{stripplot}}, \code{\link[lattice]{bwplot}},
-#' \code{\link{lattice}} for an overview of the
-#' package, as well as \code{\link[lattice]{densityplot}},
-#' \code{\link[lattice]{panel.densityplot}},
-#' \code{\link[lattice]{print.trellis}},
-#' \code{\link[lattice]{trellis.par.set}}
 #' @references Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
 #' Visualization with R}, Springer.
 #'
@@ -148,6 +139,8 @@
 #'
 #' ### All combined in one panel.
 #' densityplot(imp, ~hc)
+#' @aliases densityplot.mids densityplot
+#' @method densityplot mids
 #' @export
 densityplot.mids <- function(x,
                              data,
@@ -270,7 +263,7 @@ densityplot.mids <- function(x,
   )
 
   ## go
-  tp <- do.call("densityplot", args)
+  tp <- do.call(lattice::densityplot, args)
   tp <- update(tp, par.settings = theme)
   return(tp)
 }
