@@ -198,18 +198,18 @@ The value <code>dfcom = Inf</code> is acceptable for large samples
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3    age60-99 2 70.077449 25.817663  2.71432191  7.29272 0.028863238</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4         bmi 2  6.006762  1.982587  3.02975940 18.08472 0.007175381</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5      hypyes 2 -4.347543 20.462257 -0.21246647 17.63466 0.834179684</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      conf.low conf.high         riv      lambda       fmi        ubar</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -114.082019 120.04099 0.008166507 0.008100355 0.1021574 3081.702712</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   10.336814  93.67388 0.055814663 0.052864073 0.1500157  367.726421</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    9.521628 130.63327 0.338109344 0.252676917 0.3978908  498.129498</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    1.842899  10.17062 0.008456294 0.008385384 0.1024454    3.897692</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -47.401078  38.70599 0.024808694 0.024208122 0.1187861  408.567912</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              b           t dfcom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  16.77783124 3106.869459    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  13.68301760  388.250947    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 112.28149168  666.551735    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   0.02197335    3.930652    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   6.75735741  418.703948    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         2.5 %    97.5 %    conf.low conf.high         riv      lambda       fmi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -114.082019 120.04099 -114.082019 120.04099 0.008166507 0.008100355 0.1021574</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   10.336814  93.67388   10.336814  93.67388 0.055814663 0.052864073 0.1500157</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    9.521628 130.63327    9.521628 130.63327 0.338109344 0.252676917 0.3978908</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    1.842899  10.17062    1.842899  10.17062 0.008456294 0.008385384 0.1024454</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -47.401078  38.70599  -47.401078  38.70599 0.024808694 0.024208122 0.1187861</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          ubar            b           t dfcom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 3081.702712  16.77783124 3106.869459    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  367.726421  13.68301760  388.250947    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  498.129498 112.28149168  666.551735    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3.897692   0.02197335    3.930652    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  408.567912   6.75735741  418.703948    20</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># pool.table workflow: all numerical output</span></span></span>
 <span class="r-in"><span><span class="va">all2</span> <span class="op">&lt;-</span> <span class="fu">pool.table</span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span></span></span>
@@ -220,20 +220,21 @@ The value <code>dfcom = Inf</code> is acceptable for large samples
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3    age60-99 2 70.077449 25.817663  2.71432191  7.29272 0.028863238</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4         bmi 2  6.006762  1.982587  3.02975940 18.08472 0.007175381</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5      hypyes 2 -4.347543 20.462257 -0.21246647 17.63466 0.834179684</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      conf.low conf.high         riv      lambda       fmi        ubar</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -114.082019 120.04099 0.008166507 0.008100355 0.1021574 3081.702712</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   10.336814  93.67388 0.055814663 0.052864073 0.1500157  367.726421</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    9.521628 130.63327 0.338109344 0.252676917 0.3978908  498.129498</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    1.842899  10.17062 0.008456294 0.008385384 0.1024454    3.897692</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -47.401078  38.70599 0.024808694 0.024208122 0.1187861  408.567912</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              b           t dfcom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  16.77783124 3106.869459    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  13.68301760  388.250947    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 112.28149168  666.551735    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   0.02197335    3.930652    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   6.75735741  418.703948    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         2.5 %    97.5 %    conf.low conf.high         riv      lambda       fmi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -114.082019 120.04099 -114.082019 120.04099 0.008166507 0.008100355 0.1021574</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   10.336814  93.67388   10.336814  93.67388 0.055814663 0.052864073 0.1500157</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    9.521628 130.63327    9.521628 130.63327 0.338109344 0.252676917 0.3978908</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    1.842899  10.17062    1.842899  10.17062 0.008456294 0.008385384 0.1024454</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -47.401078  38.70599  -47.401078  38.70599 0.024808694 0.024208122 0.1187861</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          ubar            b           t dfcom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 3081.702712  16.77783124 3106.869459    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  367.726421  13.68301760  388.250947    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  498.129498 112.28149168  666.551735    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3.897692   0.02197335    3.930652    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  408.567912   6.75735741  418.703948    20</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">all1</span><span class="op">)</span>, <span class="va">all2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">all1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"data.frame"</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">all1</span>, <span class="va">all2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 </code></pre></div>
     </div>
