@@ -5,10 +5,5 @@ mice.Rproj
 .Rproj.user
 inst/doc
 *_cache
-/revdep/.cache.rds
-/revdep/checks.noindex
-/revdep/library.noindex
-/revdep/data.sqlite
-/revdep/*.html
 script
 docs
