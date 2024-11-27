@@ -1,69 +1,3 @@
-# autoReg
-
-<details>
-
-* Version: 0.3.3
-* GitHub: https://github.com/cardiomoon/autoReg
-* Source code: https://github.com/cran/autoReg
-* Date/Publication: 2023-11-14 05:53:27 UTC
-* Number of recursive dependencies: 212
-
-Run `revdepcheck::revdep_details(, "autoReg")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘autoReg-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: autoReg
-    > ### Title: Perform univariable and multivariable regression and stepwise
-    > ###   backward regression automatically
-    > ### Aliases: autoReg autoReg.lm autoReg.glm autoReg.coxph autoReg.survreg
-    > 
-    > ### ** Examples
-    > 
-    ...
-      9. │   ├─base::withCallingHandlers(...)
-     10. │   └─dplyr:::mutate_col(dots[[i]], data, mask, new_columns)
-     11. │     └─mask$eval_all_mutate(quo)
-     12. │       └─dplyr (local) eval()
-     13. ├─2.5 %
-     14. ├─rlang:::`$.rlang_data_pronoun`(.data, `2.5 %`)
-     15. │ └─rlang:::data_pronoun_get(...)
-     16. └─rlang:::abort_data_pronoun(x, call = y)
-     17.   └─rlang::abort(msg, "rlang_error_data_pronoun_not_found", call = call)
-    Execution halted
-    ```
-
-*   checking running R code from vignettes ...
-    ```
-      ‘Automatic_Regression_Modeling.Rmd’ using ‘UTF-8’... failed
-      ‘Bootstrap_Prediction.Rmd’ using ‘UTF-8’... OK
-      ‘Getting_started.Rmd’ using ‘UTF-8’... failed
-      ‘Statiastical_test_in_gaze.Rmd’ using ‘UTF-8’... OK
-      ‘Survival.Rmd’ using ‘UTF-8’... OK
-     ERROR
-    Errors in running code in vignettes:
-    when running code in ‘Automatic_Regression_Modeling.Rmd’
-      ...
-                            virginica  (N=50)    Mean ± SD  6.6 ± 0.6  1.95 (1.75 to 2.14, p<.001)  1.86 (1.65 to 2.07, p<.001) 
-    ...
-                               Male    489 (52.9%)   463 (51.6%)  0.95 (0.79-1.14, p=.594)  0.95 (0.78-1.15, p=.589)                           
-    ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-    
-    > autoReg(fit, imputed = TRUE) %>% myft()
-    
-      When sourcing ‘Getting_started.R’:
-    Error: ℹ In argument: `lower = exp(.data$`2.5 %`)`.
-    Caused by error in `` .data$`2.5 %` ``:
-    ! Column `2.5 %` not found in `.data`.
-    Execution halted
-    ```
-
 # bipd
 
 <details>
@@ -80,7 +14,7 @@ Run `revdepcheck::revdep_details(, "bipd")` for more info
 
 ## Newly broken
 
-*   checking dependencies in R code ...sh: line 1: 24340 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpazqvFP/file5c206c170a3d'
+*   checking dependencies in R code ...sh: line 1: 58727 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpM38C1S/filee1cf761be8f7'
     ```
      NOTE
     
@@ -107,7 +41,7 @@ Run `revdepcheck::revdep_details(, "bipd")` for more info
 
 ## Newly fixed
 
-*   checking dependencies in R code ...sh: line 1: 23537 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpsUM9II/file58f6540265e5'
+*   checking dependencies in R code ...sh: line 1: 58721 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//Rtmpxl1LPe/filee1b045bcd2d0'
     ```
      NOTE
     
@@ -157,80 +91,5 @@ Run `revdepcheck::revdep_details(, "bipd")` for more info
       Referenced from: <CAF5E1DC-317A-34FE-988A-FB6F7C73D89E> /Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/bipd/rjags/libs/rjags.so
       Reason: tried: '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/lib/libjags.4.dylib' (no such file), '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64')), '/Library/Frameworks/R.framework/Resources/lib/libjags.4.dylib' (no such file), '/Library/Java/
     Execution halted
-    ```
-
-# finalfit
-
-<details>
-
-* Version: 1.0.8
-* GitHub: https://github.com/ewenharrison/finalfit
-* Source code: https://github.com/cran/finalfit
-* Date/Publication: 2024-07-24 15:20:01 UTC
-* Number of recursive dependencies: 176
-
-Run `revdepcheck::revdep_details(, "finalfit")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘finalfit-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: missing_predictorMatrix
-    > ### Title: Create predictorMatrix for use with mice
-    > ### Aliases: missing_predictorMatrix
-    > 
-    > ### ** Examples
-    > 
-    > library(mice)
-    ...
-     22. │             └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
-     23. │               └─tidyselect:::as_indices_sel_impl(...)
-     24. │                 └─tidyselect:::as_indices_impl(...)
-     25. │                   └─tidyselect:::chr_as_locations(x, vars, call = call, arg = arg)
-     26. │                     └─vctrs::vec_as_location(...)
-     27. └─vctrs (local) `<fn>`()
-     28.   └─vctrs:::stop_subscript_oob(...)
-     29.     └─vctrs:::stop_subscript(...)
-     30.       └─rlang::abort(...)
-    Execution halted
-    ```
-
-*   checking running R code from vignettes ...
-    ```
-      ‘all_plots_examples.Rmd’ using ‘UTF-8’... OK
-      ‘all_tables_examples.Rmd’ using ‘UTF-8’... OK
-      ‘bootstrap.Rmd’ using ‘UTF-8’... OK
-      ‘data_prep.Rmd’ using ‘UTF-8’... OK
-      ‘export.Rmd’ using ‘UTF-8’... OK
-      ‘finalfit.Rmd’ using ‘UTF-8’... OK
-      ‘missing.Rmd’ using ‘UTF-8’... failed
-      ‘survival.Rmd’ using ‘UTF-8’... OK
-     ERROR
-    Errors in running code in vignettes:
-    ...
-    > fits_pool = fits %>% pool()
-    
-    > colon_s %>% or_plot(dependent, explanatory, glmfit = fits_pool, 
-    +     table_text_size = 4)
-    Note: dependent includes missing data. These are dropped.
-    
-      When sourcing ‘missing.R’:
-    Error: Can't select columns that don't exist.
-    ✖ Column `2.5 %` doesn't exist.
-    Execution halted
-    ```
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.6Mb
-      sub-directories of 1Mb or more:
-        doc   4.9Mb
     ```
 

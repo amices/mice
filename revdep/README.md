@@ -80,11 +80,9 @@
 |dynr    |0.1.16-105 |1     |        |     |
 |rmsb    |1.1-1      |1     |        |1    |
 
-## New problems (3)
+## New problems (1)
 
-|package  |version |error  |warning |note      |
-|:--------|:-------|:------|:-------|:---------|
-|[autoReg](problems.md#autoreg)|0.3.3   |__+2__ |        |          |
-|[bipd](problems.md#bipd)|0.3     |1      |        |-1 __+1__ |
-|[finalfit](problems.md#finalfit)|1.0.8   |__+2__ |        |1         |
+|package |version |error |warning |note      |
+|:-------|:-------|:-----|:-------|:---------|
+|[bipd](problems.md#bipd)|0.3     |1     |        |-1 __+1__ |
 
