@@ -50,7 +50,7 @@ Run `revdepcheck::revdep_details(, "autoReg")` for more info
     Errors in running code in vignettes:
     when running code in ‘Automatic_Regression_Modeling.Rmd’
       ...
-                            virginica  (N=50)    Mean ± SD  6.6 ± 0.6  1.95 (1.75 to 2.14, p<.001)  1.91 (1.68 to 2.14, p<.001) 
+                            virginica  (N=50)    Mean ± SD  6.6 ± 0.6  1.95 (1.75 to 2.14, p<.001)  1.85 (1.62 to 2.07, p<.001) 
     ...
                                Male    489 (52.9%)   463 (51.6%)  0.95 (0.79-1.14, p=.594)  0.95 (0.78-1.15, p=.589)                           
     ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -80,7 +80,7 @@ Run `revdepcheck::revdep_details(, "bipd")` for more info
 
 ## Newly broken
 
-*   checking dependencies in R code ...sh: line 1: 28198 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//Rtmp8uxG38/file6ad8527d0366'
+*   checking dependencies in R code ...sh: line 1:  6660 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpY4Kslj/file17bf4758620f'
     ```
      NOTE
     
@@ -107,7 +107,7 @@ Run `revdepcheck::revdep_details(, "bipd")` for more info
 
 ## Newly fixed
 
-*   checking dependencies in R code ...sh: line 1: 28180 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//Rtmpw6OWhC/file6a76216c4045'
+*   checking dependencies in R code ...sh: line 1:  6641 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//Rtmpt5u94R/file17892b19b039'
     ```
      NOTE
     
@@ -234,21 +234,46 @@ Run `revdepcheck::revdep_details(, "finalfit")` for more info
         doc   4.9Mb
     ```
 
-# pre
+# gFormulaMI
 
 <details>
 
-* Version: 1.0.7
-* GitHub: https://github.com/marjoleinF/pre
-* Source code: https://github.com/cran/pre
-* Date/Publication: 2024-01-12 19:30:02 UTC
-* Number of recursive dependencies: 150
+* Version: 1.0.0
+* GitHub: NA
+* Source code: https://github.com/cran/gFormulaMI
+* Date/Publication: 2023-05-25 20:00:08 UTC
+* Number of recursive dependencies: 93
 
-Run `revdepcheck::revdep_details(, "pre")` for more info
+Run `revdepcheck::revdep_details(, "gFormulaMI")` for more info
 
 </details>
 
 ## Newly broken
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘gFormulaMI-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: gFormulaImpute
+    > ### Title: G-formula multiple imputation
+    > ### Aliases: gFormulaImpute
+    > 
+    > ### ** Examples
+    > 
+    > set.seed(7626)
+    ...
+    l2      1  1  1  1  0  0 0      0
+    a2      1  1  1  1  1  0 0      0
+    y       1  1  1  1  1  1 0      0
+    regime  1  1  1  1  1  1 1      0
+    > #fit linear model to final outcome with regime as covariate
+    > fits <- with(imps, lm(y~factor(regime)))
+    Error in mira(call = call, call1 = data$call, nmis = data$nmis, analyses = analyses) : 
+      Argument 'nmis' must be an integer vector.
+    Calls: with -> with.mids -> mira
+    Execution halted
+    ```
 
 *   checking tests ...
     ```
@@ -256,20 +281,63 @@ Run `revdepcheck::revdep_details(, "pre")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      > test_check("pre")
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 127 ]
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Error ('test_pre_misc.R:94:3'): cvpre gives previous results with airquality data ──
-      Error in `serverSocket(port = port)`: creation of server socket failed: port 11508 cannot be opened
+       9.   └─mice::mira(...)
+      ── Error ('test-gFormulaMI.R:49:5'): Check 95% confidence interval includes true value, two regimes ──
+      Error in `mira(call = call, call1 = data$call, nmis = data$nmis, analyses = analyses)`: Argument 'nmis' must be an integer vector.
       Backtrace:
           ▆
-       1. └─parallel::makeCluster(2L) at test_pre_misc.R:94:3
-       2.   └─parallel::makePSOCKcluster(names = spec, ...)
-       3.     └─base::serverSocket(port = port)
+       1. ├─testthat::expect_equal(...) at test-gFormulaMI.R:45:3
+       2. │ └─testthat::quasi_label(enquo(object), label, arg = "object")
+       3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
+       4. ├─base::with(impRes, lm(y ~ factor(regime))) at test-gFormulaMI.R:49:5
+       5. └─mice:::with.mids(impRes, lm(y ~ factor(regime)))
+       6.   └─mice::mira(...)
       
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 127 ]
+      [ FAIL 5 | WARN 0 | SKIP 2 | PASS 11 ]
       Error: Test failures
       Execution halted
+    ```
+
+*   checking running R code from vignettes ...
+    ```
+      ‘gFormulaMI.Rmd’ using ‘UTF-8’... failed
+     ERROR
+    Errors in running code in vignettes:
+    when running code in ‘gFormulaMI.Rmd’
+      ...
+    3  0.4327859  0 -0.3925652  0 -0.7555212806  0 -1.5840459      1
+    4  0.6059553  0  2.4764117  0  0.7312018102  0  0.6342567      1
+    5  0.2985589  0  0.9223022  0  0.0734605439  0 -1.1511625      1
+    6 -0.1763264  0  0.6122369  0  0.8838681514  0  2.0858243      1
+    
+    > fits <- with(imps, lm(y ~ factor(regime)))
+    
+      When sourcing ‘gFormulaMI.R’:
+    Error: Argument 'nmis' must be an integer vector.
+    Execution halted
+    ```
+
+# micd
+
+<details>
+
+* Version: 1.1.1
+* GitHub: https://github.com/bips-hb/micd
+* Source code: https://github.com/cran/micd
+* Date/Publication: 2023-02-17 17:40:02 UTC
+* Number of recursive dependencies: 104
+
+Run `revdepcheck::revdep_details(, "micd")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking Rd cross-references ... WARNING
+    ```
+    Missing link or links in Rd file 'with_graph.Rd':
+      ‘[mice]{mira-class}’
+    
+    See section 'Cross-references' in the 'Writing R Extensions' manual.
     ```
 

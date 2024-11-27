@@ -1,24 +1,24 @@
 # Platform
 
-|field    |value                                      |
-|:--------|:------------------------------------------|
-|version  |R version 4.4.2 (2024-10-31)               |
-|os       |macOS Sequoia 15.1.1                       |
-|system   |aarch64, darwin20                          |
-|ui       |RStudio                                    |
-|language |(EN)                                       |
-|collate  |en_US.UTF-8                                |
-|ctype    |en_US.UTF-8                                |
-|tz       |Europe/Amsterdam                           |
-|date     |2024-11-22                                 |
-|rstudio  |2024.09.1+394 Cranberry Hibiscus (desktop) |
-|pandoc   |1.17.1 @ /usr/local/bin/pandoc             |
+|field    |value                                                                                            |
+|:--------|:------------------------------------------------------------------------------------------------|
+|version  |R version 4.4.2 (2024-10-31)                                                                     |
+|os       |macOS Sequoia 15.1.1                                                                             |
+|system   |aarch64, darwin20                                                                                |
+|ui       |RStudio                                                                                          |
+|language |(EN)                                                                                             |
+|collate  |en_US.UTF-8                                                                                      |
+|ctype    |en_US.UTF-8                                                                                      |
+|tz       |Europe/Amsterdam                                                                                 |
+|date     |2024-11-27                                                                                       |
+|rstudio  |2024.09.1+394 Cranberry Hibiscus (desktop)                                                       |
+|pandoc   |3.2 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/aarch64/ (via rmarkdown) |
 
 # Dependencies
 
 |package     |old         |new         |Δ  |
 |:-----------|:-----------|:-----------|:--|
-|mice        |3.16.0      |3.16.17     |*  |
+|mice        |3.16.0      |3.17.0      |*  |
 |backports   |1.5.0       |1.5.0       |   |
 |bit         |4.5.0       |4.5.0       |   |
 |bit64       |4.5.2       |4.5.2       |   |
@@ -82,12 +82,13 @@
 |Replication |0.1.2      |1     |        |     |
 |rmsb        |1.1-1      |1     |        |1    |
 
-## New problems (4)
+## New problems (5)
 
-|package  |version |error  |warning |note      |
-|:--------|:-------|:------|:-------|:---------|
+|package    |version |error  |warning |note      |
+|:----------|:-------|:------|:-------|:---------|
 |[autoReg](problems.md#autoreg)|0.3.3   |__+2__ |        |          |
 |[bipd](problems.md#bipd)|0.3     |1      |        |-1 __+1__ |
 |[finalfit](problems.md#finalfit)|1.0.8   |__+2__ |        |1         |
-|[pre](problems.md#pre)|1.0.7   |__+1__ |        |          |
+|[gFormulaMI](problems.md#gformulami)|1.0.0   |__+3__ |        |          |
+|[micd](problems.md#micd)|1.1.1   |       |__+1__  |          |
 
