@@ -3,6 +3,20 @@ cran-comments
 
 ## Release summary
 
+This is the resubmission of `mice` version 3.17.0. The previous
+submission was rejected due a problem with the downstream `autoReg` and
+`finalfit` packages. The problem was a change in the reporting of the
+confidence intervals. In the previous version confidence intervals were
+named `2.5 %` and `97.5 %`, a convention inherited from
+`stats::confint.default`. The update `mice 3.17.0` adopts the more
+flexible `broom` convention of naming these boundaries `conf.low` and
+`conf.high`, so that these names work for any probability level. This
+change caused the two downstream packages to fail. The issue has been
+fixed in this version of `mice` by duplicating the two conf columns, and
+naming them `2.5 %` and `97.5 %`. I will alert the maintainers of the
+`autoReg` and `finalfit` packages to this change, but for now, having
+the duplicate columns fixes the problem.
+
 This release of `mice` adds new features, bug fixes, and documentation
 improvements. See <https://github.com/amices/mice/blob/master/NEWS.md>
 
@@ -76,7 +90,7 @@ revdepcheck::revdep_summary()
     ## ✔ accelmissing 1.4                       ── E: 0     | W: 0     | N: 1    
     ## ✔ adjustedCurves 0.11.2                  ── E: 0     | W: 0     | N: 0    
     ## ✔ alookr 0.3.9                           ── E: 0     | W: 0     | N: 0    
-    ## ✖ autoReg 0.3.3                          ── E: 0  +2 | W: 0     | N: 0    
+    ## ✔ autoReg 0.3.3                          ── E: 0     | W: 0     | N: 0    
     ## ✔ BaM 1.0.3                              ── E: 0     | W: 0     | N: 0    
     ## ✔ basecamb 1.1.5                         ── E: 0     | W: 0     | N: 0    
     ## ✔ betaMC 1.3.2                           ── E: 0     | W: 0     | N: 0    
@@ -97,12 +111,12 @@ revdepcheck::revdep_summary()
     ## ✔ dynamite 1.5.5                         ── E: 0     | W: 0     | N: 2    
     ## I dynr 0.1.16.105                        ── E: 1     | W: 0     | N: 0    
     ## ✔ eatRep 0.14.7                          ── E: 0     | W: 0     | N: 0    
-    ## ✖ finalfit 1.0.8                         ── E: 0  +2 | W: 0     | N: 1    
+    ## ✔ finalfit 1.0.8                         ── E: 0     | W: 0     | N: 1    
     ## ✔ FLAME 2.1.1                            ── E: 0     | W: 0     | N: 0    
     ## ✔ flevr 0.0.4                            ── E: 0     | W: 0     | N: 0    
     ## ✔ gerbil 0.1.9                           ── E: 0     | W: 0     | N: 0    
     ## ✔ gFormulaMI 1.0.0                       ── E: 0     | W: 0     | N: 0    
-    ## ✔ ggeffects 1.7.2                        ── E: 0     | W: 0     | N: 0    
+    ## ✔ ggeffects 2.0.0                        ── E: 0     | W: 0     | N: 0    
     ## ✔ ggmice 0.1.0                           ── E: 0     | W: 0     | N: 0    
     ## ✔ gtsummary 2.0.3                        ── E: 0     | W: 0     | N: 0    
     ## ✔ HardyWeinberg 1.7.8                    ── E: 0     | W: 0     | N: 0    
@@ -162,7 +176,7 @@ revdepcheck::revdep_summary()
     ## ✔ nncc 2.0.0                             ── E: 0     | W: 0     | N: 0    
     ## ✔ ordbetareg 0.7.2                       ── E: 0     | W: 0     | N: 2    
     ## ✔ OTrecod 0.1.2                          ── E: 0     | W: 0     | N: 1    
-    ## ✔ parameters 0.23.0                      ── E: 1     | W: 0     | N: 0    
+    ## ✔ parameters 0.24.0                      ── E: 0     | W: 0     | N: 0    
     ## ✔ pema 0.1.3                             ── E: 1     | W: 0     | N: 2    
     ## ✔ pre 1.0.7                              ── E: 0     | W: 0     | N: 0    
     ## ✔ psfmi 1.4.0                            ── E: 0     | W: 0     | N: 0    
@@ -197,48 +211,28 @@ revdepcheck::revdep_summary()
     ## ✔ vsmi 0.1.0                             ── E: 0     | W: 0     | N: 0    
     ## ✔ weights 1.0.4                          ── E: 0     | W: 0     | N: 0
 
-### Summary
+### revdepcheck results
 
 We checked 123 reverse dependencies (118 from CRAN + 5 from
 Bioconductor), comparing R CMD check results across CRAN and dev
 versions of this package.
 
-- We saw 3 new problems
+- We saw 1 new problems
 - We failed to check 3 packages
 
 Issues with CRAN packages are summarised below.
 
-### New problems (3)
-
-| package                          | version | error  | warning | note      |
-|:---------------------------------|:--------|:-------|:--------|:----------|
-| [autoReg](problems.md#autoreg)   | 0.3.3   | **+2** |         |           |
-| [bipd](problems.md#bipd)         | 0.3     | 1      |         | -1 **+1** |
-| [finalfit](problems.md#finalfit) | 1.0.8   | **+2** |         | 1         |
+### New problems
 
 (This reports the first line of each new failure)
 
-- autoReg checking examples … ERROR checking running R code from
-  vignettes …
-
-- bipd checking dependencies in R code …sh: line 1: 24340 Segmentation
+- bipd checking dependencies in R code …sh: line 1: 58727 Segmentation
   fault: 11 R_DEFAULT_PACKAGES=NULL
   ‘/Library/Frameworks/R.framework/Resources/bin/R’ –vanilla –no-echo
   2\>&1 \<
-  ‘/var/folders/5\_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpazqvFP/file5c206c170a3d’
+  ‘/var/folders/5\_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpM38C1S/filee1cf761be8f7’
 
-- finalfit checking examples … ERROR checking running R code from
-  vignettes …
-
-mice developer comment: These new problems are unrelated to mice
-
-### Failed to check (3)
-
-| package | version    | error | warning | note |
-|:--------|:-----------|:------|:--------|:-----|
-| brms    | 2.22.0     | 1     |         | 2    |
-| dynr    | 0.1.16-105 | 1     |         |      |
-| rmsb    | 1.1-1      | 1     |         | 1    |
+### Failed to check
 
 - brms (NA)
 - dynr (NA)
