@@ -49,25 +49,20 @@
 #' \doi{10.18637/jss.v045.i03}
 #' @keywords classes
 #' @name mira
-#' @aliases mira
+#' @aliases mira mira-class
 #' @export
 mira <- function(
     call = match.call(),
     call1 = match.call(),
     nmis = integer(),
     analyses = list()) {
-  # Ensure the inputs are valid
-  if (!is.call(call)) stop("Argument 'call' must be a call.")
-  if (!is.call(call1)) stop("Argument 'call1' must be a call.")
-  if (!is.integer(nmis)) stop("Argument 'nmis' must be an integer vector.")
-  if (!is.list(analyses)) stop("Argument 'analyses' must be a list.")
 
   # Create the object as a list
   obj <- list(
-    call = call,
-    call1 = call1,
-    nmis = nmis,
-    analyses = analyses
+    call = as.call(call),
+    call1 = as.call(call1),
+    nmis = as.integer(nmis),
+    analyses = as.list(analyses)
   )
 
   # Assign the class

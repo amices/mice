@@ -2,6 +2,7 @@
 % Please edit documentation in R/mira.R
 \name{mira}
 \alias{mira}
+\alias{mira-class}
 \title{Create an object of class "mira"}
 \usage{
 mira(
