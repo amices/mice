@@ -1,20 +1,18 @@
 cran-comments
 ================
 
-## mice 3.17.0
+## Release summary
 
-## Overview
-
-This submission of `mice` adds new features, bug fixes, and
-documentation improvements. See
-<https://github.com/amices/mice/blob/master/NEWS.md>
-
-The package has been tested on the CRAN incoming checks and on the
-`win-builder` and `rhub` platforms. The package has 132 downstream
-dependencies. I found one issue for which I contacted the maintainer of
-the `autoreg` package.
+This release of `mice` adds new features, bug fixes, and documentation
+improvements. See <https://github.com/amices/mice/blob/master/NEWS.md>
 
 ## Test environments
+
+``` r
+packageVersion("mice")
+```
+
+    ## [1] '3.17.0'
 
 ``` r
 R.Version()$version.string
@@ -22,7 +20,23 @@ R.Version()$version.string
 
     ## [1] "R version 4.4.2 (2024-10-31)"
 
-## Checks
+## Local checks
+
+NOTE: Run in OSX terminal, not in Rstudio terminal.
+
+``` bash
+env _R_CHECK_DEPENDS_ONLY_=true R CMD check mice_3.17.0.tar.gz
+
+Status: OK
+```
+
+``` r
+devtools::check(env_vars = c('_R_CHECK_DEPENDS_ONLY_' = "true"))
+...
+Status: OK
+```
+
+## Remote checks
 
 ### win-builder
 
@@ -39,59 +53,20 @@ rhub::rhub_doctor()
 rhub::rhub_check()
 ```
 
-Status: OK <https://github.com/amices/mice/actions/runs/11974214695>
+Status: OK \<\>
 
-### Local checks
-
-Package built by
-
-``` r
-library("devtools")
-build()
-```
-
-``` bash
-R CMD CHECK mice_3.17.0.tar.gz
-
-Status: OK
-```
-
-### Local check using `_R_CHECK_DEPENDS_ONLY_=true` flag.
-
-NOTE: Run in OSX terminal, not in Rstudio terminal.
-
-``` bash
-env _R_CHECK_DEPENDS_ONLY_=true R CMD check mice_3.17.0.tar.gz
-
-Status: OK
-```
-
-``` r
-devtools::check(env_vars = c('_R_CHECK_DEPENDS_ONLY_' = "true"))
-
-...
-Status: 1 NOTE
-
-── R CMD check results ─────────────────────────────────────────────────────────────────────── mice 3.17.0 ────
-Duration: 1m 10.9s
-
-❯ checking for future file timestamps ... NOTE
-  unable to verify current time
-
-0 errors ✔ | 0 warnings ✔ | 1 note ✖
-```
+For details: <https://github.com/amices/mice/actions>
 
 ## Downstream dependencies
 
-### Overview
+### Code
 
-`mice` has 132 downstream dependencies
+Note: Inactivate `credentials::set_github_pat()`
 
 ``` r
-# NOTE: Temporarily remove credentials line from .Rprofile
 library(revdepcheck)
 revdep_reset()
-revdep_check(pkg = ".", num_workers = 10, quiet = FALSE)
+revdep_check(pkg = ".", num_workers = 12, quiet = FALSE)
 ```
 
 ``` r
@@ -106,14 +81,11 @@ revdepcheck::revdep_summary()
     ## ✔ basecamb 1.1.5                         ── E: 0     | W: 0     | N: 0    
     ## ✔ betaMC 1.3.2                           ── E: 0     | W: 0     | N: 0    
     ## ✔ BGGM 2.1.3                             ── E: 0     | W: 0     | N: 1    
-    ## ✔ binaryTimeSeries 1.0.2                 ── E: 1     | W: 0     | N: 0    
-    ## ✔ biokNN 0.1.0                           ── E: 0     | W: 0     | N: 1    
     ## ✖ bipd 0.3                               ── E: 1     | W: 0     | N: 0-1+1
-    ## ✔ bootImpute 1.2.1                       ── E: 0     | W: 0     | N: 0    
+    ## ✔ bootImpute 1.2.1                       ── E: 1     | W: 0     | N: 0    
     ## T brms 2.22.0                            ── E: 1     | W: 0     | N: 2    
     ## ✔ brokenstick 2.5.0                      ── E: 0     | W: 0     | N: 0    
     ## ✔ broom.helpers 1.17.0                   ── E: 0     | W: 0     | N: 0    
-    ## ✔ bucky 1.0.7                            ── E: 0     | W: 1     | N: 1    
     ## ✔ cati 0.99.4                            ── E: 0     | W: 0     | N: 0    
     ## ✔ censcyt 1.14.0                         ── E: 0     | W: 0     | N: 3    
     ## ✔ CIMPLE 0.1.0                           ── E: 0     | W: 0     | N: 0    
@@ -142,20 +114,18 @@ revdepcheck::revdep_summary()
     ## ✔ HSAUR3 1.0.15                          ── E: 0     | W: 0     | N: 0    
     ## ✔ idem 5.2                               ── E: 0     | W: 0     | N: 2    
     ## ✔ ImputeRobust 1.3.1                     ── E: 0     | W: 0     | N: 0    
-    ## ✔ insight 0.20.5                         ── E: 0     | W: 0     | N: 0    
+    ## ✔ insight 1.0.0                          ── E: 0     | W: 0     | N: 0    
     ## ✔ intmed 0.1.2                           ── E: 0     | W: 0     | N: 0    
     ## ✔ IPWboxplot 0.1.2                       ── E: 0     | W: 0     | N: 0    
     ## ✔ joinet 1.0.0                           ── E: 1     | W: 0     | N: 1    
     ## ✔ JWileymisc 1.4.1                       ── E: 0     | W: 0     | N: 0    
     ## ✔ konfound 1.0.2                         ── E: 0     | W: 0     | N: 0    
-    ## ✔ lavaan.survey 1.1.3.1                  ── E: 1     | W: 0     | N: 0    
     ## ✔ LMMstar 1.1.0                          ── E: 0     | W: 0     | N: 1    
     ## ✔ logistf 1.26.0                         ── E: 0     | W: 0     | N: 0    
     ## ✔ LSAmitR 1.0.3                          ── E: 0     | W: 0     | N: 2    
     ## ✔ manymome 0.2.4                         ── E: 0     | W: 0     | N: 0    
-    ## ✔ marginaleffects 0.23.0                 ── E: 0     | W: 0     | N: 0    
+    ## ✔ marginaleffects 0.24.0                 ── E: 0     | W: 0     | N: 0    
     ## ✔ MatchThem 1.2.1                        ── E: 0     | W: 0     | N: 0    
-    ## ✔ mdapack 0.0.2                          ── E: 0     | W: 0     | N: 2    
     ## ✔ medflex 0.6.10                         ── E: 0     | W: 0     | N: 0    
     ## ✔ metavcov 2.1.5                         ── E: 0     | W: 0     | N: 0    
     ## ✔ mi4p 1.2                               ── E: 0     | W: 0     | N: 0    
@@ -188,15 +158,13 @@ revdepcheck::revdep_summary()
     ## ✔ MSiP 1.3.7                             ── E: 0     | W: 0     | N: 1    
     ## ✔ mvnimpute 1.0.1                        ── E: 0     | W: 0     | N: 0    
     ## ✔ mvs 2.0.0                              ── E: 0     | W: 0     | N: 0    
-    ## ✔ NADIA 0.4.2                            ── E: 3     | W: 0     | N: 2    
     ## ✔ NIMAA 0.2.1                            ── E: 0     | W: 0     | N: 2    
     ## ✔ nncc 2.0.0                             ── E: 0     | W: 0     | N: 0    
     ## ✔ ordbetareg 0.7.2                       ── E: 0     | W: 0     | N: 2    
     ## ✔ OTrecod 0.1.2                          ── E: 0     | W: 0     | N: 1    
-    ## ✔ parameters 0.23.0                      ── E: 0     | W: 0     | N: 0    
+    ## ✔ parameters 0.23.0                      ── E: 1     | W: 0     | N: 0    
     ## ✔ pema 0.1.3                             ── E: 1     | W: 0     | N: 2    
-    ## I pguIMP 0.0.0.3                         ── E: 1     | W: 0     | N: 0    
-    ## ✖ pre 1.0.7                              ── E: 0  +1 | W: 0     | N: 0    
+    ## ✔ pre 1.0.7                              ── E: 0     | W: 0     | N: 0    
     ## ✔ psfmi 1.4.0                            ── E: 0     | W: 0     | N: 0    
     ## ✔ qgcomp 2.15.2                          ── E: 0     | W: 0     | N: 1    
     ## ✔ Qtools 1.5.9                           ── E: 0     | W: 0     | N: 0    
@@ -205,8 +173,6 @@ revdepcheck::revdep_summary()
     ## ✔ realTimeloads 1.0.0                    ── E: 1     | W: 0     | N: 0    
     ## ✔ RefBasedMI 0.2.0                       ── E: 0     | W: 0     | N: 0    
     ## ✔ regmedint 1.0.1                        ── E: 0     | W: 0     | N: 1    
-    ## ✔ RegularizedSCA 0.5.4                   ── E: 0     | W: 0     | N: 1    
-    ## I Replication 0.1.2                      ── E: 1     | W: 0     | N: 0    
     ## ✔ rexposome 1.28.0                       ── E: 0     | W: 5     | N: 4    
     ## ✔ RfEmpImp 2.1.8                         ── E: 0     | W: 0     | N: 0    
     ## ✔ rms 6.8.2                              ── E: 0     | W: 0     | N: 0    
@@ -231,25 +197,54 @@ revdepcheck::revdep_summary()
     ## ✔ vsmi 0.1.0                             ── E: 0     | W: 0     | N: 0    
     ## ✔ weights 1.0.4                          ── E: 0     | W: 0     | N: 0
 
-# Revdeps
+### Summary
 
-## Failed to check (5)
+We checked 123 reverse dependencies (118 from CRAN + 5 from
+Bioconductor), comparing R CMD check results across CRAN and dev
+versions of this package.
 
-| package     | version    | error | warning | note |                   |
-|:------------|:-----------|:------|:--------|:-----|-------------------|
-| brms        | 2.22.0     | 1     |         | 2    | Unrelated to mice |
-| dynr        | 0.1.16-105 | 1     |         |      | Unrelated to mice |
-| pguIMP      | 0.0.0.3    | 1     |         |      | Unrelated to mice |
-| Replication | 0.1.2      | 1     |         |      | Unrelated to mice |
-| rmsb        | 1.1-1      | 1     |         | 1    | Unrelated to mice |
+- We saw 3 new problems
+- We failed to check 3 packages
 
-## New problems (4)
+Issues with CRAN packages are summarised below.
 
-| package | version | error | warning | note |  |
-|:---|:---|:---|:---|:---|:---|
-| [autoReg](problems.md#autoreg) | 0.3.3 | **+2** |  |  | Informed the maintainer, asked for repair |
-| [bipd](problems.md#bipd) | 0.3 | 1 |  | -1 **+1** | Does not run because of different CPU’s |
-| [finalfit](problems.md#finalfit) | 1.0.8 | **+2** |  | 1 | Same error as autoreg, possibly related |
-| [pre](problems.md#pre) | 1.0.7 | **+1** |  |  | Unrelated to mice |
+### New problems (3)
 
-See <https://github.com/amices/mice/tree/master/revdep> for details.
+| package                          | version | error  | warning | note      |
+|:---------------------------------|:--------|:-------|:--------|:----------|
+| [autoReg](problems.md#autoreg)   | 0.3.3   | **+2** |         |           |
+| [bipd](problems.md#bipd)         | 0.3     | 1      |         | -1 **+1** |
+| [finalfit](problems.md#finalfit) | 1.0.8   | **+2** |         | 1         |
+
+(This reports the first line of each new failure)
+
+- autoReg checking examples … ERROR checking running R code from
+  vignettes …
+
+- bipd checking dependencies in R code …sh: line 1: 24340 Segmentation
+  fault: 11 R_DEFAULT_PACKAGES=NULL
+  ‘/Library/Frameworks/R.framework/Resources/bin/R’ –vanilla –no-echo
+  2\>&1 \<
+  ‘/var/folders/5\_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpazqvFP/file5c206c170a3d’
+
+- finalfit checking examples … ERROR checking running R code from
+  vignettes …
+
+mice developer comment: These new problems are unrelated to mice
+
+### Failed to check (3)
+
+| package | version    | error | warning | note |
+|:--------|:-----------|:------|:--------|:-----|
+| brms    | 2.22.0     | 1     |         | 2    |
+| dynr    | 0.1.16-105 | 1     |         |      |
+| rmsb    | 1.1-1      | 1     |         | 1    |
+
+- brms (NA)
+- dynr (NA)
+- rmsb (NA)
+
+mice developer comment: These failures are unrelated to mice
+
+See <https://github.com/amices/mice/tree/master/revdep> for additional
+details.

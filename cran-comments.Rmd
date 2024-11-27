@@ -7,59 +7,19 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## mice 3.17.0
+## Release summary
 
-## Overview
-
-This submission of `mice` adds new features, bug fixes, and documentation improvements. 
+This release of `mice` adds new features, bug fixes, and documentation improvements. 
 See <https://github.com/amices/mice/blob/master/NEWS.md>
-
-The package has been tested on the CRAN incoming checks and on the `win-builder` and `rhub` platforms. The package has 132 downstream dependencies. I found one issue for which I contacted the maintainer of the `autoreg` package.
 
 ## Test environments
 
 ```{r}
+packageVersion("mice")
 R.Version()$version.string
 ```
 
-## Checks
-
-### win-builder
-
-```{r eval=FALSE}
-devtools::check_win_devel()
-
-Status: OK
-```
-
-
-### Rhub
-
-```{r eval=FALSE}
-rhub::rhub_doctor()
-rhub::rhub_check()
-```
-
-Status: OK <https://github.com/amices/mice/actions/runs/11974214695>
-
-
-### Local checks
-
-Package built by
-
-```{r eval = FALSE}
-library("devtools")
-build()
-```
-
-```{bash eval=FALSE}
-R CMD CHECK mice_3.17.0.tar.gz
-
-Status: OK
-```
-
-
-### Local check using `_R_CHECK_DEPENDS_ONLY_=true` flag. 
+## Local checks
 
 NOTE: Run in OSX terminal, not in Rstudio terminal.
 
@@ -72,56 +32,91 @@ Status: OK
 
 ```{r eval=FALSE}
 devtools::check(env_vars = c('_R_CHECK_DEPENDS_ONLY_' = "true"))
-
 ...
-Status: 1 NOTE
-
-── R CMD check results ─────────────────────────────────────────────────────────────────────── mice 3.17.0 ────
-Duration: 1m 10.9s
-
-❯ checking for future file timestamps ... NOTE
-  unable to verify current time
-
-0 errors ✔ | 0 warnings ✔ | 1 note ✖
+Status: OK
 ```
 
+## Remote checks
+
+### win-builder
+
+```{r eval=FALSE}
+devtools::check_win_devel()
+
+Status: OK
+```
+
+### Rhub
+
+```{r eval=FALSE}
+rhub::rhub_doctor()
+rhub::rhub_check()
+```
+
+Status: OK <>
+
+For details: <https://github.com/amices/mice/actions>
 
 ## Downstream dependencies
 
-### Overview
+### Code
 
-`mice` has 132 downstream dependencies
+Note: Inactivate `credentials::set_github_pat()`
 
 ```{r eval=FALSE}
-# NOTE: Temporarily remove credentials line from .Rprofile
 library(revdepcheck)
 revdep_reset()
-revdep_check(pkg = ".", num_workers = 10, quiet = FALSE)
+revdep_check(pkg = ".", num_workers = 12, quiet = FALSE)
 ```
 
 ```{r}
 revdepcheck::revdep_summary()
 ```
 
-# Revdeps
+### Summary
 
-## Failed to check (5)
+We checked 123 reverse dependencies (118 from CRAN + 5 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
-|package     |version    |error |warning |note |                    |
-|:-----------|:----------|:-----|:-------|:----| ------------------ | 
-|brms        |2.22.0     |1     |        |2    | Unrelated to mice  |
-|dynr        |0.1.16-105 |1     |        |     | Unrelated to mice  |
-|pguIMP      |0.0.0.3    |1     |        |     | Unrelated to mice  |
-|Replication |0.1.2      |1     |        |     | Unrelated to mice  |
-|rmsb        |1.1-1      |1     |        |1    | Unrelated to mice  |
+ * We saw 3 new problems
+ * We failed to check 3 packages
 
-## New problems (4)
+Issues with CRAN packages are summarised below.
 
-|package  |version |error  |warning |note      |                   |
-|:--------|:-------|:------|:-------|:---------|:------------------|
-|[autoReg](problems.md#autoreg)|0.3.3   |__+2__ |        |          |  Informed the maintainer, asked for repair |
-|[bipd](problems.md#bipd)|0.3     |1      |        |-1 __+1__ |  Does not run because of different CPU's |
-|[finalfit](problems.md#finalfit)|1.0.8   |__+2__ |        |1         | Same error as autoreg, possibly related |
-|[pre](problems.md#pre)|1.0.7   |__+1__ |        |          | Unrelated to mice |
+### New problems (3)
 
-See <https://github.com/amices/mice/tree/master/revdep> for details.
+|package  |version |error  |warning |note      |
+|:--------|:-------|:------|:-------|:---------|
+|[autoReg](problems.md#autoreg)|0.3.3   |__+2__ |        |          |
+|[bipd](problems.md#bipd)|0.3     |1      |        |-1 __+1__ |
+|[finalfit](problems.md#finalfit)|1.0.8   |__+2__ |        |1         |
+
+(This reports the first line of each new failure)
+
+* autoReg
+  checking examples ... ERROR
+  checking running R code from vignettes ...
+
+* bipd
+  checking dependencies in R code ...sh: line 1: 24340 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpazqvFP/file5c206c170a3d'
+
+* finalfit
+  checking examples ... ERROR
+  checking running R code from vignettes ...
+
+mice developer comment: These new problems are unrelated to mice
+
+### Failed to check (3)
+
+|package |version    |error |warning |note |
+|:-------|:----------|:-----|:-------|:----|
+|brms    |2.22.0     |1     |        |2    |
+|dynr    |0.1.16-105 |1     |        |     |
+|rmsb    |1.1-1      |1     |        |1    |
+
+* brms (NA)
+* dynr (NA)
+* rmsb (NA)
+
+mice developer comment: These failures are unrelated to mice
+
+See <https://github.com/amices/mice/tree/master/revdep> for additional details.
