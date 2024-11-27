@@ -90,14 +90,13 @@ summary_mipo.workhorse <- function(x, type,
                     conf.level = conf.level,
                     exponentiate = exponentiate)
 
-  parnames <- names(z)[1L:(pmatch("m", names(z)) - 1L)]
   if (type == "tests") {
     out <- c("m", "riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")
     keep <- base::setdiff(names(z), out)
     z <- z[, keep]
   }
 
-  data.frame(z)
+  return(z)
 }
 
 #' @rdname mipo
@@ -132,30 +131,25 @@ process_mipo <- function(z, x, conf.int = FALSE, conf.level = .95,
   }
   z$estimate <- trans(z$estimate)
 
-  # combine and sort columns in desired order
-  parnames <- names(z)[1L:(pmatch("m", names(z)) - 1L)]
+  # combine and place columns in desired order
+  parnames <- z[["term"]]
   if (!is.null(CI)) {
     z <- cbind(
-      z[, parnames, drop = FALSE],
+      term = parnames,
       z[, c("m", "estimate", "std.error", "statistic", "df", "p.value")],
       trans(unrowname(CI)),
+      conf.low = trans(unrowname(CI[, 1L])),
+      conf.high = trans(unrowname(CI[, 2L])),
       z[, c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")]
     )
   } else {
     z <- cbind(
-      z[, parnames, drop = FALSE],
+      term = parnames,
       z[, c("m", "estimate", "std.error", "statistic", "df", "p.value")],
       z[, c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")]
     )
   }
   z
-}
-
-#' @export
-vcov.mipo <- function(object, ...) {
-  so <- diag(object$t)
-  dimnames(so) <- list(object$term, object$term)
-  so
 }
 
 confidence <- function(pooled, parm, level = 0.95, ...) {
@@ -178,8 +172,6 @@ confidence <- function(pooled, parm, level = 0.95, ...) {
   )
   ci[, 1] <- cf[parm] + qt(a[1], df[parm]) * se[parm]
   ci[, 2] <- cf[parm] + qt(a[2], df[parm]) * se[parm]
-  ci <- data.frame(ci)
-  names(ci) <- c("conf.low", "conf.high")
   return(ci)
 }
 

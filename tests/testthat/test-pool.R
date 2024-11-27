@@ -17,6 +17,10 @@ est <- pool(fit)
 mn <- c(18.76175, 0.05359003, -4.573652, -6.635969, 2.163629)
 se <- c(4.002796, 0.02235067, 2.033986, 2.459769, 2.02898)
 
+test_that("summary(est) works", {
+  expect_is(summary(est), "data.frame")
+})
+
 test_that("retains same numerical result", {
   expect_equal(unname(getqbar(est)), mn, tolerance = 0.00001)
   expect_equal(unname(summary(est)[, "std.error"]), se, tolerance = 0.00001)
