@@ -88,8 +88,8 @@ Leiden: TNO Quality of Life.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="with.mids.html">with.mids</a></code>, <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></code>, <code><a href="mids-class.html">mids</a></code>,
-<code><a href="mira-class.html">mira</a></code></p></div>
+    <div class="dont-index"><p><code><a href="with.mids.html">with.mids</a></code>, <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></code>, <code><a href="mids.html">mids</a></code>,
+<code><a href="mira.html">mira</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -130,7 +130,7 @@ Leiden: TNO Quality of Life.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># logistic regression on the imputed data</span></span></span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">glm.mids</span><span class="op">(</span><span class="op">(</span><span class="va">hyp</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span> <span class="op">~</span> <span class="va">bmi</span> <span class="op">+</span> <span class="va">chl</span>, data <span class="op">=</span> <span class="va">imp</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Use with(imp, glm(yourmodel).</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Use with(imp, glm(yourmodel)).</span>
 <span class="r-in"><span><span class="va">fit</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> call :</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> glm.mids(formula = (hyp == 2) ~ bmi + chl, family = binomial, </span>

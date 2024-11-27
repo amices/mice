@@ -66,7 +66,7 @@
 <url><loc>https://amices.org/mice/reference/is.mitml.result.html</loc></url>
 <url><loc>https://amices.org/mice/reference/leiden85.html</loc></url>
 <url><loc>https://amices.org/mice/reference/lm.mids.html</loc></url>
-<url><loc>https://amices.org/mice/reference/mads-class.html</loc></url>
+<url><loc>https://amices.org/mice/reference/mads.html</loc></url>
 <url><loc>https://amices.org/mice/reference/make.blocks.html</loc></url>
 <url><loc>https://amices.org/mice/reference/make.blots.html</loc></url>
 <url><loc>https://amices.org/mice/reference/make.formulas.html</loc></url>
@@ -116,11 +116,11 @@
 <url><loc>https://amices.org/mice/reference/mice.impute.sample.html</loc></url>
 <url><loc>https://amices.org/mice/reference/mice.mids.html</loc></url>
 <url><loc>https://amices.org/mice/reference/mice.theme.html</loc></url>
-<url><loc>https://amices.org/mice/reference/mids-class.html</loc></url>
+<url><loc>https://amices.org/mice/reference/mids.html</loc></url>
 <url><loc>https://amices.org/mice/reference/mids2mplus.html</loc></url>
 <url><loc>https://amices.org/mice/reference/mids2spss.html</loc></url>
 <url><loc>https://amices.org/mice/reference/mipo.html</loc></url>
-<url><loc>https://amices.org/mice/reference/mira-class.html</loc></url>
+<url><loc>https://amices.org/mice/reference/mira.html</loc></url>
 <url><loc>https://amices.org/mice/reference/mnar_demo_data.html</loc></url>
 <url><loc>https://amices.org/mice/reference/name.blocks.html</loc></url>
 <url><loc>https://amices.org/mice/reference/name.formulas.html</loc></url>
@@ -133,7 +133,6 @@
 <url><loc>https://amices.org/mice/reference/norm.draw.html</loc></url>
 <url><loc>https://amices.org/mice/reference/parlmice.html</loc></url>
 <url><loc>https://amices.org/mice/reference/pattern.html</loc></url>
-<url><loc>https://amices.org/mice/reference/plot.mids.html</loc></url>
 <url><loc>https://amices.org/mice/reference/pmm.match.html</loc></url>
 <url><loc>https://amices.org/mice/reference/pool.compare.html</loc></url>
 <url><loc>https://amices.org/mice/reference/pool.html</loc></url>
@@ -144,7 +143,6 @@
 <url><loc>https://amices.org/mice/reference/pops.html</loc></url>
 <url><loc>https://amices.org/mice/reference/potthoffroy.html</loc></url>
 <url><loc>https://amices.org/mice/reference/print.html</loc></url>
-<url><loc>https://amices.org/mice/reference/print.mads.html</loc></url>
 <url><loc>https://amices.org/mice/reference/quickpred.html</loc></url>
 <url><loc>https://amices.org/mice/reference/reexports.html</loc></url>
 <url><loc>https://amices.org/mice/reference/selfreport.html</loc></url>
