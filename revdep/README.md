@@ -72,23 +72,19 @@
 
 # Revdeps
 
-## Failed to check (5)
+## Failed to check (3)
 
-|package     |version    |error |warning |note |
-|:-----------|:----------|:-----|:-------|:----|
-|brms        |2.22.0     |1     |        |2    |
-|dynr        |0.1.16-105 |1     |        |     |
-|pguIMP      |0.0.0.3    |1     |        |     |
-|Replication |0.1.2      |1     |        |     |
-|rmsb        |1.1-1      |1     |        |1    |
+|package |version    |error |warning |note |
+|:-------|:----------|:-----|:-------|:----|
+|brms    |2.22.0     |1     |        |2    |
+|dynr    |0.1.16-105 |1     |        |     |
+|rmsb    |1.1-1      |1     |        |1    |
 
-## New problems (5)
+## New problems (3)
 
-|package    |version |error  |warning |note      |
-|:----------|:-------|:------|:-------|:---------|
+|package  |version |error  |warning |note      |
+|:--------|:-------|:------|:-------|:---------|
 |[autoReg](problems.md#autoreg)|0.3.3   |__+2__ |        |          |
 |[bipd](problems.md#bipd)|0.3     |1      |        |-1 __+1__ |
 |[finalfit](problems.md#finalfit)|1.0.8   |__+2__ |        |1         |
-|[gFormulaMI](problems.md#gformulami)|1.0.0   |__+3__ |        |          |
-|[micd](problems.md#micd)|1.1.1   |       |__+1__  |          |
 
