@@ -1,4 +1,5 @@
 #' @importFrom broom    glance tidy
+#' @importFrom data.table as.data.table data.table is.data.table set setnames
 #' @importFrom dplyr    .data %>% any_of bind_cols bind_rows filter group_by lead
 #'                      mutate n pull relocate row_number select summarize
 #' @importFrom glmnet   cv.glmnet
@@ -18,7 +19,7 @@
 #'                      na.exclude na.omit na.pass
 #'                      pf predict pt qt quantile quasibinomial
 #'                      rbinom rchisq reformulate rgamma rnorm runif
-#'                      sd summary.glm terms update var vcov
+#'                      sd setNames summary.glm terms update var vcov
 #' @importFrom tidyr    complete
 #' @importFrom utils    askYesNo flush.console hasName head install.packages
 #'                      methods packageDescription packageVersion

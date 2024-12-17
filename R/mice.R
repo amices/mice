@@ -444,10 +444,17 @@ mice <- function(data,
 
   # initialize imputations
   nmis <- apply(is.na(data), 2, sum)
-  imp <- initialize.imp(
+  # imp <- initialize.imp(
+  #   data, m, ignore, where, blocks, visitSequence,
+  #   method, nmis, data.init
+  # )
+
+  data <- as.data.table(data)
+  imp2 <- initialize.imp2(
     data, m, ignore, where, blocks, visitSequence,
     method, nmis, data.init
   )
+  return(list(imp = imp, imp2 = imp2))
 
   # and iterate...
   from <- 1
