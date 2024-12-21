@@ -21,7 +21,7 @@
 #' @return A list containing vectors with \code{0} if a case should be made missing
 #' and \code{1} if a case should remain complete. The first vector refers to the
 #' first pattern, the second vector to the second pattern, etcetera.
-#' @author Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
+#' @author Rianne Schouten, Gerko Vink, Peter Lugtig, 2016
 #' @seealso \code{\link{ampute}}, \code{\link{ampute.default.type}}
 #' @references
 #' Van Buuren, S. (2018).

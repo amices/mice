@@ -44,6 +44,6 @@ Chapman & Hall/CRC. Boca Raton, FL.
 \code{\link{ampute}}, \code{\link{ampute.default.type}}
 }
 \author{
-Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
+Rianne Schouten, Gerko Vink, Peter Lugtig, 2016
 }
 \keyword{internal}

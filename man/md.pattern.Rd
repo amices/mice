@@ -11,10 +11,10 @@ md.pattern(x, plot = TRUE, rotate.names = FALSE)
 values are coded as NA's.}
 
 \item{plot}{Should the missing data pattern be made into a plot. Default is
-`plot = TRUE`.}
+\code{plot = TRUE}.}
 
 \item{rotate.names}{Whether the variable names in the plot should be placed
-horizontally or vertically. Default is `rotate.names = FALSE`.}
+horizontally or vertically. Default is \code{rotate.names = FALSE}.}
 }
 \value{
 A matrix with \code{ncol(x)+1} columns, in which each row corresponds

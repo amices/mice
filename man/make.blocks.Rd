@@ -4,14 +4,10 @@
 \alias{make.blocks}
 \title{Creates a \code{blocks} argument}
 \usage{
-make.blocks(
-  data,
-  partition = c("scatter", "collect", "void"),
-  calltype = "pred"
-)
+make.blocks(x, partition = c("scatter", "collect", "void"), calltype = "pred")
 }
 \arguments{
-\item{data}{A \code{data.frame}, character vector with
+\item{x}{A \code{data.frame}, character vector with
 variable names, or \code{list} with variable names.}
 
 \item{partition}{A character vector of length 1 used to assign

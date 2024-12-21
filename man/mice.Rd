@@ -151,7 +151,7 @@ functions.}
 }
 \value{
 Returns an S3 object of class \code{\link[=mids-class]{mids}}
-       (multiply imputed data set)
+(multiply imputed data set)
 }
 \description{
 The \pkg{mice} package implements a method to deal with missing data.
@@ -312,11 +312,11 @@ argument \code{auxiliary = FALSE}.
 
 The main functions are:
 \tabular{ll}{
-  \code{mice()} \tab Impute the missing data *m* times\cr
-  \code{with()} \tab Analyze completed data sets\cr
-  \code{pool()} \tab Combine parameter estimates\cr
-  \code{complete()} \tab Export imputed data\cr
-  \code{ampute()} \tab Generate missing data\cr}
+\code{mice()} \tab Impute the missing data \emph{m} times\cr
+\code{with()} \tab Analyze completed data sets\cr
+\code{pool()} \tab Combine parameter estimates\cr
+\code{complete()} \tab Export imputed data\cr
+\code{ampute()} \tab Generate missing data\cr}
 }
 
 \section{Vignettes}{

@@ -1,3 +1,7 @@
+# mice 3.17.0.9000
+
+* Adds support for roxygen markdown documentation
+
 # mice 3.17.0
 
 ### Major changes

@@ -2,8 +2,8 @@
 #'
 #' This helper function generates a list of the type needed for
 #' \code{blocks} argument in the \code{[=mice]{mice}} function.
-#' @param data A \code{data.frame}, character vector with
-#' variable names, or \code{list} with variable names.
+#' @param x A `data.frame`, character vector with
+#' variable names, or `list` with variable names.
 #' @param partition A character vector of length 1 used to assign
 #' variables to blocks when \code{data} is a \code{data.frame}. Value
 #' \code{"scatter"} (default) will assign each column to it own
@@ -50,19 +50,19 @@
 #' make.blocks(nhanes)
 #' make.blocks(c("age", "sex", "edu"))
 #' @export
-make.blocks <- function(data,
+make.blocks <- function(x,
                         partition = c("scatter", "collect", "void"),
                         calltype = "pred") {
-  if (is.vector(data) && !is.list(data)) {
-    v <- as.list(as.character(data))
-    names(v) <- as.character(data)
+  if (is.vector(x) && !is.list(x)) {
+    v <- as.list(as.character(x))
+    names(v) <- as.character(x)
     ct <- rep(calltype, length(v))
     names(ct) <- names(v)
     attr(v, "calltype") <- ct
     return(v)
   }
-  if (is.list(data) && !is.data.frame(data)) {
-    v <- name.blocks(data)
+  if (is.list(x) && !is.data.frame(x)) {
+    v <- name.blocks(x)
     if (length(calltype) == 1L) {
       ct <- rep(calltype, length(v))
       names(ct) <- names(v)
@@ -74,24 +74,24 @@ make.blocks <- function(data,
     }
     return(v)
   }
-  data <- as.data.frame(data)
+  x <- as.data.frame(x)
   partition <- match.arg(partition)
   switch(partition,
-    scatter = {
-      v <- as.list(names(data))
-      names(v) <- names(data)
-    },
-    collect = {
-      v <- list(names(data))
-      names(v) <- "collect"
-    },
-    void = {
-      v <- list()
-    },
-    {
-      v <- as.list(names(data))
-      names(v) <- names(data)
-    }
+         scatter = {
+           v <- as.list(names(x))
+           names(v) <- names(x)
+         },
+         collect = {
+           v <- list(names(x))
+           names(v) <- "collect"
+         },
+         void = {
+           v <- list()
+         },
+         {
+           v <- as.list(names(x))
+           names(v) <- names(x)
+         }
   )
   if (length(calltype) == 1L) {
     ct <- rep(calltype, length(v))

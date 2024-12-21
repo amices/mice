@@ -35,11 +35,11 @@ This function enables the user to split up the computations of the Gibbs
 sampler into smaller parts. This is useful for the following reasons:
 
 \itemize{
-   \item To add a few extra iteration to an existing solution.
-   \item If RAM memory is exhausted. Returning to prompt/session
-   level may alleviate such problems.
-   \item To customize convergence statistics at specific points, e.g.,
-   after every \code{maxit} iterations to monitor convergence.
+\item To add a few extra iteration to an existing solution.
+\item If RAM memory is exhausted. Returning to prompt/session
+level may alleviate such problems.
+\item To customize convergence statistics at specific points, e.g.,
+after every \code{maxit} iterations to monitor convergence.
 }
 
 The imputation model itself is specified in the \code{\link{mice}()} function

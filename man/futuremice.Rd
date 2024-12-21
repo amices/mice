@@ -44,7 +44,7 @@ The default \code{multisession} resolves futures asynchronously (in parallel)
 in separate \code{R} sessions running in the background. See
 \code{\link[future]{plan}} for more information on future plans.}
 
-\item{packages}{A character vector with additional packages to be used in 
+\item{packages}{A character vector with additional packages to be used in
 \code{mice} (e.g., for using external imputation functions).}
 
 \item{globals}{A character string with additional functions to be exported to
@@ -67,7 +67,6 @@ This function relies on package \code{\link[furrr]{furrr}}, which is a
 package for R versions 3.2.0 and later. We have chosen to use furrr function
 \code{future_map} to allow the use of \code{futuremice} on Mac, Linux and
 Windows systems.
-
 
 This wrapper function combines the output of \code{\link[furrr]{future_map}} with
 function \code{\link{ibind}} from the \code{\link{mice}} package. A
