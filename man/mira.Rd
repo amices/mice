@@ -24,15 +24,15 @@ mira(
 \value{
 An object of class \code{"mira"}. The \code{mira} class contains
 the following elements:
- \describe{
-   \item{\code{.Data}:}{Object of class \code{"list"} containing the
-   following slots:}
-   \item{\code{call}:}{The call that created the object.}
-   \item{\code{call1}:}{The call that created the \code{mids} object that was used
+\describe{
+\item{\code{.Data}:}{Object of class \code{"list"} containing the
+following slots:}
+\item{\code{call}:}{The call that created the object.}
+\item{\code{call1}:}{The call that created the \code{mids} object that was used
 in \code{call}.}
-   \item{\code{nmis}:}{An array containing the number of missing observations per
+\item{\code{nmis}:}{An array containing the number of missing observations per
 column.}
-   \item{\code{analyses}:}{A list of \code{m} components containing the individual
+\item{\code{analyses}:}{A list of \code{m} components containing the individual
 fit objects from each of the \code{m} complete data analyses.}
 }
 }
@@ -45,7 +45,6 @@ the \code{mira} object using the \code{with()} function.
 The \code{as.mira()} function takes the results of repeated
 complete-data analysis stored as a list, and turns it into a \code{mira}
 object that can be pooled.
-
 
 In versions prior to \code{mice 3.0} pooling required only that
 \code{coef()} and \code{vcov()} methods were available for fitted

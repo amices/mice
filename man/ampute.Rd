@@ -238,5 +238,5 @@ Vink, G. (2016) Towards a standardized evaluation of multiple imputation routine
 \code{\link{xyplot.mads}}
 }
 \author{
-Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
+Rianne Schouten, Gerko Vink, Peter Lugtig, 2016
 }

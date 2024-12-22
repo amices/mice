@@ -20,6 +20,7 @@ mids(
   predictorMatrix = matrix(),
   visitSequence = character(),
   formulas = list(),
+  modeltype = character(),
   post = character(),
   blots = list(),
   ignore = logical(),
@@ -127,6 +128,19 @@ The \code{formulas} argument is an alternative to the
 \code{predictorMatrix} argument that allows for more flexibility in
 specifying imputation models, e.g., for specifying interaction terms.}
 
+\item{modeltype}{A character vector of \code{length(block)} elements
+that indicates how the imputation model is specified. Entries can
+one of two values: \code{"pred"} or \code{"formula"}. If
+\code{modeltype = "pred"}, the predictors of the imputation
+model for the block are specified by the corresponding row of the
+\code{predictorMatrix}. If  \code{modeltype = "formula"} the
+imputation model is specified by relevant entry in
+\code{formulas}. The default depends on the presence of the
+\code{formulas} argument. If \code{formulas} is present, then
+\code{mice()} sets
+\code{modeltype = "formula"} for any block
+for which a formula is specified. Otherwise, \code{modeltype = "pred"}.}
+
 \item{post}{A vector of strings with length \code{ncol(data)} specifying
 expressions as strings. Each string is parsed and
 executed within the \code{sampler()} function to post-process
@@ -215,52 +229,52 @@ The S3 class \code{mids} has the following methods:
 \section{Structure}{
 
 Objects of class \code{"mids"} are lists with the following elements:
- \describe{
-   \item{\code{data}:}{Original (incomplete) data set.}
-   \item{\code{imp}:}{A list of \code{ncol(data)} components with
-   the generated multiple imputations. Each list component is a
-   \code{data.frame} (\code{nmis[j]} by \code{m}) of imputed values
-   for variable \code{j}. A \code{NULL} component is used for
-   variables for which not imputations are generated.}
-   \item{\code{m}:}{Number of imputations.}
-   \item{\code{where}:}{The \code{where} argument of the
-   \code{mice()} function.}
-   \item{\code{blocks}:}{The \code{blocks} argument of the
-   \code{mice()} function.}
-   \item{\code{call}:}{Call that created the object.}
-   \item{\code{nmis}:}{An Named vector with counts of missing values per variable}
-   \item{\code{method}:}{A vector of strings of \code{length(blocks}
-   specifying the imputation method per block.}
-   \item{\code{predictorMatrix}:}{A numerical matrix of containing
-   integers specifying the predictor set.}
-   \item{\code{visitSequence}:}{A vector of variable and block names that
-    specifies how variables and blocks are visited in one iteration throuh
-    the data.}
-   \item{\code{formulas}:}{A named list of formula's, or expressions that
-   can be converted into formula's by \code{as.formula}. List elements
-   correspond to blocks. The block to which the list element applies is
-   identified by its name, so list names must correspond to block names.}
-   \item{\code{post}:}{A vector of strings of length \code{length(blocks)}
-   with commands for post-processing.}
-   \item{\code{blots}:}{"Block dots". The \code{blots} argument to the \code{mice()}
-   function.}
-   \item{\code{ignore}:}{A logical vector of length \code{nrow(data)} indicating
-   the rows in \code{data} used to build the imputation model. (new in \code{mice 3.12.0})}
-   \item{\code{seed}:}{The seed value of the solution.}
-   \item{\code{iteration}:}{Last Gibbs sampling iteration number.}
-   \item{\code{lastSeedValue}:}{Random number generator state.}
-   \item{\code{chainMean}:}{An array of dimensions \code{ncol} by
-   \code{maxit} by \code{m} elements containing the mean of
-   the generated multiple imputations.
-   The array can be used for monitoring convergence.
-   Note that observed data are not present in this mean.}
-   \item{\code{chainVar}:}{An array with similar structure as
-   \code{chainMean}, containing the variance of the imputed values.}
-   \item{\code{loggedEvents}:}{A \code{data.frame} with five columns
-   containing warnings, corrective actions, and other inside info.}
-   \item{\code{version}:}{Version number of \code{mice} package that
-   created the object.}
-   \item{\code{date}:}{Date at which the object was created.}
+\describe{
+\item{\code{data}:}{Original (incomplete) data set.}
+\item{\code{imp}:}{A list of \code{ncol(data)} components with
+the generated multiple imputations. Each list component is a
+\code{data.frame} (\code{nmis[j]} by \code{m}) of imputed values
+for variable \code{j}. A \code{NULL} component is used for
+variables for which not imputations are generated.}
+\item{\code{m}:}{Number of imputations.}
+\item{\code{where}:}{The \code{where} argument of the
+\code{mice()} function.}
+\item{\code{blocks}:}{The \code{blocks} argument of the
+\code{mice()} function.}
+\item{\code{call}:}{Call that created the object.}
+\item{\code{nmis}:}{An Named vector with counts of missing values per variable}
+\item{\code{method}:}{A vector of strings of \code{length(blocks}
+specifying the imputation method per block.}
+\item{\code{predictorMatrix}:}{A numerical matrix of containing
+integers specifying the predictor set.}
+\item{\code{visitSequence}:}{A vector of variable and block names that
+specifies how variables and blocks are visited in one iteration throuh
+the data.}
+\item{\code{formulas}:}{A named list of formula's, or expressions that
+can be converted into formula's by \code{as.formula}. List elements
+correspond to blocks. The block to which the list element applies is
+identified by its name, so list names must correspond to block names.}
+\item{\code{post}:}{A vector of strings of length \code{length(blocks)}
+with commands for post-processing.}
+\item{\code{blots}:}{"Block dots". The \code{blots} argument to the \code{mice()}
+function.}
+\item{\code{ignore}:}{A logical vector of length \code{nrow(data)} indicating
+the rows in \code{data} used to build the imputation model. (new in \code{mice 3.12.0})}
+\item{\code{seed}:}{The seed value of the solution.}
+\item{\code{iteration}:}{Last Gibbs sampling iteration number.}
+\item{\code{lastSeedValue}:}{Random number generator state.}
+\item{\code{chainMean}:}{An array of dimensions \code{ncol} by
+\code{maxit} by \code{m} elements containing the mean of
+the generated multiple imputations.
+The array can be used for monitoring convergence.
+Note that observed data are not present in this mean.}
+\item{\code{chainVar}:}{An array with similar structure as
+\code{chainMean}, containing the variance of the imputed values.}
+\item{\code{loggedEvents}:}{A \code{data.frame} with five columns
+containing warnings, corrective actions, and other inside info.}
+\item{\code{version}:}{Version number of \code{mice} package that
+created the object.}
+\item{\code{date}:}{Date at which the object was created.}
 }
 }
 
@@ -272,9 +286,9 @@ made.  At initialization the program removes constant variables, and
 removes variables to cause collinearity.
 During iteration, the program does the following actions:
 \itemize{
-    \item One or more variables that are linearly dependent are removed
+\item One or more variables that are linearly dependent are removed
 (for categorical data, a 'variable' corresponds to a dummy variable)
-    \item  Proportional odds regression imputation that does not converge
+\item  Proportional odds regression imputation that does not converge
 and is replaced by \code{polyreg}.
 }
 

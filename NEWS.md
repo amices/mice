@@ -1,3 +1,8 @@
+# mice 3.17.1
+
+* Adds `modeltype` argument to `mice()` for specify `"pred"` versus `"formula"` model type. The `modeltype` argument allows the user to specify different model type across blocks. It replaces the `calltype` attribute of `blocks`.
+* Adds support for roxygen markdown documentation
+
 # mice 3.17.0
 
 ### Major changes

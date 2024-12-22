@@ -6,15 +6,15 @@
 \title{Toenail data}
 \format{
 A data frame with 1908 observations on the following 5 variables:
-  \describe{
-  \item{\code{ID}}{a numeric vector giving the ID of patient}
-  \item{\code{outcome}}{a numeric vector giving the response
-  (0=none or mild seperation, 1=moderate or severe)}
-  \item{\code{treatment}}{a numeric vector giving the treatment group}
-  \item{\code{month}}{a numeric vector giving the time of the visit
-  (not exactly monthly intervals hence not round numbers)}
-  \item{\code{visit}}{a numeric vector giving the number of the visit}
-  }
+\describe{
+\item{\code{ID}}{a numeric vector giving the ID of patient}
+\item{\code{outcome}}{a numeric vector giving the response
+(0=none or mild seperation, 1=moderate or severe)}
+\item{\code{treatment}}{a numeric vector giving the treatment group}
+\item{\code{month}}{a numeric vector giving the time of the visit
+(not exactly monthly intervals hence not round numbers)}
+\item{\code{visit}}{a numeric vector giving the number of the visit}
+}
 }
 \source{
 De Backer, M., De Vroey, C., Lesaffre, E., Scheys, I., and De

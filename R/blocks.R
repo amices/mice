@@ -1,29 +1,14 @@
 #' Creates a \code{blocks} argument
 #'
-#' This helper function generates a list of the type needed for
-#' \code{blocks} argument in the \code{[=mice]{mice}} function.
-#' @param data A \code{data.frame}, character vector with
-#' variable names, or \code{list} with variable names.
+#' The `make.blocks()` helper function generates a suitable
+#' \code{blocks} argument for the \code{[=mice]{mice}} function.
+#'
+#' @param x A `data.frame`, character vector with
+#' variable names, or `list` with variable names.
 #' @param partition A character vector of length 1 used to assign
 #' variables to blocks when \code{data} is a \code{data.frame}. Value
-#' \code{"scatter"} (default) will assign each column to it own
-#' block. Value \code{"collect"} assigns all variables to one block,
-#' whereas \code{"void"} produces an empty list.
-#' @param calltype A character vector of \code{length(block)} elements
-#' that indicates how the imputation model is specified. If
-#' \code{calltype = "pred"} (the default), the underlying imputation
-#' model is called by means of the \code{type} argument. The
-#' \code{type} argument for block \code{h} is equivalent to
-#' row \code{h} in the \code{predictorMatrix}.
-#' The alternative is \code{calltype = "formula"}. This will pass
-#' \code{formulas[[h]]} to the underlying imputation
-#' function for block \code{h}, together with the current data.
-#' The \code{calltype} of a block is set automatically during
-#' initialization. Where a choice is possible, calltype
-#' \code{"formula"} is preferred over \code{"pred"} since this is
-#' more flexible and extendable. However, what precisely happens
-#' depends also on the capabilities of the imputation
-#' function that is called.
+#' \code{"scatter"} (default) assigns each variable to it own
+#' block. Value \code{"collect"} assigns all variables to a single block.
 #' @return A named list of character vectors with variables names.
 #' @details Choices \code{"scatter"} and \code{"collect"} represent to two
 #' extreme scenarios for assigning variables to imputation blocks.
@@ -50,66 +35,58 @@
 #' make.blocks(nhanes)
 #' make.blocks(c("age", "sex", "edu"))
 #' @export
-make.blocks <- function(data,
-                        partition = c("scatter", "collect", "void"),
-                        calltype = "pred") {
-  if (is.vector(data) && !is.list(data)) {
-    v <- as.list(as.character(data))
-    names(v) <- as.character(data)
-    ct <- rep(calltype, length(v))
-    names(ct) <- names(v)
-    attr(v, "calltype") <- ct
+make.blocks <- function(x,
+                        partition = c("scatter", "collect", "void")) {
+
+  # character: assign each variable to its own block
+  if (is.character(x)) {
+    v <- as.list(as.character(x))
+    names(v) <- make.unique(as.character(x))
     return(v)
   }
-  if (is.list(data) && !is.data.frame(data)) {
-    v <- name.blocks(data)
-    if (length(calltype) == 1L) {
-      ct <- rep(calltype, length(v))
-      names(ct) <- names(v)
-      attr(v, "calltype") <- ct
-    } else {
-      ct <- calltype
-      names(ct) <- names(v)
-      attr(v, "calltype") <- ct
-    }
+
+  # list: specify (named) list of blocks
+  if (is.list(x) && !is.data.frame(x)) {
+    v <- name.blocks(x)
     return(v)
   }
-  data <- as.data.frame(data)
+
+  # matrix: convert to data.frame
+  if (is.matrix(x)) {
+    x <- as.data.frame(x)
+  }
+
+  if (!is.data.frame(x)) {
+    stop("x must be a data.frame, character vector, or list")
+  }
+
+  # data.frame: assign each variable to its own block
   partition <- match.arg(partition)
   switch(partition,
-    scatter = {
-      v <- as.list(names(data))
-      names(v) <- names(data)
-    },
-    collect = {
-      v <- list(names(data))
-      names(v) <- "collect"
-    },
-    void = {
-      v <- list()
-    },
-    {
-      v <- as.list(names(data))
-      names(v) <- names(data)
-    }
+         scatter = {
+           v <- as.list(names(x))
+           names(v) <- names(x)
+         },
+         collect = {
+           v <- list(names(x))
+           names(v) <- "collect"
+         },
+         void = {
+           v <- list()
+         },
+         {
+           v <- as.list(names(x))
+           names(v) <- names(x)
+         }
   )
-  if (length(calltype) == 1L) {
-    ct <- rep(calltype, length(v))
-    names(ct) <- names(v)
-    attr(v, "calltype") <- ct
-  } else {
-    ct <- calltype
-    names(ct) <- names(v)
-    attr(v, "calltype") <- ct
-  }
-  v
+  return(v)
 }
 
 #' Name imputation blocks
 #'
 #' This helper function names any unnamed elements in the \code{blocks}
 #' specification. This is a convenience function.
-#' @inheritParams mice
+#' @inheritParams make.blocks
 #' @param prefix A character vector of length 1 with the prefix to
 #' be using for naming any unnamed blocks with two or more variables.
 #' @return A named list of character vectors with variables names.
@@ -125,25 +102,25 @@ make.blocks <- function(data,
 #' blocks <- list(c("hyp", "chl"), AGE = "age", c("bmi", "hyp"), "edu")
 #' name.blocks(blocks)
 #' @export
-name.blocks <- function(blocks, prefix = "B") {
-  if (!is.list(blocks)) {
-    return(make.blocks(blocks))
+name.blocks <- function(x, prefix = "B") {
+  if (!is.list(x)) {
+    return(make.blocks(x))
   }
-  if (is.null(names(blocks))) names(blocks) <- rep("", length(blocks))
+  if (is.null(names(x))) names(x) <- rep("", length(x))
   inc <- 1
-  for (i in seq_along(blocks)) {
-    if (names(blocks)[i] != "") next
-    if (length(blocks[[i]]) == 1) {
-      names(blocks)[i] <- blocks[[i]][1]
+  for (i in seq_along(x)) {
+    if (names(x)[i] != "") next
+    if (length(x[[i]]) == 1) {
+      names(x)[i] <- x[[i]][1]
     } else {
-      names(blocks)[i] <- paste0(prefix, inc)
+      names(x)[i] <- paste0(prefix, inc)
       inc <- inc + 1
     }
   }
-  blocks
+  return(x)
 }
 
-check.blocks <- function(blocks, data, calltype = "pred") {
+check.blocks <- function(blocks, data) {
   data <- check.dataform(data)
   blocks <- name.blocks(blocks)
 
@@ -155,16 +132,6 @@ check.blocks <- function(blocks, data, calltype = "pred") {
       "The following names were not found in `data`:",
       paste(bv[notFound], collapse = ", ")
     ))
-  }
-
-  if (length(calltype) == 1L) {
-    ct <- rep(calltype, length(blocks))
-    names(ct) <- names(blocks)
-    attr(blocks, "calltype") <- ct
-  } else {
-    ct <- calltype
-    names(ct) <- names(blocks)
-    attr(blocks, "calltype") <- ct
   }
 
   blocks
@@ -197,9 +164,6 @@ construct.blocks <- function(formulas = NULL, predictorMatrix = NULL) {
       return(NULL)
     }
     blocks.f <- name.blocks(lapply(name.formulas(formulas), lhs))
-    ct <- rep("formula", length(blocks.f))
-    names(ct) <- names(blocks.f)
-    attr(blocks.f, "calltype") <- ct
     if (is.null(predictorMatrix)) {
       return(blocks.f)
     }
@@ -210,9 +174,6 @@ construct.blocks <- function(formulas = NULL, predictorMatrix = NULL) {
       stop("No row names in predictorMatrix", call. = FALSE)
     }
     blocks.p <- name.blocks(row.names(predictorMatrix))
-    ct <- rep("pred", length(blocks.p))
-    names(ct) <- names(blocks.p)
-    attr(blocks.p, "calltype") <- ct
     if (is.null(formulas)) {
       return(blocks.p)
     }
@@ -224,11 +185,5 @@ construct.blocks <- function(formulas = NULL, predictorMatrix = NULL) {
   keep <- setdiff(blocknames, vars.f)
   add.p <- blocks.p[names(blocks.p) %in% keep]
   blocks <- c(blocks.f, add.p)
-  ct <- c(
-    rep("formula", length(formulas)),
-    rep("pred", length(add.p))
-  )
-  names(ct) <- names(blocks)
-  attr(blocks, "calltype") <- ct
-  blocks
+  return(blocks)
 }

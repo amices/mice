@@ -2,27 +2,27 @@
 % Please edit documentation in R/tidiers.R
 \name{glance.mipo}
 \alias{glance.mipo}
-\title{Glance method to extract information from a `mipo` object}
+\title{Glance method to extract information from a \code{mipo} object}
 \usage{
 \method{glance}{mipo}(x, ...)
 }
 \arguments{
-\item{x}{An object with multiply-imputed models from `mice` (class: `mipo`)}
+\item{x}{An object with multiply-imputed models from \code{mice} (class: \code{mipo})}
 
 \item{...}{extra arguments (not used)}
 }
 \value{
 a dataframe with one row and the following columns:
 \itemize{
-  \item nimp
-  \item nobs
+\item nimp
+\item nobs
 }
 }
 \description{
-Glance method to extract information from a `mipo` object
+Glance method to extract information from a \code{mipo} object
 }
 \note{
-If x contains `lm` models, R2 and Adj.R2 are included in the output
+If x contains \code{lm} models, R2 and Adj.R2 are included in the output
 }
 \concept{tidiers}
 \keyword{internal}

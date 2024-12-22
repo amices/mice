@@ -56,8 +56,8 @@ two-level regression (see argument \code{type}). This function needs the
 Implements the Gibbs sampler for the linear two-level model with homogeneous
 within group variances which is a special case of a multivariate linear mixed
 effects model (Schafer & Yucel, 2002).  For a two-level imputation with
-heterogeneous within-group variances see \code{\link{mice.impute.2l.norm}}. %
-The random intercept is automatically added in %
+heterogeneous within-group variances see \code{\link{mice.impute.2l.norm}}. \%
+The random intercept is automatically added in \%
 \code{mice.impute.2l.norm()}.
 }
 \note{

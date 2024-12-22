@@ -20,7 +20,7 @@ The D2-statistic pools test statistics from the repeated analyses.
 The method is less powerful than the D1- and D3-statistics.
 }
 \note{
-Warning: `D2()` assumes that the order of the variables is the
+Warning: \code{D2()} assumes that the order of the variables is the
 same in different models. See
 \url{https://github.com/amices/mice/issues/420} for details.
 }

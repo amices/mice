@@ -4,44 +4,23 @@
 \alias{make.blocks}
 \title{Creates a \code{blocks} argument}
 \usage{
-make.blocks(
-  data,
-  partition = c("scatter", "collect", "void"),
-  calltype = "pred"
-)
+make.blocks(x, partition = c("scatter", "collect", "void"))
 }
 \arguments{
-\item{data}{A \code{data.frame}, character vector with
+\item{x}{A \code{data.frame}, character vector with
 variable names, or \code{list} with variable names.}
 
 \item{partition}{A character vector of length 1 used to assign
 variables to blocks when \code{data} is a \code{data.frame}. Value
-\code{"scatter"} (default) will assign each column to it own
-block. Value \code{"collect"} assigns all variables to one block,
-whereas \code{"void"} produces an empty list.}
-
-\item{calltype}{A character vector of \code{length(block)} elements
-that indicates how the imputation model is specified. If
-\code{calltype = "pred"} (the default), the underlying imputation
-model is called by means of the \code{type} argument. The
-\code{type} argument for block \code{h} is equivalent to
-row \code{h} in the \code{predictorMatrix}.
-The alternative is \code{calltype = "formula"}. This will pass
-\code{formulas[[h]]} to the underlying imputation
-function for block \code{h}, together with the current data.
-The \code{calltype} of a block is set automatically during
-initialization. Where a choice is possible, calltype
-\code{"formula"} is preferred over \code{"pred"} since this is
-more flexible and extendable. However, what precisely happens
-depends also on the capabilities of the imputation
-function that is called.}
+\code{"scatter"} (default) assigns each variable to it own
+block. Value \code{"collect"} assigns all variables to a single block.}
 }
 \value{
 A named list of character vectors with variables names.
 }
 \description{
-This helper function generates a list of the type needed for
-\code{blocks} argument in the \code{[=mice]{mice}} function.
+The \code{make.blocks()} helper function generates a suitable
+\code{blocks} argument for the \code{[=mice]{mice}} function.
 }
 \details{
 Choices \code{"scatter"} and \code{"collect"} represent to two

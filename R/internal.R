@@ -153,3 +153,7 @@ ma_exists <- function(x, pos, n_index = 1:8) {
 backticks <- function(varname) {
   sprintf("`%s`", varname)
 }
+
+is.named.list <- function(x) {
+  is.list(x) && !is.null(names(x)) && all(names(x) != "")
+}

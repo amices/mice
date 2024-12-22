@@ -16,6 +16,7 @@ mice(
   blocks,
   visitSequence = NULL,
   formulas,
+  modeltype = NULL,
   blots = NULL,
   post = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -109,6 +110,19 @@ The \code{formulas} argument is an alternative to the
 \code{predictorMatrix} argument that allows for more flexibility in
 specifying imputation models, e.g., for specifying interaction terms.}
 
+\item{modeltype}{A character vector of \code{length(block)} elements
+that indicates how the imputation model is specified. Entries can
+one of two values: \code{"pred"} or \code{"formula"}. If
+\code{modeltype = "pred"}, the predictors of the imputation
+model for the block are specified by the corresponding row of the
+\code{predictorMatrix}. If  \code{modeltype = "formula"} the
+imputation model is specified by relevant entry in
+\code{formulas}. The default depends on the presence of the
+\code{formulas} argument. If \code{formulas} is present, then
+\code{mice()} sets
+\code{modeltype = "formula"} for any block
+for which a formula is specified. Otherwise, \code{modeltype = "pred"}.}
+
 \item{blots}{A named \code{list} of \code{alist}'s that can be used
 to pass down arguments to lower level imputation function. The entries
 of element \code{blots[[blockname]]} are passed down to the function
@@ -151,7 +165,7 @@ functions.}
 }
 \value{
 Returns an S3 object of class \code{\link[=mids-class]{mids}}
-       (multiply imputed data set)
+(multiply imputed data set)
 }
 \description{
 The \pkg{mice} package implements a method to deal with missing data.
@@ -312,11 +326,11 @@ argument \code{auxiliary = FALSE}.
 
 The main functions are:
 \tabular{ll}{
-  \code{mice()} \tab Impute the missing data *m* times\cr
-  \code{with()} \tab Analyze completed data sets\cr
-  \code{pool()} \tab Combine parameter estimates\cr
-  \code{complete()} \tab Export imputed data\cr
-  \code{ampute()} \tab Generate missing data\cr}
+\code{mice()} \tab Impute the missing data \emph{m} times\cr
+\code{with()} \tab Analyze completed data sets\cr
+\code{pool()} \tab Combine parameter estimates\cr
+\code{complete()} \tab Export imputed data\cr
+\code{ampute()} \tab Generate missing data\cr}
 }
 
 \section{Vignettes}{

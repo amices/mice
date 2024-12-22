@@ -30,7 +30,7 @@ Disease in Childhood}, \bold{82}, 107-112.
 Height, weight, head circumference and puberty of 748 Dutch boys.
 }
 \details{
-Random sample of 10\% from the cross-sectional data used to construct the
+Random sample of 10\\% from the cross-sectional data used to construct the
 Dutch growth references 1997. Variables \code{gen} and \code{phb} are ordered
 factors. \code{reg} is a factor.
 }

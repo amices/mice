@@ -1,7 +1,8 @@
 # The sampler controls the actual Gibbs sampling iteration scheme.
 # This function is called by mice and mice.mids
 sampler <- function(data, m, ignore, where, imp, blocks, method,
-                    visitSequence, predictorMatrix, formulas, blots,
+                    visitSequence, predictorMatrix, formulas,
+                    modeltype, blots,
                     post, fromto, printFlag, ...) {
   from <- fromto[1]
   to <- fromto[2]
@@ -39,13 +40,10 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
         # impute block-by-block
         for (h in visitSequence) {
-          ct <- attr(blocks, "calltype")
-          calltype <- ifelse(length(ct) == 1, ct[1], ct[h])
-
+          ct <- modeltype[[h]]
           b <- blocks[[h]]
-          if (calltype == "formula") ff <- formulas[[h]] else ff <- NULL
+          if (ct == "formula") ff <- formulas[[h]] else ff <- NULL
           pred <- predictorMatrix[h, ]
-
           user <- blots[[h]]
 
           # univariate/multivariate logic
@@ -77,7 +75,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
                   pred = pred, formula = ff,
                   method = theMethod,
                   yname = j, k = k,
-                  calltype = calltype,
+                  ct = ct,
                   user = user, ignore = ignore,
                   ...
                 )
@@ -102,18 +100,18 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
             data[mis] <- NA
 
             fm <- paste("mice.impute", theMethod, sep = ".")
-            if (calltype == "formula") {
+            if (ct == "formula") {
               imputes <- do.call(fm, args = list(
                 data = data,
                 formula = ff, ...
               ))
-            } else if (calltype == "pred") {
+            } else if (ct == "pred") {
               imputes <- do.call(fm, args = list(
                 data = data,
                 type = pred, ...
               ))
             } else {
-              stop("Cannot call function of type ", calltype,
+              stop("Cannot call function of type ", ct,
                 call. = FALSE
               )
             }
@@ -180,10 +178,10 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
 
 sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
-                         calltype = "pred", user, ignore, ...) {
+                         ct = "pred", user, ignore, ...) {
   j <- yname[1L]
 
-  if (calltype == "pred") {
+  if (ct == "pred") {
     vars <- colnames(data)[pred != 0]
     xnames <- setdiff(vars, j)
     if (length(xnames) > 0L) {
@@ -194,7 +192,7 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
     }
   }
 
-  if (calltype == "formula") {
+  if (ct == "formula") {
     # move terms other than j from lhs to rhs
     ymove <- setdiff(lhs(formula), j)
     formula <- update(formula, paste(j, " ~ . "))
@@ -207,12 +205,12 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
   x <- obtain.design(data, formula)
 
   # expand pred vector to model matrix, remove intercept
-  if (calltype == "pred") {
+  if (ct == "pred") {
     type <- pred[labels(terms(formula))][attr(x, "assign")]
     x <- x[, -1L, drop = FALSE]
     names(type) <- colnames(x)
   }
-  if (calltype == "formula") {
+  if (ct == "formula") {
     x <- x[, -1L, drop = FALSE]
     type <- rep(1L, length = ncol(x))
     names(type) <- colnames(x)
