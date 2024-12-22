@@ -4,20 +4,11 @@
 \alias{name.blocks}
 \title{Name imputation blocks}
 \usage{
-name.blocks(blocks, prefix = "B")
+name.blocks(x, prefix = "B")
 }
 \arguments{
-\item{blocks}{List of vectors with variable names per block. List elements
-may be named to identify blocks. Variables within a block are
-imputed by a multivariate imputation method
-(see \code{method} argument). By default each variable is placed
-into its own block, which is effectively
-fully conditional specification (FCS) by univariate models
-(variable-by-variable imputation). Only variables whose names appear in
-\code{blocks} are imputed. The relevant columns in the \code{where}
-matrix are set to \code{FALSE} of variables that are not block members.
-A variable may appear in multiple blocks. In that case, it is
-effectively re-imputed each time that it is visited.}
+\item{x}{A \code{data.frame}, character vector with
+variable names, or \code{list} with variable names.}
 
 \item{prefix}{A character vector of length 1 with the prefix to
 be using for naming any unnamed blocks with two or more variables.}

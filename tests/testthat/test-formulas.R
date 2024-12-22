@@ -18,3 +18,4 @@ test_that("model.matrix() deletes incomplete cases", {
 form <- list(bmi ~ poly(chl, 2) + age + hyp)
 pred <- make.predictorMatrix(nhanes)
 imp1 <- mice(data, form = form, pred = pred, m = 1, maxit = 2, print = FALSE)
+
