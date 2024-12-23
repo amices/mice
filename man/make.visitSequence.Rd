@@ -7,8 +7,8 @@
 make.visitSequence(data = NULL, blocks = NULL)
 }
 \arguments{
-\item{data}{A data frame or a matrix containing the incomplete data.  Missing
-values are coded as \code{NA}.}
+\item{data}{A \code{data.frame}, \code{matrix} or \code{data.table}
+containing the incomplete data.  Missing values are coded as \code{NA}.}
 
 \item{blocks}{List of vectors with variable names per block. List elements
 may be named to identify blocks. Variables within a block are

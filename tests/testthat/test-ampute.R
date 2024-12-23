@@ -161,7 +161,7 @@ test_that("error messages work properly", {
   # data
   expect_error(
     ampute(data = as.list(complete.data)),
-    "Data should be a matrix or data frame"
+    "Data should be a data.frame, matrix or data.table"
   )
 
   nasty.data <- complete.data

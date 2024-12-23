@@ -24,12 +24,14 @@ mice(
   printFlag = TRUE,
   seed = NA,
   data.init = NULL,
+  use.data.table = FALSE,
+  in_place = FALSE,
   ...
 )
 }
 \arguments{
-\item{data}{A data frame or a matrix containing the incomplete data.  Missing
-values are coded as \code{NA}.}
+\item{data}{A \code{data.frame}, \code{matrix} or \code{data.table}
+containing the incomplete data.  Missing values are coded as \code{NA}.}
 
 \item{m}{Number of multiple imputations. The default is \code{m=5}.}
 
@@ -68,7 +70,7 @@ as \code{data} indicating where in the data the imputations should be
 created. The default, \code{where = is.na(data)}, specifies that the
 missing data should be imputed. The \code{where} argument may be used to
 overimpute observed data, or to skip imputations for selected missing values.
-Note: Imputation methods that generate imptutations outside of
+Note: Imputation methods that generate imputations outside of
 \code{mice}, like \code{mice.impute.panImpute()} may depend on a complete
 predictor space. In that case, a custom \code{where} matrix can not be
 specified.}
@@ -159,6 +161,20 @@ iterative process.  The default \code{NULL} implies that starting imputation
 are created by a simple random draw from the data. Note that specification of
 \code{data.init} will start all \code{m} Gibbs sampling streams from the same
 imputation.}
+
+\item{in_place}{Logical, default is \code{FALSE}. If \code{TRUE}, the
+input \code{data.table} is modified in place during the imputation process,
+meaning the original data will be updated directly without creating a copy.
+This can improve performance and reduce memory usage for large datasets.
+However, use this option with caution as it will alter the original input.
+
+If \code{FALSE}, the function makes a copy of the input \code{data.table}
+to ensure the original data remains unchanged. This is the recommended
+behaviour for most users to avoid unintended side effects.
+
+The \code{in_place} option is applicable only when the input is a
+\code{data.table}. It has no effect if the input is a \code{data.frame},
+as the function already creates a copy in those cases.}
 
 \item{\dots}{Named arguments that are passed down to the univariate imputation
 functions.}

@@ -12,15 +12,15 @@ make.method(
 )
 }
 \arguments{
-\item{data}{A data frame or a matrix containing the incomplete data.  Missing
-values are coded as \code{NA}.}
+\item{data}{A \code{data.frame}, \code{matrix} or \code{data.table}
+containing the incomplete data.  Missing values are coded as \code{NA}.}
 
 \item{where}{A data frame or matrix with logicals of the same dimensions
 as \code{data} indicating where in the data the imputations should be
 created. The default, \code{where = is.na(data)}, specifies that the
 missing data should be imputed. The \code{where} argument may be used to
 overimpute observed data, or to skip imputations for selected missing values.
-Note: Imputation methods that generate imptutations outside of
+Note: Imputation methods that generate imputations outside of
 \code{mice}, like \code{mice.impute.panImpute()} may depend on a complete
 predictor space. In that case, a custom \code{where} matrix can not be
 specified.}

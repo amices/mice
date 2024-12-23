@@ -20,7 +20,7 @@
 make.predictorMatrix <- function(data, blocks = make.blocks(data),
                                  predictorMatrix = NULL) {
   input.predictorMatrix <- predictorMatrix
-  data <- check.dataform(data)
+  cond <- check.dataform(data)
   predictorMatrix <- matrix(1, nrow = length(blocks), ncol = ncol(data))
   dimnames(predictorMatrix) <- list(names(blocks), colnames(data))
   for (i in row.names(predictorMatrix)) {
@@ -40,7 +40,7 @@ make.predictorMatrix <- function(data, blocks = make.blocks(data),
 check.predictorMatrix <- function(predictorMatrix,
                                   data,
                                   blocks = NULL) {
-  data <- check.dataform(data)
+  cond <- check.dataform(data)
 
   if (!is.matrix(predictorMatrix)) {
     stop("predictorMatrix not a matrix", call. = FALSE)

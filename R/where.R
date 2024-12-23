@@ -27,7 +27,7 @@ make.where <- function(data,
                        keyword = c("missing", "all", "none", "observed")) {
   keyword <- match.arg(keyword)
 
-  data <- check.dataform(data)
+  cond <- check.dataform(data)
   where <- switch(keyword,
     missing = is.na(data),
     all = matrix(TRUE, nrow = nrow(data), ncol = ncol(data)),

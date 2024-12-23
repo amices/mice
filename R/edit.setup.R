@@ -27,7 +27,7 @@ mice.edit.setup <- function(data, setup,
   # remove constant variables but leave passive variables untouched
   for (j in seq_len(ncol(data))) {
     if (!is.passive(meth[j])) {
-      d.j <- data[, j]
+      d.j <- if (inherits(data, "data.table")) data[[j]] else data[, j]
       v <- if (is.character(d.j)) NA else var(as.numeric(d.j), na.rm = TRUE)
       constant <- if (allow.na) {
         if (is.na(v)) FALSE else v < 1000 * .Machine$double.eps
@@ -56,8 +56,13 @@ mice.edit.setup <- function(data, setup,
 
   ## remove collinear variables
   ispredictor <- apply(pred != 0, 2, any)
+  selected_cols <- varnames[ispredictor]
   if (any(ispredictor)) {
-    droplist <- find.collinear(data[, ispredictor, drop = FALSE], ...)
+    if (inherits(data, "data.table")) {
+      droplist <- find.collinear(data[, selected_cols, with = FALSE], ...)
+    } else {
+      droplist <- find.collinear(data[, ispredictor, drop = FALSE], ...)
+    }
   } else {
     droplist <- NULL
   }

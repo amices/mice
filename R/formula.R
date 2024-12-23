@@ -26,7 +26,7 @@
 #' @export
 make.formulas <- function(data, blocks = make.blocks(data),
                           predictorMatrix = NULL) {
-  data <- check.dataform(data)
+  cond <- check.dataform(data)
   formulas <- as.list(rep("~ 0", length(blocks)))
   names(formulas) <- names(blocks)
 

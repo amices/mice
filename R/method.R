@@ -18,10 +18,10 @@ make.method <- function(data,
   for (j in names(blocks)) {
     yvar <- blocks[[j]]
     if (length(yvar) == 1L) {
-      y <- data[, yvar]
+      y <- fselect(data, yvar)[[1L]]
       k <- assign.method(y)
     } else {
-      y <- data[, yvar]
+      y <- fselect(data, yvar)[[1L]]
       def <- sapply(y, assign.method)
       k <- ifelse(all(diff(def) == 0), k <- def[1], 1)
     }

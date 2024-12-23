@@ -86,8 +86,8 @@
 #' imp <- mice(nhanes, pred = quickpred(nhanes, minpuc = 0.25, include = "age"))
 #' @export
 quickpred <- function(data, mincor = 0.1, minpuc = 0, include = "",
-                      exclude = "", method = "pearson") {
-  data <- check.dataform(data)
+                      exclude = "", method = "pearson", in_place = FALSE) {
+  cond <- check.dataform(data)
 
   # initialize
   nvar <- ncol(data)

@@ -1,16 +1,10 @@
-check.data <- function(data, method) {
-  check.dataform(data)
-}
-
-
 check.dataform <- function(data) {
   if (!(is.matrix(data) || is.data.frame(data))) {
-    stop("Data should be a matrix or data frame", call. = FALSE)
+    stop("Data should be a data.frame, matrix or data.table", call. = FALSE)
   }
   if (ncol(data) < 2) {
     stop("Data should contain at least two columns", call. = FALSE)
   }
-  data <- as.data.frame(data)
   mat <- sapply(data, is.matrix)
   df <- sapply(data, is.data.frame)
   if (any(mat)) {
@@ -33,7 +27,7 @@ check.dataform <- function(data) {
       paste(colnames(data)[dup], collapse = ", ")
     )
   }
-  data
+  TRUE
 }
 
 

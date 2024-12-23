@@ -48,6 +48,7 @@ Depends:
     R (>= 2.10.0)
 Imports:
     broom,
+    collapse,
     dplyr,
     data.table,
     glmnet,

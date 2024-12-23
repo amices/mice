@@ -121,7 +121,7 @@ name.blocks <- function(x, prefix = "B") {
 }
 
 check.blocks <- function(blocks, data) {
-  data <- check.dataform(data)
+  cond <- check.dataform(data)
   blocks <- name.blocks(blocks)
 
   # check that all variable names exists in data

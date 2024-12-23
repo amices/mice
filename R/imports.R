@@ -1,5 +1,7 @@
 #' @importFrom broom    glance tidy
-#' @importFrom data.table as.data.table data.table is.data.table set setnames
+#' @importFrom collapse fselect
+#' @importFrom data.table := as.data.table copy data.table
+#'                      is.data.table set setnames
 #' @importFrom dplyr    .data %>% any_of bind_cols bind_rows filter group_by lead
 #'                      mutate n pull relocate row_number select summarize
 #' @importFrom glmnet   cv.glmnet

@@ -130,8 +130,8 @@
 #' to turn off this behavior by specifying the
 #' argument \code{auxiliary = FALSE}.
 #'
-#' @param data A data frame or a matrix containing the incomplete data.  Missing
-#' values are coded as \code{NA}.
+#' @param data A \code{data.frame}, \code{matrix} or \code{data.table}
+#' containing the incomplete data.  Missing values are coded as \code{NA}.
 #' @param m Number of multiple imputations. The default is \code{m=5}.
 #' @param method Can be either a single string, or a vector of strings with
 #' length \code{length(blocks)}, specifying the imputation method to be
@@ -165,7 +165,7 @@
 #' created. The default, \code{where = is.na(data)}, specifies that the
 #' missing data should be imputed. The \code{where} argument may be used to
 #' overimpute observed data, or to skip imputations for selected missing values.
-#' Note: Imputation methods that generate imptutations outside of
+#' Note: Imputation methods that generate imputations outside of
 #' \code{mice}, like \code{mice.impute.panImpute()} may depend on a complete
 #' predictor space. In that case, a custom \code{where} matrix can not be
 #' specified.
@@ -245,6 +245,19 @@
 #' are created by a simple random draw from the data. Note that specification of
 #' \code{data.init} will start all \code{m} Gibbs sampling streams from the same
 #' imputation.
+#' @param in_place Logical, default is \code{FALSE}. If \code{TRUE}, the
+#'   input \code{data.table} is modified in place during the imputation process,
+#'   meaning the original data will be updated directly without creating a copy.
+#'   This can improve performance and reduce memory usage for large datasets.
+#'   However, use this option with caution as it will alter the original input.
+#'
+#'   If \code{FALSE}, the function makes a copy of the input \code{data.table}
+#'   to ensure the original data remains unchanged. This is the recommended
+#'   behaviour for most users to avoid unintended side effects.
+#'
+#'   The \code{in_place} option is applicable only when the input is a
+#'   \code{data.table}. It has no effect if the input is a \code{data.frame},
+#'   as the function already creates a copy in those cases.
 #' @param \dots Named arguments that are passed down to the univariate imputation
 #' functions.
 #'
@@ -335,15 +348,24 @@ mice <- function(data,
                  printFlag = TRUE,
                  seed = NA,
                  data.init = NULL,
+                 use.data.table = FALSE,
+                 in_place = FALSE,
                  ...) {
   call <- match.call()
   check.deprecated(...)
-
   if (!is.na(seed)) set.seed(seed)
 
   # check form of data and m
-  data <- check.dataform(data)
+  cond <- check.dataform(data)
   m <- check.m(m)
+
+  # per default: initialize data.table copy
+  # if (!is.data.table(data)) {
+  #    data <- as.data.table(data)
+  # }
+  # if (!in_place) {
+  #   data <- copy(data)
+  # }
 
   # determine input combination: predictorMatrix, blocks, formulas
   mp <- missing(predictorMatrix)
@@ -430,7 +452,7 @@ mice <- function(data,
   # check visitSequence, edit predictorMatrix for monotone
   user.visitSequence <- visitSequence
   visitSequence <- check.visitSequence(visitSequence,
-    data = data, where = where, blocks = blocks
+                                       data = data, where = where, blocks = blocks
   )
   predictorMatrix <- mice.edit.predictorMatrix(
     predictorMatrix = predictorMatrix,
@@ -462,20 +484,11 @@ mice <- function(data,
   predictorMatrix <- setup$predictorMatrix
   visitSequence <- setup$visitSequence
   post <- setup$post
-
-  # initialize imputations
-  nmis <- apply(is.na(data), 2, sum)
-  # imp <- initialize.imp(
-  #   data, m, ignore, where, blocks, visitSequence,
-  #   method, nmis, data.init
-  # )
-
-  data <- as.data.table(data)
-  imp2 <- initialize.imp2(
+  nmis <- colSums(is.na(data))
+  imp <- initialize.imp(
     data, m, ignore, where, blocks, visitSequence,
     method, nmis, data.init
   )
-  return(list(imp = imp, imp2 = imp2))
 
   # and iterate...
   from <- 1
@@ -510,15 +523,15 @@ mice <- function(data,
     seed = seed,
     iteration = q$iteration,
     lastSeedValue = get(".Random.seed",
-      envir = globalenv(), mode = "integer",
-      inherits = FALSE),
+                        envir = globalenv(), mode = "integer",
+                        inherits = FALSE),
     chainMean = q$chainMean,
     chainVar = q$chainVar,
     loggedEvents = loggedEvents)
 
   if (!is.null(midsobj$loggedEvents)) {
     warning("Number of logged events: ", nrow(midsobj$loggedEvents),
-      call. = FALSE
+            call. = FALSE
     )
   }
   return(midsobj)

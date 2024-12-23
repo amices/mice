@@ -70,7 +70,7 @@ parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL,
                      n.imp.core = NULL, cl.type = "PSOCK", ...) {
   .Deprecated("futuremice")
   # check form of data and m
-  data <- check.dataform(data)
+  cond <- check.dataform(data)
   m <- check.m(m)
 
   # check if data complete

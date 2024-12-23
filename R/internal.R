@@ -157,3 +157,7 @@ backticks <- function(varname) {
 is.named.list <- function(x) {
   is.list(x) && !is.null(names(x)) && all(names(x) != "")
 }
+
+is.pure.dataframe <- function(x) {
+  inherits(x, "data.frame") && !inherits(x, "data.table")
+}
