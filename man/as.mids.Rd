@@ -4,12 +4,19 @@
 \alias{as.mids}
 \title{Converts an imputed dataset (long format) into a \code{mids} object}
 \usage{
-as.mids(long, where = NULL, .imp = ".imp", .id = ".id")
+as.mids(
+  long,
+  where = NULL,
+  .imp = ".imp",
+  .id = ".id",
+  sort = TRUE,
+  warn = getOption("mice.sort.warn", TRUE)
+)
 }
 \arguments{
-\item{long}{A multiply imputed data set in long format, for example
-produced by a call to \code{complete(..., action = 'long', include = TRUE)},
-or by other software.}
+\item{long}{A multiply imputed data set in long format, including the
+original dataset with missing values. For example, we can create such a
+dataset by a call to \code{complete(..., action = 'long', include = TRUE)}.}
 
 \item{where}{A data frame or matrix with logicals of the same dimensions
 as \code{data} indicating where in the data the imputations should be
@@ -21,35 +28,58 @@ Note: Imputation methods that generate imputations outside of
 predictor space. In that case, a custom \code{where} matrix can not be
 specified.}
 
-\item{.imp}{An optional column number or column name in \code{long},
+\item{.imp}{A column number or column name in \code{long},
 indicating the imputation index. The values are assumed to be consecutive
 integers between 0 and \code{m}. Values \code{1} through \code{m}
 correspond to the imputation index, value \code{0} indicates
-the original data (with missings).
-By default, the procedure will search for a variable named \code{".imp"}.}
+the original data (with missing data). The default column name is
+\code{".imp"}.}
 
 \item{.id}{An optional column number or column name in \code{long},
-indicating the subject identification. If not specified, then the
-function searches for a variable named \code{".id"}. If this variable
-is found, the values in the column will define the row names in
-the \code{data} element of the resulting \code{mids} object.}
+containing a row identifier. The default column name is
+\code{".id"}.}
+
+\item{sort}{A logical flag indicating whether the data should be sorted
+by \code{.imp} and/or \code{.id} before creating the \code{mids} object.
+Set \code{sort = FALSE} to skip sorting.}
+
+\item{warn}{A logical flag indicating whether a warning should be issued
+when the data is found to be unsorted and subsequently sorted. If set to
+\code{TRUE}, a warning is displayed whenever sorting is performed. If set to
+\code{FALSE}, no warning is issued. By default, the value is retrieved from
+the global option \code{"mice.sort.warn"} using
+\code{getOption("mice.sort.warn", TRUE)}. Users can globally enable or
+disable this warning by setting the option
+with \code{options(mice.sort.warn = TRUE)} or
+\code{options(mice.sort.warn = FALSE)}.}
 }
 \value{
 An object of class \code{mids}
 }
 \description{
-This function converts imputed data stored in long format into
-an object of class \code{mids}. The original incomplete dataset
-needs to be available so that we know where the missing data are.
+The \code{as.mids()} function converts imputed data stored in long
+format into a \code{mids} object. The original incomplete dataset
+needs to be available so that the function knows where the missing data are.
 The function is useful to convert back operations applied to
 the imputed data back in a \code{mids} object. It may also be
 used to store multiply imputed data sets from other software
 into the format used by \code{mice}.
 }
-\note{
-The function expects the input data \code{long} to be sorted by
-imputation number (variable \code{".imp"} by default), and in the
-same sequence within each imputation block.
+\details{
+The function expects the input rows of \code{long} to be sorted by
+the imputation index. By default, the imputation index is stored in
+variable named \code{".imp"}), but you can change its name through the
+\code{.imp} argument. Within each block, the function expects
+the rows to be ordered in same sequence. If an \code{.id} variable is present,
+the function will use it to resort the rows per imputation block before
+creating the \code{mids} object.
+
+The column names \code{".imp"} and \code{".id"} are reserved for the
+imputation index and row identifier, respectively. If these columns are
+present in \code{long}, they will be used as such, but they are not
+included in the \code{mids} object. If you wish to preserve their values,
+gives them a different name and specify the new name in the \code{.imp}
+and \code{.id} arguments.
 }
 \examples{
 # impute the nhanes dataset
@@ -93,6 +123,6 @@ test11 <- as.mids(X, where = where)
 identical(complete(test11, action = "long", include = TRUE), X)
 }
 \author{
-Gerko Vink
+Gerko Vink, Stef van Buuren
 }
 \keyword{mids}

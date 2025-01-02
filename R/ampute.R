@@ -184,7 +184,7 @@
 #'
 #' # Perform amputation with default settings
 #' mads_boys <- ampute(data = compl_boys)
-#' mads_boys$amp
+#' head(mads_boys$amp)
 #'
 #' # Change default matrices as desired
 #' my_patterns <- mads_boys$patterns
@@ -199,7 +199,7 @@
 #'   data = compl_boys, patterns = my_patterns, freq =
 #'     c(0.3, 0.3, 0.4), weights = my_weights, type = c("RIGHT", "TAIL", "LEFT")
 #' )
-#' my_mads_boys$amp
+#' head(my_mads_boys$amp)
 #' @export
 ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
                    mech = "MAR", weights = NULL, std = TRUE, cont = TRUE,

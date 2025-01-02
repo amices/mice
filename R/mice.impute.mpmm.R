@@ -54,9 +54,11 @@
 #' @export
 #'
 mice.impute.mpmm <- function(data, format = "imputes", ...) {
-  order <- dimnames(data)[[1]]
+  # order <- dimnames(data)[[1]]
+  # order <- 1L:nrow(data)
   res <- mpmm.impute(data, ...)
-  return(single2imputes(res[order, ], is.na(data)))
+  # return(single2imputes(res[order, ], is.na(data)))
+  return(single2imputes(res, is.na(data)))
 }
 
 

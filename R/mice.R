@@ -355,6 +355,11 @@ mice <- function(data,
   check.deprecated(...)
   if (!is.na(seed)) set.seed(seed)
 
+  # convert tibble to df
+  if (inherits(data, "tbl_df")) {
+    data <- as.data.frame(data)
+  }
+
   # check form of data and m
   cond <- check.dataform(data)
   m <- check.m(m)
@@ -493,7 +498,7 @@ mice <- function(data,
   # and iterate...
   from <- 1
   to <- from + maxit - 1
-  q <- sampler(
+  q <- sampler.dt(
     data, m, ignore, where, imp, blocks, method,
     visitSequence, predictorMatrix, formulas,
     modeltype, blots,

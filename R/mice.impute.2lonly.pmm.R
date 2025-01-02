@@ -68,7 +68,7 @@
 #' dfr[rep(rnorm(G), each = n) < qnorm(missrate), "v"] <- NA
 #'
 #' # empty mice imputation
-#' imp0 <- mice(as.matrix(dfr), maxit = 0)
+#' imp0 <- mice(dfr, maxit = 0)
 #' predM <- imp0$predictorMatrix
 #' impM <- imp0$method
 #'

@@ -4,7 +4,7 @@
 \alias{mice.mids}
 \title{Multivariate Imputation by Chained Equations (Iteration Step)}
 \usage{
-mice.mids(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...)
+mice.mids(obj, newdata = NULL, maxit = 1L, printFlag = TRUE, ...)
 }
 \arguments{
 \item{obj}{An object of class \code{mids}, typically produces by a previous

@@ -80,13 +80,138 @@
 #' dslist <- complete(imp, c(0, 3, 5), mild = TRUE)
 #' names(dslist)
 #' @export
-complete.mids <- function(data, action = 1L, include = FALSE,
-                          mild = FALSE, order = c("last", "first"),
-                          ...) {
+# complete.mids <- function(data, action = 1L, include = FALSE,
+#                           mild = FALSE, order = c("last", "first"),
+#                           ...) {
+#   if (!is.mids(data)) stop("'data' not of class 'mids'")
+#   order <- match.arg(order)
+#
+#   m <- as.integer(data$m)
+#   if (is.numeric(action)) {
+#     action <- as.integer(action)
+#     idx <- action[action >= 0L & action <= m]
+#     if (include && all(idx != 0L)) idx <- c(0L, idx)
+#     shape <- ifelse(mild, "mild", "stacked")
+#   } else if (is.character(action)) {
+#     if (include) idx <- 0L:m else idx <- 1L:m
+#     shape <- match.arg(action, c("all", "long", "broad", "repeated", "stacked"))
+#     shape <- ifelse(shape == "all" || mild, "mild", shape)
+#   } else {
+#     stop("'action' not recognized")
+#   }
+#
+#   # collect single-imputed dataset(s)
+#   # support for data.table and data.frame
+#   mylist <- vector("list", length = length(idx))
+#   for (j in seq_along(idx)) {
+#     mylist[[j]] <- impute.data(
+#       data = data$data,
+#       imp = data$imp,
+#       where = data$where,
+#       vars = names(data$data),
+#       i = idx[j],
+#       modify = "copy")
+#   }
+#
+#   if (shape == "stacked") {
+#     return(bind_rows(mylist))
+#   }
+#   if (shape == "mild") {
+#     names(mylist) <- as.character(idx)
+#     class(mylist) <- c("mild", "list")
+#     return(mylist)
+#   }
+#   if (shape == "long") {
+#     cmp <- mylist %>%
+#       bind_rows() %>%
+#       mutate(
+#         .imp = rep(idx, each = nrow(data$data)),
+#         .id = rep.int(attr(data$data, "row.names"), length(idx)),
+#       )
+#     if (order == "first") {
+#       cmp <- relocate(cmp, any_of(c(".imp", ".id")))
+#     }
+#     if (typeof(attr(data$data, "row.names")) == "integer") {
+#       row.names(cmp) <- seq_len(nrow(cmp))
+#     } else {
+#       row.names(cmp) <- as.character(seq_len(nrow(cmp)))
+#     }
+#     return(cmp)
+#   }
+#   # must be broad or repeated
+#   cmp <- bind_cols(mylist)
+#   names(cmp) <- paste(rep.int(names(data$data), m),
+#                       rep.int(idx, rep.int(ncol(data$data), length(idx))),
+#                       sep = "."
+#   )
+#   if (shape == "broad") {
+#     return(cmp)
+#   } else {
+#     return(cmp[, order(rep.int(seq_len(ncol(data$data)), length(idx)))])
+#   }
+# }
+complete.mids <- function(data, action = 1L, include = FALSE, mild = FALSE, order = c("last", "first"), ...) {
   if (!is.mids(data)) stop("'data' not of class 'mids'")
   order <- match.arg(order)
 
-  m <- as.integer(data$m)
+  parsed <- parse_action(action, m = as.integer(data$m), include = include, mild = mild)
+  idx <- parsed$idx
+  shape <- parsed$shape
+
+  # Collect single-imputed datasets
+  mylist <- lapply(idx, function(i) {
+    impute.data(
+      data = data$data,
+      imp = data$imp,
+      where = data$where,
+      vars = names(data$data),
+      i = i,
+      modify = "copy"
+    )
+  })
+
+  # Handle different shapes
+  if (shape == "stacked") {
+    return(bind_rows(mylist))
+  }
+
+  if (shape == "mild") {
+    names(mylist) <- as.character(idx)
+    class(mylist) <- c("mild", "list")
+    return(mylist)
+  }
+
+  if (shape == "long") {
+    return(create_long(mylist, data, idx, order))
+  }
+
+  # Broad and repeated shapes
+  if (shape == "broad") {
+    cmp <- do.call(cbind, mylist)
+    names(cmp) <- paste(
+      rep.int(names(data$data), length(idx)),
+      rep(idx, each = ncol(data$data)),
+      sep = "."
+    )
+    return(cmp)
+  }
+
+  if (shape == "repeated") {
+    cmp <- do.call(cbind, mylist)
+    names(cmp) <- paste(
+      rep.int(names(data$data), length(idx)),
+      rep(idx, each = ncol(data$data)),
+      sep = "."
+    )
+    col_order <- order(rep(seq_len(ncol(data$data)), length(idx)))
+    cmp <- cmp[, col_order, with = FALSE]
+    return(as.data.frame(cmp))
+  }
+
+  return(NULL)
+}
+
+parse_action <- function(action, m, include, mild) {
   if (is.numeric(action)) {
     action <- as.integer(action)
     idx <- action[action >= 0L & action <= m]
@@ -99,70 +224,22 @@ complete.mids <- function(data, action = 1L, include = FALSE,
   } else {
     stop("'action' not recognized")
   }
-
-  mylist <- vector("list", length = length(idx))
-  for (j in seq_along(idx)) {
-    mylist[[j]] <- single.complete(data$data, data$where, data$imp, idx[j])
-  }
-
-  if (shape == "stacked") {
-    return(bind_rows(mylist))
-  }
-  if (shape == "mild") {
-    names(mylist) <- as.character(idx)
-    class(mylist) <- c("mild", "list")
-    return(mylist)
-  }
-  if (shape == "long") {
-    cmp <- mylist %>%
-      bind_rows() %>%
-      mutate(
-        .imp = rep(idx, each = nrow(data$data)),
-        .id = rep.int(attr(data$data, "row.names"), length(idx)),
-      )
-    if (order == "first") {
-      cmp <- relocate(cmp, any_of(c(".imp", ".id")))
-    }
-    if (typeof(attr(data$data, "row.names")) == "integer") {
-      row.names(cmp) <- seq_len(nrow(cmp))
-    } else {
-      row.names(cmp) <- as.character(seq_len(nrow(cmp)))
-    }
-    return(cmp)
-  }
-  # must be broad or repeated
-  cmp <- bind_cols(mylist)
-  names(cmp) <- paste(rep.int(names(data$data), m),
-                      rep.int(idx, rep.int(ncol(data$data), length(idx))),
-                      sep = "."
-  )
-  if (shape == "broad") {
-    return(cmp)
-  } else {
-    return(cmp[, order(rep.int(seq_len(ncol(data$data)), length(idx)))])
-  }
+  list(idx = idx, shape = shape)
 }
 
-single.complete <- function(data, where, imp, ell) {
-  if (ell == 0L) {
-    return(data)
+create_long <- function(mylist, data, idx, order) {
+  cmp <- bind_rows(mylist) %>%
+    mutate(
+      .imp = rep(idx, each = nrow(data$data)),
+      .id = rep.int(attr(data$data, "row.names"), length(idx))
+    )
+  if (order == "first") {
+    cmp <- relocate(cmp, any_of(c(".imp", ".id")))
   }
-  if (is.null(where)) {
-    where <- is.na(data)
+  if (typeof(attr(data$data, "row.names")) == "integer") {
+    row.names(cmp) <- seq_len(nrow(cmp))
+  } else {
+    row.names(cmp) <- as.character(seq_len(nrow(cmp)))
   }
-  idx <- seq_len(ncol(data))[apply(where, 2, any)]
-  for (j in idx) {
-    if (is.null(imp[[j]])) {
-      data[where[, j], j] <- NA
-    } else {
-      if (sum(where[, j]) == nrow(imp[[j]])) {
-        # assume equal length
-        data[where[, j], j] <- imp[[j]][, ell]
-      } else {
-        # index by rowname
-        data[as.numeric(rownames(imp[[j]])), j] <- imp[[j]][, ell]
-      }
-    }
-  }
-  data
+  cmp
 }

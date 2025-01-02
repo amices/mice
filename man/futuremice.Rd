@@ -14,7 +14,6 @@ futuremice(
   future.plan = "multisession",
   packages = NULL,
   globals = NULL,
-  in_place = FALSE,
   ...
 )
 }

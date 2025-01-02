@@ -4,7 +4,19 @@ rbind.mids <- function(x, y = NULL, ...) {
     return(rbind.mids.mids(x, y, call = call))
   }
 
-  # Combine y and dots into data.frame
+  # The code below is designed for the following cases:
+  # x is a mids object
+  # y is a vector, matrix, factor, or data.frame to be row-appended to the
+  # mids object x. The dots are additional vectors, matrices, factors, or
+  # data.frames.
+  #
+  # Appending a vector/matrix/factor/data.frame leaves the y-values untouched
+  #
+  # Appending a mids object (by rbind.mids.mids) copies that latest
+  # imputations into imp structure. The impute a dataset from an existing
+  # model, first convert the newdata to a mids object (see mice.mids).
+
+  # Rowbind all new information into data.frame y by base::rbind.data.frame
   if (is.null(y)) {
     y <- rbind.data.frame(...)
   } else {
@@ -19,28 +31,33 @@ rbind.mids <- function(x, y = NULL, ...) {
 
   varnames <- colnames(x$data)
 
-  # Call is a vector, with first argument the mice statement and second argument the call to cbind.mids.
+  # Call is a vector, with first argument the mice statement and
+  # second argument the call to cbind.mids.
   call <- c(x$call, call)
 
-  # The data in x (x$data) and y are combined together.
+  # Rowbind data in x (x$data) and y
   data <- rbind(x$data, y)
+
+  # Inherits block structure from x
   blocks <- x$blocks
 
-  # where argument: code all values as observed, including NA
+  # where argument: leave y untouched (do not impute y)
+  # See https://github.com/amices/mice/issues/59
   wy <- matrix(FALSE, nrow = nrow(y), ncol = ncol(y))
-  rownames(wy) <- rownames(y)
   where <- rbind(x$where, wy)
 
-  # ignore argument: include all new values
-  ignore <- c(x$ignore, rep(FALSE, nrow(y)))
+  # ignore: new y values are ignored by the imputation model
+  ignore <- c(x$ignore, rep(TRUE, nrow(y)))
 
-  # The number of imputations in the new midsobject is equal to that in x.
+  # The collection of imputations in the new mids object is restricted to
+  # entries from x.
   m <- x$m
 
-  # count the number of missing data in y and add them to x$nmis.
+  # recalculate number of missing values
   nmis <- x$nmis + colSums(is.na(y))
 
-  # The listelements method, post, predictorMatrix, visitSequence will be copied from x.
+  # The listelements method, post, predictorMatrix, visitSequence are
+  # copies from x.
   method <- x$method
   post <- x$post
   formulas <- x$formulas
@@ -49,10 +66,21 @@ rbind.mids <- function(x, y = NULL, ...) {
   predictorMatrix <- x$predictorMatrix
   visitSequence <- x$visitSequence
 
-  # Only x contributes imputations
+  # Only x contributes to imputations if ignore for y is TRUE
+  # Set the proper row_id for the y data
+  # imp <- initialize.imp(data, m, ignore, where, blocks,
+  #                       visitSequence, method, nmis, data.init = NULL,
+  #                       leave.empty = TRUE)
+  # for (j in names(imp)) {
+  #   rows <- seq_len(nrow(x$imp[[j]]))
+  #   for (i in seq_len(m)) {
+  #     set(imp[[j]], i = rows, j = i, value = x$imp[[j]][[i]])
+  #   }
+  # }
   imp <- x$imp
 
-  # seed, lastSeedValue, number of iterations, chainMean and chainVar is taken as in mids object x.
+  # seed, lastSeedValue, number of iterations, chainMean and chainVar
+  # is taken as in mids object x.
   seed <- x$seed
   lastSeedValue <- x$lastSeedValue
   iteration <- x$iteration
@@ -131,22 +159,36 @@ rbind.mids.mids <- function(x, y, call) {
 
   # The original data of y will be binded into the multiple imputed dataset
   # including the imputed values of y.
-  imp <- vector("list", ncol(x$data))
-  for (j in seq_len(ncol(x$data))) {
-    if (!is.null(x$imp[[j]]) || !is.null(y$imp[[j]])) {
-      imp[[j]] <- rbind(x$imp[[j]], y$imp[[j]])
+  # Only x contributes to imputations if ignore for y is TRUE
+  # Set the proper row_id for the y data
+  imp <- initialize.imp(data, m, ignore, where, blocks,
+                        visitSequence, method, nmis, data.init = NULL,
+                        leave.empty = TRUE)
+  for (j in names(imp)) {
+    idx <- seq_len(nrow(imp[[j]]))
+    ids <- c(x[["imp"]][[j]][["row_id"]],
+             y[["imp"]][[j]][["row_id"]])
+    if (length(idx) != length(ids)) {
+      stop("imputation size for ", j, " differs (", length(idx),
+           " vs ", length(ids), ")")
+    }
+    if (length(idx)) {
+      for (i in seq_len(m)) {
+        xyval <- c(x[["imp"]][[j]][[i]], y[["imp"]][[j]][[i]])
+        xyidx <- c(x[["imp"]][[j]][["row_id"]], y[["imp"]][[j]][["row_id"]])
+        val <- xyval[xyidx %in% ids]
+        set(imp[[j]], i = idx, j = i, value = val)
+      }
     }
   }
-  names(imp) <- varnames
 
-  # seed, lastSeedValue, number of iterations
   seed <- x$seed
   lastSeedValue <- x$lastSeedValue
   iteration <- x$iteration
 
   if (x$iteration != y$iteration) {
     warning("iterations differ, so no convergence diagnostics calculated",
-      call. = FALSE
+            call. = FALSE
     )
     chainMean <- NULL
     chainVar <- NULL

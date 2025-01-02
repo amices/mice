@@ -81,7 +81,7 @@
 #' dfr[rho.miss * x + rnorm(G * n, sd = sqrt(1 - rho.miss)) < qnorm(missrate), "y"] <- NA
 #'
 #' # empty imputation in mice
-#' imp0 <- mice(as.matrix(dfr), maxit = 0)
+#' imp0 <- mice(dfr, maxit = 0)
 #' predM <- imp0$predictorMatrix
 #' impM <- imp0$method
 #'
@@ -93,7 +93,7 @@
 #' impM1["y"] <- "2l.pan"
 #'
 #' # multilevel imputation
-#' imp1 <- mice(as.matrix(dfr),
+#' imp1 <- mice(dfr,
 #'   m = 1, predictorMatrix = predM1,
 #'   method = impM1, maxit = 1
 #' )

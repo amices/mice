@@ -56,7 +56,7 @@ dplyr::filter
 #'
 #' # example with calculated include vector
 #' imp_f2 <- filter(imp, age >= 2 & hyp == 1)
-#' nrow(complete(imp_f2)) # should be 5
+#' identical(nrow(complete(imp_f2)), 5)
 #' @export
 filter.mids <- function(.data, ..., .preserve = FALSE) {
   if (!is.mids(.data)) {
@@ -67,7 +67,7 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
     mutate(.rownumber = row_number()) %>%
     filter(...) %>%
     pull(".rownumber")
-  include <- 1L:nrow(.data$data) %in% rows
+  # include <- 1L:nrow(.data$data) %in% rows
 
   # Components that stay the same after filtering
   m <- .data$m
@@ -86,21 +86,25 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
   loggedEvents <- .data$loggedEvents
 
   # Components that need to be subset
-  data <- .data$data[include, ]
-  ignore <- .data$ignore[include]
-  where <- .data$where[include, ]
+  data <- .data$data[rows, , drop = FALSE]
+  ignore <- .data$ignore[rows]
+  where <- .data$where[rows, , drop = FALSE]
+  nmis <- colSums(is.na(data))
 
-  imp <- vector("list", length(.data$imp))
-  names(imp) <- names(.data$imp)
-  for (i in names(.data$imp)) {
-    wy <- .data$where[, i]
-    iy <- .data$where[, i] & include
-    impi <- .data$imp[[i]][iy[wy], , drop = FALSE]
-    if (!is.null(impi)) imp[[i]] <- impi
+  imp <- initialize.imp(data, m, ignore, where, blocks,
+                        visitSequence, method, nmis, data.init = NULL,
+                        leave.empty = TRUE)
+  for (j in names(imp)) {
+    idx <- seq_len(nrow(imp[[j]]))
+    if (length(idx)) {
+      for (i in seq_len(m)) {
+        val <- .data$imp[[j]][[i]][.data$imp[[j]][["row_id"]] %in% rows]
+        set(imp[[j]], i = idx, j = i, value = val)
+      }
+    }
   }
 
   # Components that need to be recalculated/reset
-  nmis <- colSums(is.na(data))
   chainMean <- NULL
   chainVar <- NULL
 

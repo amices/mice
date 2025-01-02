@@ -162,6 +162,10 @@ imp3 <- mice(nhanes,
 )
 
 # # whacky situation where we expect no imputes for the incomplete cases
+# what happens when a cell in NA, but the column is not imputed?
+# we expect the cell to remain NA, so the combination of method == ""
+# and where == TRUE should result in NA in imp
+# Example:
 imp4 <- mice(nhanes2,
   where = matrix(TRUE, nrow = 25, ncol = 4),
   maxit = 1,

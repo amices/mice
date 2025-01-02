@@ -73,7 +73,7 @@ dfr[rep(rnorm(G), each = n) < qnorm(missrate), "w"] <- NA
 dfr[rep(rnorm(G), each = n) < qnorm(missrate), "v"] <- NA
 
 # empty mice imputation
-imp0 <- mice(as.matrix(dfr), maxit = 0)
+imp0 <- mice(dfr, maxit = 0)
 predM <- imp0$predictorMatrix
 impM <- imp0$method
 
@@ -88,7 +88,7 @@ impM1[c("y", "w", "v")] <- c("2l.pan", "2lonly.norm", "2lonly.pmm")
 # w ... imputation at level 2 using norm
 # v ... imputation at level 2 using pmm
 
-imp1 <- mice(as.matrix(dfr),
+imp1 <- mice(dfr,
   m = 1, predictorMatrix = predM1,
   method = impM1, maxit = 1, paniter = 500
 )

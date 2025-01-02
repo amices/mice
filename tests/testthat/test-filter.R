@@ -35,3 +35,9 @@ imp_fa2 <- mice.mids(imp_fa, maxit = 1, printFlag = FALSE)
 test_that("other elements of mids are left unchanged", {
   expect_equal(complete(imp2), complete(imp_fa2))
 })
+
+imp <- mice(nhanes, m = 2, maxit = 1, print = FALSE)
+imp_f2 <- filter(imp, age >= 2 & hyp == 2)
+test_that("filter() with calculated include vector", {
+  expect_identical(nrow(complete(imp_f2)), 4L)
+})

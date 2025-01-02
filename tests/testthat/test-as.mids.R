@@ -10,18 +10,29 @@ X2 <- X
 
 # nhanes example
 test1 <- as.mids(X)
+test1a <- as.mids(as.data.table(X))
+
 # nhanes example
 test2 <- as.mids(X2)
+test2a <- as.mids(as.data.table(X2))
+
 # nhanes example, where we explicitly specify .id as column 2
 test3 <- as.mids(X, .id = 6)
+test3a <- as.mids(as.data.table(X), .id = 6)
+
 # nhanes example with .id where .imp is numeric
 test4 <- as.mids(X2, .id = 6)
+test4a <- as.mids(as.data.table(X2), .id = 6)
+
 #' # example without an .id variable
 #' # variable .id not preserved
 test5 <- as.mids(X[, -6])
+test5a <- as.mids(as.data.table(X[, -6]))
+
 #' # reverse data order
 rev <- ncol(X):1
 test6 <- as.mids(X[, rev])
+test6a <- as.mids(as.data.table(X[, rev]))
 
 # mice 3.17.0 dropped support for S4 methods
 # as() syntax has fewer options
@@ -32,10 +43,15 @@ test6 <- as.mids(X[, rev])
 
 test_that("as.mids() produces a `mids` object", {
   expect_is(test1, "mids")
+  expect_is(test1a, "mids")
   expect_is(test2, "mids")
+  expect_is(test2a, "mids")
   expect_is(test3, "mids")
+  expect_is(test3a, "mids")
   expect_is(test4, "mids")
+  expect_is(test4a, "mids")
   expect_is(test5, "mids")
+  expect_is(test5a, "mids")
 #  expect_is(test7, "mids")
 #  expect_is(test8, "mids")
 #  expect_is(test9, "mids")
@@ -50,18 +66,29 @@ test_that("as.mids() produces a `mids` object", {
   )
 })
 
+df <- X[, -c(5:6)]
+dt <- as.data.table(df)
 test_that("complete() reproduces the original data", {
-  expect_true(identical(complete(test1, action = "long", include = TRUE), X))
-  expect_true(identical(complete(test2, action = "long", include = TRUE), X))
-  expect_true(identical(complete(test3, action = "long", include = TRUE), X))
-  expect_true(identical(complete(test4, action = "long", include = TRUE), X))
-  expect_true(identical(complete(test5, action = "long", include = TRUE)[, -6], X[, -6]))
-  expect_true(identical(complete(test6, action = "long", include = TRUE)[, -(5:6)], X[, rev][, -(1:2)]))
+  expect_identical(df, complete(test1, action = "long", include = TRUE)[, -c(5:6)])
+  expect_identical(dt, complete(test1a, action = "long", include = TRUE)[, -c(5:6)])
+  expect_identical(df, complete(test2, action = "long", include = TRUE)[, -c(5:6)])
+  expect_identical(df, complete(test3, action = "long", include = TRUE)[, -c(5:6)])
+  expect_identical(df, complete(test4, action = "long", include = TRUE)[, -c(5:6)])
+  expect_identical(dt, complete(test4a, action = "long", include = TRUE)[, -c(5:6)])
+  expect_identical(df, complete(test5, action = "long", include = TRUE)[, -c(5:6)])
+  expect_identical(dt, complete(test5a, action = "long", include = TRUE)[, -c(5:6)])
 })
 
-# works with dplyr
 
+
+# # works with tibbles
 library(dplyr)
+X3 <- as_tibble(X)
+test_that("handles tibbles", {
+  expect_silent(as.mids(X3))
+})
+
+# works with grouped_df
 X3 <- X %>%
   group_by(hyp) %>%
   mutate(chlm = mean(chl, na.rm = TRUE))

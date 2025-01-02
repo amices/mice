@@ -1,6 +1,10 @@
 # mice 3.17.1
 
 * Adds `modeltype` argument to `mice()` for specify `"pred"` versus `"formula"` model type. The `modeltype` argument allows the user to specify different model type across blocks. It replaces the `calltype` attribute of `blocks`.
+* Changes to `as.mids()`: 
+- can now handle a `long` argument that is `data.table`
+- can sort the `long` before creation according to imputation and row identifiers, `.imp` and `.id`
+- Breaking change: `as.mids()` does not longer use `rownames` for storing row identifiers. If you wish to preserve the row identifiers in `.id`, rename the column and set the `.id` argument to your new name.
 * Adds support for roxygen markdown documentation
 
 # mice 3.17.0

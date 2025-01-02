@@ -189,7 +189,7 @@ compl_boys <- cc(boys)[1:3]
 
 # Perform amputation with default settings
 mads_boys <- ampute(data = compl_boys)
-mads_boys$amp
+head(mads_boys$amp)
 
 # Change default matrices as desired
 my_patterns <- mads_boys$patterns
@@ -204,7 +204,7 @@ my_mads_boys <- ampute(
   data = compl_boys, patterns = my_patterns, freq =
     c(0.3, 0.3, 0.4), weights = my_weights, type = c("RIGHT", "TAIL", "LEFT")
 )
-my_mads_boys$amp
+head(my_mads_boys$amp)
 }
 \references{
 Brand, J.P.L. (1999) \emph{Development, implementation and

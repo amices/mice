@@ -59,13 +59,19 @@ test_that("Produces longer imputed data", {
   expect_identical(nrow(complete(r2)), 14L)
 })
 
-test_that("Constant variables are not imputed", {
+test_that("rbind() leaves y untouched (#59)", {
   expect_equal(sum(is.na(complete(r3))), 15L)
+})
+
+test_that("imp1$method differs from imp2$method", {
   expect_equal(sum(is.na(complete(r4))), 6L)
 })
 
-test_that("`ignore` is correctly appended", {
-  expect_equal(r2$ignore, rep(FALSE, 14))
+test_that("appended non-mids data are ignored", {
+  expect_equal(r2$ignore, c(rep(FALSE, 13), TRUE))
+})
+
+test_that("ignore vector from two mids objects are combined", {
   expect_equal(r5$ignore, c(rep(FALSE, 32), rep(TRUE, 5)))
 })
 
@@ -124,11 +130,10 @@ c1 <- complete(imp1, 2)
 # method 2: filter + rbind
 imp2 <- mice(data[!odd, ], seed = 1, m = 2, print = FALSE)
 imp2 <- rbind(imp2, data[odd, ])
-idx <- order(as.numeric(rownames(imp2$data)))
-imp2$data <- imp2$data[idx, ]
-imp2$where <- imp2$where[idx, ]
 c2 <- complete(imp2, 2)
+c2 <- c2[order(as.numeric(rownames(c2))), ]
 
 test_that("ignore + where is identical to filter + rbind (#319)", {
   expect_identical(c1, c2)
 })
+

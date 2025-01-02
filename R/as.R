@@ -1,32 +1,55 @@
 #' Converts an imputed dataset (long format) into a \code{mids} object
 #'
-#' This function converts imputed data stored in long format into
-#' an object of class \code{mids}. The original incomplete dataset
-#' needs to be available so that we know where the missing data are.
+#' The \code{as.mids()} function converts imputed data stored in long
+#' format into a \code{mids} object. The original incomplete dataset
+#' needs to be available so that the function knows where the missing data are.
 #' The function is useful to convert back operations applied to
 #' the imputed data back in a \code{mids} object. It may also be
 #' used to store multiply imputed data sets from other software
 #' into the format used by \code{mice}.
-#' @note The function expects the input data \code{long} to be sorted by
-#' imputation number (variable \code{".imp"} by default), and in the
-#' same sequence within each imputation block.
-#' @param long A multiply imputed data set in long format, for example
-#' produced by a call to \code{complete(..., action = 'long', include = TRUE)},
-#' or by other software.
-#' @param .imp An optional column number or column name in \code{long},
+#'
+#' @details The function expects the input rows of \code{long} to be sorted by
+#' the imputation index. By default, the imputation index is stored in
+#' variable named \code{".imp"}), but you can change its name through the
+#' \code{.imp} argument. Within each block, the function expects
+#' the rows to be ordered in same sequence. If an \code{.id} variable is present,
+#' the function will use it to resort the rows per imputation block before
+#' creating the \code{mids} object.
+#'
+#' The column names \code{".imp"} and \code{".id"} are reserved for the
+#' imputation index and row identifier, respectively. If these columns are
+#' present in \code{long}, they will be used as such, but they are not
+#' included in the \code{mids} object. If you wish to preserve their values,
+#' gives them a different name and specify the new name in the \code{.imp}
+#' and \code{.id} arguments.
+#'
+#' @param long A multiply imputed data set in long format, including the
+#' original dataset with missing values. For example, we can create such a
+#' dataset by a call to \code{complete(..., action = 'long', include = TRUE)}.
+#' @param .imp A column number or column name in \code{long},
 #' indicating the imputation index. The values are assumed to be consecutive
 #' integers between 0 and \code{m}. Values \code{1} through \code{m}
 #' correspond to the imputation index, value \code{0} indicates
-#' the original data (with missings).
-#' By default, the procedure will search for a variable named \code{".imp"}.
+#' the original data (with missing data). The default column name is
+#' \code{".imp"}.
 #' @param .id An optional column number or column name in \code{long},
-#' indicating the subject identification. If not specified, then the
-#' function searches for a variable named \code{".id"}. If this variable
-#' is found, the values in the column will define the row names in
-#' the \code{data} element of the resulting \code{mids} object.
+#' containing a row identifier. The default column name is
+#' \code{".id"}.
+#' @param sort A logical flag indicating whether the data should be sorted
+#'  by \code{.imp} and/or \code{.id} before creating the \code{mids} object.
+#'  Set `sort = FALSE` to skip sorting.
+#' @param warn A logical flag indicating whether a warning should be issued
+#'   when the data is found to be unsorted and subsequently sorted. If set to
+#'   `TRUE`, a warning is displayed whenever sorting is performed. If set to
+#'   `FALSE`, no warning is issued. By default, the value is retrieved from
+#'   the global option \code{"mice.sort.warn"} using
+#'   \code{getOption("mice.sort.warn", TRUE)}. Users can globally enable or
+#'   disable this warning by setting the option
+#'   with \code{options(mice.sort.warn = TRUE)} or
+#'   \code{options(mice.sort.warn = FALSE)}.
 #' @inheritParams mice
 #' @return An object of class \code{mids}
-#' @author Gerko Vink
+#' @author Gerko Vink, Stef van Buuren
 #' @examples
 #' # impute the nhanes dataset
 #' imp <- mice(nhanes, print = FALSE)
@@ -69,63 +92,97 @@
 #' identical(complete(test11, action = "long", include = TRUE), X)
 #' @keywords mids
 #' @export
-as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id") {
+as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id",
+                    sort = TRUE, warn = getOption("mice.sort.warn", TRUE)) {
+  # Convert position to column name
   if (is.numeric(.imp)) .imp <- names(long)[.imp]
   if (is.numeric(.id)) .id <- names(long)[.id]
-  if (!.imp %in% names(long)) stop("Imputation index `.imp` not found")
 
-  # no missings allowed in .imp
-  imps <- unlist(long[, .imp], use.names = FALSE)
-  if (anyNA(imps)) stop("Missing values in imputation index `.imp`")
-
-  # number of records within .imp should be the same
-  if (any(diff(table(imps))) != 0) {
-    stop("Unequal group sizes in imputation index `.imp`")
+  # Check for .imp column
+  if (!.imp %in% names(long)) {
+    stop("Imputation index `", .imp, "` not found")
   }
 
-  # get original data part
+  # No missing values allowed in .imp
+  imps <- if (is.data.table(long)) long[[.imp]] else extract.column(long, .imp)
+  if (anyNA(imps)) stop("Missing values in imputation index `", .imp, "`")
+
+  # Ensure equal group sizes
+  if (any(diff(table(imps))) != 0L) {
+    stop("Unequal group sizes in imputation index `", .imp, "`")
+  }
+
+  # Sort data if needed
+  if (sort) {
+    long <- sort_long_data(long, .imp, .id, warn)
+  }
+
+  # Extract original data
   keep <- setdiff(names(long), na.omit(c(.imp, .id)))
-  data <- long[imps == 0, keep, drop = FALSE]
+  if (is.data.table(long)) {
+    data <- long[imps == 0L, keep, with = FALSE]
+  } else {
+    data <- long[imps == 0L, keep, drop = FALSE]
+  }
   n <- nrow(data)
-  if (n == 0) {
-    stop("Original data not found.\n Use `complete(..., action = 'long', include = TRUE)` to save original data.")
+  if (n == 0L) {
+    stop("Original data not found.\n",
+         "Use `complete(..., action = 'long', include = TRUE)` ",
+         "to save the original data.")
   }
 
-  # determine m
-  m <- length(unique(imps)) - 1
+  # Determine number of imputations
+  m <- length(unique(imps)) - 1L
 
-  # use mice to get info on data
+  # Generate initial `mids` object
   if (is.null(where)) where <- is.na(data)
-  ini <- mice(data,
-    m = m, where = where, maxit = 0,
-    remove.collinear = FALSE, allow.na = TRUE
+  ini <- mice(data, m = m, where = where, maxit = 0L,
+              remove.collinear = FALSE, allow.na = TRUE)
+
+  # Populate imputations
+  for (j in names(ini$imp)) {
+    if (nrow(ini$imp[[j]])) {
+      val <- lapply(seq_len(m), function(i) {
+        idx <- imps == i & extract.column(where, j)
+        long[[j]][idx]
+      })
+      set(ini$imp[[j]], j = as.character(seq_len(m)), value = as.data.table(val))
+    }
+  }
+
+  # Add metadata for reproducibility
+  ini$metadata <- list(
+    original_imp_col = .imp,
+    original_id_col = .id,
+    sorted = sort
   )
 
-  # create default .id when .id using type from input data
-  # otherwise store provided .id as row names
-  if (!.id %in% names(long)) {
-    if (typeof(attr(long, "row.names")) == "integer") {
-      row.names(ini$data) <- seq_len(nrow(ini$data))
+  return(ini)
+}
+
+sort_long_data <- function(long, .imp, .id, warn) {
+  nosort.imp.id <- .id %in% names(long) && !is.sorted(long, keys = c(.imp, .id))
+  nosort.imp <- !is.sorted(long, keys = .imp)
+
+  if (nosort.imp.id) {
+    if (is.data.table(long)) {
+      setkeyv(long, cols = c(.imp, .id))
     } else {
-      row.names(ini$data) <- as.character(seq_len(nrow(ini$data)))
+      long <- long[order(long[[.imp]], long[[.id]], na.last = FALSE), ]
     }
-  } else {
-    row.names(ini$data) <- unlist(long[imps == 0, .id], use.names = FALSE)
+    if (warn) warning("Data not sorted by imputation index and .id. Sorting data.")
+  } else if (nosort.imp) {
+    if (is.data.table(long)) {
+      setkeyv(long, cols = .imp)
+    } else {
+      long <- long[order(long[[.imp]]), ]
+    }
+    if (warn) warning("Data not sorted by imputation index. Sorting data.")
   }
 
-  # copy imputations from long into proper ini$imp elements
-  names <- names(ini$imp)
-  for (i in seq_along(names)) {
-    varname <- names[i]
-    if (nrow(ini$imp[[varname]])) {
-      for (j in seq_len(m)) {
-        idx <- imps == j & where[, varname]
-        ini$imp[[varname]][j] <- long[idx, varname]
-      }
-    }
-  }
-  ini
+  return(long)
 }
+
 
 #' Create a \code{mira} object from repeated analyses
 #'

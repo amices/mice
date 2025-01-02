@@ -15,23 +15,35 @@ make.method <- function(data,
                         defaultMethod = c("pmm", "logreg", "polyreg", "polr")) {
   method <- rep("", length(blocks))
   names(method) <- names(blocks)
+
   for (j in names(blocks)) {
     yvar <- blocks[[j]]
+
     if (length(yvar) == 1L) {
-      y <- fselect(data, yvar)[[1L]]
+      if (is.matrix(data)) {
+        y <- data[, yvar, drop = TRUE]
+      } else {
+        y <- data[[yvar]]
+      }
       k <- assign.method(y)
     } else {
-      y <- fselect(data, yvar)[[1L]]
+      if (is.matrix(data)) {
+        y <- data[, yvar, drop = FALSE]
+      } else if (is.data.frame(data)) {
+        y <- data[yvar]
+      } else if (is.data.table(data)) {
+        y <- data[, yvar, with = FALSE]
+      }
       def <- sapply(y, assign.method)
-      k <- ifelse(all(diff(def) == 0), k <- def[1], 1)
+      k <- if (all(diff(def) == 0)) def[1] else 1
     }
+
     method[j] <- defaultMethod[k]
   }
   nimp <- nimp(where, blocks)
   method[nimp == 0] <- ""
   method
 }
-
 
 check.method <- function(method, data, where, blocks, defaultMethod) {
   if (is.null(method)) {

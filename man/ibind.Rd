@@ -27,7 +27,7 @@ have the same underlying multiple imputation model and should
 be fitted on the same data.
 }
 \examples{
-data(nhanes)
+data(nhanes2)
 imp1 <- mice(nhanes, m = 1, maxit = 2, print = FALSE)
 imp1$m
 

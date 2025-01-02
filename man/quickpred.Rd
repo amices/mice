@@ -10,8 +10,7 @@ quickpred(
   minpuc = 0,
   include = "",
   exclude = "",
-  method = "pearson",
-  in_place = FALSE
+  method = "pearson"
 )
 }
 \arguments{

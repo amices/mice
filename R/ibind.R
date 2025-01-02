@@ -17,7 +17,7 @@
 #' @seealso \code{\link[=mids-class]{mids}}
 #' @keywords manip
 #' @examples
-#' data(nhanes)
+#' data(nhanes2)
 #' imp1 <- mice(nhanes, m = 1, maxit = 2, print = FALSE)
 #' imp1$m
 #'
@@ -66,10 +66,11 @@ ibind <- function(x, y) {
     stop("Differences detected between `x$ignore` and `y$ignore`")
   }
   visitSequence <- x$visitSequence
+
   imp <- vector("list", ncol(x$data))
   names(imp) <- names(x$data)
   for (j in names(imp)) {
-    imp[[j]] <- cbind(x$imp[[j]], y$imp[[j]])
+    imp[[j]] <- as.data.table(cbind(as.data.table(x$imp[[j]]), as.data.table(y$imp[[j]])))
   }
 
   m <- (x$m + y$m)

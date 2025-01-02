@@ -47,26 +47,34 @@
 #' identical(imp$imp, imp2$imp)
 #' #
 #' @export
-mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
+mice.mids <- function(obj, newdata = NULL, maxit = 1L, printFlag = TRUE, ...) {
   if (!is.mids(obj)) {
     stop("Object should be of type mids.")
   }
 
   # Set seed to last seed after previous imputation
-  assign(".Random.seed", obj$lastSeedValue, pos = 1)
+  assign(".Random.seed", obj$lastSeedValue, pos = 1L)
 
-  # obj contains training data, newdata contains test data
-  # overwrite obj with combined obj + imp.newdata
+  # handle newdata data.frame or data.table
   if (!is.null(newdata)) {
-    ignore <- rep(FALSE, nrow(obj$data))
-    if (!is.null(obj$ignore)) ignore <- obj$ignore
-
+    # obj contains imputed training data, newdata holds unimputed test data
+    # overwrite obj by the combined mids object
     newdata <- check.newdata(newdata, obj$data)
-    imp.newdata <- mice(newdata,
-      m = obj$m, maxit = 0,
-      remove.collinear = FALSE,
-      remove.constant = FALSE
-    )
+
+    # obtain random initial imputations for missing values in newdata
+    padded.data <- rbind(obj$data, newdata)
+    padded.where <- rbind(
+      matrix(FALSE, nrow = nrow(obj$where), ncol = ncol(obj$where)),
+      is.na(newdata))
+    padded.ignore <- c(obj$ignore, rep(TRUE, nrow(newdata)))
+    imp.padded <- mice(
+      data = padded.data, m = obj$m, maxit = 0L,
+      where = padded.where, ignore = padded.ignore,
+      remove.collinear = FALSE, remove.constant = FALSE)
+
+    # combine obj and imp.newdata
+    idx <- c(rep(FALSE, nrow(obj$data)), rep(TRUE, nrow(newdata)))
+    imp.newdata <- filter(imp.padded, idx)
     obj <- withCallingHandlers(
       rbind.mids(obj, imp.newdata),
       warning = function(w) {
@@ -76,23 +84,20 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
         }
       }
     )
-
-    # ignore newdata for model building, but do impute
-    obj$ignore <- c(ignore, rep(TRUE, nrow(newdata)))
   }
 
-  if (maxit < 1) {
+  if (maxit < 1L) {
     return(obj)
   }
 
   loggedEvents <- obj$loggedEvents
   state <- list(
-    it = 0, im = 0, co = 0, dep = "", meth = "",
+    it = 0L, im = 0L, co = 0L, dep = "", meth = "",
     log = !is.null(loggedEvents)
   )
   if (is.null(loggedEvents)) {
     loggedEvents <- data.frame(
-      it = 0, im = 0, co = 0, dep = "",
+      it = 0L, im = 0L, co = 0L, dep = "",
       meth = "", out = ""
     )
   }
@@ -107,9 +112,9 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
 
   ## OK. Iterate.
   sumIt <- obj$iteration + maxit
-  from <- obj$iteration + 1
-  to <- from + maxit - 1
-  q <- sampler(
+  from <- obj$iteration + 1L
+  to <- from + maxit - 1L
+  q <- sampler.dt(
     obj$data, obj$m, obj$ignore, where, imp, blocks,
     obj$method, obj$visitSequence, obj$predictorMatrix,
     obj$formulas, obj$modeltype, obj$blots, obj$post,
@@ -123,14 +128,14 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
   nvis <- length(vnames)
   if (!is.null(obj$chainMean)) {
     chainMean <- chainVar <- array(0,
-      dim = c(nvis, to, obj$m),
-      dimnames = list(
-        vnames,
-        seq_len(to), paste("Chain", seq_len(obj$m))
-      )
+                                   dim = c(nvis, to, obj$m),
+                                   dimnames = list(
+                                     vnames,
+                                     seq_len(to), paste("Chain", seq_len(obj$m))
+                                   )
     )
     for (j in seq_len(nvis)) {
-      if (obj$iteration == 0) {
+      if (obj$iteration == 0L) {
         chainMean[j, , ] <- q$chainMean[j, , ]
         chainVar[j, , ] <- q$chainVar[j, , ]
       } else {
@@ -171,8 +176,8 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
     seed = obj$seed,
     iteration = sumIt,
     lastSeedValue = get(".Random.seed",
-      envir = globalenv(), mode = "integer",
-      inherits = FALSE),
+                        envir = globalenv(), mode = "integer",
+                        inherits = FALSE),
     chainMean = chainMean,
     chainVar = chainVar,
     loggedEvents = loggedEvents)

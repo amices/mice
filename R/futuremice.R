@@ -79,7 +79,7 @@
 #' @export
 futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
                        use.logical = TRUE, future.plan = "multisession",
-                       packages = NULL, globals = NULL, in_place = FALSE, ...) {
+                       packages = NULL, globals = NULL, ...) {
   # check if packages available
   install.on.demand("parallelly", ...)
   install.on.demand("furrr", ...)
@@ -90,9 +90,9 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
   m <- check.m(m)
 
   # per default: initialize data.table copy
-  if (!(is.data.table(data) && in_place)) {
-    data <- as.data.table(data)
-  }
+  # if (!(is.data.table(data) && in_place)) {
+  #   data <- as.data.table(data)
+  # }
 
   # check if data complete
   if (sum(is.na(data)) == 0) {
