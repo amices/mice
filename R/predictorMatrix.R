@@ -7,18 +7,43 @@
 #' the column variable is NOT used to impute the row variable or block.
 #' A nonzero value indicates that it is used.
 #' @param data A \code{data.frame} with the source data
+#' @param selection A character string specifying the method to use to
+#' select predictors. The default \code{"all"} selects all variables
+#' as predictors. Alternatives \code{"correlation"} and \code{"lars"}
+#' select predictors using the \code{quickpred()} and \code{larspred()},
+#' respectively.
 #' @param blocks An optional specification for blocks of variables in
 #' the rows. The default assigns each variable in its own block.
 #' @param predictorMatrix A predictor matrix from which rows with the same
-#' names are copied into the output predictor matrix.
-#' @return A matrix
+#' names are copied into the output predictor matrix. This is useful for
+#' editing the predictor matrix.
+#' @param \dots Arguments passed to \code{quickpred()} or \code{larspred()}.
+#' @return A matrix with the same number of rows as the number of blocks.
 #' @seealso \code{\link{make.blocks}}
 #' @examples
 #' make.predictorMatrix(nhanes)
 #' make.predictorMatrix(nhanes, blocks = make.blocks(nhanes, "collect"))
 #' @export
-make.predictorMatrix <- function(data, blocks = make.blocks(data),
+make.predictorMatrix <- function(data,
+                                 selection = c("all", "correlation", "lars"),
+                                 ...,
+                                 blocks = make.blocks(data),
                                  predictorMatrix = NULL) {
+  selection <- match.arg(selection)
+  if (selection == "all") {
+    return(make.default.predictorMatrix(data, blocks, predictorMatrix))
+  }
+  if (selection == "correlation") {
+    return(quickpred(data, ...)
+           )
+  }
+  if (selection == "lars") {
+    return(larspred(data, ...))
+  }
+  stop("Unknown selection method")
+}
+
+make.default.predictorMatrix <- function(data, blocks, predictorMatrix) {
   input.predictorMatrix <- predictorMatrix
   cond <- check.dataform(data)
   predictorMatrix <- matrix(1, nrow = length(blocks), ncol = ncol(data))
@@ -34,7 +59,7 @@ make.predictorMatrix <- function(data, blocks = make.blocks(data),
       }
     }
   }
-  predictorMatrix
+  return(predictorMatrix)
 }
 
 check.predictorMatrix <- function(predictorMatrix,

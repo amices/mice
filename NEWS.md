@@ -1,5 +1,5 @@
-
-* **MAJOR UPDATE USING data.table and long format processing**
+* **MAJOR UPDATE USING data.table, long format processing and automatic variable selection**
+* Adds a mechanism for filtering rows and selecting columns during the MICE iterations with univariate imputations. The method simplifies univariate imputation models by removing redundant predictors. The method is implemented in the top-level function `trim.data()`, which takes as input the design matrix `x`, the target variable `y` and the response `ry`, and returns a list of two logical vectors named `"rows"` (which filters rows of `x`) and `"cols"` (which selects columns of `x`). The user can choose among several low-level trimmers, including least angular regression, lasso, elastic net, and linear dependencies removal. It is also possible to specify your own low-level `mice.trim.mytrim()` function and call it from `mice()` using the `trimmer == "mytrim"` argument. The method is more robust and faster than `remove.lindep()` and can handle datasets with many variables.
 * Breaking changes: 
 - The `imp` component of the `mids` object is now a list of `data.table`s instead of a list of `data.frame`s, and includes an extra column called `row_id`. The `row_id` column contains the row number of the relevant cell in `data` and replaces the function of the `rownames` attribute (which is now deprecated). The `imp` component receives in-place updates.
 - The data.table `long` holds *m* imputed data sets in long format and is updated in place.

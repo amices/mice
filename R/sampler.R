@@ -177,16 +177,6 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
     }
   } # end k loop, end main iteration
 
-  if (printFlag) {
-    r <- get("loggedEvents", parent.frame(1))
-    ridge.used <- any(grepl("A ridge penalty", r$out))
-    if (ridge.used) {
-      cat("\n * Please inspect the loggedEvents \n")
-    } else {
-      cat("\n")
-    }
-  }
-
   list(iteration = maxit,
        imp = imp,
        chainMean = chainMean,
@@ -195,7 +185,8 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
 
 sampler.univ <- function(data, r, where, pred, formula, method, j, k,
-                            mtype = "pred", user, ignore, jimp, ...) {
+                         mtype = "pred", user, ignore, jimp,
+                         trimmer = "lindep", ...) {
   # nothing to impute
   if (!nrow(jimp)) {
     return(jimp)
@@ -228,6 +219,7 @@ sampler.univ <- function(data, r, where, pred, formula, method, j, k,
   # expand pred vector to model matrix, remove intercept
   if (mtype == "pred") {
     type <- pred[labels(terms(formula))][attr(x, "assign")]
+    # xnames <- names(type)
     x <- x[, -1L, drop = FALSE]
     names(type) <- colnames(x)
   }
@@ -255,7 +247,16 @@ sampler.univ <- function(data, r, where, pred, formula, method, j, k,
   # is the combination of two conditions:
   # 1) cases with incomplete x are not imputed (and set to NA, see below)
   # 2) cases the user excluded for imputation are not imputed
+
+  # store the names of the features
+  # xj <- unique(xnames[keep$cols])
+  # print(xj)
+
+  # set up univariate imputation method
+  # wy: entries we wish to impute (length(y) elements)
+  # iy: entries we will impute (sum(wy) elements)
   wy <- complete.cases(x) & where[, j]
+  iy <- wy[where[, j]]
 
   # cc: logical vector indicating x-complete cases that are imputed.
   # Imputations for x-incomplete cases x are set to NA.
@@ -284,10 +285,14 @@ sampler.univ <- function(data, r, where, pred, formula, method, j, k,
     # only warning on df in first iteration
     if (k == 1L) check.df(xi, yi, ryi)
 
-    # remove linear dependencies
-    keep <- remove.lindep(xi, yi, ryi, ...)
-    xi <- xi[, keep, drop = FALSE]
-    typei <- typei[keep]
+    # select the features to feed into the imputation method
+    keep <- trim.data(
+      y = yi,
+      # ry = r[, j] & !ignore,
+      ry = ryi,
+      x = xi,
+      trimmer = trimmer, ...)
+
     if (ncol(xi) != length(typei)) {
       stop("Internal error: length(type) != number of predictors")
     }
@@ -297,7 +302,14 @@ sampler.univ <- function(data, r, where, pred, formula, method, j, k,
     imputes <- unlist(jimp[, i, with = FALSE], use.names = FALSE)
     imputes[!cci] <- NA
 
-    args <- c(list(y = yi, ry = ryi, x = xi, wy = wyi, type = typei), user, list(...))
+    args <- c(
+      list(
+        y = yi,
+        ry = keep$rows,
+        x = xi[, keep$cols, drop = FALSE],
+        wy = wyi,
+        type = typei[keep$cols]
+      ), user, list(...))
     imputes[cci] <- do.call(f, args = args)
     set(jimp, j = i, value = imputes)
   }

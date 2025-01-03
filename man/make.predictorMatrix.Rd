@@ -4,19 +4,34 @@
 \alias{make.predictorMatrix}
 \title{Creates a \code{predictorMatrix} argument}
 \usage{
-make.predictorMatrix(data, blocks = make.blocks(data), predictorMatrix = NULL)
+make.predictorMatrix(
+  data,
+  selection = c("all", "correlation", "lars"),
+  ...,
+  blocks = make.blocks(data),
+  predictorMatrix = NULL
+)
 }
 \arguments{
 \item{data}{A \code{data.frame} with the source data}
+
+\item{selection}{A character string specifying the method to use to
+select predictors. The default \code{"all"} selects all variables
+as predictors. Alternatives \code{"correlation"} and \code{"lars"}
+select predictors using the \code{quickpred()} and \code{larspred()},
+respectively.}
+
+\item{\dots}{Arguments passed to \code{quickpred()} or \code{larspred()}.}
 
 \item{blocks}{An optional specification for blocks of variables in
 the rows. The default assigns each variable in its own block.}
 
 \item{predictorMatrix}{A predictor matrix from which rows with the same
-names are copied into the output predictor matrix.}
+names are copied into the output predictor matrix. This is useful for
+editing the predictor matrix.}
 }
 \value{
-A matrix
+A matrix with the same number of rows as the number of blocks.
 }
 \description{
 This helper function creates a valid \code{predictMatrix}. The

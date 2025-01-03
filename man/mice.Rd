@@ -24,7 +24,6 @@ mice(
   printFlag = TRUE,
   seed = NA,
   data.init = NULL,
-  use.data.table = FALSE,
   in_place = FALSE,
   ...
 )

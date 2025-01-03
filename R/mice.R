@@ -348,7 +348,6 @@ mice <- function(data,
                  printFlag = TRUE,
                  seed = NA,
                  data.init = NULL,
-                 use.data.table = FALSE,
                  in_place = FALSE,
                  ...) {
   call <- match.call()
@@ -359,6 +358,15 @@ mice <- function(data,
   if (inherits(data, "tbl_df")) {
     data <- as.data.frame(data)
   }
+
+  # # create details environment
+  # if (saveDetails) {
+  #   details <- rlang::env(
+  #   call = call,
+  #   seed = seed,
+  #   version = packageVersion("mice"),
+  #   date = Sys.Date())
+  # assign("details", details, envir = globalenv())
 
   # check form of data and m
   cond <- check.dataform(data)
@@ -381,7 +389,7 @@ mice <- function(data,
   if (mp & mb & mf) {
     # blocks lead
     blocks <- make.blocks(colnames(data))
-    predictorMatrix <- make.predictorMatrix(data, blocks)
+    predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     formulas <- make.formulas(data, blocks)
     modeltype <- make.modeltype(modeltype, predictorMatrix, formulas, "pred")
   }
@@ -398,7 +406,7 @@ mice <- function(data,
   if (mp & !mb & mf) {
     # blocks leads
     blocks <- check.blocks(blocks, data)
-    predictorMatrix <- make.predictorMatrix(data, blocks)
+    predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     formulas <- make.formulas(data, blocks)
     modeltype <- make.modeltype(modeltype, predictorMatrix, formulas, "pred")
   }
@@ -408,7 +416,7 @@ mice <- function(data,
     # formulas leads
     formulas <- check.formulas(formulas, data)
     blocks <- construct.blocks(formulas)
-    predictorMatrix <- make.predictorMatrix(data, blocks)
+    predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     modeltype <- make.modeltype(modeltype, predictorMatrix, formulas, "formula")
   }
 
@@ -429,7 +437,9 @@ mice <- function(data,
     formulas <- check.formulas(formulas, data)
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
     blocks <- construct.blocks(formulas, predictorMatrix)
-    predictorMatrix <- make.predictorMatrix(data, blocks, predictorMatrix)
+    predictorMatrix <- make.predictorMatrix(data,
+                                            blocks = blocks,
+                                            predictorMatrix = predictorMatrix)
     modeltype <- make.modeltype(modeltype, predictorMatrix, formulas, "formula")
   }
 
