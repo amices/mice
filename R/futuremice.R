@@ -181,10 +181,6 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
       imp <- ibind(imp, imps[[i]])
     }
   }
-  # let imputation matrix correspond to grand m
-  for (i in 1:length(imp$imp)) {
-    colnames(imp$imp[[i]]) <- 1:imp$m
-  }
 
   imp$parallelseed <- parallelseed
 

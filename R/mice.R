@@ -498,7 +498,7 @@ mice <- function(data,
   # and iterate...
   from <- 1
   to <- from + maxit - 1
-  q <- sampler.dt(
+  q <- sampler(
     data, m, ignore, where, imp, blocks, method,
     visitSequence, predictorMatrix, formulas,
     modeltype, blots,

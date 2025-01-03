@@ -139,10 +139,6 @@ parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL,
       imp <- ibind(imp, imps[[i]])
     }
   }
-  # let imputation matrix correspond to grand m
-  for (i in 1:length(imp$imp)) {
-    colnames(imp$imp[[i]]) <- 1:imp$m
-  }
 
   imp
 }

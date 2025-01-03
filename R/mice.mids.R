@@ -114,7 +114,7 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1L, printFlag = TRUE, ...) {
   sumIt <- obj$iteration + maxit
   from <- obj$iteration + 1L
   to <- from + maxit - 1L
-  q <- sampler.dt(
+  q <- sampler(
     obj$data, obj$m, obj$ignore, where, imp, blocks,
     obj$method, obj$visitSequence, obj$predictorMatrix,
     obj$formulas, obj$modeltype, obj$blots, obj$post,

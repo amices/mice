@@ -66,14 +66,17 @@ ibind <- function(x, y) {
     stop("Differences detected between `x$ignore` and `y$ignore`")
   }
   visitSequence <- x$visitSequence
+  m <- (x$m + y$m)
 
   imp <- vector("list", ncol(x$data))
   names(imp) <- names(x$data)
   for (j in names(imp)) {
-    imp[[j]] <- as.data.table(cbind(as.data.table(x$imp[[j]]), as.data.table(y$imp[[j]])))
+    prepx <- x$imp[[j]][, as.character(1L:x$m), with = FALSE]
+    prepy <- y$imp[[j]]
+    colnames(prepy) <- c(as.character((x$m + 1L):m), "row_id")
+    imp[[j]] <- as.data.table(cbind(prepx, prepy))
   }
 
-  m <- (x$m + y$m)
   iteration <- max(x$iteration, y$iteration)
 
   chainMean <- chainVar <- initialize.chain(names(x$data), iteration, m)
