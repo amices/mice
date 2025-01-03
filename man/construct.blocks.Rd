@@ -7,24 +7,27 @@
 construct.blocks(formulas = NULL, predictorMatrix = NULL)
 }
 \arguments{
-\item{formulas}{A named list of formula's, or expressions that
-can be converted into formula's by \code{as.formula}. List elements
+\item{formulas}{A named list of formulas, or expressions that
+can be converted into formulas by \code{as.formula}. List elements
 correspond to blocks. The block to which the list element applies is
 identified by its name, so list names must correspond to block names.
+
 The \code{formulas} argument is an alternative to the
 \code{predictorMatrix} argument that allows for more flexibility in
 specifying imputation models, e.g., for specifying interaction terms.}
 
-\item{predictorMatrix}{A numeric matrix of \code{length(blocks)} rows
+\item{predictorMatrix}{A numeric matrix with \code{length(blocks)} rows
 and \code{ncol(data)} columns, containing 0/1 data specifying
 the set of predictors to be used for each target column.
 Each row corresponds to a variable block, i.e., a set of variables
-to be imputed. A value of \code{1} means that the column
-variable is used as a predictor for the target block (in the rows).
+to be imputed. A value of \code{1} means that the column variable is used as a
+predictor for the target block (in the rows).
+
 By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
-rows and columns with all 1's, except for the diagonal.
-Note: For two-level imputation models (which have \code{"2l"} in their names)
-other codes (e.g, \code{2} or \code{-2}) are also allowed.}
+rows and columns with all \code{1}s, except for the diagonal.
+
+\strong{Note}: For two-level imputation models (which have \code{"2l"} in their names),
+other codes (e.g., \code{2} or \code{-2}) are also allowed.}
 }
 \value{
 A \code{blocks} object.

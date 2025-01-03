@@ -7,7 +7,7 @@
 make.post(data)
 }
 \arguments{
-\item{data}{A data frame or a matrix containing the incomplete data.  Missing
+\item{data}{A \code{data.frame} or a \code{matrix} containing the incomplete data. Missing
 values are coded as \code{NA}.}
 }
 \value{

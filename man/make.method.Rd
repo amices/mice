@@ -12,39 +12,48 @@ make.method(
 )
 }
 \arguments{
-\item{data}{A data frame or a matrix containing the incomplete data.  Missing
+\item{data}{A \code{data.frame} or a \code{matrix} containing the incomplete data. Missing
 values are coded as \code{NA}.}
 
-\item{where}{A data frame or matrix with logicals of the same dimensions
-as \code{data} indicating where in the data the imputations should be
+\item{where}{A \code{data.frame} or \code{matrix} with logical values of the same dimensions
+as \code{data}, indicating where in the data the imputations should be
 created. The default, \code{where = is.na(data)}, specifies that the
 missing data should be imputed. The \code{where} argument may be used to
-overimpute observed data, or to skip imputations for selected missing values.
-Note: Imputation methods that generate imptutations outside of
-\code{mice}, like \code{mice.impute.panImpute()} may depend on a complete
-predictor space. In that case, a custom \code{where} matrix can not be
+overimpute observed data or to skip imputations for selected missing values.
+
+\strong{Note}: Imputation methods that generate imputations outside of
+\code{mice}, like \code{mice.impute.panImpute()}, may depend on a complete
+predictor space. In that case, a custom \code{where} matrix cannot be
 specified.}
 
-\item{blocks}{List of vectors with variable names per block. List elements
+\item{blocks}{A list of vectors with variable names per block. List elements
 may be named to identify blocks. Variables within a block are
 imputed by a multivariate imputation method
-(see \code{method} argument). By default each variable is placed
-into its own block, which is effectively
-fully conditional specification (FCS) by univariate models
-(variable-by-variable imputation). Only variables whose names appear in
-\code{blocks} are imputed. The relevant columns in the \code{where}
-matrix are set to \code{FALSE} of variables that are not block members.
-A variable may appear in multiple blocks. In that case, it is
-effectively re-imputed each time that it is visited.}
+(see the \code{method} argument). By default, each variable is placed
+into its own block, which is effectively fully conditional specification
+(FCS) by univariate models (variable-by-variable imputation).
+
+Only variables whose names appear in \code{blocks} are imputed. The relevant
+columns in the \code{where} matrix are set to \code{FALSE} for variables that
+are not block members. A variable may appear in multiple blocks. In that
+case, it is effectively re-imputed each time that it is visited.}
 
 \item{defaultMethod}{A vector of length 4 containing the default
-imputation methods for 1) numeric data, 2) factor data with 2 levels, 3)
-factor data with > 2 unordered levels, and 4) factor data with > 2
-ordered levels. By default, the method uses
-\code{pmm}, predictive mean matching (numeric data) \code{logreg}, logistic
-regression imputation (binary data, factor with 2 levels) \code{polyreg},
-polytomous regression imputation for unordered categorical data (factor > 2
-levels) \code{polr}, proportional odds model for (ordered, > 2 levels).}
+imputation methods for:
+\enumerate{
+\item numeric data,
+\item factor data with 2 levels,
+\item factor data with > 2 unordered levels, and
+\item factor data with > 2 ordered levels.
+}
+
+By default, the methods are:
+\itemize{
+\item \code{pmm} for numeric data
+\item \code{logreg} for binary (2-level) factor data
+\item \code{polyreg} for unordered categorical data (factor > 2 levels)
+\item \code{polr} for ordered categorical data (> 2 levels).
+}}
 }
 \value{
 Vector of \code{length(blocks)} element with method names

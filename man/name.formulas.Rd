@@ -7,10 +7,11 @@
 name.formulas(formulas, prefix = "F")
 }
 \arguments{
-\item{formulas}{A named list of formula's, or expressions that
-can be converted into formula's by \code{as.formula}. List elements
+\item{formulas}{A named list of formulas, or expressions that
+can be converted into formulas by \code{as.formula}. List elements
 correspond to blocks. The block to which the list element applies is
 identified by its name, so list names must correspond to block names.
+
 The \code{formulas} argument is an alternative to the
 \code{predictorMatrix} argument that allows for more flexibility in
 specifying imputation models, e.g., for specifying interaction terms.}

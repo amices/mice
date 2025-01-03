@@ -11,14 +11,15 @@ as.mids(long, where = NULL, .imp = ".imp", .id = ".id")
 produced by a call to \code{complete(..., action = 'long', include = TRUE)},
 or by other software.}
 
-\item{where}{A data frame or matrix with logicals of the same dimensions
-as \code{data} indicating where in the data the imputations should be
+\item{where}{A \code{data.frame} or \code{matrix} with logical values of the same dimensions
+as \code{data}, indicating where in the data the imputations should be
 created. The default, \code{where = is.na(data)}, specifies that the
 missing data should be imputed. The \code{where} argument may be used to
-overimpute observed data, or to skip imputations for selected missing values.
-Note: Imputation methods that generate imptutations outside of
-\code{mice}, like \code{mice.impute.panImpute()} may depend on a complete
-predictor space. In that case, a custom \code{where} matrix can not be
+overimpute observed data or to skip imputations for selected missing values.
+
+\strong{Note}: Imputation methods that generate imputations outside of
+\code{mice}, like \code{mice.impute.panImpute()}, may depend on a complete
+predictor space. In that case, a custom \code{where} matrix cannot be
 specified.}
 
 \item{.imp}{An optional column number or column name in \code{long},
