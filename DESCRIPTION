@@ -71,7 +71,6 @@ Suggests:
     furrr,
     haven,
     knitr,
-    lars,
     literanger,
     lme4,
     MASS,
