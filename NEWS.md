@@ -1,10 +1,17 @@
-# mice 3.17.1
 
+* **MAJOR UPDATE USING data.table and long format processing**
+* Breaking changes: 
+- The `imp` component of the `mids` object is now a list of `data.table`s instead of a list of `data.frame`s, and includes an extra column called `row_id`. The `row_id` column contains the row number of the relevant cell in `data` and replaces the function of the `rownames` attribute (which is now deprecated). The `imp` component receives in-place updates.
+- The data.table `long` holds *m* imputed data sets in long format and is updated in place.
+- The imputation loop `i = 1, ..., m` is vectorized as far as possible, which is more efficient.
 * Adds `modeltype` argument to `mice()` for specify `"pred"` versus `"formula"` model type. The `modeltype` argument allows the user to specify different model type across blocks. It replaces the `calltype` attribute of `blocks`.
 * Changes to `as.mids()`: 
 - can now handle a `long` argument that is `data.table`
 - can sort the `long` before creation according to imputation and row identifiers, `.imp` and `.id`
 - Breaking change: `as.mids()` does not longer use `rownames` for storing row identifiers. If you wish to preserve the row identifiers in `.id`, rename the column and set the `.id` argument to your new name.
+
+# mice 3.17.1
+
 * Adds support for roxygen markdown documentation
 
 # mice 3.17.0
