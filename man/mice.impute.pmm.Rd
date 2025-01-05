@@ -146,8 +146,10 @@ blots$tv$exclude <- c(1:5)
 # Exclude 100 random observed heights from tv donor pool
 blots$hgt$exclude <- sample(unique(boys$hgt), 100)
 imp <- mice(boys, method = "pmm", print = FALSE, blots = blots, seed=123)
-blots$hgt$exclude \%in\% unlist(c(imp$imp$hgt)) # MUST be all FALSE
-blots$tv$exclude \%in\% unlist(c(imp$imp$tv)) # MUST be all FALSE
+
+# Check if all values are removed
+all(!blots$hgt$exclude \%in\% unlist(c(imp$imp$hgt[, -"row_id"])))
+all(!blots$tv$exclude \%in\% unlist(c(imp$imp$tv[, -"row_id"])))
 
 # Factor quantification
 xname <- c("age", "hgt", "wgt")
@@ -156,19 +158,19 @@ r <- stats::complete.cases(br[, xname])
 x <- br[r, xname]
 y <- factor(br[r, "tv"])
 ry <- !is.na(y)
-table(y)
+table(y, useNA = "always")
 
-# impute factor by optimizing canonical correlation y, x
-mice.impute.pmm(y, ry, x)
+# impute 38 NA's in factor by optimal scaling of y | x
+table(mice.impute.pmm(y, ry, x))
 
 # only categories with at least 2 cases can be donor
-mice.impute.pmm(y, ry, x, trim = 2L)
+table(mice.impute.pmm(y, ry, x, trim = 2L))
 
 # in addition, eliminate category 20
-mice.impute.pmm(y, ry, x, trim = 2L, exclude = 20)
+table(mice.impute.pmm(y, ry, x, trim = 2L, exclude = 20))
 
 # to get old behavior: as.integer(y))
-mice.impute.pmm(y, ry, x, quantify = FALSE)
+table(mice.impute.pmm(y, ry, x, quantify = FALSE))
 }
 \references{
 Little, R.J.A. (1988), Missing data adjustments in large surveys
@@ -190,6 +192,7 @@ Other univariate imputation functions:
 \code{\link{mice.impute.cart}()},
 \code{\link{mice.impute.lasso.logreg}()},
 \code{\link{mice.impute.lasso.norm}()},
+\code{\link{mice.impute.lasso.pmm}()},
 \code{\link{mice.impute.lasso.select.logreg}()},
 \code{\link{mice.impute.lasso.select.norm}()},
 \code{\link{mice.impute.lda}()},
