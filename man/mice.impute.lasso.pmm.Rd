@@ -14,7 +14,7 @@ mice.impute.lasso.pmm(
   remove.values = NULL,
   quantify = TRUE,
   trim = 1L,
-  dfmax = 30,
+  dfmax = NULL,
   ...
 )
 }
