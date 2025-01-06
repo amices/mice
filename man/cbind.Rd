@@ -42,7 +42,6 @@ function calls \code{cbind.mids()}, respectively \code{rbind.mids()}. In
 all other cases, the call is forwarded to standard functions in the
 \code{base} package.
 
-
 The \code{cbind.mids()} function combines two \code{mids} objects
 columnwise into a single
 object of class \code{mids}, or combines a single \code{mids} object with

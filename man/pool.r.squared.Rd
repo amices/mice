@@ -15,8 +15,8 @@ calculated.  The default value is FALSE.}
 }
 \value{
 Returns a 1x4 table with components. Component \code{est} is the
-pooled R^2 estimate. Component \code{lo95} is the 95 \% lower bound of the pooled R^2.
-Component \code{hi95} is the 95 \% upper bound of the pooled R^2.
+pooled R^2 estimate. Component \code{lo95} is the 95 \\% lower bound of the pooled R^2.
+Component \code{hi95} is the 95 \\% upper bound of the pooled R^2.
 Component \code{fmi} is the fraction of missing information due to nonresponse.
 }
 \description{

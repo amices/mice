@@ -32,8 +32,8 @@ windspeed[1:3, ]
 Haslett, J. and Raftery, A. E. (1989).  \emph{Space-time
 Modeling with Long-memory Dependence: Assessing Ireland's Wind Power
 Resource (with Discussion)}. Applied Statistics 38, 1-50.
-\url{http://lib.stat.cmu.edu/datasets/wind.desc} and
-\url{http://lib.stat.cmu.edu/datasets/wind.data}
+\url{https://lib.stat.cmu.edu/datasets/wind.desc} and
+\url{https://lib.stat.cmu.edu/datasets/wind.data}
 
 van Buuren, S., Brand, J.P.L., Groothuis-Oudshoorn C.G.M., Rubin, D.B. (2006)
 Fully conditional specification in multivariate imputation.  \emph{Journal of

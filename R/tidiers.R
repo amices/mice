@@ -1,10 +1,8 @@
-#' @importFrom generics tidy
 #' @export
-generics::tidy
+broom::tidy
 
-#' @importFrom generics glance
 #' @export
-generics::glance
+broom::glance
 
 #' Tidy method to extract results from a `mipo` object
 #'

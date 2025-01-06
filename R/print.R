@@ -1,32 +1,12 @@
-#' Print a \code{mids} object
-#'
-#' @rdname print
-#' @param x Object of class \code{mids}, \code{mira} or \code{mipo}
-#' @param ... Other parameters passed down to \code{print.default()}
-#' @return \code{NULL}
-#' @seealso \code{\link[=mids-class]{mids}}
-#' @method print mids
-#' @export
-print.mids <- function(x, ...) {
-  cat("Class: mids\n")
-  cat("Number of multiple imputations: ", x$m, "\n")
-  cat("Imputation methods:\n")
-  print(x$method, ...)
-  cat("PredictorMatrix:\n")
-  print(head(x$predictorMatrix), ...)
-  if (!is.null(x$loggedEvents)) {
-    cat("Number of logged events: ", nrow(x$loggedEvents), "\n")
-    print(head(x$loggedEvents), ...)
-  }
-  invisible(x)
-}
 
 
 #' Print a \code{mira} object
 #'
 #' @rdname print
+#' @param x An object of class \code{mira}
+#' @param \dots Other arguments
 #' @return \code{NULL}
-#' @seealso \code{\link[=mira-class]{mira}}
+#' @seealso \code{\link{mira}}
 #' @method print mira
 #' @export
 print.mira <- function(x, ...) {
@@ -42,6 +22,8 @@ print.mira <- function(x, ...) {
 #' Print a \code{mice.anova} object
 #'
 #' @rdname print
+#' @param x An object of class \code{mice.anova}
+#' @param \dots Other arguments
 #' @return \code{NULL}
 #' @seealso \code{\link{mipo}}
 #' @method print mice.anova
@@ -71,40 +53,5 @@ print.mice.anova.summary <- function(x, ...) {
   )
   if (x$method == "D2") cat(" (", x$use, ")", sep = "")
   cat("\n")
-  invisible(x)
-}
-
-
-#' Print a \code{mads} object
-#'
-#' @param x Object of class \code{mads}
-#' @param ... Other parameters passed down to \code{print.default()}
-#' @return \code{NULL}
-#' @seealso \code{\link[=mads-class]{mads}}
-#' @method print mads
-#' @export
-print.mads <- function(x, ...) {
-  if (is.mads(x)) {
-    cat("Multivariate Amputed Data Set")
-    cat("\nCall: ")
-    print(x$call)
-    cat("Class:", class(x))
-    cat("\nProportion of Missingness: ", x$prop)
-    cat("\nFrequency of Patterns: ", x$freq)
-    cat("\nPattern Matrix:\n")
-    print(x$patterns)
-    cat("Mechanism:")
-    print(x$mech)
-    cat("Weight Matrix:\n")
-    print(x$weights)
-    cat("Type Vector:\n")
-    print(x$type)
-    cat("Odds Matrix:\n")
-    print(x$odds)
-    cat("Head of Amputed Data Set\n")
-    print(head(x$amp))
-  } else {
-    print(x, ...)
-  }
   invisible(x)
 }

@@ -1,11 +1,12 @@
 #' Scatterplot of amputed and non-amputed data against weighted sum scores
 #'
 #' Plotting method to investigate relation between amputed data and the weighted sum
-#' scores. Based on \code{\link{lattice}}. \code{xyplot} produces scatterplots.
+#' scores. Based on \pkg{lattice}, \code{xyplot} produces scatterplots.
 #' The function plots the variables against the weighted sum scores. The function
 #' automatically separates the amputed and non-amputed data to see the relation between
 #' the amputation and the weighted sum scores.
 #'
+#' @aliases xyplot.mads
 #' @param x A \code{mads} object, typically created by \code{\link{ampute}}.
 #' @param data A string or vector of variable names that needs to be plotted. As
 #' a default, all variables will be plotted.
@@ -19,16 +20,16 @@
 #' There are several defaults for different #variables. Note that for more than
 #' 9 variables, multiple plots will be created automatically.
 #' @param colors A vector of two RGB values defining the colors of the non-amputed and
-#' amputed data respectively. RGB values can be obtained with \code{\link{hcl}}.
+#' amputed data respectively. RGB values can be obtained with
+#' \code{\link[grDevices]{hcl}}.
 #' @param \dots Not used, but for consistency with generic
 #' @return A list containing the scatterplots. Note that a new pattern
 #' will always be shown in a new plot.
 #' @note The \code{mads} object contains all the information you need to
-#' make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate
+#' make any desired plots. Check \code{\link{mads}} or the vignette \emph{Multivariate
 #' Amputation using Ampute} to understand the contents of class object \code{mads}.
 #' @author Rianne Schouten, 2016
-#' @seealso \code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for
-#' an overview of the package, \code{\link{mads-class}}
+#' @seealso \code{\link{ampute}}, \code{\link{mads}}
 #' @export
 xyplot.mads <- function(x, data, which.pat = NULL,
                         standardized = TRUE, layout = NULL,
@@ -103,7 +104,7 @@ xyplot.mads <- function(x, data, which.pat = NULL,
   )
   for (i in seq_len(pat)) {
     p[[paste("Scatterplot Pattern", which.pat[i])]] <-
-      xyplot(
+      lattice::xyplot(
         x = formula, data = data[data$.pat == which.pat[i], ],
         groups = data$.amp, par.settings = theme,
         multiple = TRUE, outer = TRUE, layout = layout, key = key,

@@ -1,7 +1,8 @@
 # The sampler controls the actual Gibbs sampling iteration scheme.
 # This function is called by mice and mice.mids
 sampler <- function(data, m, ignore, where, imp, blocks, method,
-                    visitSequence, predictorMatrix, formulas, blots,
+                    visitSequence, predictorMatrix, formulas,
+                    modeltype, blots,
                     post, fromto, printFlag, ...) {
   from <- fromto[1]
   to <- fromto[2]
@@ -39,13 +40,10 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
         # impute block-by-block
         for (h in visitSequence) {
-          ct <- attr(blocks, "calltype")
-          calltype <- ifelse(length(ct) == 1, ct[1], ct[h])
-
+          calltype <- modeltype[[h]]
           b <- blocks[[h]]
           if (calltype == "formula") ff <- formulas[[h]] else ff <- NULL
           pred <- predictorMatrix[h, ]
-
           user <- blots[[h]]
 
           # univariate/multivariate logic

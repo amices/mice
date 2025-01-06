@@ -114,12 +114,12 @@ to keep.
 \code{trim.data()} filters out predictors that do not contribute to
 the prediction of the target variable. It is called from within the
 MICE algorithm. The user can select one of the following trimming functions
-using the `trimmer` argument of the `mice()` function:
+using the \code{trimmer} argument of the \code{mice()} function:
 \describe{
-  \item{\code{"lindep"}}{Remove constant and multi-collinear predictors.}
-  \item{\code{"lars"}}{Include predictors by least angle regression (LARS).}
-  \item{\code{"glmnet"}}{Filter out predictors by elastic net.}
-  \item{\code{"cv.glmnet"}}{Filter out predictors by cross validated elastic net.}
+\item{\code{"lindep"}}{Remove constant and multi-collinear predictors.}
+\item{\code{"lars"}}{Include predictors by least angle regression (LARS).}
+\item{\code{"glmnet"}}{Filter out predictors by elastic net.}
+\item{\code{"cv.glmnet"}}{Filter out predictors by cross validated elastic net.}
 }
 The relevant functions are \code{mice.trim.lindep()}, \code{mice.trim.lars()},
 \code{mice.trim.glmnet()} and \code{mice.trim.cv.glmnet()}. The user can
@@ -145,17 +145,17 @@ level is equivalent to collapsing that level to the reference category.
 
 The function bypasses the column trimmer in the following cases:
 \describe{
-  \item{1}{If \code{y} is allowed to be fully missing.}
-  \item{2}{If there are zero entries of \code{y} observed.}
-  \item{3}{If there are zero predictors.}
-  \item{4}{If the user specifies \code{trimmer = ""}.}
+\item{1}{If \code{y} is allowed to be fully missing.}
+\item{2}{If there are zero entries of \code{y} observed.}
+\item{3}{If there are zero predictors.}
+\item{4}{If the user specifies \code{trimmer = ""}.}
 }
 
 Trimmers like \code{mice.trim.lars()} change the behaviour of the
 MICE algorithm. They are more aggressive in removing predictors than
 the classic \code{remove.lindep()} method. For datasets with many
 columns, our current recommendation is \code{trimmer = "lars"} in
-combination with the `max.predictors` argument.
+combination with the \code{max.predictors} argument.
 
 \code{mice.trim.lars()} fits a LARS model to the elements of the design
 matrix \code{x} and the target variable \code{y[ry]}. The procedure

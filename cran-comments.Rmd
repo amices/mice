@@ -7,26 +7,38 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## mice 3.16.0
+## Release summary
 
-## Overview
+This is the resubmission of `mice` version 3.17.0. The previous submission was rejected due a problem with the downstream `autoReg` and `finalfit` packages. The problem was a change in the reporting of the confidence intervals. In the previous version confidence intervals were named `2.5 %` and `97.5 %`, a convention inherited from `stats::confint.default`. The update `mice 3.17.0` adopts the more flexible `broom` convention of naming these boundaries `conf.low` and `conf.high`, so that these names work for any probability level. This change caused the two downstream packages to fail. The issue has been fixed in this version of `mice` by duplicating the two conf columns, and naming them `2.5 %` and `97.5 %`. I will alert the maintainers of the `autoReg` and `finalfit` packages to this change, but for now, having the duplicate columns fixes the problem.
 
-This submission 
-
-- is a third resubmission, using `devtools::check(env_vars = c('_R_CHECK_DEPENDS_ONLY_' = "true"))` to mimmick CRAN incoming checks
-- is a second resubmission, with `\donttest` changed in `\dontrun` to evade `_R_CHECK_DEPENDS_ONLY_=true` errors;
-- is a resubmission of `mice 3.16.0` after the orphaned `ucminf` CRAN package got a new maintainer;
-- is tested with the `_R_CHECK_DEPENDS_ONLY_=true` flag, as requested;
-- solves the problems at `https://cran.r-project.org/web/checks/check_results_mice.html`;
-- contains new features and bug fixes, as described in the `NEWS.md`.
+This release of `mice` adds new features, bug fixes, and documentation improvements. 
+See <https://github.com/amices/mice/blob/master/NEWS.md>
 
 ## Test environments
 
 ```{r}
-R.Version()
+packageVersion("mice")
+R.Version()$version.string
 ```
 
-## Checks
+## Local checks
+
+NOTE: Run in OSX terminal, not in Rstudio terminal.
+
+```{bash eval=FALSE}
+env _R_CHECK_DEPENDS_ONLY_=true R CMD check mice_3.17.0.tar.gz
+
+Status: OK
+```
+
+
+```{r eval=FALSE}
+devtools::check(env_vars = c('_R_CHECK_DEPENDS_ONLY_' = "true"))
+...
+Status: OK
+```
+
+## Remote checks
 
 ### win-builder
 
@@ -36,175 +48,54 @@ devtools::check_win_devel()
 Status: OK
 ```
 
-
 ### Rhub
 
 ```{r eval=FALSE}
-devtools::check_rhub()
+rhub::rhub_doctor()
+rhub::rhub_check()
 ```
 
-#### Windows
+Status: OK <>
 
-```
-── mice 3.16.0: NOTE
-
-  Build ID:   mice_3.16.0.tar.gz-018f40fa4cdc492d8c9f43b7e5f5e0e7
-  Platform:   Windows Server 2022, R-devel, 64 bit
-  Submitted:  11m 27s ago
-  Build time: 11m 25s
-
-❯ checking HTML version of manual ... [27s] NOTE
-  Skipping checking math rendering: package 'V8' unavailable
-
-❯ checking for non-standard things in the check directory ... NOTE
-  Found the following files/directories:
-    ''NULL''
-
-❯ checking for detritus in the temp directory ... NOTE
-  Found the following files/directories:
-    'lastMiKTeXException'
-
-0 errors ✔ | 0 warnings ✔ | 3 notes ✖
-```
-
-I believe these NOTES are benign.
-
-#### Fedora Linux
-
-```
-Status: succes
-```
-
-#### Ubuntu 20.04
-
-```
-Status: succes
-```
-
-#### Debian
-
-```
-FAILURE 
-
-Running `R CMD build`...
-* checking for file ‘/tmp/Rtmp5Lhzhn/remotes13171d81356/mice/DESCRIPTION’ ... OK
-* preparing ‘mice’:
-* checking DESCRIPTION meta-information ... OK
-* cleaning src
-* checking for LF line-endings in source and make files and shell scripts
-* checking for empty or unneeded directories
-* building ‘mice_3.16.0.tar.gz’
-Installing package into ‘/home/docker/R’
-(as ‘lib’ is unspecified)
-Error : Bioconductor does not yet build and check packages for R version 4.4; see
-  https://bioconductor.org/install
-ERROR: dependency ‘mitml’ is not available for package ‘mice’
-* removing ‘/home/docker/R/mice’
-> There were 20 warnings (use warnings() to see them)
-
-> 
-Error : Bioconductor does not yet build and check packages for R version 4.4; see
-  https://bioconductor.org/install
-> library(mice)
-Error in library(mice) : there is no package called ‘mice’
-Execution halted
-Build step 'Execute shell' marked build as failure
-Pinging https://builder.r-hub.io/build/FAILURE/mice_3.16.0.tar.gz-82dc7cda08814b25ac48be4b5c9c940b/2023-06-01T11:37:52Z
-{"status":"ok"}
-Finished: FAILURE
-```
-
-I believe I cannot do something to make this problem disappear.
-
-### Local checks
-
-Package built by
-
-```{r eval = FALSE}
-library("devtools")
-build()
-```
-
-```{bash eval=FALSE}
-R CMD CHECK mice_3.16.0.tar.gz
-
-Status: OK
-```
-
-
-### Local check using `_R_CHECK_DEPENDS_ONLY_=true` flag. 
-
-NOTE: Run in OSX terminal, not in Rstudio terminal.
-
-```{bash eval=FALSE}
-env _R_CHECK_DEPENDS_ONLY_=true R CMD check mice_3.16.0.tar.gz
-
-Status: OK
-```
-
-
-```{r eval=FALSE}
-devtools::check(env_vars = c('_R_CHECK_DEPENDS_ONLY_' = "true"))
-
-...
-   Status: OK
-   
-── R CMD check results ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── mice 3.16.0 ────
-Duration: 1m 13s
-
-0 errors ✔ | 0 warnings ✔ | 0 notes ✔
-```
-
+For details: <https://github.com/amices/mice/actions>
 
 ## Downstream dependencies
 
-### Overview
+### Code
 
-`mice` has 114 downstream dependencies
+Note: Inactivate `credentials::set_github_pat()`
 
 ```{r eval=FALSE}
-# NOTE: Temporarily remove credentials line from .Rprofile
 library(revdepcheck)
 revdep_reset()
-revdep_check(pkg = ".", num_workers = 10, quiet = FALSE)
+revdep_check(pkg = ".", num_workers = 12, quiet = FALSE)
 ```
 
 ```{r}
 revdepcheck::revdep_summary()
 ```
 
-### New issues
+### revdepcheck results
 
-#### `MatchThem`
+We checked 123 reverse dependencies (118 from CRAN + 5 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
-There is one new warning, for the `MatchThem` package:
+ * We saw 1 new problems
+ * We failed to check 3 packages
 
-```{r}
-revdepcheck::revdep_details(revdep = "MatchThem")
-```
+Issues with CRAN packages are summarised below.
 
-- I alerted the maintainer of the `MatchThem` package that the
-  documentation for `cbind.mids()` was removed from the `mice` package
-  to conform to CRAN guidelines. The maintainer responded this will be fixed
-  in the next release.
+### New problems
+(This reports the first line of each new failure)
 
-#### `bipd`
+* bipd
+  checking dependencies in R code ...sh: line 1: 58727 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpM38C1S/filee1cf761be8f7'
 
-```{r}
-revdepcheck::revdep_details(revdep = "bipd")
-```
+### Failed to check
 
-- The novel NOTE for `bipd` is equivalent to the old one. I contacted the maintainer previously. Did not repeat it now.
+* brms (NA)
+* dynr (NA)
+* rmsb (NA)
 
-#### `pre`
+mice developer comment: These failures are unrelated to mice
 
-- There is a new error generated by `test_pre_misc.R` of the `pre` package (`mice` is on `pre` Suggests):
-
-```{r}
-revdepcheck::revdep_details(revdep = "pre")
-```
-
-- I tried reproducing the error but stopped my attempt due to the complex structure 
-  of the testing script. I contacted the `pre` maintainer by means of 
-  issue <https://github.com/marjoleinF/pre/issues/30>.
-
+See <https://github.com/amices/mice/tree/master/revdep> for additional details.

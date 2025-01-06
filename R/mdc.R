@@ -35,9 +35,9 @@
 #' of the output vector is calculate from the length of \code{r} and \code{s}.
 #' Elements of the input vectors are repeated if needed.
 #' @author Stef van Buuren, sept 2012.
-#' @seealso \code{\link{hcl}}, \code{\link{rgb}},
-#' \code{\link{xyplot.mids}}, \code{\link[lattice:xyplot]{xyplot}},
-#' \code{\link[lattice:trellis.par.get]{trellis.par.set}}
+#' @seealso \code{\link[grDevices]{hcl}}, \code{\link[grDevices]{rgb}},
+#' \code{\link[lattice]{xyplot}},
+#' \code{\link[lattice]{trellis.par.set}}
 #' @references Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
 #' Visualization with R}, Springer.
 #' @keywords hplot

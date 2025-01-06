@@ -8,10 +8,10 @@
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #' \code{sum(wy)}
 #' @param minbucket The minimum number of observations in any terminal node used.
-#' See \code{\link{rpart.control}} for details.
+#' See \code{\link[rpart]{rpart.control}} for details.
 #' @param cp Complexity parameter. Any split that does not decrease the overall
-#' lack of fit by a factor of cp is not attempted. See \code{\link{rpart.control}}
-#' for details.
+#' lack of fit by a factor of cp is not attempted. See
+#' \code{\link[rpart]{rpart.control}} for details.
 #' @param ... Other named arguments passed down to \code{rpart()}.
 #' @return Numeric vector of length \code{sum(!ry)} with imputations
 #' @details
@@ -48,6 +48,8 @@
 #' @export
 mice.impute.cart <- function(y, ry, x, wy = NULL, minbucket = 5, cp = 1e-04,
                              ...) {
+  install.on.demand("rpart")
+
   if (is.null(wy)) {
     wy <- !ry
   }

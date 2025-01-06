@@ -40,7 +40,7 @@ See examples for an example.}
 An object of class \code{mipo}, which stands for 'multiple imputation
 pooled outcome'.
 For rule \code{"reiter2003"} values for \code{lambda} and \code{fmi} are
-set to `NA`, as these statistics do not apply for data synthesised from
+set to \code{NA}, as these statistics do not apply for data synthesised from
 fully observed data.
 }
 \description{

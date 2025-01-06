@@ -4,7 +4,8 @@
 #' the amputed data. The function shows how the amputed values are related
 #' to the variable values.
 #'
-#' @param x A \code{mads} (\code{\link{mads-class}}) object, typically created by
+#' @method bwplot mads
+#' @param x A \code{mads} (\code{\link{mads}}) object, typically created by
 #' \code{\link{ampute}}.
 #' @param data A string or vector of variable names that needs to be plotted. As
 #' a default, all variables will be plotted.
@@ -24,11 +25,10 @@
 #' @return A list containing the box-and-whisker plots. Note that a new pattern
 #' will always be shown in a new plot.
 #' @note The \code{mads} object contains all the information you need to
-#' make any desired plots. Check \code{\link{mads-class}} or the vignette \emph{Multivariate
+#' make any desired plots. Check \code{\link{mads}} or the vignette \emph{Multivariate
 #' Amputation using Ampute} to understand the contents of class object \code{mads}.
 #' @author Rianne Schouten, 2016
-#' @seealso \code{\link{ampute}}, \code{\link{bwplot}}, \code{\link{Lattice}} for
-#' an overview of the package, \code{\link{mads-class}}
+#' @seealso \code{\link{ampute}}, \code{\link[lattice]{bwplot}}, \code{\link{mads}}
 #' @export
 bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
                         descriptives = TRUE, layout = NULL, ...) {
@@ -140,7 +140,7 @@ bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
 
   for (i in seq_len(pat)) {
     p[[paste("Boxplot pattern", which.pat[i])]] <-
-      bwplot(
+      lattice::bwplot(
         x = formula, data = data[data$.pat == which.pat[i], ],
         multiple = TRUE, outer = TRUE, layout = layout,
         ylab = "", par.settings = theme,

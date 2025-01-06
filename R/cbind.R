@@ -45,9 +45,8 @@ cbind.mids <- function(x, y = NULL, ...) {
   blocknames <- make.unique(xynames)
   names(blocknames) <- xynames
   names(blocks) <- blocknames
-  ct <- c(attr(x$blocks, "calltype"), rep("pred", ncol(y)))
-  names(ct) <- blocknames
-  attr(blocks, "calltype") <- ct
+  modeltype <- c(x$modeltype, rep("pred", ncol(y)))
+  names(modeltype) <- blocknames
 
   m <- x$m
 
@@ -111,14 +110,19 @@ cbind.mids <- function(x, y = NULL, ...) {
   loggedEvents <- x$loggedEvents
 
   ## save, and return
-  midsobj <- list(
-    data = data, imp = imp, m = m,
-    where = where, blocks = blocks,
-    call = call, nmis = nmis,
+  midsobj <- mids(
+    data = data,
+    imp = imp,
+    m = m,
+    where = where,
+    blocks = blocks,
+    call = call,
+    nmis = nmis,
     method = method,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     formulas = formulas,
+    modeltype = modeltype,
     post = post,
     blots = blots,
     ignore = ignore,
@@ -127,12 +131,8 @@ cbind.mids <- function(x, y = NULL, ...) {
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents,
-    version = packageVersion("mice"),
-    date = Sys.Date()
-  )
-  oldClass(midsobj) <- "mids"
-  midsobj
+    loggedEvents = loggedEvents)
+  return(midsobj)
 }
 
 
@@ -173,9 +173,8 @@ cbind.mids.mids <- function(x, y, call) {
   blocknames <- make.unique(xynames)
   names(blocknames) <- xynames
   names(blocks) <- blocknames
-  ct <- c(attr(xblocks, "calltype"), attr(yblocks, "calltype"))
-  names(ct) <- blocknames
-  attr(blocks, "calltype") <- ct
+  modeltype <- c(x$modeltype, y$modeltype)
+  names(modeltype) <- blocknames
 
   m <- x$m
   nmis <- c(x$nmis, y$nmis)
@@ -282,14 +281,19 @@ cbind.mids.mids <- function(x, y, call) {
 
   loggedEvents <- x$loggedEvents
 
-  midsobj <- list(
-    data = data, imp = imp, m = m,
-    where = where, blocks = blocks,
-    call = call, nmis = nmis,
+  midsobj <- mids(
+    data = data,
+    imp = imp,
+    m = m,
+    where = where,
+    blocks = blocks,
+    call = call,
+    nmis = nmis,
     method = method,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     formulas = formulas,
+    modeltype = modeltype,
     post = post,
     blots = blots,
     ignore = ignore,
@@ -298,12 +302,8 @@ cbind.mids.mids <- function(x, y, call) {
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents,
-    version = packageVersion("mice"),
-    date = Sys.Date()
-  )
-  oldClass(midsobj) <- "mids"
-  midsobj
+    loggedEvents = loggedEvents)
+  return(midsobj)
 }
 
 renf <- function(f, nn) {

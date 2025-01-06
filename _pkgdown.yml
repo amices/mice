@@ -94,8 +94,9 @@ reference:
   desc: |
     The data created at the various analytic phases are stored as list objects of a specific class. The most important classes and class-test functions are:
   contents:
-  - mids-class
-  - mira-class
+  - mids
+  - mira
+  - mipo
   - is.mids
   - is.mipo
   - is.mira
@@ -132,7 +133,7 @@ reference:
   - bwplot.mads
   - xyplot.mads
   - is.mads
-  - mads-class
+  - mads
   - print.mads
   - summary.mads
 - title: Datasets

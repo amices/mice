@@ -86,13 +86,6 @@ test5 <- as.mids(X3)
 is.mids(test5)
 identical(complete(test5, action = "long", include = TRUE)[, -6], X[, -6])
 
-# as() syntax has fewer options
-test7 <- as(X, "mids")
-test8 <- as(X2, "mids")
-test9 <- as(X2[, -6], "mids")
-rev <- ncol(X):1
-test10 <- as(X[, rev], "mids")
-
 # where argument copies also observed data into $imp element
 where <- matrix(TRUE, nrow = nrow(nhanes), ncol = ncol(nhanes))
 colnames(where) <- colnames(nhanes)

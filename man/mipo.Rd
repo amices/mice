@@ -87,7 +87,7 @@ Statistical Software}, \bold{45}(3), 1-67.
 }
 \seealso{
 \code{\link{pool}},
-\code{\link[=mids-class]{mids}}, \code{\link[=mira-class]{mira}}
+\code{\link{mids}}, \code{\link{mira}}
 }
 \keyword{classes}
 \keyword{internal}

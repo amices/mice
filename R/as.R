@@ -62,13 +62,6 @@
 #' is.mids(test5)
 #' identical(complete(test5, action = "long", include = TRUE)[, -6], X[, -6])
 #'
-#' # as() syntax has fewer options
-#' test7 <- as(X, "mids")
-#' test8 <- as(X2, "mids")
-#' test9 <- as(X2[, -6], "mids")
-#' rev <- ncol(X):1
-#' test10 <- as(X[, rev], "mids")
-#'
 #' # where argument copies also observed data into $imp element
 #' where <- matrix(TRUE, nrow = nrow(nhanes), ncol = ncol(nhanes))
 #' colnames(where) <- colnames(nhanes)
@@ -141,7 +134,7 @@ as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id") {
 #' into a \code{mira} object that can be pooled.
 #' @param fitlist A list containing $m$ fitted analysis objects
 #' @return An S3 object of class \code{mira}.
-#' @seealso \code{\link[=mira-class]{mira}}
+#' @seealso \code{\link{mira}}
 #' @author Stef van Buuren
 #' @export
 as.mira <- function(fitlist) {
@@ -156,9 +149,8 @@ as.mira <- function(fitlist) {
     stop("Argument 'fitlist' is not a list")
   }
   class(fitlist) <- "list"
-  object <- list(call = call, call1 = NULL, nmis = NULL, analyses = fitlist)
-  oldClass(object) <- c("mira", "matrix")
-  object
+  object <- mira(call = call, analyses = fitlist)
+  return(object)
 }
 
 #' Converts into a \code{mitml.result} object
@@ -183,19 +175,3 @@ as.mitml.result <- function(x) {
   class(z) <- c("mitml.result", "list")
   z
 }
-
-
-setOldClass(c("mids", "mira"))
-setAs(
-  from = "data.frame", to = "mids",
-  def = function(from) {
-    as.mids(from)
-  }
-)
-
-setAs(
-  from = "list", to = "mira",
-  def = function(from) {
-    as.mira(from)
-  }
-)

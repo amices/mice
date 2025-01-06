@@ -45,7 +45,7 @@ Leiden: TNO Quality of Life.
 }
 \seealso{
 \code{\link{with.mids}}, \code{\link{glm}}, \code{\link[=mids-class]{mids}},
-\code{\link[=mira-class]{mira}}
+\code{\link{mira}}
 }
 \author{
 Stef van Buuren, Karin Groothuis-Oudshoorn, 2000

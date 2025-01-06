@@ -377,7 +377,7 @@ test_that("warnings appear when not all patterns can be generated", {
     n = 10
   ) %>%
     do.call(what = "data.frame") %>%
-    rlang::set_names(paste0("type", LETTERS[1:ncol(.)]))
+    setNames(paste0("type", LETTERS[1:ncol(.)]))
   expect_warning(
     ampute(
       data = binary.data

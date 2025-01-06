@@ -21,14 +21,13 @@
 #' @return A list containing vectors with \code{0} if a case should be made missing
 #' and \code{1} if a case should remain complete. The first vector refers to the
 #' first pattern, the second vector to the second pattern, etcetera.
-#' @author Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
+#' @author Rianne Schouten, Gerko Vink, Peter Lugtig, 2016
 #' @seealso \code{\link{ampute}}, \code{\link{ampute.default.type}}
 #' @references
 #' Van Buuren, S. (2018).
 #' \href{https://stefvanbuuren.name/fimd/sec-linearnormal.html#sec:generateuni}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @keywords internal
-#' @export
 ampute.continuous <- function(P, scores, prop, type) {
   # For a test data set, the shift of the logit function is calculated
   # in order to obtain the right proportion of missingness (area beneath the curve)

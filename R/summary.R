@@ -11,7 +11,7 @@
 #' \code{"tidy"}.
 #' @param ... Other parameters passed down to \code{print()} and \code{summary()}
 #' @return \code{NULL}
-#' @seealso \code{\link[=mira-class]{mira}}
+#' @seealso \code{\link{mira}}
 #' @method summary mira
 #' @export
 summary.mira <- function(object,
@@ -41,31 +41,6 @@ summary.mira <- function(object,
     v <- lapply(fitlist, summary, ...)
   }
   v
-}
-
-
-#' Summary of a \code{mids} object
-#'
-#' @rdname summary
-#' @return \code{NULL}
-#' @seealso \code{\link[=mids-class]{mids}}
-#' @method summary mids
-#' @export
-summary.mids <- function(object, ...) {
-  print(object, ...)
-  invisible(object)
-}
-
-
-#' Summary of a \code{mads} object
-#'
-#' @rdname summary
-#' @return \code{NULL}
-#' @seealso \code{\link[=mads-class]{mads}}
-#' @export
-summary.mads <- function(object, ...) {
-  print(object, ...)
-  invisible(object)
 }
 
 

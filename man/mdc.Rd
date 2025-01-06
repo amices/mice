@@ -75,9 +75,9 @@ Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
 Visualization with R}, Springer.
 }
 \seealso{
-\code{\link{hcl}}, \code{\link{rgb}},
-\code{\link{xyplot.mids}}, \code{\link[lattice:xyplot]{xyplot}},
-\code{\link[lattice:trellis.par.get]{trellis.par.set}}
+\code{\link[grDevices]{hcl}}, \code{\link[grDevices]{rgb}},
+\code{\link[lattice]{xyplot}},
+\code{\link[lattice]{trellis.par.set}}
 }
 \author{
 Stef van Buuren, sept 2012.

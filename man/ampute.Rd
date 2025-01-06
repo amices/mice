@@ -94,7 +94,7 @@ cells. Default is TRUE.}
 return object will contain everything except for the amputed data set.}
 }
 \value{
-Returns an S3 object of class \code{\link{mads-class}} (multivariate
+Returns an S3 object of class \code{\link{mads}} (multivariate
 amputed data set)
 }
 \description{
@@ -139,8 +139,6 @@ The first of these specifications is the missing mechanism. There are three poss
 mechanisms: the missingness depends completely on chance (MCAR), the missingness
 depends on the values of the observed variables (i.e. the variables that remain
 complete) (MAR) or on the values of the variables that will be made incomplete (MNAR).
-For a discussion on how missingness mechanisms are related to the observed data,
-we refer to \doi{10.1177/0049124118799376}.
 
 When the user specifies the missingness mechanism to be \code{"MCAR"}, the candidates
 have an equal probability of becoming incomplete. For a \code{"MAR"} or \code{"MNAR"} mechanism,
@@ -181,11 +179,9 @@ the odds values are of importance, but the relative distance between the values.
 The continuous distributions of probabilities are based on the logistic distribution function.
 The user can specify the type of missingness, which, again, may differ between patterns.
 
-For an example and more explanation about how the arguments interact with each other,
-we refer to the vignette
-\href{https://rianneschouten.github.io/mice_ampute/vignette/ampute.html}{Generate missing values with ampute}
-The amputation methodology is published in
-\doi{10.1080/00949655.2018.1491577}
+For an example and more explanation about how the arguments interact with
+each other, we refer to the vignette:
+\href{https://rianneschouten.github.io/mice_ampute/vignette/ampute.html}{Generate missing values with ampute}.
 }
 \examples{
 # start with a complete data set
@@ -238,9 +234,9 @@ Chapman & Hall/CRC. Boca Raton, FL.
 Vink, G. (2016) Towards a standardized evaluation of multiple imputation routines.
 }
 \seealso{
-\code{\link{mads-class}}, \code{\link{bwplot}}, \code{\link{xyplot}},
-\code{\link{mice}}
+\code{\link{mads}}, \code{\link{bwplot.mads}},
+\code{\link{xyplot.mads}}
 }
 \author{
-Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
+Rianne Schouten, Gerko Vink, Peter Lugtig, 2016
 }

@@ -77,6 +77,7 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
   predictorMatrix <- .data$predictorMatrix
   visitSequence <- .data$visitSequence
   formulas <- .data$formulas
+  modeltype <- .data$modeltype
   blots <- .data$blots
   post <- .data$post
   seed <- .data$seed
@@ -104,14 +105,19 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
   chainVar <- NULL
 
   # Create subset mids object
-  midsobj <- list(
-    data = data, imp = imp, m = m,
-    where = where, blocks = blocks,
-    call = call, nmis = nmis,
+  midsobj <- mids(
+    data = data,
+    imp = imp,
+    m = m,
+    where = where,
+    blocks = blocks,
+    call = call,
+    nmis = nmis,
     method = method,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     formulas = formulas,
+    modeltype = modeltype,
     post = post,
     blots = blots,
     ignore = ignore,
@@ -120,10 +126,6 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents,
-    version = packageVersion("mice"),
-    date = Sys.Date()
-  )
-  oldClass(midsobj) <- "mids"
-  midsobj
+    loggedEvents = loggedEvents)
+  return(midsobj)
 }

@@ -18,7 +18,7 @@
 #' all analyses. If \code{i} selects one of the analyses, then it return
 #' an object whose with class inherited from that element.
 #' @author Stef van Buuren, 2012, 2020
-#' @seealso \code{\link[=mira-class]{mira}}, \code{\link{with.mids}}
+#' @seealso \code{\link{mira}}, \code{\link{with.mids}}
 #' @keywords manip
 #' @examples
 #' imp <- mice(nhanes, print = FALSE, seed = 21443)
@@ -38,6 +38,8 @@ getfit <- function(x, i = -1L, simplify = FALSE) {
     return(ra[[i]])
   }
   if (simplify) ra <- unlist(ra)
+
+  # hack to get pool accept both mira and general list objects
   class(ra) <- c("mira", "list")
   ra
 }

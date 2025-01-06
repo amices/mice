@@ -226,7 +226,7 @@ form4 <- list(bmi + hyp ~ ., chl ~ .)
 # blocks1 and form1 are compatible
 imp1 <- mice(data, formulas = form1, pred = matrix(1, nr = 4, nc = 4), m = 1, maxit = 1, print = FALSE, seed = 3)
 test_that("Case F combines forms and pred in blocks", {
-  expect_identical(unname(attr(imp1$blocks, "calltype")), c(rep("formula", 3), "pred"))
+  expect_identical(unname(imp1$modeltype), c(rep("formula", 3), "pred"))
 })
 
 # dots and unnamed predictorMatrix

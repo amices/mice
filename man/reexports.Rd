@@ -13,8 +13,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr]{filter}}}
+  \item{broom}{\code{\link[broom:reexports]{glance}}, \code{\link[broom:reexports]{tidy}}}
 
-  \item{generics}{\code{\link[generics]{glance}}, \code{\link[generics]{tidy}}}
+  \item{dplyr}{\code{\link[dplyr]{filter}}}
 }}
 

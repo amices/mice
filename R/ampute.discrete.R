@@ -28,7 +28,6 @@
 #' evaluation of multiple imputation strategies for the statistical analysis of
 #' incomplete data sets.} Dissertation. Rotterdam: Erasmus University.
 #' @keywords internal
-#' @export
 ampute.discrete <- function(P, scores, prop, odds) {
   R <- vector(mode = "list", length = nrow(odds))
   for (i in seq_len(nrow(odds))) {

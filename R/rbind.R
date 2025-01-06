@@ -44,6 +44,7 @@ rbind.mids <- function(x, y = NULL, ...) {
   method <- x$method
   post <- x$post
   formulas <- x$formulas
+  modeltype <- x$modeltype
   blots <- x$blots
   predictorMatrix <- x$predictorMatrix
   visitSequence <- x$visitSequence
@@ -59,14 +60,19 @@ rbind.mids <- function(x, y = NULL, ...) {
   chainVar <- x$chainVar
   loggedEvents <- x$loggedEvents
 
-  midsobj <- list(
-    data = data, imp = imp, m = m,
-    where = where, blocks = blocks,
-    call = call, nmis = nmis,
+  midsobj <- mids(
+    data = data,
+    imp = imp,
+    m = m,
+    where = where,
+    blocks = blocks,
+    call = call,
+    nmis = nmis,
     method = method,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     formulas = formulas,
+    modeltype = modeltype,
     post = post,
     blots = blots,
     ignore = ignore,
@@ -75,12 +81,8 @@ rbind.mids <- function(x, y = NULL, ...) {
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents,
-    version = packageVersion("mice"),
-    date = Sys.Date()
-  )
-  oldClass(midsobj) <- "mids"
-  midsobj
+    loggedEvents = loggedEvents)
+  return(midsobj)
 }
 
 rbind.mids.mids <- function(x, y, call) {
@@ -121,6 +123,7 @@ rbind.mids.mids <- function(x, y, call) {
   method <- x$method
   post <- x$post
   formulas <- x$formulas
+  modeltype <- x$modeltype
   blots <- x$blots
   ignore <- c(x$ignore, y$ignore)
   predictorMatrix <- x$predictorMatrix
@@ -154,14 +157,19 @@ rbind.mids.mids <- function(x, y, call) {
   }
 
   loggedEvents <- x$loggedEvents
-  midsobj <- list(
-    data = data, imp = imp, m = m,
-    where = where, blocks = blocks,
-    call = call, nmis = nmis,
+  midsobj <- mids(
+    data = data,
+    imp = imp,
+    m = m,
+    where = where,
+    blocks = blocks,
+    call = call,
+    nmis = nmis,
     method = method,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     formulas = formulas,
+    modeltype = modeltype,
     post = post,
     blots = blots,
     ignore = ignore,
@@ -170,10 +178,6 @@ rbind.mids.mids <- function(x, y, call) {
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents,
-    version = packageVersion("mice"),
-    date = Sys.Date()
-  )
-  oldClass(midsobj) <- "mids"
-  midsobj
+    loggedEvents = loggedEvents)
+  return(midsobj)
 }

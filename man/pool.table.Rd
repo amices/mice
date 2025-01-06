@@ -124,5 +124,6 @@ all1
 all2 <- pool.table(tbl)
 all2
 
-identical(data.frame(all1), all2)
+class(all1) <- "data.frame"
+identical(all1, all2)
 }

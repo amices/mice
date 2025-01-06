@@ -21,7 +21,6 @@
 #' @author Rianne Schouten, 2016
 #' @seealso \code{\link{ampute}}
 #' @keywords internal
-#' @export
 ampute.mcar <- function(P, patterns, prop) {
   f <- function(i) {
     # If there are no candidates in a certain pattern, the list will receive a 0

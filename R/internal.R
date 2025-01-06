@@ -94,3 +94,7 @@ sweep_operator <- function(S, k) {
 
   return(S)
 }
+
+is.named.list <- function(x) {
+  is.list(x) && !is.null(names(x)) && all(names(x) != "")
+}

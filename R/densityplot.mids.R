@@ -25,7 +25,6 @@
 #' \code{col=mdc(1:2), pch=20, cex=1.5}. These choices can be set for the
 #' duration of the session by running \code{mice.theme()}.
 #'
-#' @aliases densityplot
 #' @param x A \code{mids} object, typically created by \code{mice()} or
 #' \code{mice.mids()}.
 #' @param data Formula that selects the data to be plotted.  This argument
@@ -66,7 +65,7 @@
 #' differs from \code{na.groups} because it evaluates in the completed data
 #' \code{data.frame(complete(x, "long", inc=TRUE))} (as usual), whereas
 #' \code{na.groups} evaluates in the response indicator. See
-#' \code{\link{xyplot}} for more details. When both \code{na.groups} and
+#' \code{\link[lattice]{xyplot}} for more details. When both \code{na.groups} and
 #' \code{groups} are specified, \code{na.groups} takes precedence, and
 #' \code{groups} is ignored.
 #' @param plot.points A logical used in \code{densityplot} that signals whether
@@ -89,22 +88,22 @@
 #' @param thicker Used in \code{densityplot}. Multiplication factor of the line
 #' width of the observed density. \code{thicker=1} uses the same thickness for
 #' the observed and imputed data.
-#' @param as.table See \code{\link[lattice:xyplot]{xyplot}}.
-#' @param panel See \code{\link{xyplot}}.
-#' @param default.prepanel See \code{\link[lattice:xyplot]{xyplot}}.
-#' @param outer See \code{\link[lattice:xyplot]{xyplot}}.
-#' @param allow.multiple See \code{\link[lattice:xyplot]{xyplot}}.
-#' @param drop.unused.levels See \code{\link[lattice:xyplot]{xyplot}}.
-#' @param subscripts See \code{\link[lattice:xyplot]{xyplot}}.
-#' @param subset See \code{\link[lattice:xyplot]{xyplot}}.
+#' @param as.table See \code{\link[lattice]{xyplot}}.
+#' @param panel See \code{\link[lattice]{xyplot}}.
+#' @param default.prepanel See \code{\link[lattice]{xyplot}}.
+#' @param outer See \code{\link[lattice]{xyplot}}.
+#' @param allow.multiple See \code{\link[lattice]{xyplot}}.
+#' @param drop.unused.levels See \code{\link[lattice]{xyplot}}.
+#' @param subscripts See \code{\link[lattice]{xyplot}}.
+#' @param subset See \code{\link[lattice]{xyplot}}.
 #' @param \dots Further arguments, usually not directly processed by the
 #' high-level functions documented here, but instead passed on to other
 #' functions.
 #' @return The high-level functions documented here, as well as other high-level
 #' Lattice functions, return an object of class \code{"trellis"}.  The
-#' \code{\link[lattice:update.trellis]{update}} method can be used to
+#' \code{\link[lattice]{update.trellis}} method can be used to
 #' subsequently update components of the object, and the
-#' \code{\link[lattice:print.trellis]{print}} method (usually called by default)
+#' \code{\link[lattice]{print.trellis}} method (usually called by default)
 #' will plot it on an appropriate plotting device.
 #' @note The first two arguments (\code{x} and \code{data}) are reversed
 #' compared to the standard Trellis syntax implemented in \pkg{lattice}. This
@@ -124,12 +123,6 @@
 #' automatically}. There is yet no workaround for this problem. Use the more
 #' robust \code{bwplot} or \code{stripplot} as a replacement.
 #' @author Stef van Buuren
-#' @seealso \code{\link{mice}}, \code{\link{xyplot}}, \code{\link{stripplot}},
-#' \code{\link{bwplot}}, \code{\link{lattice}} for an overview of the
-#' package, as well as \code{\link[lattice:histogram]{densityplot}},
-#' \code{\link[lattice:panel.densityplot]{panel.densityplot}},
-#' \code{\link[lattice:print.trellis]{print.trellis}},
-#' \code{\link[lattice:trellis.par.get]{trellis.par.set}}
 #' @references Sarkar, Deepayan (2008) \emph{Lattice: Multivariate Data
 #' Visualization with R}, Springer.
 #'
@@ -146,6 +139,8 @@
 #'
 #' ### All combined in one panel.
 #' densityplot(imp, ~hc)
+#' @aliases densityplot.mids densityplot
+#' @method densityplot mids
 #' @export
 densityplot.mids <- function(x,
                              data,
@@ -268,7 +263,7 @@ densityplot.mids <- function(x,
   )
 
   ## go
-  tp <- do.call("densityplot", args)
+  tp <- do.call(lattice::densityplot, args)
   tp <- update(tp, par.settings = theme)
   return(tp)
 }

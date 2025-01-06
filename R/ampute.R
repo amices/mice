@@ -40,8 +40,6 @@
 #' mechanisms: the missingness depends completely on chance (MCAR), the missingness
 #' depends on the values of the observed variables (i.e. the variables that remain
 #' complete) (MAR) or on the values of the variables that will be made incomplete (MNAR).
-#' For a discussion on how missingness mechanisms are related to the observed data,
-#' we refer to \doi{10.1177/0049124118799376}.
 #'
 #' When the user specifies the missingness mechanism to be \code{"MCAR"}, the candidates
 #' have an equal probability of becoming incomplete. For a \code{"MAR"} or \code{"MNAR"} mechanism,
@@ -82,11 +80,9 @@
 #' The continuous distributions of probabilities are based on the logistic distribution function.
 #' The user can specify the type of missingness, which, again, may differ between patterns.
 #'
-#' For an example and more explanation about how the arguments interact with each other,
-#' we refer to the vignette
-#' \href{https://rianneschouten.github.io/mice_ampute/vignette/ampute.html}{Generate missing values with ampute}
-#' The amputation methodology is published in
-#' \doi{10.1080/00949655.2018.1491577}
+#' For an example and more explanation about how the arguments interact with
+#' each other, we refer to the vignette:
+#' \href{https://rianneschouten.github.io/mice_ampute/vignette/ampute.html}{Generate missing values with ampute}.
 #'
 #' @param data A complete data matrix or data frame. Values should be numeric.
 #' Categorical variables should have been transformed to dummies.
@@ -150,13 +146,14 @@
 #' @param run Logical. If TRUE, the amputations are implemented. If FALSE, the
 #' return object will contain everything except for the amputed data set.
 #'
-#' @return Returns an S3 object of class \code{\link{mads-class}} (multivariate
+#' @return Returns an S3 object of class \code{\link{mads}} (multivariate
 #' amputed data set)
-#' @author Rianne Schouten [aut, cre], Gerko Vink [aut], Peter Lugtig [ctb], 2016
-#' @seealso \code{\link{mads-class}}, \code{\link{bwplot}}, \code{\link{xyplot}},
-#' \code{\link{mice}}
+#' @author Rianne Schouten, Gerko Vink, Peter Lugtig, 2016
+#' @seealso \code{\link{mads}}, \code{\link{bwplot.mads}},
+#' \code{\link{xyplot.mads}}
 #'
-#' @references Brand, J.P.L. (1999) \emph{Development, implementation and
+#' @references
+#' Brand, J.P.L. (1999) \emph{Development, implementation and
 #' evaluation of multiple imputation strategies for the statistical analysis of
 #' incomplete data sets.} pp. 110-113. Dissertation. Rotterdam: Erasmus University.
 #'
@@ -453,13 +450,13 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
       }
     }
   }
-  #
+
   # Create return object
   names(patterns.new) <- names(data)
   names(weights) <- names(data)
   call <- match.call()
   data.in[is.na(data.frame(missing.data))] <- NA
-  result <- list(
+  result <- mads(
     call = call,
     prop = prop,
     patterns = patterns.new,
@@ -467,18 +464,13 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     mech = mech,
     weights = weights,
     cont = cont,
-    std = std,
     type = type,
     odds = odds,
     amp = data.in,
     cand = P - 1,
     scores = scores,
-    data = as.data.frame(data)
-  )
-  #
-  # Return result
-  oldClass(result) <- "mads"
-  result
+    data = as.data.frame(data))
+  return(result)
 }
 
 
