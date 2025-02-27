@@ -1,6 +1,6 @@
-#' Imputation by Treeffuser diffusion model
+#' Imputation by Light Gradient Boosting Machine (lightGBM)
 #'
-#' @aliases mice.impute.treeffuser treeffuser
+#' @aliases mice.impute.lightGBM light``
 #' @param y Vector to be imputed
 #' @param ry Logical vector of length \code{length(y)} indicating the
 #' the subset \code{y[ry]} of elements in \code{y} to which the imputation
@@ -17,7 +17,7 @@
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #' \code{sum(wy)}
 #' @export
-mice.impute.treeffuser <- function(y, ry, x, wy = NULL, donors = 5L, ...) {
+mice.impute.lightGBM <- function(y, ry, x, wy = NULL, donors = 5L, ...) {
   if (is.null(wy)) {
     wy <- !ry
   }
