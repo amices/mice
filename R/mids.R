@@ -58,6 +58,8 @@
 #'    with commands for post-processing.}
 #'    \item{\code{blots}:}{"Block dots". The \code{blots} argument to the \code{mice()}
 #'    function.}
+#'    \item{\code{models}:}{The \code{models} list contains imputation model
+#'    estimates.}
 #'    \item{\code{ignore}:}{A logical vector of length \code{nrow(data)} indicating
 #'    the rows in \code{data} used to build the imputation model. (new in \code{mice 3.12.0})}
 #'    \item{\code{seed}:}{The seed value of the solution.}
@@ -135,6 +137,7 @@
 #'   formulas = list(a = a ~ b, b = b ~ a),
 #'   post = NULL,
 #'   blots = NULL,
+#'   models = NULL,
 #'   ignore = logical(nrow(data)),
 #'   seed = 123,
 #'   iteration = 1,
@@ -159,6 +162,7 @@ mids <- function(
     modeltype = character(),
     post = character(),
     blots = list(),
+    models = new.env(),
     ignore = logical(),
     seed = integer(),
     iteration = integer(),
@@ -186,6 +190,7 @@ mids <- function(
     modeltype = modeltype,
     post = post,
     blots = blots,
+    models = models,
     ignore = ignore,
     seed = seed,
     iteration = iteration,

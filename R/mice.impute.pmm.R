@@ -181,14 +181,7 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
   x <- cbind(1, as.matrix(x))
 
   # quantify categories for factors
-  ynum <- y
-  if (is.factor(y)) {
-    if (quantify) {
-      ynum <- quantify(y, ry, x)
-    } else {
-      ynum <- as.integer(y)
-    }
-  }
+  ynum <- quantify(y, ry, x, quantify = quantify)
 
   # parameter estimation
   parm <- .norm.draw(ynum, ry, x, ridge = ridge, ...)
@@ -261,16 +254,4 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
   ds <- sort.int(d, partial = donors)
   m <- sample(y[d <= ds[donors]], 1)
   return(m)
-}
-
-quantify <- function(y, ry, x) {
-  # replaces (reduced set of) categories by optimal scaling
-  yf <- factor(y[ry], exclude = NULL)
-  yd <- model.matrix(~ 0 + yf)
-  xd <- x[ry, , drop = FALSE]
-  cca <- cancor(yd, xd, xcenter = FALSE, ycenter = FALSE)
-  ynum <- as.integer(y)
-  ynum[ry] <- scale(as.vector(yd %*% cca$xcoef[, 2L]))
-  # plot(y[ry], ynum[ry])
-  return(ynum)
 }

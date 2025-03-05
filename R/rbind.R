@@ -46,6 +46,7 @@ rbind.mids <- function(x, y = NULL, ...) {
   formulas <- x$formulas
   modeltype <- x$modeltype
   blots <- x$blots
+  models <- x$models
   predictorMatrix <- x$predictorMatrix
   visitSequence <- x$visitSequence
 
@@ -75,6 +76,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     modeltype = modeltype,
     post = post,
     blots = blots,
+    models = models,
     ignore = ignore,
     seed = seed,
     iteration = iteration,

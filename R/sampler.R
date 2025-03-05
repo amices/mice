@@ -2,7 +2,7 @@
 # This function is called by mice and mice.mids
 sampler <- function(data, m, ignore, where, imp, blocks, method,
                     visitSequence, predictorMatrix, formulas,
-                    modeltype, blots,
+                    modeltype, blots, models,
                     post, fromto, printFlag, ...) {
   from <- fromto[1]
   to <- fromto[2]
@@ -45,6 +45,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
           if (ct == "formula") ff <- formulas[[h]] else ff <- NULL
           pred <- predictorMatrix[h, ]
           user <- blots[[h]]
+          key <- paste0(h, "_", i)
 
           # univariate/multivariate logic
           theMethod <- method[h]
@@ -74,12 +75,14 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
                   data = data, r = r, where = where,
                   pred = pred, formula = ff,
                   method = theMethod,
+                  model = models[[key]],
                   yname = j, k = k,
                   ct = ct,
                   user = user, ignore = ignore,
                   ...
                 )
 
+              # update data
               data[(!r[, j]) & where[, j], j] <-
                 imp[[j]][(!r[, j])[where[, j]], i]
 
@@ -177,8 +180,8 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 }
 
 
-sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
-                         ct = "pred", user, ignore, ...) {
+sampler.univ <- function(data, r, where, pred, formula, method, model,
+                         yname, k, ct = "pred", user, ignore, ...) {
   j <- yname[1L]
 
   if (ct == "pred") {
@@ -242,7 +245,7 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
   imputes <- data[wy, j]
   imputes[!cc] <- NA
 
-  args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type), user, list(...))
+  args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type, model = model), user, list(...))
   imputes[cc] <- do.call(f, args = args)
   imputes
 }

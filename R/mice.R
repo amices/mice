@@ -219,6 +219,9 @@
 #' to pass down arguments to lower level imputation function. The entries
 #' of element \code{blots[[blockname]]} are passed down to the function
 #' called for block \code{blockname}.
+#' @param models An environment that can be used to store fitted imputation
+#' models. The models are stored in the environment under the name of the
+#' block. The models can be used to predict missing values in new data.
 #' @param post A vector of strings with length \code{ncol(data)} specifying
 #' expressions as strings. Each string is parsed and
 #' executed within the \code{sampler()} function to post-process
@@ -329,6 +332,7 @@ mice <- function(data,
                  formulas,
                  modeltype = NULL,
                  blots = NULL,
+                 models = NULL,
                  post = NULL,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
                  maxit = 5,
@@ -430,7 +434,7 @@ mice <- function(data,
   # check visitSequence, edit predictorMatrix for monotone
   user.visitSequence <- visitSequence
   visitSequence <- check.visitSequence(visitSequence,
-    data = data, where = where, blocks = blocks
+                                       data = data, where = where, blocks = blocks
   )
   predictorMatrix <- mice.edit.predictorMatrix(
     predictorMatrix = predictorMatrix,
@@ -463,6 +467,19 @@ mice <- function(data,
   visitSequence <- setup$visitSequence
   post <- setup$post
 
+  # prepare model estimates environment
+  if (is.null(models)) {
+    models <- new.env(parent = emptyenv())
+
+    # Pre-allocate list() entries for every (blockname, iteration) pair
+    for (i in 1:m) {
+      for (h in visitSequence) {
+        assign(paste0(h, "_", i), new.env(), envir = models)
+      }
+    }
+  }
+  # if (is.null(models)) models <- initialize.models(visitSequence, m)
+
   # initialize imputations
   nmis <- apply(is.na(data), 2, sum)
   imp <- initialize.imp(
@@ -476,7 +493,7 @@ mice <- function(data,
   q <- sampler(
     data, m, ignore, where, imp, blocks, method,
     visitSequence, predictorMatrix, formulas,
-    modeltype, blots,
+    modeltype, blots, models,
     post, c(from, to), printFlag, ...
   )
 
@@ -499,19 +516,20 @@ mice <- function(data,
     modeltype = modeltype,
     post = post,
     blots = blots,
+    models = models,
     ignore = ignore,
     seed = seed,
     iteration = q$iteration,
     lastSeedValue = get(".Random.seed",
-      envir = globalenv(), mode = "integer",
-      inherits = FALSE),
+                        envir = globalenv(), mode = "integer",
+                        inherits = FALSE),
     chainMean = q$chainMean,
     chainVar = q$chainVar,
     loggedEvents = loggedEvents)
 
   if (!is.null(midsobj$loggedEvents)) {
     warning("Number of logged events: ", nrow(midsobj$loggedEvents),
-      call. = FALSE
+            call. = FALSE
     )
   }
   return(midsobj)

@@ -97,6 +97,7 @@ cbind.mids <- function(x, y = NULL, ...) {
   post <- c(x$post, rep.int("", ncol(y)))
   names(post) <- varnames
   blots <- x$blots
+  models <- x$models
   ignore <- x$ignore
 
   # seed, lastSeedValue, number of iterations, chainMean and chainVar
@@ -125,6 +126,7 @@ cbind.mids <- function(x, y = NULL, ...) {
     modeltype = modeltype,
     post = post,
     blots = blots,
+    models = models,
     ignore = ignore,
     seed = seed,
     iteration = iteration,
@@ -231,6 +233,15 @@ cbind.mids.mids <- function(x, y, call) {
   names(post) <- varnames
   blots <- c(x$blots, y$blots)
   names(blots) <- blocknames
+
+  # Function to copy all objects from one environment to another
+  merge_envs <- function(target_env, source_env) {
+    for (name in ls(source_env, all.names = TRUE)) {
+      assign(name, get(name, envir = source_env), envir = target_env)
+    }
+    return(target_env)
+  }
+  models <- merge_envs(x$models, y$models)
   ignore <- x$ignore
 
   # For the elements seed, lastSeedValue and iteration the values
@@ -296,6 +307,7 @@ cbind.mids.mids <- function(x, y, call) {
     modeltype = modeltype,
     post = post,
     blots = blots,
+    models = models,
     ignore = ignore,
     seed = seed,
     iteration = iteration,

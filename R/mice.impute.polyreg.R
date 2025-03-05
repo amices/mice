@@ -82,11 +82,18 @@ mice.impute.polyreg <- function(y, ry, x, wy = NULL, nnet.maxit = 100,
     return(rep(levels(fy)[cat.has.all.obs], sum(wy)))
   }
 
-  fit <- nnet::multinom(formula(xy),
-    data = xy[ry, , drop = FALSE], weights = w[ry],
-    maxit = nnet.maxit, trace = nnet.trace, MaxNWts = nnet.MaxNWts,
-    ...
-  )
+  # prevent model from dots to be passed to multinom
+  dots <- list(...)
+  dots$model <- NULL
+
+  # Call multinom() without `model` in dots
+  fit <- do.call(nnet::multinom, c(
+    list(formula(xy),
+         data = xy[ry, , drop = FALSE], weights = w[ry],
+         maxit = nnet.maxit, trace = nnet.trace, MaxNWts = nnet.MaxNWts),
+    dots
+  ))
+
   post <- predict(fit, xy[wy, , drop = FALSE], type = "probs")
   if (sum(wy) == 1) {
     post <- matrix(post, nrow = 1, ncol = length(post))

@@ -10,13 +10,14 @@ mice.impute.pmmsplit(
   ry,
   x,
   wy = NULL,
-  donors = 10L,
+  donors = NULL,
   matchtype = 1L,
   exclude = NULL,
   quantify = TRUE,
   trim = 1L,
   ridge = 1e-05,
-  num_bins = 50,
+  num_bins = NULL,
+  model = NULL,
   ...
 )
 }
@@ -69,6 +70,8 @@ reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
 
 \item{num_bins}{The number of bins used to store the predictive mean matching
 model. The default is 50.}
+
+\item{model}{Storage for the model estimates}
 
 \item{...}{Other named arguments.}
 }

@@ -23,6 +23,7 @@ mids(
   modeltype = character(),
   post = character(),
   blots = list(),
+  models = new.env(),
   ignore = logical(),
   seed = integer(),
   iteration = integer(),
@@ -153,6 +154,10 @@ to pass down arguments to lower level imputation function. The entries
 of element \code{blots[[blockname]]} are passed down to the function
 called for block \code{blockname}.}
 
+\item{models}{An environment that can be used to store fitted imputation
+models. The models are stored in the environment under the name of the
+block. The models can be used to predict missing values in new data.}
+
 \item{ignore}{A logical vector of \code{nrow(data)} elements indicating
 which rows are ignored when creating the imputation model. The default
 \code{NULL} includes all rows that have an observed value of the variable
@@ -258,6 +263,8 @@ identified by its name, so list names must correspond to block names.}
 with commands for post-processing.}
 \item{\code{blots}:}{"Block dots". The \code{blots} argument to the \code{mice()}
 function.}
+\item{\code{models}:}{The \code{models} list contains imputation model
+estimates.}
 \item{\code{ignore}:}{A logical vector of length \code{nrow(data)} indicating
 the rows in \code{data} used to build the imputation model. (new in \code{mice 3.12.0})}
 \item{\code{seed}:}{The seed value of the solution.}
@@ -343,6 +350,7 @@ imp <- mids(
   formulas = list(a = a ~ b, b = b ~ a),
   post = NULL,
   blots = NULL,
+  models = NULL,
   ignore = logical(nrow(data)),
   seed = 123,
   iteration = 1,

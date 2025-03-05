@@ -4,7 +4,8 @@
 #' \code{pmmsplit()} is an implementation of pmm that saves the imputation model
 #' and generates imputations from the saved model.
 #' @aliases pmmsplit
-#' @param num_bins The number of bins used to store the predictive mean matching
+#' @param model Storage for the model estimates
+#' @param nbins The number of bins used to store the predictive mean matching
 #' model. The default is 50.
 #' @inheritParams mice.impute.pmm
 #' @return Vector with imputed data, same type as \code{y}, and of length
@@ -90,11 +91,11 @@
 #' # to get old behavior: as.integer(y))
 #' mice.impute.pmmsplit(y, ry, x, quantify = FALSE)
 #' @export
-mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = 10L,
+mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
                                  matchtype = 1L, exclude = NULL,
                                  quantify = TRUE, trim = 1L,
-                                 ridge = 1e-05,
-                                 num_bins = 50, ...) {
+                                 ridge = 1e-05, nbins = NULL,
+                                 model = list(), ...) {
   if (is.null(wy)) {
     wy <- !ry
   }
@@ -123,72 +124,82 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = 10L,
   x <- cbind(1, as.matrix(x))
 
   # quantify categories for factors
-  ynum <- y
-  if (is.factor(y)) {
-    if (quantify) {
-      ynum <- quantify(y, ry, x)
-    } else {
-      ynum <- as.integer(y)
-    }
-  }
+  ynum <- quantify(y, ry, x, quantify = quantify)
 
-  # train the imputation model using the data
-  # parameter estimation
+  # predicted values for observed part
   parm <- .norm.draw(ynum, ry, x, ridge = ridge, ...)
-
-  if (matchtype %in% c(0L, 1L)) {
-    yhatobs <- x[ry, , drop = FALSE] %*% parm$coef
-  } else {
-    yhatobs <- x[ry, , drop = FALSE] %*% parm$beta
-  }
-  yhatobs <- as.vector(yhatobs)
-
-  # save predictive beta, bin_edge, and lookup table
-  stored <- preprocess_yhat(yhatobs, ynum[ry], k = donors, num_bins = num_bins)
-  stored$beta <- parm$beta
   if (matchtype == 0L) {
-    stored$beta <- parm$coef
+    beta.mis <- beta.obs <- parm$coef
   }
-
-  # impute the missing data
-  if (matchtype == 0L) {
-    yhatmis <- x[wy, , drop = FALSE] %*% stored$beta
-  } else {
-    yhatmis <- x[wy, , drop = FALSE] %*% stored$beta
+  if (matchtype == 1L) {
+    beta.obs <- parm$coef
+    beta.mis <- parm$beta
   }
+  if (matchtype == 2L) {
+    beta.mis <- beta.obs <- parm$beta
+  }
+  yhatobs <- as.vector(x[ry, , drop = FALSE] %*% beta.obs)
 
-  impy <- draw_neighbors_pmm(yhatmis,
-                             bin_edges = stored$bin_edges,
-                             lookup_table = stored$lookup_table,
-                             m = 1)
-  # convert back to factor
+  # divide predictions into bins
+  nbins <- initialize.nbins(nbins, length(yhatobs), length(unique(yhatobs)))
+  donors <- initialize.donors(donors, length(yhatobs))
+  prep <- bin.yhat(yhatobs, ynum[ry], k = donors, nbins = nbins)
+
+  # save model into environment
+  model$setup <- list(method = "pmmsplit",
+                     donors = donors,
+                     nbins = nbins,
+                     matchtype = matchtype,
+                     exclude = exclude,
+                     quantify = quantify,
+                     trim = trim,
+                     ridge = ridge)
+  model$beta.obs <- beta.obs
+  model$beta.mis <- beta.mis
+  model$edges <- prep$edges
+  model$lookup <- prep$lookup
+
+  # from here on, we deal with the missing entries
+  # linear predictor for missing data
+  yhatmis <- x[wy, , drop = FALSE] %*% model$beta.mis
+  impy <- draw.neighbors.pmm(yhatmis,
+                             edges = model$edges,
+                             lookup = model$lookup,
+                             m = 1L)
+
+  # convert back to factor if needed
   impy <- unquantify(impy, y)
-
   return(impy)
-  # idx <- matchindex(yhatobs, yhatmis, donors)
-  # return(y[ry][idx])
 }
 
+initialize.nbins <- function(nbins, n, nu) {
+  if (is.null(nbins)) {
+    nbins <- round(4 * log(n) + 1.5)
+  }
 
-preprocess_yhat <- function(yhat, y, k = 10, num_bins = 50) {
+  # max nbin is number of unique yhat values
+  if (nbins > nu) {
+    # message("Warning: nbins (", nbins, ") exceeds unique yhat values (", nu, "). Adjusting to ", nu, ".")
+    nbins <- nu
+  }
+  # Ensure at least 2 bins
+  nbins <- max(2L, nbins)
+  return(nbins)
+}
+
+initialize.donors <- function(donors, n) {
+  if (is.null(donors)) {
+    donors <- round(n / 600 + 7)
+  }
+  donors <- max(1L, min(donors, n))
+  return(donors)
+}
+
+bin.yhat <- function(yhat, y, k = 10, nbins = 25) {
   stopifnot(length(yhat) == length(y))
 
-  # Ensure valid k
-  n <- length(yhat)
-  k <- max(1, min(k, n))  # Clamp k between 1 and n
-
-  # Determine unique yhat values and adjust num_bins accordingly
-  unique_yhat <- unique(yhat)
-  num_unique <- length(unique_yhat)
-
-  if (num_bins > num_unique) {
-  #  message("Warning: num_bins (", num_bins, ") exceeds unique yhat values (", num_unique, "). Adjusting to ", num_unique, ".")
-    num_bins <- num_unique
-  }
-  num_bins <- max(2, num_bins)  # Ensure at least 2 bins
-
   # Compute percentile-based bin edges
-  bin_edges <- quantile(yhat, probs = seq(0, 1, length.out = num_bins + 1), type = 7, na.rm = TRUE)
+  edges <- quantile(yhat, probs = seq(0, 1, length.out = nbins + 1), type = 7, na.rm = TRUE)
 
   # Sort yhat and y together
   sort_order <- order(yhat)
@@ -196,16 +207,16 @@ preprocess_yhat <- function(yhat, y, k = 10, num_bins = 50) {
   y_sorted <- y[sort_order]
 
   # Initialize lookup table
-  lookup_table <- matrix(NA_real_, nrow = num_bins, ncol = k)
+  lookup <- matrix(NA_real_, nrow = nbins, ncol = k)
 
   # Assign values to bins
-  bin_idx <- findInterval(yhat_sorted, vec = bin_edges, all.inside = TRUE)
+  bin_idx <- findInterval(yhat_sorted, vec = edges, all.inside = TRUE)
 
   # Split y_sorted by bins
   bin_values_list <- split(y_sorted, bin_idx)
 
   # Fill lookup table
-  lookup_table <- t(sapply(seq_len(num_bins), function(b) {
+  lookup <- t(sapply(seq_len(nbins), function(b) {
     bin_values <- bin_values_list[[as.character(b)]]
 
     if (length(bin_values) > 0) {
@@ -217,32 +228,53 @@ preprocess_yhat <- function(yhat, y, k = 10, num_bins = 50) {
     }
   }))
 
-  return(list(bin_edges = bin_edges, lookup_table = lookup_table))
+  return(list(edges = edges, lookup = lookup))
 }
 
-draw_neighbors_pmm <- function(yhat_query, bin_edges, lookup_table, m = 1) {
+draw.neighbors.pmm <- function(yhat_query, edges, lookup, m = 1) {
   num_queries <- length(yhat_query)
-  num_bins <- length(bin_edges) - 1  # Bins are defined by edges[i] and edges[i+1]
+  nbins <- length(edges) - 1  # Bins are defined by edges[i] and edges[i+1]
 
   # Initialize result matrix: rows = number of queries, columns = m draws per query
   imputed_values <- matrix(NA_real_, nrow = num_queries, ncol = m)
 
   # Find the bin for each query value
-  bin_idx <- findInterval(yhat_query, bin_edges, rightmost.closed = TRUE, all.inside = TRUE)
+  bin_idx <- findInterval(yhat_query, edges, rightmost.closed = TRUE, all.inside = TRUE)
 
   # Compute probability of selecting from left bin (smooth transition)
-  t0 <- bin_edges[pmax(bin_idx, 1)]
-  t1 <- bin_edges[pmin(bin_idx + 1, num_bins)]
+  t0 <- edges[pmax(bin_idx, 1)]
+  t1 <- edges[pmin(bin_idx + 1, nbins)]
   p_left <- ifelse(t1 > t0, (t1 - yhat_query) / (t1 - t0), 0.5)
 
   # Determine which bin to sample from
-  selected_bin <- ifelse(runif(num_queries) < p_left, bin_idx, pmin(bin_idx + 1, num_bins))
+  selected_bin <- ifelse(runif(num_queries) < p_left, bin_idx, pmin(bin_idx + 1, nbins))
 
   # Vectorized sampling from lookup table
-  sampled_indices <- matrix(sample(1:ncol(lookup_table), num_queries * m, replace = TRUE), nrow = num_queries)
-  imputed_values <- matrix(lookup_table[cbind(selected_bin, sampled_indices)], nrow = num_queries, ncol = m)
+  sampled_indices <- matrix(sample(1:ncol(lookup), num_queries * m, replace = TRUE), nrow = num_queries)
+  imputed_values <- matrix(lookup[cbind(selected_bin, sampled_indices)], nrow = num_queries, ncol = m)
 
   return(imputed_values)
+}
+
+quantify <- function(y, ry, x, quantify = TRUE) {
+  if (!is.factor(y)) {
+    return(y)
+  }
+  if (!quantify) {
+    return(as.integer(y))
+  }
+
+  # replace (reduced set of) categories by optimal scaling
+  yf <- factor(y[ry], exclude = NULL)
+  yd <- model.matrix(~ 0 + yf)
+  xd <- x[ry, , drop = FALSE]
+  cca <- cancor(yd, xd, xcenter = FALSE, ycenter = FALSE)
+  # NOTE: We must be more careful if imputations from a previous iteration
+  # need to be processed. The line below is a quick fix.
+  ynum <- as.integer(y)
+  # Scale only observed y's, since these are used to predict missing y's
+  ynum[ry] <- scale(as.vector(yd %*% cca$xcoef[, 2L]))
+  return(ynum)
 }
 
 unquantify <- function(ynum, original_y, quantify = TRUE) {

@@ -18,6 +18,7 @@ mice(
   formulas,
   modeltype = NULL,
   blots = NULL,
+  models = NULL,
   post = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
   maxit = 5,
@@ -127,6 +128,10 @@ for which a formula is specified. Otherwise, \code{modeltype = "pred"}.}
 to pass down arguments to lower level imputation function. The entries
 of element \code{blots[[blockname]]} are passed down to the function
 called for block \code{blockname}.}
+
+\item{models}{An environment that can be used to store fitted imputation
+models. The models are stored in the environment under the name of the
+block. The models can be used to predict missing values in new data.}
 
 \item{post}{A vector of strings with length \code{ncol(data)} specifying
 expressions as strings. Each string is parsed and
