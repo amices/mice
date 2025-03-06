@@ -16,7 +16,8 @@ mice.impute.pmmsplit(
   quantify = TRUE,
   trim = 1L,
   ridge = 1e-05,
-  num_bins = NULL,
+  nbins = NULL,
+  operation = "estimate",
   model = NULL,
   ...
 )
@@ -68,8 +69,10 @@ Larger ridges may result in more biased estimates. For highly noisy data
 (e.g. many junk variables), set \code{ridge = 1e-06} or even lower to
 reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
 
-\item{num_bins}{The number of bins used to store the predictive mean matching
+\item{nbins}{The number of bins used to store the predictive mean matching
 model. The default is 50.}
+
+\item{operation}{The operation to be performed. The default is \code{"estimate"}.}
 
 \item{model}{Storage for the model estimates}
 
@@ -90,7 +93,7 @@ and generates imputations from the saved model.
 set.seed(53177)
 xname <- c("age", "hgt", "wgt")
 r <- stats::complete.cases(boys[, xname])
-x <- boys[r, xname]
+x <- as.matrix(boys[r, xname])
 y <- boys[r, "tv"]
 ry <- !is.na(y)
 table(ry)
@@ -130,7 +133,7 @@ blots$tv$exclude \%in\% unlist(c(imp$imp$tv)) # MUST be all FALSE
 xname <- c("age", "hgt", "wgt")
 br <- boys[c(1:10, 101:110, 501:510, 601:620, 701:710), ]
 r <- stats::complete.cases(br[, xname])
-x <- br[r, xname]
+x <- as.matrix(br[r, xname])
 y <- factor(br[r, "tv"])
 ry <- !is.na(y)
 table(y)

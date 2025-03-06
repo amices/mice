@@ -3,7 +3,7 @@ context("mice.impute.pmmsplit")
 xname <- c("age", "hgt", "wgt")
 br <- boys[c(1:10, 101:110, 501:510, 601:620, 701:710), ]
 r <- stats::complete.cases(br[, xname])
-x <- br[r, xname]
+x <- as.matrix(br[r, xname])
 y <- br[r, "tv"]
 ry <- !is.na(y)
 

@@ -4,6 +4,7 @@
 #' \code{pmmsplit()} is an implementation of pmm that saves the imputation model
 #' and generates imputations from the saved model.
 #' @aliases pmmsplit
+#' @param operation The operation to be performed. The default is \code{"estimate"}.
 #' @param model Storage for the model estimates
 #' @param nbins The number of bins used to store the predictive mean matching
 #' model. The default is 50.
@@ -34,7 +35,7 @@
 #' set.seed(53177)
 #' xname <- c("age", "hgt", "wgt")
 #' r <- stats::complete.cases(boys[, xname])
-#' x <- boys[r, xname]
+#' x <- as.matrix(boys[r, xname])
 #' y <- boys[r, "tv"]
 #' ry <- !is.na(y)
 #' table(ry)
@@ -74,7 +75,7 @@
 #' xname <- c("age", "hgt", "wgt")
 #' br <- boys[c(1:10, 101:110, 501:510, 601:620, 701:710), ]
 #' r <- stats::complete.cases(br[, xname])
-#' x <- br[r, xname]
+#' x <- as.matrix(br[r, xname])
 #' y <- factor(br[r, "tv"])
 #' ry <- !is.na(y)
 #' table(y)
@@ -95,38 +96,44 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
                                  matchtype = 1L, exclude = NULL,
                                  quantify = TRUE, trim = 1L,
                                  ridge = 1e-05, nbins = NULL,
-                                 model = list(), ...) {
+                                 operation = "estimate",
+                                 model = NULL, ...) {
   if (is.null(wy)) {
     wy <- !ry
   }
 
-  # Reformulate the imputation problem such that
-  # 1. the imputation model disregards records with excluded y-values
-  # 2. the donor set does not contain excluded y-values
-
-  # Keep sparse categories out of the imputation model
-  if (is.factor(y)) {
-    active <- !ry | y %in% (levels(y)[table(y) >= trim])
-    y <- y[active]
-    ry <- ry[active]
-    x <- x[active, , drop = FALSE]
-    wy <- wy[active]
-  }
-  # Keep excluded values out of the imputation model
-  if (!is.null(exclude)) {
-    active <- !ry | !y %in% exclude
-    y <- y[active]
-    ry <- ry[active]
-    x <- x[active, , drop = FALSE]
-    wy <- wy[active]
+  # **Only enforce `model` for "fit" and "fill"**
+  if (operation %in% c("fit", "fill")) {
+    if (is.null(model)) {
+      stop(paste("`model` cannot be NULL for operation:", operation))
+    }
+    if (!is.environment(model)) {
+      stop("`model` must be an environment to store results persistently.")
+    }
   }
 
-  x <- cbind(1, as.matrix(x))
+  # **Handle "fill" Operation: Use Pre-Stored Model Without Re-Training**
+  if (operation == "fill") {
+    if (!length(ls(model))) {
+      stop("No stored model found for 'fill' operation.")
+    }
 
-  # quantify categories for factors
+    # Compute linear predictor for missing data
+    yhatmis <- x[wy, , drop = FALSE] %*% model$beta.mis
+    impy <- draw.neighbors.pmm(yhatmis,
+                               edges = model$edges,
+                               lookup = model$lookup,
+                               m = 1L)
+
+    # Convert back to factor if needed
+    impy <- unquantify(impy, y)
+    return(impy)
+  }
+
+  # **Handle "estimate" and "fit": Train Model**
   ynum <- quantify(y, ry, x, quantify = quantify)
 
-  # predicted values for observed part
+  # Predicted values for observed part
   parm <- .norm.draw(ynum, ry, x, ridge = ridge, ...)
   if (matchtype == 0L) {
     beta.mis <- beta.obs <- parm$coef
@@ -140,34 +147,35 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
   }
   yhatobs <- as.vector(x[ry, , drop = FALSE] %*% beta.obs)
 
-  # divide predictions into bins
+  # Divide predictions into bins
   nbins <- initialize.nbins(nbins, length(yhatobs), length(unique(yhatobs)))
   donors <- initialize.donors(donors, length(yhatobs))
   prep <- bin.yhat(yhatobs, ynum[ry], k = donors, nbins = nbins)
 
-  # save model into environment
-  model$setup <- list(method = "pmmsplit",
-                     donors = donors,
-                     nbins = nbins,
-                     matchtype = matchtype,
-                     exclude = exclude,
-                     quantify = quantify,
-                     trim = trim,
-                     ridge = ridge)
-  model$beta.obs <- beta.obs
-  model$beta.mis <- beta.mis
-  model$edges <- prep$edges
-  model$lookup <- prep$lookup
+  # **Store Model for "fit" (skip for "estimate")**
+  if (operation == "fit") {
+    model$setup <- list(method = "pmmsplit",
+                        donors = donors,
+                        nbins = nbins,
+                        matchtype = matchtype,
+                        exclude = exclude,
+                        quantify = quantify,
+                        trim = trim,
+                        ridge = ridge)
+    model$beta.obs <- beta.obs
+    model$beta.mis <- beta.mis
+    model$edges <- prep$edges
+    model$lookup <- prep$lookup
+  }
 
-  # from here on, we deal with the missing entries
-  # linear predictor for missing data
-  yhatmis <- x[wy, , drop = FALSE] %*% model$beta.mis
+  # **Compute Missing Value Imputations**
+  yhatmis <- x[wy, , drop = FALSE] %*% beta.mis
   impy <- draw.neighbors.pmm(yhatmis,
-                             edges = model$edges,
-                             lookup = model$lookup,
+                             edges = prep$edges,
+                             lookup = prep$lookup,
                              m = 1L)
 
-  # convert back to factor if needed
+  # Convert back to factor if needed
   impy <- unquantify(impy, y)
   return(impy)
 }

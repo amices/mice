@@ -310,16 +310,16 @@
 #' complete(imp)
 #'
 #' # imputation on mixed data with a different method per column
-#' mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"))
+#' imp1 <- mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"))
 #'
 #' # Fit model for `bmi`, estimate others
 #' operations <- c("bmi" = "fit", "hyp" = "estimate", "chl" = "estimate")
-#' fit <- mice(nhanes, method = "pmmsplit", operations = operations)
+#' imp2 <- mice(nhanes, method = "pmmsplit", operations = operations)
 #'
 #' # Fill missing `bmi` values using pre-trained model
 #' operations <- c("bmi" = "fill", "hyp" = "estimate", "chl" = "estimate")
-#' imp <- mice(nhanes, method = "pmmsplit", operations = operations,
-#'             models = fit$models)
+#' imp3 <- mice(nhanes, method = "pmmsplit", operations = operations,
+#'              models = imp2$models)
 #'
 #' \dontrun{
 #' # example where we fit the imputation model on the train data
@@ -354,7 +354,7 @@ mice <- function(data,
                  formulas,
                  modeltype = NULL,
                  blots = NULL,
-                 operations = "estimate",
+                 operations = NULL,
                  models = NULL,
                  post = NULL,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -490,23 +490,24 @@ mice <- function(data,
   visitSequence <- setup$visitSequence
   post <- setup$post
 
-  # check operations
-  if (length(operations) == 1L) {
-    operations <- setNames(rep(operations, length(names(data))), names(data))
-  }
+  # check operations in current model
+  operations <- check.operations(operations, data, models, blocks)
 
-  # prepare model estimates environment
+  # Initialize models only for "fit" and "fill" blocks that are missing in models
   if (is.null(models)) {
     models <- new.env(parent = emptyenv())
-
-    # Pre-allocate list() entries for every (blockname, iteration) pair
+  }
+  model_vars <- names(operations[operations %in% c("fit", "fill")])
+  for (block in model_vars) {
+    if (!exists(block, envir = models)) {
+      models[[block]] <- new.env(parent = emptyenv())
+    }
     for (i in 1:m) {
-      for (h in visitSequence) {
-        assign(paste0(h, "_", i), new.env(), envir = models)
+      if (!exists(as.character(i), envir = models[[block]])) {
+        models[[block]][[as.character(i)]] <- new.env(parent = emptyenv())
       }
     }
   }
-  # if (is.null(models)) models <- initialize.models(visitSequence, m)
 
   # initialize imputations
   nmis <- apply(is.na(data), 2, sum)

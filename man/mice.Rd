@@ -18,7 +18,7 @@ mice(
   formulas,
   modeltype = NULL,
   blots = NULL,
-  operations = "estimate",
+  operations = NULL,
   models = NULL,
   post = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -408,16 +408,16 @@ imp$imp$bmi
 complete(imp)
 
 # imputation on mixed data with a different method per column
-mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"))
+imp1 <- mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"))
 
 # Fit model for `bmi`, estimate others
 operations <- c("bmi" = "fit", "hyp" = "estimate", "chl" = "estimate")
-fit <- mice(nhanes, method = "pmmsplit", operations = operations)
+imp2 <- mice(nhanes, method = "pmmsplit", operations = operations)
 
 # Fill missing `bmi` values using pre-trained model
 operations <- c("bmi" = "fill", "hyp" = "estimate", "chl" = "estimate")
-imp <- mice(nhanes, method = "pmmsplit", operations = operations,
-            models = fit$models)
+imp3 <- mice(nhanes, method = "pmmsplit", operations = operations,
+             models = imp2$models)
 
 \dontrun{
 # example where we fit the imputation model on the train data

@@ -75,7 +75,8 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
                   data = data, r = r, where = where,
                   pred = pred, formula = ff,
                   method = theMethod,
-                  model = models[[key]],
+                  operation = operations[j],
+                  model = models[[j]][[as.character(i)]],
                   yname = j, k = k,
                   ct = ct,
                   user = user, ignore = ignore,
@@ -180,7 +181,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 }
 
 
-sampler.univ <- function(data, r, where, pred, formula, method, model,
+sampler.univ <- function(data, r, where, pred, formula, method, operation, model,
                          yname, k, ct = "pred", user, ignore, ...) {
   j <- yname[1L]
 
@@ -245,7 +246,7 @@ sampler.univ <- function(data, r, where, pred, formula, method, model,
   imputes <- data[wy, j]
   imputes[!cc] <- NA
 
-  args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type, model = model), user, list(...))
+  args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type, operation = operation, model = model), user, list(...))
   imputes[cc] <- do.call(f, args = args)
   imputes
 }
