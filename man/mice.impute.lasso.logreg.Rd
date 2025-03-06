@@ -78,6 +78,7 @@ Other univariate imputation functions:
 \code{\link{mice.impute.norm.nob}()},
 \code{\link{mice.impute.norm.predict}()},
 \code{\link{mice.impute.pmm}()},
+\code{\link{mice.impute.pmmsplit}()},
 \code{\link{mice.impute.polr}()},
 \code{\link{mice.impute.polyreg}()},
 \code{\link{mice.impute.quadratic}()},

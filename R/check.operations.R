@@ -18,6 +18,12 @@ check.operations <- function(operations, data, models = NULL, blocks = NULL) {
     operations <- setNames(rep(operations, length(bv)), bv)
   }
 
+  # check length
+  if (length(operations) != length(bv)) {
+    stop("The length of `operations` (", length(operations),
+         ") must match the number of variables in `blocks` (", length(bv),").")
+  }
+
   # 3. Check if all names in operations exist in blocks
   notFound <- !names(operations) %in% bv
   if (any(notFound)) {

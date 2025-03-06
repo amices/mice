@@ -142,7 +142,9 @@ imputations, without re-estimating parameters.}
 }
 This argument can be specified as a named vector, where names correspond
 to variables and values specify the operation for each variable. If a
-single value is provided, it applies to all blocks.}
+single value is provided, it applies to the variables in all blocks. The
+length of the vector must match the number of variables present in the
+blocks.}
 
 \item{models}{An environment that can be used to store fitted imputation
 models. The models are stored in the environment under the name of the
@@ -408,16 +410,21 @@ imp$imp$bmi
 complete(imp)
 
 # imputation on mixed data with a different method per column
-imp1 <- mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"))
+imp1 <- mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"), print = FALSE)
 
-# Fit model for `bmi`, estimate others
-operations <- c("bmi" = "fit", "hyp" = "estimate", "chl" = "estimate")
-imp2 <- mice(nhanes, method = "pmmsplit", operations = operations)
+# Store model for `bmi`, estimate others as usual
+operations <- c("age" = "estimate", "bmi" = "fit", "hyp" = "estimate", "chl" = "estimate")
+imp2 <- mice(nhanes, method = "pmmsplit", operations = operations, print = FALSE)
+
+# Inspects the stored model for imputation 1 for `bmi`
+ls(imp2$models$bmi$"1")
+imp2$models$bmi$"1"$formula
+imp2$models$bmi$"1"$beta.mis
 
 # Fill missing `bmi` values using pre-trained model
-operations <- c("bmi" = "fill", "hyp" = "estimate", "chl" = "estimate")
+operations <- c("age" = "estimate", "bmi" = "fill", "hyp" = "estimate", "chl" = "estimate")
 imp3 <- mice(nhanes, method = "pmmsplit", operations = operations,
-             models = imp2$models)
+             models = imp2$models, print = FALSE)
 
 \dontrun{
 # example where we fit the imputation model on the train data

@@ -116,13 +116,13 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
               ))
             } else {
               stop("Cannot call function of type ", ct,
-                call. = FALSE
+                   call. = FALSE
               )
             }
             if (is.null(imputes)) {
               stop("No imputations from ", theMethod,
-                h,
-                call. = FALSE
+                   h,
+                   call. = FALSE
               )
             }
             for (j in names(imputes)) {
@@ -138,7 +138,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
               wy <- where[, j]
               ry <- r[, j]
               imp[[j]][, i] <- model.frame(as.formula(theMethod), data[wy, ],
-                na.action = na.pass
+                                           na.action = na.pass
               )
               data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
             }
@@ -185,27 +185,8 @@ sampler.univ <- function(data, r, where, pred, formula, method, operation, model
                          yname, k, ct = "pred", user, ignore, ...) {
   j <- yname[1L]
 
-  if (ct == "pred") {
-    vars <- colnames(data)[pred != 0]
-    xnames <- setdiff(vars, j)
-    if (length(xnames) > 0L) {
-      formula <- reformulate(backticks(xnames), response = backticks(j))
-      formula <- update(formula, ". ~ . ")
-    } else {
-      formula <- as.formula(paste0(j, " ~ 1"))
-    }
-  }
-
-  if (ct == "formula") {
-    # move terms other than j from lhs to rhs
-    ymove <- setdiff(lhs(formula), j)
-    formula <- update(formula, paste(j, " ~ . "))
-    if (length(ymove) > 0L) {
-      formula <- update(formula, paste("~ . + ", paste(backticks(ymove), collapse = "+")))
-    }
-  }
-
-  # get the model matrix
+  # prepare formula and model matrix
+  formula <- prepare.formula(formula, data, model, j, ct, pred, operation)
   x <- obtain.design(data, formula)
 
   # expand pred vector to model matrix, remove intercept
@@ -246,7 +227,51 @@ sampler.univ <- function(data, r, where, pred, formula, method, operation, model
   imputes <- data[wy, j]
   imputes[!cc] <- NA
 
-  args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type, operation = operation, model = model), user, list(...))
+  args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type,
+                 operation = operation, model = model),
+            user, list(...))
   imputes[cc] <- do.call(f, args = args)
   imputes
+}
+
+
+prepare.formula <- function(formula, data, model, j, ct, pred, operation) {
+  # prepares the formula for univariate imputation
+  # saves (for "fit") or retrieves (for "fill") the formula
+
+  # for "fill", use the stored formula instead of recalculating
+  if (operation == "fill") {
+    if (!exists("formula", envir = model)) {
+      stop("Error: No stored formula found in model for 'fill' operation.")
+    }
+    formula <- get("formula", envir = model)
+    return(formula)
+  }
+
+  if (ct == "pred") {
+    vars <- colnames(data)[pred != 0]
+    xnames <- setdiff(vars, j)
+    if (length(xnames) > 0L) {
+      formula <- reformulate(backticks(xnames), response = backticks(j))
+      formula <- update(formula, ". ~ . ")
+    } else {
+      formula <- as.formula(paste0(j, " ~ 1"))
+    }
+  }
+
+  if (ct == "formula") {
+    # move terms other than j from lhs to rhs
+    ymove <- setdiff(lhs(formula), j)
+    formula <- update(formula, paste(j, " ~ . "))
+    if (length(ymove) > 0L) {
+      formula <- update(formula, paste("~ . + ", paste(backticks(ymove), collapse = "+")))
+    }
+  }
+
+  # store formula in `model` only when operation == "fit"
+  if (operation == "fit") {
+    assign("formula", formula, envir = model)
+  }
+
+  return(formula)
 }

@@ -167,7 +167,9 @@ imputations, without re-estimating parameters.}
 }
 This argument can be specified as a named vector, where names correspond
 to variables and values specify the operation for each variable. If a
-single value is provided, it applies to all blocks.}
+single value is provided, it applies to the variables in all blocks. The
+length of the vector must match the number of variables present in the
+blocks.}
 
 \item{models}{An environment that can be used to store fitted imputation
 models. The models are stored in the environment under the name of the

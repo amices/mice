@@ -46,6 +46,7 @@ rbind.mids <- function(x, y = NULL, ...) {
   formulas <- x$formulas
   modeltype <- x$modeltype
   blots <- x$blots
+  operations <- x$operations
   models <- x$models
   predictorMatrix <- x$predictorMatrix
   visitSequence <- x$visitSequence
@@ -76,6 +77,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     modeltype = modeltype,
     post = post,
     blots = blots,
+    operations = operations,
     models = models,
     ignore = ignore,
     seed = seed,
@@ -127,6 +129,8 @@ rbind.mids.mids <- function(x, y, call) {
   formulas <- x$formulas
   modeltype <- x$modeltype
   blots <- x$blots
+  operations <- x$operations
+  models <- x$models
   ignore <- c(x$ignore, y$ignore)
   predictorMatrix <- x$predictorMatrix
   visitSequence <- x$visitSequence
@@ -174,6 +178,8 @@ rbind.mids.mids <- function(x, y, call) {
     modeltype = modeltype,
     post = post,
     blots = blots,
+    operations = operations,
+    models = models,
     ignore = ignore,
     seed = seed,
     iteration = iteration,

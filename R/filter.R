@@ -33,6 +33,8 @@ dplyr::filter
 #' \code{formulas}  \tab Equals \code{.data$formulas}\cr
 #' \code{post}      \tab Equals \code{.data$post}\cr
 #' \code{blots}     \tab Equals \code{.data$blots}\cr
+#' \code{operations} \tab Equals \code{.data$operations}\cr
+#' \code{models}    \tab Equals \code{.data$models}\cr
 #' \code{ignore}    \tab Select positions in \code{.data$ignore} for which \code{include == TRUE}\cr
 #' \code{seed}            \tab Equals \code{.data$seed}\cr
 #' \code{iteration}       \tab Equals \code{.data$iteration}\cr
@@ -79,6 +81,8 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
   formulas <- .data$formulas
   modeltype <- .data$modeltype
   blots <- .data$blots
+  operations <- .data$operations
+  models <- .data$models
   post <- .data$post
   seed <- .data$seed
   iteration <- .data$iteration
@@ -120,6 +124,8 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
     modeltype = modeltype,
     post = post,
     blots = blots,
+    operations = operations,
+    models = models,
     ignore = ignore,
     seed = seed,
     iteration = iteration,
