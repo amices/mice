@@ -112,7 +112,8 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
   q <- sampler(
     obj$data, obj$m, obj$ignore, where, imp, blocks,
     obj$method, obj$visitSequence, obj$predictorMatrix,
-    obj$formulas, obj$modeltype, obj$blots, obj$models,
+    obj$formulas, obj$modeltype, obj$blots,
+    obj$operations, obj$models,
     obj$post, c(from, to), printFlag, ...
   )
 
@@ -167,6 +168,7 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
     modeltype = obj$modeltype,
     post = obj$post,
     blots = obj$blots,
+    operations = obj$operations,
     models = obj$models,
     ignore = obj$ignore,
     seed = obj$seed,

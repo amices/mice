@@ -18,6 +18,7 @@ mice(
   formulas,
   modeltype = NULL,
   blots = NULL,
+  operations = "estimate",
   models = NULL,
   post = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -128,6 +129,20 @@ for which a formula is specified. Otherwise, \code{modeltype = "pred"}.}
 to pass down arguments to lower level imputation function. The entries
 of element \code{blots[[blockname]]} are passed down to the function
 called for block \code{blockname}.}
+
+\item{operations}{A character vector specifying the operation to perform for
+each imputation block. The available options are:
+\describe{
+\item{"estimate"}{Estimate parameters and generate imputations
+(classic MICE behavior). This is the default.}
+\item{"fit"}{Estimate parameters and store the imputation model
+without data and without generating imputations.}
+\item{"fill"}{Use a previously stored imputation model to generate
+imputations, without re-estimating parameters.}
+}
+This argument can be specified as a named vector, where names correspond
+to variables and values specify the operation for each variable. If a
+single value is provided, it applies to all blocks.}
 
 \item{models}{An environment that can be used to store fitted imputation
 models. The models are stored in the environment under the name of the
@@ -394,6 +409,15 @@ complete(imp)
 
 # imputation on mixed data with a different method per column
 mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"))
+
+# Fit model for `bmi`, estimate others
+operations <- c("bmi" = "fit", "hyp" = "estimate", "chl" = "estimate")
+fit <- mice(nhanes, method = "pmmsplit", operations = operations)
+
+# Fill missing `bmi` values using pre-trained model
+operations <- c("bmi" = "fill", "hyp" = "estimate", "chl" = "estimate")
+imp <- mice(nhanes, method = "pmmsplit", operations = operations,
+            models = fit$models)
 
 \dontrun{
 # example where we fit the imputation model on the train data

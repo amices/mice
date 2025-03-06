@@ -219,6 +219,19 @@
 #' to pass down arguments to lower level imputation function. The entries
 #' of element \code{blots[[blockname]]} are passed down to the function
 #' called for block \code{blockname}.
+#' @param operations A character vector specifying the operation to perform for
+#'   each imputation block. The available options are:
+#'   \describe{
+#'     \item{"estimate"}{Estimate parameters and generate imputations
+#'       (classic MICE behavior). This is the default.}
+#'     \item{"fit"}{Estimate parameters and store the imputation model
+#'       without data and without generating imputations.}
+#'     \item{"fill"}{Use a previously stored imputation model to generate
+#'       imputations, without re-estimating parameters.}
+#'   }
+#'   This argument can be specified as a named vector, where names correspond
+#'   to variables and values specify the operation for each variable. If a
+#'   single value is provided, it applies to all blocks.
 #' @param models An environment that can be used to store fitted imputation
 #' models. The models are stored in the environment under the name of the
 #' block. The models can be used to predict missing values in new data.
@@ -299,6 +312,15 @@
 #' # imputation on mixed data with a different method per column
 #' mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"))
 #'
+#' # Fit model for `bmi`, estimate others
+#' operations <- c("bmi" = "fit", "hyp" = "estimate", "chl" = "estimate")
+#' fit <- mice(nhanes, method = "pmmsplit", operations = operations)
+#'
+#' # Fill missing `bmi` values using pre-trained model
+#' operations <- c("bmi" = "fill", "hyp" = "estimate", "chl" = "estimate")
+#' imp <- mice(nhanes, method = "pmmsplit", operations = operations,
+#'             models = fit$models)
+#'
 #' \dontrun{
 #' # example where we fit the imputation model on the train data
 #' # and apply the model to impute the test data
@@ -332,6 +354,7 @@ mice <- function(data,
                  formulas,
                  modeltype = NULL,
                  blots = NULL,
+                 operations = "estimate",
                  models = NULL,
                  post = NULL,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -467,6 +490,11 @@ mice <- function(data,
   visitSequence <- setup$visitSequence
   post <- setup$post
 
+  # check operations
+  if (length(operations) == 1L) {
+    operations <- setNames(rep(operations, length(names(data))), names(data))
+  }
+
   # prepare model estimates environment
   if (is.null(models)) {
     models <- new.env(parent = emptyenv())
@@ -493,7 +521,7 @@ mice <- function(data,
   q <- sampler(
     data, m, ignore, where, imp, blocks, method,
     visitSequence, predictorMatrix, formulas,
-    modeltype, blots, models,
+    modeltype, blots, operations, models,
     post, c(from, to), printFlag, ...
   )
 
@@ -516,6 +544,7 @@ mice <- function(data,
     modeltype = modeltype,
     post = post,
     blots = blots,
+    operations = operations,
     models = models,
     ignore = ignore,
     seed = seed,

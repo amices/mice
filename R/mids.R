@@ -58,6 +58,7 @@
 #'    with commands for post-processing.}
 #'    \item{\code{blots}:}{"Block dots". The \code{blots} argument to the \code{mice()}
 #'    function.}
+#'    \item{\code{operations}:}{A character vector of length \code{length(blocks)}.}
 #'    \item{\code{models}:}{The \code{models} list contains imputation model
 #'    estimates.}
 #'    \item{\code{ignore}:}{A logical vector of length \code{nrow(data)} indicating
@@ -162,6 +163,7 @@ mids <- function(
     modeltype = character(),
     post = character(),
     blots = list(),
+    operations = character(),
     models = new.env(),
     ignore = logical(),
     seed = integer(),
@@ -190,6 +192,7 @@ mids <- function(
     modeltype = modeltype,
     post = post,
     blots = blots,
+    operations = operations,
     models = models,
     ignore = ignore,
     seed = seed,
