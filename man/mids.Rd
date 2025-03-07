@@ -23,7 +23,7 @@ mids(
   modeltype = character(),
   post = character(),
   blots = list(),
-  activities = character(),
+  actions = character(),
   models = new.env(),
   ignore = logical(),
   seed = integer(),
@@ -155,7 +155,7 @@ to pass down arguments to lower level imputation function. The entries
 of element \code{blots[[blockname]]} are passed down to the function
 called for block \code{blockname}.}
 
-\item{activities}{A character vector specifying the activity to perform for
+\item{actions}{A character vector specifying the action to perform for
 each imputation block. The available options are:
 \describe{
 \item{"walk"}{Estimate parameters and generate imputations
@@ -166,7 +166,7 @@ without data and without generating imputations.}
 imputations, without re-estimating parameters.}
 }
 This argument can be specified as a named vector, where names correspond
-to variables and values specify the activity for each variable. If a
+to variables and values specify the action for each variable. If a
 single value is provided, it applies to the variables in all blocks. The
 length of the vector must match the number of variables present in the
 blocks.}
@@ -280,7 +280,7 @@ identified by its name, so list names must correspond to block names.}
 with commands for post-processing.}
 \item{\code{blots}:}{"Block dots". The \code{blots} argument to the \code{mice()}
 function.}
-\item{\code{activities}:}{A character vector of length \code{length(blocks)}.}
+\item{\code{actions}:}{A character vector of length \code{length(blocks)}.}
 \item{\code{models}:}{The \code{models} list contains imputation model
 estimates.}
 \item{\code{ignore}:}{A logical vector of length \code{nrow(data)} indicating

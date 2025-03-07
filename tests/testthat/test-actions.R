@@ -1,4 +1,4 @@
-context("activities")
+context("actions")
 
 # We have to test the following cases:
 
@@ -8,7 +8,7 @@ context("activities")
 # - Does train-run setup with a factor variable produce imputations when only one factor level is present during training?
 # - Does train-run setup with a factor variable produce imputations when only one factor level is present during running?
 
-test_that("activities work with factor with same number of categories", {
+test_that("actions work with factor with same number of categories", {
   expect_silent(imp1 <- mice(nhanes2, m = 2, maxit = 2, act = "train", method = "pmmsplit", print = FALSE))
   expect_false(is.null(imp1$models$bmi$"1"$lookup))
   expect_silent(imp2 <- mice(nhanes2, m = 2, maxit = 2, act = "run", methode = "pmmsplit", models = imp1$models, print = FALSE))

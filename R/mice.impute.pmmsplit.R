@@ -4,7 +4,7 @@
 #' \code{pmmsplit()} is an implementation of pmm that saves the imputation model
 #' and generates imputations from the saved model.
 #' @aliases pmmsplit
-#' @param activity The activity to be performed. The default is \code{"walk"}.
+#' @param action The action to be performed. The default is \code{"walk"}.
 #' @param model Storage for the model estimates
 #' @param nbins The number of bins used to store the predictive mean matching
 #' model. The default is 50.
@@ -96,26 +96,26 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
                                  matchtype = 1L, exclude = NULL,
                                  quantify = TRUE, trim = 1L,
                                  ridge = 1e-05, nbins = NULL,
-                                 activity = "walk",
+                                 action = "walk",
                                  model = NULL, ...) {
   if (is.null(wy)) {
     wy <- !ry
   }
 
   # **Only enforce `model` for "train" and "run"**
-  if (activity %in% c("train", "run")) {
+  if (action %in% c("train", "run")) {
     if (is.null(model)) {
-      stop(paste("`model` cannot be NULL for activity:", activity))
+      stop(paste("`model` cannot be NULL for action:", action))
     }
     if (!is.environment(model)) {
       stop("`model` must be an environment to store results persistently.")
     }
   }
 
-  # **Handle "run" activity: Use Pre-Stored Model Without Re-Training**
-  if (activity == "run") {
+  # **Handle "run" action: Use Pre-Stored Model Without Re-Training**
+  if (action == "run") {
     if (!length(ls(model))) {
-      stop("No stored model found for 'fill' activity.")
+      stop("No stored model found for 'fill' action.")
     }
 
     # Compute linear predictor for missing data
@@ -153,7 +153,7 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
   prep <- bin.yhat(yhatobs, ynum[ry], k = donors, nbins = nbins)
 
   # **Store Model for "train" (skip for "walk")**
-  if (activity == "train") {
+  if (action == "train") {
     model$setup <- list(method = "pmmsplit",
                         n = length(yhatobs),
                         donors = donors,

@@ -18,7 +18,7 @@ mice(
   formulas,
   modeltype = NULL,
   blots = NULL,
-  activities = NULL,
+  actions = NULL,
   models = NULL,
   post = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -130,7 +130,7 @@ to pass down arguments to lower level imputation function. The entries
 of element \code{blots[[blockname]]} are passed down to the function
 called for block \code{blockname}.}
 
-\item{activities}{A character vector specifying the activity to perform for
+\item{actions}{A character vector specifying the action to perform for
 each imputation block. The available options are:
 \describe{
 \item{"walk"}{Estimate parameters and generate imputations
@@ -141,7 +141,7 @@ without data and without generating imputations.}
 imputations, without re-estimating parameters.}
 }
 This argument can be specified as a named vector, where names correspond
-to variables and values specify the activity for each variable. If a
+to variables and values specify the action for each variable. If a
 single value is provided, it applies to the variables in all blocks. The
 length of the vector must match the number of variables present in the
 blocks.}
@@ -413,8 +413,8 @@ complete(imp)
 imp1 <- mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"), print = FALSE)
 
 # Store model for `bmi`, estimate others as usual
-activities <- c("age" = "walk", "bmi" = "train", "hyp" = "walk", "chl" = "walk")
-imp2 <- mice(nhanes, method = "pmmsplit", activities = activities, print = FALSE)
+actions <- c("age" = "walk", "bmi" = "train", "hyp" = "walk", "chl" = "walk")
+imp2 <- mice(nhanes, method = "pmmsplit", actions = actions, print = FALSE)
 
 # Inspects the stored model for imputation 1 for `bmi`
 ls(imp2$models$bmi$"1")
@@ -422,8 +422,8 @@ imp2$models$bmi$"1"$formula
 imp2$models$bmi$"1"$beta.mis
 
 # Fill missing `bmi` values using pre-trained model
-activities <- c("age" = "walk", "bmi" = "run", "hyp" = "walk", "chl" = "walk")
-imp3 <- mice(nhanes, method = "pmmsplit", activities = activities,
+actions <- c("age" = "walk", "bmi" = "run", "hyp" = "walk", "chl" = "walk")
+imp3 <- mice(nhanes, method = "pmmsplit", actions = actions,
              models = imp2$models, print = FALSE)
 
 \dontrun{

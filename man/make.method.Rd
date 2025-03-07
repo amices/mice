@@ -8,7 +8,7 @@ make.method(
   data,
   where = make.where(data),
   blocks = make.blocks(data),
-  activities = NULL,
+  actions = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr")
 )
 }
@@ -38,7 +38,7 @@ matrix are set to \code{FALSE} of variables that are not block members.
 A variable may appear in multiple blocks. In that case, it is
 effectively re-imputed each time that it is visited.}
 
-\item{activities}{A character vector specifying the activity to perform for
+\item{actions}{A character vector specifying the action to perform for
 each imputation block. The available options are:
 \describe{
 \item{"walk"}{Estimate parameters and generate imputations
@@ -49,7 +49,7 @@ without data and without generating imputations.}
 imputations, without re-estimating parameters.}
 }
 This argument can be specified as a named vector, where names correspond
-to variables and values specify the activity for each variable. If a
+to variables and values specify the action for each variable. If a
 single value is provided, it applies to the variables in all blocks. The
 length of the vector must match the number of variables present in the
 blocks.}

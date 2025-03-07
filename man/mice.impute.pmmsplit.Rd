@@ -17,7 +17,7 @@ mice.impute.pmmsplit(
   trim = 1L,
   ridge = 1e-05,
   nbins = NULL,
-  activity = "walk",
+  action = "walk",
   model = NULL,
   ...
 )
@@ -72,7 +72,7 @@ reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
 \item{nbins}{The number of bins used to store the predictive mean matching
 model. The default is 50.}
 
-\item{activity}{The activity to be performed. The default is \code{"walk"}.}
+\item{action}{The action to be performed. The default is \code{"walk"}.}
 
 \item{model}{Storage for the model estimates}
 

@@ -97,8 +97,8 @@ cbind.mids <- function(x, y = NULL, ...) {
   post <- c(x$post, rep.int("", ncol(y)))
   names(post) <- varnames
   blots <- x$blots
-  activities <- c(x$activities, "walk")
-  names(activities) <- c(names(x$activities), tail(varnames, 1L))
+  actions <- c(x$actions, "walk")
+  names(actions) <- c(names(x$actions), tail(varnames, 1L))
   models <- x$models
   ignore <- x$ignore
 
@@ -128,7 +128,7 @@ cbind.mids <- function(x, y = NULL, ...) {
     modeltype = modeltype,
     post = post,
     blots = blots,
-    activities = activities,
+    actions = actions,
     models = models,
     ignore = ignore,
     seed = seed,
@@ -236,9 +236,9 @@ cbind.mids.mids <- function(x, y, call) {
   names(post) <- varnames
   blots <- c(x$blots, y$blots)
   names(blots) <- blocknames
-  activities <- c(x$activities, y$activities)
-  # FIXME: Assumes combined activity names yields unique names as in colnames(data)
-  names(activities) <- make.unique(c(names(x$activities), names(y$activities)))
+  actions <- c(x$actions, y$actions)
+  # FIXME: Assumes combined action names yields unique names as in colnames(data)
+  names(actions) <- make.unique(c(names(x$actions), names(y$actions)))
 
   # Function to copy all objects from one environment to another
   merge_envs <- function(target_env, source_env) {
@@ -313,7 +313,7 @@ cbind.mids.mids <- function(x, y, call) {
     modeltype = modeltype,
     post = post,
     blots = blots,
-    activities = activities,
+    actions = actions,
     models = models,
     ignore = ignore,
     seed = seed,

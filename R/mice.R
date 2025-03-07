@@ -219,7 +219,7 @@
 #' to pass down arguments to lower level imputation function. The entries
 #' of element \code{blots[[blockname]]} are passed down to the function
 #' called for block \code{blockname}.
-#' @param activities A character vector specifying the activity to perform for
+#' @param actions A character vector specifying the action to perform for
 #'   each imputation block. The available options are:
 #'   \describe{
 #'     \item{"walk"}{Estimate parameters and generate imputations
@@ -230,7 +230,7 @@
 #'       imputations, without re-estimating parameters.}
 #'   }
 #'   This argument can be specified as a named vector, where names correspond
-#'   to variables and values specify the activity for each variable. If a
+#'   to variables and values specify the action for each variable. If a
 #'   single value is provided, it applies to the variables in all blocks. The
 #'   length of the vector must match the number of variables present in the
 #'   blocks.
@@ -315,8 +315,8 @@
 #' imp1 <- mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"), print = FALSE)
 #'
 #' # Store model for `bmi`, estimate others as usual
-#' activities <- c("age" = "walk", "bmi" = "train", "hyp" = "walk", "chl" = "walk")
-#' imp2 <- mice(nhanes, method = "pmmsplit", activities = activities, print = FALSE)
+#' actions <- c("age" = "walk", "bmi" = "train", "hyp" = "walk", "chl" = "walk")
+#' imp2 <- mice(nhanes, method = "pmmsplit", actions = actions, print = FALSE)
 #'
 #' # Inspects the stored model for imputation 1 for `bmi`
 #' ls(imp2$models$bmi$"1")
@@ -324,8 +324,8 @@
 #' imp2$models$bmi$"1"$beta.mis
 #'
 #' # Fill missing `bmi` values using pre-trained model
-#' activities <- c("age" = "walk", "bmi" = "run", "hyp" = "walk", "chl" = "walk")
-#' imp3 <- mice(nhanes, method = "pmmsplit", activities = activities,
+#' actions <- c("age" = "walk", "bmi" = "run", "hyp" = "walk", "chl" = "walk")
+#' imp3 <- mice(nhanes, method = "pmmsplit", actions = actions,
 #'              models = imp2$models, print = FALSE)
 #'
 #' \dontrun{
@@ -361,7 +361,7 @@ mice <- function(data,
                  formulas,
                  modeltype = NULL,
                  blots = NULL,
-                 activities = NULL,
+                 actions = NULL,
                  models = NULL,
                  post = NULL,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -472,10 +472,10 @@ mice <- function(data,
     user.visitSequence = user.visitSequence,
     maxit = maxit
   )
-  activities <- check.activities(activities, data, models, blocks)
+  actions <- check.actions(actions, data, models, blocks)
   method <- check.method(
     method = method, data = data, where = where,
-    blocks = blocks, activities = activities,
+    blocks = blocks, actions = actions,
     defaultMethod = defaultMethod
   )
   post <- check.post(post, data)
@@ -503,7 +503,7 @@ mice <- function(data,
   if (is.null(models)) {
     models <- new.env(parent = emptyenv())
   }
-  model_vars <- names(activities[activities %in% c("train", "run")])
+  model_vars <- names(actions[actions %in% c("train", "run")])
   for (block in model_vars) {
     if (!exists(block, envir = models)) {
       models[[block]] <- new.env(parent = emptyenv())
@@ -528,7 +528,7 @@ mice <- function(data,
   q <- sampler(
     data, m, ignore, where, imp, blocks, method,
     visitSequence, predictorMatrix, formulas,
-    modeltype, blots, activities, models,
+    modeltype, blots, actions, models,
     post, c(from, to), printFlag, ...
   )
 
@@ -551,7 +551,7 @@ mice <- function(data,
     modeltype = modeltype,
     post = post,
     blots = blots,
-    activities = activities,
+    actions = actions,
     models = models,
     ignore = ignore,
     seed = seed,
