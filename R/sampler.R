@@ -207,7 +207,7 @@ sampler.univ <- function(data, r, where, pred, formula, method, activity, model,
   wy <- complete.cases(x) & where[, j]
 
   # nothing to impute
-  if (all(!wy)) {
+  if (all(!wy) && activity != "train") {
     return(numeric(0))
   }
 
