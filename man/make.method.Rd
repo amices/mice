@@ -8,6 +8,7 @@ make.method(
   data,
   where = make.where(data),
   blocks = make.blocks(data),
+  activities = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr")
 )
 }
@@ -36,6 +37,22 @@ fully conditional specification (FCS) by univariate models
 matrix are set to \code{FALSE} of variables that are not block members.
 A variable may appear in multiple blocks. In that case, it is
 effectively re-imputed each time that it is visited.}
+
+\item{activities}{A character vector specifying the activity to perform for
+each imputation block. The available options are:
+\describe{
+\item{"walk"}{Estimate parameters and generate imputations
+(classic MICE behavior). This is the default.}
+\item{"train"}{Estimate parameters and store the imputation model
+without data and without generating imputations.}
+\item{"run"}{Use a previously stored imputation model to generate
+imputations, without re-estimating parameters.}
+}
+This argument can be specified as a named vector, where names correspond
+to variables and values specify the activity for each variable. If a
+single value is provided, it applies to the variables in all blocks. The
+length of the vector must match the number of variables present in the
+blocks.}
 
 \item{defaultMethod}{A vector of length 4 containing the default
 imputation methods for 1) numeric data, 2) factor data with 2 levels, 3)

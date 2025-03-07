@@ -472,9 +472,11 @@ mice <- function(data,
     user.visitSequence = user.visitSequence,
     maxit = maxit
   )
+  activities <- check.activities(activities, data, models, blocks)
   method <- check.method(
     method = method, data = data, where = where,
-    blocks = blocks, defaultMethod = defaultMethod
+    blocks = blocks, activities = activities,
+    defaultMethod = defaultMethod
   )
   post <- check.post(post, data)
   blots <- check.blots(blots, data, blocks)
@@ -496,9 +498,6 @@ mice <- function(data,
   predictorMatrix <- setup$predictorMatrix
   visitSequence <- setup$visitSequence
   post <- setup$post
-
-  # check activities in current model
-  activities <- check.activities(activities, data, models, blocks)
 
   # Initialize models only for "train" and "run" blocks that are missing in models
   if (is.null(models)) {

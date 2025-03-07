@@ -12,6 +12,7 @@
 make.method <- function(data,
                         where = make.where(data),
                         blocks = make.blocks(data),
+                        activities = NULL,
                         defaultMethod = c("pmm", "logreg", "polyreg", "polr")) {
   method <- rep("", length(blocks))
   names(method) <- names(blocks)
@@ -28,30 +29,46 @@ make.method <- function(data,
     method[j] <- defaultMethod[k]
   }
   nimp <- nimp(where, blocks)
-  method[nimp == 0] <- ""
+
+  # preserve old behaviour that sets method <- "" with walk
+  names(method) <- names(blocks)
+  if (!is.null(activities)) {
+    for (j in names(blocks)) {
+      vname <- blocks[[j]]
+      if ("walk" %in% activities[vname] && nimp[j] == 0L) method[j] <- ""
+    }
+  }
+
   method
 }
 
 
-check.method <- function(method, data, where, blocks, defaultMethod) {
+check.method <- function(method, data, where, blocks, activities, defaultMethod) {
   if (is.null(method)) {
     return(make.method(
       data = data,
       where = where,
       blocks = blocks,
+      activities = activities,
       defaultMethod = defaultMethod
     ))
   }
   nimp <- nimp(where, blocks)
 
-  # expand user's imputation method to all visited columns
+  # expand user's imputation method to all visited blocks
   # single string supplied by user (implicit assumption of two columns)
-  if (length(method) == 1) {
+  if (length(method) == 1L) {
     if (is.passive(method)) {
-      stop("Cannot have a passive imputation method for every column.")
+      stop("Cannot have a passive imputation method for every block.")
     }
     method <- rep(method, length(blocks))
-    method[nimp == 0] <- ""
+    names(method) <- names(blocks)
+
+    # preserve old behaviour that sets method <- "" with walk
+    for (j in names(blocks)) {
+      vname <- blocks[[j]]
+      if ("walk" %in% activities[vname] && nimp[j] == 0L) method[j] <- ""
+    }
   }
 
   # check the length of the argument
@@ -117,8 +134,10 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
               call. = FALSE
       )
     }
+    # preserve old behaviour that sets method <- "" with walk
+    if ("walk" %in% activities[vname] && nimp[j] == 0L) method[j] <- ""
   }
-  method[nimp == 0] <- ""
+
   unlist(method)
 }
 

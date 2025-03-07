@@ -155,6 +155,7 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
   # **Store Model for "train" (skip for "walk")**
   if (activity == "train") {
     model$setup <- list(method = "pmmsplit",
+                        n = length(yhatobs),
                         donors = donors,
                         nbins = nbins,
                         matchtype = matchtype,
