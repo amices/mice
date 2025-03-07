@@ -4,7 +4,7 @@
 #' \code{pmmsplit()} is an implementation of pmm that saves the imputation model
 #' and generates imputations from the saved model.
 #' @aliases pmmsplit
-#' @param operation The operation to be performed. The default is \code{"estimate"}.
+#' @param activity The activity to be performed. The default is \code{"walk"}.
 #' @param model Storage for the model estimates
 #' @param nbins The number of bins used to store the predictive mean matching
 #' model. The default is 50.
@@ -96,26 +96,26 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
                                  matchtype = 1L, exclude = NULL,
                                  quantify = TRUE, trim = 1L,
                                  ridge = 1e-05, nbins = NULL,
-                                 operation = "estimate",
+                                 activity = "walk",
                                  model = NULL, ...) {
   if (is.null(wy)) {
     wy <- !ry
   }
 
-  # **Only enforce `model` for "fit" and "fill"**
-  if (operation %in% c("fit", "fill")) {
+  # **Only enforce `model` for "train" and "run"**
+  if (activity %in% c("train", "run")) {
     if (is.null(model)) {
-      stop(paste("`model` cannot be NULL for operation:", operation))
+      stop(paste("`model` cannot be NULL for activity:", activity))
     }
     if (!is.environment(model)) {
       stop("`model` must be an environment to store results persistently.")
     }
   }
 
-  # **Handle "fill" Operation: Use Pre-Stored Model Without Re-Training**
-  if (operation == "fill") {
+  # **Handle "run" activity: Use Pre-Stored Model Without Re-Training**
+  if (activity == "run") {
     if (!length(ls(model))) {
-      stop("No stored model found for 'fill' operation.")
+      stop("No stored model found for 'fill' activity.")
     }
 
     # Compute linear predictor for missing data
@@ -130,7 +130,7 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
     return(impy)
   }
 
-  # **Handle "estimate" and "fit": Train Model**
+  # **Handle "walk" and "train": Train Model**
   ynum <- quantify(y, ry, x, quantify = quantify)
 
   # Predicted values for observed part
@@ -152,8 +152,8 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
   donors <- initialize.donors(donors, length(yhatobs))
   prep <- bin.yhat(yhatobs, ynum[ry], k = donors, nbins = nbins)
 
-  # **Store Model for "fit" (skip for "estimate")**
-  if (operation == "fit") {
+  # **Store Model for "train" (skip for "walk")**
+  if (activity == "train") {
     model$setup <- list(method = "pmmsplit",
                         donors = donors,
                         nbins = nbins,

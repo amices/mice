@@ -113,7 +113,7 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
     obj$data, obj$m, obj$ignore, where, imp, blocks,
     obj$method, obj$visitSequence, obj$predictorMatrix,
     obj$formulas, obj$modeltype, obj$blots,
-    obj$operations, obj$models,
+    obj$activities, obj$models,
     obj$post, c(from, to), printFlag, ...
   )
 
@@ -168,7 +168,7 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
     modeltype = obj$modeltype,
     post = obj$post,
     blots = obj$blots,
-    operations = obj$operations,
+    activities = obj$activities,
     models = obj$models,
     ignore = obj$ignore,
     seed = obj$seed,

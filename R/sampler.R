@@ -2,7 +2,7 @@
 # This function is called by mice and mice.mids
 sampler <- function(data, m, ignore, where, imp, blocks, method,
                     visitSequence, predictorMatrix, formulas,
-                    modeltype, blots, operations, models,
+                    modeltype, blots, activities, models,
                     post, fromto, printFlag, ...) {
   from <- fromto[1]
   to <- fromto[2]
@@ -75,7 +75,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
                   data = data, r = r, where = where,
                   pred = pred, formula = ff,
                   method = theMethod,
-                  operation = operations[j],
+                  activity = activities[j],
                   model = models[[j]][[as.character(i)]],
                   yname = j, k = k,
                   ct = ct,
@@ -181,12 +181,12 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 }
 
 
-sampler.univ <- function(data, r, where, pred, formula, method, operation, model,
+sampler.univ <- function(data, r, where, pred, formula, method, activity, model,
                          yname, k, ct = "pred", user, ignore, ...) {
   j <- yname[1L]
 
   # prepare formula and model matrix
-  formula <- prepare.formula(formula, data, model, j, ct, pred, operation)
+  formula <- prepare.formula(formula, data, model, j, ct, pred, activity)
   x <- obtain.design(data, formula)
 
   # expand pred vector to model matrix, remove intercept
@@ -228,21 +228,21 @@ sampler.univ <- function(data, r, where, pred, formula, method, operation, model
   imputes[!cc] <- NA
 
   args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type,
-                 operation = operation, model = model),
+                 activity = activity, model = model),
             user, list(...))
   imputes[cc] <- do.call(f, args = args)
   imputes
 }
 
 
-prepare.formula <- function(formula, data, model, j, ct, pred, operation) {
+prepare.formula <- function(formula, data, model, j, ct, pred, activity) {
   # prepares the formula for univariate imputation
-  # saves (for "fit") or retrieves (for "fill") the formula
+  # saves (for "train") or retrieves (for "run") the formula
 
-  # for "fill", use the stored formula instead of recalculating
-  if (operation == "fill") {
+  # for "run", use the stored formula instead of recalculating
+  if (activity == "run") {
     if (!exists("formula", envir = model)) {
-      stop("Error: No stored formula found in model for 'fill' operation.")
+      stop("Error: No stored formula found in model for 'fill' activity.")
     }
     formula <- get("formula", envir = model)
     return(formula)
@@ -268,8 +268,8 @@ prepare.formula <- function(formula, data, model, j, ct, pred, operation) {
     }
   }
 
-  # store formula in `model` only when operation == "fit"
-  if (operation == "fit") {
+  # store formula in `model` only when activity == "train"
+  if (activity == "train") {
     assign("formula", formula, envir = model)
   }
 

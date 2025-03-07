@@ -44,7 +44,7 @@ The function constructs the elements of the filtered \code{mids} object as follo
 \code{formulas}  \tab Equals \code{.data$formulas}\cr
 \code{post}      \tab Equals \code{.data$post}\cr
 \code{blots}     \tab Equals \code{.data$blots}\cr
-\code{operations} \tab Equals \code{.data$operations}\cr
+\code{activities} \tab Equals \code{.data$activities}\cr
 \code{models}    \tab Equals \code{.data$models}\cr
 \code{ignore}    \tab Select positions in \code{.data$ignore} for which \code{include == TRUE}\cr
 \code{seed}            \tab Equals \code{.data$seed}\cr

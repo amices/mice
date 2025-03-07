@@ -23,7 +23,7 @@ mids(
   modeltype = character(),
   post = character(),
   blots = list(),
-  operations = character(),
+  activities = character(),
   models = new.env(),
   ignore = logical(),
   seed = integer(),
@@ -155,18 +155,18 @@ to pass down arguments to lower level imputation function. The entries
 of element \code{blots[[blockname]]} are passed down to the function
 called for block \code{blockname}.}
 
-\item{operations}{A character vector specifying the operation to perform for
+\item{activities}{A character vector specifying the activity to perform for
 each imputation block. The available options are:
 \describe{
-\item{"estimate"}{Estimate parameters and generate imputations
+\item{"walk"}{Estimate parameters and generate imputations
 (classic MICE behavior). This is the default.}
-\item{"fit"}{Estimate parameters and store the imputation model
+\item{"train"}{Estimate parameters and store the imputation model
 without data and without generating imputations.}
-\item{"fill"}{Use a previously stored imputation model to generate
+\item{"run"}{Use a previously stored imputation model to generate
 imputations, without re-estimating parameters.}
 }
 This argument can be specified as a named vector, where names correspond
-to variables and values specify the operation for each variable. If a
+to variables and values specify the activity for each variable. If a
 single value is provided, it applies to the variables in all blocks. The
 length of the vector must match the number of variables present in the
 blocks.}
@@ -280,7 +280,7 @@ identified by its name, so list names must correspond to block names.}
 with commands for post-processing.}
 \item{\code{blots}:}{"Block dots". The \code{blots} argument to the \code{mice()}
 function.}
-\item{\code{operations}:}{A character vector of length \code{length(blocks)}.}
+\item{\code{activities}:}{A character vector of length \code{length(blocks)}.}
 \item{\code{models}:}{The \code{models} list contains imputation model
 estimates.}
 \item{\code{ignore}:}{A logical vector of length \code{nrow(data)} indicating

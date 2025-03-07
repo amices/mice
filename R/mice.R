@@ -219,18 +219,18 @@
 #' to pass down arguments to lower level imputation function. The entries
 #' of element \code{blots[[blockname]]} are passed down to the function
 #' called for block \code{blockname}.
-#' @param operations A character vector specifying the operation to perform for
+#' @param activities A character vector specifying the activity to perform for
 #'   each imputation block. The available options are:
 #'   \describe{
-#'     \item{"estimate"}{Estimate parameters and generate imputations
+#'     \item{"walk"}{Estimate parameters and generate imputations
 #'       (classic MICE behavior). This is the default.}
-#'     \item{"fit"}{Estimate parameters and store the imputation model
+#'     \item{"train"}{Estimate parameters and store the imputation model
 #'       without data and without generating imputations.}
-#'     \item{"fill"}{Use a previously stored imputation model to generate
+#'     \item{"run"}{Use a previously stored imputation model to generate
 #'       imputations, without re-estimating parameters.}
 #'   }
 #'   This argument can be specified as a named vector, where names correspond
-#'   to variables and values specify the operation for each variable. If a
+#'   to variables and values specify the activity for each variable. If a
 #'   single value is provided, it applies to the variables in all blocks. The
 #'   length of the vector must match the number of variables present in the
 #'   blocks.
@@ -315,8 +315,8 @@
 #' imp1 <- mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"), print = FALSE)
 #'
 #' # Store model for `bmi`, estimate others as usual
-#' operations <- c("age" = "estimate", "bmi" = "fit", "hyp" = "estimate", "chl" = "estimate")
-#' imp2 <- mice(nhanes, method = "pmmsplit", operations = operations, print = FALSE)
+#' activities <- c("age" = "walk", "bmi" = "train", "hyp" = "walk", "chl" = "walk")
+#' imp2 <- mice(nhanes, method = "pmmsplit", activities = activities, print = FALSE)
 #'
 #' # Inspects the stored model for imputation 1 for `bmi`
 #' ls(imp2$models$bmi$"1")
@@ -324,8 +324,8 @@
 #' imp2$models$bmi$"1"$beta.mis
 #'
 #' # Fill missing `bmi` values using pre-trained model
-#' operations <- c("age" = "estimate", "bmi" = "fill", "hyp" = "estimate", "chl" = "estimate")
-#' imp3 <- mice(nhanes, method = "pmmsplit", operations = operations,
+#' activities <- c("age" = "walk", "bmi" = "run", "hyp" = "walk", "chl" = "walk")
+#' imp3 <- mice(nhanes, method = "pmmsplit", activities = activities,
 #'              models = imp2$models, print = FALSE)
 #'
 #' \dontrun{
@@ -361,7 +361,7 @@ mice <- function(data,
                  formulas,
                  modeltype = NULL,
                  blots = NULL,
-                 operations = NULL,
+                 activities = NULL,
                  models = NULL,
                  post = NULL,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -497,14 +497,14 @@ mice <- function(data,
   visitSequence <- setup$visitSequence
   post <- setup$post
 
-  # check operations in current model
-  operations <- check.operations(operations, data, models, blocks)
+  # check activities in current model
+  activities <- check.activities(activities, data, models, blocks)
 
-  # Initialize models only for "fit" and "fill" blocks that are missing in models
+  # Initialize models only for "train" and "run" blocks that are missing in models
   if (is.null(models)) {
     models <- new.env(parent = emptyenv())
   }
-  model_vars <- names(operations[operations %in% c("fit", "fill")])
+  model_vars <- names(activities[activities %in% c("train", "run")])
   for (block in model_vars) {
     if (!exists(block, envir = models)) {
       models[[block]] <- new.env(parent = emptyenv())
@@ -529,7 +529,7 @@ mice <- function(data,
   q <- sampler(
     data, m, ignore, where, imp, blocks, method,
     visitSequence, predictorMatrix, formulas,
-    modeltype, blots, operations, models,
+    modeltype, blots, activities, models,
     post, c(from, to), printFlag, ...
   )
 
@@ -552,7 +552,7 @@ mice <- function(data,
     modeltype = modeltype,
     post = post,
     blots = blots,
-    operations = operations,
+    activities = activities,
     models = models,
     ignore = ignore,
     seed = seed,
