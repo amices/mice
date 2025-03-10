@@ -1,27 +1,20 @@
-
-test_that("quantify() and unquantify() work correctly", {
+test_that("quantify() and unquantify() work correctly for factors", {
   set.seed(123)
-
-  # Original factor variable
   y <- factor(sample(c("A", "B", "C"), 10, replace = TRUE), levels = c("A", "B", "C"))
-
-  # Simulated `x` (covariates)
   x <- matrix(rnorm(10 * 3), ncol = 3)
-
-  # Logical `ry` (observed vs missing)
   ry <- sample(c(TRUE), 10, replace = TRUE)
 
   # Quantify the factor (optimal scaling)
-  ynum_quantified <- mice:::quantify(y, ry, x)
+  f <- mice:::quantify(y, ry, x)
+  ynum_quantified <- f$ynum
+  y_reconstructed_quantified <- mice:::unquantify(ynum_quantified, quant = f$quant, labels = f$labels)
+  expect_equal(y, y_reconstructed_quantified)
 
-  # Convert to integer encoding
-  ynum_integer <- as.integer(y)
-
-  # Reverse optimal scaling
-  y_reconstructed_quantified <- mice:::unquantify(ynum_quantified, y, quantify = TRUE)
-
-  # Reverse integer encoding
-  y_reconstructed_integer <- mice:::unquantify(ynum_integer, y, quantify = FALSE)
+  # Integer coding
+  f <- mice:::quantify(y, ry, x, quantify = FALSE)
+  ynum_quantified <- f$ynum
+  y_reconstructed_integer <- mice:::unquantify(ynum_quantified, quant = f$quant, labels = f$labels)
+  expect_equal(y, y_reconstructed_integer)
 
   # Test 1: Levels should remain in the original order
   expect_equal(levels(y_reconstructed_quantified), levels(y))
@@ -31,18 +24,48 @@ test_that("quantify() and unquantify() work correctly", {
   expect_equal(y_reconstructed_quantified, y)
   expect_equal(y_reconstructed_integer, y)
 
-  # Test 3: Handle missing values correctly
+  # Handle missing values, with extra level
   y_with_na <- y
   y_with_na[c(2, 5)] <- NA
+  ry[c(2,5)] <- FALSE
 
-  ynum_quantified_na <- mice:::quantify(y_with_na, ry, x)
-  y_reconstructed_na <- mice:::unquantify(ynum_quantified_na, y_with_na, quantify = TRUE)
+  f <- mice:::quantify(y_with_na, ry, x)
+  ynum_quantified_na <- f$ynum
+  y_reconstructed_na <- mice:::unquantify(ynum_quantified_na, quant = f$quant, labels = f$labels)
+  expect_equal(y_with_na, y_reconstructed_na)
 
   expect_true(is.na(y_reconstructed_na[2]))
   expect_true(is.na(y_reconstructed_na[5]))
-
-  # Test 4: Unquantify should return original y if y is not a factor
-  expect_equal(mice:::unquantify(ynum_quantified, as.numeric(y), quantify = TRUE), ynum_quantified)
 })
+
+test_that("quantify() and unquantify() work correctly for numeric variables", {
+  set.seed(123)
+  y <- rnorm(10)
+  x <- matrix(rnorm(10 * 3), ncol = 3)
+  ry <- sample(c(TRUE), 10, replace = TRUE)
+
+  # Pass through a numeric variable
+  f <- mice:::quantify(y, ry, x)
+  ynum_quantified <- f$ynum
+  y_reconstructed_quantified <- mice:::unquantify(ynum_quantified, quant = f$quant, labels = f$labels)
+  expect_equal(y, y_reconstructed_quantified)
+
+  # Pass through, integer coding
+  f <- mice:::quantify(y, ry, x, quantify = FALSE)
+  ynum_quantified <- f$ynum
+  y_reconstructed_integer <- mice:::unquantify(ynum_quantified, quant = f$quant, labels = f$labels)
+  expect_equal(y, y_reconstructed_integer)
+
+  # Handle missing values, with extra level
+  y_with_na <- y
+  y_with_na[c(2, 5)] <- NA
+  ry[c(2,5)] <- FALSE
+
+  f <- mice:::quantify(y_with_na, ry, x)
+  ynum_quantified_na <- f$ynum
+  y_reconstructed_na <- mice:::unquantify(ynum_quantified_na, quant = f$quant, labels = f$labels)
+  expect_equal(y_with_na, y_reconstructed_na)
+})
+
 
 

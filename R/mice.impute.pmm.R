@@ -161,27 +161,31 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
   # 1. the imputation model disregards records with excluded y-values
   # 2. the donor set does not contain excluded y-values
 
-  # Keep sparse categories out of the imputation model
+  # Retain categories with ">= trim" observations in the imputation model
+  # Exclude values from the imputation model
   if (is.factor(y)) {
-    active <- !ry | y %in% (levels(y)[table(y) >= trim])
-    y <- y[active]
-    ry <- ry[active]
-    x <- x[active, , drop = FALSE]
-    wy <- wy[active]
-  }
-  # Keep excluded values out of the imputation model
-  if (!is.null(exclude)) {
+    active <- !ry | (y %in% levels(y)[table(y) >= trim] & !y %in% exclude)
+    if (any(!active)) {
+      y <- droplevels(y[active])
+      ry <- ry[active]
+      x <- x[active, , drop = FALSE]
+      wy <- wy[active]
+    }
+  } else {
     active <- !ry | !y %in% exclude
-    y <- y[active]
-    ry <- ry[active]
-    x <- x[active, , drop = FALSE]
-    wy <- wy[active]
+    if (any(!active)) {
+      y <- y[active]
+      ry <- ry[active]
+      x <- x[active, , drop = FALSE]
+      wy <- wy[active]
+    }
   }
 
   x <- cbind(1, as.matrix(x))
 
   # quantify categories for factors
-  ynum <- quantify(y, ry, x, quantify = quantify)
+  q <- quantify(y, ry, x, quantify = quantify)
+  ynum <- q$ynum
 
   # parameter estimation
   parm <- .norm.draw(ynum, ry, x, ridge = ridge, ...)

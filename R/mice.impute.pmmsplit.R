@@ -102,7 +102,7 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
     wy <- !ry
   }
 
-  # **Only enforce `model` for "train" and "run"**
+  # Only enforce `model` for "train" and "run"
   if (action %in% c("train", "run")) {
     if (is.null(model)) {
       stop(paste("`model` cannot be NULL for action:", action))
@@ -112,10 +112,10 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
     }
   }
 
-  # **Handle "run" action: Use Pre-Stored Model Without Re-Training**
+  # Handle "run" action: Use pre-stored model without re-training
   if (action == "run") {
     if (!length(ls(model))) {
-      stop("No stored model found for 'fill' action.")
+      stop("No stored model found for 'run' action.")
     }
 
     # Compute linear predictor for missing data
@@ -126,12 +126,17 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
                                m = 1L)
 
     # Convert back to factor if needed
-    impy <- unquantify(impy, y)
+    impy <- unquantify(ynum = impy,
+                       quant = model$factor$quant,
+                       labels = model$factor$levels)
     return(impy)
   }
 
-  # **Handle "walk" and "train": Train Model**
-  ynum <- quantify(y, ry, x, quantify = quantify)
+  # Handle "walk" and "train": train model
+
+  # Quantify factor by optimal scaling
+  f <- quantify(y, ry, x, quantify = quantify)
+  ynum <- f$ynum
 
   # Predicted values for observed part
   parm <- .norm.draw(ynum, ry, x, ridge = ridge, ...)
@@ -152,7 +157,7 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
   donors <- initialize.donors(donors, length(yhatobs))
   prep <- bin.yhat(yhatobs, ynum[ry], k = donors, nbins = nbins)
 
-  # **Store Model for "train" (skip for "walk")**
+  # Store model for "train", skip for "walk"
   if (action == "train") {
     model$setup <- list(method = "pmmsplit",
                         n = length(yhatobs),
@@ -167,9 +172,10 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
     model$beta.mis <- beta.mis
     model$edges <- prep$edges
     model$lookup <- prep$lookup
+    model$factor <- list(f$labels, f$quant)
   }
 
-  # **Compute Missing Value Imputations**
+  # Compute imputations
   yhatmis <- x[wy, , drop = FALSE] %*% beta.mis
   impy <- draw.neighbors.pmm(yhatmis,
                              edges = prep$edges,
@@ -177,7 +183,9 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
                              m = 1L)
 
   # Convert back to factor if needed
-  impy <- unquantify(impy, y)
+  impy <- unquantify(ynum = impy,
+                     quant = f$quant,
+                     labels = f$labels)
   return(impy)
 }
 
@@ -263,48 +271,4 @@ draw.neighbors.pmm <- function(yhat_query, edges, lookup, m = 1) {
   imputed_values <- matrix(lookup[cbind(selected_bin, sampled_indices)], nrow = num_queries, ncol = m)
 
   return(imputed_values)
-}
-
-quantify <- function(y, ry, x, quantify = TRUE) {
-  if (!is.factor(y)) {
-    return(y)
-  }
-  if (!quantify) {
-    return(as.integer(y))
-  }
-
-  # replace (reduced set of) categories by optimal scaling
-  yf <- factor(y[ry], exclude = NULL)
-  yd <- model.matrix(~ 0 + yf)
-  xd <- x[ry, , drop = FALSE]
-  cca <- cancor(yd, xd, xcenter = FALSE, ycenter = FALSE)
-  # NOTE: We must be more careful if imputations from a previous iteration
-  # need to be processed. The line below is a quick fix.
-  ynum <- as.integer(y)
-  # Scale only observed y's, since these are used to predict missing y's
-  ynum[ry] <- scale(as.vector(yd %*% cca$xcoef[, 2L]))
-  return(ynum)
-}
-
-unquantify <- function(ynum, original_y, quantify = TRUE) {
-  if (!is.factor(original_y)) return(ynum)
-  factor_levels <- levels(original_y)
-  if (!is.numeric(ynum)) stop("ynum must be numeric")
-
-  if (quantify) {
-    # Get unique numeric values and their corresponding factor levels in original y
-    unique_ynum <- unique(ynum)
-    unique_levels <- unique(original_y)
-
-    # Ensure levels are assigned in the same order as original_y
-    mapping <- setNames(as.character(unique_levels), unique_ynum)
-
-    # Assign factor levels based on the mapping
-    reconstructed_y <- factor(mapping[as.character(ynum)], levels = factor_levels)
-  } else {
-    # Reverse integer encoding (simple conversion)
-    reconstructed_y <- factor(factor_levels[ynum], levels = factor_levels)
-  }
-
-  return(unname(reconstructed_y))
 }
