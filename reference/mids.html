@@ -17,7 +17,7 @@ as.mids() and filter()."><meta property="og:image" content="https://amices.org/m
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.17.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.17.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,6 +70,7 @@ The following functions produce a <code>mids</code> object:
 <span>  predictorMatrix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  visitSequence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  formulas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  modeltype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  post <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  blots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  ignore <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -206,6 +207,21 @@ The <code>formulas</code> argument is an alternative to the
 specifying imputation models, e.g., for specifying interaction terms.</p></dd>
 
 
+<dt id="arg-modeltype">modeltype<a class="anchor" aria-label="anchor" href="#arg-modeltype"></a></dt>
+<dd><p>A character vector of <code>length(block)</code> elements
+that indicates how the imputation model is specified. Entries can
+one of two values: <code>"pred"</code> or <code>"formula"</code>. If
+<code>modeltype = "pred"</code>, the predictors of the imputation
+model for the block are specified by the corresponding row of the
+<code>predictorMatrix</code>. If  <code>modeltype = "formula"</code> the
+imputation model is specified by relevant entry in
+<code>formulas</code>. The default depends on the presence of the
+<code>formulas</code> argument. If <code>formulas</code> is present, then
+<code><a href="mice.html">mice()</a></code> sets
+<code>modeltype = "formula"</code> for any block
+for which a formula is specified. Otherwise, <code>modeltype = "pred"</code>.</p></dd>
+
+
 <dt id="arg-post">post<a class="anchor" aria-label="anchor" href="#arg-post"></a></dt>
 <dd><p>A vector of strings with length <code>ncol(data)</code> specifying
 expressions as strings. Each string is parsed and
@@ -329,90 +345,90 @@ The default is <code>c(2, 3)</code>.</p></dd>
 <p>Objects of class <code>"mids"</code> are lists with the following elements:</p><dl><dt><code>data</code>:</dt>
 <dd><p>Original (incomplete) data set.</p></dd>
 
-   <dt><code>imp</code>:</dt>
+<dt><code>imp</code>:</dt>
 <dd><p>A list of <code>ncol(data)</code> components with
-   the generated multiple imputations. Each list component is a
-   <code>data.frame</code> (<code>nmis[j]</code> by <code>m</code>) of imputed values
-   for variable <code>j</code>. A <code>NULL</code> component is used for
-   variables for which not imputations are generated.</p></dd>
+the generated multiple imputations. Each list component is a
+<code>data.frame</code> (<code>nmis[j]</code> by <code>m</code>) of imputed values
+for variable <code>j</code>. A <code>NULL</code> component is used for
+variables for which not imputations are generated.</p></dd>
 
-   <dt><code>m</code>:</dt>
+<dt><code>m</code>:</dt>
 <dd><p>Number of imputations.</p></dd>
 
-   <dt><code>where</code>:</dt>
+<dt><code>where</code>:</dt>
 <dd><p>The <code>where</code> argument of the
-   <code><a href="mice.html">mice()</a></code> function.</p></dd>
+<code><a href="mice.html">mice()</a></code> function.</p></dd>
 
-   <dt><code>blocks</code>:</dt>
+<dt><code>blocks</code>:</dt>
 <dd><p>The <code>blocks</code> argument of the
-   <code><a href="mice.html">mice()</a></code> function.</p></dd>
+<code><a href="mice.html">mice()</a></code> function.</p></dd>
 
-   <dt><code>call</code>:</dt>
+<dt><code>call</code>:</dt>
 <dd><p>Call that created the object.</p></dd>
 
-   <dt><code>nmis</code>:</dt>
+<dt><code>nmis</code>:</dt>
 <dd><p>An Named vector with counts of missing values per variable</p></dd>
 
-   <dt><code>method</code>:</dt>
+<dt><code>method</code>:</dt>
 <dd><p>A vector of strings of <code>length(blocks</code>
-   specifying the imputation method per block.</p></dd>
+specifying the imputation method per block.</p></dd>
 
-   <dt><code>predictorMatrix</code>:</dt>
+<dt><code>predictorMatrix</code>:</dt>
 <dd><p>A numerical matrix of containing
-   integers specifying the predictor set.</p></dd>
+integers specifying the predictor set.</p></dd>
 
-   <dt><code>visitSequence</code>:</dt>
+<dt><code>visitSequence</code>:</dt>
 <dd><p>A vector of variable and block names that
-    specifies how variables and blocks are visited in one iteration throuh
-    the data.</p></dd>
+specifies how variables and blocks are visited in one iteration throuh
+the data.</p></dd>
 
-   <dt><code>formulas</code>:</dt>
+<dt><code>formulas</code>:</dt>
 <dd><p>A named list of formula's, or expressions that
-   can be converted into formula's by <code>as.formula</code>. List elements
-   correspond to blocks. The block to which the list element applies is
-   identified by its name, so list names must correspond to block names.</p></dd>
+can be converted into formula's by <code>as.formula</code>. List elements
+correspond to blocks. The block to which the list element applies is
+identified by its name, so list names must correspond to block names.</p></dd>
 
-   <dt><code>post</code>:</dt>
+<dt><code>post</code>:</dt>
 <dd><p>A vector of strings of length <code>length(blocks)</code>
-   with commands for post-processing.</p></dd>
+with commands for post-processing.</p></dd>
 
-   <dt><code>blots</code>:</dt>
+<dt><code>blots</code>:</dt>
 <dd><p>"Block dots". The <code>blots</code> argument to the <code><a href="mice.html">mice()</a></code>
-   function.</p></dd>
+function.</p></dd>
 
-   <dt><code>ignore</code>:</dt>
+<dt><code>ignore</code>:</dt>
 <dd><p>A logical vector of length <code>nrow(data)</code> indicating
-   the rows in <code>data</code> used to build the imputation model. (new in <code>mice 3.12.0</code>)</p></dd>
+the rows in <code>data</code> used to build the imputation model. (new in <code>mice 3.12.0</code>)</p></dd>
 
-   <dt><code>seed</code>:</dt>
+<dt><code>seed</code>:</dt>
 <dd><p>The seed value of the solution.</p></dd>
 
-   <dt><code>iteration</code>:</dt>
+<dt><code>iteration</code>:</dt>
 <dd><p>Last Gibbs sampling iteration number.</p></dd>
 
-   <dt><code>lastSeedValue</code>:</dt>
+<dt><code>lastSeedValue</code>:</dt>
 <dd><p>Random number generator state.</p></dd>
 
-   <dt><code>chainMean</code>:</dt>
+<dt><code>chainMean</code>:</dt>
 <dd><p>An array of dimensions <code>ncol</code> by
-   <code>maxit</code> by <code>m</code> elements containing the mean of
-   the generated multiple imputations.
-   The array can be used for monitoring convergence.
-   Note that observed data are not present in this mean.</p></dd>
+<code>maxit</code> by <code>m</code> elements containing the mean of
+the generated multiple imputations.
+The array can be used for monitoring convergence.
+Note that observed data are not present in this mean.</p></dd>
 
-   <dt><code>chainVar</code>:</dt>
+<dt><code>chainVar</code>:</dt>
 <dd><p>An array with similar structure as
-   <code>chainMean</code>, containing the variance of the imputed values.</p></dd>
+<code>chainMean</code>, containing the variance of the imputed values.</p></dd>
 
-   <dt><code>loggedEvents</code>:</dt>
+<dt><code>loggedEvents</code>:</dt>
 <dd><p>A <code>data.frame</code> with five columns
-   containing warnings, corrective actions, and other inside info.</p></dd>
+containing warnings, corrective actions, and other inside info.</p></dd>
 
-   <dt><code>version</code>:</dt>
+<dt><code>version</code>:</dt>
 <dd><p>Version number of <code>mice</code> package that
-   created the object.</p></dd>
+created the object.</p></dd>
 
-   <dt><code>date</code>:</dt>
+<dt><code>date</code>:</dt>
 <dd><p>Date at which the object was created.</p></dd>
 
 

@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.17.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.17.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,10 +108,10 @@ Missing data pattern of <code>nhanes</code> data. Blue is observed, red is missi
 <span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, maxit <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">2</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  iter imp variable</span></span>
-<span><span class="co">#&gt;   1   1  bmi  hyp  chl</span></span>
-<span><span class="co">#&gt;   1   2  bmi  hyp  chl</span></span>
-<span><span class="co">#&gt;   2   1  bmi  hyp  chl</span></span>
-<span><span class="co">#&gt;   2   2  bmi  hyp  chl</span></span>
+<span><span class="co">#&gt;   1   1  age  bmi  hyp  chl</span></span>
+<span><span class="co">#&gt;   1   2  age  bmi  hyp  chl</span></span>
+<span><span class="co">#&gt;   2   1  age  bmi  hyp  chl</span></span>
+<span><span class="co">#&gt;   2   2  age  bmi  hyp  chl</span></span>
 <span></span>
 <span><span class="co"># inspect quality of imputations</span></span>
 <span><span class="fu"><a href="reference/stripplot.mids.html">stripplot</a></span><span class="op">(</span><span class="va">imp</span>, <span class="va">chl</span>, pch <span class="op">=</span> <span class="fl">19</span>, xlab <span class="op">=</span> <span class="st">"Imputation number"</span><span class="op">)</span></span></code></pre></div>
@@ -244,7 +244,7 @@ Distribution of <code>chl</code> per imputed data set.
 <li><a href="https://cran.r-project.org/package=mice" class="external-link"><img src="https://www.r-pkg.org/badges/version/mice" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://cran.r-project.org/package=mice" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/mice"></a></li>
 <li><a href="https://github.com/amices/mice/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/amices/mice/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://amices.org/mice/"><img src="https://img.shields.io/badge/github%20version-3.17.0-orange.svg"></a></li>
+<li><a href="https://amices.org/mice/"><img src="https://img.shields.io/badge/github%20version-3.17.2-orange.svg"></a></li>
 </ul>
 </div>
 

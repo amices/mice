@@ -9,7 +9,7 @@ specification. This is a convenience function."><meta property="og:image" conten
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.17.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.17.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,25 +46,16 @@ specification. This is a convenience function.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">name.blocks</span><span class="op">(</span><span class="va">blocks</span>, prefix <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">name.blocks</span><span class="op">(</span><span class="va">x</span>, prefix <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-blocks">blocks<a class="anchor" aria-label="anchor" href="#arg-blocks"></a></dt>
-<dd><p>List of vectors with variable names per block. List elements
-may be named to identify blocks. Variables within a block are
-imputed by a multivariate imputation method
-(see <code>method</code> argument). By default each variable is placed
-into its own block, which is effectively
-fully conditional specification (FCS) by univariate models
-(variable-by-variable imputation). Only variables whose names appear in
-<code>blocks</code> are imputed. The relevant columns in the <code>where</code>
-matrix are set to <code>FALSE</code> of variables that are not block members.
-A variable may appear in multiple blocks. In that case, it is
-effectively re-imputed each time that it is visited.</p></dd>
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>A <code>data.frame</code>, character vector with
+variable names, or <code>list</code> with variable names.</p></dd>
 
 
 <dt id="arg-prefix">prefix<a class="anchor" aria-label="anchor" href="#arg-prefix"></a></dt>

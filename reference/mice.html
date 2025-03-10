@@ -25,7 +25,7 @@ Generates Multivariate Imputations by Chained Equations (MICE)"><meta property="
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.17.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.17.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,6 +80,7 @@ implemented to inspect the quality of the imputations.</p>
 <span>  <span class="va">blocks</span>,</span>
 <span>  visitSequence <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">formulas</span>,</span>
+<span>  modeltype <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  blots <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  post <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  defaultMethod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pmm"</span>, <span class="st">"logreg"</span>, <span class="st">"polyreg"</span>, <span class="st">"polr"</span><span class="op">)</span>,</span>
@@ -195,6 +196,21 @@ The <code>formulas</code> argument is an alternative to the
 specifying imputation models, e.g., for specifying interaction terms.</p></dd>
 
 
+<dt id="arg-modeltype">modeltype<a class="anchor" aria-label="anchor" href="#arg-modeltype"></a></dt>
+<dd><p>A character vector of <code>length(block)</code> elements
+that indicates how the imputation model is specified. Entries can
+one of two values: <code>"pred"</code> or <code>"formula"</code>. If
+<code>modeltype = "pred"</code>, the predictors of the imputation
+model for the block are specified by the corresponding row of the
+<code>predictorMatrix</code>. If  <code>modeltype = "formula"</code> the
+imputation model is specified by relevant entry in
+<code>formulas</code>. The default depends on the presence of the
+<code>formulas</code> argument. If <code>formulas</code> is present, then
+<code>mice()</code> sets
+<code>modeltype = "formula"</code> for any block
+for which a formula is specified. Otherwise, <code>modeltype = "pred"</code>.</p></dd>
+
+
 <dt id="arg-blots">blots<a class="anchor" aria-label="anchor" href="#arg-blots"></a></dt>
 <dd><p>A named <code>list</code> of <code>alist</code>'s that can be used
 to pass down arguments to lower level imputation function. The entries
@@ -254,7 +270,7 @@ functions.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Returns an S3 object of class <code><a href="mids.html">mids</a></code>
-       (multiply imputed data set)</p>
+(multiply imputed data set)</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -359,7 +375,7 @@ argument <code>auxiliary = FALSE</code>.</p>
 
 
 
-<p>The main functions are:</p><table class="table table"><tr><td><code>mice()</code></td><td>Impute the missing data *m* times</td></tr><tr><td><code><a href="with.mids.html">with()</a></code></td><td>Analyze completed data sets</td></tr><tr><td><code><a href="pool.html">pool()</a></code></td><td>Combine parameter estimates</td></tr><tr><td><code><a href="complete.mids.html">complete()</a></code></td><td>Export imputed data</td></tr><tr><td><code><a href="ampute.html">ampute()</a></code></td><td>Generate missing data</td></tr></table></div>
+<p>The main functions are:</p><table class="table table"><tr><td><code>mice()</code></td><td>Impute the missing data <em>m</em> times</td></tr><tr><td><code><a href="with.mids.html">with()</a></code></td><td>Analyze completed data sets</td></tr><tr><td><code><a href="pool.html">pool()</a></code></td><td>Combine parameter estimates</td></tr><tr><td><code><a href="complete.mids.html">complete()</a></code></td><td>Export imputed data</td></tr><tr><td><code><a href="ampute.html">ampute()</a></code></td><td>Generate missing data</td></tr></table></div>
     <div class="section level2">
     <h2 id="vignettes">Vignettes<a class="anchor" aria-label="anchor" href="#vignettes"></a></h2>
 

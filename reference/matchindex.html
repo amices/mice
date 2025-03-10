@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.17.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.17.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,16 +75,14 @@ element is an index in the array <code>d</code>.</p>
     <p>For each element in <code>t</code>, the method finds the <code>k</code> nearest
 neighbours in <code>d</code>, randomly draws one of these neighbours, and
 returns its position in vector <code>d</code>.</p>
-<p>Fast predictive mean matching algorithm in seven steps:</p>
-<p>1. Shuffle records to remove effects of ties</p>
-<p>2. Obtain sorting order on shuffled data</p>
-<p>3. Calculate index on input data and sort it</p>
-<p>4. Pre-sample vector <code>h</code> with values between 1 and <code>k</code></p>
-<p>For each of the <code>n0</code> elements in <code>t</code>:</p>
-<p>5. find the two adjacent neighbours</p>
-<p>6. find the <code>h_i</code>'th nearest neighbour</p>
-<p>7. store the index of that neighbour</p>
-<p>Return vector of <code>n0</code> positions in <code>d</code>.</p>
+<p>Fast predictive mean matching algorithm in seven steps:</p><ol><li><p>Shuffle records to remove effects of ties</p></li>
+<li><p>Obtain sorting order on shuffled data</p></li>
+<li><p>Calculate index on input data and sort it</p></li>
+<li><p>Pre-sample vector <code>h</code> with values between 1 and <code>k</code></p></li>
+</ol><p>For each of the <code>n0</code> elements in <code>t</code>:</p><ol><li><p>find the two adjacent neighbours</p></li>
+<li><p>find the <code>h_i</code>'th nearest neighbour</p></li>
+<li><p>store the index of that neighbour</p></li>
+</ol><p>Return vector of <code>n0</code> positions in <code>d</code>.</p>
 <p>We may use the function to perform predictive mean matching under a given
 predictive model. To do so, specify both <code>d</code> and <code>t</code> as
 predictions from the same model. Suppose that <code>y</code> contains the observed
