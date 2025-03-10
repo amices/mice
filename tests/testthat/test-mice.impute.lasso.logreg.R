@@ -1,4 +1,4 @@
-context("mice.impute.lasso.norm")
+context("mice.impute.lasso.logreg")
 
 #########################
 # TEST 1: Simple problem #
@@ -45,17 +45,20 @@ for (j in 1:2) {
 }
 
 # Imputations
+meth <- make.method(X)
+meth[1:2] <- "lasso.logreg"
 durr_default <- mice(X,
-  m = 2, maxit = 2, method = "lasso.logreg",
+  m = 2, maxit = 2, method = meth,
   print = FALSE
 )
 durr_custom <- mice(X,
-  m = 2, maxit = 2, method = "lasso.logreg",
+  m = 2, maxit = 2, method = meth,
   nfolds = 5,
   print = FALSE
 )
+meth[1:2] <- "logreg"
 logreg_default <- mice(X,
-  m = 2, maxit = 2, method = "logreg",
+  m = 2, maxit = 2, method = meth,
   print = FALSE
 )
 
