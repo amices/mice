@@ -12,9 +12,13 @@ mice.impute.pmm(
   wy = NULL,
   donors = 5L,
   matchtype = 1L,
-  exclude = NULL,
   quantify = TRUE,
+  exclude = NULL,
   trim = 1L,
+  task = "generate",
+  model = NULL,
+  nimp = 1L,
+  nbins = NULL,
   ridge = 1e-05,
   use.matcher = FALSE,
   ...
@@ -36,10 +40,13 @@ indicates locations in \code{y} for which imputations are created.}
 
 \item{donors}{The size of the donor pool among which a draw is made.
 The default is \code{donors = 5L}. Setting \code{donors = 1L} always selects
-the closest match, but is not recommended. Values between 3L and 10L
-provide the best results in most cases (Morris et al, 2015).}
+the closest match, but is not recommended. Values between 5L and 10L
+provide the best results (Morris et al, 2015).
+For tasks \code{"retain"} and \code{"train"}, the number of donors
+is calculated internally based on the number of
+observations in \code{yobs}.}
 
-\item{matchtype}{Type of matching distance. The default choice
+\item{matchtype}{Type of matching distance. The default (recommended) choice
 (\code{matchtype = 1L}) calculates the distance between
 the \emph{predicted} value of \code{yobs} and
 the \emph{drawn} values of \code{ymis} (called type-1 matching).
@@ -47,18 +54,42 @@ Other choices are \code{matchtype = 0L}
 (distance between predicted values) and \code{matchtype = 2L}
 (distance between drawn values).}
 
-\item{exclude}{Dependent values to exclude from the imputation model
-and the collection of donor values}
-
 \item{quantify}{Logical. If \code{TRUE}, factor levels are replaced
 by the first canonical variate before fitting the imputation model.
 If false, the procedure reverts to the old behaviour and takes the
 integer codes (which may lack a sensible interpretation).
 Relevant only of \code{y} is a factor.}
 
+\item{exclude}{Dependent values to exclude from the imputation model
+and the collection of donor values}
+
 \item{trim}{Scalar integer. Minimum number of observations required in a
 category in order to be considered as a potential donor value.
 Relevant only of \code{y} is a factor.}
+
+\item{task}{Character string. The task to be performed. Can
+be \code{"generate"}, \code{"retain"}, \code{"train"} or \code{"apply"}.
+The default is \code{"generate"} (classic MICE). See \code{mice()} for
+details.}
+
+\item{model}{An environment created by a parent to store the imputation
+model setup and estimates. The model is stored in the \code{mids} object
+under tasks \code{"retain"} and \code{"train"}, and is needed as input
+for task \code{"apply"}. The object \code{model} is not used under
+task \code{"generate"}.}
+
+\item{nimp}{Experimental. Number of random imputations per missing values
+generated from a fitted model under tasks \code{"retain"} and \code{"train"}.
+The default is 1. The \code{nimp} parameter is different from \code{m},
+the number of multiple imputations, because it generates repeated
+imputations from a single model. The \code{nimp} parameter is useful
+for large samples to reduce the computational burden, but still awaits
+support within the mice algorithm.}
+
+\item{nbins}{The number of bins used to store the predictive mean matching
+model. Under tasks \code{"retain"} and \code{"train"}, the number of donors
+is calculated internally based on the number of observations in \code{yobs}
+and the number of unique predictive values.}
 
 \item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent
 problems with multicollinearity. The default is \code{ridge = 1e-05},
@@ -69,10 +100,7 @@ reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
 
 \item{use.matcher}{Logical. Set \code{use.matcher = TRUE} to specify
 the C function \code{matcher()}, the now deprecated matching function that
-was default in versions
-\code{2.22} (June 2014) to \code{3.11.7} (Oct 2020). Since version \code{3.12.0}
-\code{mice()} uses the much faster \code{matchindex} C function. Use
-the deprecated \code{matcher} function only for exact reproduction.}
+was default in versions of \code{mice} prior to \code{3.12.0}.}
 
 \item{\dots}{Other named arguments.}
 }
@@ -86,7 +114,6 @@ Imputation by predictive mean matching
 \details{
 Imputation of \code{y} by predictive mean matching, based on
 van Buuren (2012, p. 73). The procedure is as follows:
-
 \enumerate{
 \item{Calculate the cross-product matrix \eqn{S=X_{obs}'X_{obs}}.}
 \item{Calculate \eqn{V = (S+{diag}(S)\kappa)^{-1}}, with some small ridge
@@ -203,7 +230,6 @@ Other univariate imputation functions:
 \code{\link{mice.impute.norm.boot}()},
 \code{\link{mice.impute.norm.nob}()},
 \code{\link{mice.impute.norm.predict}()},
-\code{\link{mice.impute.pmmsplit}()},
 \code{\link{mice.impute.polr}()},
 \code{\link{mice.impute.polyreg}()},
 \code{\link{mice.impute.quadratic}()},
@@ -211,7 +237,7 @@ Other univariate imputation functions:
 \code{\link{mice.impute.ri}()}
 }
 \author{
-Gerko Vink, Stef van Buuren, Karin Groothuis-Oudshoorn
+Stef van Buuren
 }
 \concept{univariate imputation functions}
 \keyword{datagen}

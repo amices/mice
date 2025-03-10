@@ -1,4 +1,5 @@
 check.tasks <- function(tasks, data, models = NULL, blocks = NULL) {
+  # This function is called during initialization
   if (is.null(tasks)) {
     tasks <- "generate"
   }
@@ -75,4 +76,22 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL) {
   }
 
   return(tasks)
+}
+
+check.model <- function(model,
+                        task = c("generate", "retain", "train", "apply")) {
+  # This function is called during iteration
+  task <- match.arg(task)
+  if (task %in% c("retain", "train", "apply")) {
+    if (is.null(model)) {
+      stop(paste("`model` cannot be NULL for task:", task))
+    }
+    if (!is.environment(model)) {
+      stop("`model` must be an environment to store results persistently.")
+    }
+  }
+  if (task == "apply" && !length(ls(model))) {
+    stop("No stored model found for 'apply' task.")
+  }
+  return()
 }

@@ -8,29 +8,52 @@
 #' (\code{TRUE}) and missing values (\code{FALSE}) in \code{y}.
 #' @param x Numeric design matrix with \code{length(y)} rows with predictors for
 #' \code{y}. Matrix \code{x} may have no missing values.
-#' @param exclude Dependent values to exclude from the imputation model
-#' and the collection of donor values
-#' @param quantify Logical. If \code{TRUE}, factor levels are replaced
-#' by the first canonical variate before fitting the imputation model.
-#' If false, the procedure reverts to the old behaviour and takes the
-#' integer codes (which may lack a sensible interpretation).
-#' Relevant only of \code{y} is a factor.
-#' @param trim Scalar integer. Minimum number of observations required in a
-#' category in order to be considered as a potential donor value.
-#' Relevant only of \code{y} is a factor.
 #' @param wy Logical vector of length \code{length(y)}. A \code{TRUE} value
 #' indicates locations in \code{y} for which imputations are created.
 #' @param donors The size of the donor pool among which a draw is made.
 #' The default is \code{donors = 5L}. Setting \code{donors = 1L} always selects
-#' the closest match, but is not recommended. Values between 3L and 10L
-#' provide the best results in most cases (Morris et al, 2015).
-#' @param matchtype Type of matching distance. The default choice
+#' the closest match, but is not recommended. Values between 5L and 10L
+#' provide the best results (Morris et al, 2015).
+#' For tasks \code{"retain"} and \code{"train"}, the number of donors
+#' is calculated internally based on the number of
+#' observations in \code{yobs}.
+#' @param matchtype Type of matching distance. The default (recommended) choice
 #' (\code{matchtype = 1L}) calculates the distance between
 #' the \emph{predicted} value of \code{yobs} and
 #' the \emph{drawn} values of \code{ymis} (called type-1 matching).
 #' Other choices are \code{matchtype = 0L}
 #' (distance between predicted values) and \code{matchtype = 2L}
 #' (distance between drawn values).
+#' @param quantify Logical. If \code{TRUE}, factor levels are replaced
+#' by the first canonical variate before fitting the imputation model.
+#' If false, the procedure reverts to the old behaviour and takes the
+#' integer codes (which may lack a sensible interpretation).
+#' Relevant only of \code{y} is a factor.
+#' @param exclude Dependent values to exclude from the imputation model
+#' and the collection of donor values
+#' @param trim Scalar integer. Minimum number of observations required in a
+#' category in order to be considered as a potential donor value.
+#' Relevant only of \code{y} is a factor.
+#' @param task Character string. The task to be performed. Can
+#' be \code{"generate"}, \code{"retain"}, \code{"train"} or \code{"apply"}.
+#' The default is \code{"generate"} (classic MICE). See \code{mice()} for
+#' details.
+#' @param model An environment created by a parent to store the imputation
+#' model setup and estimates. The model is stored in the \code{mids} object
+#' under tasks \code{"retain"} and \code{"train"}, and is needed as input
+#' for task \code{"apply"}. The object \code{model} is not used under
+#' task \code{"generate"}.
+#' @param nimp Experimental. Number of random imputations per missing values
+#' generated from a fitted model under tasks \code{"retain"} and \code{"train"}.
+#' The default is 1. The \code{nimp} parameter is different from \code{m},
+#' the number of multiple imputations, because it generates repeated
+#' imputations from a single model. The \code{nimp} parameter is useful
+#' for large samples to reduce the computational burden, but still awaits
+#' support within the mice algorithm.
+#' @param nbins The number of bins used to store the predictive mean matching
+#' model. Under tasks \code{"retain"} and \code{"train"}, the number of donors
+#' is calculated internally based on the number of observations in \code{yobs}
+#' and the number of unique predictive values.
 #' @param ridge The ridge penalty used in \code{.norm.draw()} to prevent
 #' problems with multicollinearity. The default is \code{ridge = 1e-05},
 #' which means that 0.01 percent of the diagonal is added to the cross-product.
@@ -39,18 +62,14 @@
 #' reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.
 #' @param use.matcher Logical. Set \code{use.matcher = TRUE} to specify
 #' the C function \code{matcher()}, the now deprecated matching function that
-#' was default in versions
-#' \code{2.22} (June 2014) to \code{3.11.7} (Oct 2020). Since version \code{3.12.0}
-#' \code{mice()} uses the much faster \code{matchindex} C function. Use
-#' the deprecated \code{matcher} function only for exact reproduction.
+#' was default in versions of \code{mice} prior to \code{3.12.0}.
 #' @param \dots Other named arguments.
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #' \code{sum(wy)}
-#' @author Gerko Vink, Stef van Buuren, Karin Groothuis-Oudshoorn
+#' @author Stef van Buuren
 #' @details
 #' Imputation of \code{y} by predictive mean matching, based on
 #' van Buuren (2012, p. 73). The procedure is as follows:
-#'
 #' \enumerate{
 #' \item{Calculate the cross-product matrix \eqn{S=X_{obs}'X_{obs}}.}
 #' \item{Calculate \eqn{V = (S+{diag}(S)\kappa)^{-1}}, with some small ridge
@@ -149,113 +168,198 @@
 #' # to get old behavior: as.integer(y))
 #' mice.impute.pmm(y, ry, x, quantify = FALSE)
 #' @export
-mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
-                            matchtype = 1L, exclude = NULL,
-                            quantify = TRUE, trim = 1L,
-                            ridge = 1e-05, use.matcher = FALSE, ...) {
-  if (is.null(wy)) {
-    wy <- !ry
-  }
+mice.impute.pmm <- function(y, ry, x, wy = NULL,
+                            donors = 5L, matchtype = 1L, quantify = TRUE,
+                            exclude = NULL, trim = 1L,
+                            task = "generate", model = NULL, nimp = 1L,
+                            nbins = NULL, ridge = 1e-05, use.matcher = FALSE,
+                            ...)
+{
+  check.model(model, task)
+  if (is.null(wy)) wy <- !ry
 
-  # Reformulate the imputation problem such that
-  # 1. the imputation model disregards records with excluded y-values
-  # 2. the donor set does not contain excluded y-values
-
-  # Retain categories with ">= trim" observations in the imputation model
-  # Exclude values from the imputation model
+  # Remove excluded values and trim small categories
   if (is.factor(y)) {
-    active <- !ry | (y %in% levels(y)[table(y) >= trim] & !y %in% exclude)
-    if (any(!active)) {
-      y <- droplevels(y[active])
-      ry <- ry[active]
-      x <- x[active, , drop = FALSE]
-      wy <- wy[active]
-    }
+    freq <- table(y)
+    keep_levels <- names(freq[freq >= trim & !(names(freq) %in% exclude)])
+    y <- factor(y, levels = keep_levels)
+    idx <- !ry | y %in% keep_levels
   } else {
-    active <- !ry | !y %in% exclude
-    if (any(!active)) {
-      y <- y[active]
-      ry <- ry[active]
-      x <- x[active, , drop = FALSE]
-      wy <- wy[active]
-    }
+    idx <- !ry | !(y %in% exclude)
+  }
+  if (any(!idx)) {
+    y <- y[idx]
+    ry <- ry[idx]
+    x <- x[idx, , drop = FALSE]
+    wy <- wy[idx]
   }
 
+  # Add intercept column to x
   x <- cbind(1, as.matrix(x))
 
-  # quantify categories for factors
-  q <- quantify(y, ry, x, quantify = quantify)
-  ynum <- q$ynum
+  # Task: apply (impute from stored model)
+  if (task == "apply") {
+    yhatmis <- x[wy, ] %*% model$beta.mis
+    return(pmm.impute(yhatmis, model, nimp = nimp, ...))
+  }
 
-  # parameter estimation
+  # -- Remaining tasks: generate, retain, train --
+
+  # Quantify factor levels
+  f <- quantify(y, ry, x, quantify = quantify)
+  ynum <- f$ynum
+
+  # Predict missing values using Normal draw
   parm <- .norm.draw(ynum, ry, x, ridge = ridge, ...)
-
-  if (matchtype == 0L) {
-    yhatobs <- x[ry, , drop = FALSE] %*% parm$coef
-    yhatmis <- x[wy, , drop = FALSE] %*% parm$coef
-  }
   if (matchtype == 1L) {
-    yhatobs <- x[ry, , drop = FALSE] %*% parm$coef
-    yhatmis <- x[wy, , drop = FALSE] %*% parm$beta
+    beta.obs <- parm$coef
+    beta.mis <- parm$beta
+  } else if (matchtype == 0L) {
+    beta.mis <- beta.obs <- parm$coef
+  } else if (matchtype == 2L) {
+    beta.mis <- beta.obs <- parm$beta
   }
-  if (matchtype == 2L) {
-    yhatobs <- x[ry, , drop = FALSE] %*% parm$beta
-    yhatmis <- x[wy, , drop = FALSE] %*% parm$beta
-  }
-  if (use.matcher) {
-    idx <- matcher(yhatobs, yhatmis, k = donors)
-  } else {
-    idx <- matchindex(yhatobs, yhatmis, donors)
+  x_ry <- x[ry, , drop = FALSE]
+  x_wy <- x[wy, , drop = FALSE]
+  yhatobs <- as.vector(x_ry %*% beta.obs)
+  yhatmis <- x_wy %*% beta.mis
+
+  # Generate task: Impute values (classic MICE PMM)
+  if (task == "generate") {
+    if (use.matcher) {
+      idx <- matcher(yhatobs, yhatmis, k = donors)
+    } else {
+      idx <- matchindex(yhatobs, yhatmis, donors)
+    }
+    return(y[ry][idx])
   }
 
-  return(y[ry][idx])
+  # -- Remaining tasks: retain, train --
+
+  # Divide predictions into bins
+  nbins <- initialize.nbins(nbins, length(yhatobs), length(unique(yhatobs)))
+  donors <- initialize.donors(donors, length(yhatobs))
+  prep <- bin.yhat(yhatobs, ynum[ry], k = donors, nbins = nbins)
+
+  # Store the imputation model in models environment
+  model$setup <- list(method = "pmm",
+                      n = length(yhatobs),
+                      donors = donors,
+                      matchtype = matchtype,
+                      quantify = quantify,
+                      exclude = exclude,
+                      trim = trim,
+                      task = task,
+                      nbins = nbins,
+                      ridge = ridge)
+  model$beta.obs <- beta.obs
+  model$beta.mis <- beta.mis
+  model$edges <- prep$edges
+  model$lookup <- prep$lookup
+  model$factor <- list(labels = f$labels, quant = f$quant)
+
+  # Compute imputations from model
+  return(pmm.impute(yhatmis, model, nimp = nimp, ...))
 }
 
-#' Finds an imputed value from matches in the predictive metric (deprecated)
-#'
-#' This function finds matches among the observed data in the predictive
-#' mean metric. It selects the \code{donors} closest matches, randomly
-#' samples one of the donors, and returns the observed value of the
-#' match.
-#'
-#' This function is included for backward compatibility. It was
-#' used up to \code{mice 2.21}. The current \code{mice.impute.pmm()}
-#' function calls the faster \code{C} function \code{matcher} instead of
-#' \code{.pmm.match()}.
-#'
-#' @aliases .pmm.match
-#' @param z A scalar containing the predicted value for the current case
-#' to be imputed.
-#' @param yhat A vector containing the predicted values for all cases with an observed
-#' outcome.
-#' @param y A vector of \code{length(yhat)} elements containing the observed outcome
-#' @param donors The size of the donor pool among which a draw is made. The default is
-#' \code{donors = 5}. Setting \code{donors = 1} always selects the closest match. Values
-#' between 3 and 10 provide the best results. Note: This setting was changed from
-#' 3 to 5 in version 2.19, based on simulation work by Tim Morris (UCL).
-#' @param \dots Other parameters (not used).
-#' @return A scalar containing the observed value of the selected donor.
-#' @author Stef van Buuren
-#' @rdname pmm.match
-#' @references
-#' Schenker N & Taylor JMG (1996) Partially parametric techniques
-#' for multiple imputation. \emph{Computational Statistics and Data Analysis}, 22, 425-446.
-#'
-#' Little RJA (1988) Missing-data adjustments in large surveys (with discussion).
-#' \emph{Journal of Business Economics and Statistics}, 6, 287-301.
-#'
-#' @export
-.pmm.match <- function(z, yhat = yhat, y = y, donors = 5, ...) {
-  d <- abs(yhat - z)
-  f <- d > 0
-  a1 <- ifelse(any(f), min(d[f]), 1)
-  d <- d + runif(length(d), 0, a1 / 10^10)
-  if (donors == 1) {
-    return(y[which.min(d)])
-  }
-  donors <- min(donors, length(d))
-  donors <- max(donors, 1)
-  ds <- sort.int(d, partial = donors)
-  m <- sample(y[d <= ds[donors]], 1)
-  return(m)
+
+
+# --- PMM helpers
+
+pmm.impute <- function(yhatmis, model, nimp = 1L, ...) {
+  # Task "apply": Compute imputations without estimating new model
+  impy <- draw.neighbors.pmm(yhatmis,
+                             edges = model$edges,
+                             lookup = model$lookup,
+                             m = nimp)
+  # Convert back to factor if needed
+  impy <- unquantify(ynum = impy,
+                     quant = model$factor$quant,
+                     labels = model$factor$labels)
+  return(impy)
 }
+
+initialize.nbins <- function(nbins, n, nu) {
+  if (is.null(nbins)) {
+    nbins <- round(4 * log(n) + 1.5)
+  }
+
+  # max nbin is number of unique yhat values
+  if (nbins > nu) {
+    # message("Warning: nbins (", nbins, ") exceeds unique yhat values (", nu, "). Adjusting to ", nu, ".")
+    nbins <- nu
+  }
+  # Ensure at least 2 bins
+  nbins <- max(2L, nbins)
+  return(nbins)
+}
+
+initialize.donors <- function(donors, n) {
+  if (is.null(donors)) {
+    donors <- round(n / 600 + 7)
+  }
+  donors <- max(1L, min(donors, n))
+  return(donors)
+}
+
+bin.yhat <- function(yhat, y, k = 10, nbins = 25) {
+  stopifnot(length(yhat) == length(y))
+
+  # Compute percentile-based bin edges
+  edges <- quantile(yhat, probs = seq(0, 1, length.out = nbins + 1), type = 7, na.rm = TRUE)
+
+  # Sort yhat and y together
+  sort_order <- order(yhat)
+  yhat_sorted <- yhat[sort_order]
+  y_sorted <- y[sort_order]
+
+  # Initialize lookup table
+  lookup <- matrix(NA_real_, nrow = nbins, ncol = k)
+
+  # Assign values to bins
+  bin_idx <- findInterval(yhat_sorted, vec = edges, all.inside = TRUE)
+
+  # Split y_sorted by bins
+  bin_values_list <- split(y_sorted, bin_idx)
+
+  # Fill lookup table
+  lookup <- t(sapply(seq_len(nbins), function(b) {
+    bin_values <- bin_values_list[[as.character(b)]]
+
+    if (length(bin_values) > 0) {
+      # If more than k values are available, randomly sample k
+      sample(bin_values, size = k, replace = length(bin_values) < k)
+    } else {
+      # If bin is empty, sample from entire y_sorted to avoid NA values
+      sample(y_sorted, size = k, replace = TRUE)
+    }
+  }))
+
+  return(list(edges = edges, lookup = lookup))
+}
+
+draw.neighbors.pmm <- function(yhat_query, edges, lookup, m = 1) {
+  num_queries <- length(yhat_query)
+  nbins <- length(edges) - 1  # Bins are defined by edges[i] and edges[i+1]
+
+  # Initialize result matrix: rows = number of queries, columns = m draws per query
+  imputed_values <- matrix(NA_real_, nrow = num_queries, ncol = m)
+
+  # Find the bin for each query value
+  bin_idx <- findInterval(yhat_query, edges, rightmost.closed = TRUE, all.inside = TRUE)
+
+  # Compute probability of selecting from left bin (smooth transition)
+  t0 <- edges[pmax(bin_idx, 1)]
+  t1 <- edges[pmin(bin_idx + 1, nbins)]
+  p_left <- ifelse(t1 > t0, (t1 - yhat_query) / (t1 - t0), 0.5)
+
+  # Determine which bin to sample from
+  selected_bin <- ifelse(runif(num_queries) < p_left, bin_idx, pmin(bin_idx + 1, nbins))
+
+  # Vectorized sampling from lookup table
+  sampled_indices <- matrix(sample(1:ncol(lookup), num_queries * m, replace = TRUE), nrow = num_queries)
+  imputed_values <- matrix(lookup[cbind(selected_bin, sampled_indices)], nrow = num_queries, ncol = m)
+
+  return(imputed_values)
+}
+

@@ -411,11 +411,17 @@ imp$imp$bmi
 complete(imp)
 
 # imputation on mixed data with a different method per column
-imp1 <- mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"), print = FALSE)
+imp0 <- mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"), print = FALSE)
+
+# store all imputation models
+imp1 <- mice(nhanes, tasks = "retain", print = FALSE)
+ls(imp1$models$bmi$"1")
+imp1$models$bmi$"1"$formula
+imp1$models$bmi$"1"$beta.mis
 
 # Store model for `bmi`, estimate others as usual
 tasks <- c("age" = "generate", "bmi" = "retain", "hyp" = "generate", "chl" = "generate")
-imp2 <- mice(nhanes, method = "pmmsplit", tasks = tasks, print = FALSE)
+imp2 <- mice(nhanes, tasks = tasks, print = FALSE)
 
 # Inspects the stored model for imputation 1 for `bmi`
 ls(imp2$models$bmi$"1")
@@ -424,8 +430,7 @@ imp2$models$bmi$"1"$beta.mis
 
 # Fill missing `bmi` values using pre-trained model
 tasks <- c("age" = "generate", "bmi" = "apply", "hyp" = "generate", "chl" = "generate")
-imp3 <- mice(nhanes, method = "pmmsplit", tasks = tasks,
-             models = imp2$models, print = FALSE)
+imp3 <- mice(nhanes, tasks = tasks, models = imp2$models, print = FALSE)
 
 \dontrun{
 # example where we fit the imputation model on the train data
