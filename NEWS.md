@@ -1,4 +1,4 @@
-# mice 3.17.1.9000
+# mice 3.17.2
 
 * Adds clean-ups:
   - Combines and updates tests for `lasso.select.norm()` and `lasso.norm()` into one file `test-mice.impute.lasso.norm.R`
