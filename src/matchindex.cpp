@@ -82,6 +82,7 @@ using namespace Rcpp;
 //' # twelve mpg entries in test, and count how many times the true value
 //' # (which we know here) is located within the inter-quartile range of each
 //' # distribution. Is your count anywhere close to 500? Why? Why not?
+//'
 //' @author Stef van Buuren, Nasinski Maciej, Alexander Robitzsch
 //' @export
 // [[Rcpp::export]]
@@ -90,86 +91,60 @@ IntegerVector matchindex(NumericVector d, NumericVector t, int k = 5) {
   Environment base("package:base");
   Function sample = base["sample"];
 
-  // declarations
   int n1 = d.size();
   int n0 = t.size();
 
-  // 1. Shuffle records to remove effects of ties
-  // Suggested by Alexander Robitzsch
-  // https://github.com/stefvanbuuren/mice/issues/236
-  // Call base::sample() to advance .Random.seed
-  IntegerVector ishuf= sample(n1);
-  ishuf = ishuf - 1;
+  // 1. Shuffle donor data
+  IntegerVector ishuf = as<IntegerVector>(sample(seq_len(n1))) - 1;
   NumericVector yshuf(n1);
-  for (int i = 0; i < n1; i++) {yshuf(i) = d(ishuf(i));}
+  for (int i = 0; i < n1; i++) yshuf[i] = d[ishuf[i]];
 
-  // 2. Obtain sorting order on shuffled data
-  // https://stackoverflow.com/questions/1577475/c-sorting-and-keeping-track-of-indexes
+  // 2. Sorting donor indices
   IntegerVector isort(n1);
   iota(isort.begin(), isort.end(), 0);
   stable_sort(isort.begin(), isort.end(),
-              [yshuf](int i1, int i2) {return yshuf[i1] < yshuf[i2];});
+              [&yshuf](int i1, int i2) { return yshuf[i1] < yshuf[i2]; });
 
-  // 3. Calculate index on input data and sort
+  // 3. Mapping back to shuffled indices
   IntegerVector id(n1);
-  std::vector<double> ysort(n1);
+  NumericVector ysort(n1);
   for (int i = 0; i < n1; i++) {
-    id(i) = ishuf(isort(i));
-    ysort[i] = d(id(i));
+    id[i] = ishuf[isort[i]];
+    ysort[i] = d[id[i]];
   }
 
-  // 4. Pre-sample n0 values between 1 and k
-  // restrict 1 <= k <= n1
-  k = (k <= n1) ? k : n1;
-  k = (k >= 1) ? k : 1;
-  IntegerVector kv(k);
-  iota(kv.begin(), kv.end(), 1);
-  IntegerVector h = sample(kv, n0, Rcpp::_["replace"] = true);
+  // 4. Pre-sample h
+  k = std::clamp(k, 1, n1);
+  IntegerVector h = as<IntegerVector>(sample(seq_len(k), n0,
+                                             Rcpp::_["replace"] = true));
 
   IntegerVector idx(n0);
 
-  // loop over the target units
+  // 5. Find closest neighbors
   for (int i = 0; i < n0; i++) {
-    double val = t(i);
-    int hi = h(i);
-    int count = 0;
+    double val = t[i];
+    int hi = h[i], count = 0;
 
-    // 5. find the two adjacent neighbours
-    std::vector<double>::iterator iter;
-    iter = std::lower_bound(ysort.begin(), ysort.end(), val);
-    int r = iter - ysort.begin();
+    // Binary search for nearest neighbor
+    int r = std::distance(ysort.begin(),
+                          std::lower_bound(ysort.begin(), ysort.end(), val));
     int l = r - 1;
 
-    // 6. find the h_i'th nearest neighbour
-    // 7. store the index of that neighbour
-
-    // Compare elements on left and right of crossover
-    // point to find the h'th closest match
-    // Inspired on Polkas: https://github.com/Polkas/miceFast/issues/10
-    while (count < hi && l >= 0 && r < n1)
-    {
-      if (val - ysort[l] < ysort[r] - val)
-      {
-        idx(i) = id[l--];
+    // 6. Find h-th nearest neighbor
+    while (count < hi && l >= 0 && r < n1) {
+      if (val - ysort[l] < ysort[r] - val) {
+        idx[i] = id[l--];
       } else {
-        idx(i) = id[r++];
+        idx[i] = id[r++];
       }
       count++;
     }
 
-    // If right side is exhausted, take left elements
-    while (count < hi && l >= 0)
-    {
-      idx(i) = id[l--];
-      count++;
-    }
+    // If left side is exhausted, take from right side
+    while (count < hi && l >= 0) idx[i] = id[l--], count++;
 
-    // If left side is exhausted, take right elements
-    while (count < hi && r < n1)
-    {
-      idx(i) = id[r++];
-      count++;
-    }
+    // If right side is exhausted, take from left side
+    while (count < hi && r < n1) idx[i] = id[r++], count++;
   }
 
   return idx + 1;

@@ -87,6 +87,7 @@ matcher <- function(obs, mis, k) {
 #' # twelve mpg entries in test, and count how many times the true value
 #' # (which we know here) is located within the inter-quartile range of each
 #' # distribution. Is your count anywhere close to 500? Why? Why not?
+#'
 #' @author Stef van Buuren, Nasinski Maciej, Alexander Robitzsch
 #' @export
 matchindex <- function(d, t, k = 5L) {
