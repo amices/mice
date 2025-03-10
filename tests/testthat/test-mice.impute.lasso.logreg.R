@@ -243,7 +243,7 @@ iurr_custom <- mice(X,
 )
 meth[1:2] <- "logreg"
 logreg_default <- mice(X,
-                       m = 2, maxit = 2, method = "logreg",
+                       m = 2, maxit = 2, method = meth,
                        print = FALSE
 )
 
