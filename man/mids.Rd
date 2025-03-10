@@ -23,7 +23,7 @@ mids(
   modeltype = character(),
   post = character(),
   blots = list(),
-  actions = character(),
+  tasks = character(),
   models = new.env(),
   ignore = logical(),
   seed = integer(),
@@ -155,21 +155,22 @@ to pass down arguments to lower level imputation function. The entries
 of element \code{blots[[blockname]]} are passed down to the function
 called for block \code{blockname}.}
 
-\item{actions}{A character vector specifying the action to perform for
+\item{tasks}{A character vector specifying the task to perform for
 each imputation block. The available options are:
 \describe{
-\item{"walk"}{Estimate parameters and generate imputations
-(classic MICE behavior). This is the default.}
-\item{"train"}{Estimate parameters and store the imputation model
-without data and without generating imputations.}
-\item{"run"}{Use a previously stored imputation model to generate
+\item{"generate"}{Estimate parameters, generate imputations and store
+the original data plus imputations (classic MICE behavior).}
+\item{"retain" }{Estimate parameters, generate imputations and
+store the original data, the imputations and the imputation model.}
+\item{"train"}{As retain, but store only the imputation model.}
+\item{"apply"}{Apply a previously trained imputation model to generate
 imputations, without re-estimating parameters.}
 }
 This argument can be specified as a named vector, where names correspond
-to variables and values specify the action for each variable. If a
+to variables and values specify the task for each variable. If a
 single value is provided, it applies to the variables in all blocks. The
 length of the vector must match the number of variables present in the
-blocks.}
+blocks. The default is \code{"generate"}.}
 
 \item{models}{An environment that can be used to store fitted imputation
 models. The models are stored in the environment under the name of the
@@ -280,7 +281,7 @@ identified by its name, so list names must correspond to block names.}
 with commands for post-processing.}
 \item{\code{blots}:}{"Block dots". The \code{blots} argument to the \code{mice()}
 function.}
-\item{\code{actions}:}{A character vector of length \code{length(blocks)}.}
+\item{\code{tasks}:}{A character vector of length \code{length(blocks)}.}
 \item{\code{models}:}{The \code{models} list contains imputation model
 estimates.}
 \item{\code{ignore}:}{A logical vector of length \code{nrow(data)} indicating
@@ -296,7 +297,7 @@ Note that observed data are not present in this mean.}
 \item{\code{chainVar}:}{An array with similar structure as
 \code{chainMean}, containing the variance of the imputed values.}
 \item{\code{loggedEvents}:}{A \code{data.frame} with five columns
-containing warnings, corrective actions, and other inside info.}
+containing warnings, corrective tasks, and other inside info.}
 \item{\code{version}:}{Version number of \code{mice} package that
 created the object.}
 \item{\code{date}:}{Date at which the object was created.}
@@ -306,10 +307,10 @@ created the object.}
 \section{LoggedEvents}{
 
 The \code{loggedEvents} entry is a matrix with five columns containing a
-record of automatic removal actions. It is \code{NULL} is no action was
+record of automatic removal tasks. It is \code{NULL} is no record was
 made.  At initialization the program removes constant variables, and
 removes variables to cause collinearity.
-During iteration, the program does the following actions:
+During iteration, the program does the following tasks:
 \itemize{
 \item One or more variables that are linearly dependent are removed
 (for categorical data, a 'variable' corresponds to a dummy variable)
@@ -368,6 +369,7 @@ imp <- mids(
   formulas = list(a = a ~ b, b = b ~ a),
   post = NULL,
   blots = NULL,
+  tasks = NULL,
   models = NULL,
   ignore = logical(nrow(data)),
   seed = 123,

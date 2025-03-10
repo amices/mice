@@ -4,7 +4,7 @@
 #' \code{pmmsplit()} is an implementation of pmm that saves the imputation model
 #' and generates imputations from the saved model.
 #' @aliases pmmsplit
-#' @param action The action to be performed. The default is \code{"walk"}.
+#' @param task The task to be performed. The default is \code{"generate"}.
 #' @param model Storage for the model estimates
 #' @param nbins The number of bins used to store the predictive mean matching
 #' model. The default is 50.
@@ -96,26 +96,26 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
                                  matchtype = 1L, exclude = NULL,
                                  quantify = TRUE, trim = 1L,
                                  ridge = 1e-05, nbins = NULL,
-                                 action = "walk",
+                                 task = "generate",
                                  model = NULL, ...) {
   if (is.null(wy)) {
     wy <- !ry
   }
 
-  # Only enforce `model` for "train" and "run"
-  if (action %in% c("train", "run")) {
+  # Only enforce `model` for "retain", "train" and "apply"
+  if (task %in% c("retain", "train", "apply")) {
     if (is.null(model)) {
-      stop(paste("`model` cannot be NULL for action:", action))
+      stop(paste("`model` cannot be NULL for task:", task))
     }
     if (!is.environment(model)) {
       stop("`model` must be an environment to store results persistently.")
     }
   }
 
-  # Handle "run" action: Use pre-stored model without re-training
-  if (action == "run") {
+  # Handle "apply" task: Use pre-stored model without re-training
+  if (task == "apply") {
     if (!length(ls(model))) {
-      stop("No stored model found for 'run' action.")
+      stop("No stored model found for 'apply' task.")
     }
 
     # Compute linear predictor for missing data
@@ -132,7 +132,7 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
     return(impy)
   }
 
-  # Handle "walk" and "train": train model
+  # Estimate model if "generate", "retain" and "train"
 
   # Quantify factor by optimal scaling
   f <- quantify(y, ry, x, quantify = quantify)
@@ -157,8 +157,8 @@ mice.impute.pmmsplit <- function(y, ry, x, wy = NULL, donors = NULL,
   donors <- initialize.donors(donors, length(yhatobs))
   prep <- bin.yhat(yhatobs, ynum[ry], k = donors, nbins = nbins)
 
-  # Store model for "train", skip for "walk"
-  if (action == "train") {
+  # Store model for "retain" and "train"; skip for "generate" and "apply"
+  if (task %in% c("retain", "train")) {
     model$setup <- list(method = "pmmsplit",
                         n = length(yhatobs),
                         donors = donors,

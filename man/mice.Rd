@@ -18,7 +18,7 @@ mice(
   formulas,
   modeltype = NULL,
   blots = NULL,
-  actions = NULL,
+  tasks = NULL,
   models = NULL,
   post = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -130,21 +130,22 @@ to pass down arguments to lower level imputation function. The entries
 of element \code{blots[[blockname]]} are passed down to the function
 called for block \code{blockname}.}
 
-\item{actions}{A character vector specifying the action to perform for
+\item{tasks}{A character vector specifying the task to perform for
 each imputation block. The available options are:
 \describe{
-\item{"walk"}{Estimate parameters and generate imputations
-(classic MICE behavior). This is the default.}
-\item{"train"}{Estimate parameters and store the imputation model
-without data and without generating imputations.}
-\item{"run"}{Use a previously stored imputation model to generate
+\item{"generate"}{Estimate parameters, generate imputations and store
+the original data plus imputations (classic MICE behavior).}
+\item{"retain" }{Estimate parameters, generate imputations and
+store the original data, the imputations and the imputation model.}
+\item{"train"}{As retain, but store only the imputation model.}
+\item{"apply"}{Apply a previously trained imputation model to generate
 imputations, without re-estimating parameters.}
 }
 This argument can be specified as a named vector, where names correspond
-to variables and values specify the action for each variable. If a
+to variables and values specify the task for each variable. If a
 single value is provided, it applies to the variables in all blocks. The
 length of the vector must match the number of variables present in the
-blocks.}
+blocks. The default is \code{"generate"}.}
 
 \item{models}{An environment that can be used to store fitted imputation
 models. The models are stored in the environment under the name of the
@@ -413,8 +414,8 @@ complete(imp)
 imp1 <- mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"), print = FALSE)
 
 # Store model for `bmi`, estimate others as usual
-actions <- c("age" = "walk", "bmi" = "train", "hyp" = "walk", "chl" = "walk")
-imp2 <- mice(nhanes, method = "pmmsplit", actions = actions, print = FALSE)
+tasks <- c("age" = "generate", "bmi" = "retain", "hyp" = "generate", "chl" = "generate")
+imp2 <- mice(nhanes, method = "pmmsplit", tasks = tasks, print = FALSE)
 
 # Inspects the stored model for imputation 1 for `bmi`
 ls(imp2$models$bmi$"1")
@@ -422,8 +423,8 @@ imp2$models$bmi$"1"$formula
 imp2$models$bmi$"1"$beta.mis
 
 # Fill missing `bmi` values using pre-trained model
-actions <- c("age" = "walk", "bmi" = "run", "hyp" = "walk", "chl" = "walk")
-imp3 <- mice(nhanes, method = "pmmsplit", actions = actions,
+tasks <- c("age" = "generate", "bmi" = "apply", "hyp" = "generate", "chl" = "generate")
+imp3 <- mice(nhanes, method = "pmmsplit", tasks = tasks,
              models = imp2$models, print = FALSE)
 
 \dontrun{

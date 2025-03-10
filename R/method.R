@@ -12,7 +12,7 @@
 make.method <- function(data,
                         where = make.where(data),
                         blocks = make.blocks(data),
-                        actions = NULL,
+                        tasks = NULL,
                         defaultMethod = c("pmm", "logreg", "polyreg", "polr")) {
   method <- rep("", length(blocks))
   names(method) <- names(blocks)
@@ -32,10 +32,10 @@ make.method <- function(data,
 
   # preserve old behaviour that sets method <- "" with walk
   names(method) <- names(blocks)
-  if (!is.null(actions)) {
+  if (!is.null(tasks)) {
     for (j in names(blocks)) {
       vname <- blocks[[j]]
-      if ("walk" %in% actions[vname] && nimp[j] == 0L) method[j] <- ""
+      if ("walk" %in% tasks[vname] && nimp[j] == 0L) method[j] <- ""
     }
   }
 
@@ -43,13 +43,13 @@ make.method <- function(data,
 }
 
 
-check.method <- function(method, data, where, blocks, actions, defaultMethod) {
+check.method <- function(method, data, where, blocks, tasks, defaultMethod) {
   if (is.null(method)) {
     return(make.method(
       data = data,
       where = where,
       blocks = blocks,
-      actions = actions,
+      tasks = tasks,
       defaultMethod = defaultMethod
     ))
   }
@@ -67,7 +67,7 @@ check.method <- function(method, data, where, blocks, actions, defaultMethod) {
     # preserve old behaviour that sets method <- "" with walk
     for (j in names(blocks)) {
       vname <- blocks[[j]]
-      if ("walk" %in% actions[vname] && nimp[j] == 0L) method[j] <- ""
+      if ("walk" %in% tasks[vname] && nimp[j] == 0L) method[j] <- ""
     }
   }
 
@@ -135,7 +135,7 @@ check.method <- function(method, data, where, blocks, actions, defaultMethod) {
       )
     }
     # preserve old behaviour that sets method <- "" with walk
-    if ("walk" %in% actions[vname] && nimp[j] == 0L) method[j] <- ""
+    if ("walk" %in% tasks[vname] && nimp[j] == 0L) method[j] <- ""
   }
 
   unlist(method)

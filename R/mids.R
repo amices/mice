@@ -58,7 +58,7 @@
 #'    with commands for post-processing.}
 #'    \item{\code{blots}:}{"Block dots". The \code{blots} argument to the \code{mice()}
 #'    function.}
-#'    \item{\code{actions}:}{A character vector of length \code{length(blocks)}.}
+#'    \item{\code{tasks}:}{A character vector of length \code{length(blocks)}.}
 #'    \item{\code{models}:}{The \code{models} list contains imputation model
 #'    estimates.}
 #'    \item{\code{ignore}:}{A logical vector of length \code{nrow(data)} indicating
@@ -74,7 +74,7 @@
 #'    \item{\code{chainVar}:}{An array with similar structure as
 #'    \code{chainMean}, containing the variance of the imputed values.}
 #'    \item{\code{loggedEvents}:}{A \code{data.frame} with five columns
-#'    containing warnings, corrective actions, and other inside info.}
+#'    containing warnings, corrective tasks, and other inside info.}
 #'    \item{\code{version}:}{Version number of \code{mice} package that
 #'    created the object.}
 #'    \item{\code{date}:}{Date at which the object was created.}
@@ -82,10 +82,10 @@
 #'
 #' @section LoggedEvents:
 #' The \code{loggedEvents} entry is a matrix with five columns containing a
-#' record of automatic removal actions. It is \code{NULL} is no action was
+#' record of automatic removal tasks. It is \code{NULL} is no record was
 #' made.  At initialization the program removes constant variables, and
 #' removes variables to cause collinearity.
-#' During iteration, the program does the following actions:
+#' During iteration, the program does the following tasks:
 #' \itemize{
 #'     \item One or more variables that are linearly dependent are removed
 #' (for categorical data, a 'variable' corresponds to a dummy variable)
@@ -138,6 +138,7 @@
 #'   formulas = list(a = a ~ b, b = b ~ a),
 #'   post = NULL,
 #'   blots = NULL,
+#'   tasks = NULL,
 #'   models = NULL,
 #'   ignore = logical(nrow(data)),
 #'   seed = 123,
@@ -163,7 +164,7 @@ mids <- function(
     modeltype = character(),
     post = character(),
     blots = list(),
-    actions = character(),
+    tasks = character(),
     models = new.env(),
     ignore = logical(),
     seed = integer(),
@@ -192,7 +193,7 @@ mids <- function(
     modeltype = modeltype,
     post = post,
     blots = blots,
-    actions = actions,
+    tasks = tasks,
     models = models,
     ignore = ignore,
     seed = seed,

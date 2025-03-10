@@ -219,21 +219,22 @@
 #' to pass down arguments to lower level imputation function. The entries
 #' of element \code{blots[[blockname]]} are passed down to the function
 #' called for block \code{blockname}.
-#' @param actions A character vector specifying the action to perform for
+#' @param tasks A character vector specifying the task to perform for
 #'   each imputation block. The available options are:
 #'   \describe{
-#'     \item{"walk"}{Estimate parameters and generate imputations
-#'       (classic MICE behavior). This is the default.}
-#'     \item{"train"}{Estimate parameters and store the imputation model
-#'       without data and without generating imputations.}
-#'     \item{"run"}{Use a previously stored imputation model to generate
+#'     \item{"generate"}{Estimate parameters, generate imputations and store
+#'       the original data plus imputations (classic MICE behavior).}
+#'     \item{"retain" }{Estimate parameters, generate imputations and
+#'       store the original data, the imputations and the imputation model.}
+#'     \item{"train"}{As retain, but store only the imputation model.}
+#'     \item{"apply"}{Apply a previously trained imputation model to generate
 #'       imputations, without re-estimating parameters.}
 #'   }
 #'   This argument can be specified as a named vector, where names correspond
-#'   to variables and values specify the action for each variable. If a
+#'   to variables and values specify the task for each variable. If a
 #'   single value is provided, it applies to the variables in all blocks. The
 #'   length of the vector must match the number of variables present in the
-#'   blocks.
+#'   blocks. The default is \code{"generate"}.
 #' @param models An environment that can be used to store fitted imputation
 #' models. The models are stored in the environment under the name of the
 #' block. The models can be used to predict missing values in new data.
@@ -315,8 +316,8 @@
 #' imp1 <- mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"), print = FALSE)
 #'
 #' # Store model for `bmi`, estimate others as usual
-#' actions <- c("age" = "walk", "bmi" = "train", "hyp" = "walk", "chl" = "walk")
-#' imp2 <- mice(nhanes, method = "pmmsplit", actions = actions, print = FALSE)
+#' tasks <- c("age" = "generate", "bmi" = "retain", "hyp" = "generate", "chl" = "generate")
+#' imp2 <- mice(nhanes, method = "pmmsplit", tasks = tasks, print = FALSE)
 #'
 #' # Inspects the stored model for imputation 1 for `bmi`
 #' ls(imp2$models$bmi$"1")
@@ -324,8 +325,8 @@
 #' imp2$models$bmi$"1"$beta.mis
 #'
 #' # Fill missing `bmi` values using pre-trained model
-#' actions <- c("age" = "walk", "bmi" = "run", "hyp" = "walk", "chl" = "walk")
-#' imp3 <- mice(nhanes, method = "pmmsplit", actions = actions,
+#' tasks <- c("age" = "generate", "bmi" = "apply", "hyp" = "generate", "chl" = "generate")
+#' imp3 <- mice(nhanes, method = "pmmsplit", tasks = tasks,
 #'              models = imp2$models, print = FALSE)
 #'
 #' \dontrun{
@@ -361,7 +362,7 @@ mice <- function(data,
                  formulas,
                  modeltype = NULL,
                  blots = NULL,
-                 actions = NULL,
+                 tasks = NULL,
                  models = NULL,
                  post = NULL,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
@@ -472,10 +473,10 @@ mice <- function(data,
     user.visitSequence = user.visitSequence,
     maxit = maxit
   )
-  actions <- check.actions(actions, data, models, blocks)
+  tasks <- check.tasks(tasks, data, models, blocks)
   method <- check.method(
     method = method, data = data, where = where,
-    blocks = blocks, actions = actions,
+    blocks = blocks, tasks = tasks,
     defaultMethod = defaultMethod
   )
   post <- check.post(post, data)
@@ -499,11 +500,11 @@ mice <- function(data,
   visitSequence <- setup$visitSequence
   post <- setup$post
 
-  # Initialize models only for "train" and "run" blocks that are missing in models
+  # Initialize models for "retain", "train" and "apply" blocks that are missing in models
   if (is.null(models)) {
     models <- new.env(parent = emptyenv())
   }
-  model_vars <- names(actions[actions %in% c("train", "run")])
+  model_vars <- names(tasks[tasks %in% c("retain", "train", "apply")])
   for (block in model_vars) {
     if (!exists(block, envir = models)) {
       models[[block]] <- new.env(parent = emptyenv())
@@ -528,7 +529,7 @@ mice <- function(data,
   q <- sampler(
     data, m, ignore, where, imp, blocks, method,
     visitSequence, predictorMatrix, formulas,
-    modeltype, blots, actions, models,
+    modeltype, blots, tasks, models,
     post, c(from, to), printFlag, ...
   )
 
@@ -551,7 +552,7 @@ mice <- function(data,
     modeltype = modeltype,
     post = post,
     blots = blots,
-    actions = actions,
+    tasks = tasks,
     models = models,
     ignore = ignore,
     seed = seed,

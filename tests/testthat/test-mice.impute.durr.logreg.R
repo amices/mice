@@ -54,6 +54,7 @@ durr_custom <- mice(X,
   nfolds = 5,
   print = FALSE
 )
+methods <- make.method(X)
 logreg_default <- mice(X,
   m = 2, maxit = 2, method = "logreg",
   print = FALSE
