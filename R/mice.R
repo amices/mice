@@ -510,8 +510,12 @@ mice <- function(data,
   if (is.null(models)) {
     models <- new.env(parent = emptyenv())
   }
-  model_vars <- names(tasks[tasks %in% c("retain", "train", "apply")])
-  for (block in model_vars) {
+  model.vars <- names(tasks[tasks %in% c("retain", "train", "apply")])
+  m.train <- length(models[[model.vars[1L]]])
+  if (any(tasks %in% "apply") && m > m.train) {
+    stop("Number of imputations (", m, ") is greater than training model (", m.train, ").")
+  }
+  for (block in model.vars) {
     if (!exists(block, envir = models)) {
       models[[block]] <- new.env(parent = emptyenv())
     }
