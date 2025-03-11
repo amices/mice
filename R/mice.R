@@ -479,6 +479,7 @@ mice <- function(data,
     maxit = maxit
   )
   tasks <- check.tasks(tasks, data, models, blocks)
+  store <- ifelse(length(unique(tasks)) == 1L, tasks[1L], "retain")
   method <- check.method(
     method = method, data = data, where = where,
     blocks = blocks, tasks = tasks,
