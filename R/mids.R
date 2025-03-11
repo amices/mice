@@ -181,35 +181,93 @@ mids <- function(
     version = packageVersion("mice"),
     date = Sys.Date(),
     store = "generate") {
-  obj <- list(
-    data = data,
-    imp = imp,
-    m = m,
-    where = where,
-    blocks = blocks,
-    call = call,
-    nmis = nmis,
-    method = method,
-    predictorMatrix = predictorMatrix,
-    visitSequence = visitSequence,
-    formulas = formulas,
-    modeltype = modeltype,
-    post = post,
-    blots = blots,
-    tasks = tasks,
-    models = models,
-    ignore = ignore,
-    seed = seed,
-    iteration = iteration,
-    lastSeedValue = lastSeedValue,
-    chainMean = chainMean,
-    chainVar = chainVar,
-    loggedEvents = loggedEvents,
-    version = packageVersion("mice"),
-    date = Sys.Date(),
-    store = store)
+
+  if (store == "generate") {
+    obj <- list(
+      data = data,
+      imp = imp,
+      m = m,
+      where = where,
+      blocks = blocks,
+      call = call,
+      nmis = nmis,
+      method = method,
+      predictorMatrix = predictorMatrix,
+      visitSequence = visitSequence,
+      formulas = formulas,
+      modeltype = modeltype,
+      post = post,
+      blots = blots,
+      tasks = tasks,
+      models = models,
+      ignore = ignore,
+      seed = seed,
+      iteration = iteration,
+      lastSeedValue = lastSeedValue,
+      chainMean = chainMean,
+      chainVar = chainVar,
+      loggedEvents = loggedEvents,
+      version = packageVersion("mice"),
+      date = Sys.Date(),
+      store = store)
+  } else if (store == "retain") {
+    obj <- list(
+      data = data,
+      imp = imp,
+      m = m,
+      where = where,
+      blocks = blocks,
+      call = call,
+      nmis = nmis,
+      method = method,
+      predictorMatrix = predictorMatrix,
+      visitSequence = visitSequence,
+      formulas = formulas,
+      modeltype = modeltype,
+      post = post,
+      blots = blots,
+      tasks = tasks,
+      models = models,
+      ignore = ignore,
+      seed = seed,
+      iteration = iteration,
+      lastSeedValue = lastSeedValue,
+      chainMean = chainMean,
+      chainVar = chainVar,
+      loggedEvents = loggedEvents,
+      version = packageVersion("mice"),
+      date = Sys.Date(),
+      store = store)
+  } else if (store == "train") {
+    obj <- list(
+      m = m,
+      blocks = blocks,
+      method = method,
+      blots = blots,
+      visitSequence = visitSequence,
+      iteration = iteration,
+      lastSeedValue = lastSeedValue,
+      tasks = tasks,
+      models = models,
+      store = store,
+      version = packageVersion("mice"),
+      date = Sys.Date(),
+      call = call)
+  } else if (store == "apply") {
+    obj <- list(
+      store = store,
+      version = packageVersion("mice"),
+      date = Sys.Date(),
+      call = call,
+      imp = imp)
+  } else {
+    stop("store must be one of 'generate', 'retain', 'train', or 'apply'")
+  }
+
   class(obj) <- "mids"
   return(obj)
+
+
 }
 
 #' Plot the trace lines of the MICE algorithm
