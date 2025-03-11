@@ -568,7 +568,8 @@ mice <- function(data,
                         inherits = FALSE),
     chainMean = q$chainMean,
     chainVar = q$chainVar,
-    loggedEvents = loggedEvents)
+    loggedEvents = loggedEvents,
+    store = store)
 
   if (!is.null(midsobj$loggedEvents)) {
     warning("Number of logged events: ", nrow(midsobj$loggedEvents),

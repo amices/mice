@@ -24,6 +24,7 @@
 #' @param loggedEvents Calculated field
 #' @param version Calculated field
 #' @param date Calculated field
+#' @param store Calculated field
 #' @return
 #' \code{mids()} returns a \code{mids} object.
 #'
@@ -78,6 +79,7 @@
 #'    \item{\code{version}:}{Version number of \code{mice} package that
 #'    created the object.}
 #'    \item{\code{date}:}{Date at which the object was created.}
+#'    \item{\code{store}:}{A string, indicating the type of mids object.}
 #' }
 #'
 #' @section LoggedEvents:
@@ -177,7 +179,8 @@ mids <- function(
     chainVar = list(),
     loggedEvents = data.frame(),
     version = packageVersion("mice"),
-    date = Sys.Date()) {
+    date = Sys.Date(),
+    store = "generate") {
   obj <- list(
     data = data,
     imp = imp,
@@ -203,8 +206,8 @@ mids <- function(
     chainVar = chainVar,
     loggedEvents = loggedEvents,
     version = packageVersion("mice"),
-    date = Sys.Date()
-  )
+    date = Sys.Date(),
+    store = store)
   class(obj) <- "mids"
   return(obj)
 }

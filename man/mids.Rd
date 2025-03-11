@@ -34,7 +34,8 @@ mids(
   chainVar = list(),
   loggedEvents = data.frame(),
   version = packageVersion("mice"),
-  date = Sys.Date()
+  date = Sys.Date(),
+  store = "generate"
 )
 
 \method{plot}{mids}(
@@ -205,6 +206,8 @@ generator alone.}
 
 \item{date}{Calculated field}
 
+\item{store}{Calculated field}
+
 \item{x}{An object of class \code{mids}}
 
 \item{y}{A formula that specifies which variables, stream and iterations are plotted.
@@ -301,6 +304,7 @@ containing warnings, corrective tasks, and other inside info.}
 \item{\code{version}:}{Version number of \code{mice} package that
 created the object.}
 \item{\code{date}:}{Date at which the object was created.}
+\item{\code{store}:}{A string, indicating the type of mids object.}
 }
 }
 
