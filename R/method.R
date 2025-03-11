@@ -30,18 +30,17 @@ make.method <- function(data,
   }
   nimp <- nimp(where, blocks)
 
-  # preserve old behaviour that sets method <- "" with walk
+  # preserve old behaviour that sets method <- "" with generate
   names(method) <- names(blocks)
   if (!is.null(tasks)) {
     for (j in names(blocks)) {
       vname <- blocks[[j]]
-      if ("walk" %in% tasks[vname] && nimp[j] == 0L) method[j] <- ""
+      if (nimp[j] == 0L && "generate" == tasks[vname]) method[j] <- ""
     }
   }
 
   method
 }
-
 
 check.method <- function(method, data, where, blocks, tasks, defaultMethod) {
   if (is.null(method)) {
@@ -64,10 +63,10 @@ check.method <- function(method, data, where, blocks, tasks, defaultMethod) {
     method <- rep(method, length(blocks))
     names(method) <- names(blocks)
 
-    # preserve old behaviour that sets method <- "" with walk
+    # preserve old behaviour that sets method <- "" with generate
     for (j in names(blocks)) {
       vname <- blocks[[j]]
-      if ("walk" %in% tasks[vname] && nimp[j] == 0L) method[j] <- ""
+      if (nimp[j] == 0L && "generate" == tasks[vname]) method[j] <- ""
     }
   }
 
@@ -136,8 +135,8 @@ check.method <- function(method, data, where, blocks, tasks, defaultMethod) {
               call. = FALSE
       )
     }
-    # preserve old behaviour that sets method <- "" with walk
-    if ("walk" %in% tasks[vname] && nimp[j] == 0L) method[j] <- ""
+    # preserve old behaviour that sets method <- "" with generate
+    # if ("generate" %in% tasks[vname] && nimp[j] == 0L) method[j] <- ""
   }
 
   unlist(method)
