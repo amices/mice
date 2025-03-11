@@ -215,11 +215,13 @@ sampler.univ <- function(data, r, where, pred, formula, method, task, model,
   if (k == 1L) check.df(x, y, ry)
 
   # remove linear dependencies
-  keep <- remove.lindep(x, y, ry, ...)
-  x <- x[, keep, drop = FALSE]
-  type <- type[keep]
-  if (ncol(x) != length(type)) {
-    stop("Internal error: length(type) != number of predictors")
+  if (task != "apply") {
+    keep <- remove.lindep(x, y, ry, ...)
+    x <- x[, keep, drop = FALSE]
+    type <- type[keep]
+    if (ncol(x) != length(type)) {
+      stop("Internal error: length(type) != number of predictors")
+    }
   }
 
   # here we go

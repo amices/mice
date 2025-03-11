@@ -255,19 +255,19 @@ mids <- function(
       call = call)
   } else if (store == "apply") {
     obj <- list(
+      data = data,
+      imp = imp,
+      m = m,
+      where = where,
       store = store,
       version = packageVersion("mice"),
       date = Sys.Date(),
-      call = call,
-      imp = imp)
+      call = call)
   } else {
     stop("store must be one of 'generate', 'retain', 'train', or 'apply'")
   }
-
   class(obj) <- "mids"
   return(obj)
-
-
 }
 
 #' Plot the trace lines of the MICE algorithm

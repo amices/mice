@@ -84,6 +84,10 @@ complete.mids <- function(data, action = 1L, include = FALSE,
                           mild = FALSE, order = c("last", "first"),
                           ...) {
   if (!is.mids(data)) stop("'data' not of class 'mids'")
+  if (data$store == "train") {
+    stop(paste("Cannot complete training object.\n",
+               "Use task 'generate' or 'retain' to estimate imputation model."))
+  }
   order <- match.arg(order)
 
   m <- as.integer(data$m)
@@ -166,3 +170,4 @@ single.complete <- function(data, where, imp, ell) {
   }
   data
 }
+
