@@ -199,11 +199,16 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
 
   # >>> Fill task: fill from stored model
   if (task == "fill") {
-    # This catches only length differences, not names
-    if (ncol(x) != nrow(model$beta.mis)) {
-      stop(paste("Model mismatch:\n",
-                 "Predictors: ", names(x), "\n",
-                 "Estimates:  ", rownames(model$beta.mis)))
+    formula <- model$formula
+    if (!length(formula)) {
+      stop("No model stored in environment")
+    }
+    mnames <- rownames(model$beta.mis)
+    dnames <- colnames(x)
+    if (ncol(x) != nrow(model$beta.mis) || any(mnames != dnames)) {
+      stop(paste("Model-Data mismatch: ", deparse(formula), "\n",
+                 " Model:", paste(mnames, collapse = " "), "\n",
+                 " Data: ", paste(dnames, collapse = " "), "\n"))
     }
     yhatmis <- x[wy, ] %*% model$beta.mis
     impy <- draw.neighbors.pmm(yhatmis,
