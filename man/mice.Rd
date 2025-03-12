@@ -26,6 +26,7 @@ mice(
   printFlag = TRUE,
   seed = NA,
   data.init = NULL,
+  compact = FALSE,
   ...
 )
 }
@@ -133,19 +134,19 @@ called for block \code{blockname}.}
 \item{tasks}{A character vector specifying the task to perform for
 each imputation block. The available options are:
 \describe{
-\item{"generate"}{Estimate parameters, generate imputations and store
-the original data plus imputations (classic MICE behavior).}
-\item{"retain" }{Estimate parameters, generate imputations and
+\item{"impute"}{Estimate parameters, generates imputations and store
+the original data plus imputations, but not the imputation model
+(classic MICE behavior).}
+\item{"train" }{Estimate parameters, generate imputations and
 store the original data, the imputations and the imputation model.}
-\item{"train"}{As retain, but store only the imputation model.}
-\item{"apply"}{Apply a previously trained imputation model to generate
+\item{"fill"}{Apply a previously trained imputation model to fill
 imputations, without re-estimating parameters.}
 }
 This argument can be specified as a named vector, where names correspond
 to variables and values specify the task for each variable. If a
 single value is provided, it applies to the variables in all blocks. The
 length of the vector must match the number of variables present in the
-blocks. The default is \code{"generate"}.}
+blocks. The default is \code{"impute"}.}
 
 \item{models}{An environment that can be used to store fitted imputation
 models. The models are stored in the environment under the name of the
@@ -182,6 +183,13 @@ iterative process.  The default \code{NULL} implies that starting imputation
 are created by a simple random draw from the data. Note that specification of
 \code{data.init} will start all \code{m} Gibbs sampling streams from the same
 imputation.}
+
+\item{compact}{A logical value indicating whether the resulting should be
+stored in compact form. Only relevant if \code{tasks = 'train'}.
+If \code{isTRUE(compact)}, training data, imputations and other data-specific
+elements are removed from the resulting \code{mids} object. The
+\code{store} element of the will be changed from \code{"train"} to
+\code{"train.compact"}. The default is \code{compact = FALSE}.}
 
 \item{\dots}{Named arguments that are passed down to the univariate imputation
 functions.}
@@ -414,13 +422,13 @@ complete(imp)
 imp0 <- mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"), print = FALSE)
 
 # store all imputation models
-imp1 <- mice(nhanes, tasks = "retain", print = FALSE)
+imp1 <- mice(nhanes, tasks = "train", print = FALSE)
 ls(imp1$models$bmi$"1")
 imp1$models$bmi$"1"$formula
 imp1$models$bmi$"1"$beta.mis
 
 # Store model for `bmi`, estimate others as usual
-tasks <- c("age" = "generate", "bmi" = "retain", "hyp" = "generate", "chl" = "generate")
+tasks <- c("age" = "impute", "bmi" = "train", "hyp" = "impute", "chl" = "impute")
 imp2 <- mice(nhanes, tasks = tasks, print = FALSE)
 
 # Inspects the stored model for imputation 1 for `bmi`
@@ -429,7 +437,7 @@ imp2$models$bmi$"1"$formula
 imp2$models$bmi$"1"$beta.mis
 
 # Fill missing `bmi` values using pre-trained model
-tasks <- c("age" = "generate", "bmi" = "apply", "hyp" = "generate", "chl" = "generate")
+tasks <- c("age" = "impute", "bmi" = "fill", "hyp" = "impute", "chl" = "impute")
 imp3 <- mice(nhanes, tasks = tasks, models = imp2$models, print = FALSE)
 
 \dontrun{

@@ -84,9 +84,9 @@ complete.mids <- function(data, action = 1L, include = FALSE,
                           mild = FALSE, order = c("last", "first"),
                           ...) {
   if (!is.mids(data)) stop("'data' not of class 'mids'")
-  if (data$store == "train") {
-    stop(paste("Cannot complete training object.\n",
-               "Use task 'generate' or 'retain' to estimate imputation model."))
+  if (data$store == "train_compact") {
+    stop(paste("Cannot complete compact training object.\n",
+               "Set 'compact = FALSE' to preserve training data and imputations."))
   }
   order <- match.arg(order)
 

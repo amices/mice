@@ -1,10 +1,10 @@
 check.tasks <- function(tasks, data, models = NULL, blocks = NULL) {
   # This function is called during initialization
   if (is.null(tasks)) {
-    tasks <- "generate"
+    tasks <- "impute"
   }
 
-  valid_tasks <- c("generate", "retain", "train", "apply")
+  valid_tasks <- c("impute", "train", "fill")
 
   # 1. Default blocks to individual variables if not provided
   if (is.null(blocks)) {
@@ -43,21 +43,21 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL) {
     ))
   }
 
-  # 6. Prevent "apply" if models is NULL
-  if ("apply" %in% tasks && is.null(models)) {
-    stop("The task 'apply' requires a stored model, but `models` is NULL.\n",
-         "Please provide a valid `models` object containing trained imputation models.")
+  # 6. Prevent "fill" if models is NULL
+  if ("fill" %in% tasks && is.null(models)) {
+    stop("The task 'fill' requires a stored model, but `models` is NULL.\n",
+         "Please provide a valid `models` object with a trained imputation model.")
   }
 
-  # 7. Ensure that all "apply" variables have a trained model in models
-  if ("apply" %in% tasks && !is.null(models)) {
-    fill_vars <- names(tasks[tasks == "apply"])
+  # 7. Ensure that all "fill" variables have a trained model in models
+  if ("fill" %in% tasks && !is.null(models)) {
+    fill_vars <- names(tasks[tasks == "fill"])
     missing_models <- setdiff(fill_vars, ls(models))
     if (length(missing_models) > 0) {
       stop(paste0(
-        "The following variables specified as 'apply' do not have stored models: ",
+        "The following variables specified as 'fill' do not have stored models: ",
         paste(missing_models, collapse = ", "), ".\n",
-        "Ensure these variables were previously fitted before using 'apply'."
+        "Ensure these variables were previously fitted before using 'fill'."
       ))
     }
   }
@@ -79,10 +79,10 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL) {
 }
 
 check.model <- function(model,
-                        task = c("generate", "retain", "train", "apply")) {
+                        task = c("impute", "train", "fill")) {
   # This function is called during iteration
   task <- match.arg(task)
-  if (task %in% c("retain", "train", "apply")) {
+  if (task %in% c("train", "fill")) {
     if (is.null(model)) {
       stop(paste("`model` cannot be NULL for task:", task))
     }
@@ -90,8 +90,8 @@ check.model <- function(model,
       stop("`model` must be an environment to store results persistently.")
     }
   }
-  if (task == "apply" && !length(ls(model))) {
-    stop("No stored model found for 'apply' task.")
+  if (task == "fill" && !length(ls(model))) {
+    stop("No stored model found for 'fill' task.")
   }
   return()
 }

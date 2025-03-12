@@ -180,37 +180,9 @@ mids <- function(
     loggedEvents = data.frame(),
     version = packageVersion("mice"),
     date = Sys.Date(),
-    store = "generate") {
+    store = "impute") {
 
-  if (store == "generate") {
-    obj <- list(
-      data = data,
-      imp = imp,
-      m = m,
-      where = where,
-      blocks = blocks,
-      call = call,
-      nmis = nmis,
-      method = method,
-      predictorMatrix = predictorMatrix,
-      visitSequence = visitSequence,
-      formulas = formulas,
-      modeltype = modeltype,
-      post = post,
-      blots = blots,
-      tasks = tasks,
-      models = models,
-      ignore = ignore,
-      seed = seed,
-      iteration = iteration,
-      lastSeedValue = lastSeedValue,
-      chainMean = chainMean,
-      chainVar = chainVar,
-      loggedEvents = loggedEvents,
-      version = packageVersion("mice"),
-      date = Sys.Date(),
-      store = store)
-  } else if (store == "retain") {
+  if (store == "impute") {
     obj <- list(
       data = data,
       imp = imp,
@@ -240,6 +212,34 @@ mids <- function(
       store = store)
   } else if (store == "train") {
     obj <- list(
+      data = data,
+      imp = imp,
+      m = m,
+      where = where,
+      blocks = blocks,
+      call = call,
+      nmis = nmis,
+      method = method,
+      predictorMatrix = predictorMatrix,
+      visitSequence = visitSequence,
+      formulas = formulas,
+      modeltype = modeltype,
+      post = post,
+      blots = blots,
+      tasks = tasks,
+      models = models,
+      ignore = ignore,
+      seed = seed,
+      iteration = iteration,
+      lastSeedValue = lastSeedValue,
+      chainMean = chainMean,
+      chainVar = chainVar,
+      loggedEvents = loggedEvents,
+      version = packageVersion("mice"),
+      date = Sys.Date(),
+      store = store)
+  } else if (store == "train_compact") {
+    obj <- list(
       m = m,
       blocks = blocks,
       method = method,
@@ -253,7 +253,7 @@ mids <- function(
       version = packageVersion("mice"),
       date = Sys.Date(),
       call = call)
-  } else if (store == "apply") {
+  } else if (store == "fill") {
     obj <- list(
       data = data,
       imp = imp,
@@ -264,7 +264,7 @@ mids <- function(
       date = Sys.Date(),
       call = call)
   } else {
-    stop("store must be one of 'generate', 'retain', 'train', or 'apply'")
+    stop("store must be one of 'impute', 'train', 'train_compact', or 'fill'")
   }
   class(obj) <- "mids"
   return(obj)

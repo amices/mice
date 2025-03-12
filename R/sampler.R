@@ -207,7 +207,7 @@ sampler.univ <- function(data, r, where, pred, formula, method, task, model,
   wy <- complete.cases(x) & where[, j]
 
   # nothing to impute
-  if (all(!wy) && !task %in% c("retain", "train")) {
+  if (all(!wy) && task != "train") {
     return(numeric(0))
   }
 
@@ -215,7 +215,7 @@ sampler.univ <- function(data, r, where, pred, formula, method, task, model,
   if (k == 1L) check.df(x, y, ry)
 
   # remove linear dependencies
-  if (task != "apply") {
+  if (task != "fill") {
     keep <- remove.lindep(x, y, ry, ...)
     x <- x[, keep, drop = FALSE]
     type <- type[keep]
@@ -239,12 +239,12 @@ sampler.univ <- function(data, r, where, pred, formula, method, task, model,
 
 prepare.formula <- function(formula, data, model, j, ct, pred, task) {
   # prepares the formula for univariate imputation
-  # saves (for "retain" and "train") or retrieves (for "apply") the formula
+  # saves (for "train") or retrieves (for "fill") the formula
 
-  # for "apply", use the stored formula instead of recalculating
-  if (task == "apply") {
+  # for "fill", use the stored formula instead of recalculating
+  if (task == "fill") {
     if (!exists("formula", envir = model)) {
-      stop("Error: No stored formula found in model for 'apply' task.")
+      stop("Error: No stored formula found in model for 'fill' task.")
     }
     formula <- get("formula", envir = model)
     return(formula)
@@ -270,8 +270,8 @@ prepare.formula <- function(formula, data, model, j, ct, pred, task) {
     }
   }
 
-  # store formula in `model` only when task is "retain" or "train"
-  if (task %in% c("retain", "train")) {
+  # store formula in `model` only when task is "train"
+  if (task == "train") {
     assign("formula", formula, envir = model)
   }
 

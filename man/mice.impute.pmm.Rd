@@ -15,7 +15,7 @@ mice.impute.pmm(
   quantify = TRUE,
   exclude = NULL,
   trim = 1L,
-  task = "generate",
+  task = "impute",
   model = NULL,
   nimp = 1L,
   nbins = NULL,
@@ -42,7 +42,7 @@ indicates locations in \code{y} for which imputations are created.}
 The default is \code{donors = 5L}. Setting \code{donors = 1L} always selects
 the closest match, but is not recommended. Values between 5L and 10L
 provide the best results (Morris et al, 2015).
-For tasks \code{"retain"} and \code{"train"}, the number of donors
+For task \code{"train"}, the number of donors
 is calculated internally based on the number of
 observations in \code{yobs}.}
 
@@ -68,18 +68,18 @@ category in order to be considered as a potential donor value.
 Relevant only of \code{y} is a factor.}
 
 \item{task}{Character string. The task to be performed. Can
-be \code{"generate"}, \code{"retain"}, \code{"train"} or \code{"apply"}.
-The default is \code{"generate"} (classic MICE). See \code{mice()} for
+be \code{"impute"}, \code{"train"} or \code{"fill"}.
+The default is \code{"impute"} (classic MICE). See \code{mice()} for
 details.}
 
 \item{model}{An environment created by a parent to store the imputation
 model setup and estimates. The model is stored in the \code{mids} object
-under tasks \code{"retain"} and \code{"train"}, and is needed as input
-for task \code{"apply"}. The object \code{model} is not used under
-task \code{"generate"}.}
+under tasks \code{"train"}, and is needed as input
+for task \code{"fill"}. The object \code{model} is not used under
+task \code{"impute"}.}
 
 \item{nimp}{Experimental. Number of random imputations per missing values
-generated from a fitted model under tasks \code{"retain"} and \code{"train"}.
+generated from a fitted model under task \code{"train"}.
 The default is 1. The \code{nimp} parameter is different from \code{m},
 the number of multiple imputations, because it generates repeated
 imputations from a single model. The \code{nimp} parameter is useful
@@ -87,7 +87,7 @@ for large samples to reduce the computational burden, but still awaits
 support within the mice algorithm.}
 
 \item{nbins}{The number of bins used to store the predictive mean matching
-model. Under tasks \code{"retain"} and \code{"train"}, the number of donors
+model. Under task \code{"train"}, the number of donors
 is calculated internally based on the number of observations in \code{yobs}
 and the number of unique predictive values.}
 

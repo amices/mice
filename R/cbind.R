@@ -97,7 +97,7 @@ cbind.mids <- function(x, y = NULL, ...) {
   post <- c(x$post, rep.int("", ncol(y)))
   names(post) <- varnames
   blots <- x$blots
-  tasks <- c(x$tasks, "generate")
+  tasks <- c(x$tasks, "impute")
   names(tasks) <- c(names(x$tasks), tail(varnames, 1L))
   models <- x$models
   ignore <- x$ignore

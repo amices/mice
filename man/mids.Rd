@@ -35,7 +35,7 @@ mids(
   loggedEvents = data.frame(),
   version = packageVersion("mice"),
   date = Sys.Date(),
-  store = "generate"
+  store = "impute"
 )
 
 \method{plot}{mids}(
@@ -159,19 +159,19 @@ called for block \code{blockname}.}
 \item{tasks}{A character vector specifying the task to perform for
 each imputation block. The available options are:
 \describe{
-\item{"generate"}{Estimate parameters, generate imputations and store
-the original data plus imputations (classic MICE behavior).}
-\item{"retain" }{Estimate parameters, generate imputations and
+\item{"impute"}{Estimate parameters, generates imputations and store
+the original data plus imputations, but not the imputation model
+(classic MICE behavior).}
+\item{"train" }{Estimate parameters, generate imputations and
 store the original data, the imputations and the imputation model.}
-\item{"train"}{As retain, but store only the imputation model.}
-\item{"apply"}{Apply a previously trained imputation model to generate
+\item{"fill"}{Apply a previously trained imputation model to fill
 imputations, without re-estimating parameters.}
 }
 This argument can be specified as a named vector, where names correspond
 to variables and values specify the task for each variable. If a
 single value is provided, it applies to the variables in all blocks. The
 length of the vector must match the number of variables present in the
-blocks. The default is \code{"generate"}.}
+blocks. The default is \code{"impute"}.}
 
 \item{models}{An environment that can be used to store fitted imputation
 models. The models are stored in the environment under the name of the
