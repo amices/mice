@@ -198,18 +198,7 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
   x <- cbind(1, as.matrix(x))
 
   # >>> Fill task: fill from stored model
-  if (task == "fill") {
-    formula <- model$formula
-    if (!length(formula)) {
-      stop("No model stored in environment")
-    }
-    mnames <- rownames(model$beta.mis)
-    dnames <- colnames(x)
-    if (ncol(x) != nrow(model$beta.mis) || any(mnames != dnames)) {
-      stop(paste("Model-Data mismatch: ", deparse(formula), "\n",
-                 " Model:", paste(mnames, collapse = " "), "\n",
-                 " Data: ", paste(dnames, collapse = " "), "\n"))
-    }
+  if (task == "fill" && check.model.data.match(model, x)) {
     yhatmis <- x[wy, ] %*% model$beta.mis
     impy <- draw.neighbors.pmm(yhatmis,
                                edges = model$edges,
@@ -361,3 +350,17 @@ draw.neighbors.pmm <- function(yhat, edges, lookup, nimp = 1L) {
   return(impy)
 }
 
+check.model.data.match <- function(model, x) {
+  formula <- model$formula
+  if (!length(formula)) {
+    stop("No model stored in environment")
+  }
+  mnames <- rownames(model$beta.mis)
+  dnames <- colnames(x)
+  if (ncol(x) != nrow(model$beta.mis) || any(mnames != dnames)) {
+    stop(paste("Model-Data mismatch: ", deparse(formula), "\n",
+               " Model:", paste(mnames, collapse = " "), "\n",
+               " Data: ", paste(dnames, collapse = " "), "\n"))
+  }
+  return(TRUE)
+}
