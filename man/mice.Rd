@@ -184,8 +184,8 @@ are created by a simple random draw from the data. Note that specification of
 \code{data.init} will start all \code{m} Gibbs sampling streams from the same
 imputation.}
 
-\item{compact}{A logical value indicating whether the resulting should be
-stored in compact form. Only relevant if \code{tasks = 'train'}.
+\item{compact}{A logical value indicating whether the resulting \code{mids}
+object should be stored in compact form. Only relevant if \code{tasks = 'train'}.
 If \code{isTRUE(compact)}, training data, imputations and other data-specific
 elements are removed from the resulting \code{mids} object. The
 \code{store} element of the will be changed from \code{"train"} to

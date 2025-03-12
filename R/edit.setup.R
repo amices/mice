@@ -1,9 +1,9 @@
-mice.edit.setup <- function(data, setup,
-                       allow.na = FALSE,
-                       remove.constant = TRUE,
-                       remove.collinear = TRUE,
-                       remove_collinear = TRUE,
-                       ...) {
+mice.edit.setup <- function(data, setup, tasks,
+                            allow.na = FALSE,
+                            remove.constant = TRUE,
+                            remove.collinear = TRUE,
+                            remove_collinear = TRUE,
+                            ...) {
   # legacy handling
   if (!remove_collinear) remove.collinear <- FALSE
 
@@ -18,7 +18,7 @@ mice.edit.setup <- function(data, setup,
 
   # FIXME: this function is not yet adapted to blocks
   if (ncol(pred) != nrow(pred) || length(meth) != nrow(pred) ||
-    ncol(data) != nrow(pred)) {
+      ncol(data) != nrow(pred)) {
     return(setup)
   }
 
@@ -28,28 +28,31 @@ mice.edit.setup <- function(data, setup,
   for (j in seq_len(ncol(data))) {
     if (!is.passive(meth[j])) {
       d.j <- data[, j]
-      v <- if (is.character(d.j)) NA else var(as.numeric(d.j), na.rm = TRUE)
-      constant <- if (allow.na) {
-        if (is.na(v)) FALSE else v < 1000 * .Machine$double.eps
-      } else {
-        is.na(v) || v < 1000 * .Machine$double.eps
-      }
-      didlog <- FALSE
-      if (constant && any(pred[, j] != 0) && remove.constant) {
-        out <- varnames[j]
-        pred[, j] <- 0
-        updateLog(out = out, meth = "constant")
-        didlog <- TRUE
-      }
-      if (constant && meth[j] != "" && remove.constant) {
-        out <- varnames[j]
-        pred[j, ] <- 0
-        if (!didlog) {
-          updateLog(out = out, meth = "constant")
+      task <- unname(tasks[varnames[j]])
+      if (task != "fill") {
+        v <- if (is.character(d.j)) NA else var(as.numeric(d.j), na.rm = TRUE)
+        constant <- if (allow.na) {
+          if (is.na(v)) FALSE else v < 1000 * .Machine$double.eps
+        } else {
+          is.na(v) || v < 1000 * .Machine$double.eps
         }
-        meth[j] <- ""
-        vis <- vis[vis != j]
-        post[j] <- ""
+        didlog <- FALSE
+        if (constant && any(pred[, j] != 0) && remove.constant) {
+          out <- varnames[j]
+          pred[, j] <- 0
+          updateLog(out = out, meth = "constant")
+          didlog <- TRUE
+        }
+        if (constant && meth[j] != "" && remove.constant) {
+          out <- varnames[j]
+          pred[j, ] <- 0
+          if (!didlog) {
+            updateLog(out = out, meth = "constant")
+          }
+          meth[j] <- ""
+          vis <- vis[vis != j]
+          post[j] <- ""
+        }
       }
     }
   }
@@ -61,6 +64,8 @@ mice.edit.setup <- function(data, setup,
   } else {
     droplist <- NULL
   }
+  # do not drop variables with task "fill"
+  droplist <- setdiff(droplist, names(tasks[tasks == "fill"]))
   if (length(droplist) > 0) {
     for (k in seq_along(droplist)) {
       j <- which(varnames %in% droplist[k])
