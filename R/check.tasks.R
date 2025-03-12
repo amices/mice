@@ -78,8 +78,7 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL) {
   return(tasks)
 }
 
-check.model <- function(model,
-                        task = c("impute", "train", "fill")) {
+check.model <- function(model, task = c("impute", "train", "fill")) {
   # This function is called during iteration
   task <- match.arg(task)
   if (task %in% c("train", "fill")) {

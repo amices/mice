@@ -197,19 +197,27 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
   # Add intercept column to x
   x <- cbind(1, as.matrix(x))
 
-  # Task: apply (impute from stored model)
+  # >>> Fill task: fill from stored model
   if (task == "fill") {
+    # This catches only length differences, not names
+    if (ncol(x) != nrow(model$beta.mis)) {
+      stop(paste("Model mismatch:\n",
+                 "Predictors: ", names(x), "\n",
+                 "Estimates:  ", rownames(model$beta.mis)))
+    }
     yhatmis <- x[wy, ] %*% model$beta.mis
-    return(pmm.impute(yhatmis, model, nimp = nimp, ...))
+    impy <- draw.neighbors.pmm(yhatmis,
+                               edges = model$edges,
+                               lookup = model$lookup,
+                               nimp = nimp)
+    return(impy)
   }
-
-  # -- Remaining tasks: impute, train --
 
   # Quantify factor levels
   f <- quantify(y, ry, x, quantify = quantify)
   ynum <- f$ynum
 
-  # Predict missing values using Normal draw
+  # Predict ynum on observed data with linear model
   parm <- .norm.draw(ynum, ry, x, ridge = ridge, ...)
   if (matchtype == 1L) {
     beta.obs <- parm$coef
@@ -224,7 +232,7 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
   yhatobs <- as.vector(x_ry %*% beta.obs)
   yhatmis <- x_wy %*% beta.mis
 
-  # Impute task: Impute values (classic MICE PMM)
+  # >>> Impute task: Impute values (classic MICE PMM)
   if (task == "impute") {
     if (use.matcher) {
       idx <- matcher(yhatobs, yhatmis, k = donors)
@@ -234,12 +242,12 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
     return(y[ry][idx])
   }
 
-  # -- Remaining task: train --
-
-  # Divide predictions into bins
+  # >>> Train task: Store model in environment
   nbins <- initialize.nbins(nbins, length(yhatobs), length(unique(yhatobs)))
   donors <- initialize.donors(donors, length(yhatobs))
-  prep <- bin.yhat(yhatobs, ynum[ry], k = donors, nbins = nbins)
+  edges <- quantile(yhatobs, probs = seq(0, 1, length.out = nbins + 1L),
+                    type = 7L, na.rm = TRUE)
+  lookup <- bin.yhat(yhatobs, ynum[ry], k = donors, edges = edges)
 
   # Store the imputation model in models environment
   model$setup <- list(method = "pmm",
@@ -254,42 +262,30 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
                       ridge = ridge)
   model$beta.obs <- beta.obs
   model$beta.mis <- beta.mis
-  model$edges <- prep$edges
-  model$lookup <- prep$lookup
+  model$edges <- edges
+  model$lookup <- matrix((unquantify(lookup, f$quant, levels(y))),
+                         nrow = nbins)
   model$factor <- list(labels = f$labels, quant = f$quant)
 
   # Compute imputations from model
-  return(pmm.impute(yhatmis, model, nimp = nimp, ...))
-}
-
-
-
-# --- PMM helpers
-
-pmm.impute <- function(yhatmis, model, nimp = 1L, ...) {
-  # Task "fill": Compute imputations without estimating new model
   impy <- draw.neighbors.pmm(yhatmis,
                              edges = model$edges,
                              lookup = model$lookup,
-                             m = nimp)
-  # Convert back to factor if needed
-  impy <- unquantify(ynum = impy,
-                     quant = model$factor$quant,
-                     labels = model$factor$labels)
+                             nimp = nimp)
   return(impy)
 }
+
+# --- PMM helpers
 
 initialize.nbins <- function(nbins, n, nu) {
   if (is.null(nbins)) {
     nbins <- round(4 * log(n) + 1.5)
   }
 
-  # max nbin is number of unique yhat values
+  # max nbin is number of unique yhat values, but ensure at least 2 bins
   if (nbins > nu) {
-    # message("Warning: nbins (", nbins, ") exceeds unique yhat values (", nu, "). Adjusting to ", nu, ".")
     nbins <- nu
   }
-  # Ensure at least 2 bins
   nbins <- max(2L, nbins)
   return(nbins)
 }
@@ -302,64 +298,61 @@ initialize.donors <- function(donors, n) {
   return(donors)
 }
 
-bin.yhat <- function(yhat, y, k = 10, nbins = 25) {
+bin.yhat <- function(yhat, y, k, edges) {
   stopifnot(length(yhat) == length(y))
-
-  # Compute percentile-based bin edges
-  edges <- quantile(yhat, probs = seq(0, 1, length.out = nbins + 1), type = 7, na.rm = TRUE)
 
   # Sort yhat and y together
   sort_order <- order(yhat)
   yhat_sorted <- yhat[sort_order]
   y_sorted <- y[sort_order]
 
-  # Initialize lookup table
-  lookup <- matrix(NA_real_, nrow = nbins, ncol = k)
-
   # Assign values to bins
-  bin_idx <- findInterval(yhat_sorted, vec = edges, all.inside = TRUE)
+  bin <- findInterval(yhat_sorted, vec = edges, all.inside = TRUE)
 
   # Split y_sorted by bins
-  bin_values_list <- split(y_sorted, bin_idx)
+  values_list <- split(y_sorted, bin)
 
-  # Fill lookup table
+  # Fill lookup table with k potential donor values per bin
+  # If bin is empty, sample from entire y_sorted to avoid NA values
+  # If only one value is available, repeat it
+  # Watch out for odd sample(x) behavior when length(x) == 1
+  # Sample with replacement if we fewer than k bin values
+  nbins <- length(edges) - 1L
   lookup <- t(sapply(seq_len(nbins), function(b) {
-    bin_values <- bin_values_list[[as.character(b)]]
-
-    if (length(bin_values) > 0) {
-      # If more than k values are available, randomly sample k
-      sample(bin_values, size = k, replace = length(bin_values) < k)
-    } else {
-      # If bin is empty, sample from entire y_sorted to avoid NA values
+    values <- values_list[[as.character(b)]]
+    if (length(values) == 0L) {
       sample(y_sorted, size = k, replace = TRUE)
-    }
-  }))
+    } else if (length(values) == 1L) {
+      rep(values, k)
+    } else {
+      sample(values, size = k, replace = length(values) < k)
+    }}))
 
-  return(list(edges = edges, lookup = lookup))
+  return(lookup)
 }
 
-draw.neighbors.pmm <- function(yhat_query, edges, lookup, m = 1) {
-  num_queries <- length(yhat_query)
-  nbins <- length(edges) - 1  # Bins are defined by edges[i] and edges[i+1]
+draw.neighbors.pmm <- function(yhat, edges, lookup, nimp = 1L) {
+  # Bins are defined by edges[i] and edges[i+1]
+  n <- length(yhat)
+  nbins <- length(edges) - 1L
 
-  # Initialize result matrix: rows = number of queries, columns = m draws per query
-  imputed_values <- matrix(NA_real_, nrow = num_queries, ncol = m)
+  # Result matrix: rows = number of queries, columns = nimp draws per query
+  imputed_values <- matrix(NA_real_, nrow = n, ncol = nimp)
 
   # Find the bin for each query value
-  bin_idx <- findInterval(yhat_query, edges, rightmost.closed = TRUE, all.inside = TRUE)
+  bin <- findInterval(yhat, edges, rightmost.closed = TRUE, all.inside = TRUE)
 
   # Compute probability of selecting from left bin (smooth transition)
-  t0 <- edges[pmax(bin_idx, 1)]
-  t1 <- edges[pmin(bin_idx + 1, nbins)]
-  p_left <- ifelse(t1 > t0, (t1 - yhat_query) / (t1 - t0), 0.5)
+  t0 <- edges[pmax(bin, 1L)]
+  t1 <- edges[pmin(bin + 1L, nbins)]
+  p_left <- ifelse(t1 > t0, (t1 - yhat) / (t1 - t0), 0.5)
 
   # Determine which bin to sample from
-  selected_bin <- ifelse(runif(num_queries) < p_left, bin_idx, pmin(bin_idx + 1, nbins))
+  selected_bin <- ifelse(runif(n) < p_left, bin, pmin(bin + 1L, nbins))
 
   # Vectorized sampling from lookup table
-  sampled_indices <- matrix(sample(1:ncol(lookup), num_queries * m, replace = TRUE), nrow = num_queries)
-  imputed_values <- matrix(lookup[cbind(selected_bin, sampled_indices)], nrow = num_queries, ncol = m)
-
-  return(imputed_values)
+  indices <- matrix(sample(1L:ncol(lookup), n * nimp, replace = TRUE), nrow = n)
+  impy <- matrix(lookup[cbind(selected_bin, indices)], nrow = n, ncol = nimp)
+  return(impy)
 }
 
