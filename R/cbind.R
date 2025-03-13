@@ -100,6 +100,7 @@ cbind.mids <- function(x, y = NULL, ...) {
   tasks <- c(x$tasks, "impute")
   names(tasks) <- c(names(x$tasks), tail(varnames, 1L))
   models <- x$models
+  store <- x$store
   ignore <- x$ignore
 
   # seed, lastSeedValue, number of iterations, chainMean and chainVar
@@ -130,6 +131,7 @@ cbind.mids <- function(x, y = NULL, ...) {
     blots = blots,
     tasks = tasks,
     models = models,
+    store = store,
     ignore = ignore,
     seed = seed,
     iteration = iteration,
@@ -247,7 +249,19 @@ cbind.mids.mids <- function(x, y, call) {
     }
     return(target_env)
   }
-  models <- merge_envs(x$models, y$models)
+  if (!is.null(x$models) && !is.null(y$models)) {
+    models <- merge_envs(x$models, y$models)
+  } else if (!is.null(x$models)) {
+    models <- x$models
+  } else if (!is.null(y$models)) {
+    models <- y$models
+  } else {
+    models <- NULL
+  }
+  store <- x$store
+  if (y$store != store) {
+    store <- "train"
+  }
   ignore <- x$ignore
 
   # For the elements seed, lastSeedValue and iteration the values
@@ -315,6 +329,7 @@ cbind.mids.mids <- function(x, y, call) {
     blots = blots,
     tasks = tasks,
     models = models,
+    store = store,
     ignore = ignore,
     seed = seed,
     iteration = iteration,

@@ -199,7 +199,6 @@ mids <- function(
       post = post,
       blots = blots,
       tasks = tasks,
-      models = models,
       ignore = ignore,
       seed = seed,
       iteration = iteration,

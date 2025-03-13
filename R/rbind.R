@@ -48,6 +48,7 @@ rbind.mids <- function(x, y = NULL, ...) {
   blots <- x$blots
   tasks <- x$tasks
   models <- x$models
+  store <- x$store
   predictorMatrix <- x$predictorMatrix
   visitSequence <- x$visitSequence
 
@@ -79,6 +80,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     blots = blots,
     tasks = tasks,
     models = models,
+    store = store,
     ignore = ignore,
     seed = seed,
     iteration = iteration,
@@ -131,6 +133,10 @@ rbind.mids.mids <- function(x, y, call) {
   blots <- x$blots
   tasks <- x$tasks
   models <- x$models
+  store <- x$store
+  if (y$store != store) {
+    store <- "train"
+  }
   ignore <- c(x$ignore, y$ignore)
   predictorMatrix <- x$predictorMatrix
   visitSequence <- x$visitSequence
@@ -180,6 +186,7 @@ rbind.mids.mids <- function(x, y, call) {
     blots = blots,
     tasks = tasks,
     models = models,
+    store = store,
     ignore = ignore,
     seed = seed,
     iteration = iteration,
