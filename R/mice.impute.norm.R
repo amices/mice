@@ -34,11 +34,32 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
-mice.impute.norm <- function(y, ry, x, wy = NULL, ...) {
+mice.impute.norm <- function(y, ry, x, wy = NULL,
+                             task = "impute", model = NULL,
+                             ridge = 1e-05,
+                             ...) {
+  check.model.exists(model, task)
+  method <- "norm"
   if (is.null(wy)) wy <- !ry
   x <- cbind(1, as.matrix(x))
-  parm <- .norm.draw(y, ry, x, ...)
-  x[wy, ] %*% parm$beta + rnorm(sum(wy)) * parm$sigma
+
+  if (task == "fill" && check.model.match(model, x, method)) {
+    return(x[wy, ] %*% model$beta.mis + rnorm(sum(wy)) * model$sigma)
+  }
+
+  parm <- .norm.draw(y, ry, x, ridge = ridge, ...)
+
+  if (task == "train") {
+    model$setup <- list(method = method,
+                        n = sum(ry),
+                        task = task,
+                        ridge = ridge)
+    model$beta.obs <- parm$coef
+    model$beta.mis <- parm$beta
+    model$sigma <- parm$sigma
+  }
+
+  return(x[wy, ] %*% parm$beta + rnorm(sum(wy)) * parm$sigma)
 }
 
 

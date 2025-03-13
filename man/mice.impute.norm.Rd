@@ -5,7 +5,16 @@
 \alias{norm}
 \title{Imputation by Bayesian linear regression}
 \usage{
-mice.impute.norm(y, ry, x, wy = NULL, ...)
+mice.impute.norm(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  task = "impute",
+  model = NULL,
+  ridge = 1e-05,
+  ...
+)
 }
 \arguments{
 \item{y}{Vector to be imputed}
@@ -20,6 +29,24 @@ model is fitted. The \code{ry} generally distinguishes the observed
 
 \item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
+
+\item{task}{Character string. The task to be performed. Can
+be \code{"impute"}, \code{"train"} or \code{"fill"}.
+The default is \code{"impute"} (classic MICE). See \code{mice()} for
+details.}
+
+\item{model}{An environment created by a parent to store the imputation
+model setup and estimates. The model is stored in the \code{mids} object
+under tasks \code{"train"}, and is needed as input
+for task \code{"fill"}. The object \code{model} is not used under
+task \code{"impute"}.}
+
+\item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent
+problems with multicollinearity. The default is \code{ridge = 1e-05},
+which means that 0.01 percent of the diagonal is added to the cross-product.
+Larger ridges may result in more biased estimates. For highly noisy data
+(e.g. many junk variables), set \code{ridge = 1e-06} or even lower to
+reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
 
 \item{...}{Other named arguments.}
 }
