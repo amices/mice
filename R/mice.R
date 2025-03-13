@@ -503,19 +503,17 @@ mice <- function(data,
   loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
 
   # edit imputation setup
-  # if (any(tasks != "fill")) {
-    setup <- list(
-      method = method,
-      predictorMatrix = predictorMatrix,
-      visitSequence = visitSequence,
-      post = post
-    )
-    setup <- mice.edit.setup(data, setup, tasks, ...)
-    method <- setup$method
-    predictorMatrix <- setup$predictorMatrix
-    visitSequence <- setup$visitSequence
-    post <- setup$post
-  # }
+  setup <- list(
+    method = method,
+    predictorMatrix = predictorMatrix,
+    visitSequence = visitSequence,
+    post = post
+  )
+  setup <- mice.edit.setup(data, setup, tasks, ...)
+  method <- setup$method
+  predictorMatrix <- setup$predictorMatrix
+  visitSequence <- setup$visitSequence
+  post <- setup$post
 
   # Initialize models for "train" and "fill" blocks that are missing in models
   if (is.null(models)) {

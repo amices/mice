@@ -194,7 +194,7 @@ mice.impute.pmm(y, ry, x, trim = 2L)
 # in addition, eliminate category 20
 mice.impute.pmm(y, ry, x, trim = 2L, exclude = 20)
 
-# to get old behavior: as.integer(y))
+# to get old behavior (before mice v3.16.4): as.integer(y))
 mice.impute.pmm(y, ry, x, quantify = FALSE)
 }
 \references{

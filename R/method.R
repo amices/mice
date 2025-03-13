@@ -39,6 +39,18 @@ make.method <- function(data,
     }
   }
 
+  # check whether methods support train and fill tasks
+  for (j in names(blocks)) {
+    vname <- blocks[[j]]
+    for (yname in vname) {
+      mj <- method[j]
+      task <- tasks[yname]
+      if (!is.null(task) && task %in% c("train", "fill") && !mj %in% c("pmm")) {
+        stop(paste("Method", mj, "does not support train and fill tasks. Use method = 'pmm' instead."))
+      }
+    }
+  }
+
   method
 }
 
