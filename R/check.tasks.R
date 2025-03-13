@@ -77,20 +77,3 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL) {
 
   return(tasks)
 }
-
-check.model <- function(model, task = c("impute", "train", "fill")) {
-  # This function is called during iteration
-  task <- match.arg(task)
-  if (task %in% c("train", "fill")) {
-    if (is.null(model)) {
-      stop(paste("`model` cannot be NULL for task:", task))
-    }
-    if (!is.environment(model)) {
-      stop("`model` must be an environment to store results persistently.")
-    }
-  }
-  if (task == "fill" && !length(ls(model))) {
-    stop("No stored model found for 'fill' task.")
-  }
-  return()
-}

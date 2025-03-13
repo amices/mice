@@ -175,7 +175,7 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
                             donors = 5L, nbins = NULL, use.matcher = FALSE,
                             nimp = 1L, ...)
 {
-  check.model(model, task)
+  check.model.exists(model, task)
   if (is.null(wy)) wy <- !ry
 
   # Remove excluded values and trim small categories
@@ -350,17 +350,3 @@ draw.neighbors.pmm <- function(yhat, edges, lookup, nimp = 1L) {
   return(impy)
 }
 
-check.model.data.match <- function(model, x) {
-  formula <- model$formula
-  if (!length(formula)) {
-    stop("No model stored in environment")
-  }
-  mnames <- rownames(model$beta.mis)
-  dnames <- colnames(x)
-  if (ncol(x) != nrow(model$beta.mis) || any(mnames != dnames)) {
-    stop(paste("Model-Data mismatch: ", deparse(formula), "\n",
-               " Model:", paste(mnames, collapse = " "), "\n",
-               " Data: ", paste(dnames, collapse = " "), "\n"))
-  }
-  return(TRUE)
-}
