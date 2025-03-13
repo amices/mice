@@ -70,13 +70,16 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
           # (repeated) univariate imputation - pred method
           if (univ) {
             for (j in b) {
+              # if m outruns m.train, recycle m.train
+              m.train <- length(models[[j]])
+              mod <- (i - 1L) %% m.train + 1L
               imp[[j]][, i] <-
                 sampler.univ(
                   data = data, r = r, where = where,
                   pred = pred, formula = ff,
                   method = theMethod,
                   task = tasks[j],
-                  model = models[[j]][[as.character(i)]],
+                  model = models[[j]][[as.character(mod)]],
                   yname = j, k = k,
                   ct = ct,
                   user = user, ignore = ignore,

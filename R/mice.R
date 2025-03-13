@@ -520,17 +520,18 @@ mice <- function(data,
     models <- new.env(parent = emptyenv())
   }
   model.vars <- names(tasks[tasks %in% c("train", "fill")])
-  m.train <- length(models[[model.vars[1L]]])
-  if (any(tasks %in% "fill") && m > m.train) {
-    stop("Number of imputations (", m, ") is greater than training model (", m.train, ").")
-  }
-  for (block in model.vars) {
-    if (!exists(block, envir = models)) {
-      models[[block]] <- new.env(parent = emptyenv())
-    }
-    for (i in 1:m) {
-      if (!exists(as.character(i), envir = models[[block]])) {
-        models[[block]][[as.character(i)]] <- new.env(parent = emptyenv())
+  # if (any(tasks %in% "fill") && m > m.train) {
+  #   stop("Number of imputations (", m, ") is greater than training model (", m.train, ").")
+  # }
+  for (varname in model.vars) {
+    if (tasks[varname] == "train") {
+      if (!exists(varname, envir = models)) {
+        models[[varname]] <- new.env(parent = emptyenv())
+      }
+      for (i in 1:m) {
+        if (!exists(as.character(i), envir = models[[varname]])) {
+          models[[varname]][[as.character(i)]] <- new.env(parent = emptyenv())
+        }
       }
     }
   }
