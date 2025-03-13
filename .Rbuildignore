@@ -21,3 +21,4 @@ vignettes/
 ^LICENSE\.md$
 ^\.github$
 ^CRAN-SUBMISSION$
+^vignettes/articles$
