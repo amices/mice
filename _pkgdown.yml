@@ -47,6 +47,7 @@ reference:
   - make.modeltype
   - make.post
   - make.predictorMatrix
+  - make.tasks
   - make.visitSequence
   - make.where
   - construct.blocks
