@@ -10,17 +10,17 @@ mice.impute.pmm(
   ry,
   x,
   wy = NULL,
-  donors = 5L,
-  matchtype = 1L,
-  quantify = TRUE,
-  exclude = NULL,
-  trim = 1L,
   task = "impute",
   model = NULL,
-  nimp = 1L,
-  nbins = NULL,
+  exclude = NULL,
+  trim = 1L,
+  quantify = TRUE,
   ridge = 1e-05,
+  matchtype = 1L,
+  donors = 5L,
+  nbins = NULL,
   use.matcher = FALSE,
+  nimp = 1L,
   ...
 )
 }
@@ -38,35 +38,6 @@ model is fitted. The \code{ry} generally distinguishes the observed
 \item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
-\item{donors}{The size of the donor pool among which a draw is made.
-The default is \code{donors = 5L}. Setting \code{donors = 1L} always selects
-the closest match, but is not recommended. Values between 5L and 10L
-provide the best results (Morris et al, 2015).
-For task \code{"train"}, the number of donors
-is calculated internally based on the number of
-observations in \code{yobs}.}
-
-\item{matchtype}{Type of matching distance. The default (recommended) choice
-(\code{matchtype = 1L}) calculates the distance between
-the \emph{predicted} value of \code{yobs} and
-the \emph{drawn} values of \code{ymis} (called type-1 matching).
-Other choices are \code{matchtype = 0L}
-(distance between predicted values) and \code{matchtype = 2L}
-(distance between drawn values).}
-
-\item{quantify}{Logical. If \code{TRUE}, factor levels are replaced
-by the first canonical variate before fitting the imputation model.
-If false, the procedure reverts to the old behaviour and takes the
-integer codes (which may lack a sensible interpretation).
-Relevant only of \code{y} is a factor.}
-
-\item{exclude}{Dependent values to exclude from the imputation model
-and the collection of donor values}
-
-\item{trim}{Scalar integer. Minimum number of observations required in a
-category in order to be considered as a potential donor value.
-Relevant only of \code{y} is a factor.}
-
 \item{task}{Character string. The task to be performed. Can
 be \code{"impute"}, \code{"train"} or \code{"fill"}.
 The default is \code{"impute"} (classic MICE). See \code{mice()} for
@@ -78,18 +49,18 @@ under tasks \code{"train"}, and is needed as input
 for task \code{"fill"}. The object \code{model} is not used under
 task \code{"impute"}.}
 
-\item{nimp}{Experimental. Number of random imputations per missing values
-generated from a fitted model under task \code{"train"}.
-The default is 1. The \code{nimp} parameter is different from \code{m},
-the number of multiple imputations, because it generates repeated
-imputations from a single model. The \code{nimp} parameter is useful
-for large samples to reduce the computational burden, but still awaits
-support within the mice algorithm.}
+\item{exclude}{Dependent values to exclude from the imputation model
+and the collection of donor values}
 
-\item{nbins}{The number of bins used to store the predictive mean matching
-model. Under task \code{"train"}, the number of donors
-is calculated internally based on the number of observations in \code{yobs}
-and the number of unique predictive values.}
+\item{trim}{Scalar integer. Minimum number of observations required in a
+category in order to be considered as a potential donor value.
+Relevant only of \code{y} is a factor.}
+
+\item{quantify}{Logical. If \code{TRUE}, factor levels are replaced
+by the first canonical variate before fitting the imputation model.
+If false, the procedure reverts to the old behaviour and takes the
+integer codes (which may lack a sensible interpretation).
+Relevant only of \code{y} is a factor.}
 
 \item{ridge}{The ridge penalty used in \code{.norm.draw()} to prevent
 problems with multicollinearity. The default is \code{ridge = 1e-05},
@@ -98,9 +69,38 @@ Larger ridges may result in more biased estimates. For highly noisy data
 (e.g. many junk variables), set \code{ridge = 1e-06} or even lower to
 reduce bias. For highly collinear data, set \code{ridge = 1e-04} or higher.}
 
+\item{matchtype}{Type of matching distance. The default (recommended) choice
+(\code{matchtype = 1L}) calculates the distance between
+the \emph{predicted} value of \code{yobs} and
+the \emph{drawn} values of \code{ymis} (called type-1 matching).
+Other choices are \code{matchtype = 0L}
+(distance between predicted values) and \code{matchtype = 2L}
+(distance between drawn values).}
+
+\item{donors}{The size of the donor pool among which a draw is made.
+The default is \code{donors = 5L}. Setting \code{donors = 1L} always selects
+the closest match, but is not recommended. Values between 5L and 10L
+provide the best results (Morris et al, 2015).
+For task \code{"train"}, the number of donors
+is calculated internally based on the number of
+observations in \code{yobs}.}
+
+\item{nbins}{The number of bins used to store the predictive mean matching
+model. Under task \code{"train"}, the number of donors
+is calculated internally based on the number of observations in \code{yobs}
+and the number of unique predictive values.}
+
 \item{use.matcher}{Logical. Set \code{use.matcher = TRUE} to specify
 the C function \code{matcher()}, the now deprecated matching function that
 was default in versions of \code{mice} prior to \code{3.12.0}.}
+
+\item{nimp}{Experimental. Number of random imputations per missing values
+generated from a fitted model under task \code{"train"}.
+The default is 1. The \code{nimp} parameter is different from \code{m},
+the number of multiple imputations, because it generates repeated
+imputations from a single model. The \code{nimp} parameter is useful
+for large samples to reduce the computational burden, but still awaits
+support within the mice algorithm.}
 
 \item{\dots}{Other named arguments.}
 }

@@ -169,11 +169,11 @@
 #' mice.impute.pmm(y, ry, x, quantify = FALSE)
 #' @export
 mice.impute.pmm <- function(y, ry, x, wy = NULL,
-                            donors = 5L, matchtype = 1L, quantify = TRUE,
-                            exclude = NULL, trim = 1L,
-                            task = "impute", model = NULL, nimp = 1L,
-                            nbins = NULL, ridge = 1e-05, use.matcher = FALSE,
-                            ...)
+                            task = "impute", model = NULL,
+                            exclude = NULL, trim = 1L, quantify = TRUE,
+                            ridge = 1e-05, matchtype = 1L,
+                            donors = 5L, nbins = NULL, use.matcher = FALSE,
+                            nimp = 1L, ...)
 {
   check.model(model, task)
   if (is.null(wy)) wy <- !ry
