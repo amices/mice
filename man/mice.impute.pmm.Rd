@@ -20,7 +20,7 @@ mice.impute.pmm(
   donors = 5L,
   nbins = NULL,
   use.matcher = FALSE,
-  nimp = 1L,
+  mlocal = 1L,
   ...
 )
 }
@@ -94,11 +94,11 @@ and the number of unique predictive values.}
 the C function \code{matcher()}, the now deprecated matching function that
 was default in versions of \code{mice} prior to \code{3.12.0}.}
 
-\item{nimp}{Experimental. Number of random imputations per missing values
+\item{mlocal}{Experimental. Number of random imputations per missing values
 generated from a fitted model under task \code{"train"}.
-The default is 1. The \code{nimp} parameter is different from \code{m},
+The default is 1. The \code{mlocal} parameter is different from \code{m},
 the number of multiple imputations, because it generates repeated
-imputations from a single model. The \code{nimp} parameter is useful
+imputations from a single model. The \code{mlocal} parameter is useful
 for large samples to reduce the computational burden, but still awaits
 support within the mice algorithm.}
 

@@ -43,11 +43,11 @@
 #' under tasks \code{"train"}, and is needed as input
 #' for task \code{"fill"}. The object \code{model} is not used under
 #' task \code{"impute"}.
-#' @param nimp Experimental. Number of random imputations per missing values
+#' @param mlocal Experimental. Number of random imputations per missing values
 #' generated from a fitted model under task \code{"train"}.
-#' The default is 1. The \code{nimp} parameter is different from \code{m},
+#' The default is 1. The \code{mlocal} parameter is different from \code{m},
 #' the number of multiple imputations, because it generates repeated
-#' imputations from a single model. The \code{nimp} parameter is useful
+#' imputations from a single model. The \code{mlocal} parameter is useful
 #' for large samples to reduce the computational burden, but still awaits
 #' support within the mice algorithm.
 #' @param nbins The number of bins used to store the predictive mean matching
@@ -173,9 +173,10 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
                             exclude = NULL, trim = 1L, quantify = TRUE,
                             ridge = 1e-05, matchtype = 1L,
                             donors = 5L, nbins = NULL, use.matcher = FALSE,
-                            nimp = 1L, ...)
+                            mlocal = 1L, ...)
 {
   check.model.exists(model, task)
+  method <- "pmm"
   if (is.null(wy)) wy <- !ry
 
   # Remove excluded values and trim small categories
@@ -198,12 +199,12 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
   x <- cbind(1, as.matrix(x))
 
   # >>> Fill task: fill from stored model
-  if (task == "fill" && check.model.data.match(model, x)) {
+  if (task == "fill" && check.model.match(model, x, method)) {
     yhatmis <- x[wy, ] %*% model$beta.mis
     impy <- draw.neighbors.pmm(yhatmis,
                                edges = model$edges,
                                lookup = model$lookup,
-                               nimp = nimp)
+                               mlocal = mlocal)
     return(impy)
   }
 
@@ -244,7 +245,7 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
   lookup <- bin.yhat(yhatobs, ynum[ry], k = donors, edges = edges)
 
   # Store the imputation model in models environment
-  model$setup <- list(method = "pmm",
+  model$setup <- list(method = method,
                       n = length(yhatobs),
                       donors = donors,
                       matchtype = matchtype,
@@ -265,7 +266,7 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
   impy <- draw.neighbors.pmm(yhatmis,
                              edges = model$edges,
                              lookup = model$lookup,
-                             nimp = nimp)
+                             mlocal = mlocal)
   return(impy)
 }
 
@@ -325,13 +326,13 @@ bin.yhat <- function(yhat, y, k, edges) {
   return(lookup)
 }
 
-draw.neighbors.pmm <- function(yhat, edges, lookup, nimp = 1L) {
+draw.neighbors.pmm <- function(yhat, edges, lookup, mlocal = 1L) {
   # Bins are defined by edges[i] and edges[i+1]
   n <- length(yhat)
   nbins <- length(edges) - 1L
 
-  # Result matrix: rows = number of queries, columns = nimp draws per query
-  imputed_values <- matrix(NA_real_, nrow = n, ncol = nimp)
+  # Result matrix: rows = number of queries, columns = mlocal draws per query
+  imputed_values <- matrix(NA_real_, nrow = n, ncol = mlocal)
 
   # Find the bin for each query value
   bin <- findInterval(yhat, edges, rightmost.closed = TRUE, all.inside = TRUE)
@@ -345,8 +346,8 @@ draw.neighbors.pmm <- function(yhat, edges, lookup, nimp = 1L) {
   selected_bin <- ifelse(runif(n) < p_left, bin, pmin(bin + 1L, nbins))
 
   # Vectorized sampling from lookup table
-  indices <- matrix(sample(1L:ncol(lookup), n * nimp, replace = TRUE), nrow = n)
-  impy <- matrix(lookup[cbind(selected_bin, indices)], nrow = n, ncol = nimp)
+  indices <- matrix(sample(1L:ncol(lookup), n * mlocal, replace = TRUE), nrow = n)
+  impy <- matrix(lookup[cbind(selected_bin, indices)], nrow = n, ncol = mlocal)
   return(impy)
 }
 
