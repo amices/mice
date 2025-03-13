@@ -43,7 +43,11 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
-mice.impute.logreg <- function(y, ry, x, wy = NULL, ...) {
+mice.impute.logreg <- function(y, ry, x, wy = NULL,
+                               task = "impute", model = NULL,
+                               ...) {
+  check.model.exists(model, task)
+  method <- "logreg"
   if (is.null(wy)) wy <- !ry
 
   # augment data in order to evade perfect prediction
@@ -54,30 +58,46 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL, ...) {
   wy <- aug$wy
   w <- aug$w
 
-  # fit model
   x <- cbind(1, as.matrix(x))
+
+  if (task == "fill" && check.model.match(model, x, method)) {
+    lp <- x[wy, , drop = FALSE] %*% model$beta.mis
+    return(logreg.draw(lp, levels(y)))
+  }
+
   expr <- expression(glm.fit(
     x = x[ry, , drop = FALSE],
     y = y[ry],
     family = quasibinomial(link = logit),
-    weights = w[ry]
-  ))
+    weights = w[ry]))
   fit <- eval(expr)
   fit.sum <- summary.glm(fit)
   beta <- coef(fit)
   rv <- t(chol(sym(fit.sum$cov.unscaled)))
   beta.star <- beta + rv %*% rnorm(ncol(rv))
 
-  # draw imputations
-  p <- 1 / (1 + exp(-(x[wy, , drop = FALSE] %*% beta.star)))
-  vec <- (runif(nrow(p)) <= p)
-  vec[vec] <- 1
-  if (is.factor(y)) {
-    vec <- factor(vec, c(0, 1), levels(y))
+  if (task == "train") {
+    model$setup <- list(method = method,
+                        n = sum(ry),
+                        task = task)
+    model$beta.obs <- as.matrix(beta)
+    model$beta.mis <- beta.star
+    model$factor <- list(labels = levels(y), quant = c(0, 1))
   }
-  vec
+
+  lp <- x[wy, , drop = FALSE] %*% beta.star
+  return(logreg.draw(lp, levels(y)))
 }
 
+logreg.draw <- function(lp, levels) {
+  p <- 1 / (1 + exp(-lp))
+  vec <- (runif(nrow(p)) <= p)
+  vec[vec] <- 1
+  if (!is.null(levels)) {
+    vec <- factor(vec, c(0, 1), levels)
+  }
+  return(vec)
+}
 
 #' Imputation by logistic regression using the bootstrap
 #'
