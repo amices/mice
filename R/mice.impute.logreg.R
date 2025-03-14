@@ -166,7 +166,7 @@ augment <- function(y, ry, x, wy, maxcat = 50) {
   # This function will prevent augmented data beyond the min and
   # the max of the data
   # Input:
-  # x: numeric data.frame (n rows)
+  # x:  numeric matrix (n rows)
   # y: factor or numeric vector (lengt n)
   # ry: logical vector (length n)
   # Output:
@@ -205,7 +205,7 @@ augment <- function(y, ry, x, wy, maxcat = 50) {
   e <- rep(rep(icod, each = 2), p)
 
   dimnames(d) <- list(paste0("AUG", seq_len(nrow(d))), dimnames(x)[[2]])
-  xa <- rbind.data.frame(x, d)
+  xa <- rbind(x, d)
 
   # beware, concatenation of factors
   ya <- if (is.factor(y)) as.factor(levels(y)[c(y, e)]) else c(y, e)

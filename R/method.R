@@ -39,7 +39,7 @@ make.method <- function(data,
     }
   }
 
-  support <- c("pmm", "norm", "logreg")
+  support <- c("pmm", "norm", "logreg", "polyreg")
   # check whether methods support train and fill tasks
   for (j in names(blocks)) {
     vname <- blocks[[j]]
