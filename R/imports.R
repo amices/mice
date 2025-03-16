@@ -15,7 +15,7 @@
 #'                      formula gaussian getCall
 #'                      glm is.empty.model lm lm.fit
 #'                      median model.frame model.matrix
-#'                      na.exclude na.omit na.pass
+#'                      na.exclude na.omit na.pass plogis
 #'                      pf predict pt qt quantile quasibinomial
 #'                      rbinom rchisq reformulate rgamma rnorm runif
 #'                      sd setNames summary.glm terms update var vcov
