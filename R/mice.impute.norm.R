@@ -54,8 +54,8 @@ mice.impute.norm <- function(y, ry, x, wy = NULL,
                         n = sum(ry),
                         task = task,
                         ridge = ridge)
-    model$beta.obs <- parm$coef
-    model$beta.mis <- parm$beta
+    model$beta.obs <- drop(parm$coef)
+    model$beta.mis <- drop(parm$beta)
     model$sigma <- parm$sigma
   }
 

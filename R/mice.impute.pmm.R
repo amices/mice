@@ -215,12 +215,12 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
   # Predict ynum on observed data with linear model
   parm <- .norm.draw(ynum, ry, x, ridge = ridge, ...)
   if (matchtype == 1L) {
-    beta.obs <- parm$coef
-    beta.mis <- parm$beta
+    beta.obs <- drop(parm$coef)
+    beta.mis <- drop(parm$beta)
   } else if (matchtype == 0L) {
-    beta.mis <- beta.obs <- parm$coef
+    beta.mis <- beta.obs <- drop(parm$coef)
   } else if (matchtype == 2L) {
-    beta.mis <- beta.obs <- parm$beta
+    beta.mis <- beta.obs <- drop(parm$beta)
   }
   x_ry <- x[ry, , drop = FALSE]
   x_wy <- x[wy, , drop = FALSE]

@@ -79,7 +79,8 @@ mice.impute.polyreg <- function(
   w <- aug$w
 
   if (task == "fill") {
-    x <- cbind(`(Intercept)` = 1, x[wy, , drop = FALSE])
+    x <- x[wy, , drop = FALSE]
+    x <- cbind(`(Intercept)` = rep(1, nrow(x)), x)
     check.model.match(model, x, method)
     return(polyreg.draw(x = x,
                         beta = model$beta.mis,
@@ -114,7 +115,8 @@ mice.impute.polyreg <- function(
   ))
 
   # Make names consistent
-  x <- cbind(`(Intercept)` = 1, x[wy, , drop = FALSE])
+  x <- x[wy, , drop = FALSE]
+  x <- cbind(`(Intercept)` = rep(1, nrow(x)), x)
   beta <- coef(fit)
   if (is.vector(beta)) {
     beta <- matrix(beta, ncol = 1L)
