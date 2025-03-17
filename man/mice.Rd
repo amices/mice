@@ -148,9 +148,11 @@ single value is provided, it applies to the variables in all blocks. The
 length of the vector must match the number of variables present in the
 blocks. The default is \code{"impute"}.}
 
-\item{models}{An environment that can be used to store fitted imputation
-models. The models are stored in the environment under the name of the
-block. The models can be used to predict missing values in new data.}
+\item{models}{A list that stores fitted imputation models. The models
+can be used to impute missing values in new data. \code{models} is
+only returned if \code{tasks = 'train'}. Use \code{models = trained$models}
+to fill in missing values in new data, where \code{trained} is the
+\code{mids} object returned by \code{mice(..., tasks = 'train')}.}
 
 \item{post}{A vector of strings with length \code{ncol(data)} specifying
 expressions as strings. Each string is parsed and
@@ -423,18 +425,14 @@ imp0 <- mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"), print = FALSE
 
 # store all imputation models
 imp1 <- mice(nhanes, tasks = "train", print = FALSE)
-ls(imp1$models$bmi$"1")
-imp1$models$bmi$"1"$formula
-imp1$models$bmi$"1"$beta.mis
+imp1$models$bmi[[1]]
 
 # Store model for `bmi`, estimate others as usual
 tasks <- c("age" = "impute", "bmi" = "train", "hyp" = "impute", "chl" = "impute")
 imp2 <- mice(nhanes, tasks = tasks, print = FALSE)
 
 # Inspects the stored model for imputation 1 for `bmi`
-ls(imp2$models$bmi$"1")
-imp2$models$bmi$"1"$formula
-imp2$models$bmi$"1"$beta.mis
+imp2$models$bmi[[1]]
 
 # Fill missing `bmi` values using pre-trained model
 tasks <- c("age" = "impute", "bmi" = "fill", "hyp" = "impute", "chl" = "impute")

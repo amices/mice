@@ -173,9 +173,11 @@ single value is provided, it applies to the variables in all blocks. The
 length of the vector must match the number of variables present in the
 blocks. The default is \code{"impute"}.}
 
-\item{models}{An environment that can be used to store fitted imputation
-models. The models are stored in the environment under the name of the
-block. The models can be used to predict missing values in new data.}
+\item{models}{A list that stores fitted imputation models. The models
+can be used to impute missing values in new data. \code{models} is
+only returned if \code{tasks = 'train'}. Use \code{models = trained$models}
+to fill in missing values in new data, where \code{trained} is the
+\code{mids} object returned by \code{mice(..., tasks = 'train')}.}
 
 \item{ignore}{A logical vector of \code{nrow(data)} elements indicating
 which rows are ignored when creating the imputation model. The default

@@ -8,7 +8,7 @@ context("tasks")
 
 test_that("m filling recycles training models", {
   expect_silent(imp1 <- mice(nhanes2, m = 2, maxit = 1, task = "train", method = "pmm", print = FALSE))
-  expect_false(is.null(imp1$models$bmi$"1"$lookup))
+  expect_false(is.null(imp1$models$bmi[[1]]$lookup))
   expect_silent(imp2 <- mice(nhanes2, m = 4, maxit = 1, task = "fill", method = "pmm", models = imp1$models, print = FALSE))
   expect_silent(imp2 <- mice(nhanes2[1, ], m = 2, maxit = 1, task = "fill", method = "pmm", models = imp1$models, print = FALSE))
 })
@@ -16,7 +16,7 @@ test_that("m filling recycles training models", {
 test_that("fully synthetic datasets can be created from completely observed variables", {
   dataset <- complete(mice(nhanes2, m = 1, maxit = 1, method = "pmm", print = FALSE))
   expect_silent(imp1 <- mice(dataset, m = 2, maxit = 1, task = "train", method = "pmm", print = FALSE))
-  expect_false(is.null(imp1$models$age$"1"$lookup))
+  expect_false(is.null(imp1$models$age[[1]]$lookup))
   expect_silent(imp2 <- mice(dataset, where = make.where(dataset, "all"), m = 2, maxit = 3, task = "fill", method = "pmm", models = imp1$models, print = FALSE))
   synt1 <- complete(imp2, 1)
   synt2 <- complete(imp2, 2)
