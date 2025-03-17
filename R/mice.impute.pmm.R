@@ -261,6 +261,7 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
   model$lookup <- matrix((unquantify(lookup, f$quant, levels(y))),
                          nrow = nbins)
   model$factor <- list(labels = f$labels, quant = f$quant)
+  model$xnames <- colnames(x)
 
   # Compute imputations from model
   impy <- draw.neighbors.pmm(yhatmis,

@@ -140,6 +140,7 @@ mice.impute.polyreg <- function(
     model$beta.mis <- beta
     if (warmstart) model$wts <- fit$wts
     model$factor <- list(labels = levels(y), quant = NULL)
+    model$xnames <- colnames(x)
   }
 
   # Draw imputations

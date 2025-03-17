@@ -135,9 +135,10 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
                         warmstart = warmstart)
     model$result <- list(value = fit$value,
                          convergence = fit$convergence)
-    model$beta.mis <- coef(fit)
+    model$beta.mis <- setNames(coef(fit), colnames(x))
     model$zeta.mis <- fit$zeta
     model$factor <- list(labels = levels(y), quant = NULL)
+    model$xnames <- colnames(x)
   }
 
   # Draw imputations

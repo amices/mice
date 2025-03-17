@@ -57,6 +57,7 @@ mice.impute.norm <- function(y, ry, x, wy = NULL,
     model$beta.obs <- drop(parm$coef)
     model$beta.mis <- drop(parm$beta)
     model$sigma <- parm$sigma
+    model$xnames <- colnames(x)
   }
 
   return(x[wy, ] %*% parm$beta + rnorm(sum(wy)) * parm$sigma)

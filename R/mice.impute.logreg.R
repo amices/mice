@@ -83,6 +83,7 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL,
     model$beta.obs <- drop(beta)
     model$beta.mis <- drop(beta.star)
     model$factor <- list(labels = levels(y), quant = c(0, 1))
+    model$xnames <- colnames(x)
   }
 
   lp <- x[wy, , drop = FALSE] %*% beta.star
