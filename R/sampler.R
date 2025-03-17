@@ -250,7 +250,7 @@ prepare.formula <- function(formula, data, model, j, ct, pred, task) {
       stop("Error: No stored formula found in model for 'fill' task.")
     }
     formula <- get("formula", envir = model)
-    return(formula)
+    return(as.formula(formula))
   }
 
   if (ct == "pred") {
@@ -275,7 +275,7 @@ prepare.formula <- function(formula, data, model, j, ct, pred, task) {
 
   # store formula in `model` only when task is "train"
   if (task == "train") {
-    assign("formula", formula, envir = model)
+    assign("formula", deparse(formula), envir = model)
   }
 
   return(formula)
