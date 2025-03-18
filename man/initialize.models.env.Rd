@@ -4,15 +4,51 @@
 \alias{initialize.models.env}
 \title{Initialize Models Environment}
 \usage{
-initialize.models.env(models = NULL, tasks, m)
+initialize.models.env(models = NULL, tasks, method, blocks, m)
 }
 \arguments{
-\item{models}{An existing environment to store models. If \code{NULL}, a
-new environment is created.}
+\item{models}{A list that stores fitted imputation models. The models
+can be used to impute missing values in new data. \code{models} is
+only returned if \code{tasks = 'train'}. Use \code{models = trained$models}
+to fill in missing values in new data, where \code{trained} is the
+\code{mids} object returned by \code{mice(..., tasks = 'train')}.}
 
-\item{tasks}{A named character vector where names are variable names and
-values specify task types. Only variables labeled \code{"train"} will have
-nested environments created.}
+\item{tasks}{A character vector specifying the task to perform for
+each imputation block. The available options are:
+\describe{
+\item{"impute"}{Estimate parameters, generates imputations and store
+the original data plus imputations, but not the imputation model
+(classic MICE behavior).}
+\item{"train" }{Estimate parameters, generate imputations and
+store the original data, the imputations and the imputation model.}
+\item{"fill"}{Apply a previously trained imputation model to fill
+imputations, without re-estimating parameters.}
+}
+This argument can be specified as a named vector, where names correspond
+to variables and values specify the task for each variable. If a
+single value is provided, it applies to the variables in all blocks. The
+length of the vector must match the number of variables present in the
+blocks. The default is \code{"impute"}.}
+
+\item{method}{Can be either a single string, or a vector of strings with
+length \code{length(blocks)}, specifying the imputation method to be
+used for each column in data. If specified as a single string, the same
+method will be used for all blocks. The default imputation method (when no
+argument is specified) depends on the measurement level of the target column,
+as regulated by the \code{defaultMethod} argument. Columns that need
+not be imputed have the empty method \code{""}. See details.}
+
+\item{blocks}{List of vectors with variable names per block. List elements
+may be named to identify blocks. Variables within a block are
+imputed by a multivariate imputation method
+(see \code{method} argument). By default each variable is placed
+into its own block, which is effectively
+fully conditional specification (FCS) by univariate models
+(variable-by-variable imputation). Only variables whose names appear in
+\code{blocks} are imputed. The relevant columns in the \code{where}
+matrix are set to \code{FALSE} of variables that are not block members.
+A variable may appear in multiple blocks. In that case, it is
+effectively re-imputed each time that it is visited.}
 
 \item{m}{An integer specifying the number of nested sub-environments to
 create under each \code{"train"} variable.}
@@ -29,12 +65,4 @@ Creates an environment structure for models based on specified task types.
 It ensures that a nested environment is created for each variable in \code{tasks}
 that is labeled as \code{"train"}, with sub-environments for each iteration
 from \code{1} to \code{m}.
-}
-\examples{
-tasks <- c(a = "train", b = "fill", c = "train", d = "other")
-m <- 3
-models_env <- mice:::initialize.models.env(tasks = tasks, m = m)
-ls(models_env)  # Lists "a" and "c" (only "train" tasks)
-ls(models_env$a)  # Lists "1", "2", "3"
-ls(models_env$c)  # Lists "1", "2", "3"
 }

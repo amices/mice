@@ -5,11 +5,7 @@
 #' that is labeled as `"train"`, with sub-environments for each iteration
 #' from `1` to `m`.
 #'
-#' @param models An existing environment to store models. If `NULL`, a
-#' new environment is created.
-#' @param tasks A named character vector where names are variable names and
-#' values specify task types. Only variables labeled `"train"` will have
-#' nested environments created.
+#' @inheritParams mice
 #' @param m An integer specifying the number of nested sub-environments to
 #' create under each `"train"` variable.
 #'
@@ -18,19 +14,11 @@
 #'     \item \code{models$varname} - An environment for each `"train"` variable.
 #'     \item \code{models$varname$i} - Nested environments for each iteration from `1` to `m`.
 #'   }
-#' @examples
-#' tasks <- c(a = "train", b = "fill", c = "train", d = "other")
-#' m <- 3
-#' models_env <- mice:::initialize.models.env(tasks = tasks, m = m)
-#' ls(models_env)  # Lists "a" and "c" (only "train" tasks)
-#' ls(models_env$a)  # Lists "1", "2", "3"
-#' ls(models_env$c)  # Lists "1", "2", "3"
-initialize.models.env <- function(models = NULL, tasks, m) {
+initialize.models.env <- function(models = NULL, tasks, method, blocks, m) {
 
   # Import models into environment from a model list object
   if (is.list(models)) {
     models <- import.models.env(models)
-    return(models)
   }
 
   # Ensure `models` is an environment
@@ -39,7 +27,16 @@ initialize.models.env <- function(models = NULL, tasks, m) {
   }
 
   # Identify variables that require models (i.e., "train" or "fill" tasks)
+  imported.models <- names(models)
   model.vars <- names(tasks[tasks %in% c("train", "fill")])
+  empty.methods <- character(0L)
+  for (h in names(blocks)) {
+    varnames <- blocks[[h]]
+    if (method[h] == "") {
+      empty.methods <- c(empty.methods, varnames)
+    }
+  }
+  model.vars <- setdiff(model.vars, c(imported.models, empty.methods))
 
   for (varname in model.vars) {
     if (tasks[varname] == "train") {

@@ -514,7 +514,8 @@ mice <- function(data,
   post <- setup$post
 
   # Initialize models for "train" and "fill" blocks that are missing in models
-  models <- initialize.models.env(models, tasks, m)
+  models <- initialize.models.env(models, tasks, method, blocks, m)
+  method <- overwrite.method(method, blocks, tasks, models)
 
   # initialize imputations
   nmis <- apply(is.na(data), 2L, sum)
