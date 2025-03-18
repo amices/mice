@@ -10,7 +10,7 @@
 #' make.tasks(nhanes2)
 #' @export
 make.tasks <- function(data,
-                       tasks = "generate",
+                       tasks = "impute",
                        blocks = make.blocks(data)) {
   bv <- unique(unlist(blocks))
   if (length(tasks) == 1L) {

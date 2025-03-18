@@ -4,7 +4,7 @@
 \alias{make.tasks}
 \title{Creates a \code{tasks} argument}
 \usage{
-make.tasks(data, tasks = "generate", blocks = make.blocks(data))
+make.tasks(data, tasks = "impute", blocks = make.blocks(data))
 }
 \arguments{
 \item{data}{A data frame or a matrix containing the incomplete data.  Missing
