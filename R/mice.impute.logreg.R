@@ -61,7 +61,7 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL,
   x <- cbind(1, as.matrix(x))
 
   if (task == "fill" && check.model.match(model, x, method)) {
-    lp <- x[wy, , drop = FALSE] %*% model$beta.mis
+    lp <- x[wy, , drop = FALSE] %*% model$beta.dot
     return(logreg.draw(lp, levels(y)))
   }
 
@@ -80,8 +80,8 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL,
     model$setup <- list(method = method,
                         n = sum(ry),
                         task = task)
-    model$beta.obs <- drop(beta)
-    model$beta.mis <- drop(beta.star)
+    model$beta.hat <- drop(beta)
+    model$beta.dot <- drop(beta.star)
     model$factor <- list(labels = levels(y), quant = c(0, 1))
     model$xnames <- colnames(x)
   }

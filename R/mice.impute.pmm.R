@@ -200,7 +200,7 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
 
   # >>> Fill task: fill from stored model
   if (task == "fill" && check.model.match(model, x, method)) {
-    yhatmis <- x[wy, ] %*% model$beta.mis
+    yhatmis <- x[wy, ] %*% model$beta.dot
     impy <- draw.neighbors.pmm(yhatmis,
                                edges = model$edges,
                                lookup = model$lookup,
@@ -215,17 +215,17 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
   # Predict ynum on observed data with linear model
   parm <- .norm.draw(ynum, ry, x, ridge = ridge, ...)
   if (matchtype == 1L) {
-    beta.obs <- drop(parm$coef)
-    beta.mis <- drop(parm$beta)
+    beta.hat <- drop(parm$coef)
+    beta.dot <- drop(parm$beta)
   } else if (matchtype == 0L) {
-    beta.mis <- beta.obs <- drop(parm$coef)
+    beta.dot <- beta.hat <- drop(parm$coef)
   } else if (matchtype == 2L) {
-    beta.mis <- beta.obs <- drop(parm$beta)
+    beta.dot <- beta.hat <- drop(parm$beta)
   }
   x_ry <- x[ry, , drop = FALSE]
   x_wy <- x[wy, , drop = FALSE]
-  yhatobs <- as.vector(x_ry %*% beta.obs)
-  yhatmis <- x_wy %*% beta.mis
+  yhatobs <- as.vector(x_ry %*% beta.hat)
+  yhatmis <- x_wy %*% beta.dot
 
   # >>> Impute task: Impute values (classic MICE PMM)
   if (task == "impute") {
@@ -255,8 +255,8 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
                       task = task,
                       nbins = nbins,
                       ridge = ridge)
-  model$beta.obs <- beta.obs
-  model$beta.mis <- beta.mis
+  model$beta.hat <- beta.hat
+  model$beta.dot <- beta.dot
   model$edges <- edges
   model$lookup <- matrix((unquantify(lookup, f$quant, levels(y))),
                          nrow = nbins)

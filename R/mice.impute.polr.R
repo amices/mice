@@ -77,7 +77,7 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
 
   if (task == "fill" && check.model.match(model, x, method)) {
     impy <- polr.draw(x = x[wy, , drop = FALSE],
-                      beta = model$beta.mis,
+                      beta = model$beta.dot,
                       zeta = model$zeta.mis,
                       levels = model$factor$labels)
     return(impy)
@@ -99,8 +99,8 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
       reltol = ifelse(is.null(reltol), 0.0001, reltol))
   )
   if (warmstart && task == "train" &&
-     !is.null(model$beta.mis) && !is.null(model$zeta.mis)) {
-   dots$start <- c(model$beta.mis, model$zeta.mis)
+     !is.null(model$beta.dot) && !is.null(model$zeta.mis)) {
+   dots$start <- c(model$beta.dot, model$zeta.mis)
   }
 
   # Estimate ordered logistic (polr) model with polr
@@ -135,7 +135,7 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
                         warmstart = warmstart)
     model$result <- list(value = fit$value,
                          convergence = fit$convergence)
-    model$beta.mis <- setNames(coef(fit), colnames(x))
+    model$beta.dot <- setNames(coef(fit), colnames(x))
     model$zeta.mis <- fit$zeta
     model$factor <- list(labels = levels(y), quant = NULL)
     model$xnames <- colnames(x)

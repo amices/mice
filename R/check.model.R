@@ -22,7 +22,7 @@ check.model.match <- function(model, x, method) {
   }
 
   xnames <- model$xnames
-  # if (is.matrix(model$beta.mis)) mnames <- rownames(model$beta.mis)
+  # if (is.matrix(model$beta.dot)) mnames <- rownames(model$beta.dot)
   dnames <- colnames(x)
   if (ncol(x) != length(xnames) || any(xnames != dnames)) {
     stop(paste("Model-Data mismatch: ", deparse(formula), "\n",

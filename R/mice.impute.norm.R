@@ -44,7 +44,7 @@ mice.impute.norm <- function(y, ry, x, wy = NULL,
   x <- cbind(1, as.matrix(x))
 
   if (task == "fill" && check.model.match(model, x, method)) {
-    return(x[wy, ] %*% model$beta.mis + rnorm(sum(wy)) * model$sigma)
+    return(x[wy, ] %*% model$beta.dot + rnorm(sum(wy)) * model$sigma)
   }
 
   parm <- .norm.draw(y, ry, x, ridge = ridge, ...)
@@ -54,8 +54,8 @@ mice.impute.norm <- function(y, ry, x, wy = NULL,
                         n = sum(ry),
                         task = task,
                         ridge = ridge)
-    model$beta.obs <- drop(parm$coef)
-    model$beta.mis <- drop(parm$beta)
+    model$beta.hat <- drop(parm$coef)
+    model$beta.dot <- drop(parm$beta)
     model$sigma <- parm$sigma
     model$xnames <- colnames(x)
   }

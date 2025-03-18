@@ -83,7 +83,7 @@ mice.impute.polyreg <- function(
     x <- cbind(`(Intercept)` = rep(1, nrow(x)), x)
     check.model.match(model, x, method)
     return(polyreg.draw(x = x,
-                        beta = model$beta.mis,
+                        beta = model$beta.dot,
                         levels = levels(y)))
   }
 
@@ -137,7 +137,7 @@ mice.impute.polyreg <- function(
     model$result <- list(nWts = length(fit$wts),
                          value = fit$value,
                          convergence = fit$convergence)
-    model$beta.mis <- beta
+    model$beta.dot <- beta
     if (warmstart) model$wts <- fit$wts
     model$factor <- list(labels = levels(y), quant = NULL)
     model$xnames <- colnames(x)
