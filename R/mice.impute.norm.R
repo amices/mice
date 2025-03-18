@@ -44,7 +44,7 @@ mice.impute.norm <- function(y, ry, x, wy = NULL,
   x <- cbind(1, as.matrix(x))
 
   if (task == "fill" && check.model.match(model, x, method)) {
-    return(x[wy, ] %*% model$beta.dot + rnorm(sum(wy)) * model$sigma)
+    return(x[wy, ] %*% model$beta.dot + rnorm(sum(wy)) * model$sigma.dot)
   }
 
   parm <- .norm.draw(y, ry, x, ridge = ridge, ...)
@@ -56,7 +56,8 @@ mice.impute.norm <- function(y, ry, x, wy = NULL,
                         ridge = ridge)
     model$beta.hat <- drop(parm$coef)
     model$beta.dot <- drop(parm$beta)
-    model$sigma <- parm$sigma
+    model$sigma.hat <- parm$sigma.hat
+    model$sigma.dot <- parm$sigma
     model$xnames <- colnames(x)
   }
 
@@ -95,10 +96,12 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...) {
 ###' @export
 .norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...) {
   p <- estimice(x[ry, , drop = FALSE], y[ry], ...)
-  sigma.star <- sqrt(sum((p$r)^2) / rchisq(1, p$df))
+  ssq <- sum((p$r)^2)
+  sigma.hat <- sqrt(ssq / p$df)
+  sigma.star <- sqrt(ssq / rchisq(1, p$df))
   beta.star <- p$c + (t(chol(sym(p$v))) %*% rnorm(ncol(x))) * sigma.star
-  parm <- list(p$c, beta.star, sigma.star, p$ls.meth)
-  names(parm) <- c("coef", "beta", "sigma", "estimation")
+  parm <- list(p$c, beta.star, sigma.star, p$ls.meth, sigma.hat)
+  names(parm) <- c("coef", "beta", "sigma", "estimation", "sigma.hat")
   if (any(is.na(parm$coef)) & rank.adjust) {
     parm$coef[is.na(parm$coef)] <- 0
     parm$beta[is.na(parm$beta)] <- 0
