@@ -153,6 +153,23 @@ check.method <- function(method, data, where, blocks, tasks, defaultMethod) {
   unlist(method)
 }
 
+overwrite.method <- function(method, blocks, tasks, models) {
+  # for fill tasks, overwrite method with stored model method
+  if (length(models) == 0L) {
+    return(method)
+  }
+  for (h in names(method)) {
+    for (varname in blocks[[h]]) {
+      if (tasks[varname] %in% c("fill")) {
+        newmethod <- models[[varname]]$`1`$setup$method
+        if (is.null(newmethod)) next
+        method[h] <- newmethod
+      }
+    }
+  }
+  return(method)
+}
+
 
 # assign methods based on type,
 # use method 1 if there is no single method within the block
