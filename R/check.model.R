@@ -13,14 +13,6 @@ check.model.match <- function(model, x, method) {
   if (!length(formula)) {
     stop("No model stored in environment")
   }
-  mnames <- names(model$beta.mis)
-  if (is.matrix(model$beta.mis)) mnames <- rownames(model$beta.mis)
-  dnames <- colnames(x)
-  if (ncol(x) != length(mnames) || any(mnames != dnames)) {
-    stop(paste("Model-Data mismatch: ", deparse(formula), "\n",
-               " Model:", paste(mnames, collapse = " "), "\n",
-               " Data: ", paste(dnames, collapse = " "), "\n"))
-  }
 
   mmeth <- model$setup$method
   if (length(mmeth) && mmeth != method) {
@@ -28,5 +20,15 @@ check.model.match <- function(model, x, method) {
                " Model:  ", mmeth, "\n",
                " Method: ", method, "\n"))
   }
+
+  xnames <- model$xnames
+  # if (is.matrix(model$beta.mis)) mnames <- rownames(model$beta.mis)
+  dnames <- colnames(x)
+  if (ncol(x) != length(xnames) || any(xnames != dnames)) {
+    stop(paste("Model-Data mismatch: ", deparse(formula), "\n",
+               " Model:", paste(xnames, collapse = " "), "\n",
+               " Data: ", paste(dnames, collapse = " "), "\n"))
+  }
+
   return(TRUE)
 }
