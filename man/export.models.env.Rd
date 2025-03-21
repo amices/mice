@@ -38,5 +38,5 @@ models_env$b$`1`$model <- "Model B1"
 # Convert to a list
 models_list <- mice:::export.models.env(models_env, m = 2)
 print(models_list)
-
 }
+\keyword{internal}

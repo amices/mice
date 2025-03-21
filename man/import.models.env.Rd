@@ -49,3 +49,4 @@ print(ls(models_env))  # Should list "a" and "b"
 print(ls(models_env$a))  # Should list "1" and "2"
 print(models_env$a$`1`$model)  # Should be "Model A1"
 }
+\keyword{internal}

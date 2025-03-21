@@ -14,6 +14,7 @@
 #'     \item \code{models$varname} - An environment for each `"train"` variable.
 #'     \item \code{models$varname$i} - Nested environments for each iteration from `1` to `m`.
 #'   }
+#' @keywords internal
 initialize.models.env <- function(models = NULL, tasks, method, blocks, m) {
 
   # Import models into environment from a model list object
@@ -85,7 +86,7 @@ initialize.models.env <- function(models = NULL, tasks, method, blocks, m) {
 #' # Convert to a list
 #' models_list <- mice:::export.models.env(models_env, m = 2)
 #' print(models_list)
-#'
+#' @keywords internal
 export.models.env <- function(env, m = NULL) {
   if (!is.environment(env)) stop("Input must be an environment")
 
@@ -162,6 +163,7 @@ export.models.env <- function(env, m = NULL) {
 #' print(ls(models_env))  # Should list "a" and "b"
 #' print(ls(models_env$a))  # Should list "1" and "2"
 #' print(models_env$a$`1`$model)  # Should be "Model A1"
+#' @keywords internal
 import.models.env <- function(models_list) {
   if (!is.list(models_list)) stop("Input must be a list")
 
