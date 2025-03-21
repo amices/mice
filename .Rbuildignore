@@ -11,7 +11,7 @@ cran-comments.Rmd
 changes_mice*
 ^data-raw$
 .png
-^script$
+^script/
 ^CODE_OF_CONDUCT*
 ^mice\.Rproj$
 vignettes/
@@ -21,4 +21,3 @@ vignettes/
 ^LICENSE\.md$
 ^\.github$
 ^CRAN-SUBMISSION$
-^vignettes/articles$
