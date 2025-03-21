@@ -92,8 +92,8 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...) {
   return(.norm.draw(y, ry, x, rank.adjust = TRUE, ...))
 }
 
-###' @rdname norm.draw
-###' @export
+#' @rdname norm.draw
+#' @export
 .norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...) {
   p <- estimice(x[ry, , drop = FALSE], y[ry], ...)
   ssq <- sum((p$r)^2)
