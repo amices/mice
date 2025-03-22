@@ -44,6 +44,7 @@ reference:
   - make.blots
   - make.formulas
   - make.method
+  - make.modeltype
   - make.post
   - make.predictorMatrix
   - make.visitSequence
