@@ -275,7 +275,7 @@ prepare.formula <- function(formula, data, model, j, ct, pred, task) {
 
   # store formula in `model` only when task is "train"
   if (task == "train") {
-    assign("formula", deparse(formula), envir = model)
+    assign("formula", paste(deparse(formula), collapse = ""), envir = model)
   }
 
   return(formula)
