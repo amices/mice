@@ -42,9 +42,11 @@ mice.impute.norm <- function(y, ry, x, wy = NULL,
   method <- "norm"
   if (is.null(wy)) wy <- !ry
   x <- cbind(1, as.matrix(x))
-
-  if (task == "fill" && check.model.match(model, x, method)) {
-    return(x[wy, ] %*% model$beta.dot + rnorm(sum(wy)) * model$sigma.dot)
+  if (task == "fill") {
+    cols <- check.model.match(model, x, method)
+    lp <- x[wy, cols, drop = FALSE] %*% model$beta.dot
+    noise <- rnorm(sum(wy)) * model$sigma.dot
+    return(lp + noise)
   }
 
   parm <- .norm.draw(y, ry, x, ridge = ridge, ...)

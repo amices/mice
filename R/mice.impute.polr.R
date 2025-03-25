@@ -75,8 +75,9 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
   wy <- aug$wy
   w <- aug$w
 
-  if (task == "fill" && check.model.match(model, x, method)) {
-    impy <- polr.draw(x = x[wy, , drop = FALSE],
+  if (task == "fill") {
+    cols <- check.model.match(model, x, method)
+    impy <- polr.draw(x = x[wy, cols, drop = FALSE],
                       beta = model$beta.dot,
                       zeta = model$zeta.mis,
                       levels = model$factor$labels)

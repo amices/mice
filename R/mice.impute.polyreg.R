@@ -79,9 +79,9 @@ mice.impute.polyreg <- function(
   w <- aug$w
 
   if (task == "fill") {
-    x <- x[wy, , drop = FALSE]
     x <- cbind(`(Intercept)` = rep(1, nrow(x)), x)
-    check.model.match(model, x, method)
+    cols <- check.model.match(model, x, method)
+    x <- x[wy, cols, drop = FALSE]
     return(polyreg.draw(x = x,
                         beta = model$beta.dot,
                         levels = levels(y)))

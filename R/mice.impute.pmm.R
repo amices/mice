@@ -198,9 +198,9 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
   # Add intercept column to x
   x <- cbind(1, as.matrix(x))
 
-  # >>> Fill task: fill from stored model
-  if (task == "fill" && check.model.match(model, x, method)) {
-    yhatmis <- x[wy, ] %*% model$beta.dot
+  if (task == "fill") {
+    cols <- check.model.match(model, x, method)
+    yhatmis <- x[wy, cols, drop = FALSE] %*% model$beta.dot
     impy <- draw.neighbors.pmm(yhatmis,
                                edges = model$edges,
                                lookup = model$lookup,

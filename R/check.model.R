@@ -22,13 +22,13 @@ check.model.match <- function(model, x, method) {
   }
 
   xnames <- model$xnames
-  # if (is.matrix(model$beta.dot)) mnames <- rownames(model$beta.dot)
   dnames <- colnames(x)
-  if (ncol(x) != length(xnames) || any(xnames != dnames)) {
+  notfound <- !xnames %in% dnames
+  if (any(notfound)) {
     stop(paste("Model-Data mismatch: ", deparse(formula), "\n",
-               " Model:", paste(xnames, collapse = " "), "\n",
-               " Data: ", paste(dnames, collapse = " "), "\n"))
+               "Not found in data:   ", paste(xnames[notfound], collapse = " "), "\n"))
   }
 
-  return(TRUE)
+  notfound <- !dnames %in% xnames
+  return(!notfound)
 }

@@ -60,8 +60,9 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL,
 
   x <- cbind(1, as.matrix(x))
 
-  if (task == "fill" && check.model.match(model, x, method)) {
-    lp <- x[wy, , drop = FALSE] %*% model$beta.dot
+  if (task == "fill") {
+    cols <- check.model.match(model, x, method)
+    lp <- x[wy, cols, drop = FALSE] %*% model$beta.dot
     return(logreg.draw(lp, levels(y)))
   }
 

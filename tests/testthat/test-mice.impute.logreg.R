@@ -50,3 +50,45 @@ perfectPred <- tryCatch(
 test_that("Complete separation results in same class as well behaved case", {
   expect_true(all.equal(class(wellBehaved), class(perfectPred)))
 })
+
+## Check how logreg works with logical fills
+
+set.seed(123)
+df <- data.frame(
+  factor2 = factor(sample(c("Yes", "No"), 20, replace = TRUE)),
+  factor3 = factor(sample(c("Low", "Medium", "High"), 20, replace = TRUE)),
+  factor4 = factor(sample(c("A", "B", "C", "D"), 20, replace = TRUE), ordered = TRUE),
+  logical1 = sample(c(TRUE, FALSE), 20, replace = TRUE),
+  logical2 = sample(c(TRUE, FALSE), 20, replace = TRUE),
+  numeric1 = rnorm(20)
+)
+n <- prod(dim(df))
+na_count <- round(0.3 * n)
+missing_idx <- arrayInd(sample(n, na_count), .dim = dim(df))
+for (i in seq_len(nrow(missing_idx))) {
+  df[missing_idx[i, 1], missing_idx[i, 2]] <- NA
+}
+
+# convert logicals to factors to evade problems
+df[] <- lapply(df, function(col) {
+  if (is.logical(col)) factor(col, levels = c(TRUE, FALSE)) else col
+})
+
+# there are loggedEvents
+expect_warning(trained <- mice(df, m = 2, maxit = 2, seed = 1, tasks = "train", print = FALSE))
+
+# now fill
+newdata <- rbind(df[1:2, ], data.frame(
+  factor2 = NA,
+  factor3 = NA,
+  factor4 = NA,
+  logical1 = NA,
+  logical2 = NA,
+  numeric1 = NA
+))
+
+test_that("Filling logicals work when converted to factors", {
+  expect_silent(filled <- mice(newdata, tasks = "fill", models = trained$models, print = FALSE))
+})
+
+# filled <- mice(newdata, tasks = "fill", models = trained$models)

@@ -28,9 +28,8 @@ test_that("the procedure informs the user about a mismatch between model and dat
   newdata$age <- factor(newdata$age, levels = c(levels(newdata$age), "not_a_level"))
   newdata$age[1] <- "not_a_level"
   newdata$age[2] <- NA
-  expect_error(imp2 <- mice(newdata, m = 1, maxit = 1, task = "fill", method = "pmm", models = imp1$models, print = FALSE), "Model-Data mismatch")
+  expect_silent(imp2 <- mice(newdata, m = 1, maxit = 1, task = "fill", method = "pmm", models = imp1$models, print = FALSE))
   newdata <- nhanes2
   levels(newdata$age)[levels(newdata$age) == "60-99"] <- "60+"
   expect_error(imp2 <- mice(newdata, m = 1, maxit = 1, task = "fill", method = "pmm", models = imp1$models, print = FALSE), "Model-Data mismatch")
 })
-
