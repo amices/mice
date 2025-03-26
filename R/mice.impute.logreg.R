@@ -91,12 +91,21 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL,
   return(logreg.draw(lp, levels(y)))
 }
 
-logreg.draw <- function(lp, levels) {
+# logreg.draw <- function(lp, levels) {
+#   p <- 1 / (1 + exp(-lp))
+#   vec <- (runif(nrow(p)) <= p)
+#   vec[vec] <- 1
+#   if (!is.null(levels)) {
+#     vec <- factor(vec, c(0, 1), levels)
+#   }
+#   return(vec)
+# }
+
+logreg.draw <- function(lp, levels = NULL) {
   p <- 1 / (1 + exp(-lp))
-  vec <- (runif(nrow(p)) <= p)
-  vec[vec] <- 1
+  vec <- runif(nrow(p)) <= p
   if (!is.null(levels)) {
-    vec <- factor(vec, c(0, 1), levels)
+    vec <- factor(vec, levels = c(FALSE, TRUE), labels = levels)
   }
   return(vec)
 }

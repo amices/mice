@@ -170,24 +170,23 @@ overwrite.method <- function(method, blocks, tasks, models) {
   return(method)
 }
 
-
 # assign methods based on type,
 # use method 1 if there is no single method within the block
 assign.method <- function(y) {
   if (is.numeric(y)) {
-    return(1)
-  }
-  if (nlevels(y) == 2) {
-    return(2)
-  }
-  if (is.ordered(y) && nlevels(y) > 2) {
-    return(4)
-  }
-  if (nlevels(y) > 2) {
-    return(3)
+    return(1L)
   }
   if (is.logical(y)) {
-    return(2)
+    return(2L)
   }
-  1
+  if (is.ordered(y) && nlevels(y) > 2L) {
+    return(4L)
+  }
+  if (nlevels(y) == 2L) {
+    return(2L)
+  }
+  if (nlevels(y) > 2L) {
+    return(3L)
+  }
+  return(1L)
 }
