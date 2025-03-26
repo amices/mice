@@ -49,6 +49,7 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL,
   check.model.exists(model, task)
   method <- "logreg"
   if (is.null(wy)) wy <- !ry
+  n <- sum(ry)
 
   # augment data in order to evade perfect prediction
   aug <- augment(y, ry, x, wy)
@@ -60,6 +61,14 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL,
 
   x <- cbind(1, as.matrix(x))
 
+  if (task == "fill") {
+    cols <- check.model.match(model, x, method)
+    lp <- x[wy, cols, drop = FALSE] %*% model$beta.dot
+    return(logreg.draw(lp,
+                       levels = model$factor$labels,
+                       class = model$class,
+                       ordered = isTRUE(model$ordered)))
+  }
   if (task == "fill") {
     cols <- check.model.match(model, x, method)
     lp <- x[wy, cols, drop = FALSE] %*% model$beta.dot
@@ -79,35 +88,36 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL,
 
   if (task == "train") {
     model$setup <- list(method = method,
-                        n = sum(ry),
+                        n = n,
                         task = task)
     model$beta.hat <- drop(beta)
     model$beta.dot <- drop(beta.star)
     model$factor <- list(labels = levels(y), quant = c(0, 1))
     model$xnames <- colnames(x)
+    model$class <- class(y)
+    model$ordered <- is.ordered(y)
   }
 
   lp <- x[wy, , drop = FALSE] %*% beta.star
-  return(logreg.draw(lp, levels(y)))
+  return(logreg.draw(lp, levels(y), class(y), is.ordered(y)))
 }
 
-# logreg.draw <- function(lp, levels) {
-#   p <- 1 / (1 + exp(-lp))
-#   vec <- (runif(nrow(p)) <= p)
-#   vec[vec] <- 1
-#   if (!is.null(levels)) {
-#     vec <- factor(vec, c(0, 1), levels)
-#   }
-#   return(vec)
-# }
-
-logreg.draw <- function(lp, levels = NULL) {
+logreg.draw <- function(lp, levels = NULL, class = NULL, ordered = FALSE) {
+  # supports logical, factor and numeric output
   p <- 1 / (1 + exp(-lp))
-  vec <- runif(nrow(p)) <= p
-  if (!is.null(levels)) {
-    vec <- factor(vec, levels = c(FALSE, TRUE), labels = levels)
+  draws <- (runif(length(p)) <= p) * 1L
+
+  if (!is.null(class)) {
+    if (class == "logical") {
+      return(as.logical(draws))
+    }
+    if (class == "factor") {
+      return(factor(draws, levels = c(0, 1), labels = levels, ordered = ordered))
+    }
   }
-  return(vec)
+
+  # fallback, numeric
+  return(draws)
 }
 
 #' Imputation by logistic regression using the bootstrap

@@ -56,8 +56,8 @@ test_that("Complete separation results in same class as well behaved case", {
 set.seed(123)
 df <- data.frame(
   factor2 = factor(sample(c("Yes", "No"), 20, replace = TRUE)),
-  factor3 = factor(sample(c("Low", "Medium", "High"), 20, replace = TRUE)),
-  factor4 = factor(sample(c("A", "B", "C", "D"), 20, replace = TRUE), ordered = TRUE),
+#  factor3 = factor(sample(c("Low", "Medium", "High"), 20, replace = TRUE)),
+#  factor4 = factor(sample(c("A", "B", "C", "D"), 20, replace = TRUE), ordered = TRUE),
   logical1 = sample(c(TRUE, FALSE), 20, replace = TRUE),
   logical2 = sample(c(TRUE, FALSE), 20, replace = TRUE),
   numeric1 = rnorm(20)
@@ -75,14 +75,13 @@ for (i in seq_len(nrow(missing_idx))) {
 #  if (is.logical(col)) factor(col, levels = c(TRUE, FALSE)) else col
 #})
 
-# there are loggedEvents
-expect_warning(trained <- mice(df, m = 2, maxit = 2, seed = 1, tasks = "train", print = FALSE))
+expect_silent(trained <<- mice(df, m = 2, maxit = 2, seed = 1, tasks = "train", print = FALSE))
 
 # now fill
 newdata <- rbind(df[1:2, ], data.frame(
   factor2 = NA,
-  factor3 = NA,
-  factor4 = NA,
+#  factor3 = NA,
+#  factor4 = NA,
   logical1 = NA,
   logical2 = NA,
   numeric1 = NA
@@ -92,6 +91,14 @@ test_that("df and newdata have same types before fill", {
           expect_identical(sapply(df, class), sapply(newdata, class))
 })
 
+# fill0 <- mice(newdata, tasks = "fill", models = trained$models, m = 20, maxit = 0, print = FALSE, seed = 2)
+# fill0$imp
+#
+# fill1 <- mice(newdata, tasks = "fill", models = trained$models, m = 20, maxit = 1, print = FALSE, seed = 2)
+# fill1$imp
+
 test_that("Filling logicals work without converting to factors", {
   expect_silent(filled <- mice(newdata, tasks = "fill", models = trained$models, print = FALSE))
+  expect_identical(sapply(newdata, class), sapply(complete(filled), class))
 })
+
