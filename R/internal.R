@@ -157,3 +157,29 @@ backticks <- function(varname) {
 is.named.list <- function(x) {
   is.list(x) && !is.null(names(x)) && all(names(x) != "")
 }
+
+
+sanitize.vec <- function(vec, y) {
+  # Insert at the end of any draw() or imputation function
+  # # Example for logreg.draw()
+  # vec <- logreg.draw(lp)
+  # vec <- sanitize.vec(vec, y)
+
+  cls <- class(y)[1L]
+
+  if (cls == "logical") {
+    return(as.logical(vec))
+  }
+
+  if (cls == "factor") {
+    return(factor(vec, levels = levels(y), ordered = is.ordered(y)))
+  }
+
+  if (cls == "ordered") {
+    return(factor(vec, levels = levels(y), ordered = TRUE))
+  }
+
+  # default (numeric, character, etc.)
+  vec
+}
+
