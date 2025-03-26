@@ -56,7 +56,7 @@ test_that("Complete separation results in same class as well behaved case", {
 set.seed(123)
 df <- data.frame(
   factor2 = factor(sample(c("Yes", "No"), 20, replace = TRUE)),
-#  factor3 = factor(sample(c("Low", "Medium", "High"), 20, replace = TRUE)),
+  factor3 = factor(sample(c("Low", "Medium", "High"), 20, replace = TRUE)),
 #  factor4 = factor(sample(c("A", "B", "C", "D"), 20, replace = TRUE), ordered = TRUE),
   logical1 = sample(c(TRUE, FALSE), 20, replace = TRUE),
   logical2 = sample(c(TRUE, FALSE), 20, replace = TRUE),
@@ -80,7 +80,7 @@ expect_silent(trained <<- mice(df, m = 2, maxit = 2, seed = 1, tasks = "train", 
 # now fill
 newdata <- rbind(df[1:2, ], data.frame(
   factor2 = NA,
-#  factor3 = NA,
+  factor3 = NA,
 #  factor4 = NA,
   logical1 = NA,
   logical2 = NA,

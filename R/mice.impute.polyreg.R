@@ -66,11 +66,9 @@ mice.impute.polyreg <- function(
 
   check.model.exists(model, task)
   method <- "polyreg"
-  if (is.null(wy)) {
-    wy <- !ry
-  }
+  if (is.null(wy)) wy <- !ry
 
-  # Augment data to evade issues with perfect prediction
+  # Augment data
   aug <- augment(y, ry, x, wy)
   x <- aug$x
   y <- aug$y
@@ -82,18 +80,22 @@ mice.impute.polyreg <- function(
     x <- cbind(`(Intercept)` = rep(1, nrow(x)), x)
     cols <- check.model.match(model, x, method)
     x <- x[wy, cols, drop = FALSE]
-    return(polyreg.draw(x = x,
-                        beta = model$beta.dot,
-                        levels = levels(y)))
+    return(polyreg.draw(
+      x = x,
+      beta = model$beta.dot,
+      levels = model$factor$labels,
+      class = model$class,
+      ordered = isTRUE(model$ordered)
+    ))
   }
 
-  # Escape estimation with same impute if the dependent does not vary
+  # Escape perfect prediction
   cat.has.all.obs <- table(y[ry]) == sum(ry)
   if (any(cat.has.all.obs)) {
     return(rep(levels(y)[cat.has.all.obs], sum(wy)))
   }
 
-  # Set hyper-parameters
+  # Set hyperparameters
   if (!missing(nnet.maxit)) maxit <- nnet.maxit
   if (!missing(nnet.MaxNWts)) MaxNWts <- nnet.MaxNWts
   MaxNWts_needed <- 100L + as.integer(ncol(x) * (length(levels(y)) - 1))
@@ -105,16 +107,17 @@ mice.impute.polyreg <- function(
     dots$Wts <- model$wts
   }
 
-  # Estimate model
+  # Fit multinomial model
   xy <- cbind.data.frame(y, x)
   fit <- do.call(nnet::multinom, c(
     list(formula(xy),
-         data = xy[ry, , drop = FALSE], weights = w[ry],
+         data = xy[ry, , drop = FALSE],
+         weights = w[ry],
          model = FALSE, trace = FALSE),
     dots
   ))
 
-  # Make names consistent
+  # Process beta coefficients
   x <- x[wy, , drop = FALSE]
   x <- cbind(`(Intercept)` = rep(1, nrow(x)), x)
   beta <- coef(fit)
@@ -125,38 +128,54 @@ mice.impute.polyreg <- function(
   }
   rownames(beta) <- gsub("`", "", rownames(beta))
 
-  # Save for future use
   if (task == "train") {
-    model$setup <- list(method = method,
-                        n = sum(ry),
-                        task = task,
-                        maxit = dots$maxit,
-                        MaxNWts = dots$MaxNWts,
-                        reltol = dots$reltol,
-                        warmstart = warmstart)
-    model$result <- list(nWts = length(fit$wts),
-                         value = fit$value,
-                         convergence = fit$convergence)
+    model$setup <- list(
+      method = method,
+      n = sum(ry),
+      task = task,
+      maxit = dots$maxit,
+      MaxNWts = dots$MaxNWts,
+      reltol = dots$reltol,
+      warmstart = warmstart
+    )
+    model$result <- list(
+      nWts = length(fit$wts),
+      value = fit$value,
+      convergence = fit$convergence
+    )
     model$beta.dot <- beta
     if (warmstart) model$wts <- fit$wts
     model$factor <- list(labels = levels(y), quant = NULL)
+    model$class <- class(y)
+    model$ordered <- is.ordered(y)
     model$xnames <- colnames(x)
   }
 
-  # Draw imputations
-  return(polyreg.draw(x = x,
-                      beta = beta,
-                      levels = levels(y)))
+  # Return imputed values
+  polyreg.draw(
+    x = x,
+    beta = beta,
+    levels = levels(y),
+    class = class(y),
+    ordered = is.ordered(y)
+  )
 }
 
-polyreg.draw <- function(x, beta, levels) {
+polyreg.draw <- function(x, beta, levels, class = NULL, ordered = FALSE) {
   if (nrow(x) == 0L) return(character(0))
   lp <- x %*% beta
   p <- exp(lp) / rowSums(exp(lp) + 1)
   post <- cbind(1 - rowSums(p), p)
+
   un <- rep(runif(nrow(x)), each = length(levels))
   draws <- un > apply(post, 1L, cumsum)
   idx <- 1L + apply(draws, 2L, sum)
-  return(levels[idx])
-}
 
+  out <- levels[idx]
+
+  if (!is.null(class) && class == "factor") {
+    out <- factor(out, levels = levels, ordered = ordered)
+  }
+
+  return(out)
+}
