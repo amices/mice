@@ -77,10 +77,14 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
 
   if (task == "fill") {
     cols <- check.model.match(model, x, method)
-    impy <- polr.draw(x = x[wy, cols, drop = FALSE],
-                      beta = model$beta.dot,
-                      zeta = model$zeta.mis,
-                      levels = model$factor$labels)
+    impy <- polr.draw(
+      x = x[wy, cols, drop = FALSE],
+      beta = model$beta.dot,
+      zeta = model$zeta.mis,
+      levels = model$factor$labels,
+      class = model$class,
+      ordered = isTRUE(model$ordered)
+    )
     return(impy)
   }
 
@@ -100,8 +104,8 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
       reltol = ifelse(is.null(reltol), 0.0001, reltol))
   )
   if (warmstart && task == "train" &&
-     !is.null(model$beta.dot) && !is.null(model$zeta.mis)) {
-   dots$start <- c(model$beta.dot, model$zeta.mis)
+      !is.null(model$beta.dot) && !is.null(model$zeta.mis)) {
+    dots$start <- c(model$beta.dot, model$zeta.mis)
   }
 
   # Estimate ordered logistic (polr) model with polr
@@ -131,29 +135,35 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
     model$setup <- list(method = method,
                         n = sum(ry),
                         task = task,
-                        maxit = dots$maxit,
-                        reltol = dots$reltol,
+                        maxit = dots$control$maxit,
+                        reltol = dots$control$reltol,
                         warmstart = warmstart)
     model$result <- list(value = fit$value,
                          convergence = fit$convergence)
     model$beta.dot <- setNames(coef(fit), colnames(x))
     model$zeta.mis <- fit$zeta
     model$factor <- list(labels = levels(y), quant = NULL)
+    model$class <- class(y)
+    model$ordered <- is.ordered(y)
     model$xnames <- colnames(x)
   }
 
   # Draw imputations
   if (execute == "polr") {
-    impy <- polr.draw(x = x[wy, , drop = FALSE],
-                      beta = coef(fit),
-                      zeta = fit$zeta,
-                      levels = levels(y))
+    impy <- polr.draw(
+      x = x[wy, , drop = FALSE],
+      beta = coef(fit),
+      zeta = fit$zeta,
+      levels = levels(y),
+      class = class(y),
+      ordered = is.ordered(y)
+    )
   }
 
   return(impy)
 }
 
-polr.draw <- function(x, beta, zeta, levels) {
+polr.draw <- function(x, beta, zeta, levels, class = NULL, ordered = FALSE) {
   if (nrow(x) == 0L) return(character(0))
   eta <- x %*% beta
   cumpr <- plogis(matrix(zeta, nrow(x), length(zeta), byrow = TRUE) - as.vector(eta))
@@ -161,16 +171,12 @@ polr.draw <- function(x, beta, zeta, levels) {
   un <- rep(runif(nrow(x)), each = length(levels))
   draws <- un > apply(post, 1L, cumsum)
   idx <- 1L + apply(draws, 2L, sum)
-  return(levels[idx])
-}
+  out <- levels[idx]
 
-safe_call <- function(fun, args) {
-  result <- try(suppressWarnings(do.call(fun, args)), silent = TRUE)
-  return(result)
-}
-safe_polr <- function(formula, data, ...) {
-  args <- list(formula = formula, data = data, ...)
-  safe_call(MASS::polr, args)
-}
+  if (!is.null(class) && class == "ordered") {
+    out <- factor(out, levels = levels, ordered = ordered)
+  }
 
+  return(out)
+}
 
