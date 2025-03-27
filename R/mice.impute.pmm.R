@@ -262,8 +262,7 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
                          nrow = nbins)
   model$factor <- list(labels = f$labels, quant = f$quant)
   model$xnames <- colnames(x)
-  model$class  <- class(y)
-  model$ordered <- is.ordered(y)
+  model$class <- if (is.ordered(y)) "ordered" else class(y)[1L]
 
   # Compute imputations from model
   impy <- draw.neighbors.pmm(yhatmis,

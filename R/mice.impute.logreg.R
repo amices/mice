@@ -66,13 +66,7 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL,
     lp <- x[wy, cols, drop = FALSE] %*% model$beta.dot
     return(logreg.draw(lp,
                        levels = model$factor$labels,
-                       class = model$class,
-                       ordered = isTRUE(model$ordered)))
-  }
-  if (task == "fill") {
-    cols <- check.model.match(model, x, method)
-    lp <- x[wy, cols, drop = FALSE] %*% model$beta.dot
-    return(logreg.draw(lp, levels(y)))
+                       class = model$class[1L]))
   }
 
   expr <- expression(glm.fit(
@@ -94,15 +88,16 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL,
     model$beta.dot <- drop(beta.star)
     model$factor <- list(labels = levels(y), quant = c(0, 1))
     model$xnames <- colnames(x)
-    model$class <- class(y)
-    model$ordered <- is.ordered(y)
+    model$class <- if (is.ordered(y)) "ordered" else class(y)[1L]
   }
 
   lp <- x[wy, , drop = FALSE] %*% beta.star
-  return(logreg.draw(lp, levels(y), class(y), is.ordered(y)))
+  return(logreg.draw(lp,
+                     levels = levels(y),
+                     class = if (is.ordered(y)) "ordered" else class(y)[1L]))
 }
 
-logreg.draw <- function(lp, levels = NULL, class = NULL, ordered = FALSE) {
+logreg.draw <- function(lp, levels = NULL, class = NULL) {
   # supports logical, factor and numeric output
   p <- 1 / (1 + exp(-lp))
   draws <- (runif(length(p)) <= p) * 1L
@@ -111,8 +106,11 @@ logreg.draw <- function(lp, levels = NULL, class = NULL, ordered = FALSE) {
     if (class == "logical") {
       return(as.logical(draws))
     }
-    if (class == "factor") {
-      return(factor(draws, levels = c(0, 1), labels = levels, ordered = ordered))
+    if (class %in% c("factor", "ordered")) {
+      return(factor(draws,
+                    levels = c(0, 1),
+                    labels = levels,
+                    ordered = (class == "ordered")))
     }
   }
 
@@ -229,7 +227,11 @@ augment <- function(y, ry, x, wy, maxcat = 50) {
   xa <- rbind(x, d)
 
   # beware, concatenation of factors
-  ya <- if (is.factor(y)) as.factor(levels(y)[c(y, e)]) else c(y, e)
+  if (is.factor(y)) {
+    ya <- factor(levels(y)[c(y, e)], levels = levels(y), ordered = is.ordered(y))
+  } else {
+    ya <- c(y, e)
+  }
   rya <- c(ry, rep.int(TRUE, nr))
   wya <- c(wy, rep.int(FALSE, nr))
   wa <- c(rep.int(1, length(y)), rep.int((p + 1) / nr, nr))

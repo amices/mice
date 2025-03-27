@@ -11,7 +11,7 @@ initialize.imp <- function(data, m, ignore, where, blocks, visitSequence,
       wy <- where[, j]
 
       # Determine correct NA type
-      na_type <- switch(class(y)[1],
+      na_type <- switch(class(y)[1L],
                         "logical" = as.logical(NA),
                         "factor"  = as.character(NA),
                         "ordered" = as.character(NA),

@@ -84,9 +84,8 @@ mice.impute.polyreg <- function(
       x = x,
       beta = model$beta.dot,
       levels = model$factor$labels,
-      class = model$class,
-      ordered = isTRUE(model$ordered)
-    ))
+      class = model$class[1L])
+    )
   }
 
   # Escape perfect prediction
@@ -108,6 +107,7 @@ mice.impute.polyreg <- function(
   }
 
   # Fit multinomial model
+  y <- droplevels(y)
   xy <- cbind.data.frame(y, x)
   fit <- do.call(nnet::multinom, c(
     list(formula(xy),
@@ -146,8 +146,7 @@ mice.impute.polyreg <- function(
     model$beta.dot <- beta
     if (warmstart) model$wts <- fit$wts
     model$factor <- list(labels = levels(y), quant = NULL)
-    model$class <- class(y)
-    model$ordered <- is.ordered(y)
+    model$class <- if (is.ordered(y)) "ordered" else class(y)[1L]
     model$xnames <- colnames(x)
   }
 
@@ -156,12 +155,11 @@ mice.impute.polyreg <- function(
     x = x,
     beta = beta,
     levels = levels(y),
-    class = class(y),
-    ordered = is.ordered(y)
+    class = if (is.ordered(y)) "ordered" else class(y)[1L]
   )
 }
 
-polyreg.draw <- function(x, beta, levels, class = NULL, ordered = FALSE) {
+polyreg.draw <- function(x, beta, levels, class = NULL) {
   if (nrow(x) == 0L) return(character(0))
   lp <- x %*% beta
   p <- exp(lp) / rowSums(exp(lp) + 1)
@@ -173,8 +171,8 @@ polyreg.draw <- function(x, beta, levels, class = NULL, ordered = FALSE) {
 
   out <- levels[idx]
 
-  if (!is.null(class) && class == "factor") {
-    out <- factor(out, levels = levels, ordered = ordered)
+  if (!is.null(class) && class %in% c("factor", "ordered")) {
+    out <- factor(out, levels = levels, ordered = (class == "ordered"))
   }
 
   return(out)

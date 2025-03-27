@@ -82,8 +82,7 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
       beta = model$beta.dot,
       zeta = model$zeta.mis,
       levels = model$factor$labels,
-      class = model$class,
-      ordered = isTRUE(model$ordered)
+      class = model$class[1L]
     )
     return(impy)
   }
@@ -110,6 +109,7 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
 
   # Estimate ordered logistic (polr) model with polr
   # Fall back to multinom if polr fails
+  y <- droplevels(y)
   xy <- cbind.data.frame(y, x)
   execute <- "polr"
   fun <- MASS::polr
@@ -143,8 +143,7 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
     model$beta.dot <- setNames(coef(fit), colnames(x))
     model$zeta.mis <- fit$zeta
     model$factor <- list(labels = levels(y), quant = NULL)
-    model$class <- class(y)
-    model$ordered <- is.ordered(y)
+    model$class <- if (is.ordered(y)) "ordered" else class(y)[1L]
     model$xnames <- colnames(x)
   }
 
@@ -155,15 +154,14 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
       beta = coef(fit),
       zeta = fit$zeta,
       levels = levels(y),
-      class = class(y),
-      ordered = is.ordered(y)
+      class = if (is.ordered(y)) "ordered" else class(y)[1L]
     )
   }
 
   return(impy)
 }
 
-polr.draw <- function(x, beta, zeta, levels, class = NULL, ordered = FALSE) {
+polr.draw <- function(x, beta, zeta, levels, class = NULL) {
   if (nrow(x) == 0L) return(character(0))
   eta <- x %*% beta
   cumpr <- plogis(matrix(zeta, nrow(x), length(zeta), byrow = TRUE) - as.vector(eta))
@@ -173,8 +171,8 @@ polr.draw <- function(x, beta, zeta, levels, class = NULL, ordered = FALSE) {
   idx <- 1L + apply(draws, 2L, sum)
   out <- levels[idx]
 
-  if (!is.null(class) && class == "ordered") {
-    out <- factor(out, levels = levels, ordered = ordered)
+  if (!is.null(class) && class %in% c("factor", "ordered")) {
+    out <- factor(out, levels = levels, ordered = (class == "ordered"))
   }
 
   return(out)
