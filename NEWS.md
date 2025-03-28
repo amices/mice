@@ -1,3 +1,7 @@
+# mice 3.17.3
+
+* Allow for negative adjusted R2 in `pool.r.squared()` (#700)
+
 # mice 3.17.2
 
 * Adds clean-ups:
