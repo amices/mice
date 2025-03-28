@@ -45,15 +45,12 @@ scan.data <- function(data, models, print = FALSE) {
     variable = vars.all,
     in_data = vars.all %in% vars.data,
     in_model = vars.all %in% vars.model,
-    data_class = NA_character_,
-    model_class = NA_character_,
-    class_match = NA_character_,
-    levels_match = NA_character_,
-    levels_new_missing = NA_character_,
-    levels_extra = NA_character_,
-    distribution_match = NA_character_,
-    pred_match = NA_character_,
-    task = NA_character_,
+    data_class = "",
+    model_class = "",
+    class_match = "",
+    levels_match = "",
+    pred_match = "",
+    can_fill = "",
     stringsAsFactors = FALSE
   )
 
@@ -82,13 +79,8 @@ scan.data <- function(data, models, print = FALSE) {
       lvls.data <- levels(x)
       lvls.model <- mod$factor$labels
       report$levels_match[i] <- if (identical(lvls.data, lvls.model)) "Y" else "N"
-      report$levels_new_missing[i] <- if (any(!lvls.model %in% lvls.data)) "Y" else "N"
-      report$levels_extra[i] <- if (any(!lvls.data %in% lvls.model)) "Y" else "N"
-    }
-
-    if (!is.null(x) && is.numeric(x) && !all(is.na(x))) {
-      q <- quantile(x, c(0.25, 0.75), na.rm = TRUE)
-      report$distribution_match[i] <- sprintf("Q1=%.2f, Q3=%.2f", q[1], q[2])
+      # report$levels_new_missing[i] <- if (any(!lvls.model %in% lvls.data)) "Y" else "N"
+      # report$levels_extra[i] <- if (any(!lvls.data %in% lvls.model)) "Y" else "N"
     }
 
     # predictor variable coverage
@@ -97,14 +89,6 @@ scan.data <- function(data, models, print = FALSE) {
       needed <- all.vars(f[[3L]])
       present <- names(orig.data)
       report$pred_match[i] <- if (all(needed %in% present)) "Y" else "N"
-    }
-
-    report$task[i] <- if (!is.null(mod$setup$task)) {
-      mod$setup$task
-    } else if (in_data) {
-      "train"
-    } else {
-      "none"
     }
   }
 
