@@ -169,7 +169,7 @@ make.data <- function(models, n = 1L, fill = NA, vars = NULL) {
 coerce.data <- function(data, models) {
   data <- as.data.frame(data)
   for (j in intersect(names(data), names(models))) {
-    mod <- models[[j]][[1]]
+    mod <- models[[j]][[1L]]
     cls <- mod$class
     lvls <- mod$factor$labels
 
@@ -181,6 +181,8 @@ coerce.data <- function(data, models) {
       data[[j]] <- as.logical(data[[j]])
     } else if (cls == "numeric") {
       data[[j]] <- as.numeric(data[[j]])
+    } else if (cls == "integer") {
+      data[[j]] <- as.integer(data[[j]])
     }
   }
   data
