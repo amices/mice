@@ -12,15 +12,15 @@
 #' and columns summarizing compatibility diagnostics. The following columns are included:
 #'
 #' \tabular{ll}{
-#' `variable`            \tab Variable name \cr
-#' `in_data`             \tab Logical: whether variable is present in `data` \cr
-#' `in_model`            \tab Logical: whether a trained model is available \cr
-#' `data_class`          \tab Class of the variable in `data` (e.g., `"factor"`, `"ordered"`) \cr
-#' `model_class`        \tab model class according to the trained model \cr
-#' `class_match`         \tab `"Y"` if `data_class` matches `model_class`, `"N"` otherwise \cr
-#' `levels_match`        \tab `"Y"` if factor levels exactly match, `"N"` if they differ, "" if not applicable \cr
-#' `pred_match`          \tab `"Y"` if all predictors used by the model are present in `data`, `"N"` if any are missing, "" if unknown \cr
-#' `can_fill`            \tab `"Y"` if there is a model, if classes match, if levels match and if predictor match, other "" \cr
+#' `variable`     \tab Variable name \cr
+#' `in_data`      \tab Logical: whether variable is present in `data` \cr
+#' `in_model`     \tab Logical: whether a trained model is available \cr
+#' `data_class`   \tab Class of the variable in `data` (e.g., `"factor"`, `"ordered"`) \cr
+#' `model_class`  \tab model class according to the trained model \cr
+#' `class_match`  \tab `TRUE` if `data_class` matches `model_class`, `FALSE` otherwise \cr
+#' `levels_match` \tab `TRUE` if factor levels exactly match, `FALSE` if they differ, `NA` if not applicable \cr
+#' `pred_match`   \tab `TRUE` if all predictors used by the model are present in `data`, `FALSE` if any are missing, `NA` if unknown \cr
+#' `can_fill`     \tab `TRUE` if there is a model, if classes match, if levels match and if predictor match, otherwise `FALSE` \cr
 #' }
 #'
 #' @examples
@@ -28,8 +28,9 @@
 #' imp <- mice(boys, tasks = "train", m = 1, maxit = 1, print = FALSE)
 #'
 #' # Create a new dataset with missing values and mismatched types
+#' # remove ordering
 #' data <- boys[1:3, ]
-#' data$phb <- factor(data$phb, levels = levels(data$phb), ordered = FALSE)  # remove ordering
+#' data$phb <- factor(data$phb, levels = levels(data$phb), ordered = FALSE)
 #'
 #' # Run scan
 #' scan.data(data, imp$models)
@@ -45,12 +46,12 @@ scan.data <- function(data, models, print = FALSE) {
     variable = vars.all,
     in_data = vars.all %in% vars.data,
     in_model = vars.all %in% vars.model,
-    data_class = "",
-    model_class = "",
-    class_match = "",
-    levels_match = "",
-    pred_match = "",
-    can_fill = "",
+    data_class = character(length(vars.all)),
+    model_class = character(length(vars.all)),
+    class_match = logical(length(vars.all)),
+    levels_match = logical(length(vars.all)),
+    pred_match = logical(length(vars.all)),
+    can_fill = logical(length(vars.all)),
     stringsAsFactors = FALSE
   )
 
@@ -72,15 +73,17 @@ scan.data <- function(data, models, print = FALSE) {
 
     if (!is.null(x) && !is.null(mod$class)) {
       match <- if (inherits(x, "ordered")) "ordered" else class(x)[1]
-      report$class_match[i] <- if (identical(match, mod$class)) "Y" else "N"
+      report$class_match[i] <- if (identical(match, mod$class)) TRUE else FALSE
     }
 
     if (!is.null(x) && is.factor(x) && !is.null(mod$factor$labels)) {
       lvls.data <- levels(x)
       lvls.model <- mod$factor$labels
-      report$levels_match[i] <- if (identical(lvls.data, lvls.model)) "Y" else "N"
+      report$levels_match[i] <- if (identical(lvls.data, lvls.model)) TRUE else FALSE
       # report$levels_new_missing[i] <- if (any(!lvls.model %in% lvls.data)) "Y" else "N"
       # report$levels_extra[i] <- if (any(!lvls.data %in% lvls.model)) "Y" else "N"
+    } else {
+      report$levels_match[i] <- NA
     }
 
     # predictor variable coverage
@@ -88,21 +91,21 @@ scan.data <- function(data, models, print = FALSE) {
       f <- as.formula(mod$formula)
       needed <- all.vars(f[[3L]])
       present <- names(orig.data)
-      report$pred_match[i] <- if (all(needed %in% present)) "Y" else "N"
+      report$pred_match[i] <- if (all(needed %in% present)) TRUE else FALSE
     }
   }
 
   # Add can_fill column
   report$can_fill <- vapply(seq_len(nrow(report)), function(i) {
     if (isTRUE(report$in_model[i]) &&
-        identical(report$class_match[i], "Y") &&
-        !identical(report$levels_match[i], "N") &&
-        identical(report$pred_match[i], "Y")) {
-      "Y"
+        report$class_match[i] &&
+        !isFALSE(report$levels_match[i]) &&
+        report$pred_match[i]) {
+      TRUE
     } else {
-      "N"
+      FALSE
     }
-  }, character(1))
+  }, NA)
 
   if (print) print(report)
   report
@@ -147,6 +150,8 @@ make.data <- function(models, n = 1L, fill = NA, vars = NULL) {
       out[[j]] <- as.logical(rep(fill, n))
     } else if (cls == "numeric") {
       out[[j]] <- as.numeric(rep(fill, n))
+    } else if (cls == "integer") {
+      out[[j]] <- as.integer(rep(fill, n))
     } else {
       warning(sprintf("Unknown class '%s' for variable '%s'", cls, j))
       out[[j]] <- rep(fill, n)

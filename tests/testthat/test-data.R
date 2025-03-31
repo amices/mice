@@ -26,7 +26,7 @@ result1 <- scan.data(data = newdata, models = trained$models)
 
 test_that("scan.data() sets can_fill to Y for correctly typed newdata", {
   expect_true(length(result1$can_fill) > 0)
-  expect_true(all(result1$can_fill == "Y"))
+  expect_true(all(result1$can_fill))
 })
 
 # coerce newdata (not needed here)
@@ -49,7 +49,7 @@ newdata <- data.frame(
 result2 <- scan.data(data = newdata, models = trained$models)
 
 test_that("scan.data() reports that it cannot fill all variables", {
-  expect_false(all(result2$can_fill == "Y"))
+  expect_false(all(result2$can_fill))
 })
 
 coerced2 <- coerce.data(data = newdata, models = trained$models)

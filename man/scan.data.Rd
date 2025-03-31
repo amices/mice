@@ -18,15 +18,15 @@ A \code{data.frame} with one row per variable (from either \code{data} or \code{
 and columns summarizing compatibility diagnostics. The following columns are included:
 
 \tabular{ll}{
-\code{variable}            \tab Variable name \cr
-\code{in_data}             \tab Logical: whether variable is present in \code{data} \cr
-\code{in_model}            \tab Logical: whether a trained model is available \cr
-\code{data_class}          \tab Class of the variable in \code{data} (e.g., \code{"factor"}, \code{"ordered"}) \cr
-\code{model_class}        \tab model class according to the trained model \cr
-\code{class_match}         \tab \code{"Y"} if \code{data_class} matches \code{model_class}, \code{"N"} otherwise \cr
-\code{levels_match}        \tab \code{"Y"} if factor levels exactly match, \code{"N"} if they differ, "" if not applicable \cr
-\code{pred_match}          \tab \code{"Y"} if all predictors used by the model are present in \code{data}, \code{"N"} if any are missing, "" if unknown \cr
-\code{can_fill}            \tab \code{"Y"} if there is a model, if classes match, if levels match and if predictor match, other "" \cr
+\code{variable}     \tab Variable name \cr
+\code{in_data}      \tab Logical: whether variable is present in \code{data} \cr
+\code{in_model}     \tab Logical: whether a trained model is available \cr
+\code{data_class}   \tab Class of the variable in \code{data} (e.g., \code{"factor"}, \code{"ordered"}) \cr
+\code{model_class}  \tab model class according to the trained model \cr
+\code{class_match}  \tab \code{TRUE} if \code{data_class} matches \code{model_class}, \code{FALSE} otherwise \cr
+\code{levels_match} \tab \code{TRUE} if factor levels exactly match, \code{FALSE} if they differ, \code{NA} if not applicable \cr
+\code{pred_match}   \tab \code{TRUE} if all predictors used by the model are present in \code{data}, \code{FALSE} if any are missing, \code{NA} if unknown \cr
+\code{can_fill}     \tab \code{TRUE} if there is a model, if classes match, if levels match and if predictor match, otherwise \code{FALSE} \cr
 }
 }
 \description{
@@ -39,8 +39,9 @@ availability, useful to prepare for imputation or prediction.
 imp <- mice(boys, tasks = "train", m = 1, maxit = 1, print = FALSE)
 
 # Create a new dataset with missing values and mismatched types
+# remove ordering
 data <- boys[1:3, ]
-data$phb <- factor(data$phb, levels = levels(data$phb), ordered = FALSE)  # remove ordering
+data$phb <- factor(data$phb, levels = levels(data$phb), ordered = FALSE)
 
 # Run scan
 scan.data(data, imp$models)
