@@ -1,4 +1,9 @@
-check.tasks <- function(tasks, data, models = NULL, blocks = NULL) {
+check.tasks <- function(tasks, data, models = NULL, blocks = NULL,
+                        skip.check.tasks = FALSE) {
+  if (skip.check.tasks) {
+    return(tasks)
+  }
+
   # This function is called during initialization
   if (is.null(tasks)) {
     tasks <- "impute"
@@ -13,7 +18,7 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL) {
 
   # 2. Expand tasks if it's a single value
   bv <- unique(unlist(blocks))
-  if (length(tasks) == 1) {
+  if (length(tasks) == 1L) {
     tasks <- setNames(rep(tasks, length(bv)), bv)
   }
 
@@ -23,7 +28,13 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL) {
          ") must match the number of variables in `blocks` (", length(bv),").")
   }
 
-  # 4. Check if all names in tasks exist in blocks
+  # 4. Check that tasks is a named vector
+  if (is.null(names(tasks))) {
+    # Attach names assuming same order as unique variables in blocks
+    names(tasks) <- bv
+  }
+
+  # 5. Check if all names in tasks exist in blocks
   notFound <- !names(tasks) %in% bv
   if (any(notFound)) {
     stop(paste0(
@@ -33,9 +44,9 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL) {
     ))
   }
 
-  # 5. Check if all tasks are valid
+  # 6. Check if all tasks are valid
   invalid_ops <- setdiff(unique(tasks), valid_tasks)
-  if (length(invalid_ops) > 0) {
+  if (length(invalid_ops) > 0L) {
     stop(paste0(
       "Invalid task(s) detected: ", paste(invalid_ops, collapse = ", "), ".\n",
       "Valid tasks are: ", paste(valid_tasks, collapse = ", "), ".\n",
@@ -43,17 +54,17 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL) {
     ))
   }
 
-  # 6. Prevent "fill" if models is NULL
+  # 7. Prevent "fill" if models is NULL
   if ("fill" %in% tasks && is.null(models)) {
     stop("The task 'fill' requires a stored model, but `models` is NULL.\n",
          "Please provide a valid `models` object with a trained imputation model.")
   }
 
-  # 7. Ensure that all "fill" variables have a trained model in models
+  # 8. Ensure that all "fill" variables have a trained model in models
   if ("fill" %in% tasks && !is.null(models)) {
     fill_vars <- names(tasks[tasks == "fill"])
     missing_models <- setdiff(fill_vars, ls(models))
-    if (length(missing_models) > 0) {
+    if (length(missing_models) > 0L) {
       stop(paste0(
         "The following variables specified as 'fill' do not have stored models: ",
         paste(missing_models, collapse = ", "), ".\n",
@@ -62,15 +73,29 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL) {
     }
   }
 
-  # 8. Ensure all variables in models exist in blocks
+  # 9. Ensure all variables in models exist in blocks
   if (!is.null(models)) {
     trained_vars <- ls(models)
     missing_from_data <- setdiff(trained_vars, bv)  # Use block variable names
-    if (length(missing_from_data) > 0) {
+    if (length(missing_from_data) > 0L) {
       stop(paste0(
         "The following variables are present in `models` but missing from `data`: ",
         paste(missing_from_data, collapse = ", "), ".\n",
         "Ensure that all stored models correspond to variables in the dataset."
+      ))
+    }
+  }
+
+  # 10. Check whether the data match the models for filling
+  if ("fill" %in% tasks) {
+    fill_vars <- names(tasks[tasks == "fill"])
+    scanned <- scan.data(data, models)
+    idx <- scanned$variable %in% fill_vars & !scanned$can_fill
+    if (any(idx)) {
+      stop(paste0(
+        "The following variables in `data` do not match the stored models for filling: ",
+        paste(scanned$variable[idx], collapse = ", "), ".\n",
+        "Use scan.data() to diagnose mismatch between data and models."
       ))
     }
   }

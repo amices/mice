@@ -483,7 +483,7 @@ mice <- function(data,
     user.visitSequence = user.visitSequence,
     maxit = maxit
   )
-  tasks <- check.tasks(tasks, data, models, blocks)
+  tasks <- check.tasks(tasks, data, models, blocks, skip.check.tasks = FALSE)
   store <- ifelse(length(unique(tasks)) == 1L, tasks[1L], "train")
   if (compact && store == "train") store <- "train_compact"
 
