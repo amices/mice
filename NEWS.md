@@ -1,5 +1,15 @@
 * Adds a mechanism for filtering rows and selecting columns during the MICE iterations with univariate imputations. The method simplifies univariate imputation models by removing redundant predictors. The method is implemented in the top-level function `trim.data()`, which takes as input the design matrix `x`, the target variable `y` and the response `ry`, and returns a list of two logical vectors named `"rows"` (which filters rows of `x`) and `"cols"` (which selects columns of `x`). The user can choose among several low-level trimmers, including least angular regression, lasso, elastic net, and linear dependencies removal. It is also possible to specify your own low-level `mice.trim.mytrim()` function and call it from `mice()` using the `trimmer == "mytrim"` argument. The method is more robust and faster than `remove.lindep()` and can handle datasets with many variables.
 
+# mice 3.17.3
+
+* Allow for negative adjusted R2 in `pool.r.squared()` (#700)
+
+# mice 3.17.2
+
+* Adds clean-ups:
+  - Combines and updates tests for `lasso.select.norm()` and `lasso.norm()` into one file `test-mice.impute.lasso.norm.R`
+  - Combines and updates tests for `lasso.select.logreg()` and `lasso.logreg()` into one file `test-mice.impute.lasso.logreg.R`
+
 # mice 3.17.1
 
 * Adds `modeltype` argument to `mice()` for specify `"pred"` versus `"formula"` model type. The `modeltype` argument allows the user to specify different model type across blocks. It replaces the `calltype` attribute of `blocks`.
