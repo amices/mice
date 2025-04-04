@@ -1,4 +1,3 @@
-
 * **MAJOR UPDATE USING data.table and long format processing**
 * Breaking changes: 
 - The `imp` component of the `mids` object is now a list of `data.table`s instead of a list of `data.frame`s, and includes an extra column called `row_id`. The `row_id` column contains the row number of the relevant cell in `data` and replaces the function of the `rownames` attribute (which is now deprecated). The `imp` component receives in-place updates.
@@ -9,6 +8,16 @@
 - can now handle a `long` argument that is `data.table`
 - can sort the `long` before creation according to imputation and row identifiers, `.imp` and `.id`
 - Breaking change: `as.mids()` does not longer use `rownames` for storing row identifiers. If you wish to preserve the row identifiers in `.id`, rename the column and set the `.id` argument to your new name.
+
+# mice 3.17.3
+
+* Allow for negative adjusted R2 in `pool.r.squared()` (#700)
+
+# mice 3.17.2
+
+* Adds clean-ups:
+  - Combines and updates tests for `lasso.select.norm()` and `lasso.norm()` into one file `test-mice.impute.lasso.norm.R`
+  - Combines and updates tests for `lasso.select.logreg()` and `lasso.logreg()` into one file `test-mice.impute.lasso.logreg.R`
 
 # mice 3.17.1
 
