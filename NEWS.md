@@ -1,3 +1,18 @@
+## New Feature: Parallel Imputation (Experimental)
+  - The `mice()` function now supports parallel execution of imputations via the new `parallel = TRUE` argument. When enabled, imputation chains are distributed across available CPU cores using the `future` and `future.apply` frameworks. Parallel imputation may significantly reduce runtime, especially for large datasets and many imputations (`m`).
+  - To activate parallel execution:
+
+```{r}
+library(future)
+plan(multisession)  # or multisession, multicore, cluster, etc.
+imp <- mice(data, m = 5, maxit = 5, parallel = TRUE)
+```
+
+  - The default is `parallel = FALSE` for backward compatibility.
+	- A new parallel argument was added to `sampler()` for internal control.
+	-	`printFlag = TRUE` prints iteration and imputation number only in sequential mode; parallel mode reports timing per iteration.
+  - Note: Users must install the `future` and `future.apply` packages and explicitly choose a parallel backend (e.g., `plan(multisession)`).
+
 # mice 3.17.3
 
 * Allow for negative adjusted R2 in `pool.r.squared()` (#700)
