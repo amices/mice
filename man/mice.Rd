@@ -24,6 +24,8 @@ mice(
   printFlag = TRUE,
   seed = NA,
   data.init = NULL,
+  parallel = FALSE,
+  n.core = NULL,
   ...
 )
 }
@@ -159,6 +161,14 @@ iterative process.  The default \code{NULL} implies that starting imputation
 are created by a simple random draw from the data. Note that specification of
 \code{data.init} will start all \code{m} Gibbs sampling streams from the same
 imputation.}
+
+\item{parallel}{Logical. Whether to perform imputations in parallel.
+Default is \code{FALSE}. If \code{TRUE}, imputations over \code{m} datasets are
+run in parallel using the \pkg{future} and \pkg{future.apply} packages.}
+
+\item{n.core}{Optional integer. Specifies the maximum number of CPU cores
+to use for parallel computation. If \code{NULL}, uses \code{min(m, availableCores() - 1)}.
+The number of workers is always capped at \code{m}, the number of imputations.}
 
 \item{\dots}{Named arguments that are passed down to the univariate imputation
 functions.}
@@ -320,6 +330,15 @@ be added as main effects to the \code{formulas}, which will
 act as supplementary covariates in the imputation model. It is possible
 to turn off this behavior by specifying the
 argument \code{auxiliary = FALSE}.
+
+If \code{parallel = TRUE}, the function uses the \pkg{future} package to
+distribute the \code{m} imputations across multiple cores using \code{multisession}.
+The number of workers defaults to one fewer than the number of available
+cores, but is capped at \code{m}. Parallel workers are initialized at the start
+of the function and cleaned up afterward using \code{on.exit()}.
+
+To use parallel computation, you must install the \pkg{future} and
+\pkg{future.apply} packages.
 }
 \section{Functions}{
 
@@ -459,7 +478,8 @@ data sets.} Dissertation. Rotterdam: Erasmus University.
 \code{\link{pool}}, \code{\link{complete}}, \code{\link{ampute}}
 
 \code{\link[=mids-class]{mids}}, \code{\link{with.mids}},
-\code{\link{set.seed}}, \code{\link{complete}}
+\code{\link{set.seed}}, \code{\link{complete}},
+\code{\link[future]{plan}}, \code{\link[future.apply]{future_lapply}}
 }
 \author{
 \strong{Maintainer}: Stef van Buuren \email{stef.vanbuuren@tno.nl}

@@ -150,17 +150,16 @@ single.complete <- function(data, where, imp, ell) {
   if (is.null(where)) {
     where <- is.na(data)
   }
-  idx <- seq_len(ncol(data))[apply(where, 2, any)]
+  idx <- intersect(seq_len(ncol(data)), match(names(imp), colnames(data)))
   for (j in idx) {
-    if (is.null(imp[[j]])) {
-      data[where[, j], j] <- NA
+    varname <- colnames(data)[j]
+    if (is.null(imp[[varname]])) {
+      data[where[, varname], varname] <- NA
     } else {
-      if (sum(where[, j]) == nrow(imp[[j]])) {
-        # assume equal length
-        data[where[, j], j] <- imp[[j]][, ell]
+      if (sum(where[, varname]) == nrow(imp[[varname]])) {
+        data[where[, varname], varname] <- imp[[varname]][, ell]
       } else {
-        # index by rowname
-        data[as.numeric(rownames(imp[[j]])), j] <- imp[[j]][, ell]
+        data[as.numeric(rownames(imp[[varname]])), varname] <- imp[[varname]][, ell]
       }
     }
   }
