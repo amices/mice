@@ -371,15 +371,26 @@ mice <- function(data,
     if (!requireNamespace("future.apply", quietly = TRUE)) {
       stop("Please install the 'future.apply' package to use parallel execution.")
     }
+
     available <- future::availableCores()
     cores <- if (is.null(n.core)) {
       min(m, max(1L, available - 1L))
     } else {
       min(m, n.core)
     }
+
+    # Capture and restore old plan
     old_plan <- future::plan()
-    future::plan(future::multisession, workers = cores)
     on.exit(future::plan(old_plan), add = TRUE)
+
+    # Set plan only if not already set
+    if (inherits(old_plan, "sequential") || inherits(old_plan, "default")) {
+      future::plan(future::multisession, workers = cores)
+    } else {
+      if ("workers" %in% names(formals(future::plan))) {
+        try(future::plan(workers = cores), silent = TRUE)
+      }
+    }
   }
 
   # determine input combination: predictorMatrix, blocks, formulas
@@ -467,7 +478,6 @@ mice <- function(data,
   blots <- check.blots(blots, data, blocks)
   ignore <- check.ignore(ignore, data)
 
-  # Initialize logging environment
   logenv <- new.env(parent = emptyenv())
   logenv$state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
 
