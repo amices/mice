@@ -31,7 +31,7 @@ mice.edit.setup <- function(data, setup,
 
       if (constant && any(pred[, j] != 0) && remove.constant) {
         pred[, j] <- 0
-        logEvent(out = varnames[j], meth = "constant", logenv = logenv)
+        record.event(out = varnames[j], meth = "constant", logenv = logenv)
       }
 
       if (constant && meth[j] != "" && remove.constant) {
@@ -39,7 +39,7 @@ mice.edit.setup <- function(data, setup,
         meth[j] <- ""
         vis <- vis[vis != j]
         post[j] <- ""
-        logEvent(out = varnames[j], meth = "constant", logenv = logenv)
+        record.event(out = varnames[j], meth = "constant", logenv = logenv)
       }
     }
   }
@@ -58,7 +58,7 @@ mice.edit.setup <- function(data, setup,
 
       if (any(pred[, j] != 0) && remove.collinear) {
         pred[, j] <- 0
-        logEvent(out = varnames[j], meth = "collinear", logenv = logenv)
+        record.event(out = varnames[j], meth = "collinear", logenv = logenv)
       }
 
       if (meth[j] != "" && remove.collinear) {
@@ -66,7 +66,7 @@ mice.edit.setup <- function(data, setup,
         meth[j] <- ""
         vis <- vis[vis != j]
         post[j] <- ""
-        logEvent(out = varnames[j], meth = "collinear", logenv = logenv)
+        record.event(out = varnames[j], meth = "collinear", logenv = logenv)
       }
     }
   }

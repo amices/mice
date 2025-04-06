@@ -11,7 +11,7 @@ check.df <- function(x, y, ry) {
   df <- sum(ry) - ncol(x) - 1
   mess <- paste("df set to 1. # observed cases:", sum(ry), " # predictors:", ncol(x) + 1)
   if (df < 1 && sum(ry) > 0) {
-    logEvent(out = mess, frame = 4)
+    record.event(out = mess, frame = 4)
   }
 }
 
@@ -48,7 +48,7 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99,
   keep <- keep & highcor
 
   if (all(!keep)) {
-    logEvent(
+    record.event(
       out = "All predictors are constant or have too high correlation.",
       frame = frame
     )
@@ -72,7 +72,7 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99,
 
   if (!all(keep)) {
     out <- paste(dimnames(x)[[2]][!keep], collapse = ", ")
-    logEvent(out = out, frame = frame)
+    record.event(out = out, frame = frame)
   }
 
   return(keep)
@@ -94,7 +94,7 @@ find.collinear <- function(x, threshold = 0.999, logenv = NULL, ...) {
   out <- apply(hit, 2, any, na.rm = TRUE)
 
   if (any(out)) {
-    logEvent(
+    record.event(
       out = paste(paste(varnames[out], collapse = ", ")),
       meth = "collinear",
       logenv = logenv
@@ -150,7 +150,7 @@ updateLog <- function(out = NULL, meth = NULL, frame = 1) {
 #' the function appends a log entry to `logenv$log` and sets `logenv$state$log <- TRUE`.
 #' This is compatible with parallel execution using the `future` framework.
 #'
-#' When `logenv` is not provided, `logEvent()` calls `mice:::updateLog()` using the legacy
+#' When `logenv` is not provided, `record.event()` calls `mice:::updateLog()` using the legacy
 #' frame-based mechanism.
 #'
 #' @section Advanced:
@@ -161,7 +161,7 @@ updateLog <- function(out = NULL, meth = NULL, frame = 1) {
 #' @seealso [mice()]
 #'
 #' @export
-logEvent <- function(out = NULL, meth = NULL, frame = 1, logenv = NULL) {
+record.event <- function(out = NULL, meth = NULL, frame = 1, logenv = NULL) {
   # If no logenv passed explicitly, try .logenv from globalenv
   if (is.null(logenv)) {
     logenv <- tryCatch(get(".logenv", envir = .GlobalEnv), error = function(e) NULL)
