@@ -165,7 +165,7 @@ mice.impute.lasso.pmm <- function(y, ry, x, wy = NULL,
   ynum <- y
   if (is.factor(y)) {
     if (quantify) {
-      ynum <- quantify(y, ry, x)
+      ynum <- quantify(y, ry, x)[["ynum"]]
     } else {
       # as.integer() may not make sense for unordered factors
       ynum <- as.integer(y)

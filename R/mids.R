@@ -24,6 +24,7 @@
 #' @param loggedEvents Calculated field
 #' @param version Calculated field
 #' @param date Calculated field
+#' @param store Calculated field
 #' @return
 #' \code{mids()} returns a \code{mids} object.
 #'
@@ -58,6 +59,9 @@
 #'    with commands for post-processing.}
 #'    \item{\code{blots}:}{"Block dots". The \code{blots} argument to the \code{mice()}
 #'    function.}
+#'    \item{\code{tasks}:}{A character vector of length \code{length(blocks)}.}
+#'    \item{\code{models}:}{The \code{models} list contains imputation model
+#'    estimates.}
 #'    \item{\code{ignore}:}{A logical vector of length \code{nrow(data)} indicating
 #'    the rows in \code{data} used to build the imputation model. (new in \code{mice 3.12.0})}
 #'    \item{\code{seed}:}{The seed value of the solution.}
@@ -71,18 +75,19 @@
 #'    \item{\code{chainVar}:}{An array with similar structure as
 #'    \code{chainMean}, containing the variance of the imputed values.}
 #'    \item{\code{loggedEvents}:}{A \code{data.frame} with five columns
-#'    containing warnings, corrective actions, and other inside info.}
+#'    containing warnings, corrective tasks, and other inside info.}
 #'    \item{\code{version}:}{Version number of \code{mice} package that
 #'    created the object.}
 #'    \item{\code{date}:}{Date at which the object was created.}
+#'    \item{\code{store}:}{A string, indicating the type of mids object.}
 #' }
 #'
 #' @section LoggedEvents:
 #' The \code{loggedEvents} entry is a matrix with five columns containing a
-#' record of automatic removal actions. It is \code{NULL} is no action was
+#' record of automatic removal tasks. It is \code{NULL} is no record was
 #' made.  At initialization the program removes constant variables, and
 #' removes variables to cause collinearity.
-#' During iteration, the program does the following actions:
+#' During iteration, the program does the following tasks:
 #' \itemize{
 #'     \item One or more variables that are linearly dependent are removed
 #' (for categorical data, a 'variable' corresponds to a dummy variable)
@@ -135,6 +140,8 @@
 #'   formulas = list(a = a ~ b, b = b ~ a),
 #'   post = NULL,
 #'   blots = NULL,
+#'   tasks = NULL,
+#'   models = NULL,
 #'   ignore = logical(nrow(data)),
 #'   seed = 123,
 #'   iteration = 1,
@@ -159,6 +166,8 @@ mids <- function(
     modeltype = character(),
     post = character(),
     blots = list(),
+    tasks = character(),
+    models = new.env(),
     ignore = logical(),
     seed = integer(),
     iteration = integer(),
@@ -170,32 +179,92 @@ mids <- function(
     chainVar = list(),
     loggedEvents = data.frame(),
     version = packageVersion("mice"),
-    date = Sys.Date()) {
-  obj <- list(
-    data = data,
-    imp = imp,
-    m = m,
-    where = where,
-    blocks = blocks,
-    call = call,
-    nmis = nmis,
-    method = method,
-    predictorMatrix = predictorMatrix,
-    visitSequence = visitSequence,
-    formulas = formulas,
-    modeltype = modeltype,
-    post = post,
-    blots = blots,
-    ignore = ignore,
-    seed = seed,
-    iteration = iteration,
-    lastSeedValue = lastSeedValue,
-    chainMean = chainMean,
-    chainVar = chainVar,
-    loggedEvents = loggedEvents,
-    version = packageVersion("mice"),
-    date = Sys.Date()
-  )
+    date = Sys.Date(),
+    store = "impute") {
+
+  if (store == "impute") {
+    obj <- list(
+      data = data,
+      imp = imp,
+      m = m,
+      where = where,
+      blocks = blocks,
+      call = call,
+      nmis = nmis,
+      method = method,
+      predictorMatrix = predictorMatrix,
+      visitSequence = visitSequence,
+      formulas = formulas,
+      modeltype = modeltype,
+      post = post,
+      blots = blots,
+      tasks = tasks,
+      ignore = ignore,
+      seed = seed,
+      iteration = iteration,
+      lastSeedValue = lastSeedValue,
+      chainMean = chainMean,
+      chainVar = chainVar,
+      loggedEvents = loggedEvents,
+      version = packageVersion("mice"),
+      date = Sys.Date(),
+      store = store)
+  } else if (store == "train") {
+    obj <- list(
+      data = data,
+      imp = imp,
+      m = m,
+      where = where,
+      blocks = blocks,
+      call = call,
+      nmis = nmis,
+      method = method,
+      predictorMatrix = predictorMatrix,
+      visitSequence = visitSequence,
+      formulas = formulas,
+      modeltype = modeltype,
+      post = post,
+      blots = blots,
+      tasks = tasks,
+      models = export.models.env(models),
+      ignore = ignore,
+      seed = seed,
+      iteration = iteration,
+      lastSeedValue = lastSeedValue,
+      chainMean = chainMean,
+      chainVar = chainVar,
+      loggedEvents = loggedEvents,
+      version = packageVersion("mice"),
+      date = Sys.Date(),
+      store = store)
+  } else if (store == "train_compact") {
+    obj <- list(
+      m = m,
+      blocks = blocks,
+      method = method,
+      blots = blots,
+      visitSequence = visitSequence,
+      iteration = iteration,
+      lastSeedValue = lastSeedValue,
+      tasks = tasks,
+      models = export.models.env(models),
+      store = store,
+      version = packageVersion("mice"),
+      date = Sys.Date(),
+      call = call)
+  } else if (store == "fill") {
+    obj <- list(
+      data = data,
+      imp = imp,
+      m = m,
+      where = where,
+      store = store,
+      version = packageVersion("mice"),
+      date = Sys.Date(),
+      call = call)
+  } else {
+    stop("store must be one of 'impute', 'train', 'train_compact', or 'fill'")
+  }
   class(obj) <- "mids"
   return(obj)
 }

@@ -23,6 +23,8 @@ mids(
   modeltype = character(),
   post = character(),
   blots = list(),
+  tasks = character(),
+  models = new.env(),
   ignore = logical(),
   seed = integer(),
   iteration = integer(),
@@ -32,7 +34,8 @@ mids(
   chainVar = list(),
   loggedEvents = data.frame(),
   version = packageVersion("mice"),
-  date = Sys.Date()
+  date = Sys.Date(),
+  store = "impute"
 )
 
 \method{plot}{mids}(
@@ -153,6 +156,29 @@ to pass down arguments to lower level imputation function. The entries
 of element \code{blots[[blockname]]} are passed down to the function
 called for block \code{blockname}.}
 
+\item{tasks}{A character vector specifying the task to perform for
+each imputation block. The available options are:
+\describe{
+\item{"impute"}{Estimate parameters, generates imputations and store
+the original data plus imputations, but not the imputation model
+(classic MICE behavior).}
+\item{"train" }{Estimate parameters, generate imputations and
+store the original data, the imputations and the imputation model.}
+\item{"fill"}{Apply a previously trained imputation model to fill
+imputations, without re-estimating parameters.}
+}
+This argument can be specified as a named vector, where names correspond
+to variables and values specify the task for each variable. If a
+single value is provided, it applies to the variables in all blocks. The
+length of the vector must match the number of variables present in the
+blocks. The default is \code{"impute"}.}
+
+\item{models}{A list that stores fitted imputation models. The models
+can be used to impute missing values in new data. \code{models} is
+only returned if \code{tasks = 'train'}. Use \code{models = trained$models}
+to fill in missing values in new data, where \code{trained} is the
+\code{mids} object returned by \code{mice(..., tasks = 'train')}.}
+
 \item{ignore}{A logical vector of \code{nrow(data)} elements indicating
 which rows are ignored when creating the imputation model. The default
 \code{NULL} includes all rows that have an observed value of the variable
@@ -181,6 +207,8 @@ generator alone.}
 \item{version}{Calculated field}
 
 \item{date}{Calculated field}
+
+\item{store}{Calculated field}
 
 \item{x}{An object of class \code{mids}}
 
@@ -258,6 +286,9 @@ identified by its name, so list names must correspond to block names.}
 with commands for post-processing.}
 \item{\code{blots}:}{"Block dots". The \code{blots} argument to the \code{mice()}
 function.}
+\item{\code{tasks}:}{A character vector of length \code{length(blocks)}.}
+\item{\code{models}:}{The \code{models} list contains imputation model
+estimates.}
 \item{\code{ignore}:}{A logical vector of length \code{nrow(data)} indicating
 the rows in \code{data} used to build the imputation model. (new in \code{mice 3.12.0})}
 \item{\code{seed}:}{The seed value of the solution.}
@@ -271,20 +302,21 @@ Note that observed data are not present in this mean.}
 \item{\code{chainVar}:}{An array with similar structure as
 \code{chainMean}, containing the variance of the imputed values.}
 \item{\code{loggedEvents}:}{A \code{data.frame} with five columns
-containing warnings, corrective actions, and other inside info.}
+containing warnings, corrective tasks, and other inside info.}
 \item{\code{version}:}{Version number of \code{mice} package that
 created the object.}
 \item{\code{date}:}{Date at which the object was created.}
+\item{\code{store}:}{A string, indicating the type of mids object.}
 }
 }
 
 \section{LoggedEvents}{
 
 The \code{loggedEvents} entry is a matrix with five columns containing a
-record of automatic removal actions. It is \code{NULL} is no action was
+record of automatic removal tasks. It is \code{NULL} is no record was
 made.  At initialization the program removes constant variables, and
 removes variables to cause collinearity.
-During iteration, the program does the following actions:
+During iteration, the program does the following tasks:
 \itemize{
 \item One or more variables that are linearly dependent are removed
 (for categorical data, a 'variable' corresponds to a dummy variable)
@@ -343,6 +375,8 @@ imp <- mids(
   formulas = list(a = a ~ b, b = b ~ a),
   post = NULL,
   blots = NULL,
+  tasks = NULL,
+  models = NULL,
   ignore = logical(nrow(data)),
   seed = 123,
   iteration = 1,

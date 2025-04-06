@@ -7,3 +7,5 @@ inst/doc
 *_cache
 script
 docs
+
+/.quarto/

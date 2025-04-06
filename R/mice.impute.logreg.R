@@ -43,8 +43,13 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
-mice.impute.logreg <- function(y, ry, x, wy = NULL, ...) {
+mice.impute.logreg <- function(y, ry, x, wy = NULL,
+                               task = "impute", model = NULL,
+                               ...) {
+  check.model.exists(model, task)
+  method <- "logreg"
   if (is.null(wy)) wy <- !ry
+  n <- sum(ry)
 
   # augment data in order to evade perfect prediction
   aug <- augment(y, ry, x, wy)
@@ -54,30 +59,64 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL, ...) {
   wy <- aug$wy
   w <- aug$w
 
-  # fit model
   x <- cbind(1, as.matrix(x))
+
+  if (task == "fill") {
+    cols <- check.model.match(model, x, method)
+    lp <- x[wy, cols, drop = FALSE] %*% model$beta.dot
+    return(logreg.draw(lp,
+                       levels = model$factor$labels,
+                       class = model$class[1L]))
+  }
+
   expr <- expression(glm.fit(
     x = x[ry, , drop = FALSE],
     y = y[ry],
     family = quasibinomial(link = logit),
-    weights = w[ry]
-  ))
+    weights = w[ry]))
   fit <- eval(expr)
   fit.sum <- summary.glm(fit)
   beta <- coef(fit)
   rv <- t(chol(sym(fit.sum$cov.unscaled)))
   beta.star <- beta + rv %*% rnorm(ncol(rv))
 
-  # draw imputations
-  p <- 1 / (1 + exp(-(x[wy, , drop = FALSE] %*% beta.star)))
-  vec <- (runif(nrow(p)) <= p)
-  vec[vec] <- 1
-  if (is.factor(y)) {
-    vec <- factor(vec, c(0, 1), levels(y))
+  if (task == "train") {
+    model$setup <- list(method = method,
+                        n = n,
+                        task = task)
+    model$beta.hat <- drop(beta)
+    model$beta.dot <- drop(beta.star)
+    model$factor <- list(labels = levels(y), quant = c(0, 1))
+    model$xnames <- colnames(x)
+    model$class <- if (is.ordered(y)) "ordered" else class(y)[1L]
   }
-  vec
+
+  lp <- x[wy, , drop = FALSE] %*% beta.star
+  return(logreg.draw(lp,
+                     levels = levels(y),
+                     class = if (is.ordered(y)) "ordered" else class(y)[1L]))
 }
 
+logreg.draw <- function(lp, levels = NULL, class = NULL) {
+  # supports logical, factor and numeric output
+  p <- 1 / (1 + exp(-lp))
+  draws <- (runif(length(p)) <= p) * 1L
+
+  if (!is.null(class)) {
+    if (class == "logical") {
+      return(as.logical(draws))
+    }
+    if (class %in% c("factor", "ordered")) {
+      return(factor(draws,
+                    levels = c(0, 1),
+                    labels = levels,
+                    ordered = (class == "ordered")))
+    }
+  }
+
+  # fallback, numeric
+  return(draws)
+}
 
 #' Imputation by logistic regression using the bootstrap
 #'
@@ -146,7 +185,7 @@ augment <- function(y, ry, x, wy, maxcat = 50) {
   # This function will prevent augmented data beyond the min and
   # the max of the data
   # Input:
-  # x: numeric data.frame (n rows)
+  # x:  numeric matrix (n rows)
   # y: factor or numeric vector (lengt n)
   # ry: logical vector (length n)
   # Output:
@@ -185,10 +224,14 @@ augment <- function(y, ry, x, wy, maxcat = 50) {
   e <- rep(rep(icod, each = 2), p)
 
   dimnames(d) <- list(paste0("AUG", seq_len(nrow(d))), dimnames(x)[[2]])
-  xa <- rbind.data.frame(x, d)
+  xa <- rbind(x, d)
 
   # beware, concatenation of factors
-  ya <- if (is.factor(y)) as.factor(levels(y)[c(y, e)]) else c(y, e)
+  if (is.factor(y)) {
+    ya <- factor(levels(y)[c(y, e)], levels = levels(y), ordered = is.ordered(y))
+  } else {
+    ya <- c(y, e)
+  }
   rya <- c(ry, rep.int(TRUE, nr))
   wya <- c(wy, rep.int(FALSE, nr))
   wa <- c(rep.int(1, length(y)), rep.int((p + 1) / nr, nr))

@@ -11,7 +11,7 @@ cran-comments.Rmd
 changes_mice*
 ^data-raw$
 .png
-^script$
+^script/
 ^CODE_OF_CONDUCT*
 ^mice\.Rproj$
 vignettes/

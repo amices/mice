@@ -97,6 +97,10 @@ cbind.mids <- function(x, y = NULL, ...) {
   post <- c(x$post, rep.int("", ncol(y)))
   names(post) <- varnames
   blots <- x$blots
+  tasks <- c(x$tasks, "impute")
+  names(tasks) <- c(names(x$tasks), tail(varnames, 1L))
+  models <- x$models
+  store <- x$store
   ignore <- x$ignore
 
   # seed, lastSeedValue, number of iterations, chainMean and chainVar
@@ -125,6 +129,9 @@ cbind.mids <- function(x, y = NULL, ...) {
     modeltype = modeltype,
     post = post,
     blots = blots,
+    tasks = tasks,
+    models = models,
+    store = store,
     ignore = ignore,
     seed = seed,
     iteration = iteration,
@@ -231,6 +238,30 @@ cbind.mids.mids <- function(x, y, call) {
   names(post) <- varnames
   blots <- c(x$blots, y$blots)
   names(blots) <- blocknames
+  tasks <- c(x$tasks, y$tasks)
+  # FIXME: Assumes combined task names yields unique names as in colnames(data)
+  names(tasks) <- make.unique(c(names(x$tasks), names(y$tasks)))
+
+  # Function to copy all objects from one environment to another
+  merge_envs <- function(target_env, source_env) {
+    for (name in ls(source_env, all.names = TRUE)) {
+      assign(name, get(name, envir = source_env), envir = target_env)
+    }
+    return(target_env)
+  }
+  if (!is.null(x$models) && !is.null(y$models)) {
+    models <- merge_envs(x$models, y$models)
+  } else if (!is.null(x$models)) {
+    models <- x$models
+  } else if (!is.null(y$models)) {
+    models <- y$models
+  } else {
+    models <- NULL
+  }
+  store <- x$store
+  if (y$store != store) {
+    store <- "train"
+  }
   ignore <- x$ignore
 
   # For the elements seed, lastSeedValue and iteration the values
@@ -296,6 +327,9 @@ cbind.mids.mids <- function(x, y, call) {
     modeltype = modeltype,
     post = post,
     blots = blots,
+    tasks = tasks,
+    models = models,
+    store = store,
     ignore = ignore,
     seed = seed,
     iteration = iteration,

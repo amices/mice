@@ -219,6 +219,27 @@
 #' to pass down arguments to lower level imputation function. The entries
 #' of element \code{blots[[blockname]]} are passed down to the function
 #' called for block \code{blockname}.
+#' @param tasks A character vector specifying the task to perform for
+#'   each imputation block. The available options are:
+#'   \describe{
+#'     \item{"impute"}{Estimate parameters, generates imputations and store
+#'       the original data plus imputations, but not the imputation model
+#'        (classic MICE behavior).}
+#'     \item{"train" }{Estimate parameters, generate imputations and
+#'       store the original data, the imputations and the imputation model.}
+#'     \item{"fill"}{Apply a previously trained imputation model to fill
+#'       imputations, without re-estimating parameters.}
+#'   }
+#'   This argument can be specified as a named vector, where names correspond
+#'   to variables and values specify the task for each variable. If a
+#'   single value is provided, it applies to the variables in all blocks. The
+#'   length of the vector must match the number of variables present in the
+#'   blocks. The default is \code{"impute"}.
+#' @param models A list that stores fitted imputation models. The models
+#' can be used to impute missing values in new data. \code{models} is
+#' only returned if \code{tasks = 'train'}. Use \code{models = trained$models}
+#' to fill in missing values in new data, where \code{trained} is the
+#' \code{mids} object returned by \code{mice(..., tasks = 'train')}.
 #' @param post A vector of strings with length \code{ncol(data)} specifying
 #' expressions as strings. Each string is parsed and
 #' executed within the \code{sampler()} function to post-process
@@ -245,6 +266,12 @@
 #' are created by a simple random draw from the data. Note that specification of
 #' \code{data.init} will start all \code{m} Gibbs sampling streams from the same
 #' imputation.
+#' @param compact A logical value indicating whether the resulting \code{mids}
+#' object should be stored in compact form. Only relevant if \code{tasks = 'train'}.
+#' If \code{isTRUE(compact)}, training data, imputations and other data-specific
+#' elements are removed from the resulting \code{mids} object. The
+#' \code{store} element of the will be changed from \code{"train"} to
+#' \code{"train.compact"}. The default is \code{compact = FALSE}.
 #' @param \dots Named arguments that are passed down to the univariate imputation
 #' functions.
 #'
@@ -294,7 +321,22 @@
 #' complete(imp)
 #'
 #' # imputation on mixed data with a different method per column
-#' mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"))
+#' imp0 <- mice(nhanes2, meth = c("sample", "pmm", "logreg", "norm"), print = FALSE)
+#'
+#' # store all imputation models
+#' imp1 <- mice(nhanes, tasks = "train", print = FALSE)
+#' imp1$models$bmi[[1]]
+#'
+#' # Store model for `bmi`, estimate others as usual
+#' tasks <- c("age" = "impute", "bmi" = "train", "hyp" = "impute", "chl" = "impute")
+#' imp2 <- mice(nhanes, tasks = tasks, print = FALSE)
+#'
+#' # Inspects the stored model for imputation 1 for `bmi`
+#' imp2$models$bmi[[1]]
+#'
+#' # Fill missing `bmi` values using pre-trained model
+#' tasks <- c("age" = "impute", "bmi" = "fill", "hyp" = "impute", "chl" = "impute")
+#' imp3 <- mice(nhanes, tasks = tasks, models = imp2$models, print = FALSE)
 #'
 #' \dontrun{
 #' # example where we fit the imputation model on the train data
@@ -329,27 +371,20 @@ mice <- function(data,
                  formulas,
                  modeltype = NULL,
                  blots = NULL,
+                 tasks = NULL,
+                 models = NULL,
                  post = NULL,
                  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
                  maxit = 5,
                  printFlag = TRUE,
                  seed = NA,
                  data.init = NULL,
-#                 saveDetails = FALSE,
+                 compact = FALSE,
                  ...) {
   call <- match.call()
   check.deprecated(...)
 
   if (!is.na(seed)) set.seed(seed)
-
-  # # create details environment
-  # if (saveDetails) {
-  #   details <- rlang::env(
-  #   call = call,
-  #   seed = seed,
-  #   version = packageVersion("mice"),
-  #   date = Sys.Date())
-  # assign("details", details, envir = globalenv())
 
   # check form of data and m
   data <- check.dataform(data)
@@ -442,7 +477,7 @@ mice <- function(data,
   # check visitSequence, edit predictorMatrix for monotone
   user.visitSequence <- visitSequence
   visitSequence <- check.visitSequence(visitSequence,
-    data = data, where = where, blocks = blocks
+                                       data = data, where = where, blocks = blocks
   )
   predictorMatrix <- mice.edit.predictorMatrix(
     predictorMatrix = predictorMatrix,
@@ -450,9 +485,14 @@ mice <- function(data,
     user.visitSequence = user.visitSequence,
     maxit = maxit
   )
+  tasks <- check.tasks(tasks, data, models, blocks, skip.check.tasks = FALSE)
+  store <- ifelse(length(unique(tasks)) == 1L, tasks[1L], "train")
+  if (compact && store == "train") store <- "train_compact"
+
   method <- check.method(
     method = method, data = data, where = where,
-    blocks = blocks, defaultMethod = defaultMethod
+    blocks = blocks, tasks = tasks,
+    defaultMethod = defaultMethod
   )
   post <- check.post(post, data)
   blots <- check.blots(blots, data, blocks)
@@ -469,26 +509,30 @@ mice <- function(data,
     visitSequence = visitSequence,
     post = post
   )
-  setup <- mice.edit.setup(data, setup, ...)
+  setup <- mice.edit.setup(data, setup, tasks, ...)
   method <- setup$method
   predictorMatrix <- setup$predictorMatrix
   visitSequence <- setup$visitSequence
   post <- setup$post
 
+  # Initialize models for "train" and "fill" blocks that are missing in models
+  models <- initialize.models.env(models, tasks, method, blocks, m)
+  method <- overwrite.method(method, blocks, tasks, models)
+
   # initialize imputations
-  nmis <- apply(is.na(data), 2, sum)
+  nmis <- apply(is.na(data), 2L, sum)
   imp <- initialize.imp(
     data, m, ignore, where, blocks, visitSequence,
     method, nmis, data.init
   )
 
   # and iterate...
-  from <- 1
-  to <- from + maxit - 1
+  from <- 1L
+  to <- from + maxit - 1L
   q <- sampler(
     data, m, ignore, where, imp, blocks, method,
     visitSequence, predictorMatrix, formulas,
-    modeltype, blots,
+    modeltype, blots, tasks, models,
     post, c(from, to), printFlag, ...
   )
 
@@ -511,19 +555,22 @@ mice <- function(data,
     modeltype = modeltype,
     post = post,
     blots = blots,
+    tasks = tasks,
+    models = models,
     ignore = ignore,
     seed = seed,
     iteration = q$iteration,
     lastSeedValue = get(".Random.seed",
-      envir = globalenv(), mode = "integer",
-      inherits = FALSE),
+                        envir = globalenv(), mode = "integer",
+                        inherits = FALSE),
     chainMean = q$chainMean,
     chainVar = q$chainVar,
-    loggedEvents = loggedEvents)
+    loggedEvents = loggedEvents,
+    store = store)
 
   if (!is.null(midsobj$loggedEvents)) {
     warning("Number of logged events: ", nrow(midsobj$loggedEvents),
-      call. = FALSE
+            call. = FALSE
     )
   }
   return(midsobj)

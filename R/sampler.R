@@ -2,7 +2,7 @@
 # This function is called by mice and mice.mids
 sampler <- function(data, m, ignore, where, imp, blocks, method,
                     visitSequence, predictorMatrix, formulas,
-                    modeltype, blots,
+                    modeltype, blots, tasks, models,
                     post, fromto, printFlag, ...) {
   from <- fromto[1]
   to <- fromto[2]
@@ -45,6 +45,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
           if (calltype == "formula") ff <- formulas[[h]] else ff <- NULL
           pred <- predictorMatrix[h, ]
           user <- blots[[h]]
+          key <- paste0(h, "_", i)
 
           # univariate/multivariate logic
           theMethod <- method[h]
@@ -69,17 +70,23 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
           # (repeated) univariate imputation - pred method
           if (univ) {
             for (j in b) {
+              # if m outruns m.train, recycle m.train
+              m.train <- length(models[[j]])
+              mod <- (i - 1L) %% m.train + 1L
               imp[[j]][, i] <-
                 sampler.univ(
                   data = data, r = r, where = where,
                   pred = pred, formula = ff,
                   method = theMethod,
+                  task = tasks[j],
+                  model = models[[j]][[as.character(mod)]],
                   yname = j, k = k,
                   calltype = calltype,
                   user = user, ignore = ignore,
                   ...
                 )
 
+              # update data
               data[(!r[, j]) & where[, j], j] <-
                 imp[[j]][(!r[, j])[where[, j]], i]
 
@@ -111,14 +118,12 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
                 type = pred, ...
               ))
             } else {
-              stop("Cannot call function of type ", calltype,
-                call. = FALSE
-              )
+              stop("Cannot call function of type ", calltype, call. = FALSE)
             }
             if (is.null(imputes)) {
               stop("No imputations from ", theMethod,
-                h,
-                call. = FALSE
+                   h,
+                   call. = FALSE
               )
             }
             for (j in names(imputes)) {
@@ -133,11 +138,8 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
             for (j in b) {
               wy <- where[, j]
               ry <- r[, j]
-              imp[[j]][, i] <- model.frame(
-                as.formula(theMethod),
-                data[wy, ],
-                na.action = na.pass
-              )
+              imp[[j]][, i] <- model.frame(as.formula(theMethod), data[wy, ],
+                                           na.action = na.pass)
               data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
             }
           }
@@ -179,43 +181,23 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 }
 
 
-sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
-                         calltype = "pred", user, ignore,
+sampler.univ <- function(data, r, where, pred, formula, method, task, model,
+                         yname, k, calltype = "pred", user, ignore,
                          trimmer = "lindep", ...) {
   j <- yname[1L]
 
   # nothing to impute
-  if (!any(where[, j])) {
-    return(numeric(0))
+  if (all(!where[, j]) && task != "train") {
+      return(numeric(0))
   }
 
-  if (calltype == "pred") {
-    vars <- colnames(data)[pred != 0]
-    xnames <- setdiff(vars, j)
-    if (length(xnames) > 0L) {
-      formula <- reformulate(backticks(xnames), response = backticks(j))
-      formula <- update(formula, ". ~ . ")
-    } else {
-      formula <- as.formula(paste0(j, " ~ 1"))
-    }
-  }
-
-  if (calltype == "formula") {
-    # move terms other than j from lhs to rhs
-    ymove <- setdiff(lhs(formula), j)
-    formula <- update(formula, paste(j, " ~ . "))
-    if (length(ymove) > 0L) {
-      formula <- update(formula, paste("~ . + ", paste(backticks(ymove), collapse = "+")))
-    }
-  }
-
-  # get the model matrix
+  # prepare formula and model matrix
+  formula <- prepare.formula(formula, data, model, j, calltype, pred, task)
   x <- obtain.design(data, formula)
 
   # expand pred vector to model matrix, remove intercept
   if (calltype == "pred") {
     type <- pred[labels(terms(formula))][attr(x, "assign")]
-    # xnames <- names(type)
     x <- x[, -1L, drop = FALSE]
     names(type) <- colnames(x)
   }
@@ -247,6 +229,30 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
   imputes <- data[wy, j]
   imputes[!iy] <- NA
 
+  # remove linear dependencies
+  if (task != "fill") {
+    keep <- trim.data(
+      y = data[, j],
+      ry = r[, j] & !ignore,
+      x = x,
+      trimmer = trimmer, ...
+    )
+  }
+
+  # store the names of the features
+  # xj <- unique(xnames[keep$cols])
+  # print(xj)
+
+  # set up univariate imputation method
+  # wy: entries we wish to impute (length(y) elements)
+  # iy: entries we will impute (sum(wy) elements)
+  wy <- complete.cases(x) & where[, j]
+  iy <- wy[where[, j]]
+
+  # wipe out previous values
+  imputes <- data[wy, j]
+  imputes[!iy] <- NA
+
   # here we go
   f <- paste("mice.impute", method, sep = ".")
   args <- c(
@@ -255,10 +261,52 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
       ry = keep$rows,
       x = x[, keep$cols, drop = FALSE],
       wy = wy,
-      type = type[keep$cols]
-    ),
-    user, list(...)
-  )
+      type = type[keep$cols],
+      task = task,
+      model = model),
+    user, list(...))
   imputes[iy] <- do.call(f, args = args)
   return(imputes)
+}
+
+
+prepare.formula <- function(formula, data, model, j, ct, pred, task) {
+  # prepares the formula for univariate imputation
+  # saves (for "train") or retrieves (for "fill") the formula
+
+  # for "fill", use the stored formula instead of recalculating
+  if (task == "fill") {
+    if (!exists("formula", envir = model)) {
+      stop("Error: No stored formula found in model for 'fill' task.")
+    }
+    formula <- get("formula", envir = model)
+    return(as.formula(formula))
+  }
+
+  if (ct == "pred") {
+    vars <- colnames(data)[pred != 0]
+    xnames <- setdiff(vars, j)
+    if (length(xnames) > 0L) {
+      formula <- reformulate(backticks(xnames), response = backticks(j))
+      formula <- update(formula, ". ~ . ")
+    } else {
+      formula <- as.formula(paste0(j, " ~ 1"))
+    }
+  }
+
+  if (ct == "formula") {
+    # move terms other than j from lhs to rhs
+    ymove <- setdiff(lhs(formula), j)
+    formula <- update(formula, paste(j, " ~ . "))
+    if (length(ymove) > 0L) {
+      formula <- update(formula, paste("~ . + ", paste(backticks(ymove), collapse = "+")))
+    }
+  }
+
+  # store formula in `model` only when task is "train"
+  if (task == "train") {
+    assign("formula", paste(deparse(formula), collapse = ""), envir = model)
+  }
+
+  return(formula)
 }

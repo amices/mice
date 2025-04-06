@@ -1,4 +1,14 @@
-context("remove.lindep")
+context("Internals: sanitize.vec()")
+
+x <- c(1, 0, 1)
+test_that("converts to appropriate type", {
+  expect_is(mice:::sanitize.vec(x, y = c(TRUE, FALSE)), "logical")
+  expect_is(mice:::sanitize.vec(x, y = factor(c("a", "b", "a"))), "factor")
+  expect_is(mice:::sanitize.vec(x, y = ordered(c("low", "high"))), "ordered")
+  expect_is(mice:::sanitize.vec(x, y = rnorm(5)), "numeric")
+})
+
+context("Internals: remove.lindep()")
 
 set.seed(1)
 td <- matrix(rnorm(20), nrow = 5, ncol = 4)

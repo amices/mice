@@ -12,6 +12,7 @@
 make.method <- function(data,
                         where = make.where(data),
                         blocks = make.blocks(data),
+                        tasks = NULL,
                         defaultMethod = c("pmm", "logreg", "polyreg", "polr")) {
   method <- rep("", length(blocks))
   names(method) <- names(blocks)
@@ -28,30 +29,58 @@ make.method <- function(data,
     method[j] <- defaultMethod[k]
   }
   nimp <- nimp(where, blocks)
-  method[nimp == 0] <- ""
+
+  # preserve old behaviour that sets method <- "" with impute task
+  names(method) <- names(blocks)
+  if (!is.null(tasks)) {
+    for (j in names(blocks)) {
+      vname <- blocks[[j]]
+      if (nimp[j] == 0L && "impute" == tasks[vname]) method[j] <- ""
+    }
+  }
+
+  support <- c("pmm", "norm", "logreg", "polr", "polyreg")
+  # check whether methods support train and fill tasks
+  for (j in names(blocks)) {
+    vname <- blocks[[j]]
+    for (yname in vname) {
+      mj <- method[j]
+      task <- tasks[yname]
+      if (!is.null(task) && task %in% c("train", "fill") && !mj %in% support) {
+        stop(paste("Method", mj, "lacks support for train and fill tasks."))
+      }
+    }
+  }
+
   method
 }
 
-
-check.method <- function(method, data, where, blocks, defaultMethod) {
+check.method <- function(method, data, where, blocks, tasks, defaultMethod) {
   if (is.null(method)) {
     return(make.method(
       data = data,
       where = where,
       blocks = blocks,
+      tasks = tasks,
       defaultMethod = defaultMethod
     ))
   }
   nimp <- nimp(where, blocks)
 
-  # expand user's imputation method to all visited columns
+  # expand user's imputation method to all visited blocks
   # single string supplied by user (implicit assumption of two columns)
-  if (length(method) == 1) {
+  if (length(method) == 1L) {
     if (is.passive(method)) {
-      stop("Cannot have a passive imputation method for every column.")
+      stop("Cannot have a passive imputation method for every block.")
     }
     method <- rep(method, length(blocks))
-    method[nimp == 0] <- ""
+    names(method) <- names(blocks)
+
+    # preserve old behaviour that sets method <- "" with impute task
+    for (j in names(blocks)) {
+      vname <- blocks[[j]]
+      if (nimp[j] == 0L && "impute" == tasks[vname]) method[j] <- ""
+    }
   }
 
   # check the length of the argument
@@ -120,28 +149,44 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
       )
     }
   }
-  method[nimp == 0] <- ""
+
   unlist(method)
 }
 
+overwrite.method <- function(method, blocks, tasks, models) {
+  # for fill tasks, overwrite method with stored model method
+  if (length(models) == 0L) {
+    return(method)
+  }
+  for (h in names(method)) {
+    for (varname in blocks[[h]]) {
+      if (tasks[varname] %in% c("fill")) {
+        newmethod <- models[[varname]]$`1`$setup$method
+        if (is.null(newmethod)) next
+        method[h] <- newmethod
+      }
+    }
+  }
+  return(method)
+}
 
 # assign methods based on type,
 # use method 1 if there is no single method within the block
 assign.method <- function(y) {
   if (is.numeric(y)) {
-    return(1)
-  }
-  if (nlevels(y) == 2) {
-    return(2)
-  }
-  if (is.ordered(y) && nlevels(y) > 2) {
-    return(4)
-  }
-  if (nlevels(y) > 2) {
-    return(3)
+    return(1L)
   }
   if (is.logical(y)) {
-    return(2)
+    return(2L)
   }
-  1
+  if (is.ordered(y) && nlevels(y) > 2L) {
+    return(4L)
+  }
+  if (nlevels(y) == 2L) {
+    return(2L)
+  }
+  if (nlevels(y) > 2L) {
+    return(3L)
+  }
+  return(1L)
 }

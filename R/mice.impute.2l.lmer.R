@@ -79,9 +79,7 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
   )
   suppressWarnings(fit <- try(
     lme4::lmer(formula(randmodel),
-      data = data.frame(yobs, xobs),
-      ...
-    ),
+      data = data.frame(yobs, xobs)),
     silent = TRUE
   ))
   if (inherits(fit, "try-error")) {

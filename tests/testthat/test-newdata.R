@@ -1,5 +1,13 @@
 context("mice.mids: newdata")
 
+# SvB 20250328
+# This file contains tests for the newdata argument in mice.mids
+# using a newdata argument
+#
+# This method is superseded by the tasks = "train"/"fill" arguments
+# in mice(), but is retained here for backwards compatibility, and
+# for methods that do not support the tasks argument.
+
 # Check that mice.mids correctly appends the newdata to the
 # existing mids object
 init0 <- mice(nhanes, maxit = 0, m = 1, print = FALSE, seed = 1)
