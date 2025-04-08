@@ -9,9 +9,14 @@ mice.impute.polyreg(
   ry,
   x,
   wy = NULL,
-  nnet.maxit = 100,
-  nnet.trace = FALSE,
-  nnet.MaxNWts = 1500,
+  task = "impute",
+  model = NULL,
+  nnet.maxit = NULL,
+  nnet.MaxNWts = NULL,
+  maxit = NULL,
+  MaxNWts = NULL,
+  reltol = NULL,
+  warmstart = FALSE,
   ...
 )
 }
@@ -29,11 +34,33 @@ model is fitted. The \code{ry} generally distinguishes the observed
 \item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
-\item{nnet.maxit}{Tuning parameter for \code{nnet()}.}
+\item{task}{Character string. The task to be performed. Can
+be \code{"impute"}, \code{"train"} or \code{"fill"}.
+The default is \code{"impute"} (classic MICE). See \code{mice()} for
+details.}
 
-\item{nnet.trace}{Tuning parameter for \code{nnet()}.}
+\item{model}{An environment created by a parent to store the imputation
+model setup and estimates. The model is stored in the \code{mids} object
+under tasks \code{"train"}, and is needed as input
+for task \code{"fill"}. The object \code{model} is not used under
+task \code{"impute"}.}
 
-\item{nnet.MaxNWts}{Tuning parameter for \code{nnet()}.}
+\item{nnet.maxit}{Legacy parameter.}
+
+\item{nnet.MaxNWts}{Legacy parameter.}
+
+\item{maxit}{Tuning parameter for \code{nnet()}.}
+
+\item{MaxNWts}{Tuning parameter for \code{nnet()}. Internally, the procedure
+computes the number of weights needed for the multinomial model as
+100 + \code{ncol(x)} times \code{length(levels(y)) - 1L)}.
+Use \code{MaxNWts} to override this default if you get the
+“too many weights” error.}
+
+\item{reltol}{Convergence parameter for \code{nnet()}.}
+
+\item{warmstart}{Logical. If \code{TRUE}, the estimation process
+uses weights from the previous iteration as warm starts.}
 
 \item{...}{Other named arguments.}
 }
@@ -43,14 +70,12 @@ Vector with imputed data, same type as \code{y}, and of length
 }
 \description{
 Imputes missing data in a categorical variable using polytomous regression
+for unordered factors.
 }
 \details{
 The function \code{mice.impute.polyreg()} imputes categorical response
 variables by the Bayesian polytomous regression model. See J.P.L. Brand
 (1999), Chapter 4, Appendix B.
-
-By default, unordered factors with more than two levels are imputed by
-\code{mice.impute.polyreg()}.
 
 The method consists of the following steps:
 \enumerate{

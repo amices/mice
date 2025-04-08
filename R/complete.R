@@ -84,6 +84,10 @@ complete.mids <- function(data, action = 1L, include = FALSE,
                           mild = FALSE, order = c("last", "first"),
                           ...) {
   if (!is.mids(data)) stop("'data' not of class 'mids'")
+  if (data$store == "train_compact") {
+    stop(paste("Cannot complete compact training object.\n",
+               "Set 'compact = FALSE' to preserve training data and imputations."))
+  }
   order <- match.arg(order)
 
   m <- as.integer(data$m)
@@ -166,3 +170,4 @@ single.complete <- function(data, where, imp, ell) {
   }
   data
 }
+

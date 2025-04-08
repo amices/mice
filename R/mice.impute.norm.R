@@ -34,11 +34,36 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
-mice.impute.norm <- function(y, ry, x, wy = NULL, ...) {
+mice.impute.norm <- function(y, ry, x, wy = NULL,
+                             task = "impute", model = NULL,
+                             ridge = 1e-05,
+                             ...) {
+  check.model.exists(model, task)
+  method <- "norm"
   if (is.null(wy)) wy <- !ry
   x <- cbind(1, as.matrix(x))
-  parm <- .norm.draw(y, ry, x, ...)
-  x[wy, ] %*% parm$beta + rnorm(sum(wy)) * parm$sigma
+  if (task == "fill") {
+    cols <- check.model.match(model, x, method)
+    lp <- x[wy, cols, drop = FALSE] %*% model$beta.dot
+    noise <- rnorm(sum(wy)) * model$sigma.dot
+    return(lp + noise)
+  }
+
+  parm <- .norm.draw(y, ry, x, ridge = ridge, ...)
+
+  if (task == "train") {
+    model$setup <- list(method = method,
+                        n = sum(ry),
+                        task = task,
+                        ridge = ridge)
+    model$beta.hat <- drop(parm$coef)
+    model$beta.dot <- drop(parm$beta)
+    model$sigma.hat <- parm$sigma.hat
+    model$sigma.dot <- parm$sigma
+    model$xnames <- colnames(x)
+  }
+
+  return(x[wy, ] %*% parm$beta + rnorm(sum(wy)) * parm$sigma)
 }
 
 
@@ -69,14 +94,16 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...) {
   return(.norm.draw(y, ry, x, rank.adjust = TRUE, ...))
 }
 
-###' @rdname norm.draw
-###' @export
+#' @rdname norm.draw
+#' @export
 .norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...) {
   p <- estimice(x[ry, , drop = FALSE], y[ry], ...)
-  sigma.star <- sqrt(sum((p$r)^2) / rchisq(1, p$df))
+  ssq <- sum((p$r)^2)
+  sigma.hat <- sqrt(ssq / p$df)
+  sigma.star <- sqrt(ssq / rchisq(1, p$df))
   beta.star <- p$c + (t(chol(sym(p$v))) %*% rnorm(ncol(x))) * sigma.star
-  parm <- list(p$c, beta.star, sigma.star, p$ls.meth)
-  names(parm) <- c("coef", "beta", "sigma", "estimation")
+  parm <- list(p$c, beta.star, sigma.star, p$ls.meth, sigma.hat)
+  names(parm) <- c("coef", "beta", "sigma", "estimation", "sigma.hat")
   if (any(is.na(parm$coef)) & rank.adjust) {
     parm$coef[is.na(parm$coef)] <- 0
     parm$beta[is.na(parm$beta)] <- 0

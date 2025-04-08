@@ -47,6 +47,7 @@ reference:
   - make.modeltype
   - make.post
   - make.predictorMatrix
+  - make.tasks
   - make.visitSequence
   - make.where
   - construct.blocks
@@ -125,7 +126,6 @@ reference:
   - estimice
   - norm.draw
   - .norm.draw
-  - .pmm.match
 - title: Multivariate amputation
   desc: |
     Amputation is the inverse of imputation, starting with a complete dataset, and creating missing data pattern according to the posited missing data mechanism. Amputation is useful for simulation studies.
@@ -173,9 +173,8 @@ reference:
   - supports.transparent
   - version
 articles:
-- title: General
-  navbar: ~
-  contents:
-  - overview
-  - oldfriends
-
+  - title: General
+    navbar: ~
+    contents:
+    - overview
+    - oldfriends

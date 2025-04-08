@@ -2,16 +2,21 @@
 % Please edit documentation in R/mice.impute.polr.R
 \name{mice.impute.polr}
 \alias{mice.impute.polr}
-\title{Imputation of ordered data by polytomous regression}
+\title{Imputation of categorical data by the ordered logistic (polr) model}
 \usage{
 mice.impute.polr(
   y,
   ry,
   x,
   wy = NULL,
-  nnet.maxit = 100,
-  nnet.trace = FALSE,
-  nnet.MaxNWts = 1500,
+  task = "impute",
+  model = NULL,
+  nnet.maxit = NULL,
+  nnet.MaxNWts = NULL,
+  maxit = NULL,
+  MaxNWts = NULL,
+  reltol = NULL,
+  warmstart = FALSE,
   polr.to.loggedEvents = FALSE,
   ...
 )
@@ -30,13 +35,35 @@ model is fitted. The \code{ry} generally distinguishes the observed
 \item{wy}{Logical vector of length \code{length(y)}. A \code{TRUE} value
 indicates locations in \code{y} for which imputations are created.}
 
-\item{nnet.maxit}{Tuning parameter for \code{nnet()}.}
+\item{task}{Character string. The task to be performed. Can
+be \code{"impute"}, \code{"train"} or \code{"fill"}.
+The default is \code{"impute"} (classic MICE). See \code{mice()} for
+details.}
 
-\item{nnet.trace}{Tuning parameter for \code{nnet()}.}
+\item{model}{An environment created by a parent to store the imputation
+model setup and estimates. The model is stored in the \code{mids} object
+under tasks \code{"train"}, and is needed as input
+for task \code{"fill"}. The object \code{model} is not used under
+task \code{"impute"}.}
 
-\item{nnet.MaxNWts}{Tuning parameter for \code{nnet()}.}
+\item{nnet.maxit}{Legacy parameter.}
 
-\item{polr.to.loggedEvents}{A logical indicating whether each fallback
+\item{nnet.MaxNWts}{Legacy parameter.}
+
+\item{maxit}{Tuning parameter for \code{nnet()}.}
+
+\item{MaxNWts}{Tuning parameter for \code{nnet()}. Internally, the procedure
+computes the number of weights needed for the multinomial model as
+100 + \code{ncol(x)} times \code{length(levels(y)) - 1L)}.
+Use \code{MaxNWts} to override this default if you get the
+“too many weights” error.}
+
+\item{reltol}{Convergence parameter for \code{nnet()}.}
+
+\item{warmstart}{Logical. If \code{TRUE}, the estimation process
+uses weights from the previous iteration as warm starts.}
+
+\item{polr.to.loggedEvents}{A logical indicating whether each fall-back
 to the \code{multinom()} function should be written to \code{loggedEvents}.
 The default is \code{FALSE}.}
 
@@ -47,28 +74,26 @@ Vector with imputed data, same type as \code{y}, and of length
 \code{sum(wy)}
 }
 \description{
-Imputes missing data in a categorical variable using polytomous regression
+The function \code{mice.impute.polr()} imputes missing data in an
+ordinal categorical variable using the proportional odds logistic
+regression model (\code{polr}). This model, also known as the cumulative
+link model, estimates cumulative probabilities using a set of
+threshold parameters. The method assumes that the effect of predictor
+variables is the same across all category transitions (proportional odds
+assumption).
 }
 \details{
-The function \code{mice.impute.polr()} imputes for ordered categorical response
-variables by the proportional odds logistic regression (polr) model. The
-function repeatedly applies logistic regression on the successive splits. The
-model is also known as the cumulative link model.
-
-By default, ordered factors with more than two levels are imputed by
-\code{mice.impute.polr}.
-
 The algorithm of \code{mice.impute.polr} uses the function \code{polr()} from
 the \code{MASS} package.
 
 In order to avoid bias due to perfect prediction, the algorithm augment the
 data according to the method of White, Daniel and Royston (2010).
 
-The call to \code{polr} might fail, usually because the data are very sparse.
+Calls to \code{polr} might fail if the data are very sparse.
 In that case, \code{multinom} is tried as a fallback.
 If the local flag \code{polr.to.loggedEvents} is set to TRUE,
-a record is written
-to the \code{loggedEvents} component of the \code{\link{mids}} object.
+a record is written to the \code{loggedEvents} component of
+the \code{\link{mids}} object.
 Use \code{mice(data, polr.to.loggedEvents = TRUE)} to set the flag.
 }
 \note{
@@ -82,10 +107,6 @@ See \url{https://github.com/amices/mice/issues/206} for details.
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}: Multivariate
 Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
-
-Brand, J.P.L. (1999) \emph{Development, implementation and evaluation of
-multiple imputation strategies for the statistical analysis of incomplete
-data sets.} Dissertation. Rotterdam: Erasmus University.
 
 White, I.R., Daniel, R. Royston, P. (2010). Avoiding bias due to perfect
 prediction in multiple imputation of incomplete categorical variables.
@@ -123,7 +144,7 @@ Other univariate imputation functions:
 \code{\link{mice.impute.ri}()}
 }
 \author{
-Stef van Buuren, Karin Groothuis-Oudshoorn, 2000-2010
+Stef van Buuren
 }
 \concept{univariate imputation functions}
 \keyword{datagen}
