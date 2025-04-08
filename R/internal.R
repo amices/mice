@@ -5,80 +5,6 @@ keep.in.model <- function(y, ry, x, wy) {
 
 impute.with.na <- function(x, wy) !complete.cases(x) & wy
 
-
-check.df <- function(x, y, ry) {
-  # if needed, writes the df warning message to the log
-  df <- sum(ry) - ncol(x) - 1
-  mess <- paste("df set to 1. # observed cases:", sum(ry), " # predictors:", ncol(x) + 1)
-  if (df < 1 && sum(ry) > 0) {
-    updateLog(out = mess, frame = 4)
-  }
-}
-
-
-remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99,
-                          allow.na = TRUE, frame = 4, ...) {
-  # returns a logical vector of length ncol(x)
-
-  if (ncol(x) == 0) {
-    return(NULL)
-  }
-
-  # setting eps = 0 bypasses remove.lindep()
-  if (eps == 0) {
-    return(rep.int(TRUE, ncol(x)))
-  }
-  if (eps < 0) {
-    stop("\n Argument 'eps' must be positive.")
-  }
-
-  # Keep all predictors if we allow imputation of fully missing y
-  if (allow.na && sum(ry) == 0) {
-    return(rep.int(TRUE, ncol(x)))
-  }
-
-  xobs <- x[ry, , drop = FALSE]
-  yobs <- as.numeric(y[ry])
-  if (var(yobs) < eps) {
-    return(rep(FALSE, ncol(xobs)))
-  }
-
-  keep <- unlist(apply(xobs, 2, var) > eps)
-  keep[is.na(keep)] <- FALSE
-  highcor <- suppressWarnings(unlist(apply(xobs, 2, cor, yobs) < maxcor))
-  keep <- keep & highcor
-  if (all(!keep)) {
-    updateLog(
-      out = "All predictors are constant or have too high correlation.",
-      frame = frame
-    )
-  }
-
-  # no need to calculate correlations, so return
-  k <- sum(keep)
-  if (k <= 1L) {
-    return(keep)
-  } # at most one TRUE
-
-  # correlation between x's
-  cx <- cor(xobs[, keep, drop = FALSE], use = "all.obs")
-  eig <- eigen(cx, symmetric = TRUE)
-  ncx <- cx
-  while (eig$values[k] / eig$values[1] < eps) {
-    j <- seq_len(k)[order(abs(eig$vectors[, k]), decreasing = TRUE)[1]]
-    keep[keep][j] <- FALSE
-    ncx <- cx[keep[keep], keep[keep], drop = FALSE]
-    k <- k - 1
-    eig <- eigen(ncx)
-  }
-  if (!all(keep)) {
-    out <- paste(dimnames(x)[[2]][!keep], collapse = ", ")
-    updateLog(out = out, frame = frame)
-  }
-  return(keep)
-}
-
-
 ## make list of collinear variables to remove
 find.collinear <- function(x, threshold = 0.999, ...) {
   nvar <- ncol(x)
@@ -152,6 +78,21 @@ ma_exists <- function(x, pos, n_index = 1:8) {
 
 backticks <- function(varname) {
   sprintf("`%s`", varname)
+}
+
+sweep_operator <- function(S, k) {
+  A <- S[k, k]
+  B <- matrix(S[-k, k], ncol = 1L)
+  C <- matrix(S[k, -k], nrow = 1L)
+  D <- S[-k, -k] - B %*% C / A
+
+  # Update the matrix S in place
+  S[-k, -k] <- D
+  S[-k, k] <- -B / A
+  S[k, -k] <- -t(C) / A
+  S[k, k] <- 1 / A
+
+  return(S)
 }
 
 is.named.list <- function(x) {

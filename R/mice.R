@@ -399,7 +399,7 @@ mice <- function(data,
   if (mp & mb & mf) {
     # blocks lead
     blocks <- make.blocks(colnames(data))
-    predictorMatrix <- make.predictorMatrix(data, blocks)
+    predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     formulas <- make.formulas(data, blocks)
     modeltype <- make.modeltype(modeltype, predictorMatrix, formulas, "pred")
   }
@@ -416,7 +416,7 @@ mice <- function(data,
   if (mp & !mb & mf) {
     # blocks leads
     blocks <- check.blocks(blocks, data)
-    predictorMatrix <- make.predictorMatrix(data, blocks)
+    predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     formulas <- make.formulas(data, blocks)
     modeltype <- make.modeltype(modeltype, predictorMatrix, formulas, "pred")
   }
@@ -426,7 +426,7 @@ mice <- function(data,
     # formulas leads
     formulas <- check.formulas(formulas, data)
     blocks <- construct.blocks(formulas)
-    predictorMatrix <- make.predictorMatrix(data, blocks)
+    predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     modeltype <- make.modeltype(modeltype, predictorMatrix, formulas, "formula")
   }
 
@@ -447,7 +447,9 @@ mice <- function(data,
     formulas <- check.formulas(formulas, data)
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
     blocks <- construct.blocks(formulas, predictorMatrix)
-    predictorMatrix <- make.predictorMatrix(data, blocks, predictorMatrix)
+    predictorMatrix <- make.predictorMatrix(data,
+                                            blocks = blocks,
+                                            predictorMatrix = predictorMatrix)
     modeltype <- make.modeltype(modeltype, predictorMatrix, formulas, "formula")
   }
 
@@ -456,7 +458,7 @@ mice <- function(data,
     # blocks lead
     blocks <- check.blocks(blocks, data)
     formulas <- check.formulas(formulas, blocks)
-    predictorMatrix <- make.predictorMatrix(data, blocks)
+    predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     modeltype <- make.modeltype(modeltype, predictorMatrix, formulas, "formula")
   }
 
