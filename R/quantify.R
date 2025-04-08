@@ -16,12 +16,12 @@ quantify <- function(y, ry, x, quantify = TRUE) {
   yd <- model.matrix(~ 0 + yf)
   xd <- cbind(1, x[ry, , drop = FALSE])
   cca <- cancor(y = yd, x = xd, xcenter = FALSE, ycenter = FALSE)
-  oldlevels <- levels(y)
-  levels(y) <- as.vector(cca$ycoef[, 2L])
-  ynum <- as.numeric(as.character(y))
+  quant <- as.vector(cca$ycoef[, 2L])
+  quant_expand <- quant[match(levels(y), levels(yf))]
+  ynum <- quant_expand[match(as.character(y), levels(y))]
   return(list(ynum = ynum,
-              labels = oldlevels,
-              quant = as.numeric(levels(y))))
+              labels = levels(y),
+              quant = quant_expand))
 }
 
 unquantify <- function(ynum = NULL, quant = NULL, labels = NULL) {
