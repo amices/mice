@@ -30,10 +30,10 @@ A better approach is to apply the **same imputation model** trained on the origi
 
 ## Installation
 
-The new functionality is **currently experimental** and available in the `"tasks"` branch of the `mice` repository. To install this branch from GitHub, use:
+The new functionality is **currently experimental** and available in the `dev` branch of the `mice` repository. To install this branch from GitHub, use:
 
 ```{r install, eval=FALSE}
-remotes::install_github("amices/mice", ref = "imputation_models")
+remotes::install_github("amices/mice", ref = "dev")
 ```
 
 ## MICE Architecture
