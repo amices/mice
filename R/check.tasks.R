@@ -25,7 +25,8 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL,
   # 3. Check length
   if (length(tasks) != length(bv)) {
     stop("The length of `tasks` (", length(tasks),
-         ") must match the number of variables in `blocks` (", length(bv),").")
+         ") must match the number of variables in `blocks` (", length(bv),").",
+         call. = FALSE)
   }
 
   # 4. Check that tasks is a named vector
@@ -41,7 +42,7 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL,
       "The following variables specified in `tasks` are not present in `blocks`: ",
       paste(names(tasks)[notFound], collapse = ", "), ".\n",
       "Ensure all specified variables match those in `blocks`."
-    ))
+    ), call. = FALSE)
   }
 
   # 6. Check if all tasks are valid
@@ -51,13 +52,14 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL,
       "Invalid task(s) detected: ", paste(invalid_ops, collapse = ", "), ".\n",
       "Valid tasks are: ", paste(valid_tasks, collapse = ", "), ".\n",
       "Please correct the `tasks` argument."
-    ))
+    ), call. = FALSE)
   }
 
   # 7. Prevent "fill" if models is NULL
   if ("fill" %in% tasks && is.null(models)) {
     stop("The task 'fill' requires a stored model, but `models` is NULL.\n",
-         "Please provide a valid `models` object with a trained imputation model.")
+         "Please provide a valid `models` object with a trained imputation model.",
+         call. = FALSE)
   }
 
   # 8. Ensure that all "fill" variables have a trained model in models
@@ -69,7 +71,7 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL,
         "The following variables specified as 'fill' do not have stored models: ",
         paste(missing_models, collapse = ", "), ".\n",
         "Ensure these variables were previously fitted before using 'fill'."
-      ))
+      ), call. = FALSE)
     }
   }
 
@@ -80,10 +82,10 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL,
     idx <- scanned$variable %in% fill_vars & !scanned$can_fill
     if (any(idx)) {
       stop(paste0(
-        "The following variables in `data` do not match the stored models for filling: ",
+        "The following variables in `data` cannot be filled: ",
         paste(scanned$variable[idx], collapse = ", "), ".\n",
         "Use scan.data() to diagnose mismatch between data and models."
-      ))
+      ), call. = FALSE)
     }
   }
 
