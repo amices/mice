@@ -44,10 +44,13 @@ generally benefit from much faster cluster computation if \code{type} is set to 
 A mids object as defined by \code{\link{mids-class}}
 }
 \description{
+\strong{Deprecated}: This function is deprecated as of \verb{mice 3.18.0}. Use
+\code{mice(..., parallel = TRUE)} instead, which integrates parallel
+functionality natively using the \pkg{future} framework.
+
 This function is included for backward compatibility. The function
-is superseded by \code{\link{futuremice}}.
-}
-\details{
+was superseded by \code{\link{futuremice}}, which is also deprecated.
+
 This function relies on package \code{\link{parallel}}, which is a base
 package for R versions 2.14.0 and later. We have chosen to use parallel function
 \code{parLapply} to allow the use of \code{parlmice} on Mac, Linux and Windows

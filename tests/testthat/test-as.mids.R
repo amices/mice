@@ -62,10 +62,17 @@ test_that("complete() reproduces the original data", {
 # works with dplyr
 
 library(dplyr)
+nhanes3 <- nhanes
+rownames(nhanes3) <- LETTERS[1:nrow(nhanes3)]
+imp <- mice(nhanes3, m = 2, maxit = 1, print = FALSE)
+
+X <- complete(imp, action = "long", include = TRUE)
+
 X3 <- X %>%
   group_by(hyp) %>%
   mutate(chlm = mean(chl, na.rm = TRUE))
-test_that("handles grouped_df", {
-  expect_silent(as.mids(X3))
+test_that("collinearity is logged during as.mids()", {
+  mids_obj <- suppressWarnings(as.mids(X3))
+  expect_true(any(grepl("collinear", mids_obj$loggedEvents$meth)))
 })
 
