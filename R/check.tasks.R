@@ -73,20 +73,7 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL,
     }
   }
 
-  # 9. Ensure all variables in models exist in blocks
-  if (!is.null(models)) {
-    trained_vars <- ls(models)
-    missing_from_data <- setdiff(trained_vars, bv)  # Use block variable names
-    if (length(missing_from_data) > 0L) {
-      stop(paste0(
-        "The following variables are present in `models` but missing from `data`: ",
-        paste(missing_from_data, collapse = ", "), ".\n",
-        "Ensure that all stored models correspond to variables in the dataset."
-      ))
-    }
-  }
-
-  # 10. Check whether the data match the models for filling
+  # 9. Check whether the data match the models for filling
   if ("fill" %in% tasks) {
     fill_vars <- names(tasks[tasks == "fill"])
     scanned <- scan.data(data, models)
