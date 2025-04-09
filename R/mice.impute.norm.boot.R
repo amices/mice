@@ -22,7 +22,6 @@ mice.impute.norm.boot <- function(y, ry, x, wy = NULL, ...) {
   x <- cbind(1, as.matrix(x))
   n1 <- sum(ry)
   s <- sample(n1, n1, replace = TRUE)
-  ss <- s
   dotxobs <- x[ry, , drop = FALSE][s, ]
   dotyobs <- y[ry][s]
   p <- estimice(dotxobs, dotyobs, ...)

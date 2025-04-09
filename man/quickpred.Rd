@@ -10,7 +10,8 @@ quickpred(
   minpuc = 0,
   include = "",
   exclude = "",
-  method = "pearson"
+  method = "pearson",
+  ...
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ excluded as a predictor.}
 \item{method}{A string specifying the type of correlation. Use
 \code{'pearson'} (default), \code{'kendall'} or \code{'spearman'}. Can be
 abbreviated.}
+
+\item{...}{Not used.}
 }
 \value{
 A square binary matrix of size \code{ncol(data)}.
@@ -113,6 +116,6 @@ Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 \code{\link{mice}}, \code{\link[=mids-class]{mids}}
 }
 \author{
-Stef van Buuren, Aug 2009
+Stef van Buuren, Aug 2009, 2024
 }
 \keyword{misc}

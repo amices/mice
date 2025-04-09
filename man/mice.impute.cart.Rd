@@ -73,6 +73,7 @@ Chapman & Hall/CRC. Boca Raton, FL.
 Other univariate imputation functions: 
 \code{\link{mice.impute.lasso.logreg}()},
 \code{\link{mice.impute.lasso.norm}()},
+\code{\link{mice.impute.lasso.pmm}()},
 \code{\link{mice.impute.lasso.select.logreg}()},
 \code{\link{mice.impute.lasso.select.norm}()},
 \code{\link{mice.impute.lda}()},
