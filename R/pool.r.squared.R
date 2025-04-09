@@ -72,7 +72,8 @@ pool.r.squared <- function(object, adjusted = FALSE) {
 
   # Fill arrays
   for (i in seq_len(m)) {
-    r2[i, 1] <- if (!adjusted) sqrt(glanced$r.squared[i]) else sqrt(glanced$adj.r.squared[i])
+    r2[i, 1] <- if (!adjusted) sqrt(glanced$r.squared[i]) else
+      sign(glanced$adj.r.squared[i]) * sqrt(abs(glanced$adj.r.squared[i]))
     r2[i, 2] <- 0.5 * log((r2[i, 1] + 1) / (1 - r2[i, 1]))
     r2[i, 3] <- 1 / (glanced$nobs[i] - 3)
   }

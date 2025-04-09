@@ -79,18 +79,20 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
     y <- data[, vname, drop = FALSE]
     mj <- method[j]
     mlist <- list(
-      m1 = c("logreg", "logreg.boot", "polyreg", "lda", "polr"),
+      m1 = c("logreg", "logreg.boot", "polyreg", "lda", "polr",
+             "lasso.logreg"),
       m2 = c(
         "norm", "norm.nob", "norm.predict", "norm.boot",
         "mean", "2l.norm", "2l.pan",
         "2lonly.norm", "2lonly.pan",
-        "quadratic", "ri"
+        "quadratic", "ri", "lasso.norm"
       ),
       m3 = c(
         "norm", "norm.nob", "norm.predict", "norm.boot",
         "mean", "2l.norm", "2l.pan",
         "2lonly.norm", "2lonly.pan",
-        "quadratic", "logreg", "logreg.boot"
+        "quadratic", "logreg", "logreg.boot",
+        "lasso.logreg", "ri", "lasso.norm"
       )
     )
     cond1 <- sapply(y, is.numeric)
