@@ -32,3 +32,4 @@ unquantify <- function(ynum = NULL, quant = NULL, labels = NULL) {
   }
   return(y)
 }
+
