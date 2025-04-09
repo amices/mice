@@ -78,13 +78,13 @@ check.tasks <- function(tasks, data, models = NULL, blocks = NULL,
   # 9. Check whether the data match the models for filling
   if ("fill" %in% tasks) {
     fill_vars <- names(tasks[tasks == "fill"])
-    scanned <- scan.data(data, models)
+    scanned <- scan.newdata(data, models)
     idx <- scanned$variable %in% fill_vars & !scanned$can_fill
     if (any(idx)) {
       stop(paste0(
         "The following variables in `data` cannot be filled: ",
         paste(scanned$variable[idx], collapse = ", "), ".\n",
-        "Use scan.data() to diagnose mismatch between data and models."
+        "Use scan.newdata() to diagnose mismatch between data and models."
       ), call. = FALSE)
     }
   }

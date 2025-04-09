@@ -246,17 +246,17 @@ More generally, three common issues can cause model-data mismatches during filli
 - **Missing predictors**: If `newdata` omits variables used as predictors in the trained models, imputation will not proceed.  
   ➤ *Solution*: Ensure that all required predictor variables are present in `newdata`, even if their values are completely missing.
 
-You can automate these checks using `scan.data()` and align new data structures using `coerce.data()` or `make.data()`.
+You can automate these checks using `scan.newdata()` and align new data structures using `coerce.newdata()` or `make.newdata()`.
 
-### Using `scan.data()`, `coerce.data()`, and `make.data()`
+### Using `scan.newdata()`, `coerce.newdata()`, and `make.newdata()`
 
 The `mice` package provides three helper functions to ensure that new data is compatible with trained imputation models:
 
 | Function         | Purpose                                                                 |
 |------------------|-------------------------------------------------------------------------|
-| `scan.data()`     | Inspects a given dataset and reports mismatches with the trained models. Use this to diagnose potential issues before filling. |
-| `coerce.data()`   | Transforms a dataset to match the expected structure based on a trained model. Use this to fix detected type mismatches. |
-| `make.data()`     | Creates a skeleton `newdata` frame with the correct structure, types, and levels. Use this to start from scratch. |
+| `scan.newdata()`     | Inspects a given dataset and reports mismatches with the trained models. Use this to diagnose potential issues before filling. |
+| `coerce.newdata()`   | Transforms a dataset to match the expected structure based on a trained model. Use this to fix detected type mismatches. |
+| `make.newdata()`     | Creates a skeleton `newdata` frame with the correct structure, types, and levels. Use this to start from scratch. |
 
 #### Example: Diagnosing and Fixing Type Mismatches
 
@@ -272,31 +272,31 @@ newdata <- data.frame(
 )
 
 # Diagnose structure against trained models
-scan.data(newdata, trained$models)
+scan.newdata(newdata, trained$models)
 ```
 
 This diagnostic table shows that the `class_match` column for `bmi` is `FALSE`. It has class `logical` in the data and class `numeric` in the model. As a result, the last column `can_fill` is set to `FALSE`.
 
-#### Fix the Data with `coerce.data()`
+#### Fix the Data with `coerce.newdata()`
 
 You can fix detected mismatches by coercing the data to the expected format:
 
 ```{r}
-newdata_fixed <- coerce.data(newdata, trained$models)
+newdata_fixed <- coerce.newdata(newdata, trained$models)
 
 # Check again
-scan.data(newdata_fixed, trained$models)
+scan.newdata(newdata_fixed, trained$models)
 ```
 
 Now all variables match in type and structure, and `can_fill` for `bmi` is changed to `TRUE`.
 
-#### Start from Scratch with `make.data()`
+#### Start from Scratch with `make.newdata()`
 
-If you don’t have any data yet, or want a fully clean starting point, use `make.data()`:
+If you don’t have any data yet, or want a fully clean starting point, use `make.newdata()`:
 
 ```{r}
 # Create a new empty row with correct types and levels
-template <- make.data(models = trained$models)
+template <- make.newdata(models = trained$models)
 
 # View structure
 str(template)
