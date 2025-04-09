@@ -1,3 +1,13 @@
+# mice 3.17.3
+
+* Allow for negative adjusted R2 in `pool.r.squared()` (#700)
+
+# mice 3.17.2
+
+* Adds clean-ups:
+  - Combines and updates tests for `lasso.select.norm()` and `lasso.norm()` into one file `test-mice.impute.lasso.norm.R`
+  - Combines and updates tests for `lasso.select.logreg()` and `lasso.logreg()` into one file `test-mice.impute.lasso.logreg.R`
+
 # mice 3.17.1
 
 * Adds `modeltype` argument to `mice()` for specify `"pred"` versus `"formula"` model type. The `modeltype` argument allows the user to specify different model type across blocks. It replaces the `calltype` attribute of `blocks`.
