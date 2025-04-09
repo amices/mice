@@ -32,7 +32,7 @@ A better approach is to apply the **same imputation model** trained on the origi
 
 The new functionality is **currently experimental** and available in the `"tasks"` branch of the `mice` repository. To install this branch from GitHub, use:
 
-```{r eval=FALSE}
+```{r install, eval=FALSE}
 remotes::install_github("amices/mice", ref = "imputation_models")
 ```
 
@@ -70,7 +70,7 @@ Next, we show practical examples of how to use the `tasks` argument.
 
 Setting `tasks = "impute"` returns a `mids` object identical to the classic MICE implementation: it contains imputed values but **does not store the imputation model**. The following code generates a `mids` object using the built-in `nhanes` dataset:
 
-```{r}
+```{r mice-impute}
 library(mice, warn.conflicts = FALSE)
 imputed <- mice(nhanes, tasks = "impute", seed = 1, print = FALSE)
 class(imputed)
@@ -78,7 +78,7 @@ class(imputed)
 
 As in classic MICE, specifying `tasks = "impute"` applies this setting to all variables by expanding to:
 
-```{r}
+```{r imputed-tasks}
 imputed$tasks
 ```
 
@@ -89,14 +89,14 @@ imputed$tasks
 
 To also store the imputation model, use `tasks = "train"` instead of `tasks = "impute"`:
 
-```{r}
+```{r mice-train}
 trained <- mice(nhanes, tasks = "train", seed = 1, print = FALSE)
 class(trained)
 ```
 
 This time, the `mids` object contains both the imputed values and the imputation model. To confirm the difference, inspect the `store` component:
 
-```{r}
+```{r trained-store}
 trained$store
 ```
 
@@ -113,10 +113,11 @@ Depending on the imputation method, the stored models may differ slightly. For p
 
 Training creates a **transferable representation** of the imputation model, allowing it to be reused on new data **without altering the original model or re-estimating parameters**. To apply a stored model, use `tasks = "fill"` in `mice()`, along with the `models` argument to specify the trained model.
 
-The following code demonstrates how to use a trained model to fill missing values in new data:
 
-```{r}
-newdata <- data.frame(age = c(2, 1), bmi = c(NA, NA), chl = c(NA, 190), hyp = c(NA, 1))
+Later on we will show how to avoid this issue for more general cases. For now, let us alter `newdata$bmi` directly to ensure that the variable types match the imputation model:
+
+```{r mice-fill, error=TRUE}
+newdata <- data.frame(age = c(2, 1), bmi = c(NA_real_, NA_real_), chl = c(NA, 190), hyp = c(NA, 1))
 filled <- mice(newdata, tasks = "fill", models = trained$models, seed = 1, print = FALSE)
 filled$store
 filled$data
@@ -135,7 +136,7 @@ The `complete()` function can be used to extract the multiply-imputed datasets. 
 
 The `compact` argument controls the storage of the trained model. When `compact = TRUE`, the imputation model is stored in a **minimized form**, without retaining the training data used to estimate the model. This form retains all necessary parameters for generating imputed values while excluding training data, making it suitable for **exchange, distribution, and production**.
 
-```{r}
+```{r mice-compact}
 # Train a compact imputation model (no training data stored)
 trained_compact <- mice(nhanes, tasks = "train", compact = TRUE, seed = 1, print = FALSE)
 trained_compact$store
@@ -152,7 +153,7 @@ complete(filled_compact, 2)
 
 Since compact models do not store training data, the `data` and `imp` components remain empty.
 
-```{r}
+```{r complete-compact}
 # Attempting to complete a compact model without training data will return an error
 try(complete(trained_compact))
 ```
@@ -182,7 +183,7 @@ Imputation models can be trained on a **subset** of variables rather than the en
 
 The following fragment specifies a vector `tasks = c("bmi", "hyp")` to train the imputation model **only for `bmi` and `hyp`**:
 
-```{r}
+```{r make-tasks}
 tasks <- make.tasks(nhanes)
 tasks[c("bmi", "hyp")] <- "train"
 trained_subset <- mice(nhanes, tasks = tasks, seed = 1, print = FALSE)
@@ -191,7 +192,7 @@ names(trained_subset$models)
 
 Now apply the subset model to fill missing values in `newdata`:
 
-```{r}
+```{r fill-subset}
 tasks[c("bmi", "hyp")] <- c("fill", "fill")
 filled_subset <- mice(newdata, tasks = tasks, models = trained_subset$models, seed = 1, print = FALSE)
 complete(filled_subset)
@@ -206,7 +207,7 @@ There are two ways to address this issue:
 - Include `chl` in the training subset, effectively training models for all variables.
 - Append additional records to `newdata` so that `mice()` can generate an on-the-fly imputation model for `chl`. This approach is shown below:
 
-```{r}
+```{r newdata-append}
 newdata_append <- rbind(newdata, nhanes[11:20, ])
 filled_subset <- mice(newdata_append, tasks = tasks, models = trained_subset$models, seed = 1, print = FALSE)
 complete(filled_subset, 2)[1:2, ]
@@ -218,6 +219,90 @@ Final observations:
 
 - When a combination of training and filling is used, the resulting mids object is stored with `store = "train"`.
 - Appendix A contains the full specification of `mids` components for store modes `"impute"`, `"train"`, and `"fill"`.
+
+## Ensuring Type Compatibility
+
+The following example illustrates a common pitfall when attempting to fill missing values in new data using `mice()`:
+
+```{r mice-fill-error, error=TRUE}
+newdata <- data.frame(age = c(2, 1), bmi = c(NA, NA), chl = c(NA, 190), hyp = c(NA, 1))
+filled <- mice(newdata, tasks = "fill", models = trained$models, seed = 1, print = FALSE)
+```
+
+The error message may be surprising at first, but it results from standard R behavior: when a column contains only `NA` values, R infers its type as `logical`. However, the imputation model for `bmi` was trained on a numeric variable. The mismatch in types prevents the model from applying its learned parameters to the new data. To maintain transparency and reproducibility, the `mice()` function **does not attempt to guess or convert types automatically**. Instead, it explicitly halts and reports the mismatch, allowing the user to resolve it deliberately.
+
+### How to Resolve Type Mismatches
+
+Ensure that new data uses the **same types and structure** as the original training data. In the example above, the issue can be resolved by explicitly defining the `bmi` column as numeric, for instance using `NA_real_` instead of `NA`.
+
+More generally, three common issues can cause model-data mismatches during filling:
+
+- **Variable types**: If a variable in `newdata` has a different type than in the training data (e.g., logical instead of numeric), `mice()` will raise an error.  
+  ➤ *Solution*: Convert variables to the expected types using `as.numeric()`, `as.factor()`, etc.
+
+- **Factor levels**: If a factor variable in `newdata` has different levels from those used in the training model, the filling process will fail.  
+  ➤ *Solution*: Use `factor(..., levels = ...)` to match the training data levels exactly.
+
+- **Missing predictors**: If `newdata` omits variables used as predictors in the trained models, imputation will not proceed.  
+  ➤ *Solution*: Ensure that all required predictor variables are present in `newdata`, even if their values are completely missing.
+
+You can automate these checks using `scan.data()` and align new data structures using `coerce.data()` or `make.data()`.
+
+### Using `scan.data()`, `coerce.data()`, and `make.data()`
+
+The `mice` package provides three helper functions to ensure that new data is compatible with trained imputation models:
+
+| Function         | Purpose                                                                 |
+|------------------|-------------------------------------------------------------------------|
+| `scan.data()`     | Inspects a given dataset and reports mismatches with the trained models. Use this to diagnose potential issues before filling. |
+| `coerce.data()`   | Transforms a dataset to match the expected structure based on a trained model. Use this to fix detected type mismatches. |
+| `make.data()`     | Creates a skeleton `newdata` frame with the correct structure, types, and levels. Use this to start from scratch. |
+
+#### Example: Diagnosing and Fixing Type Mismatches
+
+Suppose we have a trained model `trained` and a problematic `newdata`:
+
+```{r}
+# Problematic new data
+newdata <- data.frame(
+  age = c(2, 1),
+  bmi = c(NA, NA),              # implicit logical (should be numeric)
+  chl = c(NA, 190),
+  hyp = c(NA, 1)
+)
+
+# Diagnose structure against trained models
+scan.data(newdata, trained$models)
+```
+
+This diagnostic table shows that the `class_match` column for `bmi` is `FALSE`. It has class `logical` in the data and class `numeric` in the model. As a result, the last column `can_fill` is set to `FALSE`.
+
+#### Fix the Data with `coerce.data()`
+
+You can fix detected mismatches by coercing the data to the expected format:
+
+```{r}
+newdata_fixed <- coerce.data(newdata, trained$models)
+
+# Check again
+scan.data(newdata_fixed, trained$models)
+```
+
+Now all variables match in type and structure, and `can_fill` for `bmi` is changed to `TRUE`.
+
+#### Start from Scratch with `make.data()`
+
+If you don’t have any data yet, or want a fully clean starting point, use `make.data()`:
+
+```{r}
+# Create a new empty row with correct types and levels
+template <- make.data(models = trained$models)
+
+# View structure
+str(template)
+```
+
+You can now safely populate `template` with new values, or directly use it with `tasks = "fill"`.
 
 ## Elementary Imputation Functions
 
@@ -241,7 +326,7 @@ The `mice.impute.norm()` function is responsible for the following tasks:
 
 Let us examine how these actions are implemented in `mice.impute.norm()` for normal imputation:
 
-```{r}
+```{r mice-impute-norm}
 mice::mice.impute.norm
 ```
 
@@ -316,7 +401,7 @@ The `models` component is organized **by variable and imputation number**, allow
 
 The following diagram visualizes the hierarchical structure of the `models` component:
 
-```{mermaid}
+```{mermaid models}
 graph TD;
     A[mids] --> B[models]
     B --> C[bmi]
@@ -332,31 +417,31 @@ graph TD;
 
 The names of the parts of the first imputation model for `bmi` are:
 
-```{r models-levels}
+```{r models-bmi}
 names(trained$models$bmi[[1]])
 ```
 
 In general, the names and types of stored objects depend on the imputation method. The `setup` object for the first imputation model for `bmi` can be accessed as follows:
 
-```{r}
+```{r models-bmi-setup}
 unlist(trained$models$bmi[[1]]$setup)
 ```
 
 It contains settings specific to the imputation model. We can retrieve the `formula` used in the model as:
 
-```{r}
+```{r models-bmi-formula}
 trained$models$bmi[[1]]$formula
 ```
 
 which shows that `bmi` is imputed using a linear combination of `age`, `hyp`, and `chl`. We obtain the least squares estimates for the regression weights by:
 
-```{r}
+```{r models-bmi-betahat}
 trained$models$bmi[[1]]$beta.hat
 ```
 
 However, the actual imputation model does not use these weights directly; instead, it draws randomly from a distribution that accounts for parameter uncertainty [@rubin1987]. The drawn values can be accessed as:
 
-```{r}
+```{r models-bmi-betadot}
 trained$models$bmi[[1]]$beta.dot
 ```
 
@@ -371,13 +456,13 @@ For PMM, two additional objects are stored in `models`:
 
 The bin thresholds in `edges` are located on:
 
-```{r}
+```{r models-bmi-edges}
 trained$models$bmi[[1]]$edges
 ```
 
 The `lookup` object is a matrix, where each row represents a bin threshold $\theta_j$ that segments the linear predictor. Observations with $\hat y$ values falling outside the bin range ($\hat y \leq \theta_1$ or $\hat y > \theta_t$) are assigned to the first or last bin, respectively. The `lookup` table for the first imputation model for `bmi` can be accessed as:
 
-```{r}
+```{r models-bmi-lookup}
 trained$models$bmi[[1]]$lookup
 ```
 
