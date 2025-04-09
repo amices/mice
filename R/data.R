@@ -119,7 +119,10 @@ scan.data <- function(data, models, print = FALSE) {
 #' @param models A list of trained models from `mice()`.
 #' @param n Number of rows to generate. Default is 1.
 #' @param fill Value to fill the data with. Default is `NA`.
-#' @param vars Optional character vector specifying the variable order. Default is `NULL`.
+#' @param vars Optional character vector specifying the variable order, or for
+#' a selecting a subset of variable. The default returns all variables in
+#' the order as they appear in `models`. Beware that taking a subset could lead
+#' to an error if a predictor is undefined in the generated data.
 #'
 #' @return A `data.frame` of `n` rows, where each column matches the type and levels
 #'         expected from the corresponding model.

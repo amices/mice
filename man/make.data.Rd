@@ -13,7 +13,10 @@ make.data(models, n = 1L, fill = NA, vars = NULL)
 
 \item{fill}{Value to fill the data with. Default is \code{NA}.}
 
-\item{vars}{Optional character vector specifying the variable order. Default is \code{NULL}.}
+\item{vars}{Optional character vector specifying the variable order, or for
+a selecting a subset of variable. The default returns all variables in
+the order as they appear in \code{models}. Beware that taking a subset could lead
+to an error if a predictor is undefined in the generated data.}
 }
 \value{
 A \code{data.frame} of \code{n} rows, where each column matches the type and levels
