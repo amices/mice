@@ -1,4 +1,4 @@
-context("scan.data, make.data, coerce.data")
+context("scan.newdata, make.newdata, coerce.newdata")
 
 set.seed(123)
 df <- data.frame(
@@ -19,20 +19,20 @@ for (i in seq_len(nrow(missing_idx))) {
 expect_warning(trained <<- mice(df, m = 2, maxit = 2, seed = 1, tasks = "train", print = FALSE))
 
 # make single-row new data with correct type
-newdata <- make.data(models = trained$models, vars = names(df))
+newdata <- make.newdata(models = trained$models, vars = names(df))
 
 # run scan on newdata
-result1 <- scan.data(data = newdata, models = trained$models)
+result1 <- scan.newdata(data = newdata, models = trained$models)
 
-test_that("scan.data() sets can_fill to Y for correctly typed newdata", {
+test_that("scan.newdata() sets can_fill to Y for correctly typed newdata", {
   expect_true(length(result1$can_fill) > 0)
   expect_true(all(result1$can_fill))
 })
 
 # coerce newdata (not needed here)
-coerced1 <- coerce.data(data = newdata, models = trained$models)
+coerced1 <- coerce.newdata(data = newdata, models = trained$models)
 
-test_that("coerce.data() does not alter when it has correct type", {
+test_that("coerce.newdata() does not alter when it has correct type", {
   expect_true(identical(coerced1, newdata))
 })
 
@@ -46,15 +46,15 @@ newdata <- data.frame(
   logical2 = NA,
   numeric1 = NA)
 
-result2 <- scan.data(data = newdata, models = trained$models)
+result2 <- scan.newdata(data = newdata, models = trained$models)
 
-test_that("scan.data() reports that it cannot fill all variables", {
+test_that("scan.newdata() reports that it cannot fill all variables", {
   expect_false(all(result2$can_fill))
 })
 
-coerced2 <- coerce.data(data = newdata, models = trained$models)
+coerced2 <- coerce.newdata(data = newdata, models = trained$models)
 
-test_that("coerce.data() can coerces wrong to correct types", {
+test_that("coerce.newdata() can coerces wrong to correct types", {
   expect_false(identical(attr(result2, "data"), newdata))
   expect_true(identical(coerced1, coerced2))
 })
