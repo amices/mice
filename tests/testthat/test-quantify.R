@@ -1,5 +1,5 @@
+set.seed(123)
 test_that("quantify() and unquantify() work correctly for factors", {
-  set.seed(123)
   y <- factor(sample(c("A", "B", "C"), 10, replace = TRUE), levels = c("A", "B", "C"))
   x <- matrix(rnorm(10 * 3), ncol = 3)
   ry <- sample(c(TRUE), 10, replace = TRUE)
@@ -68,4 +68,36 @@ test_that("quantify() and unquantify() work correctly for numeric variables", {
 })
 
 
+test_that("quantify and unquantify handle small sample edge cases", {
+  # n = 1 per category (minimum viable case),
+  # but not enough to estimate a regression
+  y1 <- factor(c("low", "medium", "high"))
+  x1 <- matrix(runif(3), nrow = 3)
+  ry1 <- rep(TRUE, 3)
+
+  q1 <- quantify(y1, ry1, x1)
+  y1_back <- unquantify(q1$ynum, q1$quant, q1$labels)
+
+  expect_s3_class(y1_back, "factor")
+  expect_true(all(levels(y1_back) %in% levels(y1)))
+  expect_equal(length(y1_back), length(y1))
+  # there are duplicate quant values, so the reconstructed factor
+  # will not be identical to the original factor
+  expect_false(identical(y1_back, y1))
+
+  # n = 2 per category
+  y2 <- factor(c("low", "low", "medium", "medium", "high", "high"))
+  x2 <- matrix(runif(12), nrow = 6)
+  ry2 <- rep(TRUE, 6)
+
+  q2 <- quantify(y2, ry2, x2)
+  y2_back <- unquantify(q2$ynum, q2$quant, q2$labels)
+
+  expect_s3_class(y2_back, "factor")
+  expect_equal(length(y2_back), length(y2))
+  expect_true(all(levels(y2_back) %in% levels(y2)))
+  # there are no duplicate quant values, so the reconstructed factor
+  # will be identical to the original factor
+  expect_true(identical(y2_back, y2))
+})
 

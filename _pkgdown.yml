@@ -131,7 +131,9 @@ reference:
   - larspred
   - norm.draw
   - .norm.draw
+  - quantify
   - trim.data
+  - unquantify
 - title: Multivariate amputation
   desc: |
     Amputation is the inverse of imputation, starting with a complete dataset, and creating missing data pattern according to the posited missing data mechanism. Amputation is useful for simulation studies.
