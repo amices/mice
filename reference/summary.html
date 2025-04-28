@@ -47,7 +47,7 @@ Print a mice.anova object"><meta property="og:image" content="https://amices.org
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'mira'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tidy"</span>, <span class="st">"glance"</span>, <span class="st">"summary"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tidy"</span>, <span class="st">"glance"</span>, <span class="st">"summary"</span><span class="op">)</span>, dfcom <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'mice.anova'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -69,6 +69,11 @@ return the parameters estimates of each analyses as a data frame.
 as a data frame. <code>type = "summary"</code> returns a list of
 length <code>m</code> with the analysis results. The default is
 <code>"tidy"</code>.</p></dd>
+
+
+<dt id="arg-dfcom">dfcom<a class="anchor" aria-label="anchor" href="#arg-dfcom"></a></dt>
+<dd><p>Manually supplied degrees of freedom. For internal use by
+<code><a href="pool.html">pool()</a></code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
