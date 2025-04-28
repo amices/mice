@@ -5,7 +5,7 @@
 \alias{summary.mice.anova}
 \title{Summary of a \code{mira} object}
 \usage{
-\method{summary}{mira}(object, type = c("tidy", "glance", "summary"), ...)
+\method{summary}{mira}(object, type = c("tidy", "glance", "summary"), dfcom = NULL, ...)
 
 \method{summary}{mice.anova}(object, ...)
 }
@@ -19,6 +19,9 @@ return the parameters estimates of each analyses as a data frame.
 as a data frame. \code{type = "summary"} returns a list of
 length \code{m} with the analysis results. The default is
 \code{"tidy"}.}
+
+\item{dfcom}{Manually supplied degrees of freedom. For internal use by
+\code{pool()}.}
 
 \item{...}{Other parameters passed down to \code{print()} and \code{summary()}}
 }
