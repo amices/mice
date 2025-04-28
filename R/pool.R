@@ -162,7 +162,7 @@ pool <- function(object, dfcom = NULL, rule = NULL, custom.t = NULL) {
 
   model <- getfit(object, 1L)
   dfcom <- get.dfcom(model, dfcom)
-  w <- summary(getfit(object), type = "tidy", exponentiate = FALSE)
+  w <- summary(getfit(object), type = "tidy", exponentiate = FALSE, dfcom = dfcom)
   pooled <- pool.vector(w, dfcom = dfcom, custom.t = custom.t, rule = rule)
 
   # mipo object
