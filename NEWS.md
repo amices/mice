@@ -1,3 +1,5 @@
+# mice 3.17.4
+
 * Adds a patch to resolve a problem with the `dfcom` argument in `pool(..., dfcom = .., )` (#706)
 
 # mice 3.17.3
