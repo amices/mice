@@ -1,3 +1,5 @@
+* Adds a patch to resolve a problem with the `dfcom` argument in `pool(..., dfcom = .., )` (#706)
+
 # mice 3.17.3
 
 * Allow for negative adjusted R2 in `pool.r.squared()` (#700)
