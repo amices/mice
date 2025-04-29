@@ -1,3 +1,9 @@
+# mice 3.17.5
+
+* Changes the behavior of `mice` when passive methods are used without a user-specified `visitSequence`. In this case, `mice` will now automatically move all passive variables to the end of the `visitSequence`, ensuring greater consistency at the end of each iteration.
+This new default works well for simple cases.
+For more complex situations — especially when passive variables depend on other updated variables — it is recommended to manually specify a `visitSequence` that updates each passive variable immediately after one of its right-hand side predictors changes. (#699)
+
 # mice 3.17.4
 
 * Adds a patch to resolve a problem with the `dfcom` argument in `pool(..., dfcom = .., )` (#706)
