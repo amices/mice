@@ -1,4 +1,4 @@
-mice.edit.setup <- function(data, setup,
+mice.edit.setup <- function(data, setup, user.visitSequence,
                        allow.na = FALSE,
                        remove.constant = TRUE,
                        remove.collinear = TRUE,
@@ -87,6 +87,16 @@ mice.edit.setup <- function(data, setup,
 
   if (all(pred == 0L) && didlog) {
     stop("`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
+  }
+
+  # Detect passive methods
+  is_passive <- grepl("^~", meth)
+
+  # By default, place passive at the end of the visitSequence
+  if (is.null(user.visitSequence)) {
+    active_vars <- vis[!is_passive]
+    passive_vars <- vis[is_passive]
+    vis <- c(active_vars, passive_vars)
   }
 
   setup$predictorMatrix <- pred

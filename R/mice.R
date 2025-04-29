@@ -457,7 +457,7 @@ mice <- function(data,
     visitSequence = visitSequence,
     post = post
   )
-  setup <- mice.edit.setup(data, setup, ...)
+  setup <- mice.edit.setup(data, setup, user.visitSequence, ...)
   method <- setup$method
   predictorMatrix <- setup$predictorMatrix
   visitSequence <- setup$visitSequence
