@@ -176,9 +176,6 @@ articles:
   - title: "Overview"
     contents:
       - overview
-  - title: "Imputation Models"
-    contents:
-      - imputation-models
   - title: "Help for old friends"
     contents:
       - oldfriends

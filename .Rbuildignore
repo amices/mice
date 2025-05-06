@@ -14,6 +14,7 @@ changes_mice*
 ^script$
 ^CODE_OF_CONDUCT*
 ^mice\.Rproj$
+vignettes/
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$

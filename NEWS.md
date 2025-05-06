@@ -1,5 +1,6 @@
 # mice 3.17.6
 
+* Postpones addition of vignette "Imputation Models in MICE"
 * Adds vignette "Imputation Models in MICE" (experimental) to pkgdown site
 
 # mice 3.17.5
