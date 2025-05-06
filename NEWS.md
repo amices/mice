@@ -1,6 +1,21 @@
 * Exports `quantify()` and `unquantify()` for optimal scaling of factors to numeric representation
 * Adds a mechanism for filtering rows and selecting columns during the MICE iterations with univariate imputations. The method simplifies univariate imputation models by removing redundant predictors. The method is implemented in the top-level function `trim.data()`, which takes as input the design matrix `x`, the target variable `y` and the response `ry`, and returns a list of two logical vectors named `"rows"` (which filters rows of `x`) and `"cols"` (which selects columns of `x`). The user can choose among several low-level trimmers, including least angular regression, lasso, elastic net, and linear dependencies removal. It is also possible to specify your own low-level `mice.trim.mytrim()` function and call it from `mice()` using the `trimmer == "mytrim"` argument. The method is more robust and faster than `remove.lindep()` and can handle datasets with many variables.
 
+# mice 3.17.6
+
+* Postpones addition of vignette "Imputation Models in MICE"
+* Adds vignette "Imputation Models in MICE" (experimental) to pkgdown site
+
+# mice 3.17.5
+
+* Changes the behavior of `mice` when passive methods are used without a user-specified `visitSequence`. In this case, `mice` will now automatically move all passive variables to the end of the `visitSequence`, ensuring greater consistency at the end of each iteration.
+This new default works well for simple cases.
+For more complex situations — especially when passive variables depend on other updated variables — it is recommended to manually specify a `visitSequence` that updates each passive variable immediately after one of its right-hand side predictors changes. (#699)
+
+# mice 3.17.4
+
+* Adds a patch to resolve a problem with the `dfcom` argument in `pool(..., dfcom = .., )` (#706)
+
 # mice 3.17.3
 
 * Allow for negative adjusted R2 in `pool.r.squared()` (#700)
