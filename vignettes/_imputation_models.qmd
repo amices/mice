@@ -20,6 +20,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+> This vignette describes a new feature in the `mice` package that is currently under development. The functionality may change in future releases, and the examples may not work as expected. Use at your own risk.
+
 ## Example
 
 Suppose you created a risk prediction model for a cohort of patients. The dataset contained missing values, which you imputed using MICE. Now, you want to implement the risk prediction model in clinical practice to assist decision-making for new patients. Since missing values are expected in the new patient data, how should you proceed?
