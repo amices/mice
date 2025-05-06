@@ -25,7 +25,6 @@ jobs:
         with:
           extra-packages: any::pkgdown, local::.
           needs: website
-          sysreqs: false
           cache: true
 
       - name: Download experimental vignette artifact

@@ -179,3 +179,14 @@ articles:
   - title: "Help for old friends"
     contents:
       - oldfriends
+navbar:
+  structure:
+    left:
+      - home
+      - reference
+      - articles
+      - experimental
+  components:
+    experimental:
+      text: Experimental
+      href: experimental/index.html
