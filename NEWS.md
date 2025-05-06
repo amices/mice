@@ -1,3 +1,7 @@
+# mice 3.17.6
+
+* Adds vignette "Imputation Models in MICE" (experimental) to pkgdown site
+
 # mice 3.17.5
 
 * Changes the behavior of `mice` when passive methods are used without a user-specified `visitSequence`. In this case, `mice` will now automatically move all passive variables to the end of the `visitSequence`, ensuring greater consistency at the end of each iteration.
