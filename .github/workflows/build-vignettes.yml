@@ -20,8 +20,6 @@ jobs:
 
       - name: Install Quarto CLI
         uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          version: "latest"
 
       - name: Check Quarto version (diagnostic)
         run: quarto --version
