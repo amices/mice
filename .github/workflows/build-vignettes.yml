@@ -22,6 +22,7 @@ jobs:
         with:
           extra-packages: local::.
           needs: vignette
+          cache: true
 
       - name: Install Quarto CLI
         uses: quarto-dev/quarto-actions/setup@v2
