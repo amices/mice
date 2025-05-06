@@ -1,0 +1,58 @@
+name: Publish pkgdown Site
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  pkgdown:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::pkgdown, local::.
+          needs: website
+          sysreqs: false
+          cache: true
+
+      - name: Download experimental vignette artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: experimental-vignettes
+          path: docs/experimental
+
+      - name: Generate index.html for experimental vignettes
+        run: |
+          html_files <- list.files("docs/experimental", pattern = "\\.html$", full.names = FALSE)
+          index_path <- "docs/experimental/index.html"
+          cat("<h1>Experimental Vignettes</h1>\n<ul>\n", file = index_path)
+          for (f in sort(html_files)) {
+            label <- gsub("-", " ", tools::file_path_sans_ext(f))
+            cat(sprintf("<li><a href='%s'>%s</a></li>\n", f, label), file = index_path, append = TRUE)
+          }
+          cat("</ul>\n", file = index_path, append = TRUE)
+        shell: Rscript {0}
+
+      - name: Build pkgdown site
+        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+        shell: Rscript {0}
+
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.7.3
+        with:
+          clean: false
+          branch: gh-pages
+          folder: docs
