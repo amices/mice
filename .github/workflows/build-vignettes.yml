@@ -18,14 +18,16 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: local::.
+          needs: vignette
+
       - name: Install Quarto CLI
         uses: quarto-dev/quarto-actions/setup@v2
 
       - name: Check Quarto version (diagnostic)
         run: quarto --version
-
-      - name: Install local R package (from dev branch)
-        run: R CMD INSTALL .
 
       - name: Render all .qmd vignettes with Quarto CLI
         run: |
