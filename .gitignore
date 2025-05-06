@@ -7,5 +7,5 @@ inst/doc
 *_cache
 script
 docs
-
+vignettes/*.html
 /.quarto/
