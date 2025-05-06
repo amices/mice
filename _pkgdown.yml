@@ -173,9 +173,12 @@ reference:
   - supports.transparent
   - version
 articles:
-- title: General
-  navbar: ~
-  contents:
-  - overview
-  - oldfriends
-
+  - title: "Overview"
+    contents:
+      - overview
+  - title: "Imputation Models"
+    contents:
+      - imputation-models
+  - title: "Help for old friends"
+    contents:
+      - oldfriends
