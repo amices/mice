@@ -1,4 +1,4 @@
-name: Build Dev Vignettes
+name: Build Experimental Vignettes
 
 on:
   push:
@@ -18,22 +18,27 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Install Quarto
-        run: install.packages("quarto")
-        shell: Rscript {0}
+      - name: Install Quarto CLI
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: "latest"
 
-      - name: Create output directory for rendered vignettes
-        run: mkdir -p dev_html
-        shell: bash
+      - name: Check Quarto version (diagnostic)
+        run: quarto --version
 
-      - name: Render all .qmd vignettes to dev_html/
+      - name: Install local R package (from dev branch)
+        run: R CMD INSTALL .
+
+      - name: Render all .qmd vignettes with Quarto CLI
         run: |
-          files <- list.files("vignettes", pattern = "\\.qmd$", full.names = TRUE)
-          for (f in files) quarto::quarto_render(f, output_dir = "dev_html")
-        shell: Rscript {0}
+          mkdir -p dev_html
+          for f in vignettes/*.qmd; do
+            echo "Rendering $f..."
+            quarto render "$f" --output-dir dev_html
+          done
 
-      - name: Upload vignettes as artifact
+      - name: Upload rendered HTML vignettes as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dev-vignettes
+          name: experimental-vignettes
           path: dev_html/*.html
