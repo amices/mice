@@ -22,12 +22,14 @@ jobs:
         run: install.packages("quarto")
         shell: Rscript {0}
 
-      - name: Render all .qmd vignettes
+      - name: Create output directory for rendered vignettes
+        run: mkdir -p dev_html
+        shell: bash
+
+      - name: Render all .qmd vignettes to dev_html/
         run: |
-          mkdir -p dev_html
-          for file in vignettes/*.qmd; do
-            quarto::quarto_render(file, output_dir = "dev_html")
-          done
+          files <- list.files("vignettes", pattern = "\\.qmd$", full.names = TRUE)
+          for (f in files) quarto::quarto_render(f, output_dir = "dev_html")
         shell: Rscript {0}
 
       - name: Upload vignettes as artifact
