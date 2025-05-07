@@ -186,6 +186,7 @@ navbar:
       - reference
       - articles
       - experimental
+      - help
   components:
     experimental:
       text: Experimental
