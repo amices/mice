@@ -49,6 +49,11 @@ jobs:
           cat("</ul>\n", file = index_path, append = TRUE)
         shell: Rscript {0}
 
+      - name: Prepare docs folder for pkgdown
+        run: |
+          rm -rf docs/*
+          mkdir -p docs
+
       - name: Build pkgdown site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE, clean = TRUE)
         shell: Rscript {0}
