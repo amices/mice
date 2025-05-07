@@ -28,11 +28,6 @@ jobs:
         env:
           PKG_SYSREQS_INSTALL: false
 
-      - name: Prepare docs folder for pkgdown
-        run: |
-          rm -rf docs/*
-          mkdir -p docs
-
       - name: Download experimental vignette artifact from latest successful dev run
         uses: dawidd6/action-download-artifact@v6
         with:
@@ -40,22 +35,28 @@ jobs:
           branch: dev
           name: experimental-vignettes
           path: docs/experimental
-          if_no_artifact_found: warn  # Fail gracefully if not found
+          if_no_artifact_found: warn
 
       - name: Generate index.html for experimental vignettes
         run: |
           html_files <- list.files("docs/experimental", pattern = "\\.html$", full.names = FALSE)
-          index_path <- "docs/experimental/index.html"
-          cat("<h1>Experimental Vignettes</h1>\n<ul>\n", file = index_path)
-          for (f in sort(html_files)) {
-            label <- gsub("-", " ", tools::file_path_sans_ext(f))
-            cat(sprintf("<li><a href='%s'>%s</a></li>\n", f, label), file = index_path, append = TRUE)
+          if (length(html_files) > 0) {
+            index_path <- "docs/experimental/index.html"
+            cat("<h1>Experimental Vignettes</h1>\n<ul>\n", file = index_path)
+            for (f in sort(html_files)) {
+              label <- gsub("-", " ", tools::file_path_sans_ext(f))
+              cat(sprintf("<li><a href='%s'>%s</a></li>\n", f, label), file = index_path, append = TRUE)
+            }
+            cat("</ul>\n", file = index_path, append = TRUE)
           }
-          cat("</ul>\n", file = index_path, append = TRUE)
+        shell: Rscript {0}
+
+      - name: Force clean pkgdown site
+        run: pkgdown::clean_site(force = TRUE)
         shell: Rscript {0}
 
       - name: Build pkgdown site
-        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE, clean = TRUE)
+        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE, clean = FALSE)
         shell: Rscript {0}
 
       - name: Deploy to GitHub Pages
