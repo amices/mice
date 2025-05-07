@@ -22,15 +22,11 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: local::.
-          needs: vignette
+          extra-packages: any::pkgdown, local::.
+          needs: website
           cache: true
         env:
           PKG_SYSREQS_INSTALL: false
-
-      - name: Ensure pkgdown is installed
-        run: install.packages("pkgdown")
-        shell: Rscript {0}
 
       - name: Download experimental vignette artifact from latest successful dev run
         uses: dawidd6/action-download-artifact@v6
