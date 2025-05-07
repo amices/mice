@@ -1,8 +1,6 @@
 name: Publish pkgdown Site
 
 on:
-  push:
-    branches: [master, main]
   workflow_dispatch:
 
 permissions:
@@ -10,6 +8,7 @@ permissions:
 
 jobs:
   pkgdown:
+    name: Download vignettes + build site
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -27,11 +26,17 @@ jobs:
           needs: website
           cache: true
 
-      - name: Download experimental vignette artifact
-        uses: actions/download-artifact@v4
+      # Manual workaround: re-run the `dev` job before this!
+      # This step will fail unless a recent dev run has uploaded the artifact
+
+      - name: Download experimental vignette artifact from latest successful dev run
+        uses: dawidd6/action-download-artifact@v3
         with:
+          workflow: build-vignettes.yml
+          branch: dev
           name: experimental-vignettes
           path: docs/experimental
+          if_no_artifact_found: warn  # Fail gracefully if not found
 
       - name: Generate index.html for experimental vignettes
         run: |
@@ -49,7 +54,7 @@ jobs:
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
 
-      - name: Deploy to GitHub Pages 🚀
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.7.3
         with:
           clean: false
