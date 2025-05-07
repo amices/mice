@@ -30,7 +30,7 @@ jobs:
 
       # Download experimental vignettes to a safe location outside of docs/
       - name: Download experimental vignette artifact from latest successful dev run
-        uses: dawidd6/action-download-artifact@v6
+        uses: dawidd6/action-download-artifact@v9
         with:
           workflow: build-vignettes.yml
           branch: dev
