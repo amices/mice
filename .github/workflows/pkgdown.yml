@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      PKG_SYSREQS_INSTALL: false
 
     steps:
       - uses: actions/checkout@v4
@@ -25,8 +26,11 @@ jobs:
           extra-packages: any::pkgdown, local::.
           needs: website
           cache: true
-        env:
-          PKG_SYSREQS_INSTALL: false
+
+      - name: Prepare docs folder for pkgdown
+        run: |
+          rm -rf docs/*
+          mkdir -p docs
 
       - name: Download experimental vignette artifact from latest successful dev run
         uses: dawidd6/action-download-artifact@v6
@@ -35,7 +39,7 @@ jobs:
           branch: dev
           name: experimental-vignettes
           path: docs/experimental
-          if_no_artifact_found: warn  # Fail gracefully if not found
+          if_no_artifact_found: warn
 
       - name: Generate index.html for experimental vignettes
         run: |
@@ -49,10 +53,8 @@ jobs:
           cat("</ul>\n", file = index_path, append = TRUE)
         shell: Rscript {0}
 
-      - name: Prepare docs folder for pkgdown
-        run: |
-          rm -rf docs/*
-          mkdir -p docs
+      - name: Add .nojekyll to bypass GitHub Pages processing
+        run: touch docs/.nojekyll
 
       - name: Build pkgdown site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE, clean = TRUE)
