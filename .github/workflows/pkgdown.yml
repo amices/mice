@@ -25,9 +25,7 @@ jobs:
           extra-packages: any::pkgdown, local::.
           needs: website
           cache: true
-
-      # Manual workaround: re-run the `dev` job before this!
-      # This step will fail unless a recent dev run has uploaded the artifact
+          sysreqs: false
 
       - name: Download experimental vignette artifact from latest successful dev run
         uses: dawidd6/action-download-artifact@v6
