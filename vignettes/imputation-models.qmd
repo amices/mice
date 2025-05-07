@@ -1,7 +1,9 @@
 ---
 title: "Imputation Models in MICE"
 author: "Stef van Buuren"
-date: "`r Sys.Date()`"
+date: today
+bibliography: references.bib
+link-citations: true
 format:
   html:
     theme: sandstone
@@ -10,7 +12,6 @@ format:
     embed-resources: true
     toc: true
     toc-depth: 3
-bibliography: references.bib
 ---
 
 ```{r, include = FALSE}
