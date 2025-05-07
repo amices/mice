@@ -32,11 +32,14 @@ jobs:
 
       - name: Render all .qmd vignettes with Quarto CLI
         run: |
-          mkdir -p dev_html
+          mkdir -p "$PWD/dev_html"
           for f in vignettes/*.qmd; do
             echo "Rendering $f..."
-            quarto render "$f" --output-dir dev_html
+            quarto render "$f" --output-dir "$PWD/dev_html"
           done
+
+      - name: Show contents of dev_html
+        run: ls -lh dev_html
 
       - name: Upload rendered HTML vignettes as artifact
         uses: actions/upload-artifact@v4
