@@ -22,10 +22,11 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, local::.
-          needs: website
+          extra-packages: local::.
+          needs: vignette
           cache: true
-          sysreqs: false
+        env:
+          PKG_SYSREQS_INSTALL: false
 
       - name: Download experimental vignette artifact from latest successful dev run
         uses: dawidd6/action-download-artifact@v6
