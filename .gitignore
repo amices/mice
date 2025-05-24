@@ -1,0 +1,9 @@
+.Rhistory
+.RData
+.DS_Store
+mice.Rproj
+.Rproj.user
+inst/doc
+*_cache
+script
+docs

@@ -1,0 +1,103 @@
+Package: mice
+Type: Package
+Version: 3.17.7
+Title: Multivariate Imputation by Chained Equations
+Date: 2025-05-24
+Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
+    email = "stef.vanbuuren@tno.nl"),
+    person("Karin", "Groothuis-Oudshoorn", role = "aut",
+    email = "c.g.m.oudshoorn@utwente.nl"),
+    person("Gerko","Vink", role = "ctb",
+    email = "g.vink@uu.nl"),
+    person("Rianne","Schouten", role = "ctb",
+    email = "R.M.Schouten@uu.nl"),
+    person("Alexander", "Robitzsch", role = "ctb",
+    email = "robitzsch@ipn.uni-kiel.de"),
+    person("Patrick", "Rockenschaub", role = "ctb",
+    email = "rockenschaub.patrick@gmail.com"),
+    person("Lisa","Doove", role = "ctb",
+    email = "lisa.doove@ppw.kuleuven.be"),
+    person("Shahab","Jolani", role = "ctb",
+    email = "s.jolani@maastrichtuniversity.nl"),
+    person("Margarita","Moreno-Betancur", role="ctb",
+    email = "margarita.moreno@mcri.edu.au"),
+    person("Ian", "White", role="ctb",
+    email = "ian.white@ucl.ac.uk"),
+    person("Philipp","Gaffert", role = "ctb",
+    email = "philipp.gaffert@gfk.com"),
+    person("Florian","Meinfelder", role = "ctb",
+    email = "florian.meinfelder@uni-bamberg.de"),
+    person("Bernie","Gray", role = "ctb",
+    email = "bfgray3@gmail.com"),
+    person("Vincent", "Arel-Bundock", role = "ctb",
+    email = "vincent.arel-bundock@umontreal.ca"),
+    person("Mingyang", "Cai", role = "ctb",
+    email = "m.cai@uu.nl"),
+    person("Thom", "Volker", role = "ctb",
+    email = "t.b.volker@uu.nl"),
+    person("Edoardo", "Costantini", role = "ctb",
+    email = "e.costantini@tilburguniversity.edu"),
+    person("Caspar", "van Lissa", role = "ctb", 
+    email = "c.j.vanlissa@uu.nl"),
+    person("Hanne", "Oberman", role = "ctb",
+    email = "h.i.oberman@uu.nl"),
+    person("Stephen", "Wade", role = "ctb",
+    email = "stephematician@gmail.com"))
+Maintainer: Stef van Buuren <stef.vanbuuren@tno.nl>
+Depends:
+    R (>= 2.10.0)
+Imports:
+    broom,
+    dplyr,
+    glmnet,
+    graphics,
+    grDevices,
+    lattice,
+    mitml,
+    nnet,
+    Rcpp,
+    rpart,
+    stats,
+    tidyr,
+    utils
+Suggests:
+    broom.mixed,
+    future, 
+    furrr,
+    haven,
+    knitr,
+    literanger,
+    lme4,
+    MASS,
+    miceadds,
+    pan,
+    parallelly,
+    purrr,
+    ranger,
+    randomForest,
+    rmarkdown,
+    rstan,
+    survival,
+    testthat
+Description: Multiple imputation using Fully Conditional Specification (FCS)
+    implemented by the MICE algorithm as described in Van Buuren and
+    Groothuis-Oudshoorn (2011) <doi:10.18637/jss.v045.i03>. Each variable has
+    its own imputation model. Built-in imputation models are provided for
+    continuous data (predictive mean matching, normal), binary data (logistic
+    regression), unordered categorical data (polytomous logistic regression)
+    and ordered categorical data (proportional odds). MICE can also impute
+    continuous two-level data (normal model, pan, second-level variables).
+    Passive imputation can be used to maintain consistency between variables.
+    Various diagnostic plots are available to inspect the quality of the
+    imputations.
+Encoding: UTF-8
+LazyLoad: yes
+LazyData: yes
+URL: https://github.com/amices/mice,
+    https://amices.org/mice/,
+    https://stefvanbuuren.name/fimd/
+BugReports: https://github.com/amices/mice/issues
+LinkingTo: cpp11, Rcpp
+License: GPL (>= 2)
+RoxygenNote: 7.3.2
+Roxygen: list(markdown = TRUE)

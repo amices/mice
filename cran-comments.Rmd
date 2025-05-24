@@ -1,0 +1,101 @@
+---
+title: "cran-comments"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Release summary
+
+This is the resubmission of `mice` version 3.17.0. The previous submission was rejected due a problem with the downstream `autoReg` and `finalfit` packages. The problem was a change in the reporting of the confidence intervals. In the previous version confidence intervals were named `2.5 %` and `97.5 %`, a convention inherited from `stats::confint.default`. The update `mice 3.17.0` adopts the more flexible `broom` convention of naming these boundaries `conf.low` and `conf.high`, so that these names work for any probability level. This change caused the two downstream packages to fail. The issue has been fixed in this version of `mice` by duplicating the two conf columns, and naming them `2.5 %` and `97.5 %`. I will alert the maintainers of the `autoReg` and `finalfit` packages to this change, but for now, having the duplicate columns fixes the problem.
+
+This release of `mice` adds new features, bug fixes, and documentation improvements. 
+See <https://github.com/amices/mice/blob/master/NEWS.md>
+
+## Test environments
+
+```{r}
+packageVersion("mice")
+R.Version()$version.string
+```
+
+## Local checks
+
+NOTE: Run in OSX terminal, not in Rstudio terminal.
+
+```{bash eval=FALSE}
+env _R_CHECK_DEPENDS_ONLY_=true R CMD check mice_3.17.0.tar.gz
+
+Status: OK
+```
+
+
+```{r eval=FALSE}
+devtools::check(env_vars = c('_R_CHECK_DEPENDS_ONLY_' = "true"))
+...
+Status: OK
+```
+
+## Remote checks
+
+### win-builder
+
+```{r eval=FALSE}
+devtools::check_win_devel()
+
+Status: OK
+```
+
+### Rhub
+
+```{r eval=FALSE}
+rhub::rhub_doctor()
+rhub::rhub_check()
+```
+
+Status: OK <>
+
+For details: <https://github.com/amices/mice/actions>
+
+## Downstream dependencies
+
+### Code
+
+Note: Inactivate `credentials::set_github_pat()`
+
+```{r eval=FALSE}
+library(revdepcheck)
+revdep_reset()
+revdep_check(pkg = ".", num_workers = 12, quiet = FALSE)
+```
+
+```{r}
+revdepcheck::revdep_summary()
+```
+
+### revdepcheck results
+
+We checked 123 reverse dependencies (118 from CRAN + 5 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 1 new problems
+ * We failed to check 3 packages
+
+Issues with CRAN packages are summarised below.
+
+### New problems
+(This reports the first line of each new failure)
+
+* bipd
+  checking dependencies in R code ...sh: line 1: 58727 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpM38C1S/filee1cf761be8f7'
+
+### Failed to check
+
+* brms (NA)
+* dynr (NA)
+* rmsb (NA)
+
+mice developer comment: These failures are unrelated to mice
+
+See <https://github.com/amices/mice/tree/master/revdep> for additional details.

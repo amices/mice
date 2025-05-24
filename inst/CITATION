@@ -1,0 +1,17 @@
+citHeader("To cite mice in publications use:")
+
+bibentry(
+  bibtype      = "Article",
+  title        = "{mice}: Multivariate Imputation by Chained Equations in R",
+  author       = c(person("Stef", "van Buuren"), as.person("Karin Groothuis-Oudshoorn")),
+  journal      = "Journal of Statistical Software",
+  year         = "2011",
+  volume       = "45",
+  number       = "3",
+  pages        = "1-67",
+  doi          = "10.18637/jss.v045.i03",
+  textVersion  =
+  paste("Stef van Buuren, Karin Groothuis-Oudshoorn (2011).",
+        "mice: Multivariate Imputation by Chained Equations in R.",
+        "Journal of Statistical Software, 45(3), 1-67.",
+        "DOI 10.18637/jss.v045.i03."))
