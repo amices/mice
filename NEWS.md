@@ -1,3 +1,5 @@
+# mice 3.17.7
+
 - Fixed a long-standing issue in the internal `augment()` function that affected ordered factors. 
   Previously, `augment()` would:
   
