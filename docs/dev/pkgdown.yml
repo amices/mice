@@ -1,0 +1,11 @@
+pandoc: '3.2'
+pkgdown: 2.1.1
+pkgdown_sha: ~
+articles:
+  developer-notes-complete: developer-notes-complete.html
+  oldfriends: oldfriends.html
+  overview: overview.html
+last_built: 2025-04-06T11:28Z
+urls:
+  reference: https://amices.org/mice/reference
+  article: https://amices.org/mice/articles
