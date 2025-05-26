@@ -59,8 +59,17 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
     stop("Length of method differs from number of blocks", call. = FALSE)
   }
 
-  # add names to method
-  names(method) <- names(blocks)
+  # Add names to method if vector is unnamed
+  # Careful: Assuming method and blocks are in the same order
+  if (is.null(names(method))) {
+    names(method) <- names(blocks)
+  }
+
+  # Check whether all names(method) are non-empty and match names(blocks)
+  if (!all(names(method) %in% names(blocks))) {
+    stop("All elements of 'method' must be named and match blocks.",
+         call. = FALSE)
+  }
 
   # check whether the requested imputation methods are on the search path
   active.check <- !is.passive(method) & nimp > 0 & method != ""
