@@ -1,25 +1,25 @@
 # Platform
 
-|field    |value                                   |
-|:--------|:---------------------------------------|
-|version  |R version 4.5.0 (2025-04-11)            |
-|os       |macOS Sequoia 15.5                      |
-|system   |aarch64, darwin20                       |
-|ui       |RStudio                                 |
-|language |(EN)                                    |
-|collate  |en_US.UTF-8                             |
-|ctype    |en_US.UTF-8                             |
-|tz       |Europe/Amsterdam                        |
-|date     |2025-05-24                              |
-|rstudio  |2025.05.0+496 Mariposa Orchid (desktop) |
-|pandoc   |1.17.1 @ /usr/local/bin/pandoc          |
-|quarto   |1.6.42 @ /usr/local/bin/quarto          |
+|field    |value                                                                                            |
+|:--------|:------------------------------------------------------------------------------------------------|
+|version  |R version 4.5.0 (2025-04-11)                                                                     |
+|os       |macOS Sequoia 15.5                                                                               |
+|system   |aarch64, darwin20                                                                                |
+|ui       |RStudio                                                                                          |
+|language |(EN)                                                                                             |
+|collate  |en_US.UTF-8                                                                                      |
+|ctype    |en_US.UTF-8                                                                                      |
+|tz       |Europe/Amsterdam                                                                                 |
+|date     |2025-05-26                                                                                       |
+|rstudio  |2025.05.0+496 Mariposa Orchid (desktop)                                                          |
+|pandoc   |3.4 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/aarch64/ (via rmarkdown) |
+|quarto   |1.6.42 @ /usr/local/bin/quarto                                                                   |
 
 # Dependencies
 
 |package     |old         |new         |Δ  |
 |:-----------|:-----------|:-----------|:--|
-|mice        |3.17.0      |3.17.7      |*  |
+|mice        |3.17.0      |3.18.0      |*  |
 |backports   |1.5.0       |1.5.0       |   |
 |bit         |4.6.0       |4.6.0       |   |
 |bit64       |4.6.0-1     |4.6.0-1     |   |
