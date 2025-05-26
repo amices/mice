@@ -53,13 +53,13 @@
 <p><strong><code>mice</code> will now automatically move all passive variables to the end of the <code>visitSequence</code> for passive methods used without a user-specified <code>visitSequence</code>.</strong> This change in behavior ensures greater consistency at the end of each iteration.</p>
 <p>The new behavior works well for simple cases. However, for more complex situations — especially when passive variables depend on other passive variables — it is recommended to manually specify a <code>visitSequence</code> that updates each passive variable immediately after one of its right-hand side predictors changes. (<a href="https://github.com/amices/mice/issues/699" class="external-link">#699</a>)</p>
 </li>
-<li><p><strong>Adds the <code>modeltype</code> argument to <code><a href="../reference/mice.html">mice()</a></code> for mixing <code>predictorMatrix</code> and <code>formulas</code> specifications</strong> per variable-block. The <code>modeltype</code> argument allows the user to specify some variables (or blocks of variables) by the <code>formulas</code> argument, and other variables by <code>predictorMatrix</code> argument.</p></li>
+<li><p><strong>Adds the <code>calltype</code> argument to <code><a href="../reference/mice.html">mice()</a></code> for mixing <code>predictorMatrix</code> and <code>formulas</code> specifications</strong> per variable-block. The <code>calltype</code> argument allows the user to specify some variables (or blocks of variables) by the <code>formulas</code> argument, and other variables by <code>predictorMatrix</code> argument.</p></li>
 <li><p><strong>Introduces an optimized <code>matchindex</code> C++ function</strong> to improve speed of predictive mean matching (<a href="https://github.com/amices/mice/issues/695" class="external-link">#695</a>)</p></li>
 </ul></div>
 <div class="section level4">
 <h4 id="breaking-changes-3-17-8">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-17-8"></a></h4>
 <ul><li>
-<code>modeltype</code> replaces the <code>calltype</code> attribute of <code>blocks</code>. Most user won’t notice this change, but if you have the attribute in the past, you will need to update your code to use <code>modeltype</code> instead.</li>
+<code>calltype</code> replaces the <code>calltype</code> attribute of <code>blocks</code>. Most user won’t notice this change, but if you have the attribute in the past, you will need to update your code to use <code>calltype</code> instead.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="minor-changes-3-17-8">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-3-17-8"></a></h4>

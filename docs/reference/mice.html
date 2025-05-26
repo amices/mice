@@ -80,7 +80,7 @@ implemented to inspect the quality of the imputations.</p>
 <span>  <span class="va">blocks</span>,</span>
 <span>  visitSequence <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">formulas</span>,</span>
-<span>  modeltype <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  calltype <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  blots <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  post <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  defaultMethod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pmm"</span>, <span class="st">"logreg"</span>, <span class="st">"polyreg"</span>, <span class="st">"polr"</span><span class="op">)</span>,</span>
@@ -196,19 +196,19 @@ The <code>formulas</code> argument is an alternative to the
 specifying imputation models, e.g., for specifying interaction terms.</p></dd>
 
 
-<dt id="arg-modeltype">modeltype<a class="anchor" aria-label="anchor" href="#arg-modeltype"></a></dt>
+<dt id="arg-calltype">calltype<a class="anchor" aria-label="anchor" href="#arg-calltype"></a></dt>
 <dd><p>A character vector of <code>length(block)</code> elements
 that indicates how the imputation model is specified. Entries can
 one of two values: <code>"pred"</code> or <code>"formula"</code>. If
-<code>modeltype = "pred"</code>, the predictors of the imputation
+<code>calltype = "pred"</code>, the predictors of the imputation
 model for the block are specified by the corresponding row of the
-<code>predictorMatrix</code>. If  <code>modeltype = "formula"</code> the
+<code>predictorMatrix</code>. If  <code>calltype = "formula"</code> the
 imputation model is specified by relevant entry in
 <code>formulas</code>. The default depends on the presence of the
 <code>formulas</code> argument. If <code>formulas</code> is present, then
 <code>mice()</code> sets
-<code>modeltype = "formula"</code> for any block
-for which a formula is specified. Otherwise, <code>modeltype = "pred"</code>.</p></dd>
+<code>calltype = "formula"</code> for any block
+for which a formula is specified. Otherwise, <code>calltype = "pred"</code>.</p></dd>
 
 
 <dt id="arg-blots">blots<a class="anchor" aria-label="anchor" href="#arg-blots"></a></dt>

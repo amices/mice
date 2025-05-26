@@ -2,7 +2,7 @@
 # This function is called by mice and mice.mids
 sampler <- function(data, m, ignore, where, imp, blocks, method,
                     visitSequence, predictorMatrix, formulas,
-                    modeltype, blots,
+                    calltype, blots,
                     post, fromto, printFlag, ...) {
   from <- fromto[1]
   to <- fromto[2]
@@ -40,7 +40,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
         # impute block-by-block
         for (h in visitSequence) {
-          ct <- modeltype[[h]]
+          ct <- calltype[[h]]
           b <- blocks[[h]]
           if (ct == "formula") ff <- formulas[[h]] else ff <- NULL
           pred <- predictorMatrix[h, ]

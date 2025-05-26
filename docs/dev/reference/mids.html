@@ -71,7 +71,7 @@ The following functions produce a <code>mids</code> object:
 <span>  predictorMatrix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  visitSequence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  formulas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  modeltype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  calltype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  post <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  blots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  ignore <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -208,19 +208,19 @@ The <code>formulas</code> argument is an alternative to the
 specifying imputation models, e.g., for specifying interaction terms.</p></dd>
 
 
-<dt id="arg-modeltype">modeltype<a class="anchor" aria-label="anchor" href="#arg-modeltype"></a></dt>
+<dt id="arg-calltype">calltype<a class="anchor" aria-label="anchor" href="#arg-calltype"></a></dt>
 <dd><p>A character vector of <code>length(block)</code> elements
 that indicates how the imputation model is specified. Entries can
 one of two values: <code>"pred"</code> or <code>"formula"</code>. If
-<code>modeltype = "pred"</code>, the predictors of the imputation
+<code>calltype = "pred"</code>, the predictors of the imputation
 model for the block are specified by the corresponding row of the
-<code>predictorMatrix</code>. If  <code>modeltype = "formula"</code> the
+<code>predictorMatrix</code>. If  <code>calltype = "formula"</code> the
 imputation model is specified by relevant entry in
 <code>formulas</code>. The default depends on the presence of the
 <code>formulas</code> argument. If <code>formulas</code> is present, then
 <code><a href="mice.html">mice()</a></code> sets
-<code>modeltype = "formula"</code> for any block
-for which a formula is specified. Otherwise, <code>modeltype = "pred"</code>.</p></dd>
+<code>calltype = "formula"</code> for any block
+for which a formula is specified. Otherwise, <code>calltype = "pred"</code>.</p></dd>
 
 
 <dt id="arg-post">post<a class="anchor" aria-label="anchor" href="#arg-post"></a></dt>

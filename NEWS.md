@@ -21,13 +21,11 @@ This change in behavior ensures greater consistency at the end of each iteration
 
   The new behavior works well for simple cases. However, for more complex situations — especially when passive variables depend on other passive variables — it is recommended to manually specify a `visitSequence` that updates each passive variable immediately after one of its right-hand side predictors changes. (#699)
 
-* **Adds the `modeltype` argument to `mice()` for mixing `predictorMatrix` and `formulas` specifications** per variable-block. The `modeltype` argument allows the user to specify some variables (or blocks of variables) by the `formulas` argument, and other variables by `predictorMatrix` argument.
+* **Adds the `calltype` argument to `mice()` for mixing `predictorMatrix` and `formulas` specifications** per variable-block. The `calltype` argument allows the user to specify some variables (or blocks of variables) by the `formulas` argument, and other variables by `predictorMatrix` argument. (Note: This argument was called `modeltype` in version 3.17.1). 
+
+  `calltype` is a character vector of `length(blocks)` elements that indicates how the imputation model is specified. Entries can one of two values: `"pred"` or `"formula"`. If `calltype = "pred"`, the predictors of the imputation model for the block are specified by the corresponding row of the `predictorMatrix`. If `calltype = "formula"` the imputation model is specified by relevant entry in `formulas`. The default depends on the presence of the `formulas` argument. If `formulas` is present, then `mice()` sets `calltype = "formula"` for any block for which a `formula` is specified. Otherwise, `calltype = "pred"`.
 
 * **Introduces an optimized `matchindex` C++ function** to improve speed of predictive mean matching (#695)
-
-### Breaking changes
-
-* `modeltype` replaces the `calltype` attribute of `blocks`. Most user won't notice this change, but if you have the attribute in the past, you will need to update your code to use `modeltype` instead.
 
 ### Minor changes
 
