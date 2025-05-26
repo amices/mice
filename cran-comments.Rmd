@@ -25,7 +25,7 @@ NOTE: Run in OSX terminal, not in Rstudio terminal.
 
 ```{bash eval=FALSE}
 env _R_CHECK_DEPENDS_ONLY_=true 
-R CMD check mice_3.17.7.tar.gz
+R CMD check mice_3.18.0.tar.gz
 
 Status: OK
 ```
@@ -44,7 +44,7 @@ Status: OK
 ```{r eval=FALSE}
 devtools::check_win_devel()
 
-Upload error: response reading failed (errno: 35)
+Upload error: timeout
 ```
 
 

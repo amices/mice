@@ -1,4 +1,4 @@
-# mice 3.17.9
+# mice 3.18.0
 
 ### Major changes
 
