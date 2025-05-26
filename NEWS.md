@@ -1,51 +1,46 @@
-# mice 3.17.7
+# mice 3.17.8
 
-- Fixed a long-standing issue in the internal `augment()` function that affected ordered factors. 
+### Major changes
+
+* **Fixed a long-standing issue in the internal `augment()` function that affected ordered factors** (#713). 
+
   Previously, `augment()` would:
-  
+
   1. Convert ordered factors into unordered ones, and  
   2. Reorder their levels alphabetically, ignoring the user-specified order.
 
-  This behavior could degrade imputation quality for ordinal outcomes when using the `"polr"` method, 
-  potentially causing model convergence issues or increased noise in imputations.
-
-  The issue did not affect methods for unordered factors (`"logreg"`, `"polyreg"`, `"mnar.logreg"`), 
-  where level order is inconsequential. 
+  The old behavior could degrade imputation quality for ordinal outcomes when using the `"polr"` method, potentially causing model convergence issues or increased noise in imputations. 
+  
+  The issue did not affect methods for unordered factors (`"logreg"`, `"polyreg"`, `"mnar.logreg"`), where level order is inconsequential. 
 
   Thanks to @mmansolf for identifying the problem and suggesting a fix. The updated `augment()` now 
-  correctly preserves the `ordered` class and level order of factor variables.
-- Updates security dependabot to `dawidd6/action-download-artifact@v6`
+correctly preserves the `ordered` class and level order of factor variables.
 
-# mice 3.17.6
+* **`mice` will now automatically move all passive variables to the end of the `visitSequence` for passive methods used without a user-specified `visitSequence`.**
+This change in behavior ensures greater consistency at the end of each iteration.
 
-* Postpones addition of vignette "Imputation Models in MICE"
-* Adds vignette "Imputation Models in MICE" (experimental) to pkgdown site
-* Updates security dependabot to `dawidd6/action-download-artifact@v6`
+  The new behavior works well for simple cases. However, for more complex situations — especially when passive variables depend on other passive variables — it is recommended to manually specify a `visitSequence` that updates each passive variable immediately after one of its right-hand side predictors changes. (#699)
 
-# mice 3.17.5
+* **Adds the `modeltype` argument to `mice()` for mixing `predictorMatrix` and `formulas` specifications** per variable-block. The `modeltype` argument allows the user to specify some variables (or blocks of variables) by the `formulas` argument, and other variables by `predictorMatrix` argument.
 
-* Changes the behavior of `mice` when passive methods are used without a user-specified `visitSequence`. In this case, `mice` will now automatically move all passive variables to the end of the `visitSequence`, ensuring greater consistency at the end of each iteration.
-This new default works well for simple cases.
-For more complex situations — especially when passive variables depend on other updated variables — it is recommended to manually specify a `visitSequence` that updates each passive variable immediately after one of its right-hand side predictors changes. (#699)
+* **Introduces an optimized `matchindex` C++ function** to improve speed of predictive mean matching (#695)
 
-# mice 3.17.4
+### Breaking changes
 
-* Adds a patch to resolve a problem with the `dfcom` argument in `pool(..., dfcom = .., )` (#706)
+* `modeltype` replaces the `calltype` attribute of `blocks`. Most user won't notice this change, but if you have the attribute in the past, you will need to update your code to use `modeltype` instead.
 
-# mice 3.17.3
+### Minor changes
 
+* Updates security dependabot to `dawidd6/action-download-artifact@v9`
 * Allow for negative adjusted R2 in `pool.r.squared()` (#700)
-
-# mice 3.17.2
-
-* Adds clean-ups:
-  - Combines and updates tests for `lasso.select.norm()` and `lasso.norm()` into one file `test-mice.impute.lasso.norm.R`
-  - Combines and updates tests for `lasso.select.logreg()` and `lasso.logreg()` into one file `test-mice.impute.lasso.logreg.R`
-
-# mice 3.17.1
-
-* Adds `modeltype` argument to `mice()` for specify `"pred"` versus `"formula"` model type. The `modeltype` argument allows the user to specify different model type across blocks. It replaces the `calltype` attribute of `blocks`.
+* Combines and updates tests for `lasso.select.norm()` and `lasso.norm()` into one file `test-mice.impute.lasso.norm.R`
+* Combines and updates tests for `lasso.select.logreg()` and `lasso.logreg()` into one file `test-mice.impute.lasso.logreg.R`
 * Adds support for roxygen markdown documentation
+
+### Bug fixes
+
+* Adds a patch to resolve a problem - introduced in `mice 3.17.0` - with the `dfcom` argument of `pool(..., dfcom = .., )` (#689, #706, #707)
+* Fix sequence mismatch between `method` and `formulas` (#698)
 
 # mice 3.17.0
 
