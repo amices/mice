@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.17.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.17.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,50 +37,47 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.17.7" id="mice-3177">mice 3.17.7<a class="anchor" aria-label="anchor" href="#mice-3177"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.17.8" id="mice-3178">mice 3.17.8<a class="anchor" aria-label="anchor" href="#mice-3178"></a></h2>
+<div class="section level4">
+<h4 id="major-changes-3-17-8">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-3-17-8"></a></h4>
 <ul><li>
-<p>Fixed a long-standing issue in the internal <code>augment()</code> function that affected ordered factors. Previously, <code>augment()</code> would:</p>
+<p><strong>Fixed a long-standing issue in the internal <code>augment()</code> function that affected ordered factors</strong> (<a href="https://github.com/amices/mice/issues/713" class="external-link">#713</a>).</p>
+<p>Previously, <code>augment()</code> would:</p>
 <ol style="list-style-type: decimal"><li>Convert ordered factors into unordered ones, and<br></li>
 <li>Reorder their levels alphabetically, ignoring the user-specified order.</li>
-</ol><p>This behavior could degrade imputation quality for ordinal outcomes when using the <code>"polr"</code> method, potentially causing model convergence issues or increased noise in imputations.</p>
+</ol><p>The old behavior could degrade imputation quality for ordinal outcomes when using the <code>"polr"</code> method, potentially causing model convergence issues or increased noise in imputations.</p>
 <p>The issue did not affect methods for unordered factors (<code>"logreg"</code>, <code>"polyreg"</code>, <code>"mnar.logreg"</code>), where level order is inconsequential.</p>
 <p>Thanks to <a href="https://github.com/mmansolf" class="external-link">@mmansolf</a> for identifying the problem and suggesting a fix. The updated <code>augment()</code> now correctly preserves the <code>ordered</code> class and level order of factor variables.</p>
 </li>
-<li><p>Updates security dependabot to <code>dawidd6/action-download-artifact@v6</code></p></li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.17.6" id="mice-3176">mice 3.17.6<a class="anchor" aria-label="anchor" href="#mice-3176"></a></h2>
-<ul><li>Postpones addition of vignette “Imputation Models in MICE”</li>
-<li>Adds vignette “Imputation Models in MICE” (experimental) to pkgdown site</li>
-<li>Updates security dependabot to <code>dawidd6/action-download-artifact@v6</code>
+<li>
+<p><strong><code>mice</code> will now automatically move all passive variables to the end of the <code>visitSequence</code> for passive methods used without a user-specified <code>visitSequence</code>.</strong> This change in behavior ensures greater consistency at the end of each iteration.</p>
+<p>The new behavior works well for simple cases. However, for more complex situations — especially when passive variables depend on other passive variables — it is recommended to manually specify a <code>visitSequence</code> that updates each passive variable immediately after one of its right-hand side predictors changes. (<a href="https://github.com/amices/mice/issues/699" class="external-link">#699</a>)</p>
 </li>
+<li><p><strong>Adds the <code>modeltype</code> argument to <code><a href="../reference/mice.html">mice()</a></code> for mixing <code>predictorMatrix</code> and <code>formulas</code> specifications</strong> per variable-block. The <code>modeltype</code> argument allows the user to specify some variables (or blocks of variables) by the <code>formulas</code> argument, and other variables by <code>predictorMatrix</code> argument.</p></li>
+<li><p><strong>Introduces an optimized <code>matchindex</code> C++ function</strong> to improve speed of predictive mean matching (<a href="https://github.com/amices/mice/issues/695" class="external-link">#695</a>)</p></li>
 </ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.17.5" id="mice-3175">mice 3.17.5<a class="anchor" aria-label="anchor" href="#mice-3175"></a></h2>
-<ul><li>Changes the behavior of <code>mice</code> when passive methods are used without a user-specified <code>visitSequence</code>. In this case, <code>mice</code> will now automatically move all passive variables to the end of the <code>visitSequence</code>, ensuring greater consistency at the end of each iteration. This new default works well for simple cases. For more complex situations — especially when passive variables depend on other updated variables — it is recommended to manually specify a <code>visitSequence</code> that updates each passive variable immediately after one of its right-hand side predictors changes. (<a href="https://github.com/amices/mice/issues/699" class="external-link">#699</a>)</li>
+<div class="section level4">
+<h4 id="breaking-changes-3-17-8">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-17-8"></a></h4>
+<ul><li>
+<code>modeltype</code> replaces the <code>calltype</code> attribute of <code>blocks</code>. Most user won’t notice this change, but if you have the attribute in the past, you will need to update your code to use <code>modeltype</code> instead.</li>
 </ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.17.4" id="mice-3174">mice 3.17.4<a class="anchor" aria-label="anchor" href="#mice-3174"></a></h2>
-<ul><li>Adds a patch to resolve a problem with the <code>dfcom</code> argument in <code>pool(..., dfcom = .., )</code> (<a href="https://github.com/amices/mice/issues/706" class="external-link">#706</a>)</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.17.3" id="mice-3173">mice 3.17.3<a class="anchor" aria-label="anchor" href="#mice-3173"></a></h2>
-<ul><li>Allow for negative adjusted R2 in <code><a href="../reference/pool.r.squared.html">pool.r.squared()</a></code> (<a href="https://github.com/amices/mice/issues/700" class="external-link">#700</a>)</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.17.2" id="mice-3172">mice 3.17.2<a class="anchor" aria-label="anchor" href="#mice-3172"></a></h2>
-<ul><li>Adds clean-ups:
-<ul><li>Combines and updates tests for <code><a href="../reference/mice.impute.lasso.select.norm.html">lasso.select.norm()</a></code> and <code><a href="../reference/mice.impute.lasso.norm.html">lasso.norm()</a></code> into one file <code>test-mice.impute.lasso.norm.R</code>
+<div class="section level4">
+<h4 id="minor-changes-3-17-8">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-3-17-8"></a></h4>
+<ul><li>Updates security dependabot to <code>dawidd6/action-download-artifact@v9</code>
+</li>
+<li>Allow for negative adjusted R2 in <code><a href="../reference/pool.r.squared.html">pool.r.squared()</a></code> (<a href="https://github.com/amices/mice/issues/700" class="external-link">#700</a>)</li>
+<li>Combines and updates tests for <code><a href="../reference/mice.impute.lasso.select.norm.html">lasso.select.norm()</a></code> and <code><a href="../reference/mice.impute.lasso.norm.html">lasso.norm()</a></code> into one file <code>test-mice.impute.lasso.norm.R</code>
 </li>
 <li>Combines and updates tests for <code><a href="../reference/mice.impute.lasso.select.logreg.html">lasso.select.logreg()</a></code> and <code><a href="../reference/mice.impute.lasso.logreg.html">lasso.logreg()</a></code> into one file <code>test-mice.impute.lasso.logreg.R</code>
 </li>
-</ul></li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.17.1" id="mice-3171">mice 3.17.1<a class="anchor" aria-label="anchor" href="#mice-3171"></a></h2>
-<ul><li>Adds <code>modeltype</code> argument to <code><a href="../reference/mice.html">mice()</a></code> for specify <code>"pred"</code> versus <code>"formula"</code> model type. The <code>modeltype</code> argument allows the user to specify different model type across blocks. It replaces the <code>calltype</code> attribute of <code>blocks</code>.</li>
 <li>Adds support for roxygen markdown documentation</li>
 </ul></div>
+<div class="section level4">
+<h4 id="bug-fixes-3-17-8">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-17-8"></a></h4>
+<ul><li>Adds a patch to resolve a problem - introduced in <code>mice 3.17.0</code> - with the <code>dfcom</code> argument of <code>pool(..., dfcom = .., )</code> (<a href="https://github.com/amices/mice/issues/689" class="external-link">#689</a>, <a href="https://github.com/amices/mice/issues/706" class="external-link">#706</a>, <a href="https://github.com/amices/mice/issues/707" class="external-link">#707</a>)</li>
+<li>Fix sequence mismatch between <code>method</code> and <code>formulas</code> (<a href="https://github.com/amices/mice/issues/698" class="external-link">#698</a>)</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.17.0" id="mice-3170">mice 3.17.0<a class="anchor" aria-label="anchor" href="#mice-3170"></a></h2><p class="text-muted">CRAN release: 2024-11-27</p>
 <div class="section level4">
