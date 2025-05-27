@@ -10,7 +10,7 @@ test_that("removes variables from 'where'", {
 
 # reprex https://github.com/amices/mice/issues/326
 imp1 <- mice(nhanes, seed = 1, m = 1, maxit = 2, print = FALSE)
-imp2 <- mice(nhanes, blocks = list(c("bmi", "hyp"), "chl"), modeltype = c("pred", "pred"), m = 1, maxit = 2, seed = 1, print = FALSE)
+imp2 <- mice(nhanes, blocks = list(c("bmi", "hyp"), "chl"), calltype = c("pred", "pred"), m = 1, maxit = 2, seed = 1, print = FALSE)
 test_that("expands a univariate method to all variables in the block", {
   expect_identical(complete(imp1, 1), complete(imp2, 1))
 })
