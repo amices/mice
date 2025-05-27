@@ -4,7 +4,7 @@
 \alias{filter.mids}
 \title{Subset rows of a \code{mids} object}
 \usage{
-\method{filter}{mids}(.data, ..., .preserve = FALSE)
+filter.mids(.data, ..., .preserve = FALSE)
 }
 \arguments{
 \item{.data}{A \code{mids} object.}

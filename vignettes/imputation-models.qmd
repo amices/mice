@@ -557,7 +557,7 @@ The table lists the components of the `mids` object for each `store` value.
 |---------------|----------------------------------------------|---|-------------------|-----|-----|-----|
 | `predictorMatrix` | Specifies predictor set                  | I | `matrix`          | YES | YES | NO  |
 | `formulas`    | Formulae for imputation models               | I | `list`            | YES | YES | NO  |
-| `modeltype`   | Form of imputation model                     | I | `character`       | YES | YES | NO  |
+| `calltype`   | Form of imputation model                     | I | `character`       | YES | YES | NO  |
 | `post`        | Commands for post-processing                 | I | `character vector`| YES | YES | NO  |
 | `ignore`      | Logical vector for ignored rows              | I | `logical vector`  | YES | YES | NO  |
 | `seed`        | Seed value for reproducibility               | I | `integer`         | YES | YES | NO  |

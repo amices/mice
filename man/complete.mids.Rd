@@ -5,7 +5,7 @@
 \alias{complete}
 \title{Extracts the completed data from a \code{mids} object}
 \usage{
-\method{complete}{mids}(
+complete.mids(
   data,
   action = 1L,
   include = FALSE,

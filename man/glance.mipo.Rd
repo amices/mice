@@ -4,7 +4,7 @@
 \alias{glance.mipo}
 \title{Glance method to extract information from a \code{mipo} object}
 \usage{
-\method{glance}{mipo}(x, ...)
+glance.mipo(x, ...)
 }
 \arguments{
 \item{x}{An object with multiply-imputed models from \code{mice} (class: \code{mipo})}

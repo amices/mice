@@ -2,7 +2,7 @@
 # This function is called by mice and mice.mids
 sampler <- function(data, m, ignore, where, imp, blocks, method,
                     visitSequence, predictorMatrix, formulas,
-                    modeltype, blots, tasks, models,
+                    calltype, blots, tasks, models,
                     post, fromto, printFlag, ...) {
   from <- fromto[1]
   to <- fromto[2]
@@ -40,9 +40,9 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
         # impute block-by-block
         for (h in visitSequence) {
-          calltype <- modeltype[[h]]
+          ct <- calltype[[h]]
           b <- blocks[[h]]
-          if (calltype == "formula") ff <- formulas[[h]] else ff <- NULL
+          if (ct == "formula") ff <- formulas[[h]] else ff <- NULL
           pred <- predictorMatrix[h, ]
           user <- blots[[h]]
           key <- paste0(h, "_", i)
@@ -81,7 +81,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
                   task = tasks[j],
                   model = models[[j]][[as.character(mod)]],
                   yname = j, k = k,
-                  calltype = calltype,
+                  calltype = ct,
                   user = user, ignore = ignore,
                   ...
                 )
@@ -107,18 +107,18 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
             data[mis] <- NA
 
             fm <- paste("mice.impute", theMethod, sep = ".")
-            if (calltype == "formula") {
+            if (ct == "formula") {
               imputes <- do.call(fm, args = list(
                 data = data,
                 formula = ff, ...
               ))
-            } else if (calltype == "pred") {
+            } else if (ct == "pred") {
               imputes <- do.call(fm, args = list(
                 data = data,
                 type = pred, ...
               ))
             } else {
-              stop("Cannot call function of type ", calltype, call. = FALSE)
+              stop("Cannot call function of type ", ct, call. = FALSE)
             }
             if (is.null(imputes)) {
               stop("No imputations from ", theMethod,

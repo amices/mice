@@ -45,8 +45,8 @@ cbind.mids <- function(x, y = NULL, ...) {
   blocknames <- make.unique(xynames)
   names(blocknames) <- xynames
   names(blocks) <- blocknames
-  modeltype <- c(x$modeltype, rep("pred", ncol(y)))
-  names(modeltype) <- blocknames
+  calltype <- c(x$calltype, rep("pred", ncol(y)))
+  names(calltype) <- blocknames
 
   m <- x$m
 
@@ -126,7 +126,7 @@ cbind.mids <- function(x, y = NULL, ...) {
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     formulas = formulas,
-    modeltype = modeltype,
+    calltype = calltype,
     post = post,
     blots = blots,
     tasks = tasks,
@@ -180,8 +180,8 @@ cbind.mids.mids <- function(x, y, call) {
   blocknames <- make.unique(xynames)
   names(blocknames) <- xynames
   names(blocks) <- blocknames
-  modeltype <- c(x$modeltype, y$modeltype)
-  names(modeltype) <- blocknames
+  calltype <- c(x$calltype, y$calltype)
+  names(calltype) <- blocknames
 
   m <- x$m
   nmis <- c(x$nmis, y$nmis)
@@ -324,7 +324,7 @@ cbind.mids.mids <- function(x, y, call) {
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     formulas = formulas,
-    modeltype = modeltype,
+    calltype = calltype,
     post = post,
     blots = blots,
     tasks = tasks,

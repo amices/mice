@@ -39,12 +39,11 @@ reference:
     Specification of the imputation models can be made more convenient using the following set of helpers.
   contents:
   - coerce.newdata
-  - construct.blocks
   - make.blocks
   - make.blots
+  - make.calltype
   - make.formulas
   - make.method
-  - make.modeltype
   - make.newdata
   - make.post
   - make.predictorMatrix
