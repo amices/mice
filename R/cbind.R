@@ -18,8 +18,6 @@ cbind.mids <- function(x, y = NULL, ...) {
     y <- cbind.data.frame(y, dots)
   }
 
-  # Call is a vector, with first argument the mice statement
-  # and second argument the call to cbind.mids.
   call <- c(x$call, call)
 
   if (nrow(y) != nrow(x$data)) {
@@ -32,13 +30,9 @@ cbind.mids <- function(x, y = NULL, ...) {
   varnames <- make.unique(colnames(data))
   colnames(data) <- varnames
 
-  # where argument
   where <- cbind(x$where, matrix(FALSE, nrow = nrow(x$where), ncol = ncol(y)))
   colnames(where) <- varnames
 
-  # blocks: no renaming needed because all block definition will
-  # refer to varnames[1:ncol(x$data)] only, and are hence unique
-  # but we do need to rename duplicate block names
   yblocks <- vector("list", length = ncol(y))
   blocks <- c(x$blocks, yblocks)
   xynames <- c(names(x$blocks), colnames(y))
@@ -50,31 +44,28 @@ cbind.mids <- function(x, y = NULL, ...) {
 
   m <- x$m
 
-  # count the number of missing data in y
   nmis <- c(x$nmis, colSums(is.na(y)))
   names(nmis) <- varnames
 
-  # imp: original data of y will be copied into the multiple imputed dataset,
-  # including the missing values of y.
   r <- (!is.na(y))
   f <- function(j) {
-    m <- matrix(NA,
-                nrow = sum(!r[, j]),
-                ncol = x$m,
-                dimnames = list(row.names(y)[!r[, j]], seq_len(m))
+    mtx <- matrix(NA,
+                  nrow = sum(!r[, j]),
+                  ncol = x$m,
+                  dimnames = list(row.names(y)[!r[, j]], seq_len(m))
     )
-    as.data.frame(m)
+    as.data.frame(mtx)
   }
-  imp <- lapply(seq_len(ncol(y)), f)
-  imp <- c(x$imp, imp)
-  names(imp) <- varnames
+  imp_y <- lapply(seq_len(ncol(y)), f)
 
-  # The imputation method for (columns in) y will be set to ''.
+  imp <- vector("list", length(varnames))
+  names(imp) <- varnames
+  imp[names(x$imp)] <- x$imp
+  imp[names(imp_y)] <- imp_y
+
   method <- c(x$method, rep.int("", ncol(y)))
   names(method) <- blocknames
 
-  # The variable(s) in y are included in the predictorMatrix.
-  # y is not used as predictor as well as not imputed.
   predictorMatrix <- rbind(
     x$predictorMatrix,
     matrix(0,
@@ -99,8 +90,6 @@ cbind.mids <- function(x, y = NULL, ...) {
   blots <- x$blots
   ignore <- x$ignore
 
-  # seed, lastSeedValue, number of iterations, chainMean and chainVar
-  # is taken as in mids object x.
   seed <- x$seed
   lastSeedValue <- x$lastSeedValue
   iteration <- x$iteration
@@ -109,7 +98,6 @@ cbind.mids <- function(x, y = NULL, ...) {
 
   loggedEvents <- x$loggedEvents
 
-  ## save, and return
   midsobj <- mids(
     data = data,
     imp = imp,

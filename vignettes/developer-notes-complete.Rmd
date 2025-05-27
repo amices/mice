@@ -1,0 +1,81 @@
+---
+title: "Developer Note: Robustness of `complete.mids()`"
+author: "Stef van Buuren"
+date: "`r Sys.Date()`"
+format: gfm
+---
+
+## Overview
+
+This vignette provides implementation guidance and explains a subtle but important assumption in the interaction between the `imp` object (list of imputed values) and the `complete.mids()` function in the `mice` package.
+
+Historically, `complete.mids()` assumed that `imp[[j]]` existed only for variables that:
+
+- Contain missing values in the original data, and
+- Were actually imputed (i.e., had `method[j] != ""`).
+
+This assumption generally held because `imp` was sparse — only containing entries for imputed variables — and `complete()` typically only acted on those.
+
+## Why the Assumption No Longer Holds
+
+Recent improvements in `mice` introduce new features that change these assumptions:
+
+- **Block-based imputation** allows blocks of variables to be processed together.
+- **Flexible `where` masking** lets users request imputations for observed data, e.g., for simulation or perturbation.
+- **Parallel Gibbs sampling** promotes full and explicit initialisation of the `imp` structure.
+
+As a result:
+
+- A variable may now appear in `blocks`, or be targeted in `where`, even if it is fully observed.
+- `imp[[j]]` may not be initialized for such variables unless explicitly handled.
+
+## The Problem
+
+In this new setting, `complete.mids()` might attempt to access `imp[[j]]` for a variable that is:
+
+- Not missing,
+- Not imputed,
+- Not represented in `imp`.
+
+This results in a subscript error:
+
+```
+Error in imp[[j]]: subscript out of bounds
+```
+
+## The Solution
+
+We patch `initialize.imp()` and `single.complete()` to ensure:
+
+- Every variable that appears in `blocks` or `where` has an `imp[[j]]` entry.
+- `imp[[j]]` is allowed to be empty (i.e., zero-row matrix), so it is safe to index.
+- `single.complete()` uses `intersect()` to safely loop only over variables with defined imputations.
+
+This ensures compatibility with historical use cases **and** supports advanced, user-defined configurations.
+
+## Developer Guidance
+
+- Always use variable names (not numeric indices) when accessing `where[, j]` and `imp[[j]]`.
+- In developer tools, consider `colnames(where)` and `names(imp)` as primary references.
+- When modifying `blocks` or `visitSequence`, ensure `imp[[j]]` is initialized defensively.
+
+## Final Tip
+
+The patch was minimal but crucial. You can inspect the safety of an imputation object with:
+
+```r
+setdiff(colnames(data$where)[colSums(data$where) > 0], names(data$imp))
+```
+
+This identifies variables targeted for imputation that are missing from `imp`.
+
+## Related Patch
+
+- `initialize.imp()` now ensures all variables in `where` and `blocks` have a corresponding `imp[[j]]`.
+- `single.complete()` now uses:
+
+```r
+idx <- intersect(seq_len(ncol(data)), match(names(imp), colnames(data)))
+```
+
+to safely loop only over imputed variables.

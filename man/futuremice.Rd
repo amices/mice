@@ -56,13 +56,20 @@ each future (e.g., user-written imputation functions).}
 A mids object as defined by \code{\link{mids-class}}
 }
 \description{
+\strong{Deprecated}: This function is deprecated as of \verb{mice 3.18.0}. Please use
+\code{mice(..., parallel = TRUE)} instead, which integrates native support
+for parallel imputation via the \pkg{future} and \pkg{future.apply} frameworks.
+
+This wrapper is kept for backward compatibility and was based on the
+\pkg{furrr} package, using \code{future_map()} to distribute imputations
+across multiple R sessions. The output is combined via \code{\link{ibind}}.
+
 This is a wrapper function for \code{\link{mice}}, using multiple cores to
 execute \code{\link{mice}} in parallel. As a result, the imputation
 procedure can be sped up, which may be useful in general. By default,
 \code{\link{futuremice}} distributes the number of imputations \code{m}
 about equally over the cores.
-}
-\details{
+
 This function relies on package \code{\link[furrr]{furrr}}, which is a
 package for R versions 3.2.0 and later. We have chosen to use furrr function
 \code{future_map} to allow the use of \code{futuremice} on Mac, Linux and
