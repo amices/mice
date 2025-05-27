@@ -188,7 +188,13 @@ augment <- function(y, ry, x, wy, maxcat = 50) {
   xa <- rbind.data.frame(x, d)
 
   # beware, concatenation of factors
-  ya <- if (is.factor(y)) as.factor(levels(y)[c(y, e)]) else c(y, e)
+  ya <- if (is.factor(y)) {
+    if (is.ordered(y)) {
+      ordered(levels(y)[c(y, e)], levels = levels(y))
+    } else {
+      as.factor(levels(y)[c(y, e)])
+    }
+  } else c(y, e)
   rya <- c(ry, rep.int(TRUE, nr))
   wya <- c(wy, rep.int(FALSE, nr))
   wa <- c(rep.int(1, length(y)), rep.int((p + 1) / nr, nr))

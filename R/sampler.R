@@ -1,8 +1,8 @@
 sampler <- function(data, m, ignore, where, imp, blocks, method,
                     visitSequence, predictorMatrix, formulas,
-                    modeltype, blots,
+                    calltype, blots,
                     post, fromto, printFlag, ...,
-                    parallel = FALSE,
+                    parallel = FALSE, future.packages = c("stats", "dplyr"),
                     logenv = logenv) {
   from <- fromto[1]
   to <- fromto[2]
@@ -37,7 +37,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
             }
           }
           result <- run_imputation_cycle(data, imp, r, where, i, k, visitSequence,
-                                         blocks, method, modeltype, formulas,
+                                         blocks, method, calltype, formulas,
                                          predictorMatrix, blots, post,
                                          ignore, printFlag, ...)
           data <- result$data
@@ -63,7 +63,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
           }
 
           result <- run_imputation_cycle(data_i, imp_i, r, where, i, k, visitSequence,
-                                         blocks, method, modeltype, formulas,
+                                         blocks, method, calltype, formulas,
                                          predictorMatrix, blots, post,
                                          ignore, printFlag = FALSE, ...)
 
@@ -88,7 +88,11 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
           log_i <- if (exists("loggedEvents", inherits = FALSE)) get("loggedEvents", inherits = FALSE) else NULL
           list(imp = imp_i, mean = mean_i, var = var_i, log = log_i)
-        }, future.seed = TRUE)
+        },
+        future.packages = future.packages,
+        future.globals = list(run_imputation_cycle = run_imputation_cycle,
+                              update_chain_stats = update_chain_stats),
+        future.seed = TRUE)
 
         t1 <- Sys.time()
         if (printFlag) cat(sprintf("\n iter %d (%s)", k, format(round(difftime(t1, t0), 2))))
@@ -128,10 +132,10 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 }
 
 run_imputation_cycle <- function(data, imp, r, where, i, k, visitSequence,
-                                 blocks, method, modeltype, formulas, predictorMatrix,
+                                 blocks, method, calltype, formulas, predictorMatrix,
                                  blots, post, ignore, printFlag, ...) {
   for (h in visitSequence) {
-    ct <- modeltype[[h]]
+    ct <- calltype[[h]]
     b <- blocks[[h]]
     ff <- if (ct == "formula") formulas[[h]] else NULL
     pred <- predictorMatrix[h, ]

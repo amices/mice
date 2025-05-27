@@ -9,6 +9,8 @@
 #' as a data frame. \code{type = "summary"} returns a list of
 #' length \code{m} with the analysis results. The default is
 #' \code{"tidy"}.
+#' @param dfcom Manually supplied degrees of freedom. For internal use by
+#' \code{pool()}.
 #' @param ... Other parameters passed down to \code{print()} and \code{summary()}
 #' @return \code{NULL}
 #' @seealso \code{\link{mira}}
@@ -16,6 +18,7 @@
 #' @export
 summary.mira <- function(object,
                          type = c("tidy", "glance", "summary"),
+                         dfcom = NULL,
                          ...) {
   type <- match.arg(type)
   fitlist <- getfit(object)
@@ -32,8 +35,13 @@ summary.mira <- function(object,
     v$nobs <- tryCatch(length(stats::residuals(model)),
       error = function(e) {NULL})
   }
+
   # get df.residuals
-  if (!"df.residuals" %in% colnames(v)) {
+  if (!is.null(dfcom)) {
+    # overwrite df.residual by a user-specified value
+    v$df.residual <- dfcom
+  } else if (!"df.residuals" %in% colnames(v)) {
+    # emergency call to df.residual
     v$df.residual <- get.dfcom(model)
   }
 

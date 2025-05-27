@@ -14,7 +14,7 @@ test_that("sampler() works identically in sequential and parallel modes", {
   ignore <- rep(FALSE, nrow(data))
   predictorMatrix <- mice:::make.predictorMatrix(data, blocks)
   formulas <- mice:::make.formulas(data, blocks)
-  modeltype <- mice:::make.modeltype(NULL, predictorMatrix, formulas, "pred")
+  calltype <- mice:::make.calltype(NULL, predictorMatrix, formulas, "pred")
   blots <- vector("list", length(blocks))
   names(blots) <- names(blocks)
   post <- rep("", ncol(data))
@@ -25,7 +25,7 @@ test_that("sampler() works identically in sequential and parallel modes", {
 
   # Run sampler in sequential mode
   out_seq <- mice:::sampler(data, m, ignore, where, imp_init, blocks, method,
-                            visitSequence, predictorMatrix, formulas, modeltype,
+                            visitSequence, predictorMatrix, formulas, calltype,
                             blots, post, fromto, printFlag = FALSE, parallel = FALSE)
 
   # Reset imputations
@@ -34,7 +34,7 @@ test_that("sampler() works identically in sequential and parallel modes", {
   # Run sampler in parallel mode
   future::plan("multisession")
   out_par <- mice:::sampler(data, m, ignore, where, imp_init, blocks, method,
-                            visitSequence, predictorMatrix, formulas, modeltype,
+                            visitSequence, predictorMatrix, formulas, calltype,
                             blots, post, fromto, printFlag = FALSE, parallel = TRUE)
   future::plan("sequential")
 
@@ -56,7 +56,7 @@ test_that("sampler() collects loggedEvents in parallel mode", {
   ignore <- rep(FALSE, nrow(data))
   predictorMatrix <- mice:::make.predictorMatrix(data, blocks)
   formulas <- mice:::make.formulas(data, blocks)
-  modeltype <- mice:::make.modeltype(NULL, predictorMatrix, formulas, "pred")
+  calltype <- mice:::make.calltype(NULL, predictorMatrix, formulas, "pred")
   blots <- vector("list", length(blocks))
   names(blots) <- names(blocks)
   post <- rep("", ncol(data))
@@ -67,7 +67,7 @@ test_that("sampler() collects loggedEvents in parallel mode", {
 
   future::plan("multisession")
   out <- mice:::sampler(data, m, ignore, where, imp_init, blocks, method,
-                        visitSequence, predictorMatrix, formulas, modeltype,
+                        visitSequence, predictorMatrix, formulas, calltype,
                         blots, post, fromto, printFlag = FALSE, parallel = TRUE)
   future::plan("sequential")
 

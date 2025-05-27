@@ -20,20 +20,47 @@ imp <- mice(data, parallel = TRUE)
 - The `future` and `future.apply` packages must be installed to run parallel imputation. If not installed, `mice()` will throw an error and suggest installing the packages.
 - The wrappers `parlmice()` and `futuremice()` are still functional, but now throw a warning that they will be deprecated in the future. Users are encouraged to use the new `parallel` argument in `mice()` instead.
 
-# mice 3.17.3
+# mice 3.18.0
 
+### Major changes
+
+* **Fixed a long-standing issue in the internal `augment()` function that affected ordered factors** (#713). 
+
+  Previously, `augment()` would:
+
+  1. Convert ordered factors into unordered ones, and  
+  2. Reorder their levels alphabetically, ignoring the user-specified order.
+
+  The old behavior could degrade imputation quality for ordinal outcomes when using the `"polr"` method, potentially causing model convergence issues or increased noise in imputations. 
+  
+  The issue did not affect methods for unordered factors (`"logreg"`, `"polyreg"`, `"mnar.logreg"`), where level order is inconsequential. 
+
+  Thanks to @mmansolf for identifying the problem and suggesting a fix. The updated `augment()` now 
+correctly preserves the `ordered` class and level order of factor variables.
+
+* **`mice` will now automatically move all passive variables to the end of the `visitSequence` for passive methods used without a user-specified `visitSequence`.**
+This change in behavior ensures greater consistency at the end of each iteration.
+
+  The new behavior works well for simple cases. However, for more complex situations — especially when passive variables depend on other passive variables — it is recommended to manually specify a `visitSequence` that updates each passive variable immediately after one of its right-hand side predictors changes. (#699)
+
+* **Adds the `calltype` argument to `mice()` for mixing `predictorMatrix` and `formulas` specifications** per variable-block. The `calltype` argument allows the user to specify some variables (or blocks of variables) by the `formulas` argument, and other variables by `predictorMatrix` argument. (Note: This argument was called `modeltype` in version 3.17.1). 
+
+  `calltype` is a character vector of `length(blocks)` elements that indicates how the imputation model is specified. Entries can one of two values: `"pred"` or `"formula"`. If `calltype = "pred"`, the predictors of the imputation model for the block are specified by the corresponding row of the `predictorMatrix`. If `calltype = "formula"` the imputation model is specified by relevant entry in `formulas`. The default depends on the presence of the `formulas` argument. If `formulas` is present, then `mice()` sets `calltype = "formula"` for any block for which a `formula` is specified. Otherwise, `calltype = "pred"`.
+
+* **Introduces an optimized `matchindex` C++ function** to improve speed of predictive mean matching (#695)
+
+### Minor changes
+
+* Updates security dependabot to `dawidd6/action-download-artifact@v9`
 * Allow for negative adjusted R2 in `pool.r.squared()` (#700)
-
-# mice 3.17.2
-
-* Adds clean-ups:
-  - Combines and updates tests for `lasso.select.norm()` and `lasso.norm()` into one file `test-mice.impute.lasso.norm.R`
-  - Combines and updates tests for `lasso.select.logreg()` and `lasso.logreg()` into one file `test-mice.impute.lasso.logreg.R`
-
-# mice 3.17.1
-
-* Adds `modeltype` argument to `mice()` for specify `"pred"` versus `"formula"` model type. The `modeltype` argument allows the user to specify different model type across blocks. It replaces the `calltype` attribute of `blocks`.
+* Combines and updates tests for `lasso.select.norm()` and `lasso.norm()` into one file `test-mice.impute.lasso.norm.R`
+* Combines and updates tests for `lasso.select.logreg()` and `lasso.logreg()` into one file `test-mice.impute.lasso.logreg.R`
 * Adds support for roxygen markdown documentation
+
+### Bug fixes
+
+* Adds a patch to resolve a problem - introduced in `mice 3.17.0` - with the `dfcom` argument of `pool(..., dfcom = .., )` (#689, #706, #707)
+* Fix sequence mismatch between `method` and `formulas` (#698)
 
 # mice 3.17.0
 
