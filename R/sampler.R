@@ -1,9 +1,9 @@
-# The sampler controls the actual Gibbs sampling iteration scheme.
-# This function is called by mice and mice.mids
 sampler <- function(data, m, ignore, where, imp, blocks, method,
                     visitSequence, predictorMatrix, formulas,
                     calltype, blots, tasks, models,
-                    post, fromto, printFlag, ...) {
+                    post, fromto, printFlag, ...,
+                    parallel = FALSE, future.packages = c("stats", "dplyr"),
+                    logenv = logenv) {
   from <- fromto[1]
   to <- fromto[2]
   maxit <- to - from + 1
@@ -12,301 +12,254 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
   # set up array for convergence checking
   chainMean <- chainVar <- initialize.chain(names(data), maxit, m)
 
+  # Initialize logged events
+  loggedEvents <- data.frame(it = integer(), im = integer(), dep = character(),
+                             meth = character(), out = character(),
+                             stringsAsFactors = FALSE)
+  state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
+
   ## THE MAIN LOOP: GIBBS SAMPLER ##
   if (maxit < 1) iteration <- 0
   if (maxit >= 1) {
-    if (printFlag) {
+    if (!parallel && printFlag) {
       cat("\n iter imp variable")
     }
+
     for (k in from:to) {
       # begin k loop : main iteration loop
       iteration <- k
-      for (i in seq_len(m)) {
-        # begin i loop: repeated imputation loop
-        if (printFlag) {
-          cat("\n ", iteration, " ", i)
-        }
+      if (parallel) {
+        t0 <- Sys.time()
+      }
 
-        # prepare the i'th imputation
-        # do not overwrite any observed data
-        for (h in visitSequence) {
-          for (j in blocks[[h]]) {
-            y <- data[, j]
-            ry <- r[, j]
-            wy <- where[, j]
-            data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
-          }
-        }
-
-        # impute block-by-block
-        for (h in visitSequence) {
-          ct <- calltype[[h]]
-          b <- blocks[[h]]
-          if (ct == "formula") ff <- formulas[[h]] else ff <- NULL
-          pred <- predictorMatrix[h, ]
-          user <- blots[[h]]
-          key <- paste0(h, "_", i)
-
-          # univariate/multivariate logic
-          theMethod <- method[h]
-          empt <- theMethod == ""
-          univ <- !empt && !is.passive(theMethod) &&
-            !handles.format(paste0("mice.impute.", theMethod))
-          mult <- !empt && !is.passive(theMethod) &&
-            handles.format(paste0("mice.impute.", theMethod))
-          pass <- !empt && is.passive(theMethod) && length(blocks[[h]]) == 1
-          if (printFlag & !empt) cat(" ", b)
-
-          ## store current state
-          oldstate <- get("state", pos = parent.frame())
-          newstate <- list(
-            it = k, im = i,
-            dep = h,
-            meth = theMethod,
-            log = oldstate$log
-          )
-          assign("state", newstate, pos = parent.frame(), inherits = TRUE)
-
-          # (repeated) univariate imputation - pred method
-          if (univ) {
-            for (j in b) {
-              # if m outruns m.train, recycle m.train
-              m.train <- length(models[[j]])
-              mod <- (i - 1L) %% m.train + 1L
-              imp[[j]][, i] <-
-                sampler.univ(
-                  data = data, r = r, where = where,
-                  pred = pred, formula = ff,
-                  method = theMethod,
-                  task = tasks[j],
-                  model = models[[j]][[as.character(mod)]],
-                  yname = j, k = k,
-                  calltype = ct,
-                  user = user, ignore = ignore,
-                  ...
-                )
-
-              # update data
-              data[(!r[, j]) & where[, j], j] <-
-                imp[[j]][(!r[, j])[where[, j]], i]
-
-              # optional post-processing
-              cmd <- post[j]
-              if (cmd != "") {
-                eval(parse(text = cmd))
-                data[(!r[, j]) & where[, j], j] <-
-                  imp[[j]][(!r[, j])[where[, j]], i]
-              }
-            }
+      if (!parallel) {
+        # single-threaded processing
+        for (i in seq_len(m)) {
+          # begin i loop: repeated imputation loop
+          if (printFlag) {
+            cat("\n ", iteration, " ", i)
           }
 
-          # multivariate imputation - pred and formula
-          if (mult) {
-            mis <- !r
-            mis[, setdiff(colnames(data), b)] <- FALSE
-            data[mis] <- NA
-
-            fm <- paste("mice.impute", theMethod, sep = ".")
-            if (ct == "formula") {
-              imputes <- do.call(fm, args = list(
-                data = data,
-                formula = ff, ...
-              ))
-            } else if (ct == "pred") {
-              imputes <- do.call(fm, args = list(
-                data = data,
-                type = pred, ...
-              ))
-            } else {
-              stop("Cannot call function of type ", ct, call. = FALSE)
-            }
-            if (is.null(imputes)) {
-              stop("No imputations from ", theMethod,
-                   h,
-                   call. = FALSE
-              )
-            }
-            for (j in names(imputes)) {
-              imp[[j]][, i] <- imputes[[j]]
-              data[!r[, j], j] <- imp[[j]][, i]
-            }
-          }
-
-          # passive imputation
-          # applies to all rows, so no ignore needed
-          if (pass) {
-            for (j in b) {
-              wy <- where[, j]
+          # prepare the i'th imputation
+          # do not overwrite any observed data
+          for (h in visitSequence) {
+            for (j in blocks[[h]]) {
+              y <- data[, j]
               ry <- r[, j]
-              imp[[j]][, i] <- model.frame(as.formula(theMethod), data[wy, ],
-                                           na.action = na.pass)
+              wy <- where[, j]
               data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
             }
           }
-        } # end h loop (blocks)
-      } # end i loop (imputation number)
 
-      # store means and sd of m imputes
-      k2 <- k - from + 1L
-      if (length(visitSequence) > 0L) {
-        for (h in visitSequence) {
-          for (j in blocks[[h]]) {
-            if (!is.factor(data[, j])) {
-              chainVar[j, k2, ] <- apply(imp[[j]], 2L, var, na.rm = TRUE)
-              chainMean[j, k2, ] <- colMeans(as.matrix(imp[[j]]), na.rm = TRUE)
+          result <- one.cycle(data, imp, r, where, i, k, visitSequence,
+                                         blocks, method, calltype, formulas,
+                                         predictorMatrix, blots,
+                                         tasks, models,
+                                         post, ignore, printFlag, ...)
+          data <- result$data
+          imp <- result$imp
+        }
+        k2 <- k - from + 1L
+        stat <- get.chain.stats(data, imp, chainMean, chainVar, k2, m, blocks, visitSequence)
+        chainMean <- stat$chainMean
+        chainVar <- stat$chainVar
+
+      } else {
+        # parallel processing with future.apply
+        results_i <- future.apply::future_lapply(seq_len(m), function(i) {
+          data_i <- data
+          imp_i <- imp
+
+          for (h in visitSequence) {
+            for (j in blocks[[h]]) {
+              y <- data_i[, j]
+              ry <- r[, j]
+              wy <- where[, j]
+              data_i[(!ry) & wy, j] <- imp_i[[j]][(!ry)[wy], i]
             }
-            if (is.factor(data[, j])) {
-              for (mm in seq_len(m)) {
-                nc <- as.integer(factor(imp[[j]][, mm], levels = levels(data[, j])))
-                chainVar[j, k2, mm] <- var(nc, na.rm = TRUE)
-                chainMean[j, k2, mm] <- mean(nc, na.rm = TRUE)
+          }
+
+          result <- one.cycle(data_i, imp_i, r, where, i, k, visitSequence,
+                                         blocks, method, calltype, formulas,
+                                         predictorMatrix, blots,
+                                         tasks, models,
+                                         post, ignore, printFlag = FALSE, ...)
+
+          data_i <- result$data
+          imp_i <- result$imp
+
+          mean_i <- initialize.chain(names(data), 1, 1)[[1]]
+          var_i  <- initialize.chain(names(data), 1, 1)[[1]]
+
+          for (h in visitSequence) {
+            for (j in blocks[[h]]) {
+              if (!is.factor(data[, j])) {
+                var_i[j] <- var(imp_i[[j]][, i], na.rm = TRUE)
+                mean_i[j] <- mean(imp_i[[j]][, i], na.rm = TRUE)
+              } else {
+                nc <- as.integer(factor(imp_i[[j]][, i], levels = levels(data[, j])))
+                var_i[j] <- var(nc, na.rm = TRUE)
+                mean_i[j] <- mean(nc, na.rm = TRUE)
               }
             }
           }
+
+          log_i <- if (exists("loggedEvents", inherits = FALSE)) get("loggedEvents", inherits = FALSE) else NULL
+          list(imp = imp_i, mean = mean_i, var = var_i, log = log_i)
+        },
+        future.packages = future.packages,
+        future.globals = list(initialize.chain = initialize.chain,
+                              one.cycle = one.cycle,
+                              get.chain.stats = get.chain.stats),
+        future.seed = TRUE)
+
+        t1 <- Sys.time()
+        if (printFlag) cat(sprintf("\n iter %d (%s)", k, format(round(difftime(t1, t0), 2))))
+
+        k2 <- k - from + 1L
+        for (i in seq_len(m)) {
+          imp_i <- results_i[[i]]$imp
+          for (j in names(imp_i)) {
+            imp[[j]][, i] <- imp_i[[j]][, i]
+          }
+          mean_i <- results_i[[i]]$mean
+          var_i  <- results_i[[i]]$var
+          for (j in names(mean_i)) {
+            if (j %in% dimnames(chainMean)[[1]]) {
+              chainMean[j, k2, i] <- mean_i[[j]]
+              chainVar[j, k2, i] <- var_i[[j]]
+            }
+          }
+          if (!is.null(results_i[[i]]$log)) {
+            loggedEvents <- rbind(loggedEvents, results_i[[i]]$log)
+            state$log <- TRUE
+          }
         }
       }
-    } # end main iteration
+    } # end k loop : main iteration loop
 
-    if (printFlag) {
-      r <- get("loggedEvents", parent.frame(1))
-      ridge.used <- any(grepl("A ridge penalty", r$out))
-      if (ridge.used) {
+    if (!parallel && printFlag) {
+      if (state$log && any(grepl("A ridge penalty", loggedEvents$out))) {
         cat("\n * Please inspect the loggedEvents \n")
       } else {
         cat("\n")
       }
     }
   }
+
   list(iteration = maxit, imp = imp, chainMean = chainMean, chainVar = chainVar)
 }
 
+one.cycle <- function(data, imp, r, where, i, k, visitSequence,
+                                 blocks, method, calltype, formulas, predictorMatrix,
+                                 blots, tasks, models, post, ignore, printFlag, ...) {
+  # this function makes one pass through the data
 
-sampler.univ <- function(data, r, where, pred, formula, method, task, model,
-                         yname, k, calltype = "pred", user, ignore,
-                         trimmer = "lindep", ...) {
-  j <- yname[1L]
+  # impute block-by-block
+  for (h in visitSequence) {
+    ct <- calltype[[h]]
+    b <- blocks[[h]]
+    ff <- if (ct == "formula") formulas[[h]] else NULL
+    pred <- predictorMatrix[h, ]
+    user <- blots[[h]]
 
-  # nothing to impute
-  if (all(!where[, j]) && task != "train") {
-      return(numeric(0))
-  }
+    # univariate/multivariate logic
+    theMethod <- method[h]
+    empt <- theMethod == ""
+    univ <- !empt && !is.passive(theMethod) &&
+      !handles.format(paste0("mice.impute.", theMethod))
+    mult <- !empt && !is.passive(theMethod) &&
+      handles.format(paste0("mice.impute.", theMethod))
+    pass <- !empt && is.passive(theMethod) && length(blocks[[h]]) == 1
+    if (printFlag & !empt) cat(" ", b)
 
-  # prepare formula and model matrix
-  formula <- prepare.formula(formula, data, model, j, calltype, pred, task)
-  x <- obtain.design(data, formula)
+    # (repeated) univariate imputation - pred method
+    if (univ) {
+      for (j in b) {
+        # if m outruns m.train, recycle m.train
+        m.train <- length(models[[j]])
+        mod <- (i - 1L) %% m.train + 1L
+        imp[[j]][, i] <-
+          sampler.univ(
+            data = data, r = r, where = where,
+            pred = pred, formula = ff,
+            method = theMethod,
+            task = tasks[j],
+            model = models[[j]][[as.character(mod)]],
+            yname = j, k = k,
+            calltype = ct,
+            user = user, ignore = ignore,
+            ...
+          )
 
-  # expand pred vector to model matrix, remove intercept
-  if (calltype == "pred") {
-    type <- pred[labels(terms(formula))][attr(x, "assign")]
-    x <- x[, -1L, drop = FALSE]
-    names(type) <- colnames(x)
-  }
-  if (calltype == "formula") {
-    x <- x[, -1L, drop = FALSE]
-    type <- rep(1L, length = ncol(x))
-    names(type) <- colnames(x)
-  }
+        # update data
+        data[(!r[, j]) & where[, j], j] <-
+          imp[[j]][(!r[, j])[where[, j]], i]
 
-  # select the features to feed into the imputation method
-  keep <- trim.data(
-    y = data[, j],
-    ry = r[, j] & !ignore,
-    x = x,
-    trimmer = trimmer, ...
-  )
+        # optional post-processing
+        cmd <- post[j]
+        if (cmd != "") {
+          eval(parse(text = cmd))
+          data[(!r[, j]) & where[, j], j] <-
+            imp[[j]][(!r[, j])[where[, j]], i]
+        }
+      }
+    }
 
-  # store the names of the features
-  # xj <- unique(xnames[keep$cols])
-  # print(xj)
+    # multivariate imputation - pred and formula
+    if (mult) {
+      mis <- !r
+      mis[, setdiff(colnames(data), b)] <- FALSE
+      data[mis] <- NA
 
-  # set up univariate imputation method
-  # wy: entries we wish to impute (length(y) elements)
-  # iy: entries we will impute (sum(wy) elements)
-  wy <- complete.cases(x) & where[, j]
-  iy <- wy[where[, j]]
+      fm <- paste("mice.impute", theMethod, sep = ".")
+      imputes <- switch(ct,
+                        formula = do.call(fm, list(data = data, formula = ff, ...)),
+                        pred = do.call(fm, list(data = data, type = pred, ...)),
+                        stop("Cannot call function of type ", ct))
 
-  # wipe out previous values
-  imputes <- data[wy, j]
-  imputes[!iy] <- NA
+      # Abort if imputes is NULL
+      if (is.null(imputes)) {
+        stop("No imputations from ", theMethod, h)
+      }
 
-  # remove linear dependencies
-  if (task != "fill") {
-    keep <- trim.data(
-      y = data[, j],
-      ry = r[, j] & !ignore,
-      x = x,
-      trimmer = trimmer, ...
-    )
-  }
+      # Update imputations and data
+      for (j in names(imputes)) {
+        imp[[j]][, i] <- imputes[[j]]
+        data[!r[, j], j] <- imp[[j]][, i]
+      }
+    }
+    # passive imputation
+    # applies to all rows, so no ignore needed
+    if (pass) {
+      for (j in b) {
+        wy <- where[, j]
+        ry <- r[, j]
+        imp[[j]][, i] <- model.frame(as.formula(theMethod), data[wy, ],
+                                     na.action = na.pass)
+        data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
+      }
+    }
+  } # end h loop (blocks)
 
-  # store the names of the features
-  # xj <- unique(xnames[keep$cols])
-  # print(xj)
-
-  # set up univariate imputation method
-  # wy: entries we wish to impute (length(y) elements)
-  # iy: entries we will impute (sum(wy) elements)
-  wy <- complete.cases(x) & where[, j]
-  iy <- wy[where[, j]]
-
-  # wipe out previous values
-  imputes <- data[wy, j]
-  imputes[!iy] <- NA
-
-  # here we go
-  f <- paste("mice.impute", method, sep = ".")
-  args <- c(
-    list(
-      y = data[, j],
-      ry = keep$rows,
-      x = x[, keep$cols, drop = FALSE],
-      wy = wy,
-      type = type[keep$cols],
-      task = task,
-      model = model),
-    user, list(...))
-  imputes[iy] <- do.call(f, args = args)
-  return(imputes)
+  list(data = data, imp = imp)
 }
 
-
-prepare.formula <- function(formula, data, model, j, ct, pred, task) {
-  # prepares the formula for univariate imputation
-  # saves (for "train") or retrieves (for "fill") the formula
-
-  # for "fill", use the stored formula instead of recalculating
-  if (task == "fill") {
-    if (!exists("formula", envir = model)) {
-      stop("Error: No stored formula found in model for 'fill' task.")
-    }
-    formula <- get("formula", envir = model)
-    return(as.formula(formula))
-  }
-
-  if (ct == "pred") {
-    vars <- colnames(data)[pred != 0]
-    xnames <- setdiff(vars, j)
-    if (length(xnames) > 0L) {
-      formula <- reformulate(backticks(xnames), response = backticks(j))
-      formula <- update(formula, ". ~ . ")
-    } else {
-      formula <- as.formula(paste0(j, " ~ 1"))
+get.chain.stats <- function(data, imp, chainMean, chainVar, k2, m, blocks, visitSequence) {
+  # Updates mean and variance of imputed values
+  for (h in visitSequence) {
+    for (j in blocks[[h]]) {
+      for (i in seq_len(m)) {
+        if (!is.factor(data[, j])) {
+          chainVar[j, k2, i] <- var(imp[[j]][, i], na.rm = TRUE)
+          chainMean[j, k2, i] <- mean(imp[[j]][, i], na.rm = TRUE)
+        } else {
+          nc <- as.integer(factor(imp[[j]][, i], levels = levels(data[, j])))
+          chainVar[j, k2, i] <- var(nc, na.rm = TRUE)
+          chainMean[j, k2, i] <- mean(nc, na.rm = TRUE)
+        }
+      }
     }
   }
-
-  if (ct == "formula") {
-    # move terms other than j from lhs to rhs
-    ymove <- setdiff(lhs(formula), j)
-    formula <- update(formula, paste(j, " ~ . "))
-    if (length(ymove) > 0L) {
-      formula <- update(formula, paste("~ . + ", paste(backticks(ymove), collapse = "+")))
-    }
-  }
-
-  # store formula in `model` only when task is "train"
-  if (task == "train") {
-    assign("formula", paste(deparse(formula), collapse = ""), envir = model)
-  }
-
-  return(formula)
+  list(chainMean = chainMean, chainVar = chainVar)
 }

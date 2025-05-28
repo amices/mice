@@ -53,5 +53,19 @@ initialize.imp <- function(data, m, ignore, where, blocks, visitSequence,
     }
   }
 
+  # Ensure imp[[j]] exists for any j used in where or blocks
+  vars_needed <- union(colnames(where)[colSums(where) > 0], unique(unlist(blocks)))
+  for (j in vars_needed) {
+    if (is.null(imp[[j]])) {
+      if (j %in% colnames(where)) {
+        wy <- where[, j]
+      } else {
+        wy <- rep(FALSE, nrow(data))
+      }
+      imp[[j]] <- as.data.frame(matrix(NA, nrow = sum(wy), ncol = m))
+      dimnames(imp[[j]]) <- list(row.names(data)[wy], as.character(seq_len(m)))
+    }
+  }
+
   return(imp)
 }

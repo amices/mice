@@ -130,6 +130,15 @@
 #' to turn off this behavior by specifying the
 #' argument \code{auxiliary = FALSE}.
 #'
+#' If `parallel = TRUE`, the function uses the \pkg{future} package to
+#' distribute the `m` imputations across multiple cores using `multisession`.
+#' The number of workers defaults to one fewer than the number of available
+#' cores, but is capped at `m`. Parallel workers are initialized at the start
+#' of the function and cleaned up afterward using `on.exit()`.
+#'
+#' To use parallel computation, you must install the \pkg{future} and
+#' \pkg{future.apply} packages.
+#'
 #' @param data A data frame or a matrix containing the incomplete data.  Missing
 #' values are coded as \code{NA}.
 #' @param m Number of multiple imputations. The default is \code{m=5}.
@@ -272,18 +281,28 @@
 #' elements are removed from the resulting \code{mids} object. The
 #' \code{store} element of the will be changed from \code{"train"} to
 #' \code{"train.compact"}. The default is \code{compact = FALSE}.
+#' @param parallel Logical. Whether to perform imputations in parallel.
+#'   Default is `FALSE`. If `TRUE`, imputations over `m` datasets are
+#'   run in parallel using the \pkg{future} and \pkg{future.apply} packages.
+#' @param n.core Optional integer. Specifies the maximum number of CPU cores
+#'   to use for parallel computation. If `NULL`, uses `min(m, availableCores() - 1)`.
+#'   The number of workers is always capped at `m`, the number of imputations.
 #' @param \dots Named arguments that are passed down to the univariate imputation
 #' functions.
 #'
 #' @return Returns an S3 object of class \code{\link[=mids-class]{mids}}
 #'        (multiply imputed data set)
+#'
 #' @author Stef van Buuren \email{stef.vanbuuren@@tno.nl}, Karin
 #' Groothuis-Oudshoorn \email{c.g.m.oudshoorn@@utwente.nl}, 2000-2010, with
 #' contributions of Alexander Robitzsch, Gerko Vink, Shahab Jolani,
 #' Roel de Jong, Jason Turner, Lisa Doove,
 #' John Fox, Frank E. Harrell, and Peter Malewski.
+#'
 #' @seealso \code{\link[=mids-class]{mids}}, \code{\link{with.mids}},
-#' \code{\link{set.seed}}, \code{\link{complete}}
+#' \code{\link{set.seed}}, \code{\link{complete}},
+#' \code{\link[future]{plan}}, \code{\link[future.apply]{future_lapply}}
+#'
 #' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 #' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #' Statistical Software}, \bold{45}(3), 1-67.
@@ -380,6 +399,8 @@ mice <- function(data,
                  seed = NA,
                  data.init = NULL,
                  compact = FALSE,
+                 parallel = FALSE,
+                 n.core = NULL,
                  ...) {
   call <- match.call()
   check.deprecated(...)
@@ -390,49 +411,67 @@ mice <- function(data,
   data <- check.dataform(data)
   m <- check.m(m)
 
+  # Set up parallel backend if requested
+  if (parallel) {
+    if (!requireNamespace("future.apply", quietly = TRUE)) {
+      stop("Please install the 'future.apply' package to use parallel execution.")
+    }
+
+    available <- future::availableCores()
+    cores <- if (is.null(n.core)) {
+      min(m, max(1L, available - 1L))
+    } else {
+      min(m, n.core)
+    }
+
+    # Capture and restore old plan
+    old_plan <- future::plan()
+    on.exit(future::plan(old_plan), add = TRUE)
+
+    # Set plan only if not already set
+    if (inherits(old_plan, "sequential") || inherits(old_plan, "default")) {
+      future::plan(future::multisession, workers = cores)
+    } else {
+      if ("workers" %in% names(formals(future::plan))) {
+        try(future::plan(workers = cores), silent = TRUE)
+      }
+    }
+  }
+
   # determine input combination: predictorMatrix, blocks, formulas
   mp <- missing(predictorMatrix)
   mb <- missing(blocks)
   mf <- missing(formulas)
 
-  # case A
   if (mp & mb & mf) {
-    # blocks lead
     blocks <- make.blocks(colnames(data))
     predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     formulas <- make.formulas(data, blocks)
     calltype <- make.calltype(calltype, predictorMatrix, formulas, "pred")
   }
-  # case B
+
   if (!mp & mb & mf) {
-    # predictorMatrix leads
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
     blocks <- make.blocks(colnames(predictorMatrix), partition = "scatter")
     formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix)
     calltype <- make.calltype(calltype, predictorMatrix, formulas, "pred")
   }
 
-  # case C
   if (mp & !mb & mf) {
-    # blocks leads
     blocks <- check.blocks(blocks, data)
     predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     formulas <- make.formulas(data, blocks)
     calltype <- make.calltype(calltype, predictorMatrix, formulas, "pred")
   }
 
-  # case D
   if (mp & mb & !mf) {
-    # formulas leads
     formulas <- check.formulas(formulas, data)
     blocks <- construct.blocks(formulas)
     predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     calltype <- make.calltype(calltype, predictorMatrix, formulas, "formula")
   }
 
-  # case E
   if (!mp & !mb & mf) {
-    # predictor leads
     blocks <- check.blocks(blocks, data)
     z <- check.predictorMatrix(predictorMatrix, data, blocks)
     predictorMatrix <- z$predictorMatrix
@@ -441,9 +480,7 @@ mice <- function(data,
     calltype <- make.calltype(calltype, predictorMatrix, formulas, "pred")
   }
 
-  # case F
   if (!mp & mb & !mf) {
-    # formulas lead
     formulas <- check.formulas(formulas, data)
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
     blocks <- construct.blocks(formulas, predictorMatrix)
@@ -453,18 +490,14 @@ mice <- function(data,
     calltype <- make.calltype(calltype, predictorMatrix, formulas, "formula")
   }
 
-  # case G
   if (mp & !mb & !mf) {
-    # blocks lead
     blocks <- check.blocks(blocks, data)
     formulas <- check.formulas(formulas, blocks)
     predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     calltype <- make.calltype(calltype, predictorMatrix, formulas, "formula")
   }
 
-  # case H
   if (!mp & !mb & !mf) {
-    # blocks lead
     blocks <- check.blocks(blocks, data)
     formulas <- check.formulas(formulas, data)
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data, blocks)
@@ -474,7 +507,6 @@ mice <- function(data,
   chk <- check.cluster(data, predictorMatrix)
   where <- check.where(where, data, blocks)
 
-  # check visitSequence, edit predictorMatrix for monotone
   user.visitSequence <- visitSequence
   visitSequence <- check.visitSequence(visitSequence,
                                        data = data, where = where, blocks = blocks
@@ -498,18 +530,16 @@ mice <- function(data,
   blots <- check.blots(blots, data, blocks)
   ignore <- check.ignore(ignore, data)
 
-  # data frame for storing the event log
-  state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
-  loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
+  logenv <- new.env(parent = emptyenv())
+  logenv$state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
 
-  # edit imputation setup
   setup <- list(
     method = method,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     post = post
   )
-  setup <- mice.edit.setup(data, setup, tasks, user.visitSequence, ...)
+  setup <- mice.edit.setup(data, setup, tasks, user.visitSequence, ..., logenv = logenv)
   method <- setup$method
   predictorMatrix <- setup$predictorMatrix
   visitSequence <- setup$visitSequence
@@ -533,13 +563,18 @@ mice <- function(data,
     data, m, ignore, where, imp, blocks, method,
     visitSequence, predictorMatrix, formulas,
     calltype, blots, tasks, models,
-    post, c(from, to), printFlag, ...
-  )
+    post, c(from, to), printFlag, ...,
+    parallel = parallel, logenv = logenv)
 
-  if (!state$log) loggedEvents <- NULL
-  if (state$log) row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
+  # Extract logged events from logenv if available
+  if (exists("log", envir = logenv) && nrow(logenv$log) > 0) {
+    loggedEvents <- logenv$log
+    logenv$state$log <- TRUE
+  } else {
+    loggedEvents <- NULL
+    logenv$state$log <- FALSE
+  }
 
-  ## save, and return
   midsobj <- mids(
     data = data,
     imp = q$imp,

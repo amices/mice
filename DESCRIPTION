@@ -66,6 +66,7 @@ Imports:
 Suggests:
     broom.mixed,
     future, 
+    future.apply,
     furrr,
     haven,
     knitr,

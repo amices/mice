@@ -4,20 +4,16 @@ mice.edit.setup <- function(data, setup, tasks,
                             remove.constant = TRUE,
                             remove.collinear = TRUE,
                             remove_collinear = TRUE,
+                            logenv = NULL,
                             ...) {
   # legacy handling
   if (!remove_collinear) remove.collinear <- FALSE
-
-  # edits the imputation model setup
-  # When it detec constant or collinear variables, write in loggedEvents
-  # and continues imputation with reduced model
 
   pred <- setup$predictorMatrix
   meth <- setup$method
   vis <- setup$visitSequence
   post <- setup$post
 
-  # FIXME: this function is not yet adapted to blocks
   if (ncol(pred) != nrow(pred) || length(meth) != nrow(pred) ||
       ncol(data) != nrow(pred)) {
     return(setup)
@@ -25,7 +21,6 @@ mice.edit.setup <- function(data, setup, tasks,
 
   varnames <- colnames(data)
 
-  # remove constant variables but leave passive variables untouched
   for (j in seq_len(ncol(data))) {
     if (!is.passive(meth[j])) {
       d.j <- data[, j]
@@ -37,22 +32,16 @@ mice.edit.setup <- function(data, setup, tasks,
         } else {
           is.na(v) || v < 1000 * .Machine$double.eps
         }
-        didlog <- FALSE
         if (constant && any(pred[, j] != 0) && remove.constant) {
-          out <- varnames[j]
           pred[, j] <- 0
-          updateLog(out = out, meth = "constant")
-          didlog <- TRUE
+          record.event(out = varnames[j], meth = "constant", logenv = logenv)
         }
         if (constant && meth[j] != "" && remove.constant) {
-          out <- varnames[j]
           pred[j, ] <- 0
-          if (!didlog) {
-            updateLog(out = out, meth = "constant")
-          }
           meth[j] <- ""
           vis <- vis[vis != j]
           post[j] <- ""
+          record.event(out = varnames[j], meth = "constant", logenv = logenv)
         }
       }
     }
@@ -60,38 +49,35 @@ mice.edit.setup <- function(data, setup, tasks,
 
   ## remove collinear variables
   ispredictor <- apply(pred != 0, 2, any)
-  if (any(ispredictor)) {
-    droplist <- find.collinear(data[, ispredictor, drop = FALSE], ...)
+  droplist <- if (any(ispredictor)) {
+    find.collinear(data[, ispredictor, drop = FALSE], logenv = logenv, ...)
   } else {
-    droplist <- NULL
+    NULL
   }
+
   # do not drop variables with task "fill"
   droplist <- setdiff(droplist, names(tasks[tasks == "fill"]))
+
   if (length(droplist) > 0) {
     for (k in seq_along(droplist)) {
       j <- which(varnames %in% droplist[k])
-      didlog <- FALSE
+
       if (any(pred[, j] != 0) && remove.collinear) {
-        # remove as predictor
-        out <- varnames[j]
         pred[, j] <- 0
-        updateLog(out = out, meth = "collinear")
-        didlog <- TRUE
+        record.event(out = varnames[j], meth = "collinear", logenv = logenv)
       }
+
       if (meth[j] != "" && remove.collinear) {
-        out <- varnames[j]
         pred[j, ] <- 0
-        if (!didlog) {
-          updateLog(out = out, meth = "collinear")
-        }
         meth[j] <- ""
         vis <- vis[vis != j]
         post[j] <- ""
+        record.event(out = varnames[j], meth = "collinear", logenv = logenv)
       }
     }
   }
 
-  if (all(pred == 0L) && didlog) {
+  if (all(pred == 0L)) {
     stop("`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
   }
 

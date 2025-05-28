@@ -16,7 +16,7 @@ for (i in seq_len(nrow(missing_idx))) {
   df[missing_idx[i, 1], missing_idx[i, 2]] <- NA
 }
 
-expect_warning(trained <<- mice(df, m = 2, maxit = 2, seed = 1, tasks = "train", print = FALSE))
+expect_silent(trained <<- mice(df, m = 2, maxit = 2, seed = 1, tasks = "train", print = FALSE))
 
 # make single-row new data with correct type
 newdata <- make.newdata(models = trained$models, vars = names(df))
