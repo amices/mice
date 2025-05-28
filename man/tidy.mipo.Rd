@@ -4,7 +4,7 @@
 \alias{tidy.mipo}
 \title{Tidy method to extract results from a \code{mipo} object}
 \usage{
-tidy.mipo(x, conf.int = FALSE, conf.level = 0.95, ...)
+\method{tidy}{mipo}(x, conf.int = FALSE, conf.level = 0.95, ...)
 }
 \arguments{
 \item{x}{An object of class \code{mipo}}

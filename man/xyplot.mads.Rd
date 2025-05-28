@@ -4,7 +4,7 @@
 \alias{xyplot.mads}
 \title{Scatterplot of amputed and non-amputed data against weighted sum scores}
 \usage{
-xyplot.mads(
+\method{xyplot}{mads}(
   x,
   data,
   which.pat = NULL,
