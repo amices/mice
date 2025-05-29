@@ -113,7 +113,7 @@ record.event <- function(out = NULL, meth = NULL, frame = 1, logenv = NULL) {
       )
     }
 
-    new_entry <- data.frame(
+    state.entry <- data.frame(
       it = s$it,
       im = s$im,
       dep = s$dep,
@@ -122,7 +122,7 @@ record.event <- function(out = NULL, meth = NULL, frame = 1, logenv = NULL) {
       stringsAsFactors = FALSE
     )
 
-    logenv$log <- rbind(logenv$log, new_entry)
+    logenv$log <- rbind(logenv$log, state.entry)
     s$log <- TRUE
     assign("state", s, envir = logenv)
   } else {
@@ -140,27 +140,30 @@ sym <- function(x) {
 
 # This helper function was copied from
 # https://github.com/alexanderrobitzsch/miceadds/blob/master/R/ma_exists.R
-ma_exists <- function(x, pos, n_index = 1:8) {
+ma_exists <- function( x, pos, n_index = 1:8)
+{
   n_index <- n_index + 1
   is_there <- exists(x, where = pos)
   obj <- NULL
-  if (is_there) {
+  nn <- 0
+  if (is_there){
     obj <- get(x, pos)
   }
-  if (!is_there) {
-    for (nn in n_index) {
+  if (!is_there){
+    for (nn in n_index){
       pos <- parent.frame(n = nn)
       is_there <- exists(x, where = pos)
-      if (is_there) {
+      if (is_there){
         obj <- get(x, pos)
         break
       }
     }
   }
   #--- output
-  res <- list(is_there = is_there, obj = obj, pos = pos)
+  res <- list(is_there = is_there, obj = obj, pos = pos, n = nn)
   return(res)
 }
+
 
 backticks <- function(varname) {
   sprintf("`%s`", varname)
