@@ -20,4 +20,4 @@ expect_silent(imps <- mice::mice(dat, method = method, maxit = 2, print = FALSE)
 
 #-- impute data - parallel
 set.seed(1)
-expect_silent(impp <- mice::mice(dat, method = method, maxit = 2, parallel = TRUE, future.packages = "miceadds", print = FALSE))
+expect_no_error(impp <- mice::mice(dat, method = method, maxit = 2, parallel = TRUE, future.packages = "miceadds", print = FALSE))
