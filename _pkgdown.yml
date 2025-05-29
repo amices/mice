@@ -41,6 +41,7 @@ reference:
     Specification of the imputation models can be made more convenient using the following set of helpers.
   contents:
   - coerce.newdata
+  - construct.blocks
   - make.blocks
   - make.blots
   - make.calltype
@@ -136,7 +137,6 @@ reference:
   - trim.data
   - unquantify
   - .norm.draw
-  - .pmm.match
 - title: Multivariate amputation
   desc: |
     Amputation is the inverse of imputation, starting with a complete dataset, and creating missing data pattern according to the posited missing data mechanism. Amputation is useful for simulation studies.
