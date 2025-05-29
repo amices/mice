@@ -36,3 +36,4 @@ test_that("runs tests for the Cox model", {
   expect_error(D3(m2, m1))
   expect_silent(anova(m3, m2, m1))
 })
+

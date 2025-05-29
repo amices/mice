@@ -4,7 +4,6 @@ mice.edit.setup <- function(data, setup, tasks,
                             remove.constant = TRUE,
                             remove.collinear = TRUE,
                             remove_collinear = TRUE,
-                            logenv = NULL,
                             ...) {
   # legacy handling
   if (!remove_collinear) remove.collinear <- FALSE
@@ -34,14 +33,17 @@ mice.edit.setup <- function(data, setup, tasks,
         }
         if (constant && any(pred[, j] != 0) && remove.constant) {
           pred[, j] <- 0
-          record.event(out = varnames[j], meth = "constant", logenv = logenv)
+          updateLog(out = varnames[j], meth = "constant", frame = 1)
+          didlog <- TRUE
         }
         if (constant && meth[j] != "" && remove.constant) {
           pred[j, ] <- 0
           meth[j] <- ""
           vis <- vis[vis != j]
           post[j] <- ""
-          record.event(out = varnames[j], meth = "constant", logenv = logenv)
+          if (!didlog) {
+            updateLog(out = varnames[j], meth = "constant", frame = 1)
+          }
         }
       }
     }
@@ -50,7 +52,7 @@ mice.edit.setup <- function(data, setup, tasks,
   ## remove collinear variables
   ispredictor <- apply(pred != 0, 2, any)
   droplist <- if (any(ispredictor)) {
-    find.collinear(data[, ispredictor, drop = FALSE], logenv = logenv, ...)
+    find.collinear(data[, ispredictor, drop = FALSE], ...)
   } else {
     NULL
   }
@@ -64,7 +66,8 @@ mice.edit.setup <- function(data, setup, tasks,
 
       if (any(pred[, j] != 0) && remove.collinear) {
         pred[, j] <- 0
-        record.event(out = varnames[j], meth = "collinear", logenv = logenv)
+        updateLog(out = varnames[j], meth = "collinear", frame = 1)
+        didlog <- TRUE
       }
 
       if (meth[j] != "" && remove.collinear) {
@@ -72,7 +75,9 @@ mice.edit.setup <- function(data, setup, tasks,
         meth[j] <- ""
         vis <- vis[vis != j]
         post[j] <- ""
-        record.event(out = varnames[j], meth = "collinear", logenv = logenv)
+        if (!didlog) {
+          updateLog(out = varnames[j], meth = "collinear", frame = 1)
+        }
       }
     }
   }

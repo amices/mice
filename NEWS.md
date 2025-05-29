@@ -27,6 +27,9 @@ imp <- mice(data, parallel = TRUE)
 * Exports `quantify()` and `unquantify()` for optimal scaling of factors to numeric representation
 * Adds a mechanism for filtering rows and selecting columns during the MICE iterations with univariate imputations. The method simplifies univariate imputation models by removing redundant predictors. The method is implemented in the top-level function `trim.data()`, which takes as input the design matrix `x`, the target variable `y` and the response `ry`, and returns a list of two logical vectors named `"rows"` (which filters rows of `x`) and `"cols"` (which selects columns of `x`). The user can choose among several low-level trimmers, including least angular regression, lasso, elastic net, and linear dependencies removal. It is also possible to specify your own low-level `mice.trim.mytrim()` function and call it from `mice()` using the `trimmer == "mytrim"` argument. The method is more robust and faster than `remove.lindep()` and can handle datasets with many variables.
 
+### Minor changes
+
+* Changed argument 
 
 # mice 3.18.0
 
@@ -51,7 +54,7 @@ This change in behavior ensures greater consistency at the end of each iteration
 
   The new behavior works well for simple cases. However, for more complex situations — especially when passive variables depend on other passive variables — it is recommended to manually specify a `visitSequence` that updates each passive variable immediately after one of its right-hand side predictors changes. (#699)
 
-* **Adds the `calltype` argument to `mice()` for mixing `predictorMatrix` and `formulas` specifications** per variable-block. The `calltype` argument allows the user to specify some variables (or blocks of variables) by the `formulas` argument, and other variables by `predictorMatrix` argument. (Note: This argument was called `calltype` in version 3.17.1). 
+* **Adds the `calltype` argument to `mice()` for mixing `predictorMatrix` and `formulas` specifications** per variable-block. The `calltype` argument allows the user to specify some variables (or blocks of variables) by the `formulas` argument, and other variables by `predictorMatrix` argument. (Note: This argument was called `modeltype` in version 3.17.1). 
 
   `calltype` is a character vector of `length(blocks)` elements that indicates how the imputation model is specified. Entries can one of two values: `"pred"` or `"formula"`. If `calltype = "pred"`, the predictors of the imputation model for the block are specified by the corresponding row of the `predictorMatrix`. If `calltype = "formula"` the imputation model is specified by relevant entry in `formulas`. The default depends on the presence of the `formulas` argument. If `formulas` is present, then `mice()` sets `calltype = "formula"` for any block for which a `formula` is specified. Otherwise, `calltype = "pred"`.
 

@@ -363,15 +363,6 @@ be added as main effects to the \code{formulas}, which will
 act as supplementary covariates in the imputation model. It is possible
 to turn off this behavior by specifying the
 argument \code{auxiliary = FALSE}.
-
-If \code{parallel = TRUE}, the function uses the \pkg{future} package to
-distribute the \code{m} imputations across multiple cores using \code{multisession}.
-The number of workers defaults to one fewer than the number of available
-cores, but is capped at \code{m}. Parallel workers are initialized at the start
-of the function and cleaned up afterward using \code{on.exit()}.
-
-To use parallel computation, you must install the \pkg{future} and
-\pkg{future.apply} packages.
 }
 \section{Functions}{
 
@@ -426,6 +417,48 @@ Chapman & Hall/CRC. Boca Raton, FL.
 Updating the BLAS can improve speed of R, sometime considerably. The details
 depend on the operating system. See the discussion in the
 "R Installation and Administration" guide for further information.
+}
+
+\section{Parallel computation}{
+
+
+If \code{parallel = TRUE}, the function uses the \pkg{future} package to
+distribute the \code{m} imputations across multiple cores using \code{multisession}.
+The number of workers defaults to one fewer than the number of available
+cores, but is capped at \code{m}. Parallel workers are initialized at the start
+of the function and cleaned up afterward using \code{on.exit()}.
+
+To use parallel computation, you must install the \pkg{future} and
+\pkg{future.apply} packages.
+}
+
+\section{Logging environment}{
+
+
+A new environment \code{logenv} is created at the start of the \code{mice()} function
+to hold internal state information for logging and diagnostics. This environment
+is isolated from the global environment by using \code{new.env(parent = emptyenv())}.
+
+The \code{logenv$state} object is a list with the following components:
+
+\describe{
+\item{\code{it}}{Current iteration index (integer).}
+\item{\code{im}}{Current imputation index (integer).}
+\item{\code{dep}}{Name of the dependent (target) variable currently being imputed (character).}
+\item{\code{meth}}{Imputation method used for the current variable (character).}
+\item{\code{log}}{A string with the logged message.}
+}
+
+This internal object may be accessed by helper functions during iteration
+to collect messages on the progress of the imputation process.
+
+After the iterations have ended, \code{logenv$state} is written to the \code{loggedEvents}
+element of the \code{mids} object.
+
+\emph{Breaking change}: The \code{state} object and the \code{updateLog()} function have been
+replaced with a more structured logging approach using the \code{record.event()}.
+This allows for better integration with parallel processing and avoids
+potential issues with global state management.
 }
 
 \examples{

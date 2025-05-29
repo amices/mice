@@ -130,6 +130,8 @@
 #' to turn off this behavior by specifying the
 #' argument \code{auxiliary = FALSE}.
 #'
+#' @section Parallel computation:
+#'
 #' If `parallel = TRUE`, the function uses the \pkg{future} package to
 #' distribute the `m` imputations across multiple cores using `multisession`.
 #' The number of workers defaults to one fewer than the number of available
@@ -138,6 +140,10 @@
 #'
 #' To use parallel computation, you must install the \pkg{future} and
 #' \pkg{future.apply} packages.
+#'
+#' @section Logged Events:
+#'
+#' The `mids` object produced by `mice()` contains an element `loggedEvents`.
 #'
 #' @param data A data frame or a matrix containing the incomplete data.  Missing
 #' values are coded as \code{NA}.
@@ -530,8 +536,9 @@ mice <- function(data,
   blots <- check.blots(blots, data, blocks)
   ignore <- check.ignore(ignore, data)
 
-  logenv <- new.env(parent = emptyenv())
-  logenv$state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
+  loggedEvents <- data.frame(it = 0L, im = 0L, dep = "", meth = "", out = "",
+                             msg = NA_character_, fn = NA_character_, stringsAsFactors = FALSE)
+  state <- list(it = 0L, im = 0L, dep = "", meth = "", log = TRUE)
 
   setup <- list(
     method = method,
@@ -539,7 +546,7 @@ mice <- function(data,
     visitSequence = visitSequence,
     post = post
   )
-  setup <- mice.edit.setup(data, setup, tasks, user.visitSequence, ..., logenv = logenv)
+  setup <- mice.edit.setup(data, setup, tasks, user.visitSequence, ...)
   method <- setup$method
   predictorMatrix <- setup$predictorMatrix
   visitSequence <- setup$visitSequence
@@ -564,15 +571,13 @@ mice <- function(data,
     visitSequence, predictorMatrix, formulas,
     calltype, blots, tasks, models,
     post, c(from, to), printFlag, ...,
-    parallel = parallel, logenv = logenv)
+    parallel = parallel)
 
-  # Extract logged events from logenv if available
-  if (exists("log", envir = logenv) && nrow(logenv$log) > 0) {
-    loggedEvents <- logenv$log
-    logenv$state$log <- TRUE
-  } else {
+  if (!state$log || nrow(loggedEvents) == 1L) {
     loggedEvents <- NULL
-    logenv$state$log <- FALSE
+  } else {
+    loggedEvents <- loggedEvents[-1L, ]
+    row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
   }
 
   midsobj <- mids(

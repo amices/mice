@@ -64,9 +64,9 @@ test_that("Correct estimation method used", {
 # TEST 3: correct imputation model   #
 #####################################
 
-expect_silent(imp.qr <- mice(mammalsleep[, -1], ls.meth = "qr", seed = 123, print = FALSE, use.matcher = TRUE, trimmer = "lindep"))
-expect_silent(imp.svd <- mice(mammalsleep[, -1], ls.meth = "svd", seed = 123, print = FALSE, use.matcher = TRUE, trimmer = "lindep"))
-expect_silent(imp.ridge <- mice(mammalsleep[, -1], ls.meth = "ridge", seed = 123, print = FALSE, use.matcher = TRUE, trimmer = "lindep"))
+expect_warning(imp.qr <- mice(mammalsleep[, -1], ls.meth = "qr", seed = 123, print = FALSE, use.matcher = TRUE, trimmer = "lindep"))
+expect_warning(imp.svd <- mice(mammalsleep[, -1], ls.meth = "svd", seed = 123, print = FALSE, use.matcher = TRUE, trimmer = "lindep"))
+expect_warning(imp.ridge <- mice(mammalsleep[, -1], ls.meth = "ridge", seed = 123, print = FALSE, use.matcher = TRUE, trimmer = "lindep"))
 
 test_that("Imputations are equal", {
   expect_equal(imp.qr$imp, imp.svd$imp)
@@ -78,9 +78,9 @@ test_that("Imputations are equal", {
 #####################################
 # test on faulty imputation model (exactly singular system)
 
-expect_silent(imp.qr <- mice(mammalsleep, ls.meth = "qr", seed = 123, print = FALSE))
-expect_silent(imp.svd <- mice(mammalsleep, ls.meth = "svd", seed = 123, print = FALSE))
-expect_silent(imp.ridge <- mice(mammalsleep, ls.meth = "ridge", seed = 123, print = FALSE))
+expect_warning(imp.qr <- mice(mammalsleep, ls.meth = "qr", seed = 123, print = FALSE))
+expect_warning(imp.svd <- mice(mammalsleep, ls.meth = "svd", seed = 123, print = FALSE))
+expect_warning(imp.ridge <- mice(mammalsleep, ls.meth = "ridge", seed = 123, print = FALSE))
 
 test_that("Imputations are not equal", {
   expect_false(identical(imp.qr$imp, imp.svd$imp))

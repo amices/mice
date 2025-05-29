@@ -15,32 +15,31 @@ check.df <- function(x, y, ry) {
 }
 
 ## make list of collinear variables to remove
-find.collinear <- function(x, threshold = 0.999, logenv = NULL, ...) {
+find.collinear <- function(x, threshold = 0.999, ...) {
   nvar <- ncol(x)
   x <- data.matrix(x)
   r <- !is.na(x)
   nr <- apply(r, 2, sum, na.rm = TRUE)
   ord <- order(nr, decreasing = TRUE)
-  xo <- x[, ord, drop = FALSE]
+  xo <- x[, ord, drop = FALSE] ## SvB 24mar2011
   varnames <- dimnames(xo)[[2]]
-
   z <- suppressWarnings(cor(xo, use = "pairwise.complete.obs"))
   hit <- outer(seq_len(nvar), seq_len(nvar), "<") & (abs(z) >= threshold)
   out <- apply(hit, 2, any, na.rm = TRUE)
 
+  # Inform user
   if (any(out)) {
-    record.event(
+    updateLog(
       out = paste(paste(varnames[out], collapse = ", ")),
       meth = "collinear",
-      logenv = logenv
+      frame = 2
     )
   }
 
   return(varnames[out])
 }
 
-updateLog <- function(out = NULL, meth = NULL, frame = 1) {
-  # find structures defined a mice() level
+updateLog <- function(out = NULL, meth = NULL, msg = NULL, fn = NULL, frame = 1) {
   pos_state <- ma_exists("state", frame)$pos
   pos_loggedEvents <- ma_exists("loggedEvents", frame)$pos
 
@@ -48,21 +47,51 @@ updateLog <- function(out = NULL, meth = NULL, frame = 1) {
   r <- get("loggedEvents", pos_loggedEvents)
 
   rec <- data.frame(
-    it = s$it,
-    im = s$im,
-    dep = s$dep,
+    it   = s$it,
+    im   = s$im,
+    dep  = s$dep,
     meth = if (is.null(meth)) s$meth else meth,
-    out = if (is.null(out)) "" else out
+    out  = if (is.null(out)) "" else out,
+    msg  = if (is.null(msg)) NA_character_ else msg,
+    fn   = if (is.null(fn)) as.character(sys.call(-1)[1]) else as.character(fn),
+    stringsAsFactors = FALSE
   )
 
   if (s$log) {
-    rec <- rbind(r, rec)
+    r <- rbind(r, rec)
   }
+
   s$log <- TRUE
   assign("state", s, pos = pos_state, inherits = TRUE)
-  assign("loggedEvents", rec, pos = pos_loggedEvents, inherits = TRUE)
-  return()
+  assign("loggedEvents", r, pos = pos_loggedEvents, inherits = TRUE)
+
+  invisible(NULL)
 }
+
+# updateLog <- function(out = NULL, meth = NULL, frame = 1) {
+#   # find structures defined a mice() level
+#   pos_state <- ma_exists("state", frame)$pos
+#   pos_loggedEvents <- ma_exists("loggedEvents", frame)$pos
+#
+#   s <- get("state", pos_state)
+#   r <- get("loggedEvents", pos_loggedEvents)
+#
+#   rec <- data.frame(
+#     it = s$it,
+#     im = s$im,
+#     dep = s$dep,
+#     meth = if (is.null(meth)) s$meth else meth,
+#     out = if (is.null(out)) "" else out
+#   )
+#
+#   if (s$log) {
+#     rec <- rbind(r, rec)
+#   }
+#   s$log <- TRUE
+#   assign("state", s, pos = pos_state, inherits = TRUE)
+#   assign("loggedEvents", rec, pos = pos_loggedEvents, inherits = TRUE)
+#   return()
+# }
 
 #' Record an event in the imputation log
 #'

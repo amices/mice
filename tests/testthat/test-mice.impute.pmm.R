@@ -109,7 +109,7 @@ data3$j25 <- rnorm(nrow(data3))
 
 
 test_that("cancor with many junk variables does not crash", {
-  expect_silent(imp3 <- mice(data3, method = "pmm", remove.collinear = FALSE, eps = 0,
+  expect_warning(imp3 <- mice(data3, method = "pmm", remove.collinear = FALSE, eps = 0,
                               maxit = 1, m = 1, seed = 1, print = FALSE))
 })
 
