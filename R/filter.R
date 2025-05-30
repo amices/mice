@@ -79,7 +79,7 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
   predictorMatrix <- .data$predictorMatrix
   visitSequence <- .data$visitSequence
   formulas <- .data$formulas
-  calltype <- .data$calltype
+  calltypes <- .data$calltypes
   blots <- .data$blots
   tasks <- .data$tasks
   models <- .data$models
@@ -121,7 +121,7 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     formulas = formulas,
-    calltype = calltype,
+    calltypes = calltypes,
     post = post,
     blots = blots,
     tasks = tasks,

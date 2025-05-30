@@ -1,6 +1,6 @@
 sampler <- function(data, m, ignore, where, imp, blocks, method,
                     visitSequence, predictorMatrix, formulas,
-                    calltype, blots, tasks, models,
+                    calltypes, blots, tasks, models,
                     post, fromto, printFlag, ...,
                     parallel = FALSE, future.packages = NULL, future.seed = TRUE) {
   from <- fromto[1]
@@ -45,7 +45,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
           }
 
           result <- one.cycle(data, imp, r, where, i, k, visitSequence,
-                              blocks, method, calltype, formulas,
+                              blocks, method, calltypes, formulas,
                               predictorMatrix, blots,
                               tasks, models,
                               post, ignore, printFlag, ...)
@@ -78,7 +78,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
           }
 
           result <- one.cycle(data_i, imp_i, r, where, i, k, visitSequence,
-                              blocks, method, calltype, formulas,
+                              blocks, method, calltypes, formulas,
                               predictorMatrix, blots,
                               tasks, models,
                               post, ignore, printFlag = FALSE, ...)
@@ -161,15 +161,15 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 }
 
 one.cycle <- function(data, imp, r, where, i, k, visitSequence,
-                      blocks, method, calltype, formulas, predictorMatrix,
+                      blocks, method, calltypes, formulas, predictorMatrix,
                       blots, tasks, models, post, ignore, printFlag, ...) {
   # this function makes one pass through the data
 
   # impute block-by-block
   for (h in visitSequence) {
-    ct <- calltype[[h]]
+    calltype <- calltypes[[h]]
     b <- blocks[[h]]
-    ff <- if (ct == "formula") formulas[[h]] else NULL
+    ff <- if (calltype == "formula") formulas[[h]] else NULL
     pred <- predictorMatrix[h, ]
     user <- blots[[h]]
 
@@ -199,7 +199,7 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
             task = tasks[j],
             model = models[[j]][[as.character(mod)]],
             yname = j, k = k,
-            calltype = ct,
+            calltype = calltype,
             user = user, ignore = ignore,
             ...
           )
@@ -227,10 +227,10 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
       data[mis] <- NA
 
       fm <- paste("mice.impute", theMethod, sep = ".")
-      imputes <- switch(ct,
+      imputes <- switch(calltype,
                         formula = do.call(fm, list(data = data, formula = ff, ...)),
                         pred = do.call(fm, list(data = data, type = pred, ...)),
-                        stop("Cannot call function of type ", ct))
+                        stop("Cannot call function of type ", calltype))
 
       # Abort if imputes is NULL
       if (is.null(imputes)) {

@@ -218,18 +218,18 @@
 #' The \code{formulas} argument is an alternative to the
 #' \code{predictorMatrix} argument that allows for more flexibility in
 #' specifying imputation models, e.g., for specifying interaction terms.
-#' @param calltype A character vector of \code{length(block)} elements
+#' @param calltypes A character vector of \code{length(block)} elements
 #' that indicates how the imputation model is specified. Entries can
 #' one of two values: \code{"pred"} or \code{"formula"}. If
-#' \code{calltype = "pred"}, the predictors of the imputation
+#' \code{calltypes = "pred"}, the predictors of the imputation
 #' model for the block are specified by the corresponding row of the
-#' \code{predictorMatrix}. If  \code{calltype = "formula"} the
+#' \code{predictorMatrix}. If  \code{calltypes = "formula"} the
 #' imputation model is specified by relevant entry in
 #' \code{formulas}. The default depends on the presence of the
 #' \code{formulas} argument. If \code{formulas} is present, then
 #' \code{mice()} sets
-#' \code{calltype = "formula"} for any block
-#' for which a formula is specified. Otherwise, \code{calltype = "pred"}.
+#' \code{calltypes = "formula"} for any block
+#' for which a formula is specified. Otherwise, \code{calltypes = "pred"}.
 #' @param blots A named \code{list} of \code{alist}'s that can be used
 #' to pass down arguments to lower level imputation function. The entries
 #' of element \code{blots[[blockname]]} are passed down to the function
@@ -394,7 +394,7 @@ mice <- function(data,
                  blocks,
                  visitSequence = NULL,
                  formulas,
-                 calltype = NULL,
+                 calltypes = NULL,
                  blots = NULL,
                  tasks = NULL,
                  models = NULL,
@@ -453,28 +453,28 @@ mice <- function(data,
     blocks <- make.blocks(colnames(data))
     predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     formulas <- make.formulas(data, blocks)
-    calltype <- make.calltype(calltype, predictorMatrix, formulas, "pred")
+    calltypes <- make.calltypes(calltypes, predictorMatrix, formulas, "pred")
   }
 
   if (!mp & mb & mf) {
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
     blocks <- make.blocks(colnames(predictorMatrix), partition = "scatter")
     formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix)
-    calltype <- make.calltype(calltype, predictorMatrix, formulas, "pred")
+    calltypes <- make.calltypes(calltypes, predictorMatrix, formulas, "pred")
   }
 
   if (mp & !mb & mf) {
     blocks <- check.blocks(blocks, data)
     predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
     formulas <- make.formulas(data, blocks)
-    calltype <- make.calltype(calltype, predictorMatrix, formulas, "pred")
+    calltypes <- make.calltypes(calltypes, predictorMatrix, formulas, "pred")
   }
 
   if (mp & mb & !mf) {
     formulas <- check.formulas(formulas, data)
     blocks <- construct.blocks(formulas)
     predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
-    calltype <- make.calltype(calltype, predictorMatrix, formulas, "formula")
+    calltypes <- make.calltypes(calltypes, predictorMatrix, formulas, "formula")
   }
 
   if (!mp & !mb & mf) {
@@ -483,7 +483,7 @@ mice <- function(data,
     predictorMatrix <- z$predictorMatrix
     blocks <- z$blocks
     formulas <- make.formulas(data, blocks, predictorMatrix = predictorMatrix)
-    calltype <- make.calltype(calltype, predictorMatrix, formulas, "pred")
+    calltypes <- make.calltypes(calltypes, predictorMatrix, formulas, "pred")
   }
 
   if (!mp & mb & !mf) {
@@ -493,21 +493,21 @@ mice <- function(data,
     predictorMatrix <- make.predictorMatrix(data,
                                             blocks = blocks,
                                             predictorMatrix = predictorMatrix)
-    calltype <- make.calltype(calltype, predictorMatrix, formulas, "formula")
+    calltypes <- make.calltypes(calltypes, predictorMatrix, formulas, "formula")
   }
 
   if (mp & !mb & !mf) {
     blocks <- check.blocks(blocks, data)
     formulas <- check.formulas(formulas, blocks)
     predictorMatrix <- make.predictorMatrix(data, blocks = blocks)
-    calltype <- make.calltype(calltype, predictorMatrix, formulas, "formula")
+    calltypes <- make.calltypes(calltypes, predictorMatrix, formulas, "formula")
   }
 
   if (!mp & !mb & !mf) {
     blocks <- check.blocks(blocks, data)
     formulas <- check.formulas(formulas, data)
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data, blocks)
-    calltype <- make.calltype(calltype, predictorMatrix, formulas, "formula")
+    calltypes <- make.calltypes(calltypes, predictorMatrix, formulas, "formula")
   }
 
   chk <- check.cluster(data, predictorMatrix)
@@ -569,7 +569,7 @@ mice <- function(data,
   q <- sampler(
     data, m, ignore, where, imp, blocks, method,
     visitSequence, predictorMatrix, formulas,
-    calltype, blots, tasks, models,
+    calltypes, blots, tasks, models,
     post, c(from, to), printFlag, ...,
     parallel = parallel)
 
@@ -592,7 +592,7 @@ mice <- function(data,
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     formulas = formulas,
-    calltype = calltype,
+    calltypes = calltypes,
     post = post,
     blots = blots,
     tasks = tasks,

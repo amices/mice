@@ -44,7 +44,7 @@ reference:
   - construct.blocks
   - make.blocks
   - make.blots
-  - make.calltype
+  - make.calltypes
   - make.formulas
   - make.method
   - make.newdata

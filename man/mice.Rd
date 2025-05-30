@@ -16,7 +16,7 @@ mice(
   blocks,
   visitSequence = NULL,
   formulas,
-  calltype = NULL,
+  calltypes = NULL,
   blots = NULL,
   tasks = NULL,
   models = NULL,
@@ -115,18 +115,18 @@ The \code{formulas} argument is an alternative to the
 \code{predictorMatrix} argument that allows for more flexibility in
 specifying imputation models, e.g., for specifying interaction terms.}
 
-\item{calltype}{A character vector of \code{length(block)} elements
+\item{calltypes}{A character vector of \code{length(block)} elements
 that indicates how the imputation model is specified. Entries can
 one of two values: \code{"pred"} or \code{"formula"}. If
-\code{calltype = "pred"}, the predictors of the imputation
+\code{calltypes = "pred"}, the predictors of the imputation
 model for the block are specified by the corresponding row of the
-\code{predictorMatrix}. If  \code{calltype = "formula"} the
+\code{predictorMatrix}. If  \code{calltypes = "formula"} the
 imputation model is specified by relevant entry in
 \code{formulas}. The default depends on the presence of the
 \code{formulas} argument. If \code{formulas} is present, then
 \code{mice()} sets
-\code{calltype = "formula"} for any block
-for which a formula is specified. Otherwise, \code{calltype = "pred"}.}
+\code{calltypes = "formula"} for any block
+for which a formula is specified. Otherwise, \code{calltypes = "pred"}.}
 
 \item{blots}{A named \code{list} of \code{alist}'s that can be used
 to pass down arguments to lower level imputation function. The entries

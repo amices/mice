@@ -97,7 +97,7 @@ ibind <- function(x, y) {
     predictorMatrix = x$predictorMatrix,
     visitSequence = visitSequence,
     formulas = x$formulas,
-    calltype = x$calltype,
+    calltypes = x$calltypes,
     post = x$post,
     blots = x$blots,
     ignore = x$ignore,

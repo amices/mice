@@ -44,7 +44,7 @@ rbind.mids <- function(x, y = NULL, ...) {
   method <- x$method
   post <- x$post
   formulas <- x$formulas
-  calltype <- x$calltype
+  calltypes <- x$calltypes
   blots <- x$blots
   tasks <- x$tasks
   models <- x$models
@@ -75,7 +75,7 @@ rbind.mids <- function(x, y = NULL, ...) {
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     formulas = formulas,
-    calltype = calltype,
+    calltypes = calltypes,
     post = post,
     blots = blots,
     tasks = tasks,
@@ -129,7 +129,7 @@ rbind.mids.mids <- function(x, y, call) {
   method <- x$method
   post <- x$post
   formulas <- x$formulas
-  calltype <- x$calltype
+  calltypes <- x$calltypes
   blots <- x$blots
   tasks <- x$tasks
   models <- x$models
@@ -181,7 +181,7 @@ rbind.mids.mids <- function(x, y, call) {
     predictorMatrix = predictorMatrix,
     visitSequence = visitSequence,
     formulas = formulas,
-    calltype = calltype,
+    calltypes = calltypes,
     post = post,
     blots = blots,
     tasks = tasks,
