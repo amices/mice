@@ -31,6 +31,7 @@ mice.edit.setup <- function(data, setup, tasks,
         } else {
           is.na(v) || v < 1000 * .Machine$double.eps
         }
+        didlog <- FALSE
         if (constant && any(pred[, j] != 0) && remove.constant) {
           pred[, j] <- 0
           updateLog(out = varnames[j], meth = "constant", frame = 1)
@@ -63,6 +64,7 @@ mice.edit.setup <- function(data, setup, tasks,
   if (length(droplist) > 0) {
     for (k in seq_along(droplist)) {
       j <- which(varnames %in% droplist[k])
+      didlog <- FALSE
 
       if (any(pred[, j] != 0) && remove.collinear) {
         pred[, j] <- 0
@@ -82,7 +84,7 @@ mice.edit.setup <- function(data, setup, tasks,
     }
   }
 
-  if (all(pred == 0L)) {
+  if (all(pred == 0L) && didlog) {
     stop("`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
   }
 
