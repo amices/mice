@@ -10,7 +10,9 @@ check.df <- function(x, y, ry) {
   df <- sum(ry) - ncol(x) - 1
   mess <- paste("df set to 1. # observed cases:", sum(ry), " # predictors:", ncol(x) + 1)
   if (df < 1 && sum(ry) > 0) {
-    record.event(out = mess, frame = 4)
+    updateLog(
+      out = mess,
+      frame = 4)
   }
 }
 
@@ -28,13 +30,13 @@ find.collinear <- function(x, threshold = 0.999, ...) {
   out <- apply(hit, 2, any, na.rm = TRUE)
 
   # Inform user
-  if (any(out)) {
-    updateLog(
-      out = paste(paste(varnames[out], collapse = ", ")),
-      meth = "collinear",
-      frame = 2
-    )
-  }
+  # if (any(out)) {
+  #   updateLog(
+  #     out = paste(paste(varnames[out], collapse = ", ")),
+  #     meth = "collinear",
+  #     frame = 2
+  #   )
+  # }
 
   return(varnames[out])
 }
@@ -53,7 +55,7 @@ updateLog <- function(out = NULL, meth = NULL, msg = NULL, fn = NULL, frame = 1)
     meth = if (is.null(meth)) s$meth else meth,
     out  = if (is.null(out)) "" else out,
     msg  = if (is.null(msg)) NA_character_ else msg,
-    fn   = if (is.null(fn)) as.character(sys.call(-1)[1]) else as.character(fn),
+    fn   = if (is.null(fn)) as.character(sys.call(-1)[1]) else NA_character_,
     stringsAsFactors = FALSE
   )
 
