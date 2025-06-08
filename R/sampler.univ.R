@@ -24,28 +24,6 @@ sampler.univ <- function(data, r, where, pred, formula, method, task, model,
     names(type) <- colnames(x)
   }
 
-  # select the features to feed into the imputation method
-  keep <- trim.data(
-    y = data[, j],
-    ry = r[, j] & !ignore,
-    x = x,
-    trimmer = trimmer, ...
-  )
-
-  # store the names of the features
-  # xj <- unique(xnames[keep$cols])
-  # print(xj)
-
-  # set up univariate imputation method
-  # wy: entries we wish to impute (length(y) elements)
-  # iy: entries we will impute (sum(wy) elements)
-  wy <- complete.cases(x) & where[, j]
-  iy <- wy[where[, j]]
-
-  # wipe out previous values
-  imputes <- data[wy, j]
-  imputes[!iy] <- NA
-
   # remove linear dependencies
   if (task != "fill") {
     keep <- trim.data(
