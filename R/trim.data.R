@@ -321,10 +321,12 @@ remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99,
   cx <- cor(xobs[, cols, drop = FALSE], use = use2)
   eig <- eigen(cx, symmetric = TRUE)
   ncx <- cx
-  while (eig$values[k] / eig$values[1] < abs(eps)) {
+  while (k >= 1 && eig$values[k] / eig$values[1] < abs(eps)) {
     j <- seq_len(k)[order(abs(eig$vectors[, k]), decreasing = TRUE)[1]]
-    cols[cols][j] <- FALSE
-    ncx <- cx[cols[cols], cols[cols], drop = FALSE]
+    true_idx <- which(cols)
+    cols[true_idx[j]] <- FALSE
+    idx <- which(cols)
+    ncx <- cx[names(idx), names(idx), drop = FALSE]
     k <- k - 1
     eig <- eigen(ncx)
   }
