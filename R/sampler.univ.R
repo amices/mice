@@ -32,6 +32,11 @@ sampler.univ <- function(data, r, where, pred, formula, method, task, model,
       x = x,
       trimmer = trimmer, ...
     )
+  } else {
+    keep <- list(
+      rows = r[, j] & !ignore,
+      cols = rep(TRUE, ncol(x))
+    )
   }
 
   # store the names of the features

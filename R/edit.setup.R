@@ -5,6 +5,14 @@ mice.edit.setup <- function(data, setup, tasks,
                             remove.collinear = TRUE,
                             remove_collinear = TRUE,
                             ...) {
+  # If `remove.constant` is TRUE, removes constant variables
+  # If `remove.collinear` is TRUE, removes collinear variables in predictors with tasks `impute` or `train`
+  # If the user did not specify `visitSequence`, places any passive variable at the end of the sequence
+  # Edits `predictorMatrix`, `visitSequence`, `post` and `method`
+  # Updates `loggedEvents` per variable removed (for `collinear` and `constant`)
+  #
+  # Removed variables are not used or imputed by `mice`.
+
   # legacy handling
   if (!remove_collinear) remove.collinear <- FALSE
 
@@ -19,72 +27,73 @@ mice.edit.setup <- function(data, setup, tasks,
   }
 
   varnames <- colnames(data)
+  ispredictor <- apply(pred != 0, 2, any)
 
+  # remove constant variables, but keep passive or filled variables
   for (j in seq_len(ncol(data))) {
     if (!is.passive(meth[j])) {
       d.j <- data[, j]
       task <- unname(tasks[varnames[j]])
       if (task != "fill") {
         v <- if (is.character(d.j)) NA else var(as.numeric(d.j), na.rm = TRUE)
-        constant <- if (allow.na) {
+        isconstant <- if (allow.na) {
           if (is.na(v)) FALSE else v < 1000 * .Machine$double.eps
         } else {
           is.na(v) || v < 1000 * .Machine$double.eps
         }
-        didlog <- FALSE
-        if (constant && any(pred[, j] != 0) && remove.constant) {
+
+        # remove j as predictor
+        if (isconstant && ispredictor[j] && remove.constant) {
           pred[, j] <- 0
-          updateLog(out = varnames[j], meth = "constant", frame = 1)
-          didlog <- TRUE
         }
-        if (constant && meth[j] != "" && remove.constant) {
+
+        # FIXME length meth should be length(blocks)
+        # remove j as dependent
+        if (isconstant && meth[j] != "" && remove.constant) {
           pred[j, ] <- 0
           meth[j] <- ""
           vis <- vis[vis != j]
           post[j] <- ""
-          if (!didlog) {
-            updateLog(out = varnames[j], meth = "constant", frame = 1)
-          }
+        }
+
+        if (isconstant && remove.constant) {
+          updateLog(dep = varnames[j], out = varnames[j], meth = "constant", frame = 1)
         }
       }
     }
   }
 
   ## remove collinear variables
-  ispredictor <- apply(pred != 0, 2, any)
-  droplist <- if (any(ispredictor)) {
-    find.collinear(data[, ispredictor, drop = FALSE], ...)
-  } else {
-    NULL
+  droplist <- NULL
+  if (any(ispredictor) && remove.collinear) {
+    droplist <- find.collinear(data[, ispredictor, drop = FALSE], ...)
   }
 
-  # do not drop variables with task "fill"
-  droplist <- setdiff(droplist, names(tasks[tasks == "fill"]))
+  # but keep variables with task "fill"
+  keep_vars <- setdiff(droplist$out, names(tasks[tasks == "fill"]))
+  droplist <- droplist[droplist$out %in% keep_vars, ]
 
-  if (length(droplist) > 0) {
-    for (k in seq_along(droplist)) {
-      j <- which(varnames %in% droplist[k])
-      didlog <- FALSE
+  if (length(droplist$out)) {
+    for (k in seq_along(droplist$out)) {
+      i <- which(varnames %in% droplist$dep[k])
+      j <- which(varnames %in% droplist$out[k])
 
+      # remove j as predictor
       if (any(pred[, j] != 0) && remove.collinear) {
         pred[, j] <- 0
-        updateLog(out = varnames[j], meth = "collinear", frame = 1)
-        didlog <- TRUE
       }
-
+      # remove j as dependent
       if (meth[j] != "" && remove.collinear) {
         pred[j, ] <- 0
         meth[j] <- ""
         vis <- vis[vis != j]
         post[j] <- ""
-        if (!didlog) {
-          updateLog(out = varnames[j], meth = "collinear", frame = 1)
-        }
       }
+      updateLog(dep = varnames[i], out = varnames[j], meth = "collinear", frame = 1)
     }
   }
 
-  if (all(pred == 0L) && didlog) {
+  if (all(pred == 0L)) {
     stop("`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
   }
 

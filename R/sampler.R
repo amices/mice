@@ -2,7 +2,8 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
                     visitSequence, predictorMatrix, formulas,
                     calltypes, blots, tasks, models,
                     post, fromto, printFlag, ...,
-                    parallel = FALSE, future.packages = NULL, future.seed = TRUE) {
+                    use.future = TRUE, loggedEvents = NULL,
+                    future.packages = NULL, future.seed = TRUE) {
   from <- fromto[1]
   to <- fromto[2]
   maxit <- to - from + 1
@@ -14,36 +15,26 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
   ## THE MAIN LOOP: GIBBS SAMPLER ##
   if (maxit < 1) iteration <- 0
   if (maxit >= 1) {
-    if (!parallel && printFlag) {
+    if (!use.future && printFlag) {
       cat("\n iter imp variable")
     }
 
     for (k in from:to) {
       # begin k loop : main iteration loop
       iteration <- k
-      if (parallel) {
+      if (use.future) {
         t0 <- Sys.time()
       }
 
-      if (!parallel) {
+      if (!use.future) {
+        loggedEvents <- NULL
+
         # single-threaded processing
         for (i in seq_len(m)) {
           # begin i loop: repeated imputation loop
           if (printFlag) {
             cat("\n ", iteration, " ", i)
           }
-
-          # prepare the i'th imputation
-          # do not overwrite any observed data
-          for (h in visitSequence) {
-            for (j in blocks[[h]]) {
-              y <- data[, j]
-              ry <- r[, j]
-              wy <- where[, j]
-              data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
-            }
-          }
-
           result <- one.cycle(data, imp, r, where, i, k, visitSequence,
                               blocks, method, calltypes, formulas,
                               predictorMatrix, blots,
@@ -51,13 +42,21 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
                               post, ignore, printFlag, ...)
           data <- result$data
           imp <- result$imp
-        }
+
+          if (!is.null(loggedEvents)) {
+            logfile <- file.path(tempdir(), sprintf("log_it%02d_im%02d.rds", k, i))
+            emit_worker_log(loggedEvents, logfile)
+          }
+        } # end i loop: repeated imputation loop
+
         k2 <- k - from + 1L
         stat <- get.chain.stats(data, imp, chainMean, chainVar, k2, m, blocks, visitSequence)
         chainMean <- stat$chainMean
         chainVar <- stat$chainVar
 
       } else {
+        loggedEvents <- NULL
+
         # parallel processing with future.apply
         results_i <- future.apply::future_lapply(seq_len(m), function(i) {
           emit_worker_log <- function(log_entry, file) {
@@ -67,22 +66,11 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
           data_i <- data
           imp_i <- imp
 
-          # loop over blocks
-          for (h in visitSequence) {
-            for (j in blocks[[h]]) {
-              y <- data_i[, j]
-              ry <- r[, j]
-              wy <- where[, j]
-              data_i[(!ry) & wy, j] <- imp_i[[j]][(!ry)[wy], i]
-            }
-          }
-
           result <- one.cycle(data_i, imp_i, r, where, i, k, visitSequence,
                               blocks, method, calltypes, formulas,
                               predictorMatrix, blots,
                               tasks, models,
                               post, ignore, printFlag = FALSE, ...)
-
           data_i <- result$data
           imp_i <- result$imp
           mean_i <- initialize.chain(names(data), 1, 1)[[1]]
@@ -100,15 +88,10 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
             }
           }
 
-          # Create a log record
-          log.entry <- data.frame(
-            it   = k, im   = i, dep  = "cycle", meth = NA_character_,
-            out  = "success", msg  = "I1001", fn   = "one.cycle",
-            stringsAsFactors = FALSE
-          )
-
-          logfile <- file.path(tempdir(), sprintf("log_it%02d_im%02d.rds", k, i))
-          emit_worker_log(log.entry, logfile)
+          if (!is.null(loggedEvents)) {
+            logfile <- file.path(tempdir(), sprintf("log_it%02d_im%02d.rds", k, i))
+            emit_worker_log(loggedEvents, logfile)
+          }
 
           list(imp = imp_i, mean = mean_i, var = var_i)
         },
@@ -117,15 +100,6 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
                               one.cycle = one.cycle,
                               get.chain.stats = get.chain.stats),
         future.seed = future.seed)
-
-        # Combine with existing log if needed
-        new.loggedEvents <- collect_logs()
-        if (!is.null(new.loggedEvents)) {
-          pos.loggedEvents <- parent.frame(1L)
-          loggedEvents <- get("loggedEvents", envir = pos.loggedEvents)
-          loggedEvents <- rbind(loggedEvents, new.loggedEvents)
-          assign("loggedEvents", loggedEvents, envir = pos.loggedEvents)
-        }
 
         t1 <- Sys.time()
         if (printFlag) cat(sprintf("\n iter %d (%s)", k, format(round(difftime(t1, t0), 2))))
@@ -147,23 +121,39 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
         }
       }
     } # end k loop : main iteration loop
-
-    # if (!parallel && printFlag) {
-    #   if (state$log && any(grepl("A ridge penalty", loggedEvents$out))) {
-    #     cat("\n * Please inspect the loggedEvents \n")
-    #   } else {
-    #     cat("\n")
-    #   }
-    # }
+    if (printFlag) {
+      cat("\n")
+    }
   }
 
-  list(iteration = maxit, imp = imp, chainMean = chainMean, chainVar = chainVar)
+  # Combine with existing log if needed
+  new.loggedEvents <- collect_logs()
+  if (!is.null(new.loggedEvents)) {
+    pos.loggedEvents <- parent.frame(1L)
+    loggedEvents <- get("loggedEvents", envir = pos.loggedEvents)
+    loggedEvents <- rbind(loggedEvents, new.loggedEvents)
+    row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
+    assign("loggedEvents", loggedEvents, envir = pos.loggedEvents)
+  }
+
+  list(iteration = maxit, imp = imp,
+       chainMean = chainMean, chainVar = chainVar,
+       loggedEvents = loggedEvents)
 }
 
 one.cycle <- function(data, imp, r, where, i, k, visitSequence,
                       blocks, method, calltypes, formulas, predictorMatrix,
                       blots, tasks, models, post, ignore, printFlag, ...) {
-  # this function makes one pass through the data
+  # initialize data with the i-th imputation
+  # do not overwrite observed data
+  for (h in visitSequence) {
+    for (j in blocks[[h]]) {
+      y <- data[, j]
+      ry <- r[, j]
+      wy <- where[, j]
+      data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
+    }
+  }
 
   # impute block-by-block
   for (h in visitSequence) {
@@ -188,6 +178,7 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
       for (j in b) {
         # miceadds support
         newstate <- list(it = k, im = i, dep = j, meth = theMethod)
+        state <- newstate
         # if m outruns m.train, recycle m.train
         m.train <- length(models[[j]])
         mod <- (i - 1L) %% m.train + 1L
@@ -222,6 +213,7 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
     if (mult) {
       # miceadds support
       newstate <- list(it = k, im = i, dep = b, meth = theMethod)
+      state <- newstate
       mis <- !r
       mis[, setdiff(colnames(data), b)] <- FALSE
       data[mis] <- NA
@@ -249,6 +241,7 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
       for (j in b) {
         # miceadds support
         newstate <- list(it = k, im = i, dep = b, meth = theMethod)
+        state <- newstate
         wy <- where[, j]
         ry <- r[, j]
         imp[[j]][, i] <- model.frame(as.formula(theMethod), data[wy, ],
@@ -307,3 +300,8 @@ collect_logs <- function(path = tempdir(), pattern = "^log_it\\d+_im\\d+\\.rds$"
 
   logs
 }
+
+emit_worker_log <- function(log_entry, file) {
+  saveRDS(log_entry, file = file)
+}
+

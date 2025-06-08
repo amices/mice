@@ -1,6 +1,8 @@
 #' @importFrom broom    glance tidy
 #' @importFrom dplyr    .data %>% any_of bind_cols bind_rows filter group_by lead
 #'                      mutate n pull relocate row_number select summarize
+#' @importFrom future   availableCores plan
+#' @importFrom future.apply future_lapply
 #' @importFrom glmnet   cv.glmnet glmnet
 #' @importFrom graphics abline axis box par plot plot.new plot.window
 #'                      points rect text

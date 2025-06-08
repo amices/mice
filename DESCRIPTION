@@ -49,6 +49,8 @@ Depends:
 Imports:
     broom,
     dplyr,
+    future (>= 1.32.0),
+    future.apply (>= 1.11.0),
     glmnet,
     graphics,
     grDevices,
@@ -65,8 +67,6 @@ Imports:
     utils
 Suggests:
     broom.mixed,
-    future, 
-    future.apply,
     furrr,
     haven,
     knitr,

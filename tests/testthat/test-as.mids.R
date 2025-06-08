@@ -71,8 +71,8 @@ X <- complete(imp, action = "long", include = TRUE)
 X3 <- X %>%
   group_by(hyp) %>%
   mutate(chlm = mean(chl, na.rm = TRUE))
-test_that("collinearity is logged during as.mids()", {
-  mids_obj <- suppressWarnings(as.mids(X3))
-  expect_true(any(grepl("collinear", mids_obj$loggedEvents$meth)))
+test_that("as.mids() is silent with collinear data", {
+  mids_obj <- as.mids(X3)
+  expect_null(mids_obj$loggedEvents)
 })
 

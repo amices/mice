@@ -27,8 +27,8 @@ mice(
   seed = NA,
   data.init = NULL,
   compact = FALSE,
-  parallel = FALSE,
   n.core = NULL,
+  use.future = TRUE,
   ...
 )
 }
@@ -195,13 +195,14 @@ elements are removed from the resulting \code{mids} object. The
 \code{store} element of the will be changed from \code{"train"} to
 \code{"train.compact"}. The default is \code{compact = FALSE}.}
 
-\item{parallel}{Logical. Whether to perform imputations in parallel.
-Default is \code{FALSE}. If \code{TRUE}, imputations over \code{m} datasets are
-run in parallel using the \pkg{future} and \pkg{future.apply} packages.}
-
 \item{n.core}{Optional integer. Specifies the maximum number of CPU cores
 to use for parallel computation. If \code{NULL}, uses \code{min(m, availableCores() - 1)}.
 The number of workers is always capped at \code{m}, the number of imputations.}
+
+\item{use.future}{Logical. Whether to invoke a future sequential plan.
+The default is \code{TRUE}, which corresponds to a single-threaded sequential
+plan. Set \code{use.future} to \code{FALSE} to disable future, which is primarily
+useful for debugging purposes.}
 
 \item{\dots}{Named arguments that are passed down to the univariate imputation
 functions.}
@@ -422,14 +423,11 @@ depend on the operating system. See the discussion in the
 \section{Parallel computation}{
 
 
-If \code{parallel = TRUE}, the function uses the \pkg{future} package to
+If \code{use.future = TRUE}, the \code{mice()} uses the \pkg{future} package to
 distribute the \code{m} imputations across multiple cores using \code{multisession}.
 The number of workers defaults to one fewer than the number of available
 cores, but is capped at \code{m}. Parallel workers are initialized at the start
 of the function and cleaned up afterward using \code{on.exit()}.
-
-To use parallel computation, you must install the \pkg{future} and
-\pkg{future.apply} packages.
 }
 
 \section{Logged Events}{

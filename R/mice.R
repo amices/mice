@@ -132,14 +132,11 @@
 #'
 #' @section Parallel computation:
 #'
-#' If `parallel = TRUE`, the function uses the \pkg{future} package to
+#' If `use.future = TRUE`, the `mice()` uses the \pkg{future} package to
 #' distribute the `m` imputations across multiple cores using `multisession`.
 #' The number of workers defaults to one fewer than the number of available
 #' cores, but is capped at `m`. Parallel workers are initialized at the start
 #' of the function and cleaned up afterward using `on.exit()`.
-#'
-#' To use parallel computation, you must install the \pkg{future} and
-#' \pkg{future.apply} packages.
 #'
 #' @section Logged Events:
 #'
@@ -287,9 +284,10 @@
 #' elements are removed from the resulting \code{mids} object. The
 #' \code{store} element of the will be changed from \code{"train"} to
 #' \code{"train.compact"}. The default is \code{compact = FALSE}.
-#' @param parallel Logical. Whether to perform imputations in parallel.
-#'   Default is `FALSE`. If `TRUE`, imputations over `m` datasets are
-#'   run in parallel using the \pkg{future} and \pkg{future.apply} packages.
+#' @param use.future Logical. Whether to invoke a future sequential plan.
+#'   The default is `TRUE`, which corresponds to a single-threaded sequential
+#'   plan. Set `use.future` to `FALSE` to disable future, which is primarily
+#'   useful for debugging purposes.
 #' @param n.core Optional integer. Specifies the maximum number of CPU cores
 #'   to use for parallel computation. If `NULL`, uses `min(m, availableCores() - 1)`.
 #'   The number of workers is always capped at `m`, the number of imputations.
@@ -405,8 +403,8 @@ mice <- function(data,
                  seed = NA,
                  data.init = NULL,
                  compact = FALSE,
-                 parallel = FALSE,
                  n.core = NULL,
+                 use.future = TRUE,
                  ...) {
   call <- match.call()
   check.deprecated(...)
@@ -417,30 +415,29 @@ mice <- function(data,
   data <- check.dataform(data)
   m <- check.m(m)
 
-  # Set up parallel backend if requested
-  if (parallel) {
-    if (!requireNamespace("future.apply", quietly = TRUE)) {
-      stop("Please install the 'future.apply' package to use parallel execution.")
+  available <- future::availableCores()
+  cores <- if (is.null(n.core)) {
+    1L  # Default is sequential
+  } else {
+    min(m, min(n.core, available - 1L))
+  }
+
+  # Capture and restore old plan
+  old_plan <- future::plan()
+  on.exit(future::plan(old_plan), add = TRUE)
+
+  # Set plan only if needed
+  if (cores == 1L) {
+    if (!inherits(old_plan, "sequential")) {
+      future::plan(future::sequential)
     }
-
-    available <- future::availableCores()
-    cores <- if (is.null(n.core)) {
-      min(m, max(1L, available - 1L))
-    } else {
-      min(m, n.core)
-    }
-
-    # Capture and restore old plan
-    old_plan <- future::plan()
-    on.exit(future::plan(old_plan), add = TRUE)
-
-    # Set plan only if not already set
-    if (inherits(old_plan, "sequential") || inherits(old_plan, "default")) {
+  } else {
+    if (!inherits(old_plan, "multisession") &&
+        !inherits(old_plan, "multicore") &&
+        !inherits(old_plan, "cluster")) {
       future::plan(future::multisession, workers = cores)
-    } else {
-      if ("workers" %in% names(formals(future::plan))) {
-        try(future::plan(workers = cores), silent = TRUE)
-      }
+    } else if ("workers" %in% names(formals(future::plan))) {
+      try(future::plan(workers = cores), silent = TRUE)
     }
   }
 
@@ -536,9 +533,8 @@ mice <- function(data,
   blots <- check.blots(blots, data, blocks)
   ignore <- check.ignore(ignore, data)
 
-  loggedEvents <- data.frame(it = 0L, im = 0L, dep = "", meth = "", out = "",
-                             msg = NA_character_, fn = NA_character_, stringsAsFactors = FALSE)
-  state <- list(it = 0L, im = 0L, dep = "", meth = "", log = TRUE)
+  loggedEvents <- NULL
+  state <- list(it = 0L, im = 0L, dep = "", meth = "")
 
   setup <- list(
     method = method,
@@ -570,15 +566,7 @@ mice <- function(data,
     data, m, ignore, where, imp, blocks, method,
     visitSequence, predictorMatrix, formulas,
     calltypes, blots, tasks, models,
-    post, c(from, to), printFlag, ...,
-    parallel = parallel)
-
-  if (!state$log || nrow(loggedEvents) == 1L) {
-    loggedEvents <- NULL
-  } else {
-    loggedEvents <- loggedEvents[-1L, ]
-    row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
-  }
+    post, c(from, to), printFlag, ...)
 
   midsobj <- mids(
     data = data,

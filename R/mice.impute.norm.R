@@ -156,16 +156,21 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...) {
     v <- try(solve(as.matrix(crossprod(qr.R(qr$qr)))), silent = TRUE)
     if (inherits(v, "try-error")) {
       xtx <- as.matrix(crossprod(qr.R(qr$qr)))
+      # Identify collinear variables
+      tol <- 1e-10  # threshold for detecting linear dependence
+      qrd <- qr(x)  # QR decomposition of the design matrix x
+      rank <- qrd$rank
+      if (rank < ncol(x)) {
+        # The matrix is rank-deficien, linear dependence exists
+        collinear_idx <- setdiff(seq_len(ncol(x)), qrd$pivot[1L:rank])
+        collinear_vars <- colnames(x)[collinear_idx]
+        mess <- paste(collinear_vars, collapse = ", ")
+      }
       # calculate ridge penalty
       pen <- diag(xtx) * ridge
       # add ridge penalty to allow inverse of v
       v <- solve(xtx + diag(pen))
-      mess <- paste0(
-        "mice detected that your data are (nearly) multi-collinear.\n",
-        "It applied a ridge penalty to continue calculations, but the results can be unstable.\n",
-        "Does your dataset contain duplicates, linear transformation, or factors with unique respondent names?"
-      )
-      updateLog(out = mess, frame = 6)
+      updateLog(out = mess)
       if (get.printFlag()) {
         cat("*")
       } # indicator of added ridge penalty in the printed iteration history
