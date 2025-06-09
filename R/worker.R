@@ -160,36 +160,3 @@ get.chain.stats <- function(data, imp, chainMean, chainVar, k2, m, blocks, visit
   }
   list(chainMean = chainMean, chainVar = chainVar)
 }
-
-collect_logs <- function(path = tempdir(), pattern = "^log_it\\d+_im\\d+\\.rds$",
-                         remove = TRUE, verbose = FALSE) {
-  log_files <- list.files(path, pattern = pattern, full.names = TRUE)
-
-  if (length(log_files) == 0L) {
-    if (verbose) message("No log files found.")
-    return(NULL)
-  }
-
-  logs <- lapply(log_files, function(file) {
-    tryCatch(
-      readRDS(file),
-      error = function(e) {
-        if (verbose) warning("Failed to read log file: ", file)
-        NULL
-      }
-    )
-  })
-
-  logs <- do.call(rbind, logs[!vapply(logs, is.null, logical(1))])
-
-  if (remove) {
-    file.remove(log_files)
-  }
-
-  logs
-}
-
-emit_worker_log <- function(log_entry, file) {
-  saveRDS(log_entry, file = file)
-}
-
