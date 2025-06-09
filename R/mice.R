@@ -288,10 +288,11 @@
 #'   The default is `TRUE`, which invokes to a single-threaded sequential
 #'   plan. Set `use.future` to `FALSE` to disable future. This is
 #'   useful for debugging purposes, but also faster for small datasets.
-#' @param n.core Postive integer. Specifies the maximum number of CPU cores
+#' @param cores Postive integer. Specifies the maximum number of CPU cores
 #'   to use for parallel computation. The default (`NULL`) selects
-#'   the sequential plan (`n.core = 1`).
-#'   The number of workers is capped at `m`, the number of imputations.
+#'   the single-threaded sequential plan (`cores = 1`).
+#'   The number of workers is capped at `m`, the number of imputations, and
+#'   the number of available cores minus one.
 #' @param \dots Named arguments that are passed down to the univariate imputation
 #' functions.
 #'
@@ -404,7 +405,7 @@ mice <- function(data,
                  seed = NA,
                  data.init = NULL,
                  compact = FALSE,
-                 n.core = NULL,
+                 cores = NULL,
                  use.future = TRUE,
                  ...) {
   call <- match.call()
@@ -417,10 +418,10 @@ mice <- function(data,
   m <- check.m(m)
 
   available <- future::availableCores()
-  cores <- if (is.null(n.core)) {
+  cores <- if (is.null(cores)) {
     1L  # Default is sequential
   } else {
-    min(m, min(n.core, available - 1L))
+    min(m, min(cores, available - 1L))
   }
 
   # Capture and restore old plan

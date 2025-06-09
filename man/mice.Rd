@@ -27,7 +27,7 @@ mice(
   seed = NA,
   data.init = NULL,
   compact = FALSE,
-  n.core = NULL,
+  cores = NULL,
   use.future = TRUE,
   ...
 )
@@ -195,10 +195,11 @@ elements are removed from the resulting \code{mids} object. The
 \code{store} element of the will be changed from \code{"train"} to
 \code{"train.compact"}. The default is \code{compact = FALSE}.}
 
-\item{n.core}{Postive integer. Specifies the maximum number of CPU cores
+\item{cores}{Postive integer. Specifies the maximum number of CPU cores
 to use for parallel computation. The default (\code{NULL}) selects
-the sequential plan (\code{n.core = 1}).
-The number of workers is capped at \code{m}, the number of imputations.}
+the single-threaded sequential plan (\code{cores = 1}).
+The number of workers is capped at \code{m}, the number of imputations, and
+the number of available cores minus one.}
 
 \item{use.future}{Logical. Whether to invoke a future plan.
 The default is \code{TRUE}, which invokes to a single-threaded sequential
