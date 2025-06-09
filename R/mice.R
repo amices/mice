@@ -568,6 +568,9 @@ mice <- function(data,
     calltypes, blots, tasks, models,
     post, c(from, to), printFlag, ...)
 
+  # append loggedEvents
+  loggedEvents <- rbind(loggedEvents, q$loggedEvents)
+
   midsobj <- mids(
     data = data,
     imp = q$imp,
