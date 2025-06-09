@@ -284,13 +284,14 @@
 #' elements are removed from the resulting \code{mids} object. The
 #' \code{store} element of the will be changed from \code{"train"} to
 #' \code{"train.compact"}. The default is \code{compact = FALSE}.
-#' @param use.future Logical. Whether to invoke a future sequential plan.
-#'   The default is `TRUE`, which corresponds to a single-threaded sequential
-#'   plan. Set `use.future` to `FALSE` to disable future, which is primarily
-#'   useful for debugging purposes.
-#' @param n.core Optional integer. Specifies the maximum number of CPU cores
-#'   to use for parallel computation. If `NULL`, uses `min(m, availableCores() - 1)`.
-#'   The number of workers is always capped at `m`, the number of imputations.
+#' @param use.future Logical. Whether to invoke a future plan.
+#'   The default is `TRUE`, which invokes to a single-threaded sequential
+#'   plan. Set `use.future` to `FALSE` to disable future. This is
+#'   useful for debugging purposes, but also faster for small datasets.
+#' @param n.core Postive integer. Specifies the maximum number of CPU cores
+#'   to use for parallel computation. The default (`NULL`) selects
+#'   the sequential plan (`n.core = 1`).
+#'   The number of workers is capped at `m`, the number of imputations.
 #' @param \dots Named arguments that are passed down to the univariate imputation
 #' functions.
 #'
@@ -566,7 +567,8 @@ mice <- function(data,
     data, m, ignore, where, imp, blocks, method,
     visitSequence, predictorMatrix, formulas,
     calltypes, blots, tasks, models,
-    post, c(from, to), printFlag, ...)
+    post, c(from, to), printFlag, ...,
+    use.future = use.future)
 
   # append loggedEvents
   loggedEvents <- rbind(loggedEvents, q$loggedEvents)

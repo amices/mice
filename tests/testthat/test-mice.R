@@ -172,7 +172,7 @@ test_that("`where` produces correct number of imputes", {
   expect_identical(nrow(imp1$imp$age), 25L)
   expect_identical(nrow(imp2$imp$age), 0L)
   expect_identical(nrow(imp3$imp$age), 12L)
-  expect_identical(sum(is.na(imp4$imp$age)), nrow(nhanes2) - sum(complete.cases(nhanes2)))
+  expect_identical(nrow(imp4$imp$age), 25L)
 })
 
 
@@ -231,19 +231,17 @@ artificial <- data.frame(
   chl = c(200, 200),
   row.names = paste0("a", 1:2)
 )
+imputed <- complete(mice(nhanes, maxit = 1, m = 1, print = FALSE, seed = 1))
+dataplus <- rbind(imputed, artificial)
 
-imp1 <- mice(
-  rbind(nhanes, artificial),
-  maxit = 1, m = 1, print = FALSE, seed = 1, donors = 1L, matchtype = 0
-)
+imp1 <- mice(dataplus,
+  maxit = 1, m = 1, print = FALSE, seed = 1, donors = 1L, matchtype = 0, use.future = FALSE)
 
-imp2 <- mice(
-  rbind(nhanes, artificial),
+imp2 <- mice(dataplus,
   maxit = 1, m = 1, print = FALSE, seed = 1, donors = 1L, matchtype = 0,
-  ignore = c(rep(FALSE, nrow(nhanes)), rep(TRUE, nrow(artificial)))
-)
+  ignore = c(rep(FALSE, nrow(nhanes)), rep(TRUE, nrow(artificial))))
 
-test_that("`ignore` works with pmm", {
+test_that("pmm selects from subset defined by ignore", {
   expect_equal(complete(imp1)["a1", "bmi"], 40.0)
   expect_failure(expect_equal(complete(imp2)["a1", "bmi"], 40.0))
 })

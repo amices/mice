@@ -2,15 +2,17 @@ worker <- function(i, data, imp, r, where, k, visitSequence,
                    blocks, method, calltypes, formulas,
                    predictorMatrix, blots,
                    tasks, models,
-                   post = NULL, ignore = NULL, ...) {
+                   post = NULL, ignore = NULL,
+                   printFlag = FALSE, ...) {
   loggedEvents <- NULL
   result <- one.cycle(data, imp, r, where, i, k, visitSequence,
                       blocks, method, calltypes, formulas,
                       predictorMatrix, blots,
                       tasks, models,
-                      post, ignore, printFlag = FALSE, ...)
+                      post, ignore, printFlag = printFlag, ...)
 
   imp_i <- result$imp
+  out_i <- result$out
   mean_i <- initialize.chain(names(data), 1, 1)[[1]]
   var_i  <- initialize.chain(names(data), 1, 1)[[1]]
   for (h in visitSequence) {
@@ -26,7 +28,8 @@ worker <- function(i, data, imp, r, where, k, visitSequence,
     }
   }
 
-  list(imp = imp_i, mean = mean_i, var = var_i, loggedEvents = loggedEvents)
+  list(imp = imp_i, mean = mean_i, var = var_i,
+       loggedEvents = loggedEvents, out = out_i)
 }
 
 one.cycle <- function(data, imp, r, where, i, k, visitSequence,
@@ -44,9 +47,11 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
   }
 
   # impute block-by-block
+  out <- ""
   for (h in visitSequence) {
     calltype <- calltypes[[h]]
     b <- blocks[[h]]
+    out <- paste(out, b, sep = " ")
     ff <- if (calltype == "formula") formulas[[h]] else NULL
     pred <- predictorMatrix[h, ]
     user <- blots[[h]]
@@ -59,7 +64,6 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
     mult <- !empt && !is.passive(theMethod) &&
       handles.format(paste0("mice.impute.", theMethod))
     pass <- !empt && is.passive(theMethod) && length(blocks[[h]]) == 1
-    if (printFlag & !empt) cat(" ", b)
 
     # (repeated) univariate imputation - pred method
     if (univ) {
@@ -139,7 +143,7 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
     }
   } # end h loop (blocks)
 
-  list(data = data, imp = imp)
+  list(data = data, imp = imp, out = out)
 }
 
 get.chain.stats <- function(data, imp, chainMean, chainVar, k2, m, blocks, visitSequence) {
