@@ -69,11 +69,8 @@ The table and the graph summarize where the missing data occur in the
 # multiple impute the missing values
 imp <- mice(nhanes, maxit = 2, m = 2, seed = 1)
 #> 
-#>  iter imp variable
-#>   1   1  bmi  hyp  chl
-#>   1   2  bmi  hyp  chl
-#>   2   1  bmi  hyp  chl
-#>   2   2  bmi  hyp  chl
+#>  iter 1 (0.03 secs)
+#>  iter 2 (0.01 secs)
 
 # inspect quality of imputations
 stripplot(imp, chl, pch = 19, xlab = "Imputation number")
@@ -96,9 +93,9 @@ fit <- with(imp, lm(chl ~ age + bmi))
 # pool and summarize the results
 summary(pool(fit))
 #>          term estimate std.error statistic    df p.value
-#> 1 (Intercept)     9.08     73.09     0.124  4.50  0.9065
-#> 2         age    35.23     17.46     2.017  1.36  0.2377
-#> 3         bmi     4.69      1.94     2.417 15.25  0.0286
+#> 1 (Intercept)   -13.20     69.08    -0.191  6.05 0.85467
+#> 2         age    35.20      9.57     3.680 13.40 0.00265
+#> 3         bmi     5.53      2.22     2.496  7.67 0.03840
 ```
 
 The complete-data is fit to each imputed dataset, and the results are
