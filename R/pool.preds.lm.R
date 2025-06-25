@@ -15,25 +15,24 @@
 #' dat <- mice::nhanes
 #'
 #' # Split the data in training and test set
-#' train = dat[1:20,]
-#' test = dat[21:25,]
+#' train <- dat[1:20, ]
+#' test <- dat[21:25, ]
 #'
 #' # Impute missing values in train, and create a imputation model
-#' imp_train = mice::mice(train, m = 5, maxit = 5, task = "train")
+#' imp_train <- mice::mice(train, m = 5, maxit = 5, task = "train")
 #'
 #' # Fit the prediction models, based on the imputed training data
-#' fits = with(imp_train, lm(age ~ bmi + hyp + chl))
+#' fits <- with(imp_train, lm(age ~ bmi + hyp + chl))
 #'
 #' # To ensure the data types match between train and test use mice::coerce
 #' # Fit the imputation model on the test set
 #' test_imp <- mice::mice(test, tasks = "fill", models = imp_train$models)
 #'
 #' # Retrieve the imputed datasets
-#' test_imp = complete(test_imp, "all")
+#' test_imp <- complete(test_imp, "all")
 #'
 #' # Pool the predictions for the test set
 #' pool.preds.lm(fits, test_imp)
-
 pool.preds.lm <- function(object,
                           new_data = NULL,
                           interval = "prediction",
@@ -116,7 +115,7 @@ pool.preds.lm <- function(object,
   # make sure we have the correct length
   len <- max(length(new_data), length(fits))
 
-  # pool the predictions, 
+  # pool the predictions,
   # see test-pool.preds for the calculation without pool.scalar
   out <- unlist(preds) |>
     array(dim = c(nrow(new_data[[1]]), 2, len)) |>
