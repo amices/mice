@@ -12,18 +12,21 @@ test_imp <- mice::mice(test, tasks = "fill", models = imp_train$models, seed = 6
 test_imp <- complete(test_imp, "all")
 
 # use function
-pool_preds <- pool.preds.lm(fits, test_imp)
-
-# calc by hand, no internal mice functions
+level = 0.95
+pool_preds <- pool.preds.lm(fits, test_imp, level = level)
 
 # obtain the imputed value and the width of the prediction interval
-pred_int <- function(model, data, level = 0.95) {
-  preds <- predict(model,
-    newdata = data,
-    interval = "prediction",
-    level = level
-  )
-  return(data.frame(pred = preds[, 1], PI_width = preds[, 3] - preds[, 2]))
+predfunc <- function(model, data,level) {
+  summfit <- summary(model)
+  sigma <- summfit$sigma
+  xmat <- model.matrix(summfit$terms, data = as.data.frame(data))
+  se <- sqrt(1 + rowSums((xmat %*% summfit$cov.unscaled) * xmat))
+  xfit <- xmat %*% model$coefficients
+  
+  # variance
+  var_pred = se^2 * sigma^2
+  
+  return(cbind(model = xfit, var_pred = var_pred))
 }
 
 # obtain analysis models from fits object
@@ -31,7 +34,7 @@ fits <- fits %>%
   .$analyses
 
 # obtain predictions for the different imputations
-preds_all <- Map(pred_int, model = fits, data = test_imp, level = 0.95)
+preds_all <- Map(predfunc, model = fits, data = test_imp, level = 0.95)
 
 # change the list to a df
 preds <- unlist(preds_all) |>
@@ -50,15 +53,20 @@ B <- apply(preds[, 1, ], 1, var)
 # The total variance is T + U_bar + B + B/M (with m the number of imputations)
 T_var <- U_bar + B + B / 5
 
-# lower bound and upper bound
-lwr <- Q_bar - T_var
-upr <- Q_bar + T_var
+# calculate the degrees of freedom for all observations
+df_vector <- numeric(length(Q_bar))
+t_vector <- numeric(length(Q_bar))
+
+for (i in 1:length(Q_bar)) {
+  df_vector[i] <- mice:::barnard.rubin(5, B[i], T_var[i])
+  t_vector[i] <- qt(1 - (1-level)/2, df_vector[i])
+}
+
+# Calculate bounds using individual t-values
+lwr <- Q_bar - t_vector * sqrt(T_var)
+upr <- Q_bar + t_vector * sqrt(T_var)
 
 # check if the output structure is as expected
-test_that("Output class is correct", {
-  expect_is(preds_all[[1]], "data.frame")
-})
-
 test_that("Output class is correct", {
   expect_is(pool_preds, "data.frame")
 })
@@ -70,3 +78,4 @@ test_that("retains same numerical result", {
   expect_equal(pool_preds[, 2], lwr, tolerance = 0.00001)
   expect_equal(pool_preds[, 3], upr, tolerance = 0.00001)
 })
+

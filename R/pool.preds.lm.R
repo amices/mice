@@ -121,10 +121,7 @@ pool.preds.lm <- function(object,
     array(dim = c(nrow(new_data[[1]]), 2, len)) |>
     apply(1, \(x) {
       pooled <- mice::pool.scalar(Q = x[1, ], U = x[2, ])
-      if (is.na(pooled$b)) {
-        pooled$t <- pooled$ubar
-      }
-      pooled$qbar + c(0, -1, 1) * pooled$t
+      pooled$qbar + c(0, -1, 1) * qt(1 - (1-level)/2, pooled$df) * sqrt(pooled$t)
     }) |>
     t()
 
@@ -153,9 +150,13 @@ pool.preds.lm <- function(object,
 
 pred_int <- function(model, data, level = 0.95) {
   preds <- predict(model,
-    newdata = data,
-    interval = "prediction",
-    level = level
+                   newdata = data,
+                   interval = "prediction",
+                   level = level
   )
-  return(data.frame(pred = preds[, 1], PI_width = preds[, 3] - preds[, 2]))
+  
+  t =  qt(1 - (1-level)/2, model$df.residual) 
+  var_pred = ((preds[, 3] - preds[, 2]) / (2*t))^2
+  return(data.frame(pred = preds[, 1], var_pred = var_pred))
 }
+
