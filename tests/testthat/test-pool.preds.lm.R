@@ -3,12 +3,12 @@ context("pool.preds.lm")
 suppressWarnings(RNGversion("3.5.0"))
 
 # Obtain dataset, and impute the data
-dat <- mice::nhanes
-train <- dat[1:20, ]
-test <- dat[21:25, ]
-imp_train <- mice::mice(train, m = 5, maxit = 5, task = "train", seed = 6)
+df <- mice::nhanes
+train <- df[1:20, ]
+test <- df[21:25, ]
+imp_train <- mice::mice(train, m = 5, maxit = 5, tasks = "train")
 fits <- with(imp_train, lm(age ~ bmi + hyp + chl))
-test_imp <- mice::mice(test, tasks = "fill", models = imp_train$models, seed = 6)
+test_imp <- mice::mice(test, tasks = "fill", models = imp_train$models)
 test_imp <- complete(test_imp, "all")
 
 # use function
