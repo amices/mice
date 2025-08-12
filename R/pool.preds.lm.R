@@ -380,7 +380,9 @@ pred_int <- function(model, data, level = 0.95) {
                    level = level
   )
   
-  t =  qt(1 - (1-level)/2, model$df.residual)
+  # obtain the predictions with with the prediction variance
+  # by removing the t value that is used based on df
+  t =  qt(1 - (1-level)/2, model$df.residual) 
   var_pred = ((preds[, 3] - preds[, 2]) / (2*t))^2
   return(data.frame(pred = preds[, 1], var_pred = var_pred))
 }
