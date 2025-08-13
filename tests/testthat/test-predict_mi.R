@@ -1,4 +1,8 @@
-context("pool.preds.lm")
+context("predict_mi")
+
+library(dplyr)
+library(mice)
+library(testthat)
 
 suppressWarnings(RNGversion("3.5.0"))
 
@@ -12,11 +16,14 @@ test_imp <- mice::mice(test, tasks = "fill", models = imp_train$models)
 test_imp <- complete(test_imp, "all")
 
 # use function
-level = 0.95
-pool_preds <- pool.preds.lm(fits, test_imp, level = level)
+pool_preds <- predict_mi(object = fits, 
+                         newdata = test_imp, 
+                         pool = TRUE, 
+                         interval = "prediction",
+                         level = 0.95)
 
 # obtain the imputed value and the width of the prediction interval
-predfunc <- function(model, data,level) {
+predfunc <- function(model, data, level) {
   summfit <- summary(model)
   sigma <- summfit$sigma
   xmat <- model.matrix(summfit$terms, data = as.data.frame(data))
@@ -59,7 +66,7 @@ t_vector <- numeric(length(Q_bar))
 
 for (i in 1:length(Q_bar)) {
   df_vector[i] <- mice:::barnard.rubin(5, B[i], T_var[i])
-  t_vector[i] <- qt(1 - (1-level)/2, df_vector[i])
+  t_vector[i] <- qt(1 - (1-0.95)/2, df_vector[i])
 }
 
 # Calculate bounds using individual t-values
@@ -68,14 +75,16 @@ upr <- Q_bar + t_vector * sqrt(T_var)
 
 # check if the output structure is as expected
 test_that("Output class is correct", {
-  expect_is(pool_preds, "data.frame")
+  expect_type(pool_preds, "double")     # checks storage type
+  expect_true(is.matrix(pool_preds))    # checks it's a matrix
 })
 
 # check if result is the same, for by hand or in function
 # Note pool_preds function depends on mice::pool.scalar
 test_that("retains same numerical result", {
-  expect_equal(pool_preds[, 1], Q_bar, tolerance = 0.00001)
-  expect_equal(pool_preds[, 2], lwr, tolerance = 0.00001)
-  expect_equal(pool_preds[, 3], upr, tolerance = 0.00001)
+  expect_equal(unname(pool_preds[, 1]), Q_bar, tolerance = 0.00001)
+  expect_equal(unname(pool_preds[, 2]), lwr, tolerance = 0.00001)
+  expect_equal(unname(pool_preds[, 3]), upr, tolerance = 0.00001)
 })
 
+pool_preds
