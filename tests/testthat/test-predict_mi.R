@@ -6,18 +6,33 @@ library(testthat)
 
 suppressWarnings(RNGversion("3.5.0"))
 
-# Obtain dataset, and impute the data
-df <- mice::nhanes
-train <- df[1:20, ]
-test <- df[21:25, ]
-imp_train <- mice::mice(train, m = 5, maxit = 5, tasks = "train")
-fits <- with(imp_train, lm(age ~ bmi + hyp + chl))
-test_imp <- mice::mice(test, tasks = "fill", models = imp_train$models)
-test_imp <- complete(test_imp, "all")
+# load data
+dat <- mice::nhanes
 
-# use function
+# add indicator training and test
+# first 20 for training, last 5 for testing
+dat$set <- c(rep("train", 20), rep("test", 5))
+
+# Make prediction matrix and ensure that set is not used as a predictor
+predmat <- mice::make.predictorMatrix(dat)
+predmat[,"set"] <- 0
+
+# train imputation model
+imp <- mice(dat, m = 5, maxit = 5 ,seed = 1, 
+            predictorMatrix = predmat,
+            ignore = ifelse(dat$set == "test", TRUE, FALSE))
+
+# extract the training and test data sets
+impdats <- mice::complete(imp, "all")
+traindats <- lapply(impdats, \(dat) subset(dat, set == "train", select = -set))
+testdats <- lapply(impdats, \(dat) subset(dat, set == "test", select = -c(set)))
+
+# predict age with other variables with training datasets
+fits <- lapply(traindats, \(dat) lm(age ~ bmi + hyp + chl, data = dat))
+
+# pool the predictions with function
 pool_preds <- predict_mi(object = fits, 
-                         newdata = test_imp, 
+                         newdata = testdats, 
                          pool = TRUE, 
                          interval = "prediction",
                          level = 0.95)
@@ -36,16 +51,12 @@ predfunc <- function(model, data, level) {
   return(cbind(model = xfit, var_pred = var_pred))
 }
 
-# obtain analysis models from fits object
-fits <- fits %>%
-  .$analyses
-
 # obtain predictions for the different imputations
-preds_all <- Map(predfunc, model = fits, data = test_imp, level = 0.95)
+preds_all <- Map(predfunc, model = fits, data = testdats, level = 0.95)
 
 # change the list to a df
 preds <- unlist(preds_all) |>
-  array(dim = c(nrow(test), 2, 5))
+  array(dim = c(nrow(testdats[[1]]), 2, 5))
 
 # our estimand is the predicted value
 # so Q bar is the mean over the predictions
@@ -87,4 +98,3 @@ test_that("retains same numerical result", {
   expect_equal(unname(pool_preds[, 3]), upr, tolerance = 0.00001)
 })
 
-pool_preds

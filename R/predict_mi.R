@@ -29,27 +29,40 @@
 #' # Create Imp and Lm object
 #' dat <- mice::nhanes
 #'
-#' # Split the data in training and test set
-#' train <- dat[1:20, ]
-#' test <- dat[21:25, ]
+#' # add indicator training and test
+#' # first 20 for training, last 5 for testing
+#' dat$set <- c(rep("train", 20), rep("test", 5))
+#' 
+#' # Make prediction matrix and ensure that set is not used as a predictor
+#' predmat <- mice::make.predictorMatrix(dat)
+#' predmat[,"set"] <- 0
 #'
-#' # Impute missing values in train, and create a imputation model
-#' imp_train <- mice::mice(train, m = 5, maxit = 5, task = "train")
+#' # Impute missing values based on the train set
+#' imp <- mice(dat, m = 5, maxit = 5 ,seed = 1, predictorMatrix = predmat, 
+#' ignore = ifelse(dat$set == "test", TRUE, FALSE))\
+#' 
+#' # extract the training and test data sets
+#' traindats <- lapply(impdats, \(dat) subset(dat, set == "train", select = -set))
+#' testdats <- lapply(impdats, \(dat) subset(dat, set == "test", select = -c(set)))
 #'
 #' # Fit the prediction models, based on the imputed training data
-#' fits <- with(imp_train, lm(age ~ bmi + hyp + chl))
+#' fits <- lapply(traindats, \(dat) lm(age ~ bmi + hyp + chl, data = dat))
 #'
 #' # To ensure the data types match between train and test use mice::coerce
 #' # Fit the imputation model on the test set
 #' test_imp <- mice::mice(test, tasks = "fill", models = imp_train$models)
 #'
-#' # Retrieve the imputed datasets
-#' test_imp <- complete(test_imp, "all")
-#'
-#' # Pool the predictions for the test set
-#' predict_mi(fits, test_imp, interval = "prediction")
+#' # pool the predictions with function
+#' pool_preds <- predict_mi(object = fits, newdata = testdats, pool = TRUE,
+#' interval = "prediction",level = 0.95)
 #' @export
 
+# pool the predictions with function
+pool_preds <- predict_mi(object = fits, 
+                         newdata = testdats, 
+                         pool = TRUE, 
+                         interval = "prediction",
+                         level = 0.95)
 predict_mi <- function(object, pool = TRUE, ...) {
   UseMethod("predict_mi")
 }
