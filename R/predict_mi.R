@@ -53,20 +53,13 @@
 #' test_imp <- mice::mice(test, tasks = "fill", models = imp_train$models)
 #'
 #' # pool the predictions with function
-#' pool_preds <- predict_mi(object = fits, newdata = testdats, pool = TRUE,
+#' pool_preds <- mice::predict_mi(object = fits, newdata = testdats, pool = TRUE, 
 #' interval = "prediction",level = 0.95)
 #' @export
-
-# pool the predictions with function
-pool_preds <- predict_mi(object = fits, 
-                         newdata = testdats, 
-                         pool = TRUE, 
-                         interval = "prediction",
-                         level = 0.95)
 predict_mi <- function(object, pool = TRUE, ...) {
   UseMethod("predict_mi")
 }
-
+#' @export
 predict_mi.mira <- function(object, newdata, pool = TRUE, se.fit = FALSE, 
                             interval = c("none", "confidence", "prediction"),
                             level = 0.95, ...) {
