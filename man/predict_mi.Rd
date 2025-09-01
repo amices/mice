@@ -94,8 +94,8 @@ predmat <- mice::make.predictorMatrix(dat)
 predmat[,"set"] <- 0
 
 # Impute missing values based on the train set
-imp <- mice(dat, m = 5, maxit = 5 ,seed = 1, predictorMatrix = predmat, 
-ignore = ifelse(dat$set == "test", TRUE, FALSE))\
+imp <- mice(dat, m = 5, maxit = 5 , seed = 1, predictorMatrix = predmat, ignore = ifelse(dat$set == "test", TRUE, FALSE), print = FALSE)
+impdats <- complete(imp, "all")
 
 # extract the training and test data sets
 traindats <- lapply(impdats, \(dat) subset(dat, set == "train", select = -set))
@@ -104,13 +104,8 @@ testdats <- lapply(impdats, \(dat) subset(dat, set == "test", select = -c(set)))
 # Fit the prediction models, based on the imputed training data
 fits <- lapply(traindats, \(dat) lm(age ~ bmi + hyp + chl, data = dat))
 
-# To ensure the data types match between train and test use mice::coerce
-# Fit the imputation model on the test set
-test_imp <- mice::mice(test, tasks = "fill", models = imp_train$models)
-
 # pool the predictions with function
-pool_preds <- mice::predict_mi(object = fits, newdata = testdats, pool = TRUE, 
-interval = "prediction",level = 0.95)
+pool_preds <- mice::predict_mi(object = fits, newdata = testdats, pool = TRUE, interval = "prediction", level = 0.95)
 }
 \seealso{
 \code{\link[stats:lm]{stats::lm()}}, \code{\link[stats:predict.lm]{stats::predict.lm()}}, \code{\link[=mice]{mice()}}, \code{\link[=with.mids]{with.mids()}}
