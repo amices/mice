@@ -4,25 +4,38 @@
 \alias{predict_mi}
 \title{Predict method for linear models with multiply imputed data}
 \usage{
-predict_mi(object, pool = TRUE, ...)
+predict_mi(
+  object,
+  newdata,
+  pool = TRUE,
+  se.fit = FALSE,
+  interval = c("none", "confidence", "prediction"),
+  level = 0.95,
+  ...
+)
 }
 \arguments{
 \item{object}{A prediction model, either a single lm object or a list of lm
 objects obtained from multiply imputed data (object can also be of class mira).}
 
+\item{newdata}{An optional data frame in which to look for variables
+with which to predict. Can be a data.frame, list, or mids object.
+If omitted, the fitted values are used.}
+
 \item{pool}{Logical indicating whether to pool the predictions (and potentially
 obtain pooled prediction intervals).}
+
+\item{se.fit}{A switch indicating if standard errors are required.}
+
+\item{interval}{Type of interval calculation.  Can be abbreviated.}
+
+\item{level}{Tolerance/confidence level.}
 
 \item{...}{
   Arguments passed on to \code{\link[stats:predict.lm]{stats::predict.lm}}
   \describe{
-    \item{\code{newdata}}{An optional data frame in which to look for variables with
-    which to predict.  If omitted, the fitted values are used.}
-    \item{\code{se.fit}}{A switch indicating if standard errors are required.}
     \item{\code{scale}}{Scale parameter for std.err. calculation.}
     \item{\code{df}}{Degrees of freedom for scale.}
-    \item{\code{interval}}{Type of interval calculation.  Can be abbreviated.}
-    \item{\code{level}}{Tolerance/confidence level.}
     \item{\code{type}}{Type of prediction (response or model term).  Can be abbreviated.}
     \item{\code{terms}}{If \code{type = "terms"}, which terms (default is all
     terms), a \code{\link{character}} vector.}
@@ -94,7 +107,8 @@ predmat <- mice::make.predictorMatrix(dat)
 predmat[,"set"] <- 0
 
 # Impute missing values based on the train set
-imp <- mice(dat, m = 5, maxit = 5 , seed = 1, predictorMatrix = predmat, ignore = ifelse(dat$set == "test", TRUE, FALSE), print = FALSE)
+imp <- mice(dat, m = 5, maxit = 5 , seed = 1, predictorMatrix = predmat, 
+  ignore = ifelse(dat$set == "test", TRUE, FALSE), print = FALSE)
 impdats <- complete(imp, "all")
 
 # extract the training and test data sets
@@ -105,7 +119,8 @@ testdats <- lapply(impdats, \(dat) subset(dat, set == "test", select = -c(set)))
 fits <- lapply(traindats, \(dat) lm(age ~ bmi + hyp + chl, data = dat))
 
 # pool the predictions with function
-pool_preds <- mice::predict_mi(object = fits, newdata = testdats, pool = TRUE, interval = "prediction", level = 0.95)
+pool_preds <- mice::predict_mi(object = fits, newdata = testdats, 
+  pool = TRUE, interval = "prediction", level = 0.95)
 }
 \seealso{
 \code{\link[stats:lm]{stats::lm()}}, \code{\link[stats:predict.lm]{stats::predict.lm()}}, \code{\link[=mice]{mice()}}, \code{\link[=with.mids]{with.mids()}}

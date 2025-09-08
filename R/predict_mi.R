@@ -2,6 +2,9 @@
 #'
 #' @param object A prediction model, either a single lm object or a list of lm
 #' objects obtained from multiply imputed data (object can also be of class mira).
+#' @param newdata An optional data frame in which to look for variables 
+#' with which to predict. Can be a data.frame, list, or mids object. 
+#' If omitted, the fitted values are used.
 #' @param pool Logical indicating whether to pool the predictions (and potentially
 #' obtain pooled prediction intervals).
 #' @inheritParams stats::predict.lm
@@ -53,7 +56,13 @@
 #' pool_preds <- mice::predict_mi(object = fits, newdata = testdats, 
 #'   pool = TRUE, interval = "prediction", level = 0.95)
 #' @export
-predict_mi <- function(object, pool = TRUE, ...) {
+predict_mi <- function(object,
+                       newdata,
+                       pool = TRUE,
+                       se.fit = FALSE,
+                       interval = c("none", "confidence", "prediction"),
+                       level = 0.95,
+                       ...) {
   UseMethod("predict_mi")
 }
 
