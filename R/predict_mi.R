@@ -46,11 +46,11 @@
 #' impdats <- complete(imp, "all")
 #' 
 #' # extract the training and test data sets
-#' traindats <- lapply(impdats, \(dat) subset(dat, set == "train", select = -set))
-#' testdats <- lapply(impdats, \(dat) subset(dat, set == "test", select = -c(set)))
+#' traindats <- lapply(impdats, function(dat) subset(dat, set == "train", select = -set))
+#' testdats <- lapply(impdats, function(dat) subset(dat, set == "test", select = -c(set)))
 #'
 #' # Fit the prediction models, based on the imputed training data
-#' fits <- lapply(traindats, \(dat) lm(age ~ bmi + hyp + chl, data = dat))
+#' fits <- lapply(traindats, function(dat) lm(age ~ bmi + hyp + chl, data = dat))
 #'
 #' # pool the predictions with function
 #' pool_preds <- mice::predict_mi(object = fits, newdata = testdats, 
@@ -328,132 +328,3 @@ remove_sefit <- function(fit) {
   }
   fit
 }
-
-# pool.preds.lm <- function(object,
-#                           new_data = NULL,
-#                           interval = "prediction",
-#                           level = 0.95) {
-#   #  Make sure that we have multiple pred models or datasets, and that the prediction model is lm
-#   call <- match.call()
-#   if (!is.mira(object) & !is.mipo(object)) {
-#     if (is.data.frame(new_data)) {
-#       stop(
-#         "The prediction model must have class 'mira' or 'mipo' if there are no multiple imputed new data."
-#       )
-#     }
-#     if (class(object) != "lm") {
-#       stop(
-#         "The pooled predictions can only be calculated for results of the 'lm' modeling function"
-#       )
-#     }
-#   }
-#   
-#   # Check to see if we have more than one imputation, and the same number of pred models and imp
-#   # Make sure that we have an lm model
-#   if (is.mira(object)) {
-#     if ((m <- length(object$analyses)) < 2) {
-#       stop("At least two prediction models are needed for pooling.\n")
-#     }
-#     if ((m <- length(object$analyses)) > 2 &
-#         !is.data.frame(new_data)) {
-#       if (m != length(new_data) & !is.null(new_data)) {
-#         stop(
-#           "The number of prediction models whould be the same as the number of imputed samples for the new data.\n"
-#         )
-#       }
-#     }
-#     if (class((object$analyses[[1]]))[1] != "lm") {
-#       stop(
-#         "The pooled predictions can only be calculated for results of the 'lm' modeling function"
-#       )
-#     }
-#   }
-#   
-#   # check what type of interval is requested
-#   if (interval[1] != "prediction" & interval[1] != "none") {
-#     stop("The interval argument should be either 'prediction' or 'none'.")
-#   }
-#   
-#   # make prediction on the training set if no new data is specified
-#   if (is.null(new_data)) {
-#     if (is.mira(object)) {
-#       print("No new data provided, using the original data from the model.")
-#       new_data <- lapply(object$analyses, function(x) {
-#         x$model
-#       })
-#     } else {
-#       stop("With only a single prediction model and no new data, pooling is not possible.")
-#     }
-#   }
-#   
-#   # check the level that should be used
-#   
-#   if (level < 0 | level > 1) {
-#     stop("The level should be between 0 and 1.")
-#   }
-#   
-#   # obtain the fitted models
-#   if (is.mira(object)) {
-#     fits <- object$analyses # extract the fitted analyses
-#   } else {
-#     fits <- list(object)
-#   }
-#   
-#   # check how many test sets there are
-#   if (is.data.frame(new_data)) {
-#     new_data <- list(new_data)
-#   }
-#   
-#   # obtain the predictions with the interval
-#   preds <- Map(pred_int,
-#                model = fits,
-#                data = new_data,
-#                level = level)
-#   
-#   # make sure we have the correct length
-#   len <- max(length(new_data), length(fits))
-#   
-#   # pool the predictions,
-#   # see test-pool.preds for the calculation without pool.scalar
-#   out <- unlist(preds) |>
-#     array(dim = c(nrow(new_data[[1]]), 2, len)) |>
-#     apply(1, \(x) {
-#       pooled <- mice::pool.scalar(Q = x[1, ], U = x[2, ])
-#       pooled$qbar + c(0, -1, 1) * qt(1 - (1 - level) / 2, pooled$df) * sqrt(pooled$t)
-#     }) |>
-#     t()
-#   
-#   # tidy output
-#   # # only return the predictions if the PI is not needed
-#   if (interval == "prediction") {
-#     return(data.frame(
-#       fit = out[, 1],
-#       lwr = out[, 2],
-#       upr = out[, 3]
-#     ))
-#   } else {
-#     return(data.frame(fit = out[, 1]))
-#   }
-# }
-
-#' Title
-#' 
-#' @param model lm objeact
-#' @param data data frame with the new data to predict
-#' @param level confidence level for the prediction interval, default is 0.95
-#' 
-#' @returns predictions and the width of the prediction interval
-#' @keywords internal
-#' @noRd
-# pred_int <- function(model, data, level = 0.95) {
-#   preds <- predict(model,
-#                    newdata = data,
-#                    interval = "prediction",
-#                    level = level)
-#   
-#   # obtain the predictions with with the prediction variance
-#   # by removing the t value that is used based on df
-#   t =  qt(1 - (1 - level) / 2, model$df.residual)
-#   var_pred = ((preds[, 3] - preds[, 2]) / (2 * t))^2
-#   return(data.frame(pred = preds[, 1], var_pred = var_pred))
-# }

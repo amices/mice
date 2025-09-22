@@ -24,11 +24,11 @@ imp <- mice(dat, m = 5, maxit = 5 ,seed = 1,
 
 # extract the training and test data sets
 impdats <- mice::complete(imp, "all")
-traindats <- lapply(impdats, \(dat) subset(dat, set == "train", select = -set))
-testdats <- lapply(impdats, \(dat) subset(dat, set == "test", select = -c(set)))
+traindats <- lapply(impdats, function(dat) subset(dat, set == "train", select = -set))
+testdats <- lapply(impdats, function(dat) subset(dat, set == "test", select = -c(set)))
 
 # predict age with other variables with training datasets
-fits <- lapply(traindats, \(dat) lm(age ~ bmi + hyp + chl, data = dat))
+fits <- lapply(traindats, function(dat) lm(age ~ bmi + hyp + chl, data = dat))
 
 # pool the predictions with function
 pool_preds <- predict_mi(object = fits, 
@@ -55,7 +55,7 @@ predfunc <- function(model, data, level) {
 preds_all <- Map(predfunc, model = fits, data = testdats, level = 0.95)
 
 # change the list to a df
-preds <- unlist(preds_all) |>
+preds <- unlist(preds_all) %>% 
   array(dim = c(nrow(testdats[[1]]), 2, 5))
 
 # our estimand is the predicted value
