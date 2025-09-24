@@ -1,3 +1,25 @@
+# mice 3.18.0.9000
+
+> **Experimental release**: Native support for parallel imputation.
+
+- The `mice()` function now supports parallel execution of imputations via the new `parallel = TRUE` argument. When enabled, instead of sequentially calculating `m` imputations at a given iteration, the `m` chains are distributed across available CPU cores using the `future` and `future.apply` frameworks. 
+- Parallel imputation may significantly reduce runtime, especially for large datasets and many imputations (`m`), but does not pay-off for small datasets or few imputations. 
+- Parallel execution is implemented only in the `mice()` function, and does not affect the `mice.impute.*()` functions.
+
+- To activate parallel execution:
+
+```
+library(mice)
+imp <- mice(data, parallel = TRUE)
+```
+
+- The default is `parallel = FALSE` for backward compatibility.
+- The argument `n.core` specifies the number of CPU cores to use. If `n.core` is not specified (default) the actual number of cores used is calculated as minimum(number of available cores - 1, number of imputations).
+-	`printFlag = TRUE` prints iteration and imputation number only in sequential mode; parallel mode reports timing per iteration.
+- Note: `mice()` will automatically select a parallel backend (default is `multisession`). To override, users may manually call `plan(...)` before running `mice()`. 
+- The `future` and `future.apply` packages must be installed to run parallel imputation. If not installed, `mice()` will throw an error and suggest installing the packages.
+- The wrappers `parlmice()` and `futuremice()` are still functional, but now throw a warning that they will be deprecated in the future. Users are encouraged to use the new `parallel` argument in `mice()` instead.
+
 # mice 3.18.0
 
 ### Major changes

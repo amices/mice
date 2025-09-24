@@ -1,5 +1,7 @@
 title: mice
 url: https://amices.org/mice/
+development:
+  mode: auto
 template:
   bootstrap: 5
   params:
@@ -126,6 +128,7 @@ reference:
   - norm.draw
   - .norm.draw
   - .pmm.match
+  - record.event
 - title: Multivariate amputation
   desc: |
     Amputation is the inverse of imputation, starting with a complete dataset, and creating missing data pattern according to the posited missing data mechanism. Amputation is useful for simulation studies.
@@ -173,8 +176,9 @@ reference:
   - supports.transparent
   - version
 articles:
-  - title: General
-    navbar: ~
-    contents:
-    - overview
-    - oldfriends
+- title: General
+  navbar: ~
+  contents:
+  - overview
+  - oldfriends
+  - developer-notes-complete
