@@ -112,11 +112,11 @@ imp <- mice(dat, m = 5, maxit = 5 , seed = 1, predictorMatrix = predmat,
 impdats <- complete(imp, "all")
 
 # extract the training and test data sets
-traindats <- lapply(impdats, \(dat) subset(dat, set == "train", select = -set))
-testdats <- lapply(impdats, \(dat) subset(dat, set == "test", select = -c(set)))
+traindats <- lapply(impdats, function(dat) subset(dat, set == "train", select = -set))
+testdats <- lapply(impdats, function(dat) subset(dat, set == "test", select = -c(set)))
 
 # Fit the prediction models, based on the imputed training data
-fits <- lapply(traindats, \(dat) lm(age ~ bmi + hyp + chl, data = dat))
+fits <- lapply(traindats, function(dat) lm(age ~ bmi + hyp + chl, data = dat))
 
 # pool the predictions with function
 pool_preds <- mice::predict_mi(object = fits, newdata = testdats, 
