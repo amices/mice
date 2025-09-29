@@ -70,6 +70,7 @@ reference:
   - pool.r.squared
   - pool.scalar
   - pool.table
+  - predict_mi
   - nelsonaalen
   - pool.compare
   - anova.mira

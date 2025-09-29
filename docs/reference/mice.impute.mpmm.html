@@ -9,7 +9,7 @@ for instance, polynomials, interactions, range restrictions and sum scores."><me
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.18.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.18.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -140,10 +140,10 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># analyse and check</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="pool.html">pool</a></span><span class="op">(</span><span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">x2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term   estimate  std.error  statistic        df      p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 0.03113943 0.04146686  0.7509473 38.589154 4.572395e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2           x 0.50054117 0.03501063 14.2968326 37.065309 1.162119e-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          x2 0.48960396 0.03097395 15.8069581  5.635635 6.971423e-06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term    estimate  std.error  statistic         df      p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 0.006634165 0.04142233  0.1601592  31.917536 8.737650e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           x 0.537504457 0.04858813 11.0624653   2.935602 1.745179e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          x2 0.508113849 0.02291089 22.1778289 366.886010 9.732350e-70</span>
 <span class="r-in"><span><span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">x2</span>, col <span class="op">=</span> <span class="fu"><a href="mdc.html">mdc</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span><span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">m</span><span class="op">]</span>, <span class="va">x2</span><span class="op">[</span><span class="va">m</span><span class="op">]</span>, col <span class="op">=</span> <span class="fu"><a href="mdc.html">mdc</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="mice.impute.mpmm-1.png" alt="" width="700" height="433"></span>
@@ -158,7 +158,7 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>

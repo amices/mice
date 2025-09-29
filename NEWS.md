@@ -13,7 +13,9 @@
      predictions (`pool = FALSE`).
 
   This functionality makes it easier to evaluate predictive performance
-  on test sets while correctly accounting for imputation uncertainty.
+  on test sets while correctly accounting for imputation uncertainty. 
+  
+  Contributed: @fdvanleeuwen, @thomvolker (#720)
 
 # mice 3.18.0
 

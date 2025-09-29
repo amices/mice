@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.18.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.18.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +37,19 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.18.0" id="mice-3180">mice 3.18.0<a class="anchor" aria-label="anchor" href="#mice-3180"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.18.1" id="mice-3181">mice 3.18.1<a class="anchor" aria-label="anchor" href="#mice-3181"></a></h2>
+<ul><li>
+<p>Added <code><a href="../reference/predict_mi.html">predict_mi()</a></code> to generate predictions from models fitted on multiply imputed datasets. The function pools predictions across imputations using Rubin’s rules, and can return point predictions or prediction intervals at a specified confidence level.</p>
+<p>Typical workflow:</p>
+<ol style="list-style-type: decimal"><li>Fit a model separately on each completed dataset.</li>
+<li>Call <code><a href="../reference/predict_mi.html">predict_mi()</a></code> with the list of models and the corresponding new data (per imputation).</li>
+<li>Obtain either pooled predictions (<code>pool = TRUE</code>) or per-imputation predictions (<code>pool = FALSE</code>).</li>
+</ol><p>This functionality makes it easier to evaluate predictive performance on test sets while correctly accounting for imputation uncertainty.</p>
+<p>Contributed: <a href="https://github.com/fdvanleeuwen" class="external-link">@fdvanleeuwen</a>, <a href="https://github.com/thomvolker" class="external-link">@thomvolker</a> (<a href="https://github.com/amices/mice/issues/720" class="external-link">#720</a>)</p>
+</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.18.0" id="mice-3180">mice 3.18.0<a class="anchor" aria-label="anchor" href="#mice-3180"></a></h2><p class="text-muted">CRAN release: 2025-05-27</p>
 <div class="section level4">
 <h4 id="major-changes-3-18-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-3-18-0"></a></h4>
 <ul><li>
@@ -901,7 +913,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>
