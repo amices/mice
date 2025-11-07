@@ -23,7 +23,29 @@ summary.mira <- function(object,
   type <- match.arg(type)
   fitlist <- getfit(object)
   if (type == "tidy") {
-    v <- lapply(fitlist, tidy, effects = "fixed", parametric = TRUE, ...) %>% bind_rows()
+    # Try standard tidy() first, with fallback for lmer objects
+    v <- tryCatch({
+      lapply(fitlist, tidy, effects = "fixed", parametric = TRUE, ...) %>% bind_rows()
+    }, error = function(e) {
+      # Check if this is an lmerMod object without broom.mixed
+      if (inherits(fitlist[[1]], "lmerMod") && 
+          grepl("No.*tidy.*method", e$message, ignore.case = TRUE)) {
+        # Manual extraction for lmer objects using built-in methods
+        lapply(fitlist, function(fit) {
+          coefs <- lme4::fixef(fit)
+          se <- sqrt(diag(as.matrix(stats::vcov(fit))))
+          data.frame(
+            term = names(coefs),
+            estimate = as.numeric(coefs),
+            std.error = as.numeric(se),
+            stringsAsFactors = FALSE
+          )
+        }) %>% bind_rows()
+      } else {
+        # Re-throw the error if it's not an lmer issue
+        stop(e)
+      }
+    })
   }
   if (type == "glance") {
     v <- lapply(fitlist, glance, ...) %>% bind_rows()
