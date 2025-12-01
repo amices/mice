@@ -490,6 +490,7 @@ Other contributors:
   \item Hanne Oberman \email{h.i.oberman@uu.nl} [contributor]
   \item Stephen Wade \email{stephematician@gmail.com} [contributor]
   \item Florian van Leeuwen \email{f.d.vanleeuwen@uu.nl} [contributor]
+  \item Frederik Fabricius-Bjerre \email{frederik@fabriciusbjerre.dk} [contributor]
 }
 
 

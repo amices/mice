@@ -1,0 +1,748 @@
+# mice
+
+## [Multivariate Imputation by Chained Equations](https://amices.org/mice/)
+
+The [`mice`](https://cran.r-project.org/package=mice) package implements
+a method to deal with missing data. The package creates multiple
+imputations (replacement values) for multivariate missing data. The
+method is based on Fully Conditional Specification, where each
+incomplete variable is imputed by a separate model. The `MICE` algorithm
+can impute mixes of continuous, binary, unordered categorical and
+ordered categorical data. In addition, MICE can impute continuous
+two-level data, and maintain consistency between imputations by means of
+passive imputation. Many diagnostic plots are implemented to inspect the
+quality of the imputations.
+
+## Installation
+
+The `mice` package can be installed from CRAN as follows:
+
+``` r
+install.packages("mice")
+```
+
+The latest version can be installed from GitHub as follows:
+
+``` r
+install.packages("devtools")
+devtools::install_github(repo = "amices/mice")
+```
+
+## Minimal example
+
+``` r
+library(mice, warn.conflicts = FALSE)
+
+# show the missing data pattern
+md.pattern(nhanes)
+```
+
+![Missing data pattern of nhanes data. Blue is observed, red is
+missing.](reference/figures/README-pattern-1.png)
+
+Missing data pattern of `nhanes` data. Blue is observed, red is missing.
+
+``` R
+#>    age hyp bmi chl   
+#> 13   1   1   1   1  0
+#> 3    1   1   1   0  1
+#> 1    1   1   0   1  1
+#> 1    1   0   0   1  2
+#> 7    1   0   0   0  3
+#>      0   8   9  10 27
+```
+
+The table and the graph summarize where the missing data occur in the
+`nhanes` dataset.
+
+``` r
+# multiple impute the missing values
+imp <- mice(nhanes, maxit = 2, m = 2, seed = 1)
+#> 
+#>  iter imp variable
+#>   1   1  bmi  hyp  chl
+#>   1   2  bmi  hyp  chl
+#>   2   1  bmi  hyp  chl
+#>   2   2  bmi  hyp  chl
+
+# inspect quality of imputations
+stripplot(imp, chl, pch = 19, xlab = "Imputation number")
+```
+
+![Distribution of chl per imputed data
+set.](reference/figures/README-stripplot-1.png)
+
+Distribution of `chl` per imputed data set.
+
+In general, we would like the imputations to be plausible, i.e., values
+that could have been observed if they had not been missing.
+
+``` r
+# fit complete-data model
+fit <- with(imp, lm(chl ~ age + bmi))
+
+# pool and summarize the results
+summary(pool(fit))
+#>          term estimate std.error statistic    df p.value
+#> 1 (Intercept)     9.08     73.09     0.124  4.50  0.9065
+#> 2         age    35.23     17.46     2.017  1.36  0.2377
+#> 3         bmi     4.69      1.94     2.417 15.25  0.0286
+```
+
+The complete-data is fit to each imputed dataset, and the results are
+combined to arrive at estimates that properly account for the missing
+data.
+
+## `mice 3.0`
+
+Version 3.0 represents a major update that implements the following
+features:
+
+1.  `blocks`: The main algorithm iterates over blocks. A block is simply
+    a collection of variables. In the common MICE algorithm each block
+    was equivalent to one variable, which - of course - is the default;
+    The `blocks` argument allows mixing univariate imputation method
+    multivariate imputation methods. The `blocks` feature bridges two
+    seemingly disparate approaches, joint modeling and fully conditional
+    specification, into one framework;
+
+2.  `where`: The `where` argument is a logical matrix of the same size
+    of `data` that specifies which cells should be imputed. This opens
+    up some new analytic possibilities;
+
+3.  Multivariate tests: There are new functions
+    [`D1()`](https://amices.org/mice/reference/D1.md),
+    [`D2()`](https://amices.org/mice/reference/D2.md),
+    [`D3()`](https://amices.org/mice/reference/D3.md) and
+    [`anova()`](https://rdrr.io/r/stats/anova.html) that perform
+    multivariate parameter tests on the repeated analysis from on
+    multiply-imputed data;
+
+4.  `formulas`: The old `form` argument has been redesign and is now
+    renamed to `formulas`. This provides an alternative way to specify
+    imputation models that exploits the full power of R’s native
+    formula’s.
+
+5.  Better integration with the `tidyverse` framework, especially for
+    packages `dplyr`, `tibble` and `broom`;
+
+6.  Improved numerical algorithms for low-level imputation function.
+    Better handling of duplicate variables.
+
+7.  Last but not least: A brand new edition AND online version of
+    [Flexible Imputation of Missing Data. Second
+    Edition.](https://stefvanbuuren.name/fimd/)
+
+See [MICE: Multivariate Imputation by Chained
+Equations](https://amices.org/mice/) for more resources.
+
+I’ll be happy to take feedback and discuss suggestions. Please submit
+these through Github’s issues facility.
+
+## Resources
+
+### Books
+
+1.  Van Buuren, S. (2018). [Flexible Imputation of Missing Data. Second
+    Edition.](https://stefvanbuuren.name/fimd/). Chapman & Hall/CRC.
+    Boca Raton, FL.
+
+### Course materials
+
+1.  [Handling Missing Data in `R` with
+    `mice`](https://amices.org/Winnipeg/)
+2.  [Statistical Methods for combined data
+    sets](https://stefvanbuuren.name/RECAPworkshop/)
+
+### Vignettes
+
+1.  [Ad hoc methods and the MICE
+    algorithm](https://www.gerkovink.com/miceVignettes/Ad_hoc_and_mice/Ad_hoc_methods.html)
+2.  [Convergence and
+    pooling](https://www.gerkovink.com/miceVignettes/Convergence_pooling/Convergence_and_pooling.html)
+3.  [Inspecting how the observed data and missingness are
+    related](https://www.gerkovink.com/miceVignettes/Missingness_inspection/Missingness_inspection.html)
+4.  [Passive imputation and
+    post-processing](https://www.gerkovink.com/miceVignettes/Passive_Post_processing/Passive_imputation_post_processing.html)
+5.  [Imputing multilevel
+    data](https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html)
+6.  [Sensitivity analysis with
+    `mice`](https://www.gerkovink.com/miceVignettes/Sensitivity_analysis/Sensitivity_analysis.html)
+7.  [Generate missing values with
+    `ampute`](https://rianneschouten.github.io/mice_ampute/vignette/ampute.html)
+8.  [`futuremice`: Wrapper for parallel MICE imputation through
+    futures](https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremice.html)
+
+### Code from publications
+
+1.  [Flexible Imputation of Missing Data. Second
+    edition.](https://github.com/stefvanbuuren/fimdbook/tree/master/R)
+
+## Acknowledgement
+
+The cute mice sticker was designed by Jaden M. Walters. Thanks Jaden!
+
+## Code of Conduct
+
+Please note that the mice project is released with a [Contributor Code
+of Conduct](https://amices.org/mice/CODE_OF_CONDUCT.html). By
+contributing to this project, you agree to abide by its terms.
+
+# Package index
+
+## Main imputation functions
+
+The workflow of multiple imputation is: multiply-impute the data, apply
+the complete-data model to each imputed data set, and pool the results
+to get to the final inference. The main functions for imputing the data
+are:
+
+- [`mice()`](https://amices.org/mice/reference/mice.md) :
+
+  mice: Multivariate Imputation by Chained Equations
+
+- [`mice.mids()`](https://amices.org/mice/reference/mice.mids.md) :
+  Multivariate Imputation by Chained Equations (Iteration Step)
+
+- [`parlmice()`](https://amices.org/mice/reference/parlmice.md) :
+  Wrapper function that runs MICE in parallel
+
+- [`futuremice()`](https://amices.org/mice/reference/futuremice.md) :
+  Wrapper function that runs MICE in parallel
+
+## Missing data exploration
+
+Functions to count and explore the structure of the missing data.
+
+- [`md.pattern()`](https://amices.org/mice/reference/md.pattern.md) :
+  Missing data pattern
+- [`md.pairs()`](https://amices.org/mice/reference/md.pairs.md) :
+  Missing data pattern by variable pairs
+- [`cc()`](https://amices.org/mice/reference/cc.md) : Select complete
+  cases
+- [`cci()`](https://amices.org/mice/reference/cci.md) : Complete case
+  indicator
+- [`ic()`](https://amices.org/mice/reference/ic.md) : Select incomplete
+  cases
+- [`ici()`](https://amices.org/mice/reference/ici.md) : Incomplete case
+  indicator
+- [`mcar()`](https://amices.org/mice/reference/mcar.md) : Jamshidian and
+  Jalal's Non-Parametric MCAR Test
+- [`ncc()`](https://amices.org/mice/reference/ncc.md) : Number of
+  complete cases
+- [`nic()`](https://amices.org/mice/reference/nic.md) : Number of
+  incomplete cases
+- [`nimp()`](https://amices.org/mice/reference/nimp.md) : Number of
+  imputations per block
+- [`fico()`](https://amices.org/mice/reference/fico.md) : Fraction of
+  incomplete cases among cases with observed
+- [`flux()`](https://amices.org/mice/reference/flux.md) : Influx and
+  outflux of multivariate missing data patterns
+- [`fluxplot()`](https://amices.org/mice/reference/fluxplot.md) :
+  Fluxplot of the missing data pattern
+
+## Elementary imputation functions
+
+The elementary imputation function is the workhorse that creates the
+actual imputations. Elementary functions are called through the `method`
+argument of `mice` function. Each function imputes one or more columns
+in the data. There are also `mice.impute.xxx` functions outside the
+`mice` package.
+
+- [`mice.impute.2l.bin()`](https://amices.org/mice/reference/mice.impute.2l.bin.md)
+  :
+
+  Imputation by a two-level logistic model using `glmer`
+
+- [`mice.impute.2l.lmer()`](https://amices.org/mice/reference/mice.impute.2l.lmer.md)
+  :
+
+  Imputation by a two-level normal model using `lmer`
+
+- [`mice.impute.2l.norm()`](https://amices.org/mice/reference/mice.impute.2l.norm.md)
+  : Imputation by a two-level normal model
+
+- [`mice.impute.2l.pan()`](https://amices.org/mice/reference/mice.impute.2l.pan.md)
+  :
+
+  Imputation by a two-level normal model using `pan`
+
+- [`mice.impute.2lonly.mean()`](https://amices.org/mice/reference/mice.impute.2lonly.mean.md)
+  : Imputation of most likely value within the class
+
+- [`mice.impute.2lonly.norm()`](https://amices.org/mice/reference/mice.impute.2lonly.norm.md)
+  : Imputation at level 2 by Bayesian linear regression
+
+- [`mice.impute.2lonly.pmm()`](https://amices.org/mice/reference/mice.impute.2lonly.pmm.md)
+  : Imputation at level 2 by predictive mean matching
+
+- [`mice.impute.cart()`](https://amices.org/mice/reference/mice.impute.cart.md)
+  : Imputation by classification and regression trees
+
+- [`mice.impute.jomoImpute()`](https://amices.org/mice/reference/mice.impute.jomoImpute.md)
+  :
+
+  Multivariate multilevel imputation using `jomo`
+
+- [`mice.impute.lasso.logreg()`](https://amices.org/mice/reference/mice.impute.lasso.logreg.md)
+  : Imputation by direct use of lasso logistic regression
+
+- [`mice.impute.lasso.norm()`](https://amices.org/mice/reference/mice.impute.lasso.norm.md)
+  : Imputation by direct use of lasso linear regression
+
+- [`mice.impute.lasso.select.logreg()`](https://amices.org/mice/reference/mice.impute.lasso.select.logreg.md)
+  : Imputation by indirect use of lasso logistic regression
+
+- [`mice.impute.lasso.select.norm()`](https://amices.org/mice/reference/mice.impute.lasso.select.norm.md)
+  : Imputation by indirect use of lasso linear regression
+
+- [`mice.impute.lda()`](https://amices.org/mice/reference/mice.impute.lda.md)
+  : Imputation by linear discriminant analysis
+
+- [`mice.impute.logreg()`](https://amices.org/mice/reference/mice.impute.logreg.md)
+  : Imputation by logistic regression
+
+- [`mice.impute.logreg.boot()`](https://amices.org/mice/reference/mice.impute.logreg.boot.md)
+  : Imputation by logistic regression using the bootstrap
+
+- [`mice.impute.mean()`](https://amices.org/mice/reference/mice.impute.mean.md)
+  : Imputation by the mean
+
+- [`mice.impute.midastouch()`](https://amices.org/mice/reference/mice.impute.midastouch.md)
+  : Imputation by predictive mean matching with distance aided donor
+  selection
+
+- [`mice.impute.mnar.logreg()`](https://amices.org/mice/reference/mice.impute.mnar.md)
+  [`mice.impute.mnar.norm()`](https://amices.org/mice/reference/mice.impute.mnar.md)
+  : Imputation under MNAR mechanism by NARFCS
+
+- [`mice.impute.mpmm()`](https://amices.org/mice/reference/mice.impute.mpmm.md)
+  : Imputation by multivariate predictive mean matching
+
+- [`mice.impute.norm()`](https://amices.org/mice/reference/mice.impute.norm.md)
+  : Imputation by Bayesian linear regression
+
+- [`mice.impute.norm.boot()`](https://amices.org/mice/reference/mice.impute.norm.boot.md)
+  : Imputation by linear regression, bootstrap method
+
+- [`mice.impute.norm.nob()`](https://amices.org/mice/reference/mice.impute.norm.nob.md)
+  : Imputation by linear regression without parameter uncertainty
+
+- [`mice.impute.norm.predict()`](https://amices.org/mice/reference/mice.impute.norm.predict.md)
+  : Imputation by linear regression through prediction
+
+- [`mice.impute.panImpute()`](https://amices.org/mice/reference/mice.impute.panImpute.md)
+  :
+
+  Impute multilevel missing data using `pan`
+
+- [`mice.impute.passive()`](https://amices.org/mice/reference/mice.impute.passive.md)
+  : Passive imputation
+
+- [`mice.impute.pmm()`](https://amices.org/mice/reference/mice.impute.pmm.md)
+  : Imputation by predictive mean matching
+
+- [`mice.impute.polr()`](https://amices.org/mice/reference/mice.impute.polr.md)
+  : Imputation of ordered data by polytomous regression
+
+- [`mice.impute.polyreg()`](https://amices.org/mice/reference/mice.impute.polyreg.md)
+  : Imputation of unordered data by polytomous regression
+
+- [`mice.impute.quadratic()`](https://amices.org/mice/reference/mice.impute.quadratic.md)
+  : Imputation of quadratic terms
+
+- [`mice.impute.rf()`](https://amices.org/mice/reference/mice.impute.rf.md)
+  : Imputation by random forests
+
+- [`mice.impute.ri()`](https://amices.org/mice/reference/mice.impute.ri.md)
+  : Imputation by the random indicator method for nonignorable data
+
+- [`mice.impute.sample()`](https://amices.org/mice/reference/mice.impute.sample.md)
+  : Imputation by simple random sampling
+
+## Imputation model helpers
+
+Specification of the imputation models can be made more convenient using
+the following set of helpers.
+
+- [`construct.blocks()`](https://amices.org/mice/reference/construct.blocks.md)
+  :
+
+  Construct blocks from `formulas` and `predictorMatrix`
+
+- [`make.blocks()`](https://amices.org/mice/reference/make.blocks.md) :
+
+  Creates a `blocks` argument
+
+- [`make.blots()`](https://amices.org/mice/reference/make.blots.md) :
+
+  Creates a `blots` argument
+
+- [`make.formulas()`](https://amices.org/mice/reference/make.formulas.md)
+  :
+
+  Creates a `formulas` argument
+
+- [`make.method()`](https://amices.org/mice/reference/make.method.md) :
+
+  Creates a `method` argument
+
+- [`make.calltype()`](https://amices.org/mice/reference/make.calltype.md)
+  : Create calltype of the imputation model
+
+- [`make.post()`](https://amices.org/mice/reference/make.post.md) :
+
+  Creates a `post` argument
+
+- [`make.predictorMatrix()`](https://amices.org/mice/reference/make.predictorMatrix.md)
+  :
+
+  Creates a `predictorMatrix` argument
+
+- [`make.visitSequence()`](https://amices.org/mice/reference/make.visitSequence.md)
+  :
+
+  Creates a `visitSequence` argument
+
+- [`make.where()`](https://amices.org/mice/reference/make.where.md) :
+
+  Creates a `where` argument
+
+- [`name.blocks()`](https://amices.org/mice/reference/name.blocks.md) :
+  Name imputation blocks
+
+- [`name.formulas()`](https://amices.org/mice/reference/name.formulas.md)
+  : Name formula list elements
+
+- [`quickpred()`](https://amices.org/mice/reference/quickpred.md) :
+  Quick selection of predictors from the data
+
+- [`squeeze()`](https://amices.org/mice/reference/squeeze.md) : Squeeze
+  the imputed values to be within specified boundaries.
+
+## Plots comparing observed to imputed/amputed data
+
+These plots contrast the observed data with the imputed/amputed data,
+usually with a blue/red distinction.
+
+- [`bwplot(`*`<mids>`*`)`](https://amices.org/mice/reference/bwplot.mids.md)
+  : Box-and-whisker plot of observed and imputed data
+
+- [`densityplot(`*`<mids>`*`)`](https://amices.org/mice/reference/densityplot.mids.md)
+  : Density plot of observed and imputed data
+
+- [`mids()`](https://amices.org/mice/reference/mids.md)
+  [`plot(`*`<mids>`*`)`](https://amices.org/mice/reference/mids.md)
+  [`print(`*`<mids>`*`)`](https://amices.org/mice/reference/mids.md)
+  [`summary(`*`<mids>`*`)`](https://amices.org/mice/reference/mids.md) :
+
+  Multiply imputed data set (`mids`)
+
+- [`stripplot(`*`<mids>`*`)`](https://amices.org/mice/reference/stripplot.mids.md)
+  : Stripplot of observed and imputed data
+
+- [`xyplot(`*`<mids>`*`)`](https://amices.org/mice/reference/xyplot.mids.md)
+  : Scatterplot of observed and imputed data
+
+## Repeated analyses and combining analytic estimates
+
+Multiple imputation creates m \> 1 completed data sets, fits the model
+of interest to each of these, and combines the analytic estimates. The
+following functions assist in executing the analysis and pooling steps:
+
+- [`with(`*`<mids>`*`)`](https://amices.org/mice/reference/with.mids.md)
+  : Evaluate an expression in multiple imputed datasets
+- [`pool()`](https://amices.org/mice/reference/pool.md)
+  [`pool.syn()`](https://amices.org/mice/reference/pool.md) : Combine
+  estimates by pooling rules
+- [`pool.r.squared()`](https://amices.org/mice/reference/pool.r.squared.md)
+  : Pools R^2 of m models fitted to multiply-imputed data
+- [`pool.scalar()`](https://amices.org/mice/reference/pool.scalar.md)
+  [`pool.scalar.syn()`](https://amices.org/mice/reference/pool.scalar.md)
+  : Multiple imputation pooling: univariate version
+- [`pool.table()`](https://amices.org/mice/reference/pool.table.md) :
+  Combines estimates from a tidy table
+- [`predict_mi()`](https://amices.org/mice/reference/predict_mi.md) :
+  Predict method for linear models with multiply imputed data
+- [`nelsonaalen()`](https://amices.org/mice/reference/nelsonaalen.md) :
+  Cumulative hazard rate or Nelson-Aalen estimator
+- [`pool.compare()`](https://amices.org/mice/reference/pool.compare.md)
+  : Compare two nested models fitted to imputed data
+- [`anova(`*`<mira>`*`)`](https://amices.org/mice/reference/anova.md) :
+  Compare several nested models
+- [`fix.coef()`](https://amices.org/mice/reference/fix.coef.md) : Fix
+  coefficients and update model
+- [`D1()`](https://amices.org/mice/reference/D1.md) : Compare two nested
+  models using D1-statistic
+- [`D2()`](https://amices.org/mice/reference/D2.md) : Compare two nested
+  models using D2-statistic
+- [`D3()`](https://amices.org/mice/reference/D3.md) : Compare two nested
+  models using D3-statistic
+
+## Data manipulation
+
+The multiply-imputed data can be combined in various ways, and exported
+into other formats.
+
+- [`complete(`*`<mids>`*`)`](https://amices.org/mice/reference/complete.mids.md)
+  :
+
+  Extracts the completed data from a `mids` object
+
+- [`cbind()`](https://amices.org/mice/reference/cbind.md)
+  [`rbind()`](https://amices.org/mice/reference/cbind.md) : Combine R
+  objects by rows and columns
+
+- [`ibind()`](https://amices.org/mice/reference/ibind.md) :
+
+  Enlarge number of imputations by combining `mids` objects
+
+- [`as.mids()`](https://amices.org/mice/reference/as.mids.md) :
+
+  Converts an imputed dataset (long format) into a `mids` object
+
+- [`as.mira()`](https://amices.org/mice/reference/as.mira.md) :
+
+  Create a `mira` object from repeated analyses
+
+- [`as.mitml.result()`](https://amices.org/mice/reference/as.mitml.result.md)
+  :
+
+  Converts into a `mitml.result` object
+
+- [`filter(`*`<mids>`*`)`](https://amices.org/mice/reference/filter.mids.md)
+  :
+
+  Subset rows of a `mids` object
+
+- [`mids2mplus()`](https://amices.org/mice/reference/mids2mplus.md) :
+
+  Export `mids` object to Mplus
+
+- [`mids2spss()`](https://amices.org/mice/reference/mids2spss.md) :
+
+  Export `mids` object to SPSS
+
+## Class descriptions
+
+The data created at the various analytic phases are stored as list
+objects of a specific class. The most important classes and class-test
+functions are:
+
+- [`mids()`](https://amices.org/mice/reference/mids.md)
+  [`plot(`*`<mids>`*`)`](https://amices.org/mice/reference/mids.md)
+  [`print(`*`<mids>`*`)`](https://amices.org/mice/reference/mids.md)
+  [`summary(`*`<mids>`*`)`](https://amices.org/mice/reference/mids.md) :
+
+  Multiply imputed data set (`mids`)
+
+- [`mira()`](https://amices.org/mice/reference/mira.md) : Create an
+  object of class "mira"
+
+- [`mipo()`](https://amices.org/mice/reference/mipo.md)
+  [`summary(`*`<mipo>`*`)`](https://amices.org/mice/reference/mipo.md)
+  [`print(`*`<mipo>`*`)`](https://amices.org/mice/reference/mipo.md)
+  [`print(`*`<mipo.summary>`*`)`](https://amices.org/mice/reference/mipo.md)
+  [`process_mipo()`](https://amices.org/mice/reference/mipo.md) :
+
+  `mipo`: Multiple imputation pooled object
+
+- [`is.mids()`](https://amices.org/mice/reference/is.mids.md) :
+
+  Check for `mids` object
+
+- [`is.mipo()`](https://amices.org/mice/reference/is.mipo.md) :
+
+  Check for `mipo` object
+
+- [`is.mira()`](https://amices.org/mice/reference/is.mira.md) :
+
+  Check for `mira` object
+
+- [`is.mitml.result()`](https://amices.org/mice/reference/is.mitml.result.md)
+  :
+
+  Check for `mitml.result` object
+
+## Extraction functions
+
+Helpers to extract and print information from objects of specific
+classes.
+
+- [`convergence()`](https://amices.org/mice/reference/convergence.md) :
+
+  Computes convergence diagnostics for a `mids` object
+
+- [`getfit()`](https://amices.org/mice/reference/getfit.md) : Extract
+  list of fitted models
+
+- [`getqbar()`](https://amices.org/mice/reference/getqbar.md) :
+
+  Extract estimate from `mipo` object
+
+- [`glance(`*`<mipo>`*`)`](https://amices.org/mice/reference/glance.mipo.md)
+  :
+
+  Glance method to extract information from a `mipo` object
+
+- [`mids()`](https://amices.org/mice/reference/mids.md)
+  [`plot(`*`<mids>`*`)`](https://amices.org/mice/reference/mids.md)
+  [`print(`*`<mids>`*`)`](https://amices.org/mice/reference/mids.md)
+  [`summary(`*`<mids>`*`)`](https://amices.org/mice/reference/mids.md) :
+
+  Multiply imputed data set (`mids`)
+
+- [`print(`*`<mira>`*`)`](https://amices.org/mice/reference/print.md)
+  [`print(`*`<mice.anova>`*`)`](https://amices.org/mice/reference/print.md)
+  [`print(`*`<mice.anova.summary>`*`)`](https://amices.org/mice/reference/print.md)
+  :
+
+  Print a `mira` object
+
+- [`summary(`*`<mira>`*`)`](https://amices.org/mice/reference/summary.md)
+  [`summary(`*`<mice.anova>`*`)`](https://amices.org/mice/reference/summary.md)
+  :
+
+  Summary of a `mira` object
+
+- [`tidy(`*`<mipo>`*`)`](https://amices.org/mice/reference/tidy.mipo.md)
+  :
+
+  Tidy method to extract results from a `mipo` object
+
+## Low-level imputation functions
+
+Several functions are dedicated to common low-level operations to
+generate the imputations:
+
+- [`estimice()`](https://amices.org/mice/reference/estimice.md) :
+  Computes least squares parameters
+- [`norm.draw()`](https://amices.org/mice/reference/norm.draw.md)
+  [`.norm.draw()`](https://amices.org/mice/reference/norm.draw.md) :
+  Draws values of beta and sigma by Bayesian linear regression
+- [`.pmm.match()`](https://amices.org/mice/reference/pmm.match.md) :
+  Finds an imputed value from matches in the predictive metric
+  (deprecated)
+
+## Multivariate amputation
+
+Amputation is the inverse of imputation, starting with a complete
+dataset, and creating missing data pattern according to the posited
+missing data mechanism. Amputation is useful for simulation studies.
+
+- [`ampute()`](https://amices.org/mice/reference/ampute.md) : Generate
+  missing data for simulation purposes
+
+- [`bwplot(`*`<mads>`*`)`](https://amices.org/mice/reference/bwplot.mads.md)
+  : Box-and-whisker plot of amputed and non-amputed data
+
+- [`xyplot(`*`<mads>`*`)`](https://amices.org/mice/reference/xyplot.mads.md)
+  : Scatterplot of amputed and non-amputed data against weighted sum
+  scores
+
+- [`is.mads()`](https://amices.org/mice/reference/is.mads.md) :
+
+  Check for `mads` object
+
+- [`mads()`](https://amices.org/mice/reference/mads.md)
+  [`print(`*`<mads>`*`)`](https://amices.org/mice/reference/mads.md)
+  [`summary(`*`<mads>`*`)`](https://amices.org/mice/reference/mads.md) :
+
+  Multivariate amputed data set (`mads`)
+
+## Datasets
+
+Built-in datasets
+
+- [`boys`](https://amices.org/mice/reference/boys.md) : Growth of Dutch
+  boys
+- [`brandsma`](https://amices.org/mice/reference/brandsma.md) : Brandsma
+  school data used Snijders and Bosker (2012)
+- [`employee`](https://amices.org/mice/reference/employee.md) : Employee
+  selection data
+- [`fdd`](https://amices.org/mice/reference/fdd.md)
+  [`fdd.pred`](https://amices.org/mice/reference/fdd.md) : SE Fireworks
+  disaster data
+- [`fdgs`](https://amices.org/mice/reference/fdgs.md) : Fifth Dutch
+  growth study 2009
+- [`leiden85`](https://amices.org/mice/reference/leiden85.md) : Leiden
+  85+ study
+- [`mammalsleep`](https://amices.org/mice/reference/mammalsleep.md)
+  [`sleep`](https://amices.org/mice/reference/mammalsleep.md) : Mammal
+  sleep data
+- [`mnar_demo_data`](https://amices.org/mice/reference/mnar_demo_data.md)
+  : MNAR demo data
+- [`nhanes`](https://amices.org/mice/reference/nhanes.md) : NHANES
+  example - all variables numerical
+- [`nhanes2`](https://amices.org/mice/reference/nhanes2.md) : NHANES
+  example - mixed numerical and discrete variables
+- [`pattern`](https://amices.org/mice/reference/pattern.md)
+  [`pattern1`](https://amices.org/mice/reference/pattern.md)
+  [`pattern2`](https://amices.org/mice/reference/pattern.md)
+  [`pattern3`](https://amices.org/mice/reference/pattern.md)
+  [`pattern4`](https://amices.org/mice/reference/pattern.md) : Datasets
+  with various missing data patterns
+- [`popmis`](https://amices.org/mice/reference/popmis.md) : Hox pupil
+  popularity data with missing popularity scores
+- [`pops`](https://amices.org/mice/reference/pops.md)
+  [`pops.pred`](https://amices.org/mice/reference/pops.md) : Project on
+  preterm and small for gestational age infants (POPS)
+- [`potthoffroy`](https://amices.org/mice/reference/potthoffroy.md) :
+  Potthoff-Roy data
+- [`selfreport`](https://amices.org/mice/reference/selfreport.md)
+  [`mgg`](https://amices.org/mice/reference/selfreport.md) :
+  Self-reported and measured BMI
+- [`tbc`](https://amices.org/mice/reference/tbc.md)
+  [`tbc.target`](https://amices.org/mice/reference/tbc.md)
+  [`terneuzen`](https://amices.org/mice/reference/tbc.md) : Terneuzen
+  birth cohort
+- [`toenail`](https://amices.org/mice/reference/toenail.md) : Toenail
+  data
+- [`toenail2`](https://amices.org/mice/reference/toenail2.md) : Toenail
+  data
+- [`walking`](https://amices.org/mice/reference/walking.md) : Walking
+  disability data
+- [`windspeed`](https://amices.org/mice/reference/windspeed.md) : Subset
+  of Irish wind speed data
+
+## Miscellaneous functions
+
+Miscellaneous functions
+
+- [`appendbreak()`](https://amices.org/mice/reference/appendbreak.md) :
+  Appends specified break to the data
+
+- [`extractBS()`](https://amices.org/mice/reference/extractBS.md) :
+
+  Extract broken stick estimates from a `lmer` object
+
+- [`glm.mids()`](https://amices.org/mice/reference/glm.mids.md) :
+
+  Generalized linear model for `mids` object
+
+- [`lm.mids()`](https://amices.org/mice/reference/lm.mids.md) :
+
+  Linear regression for `mids` object
+
+- [`matchindex()`](https://amices.org/mice/reference/matchindex.md) :
+  Find index of matched donor units
+
+- [`mdc()`](https://amices.org/mice/reference/mdc.md) : Graphical
+  parameter for missing data plots
+
+- [`mice.theme()`](https://amices.org/mice/reference/mice.theme.md) :
+  Set the theme for the plotting Trellis functions
+
+- [`supports.transparent()`](https://amices.org/mice/reference/supports.transparent.md)
+  : Supports semi-transparent foreground colors?
+
+- [`version()`](https://amices.org/mice/reference/version.md) : Echoes
+  the package version number
+
+# Articles
+
+### General
+
+- [Overview](https://amices.org/mice/articles/overview.md):
+- [Help for old
+  friends](https://amices.org/mice/articles/oldfriends.md):

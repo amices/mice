@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.18.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.18.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -167,27 +167,27 @@ Statistical Software</em>, <b>45</b>, 3, 1–67. <a href="https://doi.org/10.186
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other univariate imputation functions:
-<code><a href="mice.impute.cart.html">mice.impute.cart</a>()</code>,
-<code><a href="mice.impute.lasso.logreg.html">mice.impute.lasso.logreg</a>()</code>,
-<code><a href="mice.impute.lasso.norm.html">mice.impute.lasso.norm</a>()</code>,
-<code><a href="mice.impute.lasso.select.logreg.html">mice.impute.lasso.select.logreg</a>()</code>,
-<code><a href="mice.impute.lasso.select.norm.html">mice.impute.lasso.select.norm</a>()</code>,
-<code><a href="mice.impute.lda.html">mice.impute.lda</a>()</code>,
-<code><a href="mice.impute.logreg.html">mice.impute.logreg</a>()</code>,
-<code><a href="mice.impute.logreg.boot.html">mice.impute.logreg.boot</a>()</code>,
-<code><a href="mice.impute.mean.html">mice.impute.mean</a>()</code>,
-<code><a href="mice.impute.mnar.html">mice.impute.mnar.logreg</a>()</code>,
-<code><a href="mice.impute.mpmm.html">mice.impute.mpmm</a>()</code>,
-<code><a href="mice.impute.norm.html">mice.impute.norm</a>()</code>,
-<code><a href="mice.impute.norm.boot.html">mice.impute.norm.boot</a>()</code>,
-<code><a href="mice.impute.norm.nob.html">mice.impute.norm.nob</a>()</code>,
-<code><a href="mice.impute.norm.predict.html">mice.impute.norm.predict</a>()</code>,
-<code><a href="mice.impute.pmm.html">mice.impute.pmm</a>()</code>,
-<code><a href="mice.impute.polr.html">mice.impute.polr</a>()</code>,
-<code><a href="mice.impute.polyreg.html">mice.impute.polyreg</a>()</code>,
-<code><a href="mice.impute.quadratic.html">mice.impute.quadratic</a>()</code>,
-<code><a href="mice.impute.rf.html">mice.impute.rf</a>()</code>,
-<code><a href="mice.impute.ri.html">mice.impute.ri</a>()</code></p></div>
+<code><a href="mice.impute.cart.html">mice.impute.cart()</a></code>,
+<code><a href="mice.impute.lasso.logreg.html">mice.impute.lasso.logreg()</a></code>,
+<code><a href="mice.impute.lasso.norm.html">mice.impute.lasso.norm()</a></code>,
+<code><a href="mice.impute.lasso.select.logreg.html">mice.impute.lasso.select.logreg()</a></code>,
+<code><a href="mice.impute.lasso.select.norm.html">mice.impute.lasso.select.norm()</a></code>,
+<code><a href="mice.impute.lda.html">mice.impute.lda()</a></code>,
+<code><a href="mice.impute.logreg.html">mice.impute.logreg()</a></code>,
+<code><a href="mice.impute.logreg.boot.html">mice.impute.logreg.boot()</a></code>,
+<code><a href="mice.impute.mean.html">mice.impute.mean()</a></code>,
+<code><a href="mice.impute.mnar.html">mice.impute.mnar.logreg()</a></code>,
+<code><a href="mice.impute.mpmm.html">mice.impute.mpmm()</a></code>,
+<code><a href="mice.impute.norm.html">mice.impute.norm()</a></code>,
+<code><a href="mice.impute.norm.boot.html">mice.impute.norm.boot()</a></code>,
+<code><a href="mice.impute.norm.nob.html">mice.impute.norm.nob()</a></code>,
+<code><a href="mice.impute.norm.predict.html">mice.impute.norm.predict()</a></code>,
+<code><a href="mice.impute.pmm.html">mice.impute.pmm()</a></code>,
+<code><a href="mice.impute.polr.html">mice.impute.polr()</a></code>,
+<code><a href="mice.impute.polyreg.html">mice.impute.polyreg()</a></code>,
+<code><a href="mice.impute.quadratic.html">mice.impute.quadratic()</a></code>,
+<code><a href="mice.impute.rf.html">mice.impute.rf()</a></code>,
+<code><a href="mice.impute.ri.html">mice.impute.ri()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -241,23 +241,23 @@ Statistical Software</em>, <b>45</b>, 3, 1–67. <a href="https://doi.org/10.186
 <span class="r-in"><span><span class="co"># list the actual imputations for BMI</span></span></span>
 <span class="r-in"><span><span class="va">imp</span><span class="op">$</span><span class="va">imp</span><span class="op">$</span><span class="va">bmi</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       1    2    3    4    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  30.1 20.4 30.1 27.2 29.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  30.1 30.1 30.1 27.2 29.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  25.5 24.9 24.9 22.5 21.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  29.6 20.4 30.1 27.2 30.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  30.1 30.1 30.1 27.2 30.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  27.2 24.9 24.9 22.5 21.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6  20.4 24.9 24.9 27.4 25.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 28.7 27.4 27.4 27.4 28.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11 30.1 30.1 30.1 27.2 20.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12 20.4 27.4 28.7 22.5 28.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 30.1 35.3 22.7 27.2 29.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 30.1 35.3 27.2 27.2 33.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 30.1 35.3 22.7 27.2 30.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 29.6 35.3 27.2 27.2 33.2</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># first completed data matrix</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    age  bmi hyp chl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1 30.1   1 187</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1 29.6   1 187</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2    2 22.7   1 187</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3    1 30.1   1 187</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3 25.5   2 113</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3 27.2   2 284</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5    1 20.4   1 113</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6    3 20.4   1 184</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7    1 22.5   1 118</span>
@@ -274,7 +274,7 @@ Statistical Software</em>, <b>45</b>, 3, 1–67. <a href="https://doi.org/10.186
 <span class="r-out co"><span class="r-pr">#&gt;</span> 18   2 26.3   2 199</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 19   1 35.3   1 218</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20   3 25.5   2 187</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21   1 30.1   1 187</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21   1 29.6   1 187</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 22   1 33.2   1 229</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 23   1 27.5   1 131</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 24   3 24.9   1 204</span>
@@ -331,7 +331,7 @@ Statistical Software</em>, <b>45</b>, 3, 1–67. <a href="https://doi.org/10.186
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
