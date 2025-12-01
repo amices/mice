@@ -1,3 +1,11 @@
+# mice 3.18.2
+
+* Adds a correction for the Barnard-Rubin degrees of freedom calculation
+  that provides stabler results for small samples and zero within-imputation 
+  variance. 
+
+  Contributed: @frederikfabriciusbjerre (#726)
+
 # mice 3.18.1
 
 * Added `predict_mi()` to generate predictions from models fitted on
