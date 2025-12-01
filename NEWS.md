@@ -1,4 +1,4 @@
-# mice 3.18.0.9000
+# mice 3.18.1.9000
 
 > **Experimental**: Native support for parallel imputation.
 
@@ -27,9 +27,24 @@ imp <- mice(data, parallel = TRUE)
 * Exports `quantify()` and `unquantify()` for optimal scaling of factors to numeric representation
 * Adds a mechanism for filtering rows and selecting columns during the MICE iterations with univariate imputations. The method simplifies univariate imputation models by removing redundant predictors. The method is implemented in the top-level function `trim.data()`, which takes as input the design matrix `x`, the target variable `y` and the response `ry`, and returns a list of two logical vectors named `"rows"` (which filters rows of `x`) and `"cols"` (which selects columns of `x`). The user can choose among several low-level trimmers, including least angular regression, lasso, elastic net, and linear dependencies removal. It is also possible to specify your own low-level `mice.trim.mytrim()` function and call it from `mice()` using the `trimmer == "mytrim"` argument. The method is more robust and faster than `remove.lindep()` and can handle datasets with many variables.
 
-### Minor changes
+# mice 3.18.1
 
-* Changed argument 
+* Added `predict_mi()` to generate predictions from models fitted on
+  multiply imputed datasets. The function pools predictions across
+  imputations using Rubin’s rules, and can return point predictions
+  or prediction intervals at a specified confidence level.  
+
+  Typical workflow:
+  1. Fit a model separately on each completed dataset.
+  2. Call `predict_mi()` with the list of models and the corresponding
+     new data (per imputation).
+  3. Obtain either pooled predictions (`pool = TRUE`) or per-imputation
+     predictions (`pool = FALSE`).
+
+  This functionality makes it easier to evaluate predictive performance
+  on test sets while correctly accounting for imputation uncertainty. 
+  
+  Contributed: @fdvanleeuwen, @thomvolker (#720)
 
 # mice 3.18.0
 

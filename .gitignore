@@ -6,6 +6,6 @@ mice.Rproj
 inst/doc
 *_cache
 script
-docs
+docs/
 vignettes/*.html
 /.quarto/
