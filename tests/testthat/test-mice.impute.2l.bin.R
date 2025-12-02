@@ -26,7 +26,7 @@ test_that("mice::mice.impute.2l.bin() accepts factor outcome", {
 })
 
 # toenail: outcome is 0/1
-data("toenail")
+data("toenail", package = "mice")
 data <- tidyr::complete(toenail, ID, visit) %>%
   tidyr::fill(treatment) %>%
   dplyr::select(-month)
