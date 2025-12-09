@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.18.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,14 +37,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.18.2" id="mice-3182">mice 3.18.2<a class="anchor" aria-label="anchor" href="#mice-3182"></a></h2>
-<ul><li>
-<p>Adds a correction for the Barnard-Rubin degrees of freedom calculation that provides stabler results for small samples and zero within-imputation variance.</p>
-<p>Contributed: <a href="https://github.com/frederikfabriciusbjerre" class="external-link">@frederikfabriciusbjerre</a> (<a href="https://github.com/amices/mice/issues/726" class="external-link">#726</a>)</p>
-</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.18.1" id="mice-3181">mice 3.18.1<a class="anchor" aria-label="anchor" href="#mice-3181"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.19.0" id="mice-3190">mice 3.19.0<a class="anchor" aria-label="anchor" href="#mice-3190"></a></h2>
+<div class="section level4">
+<h4 id="major-changes-3-19-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-3-19-0"></a></h4>
 <ul><li>
 <p>Added <code><a href="../reference/predict_mi.html">predict_mi()</a></code> to generate predictions from models fitted on multiply imputed datasets. The function pools predictions across imputations using Rubin’s rules, and can return point predictions or prediction intervals at a specified confidence level.</p>
 <p>Typical workflow:</p>
@@ -54,7 +49,13 @@
 </ol><p>This functionality makes it easier to evaluate predictive performance on test sets while correctly accounting for imputation uncertainty.</p>
 <p>Contributed: <a href="https://github.com/fdvanleeuwen" class="external-link">@fdvanleeuwen</a>, <a href="https://github.com/thomvolker" class="external-link">@thomvolker</a> (<a href="https://github.com/amices/mice/issues/720" class="external-link">#720</a>)</p>
 </li>
+<li><p>Adds a correction for the Barnard-Rubin degrees of freedom calculation that provides stabler results for small samples and zero within-imputation variance. Contributed: <a href="https://github.com/frederikfabriciusbjerre" class="external-link">@frederikfabriciusbjerre</a> (<a href="https://github.com/amices/mice/issues/726" class="external-link">#726</a>)</p></li>
 </ul></div>
+<div class="section level4">
+<h4 id="minor-changes-3-19-0">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-3-19-0"></a></h4>
+<ul><li>Explicitly load <code>toenail</code> data from the <code>mice</code> package to avoid <code>lme4</code> conflict. Thanks: Ben Bolker (<a href="https://github.com/amices/mice/issues/730" class="external-link">#730</a>)</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.18.0" id="mice-3180">mice 3.18.0<a class="anchor" aria-label="anchor" href="#mice-3180"></a></h2><p class="text-muted">CRAN release: 2025-05-27</p>
 <div class="section level4">
