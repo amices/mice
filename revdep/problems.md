@@ -14,12 +14,12 @@ Run `revdepcheck::revdep_details(, "bipd")` for more info
 
 ## Newly broken
 
-*   checking dependencies in R code ...sh: line 1: 68994 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpRR1uev/file10a3acf967c2'
+*   checking dependencies in R code ...sh: line 1: 27017 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpJllbtG/file667c2b1d27c'
     ```
      NOTE
     
      *** caught segfault ***
-    address 0x656d756c6f562f6d, cause 'invalid permissions'
+    address 0x2720657661682820, cause 'invalid permissions'
     
     Traceback:
      1: dyn.load(file, DLLpath = DLLpath, ...)
@@ -41,12 +41,12 @@ Run `revdepcheck::revdep_details(, "bipd")` for more info
 
 ## Newly fixed
 
-*   checking dependencies in R code ...sh: line 1: 68915 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpOL3iVt/file109d29daaa65'
+*   checking dependencies in R code ...sh: line 1: 27029 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//Rtmpb28xQo/file663f63b048a5'
     ```
      NOTE
     
      *** caught segfault ***
-    address 0x656d756c6f562f6d, cause 'invalid permissions'
+    address 0x2720657661682820, cause 'invalid permissions'
     
     Traceback:
      1: dyn.load(file, DLLpath = DLLpath, ...)
@@ -89,7 +89,7 @@ Run `revdepcheck::revdep_details(, "bipd")` for more info
       error: unable to load shared object '/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/bipd/rjags/libs/rjags.so':
       dlopen(/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/bipd/rjags/libs/rjags.so, 0x000A): Library not loaded: /usr/local/lib/libjags.4.dylib
       Referenced from: <337070A2-BC15-3117-B643-96612554E437> /Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/bipd/rjags/libs/rjags.so
-      Reason: tried: '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/lib/libjags.4.dylib' (no such file), '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64')), '/Library/Frameworks/R.framework/Resources/lib/libjags.4.dylib' (no such file), '/Library/Java/
+      Reason: tried: '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64e.v1' or 'arm64' or 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/lib/libjags.4.dylib' (no such file), '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64e.v1' or 'arm64' or 'arm64')), '/Library/Frameworks/R.framework/Resources/
     Execution halted
     ```
 
