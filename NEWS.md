@@ -23,9 +23,13 @@
   that provides stabler results for small samples and zero within-imputation 
   variance. Contributed: @frederikfabriciusbjerre (#726)
 
+
 ### Minor changes
 
-* Explicitly load `toenail` data from the `mice` package to avoid `lme4` conflict. Thanks: Ben Bolker (#730)
+* Adds fallback for `lmer` objects in `pool()` without requiring `broom.mixed`.
+  Contributed: @anya-decarlo (#728) 
+
+* Explicitly load `toenail` data from the `mice` package to avoid `lme4` conflict. Contributed: @bbolker (#730)
 
 # mice 3.18.0
 

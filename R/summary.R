@@ -16,36 +16,47 @@
 #' @seealso \code{\link{mira}}
 #' @method summary mira
 #' @export
-summary.mira <- function(object,
-                         type = c("tidy", "glance", "summary"),
-                         dfcom = NULL,
-                         ...) {
+summary.mira <- function(
+  object,
+  type = c("tidy", "glance", "summary"),
+  dfcom = NULL,
+  ...
+) {
   type <- match.arg(type)
   fitlist <- getfit(object)
   if (type == "tidy") {
     # Try standard tidy() first, with fallback for lmer objects
-    v <- tryCatch({
-      lapply(fitlist, tidy, effects = "fixed", parametric = TRUE, ...) %>% bind_rows()
-    }, error = function(e) {
-      # Check if this is an lmerMod object without broom.mixed
-      if (inherits(fitlist[[1]], "lmerMod") && 
-          grepl("No.*tidy.*method", e$message, ignore.case = TRUE)) {
-        # Manual extraction for lmer objects using built-in methods
-        lapply(fitlist, function(fit) {
-          coefs <- lme4::fixef(fit)
-          se <- sqrt(diag(as.matrix(stats::vcov(fit))))
-          data.frame(
-            term = names(coefs),
-            estimate = as.numeric(coefs),
-            std.error = as.numeric(se),
-            stringsAsFactors = FALSE
-          )
-        }) %>% bind_rows()
-      } else {
-        # Re-throw the error if it's not an lmer issue
-        stop(e)
+    v <- tryCatch(
+      {
+        lapply(fitlist, tidy, effects = "fixed", parametric = TRUE, ...) %>%
+          bind_rows()
+      },
+      error = function(e) {
+        # Check if this is an lmerMod object without broom.mixed
+        if (
+          inherits(fitlist[[1]], "lmerMod") &&
+            grepl("No.*tidy.*method", e$message, ignore.case = TRUE)
+        ) {
+          # Ensure lme4 is available (CRAN-compliant check)
+          install.on.demand("lme4", ...)
+          # Manual extraction for lmer objects using built-in methods
+          lapply(fitlist, function(fit) {
+            coefs <- lme4::fixef(fit)
+            se <- sqrt(diag(as.matrix(stats::vcov(fit))))
+            data.frame(
+              term = names(coefs),
+              estimate = as.numeric(coefs),
+              std.error = as.numeric(se),
+              stringsAsFactors = FALSE
+            )
+          }) %>%
+            bind_rows()
+        } else {
+          # Re-throw the error if it's not an lmer issue
+          stop(e)
+        }
       }
-    })
+    )
   }
   if (type == "glance") {
     v <- lapply(fitlist, glance, ...) %>% bind_rows()
@@ -54,8 +65,9 @@ summary.mira <- function(object,
   # not supplied by broom <= 0.5.6
   model <- getfit(object, 1L)
   if (!"nobs" %in% colnames(v)) {
-    v$nobs <- tryCatch(length(stats::residuals(model)),
-      error = function(e) {NULL})
+    v$nobs <- tryCatch(length(stats::residuals(model)), error = function(e) {
+      NULL
+    })
   }
 
   # get df.residuals
@@ -87,10 +99,12 @@ summary.mice.anova <- function(object, ...) {
 
   # handle objects from D1, D2 and D3
   if (is.null(out)) {
-    out <- list(`1 ~~ 2` = list(
-      result = object$result,
-      dfcom = object$dfcom
-    ))
+    out <- list(
+      `1 ~~ 2` = list(
+        result = object$result,
+        dfcom = object$dfcom
+      )
+    )
   }
 
   test <- names(out)
@@ -115,8 +129,11 @@ summary.mice.anova <- function(object, ...) {
 
   structure(
     list(
-      models = ff, comparisons = rf,
-      m = object$m, method = object$method, use = object$use
+      models = ff,
+      comparisons = rf,
+      m = object$m,
+      method = object$method,
+      use = object$use
     ),
     class = c("mice.anova.summary", class(object))
   )
