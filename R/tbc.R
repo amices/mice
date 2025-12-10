@@ -47,7 +47,7 @@
 #' De Kroon, M. L. A. (2011).  \emph{The Terneuzen Birth Cohort. Detection and
 #' Prevention of Overweight and Cardiometabolic Risk from Infancy Onward.}
 #' Dissertation, Vrije Universiteit, Amsterdam.
-#' \url{https://research.vu.nl/en/publications/the-terneuzen-birth-cohort-detection-and-prevention-of-overweight}
+#' \url{https://research.vu.nl/en/publications/the-terneuzen-birth-cohort-detection-and-prevention-of-overweight/}
 #'
 #' Van Buuren, S. (2018).
 #' \href{https://stefvanbuuren.name/fimd/sec-rastering.html#terneuzen-birth-cohort}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
