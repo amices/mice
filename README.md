@@ -10,6 +10,12 @@
 [![](https://img.shields.io/badge/github%20version-3.19.0-orange.svg)](https://amices.org/mice/)
 <!-- badges: end -->
 
+## Want to become a MICE PRO?
+
+Check out our summer course 2026 at the Utrecht Summer School: [Data
+Science: Solving Missing Data Problems in
+R](https://utrechtsummerschool.nl/courses/data-science/data-science-solving-missing-data-problems-in-r)
+
 ## [Multivariate Imputation by Chained Equations](https://amices.org/mice/)
 
 The [`mice`](https://cran.r-project.org/package=mice) package implements
