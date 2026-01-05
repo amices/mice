@@ -208,7 +208,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (is.null(data)) {
     stop("Argument data is missing, with no default", call. = FALSE)
   }
-  # data.in <- data # preserve an original set to inject the NA's in later
   data <- check.dataform(data)
   if (anyNA(data)) {
     stop("Data cannot contain NAs", call. = FALSE)
