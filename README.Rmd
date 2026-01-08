@@ -23,7 +23,7 @@ set.seed(1)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/mice)](https://cran.r-project.org/package=mice)
 [![](https://cranlogs.r-pkg.org/badges/mice)](https://cran.r-project.org/package=mice)
 [![R-CMD-check](https://github.com/amices/mice/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/amices/mice/actions/workflows/R-CMD-check.yaml)
-[![](https://img.shields.io/badge/github%20version-3.19.0-orange.svg)](https://amices.org/mice/)
+[![](https://img.shields.io/badge/github%20version-3.19.1-orange.svg)](https://amices.org/mice/)
 <!-- badges: end -->
 
 ## Want to become a MICE PRO?
@@ -138,9 +138,13 @@ through Github's issues facility.
 
 ## Resources
 
-### Books
+### Theoretical background
 
-1. Van Buuren, S. (2018). [Flexible Imputation of Missing Data. Second Edition.](https://stefvanbuuren.name/fimd/). Chapman & Hall/CRC. Boca Raton, FL.
+1. [mice: Multivariate Imputation by Chained Equations in R](https://stefvanbuuren.name/publications/#vanbuuren-2011-1) in the Journal of Statistical Software [@vanbuuren-2011-1]. 
+2. The first application on [missing blood pressure](https://stefvanbuuren.name/publications/#vanbuuren-1999-1) data [@vanbuuren-1999-1].
+3. Term [Fully Conditional Specification](https://stefvanbuuren.name/publications/#vanbuuren-2006-1) describes a general class of methods that specify imputations model for multivariate data as a set of conditional distributions [@vanbuuren-2006-1].
+4. Details about imputing [mixes of numerical and categorical data](https://stefvanbuuren.name/publications/#vanbuuren-2007-1) can be found in [@vanbuuren-2007-1].
+5. Book [Flexible Imputation of Missing Data. Second Edition](https://stefvanbuuren.name/fimd/) [@vanbuuren-2018-1].
 
 ### Course materials
 
@@ -170,3 +174,4 @@ The cute mice sticker was designed by Jaden M. Walters. Thanks Jaden!
 
 Please note that the mice project is released with a [Contributor Code of Conduct](https://amices.org/mice/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
 
+## References

@@ -88,11 +88,11 @@ Packages that extend the functionality of `mice` include:
 
 ## Further reading
 
-1. [mice: Multivariate Imputation by Chained Equations in R](https://stefvanbuuren.name/publications/2011%20MICE%20-%20JSS.pdf) in the Journal of Statistical Software [@VANBUUREN2011]. 
-2. The first application on [missing blood pressure](https://stefvanbuuren.name/publications/Multiple%20imputation%20-%20Stat%20Med%201999.pdf) data [@VANBUUREN1999]. 
-3. Term [Fully Conditional Specification](https://stefvanbuuren.name/publications/FCS%20in%20multivariate%20imputation%20-%20JSCS%202006.pdf) describes a general class of methods that specify imputations model for multivariate data as a set of conditional distributions [@VANBUUREN2006].
-4. Details about imputing [mixes of numerical and categorical data](https://stefvanbuuren.name/publications/MI%20by%20FCS%20-%20SMMR%202007.pdf) can be found in [@VANBUUREN2007]. 
-5. Book [Flexible Imputation of Missing Data. Second Edition](https://stefvanbuuren.name/fimd/) [@VANBUUREN2018].
+1. [mice: Multivariate Imputation by Chained Equations in R](https://stefvanbuuren.name/publications/#vanbuuren-2011-1) in the Journal of Statistical Software [@vanbuuren-2011-1]. 
+2. The first application on [missing blood pressure](https://stefvanbuuren.name/publications/#vanbuuren-1999-1) data [@vanbuuren-1999-1].
+3. Term [Fully Conditional Specification](https://stefvanbuuren.name/publications/#vanbuuren-2006-1) describes a general class of methods that specify imputations model for multivariate data as a set of conditional distributions [@vanbuuren-2006-1].
+4. Details about imputing [mixes of numerical and categorical data](https://stefvanbuuren.name/publications/#vanbuuren-2007-1) can be found in [@vanbuuren-2007-1].
+5. Book [Flexible Imputation of Missing Data. Second Edition](https://stefvanbuuren.name/fimd/) [@vanbuuren-2018-1].
 
 ## Code from publications
 
