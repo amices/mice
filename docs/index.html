@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -155,10 +155,15 @@ Distribution of <code>chl</code> per imputed data set.
 <h2 id="resources">Resources<a class="anchor" aria-label="anchor" href="#resources"></a>
 </h2>
 <div class="section level3">
-<h3 id="books">Books<a class="anchor" aria-label="anchor" href="#books"></a>
+<h3 id="theoretical-background">Theoretical background<a class="anchor" aria-label="anchor" href="#theoretical-background"></a>
 </h3>
 <ol style="list-style-type: decimal">
-<li>Van Buuren, S. (2018). <a href="https://stefvanbuuren.name/fimd/" class="external-link">Flexible Imputation of Missing Data. Second Edition.</a>. Chapman &amp; Hall/CRC. Boca Raton, FL.</li>
+<li>
+<a href="https://stefvanbuuren.name/publications/#vanbuuren-2011-1" class="external-link">mice: Multivariate Imputation by Chained Equations in R</a> in the Journal of Statistical Software (S. van Buuren and Groothuis-Oudshoorn 2011).</li>
+<li>The first application on <a href="https://stefvanbuuren.name/publications/#vanbuuren-1999-1" class="external-link">missing blood pressure</a> data (S. van Buuren, Boshuizen, and Knook 1999).</li>
+<li>Term <a href="https://stefvanbuuren.name/publications/#vanbuuren-2006-1" class="external-link">Fully Conditional Specification</a> describes a general class of methods that specify imputations model for multivariate data as a set of conditional distributions (S. van Buuren et al. 2006).</li>
+<li>Details about imputing <a href="https://stefvanbuuren.name/publications/#vanbuuren-2007-1" class="external-link">mixes of numerical and categorical data</a> can be found in (S. van Buuren 2007).</li>
+<li>Book <a href="https://stefvanbuuren.name/fimd/" class="external-link">Flexible Imputation of Missing Data. Second Edition</a> (Stef van Buuren 2018).</li>
 </ol>
 </div>
 <div class="section level3">
@@ -200,6 +205,27 @@ Distribution of <code>chl</code> per imputed data set.
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
 <p>Please note that the mice project is released with a <a href="https://amices.org/mice/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+</div>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-vanbuuren-2007-1" class="csl-entry">
+van Buuren, S. 2007. “Multiple Imputation of Discrete and Continuous Data by Fully Conditional Specification.” <em>Statistical Methods in Medical Research</em> 16 (3): 219–42. <a href="https://doi.org/10.1177/0962280206074463" class="external-link uri">https://doi.org/10.1177/0962280206074463</a>.
+</div>
+<div id="ref-vanbuuren-1999-1" class="csl-entry">
+van Buuren, S., H. C. Boshuizen, and D. L. Knook. 1999. “Multiple Imputation of Missing Blood Pressure Covariates in Survival Analysis.” <em>Statistics in Medicine</em> 18 (6): 681–94. <a href="https://doi.org/10.1002/(sici)1097-0258(19990330)18:6%3C681::aid-sim71%3E3.0.co;2-r" class="external-link">https://doi.org/10.1002/(sici)1097-0258(19990330)18:6&lt;681::aid-sim71&gt;3.0.co;2-r</a>.
+</div>
+<div id="ref-vanbuuren-2006-1" class="csl-entry">
+van Buuren, S., J. P. L. Brand, C. G. M. Groothuis-Oudshoorn, and D. B. Rubin. 2006. “Fully Conditional Specification in Multivariate Imputation.” <em>Journal of Statistical Computation and Simulation</em> 76 (12): 1049–64. <a href="https://doi.org/10.1080/10629360600810434" class="external-link uri">https://doi.org/10.1080/10629360600810434</a>.
+</div>
+<div id="ref-vanbuuren-2011-1" class="csl-entry">
+van Buuren, S., and K. Groothuis-Oudshoorn. 2011. “<span class="nocase">mice</span>: Multivariate Imputation by Chained Equations in R.” <em>Journal of Statistical Software</em> 45 (3): 1–67. <a href="https://doi.org/10.18637/jss.v045.i03" class="external-link uri">https://doi.org/10.18637/jss.v045.i03</a>.
+</div>
+<div id="ref-vanbuuren-2018-1" class="csl-entry">
+van Buuren, Stef. 2018. <em>Flexible Imputation of Missing Data</em>. 2nd ed. Interdisciplinary Statistics Series. Chapman and Hall/CRC. <a href="https://doi.org/10.1201/9780429492259" class="external-link uri">https://doi.org/10.1201/9780429492259</a>.
+</div>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -248,7 +274,7 @@ Distribution of <code>chl</code> per imputed data set.
 <li><a href="https://cran.r-project.org/package=mice" class="external-link"><img src="https://www.r-pkg.org/badges/version/mice" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://cran.r-project.org/package=mice" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/mice"></a></li>
 <li><a href="https://github.com/amices/mice/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/amices/mice/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://amices.org/mice/"><img src="https://img.shields.io/badge/github%20version-3.19.0-orange.svg"></a></li>
+<li><a href="https://amices.org/mice/"><img src="https://img.shields.io/badge/github%20version-3.19.1-orange.svg"></a></li>
 </ul>
 </div>
 
