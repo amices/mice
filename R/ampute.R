@@ -208,7 +208,6 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (is.null(data)) {
     stop("Argument data is missing, with no default", call. = FALSE)
   }
-  data.in <- data # preserve an original set to inject the NA's in later
   data <- check.dataform(data)
   if (anyNA(data)) {
     stop("Data cannot contain NAs", call. = FALSE)
@@ -216,9 +215,9 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   if (ncol(data) < 2) {
     stop("Data should contain at least two columns", call. = FALSE)
   }
-  data <- data.frame(data)
+  numdata <- data
   if (any(vapply(data, Negate(is.numeric), logical(1))) && mech != "MCAR") {
-    data <- as.data.frame(sapply(data, as.numeric))
+    numdata <- as.data.frame(sapply(data, as.numeric))
     warning("Data is made numeric internally, because the calculation of weights requires numeric data",
       call. = FALSE
     )
@@ -394,9 +393,10 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
   # Create empty objects
   P <- NULL
   scores <- NULL
-  missing.data <- NULL
+  data.in <- NULL
   # Apply function (run = TRUE) or merely return objects (run = FALSE)
   if (run) {
+    data.in <- data
     # Assign cases to the patterns according probs
     # Because 0 and 1 will be used for missingness,
     # the numbering of the patterns will start from 2
@@ -422,7 +422,7 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     } else {
       scores <- sumscores(
         P = P,
-        data = data,
+        data = numdata,
         std = std,
         weights = weights,
         patterns = patterns
@@ -443,19 +443,19 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
         )
       }
     }
-    missing.data <- data
     for (i in seq_len(nrow(patterns.new))) {
       if (any(P == (i + 1))) {
-        missing.data[R[[i]] == 0, patterns.new[i, ] == 0] <- NA
+        data.in[R[[i]] == 0, patterns.new[i, ] == 0] <- NA
       }
     }
   }
+
 
   # Create return object
   names(patterns.new) <- names(data)
   names(weights) <- names(data)
   call <- match.call()
-  data.in[is.na(data.frame(missing.data))] <- NA
+
   result <- mads(
     call = call,
     prop = prop,
@@ -469,7 +469,8 @@ ampute <- function(data, prop = 0.5, patterns = NULL, freq = NULL,
     amp = data.in,
     cand = P - 1,
     scores = scores,
-    data = as.data.frame(data))
+    data = data
+  )
   return(result)
 }
 
