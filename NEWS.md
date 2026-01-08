@@ -1,3 +1,8 @@
+# mice 3.19.1
+
+- Fixes bug `ampute(run = FALSE)` (#732)
+- Updates bibliography entries
+
 # mice 3.19.0
 
 ### Major changes
