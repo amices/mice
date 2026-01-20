@@ -1,3 +1,7 @@
+# mice 3.19.2
+
+- Reformats .R source files using the opiniated Air formatter to improve clarity and consistency ([#721](https://github.com/amices/mice/issues/721))
+
 # mice 3.19.1
 
 - Fixes bug `ampute(run = FALSE)` (#732)
