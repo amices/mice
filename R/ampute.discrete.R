@@ -39,17 +39,24 @@ ampute.discrete <- function(P, scores, prop, odds) {
       ng <- length(odds[i, ][!is.na(odds[i, ])])
       quantiles <- quantile(scores[[i]], probs = seq.int(0, 1, by = 1 / ng))
       if (anyDuplicated(quantiles) || anyNA(quantiles)) {
-        stop("Division of sum scores into quantiles did not succeed. Possibly
+        stop(
+          "Division of sum scores into quantiles did not succeed. Possibly
              the sum scores contain too few different observations (in case of
              categorical or dummy variables). Try using more variables to
              calculate the sum scores or diminish the number of quantiles in the
-             odds matrix", call. = FALSE)
+             odds matrix",
+          call. = FALSE
+        )
       }
       # For each candidate the quantile number is specified
       R.temp <- rep.int(NA, length(scores[[i]]))
       for (k in seq_len(ng)) {
-        R.temp <- replace(R.temp, scores[[i]] >= quantiles[k] &
-          scores[[i]] <= quantiles[k + 1], k)
+        R.temp <- replace(
+          R.temp,
+          scores[[i]] >= quantiles[k] &
+            scores[[i]] <= quantiles[k + 1],
+          k
+        )
       }
       # For each candidate, a random value between 0 and 1 is compared with the
       # odds probability of being missing. If random value <= prob, the candidate
@@ -59,7 +66,8 @@ ampute.discrete <- function(P, scores, prop, odds) {
       for (l in seq_len(ng)) {
         prob <- (ng * prop * odds[i, l]) / sum(odds[i, ], na.rm = TRUE)
         if (prob >= 1.0) {
-          warning("Combination of odds matrix and desired proportion of
+          warning(
+            "Combination of odds matrix and desired proportion of
                   missingness results to small quantile groups, probably
                   decreasing the obtained proportion of missingness",
             call. = FALSE

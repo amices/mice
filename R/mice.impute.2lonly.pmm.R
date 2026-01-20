@@ -98,16 +98,25 @@
 #' @export
 mice.impute.2lonly.pmm <- function(y, ry, x, type, wy = NULL, ...) {
   .imputation.level2(
-    y = y, ry = ry, x = x, type = type, wy = wy,
-    method = "pmm", ...
+    y = y,
+    ry = ry,
+    x = x,
+    type = type,
+    wy = wy,
+    method = "pmm",
+    ...
   )
 }
 
 # imputation function at level 2
 # can be done with norm and pmm
 .imputation.level2 <- function(y, ry, x, type, wy, method, ...) {
-  if (sum(type == -2L) != 1L) stop("No class variable")
-  if (is.null(wy)) wy <- !ry
+  if (sum(type == -2L) != 1L) {
+    stop("No class variable")
+  }
+  if (is.null(wy)) {
+    wy <- !ry
+  }
 
   # handle categorical data
   ylev <- NULL
@@ -129,8 +138,12 @@ mice.impute.2lonly.pmm <- function(y, ry, x, type, wy = NULL, ...) {
 
   if (length(csom) > 0L) {
     stop(paste0(
-      "Method 2lonly.", method, " found the following clusters with partially missing\n",
-      "  level-2 data: ", paste(csom, collapse = ", "), "\n",
+      "Method 2lonly.",
+      method,
+      " found the following clusters with partially missing\n",
+      "  level-2 data: ",
+      paste(csom, collapse = ", "),
+      "\n",
       "  Method 2lonly.mean can fix such inconsistencies."
     ))
   }
@@ -151,16 +164,22 @@ mice.impute.2lonly.pmm <- function(y, ry, x, type, wy = NULL, ...) {
   # norm imputation at level 2
   if (method == "norm") {
     ximp2 <- mice.impute.norm(
-      y = y2, ry = ry2, x = x2,
-      wy = wy2, ...
+      y = y2,
+      ry = ry2,
+      x = x2,
+      wy = wy2,
+      ...
     )
   }
 
   # pmm imputation at level 2
   if (method == "pmm") {
     ximp2 <- mice.impute.pmm(
-      y = y2, ry = ry2, x = x2,
-      wy = wy2, ...
+      y = y2,
+      ry = ry2,
+      x = x2,
+      wy = wy2,
+      ...
     )
   }
 
@@ -171,9 +190,7 @@ mice.impute.2lonly.pmm <- function(y, ry, x, type, wy = NULL, ...) {
 
   # turn back into factor
   if (!is.null(ylev)) {
-    ximp <- factor(as.integer(ximp),
-                   levels = 1L:length(ylev),
-                   labels = ylev)
+    ximp <- factor(as.integer(ximp), levels = 1L:length(ylev), labels = ylev)
   }
 
   ximp

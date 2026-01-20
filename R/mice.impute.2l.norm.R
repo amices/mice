@@ -46,7 +46,15 @@
 #' @family univariate-2l
 #' @keywords datagen
 #' @export
-mice.impute.2l.norm <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...) {
+mice.impute.2l.norm <- function(
+  y,
+  ry,
+  x,
+  type,
+  wy = NULL,
+  intercept = TRUE,
+  ...
+) {
   if (intercept) {
     x <- cbind(1, as.matrix(x))
     type <- c(2, type)
@@ -54,9 +62,13 @@ mice.impute.2l.norm <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
 
   ## Initialize
   n.iter <- 100
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
   n.class <- length(unique(x[, type == -2]))
-  if (n.class == 0) stop("No class variable")
+  if (n.class == 0) {
+    stop("No class variable")
+  }
   gf.full <- factor(x[, type == -2], labels = seq_len(n.class))
   gf <- gf.full[ry]
   XG <- split.data.frame(as.matrix(x[ry, type == 2]), gf)
@@ -79,35 +91,59 @@ mice.impute.2l.norm <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
     for (class in seq_len(n.class)) {
       vv <- symridge(inv.sigma2[class] * X.SS[[class]] + inv.psi, ...)
       bees.var <- chol2inv(chol(vv))
-      bees[class, ] <- drop(bees.var %*% (crossprod(inv.sigma2[class] * XG[[class]], yg[[class]]) + inv.psi %*% mu)) +
+      bees[class, ] <- drop(
+        bees.var %*%
+          (crossprod(inv.sigma2[class] * XG[[class]], yg[[class]]) +
+            inv.psi %*% mu)
+      ) +
         drop(rnorm(n = n.rc) %*% chol(symridge(bees.var, ...)))
       ss[class] <- crossprod(yg[[class]] - XG[[class]] %*% bees[class, ])
     }
 
     ## Draw mu
-    mu <- colMeans(bees) + drop(rnorm(n = n.rc) %*%
-      chol(chol2inv(chol(symridge(inv.psi, ...))) / n.class))
+    mu <- colMeans(bees) +
+      drop(
+        rnorm(n = n.rc) %*%
+          chol(chol2inv(chol(symridge(inv.psi, ...))) / n.class)
+      )
 
     ## Draw psi
     inv.psi <- rwishart(
       df = n.class - n.rc - 1,
-      SqrtSigma = chol(chol2inv(chol(symridge(crossprod(t(t(bees) - mu)), ...))))
+      SqrtSigma = chol(chol2inv(chol(symridge(
+        crossprod(t(t(bees) - mu)),
+        ...
+      ))))
     )
 
     ## Draw sigma2
-    inv.sigma2 <- rgamma(n.class, n.g / 2 + 1 / (2 * theta), scale = 2 * theta / (ss * theta + sigma2.0))
+    inv.sigma2 <- rgamma(
+      n.class,
+      n.g / 2 + 1 / (2 * theta),
+      scale = 2 * theta / (ss * theta + sigma2.0)
+    )
 
     ## Draw sigma2.0
     H <- 1 / mean(inv.sigma2) # Harmonic mean
-    sigma2.0 <- rgamma(1, n.class / (2 * theta) + 1, scale = 2 * theta * H / n.class)
+    sigma2.0 <- rgamma(
+      1,
+      n.class / (2 * theta) + 1,
+      scale = 2 * theta * H / n.class
+    )
 
     ## Draw theta
     G <- exp(mean(log(1 / inv.sigma2))) # Geometric mean
-    theta <- 1 / rgamma(1, n.class / 2 - 1, scale = 2 / (n.class * (sigma2.0 / H - log(sigma2.0) + log(G) - 1)))
+    theta <- 1 /
+      rgamma(
+        1,
+        n.class / 2 - 1,
+        scale = 2 / (n.class * (sigma2.0 / H - log(sigma2.0) + log(G) - 1))
+      )
   }
 
   ## Generate imputations
-  imps <- rnorm(n = sum(wy), sd = sqrt(1 / inv.sigma2[gf.full[wy]])) + rowSums(as.matrix(x[wy, type == 2, drop = FALSE]) * bees[gf.full[wy], ])
+  imps <- rnorm(n = sum(wy), sd = sqrt(1 / inv.sigma2[gf.full[wy]])) +
+    rowSums(as.matrix(x[wy, type == 2, drop = FALSE]) * bees[gf.full[wy], ])
   imps
 }
 

@@ -151,7 +151,9 @@
 pool <- function(object, dfcom = NULL, rule = NULL, custom.t = NULL) {
   call <- match.call()
 
-  if (!is.list(object)) stop("Argument 'object' not a list", call. = FALSE)
+  if (!is.list(object)) {
+    stop("Argument 'object' not a list", call. = FALSE)
+  }
   object <- as.mira(object)
   m <- length(object$analyses)
 
@@ -162,12 +164,18 @@ pool <- function(object, dfcom = NULL, rule = NULL, custom.t = NULL) {
 
   model <- getfit(object, 1L)
   dfcom <- get.dfcom(model, dfcom)
-  w <- summary(getfit(object), type = "tidy", exponentiate = FALSE, dfcom = dfcom)
+  w <- summary(
+    getfit(object),
+    type = "tidy",
+    exponentiate = FALSE,
+    dfcom = dfcom
+  )
   pooled <- pool.vector(w, dfcom = dfcom, custom.t = custom.t, rule = rule)
 
   # mipo object
   rr <- list(
-    call = call, m = m,
+    call = call,
+    m = m,
     pooled = pooled,
     glanced = get.glanced(object)
   )

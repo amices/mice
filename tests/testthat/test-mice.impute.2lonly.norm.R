@@ -12,10 +12,26 @@ data <- data.frame(
   patid = rep(1:4, each = 5),
   sex = rep(c(1, 2, 1, 2), each = 5),
   crp = c(
-    68, 78, 93, NA, 143,
-    5, 7, 9, 13, NA,
-    97, NA, 56, 52, 34,
-    22, 30, NA, NA, 45
+    68,
+    78,
+    93,
+    NA,
+    143,
+    5,
+    7,
+    9,
+    13,
+    NA,
+    97,
+    NA,
+    56,
+    52,
+    34,
+    22,
+    30,
+    NA,
+    NA,
+    45
   )
 )
 pred <- make.predictorMatrix(data)
@@ -26,9 +42,13 @@ data[3, "sex"] <- NA
 
 test_that("2lonly.norm stops with partially missing level-2 data", {
   expect_error(
-    mice(data,
+    mice(
+      data,
       method = c("", "2lonly.norm", "2l.pan"),
-      predictorMatrix = pred, maxit = 1, m = 2, print = FALSE
+      predictorMatrix = pred,
+      maxit = 1,
+      m = 2,
+      print = FALSE
     ),
     "Method 2lonly.norm found the following clusters with partially missing\n  level-2 data: 1\n  Method 2lonly.mean can fix such inconsistencies."
   )

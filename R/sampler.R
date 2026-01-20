@@ -1,9 +1,23 @@
 # The sampler controls the actual Gibbs sampling iteration scheme.
 # This function is called by mice and mice.mids
-sampler <- function(data, m, ignore, where, imp, blocks, method,
-                    visitSequence, predictorMatrix, formulas,
-                    calltype, blots,
-                    post, fromto, printFlag, ...) {
+sampler <- function(
+  data,
+  m,
+  ignore,
+  where,
+  imp,
+  blocks,
+  method,
+  visitSequence,
+  predictorMatrix,
+  formulas,
+  calltype,
+  blots,
+  post,
+  fromto,
+  printFlag,
+  ...
+) {
   from <- fromto[1]
   to <- fromto[2]
   maxit <- to - from + 1
@@ -13,7 +27,9 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
   chainMean <- chainVar <- initialize.chain(names(data), maxit, m)
 
   ## THE MAIN LOOP: GIBBS SAMPLER ##
-  if (maxit < 1) iteration <- 0
+  if (maxit < 1) {
+    iteration <- 0
+  }
   if (maxit >= 1) {
     if (printFlag) {
       cat("\n iter imp variable")
@@ -42,24 +58,33 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
         for (h in visitSequence) {
           ct <- calltype[[h]]
           b <- blocks[[h]]
-          if (ct == "formula") ff <- formulas[[h]] else ff <- NULL
+          if (ct == "formula") {
+            ff <- formulas[[h]]
+          } else {
+            ff <- NULL
+          }
           pred <- predictorMatrix[h, ]
           user <- blots[[h]]
 
           # univariate/multivariate logic
           theMethod <- method[h]
           empt <- theMethod == ""
-          univ <- !empt && !is.passive(theMethod) &&
+          univ <- !empt &&
+            !is.passive(theMethod) &&
             !handles.format(paste0("mice.impute.", theMethod))
-          mult <- !empt && !is.passive(theMethod) &&
+          mult <- !empt &&
+            !is.passive(theMethod) &&
             handles.format(paste0("mice.impute.", theMethod))
           pass <- !empt && is.passive(theMethod) && length(blocks[[h]]) == 1
-          if (printFlag & !empt) cat(" ", b)
+          if (printFlag & !empt) {
+            cat(" ", b)
+          }
 
           ## store current state
           oldstate <- get("state", pos = parent.frame())
           newstate <- list(
-            it = k, im = i,
+            it = k,
+            im = i,
             dep = h,
             meth = theMethod,
             log = oldstate$log
@@ -71,12 +96,17 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
             for (j in b) {
               imp[[j]][, i] <-
                 sampler.univ(
-                  data = data, r = r, where = where,
-                  pred = pred, formula = ff,
+                  data = data,
+                  r = r,
+                  where = where,
+                  pred = pred,
+                  formula = ff,
                   method = theMethod,
-                  yname = j, k = k,
+                  yname = j,
+                  k = k,
                   ct = ct,
-                  user = user, ignore = ignore,
+                  user = user,
+                  ignore = ignore,
                   ...
                 )
 
@@ -101,25 +131,28 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
             fm <- paste("mice.impute", theMethod, sep = ".")
             if (ct == "formula") {
-              imputes <- do.call(fm, args = list(
-                data = data,
-                formula = ff, ...
-              ))
-            } else if (ct == "pred") {
-              imputes <- do.call(fm, args = list(
-                data = data,
-                type = pred, ...
-              ))
-            } else {
-              stop("Cannot call function of type ", ct,
-                call. = FALSE
+              imputes <- do.call(
+                fm,
+                args = list(
+                  data = data,
+                  formula = ff,
+                  ...
+                )
               )
+            } else if (ct == "pred") {
+              imputes <- do.call(
+                fm,
+                args = list(
+                  data = data,
+                  type = pred,
+                  ...
+                )
+              )
+            } else {
+              stop("Cannot call function of type ", ct, call. = FALSE)
             }
             if (is.null(imputes)) {
-              stop("No imputations from ", theMethod,
-                h,
-                call. = FALSE
-              )
+              stop("No imputations from ", theMethod, h, call. = FALSE)
             }
             for (j in names(imputes)) {
               imp[[j]][, i] <- imputes[[j]]
@@ -133,7 +166,9 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
             for (j in b) {
               wy <- where[, j]
               ry <- r[, j]
-              imp[[j]][, i] <- model.frame(as.formula(theMethod), data[wy, ],
+              imp[[j]][, i] <- model.frame(
+                as.formula(theMethod),
+                data[wy, ],
                 na.action = na.pass
               )
               data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
@@ -153,7 +188,10 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
             }
             if (is.factor(data[, j])) {
               for (mm in seq_len(m)) {
-                nc <- as.integer(factor(imp[[j]][, mm], levels = levels(data[, j])))
+                nc <- as.integer(factor(
+                  imp[[j]][, mm],
+                  levels = levels(data[, j])
+                ))
                 chainVar[j, k2, mm] <- var(nc, na.rm = TRUE)
                 chainMean[j, k2, mm] <- mean(nc, na.rm = TRUE)
               }
@@ -177,8 +215,20 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 }
 
 
-sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
-                         ct = "pred", user, ignore, ...) {
+sampler.univ <- function(
+  data,
+  r,
+  where,
+  pred,
+  formula,
+  method,
+  yname,
+  k,
+  ct = "pred",
+  user,
+  ignore,
+  ...
+) {
   j <- yname[1L]
 
   if (ct == "pred") {
@@ -197,7 +247,10 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
     ymove <- setdiff(lhs(formula), j)
     formula <- update(formula, paste(j, " ~ . "))
     if (length(ymove) > 0L) {
-      formula <- update(formula, paste("~ . + ", paste(backticks(ymove), collapse = "+")))
+      formula <- update(
+        formula,
+        paste("~ . + ", paste(backticks(ymove), collapse = "+"))
+      )
     }
   }
 
@@ -227,7 +280,9 @@ sampler.univ <- function(data, r, where, pred, formula, method, yname, k,
   }
 
   cc <- wy[where[, j]]
-  if (k == 1L) check.df(x, y, ry)
+  if (k == 1L) {
+    check.df(x, y, ry)
+  }
 
   # remove linear dependencies
   keep <- remove.lindep(x, y, ry, ...)

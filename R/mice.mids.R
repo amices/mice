@@ -59,11 +59,15 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
   # overwrite obj with combined obj + imp.newdata
   if (!is.null(newdata)) {
     ignore <- rep(FALSE, nrow(obj$data))
-    if (!is.null(obj$ignore)) ignore <- obj$ignore
+    if (!is.null(obj$ignore)) {
+      ignore <- obj$ignore
+    }
 
     newdata <- check.newdata(newdata, obj$data)
-    imp.newdata <- mice(newdata,
-      m = obj$m, maxit = 0,
+    imp.newdata <- mice(
+      newdata,
+      m = obj$m,
+      maxit = 0,
       remove.collinear = FALSE,
       remove.constant = FALSE
     )
@@ -87,13 +91,21 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
 
   loggedEvents <- obj$loggedEvents
   state <- list(
-    it = 0, im = 0, co = 0, dep = "", meth = "",
+    it = 0,
+    im = 0,
+    co = 0,
+    dep = "",
+    meth = "",
     log = !is.null(loggedEvents)
   )
   if (is.null(loggedEvents)) {
     loggedEvents <- data.frame(
-      it = 0, im = 0, co = 0, dep = "",
-      meth = "", out = ""
+      it = 0,
+      im = 0,
+      co = 0,
+      dep = "",
+      meth = "",
+      out = ""
     )
   }
 
@@ -101,19 +113,35 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
   call <- match.call()
   imp <- obj$imp
   where <- obj$where
-  if (is.null(where)) where <- is.na(obj$data)
+  if (is.null(where)) {
+    where <- is.na(obj$data)
+  }
   blocks <- obj$blocks
-  if (is.null(blocks)) blocks <- make.blocks(obj$data)
+  if (is.null(blocks)) {
+    blocks <- make.blocks(obj$data)
+  }
 
   ## OK. Iterate.
   sumIt <- obj$iteration + maxit
   from <- obj$iteration + 1
   to <- from + maxit - 1
   q <- sampler(
-    obj$data, obj$m, obj$ignore, where, imp, blocks,
-    obj$method, obj$visitSequence, obj$predictorMatrix,
-    obj$formulas, obj$calltype, obj$blots, obj$post,
-    c(from, to), printFlag, ...
+    obj$data,
+    obj$m,
+    obj$ignore,
+    where,
+    imp,
+    blocks,
+    obj$method,
+    obj$visitSequence,
+    obj$predictorMatrix,
+    obj$formulas,
+    obj$calltype,
+    obj$blots,
+    obj$post,
+    c(from, to),
+    printFlag,
+    ...
   )
 
   imp <- q$imp
@@ -122,11 +150,13 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
   vnames <- unique(unlist(obj$blocks))
   nvis <- length(vnames)
   if (!is.null(obj$chainMean)) {
-    chainMean <- chainVar <- array(0,
+    chainMean <- chainVar <- array(
+      0,
       dim = c(nvis, to, obj$m),
       dimnames = list(
         vnames,
-        seq_len(to), paste("Chain", seq_len(obj$m))
+        seq_len(to),
+        paste("Chain", seq_len(obj$m))
       )
     )
     for (j in seq_len(nvis)) {
@@ -170,12 +200,16 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
     ignore = obj$ignore,
     seed = obj$seed,
     iteration = sumIt,
-    lastSeedValue = get(".Random.seed",
-      envir = globalenv(), mode = "integer",
-      inherits = FALSE),
+    lastSeedValue = get(
+      ".Random.seed",
+      envir = globalenv(),
+      mode = "integer",
+      inherits = FALSE
+    ),
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents)
+    loggedEvents = loggedEvents
+  )
 
   if (!is.null(newdata)) {
     include <- c(

@@ -1,5 +1,14 @@
-initialize.imp <- function(data, m, ignore, where, blocks, visitSequence,
-                           method, nmis, data.init) {
+initialize.imp <- function(
+  data,
+  m,
+  ignore,
+  where,
+  blocks,
+  visitSequence,
+  method,
+  nmis,
+  data.init
+) {
   imp <- vector("list", ncol(data))
   names(imp) <- names(data)
   r <- !is.na(data)

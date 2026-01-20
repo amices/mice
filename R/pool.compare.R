@@ -66,8 +66,12 @@
 #' Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 #' @keywords htest
 #' @export
-pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"),
-                         data = NULL) {
+pool.compare <- function(
+  fit1,
+  fit0,
+  method = c("wald", "likelihood"),
+  data = NULL
+) {
   .Deprecated("D1")
 
   # Check the arguments
@@ -145,8 +149,10 @@ pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"),
       pull(.data$deviance)
 
     deviances <- list(
-      dev1.M = dev1.M, dev0.M = dev0.M,
-      dev1.L = dev1.L, dev0.L = dev0.L
+      dev1.M = dev1.M,
+      dev0.M = dev0.M,
+      dev1.L = dev1.L,
+      dev0.L = dev0.L
     )
 
     dev.M <- mean(dev0.M - dev1.M)
@@ -165,13 +171,23 @@ pool.compare <- function(fit1, fit0, method = c("wald", "likelihood"),
   }
 
   statistic <- list(
-    call = call, call11 = fit1$call, call12 = fit1$call1,
-    call01 = fit0$call, call02 = fit0$call1,
-    method = method, nmis = fit1$nmis, m = m,
-    qbar1 = getqbar(est1), qbar0 = getqbar(est0),
-    ubar1 = est1$pooled$ubar, ubar0 = est0$pooled$ubar,
+    call = call,
+    call11 = fit1$call,
+    call12 = fit1$call1,
+    call01 = fit0$call,
+    call02 = fit0$call1,
+    method = method,
+    nmis = fit1$nmis,
+    m = m,
+    qbar1 = getqbar(est1),
+    qbar0 = getqbar(est0),
+    ubar1 = est1$pooled$ubar,
+    ubar0 = est0$pooled$ubar,
     deviances = deviances,
-    Dm = Dm, rm = rm, df1 = dimQ2, df2 = w,
+    Dm = Dm,
+    rm = rm,
+    df1 = dimQ2,
+    df2 = w,
     pvalue = pf(Dm, dimQ2, w, lower.tail = FALSE)
   )
   statistic

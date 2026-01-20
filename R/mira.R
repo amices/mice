@@ -52,11 +52,11 @@
 #' @aliases mira mira-class
 #' @export
 mira <- function(
-    call = match.call(),
-    call1 = match.call(),
-    nmis = integer(),
-    analyses = list()) {
-
+  call = match.call(),
+  call1 = match.call(),
+  nmis = integer(),
+  analyses = list()
+) {
   # Create the object as a list
   obj <- list(
     call = as.call(call),

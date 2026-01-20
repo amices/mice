@@ -44,7 +44,10 @@ test_that("n.imp.core not specified", {
 
 # Should return error
 test_that("n.core larger than logical CPU cores", {
-  expect_error(suppresWarnings(parlmice(nhanes, n.core = parallel::detectCores() + 1)))
+  expect_error(suppresWarnings(parlmice(
+    nhanes,
+    n.core = parallel::detectCores() + 1
+  )))
 })
 
 # # NOT RUN ON R CMD CHECK AND CRAN CHECK - TOO MANY PARALLEL PROCESSES SPAWNED

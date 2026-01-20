@@ -9,7 +9,9 @@ cbind.mids <- function(x, y = NULL, ...) {
     return(x)
   }
   n <- nrow(x$data)
-  if (length(y) == 1L) y <- rep(y, n)
+  if (length(y) == 1L) {
+    y <- rep(y, n)
+  }
   if (length(y) == 0L && length(dots) > 0L) {
     y <- cbind.data.frame(dots)
   } else if (length(y) > 0L && length(dots) == 0L) {
@@ -58,10 +60,11 @@ cbind.mids <- function(x, y = NULL, ...) {
   # including the missing values of y.
   r <- (!is.na(y))
   f <- function(j) {
-    m <- matrix(NA,
-                nrow = sum(!r[, j]),
-                ncol = x$m,
-                dimnames = list(row.names(y)[!r[, j]], seq_len(m))
+    m <- matrix(
+      NA,
+      nrow = sum(!r[, j]),
+      ncol = x$m,
+      dimnames = list(row.names(y)[!r[, j]], seq_len(m))
     )
     as.data.frame(m)
   }
@@ -77,17 +80,11 @@ cbind.mids <- function(x, y = NULL, ...) {
   # y is not used as predictor as well as not imputed.
   predictorMatrix <- rbind(
     x$predictorMatrix,
-    matrix(0,
-           ncol = ncol(x$predictorMatrix),
-           nrow = ncol(y)
-    )
+    matrix(0, ncol = ncol(x$predictorMatrix), nrow = ncol(y))
   )
   predictorMatrix <- cbind(
     predictorMatrix,
-    matrix(0,
-           ncol = ncol(y),
-           nrow = nrow(x$predictorMatrix) + ncol(y)
-    )
+    matrix(0, ncol = ncol(y), nrow = nrow(x$predictorMatrix) + ncol(y))
   )
   rownames(predictorMatrix) <- blocknames
   colnames(predictorMatrix) <- varnames
@@ -131,13 +128,16 @@ cbind.mids <- function(x, y = NULL, ...) {
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents)
+    loggedEvents = loggedEvents
+  )
   return(midsobj)
 }
 
 
 cbind.mids.mids <- function(x, y, call) {
-  if (!is.mids(y)) stop("Argument `y` not a mids object")
+  if (!is.mids(y)) {
+    stop("Argument `y` not a mids object")
+  }
 
   if (nrow(y$data) != nrow(x$data)) {
     stop("The two datasets do not have the same length\n")
@@ -166,8 +166,12 @@ cbind.mids.mids <- function(x, y, call) {
   ynew <- varnames[-(1:ncol(x$data))]
   xblocks <- x$blocks
   yblocks <- y$blocks
-  for (i in names(xblocks)) xblocks[[i]] <- unname(xnew[xblocks[[i]]])
-  for (i in names(yblocks)) yblocks[[i]] <- unname(ynew[yblocks[[i]]])
+  for (i in names(xblocks)) {
+    xblocks[[i]] <- unname(xnew[xblocks[[i]]])
+  }
+  for (i in names(yblocks)) {
+    yblocks[[i]] <- unname(ynew[yblocks[[i]]])
+  }
   blocks <- c(xblocks, yblocks)
   xynames <- c(names(xblocks), names(yblocks))
   blocknames <- make.unique(xynames)
@@ -204,18 +208,12 @@ cbind.mids.mids <- function(x, y, call) {
   # on the off diagonal blocks.
   predictorMatrix <- rbind(
     x$predictorMatrix,
-    matrix(0,
-           ncol = ncol(x$predictorMatrix),
-           nrow = nrow(y$predictorMatrix)
-    )
+    matrix(0, ncol = ncol(x$predictorMatrix), nrow = nrow(y$predictorMatrix))
   )
   predictorMatrix <- cbind(
     predictorMatrix,
     rbind(
-      matrix(0,
-             ncol = ncol(y$predictorMatrix),
-             nrow = nrow(x$predictorMatrix)
-      ),
+      matrix(0, ncol = ncol(y$predictorMatrix), nrow = nrow(x$predictorMatrix)),
       y$predictorMatrix
     )
   )
@@ -255,13 +253,19 @@ cbind.mids.mids <- function(x, y, call) {
   chainMean[seq_len(dim(x$chainMean)[1]), , ] <- x$chainMean
 
   if (iteration <= dim(y$chainMean)[2]) {
-    chainMean[(dim(x$chainMean)[1] + 1):dim(chainMean)[1], , ] <- y$chainMean[, seq_len(iteration), ]
+    chainMean[(dim(x$chainMean)[1] + 1):dim(chainMean)[1], , ] <- y$chainMean[,
+      seq_len(iteration),
+    ]
   } else {
-    chainMean[(dim(x$chainMean)[1] + 1):dim(chainMean)[1], seq_len(dim(y$chainMean)[2]), ] <- y$chainMean
+    chainMean[
+      (dim(x$chainMean)[1] + 1):dim(chainMean)[1],
+      seq_len(dim(y$chainMean)[2]),
+    ] <- y$chainMean
   }
 
   chainVar <- array(
-    data = NA, dim = c(dim(x$chainVar)[1] + dim(y$chainVar)[1], iteration, m),
+    data = NA,
+    dim = c(dim(x$chainVar)[1] + dim(y$chainVar)[1], iteration, m),
     dimnames = list(
       c(
         dimnames(x$chainVar)[[1]],
@@ -274,9 +278,14 @@ cbind.mids.mids <- function(x, y, call) {
   chainVar[seq_len(dim(x$chainVar)[1]), , ] <- x$chainVar
 
   if (iteration <= dim(y$chainVar)[2]) {
-    chainVar[(dim(x$chainVar)[1] + 1):dim(chainVar)[1], , ] <- y$chainVar[, seq_len(iteration), ]
+    chainVar[(dim(x$chainVar)[1] + 1):dim(chainVar)[1], , ] <- y$chainVar[,
+      seq_len(iteration),
+    ]
   } else {
-    chainVar[(dim(x$chainVar)[1] + 1):dim(chainVar)[1], seq_len(dim(y$chainVar)[2]), ] <- y$chainVar
+    chainVar[
+      (dim(x$chainVar)[1] + 1):dim(chainVar)[1],
+      seq_len(dim(y$chainVar)[2]),
+    ] <- y$chainVar
   }
 
   loggedEvents <- x$loggedEvents
@@ -302,7 +311,8 @@ cbind.mids.mids <- function(x, y, call) {
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents)
+    loggedEvents = loggedEvents
+  )
   return(midsobj)
 }
 

@@ -51,8 +51,16 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
-mice.impute.polyreg <- function(y, ry, x, wy = NULL, nnet.maxit = 100,
-                                nnet.trace = FALSE, nnet.MaxNWts = 1500, ...) {
+mice.impute.polyreg <- function(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  nnet.maxit = 100,
+  nnet.trace = FALSE,
+  nnet.MaxNWts = 1500,
+  ...
+) {
   if (is.null(wy)) {
     wy <- !ry
   }
@@ -82,9 +90,13 @@ mice.impute.polyreg <- function(y, ry, x, wy = NULL, nnet.maxit = 100,
     return(rep(levels(fy)[cat.has.all.obs], sum(wy)))
   }
 
-  fit <- nnet::multinom(formula(xy),
-    data = xy[ry, , drop = FALSE], weights = w[ry],
-    maxit = nnet.maxit, trace = nnet.trace, MaxNWts = nnet.MaxNWts,
+  fit <- nnet::multinom(
+    formula(xy),
+    data = xy[ry, , drop = FALSE],
+    weights = w[ry],
+    maxit = nnet.maxit,
+    trace = nnet.trace,
+    MaxNWts = nnet.MaxNWts,
     ...
   )
   post <- predict(fit, xy[wy, , drop = FALSE], type = "probs")

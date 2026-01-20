@@ -18,11 +18,16 @@ test_that("all examples work", {
   my_weights[2, 1] <- 2
   my_weights[3, 1] <- 0.5
 
-  expect_error(ampute(
-    data = compl_boys, patterns = my_patterns,
-    freq = c(0.3, 0.3, 0.4), weights = my_weights,
-    type = c("RIGHT", "TAIL", "LEFT")
-  ), NA)
+  expect_error(
+    ampute(
+      data = compl_boys,
+      patterns = my_patterns,
+      freq = c(0.3, 0.3, 0.4),
+      weights = my_weights,
+      type = c("RIGHT", "TAIL", "LEFT")
+    ),
+    NA
+  )
 })
 
 test_that("all arguments work", {
@@ -32,59 +37,123 @@ test_that("all arguments work", {
   # missingness by cells
   expect_error(ampute(data = complete.data, prop = 0.1, bycases = FALSE), NA)
   # prop with 3 dec, weigths with negative values, unequal odds matrix
-  expect_error(ampute(
-    data = complete.data, prop = 0.314,
-    freq = c(0.25, 0.4, 0.35),
-    patterns = matrix(
-      data = c(
-        1, 0, 1,
-        0, 1, 0,
-        0, 1, 1
+  expect_error(
+    ampute(
+      data = complete.data,
+      prop = 0.314,
+      freq = c(0.25, 0.4, 0.35),
+      patterns = matrix(
+        data = c(
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1
+        ),
+        nrow = 3,
+        byrow = TRUE
       ),
-      nrow = 3, byrow = TRUE
-    ),
-    weights = matrix(
-      data = c(
-        -1, 1, 0,
-        -4, -4, 1,
-        0, 0, -1
+      weights = matrix(
+        data = c(
+          -1,
+          1,
+          0,
+          -4,
+          -4,
+          1,
+          0,
+          0,
+          -1
+        ),
+        nrow = 3,
+        byrow = TRUE
       ),
-      nrow = 3, byrow = TRUE
-    ),
-    odds = matrix(
-      data = c(
-        1, 4, NA, NA,
-        0, 3, 3, NA,
-        4, 1, 1, 4
+      odds = matrix(
+        data = c(
+          1,
+          4,
+          NA,
+          NA,
+          0,
+          3,
+          3,
+          NA,
+          4,
+          1,
+          1,
+          4
+        ),
+        nrow = 3,
+        byrow = TRUE
       ),
-      nrow = 3, byrow = TRUE
+      cont = FALSE
     ),
-    cont = FALSE
-  ), NA)
+    NA
+  )
   # 1 pattern with vector for patterns and weights
-  expect_error(ampute(
-    data = complete.data, freq = 1, patterns = c(1, 0, 1),
-    weights = c(3, 3, 0)
-  ), NA)
+  expect_error(
+    ampute(
+      data = complete.data,
+      freq = 1,
+      patterns = c(1, 0, 1),
+      weights = c(3, 3, 0)
+    ),
+    NA
+  )
   # multiple patterns given in vectors
-  expect_error(ampute(
-    data = complete.data, patterns = c(1, 0, 1, 1, 0, 0),
-    cont = TRUE, weights = c(1, 4, -2, 0, 1, 2),
-    type = c("LEFT", "TAIL")
-  ), NA)
+  expect_error(
+    ampute(
+      data = complete.data,
+      patterns = c(1, 0, 1, 1, 0, 0),
+      cont = TRUE,
+      weights = c(1, 4, -2, 0, 1, 2),
+      type = c("LEFT", "TAIL")
+    ),
+    NA
+  )
   # one pattern with odds vector
-  expect_error(ampute(
-    data = complete.data, patterns = c(1, 0, 1),
-    weights = c(4, 1, 0), odds = c(2, 1), cont = FALSE
-  ), NA)
+  expect_error(
+    ampute(
+      data = complete.data,
+      patterns = c(1, 0, 1),
+      weights = c(4, 1, 0),
+      odds = c(2, 1),
+      cont = FALSE
+    ),
+    NA
+  )
   # argument standardized
   expect_error(ampute(data = complete.data, std = FALSE), NA)
 
   # sum scores cannot be NaN
-  dich.data <- matrix(c(
-    0, 0, 0, 1, 0, 0, 0, 0, 0,
-    1, 0, 0, 0, 0, 0, 0, 0, 0
-  ), ncol = 2, byrow = FALSE)
+  dich.data <- matrix(
+    c(
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ),
+    ncol = 2,
+    byrow = FALSE
+  )
   wss <- expect_warning(ampute(data = dich.data, mech = "MNAR")$scores)
   check_na <- function(x) {
     return(any(is.na(x)))
@@ -105,8 +174,14 @@ test_that("function works around unusual arguments", {
   expect_warning(ampute(data = nasty.data, mech = "MCAR"), NA)
 
   # patterns
-  expect_error(ampute(data = complete.data, patterns = c(0, 0, 0), mech = "MCAR"), NA)
-  expect_error(ampute(data = complete.data, patterns = c(0, 0, 1, 0, 0, 0), mech = "MNAR"), NA)
+  expect_error(
+    ampute(data = complete.data, patterns = c(0, 0, 0), mech = "MCAR"),
+    NA
+  )
+  expect_error(
+    ampute(data = complete.data, patterns = c(0, 0, 1, 0, 0, 0), mech = "MNAR"),
+    NA
+  )
   expect_warning(ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0)))
 
   # freq
@@ -127,33 +202,59 @@ test_that("function works around unusual arguments", {
   )
   expect_warning(
     ampute(
-      data = complete.data, mech = "MCAR",
+      data = complete.data,
+      mech = "MCAR",
       odds = matrix(
         data = c(
-          1, 4, NA, NA,
-          0, 3, 3, NA,
-          4, 1, 1, 4
+          1,
+          4,
+          NA,
+          NA,
+          0,
+          3,
+          3,
+          NA,
+          4,
+          1,
+          1,
+          4
         ),
-        nrow = 3, byrow = TRUE
-      ), cont = FALSE
+        nrow = 3,
+        byrow = TRUE
+      ),
+      cont = FALSE
     ),
     "Odds matrix is not used when mechanism is MCAR"
   )
   expect_warning(
     ampute(
-      data = complete.data, mech = "MCAR",
+      data = complete.data,
+      mech = "MCAR",
       weights = c(1, 3, 4)
     ),
     "Weights matrix is not used when mechanism is MCAR"
   )
-  expect_warning(ampute(data = complete.data, odds = matrix(
-    data = c(
-      1, 4, NA, NA,
-      0, 3, 3, NA,
-      4, 1, 1, 4
-    ),
-    nrow = 3, byrow = TRUE
-  )))
+  expect_warning(ampute(
+    data = complete.data,
+    odds = matrix(
+      data = c(
+        1,
+        4,
+        NA,
+        NA,
+        0,
+        3,
+        3,
+        NA,
+        4,
+        1,
+        1,
+        4
+      ),
+      nrow = 3,
+      byrow = TRUE
+    )
+  ))
   expect_warning(ampute(data = complete.data, cont = FALSE, type = "LEFT"))
 })
 
@@ -215,30 +316,49 @@ test_that("error messages work properly", {
     ampute(data = complete.data, weights = c(1, 2, 1, 4)),
     "Length of weight vector does not match #variables"
   )
-  expect_error(ampute(
-    data = complete.data,
-    odds = matrix(c(1, 4, -3, 2, 1, 1), nrow = 3),
-    cont = FALSE
-  ), "Odds matrix can only have positive values")
+  expect_error(
+    ampute(
+      data = complete.data,
+      odds = matrix(c(1, 4, -3, 2, 1, 1), nrow = 3),
+      cont = FALSE
+    ),
+    "Odds matrix can only have positive values"
+  )
   expect_error(
     ampute(
       data = complete.data,
       patterns = matrix(
         data = c(
-          1, 0, 1,
-          0, 1, 0,
-          0, 1, 1
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1
         ),
-        nrow = 3, byrow = TRUE
+        nrow = 3,
+        byrow = TRUE
       ),
       weights = matrix(
         data = c(
-          -1, 1, 0,
-          -4, -4, 1,
-          0, 0, -1,
-          1, 1, 0
+          -1,
+          1,
+          0,
+          -4,
+          -4,
+          1,
+          0,
+          0,
+          -1,
+          1,
+          1,
+          0
         ),
-        nrow = 4, byrow = TRUE
+        nrow = 4,
+        byrow = TRUE
       )
     ),
     "The objects patterns and weights are not matching"
@@ -248,19 +368,34 @@ test_that("error messages work properly", {
       data = complete.data,
       patterns = matrix(
         data = c(
-          1, 0, 1,
-          0, 1, 0,
-          0, 1, 1
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1
         ),
-        nrow = 3, byrow = TRUE
+        nrow = 3,
+        byrow = TRUE
       ),
       odds = matrix(
         data = c(
-          1, 4, NA, NA,
-          0, 3, 3, 0
+          1,
+          4,
+          NA,
+          NA,
+          0,
+          3,
+          3,
+          0
         ),
-        nrow = 2, byrow = TRUE
-      ), cont = FALSE
+        nrow = 2,
+        byrow = TRUE
+      ),
+      cont = FALSE
     ),
     "The objects patterns and odds are not matching"
   )
@@ -271,98 +406,136 @@ test_that("error messages work properly", {
 test_that("patterns and weights matrices have right dimensions", {
   suppressWarnings(
     expect_true(all(
-      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0))$patterns == c(0, 1, 0)
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0))$patterns ==
+        c(0, 1, 0)
     ))
   )
 
   suppressWarnings(
     expect_true(all(
-      ampute(data = complete.data, patterns = c(0, 1, 0, 1, 1, 1))$patterns == c(0, 1, 0)
-    ))
-  )
-
-  suppressWarnings(
-    expect_true(all(
-      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1))$patterns == c(0, 1, 0)
+      ampute(data = complete.data, patterns = c(0, 1, 0, 1, 1, 1))$patterns ==
+        c(0, 1, 0)
     ))
   )
 
   suppressWarnings(
     expect_true(all(
       ampute(
-        data = complete.data, patterns = c(1, 1, 1, 0, 1, 0),
+        data = complete.data,
+        patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1)
+      )$patterns ==
+        c(0, 1, 0)
+    ))
+  )
+
+  suppressWarnings(
+    expect_true(all(
+      ampute(
+        data = complete.data,
+        patterns = c(1, 1, 1, 0, 1, 0),
         weights = c(1, 0, 0, 0, 1, 0)
-      )$weights == c(0, 1, 0)
+      )$weights ==
+        c(0, 1, 0)
     ))
   )
 
   suppressWarnings(
     expect_true(all(
       ampute(
-        data = complete.data, patterns = c(0, 1, 0, 1, 1, 1),
+        data = complete.data,
+        patterns = c(0, 1, 0, 1, 1, 1),
         weights = c(1, 0, 0, 0, 1, 0)
-      )$weights == c(1, 0, 0)
+      )$weights ==
+        c(1, 0, 0)
     ))
   )
 
   suppressWarnings(
     expect_true(all(
       ampute(
-        data = complete.data, patterns = c(0, 1, 0, 1, 1, 1),
+        data = complete.data,
+        patterns = c(0, 1, 0, 1, 1, 1),
         weights = c(1, 0, 0)
-      )$weights == c(1, 0, 0)
+      )$weights ==
+        c(1, 0, 0)
     ))
   )
 
   suppressWarnings(
     expect_true(all(
       ampute(
-        data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1),
+        data = complete.data,
+        patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1),
         weights = c(1, 0, 0)
-      )$weights == c(1, 0, 0)
+      )$weights ==
+        c(1, 0, 0)
     ))
   )
 
   suppressWarnings(
     expect_true(all(
       ampute(
-        data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1),
+        data = complete.data,
+        patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1),
         weights = c(1, 0, 0, 0, 1, 0, 0, 0, 1)
-      )$weights == c(0, 1, 0)
+      )$weights ==
+        c(0, 1, 0)
     ))
   )
 })
 
 test_that("prop and freq are properly adjusted when patterns contain only 1's", {
   suppressWarnings(
-    expect_equal(ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0))$prop, 0.25)
-  )
-
-  suppressWarnings(
-    expect_equal(ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0))$freq, 1)
+    expect_equal(
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0))$prop,
+      0.25
+    )
   )
 
   suppressWarnings(
     expect_equal(
-      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 0, 1, 0))$prop, 1 / 3
+      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0))$freq,
+      1
+    )
+  )
+
+  suppressWarnings(
+    expect_equal(
+      ampute(
+        data = complete.data,
+        patterns = c(1, 1, 1, 0, 1, 0, 0, 1, 0)
+      )$prop,
+      1 / 3
     )
   )
 
   suppressWarnings(
     expect_true(all(
-      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 0, 1, 0))$freq == c(0.5, 0.5)
+      ampute(
+        data = complete.data,
+        patterns = c(1, 1, 1, 0, 1, 0, 0, 1, 0)
+      )$freq ==
+        c(0.5, 0.5)
     ))
   )
 
   suppressWarnings(
     expect_equal(
-      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1))$prop, 1 / 3 * 0.5
+      ampute(
+        data = complete.data,
+        patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1)
+      )$prop,
+      1 / 3 * 0.5
     )
   )
 
   suppressWarnings(
     expect_equal(
-      ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1))$freq, 1
+      ampute(
+        data = complete.data,
+        patterns = c(1, 1, 1, 0, 1, 0, 1, 1, 1)
+      )$freq,
+      1
     )
   )
 })
@@ -413,12 +586,14 @@ data <- replicate(
 # Ampute pattern
 covNum <- NUM_VAR_DF - 1
 misPatCov1 <- t(combn(
-  x = covNum, m = 1,
+  x = covNum,
+  m = 1,
   FUN = function(x) replace(rep(1, covNum), x, 0)
 ))
 misPat1 <- cbind(rep(1, choose(covNum, 1)), misPatCov1)
 misPatCov2 <- t(combn(
-  x = covNum, m = 2,
+  x = covNum,
+  m = 2,
   FUN = function(x) replace(rep(1, covNum), x, 0)
 ))
 misPat2 <- cbind(rep(1, choose(covNum, 2)), misPatCov2)

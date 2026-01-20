@@ -28,9 +28,14 @@ artificial <- data.frame(
   row.names = paste0("a", 1:2)
 )
 
-imp1 <- mice(nhanes,
-  maxit = 1, m = 1, print = FALSE, seed = 1,
-  donors = 1L, matchtype = 0
+imp1 <- mice(
+  nhanes,
+  maxit = 1,
+  m = 1,
+  print = FALSE,
+  seed = 1,
+  donors = 1L,
+  matchtype = 0
 )
 
 imp2 <- mice.mids(imp1, newdata = artificial, maxit = 1, print = FALSE)

@@ -51,7 +51,9 @@ ibind <- function(x, y) {
     stop("Differences detected between `x$method` and `y$method`")
   }
   if (!identical(x$predictorMatrix, y$predictorMatrix)) {
-    stop("Differences detected between `x$predictorMatrix` and `y$predictorMatrix`")
+    stop(
+      "Differences detected between `x$predictorMatrix` and `y$predictorMatrix`"
+    )
   }
   if (!identical(x$visitSequence, y$visitSequence)) {
     stop("Differences detected between `x$visitSequence` and `y$visitSequence`")
@@ -77,12 +79,12 @@ ibind <- function(x, y) {
 
   chainMean <- chainVar <- initialize.chain(names(x$data), iteration, m)
   for (j in seq_len(x$m)) {
-    chainMean[, seq_len(x$iteration), j] <- x$chainMean[, , j]
-    chainVar[, seq_len(x$iteration), j] <- x$chainVar[, , j]
+    chainMean[, seq_len(x$iteration), j] <- x$chainMean[,, j]
+    chainVar[, seq_len(x$iteration), j] <- x$chainVar[,, j]
   }
   for (j in seq_len(y$m)) {
-    chainMean[, seq_len(y$iteration), j + x$m] <- y$chainMean[, , j]
-    chainVar[, seq_len(y$iteration), j + x$m] <- y$chainVar[, , j]
+    chainMean[, seq_len(y$iteration), j + x$m] <- y$chainMean[,, j]
+    chainVar[, seq_len(y$iteration), j + x$m] <- y$chainVar[,, j]
   }
 
   midsobj <- mids(
@@ -106,6 +108,7 @@ ibind <- function(x, y) {
     lastSeedValue = x$lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = x$loggedEvents)
+    loggedEvents = x$loggedEvents
+  )
   return(midsobj)
 }

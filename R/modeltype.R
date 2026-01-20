@@ -44,10 +44,17 @@
 #' make.calltype(calltype, predictorMatrix, NULL)
 #'
 #' @export
-make.calltype <- function(calltype, predictorMatrix, formulas, priority = "pred") {
+make.calltype <- function(
+  calltype,
+  predictorMatrix,
+  formulas,
+  priority = "pred"
+) {
   # Validate calltype length
   if (!is.null(calltype) && length(calltype) != nrow(predictorMatrix)) {
-    stop("Length of calltype must match the number of blocks in predictorMatrix.")
+    stop(
+      "Length of calltype must match the number of blocks in predictorMatrix."
+    )
   }
 
   # Default calltype setup
@@ -68,7 +75,10 @@ make.calltype <- function(calltype, predictorMatrix, formulas, priority = "pred"
   # Validate entries
   valid_calltypes <- c("pred", "formula")
   if (!all(calltype %in% valid_calltypes)) {
-    stop("All entries in calltype must be one of: ", paste(valid_calltypes, collapse = ", "))
+    stop(
+      "All entries in calltype must be one of: ",
+      paste(valid_calltypes, collapse = ", ")
+    )
   }
 
   return(calltype)

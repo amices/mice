@@ -18,7 +18,9 @@
 #' @keywords datagen
 #' @export
 mice.impute.norm.boot <- function(y, ry, x, wy = NULL, ...) {
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
   x <- cbind(1, as.matrix(x))
   n1 <- sum(ry)
   s <- sample(n1, n1, replace = TRUE)

@@ -66,7 +66,14 @@ flux <- function(data, local = names(data)) {
   fico <- fico(data)
   outflux <- rowSums(pat$rm) / (rowSums(pat$rm + pat$mm))
   influx <- rowSums(pat$mr) / (rowSums(pat$mr + pat$rr))
-  data.frame(pobs = x, influx = influx, outflux = outflux, ainb = ainb, aout = aout, fico = fico)
+  data.frame(
+    pobs = x,
+    influx = influx,
+    outflux = outflux,
+    ainb = ainb,
+    aout = aout,
+    fico = fico
+  )
 }
 
 
@@ -132,31 +139,53 @@ flux <- function(data, local = names(data)) {
 #' \emph{Statistics in Medicine}, \emph{29}, 2920-2931.
 #' @keywords misc
 #' @export
-fluxplot <- function(data, local = names(data),
-                     plot = TRUE, labels = TRUE,
-                     xlim = c(0, 1), ylim = c(0, 1), las = 1,
-                     xlab = "Influx", ylab = "Outflux",
-                     main = paste("Influx-outflux pattern for", deparse(substitute(data))),
-                     eqscplot = TRUE, pty = "s",
-                     lwd = 1,
-                     ...) {
+fluxplot <- function(
+  data,
+  local = names(data),
+  plot = TRUE,
+  labels = TRUE,
+  xlim = c(0, 1),
+  ylim = c(0, 1),
+  las = 1,
+  xlab = "Influx",
+  ylab = "Outflux",
+  main = paste("Influx-outflux pattern for", deparse(substitute(data))),
+  eqscplot = TRUE,
+  pty = "s",
+  lwd = 1,
+  ...
+) {
   f <- flux(data, local)
   if (plot) {
     if (eqscplot) {
       MASS::eqscplot(
-        x = f$influx, y = f$outflux, type = "n",
+        x = f$influx,
+        y = f$outflux,
+        type = "n",
         main = main,
-        xlab = xlab, ylab = ylab,
-        xlim = xlim, ylim = ylim,
-        pty = pty, lwd = lwd, axes = FALSE, ...
+        xlab = xlab,
+        ylab = ylab,
+        xlim = xlim,
+        ylim = ylim,
+        pty = pty,
+        lwd = lwd,
+        axes = FALSE,
+        ...
       )
     } else {
       plot(
-        x = f$influx, y = f$outflux, type = "n",
+        x = f$influx,
+        y = f$outflux,
+        type = "n",
         main = main,
-        xlab = xlab, ylab = ylab,
-        xlim = xlim, ylim = ylim,
-        pty = pty, lwd = lwd, axes = FALSE, ...
+        xlab = xlab,
+        ylab = ylab,
+        xlim = xlim,
+        ylim = ylim,
+        pty = pty,
+        lwd = lwd,
+        axes = FALSE,
+        ...
       )
     }
     axis(1, lwd = lwd, las = las)

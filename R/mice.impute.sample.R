@@ -23,6 +23,8 @@ mice.impute.sample <- function(y, ry, x = NULL, wy = NULL, ...) {
   if (length(yry) < 1) {
     return(rnorm(sum(wy)))
   }
-  if (length(yry) == 1) yry <- rep(yry, 2)
+  if (length(yry) == 1) {
+    yry <- rep(yry, 2)
+  }
   sample(yry, size = sum(wy), replace = TRUE)
 }

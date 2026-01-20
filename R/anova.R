@@ -41,7 +41,8 @@ anova.mira <- function(object, ..., method = "D1", use = "wald") {
       args <- alist(fit1 = modlist[[j]], fit0 = modlist[[j + 1L]], use = use)
     } else {
       args <- alist(
-        fit1 = modlist[[j]], fit0 = modlist[[j + 1L]],
+        fit1 = modlist[[j]],
+        fit0 = modlist[[j + 1L]],
         dfcom = as.numeric(unlist(dfcom[j]))
       )
     }

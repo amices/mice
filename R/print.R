@@ -1,5 +1,3 @@
-
-
 #' Print a \code{mira} object
 #'
 #' @rdname print
@@ -48,10 +46,14 @@ print.mice.anova.summary <- function(x, ...) {
   cat("\nComparisons:\n")
   print(x$comparisons, row.names = FALSE)
   cat(
-    "\nNumber of imputations: ", x$m,
-    "  Method", x$method
+    "\nNumber of imputations: ",
+    x$m,
+    "  Method",
+    x$method
   )
-  if (x$method == "D2") cat(" (", x$use, ")", sep = "")
+  if (x$method == "D2") {
+    cat(" (", x$use, ")", sep = "")
+  }
   cat("\n")
   invisible(x)
 }

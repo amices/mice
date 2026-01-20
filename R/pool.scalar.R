@@ -70,7 +70,13 @@
 #' # check: automatic pooling using broom
 #' pool.syn(fit)
 #' @export
-pool.scalar <- function(Q, U, n = Inf, k = 1, rule = c("rubin1987", "reiter2003")) {
+pool.scalar <- function(
+  Q,
+  U,
+  n = Inf,
+  k = 1,
+  rule = c("rubin1987", "reiter2003")
+) {
   rule <- match.arg(rule)
 
   m <- length(Q)
@@ -92,8 +98,16 @@ pool.scalar <- function(Q, U, n = Inf, k = 1, rule = c("rubin1987", "reiter2003"
   }
 
   list(
-    m = m, qhat = Q, u = U, qbar = qbar, ubar = ubar, b = b, t = t,
-    df = df, r = r, fmi = fmi
+    m = m,
+    qhat = Q,
+    u = U,
+    qbar = qbar,
+    ubar = ubar,
+    b = b,
+    t = t,
+    df = df,
+    r = r,
+    fmi = fmi
   )
 }
 

@@ -44,7 +44,9 @@
 #' @keywords datagen
 #' @export
 mice.impute.logreg <- function(y, ry, x, wy = NULL, ...) {
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
 
   # augment data in order to evade perfect prediction
   aug <- augment(y, ry, x, wy)
@@ -105,7 +107,9 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL, ...) {
 #' @keywords datagen
 #' @export
 mice.impute.logreg.boot <- function(y, ry, x, wy = NULL, ...) {
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
 
   # draw a bootstrap sample for yobs and xobs
   xobs <- x[ry, , drop = FALSE]
@@ -177,7 +181,12 @@ augment <- function(y, ry, x, wy, maxcat = 50) {
   maxx <- apply(x, 2, max, na.rm = TRUE)
   nr <- 2 * p * k
   a <- matrix(mean, nrow = nr, ncol = p, byrow = TRUE)
-  b <- matrix(rep(c(rep.int(c(0.5, -0.5), k), rep.int(0, nr)), length = nr * p), nrow = nr, ncol = p, byrow = FALSE)
+  b <- matrix(
+    rep(c(rep.int(c(0.5, -0.5), k), rep.int(0, nr)), length = nr * p),
+    nrow = nr,
+    ncol = p,
+    byrow = FALSE
+  )
   c <- matrix(sd, nrow = nr, ncol = p, byrow = TRUE)
   d <- a + b * c
   d <- pmax(matrix(minx, nrow = nr, ncol = p, byrow = TRUE), d, na.rm = TRUE)
@@ -194,7 +203,9 @@ augment <- function(y, ry, x, wy, maxcat = 50) {
     } else {
       as.factor(levels(y)[c(y, e)])
     }
-  } else c(y, e)
+  } else {
+    c(y, e)
+  }
   rya <- c(ry, rep.int(TRUE, nr))
   wya <- c(wy, rep.int(FALSE, nr))
   wa <- c(rep.int(1, length(y)), rep.int((p + 1) / nr, nr))

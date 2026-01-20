@@ -47,7 +47,8 @@
 #' @export
 D3 <- function(fit1, fit0 = NULL, dfcom = NULL, df.com = NULL) {
   if (!missing(df.com)) {
-    warning("argument df.com is deprecated; please use dfcom instead.",
+    warning(
+      "argument df.com is deprecated; please use dfcom instead.",
       call. = FALSE
     )
     dfcom <- df.com
@@ -77,28 +78,34 @@ D3 <- function(fit1, fit0 = NULL, dfcom = NULL, df.com = NULL) {
 
   # For each imputed dataset, calculate the deviance between the two
   # models as fitted
-  dev1.M <- -2 * lapply(fit1, glance) %>%
-    bind_rows() %>%
-    pull(.data$logLik)
-  dev0.M <- -2 * lapply(fit0, glance) %>%
-    bind_rows() %>%
-    pull(.data$logLik)
+  dev1.M <- -2 *
+    lapply(fit1, glance) %>%
+      bind_rows() %>%
+      pull(.data$logLik)
+  dev0.M <- -2 *
+    lapply(fit0, glance) %>%
+      bind_rows() %>%
+      pull(.data$logLik)
 
   # For each imputed dataset, calculate the deviance between the two
   # models with coefficients restricted to qbar
   mds1 <- lapply(fit1, fix.coef, beta = qbar1)
-  dev1.L <- -2 * lapply(mds1, glance) %>%
-    bind_rows() %>%
-    pull(.data$logLik)
+  dev1.L <- -2 *
+    lapply(mds1, glance) %>%
+      bind_rows() %>%
+      pull(.data$logLik)
 
   mds0 <- lapply(fit0, fix.coef, beta = qbar0)
-  dev0.L <- -2 * lapply(mds0, glance) %>%
-    bind_rows() %>%
-    pull(.data$logLik)
+  dev0.L <- -2 *
+    lapply(mds0, glance) %>%
+      bind_rows() %>%
+      pull(.data$logLik)
 
   deviances <- list(
-    dev1.M = dev1.M, dev0.M = dev0.M,
-    dev1.L = dev1.L, dev0.L = dev0.L
+    dev1.M = dev1.M,
+    dev0.M = dev0.M,
+    dev1.L = dev1.L,
+    dev0.L = dev0.L
   )
 
   # scaled deviance, as fitted

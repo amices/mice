@@ -17,8 +17,11 @@
 #' make.predictorMatrix(nhanes)
 #' make.predictorMatrix(nhanes, blocks = make.blocks(nhanes, "collect"))
 #' @export
-make.predictorMatrix <- function(data, blocks = make.blocks(data),
-                                 predictorMatrix = NULL) {
+make.predictorMatrix <- function(
+  data,
+  blocks = make.blocks(data),
+  predictorMatrix = NULL
+) {
   input.predictorMatrix <- predictorMatrix
   data <- check.dataform(data)
   predictorMatrix <- matrix(1, nrow = length(blocks), ncol = ncol(data))
@@ -37,9 +40,7 @@ make.predictorMatrix <- function(data, blocks = make.blocks(data),
   predictorMatrix
 }
 
-check.predictorMatrix <- function(predictorMatrix,
-                                  data,
-                                  blocks = NULL) {
+check.predictorMatrix <- function(predictorMatrix, data, blocks = NULL) {
   data <- check.dataform(data)
 
   if (!is.matrix(predictorMatrix)) {
@@ -68,7 +69,10 @@ check.predictorMatrix <- function(predictorMatrix,
       }
     }
     for (i in row.names(predictorMatrix)) {
-      predictorMatrix[i, grep(paste0("^", i, "$"), colnames(predictorMatrix))] <- 0
+      predictorMatrix[
+        i,
+        grep(paste0("^", i, "$"), colnames(predictorMatrix))
+      ] <- 0
     }
     return(predictorMatrix)
   }
@@ -77,16 +81,21 @@ check.predictorMatrix <- function(predictorMatrix,
   if (nrow(predictorMatrix) > length(blocks)) {
     stop(
       paste0(
-        "predictorMatrix has more rows (", nrow(predictorMatrix),
-        ") than blocks (", length(blocks), ")"
+        "predictorMatrix has more rows (",
+        nrow(predictorMatrix),
+        ") than blocks (",
+        length(blocks),
+        ")"
       ),
       call. = FALSE
     )
   }
 
   # borrow rownames from blocks if needed
-  if (is.null(rownames(predictorMatrix)) &&
-      nrow(predictorMatrix) == length(blocks)) {
+  if (
+    is.null(rownames(predictorMatrix)) &&
+      nrow(predictorMatrix) == length(blocks)
+  ) {
     rownames(predictorMatrix) <- names(blocks)
   }
   if (is.null(rownames(predictorMatrix))) {
@@ -94,8 +103,10 @@ check.predictorMatrix <- function(predictorMatrix,
   }
 
   # borrow blocknames from predictorMatrix if needed
-  if (is.null(names(blocks)) &&
-      nrow(predictorMatrix) == length(blocks)) {
+  if (
+    is.null(names(blocks)) &&
+      nrow(predictorMatrix) == length(blocks)
+  ) {
     names(blocks) <- rownames(predictorMatrix)
   }
   if (is.null(names(blocks))) {
@@ -105,15 +116,18 @@ check.predictorMatrix <- function(predictorMatrix,
   # check existence of row names in blocks
   found <- rownames(predictorMatrix) %in% names(blocks)
   if (!all(found)) {
-    stop("Names not found in blocks: ",
-         paste(rownames(predictorMatrix)[!found], collapse = ", "),
-         call. = FALSE
+    stop(
+      "Names not found in blocks: ",
+      paste(rownames(predictorMatrix)[!found], collapse = ", "),
+      call. = FALSE
     )
   }
 
   # borrow colnames from data if needed
-  if (is.null(colnames(predictorMatrix)) &&
-      ncol(predictorMatrix) == ncol(data)) {
+  if (
+    is.null(colnames(predictorMatrix)) &&
+      ncol(predictorMatrix) == ncol(data)
+  ) {
     colnames(predictorMatrix) <- names(data)
   }
   if (is.null(colnames(predictorMatrix))) {
@@ -123,9 +137,10 @@ check.predictorMatrix <- function(predictorMatrix,
   # check existence of variable names on data
   found <- colnames(predictorMatrix) %in% names(data)
   if (!all(found)) {
-    stop("Names not found in data: ",
-         paste(colnames(predictorMatrix)[!found], collapse = ", "),
-         call. = FALSE
+    stop(
+      "Names not found in data: ",
+      paste(colnames(predictorMatrix)[!found], collapse = ", "),
+      call. = FALSE
     )
   }
 
@@ -135,17 +150,24 @@ check.predictorMatrix <- function(predictorMatrix,
   )
 }
 
-mice.edit.predictorMatrix <- function(predictorMatrix,
-                                 visitSequence,
-                                 user.visitSequence,
-                                 maxit) {
+mice.edit.predictorMatrix <- function(
+  predictorMatrix,
+  visitSequence,
+  user.visitSequence,
+  maxit
+) {
   # edit predictorMatrix to a monotone pattern
-  if (maxit == 1L &&
+  if (
+    maxit == 1L &&
       !is.null(user.visitSequence) &&
       length(user.visitSequence) == 1 &&
-      user.visitSequence == "monotone") {
+      user.visitSequence == "monotone"
+  ) {
     for (i in 1L:length(visitSequence)) {
-      predictorMatrix[visitSequence[i], visitSequence[i:length(visitSequence)]] <- 0
+      predictorMatrix[
+        visitSequence[i],
+        visitSequence[i:length(visitSequence)]
+      ] <- 0
     }
   }
   predictorMatrix

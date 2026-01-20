@@ -145,32 +145,38 @@
 #' print(imp)
 #' @export
 mids <- function(
-    data = data.frame(),
-    imp = list(),
-    m = integer(),
-    where = matrix,
-    blocks = list(),
-    call = match.call(),
-    nmis = integer(),
-    method = character(),
-    predictorMatrix = matrix(),
-    visitSequence = character(),
-    formulas = list(),
-    calltype = character(),
-    post = character(),
-    blots = list(),
-    ignore = logical(),
-    seed = integer(),
-    iteration = integer(),
-    lastSeedValue = tryCatch(
-      get(".Random.seed", envir = globalenv(), mode = "integer", inherits = FALSE),
-      error = function(e) NULL
+  data = data.frame(),
+  imp = list(),
+  m = integer(),
+  where = matrix,
+  blocks = list(),
+  call = match.call(),
+  nmis = integer(),
+  method = character(),
+  predictorMatrix = matrix(),
+  visitSequence = character(),
+  formulas = list(),
+  calltype = character(),
+  post = character(),
+  blots = list(),
+  ignore = logical(),
+  seed = integer(),
+  iteration = integer(),
+  lastSeedValue = tryCatch(
+    get(
+      ".Random.seed",
+      envir = globalenv(),
+      mode = "integer",
+      inherits = FALSE
     ),
-    chainMean = list(),
-    chainVar = list(),
-    loggedEvents = data.frame(),
-    version = packageVersion("mice"),
-    date = Sys.Date()) {
+    error = function(e) NULL
+  ),
+  chainMean = list(),
+  chainVar = list(),
+  loggedEvents = data.frame(),
+  version = packageVersion("mice"),
+  date = Sys.Date()
+) {
   obj <- list(
     data = data,
     imp = imp,
@@ -228,21 +234,38 @@ mids <- function(
 #' imp <- mice(nhanes, print = FALSE)
 #' plot(imp, bmi + chl ~ .it | .ms, layout = c(2, 1))
 #' @export
-plot.mids <- function(x, y = NULL, theme = mice.theme(), layout = c(2, 3),
-                      type = "l", col = 1:10, lty = 1, ...) {
+plot.mids <- function(
+  x,
+  y = NULL,
+  theme = mice.theme(),
+  layout = c(2, 3),
+  type = "l",
+  col = 1:10,
+  lty = 1,
+  ...
+) {
   strip.combined <- function(which.given, which.panel, factor.levels, ...) {
     if (which.given == 1) {
-      lattice::panel.rect(0, 0, 1, 1,
-                          col = theme$strip.background$col, border = 1
+      lattice::panel.rect(
+        0,
+        0,
+        1,
+        1,
+        col = theme$strip.background$col,
+        border = 1
       )
       lattice::panel.text(
-        x = 0, y = 0.5, pos = 4,
+        x = 0,
+        y = 0.5,
+        pos = 4,
         lab = factor.levels[which.panel[which.given]]
       )
     }
     if (which.given == 2) {
       lattice::panel.text(
-        x = 1, y = 0.5, pos = 2,
+        x = 1,
+        y = 0.5,
+        pos = 2,
         lab = factor.levels[which.panel[which.given]]
       )
     }
@@ -310,8 +333,13 @@ plot.mids <- function(x, y = NULL, theme = mice.theme(), layout = c(2, 3),
   rm(.m)
 
   tp <- lattice::xyplot(
-    x = formula, data = data, groups = .m,
-    type = type, lty = lty, col = col, layout = layout,
+    x = formula,
+    data = data,
+    groups = .m,
+    type = type,
+    lty = lty,
+    col = col,
+    layout = layout,
     scales = list(
       y = list(relation = "free"),
       x = list(alternating = FALSE)

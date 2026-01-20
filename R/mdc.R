@@ -48,15 +48,17 @@
 #' # lines color for observed and missing data
 #' mdc(c("obs", "mis"), "lin")
 #' @export
-mdc <- function(r = "observed",
-                s = "symbol",
-                transparent = TRUE,
-                cso = grDevices::hcl(240, 100, 40, 0.7),
-                csi = grDevices::hcl(0, 100, 40, 0.7),
-                csc = "gray50",
-                clo = grDevices::hcl(240, 100, 40, 0.8),
-                cli = grDevices::hcl(0, 100, 40, 0.8),
-                clc = "gray50") {
+mdc <- function(
+  r = "observed",
+  s = "symbol",
+  transparent = TRUE,
+  cso = grDevices::hcl(240, 100, 40, 0.7),
+  csi = grDevices::hcl(0, 100, 40, 0.7),
+  csc = "gray50",
+  clo = grDevices::hcl(240, 100, 40, 0.8),
+  cli = grDevices::hcl(0, 100, 40, 0.8),
+  clc = "gray50"
+) {
   # cso: blue symbol color for observed data
   # csi: red symbol color for imputations
   # csc: symbol color for combined data

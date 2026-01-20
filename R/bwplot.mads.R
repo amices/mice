@@ -30,12 +30,21 @@
 #' @author Rianne Schouten, 2016
 #' @seealso \code{\link{ampute}}, \code{\link[lattice]{bwplot}}, \code{\link{mads}}
 #' @export
-bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
-                        descriptives = TRUE, layout = NULL, ...) {
+bwplot.mads <- function(
+  x,
+  data,
+  which.pat = NULL,
+  standardized = TRUE,
+  descriptives = TRUE,
+  layout = NULL,
+  ...
+) {
   if (!is.mads(x)) {
     stop("Object is not of class mads")
   }
-  if (missing(data)) data <- NULL
+  if (missing(data)) {
+    data <- NULL
+  }
   yvar <- data
   if (is.null(yvar)) {
     varlist <- colnames(x$amp)
@@ -48,7 +57,10 @@ bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
   } else {
     pat <- length(which.pat)
   }
-  formula <- as.formula(paste0(paste0(varlist, collapse = "+"), "~ factor(.amp)"))
+  formula <- as.formula(paste0(
+    paste0(varlist, collapse = "+"),
+    "~ factor(.amp)"
+  ))
   data <- NULL
   if (standardized) {
     dat <- data.frame(scale(x$data))
@@ -87,7 +99,8 @@ bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
   vec3 <- paste("", varlist)
   var <- length(varlist)
   if (descriptives) {
-    desc <- array(NA,
+    desc <- array(
+      NA,
       dim = c(2 * length(which.pat), 4, var),
       dimnames = list(
         Pattern = vec1,
@@ -99,29 +112,65 @@ bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
     for (i in seq_along(which.pat)) {
       wp <- which.pat[i]
       desc[(i * 2) - 1, 2, ] <-
-        round(vapply(varlist, function(x) {
-          mean(data[data$.pat == wp & data$.amp == "Amp", x])
-        }, numeric(1)), 5)
+        round(
+          vapply(
+            varlist,
+            function(x) {
+              mean(data[data$.pat == wp & data$.amp == "Amp", x])
+            },
+            numeric(1)
+          ),
+          5
+        )
       desc[(i * 2), 2, ] <-
-        round(vapply(varlist, function(x) {
-          mean(data[data$.pat == wp & data$.amp == "Non-Amp", x])
-        }, numeric(1)), 5)
+        round(
+          vapply(
+            varlist,
+            function(x) {
+              mean(data[data$.pat == wp & data$.amp == "Non-Amp", x])
+            },
+            numeric(1)
+          ),
+          5
+        )
       desc[(i * 2) - 1, 3, ] <-
-        round(vapply(varlist, function(x) {
-          var(data[data$.pat == wp & data$.amp == "Amp", x])
-        }, numeric(1)), 5)
+        round(
+          vapply(
+            varlist,
+            function(x) {
+              var(data[data$.pat == wp & data$.amp == "Amp", x])
+            },
+            numeric(1)
+          ),
+          5
+        )
       desc[(i * 2), 3, ] <-
-        round(vapply(varlist, function(x) {
-          var(data[data$.pat == wp & data$.amp == "Non-Amp", x])
-        }, numeric(1)), 5)
+        round(
+          vapply(
+            varlist,
+            function(x) {
+              var(data[data$.pat == wp & data$.amp == "Non-Amp", x])
+            },
+            numeric(1)
+          ),
+          5
+        )
       desc[(i * 2) - 1, 4, ] <-
-        vapply(varlist, function(x) {
-          length(data[data$.pat == wp & data$.amp == "Amp", x])
-        }, numeric(1))
+        vapply(
+          varlist,
+          function(x) {
+            length(data[data$.pat == wp & data$.amp == "Amp", x])
+          },
+          numeric(1)
+        )
       desc[(i * 2), 4, ] <-
-        vapply(varlist, function(x) {
-          length(data[data$.pat == wp & data$.amp == "Non-Amp", x])
-        }, numeric(1))
+        vapply(
+          varlist,
+          function(x) {
+            length(data[data$.pat == wp & data$.amp == "Non-Amp", x])
+          },
+          numeric(1)
+        )
     }
     p[["Descriptives"]] <- desc
   }
@@ -141,9 +190,13 @@ bwplot.mads <- function(x, data, which.pat = NULL, standardized = TRUE,
   for (i in seq_len(pat)) {
     p[[paste("Boxplot pattern", which.pat[i])]] <-
       lattice::bwplot(
-        x = formula, data = data[data$.pat == which.pat[i], ],
-        multiple = TRUE, outer = TRUE, layout = layout,
-        ylab = "", par.settings = theme,
+        x = formula,
+        data = data[data$.pat == which.pat[i], ],
+        multiple = TRUE,
+        outer = TRUE,
+        layout = layout,
+        ylab = "",
+        par.settings = theme,
         xlab = paste("Data distributions in pattern", which.pat[i])
       )
   }

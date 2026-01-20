@@ -67,17 +67,24 @@ mice.impute.2lonly.mean <- function(y, ry, x, type, wy = NULL, ...) {
   if (is.factor(y)) {
     ym <- aggregate(yobs, list(classobs), median, na.rm = TRUE)
     ym$x <- as.integer(ym$x)
-    return(apply(as.matrix(classmis), 1,
+    return(apply(
+      as.matrix(classmis),
+      1,
       function(z, y, lev) lev[y[z == y[, 1], 2]],
-      y = ym, lev = levels(y), ...
+      y = ym,
+      lev = levels(y),
+      ...
     ))
   }
 
   # otherwise: return the class means
   ym <- aggregate(yobs, list(classobs), mean, na.rm = TRUE)
-  z <- apply(as.matrix(classmis), 1,
+  z <- apply(
+    as.matrix(classmis),
+    1,
     function(z, y) y[z == y[, 1], 2],
-    y = ym, ...
+    y = ym,
+    ...
   )
   z[is.nan(z)] <- NA
   z

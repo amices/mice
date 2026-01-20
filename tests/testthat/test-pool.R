@@ -29,7 +29,10 @@ test_that("retains same numerical result", {
 
 imp <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
 fit0 <- with(data = imp, expr = glm(hyp == "yes" ~ 1, family = binomial))
-fit1 <- with(data = imp, expr = glm(hyp == "yes" ~ chl + bmi, family = binomial))
+fit1 <- with(
+  data = imp,
+  expr = glm(hyp == "yes" ~ chl + bmi, family = binomial)
+)
 D1(fit1, fit0)
 D3(fit1, fit0)
 
@@ -66,7 +69,9 @@ LLlogistic <- function(formula, data, coefs) {
   logistic <- function(mu) exp(mu) / (1 + exp(mu))
   Xb <- model.matrix(formula, data) %*% coefs
   y <- model.frame(formula, data)[1][, 1]
-  if (is.factor(y)) y <- (0:1)[y]
+  if (is.factor(y)) {
+    y <- (0:1)[y]
+  }
   p <- logistic(Xb)
   ## in case values of categorical var are other than 0 and 1.
   y <- (y - min(y)) / (max(y) - min(y))
@@ -81,7 +86,11 @@ model.null <- update(model1, formula = . ~ 1)
 
 ll1 <- LLlogistic(formula = formula(model1), data = bwt, coefs = coef(model1))
 ll0 <- LLlogistic(formula = formula(model0), data = bwt, coefs = coef(model0))
-llnull <- LLlogistic(formula = formula(model.null), data = bwt, coefs = coef(model.null))
+llnull <- LLlogistic(
+  formula = formula(model.null),
+  data = bwt,
+  coefs = coef(model.null)
+)
 
 identical(deviance(model1), ll1, num.eq = FALSE)
 identical(deviance(model0), ll0, num.eq = FALSE)
@@ -107,8 +116,17 @@ bwt.mis$smoke[runif(nrow(bwt)) < 0.001] <- NA
 bwt.mis$lwt[runif(nrow(bwt)) < 0.01] <- NA
 
 imp <- mice(bwt.mis, print = FALSE, m = 10)
-fit1 <- with(data = imp, expr = glm(low ~ age + lwt + race + smoke + ptd + ht + ui + ftv, family = binomial))
-fit0 <- with(data = imp, glm(low ~ lwt + race + smoke + ptd + ht + ui, family = binomial))
+fit1 <- with(
+  data = imp,
+  expr = glm(
+    low ~ age + lwt + race + smoke + ptd + ht + ui + ftv,
+    family = binomial
+  )
+)
+fit0 <- with(
+  data = imp,
+  glm(low ~ lwt + race + smoke + ptd + ht + ui, family = binomial)
+)
 D1(fit1, fit0)
 D3(fit1, fit0)
 
@@ -118,15 +136,18 @@ D3(fit1, fit0)
 fit <- lm(bmi ~ age + hyp + chl, data = nhanes)
 coef(fit)
 formula(fit)
-newformula <- bmi ~ 0 + I(18.26966503 - 5.78652468 * age + 2.10467529 * hyp + 0.08044924 * chl)
-newformula <- . ~ 0 + I(18.26966503 * 1L - 5.78652468 * age + 2.10467529 * hyp + 0.08044924 * chl)
+newformula <- bmi ~ 0 +
+  I(18.26966503 - 5.78652468 * age + 2.10467529 * hyp + 0.08044924 * chl)
+newformula <- . ~ 0 +
+  I(18.26966503 * 1L - 5.78652468 * age + 2.10467529 * hyp + 0.08044924 * chl)
 fit2 <- update(fit, formula = newformula)
 coef(fit2)
 summary(fit)
 summary(fit2)
 cor(predict(fit), predict(fit) + residuals(fit))^2
 cor(predict(fit2), predict(fit2) + residuals(fit2))^2
-newformula <- bmi ~ 0 + offset(18.26966503 - 5.78652468 * age + 2.10467529 * hyp + 0.08044924 * chl)
+newformula <- bmi ~ 0 +
+  offset(18.26966503 - 5.78652468 * age + 2.10467529 * hyp + 0.08044924 * chl)
 fit3 <- update(fit, formula = newformula)
 coef(fit3)
 summary(fit3)
@@ -137,8 +158,12 @@ suppressPackageStartupMessages(library(mitml, quietly = TRUE))
 library(lme4, quietly = TRUE)
 data(studentratings)
 fml <- ReadDis + SES ~ ReadAchiev + (1 | ID)
-imp <- mitml::panImpute(studentratings,
-  formula = fml, n.burn = 1000, n.iter = 100, m = 5,
+imp <- mitml::panImpute(
+  studentratings,
+  formula = fml,
+  n.burn = 1000,
+  n.iter = 100,
+  m = 5,
   silent = TRUE
 )
 implist <- mitml::mitmlComplete(imp, print = 1:5)

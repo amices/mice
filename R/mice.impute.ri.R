@@ -58,10 +58,13 @@ mice.impute.ri <- function(y, ry, x, wy = NULL, ri.maxit = 10, ...) {
 # Imputation of y given rdot
 .y.draw <- function(y, ry, rdot, xy, wy, ...) {
   parm <- .norm.draw(y, ry, cbind(xy, rdot), ...)
-  if (all(rdot[ry] == 1) || all(rdot[ry] == 0)) parm$coef[length(parm$coef)] <- 0
+  if (all(rdot[ry] == 1) || all(rdot[ry] == 0)) {
+    parm$coef[length(parm$coef)] <- 0
+  }
   ydot <- y
   rydot <- as.logical(rdot)
-  ydot[wy] <- xy[wy, , drop = FALSE] %*% parm$beta[-length(parm$coef), ] +
+  ydot[wy] <- xy[wy, , drop = FALSE] %*%
+    parm$beta[-length(parm$coef), ] +
     rnorm(sum(wy)) * parm$sigma
   ydot[wy & !rydot] <- ydot[wy & !rydot] - parm$coef[length(parm$coef)]
   ydot

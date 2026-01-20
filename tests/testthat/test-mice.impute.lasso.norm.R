@@ -30,14 +30,20 @@ test_that("Returns requested length", {
 #########################
 
 boys_cont <- boys[, 1:4]
-durr_default <- mice(boys_cont,
-                     m = 2, maxit = 2, method = "lasso.norm",
-                     print = FALSE
+durr_default <- mice(
+  boys_cont,
+  m = 2,
+  maxit = 2,
+  method = "lasso.norm",
+  print = FALSE
 )
-durr_custom <- mice(boys_cont,
-                    m = 2, maxit = 2, method = "lasso.norm",
-                    nfolds = 5,
-                    print = FALSE
+durr_custom <- mice(
+  boys_cont,
+  m = 2,
+  maxit = 2,
+  method = "lasso.norm",
+  nfolds = 5,
+  print = FALSE
 )
 
 test_that("mice call works", {
@@ -156,14 +162,20 @@ test_that("Returns requested length when all predictors are important", {
 #########################
 
 boys_cont <- boys[, 1:4]
-iurr_default <- mice(boys_cont,
-                     m = 2, maxit = 2, method = "lasso.select.norm",
-                     print = FALSE
+iurr_default <- mice(
+  boys_cont,
+  m = 2,
+  maxit = 2,
+  method = "lasso.select.norm",
+  print = FALSE
 )
-iurr_custom <- mice(boys_cont,
-                    m = 2, maxit = 2, method = "lasso.select.norm",
-                    nfolds = 5,
-                    print = FALSE
+iurr_custom <- mice(
+  boys_cont,
+  m = 2,
+  maxit = 2,
+  method = "lasso.select.norm",
+  nfolds = 5,
+  print = FALSE
 )
 
 test_that("mice call works", {

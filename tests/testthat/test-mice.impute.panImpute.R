@@ -14,9 +14,14 @@ blocks <- make.blocks(list(c("bmi", "chl", "hyp"), "age"))
 method <- c("panImpute", "pmm")
 pred <- make.predictorMatrix(nhanes, blocks)
 pred["B1", "hyp"] <- -2
-imp <- mice(nhanes,
-  blocks = blocks, method = method, pred = pred,
-  maxit = 1, seed = 1, print = FALSE
+imp <- mice(
+  nhanes,
+  blocks = blocks,
+  method = method,
+  pred = pred,
+  maxit = 1,
+  seed = 1,
+  print = FALSE
 )
 z <- complete(imp)
 

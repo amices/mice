@@ -37,7 +37,9 @@ getfit <- function(x, i = -1L, simplify = FALSE) {
   if (i != -1L) {
     return(ra[[i]])
   }
-  if (simplify) ra <- unlist(ra)
+  if (simplify) {
+    ra <- unlist(ra)
+  }
 
   # hack to get pool accept both mira and general list objects
   class(ra) <- c("mira", "list")
@@ -51,7 +53,9 @@ getfit <- function(x, i = -1L, simplify = FALSE) {
 #' @param x An object of class \code{mipo}
 #' @export
 getqbar <- function(x) {
-  if (!is.mipo(x)) stop("Not a mipo object")
+  if (!is.mipo(x)) {
+    stop("Not a mipo object")
+  }
   qbar <- x$pooled$estimate
   # note: not supported: component/y.values
   names(qbar) <- x$pooled$term

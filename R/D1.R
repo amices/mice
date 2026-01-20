@@ -41,7 +41,8 @@ D1 <- function(fit1, fit0 = NULL, dfcom = NULL, df.com = NULL) {
 
   # legacy handling
   if (!missing(df.com)) {
-    warning("argument df.com is deprecated; please use dfcom instead.",
+    warning(
+      "argument df.com is deprecated; please use dfcom instead.",
       call. = FALSE
     )
     dfcom <- df.com

@@ -24,8 +24,11 @@
 #' f3 <- name.formulas(lapply(c1, as.formula))
 #' f3
 #' @export
-make.formulas <- function(data, blocks = make.blocks(data),
-                          predictorMatrix = NULL) {
+make.formulas <- function(
+  data,
+  blocks = make.blocks(data),
+  predictorMatrix = NULL
+) {
   data <- check.dataform(data)
   formulas <- as.list(rep("~ 0", length(blocks)))
   names(formulas) <- names(blocks)
@@ -43,7 +46,8 @@ make.formulas <- function(data, blocks = make.blocks(data),
       x <- "0"
     }
     formulas[[h]] <- paste(
-      paste(backticks(y), collapse = "+"), "~",
+      paste(backticks(y), collapse = "+"),
+      "~",
       paste(backticks(x), collapse = "+")
     )
   }
@@ -106,10 +110,14 @@ name.formulas <- function(formulas, prefix = "F") {
   if (!all(sapply(formulas, is.formula) | sapply(formulas, is.list))) {
     stop("Not all elements in `formulas` are a formula or a list")
   }
-  if (is.null(names(formulas))) names(formulas) <- rep("", length(formulas))
+  if (is.null(names(formulas))) {
+    names(formulas) <- rep("", length(formulas))
+  }
   inc <- 1
   for (i in seq_along(formulas)) {
-    if (names(formulas)[i] != "") next
+    if (names(formulas)[i] != "") {
+      next
+    }
     # if (hasdot(formulas[[i]]) && is.null(data))
     #  stop("Formula with dot requires `data` argument", call. = FALSE)
     y <- lhs(formulas[[i]])
@@ -147,10 +155,15 @@ check.formulas <- function(formulas, data) {
 #' @param include.intercept A logical that indicated whether the intercept
 #' should be included in the result.
 #' @keywords internal
-extend.formulas <- function(formulas, data, blocks, predictorMatrix = NULL,
-                            auxiliary = TRUE,
-                            include.intercept = FALSE,
-                            ...) {
+extend.formulas <- function(
+  formulas,
+  data,
+  blocks,
+  predictorMatrix = NULL,
+  auxiliary = TRUE,
+  include.intercept = FALSE,
+  ...
+) {
   # Extend formulas with predictorMatrix
   if (is.null(predictorMatrix)) {
     return(formulas)
@@ -181,11 +194,16 @@ extend.formulas <- function(formulas, data, blocks, predictorMatrix = NULL,
 #' should be included in the result.
 #' @return A formula
 #' @keywords internal
-extend.formula <- function(formula = ~0,
-                           predictors = NULL,
-                           auxiliary = TRUE,
-                           include.intercept = FALSE, ...) {
-  if (!is.formula(formula)) formula <- ~0
+extend.formula <- function(
+  formula = ~0,
+  predictors = NULL,
+  auxiliary = TRUE,
+  include.intercept = FALSE,
+  ...
+) {
+  if (!is.formula(formula)) {
+    formula <- ~0
+  }
 
   # handle dot in RHS
   if (hasdot(formula)) {
@@ -198,16 +216,20 @@ extend.formula <- function(formula = ~0,
     fr <- reformulate(c(".", backticks(predictors)))
   }
 
-  if (auxiliary) formula <- update(formula, fr, ...)
-  if (include.intercept) formula <- update(formula, ~ . + 1, ...)
+  if (auxiliary) {
+    formula <- update(formula, fr, ...)
+  }
+  if (include.intercept) {
+    formula <- update(formula, ~ . + 1, ...)
+  }
   formula
 }
 
 
-
 handle.oldstyle.formulas <- function(formulas, data) {
   # converts old-style character vector to formula list
-  oldstyle <- length(formulas) == ncol(data) && is.vector(formulas) &&
+  oldstyle <- length(formulas) == ncol(data) &&
+    is.vector(formulas) &&
     is.character(formulas)
   if (!oldstyle) {
     return(formulas)

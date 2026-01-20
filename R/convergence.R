@@ -79,12 +79,12 @@ convergence <- function(data, diagnostic = "all", parameter = "mean", ...) {
   # extract chain means or chain standard deviations
   if (parameter == "mean") {
     param <- lapply(seq(p), function(x) {
-      aperm(data$chainMean[vrbs, , , drop = FALSE], c(2, 3, 1))[, , x]
+      aperm(data$chainMean[vrbs, , , drop = FALSE], c(2, 3, 1))[,, x]
     })
   }
   if (parameter == "sd") {
     param <- lapply(seq(p), function(x) {
-      aperm(sqrt(data$chainVar)[vrbs, , , drop = FALSE], c(2, 3, 1))[, , x]
+      aperm(sqrt(data$chainVar)[vrbs, , , drop = FALSE], c(2, 3, 1))[,, x]
     })
   }
   names(param) <- vrbs
@@ -93,26 +93,34 @@ convergence <- function(data, diagnostic = "all", parameter = "mean", ...) {
   if (diagnostic == "all" | diagnostic == "ac") {
     ac <-
       purrr::map(vrbs, function(.vrb) {
-        c(NA, dplyr::cummean(dplyr::coalesce(
-          purrr::map_dbl(2:t, function(.itr) {
-            suppressWarnings(stats::cor(
-              param[[.vrb]][.itr - 1, ],
-              param[[.vrb]][.itr, ],
-              use = "pairwise.complete.obs"
-            ))
-          }), 0
-        ))) + 0 * param[[.vrb]][, 1]
+        c(
+          NA,
+          dplyr::cummean(dplyr::coalesce(
+            purrr::map_dbl(2:t, function(.itr) {
+              suppressWarnings(stats::cor(
+                param[[.vrb]][.itr - 1, ],
+                param[[.vrb]][.itr, ],
+                use = "pairwise.complete.obs"
+              ))
+            }),
+            0
+          ))
+        ) +
+          0 * param[[.vrb]][, 1]
       })
     out <- base::cbind(out, ac = unlist(ac))
   }
 
   # compute potential scale reduction factor
   if (diagnostic == "all" | diagnostic == "psrf" | diagnostic == "gr") {
-    psrf <- purrr::map_dfr(param, ~ {
-      purrr::map_dfr(1:t, function(.itr) {
-        data.frame(psrf = rstan::Rhat(.[1:.itr, ]))
-      })
-    })
+    psrf <- purrr::map_dfr(
+      param,
+      ~ {
+        purrr::map_dfr(1:t, function(.itr) {
+          data.frame(psrf = rstan::Rhat(.[1:.itr, ]))
+        })
+      }
+    )
     out <- base::cbind(out, psrf)
   }
   out[is.nan(out)] <- NA

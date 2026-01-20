@@ -7,6 +7,12 @@ install.on.demand <- function(pkg, quiet = FALSE, ...) {
   }
   if (interactive()) {
     answer <- askYesNo(paste("Package", pkg, "needed. Install from CRAN?"))
-    if (answer) install.packages(pkg, repos = "https://cloud.r-project.org/", quiet = quiet)
+    if (answer) {
+      install.packages(
+        pkg,
+        repos = "https://cloud.r-project.org/",
+        quiet = quiet
+      )
+    }
   }
 }

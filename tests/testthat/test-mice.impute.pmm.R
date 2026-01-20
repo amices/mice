@@ -38,8 +38,18 @@ y <- factor(br[r, "tv"])
 # impute factor by optimizing canonical correlation y, x
 data1 <- data.frame(y, x)
 test_that("cancor proceeds normally", {
-  expect_silent(imp1 <- mice(data1, method = "pmm", remove.collinear = FALSE, eps = 0,
-                             maxit = 1, m = 1, print = FALSE, seed = 1))
+  expect_silent(
+    imp1 <- mice(
+      data1,
+      method = "pmm",
+      remove.collinear = FALSE,
+      eps = 0,
+      maxit = 1,
+      m = 1,
+      print = FALSE,
+      seed = 1
+    )
+  )
 })
 
 # > cca$xcoef[, 2L]
@@ -75,8 +85,18 @@ data2$age25 <- data2$age
 
 # impute factor by optimizing canonical correlation y, x
 test_that("cancor proceeds normally with many duplicates", {
-  expect_warning(imp2 <- mice(data2, method = "pmm", remove.collinear = FALSE, eps = 0,
-                             maxit = 1, m = 1, seed = 1, print = FALSE))
+  expect_warning(
+    imp2 <- mice(
+      data2,
+      method = "pmm",
+      remove.collinear = FALSE,
+      eps = 0,
+      maxit = 1,
+      m = 1,
+      seed = 1,
+      print = FALSE
+    )
+  )
 })
 
 # add junk variables
@@ -109,6 +129,16 @@ data3$j25 <- rnorm(nrow(data3))
 
 
 test_that("cancor with many junk variables does not crash", {
-  expect_warning(imp3 <- mice(data3, method = "pmm", remove.collinear = FALSE, eps = 0,
-                              maxit = 1, m = 1, seed = 1, print = FALSE))
+  expect_warning(
+    imp3 <- mice(
+      data3,
+      method = "pmm",
+      remove.collinear = FALSE,
+      eps = 0,
+      maxit = 1,
+      m = 1,
+      seed = 1,
+      print = FALSE
+    )
+  )
 })

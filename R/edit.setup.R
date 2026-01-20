@@ -1,11 +1,17 @@
-mice.edit.setup <- function(data, setup, user.visitSequence,
-                       allow.na = FALSE,
-                       remove.constant = TRUE,
-                       remove.collinear = TRUE,
-                       remove_collinear = TRUE,
-                       ...) {
+mice.edit.setup <- function(
+  data,
+  setup,
+  user.visitSequence,
+  allow.na = FALSE,
+  remove.constant = TRUE,
+  remove.collinear = TRUE,
+  remove_collinear = TRUE,
+  ...
+) {
   # legacy handling
-  if (!remove_collinear) remove.collinear <- FALSE
+  if (!remove_collinear) {
+    remove.collinear <- FALSE
+  }
 
   # edits the imputation model setup
   # When it detec constant or collinear variables, write in loggedEvents
@@ -17,8 +23,11 @@ mice.edit.setup <- function(data, setup, user.visitSequence,
   post <- setup$post
 
   # FIXME: this function is not yet adapted to blocks
-  if (ncol(pred) != nrow(pred) || length(meth) != nrow(pred) ||
-    ncol(data) != nrow(pred)) {
+  if (
+    ncol(pred) != nrow(pred) ||
+      length(meth) != nrow(pred) ||
+      ncol(data) != nrow(pred)
+  ) {
     return(setup)
   }
 
@@ -86,7 +95,9 @@ mice.edit.setup <- function(data, setup, user.visitSequence,
   }
 
   if (all(pred == 0L) && didlog) {
-    stop("`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
+    stop(
+      "`mice` detected constant and/or collinear variables. No predictors were left after their removal."
+    )
   }
 
   # Detect passive methods

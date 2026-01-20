@@ -35,7 +35,9 @@
 #' @keywords datagen
 #' @export
 mice.impute.norm.predict <- function(y, ry, x, wy = NULL, ...) {
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
   x <- cbind(1, as.matrix(x))
   p <- estimice(x[ry, , drop = FALSE], y[ry], ...)
   x[wy, , drop = FALSE] %*% p$c

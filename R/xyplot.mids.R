@@ -122,21 +122,27 @@
 #' @aliases xyplot.mids xyplot
 #' @method xyplot mids
 #' @export
-xyplot.mids <- function(x,
-                        data,
-                        na.groups = NULL,
-                        groups = NULL,
-                        as.table = TRUE,
-                        theme = mice.theme(),
-                        allow.multiple = TRUE,
-                        outer = TRUE,
-                        drop.unused.levels = lattice::lattice.getOption("drop.unused.levels"),
-                        ...,
-                        subscripts = TRUE,
-                        subset = TRUE) {
+xyplot.mids <- function(
+  x,
+  data,
+  na.groups = NULL,
+  groups = NULL,
+  as.table = TRUE,
+  theme = mice.theme(),
+  allow.multiple = TRUE,
+  outer = TRUE,
+  drop.unused.levels = lattice::lattice.getOption("drop.unused.levels"),
+  ...,
+  subscripts = TRUE,
+  subset = TRUE
+) {
   call <- match.call()
-  if (!is.mids(x)) stop("Argument 'x' must be a 'mids' object")
-  if (missing(data)) stop("Missing formula")
+  if (!is.mids(x)) {
+    stop("Argument 'x' must be a 'mids' object")
+  }
+  if (missing(data)) {
+    stop("Missing formula")
+  }
   formula <- data
 
   ## unpack data and response indicator
@@ -145,16 +151,22 @@ xyplot.mids <- function(x,
 
   ## evaluate na.group in response indicator
   nagp <- eval(expr = substitute(na.groups), envir = r, enclos = parent.frame())
-  if (is.expression(nagp)) nagp <- eval(expr = nagp, envir = r, enclos = parent.frame())
+  if (is.expression(nagp)) {
+    nagp <- eval(expr = nagp, envir = r, enclos = parent.frame())
+  }
 
   ## evaluate groups in imputed data
   ngp <- eval(expr = substitute(groups), envir = cd, enclos = parent.frame())
-  if (is.expression(ngp)) ngp <- eval(expr = ngp, envir = cd, enclos = parent.frame())
+  if (is.expression(ngp)) {
+    ngp <- eval(expr = ngp, envir = cd, enclos = parent.frame())
+  }
   groups <- ngp
 
   ## evaluate subset in imputed data
   ss <- eval(expr = substitute(subset), envir = cd, enclos = parent.frame())
-  if (is.expression(ss)) ss <- eval(expr = ss, envir = cd, enclos = parent.frame())
+  if (is.expression(ss)) {
+    ss <- eval(expr = ss, envir = cd, enclos = parent.frame())
+  }
   subset <- ss
 
   ## evaluate further arguments before parsing
@@ -169,9 +181,13 @@ xyplot.mids <- function(x,
 
   ## determine the y-variables
   form <- lattice::latticeParseFormula(
-    model = formula, data = cd, subset = subset,
-    groups = groups, multiple = allow.multiple,
-    outer = outer, subscripts = TRUE,
+    model = formula,
+    data = cd,
+    subset = subset,
+    groups = groups,
+    multiple = allow.multiple,
+    outer = outer,
+    subscripts = TRUE,
     drop = drop.unused.levels
   )
   ynames <- unlist(lapply(strsplit(form$left.name, " \\+ "), rm.whitespace))
@@ -206,9 +222,12 @@ xyplot.mids <- function(x,
 
   ## ready
   args <- c(
-    x = formula, data = list(cd),
+    x = formula,
+    data = list(cd),
     groups = list(gp),
-    args, dots, subset = call$subset
+    args,
+    dots,
+    subset = call$subset
   )
 
   ## go

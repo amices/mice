@@ -38,7 +38,11 @@ test_that("Correct estimation method used", {
 #####################################
 # TEST 2: extremely high correlation #
 #####################################
-x <- matrix(c(1:1000, seq(from = 2, to = 2000, by = 2)) + rnorm(1000), nrow = 1000, ncol = 2)
+x <- matrix(
+  c(1:1000, seq(from = 2, to = 2000, by = 2)) + rnorm(1000),
+  nrow = 1000,
+  ncol = 2
+)
 y <- t(c(5, 3) %*% t(x))
 y[5:6] <- NA
 ry <- !is.na(y)
@@ -64,9 +68,33 @@ test_that("Correct estimation method used", {
 # TEST 3: correct imputation model   #
 #####################################
 
-expect_warning(imp.qr <- mice(mammalsleep[, -1], ls.meth = "qr", seed = 123, print = FALSE, use.matcher = TRUE))
-expect_warning(imp.svd <- mice(mammalsleep[, -1], ls.meth = "svd", seed = 123, print = FALSE, use.matcher = TRUE))
-expect_warning(imp.ridge <- mice(mammalsleep[, -1], ls.meth = "ridge", seed = 123, print = FALSE, use.matcher = TRUE))
+expect_warning(
+  imp.qr <- mice(
+    mammalsleep[, -1],
+    ls.meth = "qr",
+    seed = 123,
+    print = FALSE,
+    use.matcher = TRUE
+  )
+)
+expect_warning(
+  imp.svd <- mice(
+    mammalsleep[, -1],
+    ls.meth = "svd",
+    seed = 123,
+    print = FALSE,
+    use.matcher = TRUE
+  )
+)
+expect_warning(
+  imp.ridge <- mice(
+    mammalsleep[, -1],
+    ls.meth = "ridge",
+    seed = 123,
+    print = FALSE,
+    use.matcher = TRUE
+  )
+)
 
 test_that("Imputations are equal", {
   expect_equal(imp.qr$imp, imp.svd$imp)
@@ -78,9 +106,15 @@ test_that("Imputations are equal", {
 #####################################
 # test on faulty imputation model (exactly singular system)
 
-expect_warning(imp.qr <- mice(mammalsleep, ls.meth = "qr", seed = 123, print = FALSE))
-expect_warning(imp.svd <- mice(mammalsleep, ls.meth = "svd", seed = 123, print = FALSE))
-expect_warning(imp.ridge <- mice(mammalsleep, ls.meth = "ridge", seed = 123, print = FALSE))
+expect_warning(
+  imp.qr <- mice(mammalsleep, ls.meth = "qr", seed = 123, print = FALSE)
+)
+expect_warning(
+  imp.svd <- mice(mammalsleep, ls.meth = "svd", seed = 123, print = FALSE)
+)
+expect_warning(
+  imp.ridge <- mice(mammalsleep, ls.meth = "ridge", seed = 123, print = FALSE)
+)
 
 test_that("Imputations are not equal", {
   expect_false(identical(imp.qr$imp, imp.svd$imp))

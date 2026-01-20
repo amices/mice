@@ -26,7 +26,9 @@ check.post <- function(post, data) {
   }
 
   # change
-  if (is.null(names(post))) names(post) <- colnames(data)
+  if (is.null(names(post))) {
+    names(post) <- colnames(data)
+  }
 
   post
 }

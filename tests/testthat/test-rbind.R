@@ -5,7 +5,15 @@ test_that("Constant variables are not imputed by default", {
   expect_equal(sum(is.na(complete(imp1))), 6L)
 })
 
-expect_warning(imp1b <<- mice(nhanes[1:13, ], m = 2, maxit = 1, print = FALSE, remove.constant = FALSE))
+expect_warning(
+  imp1b <<- mice(
+    nhanes[1:13, ],
+    m = 2,
+    maxit = 1,
+    print = FALSE,
+    remove.constant = FALSE
+  )
+)
 test_that("Constant variables are imputed for remove.constant = FALSE", {
   expect_equal(sum(is.na(complete(imp1b))), 0L)
 })
@@ -14,13 +22,19 @@ imp2 <- mice(nhanes[14:25, ], m = 2, maxit = 1, print = FALSE)
 imp3 <- mice(nhanes2, m = 2, maxit = 1, print = FALSE)
 imp4 <- mice(nhanes2, m = 1, maxit = 1, print = FALSE)
 expect_warning(imp5 <<- mice(nhanes[1:13, ], m = 2, maxit = 2, print = FALSE))
-expect_error(imp6 <<- mice(nhanes[1:13, 2:3], m = 2, maxit = 2, print = FALSE), "`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
+expect_error(
+  imp6 <<- mice(nhanes[1:13, 2:3], m = 2, maxit = 2, print = FALSE),
+  "`mice` detected constant and/or collinear variables. No predictors were left after their removal."
+)
 nh3 <- nhanes
 colnames(nh3) <- c("AGE", "bmi", "hyp", "chl")
 imp7 <- mice(nh3[14:25, ], m = 2, maxit = 2, print = FALSE)
 expect_warning(imp8 <<- mice(nhanes[1:13, ], m = 2, maxit = 2, print = FALSE))
-imp9 <- mice(nhanes,
-  m = 2, maxit = 1, print = FALSE,
+imp9 <- mice(
+  nhanes,
+  m = 2,
+  maxit = 1,
+  print = FALSE,
   ignore = c(rep(FALSE, 20), rep(TRUE, 5))
 )
 
@@ -82,9 +96,13 @@ set.seed <- 818
 x <- rnorm(10)
 D <- data.frame(x = x, y = 2 * x + rnorm(10))
 D[c(2:4, 7), 1] <- NA
-expect_error(D_mids <<- mice(D[1:5, ], print = FALSE),
-             "`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
-expect_warning(D_mids <<- mice(D[1:5, ], print = FALSE, remove.collinear = FALSE))
+expect_error(
+  D_mids <<- mice(D[1:5, ], print = FALSE),
+  "`mice` detected constant and/or collinear variables. No predictors were left after their removal."
+)
+expect_warning(
+  D_mids <<- mice(D[1:5, ], print = FALSE, remove.collinear = FALSE)
+)
 
 D_rbind <- mice:::rbind.mids(D_mids, D[6:10, ])
 cmp <- complete(D_rbind, 1)
@@ -118,7 +136,14 @@ odd <- as.logical((1:nrow(data)) %% 2)
 # method 1: ignore + where
 where <- make.where(data)
 where[odd, ] <- FALSE
-imp1 <- mice(nhanes, ignore = odd, where = where, seed = 1, m = 2, print = FALSE)
+imp1 <- mice(
+  nhanes,
+  ignore = odd,
+  where = where,
+  seed = 1,
+  m = 2,
+  print = FALSE
+)
 c1 <- complete(imp1, 2)
 
 # method 2: filter + rbind

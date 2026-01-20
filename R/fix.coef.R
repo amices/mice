@@ -54,7 +54,9 @@
 #' @export
 fix.coef <- function(model, beta = NULL) {
   oldcoef <- clean.coef(model)
-  if (is.null(beta)) beta <- oldcoef
+  if (is.null(beta)) {
+    beta <- oldcoef
+  }
   if (length(oldcoef) != length(beta)) {
     stop("incorrect length of 'beta'", call. = FALSE)
   }
@@ -87,8 +89,11 @@ fix.coef <- function(model, beta = NULL) {
   }
   offset <- as.vector(mm %*% beta)
   uf <- . ~ 1
-  if (inherits(model, "merMod")) uf <- formula(model, random.only = TRUE)
-  upd <- update(model,
+  if (inherits(model, "merMod")) {
+    uf <- formula(model, random.only = TRUE)
+  }
+  upd <- update(
+    model,
     formula. = uf,
     data = cbind(data, offset = offset),
     offset = offset

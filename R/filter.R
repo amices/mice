@@ -126,6 +126,7 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents)
+    loggedEvents = loggedEvents
+  )
   return(midsobj)
 }

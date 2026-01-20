@@ -43,7 +43,9 @@ mice.impute.lasso.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
   install.on.demand("glmnet", ...)
 
   # Bootstrap sample
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
   n1 <- sum(ry)
   s <- sample(n1, n1, replace = TRUE)
   x_glmnet <- cbind(1, x)
@@ -52,7 +54,8 @@ mice.impute.lasso.norm <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
 
   # Train imputation model
   cv_lasso <- glmnet::cv.glmnet(
-    x = dotxobs, y = dotyobs,
+    x = dotxobs,
+    y = dotyobs,
     family = "gaussian",
     nfolds = nfolds,
     alpha = 1

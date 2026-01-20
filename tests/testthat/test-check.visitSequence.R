@@ -4,7 +4,9 @@ data <- mice::nhanes
 
 test_that("mice() takes numerical and character visitSequence", {
   expect_silent(imp <- mice(data, visitSequence = 4:1, m = 1, print = FALSE))
-  expect_silent(imp <- mice(data, visitSequence = rev(names(data)), m = 1, print = FALSE))
+  expect_silent(
+    imp <- mice(data, visitSequence = rev(names(data)), m = 1, print = FALSE)
+  )
 })
 
 test_that("Passive variable is moved to end of visitSequence when not user-defined", {
@@ -24,7 +26,7 @@ test_that("Passive variable is moved to end of visitSequence when not user-defin
   expect_setequal(imp1$visitSequence, c("x", "y", "p"))
 })
 
-df <- mice::boys[,c(2, 3, 6)]
+df <- mice::boys[, c(2, 3, 6)]
 meth <- mice::make.method(df)
 mods <- list(
   hgt ~ wgt + gen,
@@ -32,6 +34,14 @@ mods <- list(
   wgt ~ hgt + gen
 )
 test_that("method and formulas can have different orders", {
-  expect_silent(imp <- mice::mice(df, method = meth, formulas = mods, m = 1,
-                                  maxit = 1, print = FALSE))
+  expect_silent(
+    imp <- mice::mice(
+      df,
+      method = meth,
+      formulas = mods,
+      m = 1,
+      maxit = 1,
+      print = FALSE
+    )
+  )
 })

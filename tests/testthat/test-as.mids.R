@@ -36,10 +36,10 @@ test_that("as.mids() produces a `mids` object", {
   expect_is(test3, "mids")
   expect_is(test4, "mids")
   expect_is(test5, "mids")
-#  expect_is(test7, "mids")
-#  expect_is(test8, "mids")
-#  expect_is(test9, "mids")
-#  expect_is(test10, "mids")
+  #  expect_is(test7, "mids")
+  #  expect_is(test8, "mids")
+  #  expect_is(test9, "mids")
+  #  expect_is(test10, "mids")
   expect_error(
     as.mids(X[-(1:10), ], "mids"),
     "Unequal group sizes in imputation index `.imp`"
@@ -55,8 +55,14 @@ test_that("complete() reproduces the original data", {
   expect_true(identical(complete(test2, action = "long", include = TRUE), X))
   expect_true(identical(complete(test3, action = "long", include = TRUE), X))
   expect_true(identical(complete(test4, action = "long", include = TRUE), X))
-  expect_true(identical(complete(test5, action = "long", include = TRUE)[, -6], X[, -6]))
-  expect_true(identical(complete(test6, action = "long", include = TRUE)[, -(5:6)], X[, rev][, -(1:2)]))
+  expect_true(identical(
+    complete(test5, action = "long", include = TRUE)[, -6],
+    X[, -6]
+  ))
+  expect_true(identical(
+    complete(test6, action = "long", include = TRUE)[, -(5:6)],
+    X[, rev][, -(1:2)]
+  ))
 })
 
 # works with dplyr
@@ -68,4 +74,3 @@ X3 <- X %>%
 test_that("handles grouped_df", {
   expect_silent(as.mids(X3))
 })
-

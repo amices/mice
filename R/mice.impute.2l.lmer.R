@@ -45,9 +45,19 @@
 #' @family univariate-2l
 #' @keywords datagen
 #' @export
-mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...) {
+mice.impute.2l.lmer <- function(
+  y,
+  ry,
+  x,
+  type,
+  wy = NULL,
+  intercept = TRUE,
+  ...
+) {
   install.on.demand("lme4", ...)
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
 
   if (intercept) {
     x <- cbind(1, as.matrix(x))
@@ -69,21 +79,25 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
   Zobs <- Z[ry, , drop = FALSE]
 
   # create formula
-  fr <- ifelse(length(rande) > 1,
+  fr <- ifelse(
+    length(rande) > 1,
     paste("+ ( 1 +", paste(rande[-1L], collapse = "+")),
     "+ ( 1 "
   )
   randmodel <- paste(
-    "yobs ~ ", paste(fixe[-1L], collapse = "+"),
-    fr, "|", clust, ")"
+    "yobs ~ ",
+    paste(fixe[-1L], collapse = "+"),
+    fr,
+    "|",
+    clust,
+    ")"
   )
-  suppressWarnings(fit <- try(
-    lme4::lmer(formula(randmodel),
-      data = data.frame(yobs, xobs),
-      ...
-    ),
-    silent = TRUE
-  ))
+  suppressWarnings(
+    fit <- try(
+      lme4::lmer(formula(randmodel), data = data.frame(yobs, xobs), ...),
+      silent = TRUE
+    )
+  )
   if (inherits(fit, "try-error")) {
     warning("lmer does not run. Simplify imputation model")
     return(y[wy])
@@ -94,11 +108,13 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
     dc <- object@devcomp
     dd <- dc$dims
     if (dd[["useSc"]]) {
-      dc$cmp[[if (dd[["REML"]]) {
-        "sigmaREML"
-      } else {
-        "sigmaML"
-      }]]
+      dc$cmp[[
+        if (dd[["REML"]]) {
+          "sigmaREML"
+        } else {
+          "sigmaML"
+        }
+      ]]
     } else {
       1
     }
@@ -123,7 +139,7 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
   rancoef <- as.matrix(lme4::ranef(fit)[[1]])
   lambda <- t(rancoef) %*% rancoef
   df.psi <- nrow(rancoef)
-  temp.psi.star <- stats::rWishart(1, df.psi, diag(nrow(lambda)))[, , 1]
+  temp.psi.star <- stats::rWishart(1, df.psi, diag(nrow(lambda)))[,, 1]
   temp <- MASS::ginv(lambda)
   ev <- eigen(temp)
   if (sum(ev$values > 0) == length(ev$values)) {
@@ -147,7 +163,9 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
       Zi <- as.matrix(Zobs[xobs[, clust] == jj, ])
       yi <- yobs[xobs[, clust] == jj]
       sigma2 <- diag(sigma2star, nrow = nrow(Zi))
-      Mi <- psi.star %*% t(Zi) %*% MASS::ginv(Zi %*% psi.star %*% t(Zi) + sigma2)
+      Mi <- psi.star %*%
+        t(Zi) %*%
+        MASS::ginv(Zi %*% psi.star %*% t(Zi) + sigma2)
       myi <- Mi %*% (yi - Xi %*% beta.star)
       vyi <- psi.star - Mi %*% Zi %*% psi.star
     } else {
@@ -159,7 +177,8 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
     # generating bi.star using eigenvalues
     deco1 <- eigen(vyi)
     if (sum(deco1$values > 0) == length(deco1$values)) {
-      A <- deco1$vectors %*% sqrt(diag(deco1$values, nrow = length(deco1$values)))
+      A <- deco1$vectors %*%
+        sqrt(diag(deco1$values, nrow = length(deco1$values)))
       bi.star <- myi + A %*% rnorm(length(myi))
     } else {
       # generating bi.star using svd
@@ -175,8 +194,10 @@ mice.impute.2l.lmer <- function(y, ry, x, type, wy = NULL, intercept = TRUE, ...
 
     # imputation
     y[wy & x[, clust] == jj] <- as.vector(
-      as.matrix(X[wy & x[, clust] == jj, , drop = FALSE]) %*% beta.star +
-        as.matrix(Z[wy & x[, clust] == jj, , drop = FALSE]) %*% as.matrix(bi.star) +
+      as.matrix(X[wy & x[, clust] == jj, , drop = FALSE]) %*%
+        beta.star +
+        as.matrix(Z[wy & x[, clust] == jj, , drop = FALSE]) %*%
+          as.matrix(bi.star) +
         rnorm(sum(wy & x[, clust] == jj)) * sqrt(sigma2star)
     )
   }

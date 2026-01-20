@@ -19,7 +19,13 @@ data1 <- data[, c("age", "bmi")]
 data2 <- data[, c("hyp", "chl")]
 
 imp1 <- mice(data1, m = 1, maxit = 1, print = FALSE)
-imp2 <- mice(data2, blocks = list(c("hyp", "chl")), m = 1, maxit = 1, print = FALSE)
+imp2 <- mice(
+  data2,
+  blocks = list(c("hyp", "chl")),
+  m = 1,
+  maxit = 1,
+  print = FALSE
+)
 imp <- cbind(imp1, imp2)
 
 test_that("combines imputations with blocks", {
@@ -42,8 +48,20 @@ test_that("duplicate variable adds a column", {
 })
 
 # handling of duplicate blocks
-imp1 <- mice(data1, blocks = list(c("age", "bmi"), "hyp"), m = 1, maxit = 1, print = FALSE)
-imp2 <- mice(data2, blocks = list(c("hyp", "chl")), m = 1, maxit = 1, print = FALSE)
+imp1 <- mice(
+  data1,
+  blocks = list(c("age", "bmi"), "hyp"),
+  m = 1,
+  maxit = 1,
+  print = FALSE
+)
+imp2 <- mice(
+  data2,
+  blocks = list(c("hyp", "chl")),
+  m = 1,
+  maxit = 1,
+  print = FALSE
+)
 imp <- cbind(imp1, imp2)
 impc <- mice.mids(imp, max = 2, print = FALSE)
 
@@ -53,7 +71,13 @@ test_that("duplicate blocks names renames block", {
 
 
 # cbind - no second argument
-imp1 <- mice(nhanes, blocks = list(c("bmi", "chl"), "hyp"), print = FALSE, maxit = 1, m = 1)
+imp1 <- mice(
+  nhanes,
+  blocks = list(c("bmi", "chl"), "hyp"),
+  print = FALSE,
+  maxit = 1,
+  m = 1
+)
 imp2 <- cbind(imp1)
 imp3 <- cbind(imp1, NULL)
 imp4 <- cbind(imp1, character(0))
@@ -85,7 +109,8 @@ test_that("appends names vectors and constants", {
 # matrix, factor, data.frame
 # NOTE: cbind() dispatches to wrong function if there is a data.frame
 # so use cbind.mids()
-imp8 <- mice:::cbind.mids(imp1,
+imp8 <- mice:::cbind.mids(
+  imp1,
   ma = matrix(1:50, nrow = 25, ncol = 2),
   age = nhanes2$age,
   df = nhanes2[, c("hyp", "chl")]
@@ -95,9 +120,9 @@ test_that("appends matrix, factor and data.frame", {
 })
 # impc <- mice.mids(imp8, max = 2, print = FALSE)
 
-
 # NOTE: now using own version of cbind()
-imp9 <- cbind(imp1,
+imp9 <- cbind(
+  imp1,
   ma = matrix(1:50, nrow = 25, ncol = 2),
   age = nhanes2$age,
   df = nhanes2[, c("hyp", "chl")]

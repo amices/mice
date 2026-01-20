@@ -20,8 +20,12 @@ make.visitSequence <- function(data = NULL, blocks = NULL) {
   names(blocks)
 }
 
-check.visitSequence <- function(visitSequence = NULL,
-                                data, where = NULL, blocks) {
+check.visitSequence <- function(
+  visitSequence = NULL,
+  data,
+  where = NULL,
+  blocks
+) {
   if (is.null(names(blocks)) || any(is.na(names(blocks)))) {
     stop("Missing names in `blocks`.")
   }
@@ -30,15 +34,21 @@ check.visitSequence <- function(visitSequence = NULL,
     return(make.visitSequence(data, blocks))
   }
 
-  if (is.null(where)) where <- is.na(data)
+  if (is.null(where)) {
+    where <- is.na(data)
+  }
   nimp <- nimp(where, blocks)
-  if (length(nimp) == 0) visitSequence <- nimp
+  if (length(nimp) == 0) {
+    visitSequence <- nimp
+  }
 
   if (length(visitSequence) == 1 && is.character(visitSequence)) {
-    code <- match.arg(visitSequence,
+    code <- match.arg(
+      visitSequence,
       choices = c("roman", "arabic", "monotone", "revmonotone")
     )
-    visitSequence <- switch(code,
+    visitSequence <- switch(
+      code,
       roman = names(blocks)[nimp > 0],
       arabic = rev(names(blocks)[nimp > 0]),
       monotone = names(blocks)[order(nimp)],

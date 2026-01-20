@@ -318,28 +318,32 @@
 #' complete(imp.test2, 2)
 #' }
 #' @export
-mice <- function(data,
-                 m = 5,
-                 method = NULL,
-                 predictorMatrix,
-                 ignore = NULL,
-                 where = NULL,
-                 blocks,
-                 visitSequence = NULL,
-                 formulas,
-                 calltype = NULL,
-                 blots = NULL,
-                 post = NULL,
-                 defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-                 maxit = 5,
-                 printFlag = TRUE,
-                 seed = NA,
-                 data.init = NULL,
-                 ...) {
+mice <- function(
+  data,
+  m = 5,
+  method = NULL,
+  predictorMatrix,
+  ignore = NULL,
+  where = NULL,
+  blocks,
+  visitSequence = NULL,
+  formulas,
+  calltype = NULL,
+  blots = NULL,
+  post = NULL,
+  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+  maxit = 5,
+  printFlag = TRUE,
+  seed = NA,
+  data.init = NULL,
+  ...
+) {
   call <- match.call()
   check.deprecated(...)
 
-  if (!is.na(seed)) set.seed(seed)
+  if (!is.na(seed)) {
+    set.seed(seed)
+  }
 
   # check form of data and m
   data <- check.dataform(data)
@@ -429,8 +433,11 @@ mice <- function(data,
 
   # check visitSequence, edit predictorMatrix for monotone
   user.visitSequence <- visitSequence
-  visitSequence <- check.visitSequence(visitSequence,
-    data = data, where = where, blocks = blocks
+  visitSequence <- check.visitSequence(
+    visitSequence,
+    data = data,
+    where = where,
+    blocks = blocks
   )
   predictorMatrix <- mice.edit.predictorMatrix(
     predictorMatrix = predictorMatrix,
@@ -439,8 +446,11 @@ mice <- function(data,
     maxit = maxit
   )
   method <- check.method(
-    method = method, data = data, where = where,
-    blocks = blocks, defaultMethod = defaultMethod
+    method = method,
+    data = data,
+    where = where,
+    blocks = blocks,
+    defaultMethod = defaultMethod
   )
   post <- check.post(post, data)
   blots <- check.blots(blots, data, blocks)
@@ -466,22 +476,45 @@ mice <- function(data,
   # initialize imputations
   nmis <- apply(is.na(data), 2, sum)
   imp <- initialize.imp(
-    data, m, ignore, where, blocks, visitSequence,
-    method, nmis, data.init
+    data,
+    m,
+    ignore,
+    where,
+    blocks,
+    visitSequence,
+    method,
+    nmis,
+    data.init
   )
 
   # and iterate...
   from <- 1
   to <- from + maxit - 1
   q <- sampler(
-    data, m, ignore, where, imp, blocks, method,
-    visitSequence, predictorMatrix, formulas,
-    calltype, blots,
-    post, c(from, to), printFlag, ...
+    data,
+    m,
+    ignore,
+    where,
+    imp,
+    blocks,
+    method,
+    visitSequence,
+    predictorMatrix,
+    formulas,
+    calltype,
+    blots,
+    post,
+    c(from, to),
+    printFlag,
+    ...
   )
 
-  if (!state$log) loggedEvents <- NULL
-  if (state$log) row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
+  if (!state$log) {
+    loggedEvents <- NULL
+  }
+  if (state$log) {
+    row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
+  }
 
   ## save, and return
   midsobj <- mids(
@@ -502,15 +535,21 @@ mice <- function(data,
     ignore = ignore,
     seed = seed,
     iteration = q$iteration,
-    lastSeedValue = get(".Random.seed",
-      envir = globalenv(), mode = "integer",
-      inherits = FALSE),
+    lastSeedValue = get(
+      ".Random.seed",
+      envir = globalenv(),
+      mode = "integer",
+      inherits = FALSE
+    ),
     chainMean = q$chainMean,
     chainVar = q$chainVar,
-    loggedEvents = loggedEvents)
+    loggedEvents = loggedEvents
+  )
 
   if (!is.null(midsobj$loggedEvents)) {
-    warning("Number of logged events: ", nrow(midsobj$loggedEvents),
+    warning(
+      "Number of logged events: ",
+      nrow(midsobj$loggedEvents),
       call. = FALSE
     )
   }

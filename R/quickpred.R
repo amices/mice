@@ -85,22 +85,37 @@
 #' # use it directly from mice
 #' imp <- mice(nhanes, pred = quickpred(nhanes, minpuc = 0.25, include = "age"))
 #' @export
-quickpred <- function(data, mincor = 0.1, minpuc = 0, include = "",
-                      exclude = "", method = "pearson") {
+quickpred <- function(
+  data,
+  mincor = 0.1,
+  minpuc = 0,
+  include = "",
+  exclude = "",
+  method = "pearson"
+) {
   data <- check.dataform(data)
 
   # initialize
   nvar <- ncol(data)
-  predictorMatrix <- matrix(0, nrow = nvar, ncol = nvar, dimnames = list(names(data), names(data)))
+  predictorMatrix <- matrix(
+    0,
+    nrow = nvar,
+    ncol = nvar,
+    dimnames = list(names(data), names(data))
+  )
   x <- data.matrix(data)
   r <- !is.na(x)
 
   # include predictors with
   # 1) pairwise correlation among data
   # 2) pairwise correlation of data with response indicator higher than mincor
-  suppressWarnings(v <- abs(cor(x, use = "pairwise.complete.obs", method = method)))
+  suppressWarnings(
+    v <- abs(cor(x, use = "pairwise.complete.obs", method = method))
+  )
   v[is.na(v)] <- 0
-  suppressWarnings(u <- abs(cor(y = x, x = r, use = "pairwise.complete.obs", method = method)))
+  suppressWarnings(
+    u <- abs(cor(y = x, x = r, use = "pairwise.complete.obs", method = method))
+  )
   u[is.na(u)] <- 0
   maxc <- pmax(v, u)
   predictorMatrix[maxc > mincor] <- 1

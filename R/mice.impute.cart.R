@@ -46,8 +46,15 @@
 #' plot(imp)
 #' @keywords datagen
 #' @export
-mice.impute.cart <- function(y, ry, x, wy = NULL, minbucket = 5, cp = 1e-04,
-                             ...) {
+mice.impute.cart <- function(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  minbucket = 5,
+  cp = 1e-04,
+  ...
+) {
   install.on.demand("rpart")
 
   if (is.null(wy)) {
@@ -63,15 +70,21 @@ mice.impute.cart <- function(y, ry, x, wy = NULL, minbucket = 5, cp = 1e-04,
   xmis <- data.frame(x[wy, , drop = FALSE])
   yobs <- y[ry]
   if (!is.factor(yobs)) {
-    fit <- rpart::rpart(yobs ~ .,
-      data = cbind(yobs, xobs), method = "anova",
+    fit <- rpart::rpart(
+      yobs ~ .,
+      data = cbind(yobs, xobs),
+      method = "anova",
       control = rpart::rpart.control(minbucket = minbucket, cp = cp, ...)
     )
     leafnr <- floor(as.numeric(row.names(fit$frame[fit$where, ])))
     fit$frame$yval <- as.numeric(row.names(fit$frame))
     nodes <- predict(object = fit, newdata = xmis)
     donor <- lapply(nodes, function(s) yobs[leafnr == s])
-    impute <- vapply(seq_along(donor), function(s) sample(donor[[s]], 1), numeric(1))
+    impute <- vapply(
+      seq_along(donor),
+      function(s) sample(donor[[s]], 1),
+      numeric(1)
+    )
   } else {
     # escape with same impute if the dependent does not vary
     cat.has.all.obs <- table(yobs) == sum(ry)
@@ -86,19 +99,16 @@ mice.impute.cart <- function(y, ry, x, wy = NULL, minbucket = 5, cp = 1e-04,
     # likely to present problems further down the road
     # potential problem case: table(yobs): 0 10 15, then
     # droplevels may forget about category 1
-    fit <- rpart::rpart(yobs ~ .,
-      data = xy, method = "class",
+    fit <- rpart::rpart(
+      yobs ~ .,
+      data = xy,
+      method = "class",
       control = rpart::rpart.control(minbucket = minbucket, cp = cp, ...)
     )
     nodes <- predict(object = fit, newdata = xmis)
-    impute <- apply(nodes,
-      MARGIN = 1,
-      FUN = function(s) {
-        sample(colnames(nodes),
-          size = 1, prob = s
-        )
-      }
-    )
+    impute <- apply(nodes, MARGIN = 1, FUN = function(s) {
+      sample(colnames(nodes), size = 1, prob = s)
+    })
   }
   impute
 }

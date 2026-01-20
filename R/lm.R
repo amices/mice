@@ -27,17 +27,22 @@
 #' fit
 #' @export
 lm.mids <- function(formula, data, ...) {
-  .Deprecated("with",
-    msg = "Use with(imp, lm(yourmodel))."
-  )
+  .Deprecated("with", msg = "Use with(imp, lm(yourmodel)).")
   # adapted 28/1/00 repeated complete data regression (lm) on a mids data set
   call <- match.call()
   if (!is.mids(data)) {
     stop("The data must have class mids")
   }
-  analyses <- lapply(seq_len(data$m), function(i) lm(formula, data = complete(data, i), ...))
+  analyses <- lapply(seq_len(data$m), function(i) {
+    lm(formula, data = complete(data, i), ...)
+  })
   # return the complete data analyses as a list of length nimp
-  object <- list(call = call, call1 = data$call, nmis = data$nmis, analyses = analyses)
+  object <- list(
+    call = call,
+    call1 = data$call,
+    nmis = data$nmis,
+    analyses = analyses
+  )
   class(object) <- c("mira", "lm") ## FEH
   object
 }
@@ -76,9 +81,7 @@ lm.mids <- function(formula, data, ...) {
 #' fit
 #' @export
 glm.mids <- function(formula, family = gaussian, data, ...) {
-  .Deprecated("with",
-    msg = "Use with(imp, glm(yourmodel))."
-  )
+  .Deprecated("with", msg = "Use with(imp, glm(yourmodel)).")
   # adapted 04/02/00 repeated complete data regression (glm) on a mids data set
   call <- match.call()
   if (!is.mids(data)) {
@@ -89,7 +92,12 @@ glm.mids <- function(formula, family = gaussian, data, ...) {
     function(i) glm(formula, family = family, data = complete(data, i), ...)
   )
   # return the complete data analyses as a list of length nimp
-  object <- list(call = call, call1 = data$call, nmis = data$nmis, analyses = analyses)
+  object <- list(
+    call = call,
+    call1 = data$call,
+    nmis = data$nmis,
+    analyses = analyses
+  )
   class(object) <- c("mira", "glm", "lm")
   object
 }

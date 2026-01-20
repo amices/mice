@@ -19,6 +19,8 @@ nimp <- function(where, blocks = make.blocks(where)) {
   nwhere <- apply(where, 2, sum)
   nimp <- vector("integer", length = length(blocks))
   names(nimp) <- names(blocks)
-  for (i in seq_along(blocks)) nimp[i] <- sum(nwhere[blocks[[i]]])
+  for (i in seq_along(blocks)) {
+    nimp[i] <- sum(nwhere[blocks[[i]]])
+  }
   nimp
 }

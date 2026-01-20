@@ -62,10 +62,20 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
-mice.impute.polr <- function(y, ry, x, wy = NULL, nnet.maxit = 100,
-                             nnet.trace = FALSE, nnet.MaxNWts = 1500,
-                             polr.to.loggedEvents = FALSE, ...) {
-  if (is.null(wy)) wy <- !ry
+mice.impute.polr <- function(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  nnet.maxit = 100,
+  nnet.trace = FALSE,
+  nnet.MaxNWts = 1500,
+  polr.to.loggedEvents = FALSE,
+  ...
+) {
+  if (is.null(wy)) {
+    wy <- !ry
+  }
 
   # augment data to evade issues with perfect prediction
   x <- as.matrix(x)
@@ -79,7 +89,8 @@ mice.impute.polr <- function(y, ry, x, wy = NULL, nnet.maxit = 100,
 
   ## polr may fail on sparse data. We revert to multinom in such cases.
   fit <- try(
-    suppressWarnings(MASS::polr(formula(xy),
+    suppressWarnings(MASS::polr(
+      formula(xy),
       data = xy[ry, , drop = FALSE],
       weights = w[ry],
       control = list(...)
@@ -90,11 +101,14 @@ mice.impute.polr <- function(y, ry, x, wy = NULL, nnet.maxit = 100,
     if (polr.to.loggedEvents) {
       updateLog(out = "polr falls back to multinom", frame = 6)
     }
-    fit <- nnet::multinom(formula(xy),
+    fit <- nnet::multinom(
+      formula(xy),
       data = xy[ry, , drop = FALSE],
       weights = w[ry],
-      maxit = nnet.maxit, trace = nnet.trace,
-      MaxNWts = nnet.MaxNWts, ...
+      maxit = nnet.maxit,
+      trace = nnet.trace,
+      MaxNWts = nnet.MaxNWts,
+      ...
     )
   }
   post <- predict(fit, xy[wy, , drop = FALSE], type = "probs")

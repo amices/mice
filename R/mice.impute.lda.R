@@ -43,7 +43,9 @@
 #' @export
 mice.impute.lda <- function(y, ry, x, wy = NULL, ...) {
   install.on.demand("MASS", ...)
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
   fy <- as.factor(y)
   nc <- length(levels(fy))
 

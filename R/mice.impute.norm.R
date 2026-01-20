@@ -35,7 +35,9 @@
 #' @keywords datagen
 #' @export
 mice.impute.norm <- function(y, ry, x, wy = NULL, ...) {
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
   x <- cbind(1, as.matrix(x))
   parm <- .norm.draw(y, ry, x, ...)
   x[wy, ] %*% parm$beta + rnorm(sum(wy)) * parm$sigma
@@ -183,10 +185,12 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...) {
 }
 
 get.printFlag <- function(start = 4) {
-  while (inherits(
-    try(get("printFlag", parent.frame(start)), silent = TRUE),
-    "try-error"
-  )) {
+  while (
+    inherits(
+      try(get("printFlag", parent.frame(start)), silent = TRUE),
+      "try-error"
+    )
+  ) {
     start <- start + 1
   }
   get("printFlag", parent.frame(start))

@@ -42,7 +42,8 @@ ampute.continuous <- function(P, scores, prop, type) {
   }
   for (i in seq_along(scores)) {
     # The desired function is chosen
-    formula <- switch(type[i],
+    formula <- switch(
+      type[i],
       LEFT = function(x, b) logit(mean(x) - x + b),
       MID = function(x, b) logit(-abs(x - mean(x)) + 0.75 + b),
       TAIL = function(x, b) logit(abs(x - mean(x)) - 0.75 + b),
@@ -63,10 +64,26 @@ ampute.continuous <- function(P, scores, prop, type) {
       R[[i]] <- 0
     } else {
       if (length(scores.temp) == 1) {
-        warning(paste("There is only 1 candidate for pattern", i, ",it will be amputed with probability", prop), call. = FALSE)
+        warning(
+          paste(
+            "There is only 1 candidate for pattern",
+            i,
+            ",it will be amputed with probability",
+            prop
+          ),
+          call. = FALSE
+        )
         probs <- prop
       } else if (length(unique(scores.temp)) == 1) {
-        warning(paste("The weighted sum scores of all candidates in pattern", i, "are the same, they will be amputed with probability", prop), call. = FALSE)
+        warning(
+          paste(
+            "The weighted sum scores of all candidates in pattern",
+            i,
+            "are the same, they will be amputed with probability",
+            prop
+          ),
+          call. = FALSE
+        )
         probs <- prop
       } else {
         probs <- formula(x = scores.temp, b = shift)
@@ -87,10 +104,16 @@ ampute.continuous <- function(P, scores, prop, type) {
 # This is a custom adaptation of function binsearch from package gtools
 # (version 3.5.0) that returns the adjustment of the probability curves used
 # in the function ampute.continuous in ampute.
-bin.search <- function(fun, range = c(-8, 8), ..., target = 0,
-                       lower = ceiling(min(range)),
-                       upper = floor(max(range)),
-                       maxiter = 100, showiter = FALSE) {
+bin.search <- function(
+  fun,
+  range = c(-8, 8),
+  ...,
+  target = 0,
+  lower = ceiling(min(range)),
+  upper = floor(max(range)),
+  maxiter = 100,
+  showiter = FALSE
+) {
   lo <- lower
   hi <- upper
   counter <- 0
@@ -141,12 +164,24 @@ bin.search <- function(fun, range = c(-8, 8), ..., target = 0,
   retval <- list(call = match.call(), numiter = counter)
   if (outside.range) {
     if (target * sign < val.lo * sign) {
-      warning("The desired proportion of ", target, " is too small; ", val.lo, " is used instead.")
+      warning(
+        "The desired proportion of ",
+        target,
+        " is too small; ",
+        val.lo,
+        " is used instead."
+      )
       retval$flag <- "Lower Boundary"
       retval$where <- lo
       retval$value <- val.lo
     } else {
-      warning("The desired proportion of ", target, " is too large; ", val.hi, " is used instead.")
+      warning(
+        "The desired proportion of ",
+        target,
+        " is too large; ",
+        val.hi,
+        " is used instead."
+      )
       retval$flag <- "Upper Boundary"
       retval$where <- hi
       retval$value <- val.hi

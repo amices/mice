@@ -149,10 +149,20 @@
 #' # to get old behavior: as.integer(y))
 #' mice.impute.pmm(y, ry, x, quantify = FALSE)
 #' @export
-mice.impute.pmm <- function(y, ry, x, wy = NULL, donors = 5L,
-                            matchtype = 1L, exclude = NULL,
-                            quantify = TRUE, trim = 1L,
-                            ridge = 1e-05, use.matcher = FALSE, ...) {
+mice.impute.pmm <- function(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  donors = 5L,
+  matchtype = 1L,
+  exclude = NULL,
+  quantify = TRUE,
+  trim = 1L,
+  ridge = 1e-05,
+  use.matcher = FALSE,
+  ...
+) {
   if (is.null(wy)) {
     wy <- !ry
   }

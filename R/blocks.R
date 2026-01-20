@@ -35,9 +35,7 @@
 #' make.blocks(nhanes)
 #' make.blocks(c("age", "sex", "edu"))
 #' @export
-make.blocks <- function(x,
-                        partition = c("scatter", "collect", "void")) {
-
+make.blocks <- function(x, partition = c("scatter", "collect", "void")) {
   # character: assign each variable to its own block
   if (is.character(x)) {
     v <- as.list(as.character(x))
@@ -62,22 +60,23 @@ make.blocks <- function(x,
 
   # data.frame: assign each variable to its own block
   partition <- match.arg(partition)
-  switch(partition,
-         scatter = {
-           v <- as.list(names(x))
-           names(v) <- names(x)
-         },
-         collect = {
-           v <- list(names(x))
-           names(v) <- "collect"
-         },
-         void = {
-           v <- list()
-         },
-         {
-           v <- as.list(names(x))
-           names(v) <- names(x)
-         }
+  switch(
+    partition,
+    scatter = {
+      v <- as.list(names(x))
+      names(v) <- names(x)
+    },
+    collect = {
+      v <- list(names(x))
+      names(v) <- "collect"
+    },
+    void = {
+      v <- list()
+    },
+    {
+      v <- as.list(names(x))
+      names(v) <- names(x)
+    }
   )
   return(v)
 }
@@ -106,10 +105,14 @@ name.blocks <- function(x, prefix = "B") {
   if (!is.list(x)) {
     return(make.blocks(x))
   }
-  if (is.null(names(x))) names(x) <- rep("", length(x))
+  if (is.null(names(x))) {
+    names(x) <- rep("", length(x))
+  }
   inc <- 1
   for (i in seq_along(x)) {
-    if (names(x)[i] != "") next
+    if (names(x)[i] != "") {
+      next
+    }
     if (length(x[[i]]) == 1) {
       names(x)[i] <- x[[i]][1]
     } else {
