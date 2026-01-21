@@ -220,8 +220,13 @@ md.pattern2 <- function(x, plot = TRUE, rotate.names = 0, rotate.var = FALSE, or
       text(-.3, -.5, rownames(r)[nrow(r)], adj = 1)
     }
     
-    return(r)
-  } else {
-    return(r)
   }
+  
+  print(r)
+  cat(paste("Original database :", length(keep.idx), "observations of", length(names), "variables \n"))
+  cat(paste("Kept observations :", rownames(r)[nrow(r)], "\n"))
+  cat(paste("Kept variables :", R.ncol, "\n"))
+  cat("Numbers may vary due to min.ind and/or drop.zero.vars")
+  invisible(r)
+               
 }
