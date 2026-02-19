@@ -168,7 +168,11 @@ md.pattern2 <- function(x, plot = TRUE, rotate.names = 0, rotate.var = FALSE, or
       R.plot <- matrix(r[1, 1:(ncol(r) - 1)], nrow = 1)
     }
     
-    adj <- c(0.5 - (rotate.names / 200 + 0.05), (rotate.names / 200 + 0.05))
+    if(rotate.names == 0){
+      adj <- c(0.5, 0.5)
+    } else {
+      adj <- c(0, 0.5)
+    }
     srt <- rotate.names
     
     # If there is only one pattern
