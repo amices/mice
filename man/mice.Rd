@@ -21,7 +21,7 @@ mice(
   post = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
   maxit = 5,
-  printFlag = TRUE,
+  printFlag = getOption("mice.printFlag", TRUE),
   seed = NA,
   data.init = NULL,
   ...
