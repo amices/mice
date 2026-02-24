@@ -1,3 +1,7 @@
+# mice 3.19.3
+
+- Adds support for `options(mice.printFlag = FALSE)`
+
 # mice 3.19.2
 
 - Reformats .R source files using the opiniated Air formatter to improve clarity and consistency ([#721](https://github.com/amices/mice/issues/721))
