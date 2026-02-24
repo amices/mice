@@ -47,7 +47,7 @@
 #' identical(imp$imp, imp2$imp)
 #' #
 #' @export
-mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = TRUE, ...) {
+mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = getOption("mice.printFlag", TRUE), ...) {
   if (!is.mids(obj)) {
     stop("Object should be of type mids.")
   }
