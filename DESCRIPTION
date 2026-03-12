@@ -78,6 +78,7 @@ Suggests:
     miceadds,
     pan,
     parallelly,
+    progressr,
     purrr,
     ranger,
     randomForest,

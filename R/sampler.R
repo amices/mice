@@ -18,6 +18,11 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
       cat("\n iter imp variable")
     }
 
+    if(requireNamespace("progressr", quietly = TRUE)) {
+      p <- progressr::progressor(maxit * m * length(visitSequence))
+    } else {
+      p <- function (...) {}
+    }
     for (k in from:to) {
       # begin k loop : main iteration loop
       iteration <- k
@@ -48,7 +53,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
                               blocks, method, calltypes, formulas,
                               predictorMatrix, blots,
                               tasks, models,
-                              post, ignore, printFlag, ...)
+                              post, ignore, printFlag, p, ...)
           data <- result$data
           imp <- result$imp
         }
@@ -81,7 +86,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
                               blocks, method, calltypes, formulas,
                               predictorMatrix, blots,
                               tasks, models,
-                              post, ignore, printFlag = FALSE, ...)
+                              post, ignore, printFlag = FALSE, p, ...)
 
           data_i <- result$data
           imp_i <- result$imp
@@ -162,7 +167,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
 
 one.cycle <- function(data, imp, r, where, i, k, visitSequence,
                       blocks, method, calltypes, formulas, predictorMatrix,
-                      blots, tasks, models, post, ignore, printFlag, ...) {
+                      blots, tasks, models, post, ignore, printFlag, p, ...) {
   # this function makes one pass through the data
 
   # impute block-by-block
@@ -185,6 +190,10 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
 
     # (repeated) univariate imputation - pred method
     if (univ) {
+      # Advance the progress bar
+      p(message = paste("iter=", k, ", imp=", i, ", block=", b, sep = ""),
+        class = if (printFlag) "sticky")
+      
       for (j in b) {
         # miceadds support
         newstate <- list(it = k, im = i, dep = j, meth = theMethod)
@@ -220,6 +229,9 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
 
     # multivariate imputation - pred and formula
     if (mult) {
+      # Advance the progress bar
+      p()
+      
       # miceadds support
       newstate <- list(it = k, im = i, dep = b, meth = theMethod)
       mis <- !r
@@ -246,6 +258,9 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
     # passive imputation
     # applies to all rows, so no ignore needed
     if (pass) {
+      # Advance the progress bar
+      p()
+      
       for (j in b) {
         # miceadds support
         newstate <- list(it = k, im = i, dep = b, meth = theMethod)
