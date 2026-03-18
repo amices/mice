@@ -187,12 +187,10 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
       handles.format(paste0("mice.impute.", theMethod))
     pass <- !empt && is.passive(theMethod) && length(blocks[[h]]) == 1
     if (printFlag & !empt) cat(" ", b)
+    p(message = paste("iter=", k, ", imp=", i, ", block=", paste(b, collapse = " "), sep = ""))
 
     # (repeated) univariate imputation - pred method
     if (univ) {
-      # Advance the progress bar
-      p(message = paste("iter=", k, ", imp=", i, ", var=", b, sep = ""))
-      
       for (j in b) {
         # miceadds support
         newstate <- list(it = k, im = i, dep = j, meth = theMethod)
@@ -228,9 +226,6 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
 
     # multivariate imputation - pred and formula
     if (mult) {
-      # Advance the progress bar
-      p(message = paste("iter=", k, ", imp=", i, ", block=", b, sep = ""))
-      
       # miceadds support
       newstate <- list(it = k, im = i, dep = b, meth = theMethod)
       mis <- !r
@@ -257,9 +252,6 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
     # passive imputation
     # applies to all rows, so no ignore needed
     if (pass) {
-      # Advance the progress bar
-      p(message = paste("iter=", k, ", imp=", i, ", block=", b, sep = ""))
-      
       for (j in b) {
         # miceadds support
         newstate <- list(it = k, im = i, dep = b, meth = theMethod)
