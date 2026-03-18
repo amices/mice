@@ -191,8 +191,7 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
     # (repeated) univariate imputation - pred method
     if (univ) {
       # Advance the progress bar
-      p(message = paste("iter=", k, ", imp=", i, ", block=", b, sep = ""),
-        class = if (printFlag) "sticky")
+      p(message = paste("iter=", k, ", imp=", i, ", var=", b, sep = ""))
       
       for (j in b) {
         # miceadds support
@@ -230,7 +229,7 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
     # multivariate imputation - pred and formula
     if (mult) {
       # Advance the progress bar
-      p()
+      p(message = paste("iter=", k, ", imp=", i, ", block=", b, sep = ""))
       
       # miceadds support
       newstate <- list(it = k, im = i, dep = b, meth = theMethod)
@@ -259,7 +258,7 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
     # applies to all rows, so no ignore needed
     if (pass) {
       # Advance the progress bar
-      p()
+      p(message = paste("iter=", k, ", imp=", i, ", block=", b, sep = ""))
       
       for (j in b) {
         # miceadds support
