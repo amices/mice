@@ -107,6 +107,6 @@ pool.r.squared <- function(object, adjusted = FALSE) {
     (1 + exp(2 * (qbar - 1.96 * sqrt(fit$t)))))^2
   table[, 3] <- ((exp(2 * (qbar + 1.96 * sqrt(fit$t))) - 1) /
     (1 + exp(2 * (qbar + 1.96 * sqrt(fit$t)))))^2
-  table[, 4] <- fit$f
+  table[, 4] <- fit$fmi
   table
 }
