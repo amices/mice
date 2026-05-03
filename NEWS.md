@@ -1,3 +1,6 @@
+- Adds an early warning in `mice()` when the data contain `POSIXct` or `POSIXlt` date-time columns. Such variables are stored as large numbers (~1e9–1e10) that can make the predictor matrix near-singular in norm-based methods, causing an opaque `solve()` crash. The warning names the offending columns and suggests converting them to `Date` or a standardised numeric before imputing (#746)
+- Improves the error message in `estimice()` when the ridge-penalised `solve()` also fails. Previously this crashed silently; it now stops with a message explaining that extreme predictor scales (e.g. POSIX date-time columns) are the likely cause and suggests standardising or removing such variables (#746)
+
 # mice 3.19.4
 
 - Fixes `pool()` returning `dfcom = 1` for `clmm` models from the `ordinal` package, which caused incorrect degrees of freedom, p-values and confidence intervals. Root cause: `clmm` returns empty vectors from both `stats::df.residual()` and `stats::residuals()`, so `get.dfcom()` computed `nobs = 0` and silently floored `dfcom` to 1. Fix: use `stats::nobs()` as the primary fallback, consistent with broom conventions (#748)

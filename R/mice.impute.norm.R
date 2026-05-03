@@ -134,7 +134,18 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...) {
       # calculate ridge penalty
       pen <- diag(xtx) * ridge
       # add ridge penalty to allow inverse of v
-      v <- solve(xtx + diag(pen))
+      v <- tryCatch(
+        solve(xtx + diag(pen)),
+        error = function(e) {
+          stop(
+            "mice could not invert the predictor matrix, even after applying a ridge penalty.\n",
+            "This is likely caused by predictors on very different scales ",
+            "(e.g. POSIX date-time variables stored as large numbers ~1e9-1e10).\n",
+            "Consider standardising your predictors or removing date-time variables before imputing.",
+            call. = FALSE
+          )
+        }
+      )
       mess <- paste0(
         "mice detected that your data are (nearly) multi-collinear.\n",
         "It applied a ridge penalty to continue calculations, but the results can be unstable.\n",
@@ -169,7 +180,18 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...) {
       # calculate ridge penalty
       pen <- diag(xtx) * ridge
       # add ridge penalty to allow inverse of v
-      v <- solve(xtx + diag(pen))
+      v <- tryCatch(
+        solve(xtx + diag(pen)),
+        error = function(e) {
+          stop(
+            "mice could not invert the predictor matrix, even after applying a ridge penalty.\n",
+            "This is likely caused by predictors on very different scales ",
+            "(e.g. POSIX date-time variables stored as large numbers ~1e9-1e10).\n",
+            "Consider standardising your predictors or removing date-time variables before imputing.",
+            call. = FALSE
+          )
+        }
+      )
       mess <- paste0(
         "mice detected that your data are (nearly) multi-collinear.\n",
         "It applied a ridge penalty to continue calculations, but the results can be unstable.\n",
