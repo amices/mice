@@ -1,5 +1,6 @@
 # mice 3.18.1.9000
 
+- Fixes `mice.impute.midastouch()` producing "invalid factor level" warnings when imputing factors with non-default levels (e.g. `0/1` or labelled factors). The function converted `y` to numeric for internal calculations but returned integer codes instead of the original factor values, causing assignment failures in the completed data. Fix: preserve the original `y` and return from it (#738)
 - Adds an early warning in `mice()` when the data contain `POSIXct` or `POSIXlt` date-time columns. Such variables are stored as large numbers (~1e9–1e10) that can make the predictor matrix near-singular in norm-based methods, causing an opaque `solve()` crash. The warning names the offending columns and suggests converting them to `Date` or a standardised numeric before imputing (#746)
 - Improves the error message in `estimice()` when the ridge-penalised `solve()` also fails. Previously this crashed silently; it now stops with a message explaining that extreme predictor scales (e.g. POSIX date-time columns) are the likely cause and suggests standardising or removing such variables (#746)
 
