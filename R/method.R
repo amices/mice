@@ -2,7 +2,24 @@
 #'
 #' This helper function creates a valid \code{method} vector. The
 #' \code{method} vector is an argument to the \code{mice} function that
-#' specifies the method for each block.
+#' specifies the imputation method for each block.
+#'
+#' A method is assigned to every variable whose type can be imputed,
+#' regardless of whether the current data contain missing values. This is
+#' intentional: the same \code{mice()} setup can be re-used across tasks
+#' (see the \code{tasks} argument). For example, a model trained on complete
+#' data (\code{task = "train"}) retains its method so that it can later be
+#' applied to new data that do have missing values (\code{task = "fill"}).
+#'
+#' Under the default \code{task = "impute"}, variables with nothing to impute
+#' according to the \code{where} matrix receive an empty string \code{""},
+#' preserving the behaviour of earlier versions. Under \code{"train"} and
+#' \code{"fill"} tasks the method is kept regardless of missingness in the
+#' current data.
+#'
+#' To find out which variables have missing values in the current data, use
+#' \code{mids$nmis} after running \code{mice()}, or
+#' \code{colSums(is.na(data))} beforehand.
 #' @inheritParams mice
 #' @return Vector of \code{length(blocks)} element with method names
 #' @seealso \code{\link{mice}}
