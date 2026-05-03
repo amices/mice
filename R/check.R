@@ -33,6 +33,19 @@ check.dataform <- function(data) {
       paste(colnames(data)[dup], collapse = ", ")
     )
   }
+
+  posix <- sapply(data, function(x) inherits(x, c("POSIXct", "POSIXlt")))
+  if (any(posix)) {
+    warning(
+      "Data contain POSIX date-time columns: ",
+      paste(colnames(data)[posix], collapse = ", "),
+      ".\nPOSIX variables are stored as seconds since 1970 (large numbers ~1e9-1e10) ",
+      "and can cause near-singular matrices in norm-based imputation methods. ",
+      "Consider converting to numeric, Date, or a standardised numeric variable before imputing.",
+      call. = FALSE
+    )
+  }
+
   data
 }
 
