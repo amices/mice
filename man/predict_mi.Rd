@@ -107,7 +107,7 @@ predmat <- mice::make.predictorMatrix(dat)
 predmat[,"set"] <- 0
 
 # Impute missing values based on the train set
-imp <- mice(dat, m = 5, maxit = 5 , seed = 1, predictorMatrix = predmat, 
+imp <- mice(dat, m = 5, maxit = 5 , seed = 1, predictorMatrix = predmat,
   ignore = ifelse(dat$set == "test", TRUE, FALSE), print = FALSE)
 impdats <- complete(imp, "all")
 
@@ -119,7 +119,7 @@ testdats <- lapply(impdats, function(dat) subset(dat, set == "test", select = -c
 fits <- lapply(traindats, function(dat) lm(age ~ bmi + hyp + chl, data = dat))
 
 # pool the predictions with function
-pool_preds <- mice::predict_mi(object = fits, newdata = testdats, 
+pool_preds <- mice::predict_mi(object = fits, newdata = testdats,
   pool = TRUE, interval = "prediction", level = 0.95)
 }
 \seealso{
