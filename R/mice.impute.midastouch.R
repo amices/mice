@@ -104,6 +104,7 @@ mice.impute.midastouch <- function(
   x <- data.matrix(x)
   storage.mode(x) <- "numeric"
   X <- cbind(1, x)
+  y.original <- y
   y <- as.numeric(y)
 
   # get data dimensions
@@ -228,6 +229,6 @@ mice.impute.midastouch <- function(
 
   # return result
   index <- apply(probs, 2, sample, x = nobs, size = 1, replace = FALSE)
-  yimp <- y[obsind][index]
+  yimp <- y.original[obsind][index]
   yimp
 }
