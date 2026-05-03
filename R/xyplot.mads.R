@@ -31,13 +31,21 @@
 #' @author Rianne Schouten, 2016
 #' @seealso \code{\link{ampute}}, \code{\link{mads}}
 #' @export
-xyplot.mads <- function(x, data, which.pat = NULL,
-                        standardized = TRUE, layout = NULL,
-                        colors = mdc(1:2), ...) {
+xyplot.mads <- function(
+  x,
+  data,
+  which.pat = NULL,
+  standardized = TRUE,
+  layout = NULL,
+  colors = mdc(1:2),
+  ...
+) {
   if (!is.mads(x)) {
     stop("Object is not of class mads")
   }
-  if (missing(data)) data <- NULL
+  if (missing(data)) {
+    data <- NULL
+  }
   yvar <- data
   if (is.null(yvar)) {
     varlist <- colnames(x$amp)
@@ -94,7 +102,8 @@ xyplot.mads <- function(x, data, which.pat = NULL,
     strip.background = list(col = "grey95")
   )
   key <- list(
-    columns = 2, points = list(col = colors, pch = 1),
+    columns = 2,
+    points = list(col = colors, pch = 1),
     text = list(c("Non-Amputed Data", "Amputed Data"))
   )
 
@@ -105,9 +114,14 @@ xyplot.mads <- function(x, data, which.pat = NULL,
   for (i in seq_len(pat)) {
     p[[paste("Scatterplot Pattern", which.pat[i])]] <-
       lattice::xyplot(
-        x = formula, data = data[data$.pat == which.pat[i], ],
-        groups = data$.amp, par.settings = theme,
-        multiple = TRUE, outer = TRUE, layout = layout, key = key,
+        x = formula,
+        data = data[data$.pat == which.pat[i], ],
+        groups = data$.amp,
+        par.settings = theme,
+        multiple = TRUE,
+        outer = TRUE,
+        layout = layout,
+        key = key,
         ylab = "Weighted sum scores",
         xlab = paste(xlab, which.pat[i])
       )

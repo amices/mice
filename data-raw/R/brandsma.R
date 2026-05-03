@@ -54,7 +54,8 @@ mlbook2$denomina <- makemis(mlbook2$denomina) # leave as missing
 # How many missings are there now in mlbook2?
 apply(mlbook2, 2, count.na)
 
-schools <- transmute(mlbook2,
+schools <- transmute(
+  mlbook2,
   sch = as.integer(schoolnr),
   pup = as.integer(pupilNR_new),
   iqv = as.vector(scale(IQ_verb, scale = FALSE)),

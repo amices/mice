@@ -54,9 +54,13 @@
 #' # limit to three best variables
 #' larspred(boys, s = 3)
 #' @export
-larspred <- function(data, type = "lar",
-                     s = ncol(data) - 1, max.steps = ncol(data) - 1, ...) {
-
+larspred <- function(
+  data,
+  type = "lar",
+  s = ncol(data) - 1,
+  max.steps = ncol(data) - 1,
+  ...
+) {
   # use the lars package for variable selection
   install.on.demand("lars", ...)
   data <- check.dataform(data)
@@ -64,8 +68,12 @@ larspred <- function(data, type = "lar",
   # initialize predictor matrix
   nvar <- ncol(data)
   ynames <- colnames(data)
-  predictorMatrix <- matrix(0, nrow = nvar, ncol = nvar,
-                            dimnames = list(ynames, ynames))
+  predictorMatrix <- matrix(
+    0,
+    nrow = nvar,
+    ncol = nvar,
+    dimnames = list(ynames, ynames)
+  )
 
   # fill missings with random draws from observed data
   init <- mice(data, maxit = 0L, m = 1L, remove.collinear = FALSE, ...)
@@ -84,8 +92,7 @@ larspred <- function(data, type = "lar",
       lars_ry <- lars::lars(x = x, y = ry, type = type, ...)
       coef_y <- coef(lars_y, s = min(max.steps, s), ...)
       coef_ry <- coef(lars_ry, s = min(max.steps, s), ...)
-      preds <- union(colnames(x)[coef_y != 0],
-                     colnames(x)[coef_ry != 0])
+      preds <- union(colnames(x)[coef_y != 0], colnames(x)[coef_ry != 0])
       if (length(preds)) predictorMatrix[yname, preds] <- 1
     }
   }

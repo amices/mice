@@ -87,12 +87,15 @@ rbind.mids <- function(x, y = NULL, ...) {
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents)
+    loggedEvents = loggedEvents
+  )
   return(midsobj)
 }
 
 rbind.mids.mids <- function(x, y, call) {
-  if (!is.mids(y)) stop("argument `y` not a mids object")
+  if (!is.mids(y)) {
+    stop("argument `y` not a mids object")
+  }
 
   if (ncol(y$data) != ncol(x$data)) {
     stop("datasets have different number of columns")
@@ -157,7 +160,8 @@ rbind.mids.mids <- function(x, y, call) {
   iteration <- x$iteration
 
   if (x$iteration != y$iteration) {
-    warning("iterations differ, so no convergence diagnostics calculated",
+    warning(
+      "iterations differ, so no convergence diagnostics calculated",
       call. = FALSE
     )
     chainMean <- NULL
@@ -193,6 +197,7 @@ rbind.mids.mids <- function(x, y, call) {
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents)
+    loggedEvents = loggedEvents
+  )
   return(midsobj)
 }

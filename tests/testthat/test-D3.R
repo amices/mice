@@ -13,13 +13,18 @@ fit0 <- lapply(1:5, function(m) {
 })
 # outcomment to evade dependency of lmtest
 # x1 <- lmtest::lrtest(fit1[[1]], fit0[[1]])
-x1 <- structure(list(`#Df` = c(3, 2),
-                     LogLik = c(-137.087912980007, -137.516434459951),
-                     Df = c(NA, -1), Chisq = c(NA, 0.857042959888474),
-                     `Pr(>Chisq)` = c(NA, 0.354567523408569)),
-                class = c("anova",  "data.frame"),
-                row.names = c("1", "2"),
-                heading = c("Likelihood ratio test\n",  "Model 1: B ~ A\nModel 2: B ~ 1"))
+x1 <- structure(
+  list(
+    `#Df` = c(3, 2),
+    LogLik = c(-137.087912980007, -137.516434459951),
+    Df = c(NA, -1),
+    Chisq = c(NA, 0.857042959888474),
+    `Pr(>Chisq)` = c(NA, 0.354567523408569)
+  ),
+  class = c("anova", "data.frame"),
+  row.names = c("1", "2"),
+  heading = c("Likelihood ratio test\n", "Model 1: B ~ A\nModel 2: B ~ 1")
+)
 x2 <- D3(fit1 = fit1, fit0 = fit0)
 x3 <- mitml::testModels(fit1, fit0, method = "D3")
 
@@ -46,14 +51,17 @@ empty <- with(data = imp, expr = lm(hyp ~ 0))
 # stat1 <- pool.compare(fit1, fit0, method = "likelihood")
 
 z1 <- D3(fit1, fit0)
-z2 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), method = "D3")
+z2 <- mitml::testModels(
+  as.mitml.result(fit1),
+  as.mitml.result(fit0),
+  method = "D3"
+)
 
 # This test fails
 # FIXME
 # test_that("lm: mice and mitml calculate same F", {
 # expect_equal(z1$result[1], z2$test[1])
 # })
-
 
 # using lmer
 suppressPackageStartupMessages(library(mitml, quietly = TRUE))
@@ -62,8 +70,12 @@ library(lme4, quietly = TRUE)
 data(studentratings)
 fml <- ReadDis + SES ~ ReadAchiev + (1 | ID)
 set.seed(26262)
-imp <- mitml::panImpute(studentratings,
-  formula = fml, n.burn = 1000, n.iter = 100, m = 5,
+imp <- mitml::panImpute(
+  studentratings,
+  formula = fml,
+  n.burn = 1000,
+  n.iter = 100,
+  m = 5,
   silent = TRUE
 )
 implist <- mitml::mitmlComplete(imp, print = 1:5)
@@ -80,7 +92,6 @@ fit1 <- with(implist, lmer(ReadAchiev ~ ReadDis + SES + (1 | ID), REML = FALSE))
 # test_that("lmer: mice and mitml calculate same F", {
 # expect_equal(z3$result[1], z4$test[1])
 # })
-
 
 # glm
 # imp <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
@@ -106,7 +117,6 @@ fit1 <- with(implist, lmer(ReadAchiev ~ ReadDis + SES + (1 | ID), REML = FALSE))
 #   expect_equal(z5$result[1], z6$test[1])
 # })
 
-
 # data with factors
 imp <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
 fit1 <- with(data = imp, expr = lm(bmi ~ age + chl + hyp))
@@ -114,11 +124,14 @@ fit0 <- with(data = imp, expr = lm(bmi ~ age))
 empty <- with(data = imp, expr = lm(bmi ~ 0))
 
 z7 <- D3(fit1, fit0)
-z8 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), method = "D3")
+z8 <- mitml::testModels(
+  as.mitml.result(fit1),
+  as.mitml.result(fit0),
+  method = "D3"
+)
 
 # This test fails.
 # FIXME
 # test_that("factors: mice and mitml calculate same F", {
 #  expect_equal(z7$result[1], z8$test[1])
 # })
-

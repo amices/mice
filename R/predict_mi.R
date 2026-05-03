@@ -2,8 +2,8 @@
 #'
 #' @param object A prediction model, either a single lm object or a list of lm
 #' objects obtained from multiply imputed data (object can also be of class mira).
-#' @param newdata An optional data frame in which to look for variables 
-#' with which to predict. Can be a data.frame, list, or mids object. 
+#' @param newdata An optional data frame in which to look for variables
+#' with which to predict. Can be a data.frame, list, or mids object.
 #' If omitted, the fitted values are used.
 #' @param pool Logical indicating whether to pool the predictions (and potentially
 #' obtain pooled prediction intervals).
@@ -39,12 +39,12 @@
 #' # Make prediction matrix and ensure that set is not used as a predictor
 #' predmat <- mice::make.predictorMatrix(dat)
 #' predmat[,"set"] <- 0
-#' 
+#'
 #' # Impute missing values based on the train set
-#' imp <- mice(dat, m = 5, maxit = 5 , seed = 1, predictorMatrix = predmat, 
+#' imp <- mice(dat, m = 5, maxit = 5 , seed = 1, predictorMatrix = predmat,
 #'   ignore = ifelse(dat$set == "test", TRUE, FALSE), print = FALSE)
 #' impdats <- complete(imp, "all")
-#' 
+#'
 #' # extract the training and test data sets
 #' traindats <- lapply(impdats, function(dat) subset(dat, set == "train", select = -set))
 #' testdats <- lapply(impdats, function(dat) subset(dat, set == "test", select = -c(set)))
@@ -53,37 +53,44 @@
 #' fits <- lapply(traindats, function(dat) lm(age ~ bmi + hyp + chl, data = dat))
 #'
 #' # pool the predictions with function
-#' pool_preds <- mice::predict_mi(object = fits, newdata = testdats, 
+#' pool_preds <- mice::predict_mi(object = fits, newdata = testdats,
 #'   pool = TRUE, interval = "prediction", level = 0.95)
 #' @export
-predict_mi <- function(object,
-                       newdata,
-                       pool = TRUE,
-                       se.fit = FALSE,
-                       interval = c("none", "confidence", "prediction"),
-                       level = 0.95,
-                       ...) {
+predict_mi <- function(
+  object,
+  newdata,
+  pool = TRUE,
+  se.fit = FALSE,
+  interval = c("none", "confidence", "prediction"),
+  level = 0.95,
+  ...
+) {
   UseMethod("predict_mi")
 }
 
 #' @export
-predict_mi.mira <- function(object,
-                            newdata,
-                            pool = TRUE,
-                            se.fit = FALSE,
-                            interval = c("none", "confidence", "prediction"),
-                            level = 0.95,
-                            ...) {
+predict_mi.mira <- function(
+  object,
+  newdata,
+  pool = TRUE,
+  se.fit = FALSE,
+  interval = c("none", "confidence", "prediction"),
+  level = 0.95,
+  ...
+) {
   cl <- match.call()
   args <- list(...)
-  interval <- match.arg(interval, choices = c("none", "confidence", "prediction"))
+  interval <- match.arg(
+    interval,
+    choices = c("none", "confidence", "prediction")
+  )
   if (missing(newdata)) {
     newdata <- NULL
   }
   if (!inherits(object$analyses[[1]], "lm")) {
     stop("`predict_mi()` currently only works with the linear model.")
   }
-  
+
   if (!inherits(newdata, c("list", "mids"))) {
     fit <- lapply(
       object$analyses,
@@ -114,10 +121,12 @@ predict_mi.mira <- function(object,
     )
   }
   if (pool) {
-    preds <- pool_predictions(fit,
-                              interval = interval,
-                              level = level,
-                              args = args)
+    preds <- pool_predictions(
+      fit,
+      interval = interval,
+      level = level,
+      args = args
+    )
     if (!se.fit) {
       preds <- remove_sefit(preds)
     }
@@ -135,21 +144,23 @@ predict_mi.mira <- function(object,
 }
 
 #' @export
-predict_mi.list <- function(object,
-                            newdata,
-                            pool = TRUE,
-                            se.fit = FALSE,
-                            interval = c("none", "confidence", "prediction"),
-                            level = 0.95,
-                            ...) {
+predict_mi.list <- function(
+  object,
+  newdata,
+  pool = TRUE,
+  se.fit = FALSE,
+  interval = c("none", "confidence", "prediction"),
+  level = 0.95,
+  ...
+) {
   cl <- match.call()
   args <- list(...)
   if (missing(newdata)) {
     newdata <- NULL
   }
-  
+
   object <- as.mira(object)
-  
+
   predict_mi.mira(
     object,
     newdata = newdata,
@@ -162,21 +173,25 @@ predict_mi.list <- function(object,
 }
 
 #' @export
-predict_mi.lm <- function(object,
-                          newdata,
-                          pool = TRUE,
-                          se.fit = FALSE,
-                          interval = c("none", "confidence", "prediction"),
-                          level = 0.95,
-                          ...) {
+predict_mi.lm <- function(
+  object,
+  newdata,
+  pool = TRUE,
+  se.fit = FALSE,
+  interval = c("none", "confidence", "prediction"),
+  level = 0.95,
+  ...
+) {
   cl <- match.call()
   args <- list(...)
-  interval <- match.arg(interval, choices = c("none", "confidence", "prediction"))
+  interval <- match.arg(
+    interval,
+    choices = c("none", "confidence", "prediction")
+  )
   if (missing(newdata)) {
     newdata <- NULL
   }
-  
-  
+
   if (!inherits(newdata, c("list", "mids"))) {
     warning(
       "The model `object` nor the `newdata` are the result of multiple\nimputation. Returning regular predictions instead."
@@ -196,10 +211,12 @@ predict_mi.lm <- function(object,
       ...
     )
     if (pool) {
-      preds <- pool_predictions(fit,
-                                interval = interval,
-                                level = level,
-                                args = args)
+      preds <- pool_predictions(
+        fit,
+        interval = interval,
+        level = level,
+        args = args
+      )
       if (!se.fit) {
         # TODO: maybe only calculate se.fit if necessary (se.fit = TRUE / interval \in confidence or prediction)
         preds <- remove_sefit(preds)
@@ -221,18 +238,19 @@ predict_mi.lm <- function(object,
 pool_predictions <- function(predlist, interval, level, args) {
   m <- length(predlist)
   argsnames <- names(args)
-  
+
   type <- return_type(args)
-  
+
   pooled <- predlist[[1]]
-  
+
   n <- nrow(as.matrix(pooled$fit))
-  nterms <- if (type == "terms")
+  nterms <- if (type == "terms") {
     ncol(pooled$fit)
-  else
+  } else {
     1
+  }
   df <- pooled$df
-  
+
   params <- sapply(
     # stack predictions in array: 1st dim observations
     predlist,
@@ -247,10 +265,11 @@ pool_predictions <- function(predlist, interval, level, args) {
     },
     simplify = "array"
   )
-  
-  ubar_pred <- mean(sapply(predlist, function(x)
-    x$residual.scale^2))
-  
+
+  ubar_pred <- mean(sapply(predlist, function(x) {
+    x$residual.scale^2
+  }))
+
   pooled_preds <- apply(
     params,
     c(1, 2),
@@ -273,23 +292,25 @@ pool_predictions <- function(predlist, interval, level, args) {
       )
     }
   )
-  
+
   if (!is.matrix(pooled$fit)) {
     pooled$fit <- pooled_preds[1, , ]
   } else {
     pooled$fit[, seq_len(nterms)] <- pooled_preds[1, , ]
   }
-  
+
   if (type == "terms") {
-    attr(pooled$fit, "constant") <- mean(sapply(predlist, function(x)
-      attr(x$fit, "constant")))
+    attr(pooled$fit, "constant") <- mean(sapply(predlist, function(x) {
+      attr(x$fit, "constant")
+    }))
   }
-  
+
   pooled$se.fit <- sqrt(pooled_preds[2, , ])
   pooled$df <- pooled_preds[3, , ]
-  pooled$residual.scale <- mean(sapply(predlist, function(x)
-    x$residual.scale))
-  
+  pooled$residual.scale <- mean(sapply(predlist, function(x) {
+    x$residual.scale
+  }))
+
   if (interval == "confidence") {
     tscale <- pooled_preds[2, , ]
     df_pred <- pooled_preds[3, , ]
@@ -297,11 +318,11 @@ pool_predictions <- function(predlist, interval, level, args) {
     tscale <- pooled_preds[4, , ]
     df_pred <- pooled_preds[5, , ]
   }
-  
+
   if (interval %in% c("confidence", "prediction")) {
     lwr <- pooled_preds[1, , ] - sqrt(tscale) * qt(1 - (1 - level) / 2, df_pred)
     upr <- pooled_preds[1, , ] + sqrt(tscale) * qt(1 - (1 - level) / 2, df_pred)
-    
+
     if (type == "terms") {
       pooled$lwr <- lwr
       pooled$upr <- upr

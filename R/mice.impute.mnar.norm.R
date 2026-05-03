@@ -145,18 +145,30 @@
 #' # from old version at https://github.com/moreno-betancur/NARFCS
 #' pool(with(impNARFCS, lm(Y ~ X + Z)))$pooled$estimate
 #' @export
-mice.impute.mnar.norm <- function(y, ry, x, wy = NULL,
-                                  ums = NULL, umx = NULL, ...) {
+mice.impute.mnar.norm <- function(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  ums = NULL,
+  umx = NULL,
+  ...
+) {
   ## Undentifiable part:
   u <- parse.ums(x, ums = ums, umx = umx, ...)
 
   ## Identifiable part: exactly the same as mice.impute.norm
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
   x <- cbind(1, as.matrix(x))
   parm <- .norm.draw(y, ry, x, ...)
 
   ## Draw imputations
-  return(x[wy, , drop = FALSE] %*% parm$beta +
-    u$x[wy, , drop = FALSE] %*% u$delta +
-    rnorm(sum(wy)) * parm$sigma)
+  return(
+    x[wy, , drop = FALSE] %*%
+      parm$beta +
+      u$x[wy, , drop = FALSE] %*% u$delta +
+      rnorm(sum(wy)) * parm$sigma
+  )
 }

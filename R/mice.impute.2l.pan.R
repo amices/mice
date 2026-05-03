@@ -5,7 +5,6 @@
 #  3 ... introduce aggregated effects (i.e. group means)
 #  4 ... fixed, random and aggregated effects
 
-
 #' Imputation by a two-level normal model using \code{pan}
 #'
 #' Imputes univariate missing data using a two-level normal model with
@@ -114,8 +113,16 @@
 #' # random x effects and group mean of x
 #' # predM1["y","x"] <- 4
 #' @export
-mice.impute.2l.pan <- function(y, ry, x, type, intercept = TRUE, paniter = 500,
-                               groupcenter.slope = FALSE, ...) {
+mice.impute.2l.pan <- function(
+  y,
+  ry,
+  x,
+  type,
+  intercept = TRUE,
+  paniter = 500,
+  groupcenter.slope = FALSE,
+  ...
+) {
   install.on.demand("pan", ...)
 
   ## append intercept
@@ -130,8 +137,12 @@ mice.impute.2l.pan <- function(y, ry, x, type, intercept = TRUE, paniter = 500,
     colnames(x0) <- c(colnames(x)[type == -2], colnames(x)[type %in% c(3, 4)])
     type0 <- c(-2, rep.int(1, ncol(x0) - 1))
     x0.aggr <- as.matrix(.mice.impute.2l.groupmean(
-      y = y, ry = ry, x = x0,
-      type = type0, grmeanwarning = FALSE, ...
+      y = y,
+      ry = ry,
+      x = x0,
+      type = type0,
+      grmeanwarning = FALSE,
+      ...
     ))
     colnames(x0.aggr) <- paste0("M.", colnames(x0)[-1])
     # groupcentering
@@ -159,7 +170,8 @@ mice.impute.2l.pan <- function(y, ry, x, type, intercept = TRUE, paniter = 500,
   sortgroups <- any(diff(subj) < 0)
   if (sortgroups) {
     dfr <- data.frame(
-      "group" = group, "ry" = ry,
+      "group" = group,
+      "ry" = ry,
       "index" = seq(1, length(ry))
     )
     dfr <- dfr[order(dfr$group), ]
@@ -180,17 +192,30 @@ mice.impute.2l.pan <- function(y, ry, x, type, intercept = TRUE, paniter = 500,
   zcol <- which(type1 == 2)
   # noninformative priors
   prior <- list(
-    a = ncol(y1), Binv = diag(rep(1, ncol(y1))),
-    c = ncol(y1) * length(zcol), Dinv = diag(rep(1, ncol(y1) * length(zcol)))
+    a = ncol(y1),
+    Binv = diag(rep(1, ncol(y1))),
+    c = ncol(y1) * length(zcol),
+    Dinv = diag(rep(1, ncol(y1) * length(zcol)))
   )
 
-  if (length(subj) != nrow(y1)) stop("No class variable")
+  if (length(subj) != nrow(y1)) {
+    stop("No class variable")
+  }
 
   # pan imputation
   ii <- 0
   while (ii == 0) {
     s1 <- round(runif(1, 1, 10^7))
-    imput <- pan::pan(y1, subj, pred, xcol, zcol, prior, seed = s1, iter = paniter)
+    imput <- pan::pan(
+      y1,
+      subj,
+      pred,
+      xcol,
+      zcol,
+      prior,
+      seed = s1,
+      iter = paniter
+    )
     res <- imput$y
     ii <- 1 - any(is.na(res))
     # check for invalid imputations: pan occasionally produces NaNs
@@ -208,12 +233,30 @@ mice.impute.2l.pan <- function(y, ry, x, type, intercept = TRUE, paniter = 500,
 
 
 # compute cluster groupmean
-.mice.impute.2l.groupmean <- function(y, ry, x, type, grmeanwarning = TRUE, ...) {
-  if ((ncol(x) > 2) & grmeanwarning) warning("\nMore than one variable is requested to be aggregated.\n")
+.mice.impute.2l.groupmean <- function(
+  y,
+  ry,
+  x,
+  type,
+  grmeanwarning = TRUE,
+  ...
+) {
+  if ((ncol(x) > 2) & grmeanwarning) {
+    warning("\nMore than one variable is requested to be aggregated.\n")
+  }
   # calculate aggregated values
-  a1 <- aggregate(x[, type %in% c(1, 2)], list(x[, type == -2]), mean, na.rm = TRUE)
+  a1 <- aggregate(
+    x[, type %in% c(1, 2)],
+    list(x[, type == -2]),
+    mean,
+    na.rm = TRUE
+  )
   i1 <- match(x[, type == -2], a1[, 1])
   ximp <- as.matrix(a1[i1, -1])
-  colnames(ximp) <- paste(names(type)[type %in% c(1, 2)], names(type)[type == -2], sep = ".")
+  colnames(ximp) <- paste(
+    names(type)[type %in% c(1, 2)],
+    names(type)[type == -2],
+    sep = "."
+  )
   return(ximp)
 }

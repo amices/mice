@@ -26,36 +26,68 @@
 #' @seealso \code{\link[=mids-class]{mids}}, \code{\link{mids2spss}}
 #' @keywords manip
 #' @export
-mids2mplus <- function(imp, file.prefix = "imp", path = getwd(), sep = "\t", dec = ".", silent = FALSE) {
+mids2mplus <- function(
+  imp,
+  file.prefix = "imp",
+  path = getwd(),
+  sep = "\t",
+  dec = ".",
+  silent = FALSE
+) {
   m <- imp$m
   file.list <- matrix(0, m, 1)
   script <- matrix(0, 3, 1)
   for (i in seq_len(m)) {
-    write.table(complete(imp, i),
+    write.table(
+      complete(imp, i),
       file = file.path(path, paste0(file.prefix, i, ".dat")),
-      sep = sep, dec = dec, col.names = FALSE, row.names = FALSE
+      sep = sep,
+      dec = dec,
+      col.names = FALSE,
+      row.names = FALSE
     )
     file.list[i, ] <- paste0(file.prefix, i, ".dat")
   }
-  write.table(file.list,
+  write.table(
+    file.list,
     file = file.path(path, paste0(file.prefix, "list.dat")),
-    sep = sep, dec = dec, col.names = FALSE, row.names = FALSE, quote = FALSE
+    sep = sep,
+    dec = dec,
+    col.names = FALSE,
+    row.names = FALSE,
+    quote = FALSE
   )
   names <- paste(colnames(complete(imp, 1)), collapse = " ")
   script[1, ] <- paste0("DATA: FILE IS ", file.prefix, "list.dat;")
   script[2, ] <- "TYPE = IMPUTATION;"
   script[3, ] <- paste0("VARIABLE: NAMES ARE ", names, ";")
-  write.table(script,
+  write.table(
+    script,
     file = file.path(path, paste0(file.prefix, "list.inp")),
-    sep = sep, dec = dec, col.names = FALSE, row.names = FALSE, quote = FALSE
+    sep = sep,
+    dec = dec,
+    col.names = FALSE,
+    row.names = FALSE,
+    quote = FALSE
   )
 
   if (!silent) {
     cat(
-      "Data values written to", file.path(path, paste0(file.prefix, 1, ".dat")),
-      "through", paste0(file.prefix, m, ".dat"), "\n"
+      "Data values written to",
+      file.path(path, paste0(file.prefix, 1, ".dat")),
+      "through",
+      paste0(file.prefix, m, ".dat"),
+      "\n"
     )
-    cat("Data  names written to", file.path(path, paste0(file.prefix, "list.dat")), "\n")
-    cat("Mplus  code written to", file.path(path, paste0(file.prefix, "list.inp")), "\n")
+    cat(
+      "Data  names written to",
+      file.path(path, paste0(file.prefix, "list.dat")),
+      "\n"
+    )
+    cat(
+      "Mplus  code written to",
+      file.path(path, paste0(file.prefix, "list.inp")),
+      "\n"
+    )
   }
 }

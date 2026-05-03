@@ -51,7 +51,9 @@ pool.r.squared <- function(object, adjusted = FALSE) {
       stop("At least two imputations are needed for pooling.\n")
     }
     if (class((object$analyses[[1]]))[1] != "lm") {
-      stop("r^2 can only be calculated for results of the 'lm' modeling function")
+      stop(
+        "r^2 can only be calculated for results of the 'lm' modeling function"
+      )
     }
     glanced <- summary(object, type = "glance")
   }
@@ -61,19 +63,29 @@ pool.r.squared <- function(object, adjusted = FALSE) {
       stop("At least two imputations are needed for pooling.\n")
     }
     if (!"r.squared" %in% colnames(object$glanced)) {
-      stop("r^2 can only be calculated for results of the 'lm' modeling function")
+      stop(
+        "r^2 can only be calculated for results of the 'lm' modeling function"
+      )
     }
     glanced <- object$glanced
   }
 
   # Set up array r2 to store R2 values, Fisher z-transformations of R2 values and its variance.
   m <- nrow(glanced)
-  r2 <- matrix(NA, nrow = m, ncol = 3, dimnames = list(seq_len(m), c("R^2", "Fisher trans F^2", "se()")))
+  r2 <- matrix(
+    NA,
+    nrow = m,
+    ncol = 3,
+    dimnames = list(seq_len(m), c("R^2", "Fisher trans F^2", "se()"))
+  )
 
   # Fill arrays
   for (i in seq_len(m)) {
-    r2[i, 1] <- if (!adjusted) sqrt(glanced$r.squared[i]) else
+    r2[i, 1] <- if (!adjusted) {
+      sqrt(glanced$r.squared[i])
+    } else {
       sign(glanced$adj.r.squared[i]) * sqrt(abs(glanced$adj.r.squared[i]))
+    }
     r2[i, 2] <- 0.5 * log((r2[i, 1] + 1) / (1 - r2[i, 1]))
     r2[i, 3] <- 1 / (glanced$nobs[i] - 3)
   }
@@ -83,9 +95,7 @@ pool.r.squared <- function(object, adjusted = FALSE) {
 
   # Make table with results.
   qbar <- fit$qbar
-  table <- array(((exp(2 * qbar) - 1) / (1 + exp(2 * qbar)))^2,
-    dim = c(1, 4)
-  )
+  table <- array(((exp(2 * qbar) - 1) / (1 + exp(2 * qbar)))^2, dim = c(1, 4))
 
   dimnames(table) <- if (!adjusted) {
     list("R^2", c("est", "lo 95", "hi 95", "fmi"))
@@ -93,8 +103,10 @@ pool.r.squared <- function(object, adjusted = FALSE) {
     list("adj R^2", c("est", "lo 95", "hi 95", "fmi"))
   }
 
-  table[, 2] <- ((exp(2 * (qbar - 1.96 * sqrt(fit$t))) - 1) / (1 + exp(2 * (qbar - 1.96 * sqrt(fit$t)))))^2
-  table[, 3] <- ((exp(2 * (qbar + 1.96 * sqrt(fit$t))) - 1) / (1 + exp(2 * (qbar + 1.96 * sqrt(fit$t)))))^2
+  table[, 2] <- ((exp(2 * (qbar - 1.96 * sqrt(fit$t))) - 1) /
+    (1 + exp(2 * (qbar - 1.96 * sqrt(fit$t)))))^2
+  table[, 3] <- ((exp(2 * (qbar + 1.96 * sqrt(fit$t))) - 1) /
+    (1 + exp(2 * (qbar + 1.96 * sqrt(fit$t)))))^2
   table[, 4] <- fit$f
   table
 }

@@ -60,12 +60,18 @@ scan.newdata <- function(data, models, print = FALSE) {
     in_data <- isTRUE(report$in_data[i])
     in_model <- isTRUE(report$in_model[i])
 
-    x <- if (isTRUE(in_data) && j %in% names(orig.data)) orig.data[[j]] else NULL
+    x <- if (isTRUE(in_data) && j %in% names(orig.data)) {
+      orig.data[[j]]
+    } else {
+      NULL
+    }
     mod <- if (in_model) models[[j]][[1]] else NULL
 
     report$data_class[i] <- if (!is.null(x)) {
       if (inherits(x, "ordered")) "ordered" else class(x)[1]
-    } else NA
+    } else {
+      NA
+    }
 
     if (!is.null(mod$class)) {
       report$model_class[i] <- mod$class
@@ -79,7 +85,11 @@ scan.newdata <- function(data, models, print = FALSE) {
     if (!is.null(x) && is.factor(x) && !is.null(mod$factor$labels)) {
       lvls.data <- levels(x)
       lvls.model <- mod$factor$labels
-      report$levels_match[i] <- if (identical(lvls.data, lvls.model)) TRUE else FALSE
+      report$levels_match[i] <- if (identical(lvls.data, lvls.model)) {
+        TRUE
+      } else {
+        FALSE
+      }
       # report$levels_new_missing[i] <- if (any(!lvls.model %in% lvls.data)) "Y" else "N"
       # report$levels_extra[i] <- if (any(!lvls.data %in% lvls.model)) "Y" else "N"
     } else {
@@ -96,18 +106,26 @@ scan.newdata <- function(data, models, print = FALSE) {
   }
 
   # Add can_fill column
-  report$can_fill <- vapply(seq_len(nrow(report)), function(i) {
-    if (isTRUE(report$in_model[i]) &&
-        report$class_match[i] &&
-        !isFALSE(report$levels_match[i]) &&
-        report$pred_match[i]) {
-      TRUE
-    } else {
-      FALSE
-    }
-  }, NA)
+  report$can_fill <- vapply(
+    seq_len(nrow(report)),
+    function(i) {
+      if (
+        isTRUE(report$in_model[i]) &&
+          report$class_match[i] &&
+          !isFALSE(report$levels_match[i]) &&
+          report$pred_match[i]
+      ) {
+        TRUE
+      } else {
+        FALSE
+      }
+    },
+    NA
+  )
 
-  if (print) print(report)
+  if (print) {
+    print(report)
+  }
   report
 }
 

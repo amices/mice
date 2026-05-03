@@ -58,15 +58,25 @@
 #' @keywords datagen
 #' @export
 mice.impute.polyreg <- function(
-    y, ry, x, wy = NULL,
-    task = "impute", model = NULL,
-    nnet.maxit = NULL, nnet.MaxNWts = NULL,
-    maxit = NULL, MaxNWts = NULL, reltol = NULL,
-    warmstart = FALSE, ...) {
-
+  y,
+  ry,
+  x,
+  wy = NULL,
+  task = "impute",
+  model = NULL,
+  nnet.maxit = NULL,
+  nnet.MaxNWts = NULL,
+  maxit = NULL,
+  MaxNWts = NULL,
+  reltol = NULL,
+  warmstart = FALSE,
+  ...
+) {
   check.model.exists(model, task)
   method <- "polyreg"
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
 
   # Augment data
   aug <- augment(y, ry, x, wy)
@@ -84,8 +94,8 @@ mice.impute.polyreg <- function(
       x = x,
       beta = model$beta.dot,
       levels = model$factor$labels,
-      class = model$class[1L])
-    )
+      class = model$class[1L]
+    ))
   }
 
   # Escape perfect prediction
@@ -95,8 +105,12 @@ mice.impute.polyreg <- function(
   }
 
   # Set hyperparameters
-  if (!missing(nnet.maxit)) maxit <- nnet.maxit
-  if (!missing(nnet.MaxNWts)) MaxNWts <- nnet.MaxNWts
+  if (!missing(nnet.maxit)) {
+    maxit <- nnet.maxit
+  }
+  if (!missing(nnet.MaxNWts)) {
+    MaxNWts <- nnet.MaxNWts
+  }
   MaxNWts_needed <- 100L + as.integer(ncol(x) * (length(levels(y)) - 1))
   dots <- list(...)
   dots$maxit <- ifelse(is.null(maxit), 100L, maxit)
@@ -109,13 +123,19 @@ mice.impute.polyreg <- function(
   # Fit multinomial model
   y <- droplevels(y)
   xy <- cbind.data.frame(y, x)
-  fit <- do.call(nnet::multinom, c(
-    list(formula(xy),
-         data = xy[ry, , drop = FALSE],
-         weights = w[ry],
-         model = FALSE, trace = FALSE),
-    dots
-  ))
+  fit <- do.call(
+    nnet::multinom,
+    c(
+      list(
+        formula(xy),
+        data = xy[ry, , drop = FALSE],
+        weights = w[ry],
+        model = FALSE,
+        trace = FALSE
+      ),
+      dots
+    )
+  )
 
   # Process beta coefficients
   x <- x[wy, , drop = FALSE]
@@ -144,7 +164,9 @@ mice.impute.polyreg <- function(
       convergence = fit$convergence
     )
     model$beta.dot <- beta
-    if (warmstart) model$wts <- fit$wts
+    if (warmstart) {
+      model$wts <- fit$wts
+    }
     model$factor <- list(labels = levels(y), quant = NULL)
     model$class <- if (is.ordered(y)) "ordered" else class(y)[1L]
     model$xnames <- colnames(x)
@@ -160,7 +182,9 @@ mice.impute.polyreg <- function(
 }
 
 polyreg.draw <- function(x, beta, levels, class = NULL) {
-  if (nrow(x) == 0L) return(character(0))
+  if (nrow(x) == 0L) {
+    return(character(0))
+  }
   lp <- x %*% beta
   p <- exp(lp) / rowSums(exp(lp) + 1)
   post <- cbind(1 - rowSums(p), p)

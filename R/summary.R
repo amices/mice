@@ -16,14 +16,17 @@
 #' @seealso \code{\link{mira}}
 #' @method summary mira
 #' @export
-summary.mira <- function(object,
-                         type = c("tidy", "glance", "summary"),
-                         dfcom = NULL,
-                         ...) {
+summary.mira <- function(
+  object,
+  type = c("tidy", "glance", "summary"),
+  dfcom = NULL,
+  ...
+) {
   type <- match.arg(type)
   fitlist <- getfit(object)
   if (type == "tidy") {
-    v <- lapply(fitlist, tidy, effects = "fixed", parametric = TRUE, ...) %>% bind_rows()
+    v <- lapply(fitlist, tidy, effects = "fixed", parametric = TRUE, ...) %>%
+      bind_rows()
   }
   if (type == "glance") {
     v <- lapply(fitlist, glance, ...) %>% bind_rows()
@@ -32,8 +35,9 @@ summary.mira <- function(object,
   # not supplied by broom <= 0.5.6
   model <- getfit(object, 1L)
   if (!"nobs" %in% colnames(v)) {
-    v$nobs <- tryCatch(length(stats::residuals(model)),
-      error = function(e) {NULL})
+    v$nobs <- tryCatch(length(stats::residuals(model)), error = function(e) {
+      NULL
+    })
   }
 
   # get df.residuals
@@ -65,10 +69,12 @@ summary.mice.anova <- function(object, ...) {
 
   # handle objects from D1, D2 and D3
   if (is.null(out)) {
-    out <- list(`1 ~~ 2` = list(
-      result = object$result,
-      dfcom = object$dfcom
-    ))
+    out <- list(
+      `1 ~~ 2` = list(
+        result = object$result,
+        dfcom = object$dfcom
+      )
+    )
   }
 
   test <- names(out)
@@ -93,8 +99,11 @@ summary.mice.anova <- function(object, ...) {
 
   structure(
     list(
-      models = ff, comparisons = rf,
-      m = object$m, method = object$method, use = object$use
+      models = ff,
+      comparisons = rf,
+      m = object$m,
+      method = object$method,
+      use = object$use
     ),
     class = c("mice.anova.summary", class(object))
   )

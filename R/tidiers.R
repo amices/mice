@@ -29,15 +29,20 @@ broom::glance
 #'      \item conf.high (if called with conf.int = TRUE)
 #' }
 tidy.mipo <- function(x, conf.int = FALSE, conf.level = .95, ...) {
-  out <- summary(x,
+  out <- summary(
+    x,
     type = "all",
     conf.int = conf.int,
     conf.level = conf.level,
     ...
   )
 
-  if ("term" %in% names(out)) out$term <- as.character(out$term)
-  if ("contrast" %in% names(out)) out$contrast <- as.character(out$contrast)
+  if ("term" %in% names(out)) {
+    out$term <- as.character(out$term)
+  }
+  if ("contrast" %in% names(out)) {
+    out$contrast <- as.character(out$contrast)
+  }
 
   # needed for broom <= 0.5.6
   # rename variables if present
@@ -48,8 +53,13 @@ tidy.mipo <- function(x, conf.int = FALSE, conf.level = .95, ...) {
 
   # order columns
   cols_a <- c(
-    "term", "estimate", "std.error", "statistic", "p.value",
-    "conf.low", "conf.high"
+    "term",
+    "estimate",
+    "std.error",
+    "statistic",
+    "p.value",
+    "conf.low",
+    "conf.high"
   )
   cols_a <- base::intersect(cols_a, colnames(out))
   cols_b <- sort(base::setdiff(colnames(out), cols_a))
@@ -71,15 +81,15 @@ tidy.mipo <- function(x, conf.int = FALSE, conf.level = .95, ...) {
 #' @family tidiers
 glance.mipo <- function(x, ...) {
   out <- data.frame(nimp = nrow(x$glanced))
-  out$nobs <- tryCatch(x$glanced$nobs[1],
-    error = function(e) NULL
-  )
+  out$nobs <- tryCatch(x$glanced$nobs[1], error = function(e) NULL)
 
   # R2 in lm models
-  out$r.squared <- tryCatch(pool.r.squared(x, adjusted = FALSE)[1],
+  out$r.squared <- tryCatch(
+    pool.r.squared(x, adjusted = FALSE)[1],
     error = function(e) NULL
   )
-  out$adj.r.squared <- tryCatch(pool.r.squared(x, adjusted = TRUE)[1],
+  out$adj.r.squared <- tryCatch(
+    pool.r.squared(x, adjusted = TRUE)[1],
     error = function(e) NULL
   )
 

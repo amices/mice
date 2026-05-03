@@ -34,13 +34,21 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
-mice.impute.norm <- function(y, ry, x, wy = NULL,
-                             task = "impute", model = NULL,
-                             ridge = 1e-05,
-                             ...) {
+mice.impute.norm <- function(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  task = "impute",
+  model = NULL,
+  ridge = 1e-05,
+  ...
+) {
   check.model.exists(model, task)
   method <- "norm"
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
   x <- cbind(1, as.matrix(x))
   if (task == "fill") {
     cols <- check.model.match(model, x, method)
@@ -52,10 +60,12 @@ mice.impute.norm <- function(y, ry, x, wy = NULL,
   parm <- .norm.draw(y, ry, x, ridge = ridge, ...)
 
   if (task == "train") {
-    model$setup <- list(method = method,
-                        n = sum(ry),
-                        task = task,
-                        ridge = ridge)
+    model$setup <- list(
+      method = method,
+      n = sum(ry),
+      task = task,
+      ridge = ridge
+    )
     model$beta.hat <- drop(parm$coef)
     model$beta.dot <- drop(parm$beta)
     model$sigma.hat <- parm$sigma.hat
@@ -210,10 +220,12 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...) {
 }
 
 get.printFlag <- function(start = 4) {
-  while (inherits(
-    try(get("printFlag", parent.frame(start)), silent = TRUE),
-    "try-error"
-  )) {
+  while (
+    inherits(
+      try(get("printFlag", parent.frame(start)), silent = TRUE),
+      "try-error"
+    )
+  ) {
     start <- start + 1
   }
   get("printFlag", parent.frame(start))

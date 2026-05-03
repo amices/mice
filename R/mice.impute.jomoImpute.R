@@ -61,13 +61,24 @@
 #' imp <- mice(nhanes, blocks = blocks, method = method, pred = pred, maxit = 1)
 #' }
 #' @export
-mice.impute.jomoImpute <- function(data, formula, type, m = 1, silent = TRUE,
-                                   format = "imputes", ...) {
+mice.impute.jomoImpute <- function(
+  data,
+  formula,
+  type,
+  m = 1,
+  silent = TRUE,
+  format = "imputes",
+  ...
+) {
   install.on.demand("mitml", ...)
 
   nat <- mitml::jomoImpute(
-    data = data, formula = formula, type = type,
-    m = m, silent = silent, ...
+    data = data,
+    formula = formula,
+    type = type,
+    m = m,
+    silent = silent,
+    ...
   )
 
   if (format == "native") {

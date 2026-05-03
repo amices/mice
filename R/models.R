@@ -16,7 +16,6 @@
 #'   }
 #' @keywords internal
 initialize.models.env <- function(models = NULL, tasks, method, blocks, m) {
-
   # Import models into environment from a model list object
   if (is.list(models)) {
     models <- import.models.env(models)
@@ -88,7 +87,9 @@ initialize.models.env <- function(models = NULL, tasks, method, blocks, m) {
 #' print(models_list)
 #' @keywords internal
 export.models.env <- function(env, m = NULL) {
-  if (!is.environment(env)) stop("Input must be an environment")
+  if (!is.environment(env)) {
+    stop("Input must be an environment")
+  }
 
   env_to_list <- function(env) {
     obj_list <- as.list(env, all.names = TRUE)
@@ -102,7 +103,7 @@ export.models.env <- function(env, m = NULL) {
 
   # Convert first-level environment into a list
   models_list <- env_to_list(env)
-  m <- ifelse(is.null(m),  max(sapply(models_list, length)), m)
+  m <- ifelse(is.null(m), max(sapply(models_list, length)), m)
 
   # Restructure each task's models into a vector of m lists
   for (varname in names(models_list)) {
@@ -165,18 +166,24 @@ export.models.env <- function(env, m = NULL) {
 #' print(models_env$a$`1`$model)  # Should be "Model A1"
 #' @keywords internal
 import.models.env <- function(models_list) {
-  if (!is.list(models_list)) stop("Input must be a list")
+  if (!is.list(models_list)) {
+    stop("Input must be a list")
+  }
 
   models_env <- new.env(parent = emptyenv())
 
   for (varname in names(models_list)) {
-    models_env[[varname]] <- new.env(parent = emptyenv())  # Create first-level environment
+    models_env[[varname]] <- new.env(parent = emptyenv()) # Create first-level environment
 
     for (i in seq_along(models_list[[varname]])) {
       iteration_data <- models_list[[varname]][[i]]
 
-      if (length(iteration_data) > 0) {  # Only create non-empty environments
-        models_env[[varname]][[as.character(i)]] <- list2env(iteration_data, parent = emptyenv())
+      if (length(iteration_data) > 0) {
+        # Only create non-empty environments
+        models_env[[varname]][[as.character(i)]] <- list2env(
+          iteration_data,
+          parent = emptyenv()
+        )
       }
     }
   }

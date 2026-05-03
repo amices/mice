@@ -125,8 +125,13 @@
 #' @export
 mice.impute.2lonly.norm <- function(y, ry, x, type, wy = NULL, ...) {
   imp <- .imputation.level2(
-    y = y, ry = ry, x = x, type = type, wy = wy,
-    method = "norm", ...
+    y = y,
+    ry = ry,
+    x = x,
+    type = type,
+    wy = wy,
+    method = "norm",
+    ...
   )
   imp
 }

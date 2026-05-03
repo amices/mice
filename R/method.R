@@ -26,11 +26,13 @@
 #' @examples
 #' make.method(nhanes2)
 #' @export
-make.method <- function(data,
-                        where = make.where(data),
-                        blocks = make.blocks(data),
-                        tasks = NULL,
-                        defaultMethod = c("pmm", "logreg", "polyreg", "polr")) {
+make.method <- function(
+  data,
+  where = make.where(data),
+  blocks = make.blocks(data),
+  tasks = NULL,
+  defaultMethod = c("pmm", "logreg", "polyreg", "polr")
+) {
   method <- rep("", length(blocks))
   names(method) <- names(blocks)
   for (j in names(blocks)) {
@@ -113,8 +115,10 @@ check.method <- function(method, data, where, blocks, tasks, defaultMethod) {
 
   # Check whether all names(method) are non-empty and match names(blocks)
   if (!all(names(method) %in% names(blocks))) {
-    stop("All elements of 'method' must be named and match blocks.",
-         call. = FALSE)
+    stop(
+      "All elements of 'method' must be named and match blocks.",
+      call. = FALSE
+    )
   }
 
   # check whether the requested imputation methods are on the search path
@@ -134,44 +138,70 @@ check.method <- function(method, data, where, blocks, tasks, defaultMethod) {
     y <- data[, vname, drop = FALSE]
     mj <- method[j]
     mlist <- list(
-      m1 = c("logreg", "logreg.boot", "polyreg", "lda", "polr",
-             "lasso.logreg"),
+      m1 = c("logreg", "logreg.boot", "polyreg", "lda", "polr", "lasso.logreg"),
       m2 = c(
-        "norm", "norm.nob", "norm.predict", "norm.boot",
-        "mean", "2l.norm", "2l.pan",
-        "2lonly.norm", "2lonly.pan",
-        "quadratic", "ri", "lasso.norm"
+        "norm",
+        "norm.nob",
+        "norm.predict",
+        "norm.boot",
+        "mean",
+        "2l.norm",
+        "2l.pan",
+        "2lonly.norm",
+        "2lonly.pan",
+        "quadratic",
+        "ri",
+        "lasso.norm"
       ),
       m3 = c(
-        "norm", "norm.nob", "norm.predict", "norm.boot",
-        "mean", "2l.norm", "2l.pan",
-        "2lonly.norm", "2lonly.pan",
-        "quadratic", "logreg", "logreg.boot",
-        "lasso.logreg", "ri", "lasso.norm"
+        "norm",
+        "norm.nob",
+        "norm.predict",
+        "norm.boot",
+        "mean",
+        "2l.norm",
+        "2l.pan",
+        "2lonly.norm",
+        "2lonly.pan",
+        "quadratic",
+        "logreg",
+        "logreg.boot",
+        "lasso.logreg",
+        "ri",
+        "lasso.norm"
       )
     )
     cond1 <- sapply(y, is.numeric)
     cond2 <- sapply(y, is.factor) & sapply(y, nlevels) == 2
     cond3 <- sapply(y, is.factor) & sapply(y, nlevels) > 2
     if (any(cond1) && mj %in% mlist$m1) {
-      warning("Type mismatch for variable(s): ",
-              paste(vname[cond1], collapse = ", "),
-              "\nImputation method ", mj, " is for categorical data.",
-              call. = FALSE
+      warning(
+        "Type mismatch for variable(s): ",
+        paste(vname[cond1], collapse = ", "),
+        "\nImputation method ",
+        mj,
+        " is for categorical data.",
+        call. = FALSE
       )
     }
     if (any(cond2) && mj %in% mlist$m2) {
-      warning("Type mismatch for variable(s): ",
-              paste(vname[cond2], collapse = ", "),
-              "\nImputation method ", mj, " is not for factors.",
-              call. = FALSE
+      warning(
+        "Type mismatch for variable(s): ",
+        paste(vname[cond2], collapse = ", "),
+        "\nImputation method ",
+        mj,
+        " is not for factors.",
+        call. = FALSE
       )
     }
     if (any(cond3) && mj %in% mlist$m3) {
-      warning("Type mismatch for variable(s): ",
-              paste(vname[cond3], collapse = ", "),
-              "\nImputation method ", mj, " is not for factors with >2 levels.",
-              call. = FALSE
+      warning(
+        "Type mismatch for variable(s): ",
+        paste(vname[cond3], collapse = ", "),
+        "\nImputation method ",
+        mj,
+        " is not for factors with >2 levels.",
+        call. = FALSE
       )
     }
   }
@@ -188,7 +218,9 @@ overwrite.method <- function(method, blocks, tasks, models) {
     for (varname in blocks[[h]]) {
       if (tasks[varname] %in% c("fill")) {
         newmethod <- models[[varname]]$`1`$setup$method
-        if (is.null(newmethod)) next
+        if (is.null(newmethod)) {
+          next
+        }
         method[h] <- newmethod
       }
     }

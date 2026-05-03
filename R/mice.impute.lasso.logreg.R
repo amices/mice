@@ -41,7 +41,9 @@
 #' @export
 mice.impute.lasso.logreg <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
   install.on.demand("glmnet", ...)
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
 
   # Bootstrap sample
   n1 <- sum(ry)
@@ -52,7 +54,8 @@ mice.impute.lasso.logreg <- function(y, ry, x, wy = NULL, nfolds = 10, ...) {
 
   # Train imputation model
   cv_lasso <- glmnet::cv.glmnet(
-    x = dotxobs, y = dotyobs,
+    x = dotxobs,
+    y = dotyobs,
     family = "binomial",
     nfolds = nfolds,
     alpha = 1

@@ -43,12 +43,20 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
-mice.impute.logreg <- function(y, ry, x, wy = NULL,
-                               task = "impute", model = NULL,
-                               ...) {
+mice.impute.logreg <- function(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  task = "impute",
+  model = NULL,
+  ...
+) {
   check.model.exists(model, task)
   method <- "logreg"
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
   n <- sum(ry)
 
   # augment data in order to evade perfect prediction
@@ -64,16 +72,19 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL,
   if (task == "fill") {
     cols <- check.model.match(model, x, method)
     lp <- x[wy, cols, drop = FALSE] %*% model$beta.dot
-    return(logreg.draw(lp,
-                       levels = model$factor$labels,
-                       class = model$class[1L]))
+    return(logreg.draw(
+      lp,
+      levels = model$factor$labels,
+      class = model$class[1L]
+    ))
   }
 
   expr <- expression(glm.fit(
     x = x[ry, , drop = FALSE],
     y = y[ry],
     family = quasibinomial(link = logit),
-    weights = w[ry]))
+    weights = w[ry]
+  ))
   fit <- eval(expr)
   fit.sum <- summary.glm(fit)
   beta <- coef(fit)
@@ -81,9 +92,7 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL,
   beta.star <- beta + rv %*% rnorm(ncol(rv))
 
   if (task == "train") {
-    model$setup <- list(method = method,
-                        n = n,
-                        task = task)
+    model$setup <- list(method = method, n = n, task = task)
     model$beta.hat <- drop(beta)
     model$beta.dot <- drop(beta.star)
     model$factor <- list(labels = levels(y), quant = c(0, 1))
@@ -92,9 +101,11 @@ mice.impute.logreg <- function(y, ry, x, wy = NULL,
   }
 
   lp <- x[wy, , drop = FALSE] %*% beta.star
-  return(logreg.draw(lp,
-                     levels = levels(y),
-                     class = if (is.ordered(y)) "ordered" else class(y)[1L]))
+  return(logreg.draw(
+    lp,
+    levels = levels(y),
+    class = if (is.ordered(y)) "ordered" else class(y)[1L]
+  ))
 }
 
 logreg.draw <- function(lp, levels = NULL, class = NULL) {
@@ -107,10 +118,12 @@ logreg.draw <- function(lp, levels = NULL, class = NULL) {
       return(as.logical(draws))
     }
     if (class %in% c("factor", "ordered")) {
-      return(factor(draws,
-                    levels = c(0, 1),
-                    labels = levels,
-                    ordered = (class == "ordered")))
+      return(factor(
+        draws,
+        levels = c(0, 1),
+        labels = levels,
+        ordered = (class == "ordered")
+      ))
     }
   }
 
@@ -144,7 +157,9 @@ logreg.draw <- function(lp, levels = NULL, class = NULL) {
 #' @keywords datagen
 #' @export
 mice.impute.logreg.boot <- function(y, ry, x, wy = NULL, ...) {
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
 
   # draw a bootstrap sample for yobs and xobs
   xobs <- x[ry, , drop = FALSE]
@@ -216,7 +231,12 @@ augment <- function(y, ry, x, wy, maxcat = 50) {
   maxx <- apply(x, 2, max, na.rm = TRUE)
   nr <- 2 * p * k
   a <- matrix(mean, nrow = nr, ncol = p, byrow = TRUE)
-  b <- matrix(rep(c(rep.int(c(0.5, -0.5), k), rep.int(0, nr)), length = nr * p), nrow = nr, ncol = p, byrow = FALSE)
+  b <- matrix(
+    rep(c(rep.int(c(0.5, -0.5), k), rep.int(0, nr)), length = nr * p),
+    nrow = nr,
+    ncol = p,
+    byrow = FALSE
+  )
   c <- matrix(sd, nrow = nr, ncol = p, byrow = TRUE)
   d <- a + b * c
   d <- pmax(matrix(minx, nrow = nr, ncol = p, byrow = TRUE), d, na.rm = TRUE)
@@ -233,7 +253,9 @@ augment <- function(y, ry, x, wy, maxcat = 50) {
     } else {
       as.factor(levels(y)[c(y, e)])
     }
-  } else c(y, e)
+  } else {
+    c(y, e)
+  }
   rya <- c(ry, rep.int(TRUE, nr))
   wya <- c(wy, rep.int(FALSE, nr))
   wa <- c(rep.int(1, length(y)), rep.int((p + 1) / nr, nr))

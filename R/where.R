@@ -23,12 +23,15 @@
 #' fit <- with(imp, lm(chl ~ bmi + age + hyp))
 #' summary(pool.syn(fit))
 #' @export
-make.where <- function(data,
-                       keyword = c("missing", "all", "none", "observed")) {
+make.where <- function(
+  data,
+  keyword = c("missing", "all", "none", "observed")
+) {
   keyword <- match.arg(keyword)
 
   data <- check.dataform(data)
-  where <- switch(keyword,
+  where <- switch(
+    keyword,
     missing = is.na(data),
     all = matrix(TRUE, nrow = nrow(data), ncol = ncol(data)),
     none = matrix(FALSE, nrow = nrow(data), ncol = ncol(data)),

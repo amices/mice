@@ -44,8 +44,13 @@
 #' @seealso \code{\link[=mids-class]{mids}}
 #' @keywords manip
 #' @export
-mids2spss <- function(imp, filename = "midsdata",
-                      path = getwd(), compress = FALSE, silent = FALSE) {
+mids2spss <- function(
+  imp,
+  filename = "midsdata",
+  path = getwd(),
+  compress = FALSE,
+  silent = FALSE
+) {
   .id <- NULL # avoid empty global variable binding
   install.on.demand("haven")
   # extract a completed dataset (long format - all imputations stacked)

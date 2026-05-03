@@ -80,13 +80,22 @@
 #' dslist <- complete(imp, c(0, 3, 5), mild = TRUE)
 #' names(dslist)
 #' @export
-complete.mids <- function(data, action = 1L, include = FALSE,
-                          mild = FALSE, order = c("last", "first"),
-                          ...) {
-  if (!is.mids(data)) stop("'data' not of class 'mids'")
+complete.mids <- function(
+  data,
+  action = 1L,
+  include = FALSE,
+  mild = FALSE,
+  order = c("last", "first"),
+  ...
+) {
+  if (!is.mids(data)) {
+    stop("'data' not of class 'mids'")
+  }
   if (data$store == "train_compact") {
-    stop(paste("Cannot complete compact training object.\n",
-               "Set 'compact = FALSE' to preserve training data and imputations."))
+    stop(paste(
+      "Cannot complete compact training object.\n",
+      "Set 'compact = FALSE' to preserve training data and imputations."
+    ))
   }
   order <- match.arg(order)
 
@@ -94,10 +103,16 @@ complete.mids <- function(data, action = 1L, include = FALSE,
   if (is.numeric(action)) {
     action <- as.integer(action)
     idx <- action[action >= 0L & action <= m]
-    if (include && all(idx != 0L)) idx <- c(0L, idx)
+    if (include && all(idx != 0L)) {
+      idx <- c(0L, idx)
+    }
     shape <- ifelse(mild, "mild", "stacked")
   } else if (is.character(action)) {
-    if (include) idx <- 0L:m else idx <- 1L:m
+    if (include) {
+      idx <- 0L:m
+    } else {
+      idx <- 1L:m
+    }
     shape <- match.arg(action, c("all", "long", "broad", "repeated", "stacked"))
     shape <- ifelse(shape == "all" || mild, "mild", shape)
   } else {
@@ -136,9 +151,10 @@ complete.mids <- function(data, action = 1L, include = FALSE,
   }
   # must be broad or repeated
   cmp <- bind_cols(mylist)
-  names(cmp) <- paste(rep.int(names(data$data), m),
-                      rep.int(idx, rep.int(ncol(data$data), length(idx))),
-                      sep = "."
+  names(cmp) <- paste(
+    rep.int(names(data$data), m),
+    rep.int(idx, rep.int(ncol(data$data), length(idx))),
+    sep = "."
   )
   if (shape == "broad") {
     return(cmp)
@@ -163,10 +179,11 @@ single.complete <- function(data, where, imp, ell) {
       if (sum(where[, varname]) == nrow(imp[[varname]])) {
         data[where[, varname], varname] <- imp[[varname]][, ell]
       } else {
-        data[as.numeric(rownames(imp[[varname]])), varname] <- imp[[varname]][, ell]
+        data[as.numeric(rownames(imp[[varname]])), varname] <- imp[[varname]][,
+          ell
+        ]
       }
     }
   }
   data
 }
-

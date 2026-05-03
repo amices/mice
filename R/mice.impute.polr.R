@@ -55,12 +55,22 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
-mice.impute.polr <- function(y, ry, x, wy = NULL,
-                             task = "impute", model = NULL,
-                             nnet.maxit = NULL, nnet.MaxNWts = NULL,
-                             maxit = NULL, MaxNWts = NULL, reltol = NULL,
-                             warmstart = FALSE, polr.to.loggedEvents = FALSE,
-                             ...) {
+mice.impute.polr <- function(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  task = "impute",
+  model = NULL,
+  nnet.maxit = NULL,
+  nnet.MaxNWts = NULL,
+  maxit = NULL,
+  MaxNWts = NULL,
+  reltol = NULL,
+  warmstart = FALSE,
+  polr.to.loggedEvents = FALSE,
+  ...
+) {
   check.model.exists(model, task)
   method <- "polr"
   if (is.null(wy)) {
@@ -100,10 +110,15 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
     control = list(
       trace = 0L,
       maxit = ifelse(is.null(maxit), 100L, maxit),
-      reltol = ifelse(is.null(reltol), 0.0001, reltol))
+      reltol = ifelse(is.null(reltol), 0.0001, reltol)
+    )
   )
-  if (warmstart && task == "train" &&
-      !is.null(model$beta.dot) && !is.null(model$zeta.mis)) {
+  if (
+    warmstart &&
+      task == "train" &&
+      !is.null(model$beta.dot) &&
+      !is.null(model$zeta.mis)
+  ) {
     dots$start <- c(model$beta.dot, model$zeta.mis)
   }
 
@@ -113,9 +128,7 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
   xy <- cbind.data.frame(y, x)
   execute <- "polr"
   fun <- MASS::polr
-  args <- c(list(formula = formula(xy),
-                 data = xy[ry, , drop = FALSE]),
-            dots)
+  args <- c(list(formula = formula(xy), data = xy[ry, , drop = FALSE]), dots)
   fit <- try(suppressWarnings(do.call(fun, args)), silent = TRUE)
   if (inherits(fit, "try-error")) {
     if (polr.to.loggedEvents) {
@@ -123,23 +136,33 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
     }
     execute <- "multinom"
     impy <- mice.impute.polyreg(
-      y = y, ry = ry, x = x, wy = wy,
-      task = task, model = model,
-      nnet.maxit = nnet.maxit, nnet.MaxNWts = nnet.MaxNWts,
-      maxit = maxit, MaxNWts = MaxNWts, reltol = reltol,
-      warmstart = warmstart, ...)
+      y = y,
+      ry = ry,
+      x = x,
+      wy = wy,
+      task = task,
+      model = model,
+      nnet.maxit = nnet.maxit,
+      nnet.MaxNWts = nnet.MaxNWts,
+      maxit = maxit,
+      MaxNWts = MaxNWts,
+      reltol = reltol,
+      warmstart = warmstart,
+      ...
+    )
   }
 
   # Save for future use
   if (task == "train" && execute == "polr") {
-    model$setup <- list(method = method,
-                        n = sum(ry),
-                        task = task,
-                        maxit = dots$control$maxit,
-                        reltol = dots$control$reltol,
-                        warmstart = warmstart)
-    model$result <- list(value = fit$value,
-                         convergence = fit$convergence)
+    model$setup <- list(
+      method = method,
+      n = sum(ry),
+      task = task,
+      maxit = dots$control$maxit,
+      reltol = dots$control$reltol,
+      warmstart = warmstart
+    )
+    model$result <- list(value = fit$value, convergence = fit$convergence)
     model$beta.dot <- setNames(coef(fit), colnames(x))
     model$zeta.mis <- fit$zeta
     model$factor <- list(labels = levels(y), quant = NULL)
@@ -162,9 +185,13 @@ mice.impute.polr <- function(y, ry, x, wy = NULL,
 }
 
 polr.draw <- function(x, beta, zeta, levels, class = NULL) {
-  if (nrow(x) == 0L) return(character(0))
+  if (nrow(x) == 0L) {
+    return(character(0))
+  }
   eta <- x %*% beta
-  cumpr <- plogis(matrix(zeta, nrow(x), length(zeta), byrow = TRUE) - as.vector(eta))
+  cumpr <- plogis(
+    matrix(zeta, nrow(x), length(zeta), byrow = TRUE) - as.vector(eta)
+  )
   post <- t(apply(cumpr, 1L, function(x) diff(c(0, x, 1))))
   un <- rep(runif(nrow(x)), each = length(levels))
   draws <- un > apply(post, 1L, cumsum)
@@ -177,4 +204,3 @@ polr.draw <- function(x, beta, zeta, levels, class = NULL) {
 
   return(out)
 }
-

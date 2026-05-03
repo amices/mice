@@ -12,9 +12,11 @@ check.deprecated <- function(...) {
   if (any(wrn)) {
     for (i in which(wrn)) {
       msg <- paste0(
-        "The '", names(replace.args)[i],
+        "The '",
+        names(replace.args)[i],
         "' argument is no longer supported. Please use '",
-        replace.args[i], "' instead."
+        replace.args[i],
+        "' instead."
       )
       warning(msg)
     }

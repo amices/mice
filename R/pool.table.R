@@ -99,23 +99,28 @@
 #' class(all1) <- "data.frame"
 #' identical(all1, all2)
 #' @export
-pool.table <- function(w,
-                       type = c("all", "minimal", "tests"),
-                       conf.int = TRUE,
-                       conf.level = 0.95,
-                       exponentiate = FALSE,
-                       dfcom = Inf,
-                       custom.t = NULL,
-                       rule = c("rubin1987", "reiter2003"),
-                       ...) {
+pool.table <- function(
+  w,
+  type = c("all", "minimal", "tests"),
+  conf.int = TRUE,
+  conf.level = 0.95,
+  exponentiate = FALSE,
+  dfcom = Inf,
+  custom.t = NULL,
+  rule = c("rubin1987", "reiter2003"),
+  ...
+) {
   type <- match.arg(type)
   pooled <- pool.vector(w, dfcom = dfcom, custom.t = custom.t, rule = rule)
-  if (type %in% c("all", "tests"))
-  pooled <- summary_mipo.workhorse(x = pooled,
-                                   type = type,
-                                   conf.int = conf.int,
-                                   conf.level = conf.level,
-                                   exponentiate = exponentiate,
-                                   ...)
+  if (type %in% c("all", "tests")) {
+    pooled <- summary_mipo.workhorse(
+      x = pooled,
+      type = type,
+      conf.int = conf.int,
+      conf.level = conf.level,
+      exponentiate = exponentiate,
+      ...
+    )
+  }
   return(pooled)
 }

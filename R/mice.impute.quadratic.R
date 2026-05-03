@@ -74,9 +74,24 @@
 #' cmp <- complete(imp)
 #' points(cmp$x[is.na(dat$x)], cmp$xx[is.na(dat$x)], col = mdc(2))
 #' @export
-mice.impute.quadratic <- function(y, ry, x, wy = NULL, quad.outcome = NULL, ...) {
-  if (is.null(quad.outcome)) stop("Argument 'quad.outcome' for mice.impute.quadratic has not been specified")
-  if (!quad.outcome %in% colnames(x)) stop("The name specified for the outcome in 'quad.outcome' can not be found in the data")
+mice.impute.quadratic <- function(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  quad.outcome = NULL,
+  ...
+) {
+  if (is.null(quad.outcome)) {
+    stop(
+      "Argument 'quad.outcome' for mice.impute.quadratic has not been specified"
+    )
+  }
+  if (!quad.outcome %in% colnames(x)) {
+    stop(
+      "The name specified for the outcome in 'quad.outcome' can not be found in the data"
+    )
+  }
   if (is.null(wy)) {
     wy <- !ry
   }
@@ -107,13 +122,17 @@ mice.impute.quadratic <- function(y, ry, x, wy = NULL, quad.outcome = NULL, ...)
       mean(x[ry, quad.outcome]) - sd(x[ry, quad.outcome]),
       mean(x[ry, quad.outcome]) + sd(x[ry, quad.outcome]),
       mean(x[ry, quad.outcome]) - sd(x[ry, quad.outcome]),
-      mean(x[ry, quad.outcome]), mean(x[ry, quad.outcome]),
-      mean(x[ry, quad.outcome]), mean(x[ry, quad.outcome])
+      mean(x[ry, quad.outcome]),
+      mean(x[ry, quad.outcome]),
+      mean(x[ry, quad.outcome]),
+      mean(x[ry, quad.outcome])
     ),
     zstar = c(
       zstar[ry],
-      mean(zstar[ry]), mean(zstar[ry]),
-      mean(zstar[ry]), mean(zstar[ry]),
+      mean(zstar[ry]),
+      mean(zstar[ry]),
+      mean(zstar[ry]),
+      mean(zstar[ry]),
       mean(zstar[ry]) + sd(zstar[ry]),
       mean(zstar[ry]) - sd(zstar[ry]),
       mean(zstar[ry]) + sd(zstar[ry]),
@@ -122,14 +141,18 @@ mice.impute.quadratic <- function(y, ry, x, wy = NULL, quad.outcome = NULL, ...)
   )
   w <- c(rep(1, nrow(data.augment) - 8), rep(3 / 8, 8))
   # calculate regression parameters for
-  vobs <- glm(V ~ q + zstar + q * zstar,
+  vobs <- glm(
+    V ~ q + zstar + q * zstar,
     family = quasibinomial,
-    data = data.augment, weights = w
+    data = data.augment,
+    weights = w
   )
   # impute Vmis
   newdata <- data.frame(q = x[wy, quad.outcome], zstar = zstar[wy])
-  prob <- predict(vobs,
-    newdata = newdata, type = "response",
+  prob <- predict(
+    vobs,
+    newdata = newdata,
+    type = "response",
     na.action = na.exclude
   )
   idy <- rbinom(sum(wy), 1, prob = prob)

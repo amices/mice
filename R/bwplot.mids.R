@@ -137,21 +137,25 @@
 #' @aliases bwplot.mids bwplot
 #' @method bwplot mids
 #' @export
-bwplot.mids <- function(x,
-                        data,
-                        na.groups = NULL,
-                        groups = NULL,
-                        as.table = TRUE,
-                        theme = mice.theme(),
-                        mayreplicate = TRUE,
-                        allow.multiple = TRUE,
-                        outer = TRUE,
-                        drop.unused.levels = lattice::lattice.getOption("drop.unused.levels"),
-                        ...,
-                        subscripts = TRUE,
-                        subset = TRUE) {
+bwplot.mids <- function(
+  x,
+  data,
+  na.groups = NULL,
+  groups = NULL,
+  as.table = TRUE,
+  theme = mice.theme(),
+  mayreplicate = TRUE,
+  allow.multiple = TRUE,
+  outer = TRUE,
+  drop.unused.levels = lattice::lattice.getOption("drop.unused.levels"),
+  ...,
+  subscripts = TRUE,
+  subset = TRUE
+) {
   call <- match.call()
-  if (!is.mids(x)) stop("Argument 'x' must be a 'mids' object")
+  if (!is.mids(x)) {
+    stop("Argument 'x' must be a 'mids' object")
+  }
 
   ## unpack data and response indicator
   cd <- data.frame(complete(x, "long", include = TRUE))
@@ -160,16 +164,22 @@ bwplot.mids <- function(x,
 
   ## evaluate na.group in response indicator
   nagp <- eval(expr = substitute(na.groups), envir = r, enclos = parent.frame())
-  if (is.expression(nagp)) nagp <- eval(expr = nagp, envir = r, enclos = parent.frame())
+  if (is.expression(nagp)) {
+    nagp <- eval(expr = nagp, envir = r, enclos = parent.frame())
+  }
 
   ## evaluate groups in imputed data
   ngp <- eval(expr = substitute(groups), envir = cd, enclos = parent.frame())
-  if (is.expression(ngp)) ngp <- eval(expr = ngp, envir = cd, enclos = parent.frame())
+  if (is.expression(ngp)) {
+    ngp <- eval(expr = ngp, envir = cd, enclos = parent.frame())
+  }
   groups <- ngp
 
   ## evaluate subset in imputed data
   ss <- eval(expr = substitute(subset), envir = cd, enclos = parent.frame())
-  if (is.expression(ss)) ss <- eval(expr = ss, envir = cd, enclos = parent.frame())
+  if (is.expression(ss)) {
+    ss <- eval(expr = ss, envir = cd, enclos = parent.frame())
+  }
   subset <- ss
 
   ## evaluate further arguments before parsing
@@ -187,7 +197,11 @@ bwplot.mids <- function(x,
   allfactors <- unlist(lapply(cd[vnames], is.factor))
   if (missing(data)) {
     vnames <- vnames[!allfactors]
-    formula <- as.formula(paste(paste(vnames, collapse = "+", sep = ""), "~.imp", sep = ""))
+    formula <- as.formula(paste(
+      paste(vnames, collapse = "+", sep = ""),
+      "~.imp",
+      sep = ""
+    ))
   } else {
     ## pad abbreviated formula
     abbrev <- length(grep("~", call$data)) == 0
@@ -204,9 +218,13 @@ bwplot.mids <- function(x,
 
   ## determine the y-variables
   form <- lattice::latticeParseFormula(
-    model = formula, data = cd, subset = subset,
-    groups = groups, multiple = allow.multiple,
-    outer = outer, subscripts = TRUE,
+    model = formula,
+    data = cd,
+    subset = subset,
+    groups = groups,
+    multiple = allow.multiple,
+    outer = outer,
+    subscripts = TRUE,
     drop = drop.unused.levels
   )
   ynames <- unlist(lapply(strsplit(form$left.name, " \\+ "), rm.whitespace))
@@ -257,15 +275,21 @@ bwplot.mids <- function(x,
   if (is.null(call$scales)) {
     args$scales <- list()
     if (length(ynames) > 1) {
-      args$scales <- list(x = list(relation = "free"), y = list(relation = "free"))
+      args$scales <- list(
+        x = list(relation = "free"),
+        y = list(relation = "free")
+      )
     }
   }
 
   ## ready
   args <- c(
-    x = formula, data = list(cd),
+    x = formula,
+    data = list(cd),
     groups = list(groups),
-    args, dots, subset = call$subset
+    args,
+    dots,
+    subset = call$subset
   )
 
   ## go

@@ -53,42 +53,63 @@ NULL
 #' @rdname mipo
 #' @export
 mipo <- function(mira.obj, ...) {
-  if (!is.mira(mira.obj)) stop("`mira.obj` not of class `mira`")
+  if (!is.mira(mira.obj)) {
+    stop("`mira.obj` not of class `mira`")
+  }
   structure(pool(mira.obj, ...), class = c("mipo"))
 }
 
 #' @return The \code{summary} method returns a data frame with summary statistics of the pooled analysis.
 #' @rdname mipo
 #' @export
-summary.mipo <- function(object, type = c("tests", "all"),
-                         conf.int = FALSE, conf.level = .95,
-                         exponentiate = FALSE, ...) {
+summary.mipo <- function(
+  object,
+  type = c("tests", "all"),
+  conf.int = FALSE,
+  conf.level = .95,
+  exponentiate = FALSE,
+  ...
+) {
   type <- match.arg(type)
   x <- object$pooled
-  z <- summary_mipo.workhorse(x = x, type = type,
-                              conf.int = conf.int, conf.level = conf.level,
-                              exponentiate = exponentiate, ...)
+  z <- summary_mipo.workhorse(
+    x = x,
+    type = type,
+    conf.int = conf.int,
+    conf.level = conf.level,
+    exponentiate = exponentiate,
+    ...
+  )
   class(z) <- c("mipo.summary", "data.frame")
   z
 }
 
-summary_mipo.workhorse <- function(x, type,
-                                   conf.int, conf.level,
-                                   exponentiate, ...) {
+summary_mipo.workhorse <- function(
+  x,
+  type,
+  conf.int,
+  conf.level,
+  exponentiate,
+  ...
+) {
   m <- x$m[1L]
   std.error <- sqrt(x$t)
   statistic <- x$estimate / std.error
   p.value <- 2 * (pt(abs(statistic), pmax(x$df, 0.001), lower.tail = FALSE))
 
-  z <- data.frame(x,
-                  std.error = std.error,
-                  statistic = statistic,
-                  p.value = p.value
+  z <- data.frame(
+    x,
+    std.error = std.error,
+    statistic = statistic,
+    p.value = p.value
   )
-  z <- process_mipo(z, x,
-                    conf.int = conf.int,
-                    conf.level = conf.level,
-                    exponentiate = exponentiate)
+  z <- process_mipo(
+    z,
+    x,
+    conf.int = conf.int,
+    conf.level = conf.level,
+    exponentiate = exponentiate
+  )
 
   if (type == "tests") {
     out <- c("m", "riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")
@@ -116,8 +137,13 @@ print.mipo.summary <- function(x, ...) {
 
 #' @rdname mipo
 #' @keywords internal
-process_mipo <- function(z, x, conf.int = FALSE, conf.level = .95,
-                         exponentiate = FALSE) {
+process_mipo <- function(
+  z,
+  x,
+  conf.int = FALSE,
+  conf.level = .95,
+  exponentiate = FALSE
+) {
   if (exponentiate) {
     # save transformation function for use on confidence interval
     trans <- exp
@@ -166,10 +192,7 @@ confidence <- function(pooled, parm, level = 0.95, ...) {
   a <- c(a, 1 - a)
   fac <- qt(a, df)
   pct <- fmt.perc(a, 3)
-  ci <- array(NA,
-              dim = c(length(parm), 2L),
-              dimnames = list(parm, pct)
-  )
+  ci <- array(NA, dim = c(length(parm), 2L), dimnames = list(parm, pct))
   ci[, 1] <- cf[parm] + qt(a[1], df[parm]) * se[parm]
   ci[, 2] <- cf[parm] + qt(a[2], df[parm]) * se[parm]
   return(ci)

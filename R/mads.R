@@ -75,8 +75,20 @@
 #' @keywords classes
 #' @export
 mads <- function(
-    call, prop, patterns, freq, mech, weights, cont, type,
-    odds, amp, cand, scores, data) {
+  call,
+  prop,
+  patterns,
+  freq,
+  mech,
+  weights,
+  cont,
+  type,
+  odds,
+  amp,
+  cand,
+  scores,
+  data
+) {
   # Validate inputs
   # if (!is.call(call)) stop("Argument 'call' must be a call.")
   # if (!is.numeric(prop)) stop("Argument 'prop' must be numeric.")
@@ -157,4 +169,3 @@ summary.mads <- function(object, ...) {
   print(object, ...)
   invisible(object)
 }
-

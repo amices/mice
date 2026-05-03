@@ -1,20 +1,29 @@
-mice.edit.setup <- function(data, setup, tasks,
-                            user.visitSequence = NULL,
-                            allow.na = FALSE,
-                            remove.constant = TRUE,
-                            remove.collinear = TRUE,
-                            remove_collinear = TRUE,
-                            ...) {
+mice.edit.setup <- function(
+  data,
+  setup,
+  tasks,
+  user.visitSequence = NULL,
+  allow.na = FALSE,
+  remove.constant = TRUE,
+  remove.collinear = TRUE,
+  remove_collinear = TRUE,
+  ...
+) {
   # legacy handling
-  if (!remove_collinear) remove.collinear <- FALSE
+  if (!remove_collinear) {
+    remove.collinear <- FALSE
+  }
 
   pred <- setup$predictorMatrix
   meth <- setup$method
   vis <- setup$visitSequence
   post <- setup$post
 
-  if (ncol(pred) != nrow(pred) || length(meth) != nrow(pred) ||
-      ncol(data) != nrow(pred)) {
+  if (
+    ncol(pred) != nrow(pred) ||
+      length(meth) != nrow(pred) ||
+      ncol(data) != nrow(pred)
+  ) {
     return(setup)
   }
 
@@ -85,7 +94,9 @@ mice.edit.setup <- function(data, setup, tasks,
   }
 
   if (all(pred == 0L) && didlog) {
-    stop("`mice` detected constant and/or collinear variables. No predictors were left after their removal.")
+    stop(
+      "`mice` detected constant and/or collinear variables. No predictors were left after their removal."
+    )
   }
 
   # Detect passive methods

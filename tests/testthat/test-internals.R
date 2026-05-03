@@ -19,8 +19,16 @@ ry <- rep(TRUE, 5)
 
 # data frame for storing the event log
 state <- list(it = 0, im = 0, dep = "y", meth = "test", log = TRUE)
-loggedEvents <- data.frame(it = 0L, im = 0L, dep = "", meth = "", out = "",
-    msg = NA_character_, fn   = NA_character_, stringsAsFactors = FALSE)
+loggedEvents <- data.frame(
+  it = 0L,
+  im = 0L,
+  dep = "",
+  meth = "",
+  out = "",
+  msg = NA_character_,
+  fn = NA_character_,
+  stringsAsFactors = FALSE
+)
 
 fr <- 2
 

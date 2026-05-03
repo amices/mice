@@ -173,24 +173,28 @@
 #' @aliases stripplot.mids stripplot
 #' @method stripplot mids
 #' @export
-stripplot.mids <- function(x,
-                           data,
-                           na.groups = NULL,
-                           groups = NULL,
-                           as.table = TRUE,
-                           theme = mice.theme(),
-                           allow.multiple = TRUE,
-                           outer = TRUE,
-                           drop.unused.levels = lattice::lattice.getOption("drop.unused.levels"),
-                           panel = lattice::lattice.getOption("panel.stripplot"),
-                           default.prepanel = lattice::lattice.getOption("prepanel.default.stripplot"),
-                           jitter.data = TRUE,
-                           horizontal = FALSE,
-                           ...,
-                           subscripts = TRUE,
-                           subset = TRUE) {
+stripplot.mids <- function(
+  x,
+  data,
+  na.groups = NULL,
+  groups = NULL,
+  as.table = TRUE,
+  theme = mice.theme(),
+  allow.multiple = TRUE,
+  outer = TRUE,
+  drop.unused.levels = lattice::lattice.getOption("drop.unused.levels"),
+  panel = lattice::lattice.getOption("panel.stripplot"),
+  default.prepanel = lattice::lattice.getOption("prepanel.default.stripplot"),
+  jitter.data = TRUE,
+  horizontal = FALSE,
+  ...,
+  subscripts = TRUE,
+  subset = TRUE
+) {
   call <- match.call()
-  if (!is.mids(x)) stop("Argument 'x' must be a 'mids' object")
+  if (!is.mids(x)) {
+    stop("Argument 'x' must be a 'mids' object")
+  }
 
   ## unpack data and response indicator
   cd <- data.frame(complete(x, "long", include = TRUE))
@@ -198,16 +202,22 @@ stripplot.mids <- function(x,
 
   ## evaluate na.group in response indicator
   nagp <- eval(expr = substitute(na.groups), envir = r, enclos = parent.frame())
-  if (is.expression(nagp)) nagp <- eval(expr = nagp, envir = r, enclos = parent.frame())
+  if (is.expression(nagp)) {
+    nagp <- eval(expr = nagp, envir = r, enclos = parent.frame())
+  }
 
   ## evaluate groups in imputed data
   ngp <- eval(expr = substitute(groups), envir = cd, enclos = parent.frame())
-  if (is.expression(ngp)) ngp <- eval(expr = ngp, envir = cd, enclos = parent.frame())
+  if (is.expression(ngp)) {
+    ngp <- eval(expr = ngp, envir = cd, enclos = parent.frame())
+  }
   groups <- ngp
 
   ## evaluate subset in imputed data
   ss <- eval(expr = substitute(subset), envir = cd, enclos = parent.frame())
-  if (is.expression(ss)) ss <- eval(expr = ss, envir = cd, enclos = parent.frame())
+  if (is.expression(ss)) {
+    ss <- eval(expr = ss, envir = cd, enclos = parent.frame())
+  }
   subset <- ss
 
   ## evaluate further arguments before parsing
@@ -229,7 +239,10 @@ stripplot.mids <- function(x,
   allfactors <- unlist(lapply(cd[vnames], is.factor))
   if (missing(data)) {
     vnames <- vnames[!allfactors]
-    formula <- as.formula(paste0(paste0(vnames, collapse = "+"), "~ as.factor(.imp)"))
+    formula <- as.formula(paste0(
+      paste0(vnames, collapse = "+"),
+      "~ as.factor(.imp)"
+    ))
   } else {
     ## pad abbreviated formula
     abbrev <- !any(grepl("~", call$data))
@@ -246,9 +259,13 @@ stripplot.mids <- function(x,
 
   ## determine the y-variables
   form <- lattice::latticeParseFormula(
-    model = formula, data = cd, subset = subset,
-    groups = groups, multiple = allow.multiple,
-    outer = outer, subscripts = TRUE,
+    model = formula,
+    data = cd,
+    subset = subset,
+    groups = groups,
+    multiple = allow.multiple,
+    outer = outer,
+    subscripts = TRUE,
     drop = drop.unused.levels
   )
   ynames <- unlist(lapply(strsplit(form$left.name, " \\+ "), rm.whitespace))
@@ -279,15 +296,21 @@ stripplot.mids <- function(x,
   if (is.null(call$scales)) {
     args$scales <- list()
     if (length(ynames) > 1) {
-      args$scales <- list(x = list(relation = "free"), y = list(relation = "free"))
+      args$scales <- list(
+        x = list(relation = "free"),
+        y = list(relation = "free")
+      )
     }
   }
 
   ## ready
   args <- c(
-    x = formula, data = list(cd),
+    x = formula,
+    data = list(cd),
     groups = list(gp),
-    args, dots, subset = call$subset
+    args,
+    dots,
+    subset = call$subset
   )
 
   ## go

@@ -71,8 +71,16 @@
 #' }
 #'
 #' @export
-parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL,
-                     n.imp.core = NULL, cl.type = "PSOCK", ...) {
+parlmice <- function(
+  data,
+  m = 5,
+  seed = NA,
+  cluster.seed = NA,
+  n.core = NULL,
+  n.imp.core = NULL,
+  cl.type = "PSOCK",
+  ...
+) {
   warning(
     "'parlmice()' is deprecated as of mice 3.18.0. ",
     "Please use 'mice(..., parallel = TRUE)' instead.",
@@ -106,7 +114,9 @@ parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL,
     n.imp.core <- specs$imps
   }
   if (!is.na(seed) && n.core > 1) {
-    warning("Using the same seed across streams. Consider using cluster.seed for distinct streams.")
+    warning(
+      "Using the same seed across streams. Consider using cluster.seed for distinct streams."
+    )
   }
 
   args <- match.call(mice, expand.dots = TRUE)
@@ -114,11 +124,20 @@ parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL,
   args$m <- n.imp.core
 
   cl <- parallel::makeCluster(n.core, type = cl.type)
-  parallel::clusterExport(cl,
-                          varlist = c("data", "m", "seed", "cluster.seed",
-                                      "n.core", "n.imp.core", "cl.type",
-                                      ls(parent.frame())),
-                          envir = environment())
+  parallel::clusterExport(
+    cl,
+    varlist = c(
+      "data",
+      "m",
+      "seed",
+      "cluster.seed",
+      "n.core",
+      "n.imp.core",
+      "cl.type",
+      ls(parent.frame())
+    ),
+    envir = environment()
+  )
   parallel::clusterExport(cl, varlist = "do.call")
   parallel::clusterEvalQ(cl, library(mice))
 
@@ -126,8 +145,9 @@ parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL,
     parallel::clusterSetRNGStream(cl, cluster.seed)
   }
 
-  imps <- parallel::parLapply(cl = cl, X = 1:n.core,
-                              function(x) do.call(mice, as.list(args), envir = environment()))
+  imps <- parallel::parLapply(cl = cl, X = 1:n.core, function(x) {
+    do.call(mice, as.list(args), envir = environment())
+  })
   parallel::stopCluster(cl)
 
   imp <- imps[[1]]

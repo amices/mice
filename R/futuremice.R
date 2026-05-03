@@ -86,9 +86,18 @@
 #' }
 #'
 #' @export
-futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
-                       use.logical = TRUE, future.plan = "multisession",
-                       packages = NULL, globals = NULL, ...) {
+futuremice <- function(
+  data,
+  m = 5,
+  parallelseed = NA,
+  n.core = NULL,
+  seed = NA,
+  use.logical = TRUE,
+  future.plan = "multisession",
+  packages = NULL,
+  globals = NULL,
+  ...
+) {
   warning(
     "'futuremice()' is deprecated as of mice 3.18.0. ",
     "Please use 'mice(..., parallel = TRUE)' instead.",
@@ -127,26 +136,40 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
     if (n.core > 1) {
       if (interactive()) {
         msg <- "Be careful; specifying seed rather than parallelseed results in duplicate imputations.\nDo you want to continue?\n"
-        ask <- askYesNo(msg, prompts = getOption("askYesNo", gettext(c("Yes", "No, ignore seed", "Cancel"))))
+        ask <- askYesNo(
+          msg,
+          prompts = getOption(
+            "askYesNo",
+            gettext(c("Yes", "No, ignore seed", "Cancel"))
+          )
+        )
 
         if (isTRUE(ask)) {
           seed <- seed
-          warning("Be careful; the imputations will be the same over the cores.")
+          warning(
+            "Be careful; the imputations will be the same over the cores."
+          )
         } else if (isFALSE(ask)) {
           seed <- NA
-          message("Parallelseed is specified for you, and is accessible in the output object under $parallelseed.")
+          message(
+            "Parallelseed is specified for you, and is accessible in the output object under $parallelseed."
+          )
         } else if (is.na(ask)) {
-          stop("You stopped futuremice. To obtain unique, but reproducible imputations, specify parallelseed.")
+          stop(
+            "You stopped futuremice. To obtain unique, but reproducible imputations, specify parallelseed."
+          )
         }
       } else {
-        warning("Be careful; the imputations will be identical over the cores. Perhaps you want to specify parallelseed, for unique, but reproducible results.")
+        warning(
+          "Be careful; the imputations will be identical over the cores. Perhaps you want to specify parallelseed, for unique, but reproducible results."
+        )
       }
     }
   }
   if (!is.na(parallelseed)) {
     set.seed(parallelseed)
   } else {
-    if(!exists(".Random.seed")) {
+    if (!exists(".Random.seed")) {
       set.seed(NULL)
     }
     parallelseed <- get(
@@ -158,20 +181,14 @@ futuremice <- function(data, m = 5, parallelseed = NA, n.core = NULL, seed = NA,
   }
 
   # start multisession
-  future::plan(future.plan,
-    workers = n.core
-  )
+  future::plan(future.plan, workers = n.core)
 
   # begin future
   imps <- furrr::future_map(
     n.imp.core,
     function(x) {
-      mice(data = data,
-           m = x,
-           printFlag = FALSE,
-           seed = seed,
-           ...
-      )},
+      mice(data = data, m = x, printFlag = FALSE, seed = seed, ...)
+    },
     .options = furrr::furrr_options(
       seed = TRUE,
       globals = globals,
@@ -206,7 +223,10 @@ check.cores <- function(n.core, available, m) {
     n.core <- min(available - 1, m)
   } else {
     if (n.core > available | n.core > m) {
-      warning(paste("'n.core' exceeds the maximum number of available cores on your machine or the number of imputations, and is set to", min(available - 1, m)))
+      warning(paste(
+        "'n.core' exceeds the maximum number of available cores on your machine or the number of imputations, and is set to",
+        min(available - 1, m)
+      ))
     }
     n.core <- min(available - 1, m, n.core)
   }

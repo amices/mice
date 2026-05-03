@@ -70,13 +70,21 @@
 #' @keywords mids
 #' @export
 as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id") {
-  if (is.numeric(.imp)) .imp <- names(long)[.imp]
-  if (is.numeric(.id)) .id <- names(long)[.id]
-  if (!.imp %in% names(long)) stop("Imputation index `.imp` not found")
+  if (is.numeric(.imp)) {
+    .imp <- names(long)[.imp]
+  }
+  if (is.numeric(.id)) {
+    .id <- names(long)[.id]
+  }
+  if (!.imp %in% names(long)) {
+    stop("Imputation index `.imp` not found")
+  }
 
   # no missings allowed in .imp
   imps <- unlist(long[, .imp], use.names = FALSE)
-  if (anyNA(imps)) stop("Missing values in imputation index `.imp`")
+  if (anyNA(imps)) {
+    stop("Missing values in imputation index `.imp`")
+  }
 
   # number of records within .imp should be the same
   if (any(diff(table(imps))) != 0) {
@@ -88,17 +96,25 @@ as.mids <- function(long, where = NULL, .imp = ".imp", .id = ".id") {
   data <- long[imps == 0, keep, drop = FALSE]
   n <- nrow(data)
   if (n == 0) {
-    stop("Original data not found.\n Use `complete(..., action = 'long', include = TRUE)` to save original data.")
+    stop(
+      "Original data not found.\n Use `complete(..., action = 'long', include = TRUE)` to save original data."
+    )
   }
 
   # determine m
   m <- length(unique(imps)) - 1
 
   # use mice to get info on data
-  if (is.null(where)) where <- is.na(data)
-  ini <- mice(data,
-    m = m, where = where, maxit = 0,
-    remove.collinear = FALSE, allow.na = TRUE
+  if (is.null(where)) {
+    where <- is.na(data)
+  }
+  ini <- mice(
+    data,
+    m = m,
+    where = where,
+    maxit = 0,
+    remove.collinear = FALSE,
+    allow.na = TRUE
   )
 
   # create default .id when .id using type from input data
@@ -142,7 +158,9 @@ as.mira <- function(fitlist) {
     return(fitlist)
   }
   if (is.mids(fitlist)) {
-    stop("as.mira() cannot convert class 'mids' into 'mira'. Use with() instead.")
+    stop(
+      "as.mira() cannot convert class 'mids' into 'mira'. Use with() instead."
+    )
   }
   call <- match.call()
   if (!is.list(fitlist)) {
@@ -171,7 +189,9 @@ as.mitml.result <- function(x) {
   z <- NULL
   if (is.mira(x)) {
     z <- getfit(x)
-  } else if (is.list(x)) z <- x
+  } else if (is.list(x)) {
+    z <- x
+  }
   class(z) <- c("mitml.result", "list")
   z
 }

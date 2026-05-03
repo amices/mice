@@ -24,8 +24,12 @@ mice.theme <- function(transparent = TRUE, alpha.fill = 0.3) {
     }
     return(c(grDevices::hcl(240, 100, 40), grDevices::hcl(0, 100, 40)))
   }
-  if (missing(transparent)) transparent <- supports.transparent()
-  if (missing(alpha.fill)) alpha.fill <- ifelse(transparent, 0.3, 0)
+  if (missing(transparent)) {
+    transparent <- supports.transparent()
+  }
+  if (missing(alpha.fill)) {
+    alpha.fill <- ifelse(transparent, 0.3, 0)
+  }
   list(
     superpose.symbol = list(
       col = mdc(1:2),

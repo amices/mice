@@ -36,7 +36,9 @@
 #' @keywords datagen
 #' @export
 mice.impute.norm.nob <- function(y, ry, x, wy = NULL, ...) {
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
   x <- cbind(1, as.matrix(x))
   parm <- .norm.fix(y, ry, x, ...)
   x[wy, ] %*% parm$beta + rnorm(sum(wy)) * parm$sigma

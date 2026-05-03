@@ -62,13 +62,14 @@
 #' cor2[is.na(cor2)] <- 0
 #' correlar(cor2, 1)
 #' @export
-correlar <- function(corr_matrix,
-                     dependent_var_index,
-                     max_steps = NULL,
-                     crit = 0.005,
-                     force_pd = FALSE,
-                     check_input = TRUE) {
-
+correlar <- function(
+  corr_matrix,
+  dependent_var_index,
+  max_steps = NULL,
+  crit = 0.005,
+  force_pd = FALSE,
+  check_input = TRUE
+) {
   if (check_input) {
     stopifnot(
       is.matrix(corr_matrix),
@@ -93,10 +94,11 @@ correlar <- function(corr_matrix,
   steps <- 0L
   converged <- FALSE
 
-  while (length(remaining_predictors) > 0L &&
-         (is.null(max_steps) || steps < max_steps) &&
-         !converged) {
-
+  while (
+    length(remaining_predictors) > 0L &&
+      (is.null(max_steps) || steps < max_steps) &&
+      !converged
+  ) {
     # Find the predictor with the highest absolute correlation
     correlations <- current_matrix[dependent_var_index, remaining_predictors]
     best_predictor <- remaining_predictors[which.max(abs(correlations))]
@@ -124,5 +126,6 @@ correlar <- function(corr_matrix,
 
   return(list(
     predictors = predictors[seq(steps)],
-    R2 = R2[seq(steps)]))
+    R2 = R2[seq(steps)]
+  ))
 }

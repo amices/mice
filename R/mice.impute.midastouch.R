@@ -78,10 +78,18 @@
 #' @family univariate imputation functions
 #' @keywords datagen
 #' @export
-mice.impute.midastouch <- function(y, ry, x, wy = NULL, ridge = 1e-05,
-                                   midas.kappa = NULL,
-                                   outout = TRUE, neff = NULL,
-                                   debug = NULL, ...) {
+mice.impute.midastouch <- function(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  ridge = 1e-05,
+  midas.kappa = NULL,
+  outout = TRUE,
+  neff = NULL,
+  debug = NULL,
+  ...
+) {
   if (is.null(wy)) {
     wy <- !ry
   }
@@ -115,7 +123,8 @@ mice.impute.midastouch <- function(y, ry, x, wy = NULL, ridge = 1e-05,
   if (!is.null(debug)) {
     midastouch.inputlist$omega <- omega
     assign(
-      x = "midastouch.inputlist", value = midastouch.inputlist,
+      x = "midastouch.inputlist",
+      value = midastouch.inputlist,
       envir = get(debug)
     )
   }
@@ -157,8 +166,10 @@ mice.impute.midastouch <- function(y, ry, x, wy = NULL, ridge = 1e-05,
   if (outout) {
     # P-step if out of sample predictions for donors
     # estimate one model per donor by leave-one-out
-    XXarray_pre <- t(t(apply(X = Xobs, MARGIN = 1, FUN = tcrossprod)) *
-      omega)
+    XXarray_pre <- t(
+      t(apply(X = Xobs, MARGIN = 1, FUN = tcrossprod)) *
+        omega
+    )
     ridgeind <- c(1:(m - 1)) * (m + 1) + 1
     if (ridge > 0) {
       XXarray_pre[ridgeind, ] <- XXarray_pre[ridgeind, ] * (1 + ridge)
@@ -172,9 +183,14 @@ mice.impute.midastouch <- function(y, ry, x, wy = NULL, ridge = 1e-05,
     }
 
     Xyarray <- c(Xy) - t(Xobs * yobs * omega)
-    BETAarray <- apply(rbind(XXarray, Xyarray), 2, function(x, m) {
-      solve(a = matrix(head(x, m^2), m), b = tail(x, m))
-    }, m = m)
+    BETAarray <- apply(
+      rbind(XXarray, Xyarray),
+      2,
+      function(x, m) {
+        solve(a = matrix(head(x, m^2), m), b = tail(x, m))
+      },
+      m = m
+    )
     YHATdon <- rowSums(Xobs * t(BETAarray))
     # each recipient has nobs different yhats
     YHATrec <- Xmis %*% BETAarray
@@ -182,10 +198,13 @@ mice.impute.midastouch <- function(y, ry, x, wy = NULL, ridge = 1e-05,
     dist.mat <- YHATdon - t(YHATrec)
   } else {
     yhat.mis <- c(Xmis %*% beta)
-    dist.mat <- yhat.obs - matrix(
-      data = yhat.mis, nrow = nobs, ncol = nmis,
-      byrow = TRUE
-    )
+    dist.mat <- yhat.obs -
+      matrix(
+        data = yhat.mis,
+        nrow = nobs,
+        ncol = nmis,
+        byrow = TRUE
+      )
   }
 
   # convert distances to drawing probs // ensure real results
@@ -201,7 +220,9 @@ mice.impute.midastouch <- function(y, ry, x, wy = NULL, ridge = 1e-05,
       assign(x = "midastouch.neff", value = list(), envir = get(neff))
     }
     midastouch.neff <- get("midastouch.neff", envir = get(neff))
-    midastouch.neff[[length(midastouch.neff) + 1]] <- mean(1 / rowSums((t(delta.mat) / csums)^2))
+    midastouch.neff[[length(midastouch.neff) + 1]] <- mean(
+      1 / rowSums((t(delta.mat) / csums)^2)
+    )
     assign(x = "midastouch.neff", value = midastouch.neff, envir = get(neff))
   }
 

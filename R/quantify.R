@@ -40,15 +40,11 @@
 #' @export
 quantify <- function(y, ry, x, quantify = TRUE) {
   if (!is.factor(y)) {
-    return(list(ynum = y,
-                labels = NULL,
-                quant = NULL))
+    return(list(ynum = y, labels = NULL, quant = NULL))
   }
   if (!quantify) {
     ynum <- as.integer(y)
-    return(list(ynum = ynum,
-                labels = levels(y),
-                quant = 1L:length(levels(y))))
+    return(list(ynum = ynum, labels = levels(y), quant = 1L:length(levels(y))))
   }
 
   # replace (reduced set of) categories by optimal scaling
@@ -59,9 +55,7 @@ quantify <- function(y, ry, x, quantify = TRUE) {
   quant <- as.vector(cca$ycoef[, 2L])
   quant_expand <- quant[match(levels(y), levels(yf))]
   ynum <- quant_expand[match(as.character(y), levels(y))]
-  return(list(ynum = ynum,
-              labels = levels(y),
-              quant = quant_expand))
+  return(list(ynum = ynum, labels = levels(y), quant = quant_expand))
 }
 
 #' Revert quantified variables back to factor representation
@@ -99,14 +93,22 @@ quantify <- function(y, ry, x, quantify = TRUE) {
 #' @seealso [quantify()]
 #' @export
 unquantify <- function(ynum = NULL, quant = NULL, labels = NULL) {
-  if (is.null(labels)) return(ynum)
+  if (is.null(labels)) {
+    return(ynum)
+  }
 
-  closest <- vapply(seq_along(ynum), function(i) {
-    y <- ynum[i]
-    if (is.na(y)) return(NA_character_)
-    i_match <- which.min(abs(y - quant))
-    labels[i_match]
-  }, character(1))
+  closest <- vapply(
+    seq_along(ynum),
+    function(i) {
+      y <- ynum[i]
+      if (is.na(y)) {
+        return(NA_character_)
+      }
+      i_match <- which.min(abs(y - quant))
+      labels[i_match]
+    },
+    character(1)
+  )
 
   factor(closest, levels = labels)
 }

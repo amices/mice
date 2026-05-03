@@ -1,6 +1,20 @@
-sampler.univ <- function(data, r, where, pred, formula, method, task, model,
-                         yname, k, calltype = "pred", user, ignore,
-                         trimmer = "lindep", ...) {
+sampler.univ <- function(
+  data,
+  r,
+  where,
+  pred,
+  formula,
+  method,
+  task,
+  model,
+  yname,
+  k,
+  calltype = "pred",
+  user,
+  ignore,
+  trimmer = "lindep",
+  ...
+) {
   j <- yname[1L]
 
   # nothing to impute
@@ -29,7 +43,8 @@ sampler.univ <- function(data, r, where, pred, formula, method, task, model,
     y = data[, j],
     ry = r[, j] & !ignore,
     x = x,
-    trimmer = trimmer, ...
+    trimmer = trimmer,
+    ...
   )
 
   # store the names of the features
@@ -52,7 +67,8 @@ sampler.univ <- function(data, r, where, pred, formula, method, task, model,
       y = data[, j],
       ry = r[, j] & !ignore,
       x = x,
-      trimmer = trimmer, ...
+      trimmer = trimmer,
+      ...
     )
   }
 
@@ -80,8 +96,11 @@ sampler.univ <- function(data, r, where, pred, formula, method, task, model,
       wy = wy,
       type = type[keep$cols],
       task = task,
-      model = model),
-    user, list(...))
+      model = model
+    ),
+    user,
+    list(...)
+  )
   imputes[iy] <- do.call(f, args = args)
   return(imputes)
 }
@@ -116,7 +135,10 @@ prepare.formula <- function(formula, data, model, j, ct, pred, task) {
     ymove <- setdiff(lhs(formula), j)
     formula <- update(formula, paste(j, " ~ . "))
     if (length(ymove) > 0L) {
-      formula <- update(formula, paste("~ . + ", paste(backticks(ymove), collapse = "+")))
+      formula <- update(
+        formula,
+        paste("~ . + ", paste(backticks(ymove), collapse = "+"))
+      )
     }
   }
 

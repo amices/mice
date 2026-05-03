@@ -385,33 +385,37 @@
 #' complete(imp.test2, 2)
 #' }
 #' @export
-mice <- function(data,
-                 m = 5,
-                 method = NULL,
-                 predictorMatrix,
-                 ignore = NULL,
-                 where = NULL,
-                 blocks,
-                 visitSequence = NULL,
-                 formulas,
-                 calltypes = NULL,
-                 blots = NULL,
-                 tasks = NULL,
-                 models = NULL,
-                 post = NULL,
-                 defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
-                 maxit = 5,
-                 printFlag = TRUE,
-                 seed = NA,
-                 data.init = NULL,
-                 compact = FALSE,
-                 parallel = FALSE,
-                 n.core = NULL,
-                 ...) {
+mice <- function(
+  data,
+  m = 5,
+  method = NULL,
+  predictorMatrix,
+  ignore = NULL,
+  where = NULL,
+  blocks,
+  visitSequence = NULL,
+  formulas,
+  calltypes = NULL,
+  blots = NULL,
+  tasks = NULL,
+  models = NULL,
+  post = NULL,
+  defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
+  maxit = 5,
+  printFlag = TRUE,
+  seed = NA,
+  data.init = NULL,
+  compact = FALSE,
+  parallel = FALSE,
+  n.core = NULL,
+  ...
+) {
   call <- match.call()
   check.deprecated(...)
 
-  if (!is.na(seed)) set.seed(seed)
+  if (!is.na(seed)) {
+    set.seed(seed)
+  }
 
   # check form of data and m
   data <- check.dataform(data)
@@ -420,7 +424,9 @@ mice <- function(data,
   # Set up parallel backend if requested
   if (parallel) {
     if (!requireNamespace("future.apply", quietly = TRUE)) {
-      stop("Please install the 'future.apply' package to use parallel execution.")
+      stop(
+        "Please install the 'future.apply' package to use parallel execution."
+      )
     }
 
     available <- future::availableCores()
@@ -490,9 +496,11 @@ mice <- function(data,
     formulas <- check.formulas(formulas, data)
     predictorMatrix <- check.predictorMatrix(predictorMatrix, data)
     blocks <- construct.blocks(formulas, predictorMatrix)
-    predictorMatrix <- make.predictorMatrix(data,
-                                            blocks = blocks,
-                                            predictorMatrix = predictorMatrix)
+    predictorMatrix <- make.predictorMatrix(
+      data,
+      blocks = blocks,
+      predictorMatrix = predictorMatrix
+    )
     calltypes <- make.calltypes(calltypes, predictorMatrix, formulas, "formula")
   }
 
@@ -514,8 +522,11 @@ mice <- function(data,
   where <- check.where(where, data, blocks)
 
   user.visitSequence <- visitSequence
-  visitSequence <- check.visitSequence(visitSequence,
-                                       data = data, where = where, blocks = blocks
+  visitSequence <- check.visitSequence(
+    visitSequence,
+    data = data,
+    where = where,
+    blocks = blocks
   )
   predictorMatrix <- mice.edit.predictorMatrix(
     predictorMatrix = predictorMatrix,
@@ -525,19 +536,32 @@ mice <- function(data,
   )
   tasks <- check.tasks(tasks, data, models, blocks, skip.check.tasks = FALSE)
   store <- ifelse(length(unique(tasks)) == 1L, tasks[1L], "train")
-  if (compact && store == "train") store <- "train_compact"
+  if (compact && store == "train") {
+    store <- "train_compact"
+  }
 
   method <- check.method(
-    method = method, data = data, where = where,
-    blocks = blocks, tasks = tasks,
+    method = method,
+    data = data,
+    where = where,
+    blocks = blocks,
+    tasks = tasks,
     defaultMethod = defaultMethod
   )
   post <- check.post(post, data)
   blots <- check.blots(blots, data, blocks)
   ignore <- check.ignore(ignore, data)
 
-  loggedEvents <- data.frame(it = 0L, im = 0L, dep = "", meth = "", out = "",
-                             msg = NA_character_, fn = NA_character_, stringsAsFactors = FALSE)
+  loggedEvents <- data.frame(
+    it = 0L,
+    im = 0L,
+    dep = "",
+    meth = "",
+    out = "",
+    msg = NA_character_,
+    fn = NA_character_,
+    stringsAsFactors = FALSE
+  )
   state <- list(it = 0L, im = 0L, dep = "", meth = "", log = TRUE)
 
   setup <- list(
@@ -559,19 +583,41 @@ mice <- function(data,
   # initialize imputations
   nmis <- apply(is.na(data), 2L, sum)
   imp <- initialize.imp(
-    data, m, ignore, where, blocks, visitSequence,
-    method, nmis, data.init
+    data,
+    m,
+    ignore,
+    where,
+    blocks,
+    visitSequence,
+    method,
+    nmis,
+    data.init
   )
 
   # and iterate...
   from <- 1L
   to <- from + maxit - 1L
   q <- sampler(
-    data, m, ignore, where, imp, blocks, method,
-    visitSequence, predictorMatrix, formulas,
-    calltypes, blots, tasks, models,
-    post, c(from, to), printFlag, ...,
-    parallel = parallel)
+    data,
+    m,
+    ignore,
+    where,
+    imp,
+    blocks,
+    method,
+    visitSequence,
+    predictorMatrix,
+    formulas,
+    calltypes,
+    blots,
+    tasks,
+    models,
+    post,
+    c(from, to),
+    printFlag,
+    ...,
+    parallel = parallel
+  )
 
   if (!state$log || nrow(loggedEvents) == 1L) {
     loggedEvents <- NULL
@@ -600,17 +646,23 @@ mice <- function(data,
     ignore = ignore,
     seed = seed,
     iteration = q$iteration,
-    lastSeedValue = get(".Random.seed",
-                        envir = globalenv(), mode = "integer",
-                        inherits = FALSE),
+    lastSeedValue = get(
+      ".Random.seed",
+      envir = globalenv(),
+      mode = "integer",
+      inherits = FALSE
+    ),
     chainMean = q$chainMean,
     chainVar = q$chainVar,
     loggedEvents = loggedEvents,
-    store = store)
+    store = store
+  )
 
   if (!is.null(midsobj$loggedEvents)) {
-    warning("Number of logged events: ", nrow(midsobj$loggedEvents),
-            call. = FALSE
+    warning(
+      "Number of logged events: ",
+      nrow(midsobj$loggedEvents),
+      call. = FALSE
     )
   }
   return(midsobj)

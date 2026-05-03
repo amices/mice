@@ -1,8 +1,26 @@
-sampler <- function(data, m, ignore, where, imp, blocks, method,
-                    visitSequence, predictorMatrix, formulas,
-                    calltypes, blots, tasks, models,
-                    post, fromto, printFlag, ...,
-                    parallel = FALSE, future.packages = NULL, future.seed = TRUE) {
+sampler <- function(
+  data,
+  m,
+  ignore,
+  where,
+  imp,
+  blocks,
+  method,
+  visitSequence,
+  predictorMatrix,
+  formulas,
+  calltypes,
+  blots,
+  tasks,
+  models,
+  post,
+  fromto,
+  printFlag,
+  ...,
+  parallel = FALSE,
+  future.packages = NULL,
+  future.seed = TRUE
+) {
   from <- fromto[1]
   to <- fromto[2]
   maxit <- to - from + 1
@@ -12,7 +30,9 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
   chainMean <- chainVar <- initialize.chain(names(data), maxit, m)
 
   ## THE MAIN LOOP: GIBBS SAMPLER ##
-  if (maxit < 1) iteration <- 0
+  if (maxit < 1) {
+    iteration <- 0
+  }
   if (maxit >= 1) {
     if (!parallel && printFlag) {
       cat("\n iter imp variable")
@@ -44,79 +64,135 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
             }
           }
 
-          result <- one.cycle(data, imp, r, where, i, k, visitSequence,
-                              blocks, method, calltypes, formulas,
-                              predictorMatrix, blots,
-                              tasks, models,
-                              post, ignore, printFlag, ...)
+          result <- one.cycle(
+            data,
+            imp,
+            r,
+            where,
+            i,
+            k,
+            visitSequence,
+            blocks,
+            method,
+            calltypes,
+            formulas,
+            predictorMatrix,
+            blots,
+            tasks,
+            models,
+            post,
+            ignore,
+            printFlag,
+            ...
+          )
           data <- result$data
           imp <- result$imp
         }
         k2 <- k - from + 1L
-        stat <- get.chain.stats(data, imp, chainMean, chainVar, k2, m, blocks, visitSequence)
+        stat <- get.chain.stats(
+          data,
+          imp,
+          chainMean,
+          chainVar,
+          k2,
+          m,
+          blocks,
+          visitSequence
+        )
         chainMean <- stat$chainMean
         chainVar <- stat$chainVar
-
       } else {
         # parallel processing with future.apply
-        results_i <- future.apply::future_lapply(seq_len(m), function(i) {
-          emit_worker_log <- function(log_entry, file) {
-            saveRDS(log_entry, file = file)
-          }
-
-          data_i <- data
-          imp_i <- imp
-
-          # loop over blocks
-          for (h in visitSequence) {
-            for (j in blocks[[h]]) {
-              y <- data_i[, j]
-              ry <- r[, j]
-              wy <- where[, j]
-              data_i[(!ry) & wy, j] <- imp_i[[j]][(!ry)[wy], i]
+        results_i <- future.apply::future_lapply(
+          seq_len(m),
+          function(i) {
+            emit_worker_log <- function(log_entry, file) {
+              saveRDS(log_entry, file = file)
             }
-          }
 
-          result <- one.cycle(data_i, imp_i, r, where, i, k, visitSequence,
-                              blocks, method, calltypes, formulas,
-                              predictorMatrix, blots,
-                              tasks, models,
-                              post, ignore, printFlag = FALSE, ...)
+            data_i <- data
+            imp_i <- imp
 
-          data_i <- result$data
-          imp_i <- result$imp
-          mean_i <- initialize.chain(names(data), 1, 1)[[1]]
-          var_i  <- initialize.chain(names(data), 1, 1)[[1]]
-          for (h in visitSequence) {
-            for (j in blocks[[h]]) {
-              if (!is.factor(data[, j])) {
-                var_i[j] <- var(imp_i[[j]][, i], na.rm = TRUE)
-                mean_i[j] <- mean(imp_i[[j]][, i], na.rm = TRUE)
-              } else {
-                nc <- as.integer(factor(imp_i[[j]][, i], levels = levels(data[, j])))
-                var_i[j] <- var(nc, na.rm = TRUE)
-                mean_i[j] <- mean(nc, na.rm = TRUE)
+            # loop over blocks
+            for (h in visitSequence) {
+              for (j in blocks[[h]]) {
+                y <- data_i[, j]
+                ry <- r[, j]
+                wy <- where[, j]
+                data_i[(!ry) & wy, j] <- imp_i[[j]][(!ry)[wy], i]
               }
             }
-          }
 
-          # Create a log record
-          log.entry <- data.frame(
-            it   = k, im   = i, dep  = "cycle", meth = NA_character_,
-            out  = "success", msg  = "I1001", fn   = "one.cycle",
-            stringsAsFactors = FALSE
-          )
+            result <- one.cycle(
+              data_i,
+              imp_i,
+              r,
+              where,
+              i,
+              k,
+              visitSequence,
+              blocks,
+              method,
+              calltypes,
+              formulas,
+              predictorMatrix,
+              blots,
+              tasks,
+              models,
+              post,
+              ignore,
+              printFlag = FALSE,
+              ...
+            )
 
-          logfile <- file.path(tempdir(), sprintf("log_it%02d_im%02d.rds", k, i))
-          emit_worker_log(log.entry, logfile)
+            data_i <- result$data
+            imp_i <- result$imp
+            mean_i <- initialize.chain(names(data), 1, 1)[[1]]
+            var_i <- initialize.chain(names(data), 1, 1)[[1]]
+            for (h in visitSequence) {
+              for (j in blocks[[h]]) {
+                if (!is.factor(data[, j])) {
+                  var_i[j] <- var(imp_i[[j]][, i], na.rm = TRUE)
+                  mean_i[j] <- mean(imp_i[[j]][, i], na.rm = TRUE)
+                } else {
+                  nc <- as.integer(factor(
+                    imp_i[[j]][, i],
+                    levels = levels(data[, j])
+                  ))
+                  var_i[j] <- var(nc, na.rm = TRUE)
+                  mean_i[j] <- mean(nc, na.rm = TRUE)
+                }
+              }
+            }
 
-          list(imp = imp_i, mean = mean_i, var = var_i)
-        },
-        future.packages = future.packages,
-        future.globals = list(initialize.chain = initialize.chain,
-                              one.cycle = one.cycle,
-                              get.chain.stats = get.chain.stats),
-        future.seed = future.seed)
+            # Create a log record
+            log.entry <- data.frame(
+              it = k,
+              im = i,
+              dep = "cycle",
+              meth = NA_character_,
+              out = "success",
+              msg = "I1001",
+              fn = "one.cycle",
+              stringsAsFactors = FALSE
+            )
+
+            logfile <- file.path(
+              tempdir(),
+              sprintf("log_it%02d_im%02d.rds", k, i)
+            )
+            emit_worker_log(log.entry, logfile)
+
+            list(imp = imp_i, mean = mean_i, var = var_i)
+          },
+          future.packages = future.packages,
+          future.globals = list(
+            initialize.chain = initialize.chain,
+            one.cycle = one.cycle,
+            get.chain.stats = get.chain.stats
+          ),
+          future.seed = future.seed
+        )
 
         # Combine with existing log if needed
         new.loggedEvents <- collect_logs()
@@ -128,7 +204,9 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
         }
 
         t1 <- Sys.time()
-        if (printFlag) cat(sprintf("\n iter %d (%s)", k, format(round(difftime(t1, t0), 2))))
+        if (printFlag) {
+          cat(sprintf("\n iter %d (%s)", k, format(round(difftime(t1, t0), 2))))
+        }
 
         k2 <- k - from + 1L
         for (i in seq_len(m)) {
@@ -137,7 +215,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
             imp[[j]][, i] <- imp_i[[j]][, i]
           }
           mean_i <- results_i[[i]]$mean
-          var_i  <- results_i[[i]]$var
+          var_i <- results_i[[i]]$var
           for (j in names(mean_i)) {
             if (j %in% dimnames(chainMean)[[1]]) {
               chainMean[j, k2, i] <- mean_i[[j]]
@@ -160,9 +238,27 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
   list(iteration = maxit, imp = imp, chainMean = chainMean, chainVar = chainVar)
 }
 
-one.cycle <- function(data, imp, r, where, i, k, visitSequence,
-                      blocks, method, calltypes, formulas, predictorMatrix,
-                      blots, tasks, models, post, ignore, printFlag, ...) {
+one.cycle <- function(
+  data,
+  imp,
+  r,
+  where,
+  i,
+  k,
+  visitSequence,
+  blocks,
+  method,
+  calltypes,
+  formulas,
+  predictorMatrix,
+  blots,
+  tasks,
+  models,
+  post,
+  ignore,
+  printFlag,
+  ...
+) {
   # this function makes one pass through the data
 
   # impute block-by-block
@@ -176,12 +272,16 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
     # univariate/multivariate logic
     theMethod <- method[h]
     empt <- theMethod == ""
-    univ <- !empt && !is.passive(theMethod) &&
+    univ <- !empt &&
+      !is.passive(theMethod) &&
       !handles.format(paste0("mice.impute.", theMethod))
-    mult <- !empt && !is.passive(theMethod) &&
+    mult <- !empt &&
+      !is.passive(theMethod) &&
       handles.format(paste0("mice.impute.", theMethod))
     pass <- !empt && is.passive(theMethod) && length(blocks[[h]]) == 1
-    if (printFlag & !empt) cat(" ", b)
+    if (printFlag & !empt) {
+      cat(" ", b)
+    }
 
     # (repeated) univariate imputation - pred method
     if (univ) {
@@ -193,14 +293,19 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
         mod <- (i - 1L) %% m.train + 1L
         imp[[j]][, i] <-
           sampler.univ(
-            data = data, r = r, where = where,
-            pred = pred, formula = ff,
+            data = data,
+            r = r,
+            where = where,
+            pred = pred,
+            formula = ff,
             method = theMethod,
             task = tasks[j],
             model = models[[j]][[as.character(mod)]],
-            yname = j, k = k,
+            yname = j,
+            k = k,
             calltype = calltype,
-            user = user, ignore = ignore,
+            user = user,
+            ignore = ignore,
             ...
           )
 
@@ -227,10 +332,12 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
       data[mis] <- NA
 
       fm <- paste("mice.impute", theMethod, sep = ".")
-      imputes <- switch(calltype,
-                        formula = do.call(fm, list(data = data, formula = ff, ...)),
-                        pred = do.call(fm, list(data = data, type = pred, ...)),
-                        stop("Cannot call function of type ", calltype))
+      imputes <- switch(
+        calltype,
+        formula = do.call(fm, list(data = data, formula = ff, ...)),
+        pred = do.call(fm, list(data = data, type = pred, ...)),
+        stop("Cannot call function of type ", calltype)
+      )
 
       # Abort if imputes is NULL
       if (is.null(imputes)) {
@@ -251,8 +358,11 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
         newstate <- list(it = k, im = i, dep = b, meth = theMethod)
         wy <- where[, j]
         ry <- r[, j]
-        imp[[j]][, i] <- model.frame(as.formula(theMethod), data[wy, ],
-                                     na.action = na.pass)
+        imp[[j]][, i] <- model.frame(
+          as.formula(theMethod),
+          data[wy, ],
+          na.action = na.pass
+        )
         data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
       }
     }
@@ -261,7 +371,16 @@ one.cycle <- function(data, imp, r, where, i, k, visitSequence,
   list(data = data, imp = imp)
 }
 
-get.chain.stats <- function(data, imp, chainMean, chainVar, k2, m, blocks, visitSequence) {
+get.chain.stats <- function(
+  data,
+  imp,
+  chainMean,
+  chainVar,
+  k2,
+  m,
+  blocks,
+  visitSequence
+) {
   # Updates mean and variance of imputed values
   for (h in visitSequence) {
     for (j in blocks[[h]]) {
@@ -280,12 +399,18 @@ get.chain.stats <- function(data, imp, chainMean, chainVar, k2, m, blocks, visit
   list(chainMean = chainMean, chainVar = chainVar)
 }
 
-collect_logs <- function(path = tempdir(), pattern = "^log_it\\d+_im\\d+\\.rds$",
-                         remove = TRUE, verbose = FALSE) {
+collect_logs <- function(
+  path = tempdir(),
+  pattern = "^log_it\\d+_im\\d+\\.rds$",
+  remove = TRUE,
+  verbose = FALSE
+) {
   log_files <- list.files(path, pattern = pattern, full.names = TRUE)
 
   if (length(log_files) == 0L) {
-    if (verbose) message("No log files found.")
+    if (verbose) {
+      message("No log files found.")
+    }
     return(NULL)
   }
 
@@ -293,7 +418,9 @@ collect_logs <- function(path = tempdir(), pattern = "^log_it\\d+_im\\d+\\.rds$"
     tryCatch(
       readRDS(file),
       error = function(e) {
-        if (verbose) warning("Failed to read log file: ", file)
+        if (verbose) {
+          warning("Failed to read log file: ", file)
+        }
         NULL
       }
     )

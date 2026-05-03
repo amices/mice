@@ -70,8 +70,11 @@ check.ignore <- function(ignore, data) {
   }
   if (length(ignore) != nrow(data)) {
     stop(
-      "length(ignore) (", length(ignore),
-      ") does not match nrow(data) (", nrow(data), ")."
+      "length(ignore) (",
+      length(ignore),
+      ") does not match nrow(data) (",
+      nrow(data),
+      ")."
     )
   }
   if (sum(!ignore) < 10L) {

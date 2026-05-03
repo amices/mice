@@ -1,7 +1,14 @@
 context("tidiers")
 
 data(nhanes)
-imp <- mice::mice(nhanes, maxit = 2, m = 2, seed = 1, print = FALSE, use.matcher = TRUE)
+imp <- mice::mice(
+  nhanes,
+  maxit = 2,
+  m = 2,
+  seed = 1,
+  print = FALSE,
+  use.matcher = TRUE
+)
 fit_mira <- with(imp, lm(chl ~ age + bmi))
 fit_mipo <- mice::pool(fit_mira)
 

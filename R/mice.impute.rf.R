@@ -58,12 +58,20 @@
 #' plot(imp)
 #' }
 #' @export
-mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
-                           rfPackage = c("ranger", "randomForest", "literanger"),
-                           ...) {
+mice.impute.rf <- function(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  ntree = 10,
+  rfPackage = c("ranger", "randomForest", "literanger"),
+  ...
+) {
   rfPackage <- match.arg(rfPackage)
 
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
 
   ntree <- max(1, ntree) # safety
   nmis <- sum(wy)
@@ -72,7 +80,8 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
   yobs <- y[ry]
 
   # Find eligible donors
-  f <- switch(rfPackage,
+  f <- switch(
+    rfPackage,
     randomForest = .randomForest.donors,
     ranger = .ranger.donors,
     literanger = .literanger.donor
@@ -81,9 +90,13 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
   forest <- f(xobs, xmis, yobs, ntree, ...)
 
   # Short-circuit when using literanger interface
-  if (rfPackage == "literanger") return(forest)
+  if (rfPackage == "literanger") {
+    return(forest)
+  }
   # Sample from donors
-  if (nmis == 1) forest <- array(forest, dim = c(1, ntree))
+  if (nmis == 1) {
+    forest <- array(forest, dim = c(1, ntree))
+  }
   apply(forest, MARGIN = 1, FUN = function(s) sample(unlist(s), 1))
 }
 
@@ -96,7 +109,8 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
     fit <- randomForest::randomForest(
       x = xobs,
       y = yobs,
-      ntree = 1, ...
+      ntree = 1,
+      ...
     )
     leafnr <- predict(object = fit, newdata = xobs, nodes = TRUE)
     leafnr <- as.vector(attr(leafnr, "nodes"))
@@ -114,11 +128,18 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
   install.on.demand("ranger", ...)
 
   # Fit all trees at once
-  fit <- suppressWarnings(ranger::ranger(x = xobs, y = yobs, num.trees = ntree, ...))
+  fit <- suppressWarnings(ranger::ranger(
+    x = xobs,
+    y = yobs,
+    num.trees = ntree,
+    ...
+  ))
 
   nodes <- predict(
-    object = fit, data = rbind(xobs, xmis),
-    type = "terminalNodes", predict.all = TRUE
+    object = fit,
+    data = rbind(xobs, xmis),
+    type = "terminalNodes",
+    predict.all = TRUE
   )
   nodes <- ranger::predictions(nodes)
   nodes_obs <- nodes[1:nrow(xobs), , drop = FALSE]
@@ -142,7 +163,8 @@ mice.impute.rf <- function(y, ry, x, wy = NULL, ntree = 10,
   dots <- dots[intersect(names(dots), setdiff(lr_formals, c('x', 'y')))]
 
   fit <- do.call(
-    literanger::train, c(list(x = xobs, y = yobs, n_tree = ntree), dots)
+    literanger::train,
+    c(list(x = xobs, y = yobs, n_tree = ntree), dots)
   )
   predict(object = fit, newdata = xmis, prediction_type = "inbag")$values
 }

@@ -8,7 +8,12 @@ impute.with.na <- function(x, wy) !complete.cases(x) & wy
 check.df <- function(x, y, ry) {
   # If needed, writes the df warning message to the log
   df <- sum(ry) - ncol(x) - 1
-  mess <- paste("df set to 1. # observed cases:", sum(ry), " # predictors:", ncol(x) + 1)
+  mess <- paste(
+    "df set to 1. # observed cases:",
+    sum(ry),
+    " # predictors:",
+    ncol(x) + 1
+  )
   if (df < 1 && sum(ry) > 0) {
     record.event(out = mess, frame = 4)
   }
@@ -39,7 +44,13 @@ find.collinear <- function(x, threshold = 0.999, ...) {
   return(varnames[out])
 }
 
-updateLog <- function(out = NULL, meth = NULL, msg = NULL, fn = NULL, frame = 1) {
+updateLog <- function(
+  out = NULL,
+  meth = NULL,
+  msg = NULL,
+  fn = NULL,
+  frame = 1
+) {
   pos_state <- ma_exists("state", frame)$pos
   pos_loggedEvents <- ma_exists("loggedEvents", frame)$pos
 
@@ -47,13 +58,13 @@ updateLog <- function(out = NULL, meth = NULL, msg = NULL, fn = NULL, frame = 1)
   r <- get("loggedEvents", pos_loggedEvents)
 
   rec <- data.frame(
-    it   = s$it,
-    im   = s$im,
-    dep  = s$dep,
+    it = s$it,
+    im = s$im,
+    dep = s$dep,
     meth = if (is.null(meth)) s$meth else meth,
-    out  = if (is.null(out)) "" else out,
-    msg  = if (is.null(msg)) NA_character_ else msg,
-    fn   = if (is.null(fn)) as.character(sys.call(-1)[1]) else as.character(fn),
+    out = if (is.null(out)) "" else out,
+    msg = if (is.null(msg)) NA_character_ else msg,
+    fn = if (is.null(fn)) as.character(sys.call(-1)[1]) else as.character(fn),
     stringsAsFactors = FALSE
   )
 
@@ -128,16 +139,23 @@ updateLog <- function(out = NULL, meth = NULL, msg = NULL, fn = NULL, frame = 1)
 record.event <- function(out = NULL, meth = NULL, frame = 1, logenv = NULL) {
   # If no logenv passed explicitly, try .logenv from globalenv
   if (is.null(logenv)) {
-    logenv <- tryCatch(get(".logenv", envir = .GlobalEnv), error = function(e) NULL)
+    logenv <- tryCatch(get(".logenv", envir = .GlobalEnv), error = function(e) {
+      NULL
+    })
   }
 
-  if (is.environment(logenv) && exists("state", envir = logenv, inherits = FALSE)) {
+  if (
+    is.environment(logenv) && exists("state", envir = logenv, inherits = FALSE)
+  ) {
     s <- get("state", envir = logenv, inherits = FALSE)
 
     if (!exists("log", envir = logenv, inherits = FALSE)) {
       logenv$log <- data.frame(
-        it = integer(), im = integer(), dep = character(),
-        meth = character(), out = character(),
+        it = integer(),
+        im = integer(),
+        dep = character(),
+        meth = character(),
+        out = character(),
         stringsAsFactors = FALSE
       )
     }
@@ -169,20 +187,19 @@ sym <- function(x) {
 
 # This helper function was copied from
 # https://github.com/alexanderrobitzsch/miceadds/blob/master/R/ma_exists.R
-ma_exists <- function( x, pos, n_index = 1:8)
-{
+ma_exists <- function(x, pos, n_index = 1:8) {
   n_index <- n_index + 1
   is_there <- exists(x, where = pos)
   obj <- NULL
   nn <- 0
-  if (is_there){
+  if (is_there) {
     obj <- get(x, pos)
   }
-  if (!is_there){
-    for (nn in n_index){
+  if (!is_there) {
+    for (nn in n_index) {
       pos <- parent.frame(n = nn)
       is_there <- exists(x, where = pos)
-      if (is_there){
+      if (is_there) {
         obj <- get(x, pos)
         break
       }
@@ -241,4 +258,3 @@ sanitize.vec <- function(vec, y) {
   # default (numeric, character, etc.)
   vec
 }
-

@@ -120,14 +120,19 @@
 #' # to get old behavior: as.integer(y))
 #' table(mice.impute.lasso.pmm(y, ry, x, quantify = FALSE))
 #' @export
-mice.impute.lasso.pmm <- function(y, ry, x, wy = NULL,
-                             donors = 5L,
-                             matchtype = ifelse(sum(ry) >= 1000L, 0L, 1L),
-                             remove.values = NULL,
-                             quantify = TRUE,
-                             trim = 1L,
-                             dfmax = NULL,
-                             ...) {
+mice.impute.lasso.pmm <- function(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  donors = 5L,
+  matchtype = ifelse(sum(ry) >= 1000L, 0L, 1L),
+  remove.values = NULL,
+  quantify = TRUE,
+  trim = 1L,
+  dfmax = NULL,
+  ...
+) {
   stopifnot(ncol(x) >= 2L)
   x <- as.matrix(x)
 
@@ -183,8 +188,10 @@ mice.impute.lasso.pmm <- function(y, ry, x, wy = NULL,
 
   # Create partial LASSO path with dfmax non-zero coefficients
   dfmax <- ifelse(is.null(dfmax), ncol(x), dfmax)
-  fit <- do.call(glmnet::glmnet,
-                 c(list(x = xobs, y = yobs, dfmax = dfmax), dots))
+  fit <- do.call(
+    glmnet::glmnet,
+    c(list(x = xobs, y = yobs, dfmax = dfmax), dots)
+  )
 
   # Find lambda from partial LASSO path
   indices <- which(fit$df <= dfmax)
@@ -205,8 +212,10 @@ mice.impute.lasso.pmm <- function(y, ry, x, wy = NULL,
     s <- sample(n, n, replace = TRUE)
     xobs1 <- x[ry & complete.cases(x, y), , drop = FALSE][s, , drop = FALSE]
     yobs1 <- as.numeric(ynum[ry][s])
-    fit1 <- do.call(glmnet::glmnet,
-                    c(list(x = xobs1, y = yobs1, lambda = lambda), dots))
+    fit1 <- do.call(
+      glmnet::glmnet,
+      c(list(x = xobs1, y = yobs1, lambda = lambda), dots)
+    )
     yhatobs <- predict(fit, newx = xobs, s = lambda)
     yhatmis <- predict(fit1, newx = ximp, s = lambda)
   }
@@ -216,8 +225,10 @@ mice.impute.lasso.pmm <- function(y, ry, x, wy = NULL,
     s <- sample(n, n, replace = TRUE)
     xobs1 <- x[ry & complete.cases(x, y), , drop = FALSE][s, , drop = FALSE]
     yobs1 <- as.numeric(ynum[ry][s])
-    fit1 <- do.call(glmnet::glmnet,
-                    c(list(x = xobs1, y = yobs1, lambda = lambda), dots))
+    fit1 <- do.call(
+      glmnet::glmnet,
+      c(list(x = xobs1, y = yobs1, lambda = lambda), dots)
+    )
     yhatobs <- predict(fit1, newx = xobs, s = lambda)
     yhatmis <- predict(fit1, newx = ximp, s = lambda)
   }

@@ -8,9 +8,10 @@ get.dfcom <- function(model, dfcom = NULL) {
   }
 
   # first, try the standard df.residual() function
-  dfcom <- tryCatch(stats::df.residual(model),
-                    error = function(e) NULL)
-  if (!is.null(dfcom)) return(as.numeric(dfcom))
+  dfcom <- tryCatch(stats::df.residual(model), error = function(e) NULL)
+  if (!is.null(dfcom)) {
+    return(as.numeric(dfcom))
+  }
 
   # coxph model: nevent - p
   if (inherits(model, "coxph")) {
@@ -34,10 +35,15 @@ get.dfcom <- function(model, dfcom = NULL) {
 
 
 get.glanced <- function(object) {
-  if (!is.list(object)) stop("Argument 'object' not a list", call. = FALSE)
+  if (!is.list(object)) {
+    stop("Argument 'object' not a list", call. = FALSE)
+  }
   object <- as.mira(object)
 
-  glanced <- try(data.frame(summary(getfit(object), type = "glance")), silent = TRUE)
+  glanced <- try(
+    data.frame(summary(getfit(object), type = "glance")),
+    silent = TRUE
+  )
   if (inherits(glanced, "data.frame")) {
     # nobs is needed for pool.r.squared
     # broom <= 0.5.6 does not supply it; use nobs() rather than

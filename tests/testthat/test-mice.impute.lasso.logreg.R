@@ -47,20 +47,17 @@ for (j in 1:2) {
 # Imputations
 meth <- make.method(X)
 meth[1:2] <- "lasso.logreg"
-durr_default <- mice(X,
-  m = 2, maxit = 2, method = meth,
-  print = FALSE
-)
-durr_custom <- mice(X,
-  m = 2, maxit = 2, method = meth,
+durr_default <- mice(X, m = 2, maxit = 2, method = meth, print = FALSE)
+durr_custom <- mice(
+  X,
+  m = 2,
+  maxit = 2,
+  method = meth,
   nfolds = 5,
   print = FALSE
 )
 meth[1:2] <- "logreg"
-logreg_default <- mice(X,
-  m = 2, maxit = 2, method = meth,
-  print = FALSE
-)
+logreg_default <- mice(X, m = 2, maxit = 2, method = meth, print = FALSE)
 
 # Tests
 test_that("mice call works", {
@@ -232,20 +229,17 @@ for (j in 1:2) {
 # Imputations
 meth <- make.method(X)
 meth[1:2] <- "lasso.select.logreg"
-iurr_default <- mice(X,
-                     m = 2, maxit = 2, method = meth,
-                     print = FALSE
-)
-iurr_custom <- mice(X,
-                    m = 2, maxit = 2, method = meth,
-                    nfolds = 5,
-                    print = FALSE
+iurr_default <- mice(X, m = 2, maxit = 2, method = meth, print = FALSE)
+iurr_custom <- mice(
+  X,
+  m = 2,
+  maxit = 2,
+  method = meth,
+  nfolds = 5,
+  print = FALSE
 )
 meth[1:2] <- "logreg"
-logreg_default <- mice(X,
-                       m = 2, maxit = 2, method = meth,
-                       print = FALSE
-)
+logreg_default <- mice(X, m = 2, maxit = 2, method = meth, print = FALSE)
 
 # Tests
 test_that("mice call works", {

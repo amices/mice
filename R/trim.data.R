@@ -63,17 +63,21 @@
 #' imp <- mice(nhanes, m = 1, maxit = 1, print = FALSE, trimmer = "")
 #' @export
 trim.data <- function(
-    y, ry, x, trimmer = "lindep", allow.na = TRUE, ...) {
+  y,
+  ry,
+  x,
+  trimmer = "lindep",
+  allow.na = TRUE,
+  ...
+) {
   stopifnot(is.matrix(x), is.logical(ry))
   stopifnot(length(y) == length(ry), nrow(x) == length(y))
 
   # handle exceptions to bypass trimming
-  if (allow.na && sum(ry) == 0L ||
-      sum(ry) <= 1L ||
-      ncol(x) < 1L ||
-      trimmer == "") {
-    keep <- list(rows = ry & complete.cases(x, y),
-                 cols = !logical(ncol(x)))
+  if (
+    allow.na && sum(ry) == 0L || sum(ry) <= 1L || ncol(x) < 1L || trimmer == ""
+  ) {
+    keep <- list(rows = ry & complete.cases(x, y), cols = !logical(ncol(x)))
   } else if (trimmer == "lindep") {
     keep <- mice.trim.lindep(y, ry, x, ...)
   } else if (trimmer == "lars") {
@@ -106,8 +110,14 @@ mice.trim.lindep <- function(y, ry, x, frame = 5, ...) {
 
   keep <- list(
     rows = complete.cases(x, y) & ry,
-    cols = remove.lindep(x, y, ry, frame = frame,
-                         expects.complete.x = FALSE, ...)
+    cols = remove.lindep(
+      x,
+      y,
+      ry,
+      frame = frame,
+      expects.complete.x = FALSE,
+      ...
+    )
   )
   return(keep)
 }
@@ -145,10 +155,16 @@ mice.trim.lindep <- function(y, ry, x, frame = 5, ...) {
 #' @rdname trim.data
 #' @export
 mice.trim.lars <- function(
-    y, ry, x,
-    lars.type = c("lar", "lasso", "forward.stagewise", "stepwise"),
-    lars.eps = 1e-12,
-    max.predictors = NULL, lars.relax = 5, minimal.cp = 1, ...) {
+  y,
+  ry,
+  x,
+  lars.type = c("lar", "lasso", "forward.stagewise", "stepwise"),
+  lars.eps = 1e-12,
+  max.predictors = NULL,
+  lars.relax = 5,
+  minimal.cp = 1,
+  ...
+) {
   lars.type <- match.arg(lars.type)
 
   keep <- trim.preprocess(y, ry, x)
@@ -159,8 +175,13 @@ mice.trim.lars <- function(
   xobs <- x[keep$rows, keep$cols, drop = FALSE]
 
   max.steps <- ifelse(is.null(max.predictors), ncol(xobs), max.predictors)
-  model <- lars(x = xobs, y = yobs, type = lars.type, eps = lars.eps,
-                max.steps = max.steps)
+  model <- lars(
+    x = xobs,
+    y = yobs,
+    type = lars.type,
+    eps = lars.eps,
+    max.steps = max.steps
+  )
   if (any(model$R2 == 1)) {
     # work-around because Cp gives NaN for perfect fits
     coef_step <- coef(model, s = which(model$R2 == 1))
@@ -184,7 +205,6 @@ mice.trim.lars <- function(
 #' @rdname trim.data
 #' @export
 mice.trim.glmnet <- function(y, ry, x, dfmax = NULL, ...) {
-
   keep <- trim.preprocess(y, ry, x)
   if (!any(keep$cols) || !any(keep$rows)) {
     return(keep)
@@ -211,7 +231,6 @@ mice.trim.glmnet <- function(y, ry, x, dfmax = NULL, ...) {
 #' @rdname trim.data
 #' @export
 mice.trim.cv.glmnet <- function(y, ry, x, dfmax = NULL, ...) {
-
   keep <- trim.preprocess(y, ry, x)
   if (!any(keep$cols) || !any(keep$rows)) {
     return(keep)
@@ -243,8 +262,7 @@ trim.preprocess <- function(y, ry, x) {
     cols <- logical(ncol(x))
   }
 
-  return(list(rows = ry & complete.cases(x, y),
-              cols = cols))
+  return(list(rows = ry & complete.cases(x, y), cols = cols))
 }
 
 #' Filter out constant and multi-collinear predictors before imputation
@@ -272,9 +290,16 @@ trim.preprocess <- function(y, ry, x) {
 #' conservative filter than \code{trim.lars()}.
 #' @rdname trim.data
 #' @export
-remove.lindep <- function(x, y, ry, eps = 1e-04, maxcor = 0.99,
-                          frame = 4, expects.complete.x = TRUE, ...) {
-
+remove.lindep <- function(
+  x,
+  y,
+  ry,
+  eps = 1e-04,
+  maxcor = 0.99,
+  frame = 4,
+  expects.complete.x = TRUE,
+  ...
+) {
   # handle.incomplete is a flag to indicate what to do with incomplete x
   if (expects.complete.x) {
     # classic remove.lindep

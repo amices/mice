@@ -1,6 +1,13 @@
 context("models")
 
-trained <- mice(nhanes2, m = 2, maxit = 1, print = FALSE, tasks = "train", seed = 1)
+trained <- mice(
+  nhanes2,
+  m = 2,
+  maxit = 1,
+  print = FALSE,
+  tasks = "train",
+  seed = 1
+)
 models_env <- import.models.env(trained$models)
 models_list <- export.models.env(models_env)
 

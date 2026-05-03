@@ -30,7 +30,13 @@ ifdo <- function(cond, action) {
 #' @param typ Label to signal that this is a newly added observation
 #' @return A long data frame with additional rows for the break ages
 #' @export
-appendbreak <- function(data, brk, warp.model = warp.model, id = NULL, typ = "pred") {
+appendbreak <- function(
+  data,
+  brk,
+  warp.model = warp.model,
+  id = NULL,
+  typ = "pred"
+) {
   k <- length(brk)
   app <- data[data$first, ]
   if (!is.null(id)) {
@@ -48,7 +54,8 @@ appendbreak <- function(data, brk, warp.model = warp.model, id = NULL, typ = "pr
   ## update age variables
   app$age <- rep(brk, each = nap)
   app$age2 <- predict(warp.model, newdata = app)
-  X <- splines::bs(app$age,
+  X <- splines::bs(
+    app$age,
     knots = brk,
     Boundary.knots = c(brk[1], brk[k] + 0.0001),
     degree = 1
@@ -97,7 +104,9 @@ single2imputes <- function(single, mis) {
   vars <- names(single)[nmis > 0]
   z <- vector("list", length(vars))
   names(z) <- vars
-  for (j in vars) z[[j]] <- single[mis[, j], j]
+  for (j in vars) {
+    z[[j]] <- single[mis[, j], j]
+  }
   z
 }
 

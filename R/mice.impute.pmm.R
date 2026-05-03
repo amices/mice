@@ -168,16 +168,29 @@
 #' # to get old behavior (before mice v3.16.4): as.integer(y))
 #' mice.impute.pmm(y, ry, x, quantify = FALSE)
 #' @export
-mice.impute.pmm <- function(y, ry, x, wy = NULL,
-                            task = "impute", model = NULL,
-                            exclude = NULL, trim = 1L, quantify = TRUE,
-                            ridge = 1e-05, matchtype = 1L,
-                            donors = 5L, nbins = NULL, use.matcher = FALSE,
-                            mlocal = 1L, ...)
-{
+mice.impute.pmm <- function(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  task = "impute",
+  model = NULL,
+  exclude = NULL,
+  trim = 1L,
+  quantify = TRUE,
+  ridge = 1e-05,
+  matchtype = 1L,
+  donors = 5L,
+  nbins = NULL,
+  use.matcher = FALSE,
+  mlocal = 1L,
+  ...
+) {
   check.model.exists(model, task)
   method <- "pmm"
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
 
   # Remove excluded values and trim small categories
   if (is.factor(y)) {
@@ -201,10 +214,12 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
   if (task == "fill") {
     cols <- check.model.match(model, x, method)
     yhatmis <- x[wy, cols, drop = FALSE] %*% model$beta.dot
-    impy <- draw.neighbors.pmm(yhatmis,
-                               edges = model$edges,
-                               lookup = model$lookup,
-                               mlocal = mlocal)
+    impy <- draw.neighbors.pmm(
+      yhatmis,
+      edges = model$edges,
+      lookup = model$lookup,
+      mlocal = mlocal
+    )
     return(impy)
   }
 
@@ -240,35 +255,42 @@ mice.impute.pmm <- function(y, ry, x, wy = NULL,
   # >>> Train task: Store model in environment
   nbins <- initialize.nbins(nbins, length(yhatobs), length(unique(yhatobs)))
   donors <- initialize.donors(donors, length(yhatobs))
-  edges <- quantile(yhatobs, probs = seq(0, 1, length.out = nbins + 1L),
-                    type = 7L, na.rm = TRUE)
+  edges <- quantile(
+    yhatobs,
+    probs = seq(0, 1, length.out = nbins + 1L),
+    type = 7L,
+    na.rm = TRUE
+  )
   lookup <- bin.yhat(yhatobs, ynum[ry], k = donors, edges = edges)
 
   # Store the imputation model in models environment
-  model$setup <- list(method = method,
-                      n = length(yhatobs),
-                      donors = donors,
-                      matchtype = matchtype,
-                      quantify = quantify,
-                      exclude = exclude,
-                      trim = trim,
-                      task = task,
-                      nbins = nbins,
-                      ridge = ridge)
+  model$setup <- list(
+    method = method,
+    n = length(yhatobs),
+    donors = donors,
+    matchtype = matchtype,
+    quantify = quantify,
+    exclude = exclude,
+    trim = trim,
+    task = task,
+    nbins = nbins,
+    ridge = ridge
+  )
   model$beta.hat <- beta.hat
   model$beta.dot <- beta.dot
   model$edges <- edges
-  model$lookup <- matrix((unquantify(lookup, f$quant, levels(y))),
-                         nrow = nbins)
+  model$lookup <- matrix((unquantify(lookup, f$quant, levels(y))), nrow = nbins)
   model$factor <- list(labels = f$labels, quant = f$quant)
   model$xnames <- colnames(x)
   model$class <- if (is.ordered(y)) "ordered" else class(y)[1L]
 
   # Compute imputations from model
-  impy <- draw.neighbors.pmm(yhatmis,
-                             edges = model$edges,
-                             lookup = model$lookup,
-                             mlocal = mlocal)
+  impy <- draw.neighbors.pmm(
+    yhatmis,
+    edges = model$edges,
+    lookup = model$lookup,
+    mlocal = mlocal
+  )
   return(impy)
 }
 
@@ -323,7 +345,8 @@ bin.yhat <- function(yhat, y, k, edges) {
       rep(values, k)
     } else {
       sample(values, size = k, replace = length(values) < k)
-    }}))
+    }
+  }))
 
   return(lookup)
 }
@@ -348,8 +371,10 @@ draw.neighbors.pmm <- function(yhat, edges, lookup, mlocal = 1L) {
   selected_bin <- ifelse(runif(n) < p_left, bin, pmin(bin + 1L, nbins))
 
   # Vectorized sampling from lookup table
-  indices <- matrix(sample(1L:ncol(lookup), n * mlocal, replace = TRUE), nrow = n)
+  indices <- matrix(
+    sample(1L:ncol(lookup), n * mlocal, replace = TRUE),
+    nrow = n
+  )
   impy <- matrix(lookup[cbind(selected_bin, indices)], nrow = n, ncol = mlocal)
   return(impy)
 }
-

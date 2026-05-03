@@ -1,11 +1,20 @@
 #' @rdname mice.impute.mnar
 #' @export
-mice.impute.mnar.logreg <- function(y, ry, x, wy = NULL,
-                                    ums = NULL, umx = NULL, ...) {
+mice.impute.mnar.logreg <- function(
+  y,
+  ry,
+  x,
+  wy = NULL,
+  ums = NULL,
+  umx = NULL,
+  ...
+) {
   ## Undentifiable part:
   u <- parse.ums(x, ums = ums, umx = umx, ...)
 
-  if (is.null(wy)) wy <- !ry
+  if (is.null(wy)) {
+    wy <- !ry
+  }
   wyold <- wy
 
   ## Identifiable part: exactly the same as mice.impute.logreg
@@ -33,8 +42,13 @@ mice.impute.mnar.logreg <- function(y, ry, x, wy = NULL,
   beta.star <- beta + rv %*% rnorm(ncol(rv))
 
   ## Draw imputations
-  p <- 1 / (1 + exp(-(x[wy, , drop = FALSE] %*% beta.star +
-    u$x[wyold, , drop = FALSE] %*% u$delta)))
+  p <- 1 /
+    (1 +
+      exp(
+        -(x[wy, , drop = FALSE] %*%
+          beta.star +
+          u$x[wyold, , drop = FALSE] %*% u$delta)
+      ))
   vec <- (runif(nrow(p)) <= p)
   vec[vec] <- 1
   if (is.factor(y)) {

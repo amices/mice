@@ -1,5 +1,14 @@
-initialize.imp <- function(data, m, ignore, where, blocks, visitSequence,
-                           method, nmis, data.init) {
+initialize.imp <- function(
+  data,
+  m,
+  ignore,
+  where,
+  blocks,
+  visitSequence,
+  method,
+  nmis,
+  data.init
+) {
   imp <- vector("list", ncol(data))
   names(imp) <- names(data)
   r <- !is.na(data)
@@ -11,11 +20,12 @@ initialize.imp <- function(data, m, ignore, where, blocks, visitSequence,
       wy <- where[, j]
 
       # Determine correct NA type
-      na_type <- switch(class(y)[1L],
-                        "logical" = as.logical(NA),
-                        "factor"  = as.character(NA),
-                        "ordered" = as.character(NA),
-                        NA_real_
+      na_type <- switch(
+        class(y)[1L],
+        "logical" = as.logical(NA),
+        "factor" = as.character(NA),
+        "ordered" = as.character(NA),
+        NA_real_
       )
 
       # Initialize imp[[j]] with correct type
@@ -44,8 +54,12 @@ initialize.imp <- function(data, m, ignore, where, blocks, visitSequence,
           }
 
           # Final safety check: enforce type match with y
-          if (is.logical(y)) vec <- as.logical(vec)
-          if (is.factor(y)) vec <- factor(vec, levels = levels(y), ordered = is.ordered(y))
+          if (is.logical(y)) {
+            vec <- as.logical(vec)
+          }
+          if (is.factor(y)) {
+            vec <- factor(vec, levels = levels(y), ordered = is.ordered(y))
+          }
 
           imp[[j]][, i] <- vec
         }
@@ -54,7 +68,10 @@ initialize.imp <- function(data, m, ignore, where, blocks, visitSequence,
   }
 
   # Ensure imp[[j]] exists for any j used in where or blocks
-  vars_needed <- union(colnames(where)[colSums(where) > 0], unique(unlist(blocks)))
+  vars_needed <- union(
+    colnames(where)[colSums(where) > 0],
+    unique(unlist(blocks))
+  )
   for (j in vars_needed) {
     if (is.null(imp[[j]])) {
       if (j %in% colnames(where)) {
