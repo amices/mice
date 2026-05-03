@@ -18,9 +18,13 @@ get.dfcom <- function(model, dfcom = NULL) {
   }
 
   # other model: n - p
-  nobs <- tryCatch(length(stats::residuals(model)),
-                   error = function(e) NULL)
-  if (!is.null(nobs)) {
+  # prefer nobs() over length(residuals()) since some models (e.g. clmm) return
+  # empty residuals but have a valid nobs method
+  nobs <- tryCatch(stats::nobs(model), error = function(e) NULL)
+  if (is.null(nobs) || length(nobs) == 0L) {
+    nobs <- tryCatch(length(stats::residuals(model)), error = function(e) NULL)
+  }
+  if (!is.null(nobs) && nobs > 0L) {
     return(as.numeric(max(nobs - length(stats::coef(model)), 1)))
   }
 
@@ -36,9 +40,15 @@ get.glanced <- function(object) {
   glanced <- try(data.frame(summary(getfit(object), type = "glance")), silent = TRUE)
   if (inherits(glanced, "data.frame")) {
     # nobs is needed for pool.r.squared
-    # broom <= 0.5.6 does not supply it
+    # broom <= 0.5.6 does not supply it; use nobs() rather than
+    # length(residuals()) since some models (e.g. clmm) return empty residuals
     if (!"nobs" %in% colnames(glanced)) {
-      glanced$nobs <- length(stats::residuals(object$analyses[[1]]))
+      m1 <- object$analyses[[1]]
+      nobs <- tryCatch(stats::nobs(m1), error = function(e) NULL)
+      if (is.null(nobs) || length(nobs) == 0L) {
+        nobs <- length(stats::residuals(m1))
+      }
+      glanced$nobs <- nobs
     }
   } else {
     glanced <- NULL
