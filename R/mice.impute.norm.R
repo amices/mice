@@ -125,7 +125,7 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...) {
   df <- max(length(y) - ncol(x), 1)
   if (ls.meth == "qr") {
     qr <- lm.fit(x = x, y = y)
-    c <- t(qr$coef)
+    c <- t(qr$coefficients)
     f <- qr$fitted.values
     r <- t(qr$residuals)
     v <- try(solve(as.matrix(crossprod(qr.R(qr$qr)))), silent = TRUE)
