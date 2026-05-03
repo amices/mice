@@ -1,3 +1,7 @@
+# mice 3.19.4.9000
+
+- Fixes `pool()` returning `dfcom = 1` for `clmm` models from the `ordinal` package, which caused incorrect degrees of freedom, p-values and confidence intervals. Root cause: `clmm` returns empty vectors from both `stats::df.residual()` and `stats::residuals()`, so `get.dfcom()` computed `nobs = 0` and silently floored `dfcom` to 1. Fix: use `stats::nobs()` as the primary fallback, consistent with broom conventions (#748)
+
 # mice 3.19.3
 
 - Adds support for `options(mice.printFlag = FALSE)`
