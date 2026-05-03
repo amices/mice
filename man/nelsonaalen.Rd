@@ -5,7 +5,7 @@
 \alias{hazard}
 \title{Cumulative hazard rate or Nelson-Aalen estimator}
 \usage{
-nelsonaalen(data, timevar, statusvar)
+nelsonaalen(data, timevar, statusvar, ...)
 }
 \arguments{
 \item{data}{A data frame containing the data.}
@@ -13,6 +13,8 @@ nelsonaalen(data, timevar, statusvar)
 \item{timevar}{The name of the time variable in \code{data}.}
 
 \item{statusvar}{The name of the event variable, e.g. death in \code{data}.}
+
+\item{\dots}{Other named arguments passed down to \code{survival::coxph()}}
 }
 \value{
 A vector with \code{nrow(data)} elements containing the Nelson-Aalen

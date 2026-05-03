@@ -11,6 +11,7 @@
 #' @param data A data frame containing the data.
 #' @param timevar The name of the time variable in \code{data}.
 #' @param statusvar The name of the event variable, e.g. death in \code{data}.
+#' @param \dots Other named arguments passed down to \code{survival::coxph()}
 #' @return A vector with \code{nrow(data)} elements containing the Nelson-Aalen
 #' estimates of the cumulative hazard function.
 #' @author Stef van Buuren, 2012
@@ -36,7 +37,7 @@
 #' ch <- nelsonaalen(eng, time, status)
 #' plot(x = time, y = ch, ylab = "Cumulative hazard", xlab = "Time")
 #' @export
-nelsonaalen <- function(data, timevar, statusvar) {
+nelsonaalen <- function(data, timevar, statusvar, ...) {
   if (!is.data.frame(data)) {
     stop("Data must be a data frame")
   }
@@ -45,7 +46,12 @@ nelsonaalen <- function(data, timevar, statusvar) {
   time <- data[, timevar, drop = TRUE]
   status <- data[, statusvar, drop = TRUE]
 
-  hazard <- survival::basehaz(survival::coxph(survival::Surv(time, status) ~ 1))
-  idx <- match(time, hazard[, "time"])
+  coxph_obj <- survival::coxph(survival::Surv(time, status) ~ 1, ...)
+  hazard <- survival::basehaz(coxph_obj)
+  
+  # Adjust depending on near-tie correction
+  idx <- if (coxph_obj$timefix) {
+    match(coxph_obj$y[, "time"], hazard[, "time"])
+  } else match(time, hazard[, "time"])
   hazard[idx, "hazard"]
 }
