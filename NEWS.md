@@ -1,5 +1,8 @@
 # mice 3.18.1.9000
 
+- Adds an early warning in `mice()` when the data contain `POSIXct` or `POSIXlt` date-time columns. Such variables are stored as large numbers (~1e9–1e10) that can make the predictor matrix near-singular in norm-based methods, causing an opaque `solve()` crash. The warning names the offending columns and suggests converting them to `Date` or a standardised numeric before imputing (#746)
+- Improves the error message in `estimice()` when the ridge-penalised `solve()` also fails. Previously this crashed silently; it now stops with a message explaining that extreme predictor scales (e.g. POSIX date-time columns) are the likely cause and suggests standardising or removing such variables (#746)
+
 > **Experimental**: Native support for parallel imputation.
 
 - The `mice()` function now supports parallel execution of imputations via the new `parallel = TRUE` argument. When enabled, instead of sequentially calculating `m` imputations at a given iteration, the `m` chains are distributed across available CPU cores using the `future` and `future.apply` frameworks. 
