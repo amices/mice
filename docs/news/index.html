@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,12 @@
       <small>Source: <a href="https://github.com/amices/mice/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.19.5" id="mice-3195">mice 3.19.5<a class="anchor" aria-label="anchor" href="#mice-3195"></a></h2>
+<ul><li>Fixes <code><a href="../reference/mice.impute.midastouch.html">mice.impute.midastouch()</a></code> producing “invalid factor level” warnings when imputing factors with non-default levels (e.g. <code>0/1</code> or labelled factors). The function converted <code>y</code> to numeric for internal calculations but returned integer codes instead of the original factor values, causing assignment failures in the completed data. Fix: preserve the original <code>y</code> and return from it (<a href="https://github.com/amices/mice/issues/738" class="external-link">#738</a>)</li>
+<li>Adds an early warning in <code><a href="../reference/mice.html">mice()</a></code> when the data contain <code>POSIXct</code> or <code>POSIXlt</code> date-time columns. Such variables are stored as large numbers (~1e9–1e10) that can make the predictor matrix near-singular in norm-based methods, causing an opaque <code><a href="https://rdrr.io/pkg/Matrix/man/solve-methods.html" class="external-link">solve()</a></code> crash. The warning names the offending columns and suggests converting them to <code>Date</code> or a standardised numeric before imputing (<a href="https://github.com/amices/mice/issues/746" class="external-link">#746</a>)</li>
+<li>Improves the error message in <code><a href="../reference/estimice.html">estimice()</a></code> when the ridge-penalised <code><a href="https://rdrr.io/pkg/Matrix/man/solve-methods.html" class="external-link">solve()</a></code> also fails. Previously this crashed silently; it now stops with a message explaining that extreme predictor scales (e.g. POSIX date-time columns) are the likely cause and suggests standardising or removing such variables (<a href="https://github.com/amices/mice/issues/746" class="external-link">#746</a>)</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.19.4" id="mice-3194">mice 3.19.4<a class="anchor" aria-label="anchor" href="#mice-3194"></a></h2>
 <ul><li>Fixes <code><a href="../reference/pool.html">pool()</a></code> returning <code>dfcom = 1</code> for <code>clmm</code> models from the <code>ordinal</code> package, which caused incorrect degrees of freedom, p-values and confidence intervals. Root cause: <code>clmm</code> returns empty vectors from both <code><a href="https://rdrr.io/r/stats/df.residual.html" class="external-link">stats::df.residual()</a></code> and <code><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">stats::residuals()</a></code>, so <code>get.dfcom()</code> computed <code>nobs = 0</code> and silently floored <code>dfcom</code> to 1. Fix: use <code><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">stats::nobs()</a></code> as the primary fallback, consistent with broom conventions (<a href="https://github.com/amices/mice/issues/748" class="external-link">#748</a>)</li>
