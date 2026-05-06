@@ -1,3 +1,6 @@
+# NULL binding to allow mocking in tests (see testthat mocking vignette)
+requireNamespace <- NULL
+
 keep.in.model <- function(y, ry, x, wy) {
   (complete.cases(y, x) & ry) | (complete.cases(x) & wy)
 }
