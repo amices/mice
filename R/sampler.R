@@ -19,12 +19,12 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
     }
 
     # define a progressor with a suitable level of granularity
-    if(requireNamespace("progressr", quietly = TRUE)) {
+    if (requireNamespace("progressr", quietly = TRUE)) {
       n_total <- maxit * m * length(visitSequence)
 
       max_signals <- getOption("mice.progress.max_signals", 100L)
       step <- max(1L, n_total %/% max_signals)
-      
+
       # In parallel mode each worker gets a fresh closure (counter resets),
       #   so step must evenly divide the per-worker workload or some signals
       #   will be lost. Snap to the closest factor of length(visitSequence)
@@ -36,7 +36,7 @@ sampler <- function(data, m, ignore, where, imp, blocks, method,
         if (is.na(step)) step <- nv
       }
       n_signals <- ceiling(n_total / step)
-      
+
       p_raw <- progressr::progressor(steps = n_signals)
       if (step == 1L) {
         p <- p_raw

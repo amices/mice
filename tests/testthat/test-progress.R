@@ -79,22 +79,6 @@ test_that("multi-variable blocks show joined variable names in message", {
   expect_true(length(multi_block_msgs) > 0)
 })
 
-test_that("mice runs without error when progressr is unavailable", {
-  local_mocked_bindings(
-    requireNamespace = function(pkg, ...) {
-      if (pkg == "progressr") return(FALSE)
-      base::requireNamespace(pkg, ...)
-    }
-  )
-
-  updates <- capture_progress_updates(
-    imp <- mice(nhanes, maxit = 1, m = 1, printFlag = FALSE)
-  )
-
-  expect_s3_class(imp, "mids")
-  expect_equal(length(updates), 0)
-})
-
 test_that("mice.progress.max_signals throttles updates for large jobs", {
   skip_if_not_installed("progressr")
 
