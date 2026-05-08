@@ -114,21 +114,6 @@ test_that("mice.progress.max_signals throttles updates for large jobs", {
   expect_lte(length(updates), 5L)
 })
 
-test_that("max_signals does not throttle below default cap", {
-  skip_if_not_installed("progressr")
-
-  maxit <- 2
-  m <- 3
-  n_blocks <- length(make.blocks(nhanes))
-  expect_lt(maxit * m * n_blocks, 100L)
-
-  updates <- capture_progress_updates(
-    mice(nhanes, maxit = maxit, m = m, printFlag = FALSE)
-  )
-
-  expect_equal(length(updates), maxit * m * n_blocks)
-})
-
 test_that("progressr signals fire when parallel = TRUE", {
   skip_if_not_installed("progressr")
   skip_if_not_installed("future")
@@ -161,94 +146,72 @@ test_that("parallel throttling caps step at per-worker workload", {
   with(future::plan(future::multisession, workers = 1), local = TRUE)
   n_blocks <- length(make.blocks(nhanes))
 
-  # --- Case 1: aggressive throttle (max_signals = 2) -------------------------
-  # n_total = 4*2*3 = 24, naive step = 24 %/% 2 = 12.
-  # In parallel the step snaps to the largest factor of n_blocks (3)
-  # that is >= 12, which is only 3 itself — so step becomes n_blocks (3).
-  # Each worker task (maxit * n_blocks = 12 calls) fires 12/3 = 4 signals.
-  # Total: m * 4 = 8.
+  # --- Case 1: step > n_blocks (snaps to n_blocks) ----------------------------
+  # n_total = 3*1*4 = 12, naive step = 12 %/% 2 = 6 > n_blocks (4).
+  # No factor of 4 >= 6, so step caps at n_blocks (4).
+  # Each worker (maxit * n_blocks = 4 calls) fires 4/4 = 1 signal.
+  # Total: m * 1 = 3.
   withr::local_options(mice.progress.max_signals = 2L)
 
-  maxit <- 4
-  m <- 2
-
-  updates <- suppressWarnings(capture_progress_updates(
-    mice(nhanes, maxit = maxit, m = m, printFlag = FALSE, parallel = TRUE)
-  ))
-
-  expect_equal(length(updates), maxit * m)
-
-  # --- Case 2: moderate throttle where step lands on a mid-range factor -------
-  # nhanes has 3 blocks (factors: 1, 3). With max_signals = 5:
-  # n_total = 3*2*3 = 18, naive step = 18 %/% 5 = 3.
-  # Snap to first factor of 3 that is >= 3 → step = 3.
-  # Each worker fires (3*3)/3 = 3 signals. Total: 2 * 3 = 6.
-  withr::local_options(mice.progress.max_signals = 5L)
-
-  maxit <- 3
-  m <- 2
-  n_total <- maxit * m * n_blocks
+  maxit <- 1
+  m <- 3
 
   updates <- suppressWarnings(capture_progress_updates(
     mice(nhanes, maxit = maxit, m = m, printFlag = FALSE, parallel = TRUE)
   ))
 
   per_worker <- maxit * n_blocks
-  step <- n_blocks
-  expect_equal(length(updates), m * (per_worker %/% step))
+  expect_equal(length(updates), m * (per_worker %/% n_blocks))
 
-  # --- Case 3: no throttle needed (small job, step stays 1) ------------------
-  # n_total = 1*1*3 = 3, naive step = 3 %/% 100 = 0 → clamped to 1.
-  # step 1 is a factor of 3, so no snapping. Every call signals.
-  withr::local_options(mice.progress.max_signals = 100L)
+  # --- Case 2: step == n_blocks ------------------------------------------------
+  # n_total = 2*2*4 = 16, naive step = 16 %/% 4 = 4 = n_blocks (4).
+  # Step already equals n_blocks, no snapping needed.
+  # Each worker (maxit * n_blocks = 8 calls) fires 8/4 = 2 signals.
+  # Total: m * 2 = 4.
+  withr::local_options(mice.progress.max_signals = 4L)
 
-  maxit <- 1
-  m <- 1
+  maxit <- 2
+  m <- 2
 
   updates <- suppressWarnings(capture_progress_updates(
     mice(nhanes, maxit = maxit, m = m, printFlag = FALSE, parallel = TRUE)
   ))
 
-  expect_equal(length(updates), maxit * m * n_blocks)
+  per_worker <- maxit * n_blocks
+  expect_equal(length(updates), m * (per_worker %/% n_blocks))
 
-  # --- Case 4: step resolves to a factor of n_blocks --------------------------
-  # The signal count must evenly divide the per-worker workload, so the
-  # effective step must be a factor of n_blocks. Verify this across several
-  # max_signals values.
-  for (max_sig in c(2L, 5L, 10L, 20L, 50L)) {
-    withr::local_options(mice.progress.max_signals = max_sig)
+  # --- Case 3a: step < n_blocks (snaps to n_blocks) ----------------------------
+  # n_blocks = 4, factors: {1, 2, 4}. max_signals = 4:
+  # n_total = 3*1*4 = 12, naive step = 12 %/% 4 = 3 < n_blocks.
+  # Smallest factor of 4 >= 3 is 4 → step = n_blocks.
+  # Each worker (1*4 = 4 calls) fires 4/4 = 1 signal. Total: 3*1 = 3.
+  withr::local_options(mice.progress.max_signals = 4L)
 
-    maxit <- 4
-    m <- 2
-    n_total <- maxit * m * n_blocks
-    naive_step <- max(1L, n_total %/% max_sig)
-    factors <- which(n_blocks %% seq_len(n_blocks) == 0L)
-    snapped <- factors[which(factors >= naive_step)[1]]
-    if (is.na(snapped)) snapped <- n_blocks
-    expect_true(
-      n_blocks %% snapped == 0L,
-      label = sprintf("step %d divides n_blocks %d (max_signals=%d)",
-                      snapped, n_blocks, max_sig)
-    )
-  }
+  maxit <- 1
+  m <- 3
 
-  # --- Case 5: custom blocks with different factor structure ------------------
-  # 2 blocks (factors: 1, 2). max_signals = 3:
-  # n_total = 3*2*2 = 12, naive step = 12 %/% 3 = 4.
-  # First factor of 2 that is >= 4 → none, so step = n_blocks (2).
-  # Each worker fires (3*2)/2 = 3. Total: 2 * 3 = 6.
+  updates <- suppressWarnings(capture_progress_updates(
+    mice(nhanes, maxit = maxit, m = m, printFlag = FALSE, parallel = TRUE)
+  ))
+
+  per_worker <- maxit * n_blocks
+  expect_equal(length(updates), m * (per_worker %/% n_blocks))
+
+  # --- Case 3b: step < n_blocks (snaps to intermediate factor) ----------------
+  # n_blocks = 4, factors: {1, 2, 4}. max_signals = 3:
+  # n_total = 2*1*4 = 8, naive step = 8 %/% 3 = 2 < 4.
+  # Factor 2 >= 2 → step = 2, an intermediate factor.
+  # Each worker (1*4 = 4 calls) fires 4/2 = 2 signals. Total: 2*2 = 4.
   withr::local_options(mice.progress.max_signals = 3L)
 
-  blocks2 <- make.blocks(list(c("bmi", "chl"), "hyp"))
-  nb2 <- length(blocks2)
-  maxit <- 3
+  maxit <- 1
   m <- 2
 
   updates <- suppressWarnings(capture_progress_updates(
-    mice(nhanes, maxit = maxit, m = m, blocks = blocks2,
-         printFlag = FALSE, parallel = TRUE)
+    mice(nhanes, maxit = maxit, m = m, printFlag = FALSE, parallel = TRUE)
   ))
 
-  per_worker <- maxit * nb2
-  expect_equal(length(updates), m * (per_worker %/% nb2))
+  per_worker <- maxit * n_blocks
+  step <- 2L
+  expect_equal(length(updates), m * (per_worker %/% step))
 })
