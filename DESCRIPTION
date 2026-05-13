@@ -104,4 +104,4 @@ BugReports: https://github.com/amices/mice/issues
 LinkingTo: cpp11, Rcpp
 License: GPL (>= 2)
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
+Config/roxygen2/version: 8.0.0

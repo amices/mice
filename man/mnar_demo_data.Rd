@@ -11,7 +11,7 @@ An object of class \code{data.frame} with 500 rows and 3 columns.
 \url{https://github.com/moreno-betancur/NARFCS/blob/master/datmis.csv}
 }
 \usage{
-mnar_demo_data
+data(mnar_demo_data)
 }
 \description{
 A toy example from Margarita Moreno-Betancur for checking NARFCS.

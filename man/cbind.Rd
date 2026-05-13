@@ -19,6 +19,17 @@ rbind(...)
     the default \code{deparse.level = 1} typically and
     \code{deparse.level = 2} always construct labels from the argument
     names, see the \sQuote{Value} section below.}
+    \item{\code{make.row.names}}{(only for data frame method:) logical
+    indicating if unique and valid \code{\link[base]{row.names}} should be
+    constructed from the arguments.}
+    \item{\code{stringsAsFactors}}{logical, passed to \code{\link[base]{as.data.frame}};
+    only has an effect when the \code{\dots} arguments contain a
+    (non-\code{data.frame}) \code{\link[base]{character}}.}
+    \item{\code{factor.exclude}}{if the data frames contain factors, the default
+    \code{TRUE} ensures that \code{NA} levels of factors are kept, see
+    \href{https://bugs.R-project.org/show_bug.cgi?id=17562}{PR#17562} and the \sQuote{Data frame methods}.  In \R versions up
+    to 3.6.x, \code{factor.exclude = NA} has been implicitly hardcoded
+    (\R <= 3.6.0) or the default (\R = 3.6.x, x >= 1).}
   }}
 }
 \value{

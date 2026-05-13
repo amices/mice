@@ -16,7 +16,7 @@ A data frame with 20 rows and 3 variables:
 Enders (2010), Applied Missing Data Analysis, p. 218
 }
 \usage{
-employee
+data(employee)
 }
 \description{
 A toy example from Craig Enders.

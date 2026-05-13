@@ -83,8 +83,8 @@ Journal of Computational and Graphical Statistics, 11, 437-457.
 \seealso{
 \code{\link[mitml]{panImpute}}
 
-Other multivariate-2l: 
-\code{\link{mice.impute.jomoImpute}()}
+Other multivariate-2l:
+\code{\link[=mice.impute.jomoImpute]{mice.impute.jomoImpute()}}
 }
 \author{
 Stef van Buuren, 2018, building on work of Simon Grund,
