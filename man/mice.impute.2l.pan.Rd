@@ -131,10 +131,10 @@ Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-Other univariate-2l: 
-\code{\link{mice.impute.2l.bin}()},
-\code{\link{mice.impute.2l.lmer}()},
-\code{\link{mice.impute.2l.norm}()}
+Other univariate-2l:
+\code{\link[=mice.impute.2l.bin]{mice.impute.2l.bin()}},
+\code{\link[=mice.impute.2l.lmer]{mice.impute.2l.lmer()}},
+\code{\link[=mice.impute.2l.norm]{mice.impute.2l.norm()}}
 }
 \author{
 Alexander Robitzsch (IPN - Leibniz Institute for Science and

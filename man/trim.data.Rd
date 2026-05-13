@@ -84,8 +84,9 @@ for a moderate permissive filter, and 10-20 percent for very permissive.}
 threshold for the filter. Higher values select more predictors.
 The default is 1.}
 
-\item{dfmax}{Limit the maximum number of variables in the model. Useful for
-very large \code{nvars}, if a partial path is desired.}
+\item{dfmax}{\strong{Deprecated}. Use \code{control = list(dfmax = ...)}
+or \code{\link[glmnet]{glmnet.control}(dfmax = ...)} instead. Limit the maximum
+number of variables in the model.}
 
 \item{eps}{Numeric. Used by \code{remove.lindep()} as the threshold for
 the ratio of the smallest to the largest eigenvalue of the correlation

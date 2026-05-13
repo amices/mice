@@ -155,29 +155,29 @@ Imputation by Chained Equations in \code{R}. \emph{Journal of Statistical
 Software}, \bold{45}(3), 1-67. \doi{10.18637/jss.v045.i03}
 }
 \seealso{
-Other univariate imputation functions: 
-\code{\link{mice.impute.cart}()},
-\code{\link{mice.impute.lasso.logreg}()},
-\code{\link{mice.impute.lasso.norm}()},
-\code{\link{mice.impute.lasso.select.logreg}()},
-\code{\link{mice.impute.lasso.select.norm}()},
-\code{\link{mice.impute.lda}()},
-\code{\link{mice.impute.logreg}()},
-\code{\link{mice.impute.logreg.boot}()},
-\code{\link{mice.impute.mean}()},
-\code{\link{mice.impute.midastouch}()},
-\code{\link{mice.impute.mnar.logreg}()},
-\code{\link{mice.impute.mpmm}()},
-\code{\link{mice.impute.norm}()},
-\code{\link{mice.impute.norm.boot}()},
-\code{\link{mice.impute.norm.nob}()},
-\code{\link{mice.impute.norm.predict}()},
-\code{\link{mice.impute.pmm}()},
-\code{\link{mice.impute.polr}()},
-\code{\link{mice.impute.polyreg}()},
-\code{\link{mice.impute.quadratic}()},
-\code{\link{mice.impute.rf}()},
-\code{\link{mice.impute.ri}()}
+Other univariate imputation functions:
+\code{\link[=mice.impute.cart]{mice.impute.cart()}},
+\code{\link[=mice.impute.lasso.logreg]{mice.impute.lasso.logreg()}},
+\code{\link[=mice.impute.lasso.norm]{mice.impute.lasso.norm()}},
+\code{\link[=mice.impute.lasso.select.logreg]{mice.impute.lasso.select.logreg()}},
+\code{\link[=mice.impute.lasso.select.norm]{mice.impute.lasso.select.norm()}},
+\code{\link[=mice.impute.lda]{mice.impute.lda()}},
+\code{\link[=mice.impute.logreg]{mice.impute.logreg()}},
+\code{\link[=mice.impute.logreg.boot]{mice.impute.logreg.boot()}},
+\code{\link[=mice.impute.mean]{mice.impute.mean()}},
+\code{\link[=mice.impute.midastouch]{mice.impute.midastouch()}},
+\code{\link[=mice.impute.mnar.logreg]{mice.impute.mnar.logreg()}},
+\code{\link[=mice.impute.mpmm]{mice.impute.mpmm()}},
+\code{\link[=mice.impute.norm]{mice.impute.norm()}},
+\code{\link[=mice.impute.norm.boot]{mice.impute.norm.boot()}},
+\code{\link[=mice.impute.norm.nob]{mice.impute.norm.nob()}},
+\code{\link[=mice.impute.norm.predict]{mice.impute.norm.predict()}},
+\code{\link[=mice.impute.pmm]{mice.impute.pmm()}},
+\code{\link[=mice.impute.polr]{mice.impute.polr()}},
+\code{\link[=mice.impute.polyreg]{mice.impute.polyreg()}},
+\code{\link[=mice.impute.quadratic]{mice.impute.quadratic()}},
+\code{\link[=mice.impute.rf]{mice.impute.rf()}},
+\code{\link[=mice.impute.ri]{mice.impute.ri()}}
 }
 \author{
 Stef van Buuren

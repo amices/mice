@@ -98,7 +98,7 @@ Description: Multiple imputation using Fully Conditional Specification (FCS)
     Various diagnostic plots are available to inspect the quality of the
     imputations.
 Encoding: UTF-8
-LazyLoad: yes
+LazyLoad: no
 LazyData: yes
 URL: https://github.com/amices/mice,
     https://amices.org/mice/,
@@ -107,4 +107,4 @@ BugReports: https://github.com/amices/mice/issues
 LinkingTo: cpp11, Rcpp
 License: GPL (>= 2)
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
+Config/roxygen2/version: 8.0.0
