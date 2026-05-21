@@ -1,8 +1,8 @@
 Package: mice
 Type: Package
-Version: 3.19.5
+Version: 3.19.3
 Title: Multivariate Imputation by Chained Equations
-Date: 2026-05-04
+Date: 2026-02-24
 Authors@R: c(person("Stef", "van Buuren", role = c("aut","cre"),
     email = "stef.vanbuuren@tno.nl"),
     person("Karin", "Groothuis-Oudshoorn", role = "aut",
@@ -82,7 +82,8 @@ Suggests:
     rmarkdown,
     rstan,
     survival,
-    testthat
+    testthat,
+    kernlab
 Description: Multiple imputation using Fully Conditional Specification (FCS)
     implemented by the MICE algorithm as described in Van Buuren and
     Groothuis-Oudshoorn (2011) <doi:10.18637/jss.v045.i03>. Each variable has
