@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Overview</h1>
             
-            <h4 data-toc-skip class="date">2026-01-20</h4>
+            <h4 data-toc-skip class="date">2026-05-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/amices/mice/blob/HEAD/vignettes/overview.Rmd" class="external-link"><code>vignettes/overview.Rmd</code></a></small>
       <div class="d-none name"><code>overview.Rmd</code></div>
@@ -92,7 +92,7 @@ follows:</p>
 <p>The latest version can be installed from GitHub as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"amices/mice"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install-deprecated.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"amices/mice"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="capabilities-of-mice-package">Capabilities of <code>mice</code> package<a class="anchor" aria-label="anchor" href="#capabilities-of-mice-package"></a>
@@ -212,21 +212,21 @@ MICE in Python for ordinal data</a></li>
 <li>
 <a href="https://stefvanbuuren.name/publications/#vanbuuren-2011-1" class="external-link">mice:
 Multivariate Imputation by Chained Equations in R</a> in the Journal of
-Statistical Software <span class="citation">(S. van Buuren and
-Groothuis-Oudshoorn 2011)</span>.</li>
+Statistical Software <span class="citation">(<span class="nocase">van
+Buuren and Groothuis-Oudshoorn</span> 2011)</span>.</li>
 <li>The first application on <a href="https://stefvanbuuren.name/publications/#vanbuuren-1999-1" class="external-link">missing
-blood pressure</a> data <span class="citation">(S. van Buuren,
-Boshuizen, and Knook 1999)</span>.</li>
+blood pressure</a> data <span class="citation">(<span class="nocase">van
+Buuren et al.</span> 1999)</span>.</li>
 <li>Term <a href="https://stefvanbuuren.name/publications/#vanbuuren-2006-1" class="external-link">Fully
 Conditional Specification</a> describes a general class of methods that
 specify imputations model for multivariate data as a set of conditional
-distributions <span class="citation">(S. van Buuren et al.
-2006)</span>.</li>
+distributions <span class="citation">(<span class="nocase">van Buuren et
+al.</span> 2006)</span>.</li>
 <li>Details about imputing <a href="https://stefvanbuuren.name/publications/#vanbuuren-2007-1" class="external-link">mixes
-of numerical and categorical data</a> can be found in <span class="citation">(S. van Buuren 2007)</span>.</li>
+of numerical and categorical data</a> can be found in <span class="citation">(<span class="nocase">van Buuren</span>
+2007)</span>.</li>
 <li>Book <a href="https://stefvanbuuren.name/fimd/" class="external-link">Flexible Imputation
-of Missing Data. Second Edition</a> <span class="citation">(Stef van
-Buuren 2018)</span>.</li>
+of Missing Data. Second Edition</a> <span class="citation">(<span class="nocase">van Buuren</span> 2018)</span>.</li>
 </ol>
 </div>
 <div class="section level2">
@@ -248,32 +248,37 @@ Imputation by Chained Equations in R</a>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-vanbuuren-2007-1" class="csl-entry">
-van Buuren, S. 2007. <span>“Multiple Imputation of Discrete and
-Continuous Data by Fully Conditional Specification.”</span>
-<em>Statistical Methods in Medical Research</em> 16 (3): 219–42. <a href="https://doi.org/10.1177/0962280206074463" class="external-link">https://doi.org/10.1177/0962280206074463</a>.
+<span class="nocase">van Buuren, S.</span> 2007. <span>“Multiple
+Imputation of Discrete and Continuous Data by Fully Conditional
+Specification.”</span> <em>Statistical Methods in Medical Research</em>
+16 (3): 219–42. <a href="https://doi.org/10.1177/0962280206074463" class="external-link">https://doi.org/10.1177/0962280206074463</a>.
 </div>
 <div id="ref-vanbuuren-1999-1" class="csl-entry">
-van Buuren, S., H. C. Boshuizen, and D. L. Knook. 1999. <span>“Multiple
-Imputation of Missing Blood Pressure Covariates in Survival
-Analysis.”</span> <em>Statistics in Medicine</em> 18 (6): 681–94. <a href="https://doi.org/10.1002/(sici)1097-0258(19990330)18:6%3C681::aid-sim71%3E3.0.co;2-r" class="external-link">https://doi.org/10.1002/(sici)1097-0258(19990330)18:6&lt;681::aid-sim71&gt;3.0.co;2-r</a>.
+<span class="nocase">van Buuren, S., H. C. Boshuizen, and D. L.
+Knook</span>. 1999. <span>“Multiple Imputation of Missing Blood Pressure
+Covariates in Survival Analysis.”</span> <em>Statistics in Medicine</em>
+18 (6): 681–94. <a href="https://doi.org/10.1002/(sici)1097-0258(19990330)18:6%3C681::aid-sim71%3E3.0.co;2-r" class="external-link">https://doi.org/10.1002/(sici)1097-0258(19990330)18:6&lt;681::aid-sim71&gt;3.0.co;2-r</a>.
 </div>
 <div id="ref-vanbuuren-2006-1" class="csl-entry">
-van Buuren, S., J. P. L. Brand, C. G. M. Groothuis-Oudshoorn, and D. B.
-Rubin. 2006. <span>“Fully Conditional Specification in Multivariate
-Imputation.”</span> <em>Journal of Statistical Computation and
-Simulation</em> 76 (12): 1049–64. <a href="https://doi.org/10.1080/10629360600810434" class="external-link">https://doi.org/10.1080/10629360600810434</a>.
+<span class="nocase">van Buuren, S., J. P. L. Brand, C. G. M.
+Groothuis-Oudshoorn, and D. B. Rubin</span>. 2006. <span>“Fully
+Conditional Specification in Multivariate Imputation.”</span>
+<em>Journal of Statistical Computation and Simulation</em> 76 (12):
+1049–64. <a href="https://doi.org/10.1080/10629360600810434" class="external-link">https://doi.org/10.1080/10629360600810434</a>.
 </div>
 <div id="ref-vanbuuren-2011-1" class="csl-entry">
-van Buuren, S., and K. Groothuis-Oudshoorn. 2011. <span>“<span class="nocase">mice</span>: <span>M</span>ultivariate
+<span class="nocase">van Buuren, S., and K. Groothuis-Oudshoorn</span>.
+2011. <span>“<span class="nocase">mice</span>: <span>M</span>ultivariate
 <span>I</span>mputation by <span>C</span>hained <span>E</span>quations
 in <span>R</span>.”</span> <em>Journal of Statistical Software</em> 45
 (3): 1–67. <a href="https://doi.org/10.18637/jss.v045.i03" class="external-link">https://doi.org/10.18637/jss.v045.i03</a>.
 </div>
 <div id="ref-vanbuuren-2018-1" class="csl-entry">
-van Buuren, Stef. 2018. <em>Flexible Imputation of Missing Data</em>.
-2nd ed. Interdisciplinary Statistics Series. Chapman and Hall/CRC. <a href="https://doi.org/10.1201/9780429492259" class="external-link">https://doi.org/10.1201/9780429492259</a>.
+<span class="nocase">van Buuren, Stef</span>. 2018. <em>Flexible
+Imputation of Missing Data</em>. 2nd ed. Interdisciplinary Statistics
+Series. Chapman and Hall/CRC. <a href="https://doi.org/10.1201/9780429492259" class="external-link">https://doi.org/10.1201/9780429492259</a>.
 </div>
 </div>
 </div>

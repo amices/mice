@@ -24,12 +24,14 @@ quality of the imputations.
 The `mice` package can be installed from CRAN as follows:
 
 ``` r
+
 install.packages("mice")
 ```
 
 The latest version can be installed from GitHub as follows:
 
 ``` r
+
 install.packages("devtools")
 devtools::install_github(repo = "amices/mice")
 ```
@@ -37,6 +39,7 @@ devtools::install_github(repo = "amices/mice")
 ## Minimal example
 
 ``` r
+
 library(mice, warn.conflicts = FALSE)
 
 # show the missing data pattern
@@ -62,6 +65,7 @@ The table and the graph summarize where the missing data occur in the
 `nhanes` dataset.
 
 ``` r
+
 # multiple impute the missing values
 imp <- mice(nhanes, maxit = 2, m = 2, seed = 1)
 #> 
@@ -84,6 +88,7 @@ In general, we would like the imputations to be plausible, i.e., values
 that could have been observed if they had not been missing.
 
 ``` r
+
 # fit complete-data model
 fit <- with(imp, lm(chl ~ age + bmi))
 
