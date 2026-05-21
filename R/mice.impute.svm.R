@@ -21,7 +21,8 @@
 #' @references 
 #' Takahashi, M. (2026). Multiple Imputation based on the Support Vector Machine for 
 #' High-Dimensional Data with General Missing Patterns in Causal Inference. 
-#' Journal of Statistical Computation and Simulation.
+#' \emph{Journal of Statistical Computation and Simulation}. 
+#' \doi{10.1080/00949655.2026.2660865}
 #' @export
 mice.impute.svm <- function(y, ry, x, wy = NULL, type = NULL, C = 1, scaled = TRUE, kernel = "vanilladot", tol = 0.001, kpar = list(), ...) {
   
