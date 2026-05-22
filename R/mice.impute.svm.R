@@ -18,6 +18,7 @@
 #' @param kpar List of hyper-parameters for the kernel function (default = list()).
 #' @param ... Other named arguments to be passed to \code{kernlab::ksvm()}.
 #' @return A vector of length \code{sum(!ry)} with imputed values.
+#' @author Masayoshi Takahashi, 2026
 #' @references 
 #' Takahashi, M. (2026). Multiple Imputation based on the Support Vector Machine for 
 #' High-Dimensional Data with General Missing Patterns in Causal Inference. 
