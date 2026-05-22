@@ -66,3 +66,6 @@ High-Dimensional Data with General Missing Patterns in Causal Inference.
 \emph{Journal of Statistical Computation and Simulation}.
 \doi{10.1080/00949655.2026.2660865}
 }
+\author{
+Masayoshi Takahashi, 2026
+}
