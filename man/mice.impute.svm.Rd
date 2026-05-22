@@ -63,5 +63,6 @@ from removing predictors before they reach the SVM model.
 \references{
 Takahashi, M. (2026). Multiple Imputation based on the Support Vector Machine for
 High-Dimensional Data with General Missing Patterns in Causal Inference.
-Journal of Statistical Computation and Simulation.
+\emph{Journal of Statistical Computation and Simulation}.
+\doi{10.1080/00949655.2026.2660865}
 }
