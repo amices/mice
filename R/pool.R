@@ -179,7 +179,7 @@ pool <- function(object, dfcom = NULL, rule = NULL, custom.t = NULL) {
     pooled = pooled,
     glanced = get.glanced(object)
   )
-  class(rr) <- c("mipo", "data.frame")
+  class(rr) <- "mipo"
   rr
 }
 

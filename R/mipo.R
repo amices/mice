@@ -122,6 +122,12 @@ summary_mipo.workhorse <- function(
 
 #' @rdname mipo
 #' @export
+as.data.frame.mipo <- function(x, ...) {
+  summary(x, ...)
+}
+
+#' @rdname mipo
+#' @export
 print.mipo <- function(x, ...) {
   cat("Class: mipo    m =", x$m, "\n")
   print.data.frame(x$pooled, ...)
