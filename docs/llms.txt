@@ -156,21 +156,21 @@ these through Github’s issues facility.
 
 1.  [mice: Multivariate Imputation by Chained Equations in
     R](https://stefvanbuuren.name/publications/#vanbuuren-2011-1) in the
-    Journal of Statistical Software (S. van Buuren and
-    Groothuis-Oudshoorn 2011).
+    Journal of Statistical Software (van Buuren and Groothuis-Oudshoorn
+    2011).
 2.  The first application on [missing blood
     pressure](https://stefvanbuuren.name/publications/#vanbuuren-1999-1)
-    data (S. van Buuren, Boshuizen, and Knook 1999).
+    data (van Buuren et al. 1999).
 3.  Term [Fully Conditional
     Specification](https://stefvanbuuren.name/publications/#vanbuuren-2006-1)
     describes a general class of methods that specify imputations model
-    for multivariate data as a set of conditional distributions (S. van
-    Buuren et al. 2006).
+    for multivariate data as a set of conditional distributions (van
+    Buuren et al. 2006).
 4.  Details about imputing [mixes of numerical and categorical
     data](https://stefvanbuuren.name/publications/#vanbuuren-2007-1) can
-    be found in (S. van Buuren 2007).
+    be found in (van Buuren 2007).
 5.  Book [Flexible Imputation of Missing Data. Second
-    Edition](https://stefvanbuuren.name/fimd/) (Stef van Buuren 2018).
+    Edition](https://stefvanbuuren.name/fimd/) (van Buuren 2018).
 
 ### Course materials
 
@@ -234,8 +234,8 @@ van Buuren, S., and K. Groothuis-Oudshoorn. 2011. “mice: Multivariate
 Imputation by Chained Equations in R.” *Journal of Statistical Software*
 45 (3): 1–67. <https://doi.org/10.18637/jss.v045.i03>.
 
-van Buuren, Stef. 2018. *Flexible Imputation of Missing Data*. 2nd ed.
-Interdisciplinary Statistics Series. Chapman and Hall/CRC.
+van Buuren, Stef. 2018. *Flexible Imputation of Missing Data*. 2nd
+ed. Interdisciplinary Statistics Series. Chapman and Hall/CRC.
 <https://doi.org/10.1201/9780429492259>.
 
 # Package index
@@ -591,6 +591,7 @@ functions are:
 
 - [`mipo()`](https://amices.org/mice/reference/mipo.md)
   [`summary(`*`<mipo>`*`)`](https://amices.org/mice/reference/mipo.md)
+  [`as.data.frame(`*`<mipo>`*`)`](https://amices.org/mice/reference/mipo.md)
   [`print(`*`<mipo>`*`)`](https://amices.org/mice/reference/mipo.md)
   [`print(`*`<mipo.summary>`*`)`](https://amices.org/mice/reference/mipo.md)
   [`process_mipo()`](https://amices.org/mice/reference/mipo.md) :
