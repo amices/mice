@@ -1,6 +1,8 @@
+- Fixes duplicate CI columns in `summary.mipo()` (#719)
+
 # mice 3.19.6 
 
-- Fix `knitr::kable()` and `as.data.frame()` on mipo objects ([#733](https://github.com/amices/mice/issues/733)), The `mipo` class inherited from `data.frame` but is structurally a list, causing `as.data.frame()` to return 0 rows and breaking `knitr::kable()` and `rmarkdown::paged_table()`. Remove the spurious `data.frame` inheritance and add an `as.data.frame.mipo()` method that returns `summary()`.
+- Fixes `knitr::kable()` and `as.data.frame()` on mipo objects ([#733](https://github.com/amices/mice/issues/733)), The `mipo` class inherited from `data.frame` but is structurally a list, causing `as.data.frame()` to return 0 rows and breaking `knitr::kable()` and `rmarkdown::paged_table()`. Remove the spurious `data.frame` inheritance and add an `as.data.frame.mipo()` method that returns `summary()`.
 
 # mice 3.19.5
 
