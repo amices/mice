@@ -9,3 +9,5 @@ script
 
 /.quarto/
 docs/**/*.md
+scratch/
+Rplots.pdf

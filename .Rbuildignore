@@ -21,3 +21,5 @@ vignettes/
 ^LICENSE\.md$
 ^\.github$
 ^CRAN-SUBMISSION$
+^scratch$
+^Rplots\.pdf$
