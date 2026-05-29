@@ -122,6 +122,6 @@ mice.impute.polr <- function(
     post <- matrix(c(1 - post, post), ncol = 2)
   }
   draws <- un > t(apply(post, 1, cumsum))
-  idx <- 1 + apply(draws, 2, sum)
+  idx <- 1 + rowSums(draws)
   levels(fy)[idx]
 }
