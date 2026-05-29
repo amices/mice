@@ -81,7 +81,7 @@ sampler <- function(
           }
 
           ## store current state
-          oldstate <- get("state", pos = parent.frame())
+          oldstate <- get(".mice.state", pos = parent.frame())
           newstate <- list(
             it = k,
             im = i,
@@ -89,7 +89,7 @@ sampler <- function(
             meth = theMethod,
             log = oldstate$log
           )
-          assign("state", newstate, pos = parent.frame(), inherits = TRUE)
+          assign(".mice.state", newstate, pos = parent.frame(), inherits = TRUE)
 
           # (repeated) univariate imputation - pred method
           if (univ) {

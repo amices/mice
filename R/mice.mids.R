@@ -90,7 +90,7 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = getOption("mic
   }
 
   loggedEvents <- obj$loggedEvents
-  state <- list(
+  .mice.state <- list(
     it = 0,
     im = 0,
     co = 0,
@@ -174,10 +174,10 @@ mice.mids <- function(obj, newdata = NULL, maxit = 1, printFlag = getOption("mic
     chainMean <- chainVar <- NULL
   }
 
-  if (!state$log) {
+  if (!.mice.state$log) {
     loggedEvents <- NULL
   }
-  if (state$log) {
+  if (.mice.state$log) {
     row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
   }
 

@@ -457,7 +457,7 @@ mice <- function(
   ignore <- check.ignore(ignore, data)
 
   # data frame for storing the event log
-  state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
+  .mice.state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
   loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
 
   # edit imputation setup
@@ -509,10 +509,10 @@ mice <- function(
     ...
   )
 
-  if (!state$log) {
+  if (!.mice.state$log) {
     loggedEvents <- NULL
   }
-  if (state$log) {
+  if (.mice.state$log) {
     row.names(loggedEvents) <- seq_len(nrow(loggedEvents))
   }
 

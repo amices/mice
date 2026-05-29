@@ -1,10 +1,11 @@
+
+- Fixes `Error in s$it : $ operator is invalid for atomic vectors` when the data or global environment contains a variable named `state`. The internal logging object is renamed from `state` to `.mice.state` to avoid name collisions (#527). **Breaking change for extension packages:** custom `mice.impute.*` functions that call the internal `mice:::updateLog()` must ensure `.mice.state` is visible in the call stack (it is, when called from within `mice()`). Direct calls to `mice:::updateLog()` outside of the `mice()` Gibbs sampler will fail to find the logging state.
 - Fixes `Error in apply(draws, 2, sum) : dim(X) must have a positive length` in `mice.impute.polr()`, `mice.impute.lda()` and `mice.impute.polyreg()` occuring when only one missing value was present (#684).
 - Fixes `Error in colMeans(as.matrix(imp[[j]]))` crash when data contains character variables. The chain statistics loop now skips character columns, consistent with the existing factor handling (#601)
 
 # mice 3.19.7
 
 - Fixes duplicate CI columns in `summary.mipo()` (#719)
-- Fixes crash `Error in colMeans(as.matrix(imp[[j]]))` when data contains character variables; chain statistics loop now skips character columns, consistent with existing factor handling (#601)
 - Adds `random.effects` argument to `mice.impute.2l.bin()` with options `"laplace"` (default), `"eb"`, and `"marginal"`, implementing the FCS-GLM distinction between sporadic and systematic missingness as described in Audigier et al. (2018). Also vectorises the imputation loop (#686)
 - Adds vignette `random-effects-2l-bin` discussing the three random effects strategies for two-level binary imputation
 
