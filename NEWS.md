@@ -1,4 +1,8 @@
+# mice 3.19.7
+
 - Fixes duplicate CI columns in `summary.mipo()` (#719)
+- Adds `random.effects` argument to `mice.impute.2l.bin()` with options `"laplace"` (default), `"eb"`, and `"marginal"`, implementing the FCS-GLM distinction between sporadic and systematic missingness as described in Audigier et al. (2018). Also vectorises the imputation loop (#686)
+- Adds vignette `random-effects-2l-bin` discussing the three random effects strategies for two-level binary imputation
 
 # mice 3.19.6 
 
