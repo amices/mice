@@ -58,6 +58,6 @@ mice.impute.lda <- function(y, ry, x, wy = NULL, ...) {
   fit <- MASS::lda(x, fy, subset = ry)
   post <- predict(fit, x[wy, , drop = FALSE])$posterior
   un <- rep(runif(sum(wy)), each = nc)
-  idx <- 1 + apply(un > apply(post, 1, cumsum), 2, sum)
+  idx <- 1 + rowSums(un > t(apply(post, 1, cumsum)))
   levels(fy)[idx]
 }

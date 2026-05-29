@@ -110,10 +110,10 @@ find.collinear <- function(x, threshold = 0.999, ...) {
 
 updateLog <- function(out = NULL, meth = NULL, frame = 1) {
   # find structures defined a mice() level
-  pos_state <- ma_exists("state", frame)$pos
+  pos_state <- ma_exists(".mice.state", frame)$pos
   pos_loggedEvents <- ma_exists("loggedEvents", frame)$pos
 
-  s <- get("state", pos_state)
+  s <- get(".mice.state", pos_state)
   r <- get("loggedEvents", pos_loggedEvents)
 
   rec <- data.frame(
@@ -128,7 +128,7 @@ updateLog <- function(out = NULL, meth = NULL, frame = 1) {
     rec <- rbind(r, rec)
   }
   s$log <- TRUE
-  assign("state", s, pos = pos_state, inherits = TRUE)
+  assign(".mice.state", s, pos = pos_state, inherits = TRUE)
   assign("loggedEvents", rec, pos = pos_loggedEvents, inherits = TRUE)
   return()
 }
