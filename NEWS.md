@@ -1,3 +1,5 @@
+- Fixes `Error in apply(draws, 2, sum) : dim(X) must have a positive length` in `mice.impute.polr()`, `mice.impute.lda()` and `mice.impute.polyreg()` occuring when only one missing value was present (#684).
+
 # mice 3.19.7
 
 - Fixes duplicate CI columns in `summary.mipo()` (#719)
