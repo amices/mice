@@ -149,24 +149,21 @@ mice.impute.2l.bin <- function(
   }
 
   # find clusters for which we need imputes
-  clmis <- x[wy, clust]
+  clmis <- unique(x[wy, clust])
 
-  # the main imputation task
-  for (i in clmis) {
-    bi.star <- t(MASS::mvrnorm(
-      n = 1L,
-      mu = rep(0, nrow(psi.star)),
-      Sigma = psi.star
-    ))
-    idx <- wy & (x[, clust] == i)
-    logit <- X[idx, , drop = FALSE] %*%
-      beta.star +
-      Z[idx, , drop = FALSE] %*% matrix(bi.star, ncol = 1)
-    vec <- rbinom(nrow(logit), 1, as.vector(1 / (1 + exp(-logit))))
-    if (is.factor(y)) {
-      vec <- factor(vec, c(0, 1), levels(y))
-    }
-    y[idx] <- vec
+  # draw all cluster random effects at once, then impute in one pass
+  B <- MASS::mvrnorm(
+    n = length(clmis),
+    mu = rep(0, nrow(psi.star)),
+    Sigma = psi.star
+  )
+  if (length(clmis) == 1L) B <- matrix(B, nrow = 1L)
+  clust_idx <- match(x[wy, clust], clmis)
+  logit <- X[wy, , drop = FALSE] %*% beta.star +
+    rowSums(Z[wy, , drop = FALSE] * B[clust_idx, , drop = FALSE])
+  vec <- rbinom(sum(wy), 1, as.vector(1 / (1 + exp(-logit))))
+  if (is.factor(y)) {
+    vec <- factor(vec, c(0, 1), levels(y))
   }
-  y[wy]
+  vec
 }
