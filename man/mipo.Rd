@@ -3,6 +3,7 @@
 \name{mipo}
 \alias{mipo}
 \alias{summary.mipo}
+\alias{as.data.frame.mipo}
 \alias{print.mipo}
 \alias{print.mipo.summary}
 \alias{process_mipo}
@@ -18,6 +19,8 @@ mipo(mira.obj, ...)
   exponentiate = FALSE,
   ...
 )
+
+\method{as.data.frame}{mipo}(x, ...)
 
 \method{print}{mipo}(x, ...)
 

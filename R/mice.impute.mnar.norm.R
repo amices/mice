@@ -6,8 +6,7 @@
 #' different MNAR assumptions on the conclusions.
 #'
 #' @rdname mice.impute.mnar
-#' @aliases mice.impute.mnar.norm mnar.norm
-#'          mice.impute.mnar.logreg mnar.logreg
+#' @aliases mice.impute.mnar.norm mnar.norm mice.impute.mnar.logreg mnar.logreg
 #' @inheritParams mice.impute.pmm
 #' @param ums A string containing the specification of the
 #' unidentifiable part of the imputation model (the *unidentifiable

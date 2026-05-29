@@ -35,6 +35,4 @@ Print a \code{summary.mice.anova} object
 \code{\link{mira}}
 
 \code{\link{mipo}}
-
-\code{\link{mipo}}
 }

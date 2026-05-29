@@ -85,8 +85,8 @@ and studies with missing covariates. Statistics in Medicine,
 \seealso{
 \code{\link[mitml]{jomoImpute}}
 
-Other multivariate-2l: 
-\code{\link{mice.impute.panImpute}()}
+Other multivariate-2l:
+\code{\link[=mice.impute.panImpute]{mice.impute.panImpute()}}
 }
 \author{
 Stef van Buuren, 2018, building on work of Simon Grund,

@@ -122,6 +122,12 @@ summary_mipo.workhorse <- function(
 
 #' @rdname mipo
 #' @export
+as.data.frame.mipo <- function(x, ...) {
+  summary(x, ...)
+}
+
+#' @rdname mipo
+#' @export
 print.mipo <- function(x, ...) {
   cat("Class: mipo    m =", x$m, "\n")
   print.data.frame(x$pooled, ...)
@@ -163,7 +169,6 @@ process_mipo <- function(
     z <- cbind(
       term = parnames,
       z[, c("m", "estimate", "std.error", "statistic", "df", "p.value")],
-      trans(unrowname(CI)),
       conf.low = trans(unrowname(CI[, 1L])),
       conf.high = trans(unrowname(CI[, 2L])),
       z[, c("riv", "lambda", "fmi", "ubar", "b", "t", "dfcom")]

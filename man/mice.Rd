@@ -466,6 +466,7 @@ data sets.} Dissertation. Rotterdam: Erasmus University.
 
 Authors:
 \itemize{
+  \item Stef van Buuren \email{stef.vanbuuren@tno.nl}
   \item Karin Groothuis-Oudshoorn \email{c.g.m.oudshoorn@utwente.nl}
 }
 
