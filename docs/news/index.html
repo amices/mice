@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,6 +20,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
     <li><a class="dropdown-item" href="../articles/oldfriends.html">Help for old friends</a></li>
+    <li><a class="dropdown-item" href="../articles/random-effects-2l-bin.html">Random effects strategies in `mice.impute.2l.bin`</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -37,8 +38,14 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.19.7" id="mice-3197">mice 3.19.7<a class="anchor" aria-label="anchor" href="#mice-3197"></a></h2>
+<ul><li>Fixes duplicate CI columns in <code><a href="../reference/mipo.html">summary.mipo()</a></code> (<a href="https://github.com/amices/mice/issues/719" class="external-link">#719</a>)</li>
+<li>Adds <code>random.effects</code> argument to <code><a href="../reference/mice.impute.2l.bin.html">mice.impute.2l.bin()</a></code> with options <code>"laplace"</code> (default), <code>"eb"</code>, and <code>"marginal"</code>, implementing the FCS-GLM distinction between sporadic and systematic missingness as described in Audigier et al. (2018). Also vectorises the imputation loop (<a href="https://github.com/amices/mice/issues/686" class="external-link">#686</a>)</li>
+<li>Adds vignette <code>random-effects-2l-bin</code> discussing the three random effects strategies for two-level binary imputation</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.19.6" id="mice-3196">mice 3.19.6<a class="anchor" aria-label="anchor" href="#mice-3196"></a></h2>
-<ul><li>Fix <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> and <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> on mipo objects (<a href="https://github.com/amices/mice/issues/733" class="external-link">#733</a>), The <code>mipo</code> class inherited from <code>data.frame</code> but is structurally a list, causing <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> to return 0 rows and breaking <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> and <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/paged_table.html" class="external-link">rmarkdown::paged_table()</a></code>. Remove the spurious <code>data.frame</code> inheritance and add an <code><a href="../reference/mipo.html">as.data.frame.mipo()</a></code> method that returns <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.</li>
+<ul><li>Fixes <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> and <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> on mipo objects (<a href="https://github.com/amices/mice/issues/733" class="external-link">#733</a>), The <code>mipo</code> class inherited from <code>data.frame</code> but is structurally a list, causing <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> to return 0 rows and breaking <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> and <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/paged_table.html" class="external-link">rmarkdown::paged_table()</a></code>. Remove the spurious <code>data.frame</code> inheritance and add an <code><a href="../reference/mipo.html">as.data.frame.mipo()</a></code> method that returns <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.19.5" id="mice-3195">mice 3.19.5<a class="anchor" aria-label="anchor" href="#mice-3195"></a></h2>

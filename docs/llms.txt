@@ -797,3 +797,5 @@ Miscellaneous functions
 - [Overview](https://amices.org/mice/articles/overview.md):
 - [Help for old
   friends](https://amices.org/mice/articles/oldfriends.md):
+- [Random effects strategies in
+  \`mice.impute.2l.bin\`](https://amices.org/mice/articles/random-effects-2l-bin.md):

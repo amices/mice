@@ -9,7 +9,7 @@ using a two-level logistic model using lme4::glmer()"><meta property="og:image" 
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,6 +22,7 @@ using a two-level logistic model using lme4::glmer()"><meta property="og:image" 
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
     <li><a class="dropdown-item" href="../articles/oldfriends.html">Help for old friends</a></li>
+    <li><a class="dropdown-item" href="../articles/random-effects-2l-bin.html">Random effects strategies in `mice.impute.2l.bin`</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -46,7 +47,16 @@ using a two-level logistic model using <code><a href="https://rdrr.io/pkg/lme4/m
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mice.impute.2l.bin</span><span class="op">(</span><span class="va">y</span>, <span class="va">ry</span>, <span class="va">x</span>, <span class="va">type</span>, wy <span class="op">=</span> <span class="cn">NULL</span>, intercept <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mice.impute.2l.bin</span><span class="op">(</span></span>
+<span>  <span class="va">y</span>,</span>
+<span>  <span class="va">ry</span>,</span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">type</span>,</span>
+<span>  wy <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  intercept <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  random.effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"laplace"</span>, <span class="st">"eb"</span>, <span class="st">"marginal"</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -86,6 +96,12 @@ indicates locations in <code>y</code> for which imputations are created.</p></dd
 added.</p></dd>
 
 
+<dt id="arg-random-effects">random.effects<a class="anchor" aria-label="anchor" href="#arg-random-effects"></a></dt>
+<dd><p>Character string specifying how the random effect is
+drawn for sporadic clusters. One of <code>"laplace"</code> (default),
+<code>"eb"</code>, or <code>"marginal"</code>. See Details.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Arguments passed down to <code>glmer</code></p></dd>
 
@@ -100,10 +116,38 @@ added.</p></dd>
     <p>Data are missing systematically if they have not been measured, e.g., in the
 case where we combine data from different sources. Data are missing sporadically
 if they have been partially observed.</p>
-    </div>
+<p>The <code>random.effects</code> argument controls how the cluster-specific random
+effect \(b_i^*\) is drawn for clusters that have missing values:</p>
+<dl><dt><code>"laplace"</code></dt>
+<dd><p>(default) For clusters with observed data, draws
+\(b_i^*\) from \(N(m_i, V_i)\) where \(m_i\) is the posterior
+mode (BLUP) and \(V_i\) is the Laplace-approximated posterior
+variance returned by <code>lme4::ranef(fit, condVar = TRUE)</code>.
+For clusters with no observed data, draws from the marginal prior
+\(N(0, \psi^*)\). This is the method recommended by Audigier et al.
+(2018).</p></dd>
+
+<dt><code>"eb"</code></dt>
+<dd><p>Empirical Bayes: for clusters with observed data, uses
+the BLUP as the mean but draws with the full marginal variance
+\(\psi^*\), ignoring posterior uncertainty in \(b_i\).</p></dd>
+
+<dt><code>"marginal"</code></dt>
+<dd><p>Draws all \(b_i^*\) from the marginal prior
+\(N(0, \psi^*)\) regardless of whether the cluster has observed data.
+This was the original behaviour and is correct only for systematic
+missingness.</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Jolani S., Debray T.P.A., Koffijberg H., van Buuren S., Moons K.G.M. (2015).
+    <p>Audigier, V., White, I. R., Jolani, S., Debray, T. P. A., Quartagno, M.,
+Carpenter, J., van Buuren, S., &amp; Resche-Rigon, M. (2018).
+Multiple imputation for multilevel data with continuous and binary
+variables. <em>Statistical Science</em>, 33(2), 160-183.
+<a href="https://doi.org/10.1214/18-STS646" class="external-link">doi:10.1214/18-STS646</a></p>
+<p>Jolani S., Debray T.P.A., Koffijberg H., van Buuren S., Moons K.G.M. (2015).
 Imputation of systematically missing predictors in an individual
 participant data meta-analysis: a generalized approach using MICE.
 <em>Statistics in Medicine</em>, 34:1841-1863.</p>
@@ -117,7 +161,8 @@ participant data meta-analysis: a generalized approach using MICE.
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
-    <p>Shahab Jolani, 2015; adapted to mice, SvB, 2018</p>
+    <p>Shahab Jolani, 2015; adapted to mice, SvB, 2018;
+random.effects argument, SvB, 2026</p>
     </div>
 
     <div class="section level2">
@@ -141,6 +186,12 @@ participant data meta-analysis: a generalized approach using MICE.
 <span class="r-in"><span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">data</span>, print <span class="op">=</span> <span class="cn">FALSE</span>, maxit <span class="op">=</span> <span class="fl">0</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="va">pred</span></span></span>
 <span class="r-in"><span><span class="va">pred</span><span class="op">[</span><span class="st">"outcome"</span>, <span class="st">"patientID"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">data</span>, method <span class="op">=</span> <span class="st">"2l.bin"</span>, pred <span class="op">=</span> <span class="va">pred</span>, maxit <span class="op">=</span> <span class="fl">1</span>, m <span class="op">=</span> <span class="fl">1</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imp_laplace</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">data</span>, method <span class="op">=</span> <span class="st">"2l.bin"</span>, pred <span class="op">=</span> <span class="va">pred</span>, maxit <span class="op">=</span> <span class="fl">1</span>, m <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                    seed <span class="op">=</span> <span class="fl">1</span>, random.effects <span class="op">=</span> <span class="st">"laplace"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imp_eb</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">data</span>, method <span class="op">=</span> <span class="st">"2l.bin"</span>, pred <span class="op">=</span> <span class="va">pred</span>, maxit <span class="op">=</span> <span class="fl">1</span>, m <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>               seed <span class="op">=</span> <span class="fl">1</span>, random.effects <span class="op">=</span> <span class="st">"eb"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imp_marginal</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">data</span>, method <span class="op">=</span> <span class="st">"2l.bin"</span>, pred <span class="op">=</span> <span class="va">pred</span>, maxit <span class="op">=</span> <span class="fl">1</span>, m <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                     seed <span class="op">=</span> <span class="fl">1</span>, random.effects <span class="op">=</span> <span class="st">"marginal"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
