@@ -4,7 +4,16 @@
 \alias{mice.impute.2l.bin}
 \title{Imputation by a two-level logistic model using \code{glmer}}
 \usage{
-mice.impute.2l.bin(y, ry, x, type, wy = NULL, intercept = TRUE, ...)
+mice.impute.2l.bin(
+  y,
+  ry,
+  x,
+  type,
+  wy = NULL,
+  intercept = TRUE,
+  random.effects = c("laplace", "eb", "marginal"),
+  ...
+)
 }
 \arguments{
 \item{y}{Vector to be imputed}
@@ -28,6 +37,10 @@ indicates locations in \code{y} for which imputations are created.}
 \item{intercept}{Logical determining whether the intercept is automatically
 added.}
 
+\item{random.effects}{Character string specifying how the random effect is
+drawn for sporadic clusters. One of \code{"laplace"} (default),
+\code{"eb"}, or \code{"marginal"}. See Details.}
+
 \item{\dots}{Arguments passed down to \code{glmer}}
 }
 \value{
@@ -42,6 +55,26 @@ using a two-level logistic model using \code{lme4::glmer()}
 Data are missing systematically if they have not been measured, e.g., in the
 case where we combine data from different sources. Data are missing sporadically
 if they have been partially observed.
+
+The \code{random.effects} argument controls how the cluster-specific random
+effect \eqn{b_i^*} is drawn for clusters that have missing values:
+
+\describe{
+\item{\code{"laplace"}}{(default) For clusters with observed data, draws
+\eqn{b_i^*} from \eqn{N(m_i, V_i)} where \eqn{m_i} is the posterior
+mode (BLUP) and \eqn{V_i} is the Laplace-approximated posterior
+variance returned by \code{lme4::ranef(fit, condVar = TRUE)}.
+For clusters with no observed data, draws from the marginal prior
+\eqn{N(0, \psi^*)}. This is the method recommended by Audigier et al.
+(2018).}
+\item{\code{"eb"}}{Empirical Bayes: for clusters with observed data, uses
+the BLUP as the mean but draws with the full marginal variance
+\eqn{\psi^*}, ignoring posterior uncertainty in \eqn{b_i}.}
+\item{\code{"marginal"}}{Draws all \eqn{b_i^*} from the marginal prior
+\eqn{N(0, \psi^*)} regardless of whether the cluster has observed data.
+This was the original behaviour and is correct only for systematic
+missingness.}
+}
 }
 \examples{
 library(tidyr)
@@ -55,9 +88,21 @@ data <- tidyr::complete(toenail2, patientID, visit) \%>\%
 pred <- mice(data, print = FALSE, maxit = 0, seed = 1)$pred
 pred["outcome", "patientID"] <- -2
 imp <- mice(data, method = "2l.bin", pred = pred, maxit = 1, m = 1, seed = 1)
+imp_laplace <- mice(data, method = "2l.bin", pred = pred, maxit = 1, m = 1,
+                    seed = 1, random.effects = "laplace")
+imp_eb <- mice(data, method = "2l.bin", pred = pred, maxit = 1, m = 1,
+               seed = 1, random.effects = "eb")
+imp_marginal <- mice(data, method = "2l.bin", pred = pred, maxit = 1, m = 1,
+                     seed = 1, random.effects = "marginal")
 }
 }
 \references{
+Audigier, V., White, I. R., Jolani, S., Debray, T. P. A., Quartagno, M.,
+Carpenter, J., van Buuren, S., & Resche-Rigon, M. (2018).
+Multiple imputation for multilevel data with continuous and binary
+variables. \emph{Statistical Science}, 33(2), 160-183.
+\doi{10.1214/18-STS646}
+
 Jolani S., Debray T.P.A., Koffijberg H., van Buuren S., Moons K.G.M. (2015).
 Imputation of systematically missing predictors in an individual
 participant data meta-analysis: a generalized approach using MICE.
@@ -70,7 +115,8 @@ Other univariate-2l:
 \code{\link[=mice.impute.2l.pan]{mice.impute.2l.pan()}}
 }
 \author{
-Shahab Jolani, 2015; adapted to mice, SvB, 2018
+Shahab Jolani, 2015; adapted to mice, SvB, 2018;
+random.effects argument, SvB, 2026
 }
 \concept{univariate-2l}
 \keyword{datagen}

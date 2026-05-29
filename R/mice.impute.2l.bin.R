@@ -7,14 +7,44 @@
 #' case where we combine data from different sources. Data are missing sporadically
 #' if they have been partially observed.
 #'
+#' The \code{random.effects} argument controls how the cluster-specific random
+#' effect \eqn{b_i^*} is drawn for clusters that have missing values:
+#'
+#' \describe{
+#'   \item{\code{"laplace"}}{(default) For clusters with observed data, draws
+#'     \eqn{b_i^*} from \eqn{N(m_i, V_i)} where \eqn{m_i} is the posterior
+#'     mode (BLUP) and \eqn{V_i} is the Laplace-approximated posterior
+#'     variance returned by \code{lme4::ranef(fit, condVar = TRUE)}.
+#'     For clusters with no observed data, draws from the marginal prior
+#'     \eqn{N(0, \psi^*)}. This is the method recommended by Audigier et al.
+#'     (2018).}
+#'   \item{\code{"eb"}}{Empirical Bayes: for clusters with observed data, uses
+#'     the BLUP as the mean but draws with the full marginal variance
+#'     \eqn{\psi^*}, ignoring posterior uncertainty in \eqn{b_i}.}
+#'   \item{\code{"marginal"}}{Draws all \eqn{b_i^*} from the marginal prior
+#'     \eqn{N(0, \psi^*)} regardless of whether the cluster has observed data.
+#'     This was the original behaviour and is correct only for systematic
+#'     missingness.}
+#' }
+#'
 #' @inheritParams mice.impute.2l.lmer
 #' @param intercept Logical determining whether the intercept is automatically
-#' added.
+#'   added.
+#' @param random.effects Character string specifying how the random effect is
+#'   drawn for sporadic clusters. One of \code{"laplace"} (default),
+#'   \code{"eb"}, or \code{"marginal"}. See Details.
 #' @param \dots Arguments passed down to \code{glmer}
 #' @return Vector with imputed data, same type as \code{y}, and of length
-#' \code{sum(wy)}
-#' @author Shahab Jolani, 2015; adapted to mice, SvB, 2018
+#'   \code{sum(wy)}
+#' @author Shahab Jolani, 2015; adapted to mice, SvB, 2018;
+#'   random.effects argument, SvB, 2026
 #' @references
+#' Audigier, V., White, I. R., Jolani, S., Debray, T. P. A., Quartagno, M.,
+#' Carpenter, J., van Buuren, S., & Resche-Rigon, M. (2018).
+#' Multiple imputation for multilevel data with continuous and binary
+#' variables. \emph{Statistical Science}, 33(2), 160-183.
+#' \doi{10.1214/18-STS646}
+#'
 #' Jolani S., Debray T.P.A., Koffijberg H., van Buuren S., Moons K.G.M. (2015).
 #' Imputation of systematically missing predictors in an individual
 #' participant data meta-analysis: a generalized approach using MICE.
@@ -33,6 +63,12 @@
 #' pred <- mice(data, print = FALSE, maxit = 0, seed = 1)$pred
 #' pred["outcome", "patientID"] <- -2
 #' imp <- mice(data, method = "2l.bin", pred = pred, maxit = 1, m = 1, seed = 1)
+#' imp_laplace <- mice(data, method = "2l.bin", pred = pred, maxit = 1, m = 1,
+#'                     seed = 1, random.effects = "laplace")
+#' imp_eb <- mice(data, method = "2l.bin", pred = pred, maxit = 1, m = 1,
+#'                seed = 1, random.effects = "eb")
+#' imp_marginal <- mice(data, method = "2l.bin", pred = pred, maxit = 1, m = 1,
+#'                      seed = 1, random.effects = "marginal")
 #' }
 #' @export
 mice.impute.2l.bin <- function(
@@ -42,9 +78,11 @@ mice.impute.2l.bin <- function(
   type,
   wy = NULL,
   intercept = TRUE,
+  random.effects = c("laplace", "eb", "marginal"),
   ...
 ) {
   install.on.demand("lme4", ...)
+  random.effects <- match.arg(random.effects)
 
   if (is.null(wy)) {
     wy <- !ry
@@ -108,7 +146,8 @@ mice.impute.2l.bin <- function(
     nrow = dim(lme4::VarCorr(fit)[[1L]])[1L]
   )
   s <- nrow(psi.hat) * psi.hat
-  rancoef <- as.matrix(lme4::ranef(fit)[[1L]])
+  re <- lme4::ranef(fit, condVar = random.effects == "laplace")
+  rancoef <- as.matrix(re[[1L]])
   lambda <- t(rancoef) %*% rancoef
   temp <- lambda + s
   if (attr(suppressWarnings(chol(temp, pivot = TRUE)), "rank") != nrow(temp)) {
@@ -148,16 +187,55 @@ mice.impute.2l.bin <- function(
     psi.star <- valprop$vectors %*% diag(valprop$values) %*% t(valprop$vectors)
   }
 
-  # find clusters for which we need imputes
+  # clusters needing imputation, split into sporadic and systematic
   clmis <- unique(x[wy, clust])
+  clobs <- unique(xobs[, clust])          # clusters with observed y
+  clmis_sporadic   <- clmis[clmis %in% clobs]
+  clmis_systematic <- clmis[!clmis %in% clobs]
 
-  # draw all cluster random effects at once, then impute in one pass
-  B <- MASS::mvrnorm(
-    n = length(clmis),
-    mu = rep(0, nrow(psi.star)),
-    Sigma = psi.star
-  )
-  if (length(clmis) == 1L) B <- matrix(B, nrow = 1L)
+  # Laplace posterior variance array (q x q x n_clusters), NULL otherwise
+  postVar <- if (random.effects == "laplace") attr(re[[1L]], "postVar") else NULL
+
+  # draw bi.star per cluster, collect in a named list
+  draw_bi <- function(cluster_id) {
+    if (cluster_id %in% clmis_systematic || random.effects == "marginal") {
+      # systematic: draw from marginal prior N(0, psi.star)
+      myi <- matrix(0, nrow = nrow(psi.star), ncol = 1)
+      vyi <- psi.star
+    } else if (random.effects == "eb") {
+      # empirical Bayes: centre on BLUP, spread with marginal variance
+      myi <- matrix(rancoef[rownames(rancoef) == cluster_id, ], ncol = 1)
+      vyi <- psi.star
+    } else {
+      # laplace: centre on BLUP, spread with Laplace posterior variance,
+      # scaled from psi.hat to psi.star so the draw is coherent with beta.star
+      ri    <- which(rownames(rancoef) == cluster_id)
+      myi   <- matrix(rancoef[ri, ], ncol = 1)
+      scale <- if (all(psi.hat == 0)) 1 else mean(diag(psi.star)) / mean(diag(psi.hat))
+      vyi   <- matrix(postVar[,, ri], nrow = nrow(psi.star)) * scale
+    }
+    # symmetrise and floor negative eigenvalues (mirrors 2l.lmer)
+    vyi <- vyi - upper.tri(vyi) * vyi + t(lower.tri(vyi) * vyi)
+    deco1 <- eigen(vyi)
+    if (sum(deco1$values > 0) == length(deco1$values)) {
+      A <- deco1$vectors %*% sqrt(diag(deco1$values, nrow = length(deco1$values)))
+      myi + A %*% rnorm(length(myi))
+    } else {
+      deco1 <- try(svd(vyi), silent = TRUE)
+      if (!inherits(deco1, "try-error")) {
+        A <- deco1$u %*% sqrt(diag(deco1$d, nrow = length(deco1$d)))
+        myi + A %*% rnorm(length(myi))
+      } else {
+        warning("b_", cluster_id, " fixed to estimate")
+        myi
+      }
+    }
+  }
+
+  # draw all bi.star and stack into matrix (n_clmis x q)
+  B <- do.call(rbind, lapply(clmis, draw_bi))
+  if (nrow(psi.star) == 1L) B <- matrix(B, ncol = 1L)
+
   clust_idx <- match(x[wy, clust], clmis)
   logit <- X[wy, , drop = FALSE] %*% beta.star +
     rowSums(Z[wy, , drop = FALSE] * B[clust_idx, , drop = FALSE])
