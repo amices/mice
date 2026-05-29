@@ -1,8 +1,10 @@
 - Fixes `Error in apply(draws, 2, sum) : dim(X) must have a positive length` in `mice.impute.polr()`, `mice.impute.lda()` and `mice.impute.polyreg()` occuring when only one missing value was present (#684).
+- Fixes `Error in colMeans(as.matrix(imp[[j]]))` crash when data contains character variables. The chain statistics loop now skips character columns, consistent with the existing factor handling (#601)
 
 # mice 3.19.7
 
 - Fixes duplicate CI columns in `summary.mipo()` (#719)
+- Fixes crash `Error in colMeans(as.matrix(imp[[j]]))` when data contains character variables; chain statistics loop now skips character columns, consistent with existing factor handling (#601)
 - Adds `random.effects` argument to `mice.impute.2l.bin()` with options `"laplace"` (default), `"eb"`, and `"marginal"`, implementing the FCS-GLM distinction between sporadic and systematic missingness as described in Audigier et al. (2018). Also vectorises the imputation loop (#686)
 - Adds vignette `random-effects-2l-bin` discussing the three random effects strategies for two-level binary imputation
 

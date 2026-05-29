@@ -182,7 +182,7 @@ sampler <- function(
       if (length(visitSequence) > 0L) {
         for (h in visitSequence) {
           for (j in blocks[[h]]) {
-            if (!is.factor(data[, j])) {
+            if (!is.factor(data[, j]) && !is.character(data[, j])) {
               chainVar[j, k2, ] <- apply(imp[[j]], 2L, var, na.rm = TRUE)
               chainMean[j, k2, ] <- colMeans(as.matrix(imp[[j]]), na.rm = TRUE)
             }
