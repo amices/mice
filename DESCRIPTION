@@ -69,6 +69,7 @@ Suggests:
     future, 
     furrr,
     haven,
+    kernlab,
     knitr,
     literanger,
     lme4,
