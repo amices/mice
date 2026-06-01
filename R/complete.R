@@ -164,6 +164,7 @@ single.complete <- function(data, where, imp, ell) {
   if (is.null(where)) {
     where <- is.na(data)
   }
+  where <- matrix(where, nrow = nrow(data), ncol = ncol(data), dimnames = dimnames(where))
   idx <- seq_len(ncol(data))[apply(where, 2, any)]
   for (j in idx) {
     if (is.null(imp[[j]])) {
@@ -174,7 +175,8 @@ single.complete <- function(data, where, imp, ell) {
         data[where[, j], j] <- imp[[j]][, ell]
       } else {
         # index by rowname
-        data[as.numeric(rownames(imp[[j]])), j] <- imp[[j]][, ell]
+        rows <- match(rownames(imp[[j]]), rownames(data))
+        data[rows, j] <- imp[[j]][, ell]
       }
     }
   }
