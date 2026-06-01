@@ -1,4 +1,6 @@
+# mice 3.19.8
 
+- Implements new behavior in `mice.mids() that inherits the imputation methods from the trained imputation model rather than re-initializing methods anew. This gives consistent behavior between train and deployment imputation models ([#753](https://github.com/amices/mice/issues/753))
 - Fixes `Error in s$it : $ operator is invalid for atomic vectors` when the data or global environment contains a variable named `state`. The internal logging object is renamed from `state` to `.mice.state` to avoid name collisions (#527). **Breaking change for extension packages:** custom `mice.impute.*` functions that call the internal `mice:::updateLog()` must ensure `.mice.state` is visible in the call stack (it is, when called from within `mice()`). Direct calls to `mice:::updateLog()` outside of the `mice()` Gibbs sampler will fail to find the logging state.
 - Fixes `Error in apply(draws, 2, sum) : dim(X) must have a positive length` in `mice.impute.polr()`, `mice.impute.lda()` and `mice.impute.polyreg()` occuring when only one missing value was present (#684).
 - Fixes `Error in colMeans(as.matrix(imp[[j]]))` crash when data contains character variables. The chain statistics loop now skips character columns, consistent with the existing factor handling (#601)
