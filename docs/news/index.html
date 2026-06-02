@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,13 @@
       <small>Source: <a href="https://github.com/amices/mice/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.19.8" id="mice-3198">mice 3.19.8<a class="anchor" aria-label="anchor" href="#mice-3198"></a></h2>
+<ul><li>Implements new behavior in `mice.mids() that inherits the imputation methods from the trained imputation model rather than re-initializing methods anew. This gives consistent behavior between train and deployment imputation models (<a href="https://github.com/amices/mice/issues/753" class="external-link">#753</a>)</li>
+<li>Fixes <code>Error in s$it : $ operator is invalid for atomic vectors</code> when the data or global environment contains a variable named <code>state</code>. The internal logging object is renamed from <code>state</code> to <code>.mice.state</code> to avoid name collisions (<a href="https://github.com/amices/mice/issues/527" class="external-link">#527</a>). <strong>Breaking change for extension packages:</strong> custom <code>mice.impute.*</code> functions that call the internal <code>mice:::updateLog()</code> must ensure <code>.mice.state</code> is visible in the call stack (it is, when called from within <code><a href="../reference/mice.html">mice()</a></code>). Direct calls to <code>mice:::updateLog()</code> outside of the <code><a href="../reference/mice.html">mice()</a></code> Gibbs sampler will fail to find the logging state.</li>
+<li>Fixes <code>Error in apply(draws, 2, sum) : dim(X) must have a positive length</code> in <code><a href="../reference/mice.impute.polr.html">mice.impute.polr()</a></code>, <code><a href="../reference/mice.impute.lda.html">mice.impute.lda()</a></code> and <code><a href="../reference/mice.impute.polyreg.html">mice.impute.polyreg()</a></code> occuring when only one missing value was present (<a href="https://github.com/amices/mice/issues/684" class="external-link">#684</a>).</li>
+<li>Fixes <code>Error in colMeans(as.matrix(imp[[j]]))</code> crash when data contains character variables. The chain statistics loop now skips character columns, consistent with the existing factor handling (<a href="https://github.com/amices/mice/issues/601" class="external-link">#601</a>)</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.19.7" id="mice-3197">mice 3.19.7<a class="anchor" aria-label="anchor" href="#mice-3197"></a></h2>
 <ul><li>Fixes duplicate CI columns in <code><a href="../reference/mipo.html">summary.mipo()</a></code> (<a href="https://github.com/amices/mice/issues/719" class="external-link">#719</a>)</li>

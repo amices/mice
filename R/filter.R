@@ -88,7 +88,7 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
   # Components that need to be subset
   data <- .data$data[include, ]
   ignore <- .data$ignore[include]
-  where <- .data$where[include, ]
+  where <- .data$where[include, , drop = FALSE]
 
   imp <- vector("list", length(.data$imp))
   names(imp) <- names(.data$imp)
