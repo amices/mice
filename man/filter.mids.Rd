@@ -14,8 +14,9 @@ logical value, and are defined in terms of the variables in \code{.data$data}.
 If multiple expressions are specified, they are combined with the \code{&} operator.
 Only rows for which all conditions evaluate to \code{TRUE} are kept.}
 
-\item{.preserve}{Relevant when the \code{.data} input is grouped. If \code{.preserve = FALSE} (the default), the grouping structure is recalculated based on the
-resulting data, otherwise the grouping is kept as is.}
+\item{.preserve}{Relevant when the \code{.data} input is grouped.
+If \code{.preserve = FALSE} (the default), the grouping structure
+is recalculated based on the resulting data, otherwise the grouping is kept as is.}
 }
 \value{
 An S3 object of class \code{mids}
