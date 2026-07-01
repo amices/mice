@@ -118,6 +118,24 @@ IntegerVector matchindex(NumericVector d, NumericVector t, int k = 5) {
     ysort[i] = d(id(i));
   }
 
+  // 3b. Identify tie blocks: blockOf[i] is the id of the maximal run of
+  // equal ysort values that position i belongs to. Donors tied at the same
+  // distance from a target must be selected independently at random for
+  // each target, not in the fixed order left by the single pre-shuffle
+  // above (see https://github.com/amices/mice/issues/236).
+  std::vector<int> blockOf(n1);
+  std::vector<int> blockStart;
+  std::vector<int> blockEnd;
+  for (int i = 0; i < n1; i++) {
+    if (i == 0 || ysort[i] != ysort[i - 1]) {
+      blockStart.push_back(i);
+      blockEnd.push_back(i);
+    } else {
+      blockEnd.back() = i;
+    }
+    blockOf[i] = static_cast<int>(blockStart.size()) - 1;
+  }
+
   // 4. Pre-sample n0 values between 1 and k
   // restrict 1 <= k <= n1
   k = (k <= n1) ? k : n1;
@@ -128,10 +146,47 @@ IntegerVector matchindex(NumericVector d, NumericVector t, int k = 5) {
 
   IntegerVector idx(n0);
 
+  // Scratch space reused across target cases: tracks, within a tie block
+  // touched by the current target, which sorted positions have already
+  // been consumed by that target.
+  std::vector<char> consumed(n1, 0);
+  std::vector<int> touched;
+  touched.reserve(k);
+
+  // Draws a not-yet-consumed donor from the tie block containing sorted
+  // position `pos`, chosen uniformly at random among the remaining
+  // (unconsumed) members of that block for this target only.
+  auto consumeFromBlock = [&](int pos) -> int {
+    int b = blockOf[pos];
+    int lo = blockStart[b];
+    int hi = blockEnd[b];
+    int blockLen = hi - lo + 1;
+    if (blockLen == 1) {
+      consumed[pos] = 1;
+      touched.push_back(pos);
+      return pos;
+    }
+    // Reservoir-style pick among unconsumed members of [lo, hi]
+    int remaining = 0;
+    for (int j = lo; j <= hi; j++) if (!consumed[j]) remaining++;
+    int pick = (remaining > 1) ? (int) std::floor(unif_rand() * remaining) : 0;
+    int seen = 0;
+    int chosen = lo;
+    for (int j = lo; j <= hi; j++) {
+      if (!consumed[j]) {
+        if (seen == pick) { chosen = j; break; }
+        seen++;
+      }
+    }
+    consumed[chosen] = 1;
+    touched.push_back(chosen);
+    return chosen;
+  };
+
   // loop over the target units
   for (int i = 0; i < n0; i++) {
     double val = t(i);
-    int hi = h(i);
+    int hi_k = h(i);
     int count = 0;
 
     // 5. find the two adjacent neighbours
@@ -140,36 +195,65 @@ IntegerVector matchindex(NumericVector d, NumericVector t, int k = 5) {
     int r = iter - ysort.begin();
     int l = r - 1;
 
+    // Fast path: if the nearest side's tie block alone already has at
+    // least k members, all k nearest neighbours necessarily come from
+    // that single block, so the h_i'th draw is uniform over the whole
+    // block regardless of h_i. We can skip the walk and h entirely and
+    // just draw one donor directly from the block.
+    if (l >= 0 || r < n1) {
+      bool takeLeft = (r >= n1) || (l >= 0 && val - ysort[l] < ysort[r] - val);
+      int nearPos = takeLeft ? l : r;
+      int b = blockOf[nearPos];
+      int lo = blockStart[b];
+      int hi = blockEnd[b];
+      int blockLen = hi - lo + 1;
+      // Only safe when the block does not extend past the array bound
+      // being approached (it never does, by construction of blockStart/
+      // blockEnd), and contains at least k members.
+      if (blockLen >= hi_k) {
+        int pick = lo + (int) std::floor(unif_rand() * blockLen);
+        idx(i) = id[pick];
+        continue;
+      }
+    }
+
     // 6. find the h_i'th nearest neighbour
     // 7. store the index of that neighbour
 
     // Compare elements on left and right of crossover
     // point to find the h'th closest match
     // Inspired on Polkas: https://github.com/Polkas/miceFast/issues/10
-    while (count < hi && l >= 0 && r < n1)
+    // Ties (equal ysort values) are resolved by an independent random
+    // draw per target case, see consumeFromBlock() above.
+    while (count < hi_k && l >= 0 && r < n1)
     {
       if (val - ysort[l] < ysort[r] - val)
       {
-        idx(i) = id[l--];
+        idx(i) = id[consumeFromBlock(l--)];
       } else {
-        idx(i) = id[r++];
+        idx(i) = id[consumeFromBlock(r++)];
       }
       count++;
     }
 
     // If right side is exhausted, take left elements
-    while (count < hi && l >= 0)
+    while (count < hi_k && l >= 0)
     {
-      idx(i) = id[l--];
+      idx(i) = id[consumeFromBlock(l--)];
       count++;
     }
 
     // If left side is exhausted, take right elements
-    while (count < hi && r < n1)
+    while (count < hi_k && r < n1)
     {
-      idx(i) = id[r++];
+      idx(i) = id[consumeFromBlock(r++)];
       count++;
     }
+
+    // Reset only the positions touched by this target, so the next
+    // target's tie-breaking is independent again.
+    for (size_t j = 0; j < touched.size(); j++) consumed[touched[j]] = 0;
+    touched.clear();
   }
 
   return idx + 1;
