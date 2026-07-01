@@ -72,7 +72,11 @@ the C function \code{matcher()}, the now deprecated matching function that
 was default in versions
 \code{2.22} (June 2014) to \code{3.11.7} (Oct 2020). Since version \code{3.12.0}
 \code{mice()} uses the much faster \code{matchindex} C function. Use
-the deprecated \code{matcher} function only for exact reproduction.}
+the deprecated \code{matcher} function only for exact reproduction.
+Note that \code{matcher()} itself is miscalibrated when donors are tied
+(see \url{https://github.com/amices/mice/issues/757}), so it should not
+be used as a "safe" alternative for tied data, only for reproducing
+results computed with an older \code{mice} version.}
 
 \item{\dots}{Other named arguments.}
 }
