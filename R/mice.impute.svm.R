@@ -8,6 +8,7 @@
 #' to set \code{eps = 0} in the \code{mice()} call to prevent \code{remove.lindep()} 
 #' from removing predictors before they reach the SVM model.
 #'
+#' @aliases mice.impute.svm svm
 #' @inheritParams mice.impute.pmm
 #' @param type A vector of length \code{ncol(x)} identifying the predictors. 
 #' Captured here to avoid conflicts with the SVM 'type' argument from mice's internal calls.
