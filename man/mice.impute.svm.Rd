@@ -2,6 +2,7 @@
 % Please edit documentation in R/mice.impute.svm.R
 \name{mice.impute.svm}
 \alias{mice.impute.svm}
+\alias{svm}
 \title{Imputation by the Support Vector Machine (mice-SVM)}
 \usage{
 mice.impute.svm(
