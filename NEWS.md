@@ -1,3 +1,11 @@
+# mice 3.19.9
+Adds `mice.impute.svm()` as a binary variables imputation technique for high 
+dimensional data based on proper multiple imputation using Support Vector 
+Machines combined with bootstrapping. Solves (#751) with (#752). 
+
+Contibuted: @Mmtakahashi123
+
+
 # mice 3.19.8
 
 - Implements new behavior in `mice.mids() that inherits the imputation methods from the trained imputation model rather than re-initializing methods anew. This gives consistent behavior between train and deployment imputation models ([#753](https://github.com/amices/mice/issues/753))
