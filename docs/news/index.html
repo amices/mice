@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,10 @@
       <small>Source: <a href="https://github.com/amices/mice/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.19.9" id="mice-3199">mice 3.19.9<a class="anchor" aria-label="anchor" href="#mice-3199"></a></h2>
+<ul><li>Adds <code><a href="../reference/mice.impute.svm.html">mice.impute.svm()</a></code> as a binary variables imputation technique for high dimensional data based on proper multiple imputation using Support Vector Machines combined with bootstrapping. Solves (<a href="https://github.com/amices/mice/issues/751" class="external-link">#751</a>) with (<a href="https://github.com/amices/mice/issues/752" class="external-link">#752</a>). Thanks <a href="https://github.com/Mmtakahashi123" class="external-link">@Mmtakahashi123</a></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.19.8" id="mice-3198">mice 3.19.8<a class="anchor" aria-label="anchor" href="#mice-3198"></a></h2>
 <ul><li>Implements new behavior in `mice.mids() that inherits the imputation methods from the trained imputation model rather than re-initializing methods anew. This gives consistent behavior between train and deployment imputation models (<a href="https://github.com/amices/mice/issues/753" class="external-link">#753</a>)</li>

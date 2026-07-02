@@ -410,6 +410,9 @@ in the data. There are also `mice.impute.xxx` functions outside the
 - [`mice.impute.sample()`](https://amices.org/mice/reference/mice.impute.sample.md)
   : Imputation by simple random sampling
 
+- [`mice.impute.svm()`](https://amices.org/mice/reference/mice.impute.svm.md)
+  : Imputation by the Support Vector Machine (mice-SVM)
+
 ## Imputation model helpers
 
 Specification of the imputation models can be made more convenient using
