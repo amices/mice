@@ -1,9 +1,7 @@
 # mice 3.19.9
-Adds `mice.impute.svm()` as a binary variables imputation technique for high 
-dimensional data based on proper multiple imputation using Support Vector 
-Machines combined with bootstrapping. Solves (#751) with (#752). 
-
-Contibuted: @Mmtakahashi123
+- Adds `mice.impute.svm()` as a binary variables imputation technique for high 
+  dimensional data based on proper multiple imputation using Support Vector 
+  Machines combined with bootstrapping. Solves (#751) with (#752). Thanks @Mmtakahashi123
 
 
 # mice 3.19.8
