@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.10</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,14 @@
       <small>Source: <a href="https://github.com/amices/mice/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.19.10" id="mice-31910">mice 3.19.10<a class="anchor" aria-label="anchor" href="#mice-31910"></a></h2>
+<ul><li>
+<strong>Breaking change:</strong> Confidence interval columns from <code>summary(pool(fit), conf.int = TRUE)</code>, <code><a href="../reference/mipo.html">summary.mipo()</a></code> and <code><a href="../reference/pool.table.html">pool.table()</a></code> are named <code>conf.low</code>/<code>conf.high</code> (broom convention) instead of the raw <code><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint()</a></code>-style <code>2.5 %</code>/<code>97.5 %</code> labels. Code that indexes these columns by name should be updated accordingly.</li>
+<li>Fixes <code>barnard.rubin()</code> silently returning only the first element when called with vector <code>b</code> and <code>dfcom = Inf</code>. The infinite-<code>dfcom</code> branch used a scalar <code>if</code>, so only the length-1 result was returned instead of a vector matching <code>b</code>. Now vectorised with <code><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse()</a></code>, consistent with the finite-<code>dfcom</code> case.</li>
+<li>Cleans up the testthat suite: restores or removes commented-out tests, replaces deprecated <code>context()</code>/<code>expect_is()</code> calls, guards optional-package tests with <code>skip_if_not_installed()</code>, and fixes a handful of latent test bugs (a <code>set.seed &lt;- 818</code> typo that silently disabled seeding, and a tautological assertion in <code>test-blocks.R</code>). No user-facing behavior changes.</li>
+<li>Adds a stable <code>&lt;FUNCTION&gt;-&lt;NNN&gt;</code> ID (e.g. <code>BARNARD-RUBIN-001</code>) to every <code>test_that()</code> label in the testthat suite, derived from the test file name and assigned in file order. These IDs let this R suite be compared directly against other implementations that share the same scheme, so equivalent test cases are greppable across languages instead of relying on manual cross-referencing. No user-facing behavior changes.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.19.9" id="mice-3199">mice 3.19.9<a class="anchor" aria-label="anchor" href="#mice-3199"></a></h2>
 <ul><li>Adds <code><a href="../reference/mice.impute.svm.html">mice.impute.svm()</a></code> as a binary variables imputation technique for high dimensional data based on proper multiple imputation using Support Vector Machines combined with bootstrapping. Solves (<a href="https://github.com/amices/mice/issues/751" class="external-link">#751</a>) with (<a href="https://github.com/amices/mice/issues/752" class="external-link">#752</a>). Thanks <a href="https://github.com/Mmtakahashi123" class="external-link">@Mmtakahashi123</a></li>
