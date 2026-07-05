@@ -1,8 +1,26 @@
+# mice 3.19.10
+
+- Fixes `barnard.rubin()` silently returning only the first element when called
+  with vector `b` and `dfcom = Inf`. The infinite-`dfcom` branch used a scalar
+  `if`, so only the length-1 result was returned instead of a vector matching
+  `b`. Now vectorised with `ifelse()`, consistent with the finite-`dfcom` case.
+- Cleans up the testthat suite: restores or removes commented-out tests,
+  replaces deprecated `context()`/`expect_is()` calls, guards optional-package
+  tests with `skip_if_not_installed()`, and fixes a handful of latent test bugs
+  (a `set.seed <- 818` typo that silently disabled seeding, and a tautological
+  assertion in `test-blocks.R`). No user-facing behavior changes.
+- Adds a stable `<FUNCTION>-<NNN>` ID (e.g. `BARNARD-RUBIN-001`) to every
+  `test_that()` label in the testthat suite, derived from the test file name
+  and assigned in file order. These IDs let this R suite be compared directly
+  against other implementations that share the same scheme,
+  so equivalent test cases are greppable across languages instead of relying
+  on manual cross-referencing. No user-facing behavior changes.
+
 # mice 3.19.9
+
 - Adds `mice.impute.svm()` as a binary variables imputation technique for high 
   dimensional data based on proper multiple imputation using Support Vector 
   Machines combined with bootstrapping. Solves (#751) with (#752). Thanks @Mmtakahashi123
-
 
 # mice 3.19.8
 
