@@ -16,6 +16,7 @@ test_that("anova.mira() produces silent with D2", {
 })
 
 context("Cox model tests")
+skip_if_not_installed("survival")
 library(survival)
 
 set.seed(1)

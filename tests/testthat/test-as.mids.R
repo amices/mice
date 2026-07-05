@@ -31,11 +31,11 @@ test6 <- as.mids(X[, rev])
 # test10 <- as(X[, rev], "mids")
 
 test_that("as.mids() produces a `mids` object", {
-  expect_is(test1, "mids")
-  expect_is(test2, "mids")
-  expect_is(test3, "mids")
-  expect_is(test4, "mids")
-  expect_is(test5, "mids")
+  expect_s3_class(test1, "mids")
+  expect_s3_class(test2, "mids")
+  expect_s3_class(test3, "mids")
+  expect_s3_class(test4, "mids")
+  expect_s3_class(test5, "mids")
   #  expect_is(test7, "mids")
   #  expect_is(test8, "mids")
   #  expect_is(test9, "mids")
@@ -67,6 +67,7 @@ test_that("complete() reproduces the original data", {
 
 # works with dplyr
 
+skip_if_not_installed("dplyr")
 library(dplyr)
 X3 <- X |>
   group_by(hyp) |>

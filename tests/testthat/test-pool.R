@@ -13,7 +13,7 @@ mn <- c(18.76175, 0.05359003, -4.573652, -6.635969, 2.163629)
 se <- c(4.002796, 0.02235067, 2.033986, 2.459769, 2.02898)
 
 test_that("summary(est) works", {
-  expect_is(summary(est), "data.frame")
+  expect_s3_class(summary(est), "data.frame")
 })
 
 test_that("retains same numerical result", {
@@ -25,8 +25,8 @@ test_that("D1 and D3 work for glm on imputed data", {
   imp <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
   fit0 <- with(data = imp, expr = glm(hyp == "yes" ~ 1, family = binomial))
   fit1 <- with(data = imp, expr = glm(hyp == "yes" ~ chl + bmi, family = binomial))
-  expect_is(D1(fit1, fit0), "mice.anova")
-  expect_is(D3(fit1, fit0), "mice.anova")
+  expect_s3_class(D1(fit1, fit0), "mice.anova")
+  expect_s3_class(D3(fit1, fit0), "mice.anova")
 })
 
 test_that("D1 p-value for glm is numeric", {

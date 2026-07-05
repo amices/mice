@@ -30,7 +30,7 @@ test_that("n.imp.core not specified", {
 })
 
 # Should return m = 2x7=42
-test_that("n.imp.core not specified", {
+test_that("n.imp.core not specified, m overridden", {
   expect_warning(K <- parlmice(nhanes, n.core = 2, m = 7))
   expect_identical(K$m, 2 * 7)
 })

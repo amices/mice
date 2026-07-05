@@ -1,8 +1,7 @@
 context("predict_mi")
 
+skip_if_not_installed("dplyr")
 library(dplyr)
-library(mice)
-library(testthat)
 
 suppressWarnings(RNGversion("3.5.0"))
 

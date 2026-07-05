@@ -20,7 +20,7 @@ ry <- !is.na(y)
 set.seed(123)
 imps <- mice.impute.lasso.norm(y, ry, x)
 
-test_that("Returns requested length", {
+test_that("Returns requested length (lasso.norm)", {
   expect_equal(length(imps), sum(!ry))
 })
 
@@ -46,11 +46,11 @@ durr_custom <- mice(
   print = FALSE
 )
 
-test_that("mice call works", {
+test_that("mice call works (lasso.norm)", {
   expect_equal(class(durr_custom), "mids")
 })
 
-test_that("mice call works w/ custom arguments", {
+test_that("mice call works w/ custom arguments (lasso.norm)", {
   expect_equal(class(durr_custom), "mids")
 })
 
@@ -93,7 +93,7 @@ wy <- !ry
 set.seed(123)
 imps_t1 <- mice.impute.lasso.select.norm(y, ry, x)
 
-test_that("Returns requested length", {
+test_that("Returns requested length (lasso.select.norm)", {
   expect_equal(length(imps_t1), sum(!ry))
 })
 
@@ -166,10 +166,10 @@ iurr_custom <- mice(
   print = FALSE
 )
 
-test_that("mice call works", {
+test_that("mice call works (lasso.select.norm)", {
   expect_equal(class(iurr_custom), "mids")
 })
 
-test_that("mice call works w/ custom arguments", {
+test_that("mice call works w/ custom arguments (lasso.select.norm)", {
   expect_equal(class(iurr_custom), "mids")
 })

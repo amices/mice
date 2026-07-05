@@ -127,7 +127,7 @@ imp9 <- cbind(
   age = nhanes2$age,
   df = nhanes2[, c("hyp", "chl")]
 )
-test_that("appends matrix, factor and data.frame", {
+test_that("appends matrix, factor and data.frame (imp9)", {
   expect_identical(ncol(complete(imp9)), 9L)
 })
 

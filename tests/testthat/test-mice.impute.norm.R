@@ -23,12 +23,12 @@ set.seed(123)
 qr <- .norm.draw(y, ry, x, ls.meth = "qr")
 
 # tests for test1
-test_that("Estimates are equal", {
+test_that("norm: Estimates are equal", {
   expect_equal(svd$coef, matrix(qr$coef))
   expect_equal(svd$beta, matrix(qr$beta))
   expect_equal(svd$sigma, qr$sigma)
 })
-test_that("Correct estimation method used", {
+test_that("norm: Correct estimation method used", {
   expect_equal(svd$estimation, "svd")
   expect_equal(qr$estimation, "qr")
   expect_equal(ridge$estimation, "ridge")
@@ -52,12 +52,12 @@ ridge <- .norm.draw(y, ry, x, ls.meth = "ridge")
 qr <- .norm.draw(y, ry, x, ls.meth = "qr")
 
 # tests for test2
-test_that("Estimates are equal", {
+test_that("norm.nob: Estimates are equal", {
   expect_equal(svd$coef, matrix(qr$coef))
   expect_equal(svd$beta, matrix(qr$beta))
   expect_equal(svd$sigma, qr$sigma)
 })
-test_that("Correct estimation method used", {
+test_that("norm.nob: Correct estimation method used", {
   expect_equal(svd$estimation, "svd")
   expect_equal(qr$estimation, "qr")
   expect_equal(ridge$estimation, "ridge")

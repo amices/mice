@@ -3,7 +3,7 @@ context("quickpred")
 test_that("returns square binary matrix", {
   predictorMatrix <- quickpred(nhanes)
 
-  expect_is(predictorMatrix, 'matrix')
+  expect_true(is.matrix(predictorMatrix))
   expect_equal(nrow(predictorMatrix), ncol(predictorMatrix))
   expect_in(predictorMatrix, c(0, 1))
 })

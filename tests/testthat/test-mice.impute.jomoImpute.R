@@ -7,7 +7,7 @@ names(type) <- names(data)
 z1 <- mice.impute.jomoImpute(data = data, type = type, format = "native")
 
 test_that("jomoImpute returns native class", {
-  expect_is(z1, "mitml")
+  expect_s3_class(z1, "mitml")
 })
 
 blocks <- make.blocks(list(c("bmi", "chl", "hyp"), "age"))

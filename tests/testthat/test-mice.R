@@ -63,16 +63,16 @@ test_that("blocks run as expected", {
 test_that("Block names are generated automatically", {
   expect_identical(names(imp1b$blocks), c("B1", "chl", "bmi"))
 })
-test_that("Method `pmm` is used for mixed variable types", {
+test_that("blocks: Method 'pmm' is used for mixed variable types", {
   expect_identical(unname(imp2b$method[1]), "pmm")
 })
-test_that("Method `logreg` if all are binary", {
+test_that("blocks: Method 'logreg' if all are binary", {
   expect_identical(unname(imp3b$method[1]), "logreg")
 })
-test_that("Method `polr` if all are ordered", {
+test_that("blocks: Method 'polr' if all are ordered", {
   expect_identical(unname(imp4b$method[1]), "polr")
 })
-test_that("Method `polr` works with one block", {
+test_that("blocks: Method 'polr' works with one block", {
   expect_identical(unname(imp5b$method[1]), "pmm")
 })
 
@@ -191,16 +191,16 @@ test_that("formulas run as expected", {
 test_that("Formula names are generated automatically", {
   expect_identical(names(imp1f$blocks), c("F1", "chl", "bmi"))
 })
-test_that("Method `pmm` is used for mixed variable types", {
+test_that("formulas: Method 'pmm' is used for mixed variable types", {
   expect_identical(unname(imp2f$method[1]), "pmm")
 })
-test_that("Method `logreg` if all are binary", {
+test_that("formulas: Method 'logreg' if all are binary", {
   expect_identical(unname(imp3f$method[1]), "logreg")
 })
-test_that("Method `polr` if all are ordered", {
+test_that("formulas: Method 'polr' if all are ordered", {
   expect_identical(unname(imp4f$method[1]), "polr")
 })
-test_that("Method `polr` works with one block", {
+test_that("formulas: Method 'polr' works with one block", {
   expect_identical(unname(imp5f$method[1]), "pmm")
 })
 
