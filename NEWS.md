@@ -1,5 +1,9 @@
 # mice 3.19.10
 
+- **Breaking change:** Confidence interval columns from `summary(pool(fit), conf.int = TRUE)`,
+  `summary.mipo()` and `pool.table()` are named `conf.low`/`conf.high` (broom convention)
+  instead of the raw `confint()`-style `2.5 %`/`97.5 %` labels. Code that indexes these
+  columns by name should be updated accordingly.
 - Fixes `barnard.rubin()` silently returning only the first element when called
   with vector `b` and `dfcom = Inf`. The infinite-`dfcom` branch used a scalar
   `if`, so only the length-1 result was returned instead of a vector matching
