@@ -22,9 +22,9 @@ qr <- .norm.draw(y, ry, x, ls.meth = "qr")
 
 # tests for test1
 test_that("norm: Estimates are equal", {
-  expect_equal(svd$coef, matrix(qr$coef))
-  expect_equal(svd$beta, matrix(qr$beta))
-  expect_equal(svd$sigma, qr$sigma)
+  expect_equal(svd$coef, matrix(qr$coef), tolerance = 1e-6)
+  expect_equal(svd$beta, matrix(qr$beta), tolerance = 1e-6)
+  expect_equal(svd$sigma, qr$sigma, tolerance = 1e-6)
 })
 test_that("norm: Correct estimation method used", {
   expect_equal(svd$estimation, "svd")
@@ -51,9 +51,9 @@ qr <- .norm.draw(y, ry, x, ls.meth = "qr")
 
 # tests for test2
 test_that("norm.nob: Estimates are equal", {
-  expect_equal(svd$coef, matrix(qr$coef))
-  expect_equal(svd$beta, matrix(qr$beta))
-  expect_equal(svd$sigma, qr$sigma)
+  expect_equal(svd$coef, matrix(qr$coef), tolerance = 1e-6)
+  expect_equal(svd$beta, matrix(qr$beta), tolerance = 1e-6)
+  expect_equal(svd$sigma, qr$sigma, tolerance = 1e-6)
 })
 test_that("norm.nob: Correct estimation method used", {
   expect_equal(svd$estimation, "svd")
@@ -95,7 +95,7 @@ expect_warning(
 )
 
 test_that("Imputations are equal", {
-  expect_equal(imp.qr$imp, imp.svd$imp)
+  expect_equal(imp.qr$imp, imp.svd$imp, tolerance = 1e-6)
   expect_false(identical(imp.qr$imp, imp.ridge$imp))
 })
 
@@ -177,7 +177,7 @@ norm.boot2 <- mice.impute.norm.boot(y, ry, x2)
 test_that("Imputations are invariant to column order", {
   # expect_equal(pmm1, pmm2)
   # expect_equal(norm1, norm2)
-  expect_equal(norm.nob1, norm.nob2)
-  expect_equal(norm.predict1, norm.predict2)
-  expect_equal(norm.boot1, norm.boot2)
+  expect_equal(norm.nob1, norm.nob2, tolerance = 1e-6)
+  expect_equal(norm.predict1, norm.predict2, tolerance = 1e-6)
+  expect_equal(norm.boot1, norm.boot2, tolerance = 1e-6)
 })

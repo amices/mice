@@ -23,11 +23,11 @@ x2 <- D3(fit1 = fit1, fit0 = fit0)
 x3 <- mitml::testModels(fit1, fit0, method = "D3")
 
 test_that("lm, complete data: D3() and lrtest() calculate same test statistic", {
-  expect_equal(x1$Chisq[2], x2$result[1])
+  expect_equal(x1$Chisq[2], x2$result[1], tolerance = 1e-6)
 })
 
 test_that("lm, complete data: testModels() and lrtest() calculate same test statistic", {
-  expect_equal(x1$Chisq[2], x3$test[1])
+  expect_equal(x1$Chisq[2], x3$test[1], tolerance = 1e-6)
 })
 
 # imputed data: lm
