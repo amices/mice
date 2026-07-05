@@ -18,7 +18,7 @@ ry <- !is.na(y)
 set.seed(123)
 imps <- mice.impute.lasso.norm(y, ry, x)
 
-test_that("Returns requested length (lasso.norm)", {
+test_that("MICE-IMPUTE-LASSO-NORM-001: Returns requested length (lasso.norm)", {
   expect_equal(length(imps), sum(!ry))
 })
 
@@ -44,11 +44,11 @@ durr_custom <- mice(
   print = FALSE
 )
 
-test_that("mice call works (lasso.norm)", {
+test_that("MICE-IMPUTE-LASSO-NORM-002: mice call works (lasso.norm)", {
   expect_equal(class(durr_custom), "mids")
 })
 
-test_that("mice call works w/ custom arguments (lasso.norm)", {
+test_that("MICE-IMPUTE-LASSO-NORM-003: mice call works w/ custom arguments (lasso.norm)", {
   expect_equal(class(durr_custom), "mids")
 })
 
@@ -56,7 +56,7 @@ test_that("mice call works w/ custom arguments (lasso.norm)", {
 # TEST 3: Failure because removals by remove.lindep()  #577
 #########################
 
-test_that("lasso.norm handles constant predictor column (#577)", {
+test_that("MICE-IMPUTE-LASSO-NORM-004: lasso.norm handles constant predictor column (#577)", {
   skip("FIXME: glmnet errors with 'all used predictors have zero variance' when x is constant (#577)")
   set.seed(123)
   n <- 100
@@ -91,7 +91,7 @@ wy <- !ry
 set.seed(123)
 imps_t1 <- mice.impute.lasso.select.norm(y, ry, x)
 
-test_that("Returns requested length (lasso.select.norm)", {
+test_that("MICE-IMPUTE-LASSO-NORM-005: Returns requested length (lasso.select.norm)", {
   expect_equal(length(imps_t1), sum(!ry))
 })
 
@@ -115,7 +115,7 @@ wy <- !ry
 set.seed(123)
 imps_t2 <- mice.impute.lasso.select.norm(y, ry, x)
 
-test_that("Returns requested length w/ intercept only model", {
+test_that("MICE-IMPUTE-LASSO-NORM-006: Returns requested length w/ intercept only model", {
   expect_equal(length(imps_t2), sum(!ry))
 })
 
@@ -139,7 +139,7 @@ wy <- !ry
 set.seed(123)
 imps_t3 <- mice.impute.lasso.select.norm(y, ry, x)
 
-test_that("Returns requested length when all predictors are important", {
+test_that("MICE-IMPUTE-LASSO-NORM-007: Returns requested length when all predictors are important", {
   expect_equal(length(imps_t3), sum(!ry))
 })
 
@@ -164,10 +164,10 @@ iurr_custom <- mice(
   print = FALSE
 )
 
-test_that("mice call works (lasso.select.norm)", {
+test_that("MICE-IMPUTE-LASSO-NORM-008: mice call works (lasso.select.norm)", {
   expect_equal(class(iurr_custom), "mids")
 })
 
-test_that("mice call works w/ custom arguments (lasso.select.norm)", {
+test_that("MICE-IMPUTE-LASSO-NORM-009: mice call works w/ custom arguments (lasso.select.norm)", {
   expect_equal(class(iurr_custom), "mids")
 })

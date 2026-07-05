@@ -1,13 +1,13 @@
 data <- mice::nhanes
 
-test_that("mice() takes numerical and character visitSequence", {
+test_that("CHECK-VISITSEQUENCE-001: mice() takes numerical and character visitSequence", {
   expect_silent(imp <- mice(data, visitSequence = 4:1, m = 1, print = FALSE))
   expect_silent(
     imp <- mice(data, visitSequence = rev(names(data)), m = 1, print = FALSE)
   )
 })
 
-test_that("Passive variable is moved to end of visitSequence when not user-defined", {
+test_that("CHECK-VISITSEQUENCE-002: Passive variable is moved to end of visitSequence when not user-defined", {
   data <- data.frame(
     p = rep(NA_real_, 8),
     x = c(1, NA, 3, 4, NA, 3, 2, NA),
@@ -31,7 +31,7 @@ mods <- list(
   gen ~ hgt + wgt,
   wgt ~ hgt + gen
 )
-test_that("method and formulas can have different orders", {
+test_that("CHECK-VISITSEQUENCE-003: method and formulas can have different orders", {
   expect_silent(
     imp <- mice::mice(
       df,

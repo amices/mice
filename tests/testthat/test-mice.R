@@ -3,18 +3,18 @@
 nhanes_mids <- mice(nhanes, m = 2, print = FALSE)
 nhanes_complete <- complete(nhanes_mids)
 
-test_that("No missing values remain in imputed nhanes data set", {
+test_that("MICE-001: No missing values remain in imputed nhanes data set", {
   expect_gt(sum(is.na(nhanes)), 0)
   expect_equal(sum(is.na(nhanes_complete)), 0)
 })
 
-test_that("Data set in returned mids object is identical to nhanes data set", {
+test_that("MICE-002: Data set in returned mids object is identical to nhanes data set", {
   expect_identical(nhanes_mids$data, nhanes)
 })
 
 # ---- blocks ----
 
-test_that("blocks run as expected", {
+test_that("MICE-003: blocks run as expected", {
   expect_silent(
     imp1b <<- mice(
       nhanes,
@@ -60,19 +60,19 @@ test_that("blocks run as expected", {
   )
 })
 
-test_that("Block names are generated automatically", {
+test_that("MICE-004: Block names are generated automatically", {
   expect_identical(names(imp1b$blocks), c("B1", "chl", "bmi"))
 })
-test_that("blocks: Method 'pmm' is used for mixed variable types", {
+test_that("MICE-005: blocks: Method 'pmm' is used for mixed variable types", {
   expect_identical(unname(imp2b$method[1]), "pmm")
 })
-test_that("blocks: Method 'logreg' if all are binary", {
+test_that("MICE-006: blocks: Method 'logreg' if all are binary", {
   expect_identical(unname(imp3b$method[1]), "logreg")
 })
-test_that("blocks: Method 'polr' if all are ordered", {
+test_that("MICE-007: blocks: Method 'polr' if all are ordered", {
   expect_identical(unname(imp4b$method[1]), "polr")
 })
-test_that("blocks: Method 'polr' works with one block", {
+test_that("MICE-008: blocks: Method 'polr' works with one block", {
   expect_identical(unname(imp5b$method[1]), "pmm")
 })
 
@@ -112,7 +112,7 @@ imp4 <- mice(
   seed = 123
 )
 
-test_that("Univariate yield same imputes for `scatter` and `collect`", {
+test_that("MICE-009: Univariate yield same imputes for `scatter` and `collect`", {
   expect_identical(complete(imp1), complete(imp2))
   expect_identical(complete(imp1), complete(imp3))
   expect_identical(complete(imp1), complete(imp4))
@@ -129,7 +129,7 @@ test_that("Univariate yield same imputes for `scatter` and `collect`", {
 
 # ---- formulas ----
 
-test_that("formulas run as expected", {
+test_that("MICE-010: formulas run as expected", {
   expect_silent(
     imp1f <<- mice(
       nhanes,
@@ -188,19 +188,19 @@ test_that("formulas run as expected", {
   )
 })
 
-test_that("Formula names are generated automatically", {
+test_that("MICE-011: Formula names are generated automatically", {
   expect_identical(names(imp1f$blocks), c("F1", "chl", "bmi"))
 })
-test_that("formulas: Method 'pmm' is used for mixed variable types", {
+test_that("MICE-012: formulas: Method 'pmm' is used for mixed variable types", {
   expect_identical(unname(imp2f$method[1]), "pmm")
 })
-test_that("formulas: Method 'logreg' if all are binary", {
+test_that("MICE-013: formulas: Method 'logreg' if all are binary", {
   expect_identical(unname(imp3f$method[1]), "logreg")
 })
-test_that("formulas: Method 'polr' if all are ordered", {
+test_that("MICE-014: formulas: Method 'polr' if all are ordered", {
   expect_identical(unname(imp4f$method[1]), "polr")
 })
-test_that("formulas: Method 'polr' works with one block", {
+test_that("MICE-015: formulas: Method 'polr' works with one block", {
   expect_identical(unname(imp5f$method[1]), "pmm")
 })
 
@@ -244,7 +244,7 @@ imp4 <- mice(
   print = FALSE
 )
 
-test_that("`where` produces correct number of imputes", {
+test_that("MICE-016: `where` produces correct number of imputes", {
   expect_identical(nrow(imp1$imp$age), 25L)
   expect_identical(nrow(imp2$imp$age), 0L)
   expect_identical(nrow(imp3$imp$age), 12L)
@@ -258,7 +258,7 @@ test_that("`where` produces correct number of imputes", {
 # ---- ignore ----
 
 # # all TRUE
-test_that("`ignore` throws appropriate errors and warnings", {
+test_that("MICE-017: `ignore` throws appropriate errors and warnings", {
   expect_error(
     mice(nhanes, maxit = 1, m = 1, print = FALSE, seed = 1, ignore = TRUE),
     "does not match"
@@ -307,7 +307,7 @@ imp3 <- mice(
   ignore = alternate
 )
 
-test_that("`ignore` changes the imputation results", {
+test_that("MICE-018: `ignore` changes the imputation results", {
   expect_identical(complete(imp1), complete(imp2))
   expect_failure(expect_identical(complete(imp1), complete(imp3)))
 })
@@ -344,7 +344,7 @@ imp2 <- mice(
   ignore = c(rep(FALSE, nrow(nhanes)), rep(TRUE, nrow(artificial)))
 )
 
-test_that("`ignore` works with pmm", {
+test_that("MICE-019: `ignore` works with pmm", {
   expect_equal(complete(imp1)["a1", "bmi"], 40.0)
   expect_failure(expect_equal(complete(imp2)["a1", "bmi"], 40.0))
 })

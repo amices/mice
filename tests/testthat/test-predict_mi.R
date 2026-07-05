@@ -94,14 +94,14 @@ lwr <- Q_bar - t_vector * sqrt(T_var)
 upr <- Q_bar + t_vector * sqrt(T_var)
 
 # check if the output structure is as expected
-test_that("Output class is correct", {
+test_that("PREDICT_MI-001: Output class is correct", {
   expect_type(pool_preds, "double") # checks storage type
   expect_true(is.matrix(pool_preds)) # checks it's a matrix
 })
 
 # check if result is the same, for by hand or in function
 # Note pool_preds function depends on mice::pool.scalar
-test_that("retains same numerical result", {
+test_that("PREDICT_MI-002: retains same numerical result", {
   expect_equal(unname(pool_preds[, 1]), Q_bar, tolerance = 0.00001)
   expect_equal(unname(pool_preds[, 2]), lwr, tolerance = 0.00001)
   expect_equal(unname(pool_preds[, 3]), upr, tolerance = 0.00001)

@@ -4,12 +4,12 @@ m1 <- with(imp, lm(chl ~ bmi))
 m0 <- with(imp, lm(chl ~ 1))
 
 # anova methods
-test_that("anova.mira() produces silent D1 and D3", {
+test_that("ANOVA-001: anova.mira() produces silent D1 and D3", {
   expect_silent(z1 <- anova(m2, m1, m0))
   expect_silent(z3 <- anova(m2, m1, m0, method = "D3"))
 })
 
-test_that("anova.mira() produces silent with D2", {
+test_that("ANOVA-002: anova.mira() produces silent with D2", {
   expect_silent(z2a <- anova(m2, m1, m0, method = "D2"))
   expect_silent(z2b <- anova(m2, m1, m0, method = "D2", use = "likelihood"))
 })
@@ -29,7 +29,7 @@ m1 <- with(imp, coxph(Surv(time, status) ~ age))
 m2 <- with(imp, coxph(Surv(time, status) ~ age + sex))
 m3 <- with(imp, coxph(Surv(time, status) ~ age + sex + ph.ecog))
 
-test_that("runs tests for the Cox model", {
+test_that("ANOVA-003: runs tests for the Cox model", {
   expect_silent(pool(m1))
   expect_silent(D1(m2, m1))
   expect_silent(D2(m2, m1))

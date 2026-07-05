@@ -4,7 +4,7 @@ names(type) <- names(data)
 
 z1 <- mice.impute.jomoImpute(data = data, type = type, format = "native")
 
-test_that("jomoImpute returns native class", {
+test_that("MICE-IMPUTE-JOMOIMPUTE-001: jomoImpute returns native class", {
   expect_s3_class(z1, "mitml")
 })
 
@@ -12,7 +12,7 @@ blocks <- make.blocks(list(c("bmi", "chl", "hyp"), "age"))
 method <- c("jomoImpute", "pmm")
 pred <- make.predictorMatrix(nhanes, blocks)
 pred["B1", "hyp"] <- -2
-test_that("mice can call jomoImpute", {
+test_that("MICE-IMPUTE-JOMOIMPUTE-002: mice can call jomoImpute", {
   imp <- mice(nhanes, blocks = blocks, method = method, pred = pred,
               maxit = 1, seed = 1, print = FALSE)
   z <- complete(imp)

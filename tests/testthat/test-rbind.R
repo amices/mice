@@ -1,5 +1,5 @@
 expect_warning(imp1 <- mice(nhanes[1:13, ], m = 2, maxit = 1, print = FALSE))
-test_that("Constant variables are not imputed by default", {
+test_that("RBIND-001: Constant variables are not imputed by default", {
   expect_equal(sum(is.na(complete(imp1))), 6L)
 })
 
@@ -12,7 +12,7 @@ expect_warning(
     remove.constant = FALSE
   )
 )
-test_that("Constant variables are imputed for remove.constant = FALSE", {
+test_that("RBIND-002: Constant variables are imputed for remove.constant = FALSE", {
   expect_equal(sum(is.na(complete(imp1b))), 0L)
 })
 
@@ -39,17 +39,17 @@ imp9 <- mice(
 mylist <- list(age = NA, bmi = NA, hyp = NA, chl = NA)
 nhalf <- nhanes[13:25, ]
 
-test_that("Expands number of rows and imputes", {
+test_that("RBIND-003: Expands number of rows and imputes", {
   expect_equal(nrow(complete(rbind(imp1, imp2))), 25L)
   expect_equal(nrow(rbind(imp1, imp2)$imp$bmi), 9L)
 })
 
-test_that("throws error", {
+test_that("RBIND-004: throws error", {
   expect_error(rbind(imp1, imp3), "datasets have different factor variables")
   expect_error(rbind(imp3, imp4), "number of imputations differ")
   expect_error(rbind(imp1, imp7), "datasets have different variable names")
 })
-test_that("throws warning", {
+test_that("RBIND-005: throws warning", {
   expect_warning(
     rbind(imp1, imp5),
     "iterations differ, so no convergence diagnostics calculated"
@@ -66,22 +66,22 @@ r3 <- rbind(imp1, nhalf)
 r4 <- rbind(imp1, imp2)
 r5 <- rbind(imp2, imp9)
 
-test_that("Produces longer imputed data", {
+test_that("RBIND-006: Produces longer imputed data", {
   expect_identical(nrow(complete(r1)), 26L)
   expect_identical(nrow(complete(r2)), 14L)
 })
 
-test_that("Constant variables are not imputed", {
+test_that("RBIND-007: Constant variables are not imputed", {
   expect_equal(sum(is.na(complete(r3))), 15L)
   expect_equal(sum(is.na(complete(r4))), 6L)
 })
 
-test_that("`ignore` is correctly appended", {
+test_that("RBIND-008: `ignore` is correctly appended", {
   expect_equal(r2$ignore, rep(FALSE, 14))
   expect_equal(r5$ignore, c(rep(FALSE, 32), rep(TRUE, 5)))
 })
 
-test_that("plot throws error on convergence diagnostics", {
+test_that("RBIND-009: plot throws error on convergence diagnostics", {
   r11 <- suppressWarnings(mice.mids(rbind(imp1, imp5), print = FALSE))
   expect_error(plot(r11), "no convergence diagnostics found")
 })
@@ -104,9 +104,9 @@ expect_warning(
 
 D_rbind <- mice:::rbind.mids(D_mids, D[6:10, ])
 cmp <- complete(D_rbind, 1)
-test_that("Solves issue #59, rbind", expect_identical(cmp[6:10, ], D[6:10, ]))
+test_that("RBIND-010: Solves issue #59, rbind", expect_identical(cmp[6:10, ], D[6:10, ]))
 
-test_that("rbind does not throw a warning (#114)", {
+test_that("RBIND-011: rbind does not throw a warning (#114)", {
   expect_silent(rbind(ordered(c(1, 2))))
 })
 
@@ -152,6 +152,6 @@ imp2$data <- imp2$data[idx, ]
 imp2$where <- imp2$where[idx, ]
 c2 <- complete(imp2, 2)
 
-test_that("ignore + where is identical to filter + rbind (#319)", {
+test_that("RBIND-012: ignore + where is identical to filter + rbind (#319)", {
   expect_identical(c1, c2)
 })

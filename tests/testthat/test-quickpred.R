@@ -1,4 +1,4 @@
-test_that("returns square binary matrix", {
+test_that("QUICKPRED-001: returns square binary matrix", {
   predictorMatrix <- quickpred(nhanes)
 
   expect_true(is.matrix(predictorMatrix))
@@ -6,7 +6,7 @@ test_that("returns square binary matrix", {
   expect_in(predictorMatrix, c(0, 1))
 })
 
-test_that("mincor supports scalar, vector, matrix", {
+test_that("QUICKPRED-002: mincor supports scalar, vector, matrix", {
   n_col <- ncol(nhanes)
   expect_in(quickpred(nhanes, mincor = 0), c(0, 1))
   expect_in(quickpred(nhanes, mincor = 1), 0)
@@ -17,7 +17,7 @@ test_that("mincor supports scalar, vector, matrix", {
   )
 })
 
-test_that("minpuc supports scalar, vector, matrix", {
+test_that("QUICKPRED-003: minpuc supports scalar, vector, matrix", {
   n_col <- ncol(nhanes)
   expect_in(quickpred(nhanes, minpuc = 0), c(0, 1))
   expect_in(quickpred(nhanes, minpuc = rep(0.1, n_col)), c(0, 1))
@@ -27,7 +27,7 @@ test_that("minpuc supports scalar, vector, matrix", {
   )
 })
 
-test_that("include one or more variables", {
+test_that("QUICKPRED-004: include one or more variables", {
   result_include_bmi <- quickpred(nhanes, include = "bmi")
   has_missing <- apply(is.na(nhanes), 2, any)
   not_bmi <- setdiff(names(nhanes)[has_missing], "bmi")
@@ -43,7 +43,7 @@ test_that("include one or more variables", {
   )
 })
 
-test_that("exclude one or more variables", {
+test_that("QUICKPRED-005: exclude one or more variables", {
   result_exclude_age <- quickpred(nhanes, exclude = "age")
   expect_in(result_exclude_age[, "age"], 0)
 

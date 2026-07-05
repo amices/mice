@@ -1,4 +1,4 @@
-test_that("pool(fit)$pooled and pool.vector(summary(fit)) are identical", {
+test_that("POOL-VECTOR-001: pool(fit)$pooled and pool.vector(summary(fit)) are identical", {
   # conventional flow
   imp <- mice(nhanes2, m = 2, maxit = 2, seed = 1, print = FALSE)
   fit <- with(imp, lm(chl ~ age + bmi + hyp))

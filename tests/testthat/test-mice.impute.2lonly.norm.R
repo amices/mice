@@ -39,7 +39,7 @@ pred[, "patid"] <- -2
 # only missing value (out of five) for patid == 1
 data[3, "sex"] <- NA
 
-test_that("2lonly.norm stops with partially missing level-2 data", {
+test_that("MICE-IMPUTE-2LONLY-NORM-001: 2lonly.norm stops with partially missing level-2 data", {
   expect_error(
     mice(
       data,

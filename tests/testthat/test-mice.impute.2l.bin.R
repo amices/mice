@@ -7,7 +7,7 @@ data_factor <- tidyr::complete(toenail2, patientID, visit) |>
 pred_factor <- make.predictorMatrix(data_factor)
 pred_factor["outcome", "patientID"] <- -2
 
-test_that("mice::mice.impute.2l.bin() accepts factor outcome", {
+test_that("MICE-IMPUTE-2L-BIN-001: mice::mice.impute.2l.bin() accepts factor outcome", {
   expect_silent(
     imp <- mice(data_factor, method = "2l.bin", print = FALSE,
                 pred = pred_factor, m = 1, maxit = 1)
@@ -23,7 +23,7 @@ data_binary <- tidyr::complete(toenail, ID, visit) |>
 pred_binary <- make.predictorMatrix(data_binary)
 pred_binary["outcome", "ID"] <- -2
 
-test_that("mice::mice.impute.2l.bin() accepts 0/1 outcome", {
+test_that("MICE-IMPUTE-2L-BIN-002: mice::mice.impute.2l.bin() accepts 0/1 outcome", {
   expect_silent(
     imp <- mice(data_binary, method = "2l.bin", print = FALSE,
                 pred = pred_binary, m = 1, maxit = 1)

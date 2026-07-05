@@ -2,7 +2,7 @@ d1 <- brandsma[1:200, c("sch", "lpo")]
 pred <- make.predictorMatrix(d1)
 pred["lpo", "sch"] <- -2
 
-test_that("mice::mice.impute.2l.norm() runs empty model", {
+test_that("MICE-IMPUTE-2L-NORM-001: mice::mice.impute.2l.norm() runs empty model", {
   expect_silent(
     imp <- mice(
       d1,

@@ -2,7 +2,7 @@ d <- brandsma[1:200, c("sch", "lpo")]
 pred <- make.predictorMatrix(d)
 pred["lpo", "sch"] <- -2
 
-test_that("mice::mice.impute.2l.lmer() runs empty model", {
+test_that("MICE-IMPUTE-2L-LMER-001: mice::mice.impute.2l.lmer() runs empty model", {
   expect_silent(
     imp <- mice(
       d,
@@ -21,7 +21,7 @@ d[c(1, 11, 21), "iqv"] <- NA
 pred <- make.predictorMatrix(d)
 pred[c("lpo", "iqv"), "sch"] <- -2
 
-test_that("2l.lmer() runs random intercept, one predictor", {
+test_that("MICE-IMPUTE-2L-LMER-002: 2l.lmer() runs random intercept, one predictor", {
   expect_silent(
     imp <- mice(
       d,

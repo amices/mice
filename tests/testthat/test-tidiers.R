@@ -10,12 +10,12 @@ imp <- mice::mice(
 fit_mira <- with(imp, lm(chl ~ age + bmi))
 fit_mipo <- mice::pool(fit_mira)
 
-test_that("glance.mipo: nhanes lm", {
+test_that("TIDIERS-001: glance.mipo: nhanes lm", {
   tmp <- glance(fit_mipo)
   expect_true(inherits(tmp, "data.frame"))
 })
 
-test_that("tidy.mipo: nhanes lm", {
+test_that("TIDIERS-002: tidy.mipo: nhanes lm", {
   tmp <- tidy(fit_mipo)
   expect_true(inherits(tmp, "data.frame"))
   expect_equal(dim(tmp), c(3, 13))

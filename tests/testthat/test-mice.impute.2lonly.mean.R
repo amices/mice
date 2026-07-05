@@ -10,7 +10,7 @@ wy4 <- rep(c(TRUE, FALSE), times = c(1, length(y) - 1))
 type <- c(1, -2, 1)
 yn <- y
 
-test_that("Returns requested length, for numeric", {
+test_that("MICE-IMPUTE-2LONLY-MEAN-001: Returns requested length, for numeric", {
   expect_equal(length(mice.impute.2lonly.mean(y, ry, x, type, wy1)), sum(wy1))
   expect_equal(length(mice.impute.2lonly.mean(y, ry, x, type, wy2)), sum(wy2))
   expect_equal(length(mice.impute.2lonly.mean(y, ry, x, type, wy3)), sum(wy3))
@@ -23,7 +23,7 @@ y <- popmis$texp
 y <- cut(y, breaks = c(0, 5, 10, 20, 30))
 y[rbinom(length(y), size = 1, prob = 0.5) == 1] <- NA
 
-test_that("Returns requested length, for factor", {
+test_that("MICE-IMPUTE-2LONLY-MEAN-002: Returns requested length, for factor", {
   expect_equal(length(mice.impute.2lonly.mean(y, ry, x, type, wy1)), sum(wy1))
   expect_equal(length(mice.impute.2lonly.mean(y, ry, x, type, wy2)), sum(wy2))
   expect_equal(length(mice.impute.2lonly.mean(y, ry, x, type, wy3)), sum(wy3))
@@ -43,7 +43,7 @@ y[1:100] <- NA
 imf <- mice.impute.2lonly.mean(y, ry, x, type, wy1)
 zf <- table(imf, useNA = "al")
 
-test_that("Return NA for classes without values", {
+test_that("MICE-IMPUTE-2LONLY-MEAN-003: Return NA for classes without values", {
   expect_equal(as.numeric(zn[length(zn)]), 39)
   expect_equal(as.numeric(zf[length(zf)]), 39)
 })

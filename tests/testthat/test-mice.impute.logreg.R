@@ -45,6 +45,6 @@ perfectPred <- tryCatch(
 )
 
 # Test
-test_that("Complete separation results in same class as well behaved case", {
+test_that("MICE-IMPUTE-LOGREG-001: Complete separation results in same class as well behaved case", {
   expect_true(all.equal(class(wellBehaved), class(perfectPred)))
 })

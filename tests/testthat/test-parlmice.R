@@ -1,6 +1,6 @@
 # Same seed - multiple cores -
 # Result: Imputations not equal between mice and parlmice
-test_that("Warning and Imputations between mice and parlmice are unequal", {
+test_that("PARLMICE-001: Warning and Imputations between mice and parlmice are unequal", {
   skip_if_not(parallel::detectCores() > 2)
   expect_warning(A <- parlmice(nhanes, m = 2, seed = 123))
   B <- mice(nhanes, m = 2, print = FALSE, seed = 123)
@@ -9,7 +9,7 @@ test_that("Warning and Imputations between mice and parlmice are unequal", {
 
 # Same seed - single core -
 # Result: Imputations equal between mice and parlmice
-test_that("Imputations are equal between mice and parlmice", {
+test_that("PARLMICE-002: Imputations are equal between mice and parlmice", {
   expect_warning(C <- parlmice(nhanes, n.core = 1, n.imp.core = 5, seed = 123))
   D <- mice(nhanes, m = 5, print = FALSE, seed = 123)
 
@@ -18,25 +18,25 @@ test_that("Imputations are equal between mice and parlmice", {
 })
 
 # Should return m = 8
-test_that("Cores and n.imp.core specified. Override m", {
+test_that("PARLMICE-003: Cores and n.imp.core specified. Override m", {
   expect_warning(I <- parlmice(nhanes, n.core = 2, n.imp.core = 4))
   expect_identical(I$m, 2 * 4)
 })
 
 # Should return m = 3x5=15
-test_that("n.imp.core not specified", {
+test_that("PARLMICE-004: n.imp.core not specified", {
   expect_warning(J <- parlmice(nhanes, n.core = 2))
   expect_identical(J$m, 2 * 5)
 })
 
 # Should return m = 2x7=42
-test_that("n.imp.core not specified, m overridden", {
+test_that("PARLMICE-005: n.imp.core not specified, m overridden", {
   expect_warning(K <- parlmice(nhanes, n.core = 2, m = 7))
   expect_identical(K$m, 2 * 7)
 })
 
 # Should return error
-test_that("n.core larger than logical CPU cores", {
+test_that("PARLMICE-006: n.core larger than logical CPU cores", {
   expect_error(suppresWarnings(parlmice(
     nhanes,
     n.core = parallel::detectCores() + 1

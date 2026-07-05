@@ -1,4 +1,4 @@
-test_that("mpmm() works for any column order in data", {
+test_that("MICE-IMPUTE-MPMM-001: mpmm() works for any column order in data", {
   set.seed(1)
   beta2 <- beta1 <- .5
   x <- rnorm(1000)

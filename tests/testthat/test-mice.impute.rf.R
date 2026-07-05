@@ -12,17 +12,17 @@ par <- list(
   x = df[, "X2", drop = FALSE]
 )
 
-test_that("runs with a single missing value using ranger", {
+test_that("MICE-IMPUTE-RF-001: runs with a single missing value using ranger", {
   skip_if_not_installed("ranger")
   expect_visible(do.call(mice.impute.rf, c(par, list(rfPackage = "ranger"))))
 })
 
-test_that("runs with a single missing value using randomForest", {
+test_that("MICE-IMPUTE-RF-002: runs with a single missing value using randomForest", {
   skip_if_not_installed("randomForest")
   expect_visible(do.call(mice.impute.rf, c(par, list(rfPackage = "randomForest"))))
 })
 
-test_that("runs with a single missing value using literanger", {
+test_that("MICE-IMPUTE-RF-003: runs with a single missing value using literanger", {
   skip_if_not_installed("literanger")
   expect_visible(do.call(mice.impute.rf, c(par, list(rfPackage = "literanger"))))
 })

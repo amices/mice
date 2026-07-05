@@ -1,4 +1,4 @@
-test_that("loggedEvents is NULL", {
+test_that("LOGGEDEVENTS-001: loggedEvents is NULL", {
   imp1 <- mice(nhanes, m = 2, print = FALSE)
 
   # copy of data, different names

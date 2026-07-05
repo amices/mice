@@ -1,4 +1,4 @@
-test_that("removes variables from 'where'", {
+test_that("BLOCKS-001: removes variables from 'where'", {
   imp <- mice(
     nhanes,
     blocks = make.blocks(list(c("bmi", "chl"), "bmi", "age")),
@@ -8,7 +8,7 @@ test_that("removes variables from 'where'", {
   expect_identical(sum(imp$where[, "hyp"]), 0L)
 })
 
-test_that("expands a univariate method to all variables in the block", {
+test_that("BLOCKS-002: expands a univariate method to all variables in the block", {
   # reprex https://github.com/amices/mice/issues/326
   imp1 <- mice(nhanes, seed = 1, m = 1, maxit = 2, print = FALSE)
   imp2 <- mice(
@@ -23,7 +23,7 @@ test_that("expands a univariate method to all variables in the block", {
   expect_identical(complete(imp1, 1), complete(imp2, 1))
 })
 
-test_that("within-block order affects imputations though visitSequence is unchanged", {
+test_that("BLOCKS-003: within-block order affects imputations though visitSequence is unchanged", {
   imp3 <- mice(
     nhanes,
     blocks = list(c("hyp", "bmi"), "chl"),

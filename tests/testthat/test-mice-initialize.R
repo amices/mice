@@ -5,10 +5,10 @@ data <- nhanes
 imp1 <- mice(data, print = FALSE, m = 1, maxit = 1)
 pred <- imp1$predictorMatrix
 form <- imp1$formulas
-test_that("Case A finds blocks", {
+test_that("MICE-INITIALIZE-001: Case A finds blocks", {
   expect_identical(names(imp1$blocks), colnames(data))
 })
-test_that("Case A finds formulas", {
+test_that("MICE-INITIALIZE-002: Case A finds formulas", {
   expect_identical(
     attr(terms(form[["bmi"]]), "term.labels"),
     names(pred["bmi", ])[pred["bmi", ] == 1]
@@ -33,7 +33,7 @@ pred4 <- matrix(
 )
 imp1 <- mice(data, predictorMatrix = pred1, print = FALSE, m = 1, maxit = 1)
 imp3 <- mice(data, predictorMatrix = pred3, print = FALSE, m = 1, maxit = 1)
-test_that("Case B tests the predictorMatrix", {
+test_that("MICE-INITIALIZE-003: Case B tests the predictorMatrix", {
   expect_equal(nrow(imp1$predictorMatrix), 4L)
   expect_error(mice(
     data,
@@ -46,12 +46,12 @@ test_that("Case B tests the predictorMatrix", {
 
 pred <- imp3$predictorMatrix
 blocks <- imp3$blocks
-test_that("Case B finds blocks", {
+test_that("MICE-INITIALIZE-004: Case B finds blocks", {
   expect_identical(names(blocks), c("bmi", "hyp"))
 })
 
 form <- imp3$formulas
-test_that("Case B finds formulas", {
+test_that("MICE-INITIALIZE-005: Case B finds formulas", {
   expect_identical(
     attr(terms(form[["bmi"]]), "term.labels"),
     names(pred["bmi", ])[pred["bmi", ] == 1]
@@ -83,7 +83,7 @@ imp3.0 <- mice(
   seed = 11
 )
 
-test_that("Case C imputations are identical after initialization", {
+test_that("MICE-INITIALIZE-006: Case C imputations are identical after initialization", {
   expect_identical(complete(imp1.0), complete(imp2.0))
   expect_identical(complete(imp1.0), complete(imp3.0))
 })
@@ -113,21 +113,21 @@ imp3 <- mice(
   seed = 11
 )
 
-test_that("Case C finds blocks", {
+test_that("MICE-INITIALIZE-007: Case C finds blocks", {
   expect_identical(names(imp2$blocks), c("B1", "hyp"))
   expect_identical(names(imp3$blocks), c("all"))
 })
 
-test_that("Case C finds predictorMatrix", {
+test_that("MICE-INITIALIZE-008: Case C finds predictorMatrix", {
   expect_identical(imp2$predictorMatrix["hyp", "hyp"], 0)
   expect_identical(dim(imp3$predictorMatrix), c(1L, 4L))
 })
 
-test_that("Case C finds formulas", {
+test_that("MICE-INITIALIZE-009: Case C finds formulas", {
   expect_identical(sort(all.vars(imp2$formulas[["B1"]])), sort(colnames(data)))
 })
 
-test_that("Case C yields same imputations for FCS and multivariate", {
+test_that("MICE-INITIALIZE-010: Case C yields same imputations for FCS and multivariate", {
   expect_identical(complete(imp1), complete(imp2))
   expect_identical(complete(imp1), complete(imp3))
 })
@@ -190,12 +190,12 @@ imp4 <- mice(
   seed = 12199
 )
 
-test_that("Case D yields same imputations for dot notation", {
+test_that("MICE-INITIALIZE-011: Case D yields same imputations for dot notation", {
   expect_identical(complete(imp1), complete(imp2))
   expect_identical(complete(imp3), complete(imp4))
 })
 
-test_that("Case D yields same imputations for FCS and multivariate", {
+test_that("MICE-INITIALIZE-012: Case D yields same imputations for FCS and multivariate", {
   expect_equal(complete(imp1), complete(imp3))
   expect_equal(complete(imp2), complete(imp4))
 })
@@ -259,19 +259,19 @@ imp3a <- mice(
   print = FALSE
 )
 
-test_that("Case E borrows rownames from blocks", {
+test_that("MICE-INITIALIZE-013: Case E borrows rownames from blocks", {
   expect_identical(rownames(imp1a$predictorMatrix), names(blocks1))
   expect_identical(rownames(imp2a$predictorMatrix), names(blocks2))
   expect_identical(rownames(imp3a$predictorMatrix), names(blocks3))
 })
 
-test_that("Case E borrows colnames from data", {
+test_that("MICE-INITIALIZE-014: Case E borrows colnames from data", {
   expect_identical(colnames(imp1a$predictorMatrix), names(data))
   expect_identical(colnames(imp2a$predictorMatrix), names(data))
   expect_identical(colnames(imp3a$predictorMatrix), names(data))
 })
 
-test_that("Case E name setting fails on incompatible sizes", {
+test_that("MICE-INITIALIZE-015: Case E name setting fails on incompatible sizes", {
   expect_error(
     mice(data, blocks = blocks2, pred = matrix(1, nr = 2, nc = 2)),
     "Unable to set column names of predictorMatrix"
@@ -285,7 +285,7 @@ test_that("Case E name setting fails on incompatible sizes", {
 
 colnames(pred1) <- c("A", "B", "chl", "bmi")
 pred2a <- pred2[, -(1:4), drop = FALSE]
-test_that("Case E detects incompatible arguments", {
+test_that("MICE-INITIALIZE-016: Case E detects incompatible arguments", {
   expect_error(
     mice(data, blocks = blocks1, pred = pred1),
     "Names not found in data: A, B"
@@ -336,7 +336,7 @@ imp1 <- mice(
   print = FALSE,
   seed = 3
 )
-test_that("Case F combines forms and pred in blocks", {
+test_that("MICE-INITIALIZE-017: Case F combines forms and pred in blocks", {
   expect_identical(unname(imp1$calltype), c(rep("formula", 3), "pred"))
 })
 
@@ -350,12 +350,12 @@ imp2 <- mice(
   print = FALSE,
   seed = 3
 )
-test_that("Case F dots and specified form produce same imputes", {
+test_that("MICE-INITIALIZE-018: Case F dots and specified form produce same imputes", {
   expect_identical(complete(imp1), complete(imp2))
 })
 
 # error
-test_that("Case F generates error if it cannot handle non-square predictor", {
+test_that("MICE-INITIALIZE-019: Case F generates error if it cannot handle non-square predictor", {
   expect_error(
     mice(data, formulas = form2, pred = pred2),
     "If no blocks are specified, predictorMatrix must have same number of rows and columns"
@@ -385,7 +385,7 @@ imp3a <- mice(
 # err on matrix columns
 nh <- nhanes
 nh$hyp <- as.matrix(nh$hyp)
-test_that("MICE does not accept data.frames with embedded matrix ", {
+test_that("MICE-INITIALIZE-020: MICE does not accept data.frames with embedded matrix ", {
   expect_error(
     mice(nh),
     "Cannot handle columns with class matrix: hyp"

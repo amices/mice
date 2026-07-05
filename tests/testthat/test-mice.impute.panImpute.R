@@ -1,4 +1,4 @@
-test_that("panImpute returns native class", {
+test_that("MICE-IMPUTE-PANIMPUTE-001: panImpute returns native class", {
   data <- boys[c(1:10, 101:110, 501:510, 601:620, 701:710), ]
   type <- c(2, 0, 0, 0, -2, 0, 1, 1, 0)
   names(type) <- names(data)
@@ -8,7 +8,7 @@ test_that("panImpute returns native class", {
   expect_s3_class(z1, "mitml")
 })
 
-test_that("mice can call panImpute", {
+test_that("MICE-IMPUTE-PANIMPUTE-002: mice can call panImpute", {
   blocks <- make.blocks(list(c("bmi", "chl", "hyp"), "age"))
   method <- c("panImpute", "pmm")
   pred <- make.predictorMatrix(nhanes, blocks)

@@ -20,7 +20,7 @@ wy <- !ry
 set.seed(123)
 imps <- mice.impute.lasso.logreg(y, ry, x)
 
-test_that("Returns a matrix of dimensionality sum(wy) x 1", {
+test_that("MICE-IMPUTE-LASSO-LOGREG-001: Returns a matrix of dimensionality sum(wy) x 1", {
   expect_true(is.matrix(imps))
   expect_equal(dim(imps), c(sum(wy), 1))
 })
@@ -58,15 +58,15 @@ meth[1:2] <- "logreg"
 logreg_default <- mice(X, m = 2, maxit = 2, method = meth, print = FALSE)
 
 # Tests
-test_that("mice call works (lasso.logreg)", {
+test_that("MICE-IMPUTE-LASSO-LOGREG-002: mice call works (lasso.logreg)", {
   expect_equal(class(durr_custom), "mids")
 })
 
-test_that("mice call works w/ custom arguments (lasso.logreg)", {
+test_that("MICE-IMPUTE-LASSO-LOGREG-003: mice call works w/ custom arguments (lasso.logreg)", {
   expect_equal(class(durr_custom), "mids")
 })
 
-test_that("same class as logreg default method (lasso.logreg)", {
+test_that("MICE-IMPUTE-LASSO-LOGREG-004: same class as logreg default method (lasso.logreg)", {
   expect_equal(
     class(complete(logreg_default)[, 1]),
     class(complete(durr_default)[, 1])
@@ -120,7 +120,7 @@ perfectPred <- tryCatch(
 )
 
 # Test
-test_that("Complete separation results in same class as well behaved case (lasso.logreg)", {
+test_that("MICE-IMPUTE-LASSO-LOGREG-005: Complete separation results in same class as well behaved case (lasso.logreg)", {
   expect_true(all.equal(class(wellBehaved), class(perfectPred)))
 })
 
@@ -149,10 +149,10 @@ wy <- !ry
 set.seed(123)
 imps_t1 <- mice.impute.lasso.select.logreg(y, ry, x)
 
-test_that("Returns requested length", {
+test_that("MICE-IMPUTE-LASSO-LOGREG-006: Returns requested length", {
   expect_equal(length(imps_t1), sum(!ry))
 })
-test_that("Returns dichotomous imputations (TEST 1)", {
+test_that("MICE-IMPUTE-LASSO-LOGREG-007: Returns dichotomous imputations (TEST 1)", {
   expect_equal(length(unique(imps_t1)), 2)
 })
 
@@ -178,7 +178,7 @@ wy <- !ry
 set.seed(123)
 imps_t2 <- mice.impute.lasso.select.logreg(y, ry, x)
 
-test_that("Returns dichotomous imputations (TEST 2)", {
+test_that("MICE-IMPUTE-LASSO-LOGREG-008: Returns dichotomous imputations (TEST 2)", {
   expect_equal(length(unique(imps_t2)), 2)
 })
 
@@ -203,7 +203,7 @@ wy <- !ry
 set.seed(123)
 imps_t3 <- mice.impute.lasso.select.logreg(y, ry, x)
 
-test_that("Works when all predictors are important (TEST 3)", {
+test_that("MICE-IMPUTE-LASSO-LOGREG-009: Works when all predictors are important (TEST 3)", {
   expect_equal(length(unique(imps_t3)), 2)
 })
 
@@ -240,15 +240,15 @@ meth[1:2] <- "logreg"
 logreg_default <- mice(X, m = 2, maxit = 2, method = meth, print = FALSE)
 
 # Tests
-test_that("mice call works (lasso.select.logreg)", {
+test_that("MICE-IMPUTE-LASSO-LOGREG-010: mice call works (lasso.select.logreg)", {
   expect_equal(class(iurr_custom), "mids")
 })
 
-test_that("mice call works w/ custom arguments (lasso.select.logreg)", {
+test_that("MICE-IMPUTE-LASSO-LOGREG-011: mice call works w/ custom arguments (lasso.select.logreg)", {
   expect_equal(class(iurr_custom), "mids")
 })
 
-test_that("same class as logreg default method (lasso.select.logreg)", {
+test_that("MICE-IMPUTE-LASSO-LOGREG-012: same class as logreg default method (lasso.select.logreg)", {
   expect_equal(
     class(complete(logreg_default)[, 1]),
     class(complete(iurr_default)[, 1])
@@ -302,6 +302,6 @@ perfectPred <- tryCatch(
 )
 
 # Test
-test_that("Complete separation results in same class as well behaved case (lasso.select.logreg)", {
+test_that("MICE-IMPUTE-LASSO-LOGREG-013: Complete separation results in same class as well behaved case (lasso.select.logreg)", {
   expect_true(all.equal(class(wellBehaved), class(perfectPred)))
 })

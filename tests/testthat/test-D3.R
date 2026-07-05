@@ -22,11 +22,11 @@ x1 <- structure(
 x2 <- D3(fit1 = fit1, fit0 = fit0)
 x3 <- mitml::testModels(fit1, fit0, method = "D3")
 
-test_that("lm, complete data: D3() and lrtest() calculate same test statistic", {
+test_that("D3-001: lm, complete data: D3() and lrtest() calculate same test statistic", {
   expect_equal(x1$Chisq[2], x2$result[1], tolerance = 1e-6)
 })
 
-test_that("lm, complete data: testModels() and lrtest() calculate same test statistic", {
+test_that("D3-002: lm, complete data: testModels() and lrtest() calculate same test statistic", {
   expect_equal(x1$Chisq[2], x3$test[1], tolerance = 1e-6)
 })
 
@@ -37,13 +37,13 @@ fit0 <- with(data = imp, expr = lm(hyp ~ 1))
 z1 <- D3(fit1, fit0)
 z2 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), method = "D3")
 
-test_that("lm, imputed data: mice D3() and mitml testModels() calculate same F", {
+test_that("D3-003: lm, imputed data: mice D3() and mitml testModels() calculate same F", {
   skip("FIXME: mice and mitml give discrepant D3 results for imputed data (#226)")
   expect_equal(z1$result[1], z2$test[1])
 })
 
 # imputed data: lmer (requires broom.mixed)
-test_that("lmer, imputed data: mice D3() and mitml testModels() calculate same F", {
+test_that("D3-004: lmer, imputed data: mice D3() and mitml testModels() calculate same F", {
   skip_if_not_installed("broom.mixed")
   suppressPackageStartupMessages(library(mitml))
   library(lme4)
@@ -62,7 +62,7 @@ test_that("lmer, imputed data: mice D3() and mitml testModels() calculate same F
 })
 
 # imputed data: glm
-test_that("glm, imputed data: mice D3() and mitml testModels() calculate same F", {
+test_that("D3-005: glm, imputed data: mice D3() and mitml testModels() calculate same F", {
   skip("FIXME: D3() with glm produces negative Dm and convergence problems")
   imp_glm <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
   fit1_glm <- with(data = imp_glm, expr = glm(hyp == "yes" ~ age + chl, family = binomial))
@@ -79,7 +79,7 @@ fit0 <- with(data = imp2, expr = lm(bmi ~ age))
 z7 <- D3(fit1, fit0)
 z8 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), method = "D3")
 
-test_that("lm with factors, imputed data: mice D3() and mitml testModels() calculate same F", {
+test_that("D3-006: lm with factors, imputed data: mice D3() and mitml testModels() calculate same F", {
   skip("FIXME: mice and mitml give discrepant D3 results for imputed data (#226)")
   expect_equal(z7$result[1], z8$test[1])
 })

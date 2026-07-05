@@ -1,6 +1,6 @@
 # See #292: with.mids() using eval_tidy() breaks compatibility with metafor
 
-test_that("does not break metafor package (#292)", {
+test_that("WITH-001: does not break metafor package (#292)", {
   skip_if_not_installed("metafor")
   library(metafor)
   dat <- dat.bcg
