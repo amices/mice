@@ -548,9 +548,9 @@ test_that("warnings appear when not all patterns can be generated", {
     runif(10, 0.05, 0.15),
     function(p, n) rbinom(n, 1, p),
     n = 10
-  ) %>%
-    do.call(what = "data.frame") %>%
-    setNames(paste0("type", LETTERS[1:ncol(.)]))
+  ) |>
+    do.call(what = "data.frame")
+  names(binary.data) <- paste0("type", LETTERS[1:ncol(binary.data)])
   expect_warning(
     ampute(
       data = binary.data

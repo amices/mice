@@ -58,29 +58,17 @@ test_that("mice call works w/ custom arguments", {
 # TEST 3: Failure because removals by remove.lindep()  #577
 #########################
 
-# library(mice, warn.conflicts = FALSE)
-# set.seed(123)
-#
-# n <- 100
-# y <- rnorm(n)
-# x <- rep(1, n)
-# y[sample(1:n, n * .3)] <- NA
-# ry <- !is.na(y)
-#
-# # Test univariate imputation outside mice
-# imps <- mice.impute.lasso.norm(y, ry, as.matrix(x))
-# imps <- mice.impute.lasso.norm(y, ry, as.matrix(x)[, -1])
-#
-# # Test inside mice
-# input <- data.frame(y = y, x = 1)
-# imp <- mice(input, m = 1, maxit = 1, method = "lasso.norm", print = FALSE)
-# imp <- mice(input, m = 1, maxit = 1, method = "lasso.norm", print = FALSE, eps = 0)
-# imp <- mice(input, m = 1, maxit = 1, method = "lasso.norm", print = FALSE, eps = 0, remove.constant = FALSE)
-#
-# test_that("skip remove.lindep()", {
-#   expect_silent(mice(data, m = 1, maxit = 1, method = "lasso.norm", eps = 0, print = FALSE))
-# })
-#
+test_that("lasso.norm handles constant predictor column (#577)", {
+  skip("FIXME: glmnet errors with 'all used predictors have zero variance' when x is constant (#577)")
+  set.seed(123)
+  n <- 100
+  y <- rnorm(n)
+  y[sample(1:n, n * .3)] <- NA
+  ry <- !is.na(y)
+  input <- data.frame(y = y, x = 1)
+  expect_silent(mice(input, m = 1, maxit = 1, method = "lasso.norm", print = FALSE))
+  expect_silent(mice(input, m = 1, maxit = 1, method = "lasso.norm", eps = 0, print = FALSE))
+})
 
 context("mice.impute.lasso.select.norm")
 

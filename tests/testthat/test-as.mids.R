@@ -68,8 +68,8 @@ test_that("complete() reproduces the original data", {
 # works with dplyr
 
 library(dplyr)
-X3 <- X %>%
-  group_by(hyp) %>%
+X3 <- X |>
+  group_by(hyp) |>
   mutate(chlm = mean(chl, na.rm = TRUE))
 test_that("handles grouped_df", {
   expect_silent(as.mids(X3))

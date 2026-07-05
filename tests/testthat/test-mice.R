@@ -35,9 +35,9 @@ test_that("blocks run as expected", {
       seed = 1
     )
   )
-  # expect_silent(imp3b <<- mice(nhanes2,
-  #                             blocks = list(c("hyp", "hyp", "hyp"), "chl", "bmi"),
-  #                             print = FALSE, m = 1, maxit = 1, seed = 1))
+  expect_silent(imp3b <<- mice(nhanes2,
+    blocks = list(c("hyp", "hyp", "hyp"), "chl", "bmi"),
+    print = FALSE, m = 1, maxit = 1, seed = 1))
   expect_silent(
     imp4b <<- mice(
       boys,
@@ -66,9 +66,9 @@ test_that("Block names are generated automatically", {
 test_that("Method `pmm` is used for mixed variable types", {
   expect_identical(unname(imp2b$method[1]), "pmm")
 })
-# test_that("Method `logreg` if all are binary", {
-#   expect_identical(unname(imp3b$method[1]), "logreg")
-# })
+test_that("Method `logreg` if all are binary", {
+  expect_identical(unname(imp3b$method[1]), "logreg")
+})
 test_that("Method `polr` if all are ordered", {
   expect_identical(unname(imp4b$method[1]), "polr")
 })
@@ -158,11 +158,11 @@ test_that("formulas run as expected", {
       seed = 1
     )
   )
-  # expect_silent(imp3f <<- mice(nhanes2,
-  #                             formulas = list( hyp + hyp + hyp ~ chl + bmi,
-  #                                              chl ~ hyp + hyp + hyp + bmi,
-  #                                              bmi ~ hyp + hyp + hyp + chl),
-  #                             print = FALSE, m = 1, maxit = 1, seed = 1))
+  expect_silent(imp3f <<- mice(nhanes2,
+    formulas = list(hyp + hyp + hyp ~ chl + bmi,
+                    chl ~ hyp + hyp + hyp + bmi,
+                    bmi ~ hyp + hyp + hyp + chl),
+    print = FALSE, m = 1, maxit = 1, seed = 1))
   expect_silent(
     imp4f <<- mice(
       boys,
@@ -194,9 +194,9 @@ test_that("Formula names are generated automatically", {
 test_that("Method `pmm` is used for mixed variable types", {
   expect_identical(unname(imp2f$method[1]), "pmm")
 })
-# test_that("Method `logreg` if all are binary", {
-#   expect_identical(unname(imp3f$method[1]), "logreg")
-# })
+test_that("Method `logreg` if all are binary", {
+  expect_identical(unname(imp3f$method[1]), "logreg")
+})
 test_that("Method `polr` if all are ordered", {
   expect_identical(unname(imp4f$method[1]), "polr")
 })

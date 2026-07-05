@@ -23,6 +23,7 @@ imp <- mice(
   m = 5,
   maxit = 5,
   seed = 1,
+  print = FALSE,
   predictorMatrix = predmat,
   ignore = ifelse(dat$set == "test", TRUE, FALSE)
 )
@@ -66,7 +67,7 @@ predfunc <- function(model, data, level) {
 preds_all <- Map(predfunc, model = fits, data = testdats, level = 0.95)
 
 # change the list to a df
-preds <- unlist(preds_all) %>%
+preds <- unlist(preds_all) |>
   array(dim = c(nrow(testdats[[1]]), 2, 5))
 
 # our estimand is the predicted value

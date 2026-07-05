@@ -83,10 +83,10 @@ test_that("`ignore` is correctly appended", {
   expect_equal(r5$ignore, c(rep(FALSE, 32), rep(TRUE, 5)))
 })
 
-# r11 <- mice.mids(rbind(imp1, imp5), print = FALSE)
-# test_that("plot throws error on convergence diagnostics", {
-#   expect_error(plot(r11), "no convergence diagnostics found")
-#   })
+test_that("plot throws error on convergence diagnostics", {
+  r11 <- suppressWarnings(mice.mids(rbind(imp1, imp5), print = FALSE))
+  expect_error(plot(r11), "no convergence diagnostics found")
+})
 
 r21 <- mice.mids(r2, print = FALSE)
 r31 <- mice.mids(r3, print = FALSE)
