@@ -90,7 +90,7 @@ r21 <- mice.mids(r2, print = FALSE)
 r31 <- mice.mids(r3, print = FALSE)
 
 # issue #59
-set.seed <- 818
+set.seed(818)
 x <- rnorm(10)
 D <- data.frame(x = x, y = 2 * x + rnorm(10))
 D[c(2:4, 7), 1] <- NA
