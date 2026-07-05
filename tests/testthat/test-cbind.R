@@ -1,69 +1,71 @@
-data <- nhanes
-data1 <- data[, c("age", "bmi")]
-data2 <- data[, c("hyp", "chl")]
-
-imp1 <- mice(data1, m = 2, maxit = 1, print = FALSE)
-imp2 <- mice(data2, m = 2, maxit = 1, print = FALSE)
-imp <- cbind(imp1, imp2)
-
 test_that("combines imputations", {
+  data <- nhanes
+  data1 <- data[, c("age", "bmi")]
+  data2 <- data[, c("hyp", "chl")]
+
+  imp1 <- mice(data1, m = 2, maxit = 1, print = FALSE)
+  imp2 <- mice(data2, m = 2, maxit = 1, print = FALSE)
+  imp <- cbind(imp1, imp2)
+
   expect_identical(ncol(complete(imp)), 4L)
   expect_identical(complete(imp1), complete(imp)[, c("age", "bmi")])
 })
-
-# when using blocks
-data <- nhanes
-data1 <- data[, c("age", "bmi")]
-data2 <- data[, c("hyp", "chl")]
-
-imp1 <- mice(data1, m = 1, maxit = 1, print = FALSE)
-imp2 <- mice(
-  data2,
-  blocks = list(c("hyp", "chl")),
-  m = 1,
-  maxit = 1,
-  print = FALSE
-)
-imp <- cbind(imp1, imp2)
 
 test_that("combines imputations with blocks", {
+  data <- nhanes
+  data1 <- data[, c("age", "bmi")]
+  data2 <- data[, c("hyp", "chl")]
+
+  imp1 <- mice(data1, m = 1, maxit = 1, print = FALSE)
+  imp2 <- mice(
+    data2,
+    blocks = list(c("hyp", "chl")),
+    m = 1,
+    maxit = 1,
+    print = FALSE
+  )
+  imp <- cbind(imp1, imp2)
+
   expect_identical(ncol(complete(imp)), 4L)
   expect_identical(complete(imp1), complete(imp)[, c("age", "bmi")])
 })
 
-# handling of duplicate variable names
-data <- nhanes
-data1 <- data[, c("age", "bmi", "hyp")]
-data2 <- data[, c("hyp", "chl")]
-
-imp1 <- mice(data1, m = 1, maxit = 1, print = FALSE)
-imp2 <- mice(data2, m = 1, maxit = 1, print = FALSE)
-imp <- cbind(imp1, imp2)
-impc <- mice.mids(imp, max = 2, print = FALSE)
-
 test_that("duplicate variable adds a column", {
+  # handling of duplicate variable names
+  data <- nhanes
+  data1 <- data[, c("age", "bmi", "hyp")]
+  data2 <- data[, c("hyp", "chl")]
+
+  imp1 <- mice(data1, m = 1, maxit = 1, print = FALSE)
+  imp2 <- mice(data2, m = 1, maxit = 1, print = FALSE)
+  imp <- cbind(imp1, imp2)
+  impc <- mice.mids(imp, max = 2, print = FALSE)
+
   expect_identical(ncol(complete(impc)), 5L)
 })
 
-# handling of duplicate blocks
-imp1 <- mice(
-  data1,
-  blocks = list(c("age", "bmi"), "hyp"),
-  m = 1,
-  maxit = 1,
-  print = FALSE
-)
-imp2 <- mice(
-  data2,
-  blocks = list(c("hyp", "chl")),
-  m = 1,
-  maxit = 1,
-  print = FALSE
-)
-imp <- cbind(imp1, imp2)
-impc <- mice.mids(imp, max = 2, print = FALSE)
-
 test_that("duplicate blocks names renames block", {
+  # handling of duplicate blocks
+  data1 <- nhanes[, c("age", "bmi", "hyp")]
+  data2 <- nhanes[, c("hyp", "chl")]
+
+  imp1 <- mice(
+    data1,
+    blocks = list(c("age", "bmi"), "hyp"),
+    m = 1,
+    maxit = 1,
+    print = FALSE
+  )
+  imp2 <- mice(
+    data2,
+    blocks = list(c("hyp", "chl")),
+    m = 1,
+    maxit = 1,
+    print = FALSE
+  )
+  imp <- cbind(imp1, imp2)
+  impc <- mice.mids(imp, max = 2, print = FALSE)
+
   expect_identical(names(impc$blocks)[3], "B1.1")
 })
 
