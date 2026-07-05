@@ -23,7 +23,7 @@ test_that("expands a univariate method to all variables in the block", {
   expect_identical(complete(imp1, 1), complete(imp2, 1))
 })
 
-test_that("blocks alter the visit sequence", {
+test_that("within-block order affects imputations though visitSequence is unchanged", {
   imp3 <- mice(
     nhanes,
     blocks = list(c("hyp", "bmi"), "chl"),
@@ -32,5 +32,14 @@ test_that("blocks alter the visit sequence", {
     seed = 1,
     print = FALSE
   )
-  expect_identical(complete(imp3, 1), complete(imp3, 1))
+  imp3a <- mice(
+    nhanes,
+    blocks = list(c("bmi", "hyp"), "chl"),
+    m = 1,
+    maxit = 2,
+    seed = 1,
+    print = FALSE
+  )
+  expect_identical(imp3$visitSequence, imp3a$visitSequence)
+  expect_failure(expect_identical(complete(imp3, 1), complete(imp3a, 1)))
 })
