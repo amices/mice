@@ -1,5 +1,3 @@
-context("filter.mids")
-
 imp <- mice(nhanes, m = 2, maxit = 1, print = FALSE, seed = 1)
 
 imp_l <- imp

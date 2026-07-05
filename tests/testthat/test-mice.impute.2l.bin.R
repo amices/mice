@@ -1,5 +1,3 @@
-context("mice.impute.2l.bin")
-
 # toenail: outcome is factor
 data("toenail2")
 data_factor <- tidyr::complete(toenail2, patientID, visit) |>

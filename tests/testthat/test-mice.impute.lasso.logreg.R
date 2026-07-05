@@ -1,5 +1,3 @@
-context("mice.impute.lasso.logreg")
-
 #########################
 # TEST 1: Simple problem #
 #########################
@@ -127,7 +125,7 @@ test_that("Complete separation results in same class as well behaved case (lasso
 })
 
 
-context("mice.impute.lasso.select.logreg")
+# ---- mice.impute.lasso.select.logreg ----
 
 #########################
 # TEST 1: Simple problem #

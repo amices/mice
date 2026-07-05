@@ -1,5 +1,3 @@
-context("mice: loggedEvents")
-
 imp1 <- mice(nhanes, m = 2, print = FALSE)
 
 # copy of data, different names

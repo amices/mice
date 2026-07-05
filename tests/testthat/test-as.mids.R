@@ -1,5 +1,3 @@
-context("as.mids")
-
 nhanes3 <- nhanes
 rownames(nhanes3) <- LETTERS[1:nrow(nhanes3)]
 imp <- mice(nhanes3, m = 2, maxit = 1, print = FALSE)

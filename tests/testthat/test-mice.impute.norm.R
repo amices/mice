@@ -1,5 +1,3 @@
-context("mice.impute.norm")
-
 #########################
 # TEST 1: Simple problem #
 #########################

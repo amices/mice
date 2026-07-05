@@ -1,5 +1,3 @@
-context("quickpred")
-
 test_that("returns square binary matrix", {
   predictorMatrix <- quickpred(nhanes)
 

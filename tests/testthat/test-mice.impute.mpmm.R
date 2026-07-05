@@ -1,5 +1,3 @@
-context("mice.impute.mpmm")
-
 set.seed(1)
 beta2 <- beta1 <- .5
 x <- rnorm(1000)

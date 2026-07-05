@@ -1,5 +1,3 @@
-context("check.visitSequence")
-
 data <- mice::nhanes
 
 test_that("mice() takes numerical and character visitSequence", {

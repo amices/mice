@@ -1,5 +1,3 @@
-context("mice-initialize")
-
 data <- nhanes
 
 # case A: no predictorMatrix, blocks or formulas arguments

@@ -1,5 +1,3 @@
-context("mice.impute.panImpute")
-
 data <- boys[c(1:10, 101:110, 501:510, 601:620, 701:710), ]
 type <- c(2, 0, 0, 0, -2, 0, 1, 1, 0)
 names(type) <- names(data)

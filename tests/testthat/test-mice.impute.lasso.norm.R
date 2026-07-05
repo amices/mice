@@ -1,5 +1,3 @@
-context("mice.impute.lasso.norm")
-
 #########################
 # TEST 1: Simple problem #
 #########################
@@ -70,7 +68,7 @@ test_that("lasso.norm handles constant predictor column (#577)", {
   expect_silent(mice(input, m = 1, maxit = 1, method = "lasso.norm", eps = 0, print = FALSE))
 })
 
-context("mice.impute.lasso.select.norm")
+# ---- mice.impute.lasso.select.norm ----
 
 #########################
 # TEST 1: Simple problem #

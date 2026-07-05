@@ -1,5 +1,3 @@
-context("ampute")
-
 # make objects for testfunctions
 sigma <- matrix(data = c(1, 0.2, 0.2, 0.2, 1, 0.2, 0.2, 0.2, 1), nrow = 3)
 complete.data <- MASS::mvrnorm(n = 100, mu = c(5, 5, 5), Sigma = sigma)
@@ -566,7 +564,7 @@ test_that("warnings appear when not all patterns can be generated", {
 
 
 # The following test was contributed by Shangzhi-hong (#216) Dec 2019
-context("ampute robust version")
+# ---- ampute robust version ----
 
 set.seed(1)
 

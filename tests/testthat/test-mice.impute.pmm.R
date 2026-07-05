@@ -1,5 +1,3 @@
-context("mice.impute.pmm")
-
 xname <- c("age", "hgt", "wgt")
 br <- boys[c(1:10, 101:110, 501:510, 601:620, 701:710), ]
 r <- stats::complete.cases(br[, xname])
@@ -30,7 +28,7 @@ test_that("excluding unobserved values does not impact pmm", {
   expect_identical(imp1$imp, imp2$imp)
 })
 
-context("optimal scaling")
+# ---- optimal scaling ----
 
 # Factor quantification
 y <- factor(br[r, "tv"])

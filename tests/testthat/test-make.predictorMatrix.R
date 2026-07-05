@@ -1,5 +1,3 @@
-context("make.predictorMatrix")
-
 blocks1 <- make.blocks(c("bmi", "chl", "hyp", "age"))
 
 test_that("errors on invalid data arguments", {

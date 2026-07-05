@@ -1,4 +1,4 @@
-context("mice: complete")
+# ---- complete ----
 
 nhanes_mids <- mice(nhanes, m = 2, print = FALSE)
 nhanes_complete <- complete(nhanes_mids)
@@ -12,7 +12,7 @@ test_that("Data set in returned mids object is identical to nhanes data set", {
   expect_identical(nhanes_mids$data, nhanes)
 })
 
-context("mice: blocks")
+# ---- blocks ----
 
 test_that("blocks run as expected", {
   expect_silent(
@@ -127,7 +127,7 @@ test_that("Univariate yield same imputes for `scatter` and `collect`", {
 # mice to impute age by pmm, but then, this would need to be
 # done in both imp1 and imp2 models.
 
-context("mice: formulas")
+# ---- formulas ----
 
 test_that("formulas run as expected", {
   expect_silent(
@@ -205,7 +205,7 @@ test_that("formulas: Method 'polr' works with one block", {
 })
 
 
-context("mice: where")
+# ---- where ----
 
 # # all TRUE
 imp1 <- mice(
@@ -255,7 +255,7 @@ test_that("`where` produces correct number of imputes", {
 })
 
 
-context("mice: ignore")
+# ---- ignore ----
 
 # # all TRUE
 test_that("`ignore` throws appropriate errors and warnings", {

@@ -1,5 +1,3 @@
-context("tidiers")
-
 data(nhanes)
 imp <- mice::mice(
   nhanes,

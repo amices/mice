@@ -1,5 +1,3 @@
-context("predict_mi")
-
 skip_if_not_installed("dplyr")
 library(dplyr)
 

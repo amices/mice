@@ -1,5 +1,3 @@
-context("mice.impute.2lonly.norm")
-
 ## https://stackoverflow.com/questions/58266785/mice-2l-pan-multilevel-multiple-imputation-error-missing-values-in-pred-not-all?sem=2
 
 skip_if_not_installed("pan")

@@ -1,5 +1,3 @@
-context("remove.lindep")
-
 set.seed(1)
 td <- matrix(rnorm(20), nrow = 5, ncol = 4)
 dimnames(td) <- list(1:5, LETTERS[1:4])

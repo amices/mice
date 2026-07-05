@@ -1,5 +1,3 @@
-context("cbind.mids")
-
 data <- nhanes
 data1 <- data[, c("age", "bmi")]
 data2 <- data[, c("hyp", "chl")]

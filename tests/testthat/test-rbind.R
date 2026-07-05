@@ -1,5 +1,3 @@
-context("rbind.mids")
-
 expect_warning(imp1 <<- mice(nhanes[1:13, ], m = 2, maxit = 1, print = FALSE))
 test_that("Constant variables are not imputed by default", {
   expect_equal(sum(is.na(complete(imp1))), 6L)

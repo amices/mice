@@ -1,5 +1,3 @@
-context("formulas")
-
 data <- nhanes
 
 test_that("model.matrix() deletes incomplete cases", {

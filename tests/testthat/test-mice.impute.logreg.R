@@ -1,5 +1,3 @@
-context("test-mice.impute.logreg.R")
-
 #########################
 # TEST 1: Perfect Prediction / Complete Separation #
 #########################

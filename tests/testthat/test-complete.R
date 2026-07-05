@@ -1,5 +1,3 @@
-context("complete")
-
 imp <- mice(nhanes, maxit = 1, m = 2, seed = 123, print = FALSE)
 
 lng <- subset(complete(imp, "long"), .imp == 1, select = c(age, bmi, hyp, chl))

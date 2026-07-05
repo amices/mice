@@ -1,5 +1,3 @@
-context("pool.vector")
-
 # conventional flow
 imp <- mice(nhanes2, m = 2, maxit = 2, seed = 1, print = FALSE)
 fit <- with(imp, lm(chl ~ age + bmi + hyp))

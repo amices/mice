@@ -1,5 +1,3 @@
-context("mice.impute.2l.lmer")
-
 d <- brandsma[1:200, c("sch", "lpo")]
 pred <- make.predictorMatrix(d)
 pred["lpo", "sch"] <- -2

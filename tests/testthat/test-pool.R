@@ -1,5 +1,3 @@
-context("pool")
-
 # set the random generator to V3.5.0 to ensure that this test
 # passes in V3.6.0 and later
 # see mail Kurt Hornik, dated 06mar19

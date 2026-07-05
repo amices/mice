@@ -1,4 +1,4 @@
-context("D1")
+# ---- D1 ----
 imp <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
 
 fit1 <- with(
@@ -43,7 +43,7 @@ test_that("D1: compares fit1 to empty model", {
 })
 
 
-context("D2")
+# ---- D2 ----
 
 z1 <- D2(fit1, fit0)
 z2 <- mitml::testModels(

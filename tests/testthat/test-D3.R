@@ -1,5 +1,3 @@
-context("D3")
-
 # The following test was contributed by jawitte
 # https://github.com/amices/mice/issues/226
 set.seed(1)

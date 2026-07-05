@@ -1,5 +1,3 @@
-context("check.formulas")
-
 # predictorMatrix specification (baseline)
 imp_pm <- mice(nhanes, seed = 51212, print = FALSE, m = 1)
 

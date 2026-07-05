@@ -1,5 +1,3 @@
-context("pool.r.squared")
-
 data(nhanes)
 imp <- mice::mice(nhanes, maxit = 2, m = 2, seed = 10, print = FALSE)
 fit_mira <- with(data = imp, exp = lm(chl ~ age + bmi))

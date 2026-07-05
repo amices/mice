@@ -1,4 +1,3 @@
-context("anova")
 imp <- mice(nhanes2, m = 10, print = FALSE, seed = 71242)
 m2 <- with(imp, lm(chl ~ age + bmi))
 m1 <- with(imp, lm(chl ~ bmi))
@@ -15,7 +14,7 @@ test_that("anova.mira() produces silent with D2", {
   expect_silent(z2b <- anova(m2, m1, m0, method = "D2", use = "likelihood"))
 })
 
-context("Cox model tests")
+# ---- Cox model tests ----
 skip_if_not_installed("survival")
 library(survival)
 

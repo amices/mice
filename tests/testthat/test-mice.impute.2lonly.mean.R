@@ -1,5 +1,3 @@
-context("mice.impute.2lonly.mean")
-
 set.seed(66322)
 y <- popmis$texp
 y[rbinom(length(y), size = 1, prob = 0.5) == 1] <- NA

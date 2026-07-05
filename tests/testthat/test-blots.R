@@ -1,5 +1,3 @@
-context("blots")
-
 # global change of donors argument
 blocks1 <- name.blocks(list(c("bmi", "chl"), "hyp"))
 imp0 <- mice(

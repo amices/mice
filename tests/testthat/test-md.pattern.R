@@ -1,5 +1,3 @@
-context("md.pattern")
-
 test_that("patterns run as expected", {
   # boys
   expect_silent(md.pattern(boys, plot = FALSE))
