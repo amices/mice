@@ -5,6 +5,20 @@ test_that("COMPLETE-001: long and all produce same data", {
   expect_equal(lng, all)
 })
 
+test_that("COMPLETE-005: completed logical variables remain logical", {
+  set.seed(123)
+  dat <- data.frame(
+    binary = as.logical(rbinom(200, 1, 0.5)),
+    x = rnorm(200)
+  )
+  dat$binary[seq(1, 200, by = 4)] <- NA
+  imp <- mice(dat, m = 1, maxit = 1, print = FALSE, seed = 123)
+
+  expect_type(complete(imp)$binary, "logical")
+  expect_type(complete(imp, "all")[[1]]$binary, "logical")
+  expect_type(complete(imp, "long")$binary, "logical")
+})
+
 # preserve rownames type
 nhanes3 <- mice::nhanes
 row.names(nhanes3) <- seq_len(nrow(nhanes3))
