@@ -270,7 +270,7 @@ Functions to count and explore the structure of the missing data.
   cases
 - [`ici()`](https://amices.org/mice/reference/ici.md) : Incomplete case
   indicator
-- [`mcar()`](https://amices.org/mice/reference/mcar.md) : Jamshidian and
+- [`mcar()`](https://amices.org/mice/reference/MCAR.md) : Jamshidian and
   Jalal's Non-Parametric MCAR Test
 - [`ncc()`](https://amices.org/mice/reference/ncc.md) : Number of
   complete cases
