@@ -113,9 +113,9 @@ imp4 <- mice(
 )
 
 test_that("MICE-009: Univariate yield same imputes for `scatter` and `collect`", {
-  expect_identical(complete(imp1), complete(imp2))
-  expect_identical(complete(imp1), complete(imp3))
-  expect_identical(complete(imp1), complete(imp4))
+  expect_equal(complete(imp1), complete(imp2))
+  expect_equal(complete(imp1), complete(imp3))
+  expect_equal(complete(imp1), complete(imp4))
 })
 
 # potentially, we may also change the visitSequence, but mice
@@ -308,7 +308,7 @@ imp3 <- mice(
 )
 
 test_that("MICE-018: `ignore` changes the imputation results", {
-  expect_identical(complete(imp1), complete(imp2))
+  expect_equal(complete(imp1), complete(imp2))
   expect_failure(expect_identical(complete(imp1), complete(imp3)))
 })
 

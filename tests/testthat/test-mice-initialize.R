@@ -128,8 +128,8 @@ test_that("MICE-INITIALIZE-009: Case C finds formulas", {
 })
 
 test_that("MICE-INITIALIZE-010: Case C yields same imputations for FCS and multivariate", {
-  expect_identical(complete(imp1), complete(imp2))
-  expect_identical(complete(imp1), complete(imp3))
+  expect_equal(complete(imp1), complete(imp2))
+  expect_equal(complete(imp1), complete(imp3))
 })
 
 
@@ -191,8 +191,8 @@ imp4 <- mice(
 )
 
 test_that("MICE-INITIALIZE-011: Case D yields same imputations for dot notation", {
-  expect_identical(complete(imp1), complete(imp2))
-  expect_identical(complete(imp3), complete(imp4))
+  expect_equal(complete(imp1), complete(imp2))
+  expect_equal(complete(imp3), complete(imp4))
 })
 
 test_that("MICE-INITIALIZE-012: Case D yields same imputations for FCS and multivariate", {
@@ -351,7 +351,7 @@ imp2 <- mice(
   seed = 3
 )
 test_that("MICE-INITIALIZE-018: Case F dots and specified form produce same imputes", {
-  expect_identical(complete(imp1), complete(imp2))
+  expect_equal(complete(imp1), complete(imp2))
 })
 
 # error

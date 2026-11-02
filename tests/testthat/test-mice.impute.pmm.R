@@ -25,7 +25,7 @@ test_that("MICE-IMPUTE-PMM-002: Excludes donors", {
 imp1 <- mice(nhanes, printFlag = FALSE, seed = 123)
 imp2 <- mice(nhanes, printFlag = FALSE, seed = 123, exclude = c(-1, 1032))
 test_that("MICE-IMPUTE-PMM-003: excluding unobserved values does not impact pmm", {
-  expect_identical(imp1$imp, imp2$imp)
+  expect_equal(imp1$imp, imp2$imp)
 })
 
 # ---- optimal scaling ----

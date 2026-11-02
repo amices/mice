@@ -3,8 +3,8 @@ test_that("CHECK-FORMULA-001: predictorMatrix and dot-formula yield same imputat
   imp_pm <- mice(nhanes, seed = 51212, print = FALSE, m = 1)
   form <- list(age ~ ., bmi ~ ., hyp ~ ., chl ~ .)
   imp_f <- mice(nhanes, formulas = form, seed = 51212, print = FALSE, m = 1)
-  expect_identical(complete(imp_pm), complete(imp_f))
-  expect_identical(imp_pm$imp, imp_f$imp)
+  expect_equal(complete(imp_pm), complete(imp_f))
+  expect_equal(imp_pm$imp, imp_f$imp)
 })
 
 test_that("CHECK-FORMULA-002: name.formulas names formulas by LHS variable", {

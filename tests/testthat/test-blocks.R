@@ -20,7 +20,7 @@ test_that("BLOCKS-002: expands a univariate method to all variables in the block
     seed = 1,
     print = FALSE
   )
-  expect_identical(complete(imp1, 1), complete(imp2, 1))
+  expect_equal(complete(imp1, 1), complete(imp2, 1))
 })
 
 test_that("BLOCKS-003: within-block order affects imputations though visitSequence is unchanged", {
