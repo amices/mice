@@ -1,3 +1,10 @@
+
+- Fixes test failures on CRAN's MKL check ("Objects equal but not identical"
+  in `MICE-INITIALIZE-011`). MKL is not bitwise reproducible, so two separate
+  `mice()` runs with the same seed can differ in the last digits. Tests that
+  compare imputations across separate runs now use `expect_equal()` instead of
+  `expect_identical()`. No user-facing behavior changes.
+
 # mice 3.19.10
 
 - **Breaking change:** Confidence interval columns from `summary(pool(fit), conf.int = TRUE)`,
@@ -19,11 +26,6 @@
   against other implementations that share the same scheme,
   so equivalent test cases are greppable across languages instead of relying
   on manual cross-referencing. No user-facing behavior changes.
-- Fixes test failures on CRAN's MKL check ("Objects equal but not identical"
-  in `MICE-INITIALIZE-011`). MKL is not bitwise reproducible, so two separate
-  `mice()` runs with the same seed can differ in the last digits. Tests that
-  compare imputations across separate runs now use `expect_equal()` instead of
-  `expect_identical()`. No user-facing behavior changes.
 
 # mice 3.19.9
 
