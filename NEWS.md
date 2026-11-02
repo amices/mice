@@ -1,3 +1,4 @@
+# mice 3.19.11
 
 - Fixes test failures on CRAN's MKL check ("Objects equal but not identical"
   in `MICE-INITIALIZE-011`). MKL is not bitwise reproducible, so two separate
