@@ -122,7 +122,6 @@ export(mice.impute.lasso.logreg)
 export(mice.impute.lasso.norm)
 export(mice.impute.lasso.select.logreg)
 export(mice.impute.lasso.select.norm)
-export(mice.impute.lasso.select.pmm)
 export(mice.impute.lda)
 export(mice.impute.logreg)
 export(mice.impute.logreg.boot)
@@ -177,118 +176,103 @@ export(tidy)
 export(version)
 export(xyplot)
 importFrom(Rcpp,evalCpp)
-importFrom(broom,
-  glance,
-  tidy
-)
-importFrom(dplyr,
-  "%>%",
-  .data,
-  any_of,
-  bind_cols,
-  bind_rows,
-  filter,
-  group_by,
-  lead,
-  mutate,
-  n,
-  pull,
-  relocate,
-  row_number,
-  select,
-  summarize
-)
+importFrom(broom,glance)
+importFrom(broom,tidy)
+importFrom(dplyr,"%>%")
+importFrom(dplyr,.data)
+importFrom(dplyr,any_of)
+importFrom(dplyr,bind_cols)
+importFrom(dplyr,bind_rows)
+importFrom(dplyr,filter)
+importFrom(dplyr,group_by)
+importFrom(dplyr,lead)
+importFrom(dplyr,mutate)
+importFrom(dplyr,n)
+importFrom(dplyr,pull)
+importFrom(dplyr,relocate)
+importFrom(dplyr,row_number)
+importFrom(dplyr,select)
+importFrom(dplyr,summarize)
 importFrom(glmnet,cv.glmnet)
 importFrom(grDevices,dev.off)
-importFrom(graphics,
-  abline,
-  axis,
-  box,
-  hist,
-  par,
-  plot,
-  plot.new,
-  plot.window,
-  points,
-  rect,
-  text
-)
-importFrom(lattice,
-  bwplot,
-  densityplot,
-  stripplot,
-  xyplot
-)
-importFrom(mitml,
-  jomoImpute,
-  mitmlComplete,
-  panImpute,
-  testModels
-)
+importFrom(graphics,abline)
+importFrom(graphics,axis)
+importFrom(graphics,box)
+importFrom(graphics,hist)
+importFrom(graphics,par)
+importFrom(graphics,plot)
+importFrom(graphics,plot.new)
+importFrom(graphics,plot.window)
+importFrom(graphics,points)
+importFrom(graphics,rect)
+importFrom(graphics,text)
+importFrom(lattice,bwplot)
+importFrom(lattice,densityplot)
+importFrom(lattice,stripplot)
+importFrom(lattice,xyplot)
+importFrom(mitml,jomoImpute)
+importFrom(mitml,mitmlComplete)
+importFrom(mitml,panImpute)
+importFrom(mitml,testModels)
 importFrom(nnet,multinom)
-importFrom(rpart,
-  rpart,
-  rpart.control
-)
-importFrom(stats,
-  C,
-  aggregate,
-  as.formula,
-  binomial,
-  cancor,
-  coef,
-  complete.cases,
-  confint,
-  contr.treatment,
-  cor,
-  cov,
-  df.residual,
-  fitted,
-  formula,
-  gaussian,
-  getCall,
-  glm,
-  is.empty.model,
-  lm,
-  lm.fit,
-  median,
-  model.frame,
-  model.matrix,
-  na.exclude,
-  na.omit,
-  na.pass,
-  pchisq,
-  pf,
-  predict,
-  pt,
-  qt,
-  quantile,
-  quasibinomial,
-  rbinom,
-  rchisq,
-  reformulate,
-  rgamma,
-  rnorm,
-  runif,
-  sd,
-  spline,
-  summary.glm,
-  terms,
-  update,
-  var,
-  vcov
-)
+importFrom(rpart,rpart)
+importFrom(rpart,rpart.control)
+importFrom(stats,C)
+importFrom(stats,aggregate)
+importFrom(stats,as.formula)
+importFrom(stats,binomial)
+importFrom(stats,cancor)
+importFrom(stats,coef)
+importFrom(stats,complete.cases)
+importFrom(stats,confint)
+importFrom(stats,contr.treatment)
+importFrom(stats,cor)
+importFrom(stats,cov)
+importFrom(stats,df.residual)
+importFrom(stats,fitted)
+importFrom(stats,formula)
+importFrom(stats,gaussian)
+importFrom(stats,getCall)
+importFrom(stats,glm)
+importFrom(stats,is.empty.model)
+importFrom(stats,lm)
+importFrom(stats,lm.fit)
+importFrom(stats,median)
+importFrom(stats,model.frame)
+importFrom(stats,model.matrix)
+importFrom(stats,na.exclude)
+importFrom(stats,na.omit)
+importFrom(stats,na.pass)
+importFrom(stats,pchisq)
+importFrom(stats,pf)
+importFrom(stats,predict)
+importFrom(stats,pt)
+importFrom(stats,qt)
+importFrom(stats,quantile)
+importFrom(stats,quasibinomial)
+importFrom(stats,rbinom)
+importFrom(stats,rchisq)
+importFrom(stats,reformulate)
+importFrom(stats,rgamma)
+importFrom(stats,rnorm)
+importFrom(stats,runif)
+importFrom(stats,sd)
+importFrom(stats,spline)
+importFrom(stats,summary.glm)
+importFrom(stats,terms)
+importFrom(stats,update)
+importFrom(stats,var)
+importFrom(stats,vcov)
 importFrom(tidyr,complete)
-importFrom(utils,
-  askYesNo,
-  flush.console,
-  hasName,
-  head,
-  install.packages,
-  methods,
-  packageDescription,
-  packageVersion,
-  tail,
-  write.table
-)
+importFrom(utils,askYesNo)
+importFrom(utils,capture.output)
+importFrom(utils,flush.console)
+importFrom(utils,hasName)
+importFrom(utils,head)
+importFrom(utils,install.packages)
+importFrom(utils,methods)
+importFrom(utils,packageDescription)
+importFrom(utils,packageVersion)
+importFrom(utils,tail)
+importFrom(utils,write.table)
 useDynLib(mice, .registration = TRUE)
