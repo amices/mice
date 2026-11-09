@@ -80,7 +80,7 @@ mice.impute.lasso.select.norm <- function(
 
   # Define Active Set
   glmnet_coefs <- as.matrix(coef(cv_lasso, s = "lambda.min"))[, 1]
-  AS <- which((glmnet_coefs != 0)[-1]) # Non-zero reg coefficinets
+  AS <- which((glmnet_coefs != 0)[-1]) # Non-zero reg coefficients
 
   # Perform regular norm draw from Bayesian linear model
   xas <- x_glmnet[, AS, drop = FALSE]
