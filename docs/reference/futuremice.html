@@ -111,7 +111,7 @@ physical (<code>FALSE</code>) CPU's on machine should be used.</p></dd>
 <dd><p>A character indicating how <code>future</code>s are resolved.
 The default <code>multisession</code> resolves futures asynchronously (in parallel)
 in separate <code>R</code> sessions running in the background. See
-<code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></code> for more information on future plans.</p></dd>
+<code>plan</code> for more information on future plans.</p></dd>
 
 
 <dt id="arg-packages">packages<a class="anchor" aria-label="anchor" href="#arg-packages"></a></dt>
@@ -134,11 +134,11 @@ each future (e.g., user-written imputation functions).</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function relies on package <code><a href="https://furrr.futureverse.org/reference/furrr-package.html" class="external-link">furrr</a></code>, which is a
+    <p>This function relies on package <code>furrr</code>, which is a
 package for R versions 3.2.0 and later. We have chosen to use furrr function
 <code>future_map</code> to allow the use of <code>futuremice</code> on Mac, Linux and
 Windows systems.</p>
-<p>This wrapper function combines the output of <code><a href="https://furrr.futureverse.org/reference/future_map.html" class="external-link">future_map</a></code> with
+<p>This wrapper function combines the output of <code>future_map</code> with
 function <code><a href="ibind.html">ibind</a></code> from the <code><a href="mice.html">mice</a></code> package. A
 <code>mids</code> object is returned and can be used for further analyses.</p>
 <p>A seed value can be specified in the global environment, which will yield
@@ -161,8 +161,8 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://future.futureverse.org/reference/future.html" class="external-link">future</a></code>, <code><a href="https://furrr.futureverse.org/reference/furrr-package.html" class="external-link">furrr</a></code>, <code><a href="https://furrr.futureverse.org/reference/future_map.html" class="external-link">future_map</a></code>,
-<code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></code>, <code><a href="mice.html">mice</a></code>, <code><a href="mids.html">mids-class</a></code></p></div>
+    <div class="dont-index"><p><code>future</code>, <code>furrr</code>, <code>future_map</code>,
+<code>plan</code>, <code><a href="mice.html">mice</a></code>, <code><a href="mids.html">mids-class</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
