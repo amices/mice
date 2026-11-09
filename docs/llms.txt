@@ -270,7 +270,7 @@ Functions to count and explore the structure of the missing data.
   cases
 - [`ici()`](https://amices.org/mice/reference/ici.md) : Incomplete case
   indicator
-- [`mcar()`](https://amices.org/mice/reference/mcar.md) : Jamshidian and
+- [`mcar()`](https://amices.org/mice/reference/MCAR.md) : Jamshidian and
   Jalal's Non-Parametric MCAR Test
 - [`ncc()`](https://amices.org/mice/reference/ncc.md) : Number of
   complete cases
@@ -338,9 +338,6 @@ in the data. There are also `mice.impute.xxx` functions outside the
   : Imputation by indirect use of lasso logistic regression
 
 - [`mice.impute.lasso.select.norm()`](https://amices.org/mice/reference/mice.impute.lasso.select.norm.md)
-  : Imputation by indirect use of lasso linear regression
-
-- [`mice.impute.lasso.select.pmm()`](https://amices.org/mice/reference/mice.impute.lasso.select.pmm.md)
   : Imputation by indirect use of lasso linear regression
 
 - [`mice.impute.lda()`](https://amices.org/mice/reference/mice.impute.lda.md)
