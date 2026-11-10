@@ -492,6 +492,7 @@ Other contributors:
   \item Stephen Wade \email{stephematician@gmail.com} [contributor]
   \item Florian van Leeuwen \email{f.d.vanleeuwen@uu.nl} [contributor]
   \item Frederik Fabricius-Bjerre \email{frederik@fabriciusbjerre.dk} [contributor]
+  \item Masayoshi Takahashi \email{mtakahashi615@g.chuo-u.ac.jp} [contributor]
 }
 
 

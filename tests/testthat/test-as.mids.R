@@ -1,5 +1,3 @@
-context("as.mids")
-
 nhanes3 <- nhanes
 rownames(nhanes3) <- LETTERS[1:nrow(nhanes3)]
 imp <- mice(nhanes3, m = 2, maxit = 1, print = FALSE)
@@ -30,12 +28,12 @@ test6 <- as.mids(X[, rev])
 # test9 <- as(X2[, -2], "mids")
 # test10 <- as(X[, rev], "mids")
 
-test_that("as.mids() produces a `mids` object", {
-  expect_is(test1, "mids")
-  expect_is(test2, "mids")
-  expect_is(test3, "mids")
-  expect_is(test4, "mids")
-  expect_is(test5, "mids")
+test_that("AS-MIDS-001: as.mids() produces a `mids` object", {
+  expect_s3_class(test1, "mids")
+  expect_s3_class(test2, "mids")
+  expect_s3_class(test3, "mids")
+  expect_s3_class(test4, "mids")
+  expect_s3_class(test5, "mids")
   #  expect_is(test7, "mids")
   #  expect_is(test8, "mids")
   #  expect_is(test9, "mids")
@@ -50,7 +48,7 @@ test_that("as.mids() produces a `mids` object", {
   )
 })
 
-test_that("complete() reproduces the original data", {
+test_that("AS-MIDS-002: complete() reproduces the original data", {
   expect_true(identical(complete(test1, action = "long", include = TRUE), X))
   expect_true(identical(complete(test2, action = "long", include = TRUE), X))
   expect_true(identical(complete(test3, action = "long", include = TRUE), X))
@@ -67,10 +65,11 @@ test_that("complete() reproduces the original data", {
 
 # works with dplyr
 
+skip_if_not_installed("dplyr")
 library(dplyr)
-X3 <- X %>%
-  group_by(hyp) %>%
+X3 <- X |>
+  group_by(hyp) |>
   mutate(chlm = mean(chl, na.rm = TRUE))
-test_that("handles grouped_df", {
+test_that("AS-MIDS-003: handles grouped_df", {
   expect_silent(as.mids(X3))
 })

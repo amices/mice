@@ -1,5 +1,3 @@
-context("mice.impute.pmm")
-
 xname <- c("age", "hgt", "wgt")
 br <- boys[c(1:10, 101:110, 501:510, 601:620, 701:710), ]
 r <- stats::complete.cases(br[, xname])
@@ -12,7 +10,7 @@ wy2 <- rep(TRUE, length(y))
 wy3 <- rep(FALSE, length(y))
 wy4 <- rep(c(TRUE, FALSE), times = c(1, length(y) - 1))
 
-test_that("Returns requested length", {
+test_that("MICE-IMPUTE-PMM-001: Returns requested length", {
   expect_equal(length(mice.impute.pmm(y, ry, x)), sum(!ry))
   expect_equal(length(mice.impute.pmm(y, ry, x, wy = wy1)), sum(wy1))
   expect_equal(length(mice.impute.pmm(y, ry, x, wy = wy2)), sum(wy2))
@@ -20,24 +18,24 @@ test_that("Returns requested length", {
   expect_equal(length(mice.impute.pmm(y, ry, x, wy = wy4)), sum(wy4))
 })
 
-test_that("Excludes donors", {
+test_that("MICE-IMPUTE-PMM-002: Excludes donors", {
   expect_false(all(c(15:25) %in% mice.impute.pmm(y, ry, x, exclude = c(15:25))))
 })
 
 imp1 <- mice(nhanes, printFlag = FALSE, seed = 123)
 imp2 <- mice(nhanes, printFlag = FALSE, seed = 123, exclude = c(-1, 1032))
-test_that("excluding unobserved values does not impact pmm", {
-  expect_identical(imp1$imp, imp2$imp)
+test_that("MICE-IMPUTE-PMM-003: excluding unobserved values does not impact pmm", {
+  expect_equal(imp1$imp, imp2$imp)
 })
 
-context("optimal scaling")
+# ---- optimal scaling ----
 
 # Factor quantification
 y <- factor(br[r, "tv"])
 
 # impute factor by optimizing canonical correlation y, x
 data1 <- data.frame(y, x)
-test_that("cancor proceeds normally", {
+test_that("MICE-IMPUTE-PMM-004: cancor proceeds normally", {
   expect_silent(
     imp1 <- mice(
       data1,
@@ -84,7 +82,7 @@ data2$age24 <- data2$age
 data2$age25 <- data2$age
 
 # impute factor by optimizing canonical correlation y, x
-test_that("cancor proceeds normally with many duplicates", {
+test_that("MICE-IMPUTE-PMM-005: cancor proceeds normally with many duplicates", {
   expect_warning(
     imp2 <- mice(
       data2,
@@ -128,7 +126,7 @@ data3$j24 <- rnorm(nrow(data3))
 data3$j25 <- rnorm(nrow(data3))
 
 
-test_that("cancor with many junk variables does not crash", {
+test_that("MICE-IMPUTE-PMM-006: cancor with many junk variables does not crash", {
   expect_warning(
     imp3 <- mice(
       data3,

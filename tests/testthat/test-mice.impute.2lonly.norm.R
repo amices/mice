@@ -1,7 +1,6 @@
-context("mice.impute.2lonly.norm")
-
 ## https://stackoverflow.com/questions/58266785/mice-2l-pan-multilevel-multiple-imputation-error-missing-values-in-pred-not-all?sem=2
 
+skip_if_not_installed("pan")
 library("pan")
 
 # Not multilevel to illustrate need
@@ -40,7 +39,7 @@ pred[, "patid"] <- -2
 # only missing value (out of five) for patid == 1
 data[3, "sex"] <- NA
 
-test_that("2lonly.norm stops with partially missing level-2 data", {
+test_that("MICE-IMPUTE-2LONLY-NORM-001: 2lonly.norm stops with partially missing level-2 data", {
   expect_error(
     mice(
       data,

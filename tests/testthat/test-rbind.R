@@ -1,12 +1,10 @@
-context("rbind.mids")
-
-expect_warning(imp1 <<- mice(nhanes[1:13, ], m = 2, maxit = 1, print = FALSE))
-test_that("Constant variables are not imputed by default", {
+expect_warning(imp1 <- mice(nhanes[1:13, ], m = 2, maxit = 1, print = FALSE))
+test_that("RBIND-001: Constant variables are not imputed by default", {
   expect_equal(sum(is.na(complete(imp1))), 6L)
 })
 
 expect_warning(
-  imp1b <<- mice(
+  imp1b <- mice(
     nhanes[1:13, ],
     m = 2,
     maxit = 1,
@@ -14,22 +12,22 @@ expect_warning(
     remove.constant = FALSE
   )
 )
-test_that("Constant variables are imputed for remove.constant = FALSE", {
+test_that("RBIND-002: Constant variables are imputed for remove.constant = FALSE", {
   expect_equal(sum(is.na(complete(imp1b))), 0L)
 })
 
 imp2 <- mice(nhanes[14:25, ], m = 2, maxit = 1, print = FALSE)
 imp3 <- mice(nhanes2, m = 2, maxit = 1, print = FALSE)
 imp4 <- mice(nhanes2, m = 1, maxit = 1, print = FALSE)
-expect_warning(imp5 <<- mice(nhanes[1:13, ], m = 2, maxit = 2, print = FALSE))
+expect_warning(imp5 <- mice(nhanes[1:13, ], m = 2, maxit = 2, print = FALSE))
 expect_error(
-  imp6 <<- mice(nhanes[1:13, 2:3], m = 2, maxit = 2, print = FALSE),
+  imp6 <- mice(nhanes[1:13, 2:3], m = 2, maxit = 2, print = FALSE),
   "`mice` detected constant and/or collinear variables. No predictors were left after their removal."
 )
 nh3 <- nhanes
 colnames(nh3) <- c("AGE", "bmi", "hyp", "chl")
 imp7 <- mice(nh3[14:25, ], m = 2, maxit = 2, print = FALSE)
-expect_warning(imp8 <<- mice(nhanes[1:13, ], m = 2, maxit = 2, print = FALSE))
+expect_warning(imp8 <- mice(nhanes[1:13, ], m = 2, maxit = 2, print = FALSE))
 imp9 <- mice(
   nhanes,
   m = 2,
@@ -41,17 +39,17 @@ imp9 <- mice(
 mylist <- list(age = NA, bmi = NA, hyp = NA, chl = NA)
 nhalf <- nhanes[13:25, ]
 
-test_that("Expands number of rows and imputes", {
+test_that("RBIND-003: Expands number of rows and imputes", {
   expect_equal(nrow(complete(rbind(imp1, imp2))), 25L)
   expect_equal(nrow(rbind(imp1, imp2)$imp$bmi), 9L)
 })
 
-test_that("throws error", {
+test_that("RBIND-004: throws error", {
   expect_error(rbind(imp1, imp3), "datasets have different factor variables")
   expect_error(rbind(imp3, imp4), "number of imputations differ")
   expect_error(rbind(imp1, imp7), "datasets have different variable names")
 })
-test_that("throws warning", {
+test_that("RBIND-005: throws warning", {
   expect_warning(
     rbind(imp1, imp5),
     "iterations differ, so no convergence diagnostics calculated"
@@ -68,47 +66,47 @@ r3 <- rbind(imp1, nhalf)
 r4 <- rbind(imp1, imp2)
 r5 <- rbind(imp2, imp9)
 
-test_that("Produces longer imputed data", {
+test_that("RBIND-006: Produces longer imputed data", {
   expect_identical(nrow(complete(r1)), 26L)
   expect_identical(nrow(complete(r2)), 14L)
 })
 
-test_that("Constant variables are not imputed", {
+test_that("RBIND-007: Constant variables are not imputed", {
   expect_equal(sum(is.na(complete(r3))), 15L)
   expect_equal(sum(is.na(complete(r4))), 6L)
 })
 
-test_that("`ignore` is correctly appended", {
+test_that("RBIND-008: `ignore` is correctly appended", {
   expect_equal(r2$ignore, rep(FALSE, 14))
   expect_equal(r5$ignore, c(rep(FALSE, 32), rep(TRUE, 5)))
 })
 
-# r11 <- mice.mids(rbind(imp1, imp5), print = FALSE)
-# test_that("plot throws error on convergence diagnostics", {
-#   expect_error(plot(r11), "no convergence diagnostics found")
-#   })
+test_that("RBIND-009: plot throws error on convergence diagnostics", {
+  r11 <- suppressWarnings(mice.mids(rbind(imp1, imp5), print = FALSE))
+  expect_error(plot(r11), "no convergence diagnostics found")
+})
 
 r21 <- mice.mids(r2, print = FALSE)
 r31 <- mice.mids(r3, print = FALSE)
 
 # issue #59
-set.seed <- 818
+set.seed(818)
 x <- rnorm(10)
 D <- data.frame(x = x, y = 2 * x + rnorm(10))
 D[c(2:4, 7), 1] <- NA
 expect_error(
-  D_mids <<- mice(D[1:5, ], print = FALSE),
+  mice(D[1:5, ], print = FALSE),
   "`mice` detected constant and/or collinear variables. No predictors were left after their removal."
 )
 expect_warning(
-  D_mids <<- mice(D[1:5, ], print = FALSE, remove.collinear = FALSE)
+  D_mids <- mice(D[1:5, ], print = FALSE, remove.collinear = FALSE)
 )
 
 D_rbind <- mice:::rbind.mids(D_mids, D[6:10, ])
 cmp <- complete(D_rbind, 1)
-test_that("Solves issue #59, rbind", expect_identical(cmp[6:10, ], D[6:10, ]))
+test_that("RBIND-010: Solves issue #59, rbind", expect_identical(cmp[6:10, ], D[6:10, ]))
 
-test_that("rbind does not throw a warning (#114)", {
+test_that("RBIND-011: rbind does not throw a warning (#114)", {
   expect_silent(rbind(ordered(c(1, 2))))
 })
 
@@ -154,6 +152,6 @@ imp2$data <- imp2$data[idx, ]
 imp2$where <- imp2$where[idx, ]
 c2 <- complete(imp2, 2)
 
-test_that("ignore + where is identical to filter + rbind (#319)", {
+test_that("RBIND-012: ignore + where is identical to filter + rbind (#319)", {
   expect_identical(c1, c2)
 })

@@ -1,10 +1,8 @@
-context("ampute")
-
 # make objects for testfunctions
 sigma <- matrix(data = c(1, 0.2, 0.2, 0.2, 1, 0.2, 0.2, 0.2, 1), nrow = 3)
 complete.data <- MASS::mvrnorm(n = 100, mu = c(5, 5, 5), Sigma = sigma)
 
-test_that("all examples work", {
+test_that("AMPUTE-001: all examples work", {
   compl_boys <- cc(boys)[1:3]
 
   expect_error(ampute(data = compl_boys), NA)
@@ -30,7 +28,7 @@ test_that("all examples work", {
   )
 })
 
-test_that("all arguments work", {
+test_that("AMPUTE-002: all arguments work", {
   set.seed(123)
   # empty run
   expect_error(ampute(data = complete.data, run = FALSE), NA)
@@ -161,7 +159,7 @@ test_that("all arguments work", {
   expect_false(any(unlist(lapply(wss, check_na))))
 })
 
-test_that("function works around unusual arguments", {
+test_that("AMPUTE-003: function works around unusual arguments", {
   # data
   nasty.data <- complete.data
   nasty.data[, 1] <- rep(c("one", "two"), 50)
@@ -258,7 +256,7 @@ test_that("function works around unusual arguments", {
   expect_warning(ampute(data = complete.data, cont = FALSE, type = "LEFT"))
 })
 
-test_that("error messages work properly", {
+test_that("AMPUTE-004: error messages work properly", {
   # data
   expect_error(
     ampute(data = as.list(complete.data)),
@@ -403,7 +401,7 @@ test_that("error messages work properly", {
 
 # The following tests were created to evaluate the patterns and weights matrices in case of a pattern with only 1's (#449)
 
-test_that("patterns and weights matrices have right dimensions", {
+test_that("AMPUTE-005: patterns and weights matrices have right dimensions", {
   suppressWarnings(
     expect_true(all(
       ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0))$patterns ==
@@ -484,7 +482,7 @@ test_that("patterns and weights matrices have right dimensions", {
   )
 })
 
-test_that("prop and freq are properly adjusted when patterns contain only 1's", {
+test_that("AMPUTE-006: prop and freq are properly adjusted when patterns contain only 1's", {
   suppressWarnings(
     expect_equal(
       ampute(data = complete.data, patterns = c(1, 1, 1, 0, 1, 0))$prop,
@@ -542,15 +540,15 @@ test_that("prop and freq are properly adjusted when patterns contain only 1's", 
 
 # The following test was created to evaluate warnings when not all patterns can be generated (#317)
 
-test_that("warnings appear when not all patterns can be generated", {
+test_that("AMPUTE-007: warnings appear when not all patterns can be generated", {
   set.seed(12032021)
   binary.data <- lapply(
     runif(10, 0.05, 0.15),
     function(p, n) rbinom(n, 1, p),
     n = 10
-  ) %>%
-    do.call(what = "data.frame") %>%
-    setNames(paste0("type", LETTERS[1:ncol(.)]))
+  ) |>
+    do.call(what = "data.frame")
+  names(binary.data) <- paste0("type", LETTERS[1:ncol(binary.data)])
   expect_warning(
     ampute(
       data = binary.data
@@ -566,7 +564,7 @@ test_that("warnings appear when not all patterns can be generated", {
 
 
 # The following test was contributed by Shangzhi-hong (#216) Dec 2019
-context("ampute robust version")
+# ---- ampute robust version ----
 
 set.seed(1)
 
@@ -613,7 +611,7 @@ bycases <- TRUE
 # odds <- NULL
 # run <- TRUE
 
-test_that("ampute() works under extreme condition", {
+test_that("AMPUTE-008: ampute() works under extreme condition", {
   expect_warning(
     ampDf <- ampute(
       data = data,

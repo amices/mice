@@ -11,9 +11,15 @@
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
+  window.MathJax = {
+    chtml: {
+      fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
+    }
+  };
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Random effects strategies in `mice.impute.2l.bin`">
 </head>
@@ -25,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.11</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +72,7 @@
                         <h4 data-toc-skip class="author">Stef van
 Buuren</h4>
             
-            <h4 data-toc-skip class="date">2026-06-01</h4>
+            <h4 data-toc-skip class="date">2026-11-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/amices/mice/blob/HEAD/vignettes/random-effects-2l-bin.Rmd" class="external-link"><code>vignettes/random-effects-2l-bin.Rmd</code></a></small>
       <div class="d-none name"><code>random-effects-2l-bin.Rmd</code></div>
@@ -80,28 +86,20 @@ Buuren</h4>
 <p><code><a href="../reference/mice.impute.2l.bin.html">mice.impute.2l.bin()</a></code> imputes a binary outcome in a
 two-level (clustered) data structure using a logistic mixed model fitted
 by <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">lme4::glmer()</a></code>. A key modelling choice is how the
-cluster-specific random effect
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>b</mi><mi>i</mi><mo>*</mo></msubsup><annotation encoding="application/x-tex">b_i^*</annotation></semantics></math>
-is drawn for clusters that contain missing values.</p>
+cluster-specific random effect <span class="math inline">\(b_i^*\)</span> is drawn for clusters that contain
+missing values.</p>
 <p>Audigier et al. (2018, p. 163) describe two situations for the
 FCS-GLM imputer:</p>
 <ul>
-<li><p><strong>Systematic missingness</strong>: cluster
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
-has <em>no</em> observed values of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>.
-Nothing is known about
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>b</mi><mi>i</mi></msub><annotation encoding="application/x-tex">b_i</annotation></semantics></math>
-from the data, so the only coherent draw is from the marginal prior
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>b</mi><mi>i</mi><mo>*</mo></msubsup><mo>∼</mo><mi>N</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mi>ψ</mi><mo>*</mo></msup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">b_i^* \sim N(0, \psi^*)</annotation></semantics></math>.</p></li>
-<li><p><strong>Sporadic missingness</strong>: cluster
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
-has <em>some</em> observed values of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>.
-These observations are informative about
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>b</mi><mi>i</mi></msub><annotation encoding="application/x-tex">b_i</annotation></semantics></math>,
-so the draw should come from the posterior
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>b</mi><mi>i</mi></msub><mo>∣</mo><msub><mi>y</mi><mrow><mtext mathvariant="normal">obs</mtext><mo>,</mo><mi>i</mi></mrow></msub><mo>,</mo><msub><mi>X</mi><mi>i</mi></msub><mo>,</mo><msup><mi>β</mi><mo>*</mo></msup><mo>,</mo><msup><mi>ψ</mi><mo>*</mo></msup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">p(b_i \mid y_{\text{obs},i}, X_i, \beta^*, \psi^*)</annotation></semantics></math>.</p></li>
+<li><p><strong>Systematic missingness</strong>: cluster <span class="math inline">\(i\)</span> has <em>no</em> observed values of
+<span class="math inline">\(y\)</span>. Nothing is known about <span class="math inline">\(b_i\)</span> from the data, so the only coherent
+draw is from the marginal prior <span class="math inline">\(b_i^* \sim
+N(0, \psi^*)\)</span>.</p></li>
+<li><p><strong>Sporadic missingness</strong>: cluster <span class="math inline">\(i\)</span> has <em>some</em> observed values of
+<span class="math inline">\(y\)</span>. These observations are
+informative about <span class="math inline">\(b_i\)</span>, so the draw
+should come from the posterior <span class="math inline">\(p(b_i \mid
+y_{\text{obs},i}, X_i, \beta^*, \psi^*)\)</span>.</p></li>
 </ul>
 <p><code><a href="../reference/mice.impute.2l.bin.html">mice.impute.2l.bin()</a></code> exposes three strategies via the
 <code>random.effects</code> argument.</p>
@@ -113,73 +111,53 @@ so the draw should come from the posterior
 <h3 id="marginal-original-behaviour">
 <code>"marginal"</code> — original behaviour<a class="anchor" aria-label="anchor" href="#marginal-original-behaviour"></a>
 </h3>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>b</mi><mi>i</mi><mo>*</mo></msubsup><mo>∼</mo><mi>N</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mi>ψ</mi><mo>*</mo></msup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">b_i^* \sim N(0, \psi^*)</annotation></semantics></math></p>
+<p><span class="math display">\[b_i^* \sim N(0, \psi^*)\]</span></p>
 <p>All missing clusters, sporadic or systematic, draw from the marginal
 prior. This ignores the observed responses within a partially observed
 cluster.</p>
 <p><strong>Pro:</strong> Simple; correct for systematic missingness.
 <strong>Con:</strong> For sporadic clusters, ignores information in
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>y</mi><mrow><mtext mathvariant="normal">obs</mtext><mo>,</mo><mi>i</mi></mrow></msub><annotation encoding="application/x-tex">y_{\text{obs},i}</annotation></semantics></math>,
-leading to overdispersed imputations.</p>
+<span class="math inline">\(y_{\text{obs},i}\)</span>, leading to
+overdispersed imputations.</p>
 </div>
 <div class="section level3">
 <h3 id="eb-empirical-bayes">
 <code>"eb"</code> — Empirical Bayes<a class="anchor" aria-label="anchor" href="#eb-empirical-bayes"></a>
 </h3>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>b</mi><mi>i</mi><mo>*</mo></msubsup><mo>∼</mo><mi>N</mi><mo stretchy="false" form="prefix">(</mo><msub><mover><mi>b</mi><mo accent="true">̂</mo></mover><mi>i</mi></msub><mo>,</mo><msup><mi>ψ</mi><mo>*</mo></msup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">b_i^* \sim N(\hat{b}_i, \psi^*)</annotation></semantics></math></p>
-<p>The draw is centred on the BLUP
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>b</mi><mo accent="true">̂</mo></mover><mi>i</mi></msub><annotation encoding="application/x-tex">\hat{b}_i</annotation></semantics></math>
-from <code><a href="https://rdrr.io/pkg/nlme/man/random.effects.html" class="external-link">lme4::ranef()</a></code>, but still spread with the full marginal
-variance
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ψ</mi><mo>*</mo></msup><annotation encoding="application/x-tex">\psi^*</annotation></semantics></math>.</p>
-<p><strong>Pro:</strong> Uses the observed data to locate
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>b</mi><mi>i</mi><mo>*</mo></msubsup><annotation encoding="application/x-tex">b_i^*</annotation></semantics></math>;
-easy to implement. <strong>Con:</strong> Does not account for the
-uncertainty in
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>b</mi><mo accent="true">̂</mo></mover><mi>i</mi></msub><annotation encoding="application/x-tex">\hat{b}_i</annotation></semantics></math>.
-Clusters with few observations get the same spread as clusters with many
-observations, underestimating uncertainty for small clusters and
-overestimating it for large ones.</p>
+<p><span class="math display">\[b_i^* \sim N(\hat{b}_i,
+\psi^*)\]</span></p>
+<p>The draw is centred on the BLUP <span class="math inline">\(\hat{b}_i\)</span> from
+<code><a href="https://rdrr.io/pkg/nlme/man/random.effects.html" class="external-link">lme4::ranef()</a></code>, but still spread with the full marginal
+variance <span class="math inline">\(\psi^*\)</span>.</p>
+<p><strong>Pro:</strong> Uses the observed data to locate <span class="math inline">\(b_i^*\)</span>; easy to implement.
+<strong>Con:</strong> Does not account for the uncertainty in <span class="math inline">\(\hat{b}_i\)</span>. Clusters with few observations
+get the same spread as clusters with many observations, underestimating
+uncertainty for small clusters and overestimating it for large ones.</p>
 </div>
 <div class="section level3">
 <h3 id="laplace-laplace-approximation-default">
 <code>"laplace"</code> — Laplace approximation (default)<a class="anchor" aria-label="anchor" href="#laplace-laplace-approximation-default"></a>
 </h3>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>b</mi><mi>i</mi><mo>*</mo></msubsup><mo>∼</mo><mi>N</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>m</mi><mi>i</mi></msub><mo>,</mo><msub><mi>V</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">b_i^* \sim N(m_i, V_i)</annotation></semantics></math></p>
-<p>where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>m</mi><mi>i</mi></msub><annotation encoding="application/x-tex">m_i</annotation></semantics></math>
-is the BLUP and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>V</mi><mi>i</mi></msub><annotation encoding="application/x-tex">V_i</annotation></semantics></math>
-is the Laplace-approximated posterior variance returned by
-<code>lme4::ranef(fit, condVar = TRUE)</code>.</p>
-<p>As
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mi>i</mi></msub><mo>→</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">n_i \to 0</annotation></semantics></math>,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mi>i</mi></msub><mo>→</mo><msup><mi>ψ</mi><mo>*</mo></msup></mrow><annotation encoding="application/x-tex">V_i \to \psi^*</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>m</mi><mi>i</mi></msub><mo>→</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">m_i \to 0</annotation></semantics></math>,
-recovering the marginal draw. As
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mi>i</mi></msub><mo>→</mo><mi>∞</mi></mrow><annotation encoding="application/x-tex">n_i \to \infty</annotation></semantics></math>,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mi>i</mi></msub><mo>→</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">V_i \to 0</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>m</mi><mi>i</mi></msub><mo>→</mo><msub><mover><mi>b</mi><mo accent="true">̂</mo></mover><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">m_i \to \hat{b}_i</annotation></semantics></math>,
-concentrating the draw around the BLUP.</p>
-<p><strong>Pro:</strong> Posterior uncertainty in
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>b</mi><mi>i</mi></msub><annotation encoding="application/x-tex">b_i</annotation></semantics></math>
-is correctly reflected; bridges sporadic and systematic cases
-continuously; consistent with the recommendation of Audigier et
-al. (2018). <strong>Con:</strong> Relies on the Laplace approximation,
-which can be inaccurate for very sparse binary data (few events per
-cluster).</p>
+<p><span class="math display">\[b_i^* \sim N(m_i, V_i)\]</span></p>
+<p>where <span class="math inline">\(m_i\)</span> is the BLUP and <span class="math inline">\(V_i\)</span> is the Laplace-approximated posterior
+variance returned by <code>lme4::ranef(fit, condVar = TRUE)</code>.</p>
+<p>As <span class="math inline">\(n_i \to 0\)</span>, <span class="math inline">\(V_i \to \psi^*\)</span> and <span class="math inline">\(m_i \to 0\)</span>, recovering the marginal draw.
+As <span class="math inline">\(n_i \to \infty\)</span>, <span class="math inline">\(V_i \to 0\)</span> and <span class="math inline">\(m_i \to \hat{b}_i\)</span>, concentrating the draw
+around the BLUP.</p>
+<p><strong>Pro:</strong> Posterior uncertainty in <span class="math inline">\(b_i\)</span> is correctly reflected; bridges
+sporadic and systematic cases continuously; consistent with the
+recommendation of Audigier et al. (2018). <strong>Con:</strong> Relies
+on the Laplace approximation, which can be inaccurate for very sparse
+binary data (few events per cluster).</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
 </h2>
 <p>We simulate a two-level dataset with known parameters to make the
-differences between strategies visible. Strong random effects
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>σ</mi><mi>b</mi></msub><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\sigma_b = 3</annotation></semantics></math>)
-and a mix of sporadic and systematic missingness create conditions where
-the three methods behave differently.</p>
+differences between strategies visible. Strong random effects (<span class="math inline">\(\sigma_b = 3\)</span>) and a mix of sporadic and
+systematic missingness create conditions where the three methods behave
+differently.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice" class="external-link">mice</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -247,9 +225,7 @@ the three methods behave differently.</p>
 <h3 id="between-imputation-variability-per-cluster">Between-imputation variability per cluster<a class="anchor" aria-label="anchor" href="#between-imputation-variability-per-cluster"></a>
 </h3>
 <p>The key difference between methods appears at the cluster level: how
-much do the imputed cluster means vary across the
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
-imputations?</p>
+much do the imputed cluster means vary across the <span class="math inline">\(m\)</span> imputations?</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">get_cluster_sd</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">imp</span>, <span class="va">label</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">vals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">imp</span><span class="op">$</span><span class="va">m</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
@@ -276,13 +252,8 @@ imputations?</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `geom_smooth()` using formula = 'y ~ x'</span></span></code></pre></div>
 <p><img src="random-effects-2l-bin_files/figure-html/cluster-var-1.png" class="r-plt" alt="" width="672"></p>
-<p>For clusters with zero observed
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>
-(systematic,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mtext mathvariant="normal">obs</mtext></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">n_\text{obs} = 0</annotation></semantics></math>),
-all three methods draw from the marginal prior and are identical. As
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>n</mi><mtext mathvariant="normal">obs</mtext></msub><annotation encoding="application/x-tex">n_\text{obs}</annotation></semantics></math>
-increases:</p>
+<p>For clusters with zero observed <span class="math inline">\(y\)</span> (systematic, <span class="math inline">\(n_\text{obs} = 0\)</span>), all three methods draw
+from the marginal prior and are identical. As <span class="math inline">\(n_\text{obs}\)</span> increases:</p>
 <ul>
 <li>
 <code>"marginal"</code> stays high — it ignores the observed data
@@ -344,15 +315,11 @@ applications. It is the only method that correctly handles the full
 spectrum from sporadic to systematic missingness within a single
 coherent framework.</p>
 <p>Use <code>random.effects = "marginal"</code> only if all missing
-clusters are known to be systematically missing (no observed
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>
-in the cluster at all).</p>
+clusters are known to be systematically missing (no observed <span class="math inline">\(y\)</span> in the cluster at all).</p>
 <p>Use <code>random.effects = "eb"</code> as a fast approximation when
 clusters are large (many observations per cluster), so that posterior
-uncertainty in
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>b</mi><mo accent="true">̂</mo></mover><mi>i</mi></msub><annotation encoding="application/x-tex">\hat{b}_i</annotation></semantics></math>
-is small relative to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ψ</mi><mo>*</mo></msup><annotation encoding="application/x-tex">\psi^*</annotation></semantics></math>.</p>
+uncertainty in <span class="math inline">\(\hat{b}_i\)</span> is small
+relative to <span class="math inline">\(\psi^*\)</span>.</p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -373,7 +340,7 @@ variables. <em>Statistical Science</em>, 33(2), 160–183. <a href="https://doi.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

@@ -1,12 +1,22 @@
-context("complete")
-
-imp <- mice(nhanes, maxit = 1, m = 2, seed = 123, print = FALSE)
-
-lng <- subset(complete(imp, "long"), .imp == 1, select = c(age, bmi, hyp, chl))
-all <- complete(imp, "all")[[1]]
-
-test_that("long and all produce same data", {
+test_that("COMPLETE-001: long and all produce same data", {
+  imp <- mice(nhanes, maxit = 1, m = 2, seed = 123, print = FALSE)
+  lng <- subset(complete(imp, "long"), .imp == 1, select = c(age, bmi, hyp, chl))
+  all <- complete(imp, "all")[[1]]
   expect_equal(lng, all)
+})
+
+test_that("COMPLETE-005: completed logical variables remain logical", {
+  set.seed(123)
+  dat <- data.frame(
+    binary = as.logical(rbinom(200, 1, 0.5)),
+    x = rnorm(200)
+  )
+  dat$binary[seq(1, 200, by = 4)] <- NA
+  imp <- mice(dat, m = 1, maxit = 1, print = FALSE, seed = 123)
+
+  expect_type(complete(imp)$binary, "logical")
+  expect_type(complete(imp, "all")[[1]]$binary, "logical")
+  expect_type(complete(imp, "long")$binary, "logical")
 })
 
 # preserve rownames type
@@ -14,36 +24,34 @@ nhanes3 <- mice::nhanes
 row.names(nhanes3) <- seq_len(nrow(nhanes3))
 imp <- mice(nhanes, maxit = 1, m = 2, seed = 123, print = FALSE)
 imp3 <- mice(nhanes3, maxit = 1, m = 2, seed = 123, print = FALSE)
-test_that("mice() preserves the rownames type attribute", {
+test_that("COMPLETE-002: mice() preserves the rownames type attribute", {
   expect_type(attr(imp$data, "row.names"), "character")
   expect_type(attr(imp3$data, "row.names"), "integer")
 })
 cmp <- complete(imp, "long")
 cmp3 <- complete(imp3, "long")
-test_that("complete() preserves the rownames type attribute", {
+test_that("COMPLETE-003: complete() preserves the rownames type attribute", {
   expect_type(attr(cmp, "row.names"), "character")
   expect_type(attr(cmp3, "row.names"), "integer")
 })
 
-# mids workflow using saved objects
-imp <- mice(nhanes, seed = 123, print = FALSE)
-fit <- with(imp, lm(chl ~ age + bmi + hyp))
-est <- pool(fit)
-est.mice <- est
+test_that("COMPLETE-004: workflow mids, mild and long produce same estimates", {
+  imp <- mice(nhanes, seed = 123, print = FALSE)
 
-# mild workflow using saved objects and base::lapply
-idl <- complete(imp, "all")
-fit <- lapply(idl, lm, formula = chl ~ age + bmi + hyp)
-est <- pool(fit)
-est.mild <- est
+  # mids workflow using saved objects
+  fit <- with(imp, lm(chl ~ age + bmi + hyp))
+  est.mice <- pool(fit)
 
-# long workflow using base::by
-cmp <- complete(imp, "long")
-fit <- by(cmp, as.factor(cmp$.imp), lm, formula = chl ~ age + bmi + hyp)
-est <- pool(fit)
-est.long <- est
+  # mild workflow using saved objects and base::lapply
+  idl <- complete(imp, "all")
+  fit <- lapply(idl, lm, formula = chl ~ age + bmi + hyp)
+  est.mild <- pool(fit)
 
-test_that("workflow mids, mild and long produce same estimates", {
+  # long workflow using base::by
+  cmp <- complete(imp, "long")
+  fit <- by(cmp, as.factor(cmp$.imp), lm, formula = chl ~ age + bmi + hyp)
+  est.long <- pool(fit)
+
   expect_identical(getqbar(est.mice), getqbar(est.mild))
   expect_identical(getqbar(est.mice), getqbar(est.long))
 })

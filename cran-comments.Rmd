@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Release summary
 
-`mice 3.19.0` adds new features, bug fixes, and enhancements. 
+`mice 3.19.10` adds new features, bug fixes, and enhancements.
 See <https://github.com/amices/mice/blob/master/NEWS.md>
 
 ## Test environments
@@ -25,7 +25,7 @@ NOTE: Run in OSX terminal, not in Rstudio terminal.
 
 ```{bash eval=FALSE}
 env _R_CHECK_DEPENDS_ONLY_=true 
-R CMD check mice_3.19.0.tar.gz
+R CMD check mice_3.19.10.tar.gz
 
 Status: OK
 ```
@@ -83,9 +83,19 @@ revdep_check(pkg = ".", num_workers = 12, quiet = FALSE)
 
 ## revdepcheck results
 
-We checked 148 reverse dependencies (140 from CRAN + 8 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 177 reverse dependencies (171 from CRAN + 6 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 1 new problems
- * We failed to check 5 packages
+ * We saw 5 new problems
+ * We failed to check 4 packages
+
+Of the 5 new problems, only `autoReg` is caused by this release: it reads
+the confidence interval columns from `summary(pool(fit), conf.int = TRUE)`
+by their old `confint()`-style names (`` `2.5 %` ``/`` `97.5 %` ``), which
+this version renames to `conf.low`/`conf.high` (broom convention). We have
+contacted the maintainer about updating `autoReg` accordingly. The
+remaining new problems (`bipd`, `broom.mixed`, `pminternal`, `pre`) are
+unrelated environment flakiness (segfaults also seen as "newly fixed" in
+the same run, or local port conflicts from parallel checking) and not
+caused by changes in this package.
 
 See <https://github.com/amices/mice/tree/master/revdep> for details.

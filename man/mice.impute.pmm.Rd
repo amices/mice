@@ -99,7 +99,7 @@ parameter \eqn{\kappa}.}
 \item{Draw \eqn{q} independent \eqn{N(0,1)} variates in vector \eqn{\dot z_1}.}
 \item{Calculate \eqn{V^{1/2}} by Cholesky decomposition.}
 \item{Calculate \eqn{\dot\beta = \hat\beta + \dot\sigma\dot z_1 V^{1/2}}.}
-\item{Calculate \eqn{\dot\eta(i,j)=|X_{{obs},[i]|}\hat\beta-X_{{mis},[j]}\dot\beta}
+\item{Calculate \eqn{\dot\eta(i,j)=|X_{{obs},[i]}\hat\beta-X_{{mis},[j]}\dot\beta|}
 with \eqn{i=1,\dots,n_1} and \eqn{j=1,\dots,n_0}.}
 \item{Construct \eqn{n_0} sets \eqn{Z_j}, each containing \eqn{d}
 candidate donors, from \eqn{y_{obs}} such that \eqn{\sum_d\dot\eta(i,j)} is
@@ -107,6 +107,17 @@ minimum for all \eqn{j=1,\dots,n_0}. Break ties randomly.}
 \item{Draw one donor \eqn{i_j} from \eqn{Z_j} randomly for \eqn{j=1,\dots,n_0}.}
 \item{Calculate imputations \eqn{\dot y_j = y_{i_j}} for \eqn{j=1,\dots,n_0}.}
 }
+
+Since \code{mice 3.19.12}, ties among candidate donors are broken
+independently for each target case. In versions \code{3.11.8} through
+\code{3.19.11}, the default \code{matchindex()} engine broke ties only
+once per imputed dataset, so target cases sharing the same predicted
+value drew from the same small set of donors. This inflated the
+between-imputation variance and produced too wide confidence intervals,
+most visibly for intercept-only models, models with few categorical
+predictors, or heavily rounded outcomes. Results from these versions
+may therefore differ from those of the current version
+(see \url{https://github.com/amices/mice/issues/757}).
 
 The name \emph{predictive mean matching} was proposed by Little (1988).
 }

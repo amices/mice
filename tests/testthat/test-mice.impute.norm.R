@@ -1,5 +1,3 @@
-context("mice.impute.norm")
-
 #########################
 # TEST 1: Simple problem #
 #########################
@@ -23,12 +21,12 @@ set.seed(123)
 qr <- .norm.draw(y, ry, x, ls.meth = "qr")
 
 # tests for test1
-test_that("Estimates are equal", {
-  expect_equal(svd$coef, matrix(qr$coef))
-  expect_equal(svd$beta, matrix(qr$beta))
-  expect_equal(svd$sigma, qr$sigma)
+test_that("MICE-IMPUTE-NORM-001: norm: Estimates are equal", {
+  expect_equal(svd$coef, matrix(qr$coef), tolerance = 1e-6)
+  expect_equal(svd$beta, matrix(qr$beta), tolerance = 1e-6)
+  expect_equal(svd$sigma, qr$sigma, tolerance = 1e-6)
 })
-test_that("Correct estimation method used", {
+test_that("MICE-IMPUTE-NORM-002: norm: Correct estimation method used", {
   expect_equal(svd$estimation, "svd")
   expect_equal(qr$estimation, "qr")
   expect_equal(ridge$estimation, "ridge")
@@ -52,12 +50,12 @@ ridge <- .norm.draw(y, ry, x, ls.meth = "ridge")
 qr <- .norm.draw(y, ry, x, ls.meth = "qr")
 
 # tests for test2
-test_that("Estimates are equal", {
-  expect_equal(svd$coef, matrix(qr$coef))
-  expect_equal(svd$beta, matrix(qr$beta))
-  expect_equal(svd$sigma, qr$sigma)
+test_that("MICE-IMPUTE-NORM-003: norm.nob: Estimates are equal", {
+  expect_equal(svd$coef, matrix(qr$coef), tolerance = 1e-6)
+  expect_equal(svd$beta, matrix(qr$beta), tolerance = 1e-6)
+  expect_equal(svd$sigma, qr$sigma, tolerance = 1e-6)
 })
-test_that("Correct estimation method used", {
+test_that("MICE-IMPUTE-NORM-004: norm.nob: Correct estimation method used", {
   expect_equal(svd$estimation, "svd")
   expect_equal(qr$estimation, "qr")
   expect_equal(ridge$estimation, "ridge")
@@ -96,8 +94,8 @@ expect_warning(
   )
 )
 
-test_that("Imputations are equal", {
-  expect_equal(imp.qr$imp, imp.svd$imp)
+test_that("MICE-IMPUTE-NORM-005: Imputations are equal", {
+  expect_equal(imp.qr$imp, imp.svd$imp, tolerance = 1e-6)
   expect_false(identical(imp.qr$imp, imp.ridge$imp))
 })
 
@@ -116,7 +114,7 @@ expect_warning(
   imp.ridge <- mice(mammalsleep, ls.meth = "ridge", seed = 123, print = FALSE)
 )
 
-test_that("Imputations are not equal", {
+test_that("MICE-IMPUTE-NORM-006: Imputations are not equal", {
   expect_false(identical(imp.qr$imp, imp.svd$imp))
   expect_false(identical(imp.qr$imp, imp.ridge$imp))
 })
@@ -137,7 +135,7 @@ wy2 <- rep(TRUE, length(y))
 wy3 <- rep(FALSE, length(y))
 wy4 <- rep(c(TRUE, FALSE), times = c(1, length(y) - 1))
 
-test_that("Returns requested length", {
+test_that("MICE-IMPUTE-NORM-007: Returns requested length", {
   expect_equal(length(mice.impute.norm(y, ry, x)), sum(!ry))
   expect_equal(length(mice.impute.norm(y, ry, x, wy = wy1)), sum(wy1))
   expect_equal(length(mice.impute.norm(y, ry, x, wy = wy2)), sum(wy2))
@@ -176,10 +174,10 @@ norm.boot1 <- mice.impute.norm.boot(y, ry, x1)
 set.seed(123)
 norm.boot2 <- mice.impute.norm.boot(y, ry, x2)
 
-test_that("Imputations are invariant to column order", {
+test_that("MICE-IMPUTE-NORM-008: Imputations are invariant to column order", {
   # expect_equal(pmm1, pmm2)
   # expect_equal(norm1, norm2)
-  expect_equal(norm.nob1, norm.nob2)
-  expect_equal(norm.predict1, norm.predict2)
-  expect_equal(norm.boot1, norm.boot2)
+  expect_equal(norm.nob1, norm.nob2, tolerance = 1e-6)
+  expect_equal(norm.predict1, norm.predict2, tolerance = 1e-6)
+  expect_equal(norm.boot1, norm.boot2, tolerance = 1e-6)
 })

@@ -1,43 +1,31 @@
-# brms
+# brms (2.23.0)
 
-<details>
-
-* Version: 2.23.0
-* GitHub: https://github.com/paul-buerkner/brms
-* Source code: https://github.com/cran/brms
-* Date/Publication: 2025-09-09 10:50:02 UTC
-* Number of recursive dependencies: 219
+* GitHub: <https://github.com/paul-buerkner/brms>
+* Email: <mailto:paul.buerkner@gmail.com>
+* GitHub mirror: <https://github.com/cran/brms>
 
 Run `revdepcheck::revdep_details(, "brms")` for more info
-
-</details>
 
 ## In both
 
 *   R CMD check timed out
-    
 
-# dynr
 
-<details>
+# dynr (0.1.16-114)
 
-* Version: 0.1.16-114
-* GitHub: https://github.com/mhunter1/dynr
-* Source code: https://github.com/cran/dynr
-* Date/Publication: 2025-09-02 16:00:08 UTC
-* Number of recursive dependencies: 160
+* GitHub: <https://github.com/mhunter1/dynr>
+* Email: <mailto:mike.dynr@gmail.com>
+* GitHub mirror: <https://github.com/cran/dynr>
 
 Run `revdepcheck::revdep_details(, "dynr")` for more info
-
-</details>
 
 ## In both
 
 *   checking whether package ‘dynr’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/dynr/new/dynr.Rcheck/00install.out’ for details.
-    ```
+     ```
+     Installation failed.
+     See ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/dynr/new/dynr.Rcheck/00install.out’ for details.
+     ```
 
 ## Installation
 
@@ -69,193 +57,78 @@ ERROR: configuration failed for package ‘dynr’
 
 
 ```
-# hbsaems
+# pguIMP (0.1.1)
 
-<details>
+* GitHub: <https://github.com/JornLotsch/pguIMP>
+* Email: <mailto:j.lotsch@em.uni-frankfurt.de>
+* GitHub mirror: <https://github.com/cran/pguIMP>
 
-* Version: 0.1.1
-* GitHub: https://github.com/madsyair/hbsaems
-* Source code: https://github.com/cran/hbsaems
-* Date/Publication: 2025-07-18 14:40:02 UTC
-* Number of recursive dependencies: 178
-
-Run `revdepcheck::revdep_details(, "hbsaems")` for more info
-
-</details>
+Run `revdepcheck::revdep_details(, "pguIMP")` for more info
 
 ## In both
 
-*   R CMD check timed out
-    
+*   checking whether package ‘pguIMP’ can be installed ... ERROR
+     ```
+     Installation failed.
+     See ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/pguIMP/new/pguIMP.Rcheck/00install.out’ for details.
+     ```
 
-# metafor
-
-<details>
-
-* Version: 4.8-0
-* GitHub: https://github.com/wviechtb/metafor
-* Source code: https://github.com/cran/metafor
-* Date/Publication: 2025-01-28 13:20:02 UTC
-* Number of recursive dependencies: 189
-
-Run `revdepcheck::revdep_details(, "metafor")` for more info
-
-</details>
-
-## In both
-
-*   R CMD check timed out
-    
-
-# mi4p
-
-<details>
-
-* Version: 
-* GitHub: https://github.com/amices/mice
-* Source code: NA
-* Number of recursive dependencies: 0
-
-</details>
-
-## Error before installation
+## Installation
 
 ### Devel
 
 ```
-
-  There are binary versions available but the source versions are later:
-            binary source needs_compilation
-MsCoreUtils 1.21.0 1.22.1              TRUE
-S4Arrays    1.10.0 1.10.1              TRUE
-SparseArray 1.10.2 1.10.6              TRUE
-
-  Binaries will be installed
-
-The downloaded binary packages are in
-	/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//Rtmp8AWm9i/downloaded_packages
-
-
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/affy_1.88.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/affyio_1.80.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/AnnotationDbi_1.72.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/AnnotationFilter_1.34.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/BiocBaseUtils_1.12.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/BiocFileCache_3.0.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/biomaRt_2.66.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/Biostrings_2.78.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/DAPAR_1.42.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/impute_1.84.0.tgz'
-...
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/QFeatures_1.20.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/Spectra_1.20.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/vsn_3.78.0.tgz'
-installing the source package ‘DAPARdata’
-
-trying URL 'https://bioconductor.org/packages/3.22/data/experiment/src/contrib/DAPARdata_1.40.0.tar.gz'
-Content type 'application/x-gzip' length 30447560 bytes (29.0 MB)
-==================================================
-downloaded 29.0 MB
-
+* installing *source* package ‘pguIMP’ ...
+** this is package ‘pguIMP’ version ‘0.1.1’
+** package ‘pguIMP’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(jli, FALSE)
+  error: unable to load shared object '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib':
+  dlopen(/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib, 0x000A): tried: '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64e.v1' or 'arm64' or 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (no such file), '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64e.v1' or 'arm64' or 'arm64'))
+Execution halted
+ERROR: lazy loading failed for package ‘pguIMP’
+* removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/pguIMP/new/pguIMP.Rcheck/pguIMP’
 
 
 ```
 ### CRAN
 
 ```
-
-  There are binary versions available but the source versions are later:
-            binary source needs_compilation
-MsCoreUtils 1.21.0 1.22.1              TRUE
-S4Arrays    1.10.0 1.10.1              TRUE
-SparseArray 1.10.2 1.10.6              TRUE
-
-  Binaries will be installed
-
-The downloaded binary packages are in
-	/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//Rtmp8AWm9i/downloaded_packages
-
-
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/affy_1.88.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/affyio_1.80.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/AnnotationDbi_1.72.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/AnnotationFilter_1.34.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/BiocBaseUtils_1.12.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/BiocFileCache_3.0.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/biomaRt_2.66.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/Biostrings_2.78.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/DAPAR_1.42.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/impute_1.84.0.tgz'
-...
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/QFeatures_1.20.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/Spectra_1.20.0.tgz'
-trying URL 'https://bioconductor.org/packages/3.22/bioc/bin/macosx/big-sur-arm64/contrib/4.5/vsn_3.78.0.tgz'
-installing the source package ‘DAPARdata’
-
-trying URL 'https://bioconductor.org/packages/3.22/data/experiment/src/contrib/DAPARdata_1.40.0.tar.gz'
-Content type 'application/x-gzip' length 30447560 bytes (29.0 MB)
-==================================================
-downloaded 29.0 MB
-
+* installing *source* package ‘pguIMP’ ...
+** this is package ‘pguIMP’ version ‘0.1.1’
+** package ‘pguIMP’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error: .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(jli, FALSE)
+  error: unable to load shared object '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib':
+  dlopen(/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib, 0x000A): tried: '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64e.v1' or 'arm64' or 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (no such file), '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64e.v1' or 'arm64' or 'arm64'))
+Execution halted
+ERROR: lazy loading failed for package ‘pguIMP’
+* removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/pguIMP/old/pguIMP.Rcheck/pguIMP’
 
 
 ```
-# miceadds
+# rmsb (1.1-2)
 
-<details>
-
-* Version: 
-* GitHub: https://github.com/amices/mice
-* Source code: NA
-* Number of recursive dependencies: 0
-
-</details>
-
-## Error before installation
-
-### Devel
-
-```
-
-
-
-trying URL 'https://cloud.r-project.org/bin/macosx/big-sur-arm64/contrib/4.5/broman_0.92.tgz'
-trying URL 'https://cloud.r-project.org/bin/macosx/big-sur-arm64/contrib/4.5/synthpop_1.9-2.tgz'
-
-
-```
-### CRAN
-
-```
-
-
-
-trying URL 'https://cloud.r-project.org/bin/macosx/big-sur-arm64/contrib/4.5/broman_0.92.tgz'
-trying URL 'https://cloud.r-project.org/bin/macosx/big-sur-arm64/contrib/4.5/synthpop_1.9-2.tgz'
-
-
-```
-# rmsb
-
-<details>
-
-* Version: 1.1-2
-* GitHub: NA
-* Source code: https://github.com/cran/rmsb
-* Date/Publication: 2025-04-13 16:30:02 UTC
-* Number of recursive dependencies: 135
+* Email: <mailto:fh@fharrell.com>
+* GitHub mirror: <https://github.com/cran/rmsb>
 
 Run `revdepcheck::revdep_details(, "rmsb")` for more info
-
-</details>
 
 ## In both
 
 *   checking whether package ‘rmsb’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/rmsb/new/rmsb.Rcheck/00install.out’ for details.
-    ```
+     ```
+     Installation failed.
+     See ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/rmsb/new/rmsb.Rcheck/00install.out’ for details.
+     ```
 
 ## Installation
 

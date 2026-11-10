@@ -170,13 +170,17 @@ single.complete <- function(data, where, imp, ell) {
     if (is.null(imp[[j]])) {
       data[where[, j], j] <- NA
     } else {
+      values <- imp[[j]][, ell]
+      if (is.logical(data[[j]])) {
+        values <- as.logical(values)
+      }
       if (sum(where[, j]) == nrow(imp[[j]])) {
         # assume equal length
-        data[where[, j], j] <- imp[[j]][, ell]
+        data[where[, j], j] <- values
       } else {
         # index by rowname
         rows <- match(rownames(imp[[j]]), rownames(data))
-        data[rows, j] <- imp[[j]][, ell]
+        data[rows, j] <- values
       }
     }
   }

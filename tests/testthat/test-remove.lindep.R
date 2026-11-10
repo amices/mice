@@ -1,5 +1,3 @@
-context("remove.lindep")
-
 set.seed(1)
 td <- matrix(rnorm(20), nrow = 5, ncol = 4)
 dimnames(td) <- list(1:5, LETTERS[1:4])
@@ -58,7 +56,7 @@ k8 <- mice:::remove.lindep(x, y, ry, frame = fr)
 
 loggedEvents
 
-test_that("removes copies", {
+test_that("REMOVE-LINDEP-001: removes copies", {
   expect_identical(unname(k1), c(TRUE, TRUE, TRUE))
   expect_identical(unname(k2), c(FALSE, TRUE, TRUE))
   # expect_identical(unname(k3), c(FALSE, FALSE, TRUE))

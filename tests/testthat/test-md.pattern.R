@@ -1,6 +1,4 @@
-context("md.pattern")
-
-test_that("patterns run as expected", {
+test_that("MD-PATTERN-001: patterns run as expected", {
   # boys
   expect_silent(md.pattern(boys, plot = FALSE))
   # nhanes

@@ -1,8 +1,5 @@
-context("predict_mi")
-
+skip_if_not_installed("dplyr")
 library(dplyr)
-library(mice)
-library(testthat)
 
 suppressWarnings(RNGversion("3.5.0"))
 
@@ -23,6 +20,7 @@ imp <- mice(
   m = 5,
   maxit = 5,
   seed = 1,
+  print = FALSE,
   predictorMatrix = predmat,
   ignore = ifelse(dat$set == "test", TRUE, FALSE)
 )
@@ -66,7 +64,7 @@ predfunc <- function(model, data, level) {
 preds_all <- Map(predfunc, model = fits, data = testdats, level = 0.95)
 
 # change the list to a df
-preds <- unlist(preds_all) %>%
+preds <- unlist(preds_all) |>
   array(dim = c(nrow(testdats[[1]]), 2, 5))
 
 # our estimand is the predicted value
@@ -96,14 +94,14 @@ lwr <- Q_bar - t_vector * sqrt(T_var)
 upr <- Q_bar + t_vector * sqrt(T_var)
 
 # check if the output structure is as expected
-test_that("Output class is correct", {
+test_that("PREDICT_MI-001: Output class is correct", {
   expect_type(pool_preds, "double") # checks storage type
   expect_true(is.matrix(pool_preds)) # checks it's a matrix
 })
 
 # check if result is the same, for by hand or in function
 # Note pool_preds function depends on mice::pool.scalar
-test_that("retains same numerical result", {
+test_that("PREDICT_MI-002: retains same numerical result", {
   expect_equal(unname(pool_preds[, 1]), Q_bar, tolerance = 0.00001)
   expect_equal(unname(pool_preds[, 2]), lwr, tolerance = 0.00001)
   expect_equal(unname(pool_preds[, 3]), upr, tolerance = 0.00001)
