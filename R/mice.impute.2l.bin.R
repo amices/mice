@@ -189,12 +189,16 @@ mice.impute.2l.bin <- function(
 
   # clusters needing imputation, split into sporadic and systematic
   clmis <- unique(x[wy, clust])
-  clobs <- unique(xobs[, clust])          # clusters with observed y
-  clmis_sporadic   <- clmis[clmis %in% clobs]
+  clobs <- unique(xobs[, clust]) # clusters with observed y
+  clmis_sporadic <- clmis[clmis %in% clobs]
   clmis_systematic <- clmis[!clmis %in% clobs]
 
   # Laplace posterior variance array (q x q x n_clusters), NULL otherwise
-  postVar <- if (random.effects == "laplace") attr(re[[1L]], "postVar") else NULL
+  postVar <- if (random.effects == "laplace") {
+    attr(re[[1L]], "postVar")
+  } else {
+    NULL
+  }
 
   # draw bi.star per cluster, collect in a named list
   draw_bi <- function(cluster_id) {
@@ -209,16 +213,21 @@ mice.impute.2l.bin <- function(
     } else {
       # laplace: centre on BLUP, spread with Laplace posterior variance,
       # scaled from psi.hat to psi.star so the draw is coherent with beta.star
-      ri    <- which(rownames(rancoef) == cluster_id)
-      myi   <- matrix(rancoef[ri, ], ncol = 1)
-      scale <- if (all(psi.hat == 0)) 1 else mean(diag(psi.star)) / mean(diag(psi.hat))
-      vyi   <- matrix(postVar[,, ri], nrow = nrow(psi.star)) * scale
+      ri <- which(rownames(rancoef) == cluster_id)
+      myi <- matrix(rancoef[ri, ], ncol = 1)
+      scale <- if (all(psi.hat == 0)) {
+        1
+      } else {
+        mean(diag(psi.star)) / mean(diag(psi.hat))
+      }
+      vyi <- matrix(postVar[,, ri], nrow = nrow(psi.star)) * scale
     }
     # symmetrise and floor negative eigenvalues (mirrors 2l.lmer)
     vyi <- vyi - upper.tri(vyi) * vyi + t(lower.tri(vyi) * vyi)
     deco1 <- eigen(vyi)
     if (sum(deco1$values > 0) == length(deco1$values)) {
-      A <- deco1$vectors %*% sqrt(diag(deco1$values, nrow = length(deco1$values)))
+      A <- deco1$vectors %*%
+        sqrt(diag(deco1$values, nrow = length(deco1$values)))
       myi + A %*% rnorm(length(myi))
     } else {
       deco1 <- try(svd(vyi), silent = TRUE)
@@ -234,10 +243,13 @@ mice.impute.2l.bin <- function(
 
   # draw all bi.star and stack into matrix (n_clmis x q)
   B <- do.call(rbind, lapply(clmis, draw_bi))
-  if (nrow(psi.star) == 1L) B <- matrix(B, ncol = 1L)
+  if (nrow(psi.star) == 1L) {
+    B <- matrix(B, ncol = 1L)
+  }
 
   clust_idx <- match(x[wy, clust], clmis)
-  logit <- X[wy, , drop = FALSE] %*% beta.star +
+  logit <- X[wy, , drop = FALSE] %*%
+    beta.star +
     rowSums(Z[wy, , drop = FALSE] * B[clust_idx, , drop = FALSE])
   vec <- rbinom(sum(wy), 1, as.vector(1 / (1 + exp(-logit))))
   if (is.factor(y)) {

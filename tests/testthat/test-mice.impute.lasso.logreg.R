@@ -227,7 +227,13 @@ for (j in 1:2) {
 # Imputations
 meth <- make.method(X)
 meth[1:2] <- "lasso.select.logreg"
-iurr_default <- suppressWarnings(mice(X, m = 2, maxit = 2, method = meth, print = FALSE))
+iurr_default <- suppressWarnings(mice(
+  X,
+  m = 2,
+  maxit = 2,
+  method = meth,
+  print = FALSE
+))
 iurr_custom <- suppressWarnings(mice(
   X,
   m = 2,

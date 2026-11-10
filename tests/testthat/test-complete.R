@@ -1,6 +1,10 @@
 test_that("COMPLETE-001: long and all produce same data", {
   imp <- mice(nhanes, maxit = 1, m = 2, seed = 123, print = FALSE)
-  lng <- subset(complete(imp, "long"), .imp == 1, select = c(age, bmi, hyp, chl))
+  lng <- subset(
+    complete(imp, "long"),
+    .imp == 1,
+    select = c(age, bmi, hyp, chl)
+  )
   all <- complete(imp, "all")[[1]]
   expect_equal(lng, all)
 })

@@ -35,10 +35,16 @@ imp <- mice(nhanes, print = FALSE, m = 10, seed = 219)
 fit1 <- with(data = imp, expr = lm(hyp ~ age + chl))
 fit0 <- with(data = imp, expr = lm(hyp ~ 1))
 z1 <- D3(fit1, fit0)
-z2 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), method = "D3")
+z2 <- mitml::testModels(
+  as.mitml.result(fit1),
+  as.mitml.result(fit0),
+  method = "D3"
+)
 
 test_that("D3-003: lm, imputed data: mice D3() and mitml testModels() calculate same F", {
-  skip("FIXME: mice and mitml give discrepant D3 results for imputed data (#226)")
+  skip(
+    "FIXME: mice and mitml give discrepant D3 results for imputed data (#226)"
+  )
   expect_equal(z1$result[1], z2$test[1])
 })
 
@@ -50,14 +56,25 @@ test_that("D3-004: lmer, imputed data: mice D3() and mitml testModels() calculat
   data(studentratings)
   fml <- ReadDis + SES ~ ReadAchiev + (1 | ID)
   set.seed(26262)
-  imp_pan <- mitml::panImpute(studentratings, formula = fml,
-                              n.burn = 1000, n.iter = 100, m = 5, silent = TRUE)
+  imp_pan <- mitml::panImpute(
+    studentratings,
+    formula = fml,
+    n.burn = 1000,
+    n.iter = 100,
+    m = 5,
+    silent = TRUE
+  )
   implist <- mitml::mitmlComplete(imp_pan, print = 1:5)
   fit0_lmer <- with(implist, lmer(ReadAchiev ~ (1 | ID), REML = FALSE))
-  fit1_lmer <- with(implist, lmer(ReadAchiev ~ ReadDis + SES + (1 | ID), REML = FALSE))
+  fit1_lmer <- with(
+    implist,
+    lmer(ReadAchiev ~ ReadDis + SES + (1 | ID), REML = FALSE)
+  )
   z3 <- D3(fit1_lmer, fit0_lmer)
   z4 <- mitml::testModels(fit1_lmer, fit0_lmer, method = "D3")
-  skip("FIXME: mice and mitml give discrepant D3 results for imputed data (#226)")
+  skip(
+    "FIXME: mice and mitml give discrepant D3 results for imputed data (#226)"
+  )
   expect_equal(z3$result[1], z4$test[1])
 })
 
@@ -65,10 +82,20 @@ test_that("D3-004: lmer, imputed data: mice D3() and mitml testModels() calculat
 test_that("D3-005: glm, imputed data: mice D3() and mitml testModels() calculate same F", {
   skip("FIXME: D3() with glm produces negative Dm and convergence problems")
   imp_glm <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
-  fit1_glm <- with(data = imp_glm, expr = glm(hyp == "yes" ~ age + chl, family = binomial))
-  fit0_glm <- with(data = imp_glm, expr = glm(hyp == "yes" ~ 1, family = binomial))
+  fit1_glm <- with(
+    data = imp_glm,
+    expr = glm(hyp == "yes" ~ age + chl, family = binomial)
+  )
+  fit0_glm <- with(
+    data = imp_glm,
+    expr = glm(hyp == "yes" ~ 1, family = binomial)
+  )
   z5 <- D3(fit1_glm, fit0_glm)
-  z6 <- mitml::testModels(as.mitml.result(fit1_glm), as.mitml.result(fit0_glm), method = "D3")
+  z6 <- mitml::testModels(
+    as.mitml.result(fit1_glm),
+    as.mitml.result(fit0_glm),
+    method = "D3"
+  )
   expect_equal(z5$result[1], z6$test[1])
 })
 
@@ -77,9 +104,15 @@ imp2 <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
 fit1 <- with(data = imp2, expr = lm(bmi ~ age + chl + hyp))
 fit0 <- with(data = imp2, expr = lm(bmi ~ age))
 z7 <- D3(fit1, fit0)
-z8 <- mitml::testModels(as.mitml.result(fit1), as.mitml.result(fit0), method = "D3")
+z8 <- mitml::testModels(
+  as.mitml.result(fit1),
+  as.mitml.result(fit0),
+  method = "D3"
+)
 
 test_that("D3-006: lm with factors, imputed data: mice D3() and mitml testModels() calculate same F", {
-  skip("FIXME: mice and mitml give discrepant D3 results for imputed data (#226)")
+  skip(
+    "FIXME: mice and mitml give discrepant D3 results for imputed data (#226)"
+  )
   expect_equal(z7$result[1], z8$test[1])
 })

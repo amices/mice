@@ -55,7 +55,7 @@ predfunc <- function(model, data, level) {
   xfit <- xmat %*% model$coefficients
 
   # variance
-  var_pred = se^2 * sigma^2
+  var_pred <- se^2 * sigma^2
 
   return(cbind(model = xfit, var_pred = var_pred))
 }

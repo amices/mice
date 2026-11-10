@@ -32,23 +32,32 @@ test_that("CHECK-FORMULA-005: name.blocks dot-formula produces a valid mids obje
 })
 
 test_that("CHECK-FORMULA-006: intercept-only formula (~ 1) produces a valid mids object", {
-  skip("not yet implemented: ~ 1 formula has no LHS, check.method cannot find variable name")
-  imp <- mice(nhanes,
-    formulas = list(bmi = ~ 1, chl = ~ 1, hyp = ~ 1),
-    method = "norm.predict", seed = 1, m = 1, print = FALSE
+  skip(
+    "not yet implemented: ~ 1 formula has no LHS, check.method cannot find variable name"
+  )
+  imp <- mice(
+    nhanes,
+    formulas = list(bmi = ~1, chl = ~1, hyp = ~1),
+    method = "norm.predict",
+    seed = 1,
+    m = 1,
+    print = FALSE
   )
   expect_true(is.mids(imp))
 })
 
 test_that("CHECK-FORMULA-007: character string formulas produce a valid mids object", {
   skip("not yet implemented: name.formulas() rejects character strings")
-  imp <- mice(nhanes,
+  imp <- mice(
+    nhanes,
     formulas = list(
       bmi = "bmi ~ hyp + chl",
       hyp = "hyp ~ bmi + chl",
       chl = "chl ~ bmi + hyp"
     ),
-    seed = 1, m = 1, print = FALSE
+    seed = 1,
+    m = 1,
+    print = FALSE
   )
   expect_true(is.mids(imp))
 })

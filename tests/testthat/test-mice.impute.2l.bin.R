@@ -9,8 +9,14 @@ pred_factor["outcome", "patientID"] <- -2
 
 test_that("MICE-IMPUTE-2L-BIN-001: mice::mice.impute.2l.bin() accepts factor outcome", {
   expect_silent(
-    imp <- mice(data_factor, method = "2l.bin", print = FALSE,
-                pred = pred_factor, m = 1, maxit = 1)
+    imp <- mice(
+      data_factor,
+      method = "2l.bin",
+      print = FALSE,
+      pred = pred_factor,
+      m = 1,
+      maxit = 1
+    )
   )
   expect_false(anyNA(complete(imp)))
 })
@@ -25,8 +31,14 @@ pred_binary["outcome", "ID"] <- -2
 
 test_that("MICE-IMPUTE-2L-BIN-002: mice::mice.impute.2l.bin() accepts 0/1 outcome", {
   expect_silent(
-    imp <- mice(data_binary, method = "2l.bin", print = FALSE,
-                pred = pred_binary, m = 1, maxit = 1)
+    imp <- mice(
+      data_binary,
+      method = "2l.bin",
+      print = FALSE,
+      pred = pred_binary,
+      m = 1,
+      maxit = 1
+    )
   )
   expect_false(anyNA(complete(imp)))
 })

@@ -13,8 +13,15 @@ method <- c("jomoImpute", "pmm")
 pred <- make.predictorMatrix(nhanes, blocks)
 pred["B1", "hyp"] <- -2
 test_that("MICE-IMPUTE-JOMOIMPUTE-002: mice can call jomoImpute", {
-  imp <- mice(nhanes, blocks = blocks, method = method, pred = pred,
-              maxit = 1, seed = 1, print = FALSE)
+  imp <- mice(
+    nhanes,
+    blocks = blocks,
+    method = method,
+    pred = pred,
+    maxit = 1,
+    seed = 1,
+    print = FALSE
+  )
   z <- complete(imp)
   expect_equal(sum(is.na(z$bmi)), 0)
   expect_equal(sum(is.na(z$chl)), 0)

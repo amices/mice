@@ -57,15 +57,30 @@ test_that("MICE-IMPUTE-LASSO-NORM-003: mice call works w/ custom arguments (lass
 #########################
 
 test_that("MICE-IMPUTE-LASSO-NORM-004: lasso.norm handles constant predictor column (#577)", {
-  skip("FIXME: glmnet errors with 'all used predictors have zero variance' when x is constant (#577)")
+  skip(
+    "FIXME: glmnet errors with 'all used predictors have zero variance' when x is constant (#577)"
+  )
   set.seed(123)
   n <- 100
   y <- rnorm(n)
   y[sample(1:n, n * .3)] <- NA
   ry <- !is.na(y)
   input <- data.frame(y = y, x = 1)
-  expect_silent(mice(input, m = 1, maxit = 1, method = "lasso.norm", print = FALSE))
-  expect_silent(mice(input, m = 1, maxit = 1, method = "lasso.norm", eps = 0, print = FALSE))
+  expect_silent(mice(
+    input,
+    m = 1,
+    maxit = 1,
+    method = "lasso.norm",
+    print = FALSE
+  ))
+  expect_silent(mice(
+    input,
+    m = 1,
+    maxit = 1,
+    method = "lasso.norm",
+    eps = 0,
+    print = FALSE
+  ))
 })
 
 # ---- mice.impute.lasso.select.norm ----

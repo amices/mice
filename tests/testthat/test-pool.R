@@ -22,7 +22,10 @@ test_that("POOL-002: retains same numerical result", {
 test_that("POOL-003: D1 and D3 work for glm on imputed data", {
   imp <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
   fit0 <- with(data = imp, expr = glm(hyp == "yes" ~ 1, family = binomial))
-  fit1 <- with(data = imp, expr = glm(hyp == "yes" ~ chl + bmi, family = binomial))
+  fit1 <- with(
+    data = imp,
+    expr = glm(hyp == "yes" ~ chl + bmi, family = binomial)
+  )
   expect_s3_class(D1(fit1, fit0), "mice.anova")
   expect_s3_class(D3(fit1, fit0), "mice.anova")
 })
@@ -31,7 +34,10 @@ test_that("POOL-004: D1 p-value for glm is numeric", {
   skip("FIXME: D1/D3 return NA p-value for glm on imputed data")
   imp <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
   fit0 <- with(data = imp, expr = glm(hyp == "yes" ~ 1, family = binomial))
-  fit1 <- with(data = imp, expr = glm(hyp == "yes" ~ chl + bmi, family = binomial))
+  fit1 <- with(
+    data = imp,
+    expr = glm(hyp == "yes" ~ chl + bmi, family = binomial)
+  )
   expect_false(is.na(D1(fit1, fit0)$result["P(>F)"]))
   expect_false(is.na(D3(fit1, fit0)$result["P(>F)"]))
 })

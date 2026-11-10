@@ -48,10 +48,12 @@ nelsonaalen <- function(data, timevar, statusvar, ...) {
 
   coxph_obj <- survival::coxph(survival::Surv(time, status) ~ 1, ...)
   hazard <- survival::basehaz(coxph_obj)
-  
+
   # Adjust depending on near-tie correction
   idx <- if (coxph_obj$timefix) {
     match(coxph_obj$y[, "time"], hazard[, "time"])
-  } else match(time, hazard[, "time"])
+  } else {
+    match(time, hazard[, "time"])
+  }
   hazard[idx, "hazard"]
 }

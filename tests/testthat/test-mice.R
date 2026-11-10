@@ -35,9 +35,16 @@ test_that("MICE-003: blocks run as expected", {
       seed = 1
     )
   )
-  expect_silent(imp3b <<- mice(nhanes2,
-    blocks = list(c("hyp", "hyp", "hyp"), "chl", "bmi"),
-    print = FALSE, m = 1, maxit = 1, seed = 1))
+  expect_silent(
+    imp3b <<- mice(
+      nhanes2,
+      blocks = list(c("hyp", "hyp", "hyp"), "chl", "bmi"),
+      print = FALSE,
+      m = 1,
+      maxit = 1,
+      seed = 1
+    )
+  )
   expect_silent(
     imp4b <<- mice(
       boys,
@@ -158,11 +165,20 @@ test_that("MICE-010: formulas run as expected", {
       seed = 1
     )
   )
-  expect_silent(imp3f <<- mice(nhanes2,
-    formulas = list(hyp + hyp + hyp ~ chl + bmi,
-                    chl ~ hyp + hyp + hyp + bmi,
-                    bmi ~ hyp + hyp + hyp + chl),
-    print = FALSE, m = 1, maxit = 1, seed = 1))
+  expect_silent(
+    imp3f <<- mice(
+      nhanes2,
+      formulas = list(
+        hyp + hyp + hyp ~ chl + bmi,
+        chl ~ hyp + hyp + hyp + bmi,
+        bmi ~ hyp + hyp + hyp + chl
+      ),
+      print = FALSE,
+      m = 1,
+      maxit = 1,
+      seed = 1
+    )
+  )
   expect_silent(
     imp4f <<- mice(
       boys,

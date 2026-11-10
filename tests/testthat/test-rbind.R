@@ -104,7 +104,10 @@ expect_warning(
 
 D_rbind <- mice:::rbind.mids(D_mids, D[6:10, ])
 cmp <- complete(D_rbind, 1)
-test_that("RBIND-010: Solves issue #59, rbind", expect_identical(cmp[6:10, ], D[6:10, ]))
+test_that(
+  "RBIND-010: Solves issue #59, rbind",
+  expect_identical(cmp[6:10, ], D[6:10, ])
+)
 
 test_that("RBIND-011: rbind does not throw a warning (#114)", {
   expect_silent(rbind(ordered(c(1, 2))))

@@ -164,7 +164,12 @@ single.complete <- function(data, where, imp, ell) {
   if (is.null(where)) {
     where <- is.na(data)
   }
-  where <- matrix(where, nrow = nrow(data), ncol = ncol(data), dimnames = dimnames(where))
+  where <- matrix(
+    where,
+    nrow = nrow(data),
+    ncol = ncol(data),
+    dimnames = dimnames(where)
+  )
   idx <- seq_len(ncol(data))[apply(where, 2, any)]
   for (j in idx) {
     if (is.null(imp[[j]])) {

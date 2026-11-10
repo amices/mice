@@ -14,5 +14,12 @@ test_that("FORMULAS-001: model.matrix() deletes incomplete cases", {
 test_that("FORMULAS-002: mice() accepts poly() in a formula", {
   form <- list(bmi ~ poly(chl, 2) + age + hyp)
   pred <- make.predictorMatrix(nhanes)
-  expect_silent(mice(data, form = form, pred = pred, m = 1, maxit = 2, print = FALSE))
+  expect_silent(mice(
+    data,
+    form = form,
+    pred = pred,
+    m = 1,
+    maxit = 2,
+    print = FALSE
+  ))
 })
