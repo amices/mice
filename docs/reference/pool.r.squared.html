@@ -17,7 +17,7 @@ function. For pooling it uses the Fisher z-transformation."><meta property="og:i
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.12</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,20 +107,20 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># input: mira object</span></span></span>
 <span class="r-in"><span><span class="fu">pool.r.squared</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           est      lo 95     hi 95       fmi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> R^2 0.4338408 0.06503877 0.7513683 0.4176739</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           est     lo 95     hi 95       fmi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R^2 0.5417834 0.1558123 0.8079513 0.4035626</span>
 <span class="r-in"><span><span class="fu">pool.r.squared</span><span class="op">(</span><span class="va">fit</span>, adjusted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               est      lo 95     hi 95       fmi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> adj R^2 0.3507643 0.01771032 0.7091501 0.4617807</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> adj R^2 0.4749466 0.08886674 0.7781514 0.4414851</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># input: mipo object</span></span></span>
 <span class="r-in"><span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="pool.html">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">pool.r.squared</span><span class="op">(</span><span class="va">est</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           est      lo 95     hi 95       fmi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> R^2 0.4338408 0.06503877 0.7513683 0.4176739</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           est     lo 95     hi 95       fmi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R^2 0.5417834 0.1558123 0.8079513 0.4035626</span>
 <span class="r-in"><span><span class="fu">pool.r.squared</span><span class="op">(</span><span class="va">est</span>, adjusted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               est      lo 95     hi 95       fmi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> adj R^2 0.3507643 0.01771032 0.7091501 0.4617807</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> adj R^2 0.4749466 0.08886674 0.7781514 0.4414851</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

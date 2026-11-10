@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.12</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,12 +82,22 @@ element is an index in the array <code>d</code>.</p>
     <p>For each element in <code>t</code>, the method finds the <code>k</code> nearest
 neighbours in <code>d</code>, randomly draws one of these neighbours, and
 returns its position in vector <code>d</code>.</p>
-<p>Fast predictive mean matching algorithm in seven steps:</p><ol><li><p>Shuffle records to remove effects of ties</p></li>
+<p>Fast predictive mean matching algorithm in eight steps:</p><ol><li><p>Shuffle records to remove effects of ties</p></li>
 <li><p>Obtain sorting order on shuffled data</p></li>
 <li><p>Calculate index on input data and sort it</p></li>
+<li><p>Identify contiguous tie blocks (maximal runs of equal values) in
+the sorted donor data</p></li>
 <li><p>Pre-sample vector <code>h</code> with values between 1 and <code>k</code></p></li>
 </ol><p>For each of the <code>n0</code> elements in <code>t</code>:</p><ol><li><p>find the two adjacent neighbours</p></li>
-<li><p>find the <code>h_i</code>'th nearest neighbour</p></li>
+<li><p>find the <code>h_i</code>'th nearest neighbour, breaking ties among
+equidistant donors with an independent random draw for this
+target case (not a single order shared by all target cases).
+If the tie block nearest to the target already has at least
+<code>k</code> members, all <code>k</code> nearest neighbours necessarily lie
+within that one block, so <code>h_i</code> is skipped and a donor is
+drawn directly and uniformly from the block; otherwise, the
+neighbours are found by stepping outward from the target,
+drawing without replacement from each tie block encountered</p></li>
 <li><p>store the index of that neighbour</p></li>
 </ol><p>Return vector of <code>n0</code> positions in <code>d</code>.</p>
 <p>We may use the function to perform predictive mean matching under a given
@@ -99,6 +109,15 @@ target case.</p>
 <p>See <a href="https://github.com/amices/mice/issues/236" class="external-link">https://github.com/amices/mice/issues/236</a>.
 This function is a replacement for the <code>matcher()</code> function that has
 been in default in <code>mice</code> since version <code>2.22</code> (June 2014).</p>
+<p>Prior to the fix in <a href="https://github.com/amices/mice/issues/757" class="external-link">https://github.com/amices/mice/issues/757</a>, ties
+among donors were broken once per call to <code>matchindex()</code> (i.e. once
+per imputed dataset), so all target cases sharing the same predicted
+value drew from the same fixed subset of donors within one completed
+dataset. This inflated between-imputation variance and produced overly
+conservative confidence intervals under Rubin's rules. This was most
+visible in intercept-only imputation models, models with few categorical
+predictors, or heavily rounded/discretised outcomes. Ties are now broken
+independently for each target case.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -122,7 +141,7 @@ been in default in <code>mice</code> since version <code>2.22</code> (June 2014)
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Random draw among indices of the 5 closest predictors</span></span></span>
 <span class="r-in"><span><span class="fu">matchindex</span><span class="op">(</span><span class="va">d</span>, <span class="va">t</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3 1 5 5 2 3 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 5 5 2 3 3 3</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># An example</span></span></span>
 <span class="r-in"><span><span class="va">train</span> <span class="op">&lt;-</span> <span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, <span class="op">]</span></span></span>
@@ -136,7 +155,7 @@ been in default in <code>mice</code> since version <code>2.22</code> (June 2014)
 <span class="r-in"><span><span class="co"># Synthetic values are plausible values that could have been observed if</span></span></span>
 <span class="r-in"><span><span class="co"># they had been measured.</span></span></span>
 <span class="r-in"><span><span class="va">train</span><span class="op">$</span><span class="va">mpg</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 22.8 15.2 16.4 18.7 14.3 30.4 22.8 22.8 18.7 21.0 17.3 24.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 24.4 18.7 15.2 17.3 14.3 32.4 24.4 30.4 17.3 17.8 16.4 32.4</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Exercise: Create a distribution of 1000 plausible values for each of the</span></span></span>
 <span class="r-in"><span><span class="co"># twelve mpg entries in test, and count how many times the true value</span></span></span>

@@ -43,7 +43,7 @@ this case."><meta property="og:image" content="https://amices.org/mice/logo.png"
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.12</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -228,10 +228,10 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2   2  bmi  hyp  chl</span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">pool</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term    estimate  std.error  statistic       df    p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 22.23086658 5.61910066  3.9563033 13.44600 0.00154321</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         hyp -0.78167849 2.56229587 -0.3050696 19.72280 0.76350927</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         chl  0.02916662 0.02803195  1.0404777 18.43901 0.31156960</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term  estimate  std.error  statistic       df      p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 21.673417 4.07167990  5.3229668 17.97818 4.658437e-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         hyp -1.424080 2.31599973 -0.6148879 11.01899 5.511152e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         chl  0.033025 0.02249117  1.4683543 14.54300 1.633035e-01</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># generate fully synthetic data, analyse and pool</span></span></span>
 <span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">cars</span>,</span></span>
@@ -246,9 +246,9 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2   2  speed  dist</span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">speed</span> <span class="op">~</span> <span class="va">dist</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">pool.syn</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term   estimate  std.error statistic        df      p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 10.5306457 1.52208942  6.918546 12.680505 1.203795e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        dist  0.1138127 0.03487642  3.263314  4.696128 2.450550e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term  estimate  std.error statistic           df      p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 9.1828545 1.40587948  6.531751 5.475415e+08 6.500529e-11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        dist 0.1394307 0.03025361  4.608728 3.937664e+02 5.481639e-06</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># use a custom pooling rule for the total variance about the estimate</span></span></span>
 <span class="r-in"><span><span class="co"># e.g. use t = b + b/m instead of t = ubar + b + b/m</span></span></span>
@@ -263,13 +263,13 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-in"><span><span class="fu">pool</span><span class="op">(</span><span class="va">fit</span>, custom.t <span class="op">=</span> <span class="st">".data$b + .data$b / .data$m"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class: mipo    m = 2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          term m    estimate         ubar            b            t dfcom df</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2 21.54947514 1.476006e+01 2.8869029613 4.3303544420    22  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         hyp 2 -1.19294143 2.760975e+00 0.0006443561 0.0009665342    22  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         chl 2  0.03157976 3.701459e-04 0.0001114101 0.0001671152    22  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2 20.35296941 1.451433e+01 5.262156e-01 7.893233e-01    22  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         hyp 2 -0.62561476 3.760003e+00 6.666362e-05 9.999543e-05    22  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         chl 2  0.03558494 3.390498e-04 1.672343e-05 2.508515e-05    22  0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            riv lambda       fmi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.2933832267      1 0.7422780</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.0003500699      1 0.6667833</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.4514846840      1 0.7703501</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.0543823518      1 0.6838591</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.0000265945      1 0.6666755</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.0739866343      1 0.6896299</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

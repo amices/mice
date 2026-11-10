@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.12</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,7 +142,11 @@ the C function <code>matcher()</code>, the now deprecated matching function that
 was default in versions
 <code>2.22</code> (June 2014) to <code>3.11.7</code> (Oct 2020). Since version <code>3.12.0</code>
 <code><a href="mice.html">mice()</a></code> uses the much faster <code>matchindex</code> C function. Use
-the deprecated <code>matcher</code> function only for exact reproduction.</p></dd>
+the deprecated <code>matcher</code> function only for exact reproduction.
+Note that <code>matcher()</code> itself is miscalibrated when donors are tied
+(see <a href="https://github.com/amices/mice/issues/757" class="external-link">https://github.com/amices/mice/issues/757</a>), so it should not
+be used as a "safe" alternative for tied data, only for reproducing
+results computed with an older <code>mice</code> version.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -172,7 +176,17 @@ candidate donors, from \(y_{obs}\) such that \(\sum_d\dot\eta(i,j)\) is
 minimum for all \(j=1,\dots,n_0\). Break ties randomly.</p></li>
 <li><p>Draw one donor \(i_j\) from \(Z_j\) randomly for \(j=1,\dots,n_0\).</p></li>
 <li><p>Calculate imputations \(\dot y_j = y_{i_j}\) for \(j=1,\dots,n_0\).</p></li>
-</ol><p>The name <em>predictive mean matching</em> was proposed by Little (1988).</p>
+</ol><p>Since <code>mice 3.19.12</code>, ties among candidate donors are broken
+independently for each target case. In versions <code>3.11.8</code> through
+<code>3.19.11</code>, the default <code><a href="matchindex.html">matchindex()</a></code> engine broke ties only
+once per imputed dataset, so target cases sharing the same predicted
+value drew from the same small set of donors. This inflated the
+between-imputation variance and produced too wide confidence intervals,
+most visibly for intercept-only models, models with few categorical
+predictors, or heavily rounded outcomes. Results from these versions
+may therefore differ from those of the current version
+(see <a href="https://github.com/amices/mice/issues/757" class="external-link">https://github.com/amices/mice/issues/757</a>).</p>
+<p>The name <em>predictive mean matching</em> was proposed by Little (1988).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -258,7 +272,7 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="mice.impute.pmm-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">yimp</span>, use <span class="op">=</span> <span class="st">"pair"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7415001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7387041</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Use blots to exclude different values per column</span></span></span>
 <span class="r-in"><span><span class="co"># Create blots object</span></span></span>
@@ -295,26 +309,26 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># impute factor by optimizing canonical correlation y, x</span></span></span>
 <span class="r-in"><span><span class="fu">mice.impute.pmm</span><span class="op">(</span><span class="va">y</span>, <span class="va">ry</span>, <span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 25 25 25 20 25 25 20 25 25 25 15 25 25 25 25 25 15 15 25 15 20 15 8  25 8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [26] 25 20 20 15 25 25 15 15 25 25 15 20 8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 25 25 20 25 25 10 25 25 25 25 25 25 25 20 25 25 12 12 10 10 25 25 15 20 8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] 15 15 25 25 15 25 8  25 25 15 8  20 15</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 6 8 10 12 13 15 16 20 25</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># only categories with at least 2 cases can be donor</span></span></span>
 <span class="r-in"><span><span class="fu">mice.impute.pmm</span><span class="op">(</span><span class="va">y</span>, <span class="va">ry</span>, <span class="va">x</span>, trim <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 8  25 25 8  8  20 15 20 20 8  8  8  15 8  20 20 15 8  20 25 20 25 20 15 20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [26] 20 20 20 15 20 15 25 20 25 25 20 20 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 20 8  25 8  20 15 25 8  25 8  25 25 8  15 20 20 15 8  8  8  8  8  8  20 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] 15 8  15 20 25 25 25 25 20 15 15 25 25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 6 8 10 12 13 15 16 20 25</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># in addition, eliminate category 20</span></span></span>
 <span class="r-in"><span><span class="fu">mice.impute.pmm</span><span class="op">(</span><span class="va">y</span>, <span class="va">ry</span>, <span class="va">x</span>, trim <span class="op">=</span> <span class="fl">2L</span>, exclude <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 8  25 15 25 15 8  8  25 25 25 8  15 15 8  8  8  25 25 25 25 15 8  8  15 15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [26] 25 15 8  15 15 25 25 15 25 25 15 25 25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 25 8  15 25 15 8  15 8  15 8  15 8  25 8  8  25 15 25 8  8  8  8  25 8  15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] 15 8  15 25 25 25 25 15 25 25 25 25 25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 6 8 10 12 13 15 16 20 25</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># to get old behavior: as.integer(y))</span></span></span>
 <span class="r-in"><span><span class="fu">mice.impute.pmm</span><span class="op">(</span><span class="va">y</span>, <span class="va">ry</span>, <span class="va">x</span>, quantify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 8  6  10 15 12 8  6  15 15 10 10 6  8  10 8  15 8  15 8  15 15 12 15 8  20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [26] 25 12 25 15 25 25 13 8  20 16 20 20 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 8  10 15 8  8  6  6  8  10 6  15 12 10 8  12 15 8  6  8  6  20 12 15 8  15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] 15 10 13 25 20 20 20 15 25 16 25 25 25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 6 8 10 12 13 15 16 20 25</span>
 </code></pre></div>
     </div>

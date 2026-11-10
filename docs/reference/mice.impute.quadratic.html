@@ -15,7 +15,7 @@ main effect and quadratic effect in the complete-data model."><meta property="og
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.12</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -212,14 +212,14 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <span class="r-in"><span><span class="co"># Pool results</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="pool.html">pool</a></span><span class="op">(</span><span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">xx</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class: mipo    m = 5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term m   estimate         ubar            b            t dfcom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 5 0.09523804 0.0014726259 0.0001460981 0.0016479437   997</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2           x 5 0.47686983 0.0009562814 0.0003835250 0.0014165114   997</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          xx 5 0.49101019 0.0004636236 0.0001422658 0.0006343426   997</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          df       riv    lambda       fmi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 252.89879 0.1190511 0.1063858 0.1133699</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  35.86887 0.4812705 0.3249038 0.3596410</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  51.32816 0.3682275 0.2691274 0.2960333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term m    estimate         ubar            b           t dfcom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 5 0.007192889 0.0015794557 5.699852e-05 0.001647854   997</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           x 5 0.522087857 0.0011113808 4.990191e-04 0.001710204   997</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          xx 5 0.493210480 0.0006300634 8.500719e-05 0.000732072   997</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          df        riv     lambda        fmi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 676.01433 0.04330493 0.04150746 0.04433064</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  31.05852 0.53880986 0.35014713 0.38830809</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 166.06315 0.16190216 0.13934234 0.14952383</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Plot results</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="stripplot.mids.html">stripplot</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span></span></span>

@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.12</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -119,8 +119,8 @@ Performing Likelihood Ratio Tests with Multiply-Imputed Data Sets.
 <span class="r-in"><span><span class="va">mi1</span> <span class="op">&lt;-</span> <span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, expr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mi0</span> <span class="op">&lt;-</span> <span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, expr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">D3</span><span class="op">(</span><span class="va">mi1</span>, <span class="va">mi0</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    test statistic df1      df2 dfcom  p.value      riv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1 ~~ 2  2.917381   1 8.764849    20 0.122711 2.082143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    test statistic df1      df2 dfcom   p.value      riv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1 ~~ 2  3.341736   1 8.186372    20 0.1041035 2.322385</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co"># Compare two logistic regression models</span></span></span>
 <span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">boys</span>, maxit <span class="op">=</span> <span class="fl">2</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>

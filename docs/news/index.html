@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.12</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,6 +43,12 @@
       <small>Source: <a href="https://github.com/amices/mice/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.19.12" id="mice-31912">mice 3.19.12<a class="anchor" aria-label="anchor" href="#mice-31912"></a></h2>
+<ul><li>Fixes miscalibrated donor selection in <code><a href="../reference/matchindex.html">matchindex()</a></code>, the default PMM matching engine since mice 3.11.8 (2020), for predictive mean matching models where many target cases share the same (or nearly the same) predicted value, e.g. an intercept-only imputation model, models with few categorical predictors, or heavily rounded/discretised outcomes. Previously, ties among donors were broken once per call to <code><a href="../reference/matchindex.html">matchindex()</a></code> (i.e. once per imputed dataset), so all target cases with a tied predicted value drew from the same small, fixed subset of donors within one completed dataset. This inflated the between-imputation variance and produced overly conservative (too wide) confidence intervals under Rubin’s rules. Ties are now broken independently for each target case. <strong>Affected versions:</strong> mice 3.11.8 through 3.19.11 (any analysis using the default <code>method = "pmm"</code> with tied or near-tied predicted values). To reproduce results computed with an affected version, reinstall that specific version, e.g. <code>remotes::install_version("mice", version = "3.19.11")</code>, rather than relying on a compatibility flag in the current version. See <a href="https://github.com/amices/mice/issues/757" class="external-link">#757</a> and the original discussion in <a href="https://github.com/amices/mice/issues/236" class="external-link">#236</a>.</li>
+<li>Fixes a bug in <code><a href="../reference/mcar.html">mcar()</a></code> (<a href="https://github.com/amices/mice/issues/762" class="external-link">#762</a>,#763)</li>
+<li>Preserves logical variable classes in <code><a href="../reference/complete.mids.html">complete()</a></code> (<a href="https://github.com/amices/mice/issues/764" class="external-link">#764</a>,#765)</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.19.11" id="mice-31911">mice 3.19.11<a class="anchor" aria-label="anchor" href="#mice-31911"></a></h2>
 <ul><li>Fixes test failures on CRAN’s MKL check (“Objects equal but not identical” in <code>MICE-INITIALIZE-011</code>). MKL is not bitwise reproducible, so two separate <code><a href="../reference/mice.html">mice()</a></code> runs with the same seed can differ in the last digits. Tests that compare imputations across separate runs now use <code>expect_equal()</code> instead of <code>expect_identical()</code>. No user-facing behavior changes.</li>
