@@ -66,6 +66,7 @@ Other univariate imputation functions:
 \code{\link[=mice.impute.lasso.norm]{mice.impute.lasso.norm()}},
 \code{\link[=mice.impute.lasso.select.logreg]{mice.impute.lasso.select.logreg()}},
 \code{\link[=mice.impute.lasso.select.norm]{mice.impute.lasso.select.norm()}},
+\code{\link[=mice.impute.lasso.select.pmm]{mice.impute.lasso.select.pmm()}},
 \code{\link[=mice.impute.lda]{mice.impute.lda()}},
 \code{\link[=mice.impute.logreg]{mice.impute.logreg()}},
 \code{\link[=mice.impute.logreg.boot]{mice.impute.logreg.boot()}},

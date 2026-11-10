@@ -24,3 +24,5 @@ vignettes/
 ^scratch$
 ^Rplots\.pdf$
 ^.claude$
+^\.positai$
+^\.claude$

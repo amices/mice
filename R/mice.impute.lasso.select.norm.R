@@ -50,40 +50,20 @@
 #' @keywords datagen
 #' @export
 mice.impute.lasso.select.norm <- function(
-  y,
-  ry,
-  x,
-  wy = NULL,
-  nfolds = 10,
-  ...
+    y,
+    ry,
+    x,
+    wy = NULL,
+    nfolds = 10,
+    ...
 ) {
   install.on.demand("glmnet", ...)
-
-  # Body
+  
   if (is.null(wy)) {
     wy <- !ry
   }
-  x_glmnet <- cbind(1, x)
-  xobs <- x_glmnet[ry, , drop = FALSE]
-  xmis <- x[wy, ]
-  yobs <- y[ry]
-
-  # Train imputation model
-  # used later in the estiamtion require this.
-  cv_lasso <- glmnet::cv.glmnet(
-    x = xobs,
-    y = yobs,
-    family = "gaussian",
-    nfolds = nfolds,
-    alpha = 1
-  )
-
-  # Define Active Set
-  glmnet_coefs <- as.matrix(coef(cv_lasso, s = "lambda.min"))[, 1]
-  AS <- which((glmnet_coefs != 0)[-1]) # Non-zero reg coefficients
-
-  # Perform regular norm draw from Bayesian linear model
-  xas <- x_glmnet[, AS, drop = FALSE]
+  
+  xas <- .mice.impute.lasso.select(y, ry, x, wy, nfolds, ...)
   vec <- mice.impute.norm(
     y = y,
     ry = ry,
