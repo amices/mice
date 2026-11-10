@@ -72,7 +72,11 @@ the C function \code{matcher()}, the now deprecated matching function that
 was default in versions
 \code{2.22} (June 2014) to \code{3.11.7} (Oct 2020). Since version \code{3.12.0}
 \code{mice()} uses the much faster \code{matchindex} C function. Use
-the deprecated \code{matcher} function only for exact reproduction.}
+the deprecated \code{matcher} function only for exact reproduction.
+Note that \code{matcher()} itself is miscalibrated when donors are tied
+(see \url{https://github.com/amices/mice/issues/757}), so it should not
+be used as a "safe" alternative for tied data, only for reproducing
+results computed with an older \code{mice} version.}
 
 \item{\dots}{Other named arguments.}
 }
@@ -103,6 +107,17 @@ minimum for all \eqn{j=1,\dots,n_0}. Break ties randomly.}
 \item{Draw one donor \eqn{i_j} from \eqn{Z_j} randomly for \eqn{j=1,\dots,n_0}.}
 \item{Calculate imputations \eqn{\dot y_j = y_{i_j}} for \eqn{j=1,\dots,n_0}.}
 }
+
+Since \code{mice 3.19.12}, ties among candidate donors are broken
+independently for each target case. In versions \code{3.11.8} through
+\code{3.19.11}, the default \code{matchindex()} engine broke ties only
+once per imputed dataset, so target cases sharing the same predicted
+value drew from the same small set of donors. This inflated the
+between-imputation variance and produced too wide confidence intervals,
+most visibly for intercept-only models, models with few categorical
+predictors, or heavily rounded outcomes. Results from these versions
+may therefore differ from those of the current version
+(see \url{https://github.com/amices/mice/issues/757}).
 
 The name \emph{predictive mean matching} was proposed by Little (1988).
 }

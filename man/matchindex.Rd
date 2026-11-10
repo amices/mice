@@ -28,18 +28,28 @@ For each element in \code{t}, the method finds the \code{k} nearest
 neighbours in \code{d}, randomly draws one of these neighbours, and
 returns its position in vector \code{d}.
 
-Fast predictive mean matching algorithm in seven steps:
+Fast predictive mean matching algorithm in eight steps:
 \enumerate{
 \item Shuffle records to remove effects of ties
 \item Obtain sorting order on shuffled data
 \item Calculate index on input data and sort it
+\item Identify contiguous tie blocks (maximal runs of equal values) in
+the sorted donor data
 \item Pre-sample vector \code{h} with values between 1 and \code{k}
 }
 
 For each of the \code{n0} elements in \code{t}:
 \enumerate{
 \item find the two adjacent neighbours
-\item find the \code{h_i}'th nearest neighbour
+\item find the \code{h_i}'th nearest neighbour, breaking ties among
+equidistant donors with an independent random draw for this
+target case (not a single order shared by all target cases).
+If the tie block nearest to the target already has at least
+\code{k} members, all \code{k} nearest neighbours necessarily lie
+within that one block, so \code{h_i} is skipped and a donor is
+drawn directly and uniformly from the block; otherwise, the
+neighbours are found by stepping outward from the target,
+drawing without replacement from each tie block encountered
 \item store the index of that neighbour
 }
 
@@ -55,6 +65,16 @@ target case.
 See \url{https://github.com/amices/mice/issues/236}.
 This function is a replacement for the \code{matcher()} function that has
 been in default in \code{mice} since version \code{2.22} (June 2014).
+
+Prior to the fix in \url{https://github.com/amices/mice/issues/757}, ties
+among donors were broken once per call to \code{matchindex()} (i.e. once
+per imputed dataset), so all target cases sharing the same predicted
+value drew from the same fixed subset of donors within one completed
+dataset. This inflated between-imputation variance and produced overly
+conservative confidence intervals under Rubin's rules. This was most
+visible in intercept-only imputation models, models with few categorical
+predictors, or heavily rounded/discretised outcomes. Ties are now broken
+independently for each target case.
 }
 \examples{
 set.seed(1)
