@@ -132,6 +132,7 @@ mice.mids <- function(
   sumIt <- obj$iteration + maxit
   from <- obj$iteration + 1
   to <- from + maxit - 1
+  progress <- make.progress(obj$m * maxit)
   q <- sampler(
     obj$data,
     obj$m,
@@ -148,7 +149,8 @@ mice.mids <- function(
     obj$post,
     c(from, to),
     printFlag,
-    ...
+    ...,
+    progress = progress
   )
 
   imp <- q$imp

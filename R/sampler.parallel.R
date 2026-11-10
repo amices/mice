@@ -18,7 +18,8 @@ sampler.parallel <- function(
   post,
   fromto,
   printFlag,
-  ...
+  ...,
+  progress = NULL
 ) {
   from <- fromto[1]
   to <- fromto[2]
@@ -31,6 +32,9 @@ sampler.parallel <- function(
     loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
 
     imp.i <- lapply(imp, function(x) x[, i, drop = FALSE])
+    chain.progress <- if (!is.null(progress)) {
+      function(k, ii) progress(k, i)
+    }
     q <- sampler(
       data,
       1L,
@@ -47,7 +51,8 @@ sampler.parallel <- function(
       post,
       fromto,
       FALSE,
-      ...
+      ...,
+      progress = chain.progress
     )
     if (.mice.state$log) {
       loggedEvents$im <- i

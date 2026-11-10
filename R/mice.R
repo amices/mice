@@ -152,6 +152,20 @@
 #' The function \code{\link{mice.mids}()} continues the iterations
 #' sequentially.
 #'
+#' @section Progress reporting:
+#' If the \pkg{progressr} package is installed, \code{mice()} and
+#' \code{\link{mice.mids}()} signal one progress step after each iteration of
+#' each chain, \code{m * maxit} steps in total, with a message such as
+#' \code{"iter 3, imp 2"}. This works for both \code{parallel = FALSE} and
+#' \code{parallel = TRUE}; in the latter case the steps are relayed from the
+#' workers while the chains run. The progress is only shown if the user
+#' enables it, for example by
+#' \code{progressr::with_progress(imp <- mice(nhanes, parallel = TRUE))}, or
+#' for the whole session by \code{progressr::handlers(global = TRUE)}. The
+#' function \code{progressr::handlers()} sets the type of display. Without a
+#' handler, or without \pkg{progressr}, nothing is shown. Progress reporting
+#' does not change the imputations.
+#'
 #' @param data A data frame or a matrix containing the incomplete data.  Missing
 #' values are coded as \code{NA}.
 #' @param m Number of multiple imputations. The default is \code{m=5}.
@@ -534,6 +548,7 @@ mice <- function(
     }
   }
   sampler.fun <- if (parallel) sampler.parallel else sampler
+  progress <- make.progress(m * maxit)
   q <- sampler.fun(
     data,
     m,
@@ -550,7 +565,8 @@ mice <- function(
     post,
     c(from, to),
     printFlag,
-    ...
+    ...,
+    progress = progress
   )
 
   # append events logged by the parallel chains to those from the setup

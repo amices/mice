@@ -11,6 +11,14 @@
   number stream, so results are reproducible with `seed` and do not depend on
   the number of workers, but differ from `parallel = FALSE`. The sequential
   sampler is unchanged. Requires the `future` and `future.apply` packages.
+- Adds progress reporting through the `progressr` package. `mice()` and
+  `mice.mids()` signal one step after each iteration of each chain
+  (`m * maxit` steps), both sequentially and with `parallel = TRUE`, where the
+  steps are relayed from the workers while the chains run. Enable it with
+  `progressr::with_progress(mice(...))` or `progressr::handlers(global = TRUE)`.
+  Nothing is shown without a handler, and the imputations are unchanged.
+  `progressr` is a suggested package. Based on the idea in #750 by Joshua
+  Carpenter (see also #516, #551, #565).
 
 # mice 3.19.12
 

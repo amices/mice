@@ -16,7 +16,8 @@ sampler <- function(
   post,
   fromto,
   printFlag,
-  ...
+  ...,
+  progress = NULL
 ) {
   from <- fromto[1]
   to <- fromto[2]
@@ -175,6 +176,11 @@ sampler <- function(
             }
           }
         } # end h loop (blocks)
+
+        # report progress, e.g. through progressr
+        if (!is.null(progress)) {
+          progress(k, i)
+        }
       } # end i loop (imputation number)
 
       # store means and sd of m imputes
