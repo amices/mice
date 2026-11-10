@@ -24,6 +24,8 @@ mice(
   printFlag = getOption("mice.printFlag", TRUE),
   seed = NA,
   data.init = NULL,
+  parallel = FALSE,
+  n.core = NULL,
   ...
 )
 }
@@ -159,6 +161,20 @@ iterative process.  The default \code{NULL} implies that starting imputation
 are created by a simple random draw from the data. Note that specification of
 \code{data.init} will start all \code{m} Gibbs sampling streams from the same
 imputation.}
+
+\item{parallel}{Logical. If \code{TRUE}, the \code{m} imputation chains are
+run in parallel using the \pkg{future} and \pkg{future.apply} packages.
+The default \code{parallel = FALSE} runs the chains one after the other.
+See the section \emph{Parallel imputation} for details.}
+
+\item{n.core}{Optional positive integer with the number of workers used
+when \code{parallel = TRUE}. If \code{NULL} (default), \code{mice()} uses
+the \code{future} plan set by the user, or, if no plan is set, a
+\code{multisession} plan with \code{min(m, availableCores() - 1)} workers.
+A non-\code{NULL} value of \code{n.core} sets up a \code{multisession}
+plan with \code{min(m, n.core)} workers, and \code{n.core = 1} runs the
+chains sequentially through \pkg{future}. A plan set by \code{mice()} is
+reset when \code{mice()} returns.}
 
 \item{\dots}{Named arguments that are passed down to the univariate imputation
 functions.}
@@ -376,6 +392,30 @@ depend on the operating system. See the discussion in the
 "R Installation and Administration" guide for further information.
 }
 
+\section{Parallel imputation}{
+
+The \code{m} chains of the Gibbs sampler are independent: imputation
+\code{i} only uses the values from chain \code{i}. With
+\code{parallel = TRUE}, \code{mice()} initializes the imputations as usual,
+and then runs each chain over all \code{maxit} iterations on a separate
+worker by \code{future.apply::future_lapply()}. The results are combined
+into one \code{mids} object, including \code{chainMean}, \code{chainVar}
+and \code{loggedEvents}.
+
+Each chain gets its own random number stream (\code{future.seed = TRUE}).
+Results with the same \code{seed} are therefore reproducible across runs
+with \code{parallel = TRUE}, also for a different number of workers, but
+they differ from those of \code{parallel = FALSE}.
+
+Running chains in parallel adds the cost of starting workers and copying
+the data to them. It pays off for large data or for slow imputation
+methods, but usually not for small data. With \code{printFlag = TRUE},
+\code{mice()} reports the total time instead of the iteration history.
+Imputation methods from other packages must be available on the workers.
+The function \code{\link{mice.mids}()} continues the iterations
+sequentially.
+}
+
 \examples{
 # do default multiple imputation on a numeric matrix
 imp <- mice(nhanes)
@@ -459,7 +499,8 @@ data sets.} Dissertation. Rotterdam: Erasmus University.
 \code{\link{pool}}, \code{\link{complete}}, \code{\link{ampute}}
 
 \code{\link[=mids-class]{mids}}, \code{\link{with.mids}},
-\code{\link{set.seed}}, \code{\link{complete}}
+\code{\link{set.seed}}, \code{\link{complete}},
+\code{\link[future]{plan}}, \code{\link[future.apply]{future_lapply}}
 }
 \author{
 \strong{Maintainer}: Stef van Buuren \email{stef.vanbuuren@tno.nl}

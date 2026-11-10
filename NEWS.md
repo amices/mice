@@ -1,3 +1,17 @@
+# mice (development version)
+
+- Adds native parallel imputation with `mice(..., parallel = TRUE)`. The `m`
+  chains of the Gibbs sampler are independent, so each chain runs over all
+  iterations on its own worker through `future.apply::future_lapply()`, and
+  the results are combined into one `mids` object, including `chainMean`,
+  `chainVar` and `loggedEvents`. A `future` plan set by the user is respected;
+  otherwise `mice()` sets up a `multisession` plan with
+  `min(m, availableCores() - 1)` workers, or `min(m, n.core)` workers for the
+  new `n.core` argument, and resets it on exit. Each chain gets its own random
+  number stream, so results are reproducible with `seed` and do not depend on
+  the number of workers, but differ from `parallel = FALSE`. The sequential
+  sampler is unchanged. Requires the `future` and `future.apply` packages.
+
 # mice 3.19.12
 
 - Fixes miscalibrated donor selection in `matchindex()`, the default PMM matching engine since mice 3.11.8 (2020), for predictive mean matching models where many target cases share the same (or nearly the same) predicted value, e.g. an intercept-only imputation model, models with few categorical predictors, or heavily rounded/discretised outcomes. Previously, ties among donors were broken once per call to `matchindex()` (i.e. once per imputed dataset), so all target cases with a tied predicted value drew from the same small, fixed subset of donors within one completed dataset. This inflated the between-imputation variance and produced overly conservative (too wide) confidence intervals under Rubin's rules. Ties are now broken independently for each target case. **Affected versions:** mice 3.11.8 through 3.19.11 (any analysis using the default `method = "pmm"` with tied or near-tied predicted values). To reproduce results computed with an affected version, reinstall that specific version, e.g. `remotes::install_version("mice", version = "3.19.11")`, rather than relying on a compatibility flag in the current version. See [#757](https://github.com/amices/mice/issues/757) and the original discussion in [#236](https://github.com/amices/mice/issues/236).

@@ -68,7 +68,8 @@ Imports:
     utils
 Suggests:
     broom.mixed,
-    future, 
+    future,
+    future.apply,
     furrr,
     haven,
     kernlab,

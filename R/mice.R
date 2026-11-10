@@ -130,6 +130,28 @@
 #' to turn off this behavior by specifying the
 #' argument \code{auxiliary = FALSE}.
 #'
+#' @section Parallel imputation:
+#' The \code{m} chains of the Gibbs sampler are independent: imputation
+#' \code{i} only uses the values from chain \code{i}. With
+#' \code{parallel = TRUE}, \code{mice()} initializes the imputations as usual,
+#' and then runs each chain over all \code{maxit} iterations on a separate
+#' worker by \code{future.apply::future_lapply()}. The results are combined
+#' into one \code{mids} object, including \code{chainMean}, \code{chainVar}
+#' and \code{loggedEvents}.
+#'
+#' Each chain gets its own random number stream (\code{future.seed = TRUE}).
+#' Results with the same \code{seed} are therefore reproducible across runs
+#' with \code{parallel = TRUE}, also for a different number of workers, but
+#' they differ from those of \code{parallel = FALSE}.
+#'
+#' Running chains in parallel adds the cost of starting workers and copying
+#' the data to them. It pays off for large data or for slow imputation
+#' methods, but usually not for small data. With \code{printFlag = TRUE},
+#' \code{mice()} reports the total time instead of the iteration history.
+#' Imputation methods from other packages must be available on the workers.
+#' The function \code{\link{mice.mids}()} continues the iterations
+#' sequentially.
+#'
 #' @param data A data frame or a matrix containing the incomplete data.  Missing
 #' values are coded as \code{NA}.
 #' @param m Number of multiple imputations. The default is \code{m=5}.
@@ -245,6 +267,18 @@
 #' are created by a simple random draw from the data. Note that specification of
 #' \code{data.init} will start all \code{m} Gibbs sampling streams from the same
 #' imputation.
+#' @param parallel Logical. If \code{TRUE}, the \code{m} imputation chains are
+#' run in parallel using the \pkg{future} and \pkg{future.apply} packages.
+#' The default \code{parallel = FALSE} runs the chains one after the other.
+#' See the section \emph{Parallel imputation} for details.
+#' @param n.core Optional positive integer with the number of workers used
+#' when \code{parallel = TRUE}. If \code{NULL} (default), \code{mice()} uses
+#' the \code{future} plan set by the user, or, if no plan is set, a
+#' \code{multisession} plan with \code{min(m, availableCores() - 1)} workers.
+#' A non-\code{NULL} value of \code{n.core} sets up a \code{multisession}
+#' plan with \code{min(m, n.core)} workers, and \code{n.core = 1} runs the
+#' chains sequentially through \pkg{future}. A plan set by \code{mice()} is
+#' reset when \code{mice()} returns.
 #' @param \dots Named arguments that are passed down to the univariate imputation
 #' functions.
 #'
@@ -256,7 +290,8 @@
 #' Roel de Jong, Jason Turner, Lisa Doove,
 #' John Fox, Frank E. Harrell, and Peter Malewski.
 #' @seealso \code{\link[=mids-class]{mids}}, \code{\link{with.mids}},
-#' \code{\link{set.seed}}, \code{\link{complete}}
+#' \code{\link{set.seed}}, \code{\link{complete}},
+#' \code{\link[future]{plan}}, \code{\link[future.apply]{future_lapply}}
 #' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 #' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #' Statistical Software}, \bold{45}(3), 1-67.
@@ -336,6 +371,8 @@ mice <- function(
   printFlag = getOption("mice.printFlag", TRUE),
   seed = NA,
   data.init = NULL,
+  parallel = FALSE,
+  n.core = NULL,
   ...
 ) {
   call <- match.call()
@@ -490,7 +527,14 @@ mice <- function(
   # and iterate...
   from <- 1
   to <- from + maxit - 1
-  q <- sampler(
+  if (parallel) {
+    oldplan <- setup.parallel(m, n.core)
+    if (!is.null(oldplan)) {
+      on.exit(future::plan(oldplan), add = TRUE)
+    }
+  }
+  sampler.fun <- if (parallel) sampler.parallel else sampler
+  q <- sampler.fun(
     data,
     m,
     ignore,
@@ -509,6 +553,15 @@ mice <- function(
     ...
   )
 
+  # append events logged by the parallel chains to those from the setup
+  if (parallel && !is.null(q$loggedEvents)) {
+    if (.mice.state$log) {
+      loggedEvents <- rbind(loggedEvents, q$loggedEvents)
+    } else {
+      loggedEvents <- q$loggedEvents
+    }
+    .mice.state$log <- TRUE
+  }
   if (!.mice.state$log) {
     loggedEvents <- NULL
   }
