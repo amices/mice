@@ -143,11 +143,7 @@ test_that("MICE-PARALLEL-010: the future plan set by mice() is reset", {
 test_that("MICE-PARALLEL-011: results do not depend on the number of workers", {
   skip_on_cran()
   skip_if_not(future::availableCores() >= 2L)
-  # workers load the installed mice, not the one from devtools::load_all()
-  skip_if(
-    isNamespaceLoaded("pkgload") && pkgload::is_dev_package("mice"),
-    "mice is loaded with pkgload"
-  )
+  skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
   imp2 <- mice(
     nhanes,
     m = 3,
@@ -159,4 +155,107 @@ test_that("MICE-PARALLEL-011: results do not depend on the number of workers", {
   )
   expect_identical(complete(imp_par, "long"), complete(imp2, "long"))
   expect_identical(imp_par$chainMean, imp2$chainMean)
+})
+
+test_that("MICE-PARALLEL-012: user-defined methods and their helpers reach the chains", {
+  assign("helper.par012", function(y, ry, x, ...) {
+    mice.impute.pmm(y, ry, x, ...)
+  }, envir = globalenv())
+  assign("mice.impute.par012", function(y, ry, x, ...) {
+    helper.par012(y, ry, x, ...)
+  }, envir = globalenv())
+  on.exit(
+    rm(list = c("helper.par012", "mice.impute.par012"), envir = globalenv()),
+    add = TRUE
+  )
+  meth <- make.method(nhanes)
+  meth["bmi"] <- "par012"
+  imp1 <- mice(
+    nhanes,
+    m = 2,
+    maxit = 2,
+    method = meth,
+    seed = 1,
+    print = FALSE,
+    parallel = TRUE,
+    n.core = 1
+  )
+  expect_false(anyNA(complete(imp1)))
+
+  skip_on_cran()
+  skip_if_not(future::availableCores() >= 2L)
+  skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
+  imp2 <- mice(
+    nhanes,
+    m = 2,
+    maxit = 2,
+    method = meth,
+    seed = 1,
+    print = FALSE,
+    parallel = TRUE,
+    n.core = 2
+  )
+  expect_identical(complete(imp1, "long"), complete(imp2, "long"))
+})
+
+test_that("MICE-PARALLEL-013: errors name the iteration, chain and variable", {
+  # fails at the fifth call: chain 2, iteration 1, since each chain
+  # runs over all iterations before the next chain starts
+  assign("calls.par013", 0L, envir = globalenv())
+  assign("mice.impute.par013", function(y, ry, x, ...) {
+    calls.par013 <<- calls.par013 + 1L
+    if (calls.par013 == 5L) {
+      stop("failure in par013")
+    }
+    mice.impute.pmm(y, ry, x, ...)
+  }, envir = globalenv())
+  on.exit(
+    rm(list = c("calls.par013", "mice.impute.par013"), envir = globalenv()),
+    add = TRUE
+  )
+  meth <- make.method(nhanes)
+  meth["bmi"] <- "par013"
+  # future.apply warns that it cancels the other chains
+  e <- suppressWarnings(tryCatch(
+    mice(
+      nhanes,
+      m = 3,
+      maxit = 4,
+      method = meth,
+      seed = 1,
+      print = FALSE,
+      parallel = TRUE,
+      n.core = 1
+    ),
+    error = identity
+  ))
+  expect_s3_class(e, "mice_sampler_error")
+  expect_identical(e$iteration, 1L)
+  expect_identical(e$imputation, 2L)
+  expect_identical(e$variable, "bmi")
+  expect_identical(e$method, "par013")
+  expect_match(conditionMessage(e), "iteration 1, imputation 2, variable 'bmi'")
+  expect_match(conditionMessage(e$parent), "failure in par013")
+})
+
+test_that("MICE-PARALLEL-014: post can use the imputation number as chain", {
+  post <- make.post(nhanes)
+  post["bmi"] <- "imp[[j]][, i] <- 100 * chain"
+  imp_s <- mice(nhanes, m = 3, maxit = 1, post = post, seed = 1, print = FALSE)
+  imp_p <- mice(
+    nhanes,
+    m = 3,
+    maxit = 1,
+    post = post,
+    seed = 1,
+    print = FALSE,
+    parallel = TRUE,
+    n.core = 1
+  )
+  expected <- matrix(
+    rep(c(100, 200, 300), each = sum(is.na(nhanes$bmi))),
+    ncol = 3
+  )
+  expect_equal(unname(as.matrix(imp_s$imp$bmi)), expected)
+  expect_equal(unname(as.matrix(imp_p$imp$bmi)), expected)
 })

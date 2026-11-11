@@ -71,6 +71,7 @@ Suggests:
     future,
     future.apply,
     furrr,
+    globals,
     haven,
     kernlab,
     knitr,

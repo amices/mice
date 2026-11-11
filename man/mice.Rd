@@ -135,7 +135,16 @@ expressions as strings. Each string is parsed and
 executed within the \code{sampler()} function to post-process
 imputed values during the iterations.
 The default is a vector of empty strings, indicating no post-processing.
-Multivariate (block) imputation methods ignore the \code{post} parameter.}
+Multivariate (block) imputation methods ignore the \code{post} parameter.
+The expression can use the current variable \code{j}, the iteration
+\code{k}, the column \code{i} of the imputations and the imputation
+number \code{chain}, for example
+\code{"imp[[j]][, i] <- squeeze(imp[[j]][, i], c(100, 300))"}. Use
+\code{i} to index \code{imp[[j]]}, and \code{chain} for anything that
+should differ between imputations, e.g.
+\code{"imp[[j]][, i] <- imp[[j]][, i] + delta[chain]"}. The two are equal
+for \code{parallel = FALSE}, but with \code{parallel = TRUE} each chain
+has only one column, so \code{i} is always 1.}
 
 \item{defaultMethod}{A vector of length 4 containing the default
 imputation methods for 1) numeric data, 2) factor data with 2 levels, 3)
@@ -411,9 +420,28 @@ Running chains in parallel adds the cost of starting workers and copying
 the data to them. It pays off for large data or for slow imputation
 methods, but usually not for small data. With \code{printFlag = TRUE},
 \code{mice()} reports the total time instead of the iteration history.
-Imputation methods from other packages must be available on the workers.
+Imputation methods defined by the user, for example
+\code{mice.impute.mymethod()} in the global environment, are sent to the
+workers, together with the objects from the global environment they use.
+Imputation methods from other packages must be installed on the workers.
+Within \code{post}, the column index \code{i} is always 1, as each
+worker holds one chain; use \code{chain} for the imputation number (see
+argument \code{post}).
 The function \code{\link{mice.mids}()} continues the iterations
 sequentially.
+}
+
+\section{Errors during imputation}{
+
+If an imputation method or a \code{post} statement fails, \code{mice()}
+stops with an error of class \code{mice_sampler_error} that names the
+iteration, the imputation (the chain), the variable and the method at
+which the error occurred, followed by the original message. This also
+holds for \code{parallel = TRUE}, where a failing chain stops all chains.
+The fields \code{iteration}, \code{imputation}, \code{variable},
+\code{method} and \code{post} of the condition contain these details, and
+the field \code{parent} holds the original error, e.g.
+\code{e <- tryCatch(mice(...), error = identity); e$parent}.
 }
 
 \section{Progress reporting}{

@@ -19,6 +19,22 @@
   Nothing is shown without a handler, and the imputations are unchanged.
   `progressr` is a suggested package. Based on the idea in #750 by Joshua
   Carpenter (see also #516, #551, #565).
+- Errors raised by an imputation method or a `post` statement now report
+  where the Gibbs sampler stopped, e.g. `mice() stopped at iteration 3,
+  imputation 2, variable 'bmi' (method 'pmm')`, followed by the original
+  message. The error has class `mice_sampler_error` with fields `iteration`,
+  `imputation`, `variable`, `method`, `post` and `parent` (the original
+  error). With `parallel = TRUE`, the imputation number is that of the
+  failing chain.
+- With `parallel = TRUE`, imputation methods defined by the user, e.g.
+  `mice.impute.mymethod()` in the global environment, are now sent to the
+  workers, together with the helper functions and objects they use.
+  Previously these methods were not found on `multisession` workers.
+- `post` expressions can use the new variable `chain`, the imputation
+  number, for post-processing that differs between imputations, e.g.
+  `imp[[j]][, i] <- imp[[j]][, i] + delta[chain]`. Use `i` only to index
+  `imp[[j]]`: it equals `chain` for `parallel = FALSE`, but is always 1 with
+  `parallel = TRUE`, where each worker holds one chain.
 
 # mice 3.19.12
 

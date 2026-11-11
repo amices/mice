@@ -26,7 +26,16 @@ sampler.parallel <- function(
   maxit <- to - from + 1
   t0 <- Sys.time()
 
+  # methods defined outside mice, e.g. in the global environment, are not
+  # on the search path of the workers, so send them along
+  impute.funs <- user.impute.funs(method)
+
   run.chain <- function(i, ...) {
+    for (fn in names(impute.funs)) {
+      assign(fn, impute.funs[[fn]], envir = .impute.funs)
+    }
+    on.exit(rm(list = names(impute.funs), envir = .impute.funs), add = TRUE)
+
     # local event log, found by updateLog() through the call stack
     .mice.state <- list(it = 0, im = 0, dep = "", meth = "", log = FALSE)
     loggedEvents <- data.frame(it = 0, im = 0, dep = "", meth = "", out = "")
@@ -52,7 +61,8 @@ sampler.parallel <- function(
       fromto,
       FALSE,
       ...,
-      progress = chain.progress
+      progress = chain.progress,
+      chain.id = i
     )
     if (.mice.state$log) {
       loggedEvents$im <- i

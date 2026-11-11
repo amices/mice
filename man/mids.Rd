@@ -146,7 +146,16 @@ expressions as strings. Each string is parsed and
 executed within the \code{sampler()} function to post-process
 imputed values during the iterations.
 The default is a vector of empty strings, indicating no post-processing.
-Multivariate (block) imputation methods ignore the \code{post} parameter.}
+Multivariate (block) imputation methods ignore the \code{post} parameter.
+The expression can use the current variable \code{j}, the iteration
+\code{k}, the column \code{i} of the imputations and the imputation
+number \code{chain}, for example
+\code{"imp[[j]][, i] <- squeeze(imp[[j]][, i], c(100, 300))"}. Use
+\code{i} to index \code{imp[[j]]}, and \code{chain} for anything that
+should differ between imputations, e.g.
+\code{"imp[[j]][, i] <- imp[[j]][, i] + delta[chain]"}. The two are equal
+for \code{parallel = FALSE}, but with \code{parallel = TRUE} each chain
+has only one column, so \code{i} is always 1.}
 
 \item{blots}{A named \code{list} of \code{alist}'s that can be used
 to pass down arguments to lower level imputation function. The entries
