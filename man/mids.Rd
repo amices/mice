@@ -31,6 +31,8 @@ mids(
   chainMean = list(),
   chainVar = list(),
   loggedEvents = data.frame(),
+  parallel = FALSE,
+  chainSeed = NULL,
   version = packageVersion("mice"),
   date = Sys.Date()
 )
@@ -187,6 +189,14 @@ generator alone.}
 
 \item{loggedEvents}{Calculated field}
 
+\item{parallel}{Logical. If \code{TRUE}, the \code{m} imputation chains are
+run in parallel using the \pkg{future} and \pkg{future.apply} packages.
+The default \code{parallel = FALSE} uses the sequential sampler, which
+performs each iteration for all chains before it starts the next one.
+See the section \emph{Parallel imputation} for details.}
+
+\item{chainSeed}{Calculated field}
+
 \item{version}{Calculated field}
 
 \item{date}{Calculated field}
@@ -281,6 +291,13 @@ Note that observed data are not present in this mean.}
 \code{chainMean}, containing the variance of the imputed values.}
 \item{\code{loggedEvents}:}{A \code{data.frame} with five columns
 containing warnings, corrective actions, and other inside info.}
+\item{\code{parallel}:}{Logical indicating whether the last iterations
+ran the chains in parallel (\code{parallel = TRUE} in \code{mice()}
+or \code{mice.mids()}).}
+\item{\code{chainSeed}:}{If \code{parallel = TRUE}, a list with, for
+each chain, the state of its random number stream after the last
+iteration, used by \code{mice.mids()} to continue the chain exactly;
+otherwise \code{NULL}.}
 \item{\code{version}:}{Version number of \code{mice} package that
 created the object.}
 \item{\code{date}:}{Date at which the object was created.}

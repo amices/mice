@@ -29,12 +29,34 @@
 - With `parallel = TRUE`, imputation methods defined by the user, e.g.
   `mice.impute.mymethod()` in the global environment, are now sent to the
   workers, together with the helper functions and objects they use.
-  Previously these methods were not found on `multisession` workers.
+  Previously these methods were not found on `multisession` workers. The
+  same holds for objects from the global environment used in `post`, such
+  as a vector `delta` in `imp[[j]][, i] + delta[chain]`.
 - `post` expressions can use the new variable `chain`, the imputation
   number, for post-processing that differs between imputations, e.g.
   `imp[[j]][, i] <- imp[[j]][, i] + delta[chain]`. Use `i` only to index
   `imp[[j]]`: it equals `chain` for `parallel = FALSE`, but is always 1 with
   `parallel = TRUE`, where each worker holds one chain.
+- `mice.mids()` gains the arguments `parallel` and `n.core`. By default, an
+  object created with `parallel = TRUE` continues in parallel, with the
+  same result as a single `mice()` call with all iterations. Setting
+  `parallel` explicitly continues a sequential object in parallel, or a
+  parallel object sequentially. To support this, the `mids` object has two
+  new fields: `parallel`, and `chainSeed`, the state of the random number
+  stream of each chain. `rbind()`, `cbind()`, `filter()` and `ibind()` keep
+  these fields; objects from earlier versions continue sequentially.
+- `mice()` and `mice.mids()` gain the argument `print`, which replaces
+  `printFlag` as the recommended way to silence the iteration history,
+  e.g. `mice(nhanes, print = FALSE)`. The default can be set with
+  `options(mice.print = FALSE)`. `printFlag` and the option
+  `mice.printFlag` keep working as legacy names; if both `print` and
+  `printFlag` are given, `printFlag` takes precedence.
+- Fixes a bug where an argument in `...` that partially matched an
+  argument of the internal sampler, such as `print = FALSE` next to
+  `printFlag`, shifted the positional arguments, so that the value of
+  `printFlag` was passed to the imputation methods. This silently changed
+  the imputations, e.g. `rf` used a single tree instead of `ntree`, and
+  occurred in particular with `futuremice(..., print = FALSE)`.
 
 # mice 3.19.12
 

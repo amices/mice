@@ -259,3 +259,40 @@ test_that("MICE-PARALLEL-014: post can use the imputation number as chain", {
   expect_equal(unname(as.matrix(imp_s$imp$bmi)), expected)
   expect_equal(unname(as.matrix(imp_p$imp$bmi)), expected)
 })
+
+test_that("MICE-PARALLEL-015: post can use objects from the global environment", {
+  assign("delta.par015", c(0, 100, 200), envir = globalenv())
+  on.exit(rm("delta.par015", envir = globalenv()), add = TRUE)
+  post <- make.post(nhanes)
+  post["bmi"] <- "imp[[j]][, i] <- 0 * imp[[j]][, i] + delta.par015[chain]"
+  expected <- matrix(
+    rep(c(0, 100, 200), each = sum(is.na(nhanes$bmi))),
+    ncol = 3
+  )
+  imp1 <- mice(
+    nhanes,
+    m = 3,
+    maxit = 1,
+    post = post,
+    seed = 1,
+    print = FALSE,
+    parallel = TRUE,
+    n.core = 1
+  )
+  expect_equal(unname(as.matrix(imp1$imp$bmi)), expected)
+
+  skip_on_cran()
+  skip_if_not(future::availableCores() >= 2L)
+  skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
+  imp2 <- mice(
+    nhanes,
+    m = 3,
+    maxit = 1,
+    post = post,
+    seed = 1,
+    print = FALSE,
+    parallel = TRUE,
+    n.core = 2
+  )
+  expect_equal(unname(as.matrix(imp2$imp$bmi)), expected)
+})

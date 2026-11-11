@@ -78,3 +78,29 @@ bundle.globals <- function(f) {
   environment(f) <- env
   f
 }
+
+# Collects the objects from the global environment that the post
+# expressions use, such as a vector delta in "imp[[j]][, i] + delta[chain]".
+# In the sequential sampler, post is evaluated within sampler(), so these
+# objects are found on the search path; on a parallel worker they are not.
+# Names that sampler() uses itself are skipped, as these would be masked
+# by the variables of sampler() anyway.
+post.globals <- function(post) {
+  cmds <- post[!is.na(post) & post != ""]
+  if (length(cmds) == 0L) {
+    return(list())
+  }
+  install.on.demand("globals")
+  expr <- as.call(c(as.name("{"), as.list(parse(text = cmds))))
+  objs <- globals::cleanup(globals::globalsOf(
+    expr,
+    envir = globalenv(),
+    recursive = TRUE,
+    mustExist = FALSE
+  ))
+  skip <- c(names(formals(sampler)), all.names(body(sampler)))
+  objs <- as.list(objs)[setdiff(names(objs), skip)]
+  lapply(objs, function(obj) {
+    if (is.function(obj)) bundle.globals(obj) else obj
+  })
+}

@@ -8,8 +8,11 @@ mice.mids(
   obj,
   newdata = NULL,
   maxit = 1,
-  printFlag = getOption("mice.printFlag", TRUE),
-  ...
+  print = getOption("mice.print", getOption("mice.printFlag", TRUE)),
+  parallel = isTRUE(obj$parallel),
+  n.core = NULL,
+  ...,
+  printFlag = print
 )
 }
 \arguments{
@@ -22,12 +25,22 @@ are generated according to the model in \code{obj}.}
 \item{maxit}{The number of additional Gibbs sampling iterations. The
 default is 1.}
 
-\item{printFlag}{A Boolean flag. If \code{TRUE}, diagnostic information
-during the Gibbs sampling iterations will be written to the command window.
-The default is \code{TRUE}.}
+\item{print}{Logical. If \code{TRUE} (default), diagnostic information
+during the Gibbs sampling iterations is written to the console. See
+\code{\link{mice}()}.}
+
+\item{parallel}{Logical. If \code{TRUE}, the chains are run in parallel,
+as in \code{mice(parallel = TRUE)}. The default continues in the mode in
+which \code{obj} was created. See Details.}
+
+\item{n.core}{Optional positive integer with the number of workers used
+when \code{parallel = TRUE}. See \code{\link{mice}()}.}
 
 \item{\dots}{Named arguments that are passed down to the univariate imputation
 functions.}
+
+\item{printFlag}{Legacy name of \code{print}, kept for backward
+compatibility. If given, it takes precedence over \code{print}.}
 }
 \value{
 \code{mice.mids} returns an object of class \code{"mids"}.
@@ -52,6 +65,20 @@ The imputation model itself is specified in the \code{\link{mice}()} function
 and cannot be changed in \code{mice.mids()}. The state of the random
 generator is saved with the \code{mids} object. This ensures that the
 imputations are reproducible.
+
+By default, \code{mice.mids()} continues in the same way as the object
+was created: an object made with \code{parallel = TRUE} continues in
+parallel, and other objects continue sequentially. In both cases, the
+result is identical to that of a single call with all iterations. For
+a parallel object, this works because the object stores the state of
+the random number stream of each chain (\code{chainSeed}).
+
+It is possible to switch: \code{parallel = TRUE} continues a sequential
+object in parallel, and \code{parallel = FALSE} continues a parallel
+object sequentially, e.g. to see the iteration history or to debug an
+imputation method. The result is reproducible, but differs from a
+single call with all iterations, as the random numbers come from
+different streams.
 }
 \examples{
 imp1 <- mice(nhanes, maxit = 1, seed = 123)
@@ -62,6 +89,14 @@ imp <- mice(nhanes, maxit = 2, seed = 123)
 
 # verification
 identical(imp$imp, imp2$imp)
+
+\dontrun{
+# the same holds in parallel
+imp1 <- mice(nhanes, maxit = 1, seed = 123, parallel = TRUE, n.core = 2)
+imp2 <- mice.mids(imp1, n.core = 2)
+imp <- mice(nhanes, maxit = 2, seed = 123, parallel = TRUE, n.core = 2)
+identical(imp$imp, imp2$imp)
+}
 #
 }
 \seealso{

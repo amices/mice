@@ -81,3 +81,14 @@ test_that("SAMPLER-ERROR-004: errors on a parallel chain report its imputation n
   expect_identical(e$imputation, 2L)
   expect_identical(e$iteration, 1L)
 })
+
+test_that("SAMPLER-ERROR-005: arguments in ... do not shift the sampler arguments", {
+  # an argument in ... that partially matched an argument of sampler(),
+  # e.g. `from` for `fromto`, used to shift the positional arguments, so
+  # that printFlag was passed to the methods (e.g. as ntree of rf)
+  a <- mice(nhanes, method = "rf", seed = 1, print = FALSE)
+  b <- mice(nhanes, method = "rf", seed = 1, print = FALSE, from = 1)
+  expect_identical(a$imp, b$imp)
+  c <- mice(nhanes, method = "rf", seed = 1, printFlag = FALSE, print = FALSE)
+  expect_identical(a$imp, c$imp)
+})

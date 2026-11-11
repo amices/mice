@@ -1,7 +1,11 @@
 # Runs the m Gibbs sampling chains in parallel. Chain i only depends on
 # column i of imp, so each worker calls the sequential sampler() with
 # m = 1 for one chain over all iterations. Results are recombined in
-# the order of the chains. This function is called by mice.
+# the order of the chains. This function is called by mice and mice.mids.
+#
+# chain.seed is NULL, which derives a new random number stream for each
+# chain from the current seed, or a list with the state of the stream of
+# each chain, as returned in chainSeed, to continue the chains exactly.
 sampler.parallel <- function(
   data,
   m,
@@ -19,7 +23,8 @@ sampler.parallel <- function(
   fromto,
   printFlag,
   ...,
-  progress = NULL
+  progress = NULL,
+  chain.seed = NULL
 ) {
   from <- fromto[1]
   to <- fromto[2]
@@ -29,6 +34,7 @@ sampler.parallel <- function(
   # methods defined outside mice, e.g. in the global environment, are not
   # on the search path of the workers, so send them along
   impute.funs <- user.impute.funs(method)
+  post.objs <- post.globals(post)
 
   run.chain <- function(i, ...) {
     for (fn in names(impute.funs)) {
@@ -45,38 +51,41 @@ sampler.parallel <- function(
       function(k, ii) progress(k, i)
     }
     q <- sampler(
-      data,
-      1L,
-      ignore,
-      where,
-      imp.i,
-      blocks,
-      method,
-      visitSequence,
-      predictorMatrix,
-      formulas,
-      calltype,
-      blots,
-      post,
-      fromto,
-      FALSE,
+      data = data,
+      m = 1L,
+      ignore = ignore,
+      where = where,
+      imp = imp.i,
+      blocks = blocks,
+      method = method,
+      visitSequence = visitSequence,
+      predictorMatrix = predictorMatrix,
+      formulas = formulas,
+      calltype = calltype,
+      blots = blots,
+      post = post,
+      fromto = fromto,
+      printFlag = FALSE,
       ...,
       progress = chain.progress,
-      chain.id = i
+      chain.id = i,
+      post.globals = post.objs
     )
     if (.mice.state$log) {
       loggedEvents$im <- i
     } else {
       loggedEvents <- NULL
     }
-    list(q = q, loggedEvents = loggedEvents)
+    # state of the random number stream of this chain
+    seed <- get(".Random.seed", envir = globalenv(), inherits = FALSE)
+    list(q = q, loggedEvents = loggedEvents, seed = seed)
   }
 
   chains <- future.apply::future_lapply(
     seq_len(m),
     run.chain,
     ...,
-    future.seed = TRUE
+    future.seed = if (is.null(chain.seed)) TRUE else chain.seed
   )
 
   # combine chains
@@ -120,7 +129,8 @@ sampler.parallel <- function(
     imp = imp,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = logs
+    loggedEvents = logs,
+    chainSeed = lapply(chains, function(x) x$seed)
   )
 }
 

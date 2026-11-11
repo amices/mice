@@ -146,7 +146,7 @@
 #'
 #' Running chains in parallel adds the cost of starting workers and copying
 #' the data to them. It pays off for large data or for slow imputation
-#' methods, but usually not for small data. With \code{printFlag = TRUE},
+#' methods, but usually not for small data. With \code{print = TRUE},
 #' \code{mice()} reports the total time instead of the iteration history.
 #' Imputation methods defined by the user, for example
 #' \code{mice.impute.mymethod()} in the global environment, are sent to the
@@ -155,8 +155,10 @@
 #' Within \code{post}, the column index \code{i} is always 1, as each
 #' worker holds one chain; use \code{chain} for the imputation number (see
 #' argument \code{post}).
-#' The function \code{\link{mice.mids}()} continues the iterations
-#' sequentially.
+#' The \code{mids} object stores whether the chains ran in parallel, and the
+#' state of the random number stream of each chain (\code{chainSeed}).
+#' \code{\link{mice.mids}()} uses these to continue the chains in parallel,
+#' with the same result as a single call with all iterations.
 #'
 #' @section Errors during imputation:
 #' If an imputation method or a \code{post} statement fails, \code{mice()}
@@ -296,8 +298,14 @@
 #' polytomous regression imputation for unordered categorical data (factor > 2
 #' levels) \code{polr}, proportional odds model for (ordered, > 2 levels).
 #' @param maxit A scalar giving the number of iterations. The default is 5.
-#' @param printFlag If \code{TRUE}, \code{mice} will print history on console.
-#' Use \code{print=FALSE} for silent computation.
+#' @param print Logical. If \code{TRUE} (default), \code{mice()} prints the
+#' iteration history on the console. Use \code{print = FALSE} for silent
+#' computation. The default can be set for the session by
+#' \code{options(mice.print = FALSE)}.
+#' @param printFlag Legacy name of \code{print}, kept for backward
+#' compatibility. If given, it takes precedence over \code{print}. New
+#' code should use \code{print}. The option \code{mice.printFlag} is
+#' still respected if \code{mice.print} is not set.
 #' @param seed An integer that is used as argument by the \code{set.seed()} for
 #' offsetting the random number generator. Default is to leave the random number
 #' generator alone.
@@ -309,7 +317,8 @@
 #' imputation.
 #' @param parallel Logical. If \code{TRUE}, the \code{m} imputation chains are
 #' run in parallel using the \pkg{future} and \pkg{future.apply} packages.
-#' The default \code{parallel = FALSE} runs the chains one after the other.
+#' The default \code{parallel = FALSE} uses the sequential sampler, which
+#' performs each iteration for all chains before it starts the next one.
 #' See the section \emph{Parallel imputation} for details.
 #' @param n.core Optional positive integer with the number of workers used
 #' when \code{parallel = TRUE}. If \code{NULL} (default), \code{mice()} uses
@@ -317,7 +326,8 @@
 #' \code{multisession} plan with \code{min(m, availableCores() - 1)} workers.
 #' A non-\code{NULL} value of \code{n.core} sets up a \code{multisession}
 #' plan with \code{min(m, n.core)} workers, and \code{n.core = 1} runs the
-#' chains sequentially through \pkg{future}. A plan set by \code{mice()} is
+#' chains one after the other through \pkg{future}, each over all
+#' iterations. A plan set by \code{mice()} is
 #' reset when \code{mice()} returns.
 #' @param \dots Named arguments that are passed down to the univariate imputation
 #' functions.
@@ -408,12 +418,13 @@ mice <- function(
   post = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
   maxit = 5,
-  printFlag = getOption("mice.printFlag", TRUE),
+  print = getOption("mice.print", getOption("mice.printFlag", TRUE)),
   seed = NA,
   data.init = NULL,
   parallel = FALSE,
   n.core = NULL,
-  ...
+  ...,
+  printFlag = print
 ) {
   call <- match.call()
   check.deprecated(...)
@@ -576,21 +587,21 @@ mice <- function(
   sampler.fun <- if (parallel) sampler.parallel else sampler
   progress <- make.progress(m * maxit)
   q <- sampler.fun(
-    data,
-    m,
-    ignore,
-    where,
-    imp,
-    blocks,
-    method,
-    visitSequence,
-    predictorMatrix,
-    formulas,
-    calltype,
-    blots,
-    post,
-    c(from, to),
-    printFlag,
+    data = data,
+    m = m,
+    ignore = ignore,
+    where = where,
+    imp = imp,
+    blocks = blocks,
+    method = method,
+    visitSequence = visitSequence,
+    predictorMatrix = predictorMatrix,
+    formulas = formulas,
+    calltype = calltype,
+    blots = blots,
+    post = post,
+    fromto = c(from, to),
+    printFlag = printFlag,
     ...,
     progress = progress
   )
@@ -638,7 +649,9 @@ mice <- function(
     ),
     chainMean = q$chainMean,
     chainVar = q$chainVar,
-    loggedEvents = loggedEvents
+    loggedEvents = loggedEvents,
+    parallel = parallel,
+    chainSeed = q$chainSeed
   )
 
   if (!is.null(midsobj$loggedEvents)) {

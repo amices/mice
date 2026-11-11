@@ -18,8 +18,13 @@ sampler <- function(
   printFlag,
   ...,
   progress = NULL,
-  chain.id = seq_len(m)
+  chain.id = seq_len(m),
+  post.globals = NULL
 ) {
+  # objects used by post, sent along to a parallel worker
+  for (nm in names(post.globals)) {
+    assign(nm, post.globals[[nm]])
+  }
   from <- fromto[1]
   to <- fromto[2]
   maxit <- to - from + 1

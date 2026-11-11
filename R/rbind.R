@@ -81,7 +81,9 @@ rbind.mids <- function(x, y = NULL, ...) {
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents
+    loggedEvents = loggedEvents,
+    parallel = isTRUE(x$parallel),
+    chainSeed = x$chainSeed
   )
   return(midsobj)
 }
@@ -182,7 +184,9 @@ rbind.mids.mids <- function(x, y, call) {
     lastSeedValue = lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents
+    loggedEvents = loggedEvents,
+    parallel = isTRUE(x$parallel),
+    chainSeed = x$chainSeed
   )
   return(midsobj)
 }

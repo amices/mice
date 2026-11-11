@@ -20,15 +20,36 @@
 #' generator is saved with the \code{mids} object. This ensures that the
 #' imputations are reproducible.
 #'
+#' By default, \code{mice.mids()} continues in the same way as the object
+#' was created: an object made with \code{parallel = TRUE} continues in
+#' parallel, and other objects continue sequentially. In both cases, the
+#' result is identical to that of a single call with all iterations. For
+#' a parallel object, this works because the object stores the state of
+#' the random number stream of each chain (\code{chainSeed}).
+#'
+#' It is possible to switch: \code{parallel = TRUE} continues a sequential
+#' object in parallel, and \code{parallel = FALSE} continues a parallel
+#' object sequentially, e.g. to see the iteration history or to debug an
+#' imputation method. The result is reproducible, but differs from a
+#' single call with all iterations, as the random numbers come from
+#' different streams.
+#'
 #' @param obj An object of class \code{mids}, typically produces by a previous
 #' call to \code{mice()} or \code{mice.mids()}
 #' @param newdata An optional \code{data.frame} for which multiple imputations
 #' are generated according to the model in \code{obj}.
 #' @param maxit The number of additional Gibbs sampling iterations. The
 #' default is 1.
-#' @param printFlag A Boolean flag. If \code{TRUE}, diagnostic information
-#' during the Gibbs sampling iterations will be written to the command window.
-#' The default is \code{TRUE}.
+#' @param print Logical. If \code{TRUE} (default), diagnostic information
+#' during the Gibbs sampling iterations is written to the console. See
+#' \code{\link{mice}()}.
+#' @param printFlag Legacy name of \code{print}, kept for backward
+#' compatibility. If given, it takes precedence over \code{print}.
+#' @param parallel Logical. If \code{TRUE}, the chains are run in parallel,
+#' as in \code{mice(parallel = TRUE)}. The default continues in the mode in
+#' which \code{obj} was created. See Details.
+#' @param n.core Optional positive integer with the number of workers used
+#' when \code{parallel = TRUE}. See \code{\link{mice}()}.
 #' @param \dots Named arguments that are passed down to the univariate imputation
 #' functions.
 #' @return \code{mice.mids} returns an object of class \code{"mids"}.
@@ -45,18 +66,30 @@
 #'
 #' # verification
 #' identical(imp$imp, imp2$imp)
+#'
+#' \dontrun{
+#' # the same holds in parallel
+#' imp1 <- mice(nhanes, maxit = 1, seed = 123, parallel = TRUE, n.core = 2)
+#' imp2 <- mice.mids(imp1, n.core = 2)
+#' imp <- mice(nhanes, maxit = 2, seed = 123, parallel = TRUE, n.core = 2)
+#' identical(imp$imp, imp2$imp)
+#' }
 #' #
 #' @export
 mice.mids <- function(
   obj,
   newdata = NULL,
   maxit = 1,
-  printFlag = getOption("mice.printFlag", TRUE),
-  ...
+  print = getOption("mice.print", getOption("mice.printFlag", TRUE)),
+  parallel = isTRUE(obj$parallel),
+  n.core = NULL,
+  ...,
+  printFlag = print
 ) {
   if (!is.mids(obj)) {
     stop("Object should be of type mids.")
   }
+  parallel <- isTRUE(parallel)
 
   # Set seed to last seed after previous imputation
   assign(".Random.seed", obj$lastSeedValue, pos = 1)
@@ -133,22 +166,39 @@ mice.mids <- function(
   from <- obj$iteration + 1
   to <- from + maxit - 1
   progress <- make.progress(obj$m * maxit)
-  q <- sampler(
-    obj$data,
-    obj$m,
-    obj$ignore,
-    where,
-    imp,
-    blocks,
-    obj$method,
-    obj$visitSequence,
-    obj$predictorMatrix,
-    obj$formulas,
-    obj$calltype,
-    obj$blots,
-    obj$post,
-    c(from, to),
-    printFlag,
+  # continue the random number streams of parallel chains, if available
+  chain.seed <- NULL
+  if (parallel) {
+    oldplan <- setup.parallel(obj$m, n.core)
+    if (!is.null(oldplan)) {
+      on.exit(future::plan(oldplan), add = TRUE)
+    }
+    if (isTRUE(obj$parallel) && length(obj$chainSeed) == obj$m) {
+      chain.seed <- obj$chainSeed
+    }
+  }
+  # sampler() looks up .mice.state in its caller, so it is called directly
+  sampler.fun <- if (parallel) {
+    function(...) sampler.parallel(..., chain.seed = chain.seed)
+  } else {
+    sampler
+  }
+  q <- sampler.fun(
+    data = obj$data,
+    m = obj$m,
+    ignore = obj$ignore,
+    where = where,
+    imp = imp,
+    blocks = blocks,
+    method = obj$method,
+    visitSequence = obj$visitSequence,
+    predictorMatrix = obj$predictorMatrix,
+    formulas = obj$formulas,
+    calltype = obj$calltype,
+    blots = obj$blots,
+    post = obj$post,
+    fromto = c(from, to),
+    printFlag = printFlag,
     ...,
     progress = progress
   )
@@ -183,6 +233,15 @@ mice.mids <- function(
     chainMean <- chainVar <- NULL
   }
 
+  # append events logged by the parallel chains
+  if (parallel && !is.null(q$loggedEvents)) {
+    if (.mice.state$log) {
+      loggedEvents <- rbind(loggedEvents, q$loggedEvents)
+    } else {
+      loggedEvents <- q$loggedEvents
+    }
+    .mice.state$log <- TRUE
+  }
   if (!.mice.state$log) {
     loggedEvents <- NULL
   }
@@ -217,7 +276,9 @@ mice.mids <- function(
     ),
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = loggedEvents
+    loggedEvents = loggedEvents,
+    parallel = parallel,
+    chainSeed = if (parallel) q$chainSeed
   )
 
   if (!is.null(newdata)) {

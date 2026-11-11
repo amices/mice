@@ -108,7 +108,11 @@ ibind <- function(x, y) {
     lastSeedValue = x$lastSeedValue,
     chainMean = chainMean,
     chainVar = chainVar,
-    loggedEvents = x$loggedEvents
+    loggedEvents = x$loggedEvents,
+    parallel = isTRUE(x$parallel) && isTRUE(y$parallel),
+    chainSeed = if (!is.null(x$chainSeed) && !is.null(y$chainSeed)) {
+      c(x$chainSeed, y$chainSeed)
+    }
   )
   return(midsobj)
 }
