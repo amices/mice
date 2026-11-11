@@ -1,4 +1,4 @@
-# mice (development version)
+# mice 3.19.14
 
 - `futuremice()` no longer resets the `future` plan to `sequential` when it finishes, but restores the plan that was active before the call, following the advice for package developers in `future` (#735). Thanks @HenrikBengtsson
 
