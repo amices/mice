@@ -165,8 +165,9 @@ futuremice <- function(
     )
   }
 
-  # start multisession
-  future::plan(future.plan, workers = n.core)
+  # start multisession, restore the plan of the user on exit
+  oldplan <- future::plan(future.plan, workers = n.core)
+  on.exit(future::plan(oldplan), add = TRUE)
 
   # begin future
   imps <- furrr::future_map(
@@ -180,9 +181,6 @@ futuremice <- function(
       packages = packages
     )
   )
-
-  # end multisession
-  future::plan(future::sequential)
 
   # stitch future into mids
 

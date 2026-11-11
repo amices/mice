@@ -1,3 +1,7 @@
+# mice (development version)
+
+- `futuremice()` no longer resets the `future` plan to `sequential` when it finishes, but restores the plan that was active before the call, following the advice for package developers in `future` (#735). Thanks @HenrikBengtsson
+
 # mice 3.19.13
 
 - Adds native parallel imputation with `mice(..., parallel = TRUE)`. The `m`
