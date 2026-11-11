@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.13</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.14</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,11 @@
       <small>Source: <a href="https://github.com/amices/mice/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.19.14" id="mice-31914">mice 3.19.14<a class="anchor" aria-label="anchor" href="#mice-31914"></a></h2>
+<ul><li>
+<code><a href="../reference/futuremice.html">futuremice()</a></code> no longer resets the <code>future</code> plan to <code>sequential</code> when it finishes, but restores the plan that was active before the call, following the advice for package developers in <code>future</code> (<a href="https://github.com/amices/mice/issues/735" class="external-link">#735</a>). Thanks <a href="https://github.com/HenrikBengtsson" class="external-link">@HenrikBengtsson</a></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.19.13" id="mice-31913">mice 3.19.13<a class="anchor" aria-label="anchor" href="#mice-31913"></a></h2>
 <ul><li>Adds native parallel imputation with <code>mice(..., parallel = TRUE)</code>. The <code>m</code> chains of the Gibbs sampler are independent, so each chain runs over all iterations on its own worker through <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future.apply::future_lapply()</a></code>, and the results are combined into one <code>mids</code> object, including <code>chainMean</code>, <code>chainVar</code> and <code>loggedEvents</code>. A <code>future</code> plan set by the user is respected; otherwise <code><a href="../reference/mice.html">mice()</a></code> sets up a <code>multisession</code> plan with <code>min(m, availableCores() - 1)</code> workers, or <code>min(m, n.core)</code> workers for the new <code>n.core</code> argument, and resets it on exit. Each chain gets its own random number stream, so results are reproducible with <code>seed</code> and do not depend on the number of workers, but differ from <code>parallel = FALSE</code>. The sequential sampler is unchanged. Requires the <code>future</code> and <code>future.apply</code> packages.</li>
