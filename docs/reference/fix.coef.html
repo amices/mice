@@ -25,7 +25,8 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
-    <li><a class="dropdown-item" href="../articles/oldfriends.html">Help for old friends</a></li>
+    <li><a class="dropdown-item" href="../articles/parallel.html">Parallel imputation</a></li>
+    <li><a class="dropdown-item" href="../articles/parallel-benchmark.html">Parallel imputation: benchmarks</a></li>
     <li><a class="dropdown-item" href="../articles/random-effects-2l-bin.html">Random effects strategies in `mice.impute.2l.bin`</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -91,7 +92,7 @@ if we set <code>beta = coef(model)</code>.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">model0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Volume</span> <span class="op">~</span> <span class="va">Girth</span> <span class="op">+</span> <span class="va">Height</span>, data <span class="op">=</span> <span class="va">trees</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></span><span class="op">(</span><span class="va">model0</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Volume ~ Girth + Height</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x135242208&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x13a231208&gt;</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">model0</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       Girth      Height </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -57.9876589   4.7081605   0.3392512 </span>
@@ -102,7 +103,7 @@ if we set <code>beta = coef(model)</code>.</p>
 <span class="r-in"><span><span class="va">model1</span> <span class="op">&lt;-</span> <span class="fu">fix.coef</span><span class="op">(</span><span class="va">model0</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Volume ~ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x135242208&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x13a231208&gt;</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -2.751643e-15 </span>

@@ -27,7 +27,8 @@ studies."><meta property="og:image" content="https://amices.org/mice/logo.png"><
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
-    <li><a class="dropdown-item" href="../articles/oldfriends.html">Help for old friends</a></li>
+    <li><a class="dropdown-item" href="../articles/parallel.html">Parallel imputation</a></li>
+    <li><a class="dropdown-item" href="../articles/parallel-benchmark.html">Parallel imputation: benchmarks</a></li>
     <li><a class="dropdown-item" href="../articles/random-effects-2l-bin.html">Random effects strategies in `mice.impute.2l.bin`</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -153,7 +154,8 @@ Van Buuren (2012) shows how the missing measured data can be imputed in the
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  iter imp variable</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1   1  hm  wm  edu  etn  bm</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in bmi(hm, wm):</span> could not find function "bmi"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> mice() stopped at iteration 1, imputation 1, variable 'bm' (method '~bmi(hm,wm)'):</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>   could not find function "bmi"</span>
 <span class="r-in"><span><span class="co">## imp &lt;- mice(selfreport, pred=pred, meth=meth, seed=66573, maxit=20, m=10)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### Like FIMD Figure 7.6</span></span></span>

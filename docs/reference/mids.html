@@ -35,7 +35,8 @@ as.mids() and filter()."><meta property="og:image" content="https://amices.org/m
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
-    <li><a class="dropdown-item" href="../articles/oldfriends.html">Help for old friends</a></li>
+    <li><a class="dropdown-item" href="../articles/parallel.html">Parallel imputation</a></li>
+    <li><a class="dropdown-item" href="../articles/parallel-benchmark.html">Parallel imputation: benchmarks</a></li>
     <li><a class="dropdown-item" href="../articles/random-effects-2l-bin.html">Random effects strategies in `mice.impute.2l.bin`</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -88,6 +89,8 @@ The following functions produce a <code>mids</code> object:
 <span>  chainMean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  chainVar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  loggedEvents <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  chainSeed <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  version <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"mice"</span><span class="op">)</span>,</span>
 <span>  date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -235,7 +238,16 @@ expressions as strings. Each string is parsed and
 executed within the <code>sampler()</code> function to post-process
 imputed values during the iterations.
 The default is a vector of empty strings, indicating no post-processing.
-Multivariate (block) imputation methods ignore the <code>post</code> parameter.</p></dd>
+Multivariate (block) imputation methods ignore the <code>post</code> parameter.
+The expression can use the current variable <code>j</code>, the iteration
+<code>k</code>, the column <code>i</code> of the imputations and the imputation
+number <code>chain</code>, for example
+<code>"imp[[j]][, i] &lt;- squeeze(imp[[j]][, i], c(100, 300))"</code>. Use
+<code>i</code> to index <code>imp[[j]]</code>, and <code>chain</code> for anything that
+should differ between imputations, e.g.
+<code>"imp[[j]][, i] &lt;- imp[[j]][, i] + delta[chain]"</code>. The two are equal
+for <code>parallel = FALSE</code>, but with <code>parallel = TRUE</code> each chain
+has only one column, so <code>i</code> is always 1.</p></dd>
 
 
 <dt id="arg-blots">blots<a class="anchor" aria-label="anchor" href="#arg-blots"></a></dt>
@@ -281,6 +293,18 @@ generator alone.</p></dd>
 
 
 <dt id="arg-loggedevents">loggedEvents<a class="anchor" aria-label="anchor" href="#arg-loggedevents"></a></dt>
+<dd><p>Calculated field</p></dd>
+
+
+<dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
+<dd><p>Logical. If <code>TRUE</code>, the <code>m</code> imputation chains are
+run in parallel using the <span class="pkg">future</span> and <span class="pkg">future.apply</span> packages.
+The default <code>parallel = FALSE</code> uses the sequential sampler, which
+performs each iteration for all chains before it starts the next one.
+See the section <em>Parallel imputation</em> for details.</p></dd>
+
+
+<dt id="arg-chainseed">chainSeed<a class="anchor" aria-label="anchor" href="#arg-chainseed"></a></dt>
 <dd><p>Calculated field</p></dd>
 
 
@@ -430,6 +454,17 @@ Note that observed data are not present in this mean.</p></dd>
 <dt><code>loggedEvents</code>:</dt>
 <dd><p>A <code>data.frame</code> with five columns
 containing warnings, corrective actions, and other inside info.</p></dd>
+
+<dt><code>parallel</code>:</dt>
+<dd><p>Logical indicating whether the last iterations
+ran the chains in parallel (<code>parallel = TRUE</code> in <code><a href="mice.html">mice()</a></code>
+or <code><a href="mice.mids.html">mice.mids()</a></code>).</p></dd>
+
+<dt><code>chainSeed</code>:</dt>
+<dd><p>If <code>parallel = TRUE</code>, a list with, for
+each chain, the state of its random number stream after the last
+iteration, used by <code><a href="mice.mids.html">mice.mids()</a></code> to continue the chain exactly;
+otherwise <code>NULL</code>.</p></dd>
 
 <dt><code>version</code>:</dt>
 <dd><p>Version number of <code>mice</code> package that
