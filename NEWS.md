@@ -1,3 +1,63 @@
+# mice (development version)
+
+- Adds native parallel imputation with `mice(..., parallel = TRUE)`. The `m`
+  chains of the Gibbs sampler are independent, so each chain runs over all
+  iterations on its own worker through `future.apply::future_lapply()`, and
+  the results are combined into one `mids` object, including `chainMean`,
+  `chainVar` and `loggedEvents`. A `future` plan set by the user is respected;
+  otherwise `mice()` sets up a `multisession` plan with
+  `min(m, availableCores() - 1)` workers, or `min(m, n.core)` workers for the
+  new `n.core` argument, and resets it on exit. Each chain gets its own random
+  number stream, so results are reproducible with `seed` and do not depend on
+  the number of workers, but differ from `parallel = FALSE`. The sequential
+  sampler is unchanged. Requires the `future` and `future.apply` packages.
+- Adds progress reporting through the `progressr` package. `mice()` and
+  `mice.mids()` signal one step after each iteration of each chain
+  (`m * maxit` steps), both sequentially and with `parallel = TRUE`, where the
+  steps are relayed from the workers while the chains run. Enable it with
+  `progressr::with_progress(mice(...))` or `progressr::handlers(global = TRUE)`.
+  Nothing is shown without a handler, and the imputations are unchanged.
+  `progressr` is a suggested package. Based on the idea in #750 by Joshua
+  Carpenter (see also #516, #551, #565).
+- Errors raised by an imputation method or a `post` statement now report
+  where the Gibbs sampler stopped, e.g. `mice() stopped at iteration 3,
+  imputation 2, variable 'bmi' (method 'pmm')`, followed by the original
+  message. The error has class `mice_sampler_error` with fields `iteration`,
+  `imputation`, `variable`, `method`, `post` and `parent` (the original
+  error). With `parallel = TRUE`, the imputation number is that of the
+  failing chain.
+- With `parallel = TRUE`, imputation methods defined by the user, e.g.
+  `mice.impute.mymethod()` in the global environment, are now sent to the
+  workers, together with the helper functions and objects they use.
+  Previously these methods were not found on `multisession` workers. The
+  same holds for objects from the global environment used in `post`, such
+  as a vector `delta` in `imp[[j]][, i] + delta[chain]`.
+- `post` expressions can use the new variable `chain`, the imputation
+  number, for post-processing that differs between imputations, e.g.
+  `imp[[j]][, i] <- imp[[j]][, i] + delta[chain]`. Use `i` only to index
+  `imp[[j]]`: it equals `chain` for `parallel = FALSE`, but is always 1 with
+  `parallel = TRUE`, where each worker holds one chain.
+- `mice.mids()` gains the arguments `parallel` and `n.core`. By default, an
+  object created with `parallel = TRUE` continues in parallel, with the
+  same result as a single `mice()` call with all iterations. Setting
+  `parallel` explicitly continues a sequential object in parallel, or a
+  parallel object sequentially. To support this, the `mids` object has two
+  new fields: `parallel`, and `chainSeed`, the state of the random number
+  stream of each chain. `rbind()`, `cbind()`, `filter()` and `ibind()` keep
+  these fields; objects from earlier versions continue sequentially.
+- `mice()` and `mice.mids()` gain the argument `print`, which replaces
+  `printFlag` as the recommended way to silence the iteration history,
+  e.g. `mice(nhanes, print = FALSE)`. The default can be set with
+  `options(mice.print = FALSE)`. `printFlag` and the option
+  `mice.printFlag` keep working as legacy names; if both `print` and
+  `printFlag` are given, `printFlag` takes precedence.
+- Fixes a bug where an argument in `...` that partially matched an
+  argument of the internal sampler, such as `print = FALSE` next to
+  `printFlag`, shifted the positional arguments, so that the value of
+  `printFlag` was passed to the imputation methods. This silently changed
+  the imputations, e.g. `rf` used a single tree instead of `ntree`, and
+  occurred in particular with `futuremice(..., print = FALSE)`.
+
 # mice 3.19.12
 
 - Fixes miscalibrated donor selection in `matchindex()`, the default PMM matching engine since mice 3.11.8 (2020), for predictive mean matching models where many target cases share the same (or nearly the same) predicted value, e.g. an intercept-only imputation model, models with few categorical predictors, or heavily rounded/discretised outcomes. Previously, ties among donors were broken once per call to `matchindex()` (i.e. once per imputed dataset), so all target cases with a tied predicted value drew from the same small, fixed subset of donors within one completed dataset. This inflated the between-imputation variance and produced overly conservative (too wide) confidence intervals under Rubin's rules. Ties are now broken independently for each target case. **Affected versions:** mice 3.11.8 through 3.19.11 (any analysis using the default `method = "pmm"` with tied or near-tied predicted values). To reproduce results computed with an affected version, reinstall that specific version, e.g. `remotes::install_version("mice", version = "3.19.11")`, rather than relying on a compatibility flag in the current version. See [#757](https://github.com/amices/mice/issues/757) and the original discussion in [#236](https://github.com/amices/mice/issues/236).

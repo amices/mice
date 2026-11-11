@@ -16,8 +16,15 @@ sampler <- function(
   post,
   fromto,
   printFlag,
-  ...
+  ...,
+  progress = NULL,
+  chain.id = seq_len(m),
+  post.globals = NULL
 ) {
+  # objects used by post, sent along to a parallel worker
+  for (nm in names(post.globals)) {
+    assign(nm, post.globals[[nm]])
+  }
   from <- fromto[1]
   to <- fromto[2]
   maxit <- to - from + 1
@@ -39,6 +46,9 @@ sampler <- function(
       iteration <- k
       for (i in seq_len(m)) {
         # begin i loop: repeated imputation loop
+        # i indexes the columns of imp; chain is the imputation number,
+        # also on parallel workers, where m = 1 and thus i = 1
+        chain <- chain.id[i]
         if (printFlag) {
           cat("\n ", iteration, " ", i)
         }
@@ -91,90 +101,108 @@ sampler <- function(
           )
           assign(".mice.state", newstate, pos = parent.frame(), inherits = TRUE)
 
-          # (repeated) univariate imputation - pred method
-          if (univ) {
-            for (j in b) {
-              imp[[j]][, i] <-
-                sampler.univ(
-                  data = data,
-                  r = r,
-                  where = where,
-                  pred = pred,
-                  formula = ff,
-                  method = theMethod,
-                  yname = j,
-                  k = k,
-                  ct = ct,
-                  user = user,
-                  ignore = ignore,
-                  ...
-                )
+          # add the iteration, chain and variable to errors
+          dep <- h
+          in.post <- FALSE
+          withCallingHandlers(
+            {
+              # (repeated) univariate imputation - pred method
+              if (univ) {
+                for (j in b) {
+                  dep <- j
+                  in.post <- FALSE
+                  imp[[j]][, i] <-
+                    sampler.univ(
+                      data = data,
+                      r = r,
+                      where = where,
+                      pred = pred,
+                      formula = ff,
+                      method = theMethod,
+                      yname = j,
+                      k = k,
+                      ct = ct,
+                      user = user,
+                      ignore = ignore,
+                      ...
+                    )
 
-              data[(!r[, j]) & where[, j], j] <-
-                imp[[j]][(!r[, j])[where[, j]], i]
+                  data[(!r[, j]) & where[, j], j] <-
+                    imp[[j]][(!r[, j])[where[, j]], i]
 
-              # optional post-processing
-              cmd <- post[j]
-              if (cmd != "") {
-                eval(parse(text = cmd))
-                data[(!r[, j]) & where[, j], j] <-
-                  imp[[j]][(!r[, j])[where[, j]], i]
+                  # optional post-processing
+                  cmd <- post[j]
+                  if (cmd != "") {
+                    in.post <- TRUE
+                    eval(parse(text = cmd))
+                    data[(!r[, j]) & where[, j], j] <-
+                      imp[[j]][(!r[, j])[where[, j]], i]
+                  }
+                }
               }
-            }
-          }
 
-          # multivariate imputation - pred and formula
-          if (mult) {
-            mis <- !r
-            mis[, setdiff(colnames(data), b)] <- FALSE
-            data[mis] <- NA
+              # multivariate imputation - pred and formula
+              if (mult) {
+                mis <- !r
+                mis[, setdiff(colnames(data), b)] <- FALSE
+                data[mis] <- NA
 
-            fm <- paste("mice.impute", theMethod, sep = ".")
-            if (ct == "formula") {
-              imputes <- do.call(
-                fm,
-                args = list(
-                  data = data,
-                  formula = ff,
-                  ...
-                )
-              )
-            } else if (ct == "pred") {
-              imputes <- do.call(
-                fm,
-                args = list(
-                  data = data,
-                  type = pred,
-                  ...
-                )
-              )
-            } else {
-              stop("Cannot call function of type ", ct, call. = FALSE)
-            }
-            if (is.null(imputes)) {
-              stop("No imputations from ", theMethod, h, call. = FALSE)
-            }
-            for (j in names(imputes)) {
-              imp[[j]][, i] <- imputes[[j]]
-              data[!r[, j], j] <- imp[[j]][, i]
-            }
-          }
+                fm <- impute.fun(paste("mice.impute", theMethod, sep = "."))
+                if (ct == "formula") {
+                  imputes <- do.call(
+                    fm,
+                    args = list(
+                      data = data,
+                      formula = ff,
+                      ...
+                    )
+                  )
+                } else if (ct == "pred") {
+                  imputes <- do.call(
+                    fm,
+                    args = list(
+                      data = data,
+                      type = pred,
+                      ...
+                    )
+                  )
+                } else {
+                  stop("Cannot call function of type ", ct, call. = FALSE)
+                }
+                if (is.null(imputes)) {
+                  stop("No imputations from ", theMethod, h, call. = FALSE)
+                }
+                for (j in names(imputes)) {
+                  imp[[j]][, i] <- imputes[[j]]
+                  data[!r[, j], j] <- imp[[j]][, i]
+                }
+              }
 
-          # passive imputation
-          # applies to all rows, so no ignore needed
-          if (pass) {
-            for (j in b) {
-              wy <- where[, j]
-              ry <- r[, j]
-              imp[[j]][, i] <- model.frame(
-                as.formula(theMethod),
-                data[wy, ],
-                na.action = na.pass
-              )
-              data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
+              # passive imputation
+              # applies to all rows, so no ignore needed
+              if (pass) {
+                for (j in b) {
+                  wy <- where[, j]
+                  ry <- r[, j]
+                  imp[[j]][, i] <- model.frame(
+                    as.formula(theMethod),
+                    data[wy, ],
+                    na.action = na.pass
+                  )
+                  data[(!ry) & wy, j] <- imp[[j]][(!ry)[wy], i]
+                }
+              }
+            },
+            error = function(e) {
+              sampler.error(e, k, chain, dep, theMethod, in.post)
             }
-          }
+          )
         } # end h loop (blocks)
+
+        # report progress, e.g. through progressr
+        if (!is.null(progress)) {
+          progress(k, i)
+        }
       } # end i loop (imputation number)
 
       # store means and sd of m imputes
@@ -293,11 +321,48 @@ sampler.univ <- function(
   }
 
   # here we go
-  f <- paste("mice.impute", method, sep = ".")
+  f <- impute.fun(paste("mice.impute", method, sep = "."))
   imputes <- data[wy, j]
   imputes[!cc] <- NA
 
   args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type), user, list(...))
   imputes[cc] <- do.call(f, args = args)
   imputes
+}
+
+
+# Adds the iteration, imputation, variable and method to an error raised
+# during the Gibbs sampler, and resignals it as a `mice_sampler_error`.
+# The original condition is kept in the `parent` field.
+sampler.error <- function(e, iteration, imputation, variable, method, post) {
+  if (inherits(e, "mice_sampler_error")) {
+    return(invisible())
+  }
+  what <- if (post) "post-processing" else paste0("method '", unname(method), "'")
+  msg <- paste0(
+    "mice() stopped at iteration ",
+    iteration,
+    ", imputation ",
+    imputation,
+    ", variable '",
+    variable,
+    "' (",
+    what,
+    "):\n  ",
+    conditionMessage(e)
+  )
+  cond <- structure(
+    class = c("mice_sampler_error", "error", "condition"),
+    list(
+      message = msg,
+      call = NULL,
+      parent = e,
+      iteration = iteration,
+      imputation = imputation,
+      variable = variable,
+      method = unname(method),
+      post = post
+    )
+  )
+  stop(cond)
 }

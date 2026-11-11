@@ -31,6 +31,8 @@ mids(
   chainMean = list(),
   chainVar = list(),
   loggedEvents = data.frame(),
+  parallel = FALSE,
+  chainSeed = NULL,
   version = packageVersion("mice"),
   date = Sys.Date()
 )
@@ -146,7 +148,16 @@ expressions as strings. Each string is parsed and
 executed within the \code{sampler()} function to post-process
 imputed values during the iterations.
 The default is a vector of empty strings, indicating no post-processing.
-Multivariate (block) imputation methods ignore the \code{post} parameter.}
+Multivariate (block) imputation methods ignore the \code{post} parameter.
+The expression can use the current variable \code{j}, the iteration
+\code{k}, the column \code{i} of the imputations and the imputation
+number \code{chain}, for example
+\code{"imp[[j]][, i] <- squeeze(imp[[j]][, i], c(100, 300))"}. Use
+\code{i} to index \code{imp[[j]]}, and \code{chain} for anything that
+should differ between imputations, e.g.
+\code{"imp[[j]][, i] <- imp[[j]][, i] + delta[chain]"}. The two are equal
+for \code{parallel = FALSE}, but with \code{parallel = TRUE} each chain
+has only one column, so \code{i} is always 1.}
 
 \item{blots}{A named \code{list} of \code{alist}'s that can be used
 to pass down arguments to lower level imputation function. The entries
@@ -177,6 +188,14 @@ generator alone.}
 \item{chainVar}{Calculated field}
 
 \item{loggedEvents}{Calculated field}
+
+\item{parallel}{Logical. If \code{TRUE}, the \code{m} imputation chains are
+run in parallel using the \pkg{future} and \pkg{future.apply} packages.
+The default \code{parallel = FALSE} uses the sequential sampler, which
+performs each iteration for all chains before it starts the next one.
+See the section \emph{Parallel imputation} for details.}
+
+\item{chainSeed}{Calculated field}
 
 \item{version}{Calculated field}
 
@@ -272,6 +291,13 @@ Note that observed data are not present in this mean.}
 \code{chainMean}, containing the variance of the imputed values.}
 \item{\code{loggedEvents}:}{A \code{data.frame} with five columns
 containing warnings, corrective actions, and other inside info.}
+\item{\code{parallel}:}{Logical indicating whether the last iterations
+ran the chains in parallel (\code{parallel = TRUE} in \code{mice()}
+or \code{mice.mids()}).}
+\item{\code{chainSeed}:}{If \code{parallel = TRUE}, a list with, for
+each chain, the state of its random number stream after the last
+iteration, used by \code{mice.mids()} to continue the chain exactly;
+otherwise \code{NULL}.}
 \item{\code{version}:}{Version number of \code{mice} package that
 created the object.}
 \item{\code{date}:}{Date at which the object was created.}

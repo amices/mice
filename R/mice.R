@@ -130,6 +130,61 @@
 #' to turn off this behavior by specifying the
 #' argument \code{auxiliary = FALSE}.
 #'
+#' @section Parallel imputation:
+#' The \code{m} chains of the Gibbs sampler are independent: imputation
+#' \code{i} only uses the values from chain \code{i}. With
+#' \code{parallel = TRUE}, \code{mice()} initializes the imputations as usual,
+#' and then runs each chain over all \code{maxit} iterations on a separate
+#' worker by \code{future.apply::future_lapply()}. The results are combined
+#' into one \code{mids} object, including \code{chainMean}, \code{chainVar}
+#' and \code{loggedEvents}.
+#'
+#' Each chain gets its own random number stream (\code{future.seed = TRUE}).
+#' Results with the same \code{seed} are therefore reproducible across runs
+#' with \code{parallel = TRUE}, also for a different number of workers, but
+#' they differ from those of \code{parallel = FALSE}.
+#'
+#' Running chains in parallel adds the cost of starting workers and copying
+#' the data to them. It pays off for large data or for slow imputation
+#' methods, but usually not for small data. With \code{print = TRUE},
+#' \code{mice()} reports the total time instead of the iteration history.
+#' Imputation methods defined by the user, for example
+#' \code{mice.impute.mymethod()} in the global environment, are sent to the
+#' workers, together with the objects from the global environment they use.
+#' Imputation methods from other packages must be installed on the workers.
+#' Within \code{post}, the column index \code{i} is always 1, as each
+#' worker holds one chain; use \code{chain} for the imputation number (see
+#' argument \code{post}).
+#' The \code{mids} object stores whether the chains ran in parallel, and the
+#' state of the random number stream of each chain (\code{chainSeed}).
+#' \code{\link{mice.mids}()} uses these to continue the chains in parallel,
+#' with the same result as a single call with all iterations.
+#'
+#' @section Errors during imputation:
+#' If an imputation method or a \code{post} statement fails, \code{mice()}
+#' stops with an error of class \code{mice_sampler_error} that names the
+#' iteration, the imputation (the chain), the variable and the method at
+#' which the error occurred, followed by the original message. This also
+#' holds for \code{parallel = TRUE}, where a failing chain stops all chains.
+#' The fields \code{iteration}, \code{imputation}, \code{variable},
+#' \code{method} and \code{post} of the condition contain these details, and
+#' the field \code{parent} holds the original error, e.g.
+#' \code{e <- tryCatch(mice(...), error = identity); e$parent}.
+#'
+#' @section Progress reporting:
+#' If the \pkg{progressr} package is installed, \code{mice()} and
+#' \code{\link{mice.mids}()} signal one progress step after each iteration of
+#' each chain, \code{m * maxit} steps in total, with a message such as
+#' \code{"iter 3, imp 2"}. This works for both \code{parallel = FALSE} and
+#' \code{parallel = TRUE}; in the latter case the steps are relayed from the
+#' workers while the chains run. The progress is only shown if the user
+#' enables it, for example by
+#' \code{progressr::with_progress(imp <- mice(nhanes, parallel = TRUE))}, or
+#' for the whole session by \code{progressr::handlers(global = TRUE)}. The
+#' function \code{progressr::handlers()} sets the type of display. Without a
+#' handler, or without \pkg{progressr}, nothing is shown. Progress reporting
+#' does not change the imputations.
+#'
 #' @param data A data frame or a matrix containing the incomplete data.  Missing
 #' values are coded as \code{NA}.
 #' @param m Number of multiple imputations. The default is \code{m=5}.
@@ -225,6 +280,15 @@
 #' imputed values during the iterations.
 #' The default is a vector of empty strings, indicating no post-processing.
 #' Multivariate (block) imputation methods ignore the \code{post} parameter.
+#' The expression can use the current variable \code{j}, the iteration
+#' \code{k}, the column \code{i} of the imputations and the imputation
+#' number \code{chain}, for example
+#' \code{"imp[[j]][, i] <- squeeze(imp[[j]][, i], c(100, 300))"}. Use
+#' \code{i} to index \code{imp[[j]]}, and \code{chain} for anything that
+#' should differ between imputations, e.g.
+#' \code{"imp[[j]][, i] <- imp[[j]][, i] + delta[chain]"}. The two are equal
+#' for \code{parallel = FALSE}, but with \code{parallel = TRUE} each chain
+#' has only one column, so \code{i} is always 1.
 #' @param defaultMethod A vector of length 4 containing the default
 #' imputation methods for 1) numeric data, 2) factor data with 2 levels, 3)
 #' factor data with > 2 unordered levels, and 4) factor data with > 2
@@ -234,8 +298,14 @@
 #' polytomous regression imputation for unordered categorical data (factor > 2
 #' levels) \code{polr}, proportional odds model for (ordered, > 2 levels).
 #' @param maxit A scalar giving the number of iterations. The default is 5.
-#' @param printFlag If \code{TRUE}, \code{mice} will print history on console.
-#' Use \code{print=FALSE} for silent computation.
+#' @param print Logical. If \code{TRUE} (default), \code{mice()} prints the
+#' iteration history on the console. Use \code{print = FALSE} for silent
+#' computation. The default can be set for the session by
+#' \code{options(mice.print = FALSE)}.
+#' @param printFlag Legacy name of \code{print}, kept for backward
+#' compatibility. If given, it takes precedence over \code{print}. New
+#' code should use \code{print}. The option \code{mice.printFlag} is
+#' still respected if \code{mice.print} is not set.
 #' @param seed An integer that is used as argument by the \code{set.seed()} for
 #' offsetting the random number generator. Default is to leave the random number
 #' generator alone.
@@ -245,6 +315,20 @@
 #' are created by a simple random draw from the data. Note that specification of
 #' \code{data.init} will start all \code{m} Gibbs sampling streams from the same
 #' imputation.
+#' @param parallel Logical. If \code{TRUE}, the \code{m} imputation chains are
+#' run in parallel using the \pkg{future} and \pkg{future.apply} packages.
+#' The default \code{parallel = FALSE} uses the sequential sampler, which
+#' performs each iteration for all chains before it starts the next one.
+#' See the section \emph{Parallel imputation} for details.
+#' @param n.core Optional positive integer with the number of workers used
+#' when \code{parallel = TRUE}. If \code{NULL} (default), \code{mice()} uses
+#' the \code{future} plan set by the user, or, if no plan is set, a
+#' \code{multisession} plan with \code{min(m, availableCores() - 1)} workers.
+#' A non-\code{NULL} value of \code{n.core} sets up a \code{multisession}
+#' plan with \code{min(m, n.core)} workers, and \code{n.core = 1} runs the
+#' chains one after the other through \pkg{future}, each over all
+#' iterations. A plan set by \code{mice()} is
+#' reset when \code{mice()} returns.
 #' @param \dots Named arguments that are passed down to the univariate imputation
 #' functions.
 #'
@@ -256,7 +340,8 @@
 #' Roel de Jong, Jason Turner, Lisa Doove,
 #' John Fox, Frank E. Harrell, and Peter Malewski.
 #' @seealso \code{\link[=mids-class]{mids}}, \code{\link{with.mids}},
-#' \code{\link{set.seed}}, \code{\link{complete}}
+#' \code{\link{set.seed}}, \code{\link{complete}},
+#' \code{\link[future]{plan}}, \code{\link[future.apply]{future_lapply}}
 #' @references Van Buuren, S., Groothuis-Oudshoorn, K. (2011). \code{mice}:
 #' Multivariate Imputation by Chained Equations in \code{R}. \emph{Journal of
 #' Statistical Software}, \bold{45}(3), 1-67.
@@ -333,10 +418,13 @@ mice <- function(
   post = NULL,
   defaultMethod = c("pmm", "logreg", "polyreg", "polr"),
   maxit = 5,
-  printFlag = getOption("mice.printFlag", TRUE),
+  print = getOption("mice.print", getOption("mice.printFlag", TRUE)),
   seed = NA,
   data.init = NULL,
-  ...
+  parallel = FALSE,
+  n.core = NULL,
+  ...,
+  printFlag = print
 ) {
   call <- match.call()
   check.deprecated(...)
@@ -490,25 +578,43 @@ mice <- function(
   # and iterate...
   from <- 1
   to <- from + maxit - 1
-  q <- sampler(
-    data,
-    m,
-    ignore,
-    where,
-    imp,
-    blocks,
-    method,
-    visitSequence,
-    predictorMatrix,
-    formulas,
-    calltype,
-    blots,
-    post,
-    c(from, to),
-    printFlag,
-    ...
+  if (parallel) {
+    oldplan <- setup.parallel(m, n.core)
+    if (!is.null(oldplan)) {
+      on.exit(future::plan(oldplan), add = TRUE)
+    }
+  }
+  sampler.fun <- if (parallel) sampler.parallel else sampler
+  progress <- make.progress(m * maxit)
+  q <- sampler.fun(
+    data = data,
+    m = m,
+    ignore = ignore,
+    where = where,
+    imp = imp,
+    blocks = blocks,
+    method = method,
+    visitSequence = visitSequence,
+    predictorMatrix = predictorMatrix,
+    formulas = formulas,
+    calltype = calltype,
+    blots = blots,
+    post = post,
+    fromto = c(from, to),
+    printFlag = printFlag,
+    ...,
+    progress = progress
   )
 
+  # append events logged by the parallel chains to those from the setup
+  if (parallel && !is.null(q$loggedEvents)) {
+    if (.mice.state$log) {
+      loggedEvents <- rbind(loggedEvents, q$loggedEvents)
+    } else {
+      loggedEvents <- q$loggedEvents
+    }
+    .mice.state$log <- TRUE
+  }
   if (!.mice.state$log) {
     loggedEvents <- NULL
   }
@@ -543,7 +649,9 @@ mice <- function(
     ),
     chainMean = q$chainMean,
     chainVar = q$chainVar,
-    loggedEvents = loggedEvents
+    loggedEvents = loggedEvents,
+    parallel = parallel,
+    chainSeed = q$chainSeed
   )
 
   if (!is.null(midsobj$loggedEvents)) {

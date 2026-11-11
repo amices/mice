@@ -23,4 +23,5 @@ vignettes/
 ^CRAN-SUBMISSION$
 ^scratch$
 ^Rplots\.pdf$
-^.claude$
+^\.claude$
+^\.git$

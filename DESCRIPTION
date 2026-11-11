@@ -68,8 +68,10 @@ Imports:
     utils
 Suggests:
     broom.mixed,
-    future, 
+    future,
+    future.apply,
     furrr,
+    globals,
     haven,
     kernlab,
     knitr,
@@ -79,6 +81,7 @@ Suggests:
     miceadds,
     pan,
     parallelly,
+    progressr,
     purrr,
     ranger,
     randomForest,

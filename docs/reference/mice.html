@@ -43,7 +43,8 @@ Generates Multivariate Imputations by Chained Equations (MICE)"><meta property="
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
-    <li><a class="dropdown-item" href="../articles/oldfriends.html">Help for old friends</a></li>
+    <li><a class="dropdown-item" href="../articles/parallel.html">Parallel imputation</a></li>
+    <li><a class="dropdown-item" href="../articles/parallel-benchmark.html">Parallel imputation: benchmarks</a></li>
     <li><a class="dropdown-item" href="../articles/random-effects-2l-bin.html">Random effects strategies in `mice.impute.2l.bin`</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -92,10 +93,13 @@ implemented to inspect the quality of the imputations.</p>
 <span>  post <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  defaultMethod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pmm"</span>, <span class="st">"logreg"</span>, <span class="st">"polyreg"</span>, <span class="st">"polr"</span><span class="op">)</span>,</span>
 <span>  maxit <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  printFlag <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mice.printFlag"</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  print <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mice.print"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mice.printFlag"</span>, <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  seed <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  data.init <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span></span>
+<span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  n.core <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  printFlag <span class="op">=</span> <span class="va">print</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -231,7 +235,16 @@ expressions as strings. Each string is parsed and
 executed within the <code>sampler()</code> function to post-process
 imputed values during the iterations.
 The default is a vector of empty strings, indicating no post-processing.
-Multivariate (block) imputation methods ignore the <code>post</code> parameter.</p></dd>
+Multivariate (block) imputation methods ignore the <code>post</code> parameter.
+The expression can use the current variable <code>j</code>, the iteration
+<code>k</code>, the column <code>i</code> of the imputations and the imputation
+number <code>chain</code>, for example
+<code>"imp[[j]][, i] &lt;- squeeze(imp[[j]][, i], c(100, 300))"</code>. Use
+<code>i</code> to index <code>imp[[j]]</code>, and <code>chain</code> for anything that
+should differ between imputations, e.g.
+<code>"imp[[j]][, i] &lt;- imp[[j]][, i] + delta[chain]"</code>. The two are equal
+for <code>parallel = FALSE</code>, but with <code>parallel = TRUE</code> each chain
+has only one column, so <code>i</code> is always 1.</p></dd>
 
 
 <dt id="arg-defaultmethod">defaultMethod<a class="anchor" aria-label="anchor" href="#arg-defaultmethod"></a></dt>
@@ -249,9 +262,11 @@ levels) <code>polr</code>, proportional odds model for (ordered, &gt; 2 levels).
 <dd><p>A scalar giving the number of iterations. The default is 5.</p></dd>
 
 
-<dt id="arg-printflag">printFlag<a class="anchor" aria-label="anchor" href="#arg-printflag"></a></dt>
-<dd><p>If <code>TRUE</code>, <code>mice</code> will print history on console.
-Use <code>print=FALSE</code> for silent computation.</p></dd>
+<dt id="arg-print">print<a class="anchor" aria-label="anchor" href="#arg-print"></a></dt>
+<dd><p>Logical. If <code>TRUE</code> (default), <code>mice()</code> prints the
+iteration history on the console. Use <code>print = FALSE</code> for silent
+computation. The default can be set for the session by
+<code>options(mice.print = FALSE)</code>.</p></dd>
 
 
 <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
@@ -269,9 +284,36 @@ are created by a simple random draw from the data. Note that specification of
 imputation.</p></dd>
 
 
+<dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
+<dd><p>Logical. If <code>TRUE</code>, the <code>m</code> imputation chains are
+run in parallel using the <span class="pkg">future</span> and <span class="pkg">future.apply</span> packages.
+The default <code>parallel = FALSE</code> uses the sequential sampler, which
+performs each iteration for all chains before it starts the next one.
+See the section <em>Parallel imputation</em> for details.</p></dd>
+
+
+<dt id="arg-n-core">n.core<a class="anchor" aria-label="anchor" href="#arg-n-core"></a></dt>
+<dd><p>Optional positive integer with the number of workers used
+when <code>parallel = TRUE</code>. If <code>NULL</code> (default), <code>mice()</code> uses
+the <code>future</code> plan set by the user, or, if no plan is set, a
+<code>multisession</code> plan with <code>min(m, availableCores() - 1)</code> workers.
+A non-<code>NULL</code> value of <code>n.core</code> sets up a <code>multisession</code>
+plan with <code>min(m, n.core)</code> workers, and <code>n.core = 1</code> runs the
+chains one after the other through <span class="pkg">future</span>, each over all
+iterations. A plan set by <code>mice()</code> is
+reset when <code>mice()</code> returns.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Named arguments that are passed down to the univariate imputation
 functions.</p></dd>
+
+
+<dt id="arg-printflag">printFlag<a class="anchor" aria-label="anchor" href="#arg-printflag"></a></dt>
+<dd><p>Legacy name of <code>print</code>, kept for backward
+compatibility. If given, it takes precedence over <code>print</code>. New
+code should use <code>print</code>. The option <code>mice.printFlag</code> is
+still respected if <code>mice.print</code> is not set.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -427,6 +469,68 @@ depend on the operating system. See the discussion in the
 "R Installation and Administration" guide for further information.</p>
     </div>
     <div class="section level2">
+    <h2 id="parallel-imputation">Parallel imputation<a class="anchor" aria-label="anchor" href="#parallel-imputation"></a></h2>
+
+
+<p>The <code>m</code> chains of the Gibbs sampler are independent: imputation
+<code>i</code> only uses the values from chain <code>i</code>. With
+<code>parallel = TRUE</code>, <code>mice()</code> initializes the imputations as usual,
+and then runs each chain over all <code>maxit</code> iterations on a separate
+worker by <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future.apply::future_lapply()</a></code>. The results are combined
+into one <code>mids</code> object, including <code>chainMean</code>, <code>chainVar</code>
+and <code>loggedEvents</code>.</p>
+<p>Each chain gets its own random number stream (<code>future.seed = TRUE</code>).
+Results with the same <code>seed</code> are therefore reproducible across runs
+with <code>parallel = TRUE</code>, also for a different number of workers, but
+they differ from those of <code>parallel = FALSE</code>.</p>
+<p>Running chains in parallel adds the cost of starting workers and copying
+the data to them. It pays off for large data or for slow imputation
+methods, but usually not for small data. With <code>print = TRUE</code>,
+<code>mice()</code> reports the total time instead of the iteration history.
+Imputation methods defined by the user, for example
+<code>mice.impute.mymethod()</code> in the global environment, are sent to the
+workers, together with the objects from the global environment they use.
+Imputation methods from other packages must be installed on the workers.
+Within <code>post</code>, the column index <code>i</code> is always 1, as each
+worker holds one chain; use <code>chain</code> for the imputation number (see
+argument <code>post</code>).
+The <code>mids</code> object stores whether the chains ran in parallel, and the
+state of the random number stream of each chain (<code>chainSeed</code>).
+<code><a href="mice.mids.html">mice.mids()</a></code> uses these to continue the chains in parallel,
+with the same result as a single call with all iterations.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="errors-during-imputation">Errors during imputation<a class="anchor" aria-label="anchor" href="#errors-during-imputation"></a></h2>
+
+
+<p>If an imputation method or a <code>post</code> statement fails, <code>mice()</code>
+stops with an error of class <code>mice_sampler_error</code> that names the
+iteration, the imputation (the chain), the variable and the method at
+which the error occurred, followed by the original message. This also
+holds for <code>parallel = TRUE</code>, where a failing chain stops all chains.
+The fields <code>iteration</code>, <code>imputation</code>, <code>variable</code>,
+<code>method</code> and <code>post</code> of the condition contain these details, and
+the field <code>parent</code> holds the original error, e.g.
+<code>e &lt;- tryCatch(mice(...), error = identity); e$parent</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="progress-reporting">Progress reporting<a class="anchor" aria-label="anchor" href="#progress-reporting"></a></h2>
+
+
+<p>If the <span class="pkg">progressr</span> package is installed, <code>mice()</code> and
+<code><a href="mice.mids.html">mice.mids()</a></code> signal one progress step after each iteration of
+each chain, <code>m * maxit</code> steps in total, with a message such as
+<code>"iter 3, imp 2"</code>. This works for both <code>parallel = FALSE</code> and
+<code>parallel = TRUE</code>; in the latter case the steps are relayed from the
+workers while the chains run. The progress is only shown if the user
+enables it, for example by
+<code>progressr::with_progress(imp &lt;- mice(nhanes, parallel = TRUE))</code>, or
+for the whole session by <code>progressr::handlers(global = TRUE)</code>. The
+function <code><a href="https://progressr.futureverse.org/reference/handlers.html" class="external-link">progressr::handlers()</a></code> sets the type of display. Without a
+handler, or without <span class="pkg">progressr</span>, nothing is shown. Progress reporting
+does not change the imputations.</p>
+    </div>
+    <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>van Buuren, S., Boshuizen, H.C., Knook, D.L. (1999) Multiple
 imputation of missing blood pressure covariates in survival analysis.
@@ -465,7 +569,8 @@ data sets.</em> Dissertation. Rotterdam: Erasmus University.</p>
     <div class="dont-index"><p><code>mice</code>, <code><a href="with.mids.html">with.mids</a></code>,
 <code><a href="pool.html">pool</a></code>, <code><a href="complete.mids.html">complete</a></code>, <code><a href="ampute.html">ampute</a></code></p>
 <p><code><a href="mids.html">mids</a></code>, <code><a href="with.mids.html">with.mids</a></code>,
-<code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></code>, <code><a href="complete.mids.html">complete</a></code></p></div>
+<code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></code>, <code><a href="complete.mids.html">complete</a></code>,
+<code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></code>, <code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_lapply</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

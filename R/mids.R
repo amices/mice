@@ -22,6 +22,7 @@
 #' @param chainMean Calculated field
 #' @param chainVar Calculated field
 #' @param loggedEvents Calculated field
+#' @param chainSeed Calculated field
 #' @param version Calculated field
 #' @param date Calculated field
 #' @return
@@ -72,6 +73,13 @@
 #'    \code{chainMean}, containing the variance of the imputed values.}
 #'    \item{\code{loggedEvents}:}{A \code{data.frame} with five columns
 #'    containing warnings, corrective actions, and other inside info.}
+#'    \item{\code{parallel}:}{Logical indicating whether the last iterations
+#'    ran the chains in parallel (\code{parallel = TRUE} in \code{mice()}
+#'    or \code{mice.mids()}).}
+#'    \item{\code{chainSeed}:}{If \code{parallel = TRUE}, a list with, for
+#'    each chain, the state of its random number stream after the last
+#'    iteration, used by \code{mice.mids()} to continue the chain exactly;
+#'    otherwise \code{NULL}.}
 #'    \item{\code{version}:}{Version number of \code{mice} package that
 #'    created the object.}
 #'    \item{\code{date}:}{Date at which the object was created.}
@@ -174,6 +182,8 @@ mids <- function(
   chainMean = list(),
   chainVar = list(),
   loggedEvents = data.frame(),
+  parallel = FALSE,
+  chainSeed = NULL,
   version = packageVersion("mice"),
   date = Sys.Date()
 ) {
@@ -199,6 +209,8 @@ mids <- function(
     chainMean = chainMean,
     chainVar = chainVar,
     loggedEvents = loggedEvents,
+    parallel = parallel,
+    chainSeed = chainSeed,
     version = packageVersion("mice"),
     date = Sys.Date()
   )
