@@ -11,6 +11,13 @@ S3method(cc,mids)
 S3method(cci,default)
 S3method(cci,mids)
 S3method(complete,mids)
+S3method(d3.loglik,glm)
+S3method(d3.loglik,lm)
+S3method(d3.loglik,lmerMod)
+S3method(d3.pars,default)
+S3method(d3.pars,glm)
+S3method(d3.pars,lm)
+S3method(d3.pars,lmerMod)
 S3method(densityplot,mids)
 S3method(df.residual,lme)
 S3method(df.residual,mer)
@@ -243,9 +250,12 @@ importFrom(stats,
   is.empty.model,
   lm,
   lm.fit,
+  logLik,
   median,
   model.frame,
   model.matrix,
+  model.offset,
+  model.response,
   na.exclude,
   na.omit,
   na.pass,
@@ -259,6 +269,7 @@ importFrom(stats,
   rbinom,
   rchisq,
   reformulate,
+  residuals,
   rgamma,
   rnorm,
   runif,
@@ -268,7 +279,8 @@ importFrom(stats,
   terms,
   update,
   var,
-  vcov
+  vcov,
+  weights
 )
 importFrom(tidyr,complete)
 importFrom(utils,

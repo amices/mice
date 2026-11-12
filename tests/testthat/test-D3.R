@@ -43,49 +43,32 @@ z2 <- mitml::testModels(
   method = "D3"
 )
 
-# D3() constrains the regression coefficients to their pooled values and
-# re-estimates the residual variance in each imputed dataset. testModels()
-# also constrains the residual variance to its pooled value, as in Meng and
-# Rubin (1992). The two therefore differ for lm. The helper below evaluates
-# the likelihood with both the coefficients and the ML residual variance
-# pooled, which should reproduce testModels() exactly.
-d3_pooled_sigma <- function(fit1, fit0) {
-  fit1 <- getfit(fit1)
-  fit0 <- getfit(fit0)
-  m <- length(fit1)
-  qbar1 <- colMeans(do.call(rbind, lapply(fit1, coef)))
-  qbar0 <- colMeans(do.call(rbind, lapply(fit0, coef)))
-  k <- length(qbar1) - length(qbar0)
-  s2 <- function(f) sum(residuals(f)^2) / nobs(f)
-  s2bar1 <- mean(vapply(fit1, s2, numeric(1)))
-  s2bar0 <- mean(vapply(fit0, s2, numeric(1)))
-  ll <- function(f, beta, s2) {
-    y <- model.response(model.frame(f))
-    r <- y - model.matrix(f) %*% beta
-    -length(y) / 2 * log(2 * pi * s2) - sum(r^2) / (2 * s2)
-  }
-  dev.M <- mean(-2 * (
-    vapply(fit0, logLik, numeric(1)) - vapply(fit1, logLik, numeric(1))
-  ))
-  dev.L <- mean(-2 * mapply(
-    function(f0, f1) ll(f0, qbar0, s2bar0) - ll(f1, qbar1, s2bar1),
-    fit0,
-    fit1
-  ))
-  rm <- ((m + 1) / (k * (m - 1))) * (dev.M - dev.L)
-  c(Dm = dev.L / (k * (1 + rm)), rm = rm)
-}
+test_that("D3-003: lm, imputed data: D3() equals mitml::testModels()", {
+  expect_equal(unname(z1$result[1]), unname(z2$test[1]), tolerance = 1e-6)
+  expect_equal(unname(z1$result[3]), unname(z2$test[3]), tolerance = 1e-6)
+  expect_equal(unname(z1$result[4]), unname(z2$test[4]), tolerance = 1e-6)
+  expect_equal(unname(z1$result[5]), unname(z2$test[5]), tolerance = 1e-6)
+})
 
-test_that("D3-003: lm, imputed data: D3() differs from testModels() only in the handling of sigma", {
-  ps <- d3_pooled_sigma(fit1, fit0)
-  expect_equal(unname(ps["Dm"]), unname(z2$test[1]), tolerance = 1e-6)
-  expect_equal(unname(ps["rm"]), unname(z2$test[5]), tolerance = 1e-6)
-  expect_false(isTRUE(all.equal(z1$result[1], z2$test[1])))
+test_that("D3-003b: lm, imputed data: gaussian glm gives the same D3 as lm", {
+  g1 <- with(data = imp, expr = glm(hyp ~ age + chl))
+  g0 <- with(data = imp, expr = glm(hyp ~ 1))
+  zg <- D3(g1, g0)
+  expect_equal(zg$result, z1$result, tolerance = 1e-6)
+})
+
+test_that("D3-003c: lm, imputed data: D3() with fit0 = NULL tests all coefficients", {
+  z <- D3(fit1)
+  expect_s3_class(z, "mice.anova")
+  expect_equal(unname(z$result[2]), 2)
+  expect_true(is.finite(z$result[1]))
 })
 
 # imputed data: lmer (requires broom.mixed)
-test_that("D3-004: lmer, imputed data: mice D3() and mitml testModels() calculate same F", {
+test_that("D3-004: lmer, imputed data: D3() equals mitml::testModels() and refits REML", {
   skip_if_not_installed("broom.mixed")
+  skip_if_not_installed("lme4")
+  skip_if_not_installed("pan")
   suppressPackageStartupMessages(library(mitml))
   library(lme4)
   data(studentratings)
@@ -108,11 +91,14 @@ test_that("D3-004: lmer, imputed data: mice D3() and mitml testModels() calculat
   z3 <- D3(fit1_lmer, fit0_lmer)
   z4 <- mitml::testModels(fit1_lmer, fit0_lmer, method = "D3")
   expect_s3_class(z3, "mice.anova")
-  expect_true(is.finite(z3$result[1]))
-  skip(
-    "D3() constrains the fixed effects only; testModels() also constrains the variance components (see ?D3)"
-  )
-  expect_equal(z3$result[1], z4$test[1])
+  expect_equal(unname(z3$result[1]), unname(z4$test[1]), tolerance = 1e-6)
+  expect_equal(unname(z3$result[5]), unname(z4$test[5]), tolerance = 1e-6)
+
+  # REML fits are refitted with ML and give the same result
+  fit1_reml <- with(implist, lmer(ReadAchiev ~ ReadDis + SES + (1 | ID)))
+  fit0_reml <- with(implist, lmer(ReadAchiev ~ (1 | ID)))
+  expect_message(z3r <- D3(fit1_reml, fit0_reml), "REML")
+  expect_equal(z3r$result, z3$result, tolerance = 1e-6)
 })
 
 # glm: without missing data D3 must reduce to the likelihood ratio test.
@@ -161,9 +147,17 @@ z8 <- mitml::testModels(
   method = "D3"
 )
 
-test_that("D3-006: lm with factors, imputed data: D3() differs from testModels() only in the handling of sigma", {
-  ps <- d3_pooled_sigma(fit1, fit0)
-  expect_equal(unname(ps["Dm"]), unname(z8$test[1]), tolerance = 1e-6)
-  expect_equal(unname(ps["rm"]), unname(z8$test[5]), tolerance = 1e-6)
-  expect_false(isTRUE(all.equal(z7$result[1], z8$test[1])))
+test_that("D3-006: lm with factors, imputed data: D3() equals mitml::testModels()", {
+  expect_equal(unname(z7$result[1]), unname(z8$test[1]), tolerance = 1e-6)
+  expect_equal(unname(z7$result[3]), unname(z8$test[3]), tolerance = 1e-6)
+  expect_equal(unname(z7$result[4]), unname(z8$test[4]), tolerance = 1e-6)
+  expect_equal(unname(z7$result[5]), unname(z8$test[5]), tolerance = 1e-6)
+})
+
+test_that("D3-007: weighted lm: D3() with equal weights equals the unweighted result", {
+  w1 <- with(data = imp2, expr = lm(bmi ~ age + chl + hyp, weights = rep(2, 25)))
+  w0 <- with(data = imp2, expr = lm(bmi ~ age, weights = rep(2, 25)))
+  zw <- D3(w1, w0)
+  # equal weights do not change the estimates, nor the likelihood ratio
+  expect_equal(zw$result, z7$result, tolerance = 1e-6)
 })

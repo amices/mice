@@ -27,26 +27,23 @@ An object of class \code{mice.anova}
 The D3-statistic is a likelihood-ratio test statistic.
 }
 \details{
-The \code{D3()} function implement the LR-method by
-Meng and Rubin (1992). The implementation of the method relies
-on the \code{broom} package, the standard \code{update} mechanism
-for statistical models in \code{R} and the \code{offset} function.
+The \code{D3()} function implements the likelihood-ratio method of
+Meng and Rubin (1992). For each of the \code{m} imputed datasets, the
+function calculates the deviance between the full and the null model
+as fitted, and the deviance between the two models with all parameters
+fixed at their estimates pooled over the imputations. The pooled
+parameters include the nuisance parameters: the residual variance in
+\code{lm} and gaussian \code{glm}, and the variance components and
+residual variance in \code{lmer} models. Models fitted by REML are
+refitted by ML.
 
-The function calculates \code{m} repetitions of the full
-(or null) models, calculates the mean of the estimates of the
-(fixed) parameter coefficients \eqn{\beta}. For each imputed
-imputed dataset, it calculates the likelihood for the model with
-the parameters constrained to \eqn{\beta}.
-
-The \code{mitml::testModels()} function offers similar functionality
-for a subset of statistical models. Results of \code{mice::D3()} and
-\code{mitml::testModels()} differ because \code{D3()} constrains only
-the regression coefficients to their pooled values and re-estimates the
-nuisance parameters (the residual variance in \code{lm}, the variance
-components in multilevel models) in each imputed dataset, whereas
-\code{testModels()} also constrains the nuisance parameters to their
-pooled values. The two methods agree for models without nuisance
-parameters, such as logistic regression, and without missing data.
+The log-likelihood at fixed parameters is evaluated exactly for
+\code{lm}, for \code{glm} with the gaussian, binomial and poisson
+families, and for \code{lmerMod}. For these classes \code{D3()} gives
+the same result as \code{mitml::testModels(method = "D3")}. For other
+classes, \code{D3()} constrains the regression coefficients by means of
+\code{\link{fix.coef}} and re-estimates the remaining parameters in
+each imputed dataset, which approximates the method.
 
 A negative \code{D3} statistic signals that the models constrained to
 the pooled coefficients fit much worse than the models as fitted. This

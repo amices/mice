@@ -3,26 +3,23 @@
 #' The D3-statistic is a likelihood-ratio test statistic.
 #'
 #' @details
-#' The \code{D3()} function implement the LR-method by
-#' Meng and Rubin (1992). The implementation of the method relies
-#' on the \code{broom} package, the standard \code{update} mechanism
-#' for statistical models in \code{R} and the \code{offset} function.
+#' The \code{D3()} function implements the likelihood-ratio method of
+#' Meng and Rubin (1992). For each of the \code{m} imputed datasets, the
+#' function calculates the deviance between the full and the null model
+#' as fitted, and the deviance between the two models with all parameters
+#' fixed at their estimates pooled over the imputations. The pooled
+#' parameters include the nuisance parameters: the residual variance in
+#' \code{lm} and gaussian \code{glm}, and the variance components and
+#' residual variance in \code{lmer} models. Models fitted by REML are
+#' refitted by ML.
 #'
-#' The function calculates \code{m} repetitions of the full
-#' (or null) models, calculates the mean of the estimates of the
-#' (fixed) parameter coefficients \eqn{\beta}. For each imputed
-#' imputed dataset, it calculates the likelihood for the model with
-#' the parameters constrained to \eqn{\beta}.
-#'
-#' The \code{mitml::testModels()} function offers similar functionality
-#' for a subset of statistical models. Results of \code{mice::D3()} and
-#' \code{mitml::testModels()} differ because \code{D3()} constrains only
-#' the regression coefficients to their pooled values and re-estimates the
-#' nuisance parameters (the residual variance in \code{lm}, the variance
-#' components in multilevel models) in each imputed dataset, whereas
-#' \code{testModels()} also constrains the nuisance parameters to their
-#' pooled values. The two methods agree for models without nuisance
-#' parameters, such as logistic regression, and without missing data.
+#' The log-likelihood at fixed parameters is evaluated exactly for
+#' \code{lm}, for \code{glm} with the gaussian, binomial and poisson
+#' families, and for \code{lmerMod}. For these classes \code{D3()} gives
+#' the same result as \code{mitml::testModels(method = "D3")}. For other
+#' classes, \code{D3()} constrains the regression coefficients by means of
+#' \code{\link{fix.coef}} and re-estimates the remaining parameters in
+#' each imputed dataset, which approximates the method.
 #'
 #' A negative \code{D3} statistic signals that the models constrained to
 #' the pooled coefficients fit much worse than the models as fitted. This
@@ -86,30 +83,27 @@ D3 <- function(fit1, fit0 = NULL, dfcom = NULL, df.com = NULL) {
   qbar0 <- getqbar(est0)
   k <- length(qbar1) - length(qbar0)
 
-  # For each imputed dataset, calculate the deviance between the two
-  # models as fitted
-  dev1.M <- -2 *
-    lapply(fit1, glance) %>%
-      bind_rows() %>%
-      pull(.data$logLik)
-  dev0.M <- -2 *
-    lapply(fit0, glance) %>%
-      bind_rows() %>%
-      pull(.data$logLik)
+  # refit REML fits with ML, since D3 needs the likelihood
+  reml <- vapply(
+    c(fit1, fit0),
+    function(f) inherits(f, "merMod") && lme4::isREML(f),
+    logical(1)
+  )
+  if (any(reml)) {
+    message("D3: refitting REML models with ML")
+    fit1 <- lapply(fit1, d3.ml)
+    fit0 <- lapply(fit0, d3.ml)
+  }
 
-  # For each imputed dataset, calculate the deviance between the two
-  # models with coefficients restricted to qbar
-  mds1 <- lapply(fit1, fix.coef, beta = qbar1)
-  dev1.L <- -2 *
-    lapply(mds1, glance) %>%
-      bind_rows() %>%
-      pull(.data$logLik)
+  # For each imputed dataset, the deviance of the two models as fitted
+  dev1.M <- -2 * vapply(fit1, function(f) as.numeric(logLik(f)), numeric(1))
+  dev0.M <- -2 * vapply(fit0, function(f) as.numeric(logLik(f)), numeric(1))
 
-  mds0 <- lapply(fit0, fix.coef, beta = qbar0)
-  dev0.L <- -2 *
-    lapply(mds0, glance) %>%
-      bind_rows() %>%
-      pull(.data$logLik)
+  # For each imputed dataset, the deviance of the two models with all
+  # parameters, including the nuisance parameters, fixed at their pooled
+  # values (Meng and Rubin, 1992)
+  dev1.L <- -2 * d3.restricted(fit1)
+  dev0.L <- -2 * d3.restricted(fit0)
 
   deviances <- list(
     dev1.M = dev1.M,

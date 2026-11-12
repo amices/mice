@@ -1,10 +1,18 @@
 # mice 3.19.15
 
+- `D3()` now follows Meng and Rubin (1992) exactly. The deviance of the
+  constrained models is evaluated with all parameters fixed at their pooled
+  values, including the nuisance parameters: the residual variance in `lm`
+  and gaussian `glm`, and the variance components in `lmer` models. Models
+  fitted by REML are refitted by ML. For these classes `D3()` now gives the
+  same result as `mitml::testModels(method = "D3")`. Previously, `D3()`
+  constrained only the regression coefficients and re-estimated the
+  nuisance parameters, which inflated the statistic somewhat. The `D3`
+  statistics and p-values for `lm` and `lmer` therefore change. For other
+  model classes `D3()` keeps the previous approach.
 - `D3()` now warns when the statistic is negative, which happens when the
   coefficients are unstable across imputations, e.g. under separation in
-  logistic regression. The documentation of `D3()` now explains why its
-  results differ from `mitml::testModels()`: `D3()` constrains only the
-  regression coefficients, `testModels()` also the nuisance parameters.
+  logistic regression.
 
 - `parlmice()` no longer changes the RNG kind of the session to
   `L'Ecuyer-CMRG`, a side effect of `parallel::clusterSetRNGStream()`.
