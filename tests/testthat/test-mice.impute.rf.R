@@ -131,7 +131,9 @@ test_that("MICE-IMPUTE-RF-006: the number of threads reaches ranger", {
   skip_if_not_installed("parallelly")
   restore <- set.rf.env(mc.cores = 1L, Ncpus = NULL, ranger.num.threads = NULL)
   on.exit(restore(), add = TRUE)
-  threads <- function(...) captured.threads("ranger", "ranger", "num.threads", ...)
+  threads <- function(...) {
+    captured.threads("ranger", "ranger", "num.threads", ...)
+  }
   expect_identical(threads(), 1L)
   expect_identical(threads(num.threads = 3), 3)
   options(ranger.num.threads = 3)
@@ -143,7 +145,9 @@ test_that("MICE-IMPUTE-RF-007: the number of threads reaches literanger", {
   skip_if_not_installed("parallelly")
   restore <- set.rf.env(mc.cores = 1L)
   on.exit(restore(), add = TRUE)
-  threads <- function(...) captured.threads("train", "literanger", "n_thread", ...)
+  threads <- function(...) {
+    captured.threads("train", "literanger", "n_thread", ...)
+  }
   expect_identical(threads(), 1L)
   expect_identical(threads(n_thread = 3), 3)
 })

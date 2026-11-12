@@ -138,7 +138,10 @@ test_that("MIDS-PARALLEL-011: the future field describes the run", {
 
 test_that("MIDS-PARALLEL-012: removed arguments give a warning", {
   imp <- fut_mice(nhanes, m = 2, maxit = 1, seed = 1)
-  expect_warning(mice.mids(imp, n.core = 2, print = FALSE), "no longer supported")
+  expect_warning(
+    mice.mids(imp, n.core = 2, print = FALSE),
+    "no longer supported"
+  )
   expect_warning(
     mice.mids(imp, parallel = TRUE, print = FALSE),
     "no longer supported"

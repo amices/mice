@@ -1,12 +1,16 @@
 test_that("SAMPLER-ERROR-001: errors in a method name the iteration, imputation and variable", {
   assign("calls.se001", 0L, envir = globalenv())
-  assign("mice.impute.se001", function(y, ry, x, ...) {
-    calls.se001 <<- calls.se001 + 1L
-    if (calls.se001 == 5L) {
-      stop("failure in se001")
-    }
-    mice.impute.pmm(y, ry, x, ...)
-  }, envir = globalenv())
+  assign(
+    "mice.impute.se001",
+    function(y, ry, x, ...) {
+      calls.se001 <<- calls.se001 + 1L
+      if (calls.se001 == 5L) {
+        stop("failure in se001")
+      }
+      mice.impute.pmm(y, ry, x, ...)
+    },
+    envir = globalenv()
+  )
   on.exit(
     rm(list = c("calls.se001", "mice.impute.se001"), envir = globalenv()),
     add = TRUE

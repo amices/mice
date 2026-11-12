@@ -97,8 +97,8 @@ sampler.future <- function(
     for (j in names(imp)) {
       imp[[j]][, i] <- q$imp[[j]][, 1L]
     }
-    chainMean[, , i] <- q$chainMean[, , 1L]
-    chainVar[, , i] <- q$chainVar[, , 1L]
+    chainMean[,, i] <- q$chainMean[,, 1L]
+    chainVar[,, i] <- q$chainVar[,, 1L]
   }
 
   # combine event logs in the order of the sequential sampler

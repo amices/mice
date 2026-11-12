@@ -338,7 +338,11 @@ sampler.error <- function(e, iteration, imputation, variable, method, post) {
   if (inherits(e, "mice_sampler_error")) {
     return(invisible())
   }
-  what <- if (post) "post-processing" else paste0("method '", unname(method), "'")
+  what <- if (post) {
+    "post-processing"
+  } else {
+    paste0("method '", unname(method), "'")
+  }
   msg <- paste0(
     "mice() stopped at iteration ",
     iteration,

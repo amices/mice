@@ -171,12 +171,20 @@ test_that("MICE-PARALLEL-011: results do not depend on the number of workers", {
 })
 
 test_that("MICE-PARALLEL-012: user-defined methods and their helpers reach the chains", {
-  assign("helper.par012", function(y, ry, x, ...) {
-    mice.impute.pmm(y, ry, x, ...)
-  }, envir = globalenv())
-  assign("mice.impute.par012", function(y, ry, x, ...) {
-    helper.par012(y, ry, x, ...)
-  }, envir = globalenv())
+  assign(
+    "helper.par012",
+    function(y, ry, x, ...) {
+      mice.impute.pmm(y, ry, x, ...)
+    },
+    envir = globalenv()
+  )
+  assign(
+    "mice.impute.par012",
+    function(y, ry, x, ...) {
+      helper.par012(y, ry, x, ...)
+    },
+    envir = globalenv()
+  )
   on.exit(
     rm(list = c("helper.par012", "mice.impute.par012"), envir = globalenv()),
     add = TRUE
@@ -213,13 +221,17 @@ test_that("MICE-PARALLEL-013: errors name the iteration, chain and variable", {
   # fails at the fifth call: chain 2, iteration 1, since each chain
   # runs over all iterations before the next chain starts
   assign("calls.par013", 0L, envir = globalenv())
-  assign("mice.impute.par013", function(y, ry, x, ...) {
-    calls.par013 <<- calls.par013 + 1L
-    if (calls.par013 == 5L) {
-      stop("failure in par013")
-    }
-    mice.impute.pmm(y, ry, x, ...)
-  }, envir = globalenv())
+  assign(
+    "mice.impute.par013",
+    function(y, ry, x, ...) {
+      calls.par013 <<- calls.par013 + 1L
+      if (calls.par013 == 5L) {
+        stop("failure in par013")
+      }
+      mice.impute.pmm(y, ry, x, ...)
+    },
+    envir = globalenv()
+  )
   on.exit(
     rm(list = c("calls.par013", "mice.impute.par013"), envir = globalenv()),
     add = TRUE
@@ -307,12 +319,16 @@ test_that("MICE-PARALLEL-015: post can use objects from the global environment",
 test_that("MICE-PARALLEL-016: rf uses one thread per chain on future workers", {
   skip_if_not_installed("parallelly")
   # the method imputes the number of threads that rf would use
-  assign("mice.impute.par016", function(y, ry, x, wy = NULL, ...) {
-    if (is.null(wy)) {
-      wy <- !ry
-    }
-    rep(mice:::rf.threads(NULL, "literanger"), sum(wy))
-  }, envir = globalenv())
+  assign(
+    "mice.impute.par016",
+    function(y, ry, x, wy = NULL, ...) {
+      if (is.null(wy)) {
+        wy <- !ry
+      }
+      rep(mice:::rf.threads(NULL, "literanger"), sum(wy))
+    },
+    envir = globalenv()
+  )
   on.exit(rm("mice.impute.par016", envir = globalenv()), add = TRUE)
   meth <- make.method(nhanes)
   meth["bmi"] <- "par016"
