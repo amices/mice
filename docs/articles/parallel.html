@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.15</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.16</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,7 @@ call:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">123</span>, future <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Imputed 5 chains with future (multisession) on 2 workers, 5 iterations (0.68 secs)</span></span>
+<span><span class="co">#&gt;  Imputed 5 chains with future (multisession) on 2 workers, 5 iterations (0.31 secs)</span></span>
 <span><span class="va">imp</span></span>
 <span><span class="co">#&gt; Class: mids</span></span>
 <span><span class="co">#&gt; Number of multiple imputations:  5 </span></span>
@@ -384,7 +384,7 @@ the failing chain stops all chains:</p>
 <span><span class="va">post</span><span class="op">[</span><span class="st">"bmi"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"if (k == 3 &amp;&amp; chain == 4) stop('implausible values')"</span></span>
 <span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, post <span class="op">=</span> <span class="va">post</span>, seed <span class="op">=</span> <span class="fl">1</span>, future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>            print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Caught mice_sampler_error. Canceling all iterations ...</span></span>
+<span><span class="co">#&gt; Caught mice_sampler_error. Canceling all iterations ...</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> mice() stopped at iteration 3, imputation 4, variable 'bmi' (post-processing):</span></span>
 <span><span class="co">#&gt;   implausible values</span></span></code></pre></div>
@@ -397,7 +397,7 @@ the original error:</p>
 <span>       print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  error <span class="op">=</span> <span class="va">identity</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Caught mice_sampler_error. Canceling all iterations ...</span></span>
+<span><span class="co">#&gt; Caught mice_sampler_error. Canceling all iterations ...</span></span>
 <span><span class="va">e</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"iteration"</span>, <span class="st">"imputation"</span>, <span class="st">"variable"</span>, <span class="st">"method"</span>, <span class="st">"post"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; $iteration</span></span>
 <span><span class="co">#&gt; [1] 3</span></span>

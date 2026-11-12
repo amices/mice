@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.15</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.16</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,20 +85,27 @@ be done, the procedure assumes (perhaps incorrectly) a large sample.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The <code>D3()</code> function implement the LR-method by
-Meng and Rubin (1992). The implementation of the method relies
-on the <code>broom</code> package, the standard <code>update</code> mechanism
-for statistical models in <code>R</code> and the <code>offset</code> function.</p>
-<p>The function calculates <code>m</code> repetitions of the full
-(or null) models, calculates the mean of the estimates of the
-(fixed) parameter coefficients \(\beta\). For each imputed
-imputed dataset, it calculates the likelihood for the model with
-the parameters constrained to \(\beta\).</p>
-<p>The <code><a href="https://rdrr.io/pkg/mitml/man/testModels.html" class="external-link">mitml::testModels()</a></code> function offers similar functionality
-for a subset of statistical models. Results of <code>mice::D3()</code> and
-<code><a href="https://rdrr.io/pkg/mitml/man/testModels.html" class="external-link">mitml::testModels()</a></code> differ in multilevel models because the
-<code>testModels()</code> also constrains the variance components parameters.
-For more details on</p>
+    <p>The <code>D3()</code> function implements the likelihood-ratio method of
+Meng and Rubin (1992). For each of the <code>m</code> imputed datasets, the
+function calculates the deviance between the full and the null model
+as fitted, and the deviance between the two models with all parameters
+fixed at their estimates pooled over the imputations. The pooled
+parameters include the nuisance parameters: the residual variance in
+<code>lm</code> and gaussian <code>glm</code>, and the variance components and
+residual variance in <code>lmer</code> models. Models fitted by REML are
+refitted by ML.</p>
+<p>The log-likelihood at fixed parameters is evaluated exactly for
+<code>lm</code>, for <code>glm</code> with the gaussian, binomial and poisson
+families, and for <code>lmerMod</code>. For these classes <code>D3()</code> gives
+the same result as <code>mitml::testModels(method = "D3")</code>. For other
+classes, <code>D3()</code> constrains the regression coefficients by means of
+<code><a href="fix.coef.html">fix.coef</a></code> and re-estimates the remaining parameters in
+each imputed dataset, which approximates the method.</p>
+<p>A negative <code>D3</code> statistic signals that the models constrained to
+the pooled coefficients fit much worse than the models as fitted. This
+typically happens when the coefficients are unstable across imputations,
+for example under separation in logistic regression with small samples.
+<code>D3()</code> warns in that case, and the result should not be trusted.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -121,7 +128,7 @@ Performing Likelihood Ratio Tests with Multiply-Imputed Data Sets.
 <span class="r-in"><span><span class="va">mi0</span> <span class="op">&lt;-</span> <span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, expr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">D3</span><span class="op">(</span><span class="va">mi1</span>, <span class="va">mi0</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    test statistic df1      df2 dfcom   p.value      riv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1 ~~ 2  3.341736   1 8.186372    20 0.1041035 2.322385</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1 ~~ 2  1.854883   1 6.086733    20 0.2214652 4.281458</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co"># Compare two logistic regression models</span></span></span>
 <span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">boys</span>, maxit <span class="op">=</span> <span class="fl">2</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>

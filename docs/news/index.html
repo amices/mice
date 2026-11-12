@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.15</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.16</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,15 @@
       <small>Source: <a href="https://github.com/amices/mice/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.19.16" id="mice-31916">mice 3.19.16<a class="anchor" aria-label="anchor" href="#mice-31916"></a></h2>
+<ul><li><p><code><a href="../reference/D3.html">D3()</a></code> now follows Meng and Rubin (1992) exactly. The deviance of the constrained models is evaluated with all parameters fixed at their pooled values, including the nuisance parameters: the residual variance in <code>lm</code> and gaussian <code>glm</code>, and the variance components in <code>lmer</code> models. Models fitted by REML are refitted by ML. For these classes <code><a href="../reference/D3.html">D3()</a></code> now gives the same result as <code>mitml::testModels(method = "D3")</code>. Previously, <code><a href="../reference/D3.html">D3()</a></code> constrained only the regression coefficients and re-estimated the nuisance parameters, which inflated the statistic somewhat. The <code>D3</code> statistics and p-values for <code>lm</code> and <code>lmer</code> therefore change. For other model classes <code><a href="../reference/D3.html">D3()</a></code> keeps the previous approach.</p></li>
+<li><p><code><a href="../reference/D3.html">D3()</a></code> now warns when the statistic is negative, which happens when the coefficients are unstable across imputations, e.g. under separation in logistic regression.</p></li>
+<li><p><code><a href="../reference/parlmice.html">parlmice()</a></code> no longer changes the RNG kind of the session to <code>L'Ecuyer-CMRG</code>, a side effect of <code><a href="https://rdrr.io/r/parallel/RngStream.html" class="external-link">parallel::clusterSetRNGStream()</a></code>.</p></li>
+<li><p>Requires R 4.1.0 or later, which <code>broom</code>, <code>dplyr</code> and <code>tidyr</code> already required. The old declaration of R 2.10 was not accurate. Removes the unused <code>cpp11</code> entry from <code>LinkingTo</code>.</p></li>
+<li><p>Moves <code>glmnet</code> from <code>Imports</code> to <code>Suggests</code>. <code>glmnet</code> is only needed by the four <code>lasso</code> methods, which already ask to install it on demand. This removes <code>glmnet</code>, <code>foreach</code>, <code>iterators</code> and <code>shape</code> from the installation of <code>mice</code>.</p></li>
+<li><p>Moves <code>mitml</code> from <code>Imports</code> to <code>Suggests</code>. <code>mitml</code> is only needed by <code><a href="../reference/D1.html">D1()</a></code>, <code><a href="../reference/D2.html">D2()</a></code>, <code><a href="../reference/mice.impute.panImpute.html">mice.impute.panImpute()</a></code> and <code><a href="../reference/mice.impute.jomoImpute.html">mice.impute.jomoImpute()</a></code>, which already ask to install it on demand. This removes 26 packages from the installation of <code>mice</code>, including <code>jomo</code>, <code>pan</code>, <code>lme4</code>, <code>haven</code> and <code>readr</code>.</p></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.19.15" id="mice-31915">mice 3.19.15<a class="anchor" aria-label="anchor" href="#mice-31915"></a></h2>
 <ul><li>
