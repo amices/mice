@@ -1,4 +1,4 @@
-# mice (development version)
+# mice 3.19.15
 
 - `method = "rf"` now caps the number of threads of `ranger` and
   `literanger` at `parallelly::availableCores()`. `future` sets this to 1
