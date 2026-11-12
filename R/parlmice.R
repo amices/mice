@@ -149,7 +149,11 @@ parlmice <- function(
   parallel::clusterExport(cl, varlist = "do.call")
   parallel::clusterEvalQ(cl, library(mice))
   if (!is.na(cluster.seed)) {
+    # clusterSetRNGStream() switches the RNG kind of the master session to
+    # L'Ecuyer-CMRG as a side effect; restore the kind of the caller
+    old.kind <- RNGkind()
     parallel::clusterSetRNGStream(cl, cluster.seed)
+    RNGkind(old.kind[1L], old.kind[2L], old.kind[3L])
   }
 
   # generate imputations

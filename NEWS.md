@@ -1,5 +1,8 @@
 # mice 3.19.15
 
+- `parlmice()` no longer changes the RNG kind of the session to
+  `L'Ecuyer-CMRG`, a side effect of `parallel::clusterSetRNGStream()`.
+
 - Requires R 4.1.0 or later, which `broom`, `dplyr` and `tidyr` already
   required. The old declaration of R 2.10 was not accurate. Removes the
   unused `cpp11` entry from `LinkingTo`.
