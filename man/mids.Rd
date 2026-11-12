@@ -31,7 +31,7 @@ mids(
   chainMean = list(),
   chainVar = list(),
   loggedEvents = data.frame(),
-  parallel = FALSE,
+  future = NULL,
   chainSeed = NULL,
   version = packageVersion("mice"),
   date = Sys.Date()
@@ -156,7 +156,7 @@ number \code{chain}, for example
 \code{i} to index \code{imp[[j]]}, and \code{chain} for anything that
 should differ between imputations, e.g.
 \code{"imp[[j]][, i] <- imp[[j]][, i] + delta[chain]"}. The two are equal
-for \code{parallel = FALSE}, but with \code{parallel = TRUE} each chain
+for \code{future = FALSE}, but with \code{future = TRUE} each chain
 has only one column, so \code{i} is always 1.}
 
 \item{blots}{A named \code{list} of \code{alist}'s that can be used
@@ -189,11 +189,15 @@ generator alone.}
 
 \item{loggedEvents}{Calculated field}
 
-\item{parallel}{Logical. If \code{TRUE}, the \code{m} imputation chains are
-run in parallel using the \pkg{future} and \pkg{future.apply} packages.
-The default \code{parallel = FALSE} uses the sequential sampler, which
-performs each iteration for all chains before it starts the next one.
-See the section \emph{Parallel imputation} for details.}
+\item{future}{Logical. If \code{TRUE}, the \code{m} imputation chains are
+run as futures on the current \pkg{future} plan, using the \pkg{future}
+and \pkg{future.apply} packages. Set the plan before the call, e.g. by
+\code{future::plan(future::multisession)}, to run the chains in parallel.
+The default \code{future = FALSE} uses the classic sequential sampler,
+which performs each iteration for all chains before it starts the next
+one, and, with \code{print = TRUE}, prints the iteration history while
+it runs. See the section
+\emph{Parallel imputation} for details.}
 
 \item{chainSeed}{Calculated field}
 
@@ -291,10 +295,12 @@ Note that observed data are not present in this mean.}
 \code{chainMean}, containing the variance of the imputed values.}
 \item{\code{loggedEvents}:}{A \code{data.frame} with five columns
 containing warnings, corrective actions, and other inside info.}
-\item{\code{parallel}:}{Logical indicating whether the last iterations
-ran the chains in parallel (\code{parallel = TRUE} in \code{mice()}
-or \code{mice.mids()}).}
-\item{\code{chainSeed}:}{If \code{parallel = TRUE}, a list with, for
+\item{\code{future}:}{If the last iterations ran the chains as futures
+(\code{future = TRUE} in \code{mice()} or \code{mice.mids()}), a list
+with the name of the \pkg{future} plan (\code{plan}), the number of
+processes that ran the chains (\code{workers}), and the process id of
+each chain (\code{pid}); otherwise \code{NULL}.}
+\item{\code{chainSeed}:}{If \code{future = TRUE}, a list with, for
 each chain, the state of its random number stream after the last
 iteration, used by \code{mice.mids()} to continue the chain exactly;
 otherwise \code{NULL}.}

@@ -73,10 +73,12 @@
 #'    \code{chainMean}, containing the variance of the imputed values.}
 #'    \item{\code{loggedEvents}:}{A \code{data.frame} with five columns
 #'    containing warnings, corrective actions, and other inside info.}
-#'    \item{\code{parallel}:}{Logical indicating whether the last iterations
-#'    ran the chains in parallel (\code{parallel = TRUE} in \code{mice()}
-#'    or \code{mice.mids()}).}
-#'    \item{\code{chainSeed}:}{If \code{parallel = TRUE}, a list with, for
+#'    \item{\code{future}:}{If the last iterations ran the chains as futures
+#'    (\code{future = TRUE} in \code{mice()} or \code{mice.mids()}), a list
+#'    with the name of the \pkg{future} plan (\code{plan}), the number of
+#'    processes that ran the chains (\code{workers}), and the process id of
+#'    each chain (\code{pid}); otherwise \code{NULL}.}
+#'    \item{\code{chainSeed}:}{If \code{future = TRUE}, a list with, for
 #'    each chain, the state of its random number stream after the last
 #'    iteration, used by \code{mice.mids()} to continue the chain exactly;
 #'    otherwise \code{NULL}.}
@@ -182,7 +184,7 @@ mids <- function(
   chainMean = list(),
   chainVar = list(),
   loggedEvents = data.frame(),
-  parallel = FALSE,
+  future = NULL,
   chainSeed = NULL,
   version = packageVersion("mice"),
   date = Sys.Date()
@@ -209,7 +211,7 @@ mids <- function(
     chainMean = chainMean,
     chainVar = chainVar,
     loggedEvents = loggedEvents,
-    parallel = parallel,
+    future = future,
     chainSeed = chainSeed,
     version = packageVersion("mice"),
     date = Sys.Date()

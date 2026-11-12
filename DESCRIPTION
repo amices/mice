@@ -80,7 +80,7 @@ Suggests:
     MASS,
     miceadds,
     pan,
-    parallelly,
+    parallelly (>= 1.45.0),
     progressr,
     purrr,
     ranger,

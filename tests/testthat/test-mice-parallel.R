@@ -8,11 +8,10 @@ imp_par <- mice(
   maxit = 3,
   seed = 1,
   print = FALSE,
-  parallel = TRUE,
-  n.core = 1
+  future = TRUE
 )
 
-test_that("MICE-PARALLEL-001: parallel = TRUE returns a complete mids object", {
+test_that("MICE-PARALLEL-001: future = TRUE returns a complete mids object", {
   expect_s3_class(imp_par, "mids")
   expect_identical(imp_par$m, imp_seq$m)
   expect_identical(imp_par$iteration, 3)
@@ -40,21 +39,20 @@ test_that("MICE-PARALLEL-003: parallel imputations are reproducible with a seed"
     maxit = 3,
     seed = 1,
     print = FALSE,
-    parallel = TRUE,
-    n.core = 1
+    future = TRUE
   )
   expect_identical(complete(imp_par, "long"), complete(imp2, "long"))
   expect_identical(imp_par$chainMean, imp2$chainMean)
 })
 
-test_that("MICE-PARALLEL-004: parallel = FALSE is not affected", {
+test_that("MICE-PARALLEL-004: future = FALSE is not affected", {
   imp2 <- mice(
     nhanes,
     m = 3,
     maxit = 3,
     seed = 1,
     print = FALSE,
-    parallel = FALSE
+    future = FALSE
   )
   expect_identical(complete(imp_seq, "long"), complete(imp2, "long"))
 })
@@ -75,8 +73,7 @@ test_that("MICE-PARALLEL-005: events logged within chains are kept", {
     maxit = 2,
     seed = 1,
     print = FALSE,
-    parallel = TRUE,
-    n.core = 1
+    future = TRUE
   ))
   expect_identical(
     p$loggedEvents[, c("it", "im", "dep", "meth")],
@@ -94,16 +91,15 @@ test_that("MICE-PARALLEL-006: events logged during setup are kept", {
     maxit = 1,
     seed = 2,
     print = FALSE,
-    parallel = TRUE,
-    n.core = 1
+    future = TRUE
   ))
   expect_identical(p$loggedEvents, s$loggedEvents)
 })
 
 test_that("MICE-PARALLEL-007: printFlag reports the total time", {
   expect_output(
-    mice(nhanes, m = 2, maxit = 1, seed = 1, parallel = TRUE, n.core = 1),
-    "Imputed 2 chains in parallel, 1 iterations"
+    mice(nhanes, m = 2, maxit = 1, seed = 1, future = TRUE),
+    "Imputed 2 chains with future \\(sequential\\) on 1 worker, 1 iterations"
   )
 })
 
@@ -114,45 +110,62 @@ test_that("MICE-PARALLEL-008: maxit = 0 returns the initial imputations", {
     maxit = 0,
     seed = 1,
     print = FALSE,
-    parallel = TRUE,
-    n.core = 1
+    future = TRUE
   )
   imp0_seq <- mice(nhanes, m = 2, maxit = 0, seed = 1, print = FALSE)
   expect_identical(imp0$iteration, 0)
   expect_identical(imp0$imp, imp0_seq$imp)
 })
 
-test_that("MICE-PARALLEL-009: invalid n.core is rejected", {
-  expect_error(
-    mice(nhanes, parallel = TRUE, n.core = 0, print = FALSE),
-    "positive integer"
+test_that("MICE-PARALLEL-009: removed arguments give a warning", {
+  expect_warning(
+    imp <- mice(nhanes, m = 2, maxit = 1, parallel = TRUE, print = FALSE),
+    "'parallel' argument is no longer supported"
   )
-  expect_error(
-    mice(nhanes, parallel = TRUE, n.core = c(1, 2), print = FALSE),
-    "positive integer"
+  expect_null(imp$future)
+  expect_warning(
+    mice(nhanes, m = 2, maxit = 1, future = TRUE, n.core = 2, print = FALSE),
+    "'n.core' argument is no longer supported"
+  )
+  # as before mice 3.19.13, other uses pass silently, e.g. by parlmice()
+  expect_no_warning(
+    mice(nhanes, m = 2, maxit = 1, n.core = 2, parallel = FALSE, print = FALSE)
   )
 })
 
-test_that("MICE-PARALLEL-010: the future plan set by mice() is reset", {
+test_that("MICE-PARALLEL-010: mice() uses the plan of the user and leaves it unchanged", {
   oldplan <- future::plan(future::sequential)
   on.exit(future::plan(oldplan), add = TRUE)
-  mice(nhanes, m = 2, maxit = 1, print = FALSE, parallel = TRUE, n.core = 1)
+  imp <- mice(nhanes, m = 2, maxit = 1, print = FALSE, future = TRUE)
   expect_true(inherits(future::plan(), "sequential"))
+  expect_identical(imp$future$plan, "sequential")
+  expect_identical(imp$future$workers, 1L)
+
+  skip_on_cran()
+  skip_if_not(future::availableCores() >= 2L)
+  skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
+  imp2 <- with_workers({
+    imp <- mice(nhanes, m = 2, maxit = 1, print = FALSE, future = TRUE)
+    expect_true(inherits(future::plan(), "multisession"))
+    imp
+  })
+  expect_identical(imp2$future$plan, "multisession")
+  expect_identical(imp2$future$workers, 2L)
+  expect_false(any(imp2$future$pid == Sys.getpid()))
 })
 
 test_that("MICE-PARALLEL-011: results do not depend on the number of workers", {
   skip_on_cran()
   skip_if_not(future::availableCores() >= 2L)
   skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
-  imp2 <- mice(
+  imp2 <- with_workers(mice(
     nhanes,
     m = 3,
     maxit = 3,
     seed = 1,
     print = FALSE,
-    parallel = TRUE,
-    n.core = 2
-  )
+    future = TRUE
+  ))
   expect_identical(complete(imp_par, "long"), complete(imp2, "long"))
   expect_identical(imp_par$chainMean, imp2$chainMean)
 })
@@ -177,24 +190,22 @@ test_that("MICE-PARALLEL-012: user-defined methods and their helpers reach the c
     method = meth,
     seed = 1,
     print = FALSE,
-    parallel = TRUE,
-    n.core = 1
+    future = TRUE
   )
   expect_false(anyNA(complete(imp1)))
 
   skip_on_cran()
   skip_if_not(future::availableCores() >= 2L)
   skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
-  imp2 <- mice(
+  imp2 <- with_workers(mice(
     nhanes,
     m = 2,
     maxit = 2,
     method = meth,
     seed = 1,
     print = FALSE,
-    parallel = TRUE,
-    n.core = 2
-  )
+    future = TRUE
+  ))
   expect_identical(complete(imp1, "long"), complete(imp2, "long"))
 })
 
@@ -224,8 +235,7 @@ test_that("MICE-PARALLEL-013: errors name the iteration, chain and variable", {
       method = meth,
       seed = 1,
       print = FALSE,
-      parallel = TRUE,
-      n.core = 1
+      future = TRUE
     ),
     error = identity
   ))
@@ -249,8 +259,7 @@ test_that("MICE-PARALLEL-014: post can use the imputation number as chain", {
     post = post,
     seed = 1,
     print = FALSE,
-    parallel = TRUE,
-    n.core = 1
+    future = TRUE
   )
   expected <- matrix(
     rep(c(100, 200, 300), each = sum(is.na(nhanes$bmi))),
@@ -276,23 +285,49 @@ test_that("MICE-PARALLEL-015: post can use objects from the global environment",
     post = post,
     seed = 1,
     print = FALSE,
-    parallel = TRUE,
-    n.core = 1
+    future = TRUE
   )
   expect_equal(unname(as.matrix(imp1$imp$bmi)), expected)
 
   skip_on_cran()
   skip_if_not(future::availableCores() >= 2L)
   skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
-  imp2 <- mice(
+  imp2 <- with_workers(mice(
     nhanes,
     m = 3,
     maxit = 1,
     post = post,
     seed = 1,
     print = FALSE,
-    parallel = TRUE,
-    n.core = 2
-  )
+    future = TRUE
+  ))
   expect_equal(unname(as.matrix(imp2$imp$bmi)), expected)
+})
+
+test_that("MICE-PARALLEL-016: rf uses one thread per chain on future workers", {
+  skip_if_not_installed("parallelly")
+  # the method imputes the number of threads that rf would use
+  assign("mice.impute.par016", function(y, ry, x, wy = NULL, ...) {
+    if (is.null(wy)) {
+      wy <- !ry
+    }
+    rep(mice:::rf.threads(NULL, "literanger"), sum(wy))
+  }, envir = globalenv())
+  on.exit(rm("mice.impute.par016", envir = globalenv()), add = TRUE)
+  meth <- make.method(nhanes)
+  meth["bmi"] <- "par016"
+
+  skip_on_cran()
+  skip_if_not(future::availableCores() >= 2L)
+  skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
+  imp <- with_workers(mice(
+    nhanes,
+    m = 2,
+    maxit = 1,
+    method = meth,
+    seed = 1,
+    print = FALSE,
+    future = TRUE
+  ))
+  expect_true(all(imp$imp$bmi == 1))
 })

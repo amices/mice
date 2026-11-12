@@ -24,8 +24,7 @@ mice(
   print = getOption("mice.print", getOption("mice.printFlag", TRUE)),
   seed = NA,
   data.init = NULL,
-  parallel = FALSE,
-  n.core = NULL,
+  future = FALSE,
   ...,
   printFlag = print
 )
@@ -144,7 +143,7 @@ number \code{chain}, for example
 \code{i} to index \code{imp[[j]]}, and \code{chain} for anything that
 should differ between imputations, e.g.
 \code{"imp[[j]][, i] <- imp[[j]][, i] + delta[chain]"}. The two are equal
-for \code{parallel = FALSE}, but with \code{parallel = TRUE} each chain
+for \code{future = FALSE}, but with \code{future = TRUE} each chain
 has only one column, so \code{i} is always 1.}
 
 \item{defaultMethod}{A vector of length 4 containing the default
@@ -174,21 +173,15 @@ are created by a simple random draw from the data. Note that specification of
 \code{data.init} will start all \code{m} Gibbs sampling streams from the same
 imputation.}
 
-\item{parallel}{Logical. If \code{TRUE}, the \code{m} imputation chains are
-run in parallel using the \pkg{future} and \pkg{future.apply} packages.
-The default \code{parallel = FALSE} uses the sequential sampler, which
-performs each iteration for all chains before it starts the next one.
-See the section \emph{Parallel imputation} for details.}
-
-\item{n.core}{Optional positive integer with the number of workers used
-when \code{parallel = TRUE}. If \code{NULL} (default), \code{mice()} uses
-the \code{future} plan set by the user, or, if no plan is set, a
-\code{multisession} plan with \code{min(m, availableCores() - 1)} workers.
-A non-\code{NULL} value of \code{n.core} sets up a \code{multisession}
-plan with \code{min(m, n.core)} workers, and \code{n.core = 1} runs the
-chains one after the other through \pkg{future}, each over all
-iterations. A plan set by \code{mice()} is
-reset when \code{mice()} returns.}
+\item{future}{Logical. If \code{TRUE}, the \code{m} imputation chains are
+run as futures on the current \pkg{future} plan, using the \pkg{future}
+and \pkg{future.apply} packages. Set the plan before the call, e.g. by
+\code{future::plan(future::multisession)}, to run the chains in parallel.
+The default \code{future = FALSE} uses the classic sequential sampler,
+which performs each iteration for all chains before it starts the next
+one, and, with \code{print = TRUE}, prints the iteration history while
+it runs. See the section
+\emph{Parallel imputation} for details.}
 
 \item{\dots}{Named arguments that are passed down to the univariate imputation
 functions.}
@@ -415,21 +408,29 @@ depend on the operating system. See the discussion in the
 
 The \code{m} chains of the Gibbs sampler are independent: imputation
 \code{i} only uses the values from chain \code{i}. With
-\code{parallel = TRUE}, \code{mice()} initializes the imputations as usual,
-and then runs each chain over all \code{maxit} iterations on a separate
-worker by \code{future.apply::future_lapply()}. The results are combined
+\code{future = TRUE}, \code{mice()} initializes the imputations as usual,
+and then runs each chain over all \code{maxit} iterations as a separate
+future by \code{future.apply::future_lapply()}. The results are combined
 into one \code{mids} object, including \code{chainMean}, \code{chainVar}
 and \code{loggedEvents}.
 
+The chains run on the \pkg{future} plan set by the user, which
+\code{mice()} uses as is and never changes. The user thus chooses the
+backend and the number of workers, for example
+\code{future::plan(future::multisession, workers = 4)}. Under the default
+plan, \code{sequential}, the chains run one after the other.
+
 Each chain gets its own random number stream (\code{future.seed = TRUE}).
 Results with the same \code{seed} are therefore reproducible across runs
-with \code{parallel = TRUE}, also for a different number of workers, but
-they differ from those of \code{parallel = FALSE}.
+with \code{future = TRUE}, also for a different plan or number of workers,
+but they differ from those of \code{future = FALSE}, where all chains
+draw from one random number stream.
 
 Running chains in parallel adds the cost of starting workers and copying
 the data to them. It pays off for large data or for slow imputation
 methods, but usually not for small data. With \code{print = TRUE},
-\code{mice()} reports the total time instead of the iteration history.
+\code{mice()} reports the plan, the number of workers that ran the
+chains and the total time, instead of the iteration history.
 Imputation methods defined by the user, for example
 \code{mice.impute.mymethod()} in the global environment, are sent to the
 workers, together with the objects from the global environment they use.
@@ -437,9 +438,19 @@ Imputation methods from other packages must be installed on the workers.
 Within \code{post}, the column index \code{i} is always 1, as each
 worker holds one chain; use \code{chain} for the imputation number (see
 argument \code{post}).
-The \code{mids} object stores whether the chains ran in parallel, and the
-state of the random number stream of each chain (\code{chainSeed}).
-\code{\link{mice.mids}()} uses these to continue the chains in parallel,
+Methods that are multithreaded themselves can oversubscribe the cores
+when several chains run at the same time. \pkg{future} prevents nested
+parallelism by setting \code{parallelly::availableCores()} to 1 on its
+workers, and \code{method = "rf"} caps the number of threads of
+\pkg{ranger} and \pkg{literanger} at this value, so each chain then uses
+one thread. This does not change the imputations. A thread count set by
+the user takes precedence (see \code{\link{mice.impute.rf}()}). Other
+sources of threads, such as a multithreaded BLAS library, are not
+limited by \code{mice()}.
+The \code{mids} object stores the plan, the number of workers and the
+process id of each chain (\code{future}), and the state of the random
+number stream of each chain (\code{chainSeed}).
+\code{\link{mice.mids}()} uses these to continue the chains as futures,
 with the same result as a single call with all iterations.
 }
 
@@ -449,7 +460,7 @@ If an imputation method or a \code{post} statement fails, \code{mice()}
 stops with an error of class \code{mice_sampler_error} that names the
 iteration, the imputation (the chain), the variable and the method at
 which the error occurred, followed by the original message. This also
-holds for \code{parallel = TRUE}, where a failing chain stops all chains.
+holds for \code{future = TRUE}, where a failing chain stops all chains.
 The fields \code{iteration}, \code{imputation}, \code{variable},
 \code{method} and \code{post} of the condition contain these details, and
 the field \code{parent} holds the original error, e.g.
@@ -461,11 +472,11 @@ the field \code{parent} holds the original error, e.g.
 If the \pkg{progressr} package is installed, \code{mice()} and
 \code{\link{mice.mids}()} signal one progress step after each iteration of
 each chain, \code{m * maxit} steps in total, with a message such as
-\code{"iter 3, imp 2"}. This works for both \code{parallel = FALSE} and
-\code{parallel = TRUE}; in the latter case the steps are relayed from the
+\code{"iter 3, imp 2"}. This works for both \code{future = FALSE} and
+\code{future = TRUE}; in the latter case the steps are relayed from the
 workers while the chains run. The progress is only shown if the user
 enables it, for example by
-\code{progressr::with_progress(imp <- mice(nhanes, parallel = TRUE))}, or
+\code{progressr::with_progress(imp <- mice(nhanes, future = TRUE))}, or
 for the whole session by \code{progressr::handlers(global = TRUE)}. The
 function \code{progressr::handlers()} sets the type of display. Without a
 handler, or without \pkg{progressr}, nothing is shown. Progress reporting

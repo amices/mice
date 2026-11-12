@@ -1,3 +1,42 @@
+# mice (development version)
+
+- `method = "rf"` now caps the number of threads of `ranger` and
+  `literanger` at `parallelly::availableCores()`. `future` sets this to 1
+  on its workers, so with `mice(..., future = TRUE)` each chain uses one
+  thread, and the workers no longer compete for the cores. Outside
+  `future`, `ranger` keeps its default of 2 threads, and `literanger`
+  uses the available cores instead of all cores, which respects the
+  limits of schedulers such as Slurm and of containers. A thread count set
+  by the user (`num.threads`, `n_thread`, `R_RANGER_NUM_THREADS` or the
+  `ranger.num.threads` option) takes precedence. The imputations do not
+  change. In addition, `num.threads` and `n_thread` are now also used to
+  predict, and not only to fit the forest.
+- Renames the argument `parallel` of `mice()` and `mice.mids()` to
+  `future`, following the advice of @HenrikBengtsson (#735, #736). With
+  `future = TRUE`, the chains run as futures on the plan set by the user,
+  which `mice()` uses as is and never changes, including
+  `plan(sequential)`. `mice()` no longer sets up a `multisession` plan
+  itself, so the user chooses the backend, e.g. `plan(multisession)`,
+  `plan(future.mirai::mirai_multisession)` or a cluster. The argument
+  `n.core` is removed; set the number of workers with `future::plan()`.
+  The default `future = FALSE` is the classic sequential sampler, with the
+  same results and iteration history as before. The arguments `parallel`
+  and `n.core` were only available in the development versions 3.19.13
+  and 3.19.14. They are now ignored, with a warning for `parallel = TRUE`
+  and for `n.core` together with `future = TRUE`.
+- With `future = TRUE` and `print = TRUE`, `mice()` reports the plan and
+  the number of workers that ran the chains, e.g. `Imputed 5 chains with
+  future (multisession) on 4 workers`. The `mids` object stores this in
+  the new field `future`, a list with `plan`, `workers` and the process id
+  of each chain (`pid`), which replaces the logical field `parallel`.
+  Objects created by 3.19.13 and 3.19.14 still continue as futures in
+  `mice.mids()`.
+- `futuremice()` now determines the number of cores by
+  `parallelly::availableCores(omit = 1, max = m)`. Before, it used
+  `availableCores() - 1`, which gave zero workers, and an error, on a
+  machine or job with a single core (#735). Requires `parallelly` 1.45.0
+  or later.
+
 # mice 3.19.14
 
 - `futuremice()` no longer resets the `future` plan to `sequential` when it finishes, but restores the plan that was active before the call, following the advice for package developers in `future` (#735). Thanks @HenrikBengtsson

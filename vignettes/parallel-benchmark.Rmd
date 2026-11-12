@@ -32,16 +32,18 @@ tm$panel <- factor(
   panel_labels[names(b$scenarios)[as.integer(tm$scenario)]],
   panel_labels
 )
+# earlier runs stored the label "mice(parallel = TRUE)"
+tm$approach[tm$approach == "mice(parallel = TRUE)"] <- "mice(future = TRUE)"
 tm$approach <- factor(
   tm$approach,
-  c("mice()", "mice(parallel = TRUE)", "futuremice()")
+  c("mice()", "mice(future = TRUE)", "futuremice()")
 )
 get <- function(s, a, w, m) {
   tm$time[tm$scenario == b$scenarios[[s]] & tm$approach == a &
     tm$workers == w & tm$m == m]
 }
 seq_time <- function(s, m) get(s, "mice()", 1, m)
-par_time <- function(s, w, m) get(s, "mice(parallel = TRUE)", w, m)
+par_time <- function(s, w, m) get(s, "mice(future = TRUE)", w, m)
 fut_time <- function(s, w, m) get(s, "futuremice()", w, m)
 f1 <- function(x) format(round(x, 1), nsmall = 1)
 f2 <- function(x) format(round(x, 2), nsmall = 2)
@@ -53,11 +55,11 @@ startup$cost <- startup$cold - startup$warm
 ## Introduction
 
 This vignette measures when running the chains in parallel pays off,
-and compares `mice(parallel = TRUE)` with sequential `mice()` and with
+and compares `mice(future = TRUE)` with sequential `mice()` and with
 the wrapper `futuremice()` [@volker-2022-1]. It follows the design of
 @volker-2022-1, and adds a slow imputation method and more numbers of
 imputations. The vignette [Parallel imputation](parallel.html) explains
-how to use `parallel = TRUE`.
+how to use `future = TRUE`.
 
 The timings were computed beforehand with the script
 `data-raw/parallel-benchmark.R` in the source of the package, and are
@@ -97,7 +99,7 @@ runs use `maxit = `r b$maxit``, and every combination is repeated
 `r b$reps` times; the figures show the median time. We compare:
 
 * **`mice()`**: the sequential sampler, on one core.
-* **`mice(parallel = TRUE)`**: the parallel sampler, on a `multisession`
+* **`mice(future = TRUE)`**: the parallel sampler, on a `multisession`
   plan with 2, 4 or 8 workers that was started before the timing, so that
   the workers are reused. This is how you would use it for repeated
   imputations (see below for the cost of starting workers).
@@ -126,10 +128,10 @@ knitr::kable(
 ```
 
 Starting the workers costs about `r f1(mean(startup$cost))` seconds per
-call on this machine. `mice(parallel = TRUE, n.core = 4)` pays this cost
-in every call, as does `futuremice()`. Setting up the workers once with
-`future::plan(multisession, workers = 4)` pays it only for the first
-call. For a single long imputation the difference does not matter, but
+call on this machine. `futuremice()` pays this cost in every call.
+`mice(future = TRUE)` uses the workers of the plan set by the user, so
+with `future::plan(multisession, workers = 4)` it pays the cost only for
+the first call. For a single long imputation the difference does not matter, but
 for many short imputations, for example in a simulation study, it does.
 
 ## Results
@@ -142,7 +144,7 @@ tm$series <- ifelse(
 )
 lev <- c(
   "mice()",
-  paste0("mice(parallel = TRUE), ", c(2, 4, 8), " workers"),
+  paste0("mice(future = TRUE), ", c(2, 4, 8), " workers"),
   paste0("futuremice(), ", c(2, 4, 8), " workers")
 )
 tm$series <- factor(tm$series, lev)
@@ -171,7 +173,7 @@ xyplot(
 )
 ```
 
-```{r speedup, echo = FALSE, fig.height = 3.5, fig.cap = "Speed-up of mice(parallel = TRUE) relative to sequential mice(), for m = 100. The dashed line is the ideal speed-up, equal to the number of workers."}
+```{r speedup, echo = FALSE, fig.height = 3.5, fig.cap = "Speed-up of mice(future = TRUE) relative to sequential mice(), for m = 100. The dashed line is the ideal speed-up, equal to the number of workers."}
 sp <- do.call(rbind, lapply(names(b$scenarios), function(s) {
   data.frame(
     scenario = panel_labels[[s]],
@@ -207,7 +209,7 @@ xyplot(
   a few milliseconds. Sequential `mice()` needs
   `r f2(seq_time("small", 5))` seconds for `m = 5` and
   `r f2(seq_time("small", 100))` seconds for `m = 100`. On running
-  workers, `mice(parallel = TRUE)` with 8 workers needs
+  workers, `mice(future = TRUE)` with 8 workers needs
   `r f2(par_time("small", 8, 100))` seconds for `m = 100`. But if the
   workers have to be started first, the start-up cost of about
   `r f1(mean(startup$cost))` seconds is larger than the whole sequential
@@ -225,7 +227,7 @@ xyplot(
 
 * **Slow method.** With `rf`, `mice()` takes
   `r f1(seq_time("slow", 100))` seconds for `m = 100`, and
-  `mice(parallel = TRUE)` with 8 workers
+  `mice(future = TRUE)` with 8 workers
   `r f1(par_time("slow", 8, 100))` seconds, a speed-up of
   `r f1(seq_time("slow", 100) / par_time("slow", 8, 100))`. The slower
   the imputation, the smaller the share of the fixed costs, and the closer
@@ -248,14 +250,14 @@ run is close to `workers` times faster.
 `futuremice()` splits the `m` imputations into one block per worker,
 and runs a complete `mice()` call for each block, including its own
 set-up and starting imputations. The blocks are then combined with
-`ibind()`. `mice(parallel = TRUE)` sets up the imputation model and the
+`ibind()`. `mice(future = TRUE)` sets up the imputation model and the
 starting imputations once, and only runs the chains on the workers.
 
 For `m = 100` with 8 workers, `futuremice()` took
 `r f1(fut_time("large", 8, 100))` seconds for the large data and
 `r f1(fut_time("slow", 8, 100))` seconds for the slow method, against
 `r f1(par_time("large", 8, 100))` and `r f1(par_time("slow", 8, 100))`
-seconds for `mice(parallel = TRUE)`. About
+seconds for `mice(future = TRUE)`. About
 `r f1(mean(startup$cost))` seconds of the difference is the start-up of
 the workers, which `futuremice()` pays in every call. The remainder is
 probably due to the repeated set-up per block and the combining of the
@@ -264,14 +266,14 @@ only faster than sequential `mice()` for `m = 100`
 (`r f2(fut_time("small", 8, 100))` against
 `r f2(seq_time("small", 100))` seconds with 8 workers).
 
-## Moving from `futuremice()` to `mice(parallel = TRUE)`
+## Moving from `futuremice()` to `mice(future = TRUE)`
 
 Most arguments of `futuremice()` have a direct counterpart, or are no
 longer needed:
 
-| `futuremice()` | `mice(parallel = TRUE)` |
+| `futuremice()` | `mice(future = TRUE)` |
 |:---------------|:------------------------|
-| `n.core = 4` | `n.core = 4`, or set up the workers once with `future::plan(multisession, workers = 4)` |
+| `n.core = 4` | set up the workers once with `future::plan(multisession, workers = 4)` |
 | `parallelseed = 123` | `seed = 123` |
 | `seed` (gives identical imputations on all cores) | not needed |
 | `use.logical = FALSE` | `future::plan(multisession, workers = parallelly::availableCores(logical = FALSE))` |
@@ -283,18 +285,18 @@ longer needed:
 The results differ in a few other ways:
 
 * **Reproducibility.** `futuremice()` gives reproducible results for a
-  given `parallelseed` and `n.core`. `mice(parallel = TRUE)` gives the
+  given `parallelseed` and `n.core`. `mice(future = TRUE)` gives the
   same imputations for a given `seed`, whatever the number of workers.
-* **Plan.** `futuremice()` sets the plan to `sequential` when it returns,
-  also if you had set up workers yourself. `mice(parallel = TRUE)` leaves
-  a plan set by the user untouched.
+* **Plan.** `futuremice()` sets up its own plan in every call, and
+  restores the previous plan when it returns. `mice(future = TRUE)` never
+  sets up or changes a plan: it uses the plan set by the user.
 * **Logged events.** `ibind()` keeps the `loggedEvents` of the first
   block only, so `futuremice()` drops the events logged by the other
-  workers. `mice(parallel = TRUE)` collects the events of all chains.
-* **Continuing.** An object from `mice(parallel = TRUE)` can be continued
+  workers. `mice(future = TRUE)` collects the events of all chains.
+* **Continuing.** An object from `mice(future = TRUE)` can be continued
   with `mice.mids()`, in parallel, with the same result as a single run.
 * **Starting imputations.** `futuremice()` draws the starting imputations
-  separately for each block; `mice(parallel = TRUE)` draws them once, as
+  separately for each block; `mice(future = TRUE)` draws them once, as
   `mice()` does.
 
 ## Reproducing the benchmark

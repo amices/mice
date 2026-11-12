@@ -50,7 +50,7 @@ The function constructs the elements of the filtered \code{mids} object as follo
 \code{chainMean}       \tab Set to \code{NULL}\cr
 \code{chainVar}        \tab Set to \code{NULL}\cr
 \code{loggedEvents}    \tab Equals \code{.data$loggedEvents}\cr
-\code{parallel}        \tab Equals \code{.data$parallel}\cr
+\code{future}          \tab Equals \code{.data$future}\cr
 \code{chainSeed}       \tab Equals \code{.data$chainSeed}\cr
 \code{version}    \tab Replaced with current version\cr
 \code{date}       \tab Replaced with current date

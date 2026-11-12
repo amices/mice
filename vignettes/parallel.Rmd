@@ -25,16 +25,17 @@ running `m` chains of the Gibbs sampler. Chain `i` only uses its own
 imputations from the previous iteration, so the chains are independent
 and can run at the same time on different cores or machines.
 
-`mice()` can do this itself with the argument `parallel = TRUE`. This
+`mice()` can do this itself with the argument `future = TRUE`. This
 builds the parallel run into `mice()`, instead of the wrapper functions
-`parlmice()` (deprecated) and `futuremice()` [@volker-2022-1]. The parallel backend is provided by
-the `future` framework [@bengtsson-2021-1], so the same code runs on a
-laptop, a workstation or a cluster.
+`parlmice()` (deprecated) and `futuremice()` [@volker-2022-1]. The chains
+run as futures of the `future` framework [@bengtsson-2021-1], so the same
+code runs on a laptop, a workstation or a cluster. You choose where the
+chains run by setting a `future` plan; `mice()` itself never changes it.
 
-This vignette shows how to use `parallel = TRUE`, what stays the same,
+This vignette shows how to use `future = TRUE`, what stays the same,
 and what to watch out for. The companion vignette
 [Parallel imputation: benchmarks](parallel-benchmark.html) shows when
-running in parallel pays off, and how `mice(parallel = TRUE)` compares
+running in parallel pays off, and how `mice(future = TRUE)` compares
 to `futuremice()`.
 
 Parallel imputation needs the `future` and `future.apply` packages:
@@ -45,100 +46,105 @@ install.packages(c("future", "future.apply"))
 
 ```{r, message = FALSE}
 library(mice)
+library(future)
 ```
 
 ## Basic use
 
-Add `parallel = TRUE` to the call:
+Set a plan with workers, and add `future = TRUE` to the call:
 
 ```{r}
-imp <- mice(nhanes, m = 5, seed = 123, parallel = TRUE, n.core = 2)
+plan(multisession, workers = 2)
+imp <- mice(nhanes, m = 5, seed = 123, future = TRUE)
 imp
 ```
 
 `mice()` first sets up the imputation model and the starting
-imputations, exactly as for `parallel = FALSE`. It then sends chain
+imputations, exactly as for `future = FALSE`. It then sends chain
 `i`, with all its `maxit` iterations, to a worker, and combines the
 results into one `mids` object. With `print = TRUE` (the default),
-`mice()` reports the total time rather than the iteration history.
+`mice()` reports the plan, the number of workers that ran the chains,
+and the total time, rather than the iteration history. The same
+information is stored in the result:
 
-The argument `n.core` sets the number of workers. Without `n.core`,
-`mice()` uses the backend that you set with `future::plan()` (see
-below), or, if you set none, starts `availableCores() - 1` workers.
+```{r}
+imp$future[c("plan", "workers")]
+```
+
 `mice()` never uses more workers than there are chains, so `m = 5`
-keeps at most five workers busy.
+keeps at most five workers busy. The workers come on top of your own R
+session, the main process. The main process sets up the imputation
+model and the starting imputations, sends the chains to the workers,
+and collects and combines the results. While the chains run, it mostly
+waits. A common choice is therefore to leave one core free for it,
+e.g. `plan(multisession, workers = parallelly::availableCores(omit = 1))`.
 
-The workers come on top of your own R session, the main process. The
-main process sets up the imputation model and the starting imputations,
-sends the chains to the workers, and collects and combines the results.
-While the chains run, it mostly waits. This is why the default leaves
-one core free for it (`availableCores() - 1`).
+## The plan is yours
 
-## Choosing and reusing the backend
+`mice()` uses the current plan as is. It does not start workers itself,
+and it does not change or close the plan. This has three consequences.
 
-With `n.core`, `mice()` starts a fresh set of background R sessions
-(a `multisession` plan) for every call, and closes them afterwards.
-Starting a worker takes time, mainly because each worker has to load
-`mice` and its dependencies. On a recent laptop this costs about a
-second per call, which is more than the whole imputation of a small
-data set.
+* **Workers are reused.** Starting a worker takes time, mainly because
+  each worker has to load `mice` and its dependencies. On a recent
+  laptop this costs about a second, which is more than the whole
+  imputation of a small data set. The first call with `future = TRUE`
+  loads `mice` on the workers, and later calls reuse them:
 
-If you impute more than once, start the workers yourself, once:
+  ```{r}
+  imp1 <- mice(nhanes, m = 5, seed = 1, future = TRUE, print = FALSE)
+  imp2 <- mice(nhanes2, m = 5, seed = 1, future = TRUE, print = FALSE)
+  ```
 
-```{r}
-library(future)
-plan(multisession, workers = 4)
+* **`sequential` is respected.** Under the default plan, `sequential`,
+  `future = TRUE` runs the chains one after the other in your own
+  session. The result is the same as on parallel workers, which is
+  useful for debugging. The printed summary then reports `on 1 worker`,
+  a reminder that no plan with workers was set.
 
-imp1 <- mice(nhanes, m = 5, seed = 1, parallel = TRUE, print = FALSE)
-imp2 <- mice(nhanes2, m = 5, seed = 1, parallel = TRUE, print = FALSE)
-```
+* **You choose the backend.** Any `future` backend works, also those
+  that `mice` does not know about. Some examples:
 
-`mice()` respects a plan set by the user, and does not change or close
-it. The first call loads `mice` on the workers; later calls reuse them.
-Close the workers when you are done:
+  ```{r, eval = FALSE}
+  # forked processes, Linux and macOS outside RStudio only
+  plan(multicore, workers = 8)
 
-```{r}
-plan(sequential)
-```
+  # background R sessions based on mirai, with the future.mirai package
+  plan(future.mirai::mirai_multisession, workers = 8)
 
-The same mechanism selects other backends. Some examples:
+  # R sessions on other machines
+  plan(cluster, workers = c("node1", "node2", "node3"))
 
-```{r, eval = FALSE}
-# forked processes, Linux and macOS outside RStudio only
-plan(multicore, workers = 8)
-
-# R sessions on other machines
-plan(cluster, workers = c("node1", "node2", "node3"))
-
-# jobs on an HPC scheduler, with the future.batchtools package
-plan(future.batchtools::batchtools_slurm)
-```
+  # jobs on an HPC scheduler, with the future.batchtools package
+  plan(future.batchtools::batchtools_slurm)
+  ```
 
 See `vignette("future-1-overview", package = "future")` for all
-options. Without `parallel = TRUE`, `mice()` ignores the plan and uses the
-sequential sampler, which performs iteration 1 for all chains, then
-iteration 2 for all chains, and so on.
+options. With `future = FALSE` (the default), `mice()` ignores the plan
+and uses the classic sequential sampler, which performs iteration 1 for
+all chains, then iteration 2 for all chains, and so on. With
+`print = TRUE` (the default), it prints the iteration history while it
+runs.
 
 ## Reproducibility
 
 Each chain gets its own random number stream, derived from `seed`
 (`future.seed = TRUE` in `future.apply`). As a result, the imputations
-are reproducible with `parallel = TRUE`, and they do not depend on the
-number of workers:
+are reproducible with `future = TRUE`, and they do not depend on the
+plan or the number of workers:
 
 ```{r}
-imp2 <- mice(nhanes, m = 5, seed = 123, parallel = TRUE, n.core = 2,
-             print = FALSE)
-imp3 <- mice(nhanes, m = 5, seed = 123, parallel = TRUE, n.core = 3,
-             print = FALSE)
-identical(complete(imp2, "long"), complete(imp3, "long"))
+imp2 <- mice(nhanes, m = 5, seed = 123, future = TRUE, print = FALSE)
+plan(sequential)
+imp1 <- mice(nhanes, m = 5, seed = 123, future = TRUE, print = FALSE)
+plan(multisession, workers = 2)
+identical(complete(imp1, "long"), complete(imp2, "long"))
 ```
 
-The imputations do differ from those of `parallel = FALSE` with the
-same seed. The sequential sampler takes the random numbers for all
+The imputations do differ from those of `future = FALSE` with the
+same seed. The classic sampler takes the random numbers for all
 chains from one and the same stream, in the order in which it visits
 them: iteration 1 of chain 1, iteration 1 of chain 2, and so on. With
-`parallel = TRUE`, each chain draws from its own stream:
+`future = TRUE`, each chain draws from its own stream:
 
 ```{r}
 imps <- mice(nhanes, m = 5, seed = 123, print = FALSE)
@@ -146,11 +152,11 @@ identical(complete(imps, "long"), complete(imp2, "long"))
 ```
 
 Both are valid multiple imputations. If you need to reproduce an
-earlier analysis, use the same setting of `parallel` as before.
+earlier analysis, use the same setting of `future` as before.
 
 ## The result is an ordinary `mids` object
 
-The object returned by `mice(parallel = TRUE)` has the same structure
+The object returned by `mice(future = TRUE)` has the same structure
 as that of the sequential sampler. All functions that work on a `mids`
 object work as before. Convergence plots use `chainMean` and
 `chainVar`, which hold one trace per chain. We remove `bmi` from the
@@ -159,8 +165,8 @@ which makes the chains mix slowly:
 
 ```{r}
 boys2 <- boys[, names(boys) != "bmi"]
-imp <- mice(boys2, m = 5, maxit = 10, seed = 1, parallel = TRUE,
-            n.core = 2, print = FALSE)
+imp <- mice(boys2, m = 5, maxit = 10, seed = 1, future = TRUE,
+            print = FALSE)
 plot(imp, c("hgt", "wgt", "hc"))
 ```
 
@@ -176,32 +182,32 @@ summary(pool(fit))
 ## Adding iterations
 
 `mice.mids()` adds iterations to an existing `mids` object. An object
-created with `parallel = TRUE` continues in parallel, and the result is
+created with `future = TRUE` continues as futures, and the result is
 the same as that of a single call with all iterations:
 
 ```{r}
-imp5 <- mice(nhanes, m = 5, maxit = 5, seed = 1, parallel = TRUE,
-             n.core = 2, print = FALSE)
-imp10 <- mice.mids(imp5, maxit = 5, n.core = 2, print = FALSE)
+imp5 <- mice(nhanes, m = 5, maxit = 5, seed = 1, future = TRUE,
+             print = FALSE)
+imp10 <- mice.mids(imp5, maxit = 5, print = FALSE)
 imp10$iteration
 
-full <- mice(nhanes, m = 5, maxit = 10, seed = 1, parallel = TRUE,
-             n.core = 2, print = FALSE)
+full <- mice(nhanes, m = 5, maxit = 10, seed = 1, future = TRUE,
+             print = FALSE)
 identical(complete(imp10, "long"), complete(full, "long"))
 ```
 
-This works because the `mids` object stores whether it was created in
-parallel (`imp$parallel`), and the state of the random number stream of
-each chain after the last iteration (`imp$chainSeed`).
+This works because the `mids` object stores how it was created
+(`imp$future`), and the state of the random number stream of each chain
+after the last iteration (`imp$chainSeed`).
 
-You can also switch. `parallel = TRUE` continues a sequential object in
-parallel, for example to add many iterations to a model that you first
-checked with a short sequential run. `parallel = FALSE` continues a
-parallel object sequentially, for example to see the iteration history
-or to debug an imputation method:
+You can also switch. `future = TRUE` continues a sequential object as
+futures, for example to add many iterations to a model that you first
+checked with a short sequential run. `future = FALSE` continues a
+future object with the classic sampler, for example to see the
+iteration history or to debug an imputation method:
 
 ```{r}
-imp_seq <- mice.mids(imp5, maxit = 1, parallel = FALSE)
+imp_seq <- mice.mids(imp5, maxit = 1, future = FALSE)
 ```
 
 After a switch, the results are reproducible, but they differ from those
@@ -211,7 +217,7 @@ of a single call, because the random numbers come from other streams.
 
 For long runs, `mice()` can report its progress through the `progressr`
 package. It signals one step after each iteration of each chain, so
-`m * maxit` steps in total. With `parallel = TRUE`, the workers relay
+`m * maxit` steps in total. With `future = TRUE`, the workers relay
 these steps while the chains run. Nothing is shown unless you enable a
 progress handler:
 
@@ -220,7 +226,7 @@ library(progressr)
 handlers("cli")
 
 with_progress(
-  imp <- mice(boys2, m = 20, maxit = 20, parallel = TRUE, print = FALSE)
+  imp <- mice(boys2, m = 20, maxit = 20, future = TRUE, print = FALSE)
 )
 ```
 
@@ -233,7 +239,7 @@ Progress reporting does not change the imputations.
 ## User-written imputation methods
 
 An imputation method is a function called `mice.impute.<name>()`. You
-can write your own and use it in `method`. With `parallel = TRUE`,
+can write your own and use it in `method`. With `future = TRUE`,
 `mice()` sends such functions to the workers, together with the objects
 from your session that they use, such as helper functions:
 
@@ -246,8 +252,8 @@ mice.impute.pmmshrink <- function(y, ry, x, ...) {
 
 meth <- make.method(nhanes)
 meth["bmi"] <- "pmmshrink"
-imp <- mice(nhanes, method = meth, seed = 1, parallel = TRUE,
-            n.core = 2, print = FALSE)
+imp <- mice(nhanes, method = meth, seed = 1, future = TRUE,
+            print = FALSE)
 ```
 
 Imputation methods from other packages, such as those in `miceadds`,
@@ -266,7 +272,7 @@ post <- make.post(nhanes)
 post["chl"] <- "imp[[j]][, i] <- squeeze(imp[[j]][, i], c(120, 300))"
 ```
 
-Use `i` only to index `imp[[j]]`. With `parallel = TRUE`, each worker
+Use `i` only to index `imp[[j]]`. With `future = TRUE`, each worker
 holds a single chain, so `i` is always 1 there. For anything that should
 differ between the imputations, use `chain`. For example, in a
 sensitivity analysis that shifts the imputed values by an amount that
@@ -275,23 +281,23 @@ differs per imputation:
 ```{r}
 delta <- c(0, 5, 10, 15, 20)
 post["chl"] <- "imp[[j]][, i] <- imp[[j]][, i] + delta[chain]"
-imp <- mice(nhanes, post = post, seed = 1, parallel = TRUE, n.core = 2,
+imp <- mice(nhanes, post = post, seed = 1, future = TRUE,
             print = FALSE)
 ```
 
-With `parallel = FALSE`, `i` and `chain` are equal, so code that uses
+With `future = FALSE`, `i` and `chain` are equal, so code that uses
 `chain` works in both cases.
 
 ## When an imputation fails
 
 If an imputation method or a `post` statement fails, `mice()` stops
 with an error that tells where the sampler was. This works in the same
-way with `parallel = TRUE`, where the failing chain stops all chains:
+way with `future = TRUE`, where the failing chain stops all chains:
 
 ```{r, error = TRUE}
 post <- make.post(nhanes)
 post["bmi"] <- "if (k == 3 && chain == 4) stop('implausible values')"
-imp <- mice(nhanes, post = post, seed = 1, parallel = TRUE, n.core = 2,
+imp <- mice(nhanes, post = post, seed = 1, future = TRUE,
             print = FALSE)
 ```
 
@@ -300,7 +306,7 @@ contain the details, and the field `parent` holds the original error:
 
 ```{r}
 e <- tryCatch(
-  mice(nhanes, post = post, seed = 1, parallel = TRUE, n.core = 2,
+  mice(nhanes, post = post, seed = 1, future = TRUE,
        print = FALSE),
   error = identity
 )
@@ -325,17 +331,30 @@ e$parent
   warnings. Wrap such code in `if (interactive()) { ... }`.
 
 * **Avoid parallelism within parallelism.** Some imputation methods use
-  several threads themselves, such as `method = "rf"` with the `ranger`
-  package. Running such methods on many workers at once can oversubscribe
-  the cores. Use fewer workers, or limit the threads per worker, e.g.
-  `mice(..., method = "rf", num.threads = 1)`.
+  several threads themselves. Running such methods on many workers at
+  once can oversubscribe the cores. `future` sets
+  `parallelly::availableCores()` to 1 on its workers, and
+  `method = "rf"` caps the threads of `ranger` and `literanger` at this
+  value, so each chain uses one thread. This does not change the
+  imputations. To use more threads per chain, set them yourself, e.g.
+  `mice(..., method = "rf", num.threads = 2)` for `ranger` or
+  `n_thread = 2` for `literanger`. Other methods, and a multithreaded
+  BLAS library, are not limited automatically; use fewer workers for
+  these.
 
 * **Memory.** Each worker receives its own copy of the data and of the
   imputations of its chain. For large data, the memory use grows with
   the number of workers.
 
-* **Number of cores.** `availableCores()` respects the limits set by
-  schedulers such as Slurm and by containers, and is a safer choice than
-  `parallel::detectCores()`.
+* **Number of cores.** `parallelly::availableCores()` respects the
+  limits set by schedulers such as Slurm and by containers, and is a
+  safer choice than `parallel::detectCores()`. Use `omit = 1` to keep a
+  core free for the main process.
+
+Close the workers when you are done:
+
+```{r}
+plan(sequential)
+```
 
 ## References

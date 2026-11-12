@@ -18,7 +18,7 @@ handles.format <- function(fn) {
 
 
 # Functions of imputation methods that are not part of mice, set by
-# sampler.parallel() on the workers, where the search path of the user
+# sampler.future() on the workers, where the search path of the user
 # session is not available.
 .impute.funs <- new.env(parent = emptyenv())
 
