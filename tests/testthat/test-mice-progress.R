@@ -45,8 +45,7 @@ test_that("MICE-PROGRESS-003: parallel chains signal their own steps", {
       maxit = 2,
       seed = 1,
       print = FALSE,
-      parallel = TRUE,
-      n.core = 1
+      future = TRUE
     )
   )
   expect_length(msg, 6L)

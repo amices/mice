@@ -40,7 +40,7 @@ dplyr::filter
 #' \code{chainMean}       \tab Set to \code{NULL}\cr
 #' \code{chainVar}        \tab Set to \code{NULL}\cr
 #' \code{loggedEvents}    \tab Equals \code{.data$loggedEvents}\cr
-#' \code{parallel}        \tab Equals \code{.data$parallel}\cr
+#' \code{future}          \tab Equals \code{.data$future}\cr
 #' \code{chainSeed}       \tab Equals \code{.data$chainSeed}\cr
 #' \code{version}    \tab Replaced with current version\cr
 #' \code{date}       \tab Replaced with current date
@@ -129,7 +129,7 @@ filter.mids <- function(.data, ..., .preserve = FALSE) {
     chainMean = chainMean,
     chainVar = chainVar,
     loggedEvents = loggedEvents,
-    parallel = isTRUE(.data$parallel),
+    future = .data$future,
     chainSeed = .data$chainSeed
   )
   return(midsobj)

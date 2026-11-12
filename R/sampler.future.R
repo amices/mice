@@ -1,12 +1,14 @@
-# Runs the m Gibbs sampling chains in parallel. Chain i only depends on
-# column i of imp, so each worker calls the sequential sampler() with
-# m = 1 for one chain over all iterations. Results are recombined in
-# the order of the chains. This function is called by mice and mice.mids.
+# Runs the m Gibbs sampling chains as futures, for mice(future = TRUE).
+# Chain i only depends on column i of imp, so each future calls the
+# sequential sampler() with m = 1 for one chain over all iterations.
+# Results are recombined in the order of the chains. The chains run on
+# the current future plan of the user, which mice never changes. This
+# function is called by mice and mice.mids.
 #
 # chain.seed is NULL, which derives a new random number stream for each
 # chain from the current seed, or a list with the state of the stream of
 # each chain, as returned in chainSeed, to continue the chains exactly.
-sampler.parallel <- function(
+sampler.future <- function(
   data,
   m,
   ignore,
@@ -78,7 +80,7 @@ sampler.parallel <- function(
     }
     # state of the random number stream of this chain
     seed <- get(".Random.seed", envir = globalenv(), inherits = FALSE)
-    list(q = q, loggedEvents = loggedEvents, seed = seed)
+    list(q = q, loggedEvents = loggedEvents, seed = seed, pid = Sys.getpid())
   }
 
   chains <- future.apply::future_lapply(
@@ -105,11 +107,23 @@ sampler.parallel <- function(
     logs <- logs[order(logs$it, logs$im), , drop = FALSE]
   }
 
+  # backend and number of processes that ran the chains
+  pid <- vapply(chains, function(x) x$pid, integer(1))
+  info <- list(
+    plan = plan.name(),
+    workers = length(unique(pid)),
+    pid = pid
+  )
+
   if (printFlag && maxit >= 1) {
     cat(
       "\n Imputed ",
       m,
-      " chains in parallel, ",
+      " chains with future (",
+      info$plan,
+      ") on ",
+      info$workers,
+      if (info$workers == 1L) " worker, " else " workers, ",
       maxit,
       " iterations (",
       format(round(difftime(Sys.time(), t0), 2)),
@@ -130,31 +144,34 @@ sampler.parallel <- function(
     chainMean = chainMean,
     chainVar = chainVar,
     loggedEvents = logs,
-    chainSeed = lapply(chains, function(x) x$seed)
+    chainSeed = lapply(chains, function(x) x$seed),
+    future = info
   )
 }
 
-# Activates a parallel backend for mice(parallel = TRUE). A plan set by
-# the user is respected. Otherwise, a multisession plan is set up with
-# n.core workers. Returns the previous plan, or NULL if unchanged.
-setup.parallel <- function(m, n.core = NULL) {
+# Checks that the packages for mice(future = TRUE) are available. The
+# chains run on the current future plan, so nothing is set up here.
+check.future <- function() {
   install.on.demand("future")
   install.on.demand("future.apply")
-  if (!is.null(n.core)) {
-    n.core <- as.integer(n.core)
-    if (length(n.core) != 1L || is.na(n.core) || n.core < 1L) {
-      stop("Argument `n.core` must be a positive integer.", call. = FALSE)
-    }
-  }
+  invisible(NULL)
+}
 
-  if (!is.null(n.core) && n.core == 1L) {
-    return(future::plan(future::sequential))
-  }
-  if (is.null(n.core) && !inherits(future::plan(), "sequential")) {
+# Name of the current future plan, e.g. "sequential" or "multisession"
+plan.name <- function() {
+  cls <- setdiff(class(future::plan()), c("FutureStrategy", "tweaked"))
+  cls[1L]
+}
+
+# Combines the future fields of two mids objects, for ibind()
+combine.future <- function(x, y) {
+  if (is.null(x) || is.null(y)) {
     return(NULL)
   }
-  if (is.null(n.core)) {
-    n.core <- max(1L, future::availableCores() - 1L)
-  }
-  future::plan(future::multisession, workers = min(m, n.core))
+  pid <- c(x$pid, y$pid)
+  list(
+    plan = paste(unique(c(x$plan, y$plan)), collapse = ", "),
+    workers = length(unique(pid)),
+    pid = pid
+  )
 }

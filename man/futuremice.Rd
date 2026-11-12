@@ -68,6 +68,12 @@ package for R versions 3.2.0 and later. We have chosen to use furrr function
 \code{future_map} to allow the use of \code{futuremice} on Mac, Linux and
 Windows systems.
 
+The recommended way to run the chains in
+parallel is \code{mice(..., future = TRUE)}, which uses the \pkg{future}
+plan set by the user. See the section \emph{Parallel imputation} in
+\code{\link{mice}()}. \code{futuremice()} is kept for backward
+compatibility.
+
 This wrapper function combines the output of \code{\link[furrr]{future_map}} with
 function \code{\link{ibind}} from the \code{\link{mice}} package. A
 \code{mids} object is returned and can be used for further analyses.

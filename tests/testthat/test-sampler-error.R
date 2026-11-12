@@ -72,8 +72,7 @@ test_that("SAMPLER-ERROR-004: errors on a parallel chain report its imputation n
       post = post,
       seed = 1,
       print = FALSE,
-      parallel = TRUE,
-      n.core = 1
+      future = TRUE
     ),
     error = identity
   ))

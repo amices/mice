@@ -1,6 +1,6 @@
 # Timings for the vignette "Parallel imputation: benchmarks".
 #
-# Compares sequential mice(), mice(parallel = TRUE) and futuremice() for
+# Compares sequential mice(), mice(future = TRUE) and futuremice() for
 # three data sets, several numbers of imputations m and of workers. Run
 # from the package root with the version of mice to be benchmarked
 # installed (workers load the installed mice):
@@ -68,7 +68,7 @@ start.workers <- function(n) {
     m = n,
     maxit = 1,
     print = FALSE,
-    parallel = TRUE
+    future = TRUE
   ))
 }
 
@@ -89,7 +89,7 @@ for (n in workers) {
       m = n,
       maxit = 1,
       print = FALSE,
-      parallel = TRUE
+      future = TRUE
     ))
     startup[[length(startup) + 1L]] <- data.frame(
       workers = n,
@@ -131,7 +131,7 @@ for (s in names(scenarios)) {
     }
   }
 
-  # mice(parallel = TRUE) on workers that are already running
+  # mice(future = TRUE) on workers that are already running
   for (n in workers) {
     start.workers(n)
     for (m in ms) {
@@ -143,11 +143,11 @@ for (s in names(scenarios)) {
           method = sc$method,
           seed = r,
           print = FALSE,
-          parallel = TRUE
+          future = TRUE
         ))
         add(
           scenario = s,
-          approach = "mice(parallel = TRUE)",
+          approach = "mice(future = TRUE)",
           workers = n,
           m = m,
           rep = r,

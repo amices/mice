@@ -109,7 +109,7 @@ ibind <- function(x, y) {
     chainMean = chainMean,
     chainVar = chainVar,
     loggedEvents = x$loggedEvents,
-    parallel = isTRUE(x$parallel) && isTRUE(y$parallel),
+    future = combine.future(x$future, y$future),
     chainSeed = if (!is.null(x$chainSeed) && !is.null(y$chainSeed)) {
       c(x$chainSeed, y$chainSeed)
     }

@@ -11,6 +11,11 @@
 #' \code{future_map} to allow the use of \code{futuremice} on Mac, Linux and
 #' Windows systems.
 #'
+#' The recommended way to run the chains in
+#' parallel is \code{mice(..., future = TRUE)}, which uses the \pkg{future}
+#' plan set by the user. See the section \emph{Parallel imputation} in
+#' \code{\link{mice}()}. \code{futuremice()} is kept for backward
+#' compatibility.
 #'
 #' This wrapper function combines the output of \code{\link[furrr]{future_map}} with
 #' function \code{\link{ibind}} from the \code{\link{mice}} package. A
@@ -103,8 +108,12 @@ futuremice <- function(
     stop("Data has no missing values")
   }
 
-  # number of available cores
-  available <- parallelly::availableCores(logical = use.logical)
+  # number of available cores, keeping one free, at least 1 and at most m
+  available <- parallelly::availableCores(
+    logical = use.logical,
+    omit = 1,
+    max = m
+  )
 
   # set the number of cores
   n.core <- check.cores(n.core, available, m)
@@ -201,17 +210,18 @@ futuremice <- function(
   return(imp)
 }
 
+# available is the number of usable cores, as returned by
+# parallelly::availableCores(omit = 1, max = m), so at least 1
 check.cores <- function(n.core, available, m) {
+  available <- max(1L, min(available, m))
   if (is.null(n.core)) {
-    n.core <- min(available - 1, m)
-  } else {
-    if (n.core > available | n.core > m) {
-      warning(paste(
-        "'n.core' exceeds the maximum number of available cores on your machine or the number of imputations, and is set to",
-        min(available - 1, m)
-      ))
-    }
-    n.core <- min(available - 1, m, n.core)
+    return(available)
   }
-  n.core
+  if (n.core > available) {
+    warning(paste(
+      "'n.core' exceeds the maximum number of available cores on your machine or the number of imputations, and is set to",
+      available
+    ))
+  }
+  min(available, n.core)
 }

@@ -9,8 +9,7 @@ mice.mids(
   newdata = NULL,
   maxit = 1,
   print = getOption("mice.print", getOption("mice.printFlag", TRUE)),
-  parallel = isTRUE(obj$parallel),
-  n.core = NULL,
+  future = !is.null(obj$future) || isTRUE(obj$parallel),
   ...,
   printFlag = print
 )
@@ -29,12 +28,10 @@ default is 1.}
 during the Gibbs sampling iterations is written to the console. See
 \code{\link{mice}()}.}
 
-\item{parallel}{Logical. If \code{TRUE}, the chains are run in parallel,
-as in \code{mice(parallel = TRUE)}. The default continues in the mode in
-which \code{obj} was created. See Details.}
-
-\item{n.core}{Optional positive integer with the number of workers used
-when \code{parallel = TRUE}. See \code{\link{mice}()}.}
+\item{future}{Logical. If \code{TRUE}, the chains are run as futures on
+the current \pkg{future} plan, as in \code{mice(future = TRUE)}. The
+default continues in the mode in which \code{obj} was created. See
+Details.}
 
 \item{\dots}{Named arguments that are passed down to the univariate imputation
 functions.}
@@ -67,16 +64,17 @@ generator is saved with the \code{mids} object. This ensures that the
 imputations are reproducible.
 
 By default, \code{mice.mids()} continues in the same way as the object
-was created: an object made with \code{parallel = TRUE} continues in
-parallel, and other objects continue sequentially. In both cases, the
-result is identical to that of a single call with all iterations. For
-a parallel object, this works because the object stores the state of
+was created: an object made with \code{future = TRUE} continues as
+futures on the current plan, and other objects continue with the classic
+sequential sampler. In both cases, the result is identical to that of a
+single call with all iterations. For an object made with
+\code{future = TRUE}, this works because the object stores the state of
 the random number stream of each chain (\code{chainSeed}).
 
-It is possible to switch: \code{parallel = TRUE} continues a sequential
-object in parallel, and \code{parallel = FALSE} continues a parallel
-object sequentially, e.g. to see the iteration history or to debug an
-imputation method. The result is reproducible, but differs from a
+It is possible to switch: \code{future = TRUE} continues a sequential
+object as futures, and \code{future = FALSE} continues a future object
+with the classic sampler, e.g. to see the iteration history or to debug
+an imputation method. The result is reproducible, but differs from a
 single call with all iterations, as the random numbers come from
 different streams.
 }
@@ -91,11 +89,13 @@ imp <- mice(nhanes, maxit = 2, seed = 123)
 identical(imp$imp, imp2$imp)
 
 \dontrun{
-# the same holds in parallel
-imp1 <- mice(nhanes, maxit = 1, seed = 123, parallel = TRUE, n.core = 2)
-imp2 <- mice.mids(imp1, n.core = 2)
-imp <- mice(nhanes, maxit = 2, seed = 123, parallel = TRUE, n.core = 2)
+# the same holds for chains run as futures
+future::plan(future::multisession, workers = 2)
+imp1 <- mice(nhanes, maxit = 1, seed = 123, future = TRUE)
+imp2 <- mice.mids(imp1)
+imp <- mice(nhanes, maxit = 2, seed = 123, future = TRUE)
 identical(imp$imp, imp2$imp)
+future::plan(future::sequential)
 }
 #
 }
