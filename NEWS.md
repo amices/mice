@@ -1,4 +1,4 @@
-# mice 3.19.15
+# mice 3.19.16
 
 - `D3()` now follows Meng and Rubin (1992) exactly. The deviance of the
   constrained models is evaluated with all parameters fixed at their pooled
@@ -31,6 +31,8 @@
   which already ask to install it on demand. This removes 26 packages from
   the installation of `mice`, including `jomo`, `pan`, `lme4`, `haven` and
   `readr`.
+
+# mice 3.19.15
 
 - `method = "rf"` now caps the number of threads of `ranger` and
   `literanger` at `parallelly::availableCores()`. `future` sets this to 1
