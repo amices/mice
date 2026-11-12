@@ -31,14 +31,19 @@ test_that("POOL-003: D1 and D3 work for glm on imputed data", {
   expect_s3_class(D3(fit1, fit0), "mice.anova")
 })
 
-test_that("POOL-004: D1 p-value for glm is numeric", {
-  skip("FIXME: D1/D3 return NA p-value for glm on imputed data")
+test_that("POOL-004: D1 and D3 p-values for glm are numeric", {
+  skip_if_not_installed("mitml")
   imp <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
   fit0 <- with(data = imp, expr = glm(hyp == "yes" ~ 1, family = binomial))
   fit1 <- with(
     data = imp,
     expr = glm(hyp == "yes" ~ chl + bmi, family = binomial)
   )
-  expect_false(is.na(D1(fit1, fit0)$result["P(>F)"]))
-  expect_false(is.na(D3(fit1, fit0)$result["P(>F)"]))
+  # D1 returns a 1-row matrix with column names, D3 an unnamed vector
+  p1 <- D1(fit1, fit0)$result[1, "P(>F)"]
+  p3 <- D3(fit1, fit0)$result[4]
+  expect_true(is.finite(p1))
+  expect_true(is.finite(p3))
+  expect_true(p1 >= 0 && p1 <= 1)
+  expect_true(p3 >= 0 && p3 <= 1)
 })

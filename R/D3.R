@@ -16,9 +16,19 @@
 #'
 #' The \code{mitml::testModels()} function offers similar functionality
 #' for a subset of statistical models. Results of \code{mice::D3()} and
-#' \code{mitml::testModels()} differ in multilevel models because the
-#' \code{testModels()} also constrains the variance components parameters.
-#' For more details on
+#' \code{mitml::testModels()} differ because \code{D3()} constrains only
+#' the regression coefficients to their pooled values and re-estimates the
+#' nuisance parameters (the residual variance in \code{lm}, the variance
+#' components in multilevel models) in each imputed dataset, whereas
+#' \code{testModels()} also constrains the nuisance parameters to their
+#' pooled values. The two methods agree for models without nuisance
+#' parameters, such as logistic regression, and without missing data.
+#'
+#' A negative \code{D3} statistic signals that the models constrained to
+#' the pooled coefficients fit much worse than the models as fitted. This
+#' typically happens when the coefficients are unstable across imputations,
+#' for example under separation in logistic regression with small samples.
+#' \code{D3()} warns in that case, and the result should not be trusted.
 #'
 #' @seealso \code{\link{fix.coef}}
 #' @inheritParams D1
@@ -123,6 +133,14 @@ D3 <- function(fit1, fit0 = NULL, dfcom = NULL, df.com = NULL) {
     w <- v * (1 + 1 / k) * ((1 + 1 / rm)^2) / 2
   }
   pvalue <- pf(Dm, k, w, lower.tail = FALSE)
+  if (is.finite(Dm) && Dm < 0) {
+    warning(
+      "D3 statistic is negative (", format(Dm, digits = 3), "). ",
+      "The coefficients are unstable across imputations, ",
+      "e.g. because of separation. Do not trust this result.",
+      call. = FALSE
+    )
+  }
 
   test <-
     out <- list(

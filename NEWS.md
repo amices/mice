@@ -1,5 +1,11 @@
 # mice 3.19.15
 
+- `D3()` now warns when the statistic is negative, which happens when the
+  coefficients are unstable across imputations, e.g. under separation in
+  logistic regression. The documentation of `D3()` now explains why its
+  results differ from `mitml::testModels()`: `D3()` constrains only the
+  regression coefficients, `testModels()` also the nuisance parameters.
+
 - `parlmice()` no longer changes the RNG kind of the session to
   `L'Ecuyer-CMRG`, a side effect of `parallel::clusterSetRNGStream()`.
 
