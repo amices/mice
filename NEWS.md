@@ -1,5 +1,10 @@
 # mice 3.19.15
 
+- Moves `glmnet` from `Imports` to `Suggests`. `glmnet` is only needed by
+  the four `lasso` methods, which already ask to install it on demand.
+  This removes `glmnet`, `foreach`, `iterators` and `shape` from the
+  installation of `mice`.
+
 - Moves `mitml` from `Imports` to `Suggests`. `mitml` is only needed by
   `D1()`, `D2()`, `mice.impute.panImpute()` and `mice.impute.jomoImpute()`,
   which already ask to install it on demand. This removes 26 packages from

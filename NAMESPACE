@@ -197,7 +197,6 @@ importFrom(dplyr,
   select,
   summarize
 )
-importFrom(glmnet,cv.glmnet)
 importFrom(grDevices,dev.off)
 importFrom(graphics,
   abline,

@@ -1,3 +1,5 @@
+skip_if_not_installed("glmnet")
+
 #########################
 # TEST 1: Simple problem #
 #########################

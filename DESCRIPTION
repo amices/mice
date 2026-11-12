@@ -55,7 +55,6 @@ Depends:
 Imports:
     broom,
     dplyr,
-    glmnet,
     graphics,
     grDevices,
     lattice,
@@ -70,6 +69,7 @@ Suggests:
     future,
     future.apply,
     furrr,
+    glmnet,
     globals,
     haven,
     kernlab,
