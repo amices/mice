@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.14</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.15</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,15 @@
       <small>Source: <a href="https://github.com/amices/mice/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.19.15" id="mice-31915">mice 3.19.15<a class="anchor" aria-label="anchor" href="#mice-31915"></a></h2>
+<ul><li>
+<code>method = "rf"</code> now caps the number of threads of <code>ranger</code> and <code>literanger</code> at <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code>. <code>future</code> sets this to 1 on its workers, so with <code>mice(..., future = TRUE)</code> each chain uses one thread, and the workers no longer compete for the cores. Outside <code>future</code>, <code>ranger</code> keeps its default of 2 threads, and <code>literanger</code> uses the available cores instead of all cores, which respects the limits of schedulers such as Slurm and of containers. A thread count set by the user (<code>num.threads</code>, <code>n_thread</code>, <code>R_RANGER_NUM_THREADS</code> or the <code>ranger.num.threads</code> option) takes precedence. The imputations do not change. In addition, <code>num.threads</code> and <code>n_thread</code> are now also used to predict, and not only to fit the forest.</li>
+<li>Renames the argument <code>parallel</code> of <code><a href="../reference/mice.html">mice()</a></code> and <code><a href="../reference/mice.mids.html">mice.mids()</a></code> to <code>future</code>, following the advice of <a href="https://github.com/HenrikBengtsson" class="external-link">@HenrikBengtsson</a> (<a href="https://github.com/amices/mice/issues/735" class="external-link">#735</a>, <a href="https://github.com/amices/mice/issues/736" class="external-link">#736</a>). With <code>future = TRUE</code>, the chains run as futures on the plan set by the user, which <code><a href="../reference/mice.html">mice()</a></code> uses as is and never changes, including <code>plan(sequential)</code>. <code><a href="../reference/mice.html">mice()</a></code> no longer sets up a <code>multisession</code> plan itself, so the user chooses the backend, e.g. <code>plan(multisession)</code>, <code>plan(future.mirai::mirai_multisession)</code> or a cluster. The argument <code>n.core</code> is removed; set the number of workers with <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code>. The default <code>future = FALSE</code> is the classic sequential sampler, with the same results and iteration history as before. The arguments <code>parallel</code> and <code>n.core</code> were only available in the development versions 3.19.13 and 3.19.14. They are now ignored, with a warning for <code>parallel = TRUE</code> and for <code>n.core</code> together with <code>future = TRUE</code>.</li>
+<li>With <code>future = TRUE</code> and <code>print = TRUE</code>, <code><a href="../reference/mice.html">mice()</a></code> reports the plan and the number of workers that ran the chains, e.g. <code>Imputed 5 chains with future (multisession) on 4 workers</code>. The <code>mids</code> object stores this in the new field <code>future</code>, a list with <code>plan</code>, <code>workers</code> and the process id of each chain (<code>pid</code>), which replaces the logical field <code>parallel</code>. Objects created by 3.19.13 and 3.19.14 still continue as futures in <code><a href="../reference/mice.mids.html">mice.mids()</a></code>.</li>
+<li>
+<code><a href="../reference/futuremice.html">futuremice()</a></code> now determines the number of cores by <code>parallelly::availableCores(omit = 1, max = m)</code>. Before, it used <code>availableCores() - 1</code>, which gave zero workers, and an error, on a machine or job with a single core (<a href="https://github.com/amices/mice/issues/735" class="external-link">#735</a>). Requires <code>parallelly</code> 1.45.0 or later.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.19.14" id="mice-31914">mice 3.19.14<a class="anchor" aria-label="anchor" href="#mice-31914"></a></h2>
 <ul><li>

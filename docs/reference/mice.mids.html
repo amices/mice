@@ -15,7 +15,7 @@ produces a new object of class "mids".'><meta property="og:image" content="https
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.14</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.15</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,8 +59,7 @@ produces a new object of class <code>"mids"</code>.</p>
 <span>  newdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  maxit <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  print <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mice.print"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mice.printFlag"</span>, <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  parallel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Logic.html" class="external-link">isTRUE</a></span><span class="op">(</span><span class="va">obj</span><span class="op">$</span><span class="va">parallel</span><span class="op">)</span>,</span>
-<span>  n.core <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  future <span class="op">=</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">obj</span><span class="op">$</span><span class="va">future</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/Logic.html" class="external-link">isTRUE</a></span><span class="op">(</span><span class="va">obj</span><span class="op">$</span><span class="va">parallel</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  printFlag <span class="op">=</span> <span class="va">print</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -91,15 +90,11 @@ during the Gibbs sampling iterations is written to the console. See
 <code><a href="mice.html">mice()</a></code>.</p></dd>
 
 
-<dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
-<dd><p>Logical. If <code>TRUE</code>, the chains are run in parallel,
-as in <code>mice(parallel = TRUE)</code>. The default continues in the mode in
-which <code>obj</code> was created. See Details.</p></dd>
-
-
-<dt id="arg-n-core">n.core<a class="anchor" aria-label="anchor" href="#arg-n-core"></a></dt>
-<dd><p>Optional positive integer with the number of workers used
-when <code>parallel = TRUE</code>. See <code><a href="mice.html">mice()</a></code>.</p></dd>
+<dt id="arg-future">future<a class="anchor" aria-label="anchor" href="#arg-future"></a></dt>
+<dd><p>Logical. If <code>TRUE</code>, the chains are run as futures on
+the current <span class="pkg">future</span> plan, as in <code>mice(future = TRUE)</code>. The
+default continues in the mode in which <code>obj</code> was created. See
+Details.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -130,15 +125,16 @@ and cannot be changed in <code>mice.mids()</code>. The state of the random
 generator is saved with the <code>mids</code> object. This ensures that the
 imputations are reproducible.</p>
 <p>By default, <code>mice.mids()</code> continues in the same way as the object
-was created: an object made with <code>parallel = TRUE</code> continues in
-parallel, and other objects continue sequentially. In both cases, the
-result is identical to that of a single call with all iterations. For
-a parallel object, this works because the object stores the state of
+was created: an object made with <code>future = TRUE</code> continues as
+futures on the current plan, and other objects continue with the classic
+sequential sampler. In both cases, the result is identical to that of a
+single call with all iterations. For an object made with
+<code>future = TRUE</code>, this works because the object stores the state of
 the random number stream of each chain (<code>chainSeed</code>).</p>
-<p>It is possible to switch: <code>parallel = TRUE</code> continues a sequential
-object in parallel, and <code>parallel = FALSE</code> continues a parallel
-object sequentially, e.g. to see the iteration history or to debug an
-imputation method. The result is reproducible, but differs from a
+<p>It is possible to switch: <code>future = TRUE</code> continues a sequential
+object as futures, and <code>future = FALSE</code> continues a future object
+with the classic sampler, e.g. to see the iteration history or to debug
+an imputation method. The result is reproducible, but differs from a
 single call with all iterations, as the random numbers come from
 different streams.</p>
     </div>
@@ -187,11 +183,13 @@ different streams.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># the same holds in parallel</span></span></span>
-<span class="r-in"><span><span class="va">imp1</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, maxit <span class="op">=</span> <span class="fl">1</span>, seed <span class="op">=</span> <span class="fl">123</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>, n.core <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">imp2</span> <span class="op">&lt;-</span> <span class="fu">mice.mids</span><span class="op">(</span><span class="va">imp1</span>, n.core <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, maxit <span class="op">=</span> <span class="fl">2</span>, seed <span class="op">=</span> <span class="fl">123</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>, n.core <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># the same holds for chains run as futures</span></span></span>
+<span class="r-in"><span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">multisession</a></span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imp1</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, maxit <span class="op">=</span> <span class="fl">1</span>, seed <span class="op">=</span> <span class="fl">123</span>, future <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imp2</span> <span class="op">&lt;-</span> <span class="fu">mice.mids</span><span class="op">(</span><span class="va">imp1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, maxit <span class="op">=</span> <span class="fl">2</span>, seed <span class="op">=</span> <span class="fl">123</span>, future <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">imp</span><span class="op">$</span><span class="va">imp</span>, <span class="va">imp2</span><span class="op">$</span><span class="va">imp</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/sequential.html" class="external-link">sequential</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
 </code></pre></div>

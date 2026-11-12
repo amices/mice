@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.14</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.15</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,7 +71,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parallel imputation: benchmarks</h1>
             
-            <h4 data-toc-skip class="date">2026-11-11</h4>
+            <h4 data-toc-skip class="date">2026-11-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/amices/mice/blob/HEAD/vignettes/parallel-benchmark.Rmd" class="external-link"><code>vignettes/parallel-benchmark.Rmd</code></a></small>
       <div class="d-none name"><code>parallel-benchmark.Rmd</code></div>
@@ -83,11 +83,11 @@
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This vignette measures when running the chains in parallel pays off,
-and compares <code>mice(parallel = TRUE)</code> with sequential
+and compares <code>mice(future = TRUE)</code> with sequential
 <code><a href="../reference/mice.html">mice()</a></code> and with the wrapper <code><a href="../reference/futuremice.html">futuremice()</a></code> <span class="citation">(Volker and Vink 2022)</span>. It follows the design of
 <span class="citation">Volker and Vink (2022)</span>, and adds a slow
 imputation method and more numbers of imputations. The vignette <a href="parallel.html">Parallel imputation</a> explains how to use
-<code>parallel = TRUE</code>.</p>
+<code>future = TRUE</code>.</p>
 <p>The timings were computed beforehand with the script
 <code>data-raw/parallel-benchmark.R</code> in the source of the package,
 and are read from a file. They depend on the machine, so treat them as
@@ -164,7 +164,7 @@ figures show the median time. We compare:</p>
 <strong><code><a href="../reference/mice.html">mice()</a></code></strong>: the sequential sampler, on one
 core.</li>
 <li>
-<strong><code>mice(parallel = TRUE)</code></strong>: the parallel
+<strong><code>mice(future = TRUE)</code></strong>: the parallel
 sampler, on a <code>multisession</code> plan with 2, 4 or 8 workers that
 was started before the timing, so that the workers are reused. This is
 how you would use it for repeated imputations (see below for the cost of
@@ -212,12 +212,12 @@ and on workers that are already running (warm):</p>
 </tbody>
 </table>
 <p>Starting the workers costs about 0.8 seconds per call on this
-machine. <code>mice(parallel = TRUE, n.core = 4)</code> pays this cost
-in every call, as does <code><a href="../reference/futuremice.html">futuremice()</a></code>. Setting up the workers
-once with <code>future::plan(multisession, workers = 4)</code> pays it
-only for the first call. For a single long imputation the difference
-does not matter, but for many short imputations, for example in a
-simulation study, it does.</p>
+machine. <code><a href="../reference/futuremice.html">futuremice()</a></code> pays this cost in every call.
+<code>mice(future = TRUE)</code> uses the workers of the plan set by the
+user, so with <code>future::plan(multisession, workers = 4)</code> it
+pays the cost only for the first call. For a single long imputation the
+difference does not matter, but for many short imputations, for example
+in a simulation study, it does.</p>
 </div>
 <div class="section level2">
 <h2 id="results">Results<a class="anchor" aria-label="anchor" href="#results"></a>
@@ -229,8 +229,8 @@ and number of workers. Note the different vertical scales.
 </p>
 </div>
 <div class="figure">
-<img src="parallel-benchmark_files/figure-html/speedup-1.png" class="r-plt" alt="Speed-up of mice(parallel = TRUE) relative to sequential mice(), for m = 100. The dashed line is the ideal speed-up, equal to the number of workers." width="672"><p class="caption">
-Speed-up of mice(parallel = TRUE) relative to sequential mice(), for m =
+<img src="parallel-benchmark_files/figure-html/speedup-1.png" class="r-plt" alt="Speed-up of mice(future = TRUE) relative to sequential mice(), for m = 100. The dashed line is the ideal speed-up, equal to the number of workers." width="672"><p class="caption">
+Speed-up of mice(future = TRUE) relative to sequential mice(), for m =
 100. The dashed line is the ideal speed-up, equal to the number of
 workers.
 </p>
@@ -243,7 +243,7 @@ workers.
 imputation takes a few milliseconds. Sequential <code><a href="../reference/mice.html">mice()</a></code>
 needs 0.10 seconds for <code>m = 5</code> and 1.86 seconds for
 <code>m = 100</code>. On running workers,
-<code>mice(parallel = TRUE)</code> with 8 workers needs 0.38 seconds for
+<code>mice(future = TRUE)</code> with 8 workers needs 0.38 seconds for
 <code>m = 100</code>. But if the workers have to be started first, the
 start-up cost of about 0.8 seconds is larger than the whole sequential
 run for small <code>m</code>. For small data, parallel imputation only
@@ -258,9 +258,9 @@ start-up of new workers, parallel imputation pays off from
 small.</p></li>
 <li><p><strong>Slow method.</strong> With <code>rf</code>,
 <code><a href="../reference/mice.html">mice()</a></code> takes 64.5 seconds for <code>m = 100</code>, and
-<code>mice(parallel = TRUE)</code> with 8 workers 11.0 seconds, a
-speed-up of 5.8. The slower the imputation, the smaller the share of the
-fixed costs, and the closer the speed-up gets to the number of
+<code>mice(future = TRUE)</code> with 8 workers 11.0 seconds, a speed-up
+of 5.8. The slower the imputation, the smaller the share of the fixed
+costs, and the closer the speed-up gets to the number of
 workers.</p></li>
 <li><p><strong>Number of workers.</strong> The speed-up grows with the
 number of workers, but less than proportionally (second figure). With
@@ -282,13 +282,13 @@ little; if it takes minutes, the parallel run is close to
 one block per worker, and runs a complete <code><a href="../reference/mice.html">mice()</a></code> call for
 each block, including its own set-up and starting imputations. The
 blocks are then combined with <code><a href="../reference/ibind.html">ibind()</a></code>.
-<code>mice(parallel = TRUE)</code> sets up the imputation model and the
+<code>mice(future = TRUE)</code> sets up the imputation model and the
 starting imputations once, and only runs the chains on the workers.</p>
 <p>For <code>m = 100</code> with 8 workers, <code><a href="../reference/futuremice.html">futuremice()</a></code>
 took 9.5 seconds for the large data and 12.0 seconds for the slow
 method, against 5.4 and 11.0 seconds for
-<code>mice(parallel = TRUE)</code>. About 0.8 seconds of the difference
-is the start-up of the workers, which <code><a href="../reference/futuremice.html">futuremice()</a></code> pays in
+<code>mice(future = TRUE)</code>. About 0.8 seconds of the difference is
+the start-up of the workers, which <code><a href="../reference/futuremice.html">futuremice()</a></code> pays in
 every call. The remainder is probably due to the repeated set-up per
 block and the combining of the blocks. For small data, the start-up cost
 dominates: <code><a href="../reference/futuremice.html">futuremice()</a></code> is only faster than sequential
@@ -297,8 +297,8 @@ with 8 workers).</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="moving-from-futuremice-to-miceparallel-true">Moving from <code>futuremice()</code> to
-<code>mice(parallel = TRUE)</code><a class="anchor" aria-label="anchor" href="#moving-from-futuremice-to-miceparallel-true"></a>
+<h2 id="moving-from-futuremice-to-micefuture-true">Moving from <code>futuremice()</code> to
+<code>mice(future = TRUE)</code><a class="anchor" aria-label="anchor" href="#moving-from-futuremice-to-micefuture-true"></a>
 </h2>
 <p>Most arguments of <code><a href="../reference/futuremice.html">futuremice()</a></code> have a direct
 counterpart, or are no longer needed:</p>
@@ -309,14 +309,13 @@ counterpart, or are no longer needed:</p>
 </colgroup>
 <thead><tr class="header">
 <th align="left"><code><a href="../reference/futuremice.html">futuremice()</a></code></th>
-<th align="left"><code>mice(parallel = TRUE)</code></th>
+<th align="left"><code>mice(future = TRUE)</code></th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left"><code>n.core = 4</code></td>
-<td align="left">
-<code>n.core = 4</code>, or set up the workers once
-with <code>future::plan(multisession, workers = 4)</code>
+<td align="left">set up the workers once with
+<code>future::plan(multisession, workers = 4)</code>
 </td>
 </tr>
 <tr class="even">
@@ -360,30 +359,29 @@ functions and objects used in <code>post</code> are sent along</td>
 <li>
 <strong>Reproducibility.</strong> <code><a href="../reference/futuremice.html">futuremice()</a></code> gives
 reproducible results for a given <code>parallelseed</code> and
-<code>n.core</code>. <code>mice(parallel = TRUE)</code> gives the same
+<code>n.core</code>. <code>mice(future = TRUE)</code> gives the same
 imputations for a given <code>seed</code>, whatever the number of
 workers.</li>
 <li>
-<strong>Plan.</strong> <code><a href="../reference/futuremice.html">futuremice()</a></code> sets the plan to
-<code>sequential</code> when it returns, also if you had set up workers
-yourself. <code>mice(parallel = TRUE)</code> leaves a plan set by the
-user untouched.</li>
+<strong>Plan.</strong> <code><a href="../reference/futuremice.html">futuremice()</a></code> sets up its own
+plan in every call, and restores the previous plan when it returns.
+<code>mice(future = TRUE)</code> never sets up or changes a plan: it
+uses the plan set by the user.</li>
 <li>
 <strong>Logged events.</strong> <code><a href="../reference/ibind.html">ibind()</a></code> keeps the
 <code>loggedEvents</code> of the first block only, so
 <code><a href="../reference/futuremice.html">futuremice()</a></code> drops the events logged by the other workers.
-<code>mice(parallel = TRUE)</code> collects the events of all
-chains.</li>
+<code>mice(future = TRUE)</code> collects the events of all chains.</li>
 <li>
 <strong>Continuing.</strong> An object from
-<code>mice(parallel = TRUE)</code> can be continued with
+<code>mice(future = TRUE)</code> can be continued with
 <code><a href="../reference/mice.mids.html">mice.mids()</a></code>, in parallel, with the same result as a single
 run.</li>
 <li>
 <strong>Starting imputations.</strong> <code><a href="../reference/futuremice.html">futuremice()</a></code>
 draws the starting imputations separately for each block;
-<code>mice(parallel = TRUE)</code> draws them once, as
-<code><a href="../reference/mice.html">mice()</a></code> does.</li>
+<code>mice(future = TRUE)</code> draws them once, as <code><a href="../reference/mice.html">mice()</a></code>
+does.</li>
 </ul>
 </div>
 <div class="section level2">

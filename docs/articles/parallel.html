@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.14</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.15</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,7 +71,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parallel imputation</h1>
             
-            <h4 data-toc-skip class="date">2026-11-11</h4>
+            <h4 data-toc-skip class="date">2026-11-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/amices/mice/blob/HEAD/vignettes/parallel.Rmd" class="external-link"><code>vignettes/parallel.Rmd</code></a></small>
       <div class="d-none name"><code>parallel.Rmd</code></div>
@@ -88,31 +88,36 @@ Chain <code>i</code> only uses its own imputations from the previous
 iteration, so the chains are independent and can run at the same time on
 different cores or machines.</p>
 <p><code><a href="../reference/mice.html">mice()</a></code> can do this itself with the argument
-<code>parallel = TRUE</code>. This builds the parallel run into
+<code>future = TRUE</code>. This builds the parallel run into
 <code><a href="../reference/mice.html">mice()</a></code>, instead of the wrapper functions
-<code><a href="../reference/parlmice.html">parlmice()</a></code> (deprecated) and <code><a href="../reference/futuremice.html">futuremice()</a></code> <span class="citation">(Volker and Vink 2022)</span>. The parallel backend is
-provided by the <code>future</code> framework <span class="citation">(Bengtsson 2021)</span>, so the same code runs on a
-laptop, a workstation or a cluster.</p>
-<p>This vignette shows how to use <code>parallel = TRUE</code>, what
-stays the same, and what to watch out for. The companion vignette <a href="parallel-benchmark.html">Parallel imputation: benchmarks</a> shows
+<code><a href="../reference/parlmice.html">parlmice()</a></code> (deprecated) and <code><a href="../reference/futuremice.html">futuremice()</a></code> <span class="citation">(Volker and Vink 2022)</span>. The chains run as
+futures of the <code>future</code> framework <span class="citation">(Bengtsson 2021)</span>, so the same code runs on a
+laptop, a workstation or a cluster. You choose where the chains run by
+setting a <code>future</code> plan; <code><a href="../reference/mice.html">mice()</a></code> itself never
+changes it.</p>
+<p>This vignette shows how to use <code>future = TRUE</code>, what stays
+the same, and what to watch out for. The companion vignette <a href="parallel-benchmark.html">Parallel imputation: benchmarks</a> shows
 when running in parallel pays off, and how
-<code>mice(parallel = TRUE)</code> compares to
+<code>mice(future = TRUE)</code> compares to
 <code><a href="../reference/futuremice.html">futuremice()</a></code>.</p>
 <p>Parallel imputation needs the <code>future</code> and
 <code>future.apply</code> packages:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"future"</span>, <span class="st">"future.apply"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice" class="external-link">mice</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice" class="external-link">mice</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org" class="external-link">future</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="basic-use">Basic use<a class="anchor" aria-label="anchor" href="#basic-use"></a>
 </h2>
-<p>Add <code>parallel = TRUE</code> to the call:</p>
+<p>Set a plan with workers, and add <code>future = TRUE</code> to the
+call:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">123</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>, n.core <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">123</span>, future <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Imputed 5 chains in parallel, 5 iterations (0.61 secs)</span></span>
+<span><span class="co">#&gt;  Imputed 5 chains with future (multisession) on 2 workers, 5 iterations (0.68 secs)</span></span>
 <span><span class="va">imp</span></span>
 <span><span class="co">#&gt; Class: mids</span></span>
 <span><span class="co">#&gt; Number of multiple imputations:  5 </span></span>
@@ -126,61 +131,77 @@ when running in parallel pays off, and how
 <span><span class="co">#&gt; hyp   1   1   0   1</span></span>
 <span><span class="co">#&gt; chl   1   1   1   0</span></span></code></pre></div>
 <p><code><a href="../reference/mice.html">mice()</a></code> first sets up the imputation model and the
-starting imputations, exactly as for <code>parallel = FALSE</code>. It
+starting imputations, exactly as for <code>future = FALSE</code>. It
 then sends chain <code>i</code>, with all its <code>maxit</code>
 iterations, to a worker, and combines the results into one
 <code>mids</code> object. With <code>print = TRUE</code> (the default),
-<code><a href="../reference/mice.html">mice()</a></code> reports the total time rather than the iteration
-history.</p>
-<p>The argument <code>n.core</code> sets the number of workers. Without
-<code>n.core</code>, <code><a href="../reference/mice.html">mice()</a></code> uses the backend that you set
-with <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code> (see below), or, if you set none,
-starts <code>availableCores() - 1</code> workers. <code><a href="../reference/mice.html">mice()</a></code>
-never uses more workers than there are chains, so <code>m = 5</code>
-keeps at most five workers busy.</p>
-<p>The workers come on top of your own R session, the main process. The
-main process sets up the imputation model and the starting imputations,
-sends the chains to the workers, and collects and combines the results.
-While the chains run, it mostly waits. This is why the default leaves
-one core free for it (<code>availableCores() - 1</code>).</p>
+<code><a href="../reference/mice.html">mice()</a></code> reports the plan, the number of workers that ran the
+chains, and the total time, rather than the iteration history. The same
+information is stored in the result:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">imp</span><span class="op">$</span><span class="va">future</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plan"</span>, <span class="st">"workers"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; $plan</span></span>
+<span><span class="co">#&gt; [1] "multisession"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $workers</span></span>
+<span><span class="co">#&gt; [1] 2</span></span></code></pre></div>
+<p><code><a href="../reference/mice.html">mice()</a></code> never uses more workers than there are chains, so
+<code>m = 5</code> keeps at most five workers busy. The workers come on
+top of your own R session, the main process. The main process sets up
+the imputation model and the starting imputations, sends the chains to
+the workers, and collects and combines the results. While the chains
+run, it mostly waits. A common choice is therefore to leave one core
+free for it,
+e.g. <code>plan(multisession, workers = parallelly::availableCores(omit = 1))</code>.</p>
 </div>
 <div class="section level2">
-<h2 id="choosing-and-reusing-the-backend">Choosing and reusing the backend<a class="anchor" aria-label="anchor" href="#choosing-and-reusing-the-backend"></a>
+<h2 id="the-plan-is-yours">The plan is yours<a class="anchor" aria-label="anchor" href="#the-plan-is-yours"></a>
 </h2>
-<p>With <code>n.core</code>, <code><a href="../reference/mice.html">mice()</a></code> starts a fresh set of
-background R sessions (a <code>multisession</code> plan) for every call,
-and closes them afterwards. Starting a worker takes time, mainly because
-each worker has to load <code>mice</code> and its dependencies. On a
-recent laptop this costs about a second per call, which is more than the
-whole imputation of a small data set.</p>
-<p>If you impute more than once, start the workers yourself, once:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org" class="external-link">future</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">imp1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">1</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">imp2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes2</span>, m <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">1</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><code><a href="../reference/mice.html">mice()</a></code> respects a plan set by the user, and does not
-change or close it. The first call loads <code>mice</code> on the
-workers; later calls reuse them. Close the workers when you are
-done:</p>
+<p><code><a href="../reference/mice.html">mice()</a></code> uses the current plan as is. It does not start
+workers itself, and it does not change or close the plan. This has three
+consequences.</p>
+<ul>
+<li>
+<p><strong>Workers are reused.</strong> Starting a worker takes
+time, mainly because each worker has to load <code>mice</code> and its
+dependencies. On a recent laptop this costs about a second, which is
+more than the whole imputation of a small data set. The first call with
+<code>future = TRUE</code> loads <code>mice</code> on the workers, and
+later calls reuse them:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
-<p>The same mechanism selects other backends. Some examples:</p>
+<code class="sourceCode R"><span><span class="va">imp1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">1</span>, future <span class="op">=</span> <span class="cn">TRUE</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">imp2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes2</span>, m <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">1</span>, future <span class="op">=</span> <span class="cn">TRUE</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+</li>
+<li><p><strong><code>sequential</code> is respected.</strong> Under the
+default plan, <code>sequential</code>, <code>future = TRUE</code> runs
+the chains one after the other in your own session. The result is the
+same as on parallel workers, which is useful for debugging. The printed
+summary then reports <code>on 1 worker</code>, a reminder that no plan
+with workers was set.</p></li>
+<li>
+<p><strong>You choose the backend.</strong> Any <code>future</code>
+backend works, also those that <code>mice</code> does not know about.
+Some examples:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># forked processes, Linux and macOS outside RStudio only</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multicore</span>, workers <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># background R sessions based on mirai, with the future.mirai package</span></span>
+<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.mirai</span><span class="fu">::</span><span class="va">mirai_multisession</span>, workers <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># R sessions on other machines</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">cluster</span>, workers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"node1"</span>, <span class="st">"node2"</span>, <span class="st">"node3"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># jobs on an HPC scheduler, with the future.batchtools package</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.batchtools</span><span class="fu">::</span><span class="va">batchtools_slurm</span><span class="op">)</span></span></code></pre></div>
+</li>
+</ul>
 <p>See <code><a href="https://future.futureverse.org/articles/future-1-overview.html" class="external-link">vignette("future-1-overview", package = "future")</a></code>
-for all options. Without <code>parallel = TRUE</code>,
-<code><a href="../reference/mice.html">mice()</a></code> ignores the plan and uses the sequential sampler,
-which performs iteration 1 for all chains, then iteration 2 for all
-chains, and so on.</p>
+for all options. With <code>future = FALSE</code> (the default),
+<code><a href="../reference/mice.html">mice()</a></code> ignores the plan and uses the classic sequential
+sampler, which performs iteration 1 for all chains, then iteration 2 for
+all chains, and so on. With <code>print = TRUE</code> (the default), it
+prints the iteration history while it runs.</p>
 </div>
 <div class="section level2">
 <h2 id="reproducibility">Reproducibility<a class="anchor" aria-label="anchor" href="#reproducibility"></a>
@@ -188,42 +209,42 @@ chains, and so on.</p>
 <p>Each chain gets its own random number stream, derived from
 <code>seed</code> (<code>future.seed = TRUE</code> in
 <code>future.apply</code>). As a result, the imputations are
-reproducible with <code>parallel = TRUE</code>, and they do not depend
-on the number of workers:</p>
+reproducible with <code>future = TRUE</code>, and they do not depend on
+the plan or the number of workers:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">imp2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">123</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>, n.core <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>             print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">imp3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">123</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>, n.core <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>             print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="../reference/complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp2</span>, <span class="st">"long"</span><span class="op">)</span>, <span class="fu"><a href="../reference/complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp3</span>, <span class="st">"long"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">imp2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">123</span>, future <span class="op">=</span> <span class="cn">TRUE</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span>
+<span><span class="va">imp1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">123</span>, future <span class="op">=</span> <span class="cn">TRUE</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="../reference/complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp1</span>, <span class="st">"long"</span><span class="op">)</span>, <span class="fu"><a href="../reference/complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp2</span>, <span class="st">"long"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
-<p>The imputations do differ from those of <code>parallel = FALSE</code>
-with the same seed. The sequential sampler takes the random numbers for
-all chains from one and the same stream, in the order in which it visits
+<p>The imputations do differ from those of <code>future = FALSE</code>
+with the same seed. The classic sampler takes the random numbers for all
+chains from one and the same stream, in the order in which it visits
 them: iteration 1 of chain 1, iteration 1 of chain 2, and so on. With
-<code>parallel = TRUE</code>, each chain draws from its own stream:</p>
+<code>future = TRUE</code>, each chain draws from its own stream:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">imps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">123</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="../reference/complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imps</span>, <span class="st">"long"</span><span class="op">)</span>, <span class="fu"><a href="../reference/complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp2</span>, <span class="st">"long"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
 <p>Both are valid multiple imputations. If you need to reproduce an
-earlier analysis, use the same setting of <code>parallel</code> as
+earlier analysis, use the same setting of <code>future</code> as
 before.</p>
 </div>
 <div class="section level2">
 <h2 id="the-result-is-an-ordinary-mids-object">The result is an ordinary <code>mids</code> object<a class="anchor" aria-label="anchor" href="#the-result-is-an-ordinary-mids-object"></a>
 </h2>
-<p>The object returned by <code>mice(parallel = TRUE)</code> has the
-same structure as that of the sequential sampler. All functions that
-work on a <code>mids</code> object work as before. Convergence plots use
+<p>The object returned by <code>mice(future = TRUE)</code> has the same
+structure as that of the sequential sampler. All functions that work on
+a <code>mids</code> object work as before. Convergence plots use
 <code>chainMean</code> and <code>chainVar</code>, which hold one trace
 per chain. We remove <code>bmi</code> from the <code>boys</code> data,
 because it is a deterministic function of <code>hgt</code> and
 <code>wgt</code>, which makes the chains mix slowly:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">boys2</span> <span class="op">&lt;-</span> <span class="va">boys</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">boys</span><span class="op">)</span> <span class="op">!=</span> <span class="st">"bmi"</span><span class="op">]</span></span>
-<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">boys2</span>, m <span class="op">=</span> <span class="fl">5</span>, maxit <span class="op">=</span> <span class="fl">10</span>, seed <span class="op">=</span> <span class="fl">1</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>            n.core <span class="op">=</span> <span class="fl">2</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">boys2</span>, m <span class="op">=</span> <span class="fl">5</span>, maxit <span class="op">=</span> <span class="fl">10</span>, seed <span class="op">=</span> <span class="fl">1</span>, future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>            print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hgt"</span>, <span class="st">"wgt"</span>, <span class="st">"hc"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="parallel_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="672"></p>
 <p>The events that the chains log, such as removed predictors, are
@@ -242,31 +263,31 @@ sampler. The usual analysis and pooling steps are unchanged:</p>
 </h2>
 <p><code><a href="../reference/mice.mids.html">mice.mids()</a></code> adds iterations to an existing
 <code>mids</code> object. An object created with
-<code>parallel = TRUE</code> continues in parallel, and the result is
-the same as that of a single call with all iterations:</p>
+<code>future = TRUE</code> continues as futures, and the result is the
+same as that of a single call with all iterations:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">imp5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, maxit <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">1</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>             n.core <span class="op">=</span> <span class="fl">2</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">imp10</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.mids.html">mice.mids</a></span><span class="op">(</span><span class="va">imp5</span>, maxit <span class="op">=</span> <span class="fl">5</span>, n.core <span class="op">=</span> <span class="fl">2</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">imp5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, maxit <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">1</span>, future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>             print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">imp10</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.mids.html">mice.mids</a></span><span class="op">(</span><span class="va">imp5</span>, maxit <span class="op">=</span> <span class="fl">5</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">imp10</span><span class="op">$</span><span class="va">iteration</span></span>
 <span><span class="co">#&gt; [1] 10</span></span>
 <span></span>
-<span><span class="va">full</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, maxit <span class="op">=</span> <span class="fl">10</span>, seed <span class="op">=</span> <span class="fl">1</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>             n.core <span class="op">=</span> <span class="fl">2</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">full</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, maxit <span class="op">=</span> <span class="fl">10</span>, seed <span class="op">=</span> <span class="fl">1</span>, future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>             print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="../reference/complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp10</span>, <span class="st">"long"</span><span class="op">)</span>, <span class="fu"><a href="../reference/complete.mids.html">complete</a></span><span class="op">(</span><span class="va">full</span>, <span class="st">"long"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
-<p>This works because the <code>mids</code> object stores whether it was
-created in parallel (<code>imp$parallel</code>), and the state of the
-random number stream of each chain after the last iteration
+<p>This works because the <code>mids</code> object stores how it was
+created (<code>imp$future</code>), and the state of the random number
+stream of each chain after the last iteration
 (<code>imp$chainSeed</code>).</p>
-<p>You can also switch. <code>parallel = TRUE</code> continues a
-sequential object in parallel, for example to add many iterations to a
+<p>You can also switch. <code>future = TRUE</code> continues a
+sequential object as futures, for example to add many iterations to a
 model that you first checked with a short sequential run.
-<code>parallel = FALSE</code> continues a parallel object sequentially,
-for example to see the iteration history or to debug an imputation
-method:</p>
+<code>future = FALSE</code> continues a future object with the classic
+sampler, for example to see the iteration history or to debug an
+imputation method:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">imp_seq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.mids.html">mice.mids</a></span><span class="op">(</span><span class="va">imp5</span>, maxit <span class="op">=</span> <span class="fl">1</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">imp_seq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.mids.html">mice.mids</a></span><span class="op">(</span><span class="va">imp5</span>, maxit <span class="op">=</span> <span class="fl">1</span>, future <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  iter imp variable</span></span>
 <span><span class="co">#&gt;   6   1  bmi  hyp  chl</span></span>
@@ -284,14 +305,14 @@ streams.</p>
 <p>For long runs, <code><a href="../reference/mice.html">mice()</a></code> can report its progress through
 the <code>progressr</code> package. It signals one step after each
 iteration of each chain, so <code>m * maxit</code> steps in total. With
-<code>parallel = TRUE</code>, the workers relay these steps while the
+<code>future = TRUE</code>, the workers relay these steps while the
 chains run. Nothing is shown unless you enable a progress handler:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://progressr.futureverse.org" class="external-link">progressr</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://progressr.futureverse.org/reference/handlers.html" class="external-link">handlers</a></span><span class="op">(</span><span class="st">"cli"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://progressr.futureverse.org/reference/with_progress.html" class="external-link">with_progress</a></span><span class="op">(</span></span>
-<span>  <span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">boys2</span>, m <span class="op">=</span> <span class="fl">20</span>, maxit <span class="op">=</span> <span class="fl">20</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">boys2</span>, m <span class="op">=</span> <span class="fl">20</span>, maxit <span class="op">=</span> <span class="fl">20</span>, future <span class="op">=</span> <span class="cn">TRUE</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>To show the progress of every call in the session, use
 <code>handlers(global = TRUE)</code> instead of
@@ -305,7 +326,7 @@ reporting does not change the imputations.</p>
 </h2>
 <p>An imputation method is a function called
 <code>mice.impute.&lt;name&gt;()</code>. You can write your own and use
-it in <code>method</code>. With <code>parallel = TRUE</code>,
+it in <code>method</code>. With <code>future = TRUE</code>,
 <code><a href="../reference/mice.html">mice()</a></code> sends such functions to the workers, together with
 the objects from your session that they use, such as helper
 functions:</p>
@@ -318,8 +339,8 @@ functions:</p>
 <span></span>
 <span><span class="va">meth</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make.method.html">make.method</a></span><span class="op">(</span><span class="va">nhanes</span><span class="op">)</span></span>
 <span><span class="va">meth</span><span class="op">[</span><span class="st">"bmi"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"pmmshrink"</span></span>
-<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, method <span class="op">=</span> <span class="va">meth</span>, seed <span class="op">=</span> <span class="fl">1</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>            n.core <span class="op">=</span> <span class="fl">2</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, method <span class="op">=</span> <span class="va">meth</span>, seed <span class="op">=</span> <span class="fl">1</span>, future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>            print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>Imputation methods from other packages, such as those in
 <code>miceadds</code>, are loaded on the workers automatically, but the
 package must be installed on every worker.</p>
@@ -337,7 +358,7 @@ range:</p>
 <code class="sourceCode R"><span><span class="va">post</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make.post.html">make.post</a></span><span class="op">(</span><span class="va">nhanes</span><span class="op">)</span></span>
 <span><span class="va">post</span><span class="op">[</span><span class="st">"chl"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"imp[[j]][, i] &lt;- squeeze(imp[[j]][, i], c(120, 300))"</span></span></code></pre></div>
 <p>Use <code>i</code> only to index <code>imp[[j]]</code>. With
-<code>parallel = TRUE</code>, each worker holds a single chain, so
+<code>future = TRUE</code>, each worker holds a single chain, so
 <code>i</code> is always 1 there. For anything that should differ
 between the imputations, use <code>chain</code>. For example, in a
 sensitivity analysis that shifts the imputed values by an amount that
@@ -345,9 +366,9 @@ differs per imputation:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">delta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">15</span>, <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="va">post</span><span class="op">[</span><span class="st">"chl"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"imp[[j]][, i] &lt;- imp[[j]][, i] + delta[chain]"</span></span>
-<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, post <span class="op">=</span> <span class="va">post</span>, seed <span class="op">=</span> <span class="fl">1</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>, n.core <span class="op">=</span> <span class="fl">2</span>,</span>
+<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, post <span class="op">=</span> <span class="va">post</span>, seed <span class="op">=</span> <span class="fl">1</span>, future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>            print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p>With <code>parallel = FALSE</code>, <code>i</code> and
+<p>With <code>future = FALSE</code>, <code>i</code> and
 <code>chain</code> are equal, so code that uses <code>chain</code> works
 in both cases.</p>
 </div>
@@ -356,12 +377,12 @@ in both cases.</p>
 </h2>
 <p>If an imputation method or a <code>post</code> statement fails,
 <code><a href="../reference/mice.html">mice()</a></code> stops with an error that tells where the sampler
-was. This works in the same way with <code>parallel = TRUE</code>, where
+was. This works in the same way with <code>future = TRUE</code>, where
 the failing chain stops all chains:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">post</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make.post.html">make.post</a></span><span class="op">(</span><span class="va">nhanes</span><span class="op">)</span></span>
 <span><span class="va">post</span><span class="op">[</span><span class="st">"bmi"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"if (k == 3 &amp;&amp; chain == 4) stop('implausible values')"</span></span>
-<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, post <span class="op">=</span> <span class="va">post</span>, seed <span class="op">=</span> <span class="fl">1</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>, n.core <span class="op">=</span> <span class="fl">2</span>,</span>
+<span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, post <span class="op">=</span> <span class="va">post</span>, seed <span class="op">=</span> <span class="fl">1</span>, future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>            print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Caught mice_sampler_error. Canceling all iterations ...</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
@@ -372,7 +393,7 @@ Its fields contain the details, and the field <code>parent</code> holds
 the original error:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, post <span class="op">=</span> <span class="va">post</span>, seed <span class="op">=</span> <span class="fl">1</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span>, n.core <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, post <span class="op">=</span> <span class="va">post</span>, seed <span class="op">=</span> <span class="fl">1</span>, future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>       print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  error <span class="op">=</span> <span class="va">identity</span></span>
 <span><span class="op">)</span></span>
@@ -414,19 +435,30 @@ use, such as loading development tools, slows down every worker and may
 produce warnings. Wrap such code in
 <code>if (interactive()) { ... }</code>.</p></li>
 <li><p><strong>Avoid parallelism within parallelism.</strong> Some
-imputation methods use several threads themselves, such as
-<code>method = "rf"</code> with the <code>ranger</code> package. Running
-such methods on many workers at once can oversubscribe the cores. Use
-fewer workers, or limit the threads per worker, e.g.
-<code>mice(..., method = "rf", num.threads = 1)</code>.</p></li>
+imputation methods use several threads themselves. Running such methods
+on many workers at once can oversubscribe the cores. <code>future</code>
+sets <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> to 1 on its workers, and
+<code>method = "rf"</code> caps the threads of <code>ranger</code> and
+<code>literanger</code> at this value, so each chain uses one thread.
+This does not change the imputations. To use more threads per chain, set
+them yourself, e.g.
+<code>mice(..., method = "rf", num.threads = 2)</code> for
+<code>ranger</code> or <code>n_thread = 2</code> for
+<code>literanger</code>. Other methods, and a multithreaded BLAS
+library, are not limited automatically; use fewer workers for
+these.</p></li>
 <li><p><strong>Memory.</strong> Each worker receives its own copy of the
 data and of the imputations of its chain. For large data, the memory use
 grows with the number of workers.</p></li>
-<li><p><strong>Number of cores.</strong> <code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">availableCores()</a></code>
-respects the limits set by schedulers such as Slurm and by containers,
-and is a safer choice than
-<code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code>.</p></li>
+<li><p><strong>Number of cores.</strong>
+<code><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">parallelly::availableCores()</a></code> respects the limits set by
+schedulers such as Slurm and by containers, and is a safer choice than
+<code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code>. Use <code>omit = 1</code> to keep
+a core free for the main process.</p></li>
 </ul>
+<p>Close the workers when you are done:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
