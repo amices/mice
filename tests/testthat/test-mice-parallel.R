@@ -142,7 +142,7 @@ test_that("MICE-PARALLEL-010: mice() uses the plan of the user and leaves it unc
   expect_identical(imp$future$workers, 1L)
 
   skip_on_cran()
-  skip_if_not(future::availableCores() >= 2L)
+  skip_if_not(parallelly::availableCores() >= 2L)
   skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
   imp2 <- with_workers({
     imp <- mice(nhanes, m = 2, maxit = 1, print = FALSE, future = TRUE)
@@ -156,7 +156,7 @@ test_that("MICE-PARALLEL-010: mice() uses the plan of the user and leaves it unc
 
 test_that("MICE-PARALLEL-011: results do not depend on the number of workers", {
   skip_on_cran()
-  skip_if_not(future::availableCores() >= 2L)
+  skip_if_not(parallelly::availableCores() >= 2L)
   skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
   imp2 <- with_workers(mice(
     nhanes,
@@ -203,7 +203,7 @@ test_that("MICE-PARALLEL-012: user-defined methods and their helpers reach the c
   expect_false(anyNA(complete(imp1)))
 
   skip_on_cran()
-  skip_if_not(future::availableCores() >= 2L)
+  skip_if_not(parallelly::availableCores() >= 2L)
   skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
   imp2 <- with_workers(mice(
     nhanes,
@@ -302,7 +302,7 @@ test_that("MICE-PARALLEL-015: post can use objects from the global environment",
   expect_equal(unname(as.matrix(imp1$imp$bmi)), expected)
 
   skip_on_cran()
-  skip_if_not(future::availableCores() >= 2L)
+  skip_if_not(parallelly::availableCores() >= 2L)
   skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
   imp2 <- with_workers(mice(
     nhanes,
@@ -334,7 +334,7 @@ test_that("MICE-PARALLEL-016: rf uses one thread per chain on future workers", {
   meth["bmi"] <- "par016"
 
   skip_on_cran()
-  skip_if_not(future::availableCores() >= 2L)
+  skip_if_not(parallelly::availableCores() >= 2L)
   skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
   imp <- with_workers(mice(
     nhanes,

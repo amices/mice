@@ -38,7 +38,7 @@ test_that("MIDS-PARALLEL-003: maxit = 0 followed by mice.mids() equals a single 
 
 test_that("MIDS-PARALLEL-004: exact continuation holds on multisession workers", {
   skip_on_cran()
-  skip_if_not(future::availableCores() >= 2L)
+  skip_if_not(parallelly::availableCores() >= 2L)
   skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
   full <- fut_mice(nhanes, m = 3, maxit = 4, seed = 1)
   cont <- with_workers({
