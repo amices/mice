@@ -1,5 +1,9 @@
 # mice 3.19.15
 
+- Requires R 4.1.0 or later, which `broom`, `dplyr` and `tidyr` already
+  required. The old declaration of R 2.10 was not accurate. Removes the
+  unused `cpp11` entry from `LinkingTo`.
+
 - Moves `glmnet` from `Imports` to `Suggests`. `glmnet` is only needed by
   the four `lasso` methods, which already ask to install it on demand.
   This removes `glmnet`, `foreach`, `iterators` and `shape` from the
