@@ -1,3 +1,5 @@
+skip_if_not_installed("mitml")
+
 test_that("MICE-IMPUTE-PANIMPUTE-001: panImpute returns native class", {
   data <- boys[c(1:10, 101:110, 501:510, 601:620, 701:710), ]
   type <- c(2, 0, 0, 0, -2, 0, 1, 1, 0)

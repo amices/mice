@@ -20,6 +20,7 @@ test_that("POOL-002: retains same numerical result", {
 })
 
 test_that("POOL-003: D1 and D3 work for glm on imputed data", {
+  skip_if_not_installed("mitml")
   imp <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
   fit0 <- with(data = imp, expr = glm(hyp == "yes" ~ 1, family = binomial))
   fit1 <- with(

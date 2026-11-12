@@ -1,5 +1,11 @@
 # mice 3.19.15
 
+- Moves `mitml` from `Imports` to `Suggests`. `mitml` is only needed by
+  `D1()`, `D2()`, `mice.impute.panImpute()` and `mice.impute.jomoImpute()`,
+  which already ask to install it on demand. This removes 26 packages from
+  the installation of `mice`, including `jomo`, `pan`, `lme4`, `haven` and
+  `readr`.
+
 - `method = "rf"` now caps the number of threads of `ranger` and
   `literanger` at `parallelly::availableCores()`. `future` sets this to 1
   on its workers, so with `mice(..., future = TRUE)` each chain uses one

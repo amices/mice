@@ -218,12 +218,6 @@ importFrom(lattice,
   stripplot,
   xyplot
 )
-importFrom(mitml,
-  jomoImpute,
-  mitmlComplete,
-  panImpute,
-  testModels
-)
 importFrom(nnet,multinom)
 importFrom(rpart,
   rpart,

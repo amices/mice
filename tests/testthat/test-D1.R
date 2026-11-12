@@ -1,3 +1,5 @@
+skip_if_not_installed("mitml")
+
 # ---- D1 ----
 imp <- mice(nhanes2, print = FALSE, m = 10, seed = 219)
 

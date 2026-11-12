@@ -1,3 +1,5 @@
+skip_if_not_installed("mitml")
+
 imp <- mice(nhanes2, m = 10, print = FALSE, seed = 71242)
 m2 <- with(imp, lm(chl ~ age + bmi))
 m1 <- with(imp, lm(chl ~ bmi))

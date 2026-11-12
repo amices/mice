@@ -1,3 +1,5 @@
+skip_if_not_installed("mitml")
+
 # The following test was contributed by jawitte
 # https://github.com/amices/mice/issues/226
 set.seed(1)
