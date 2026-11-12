@@ -303,3 +303,31 @@ test_that("MICE-PARALLEL-015: post can use objects from the global environment",
   ))
   expect_equal(unname(as.matrix(imp2$imp$bmi)), expected)
 })
+
+test_that("MICE-PARALLEL-016: rf uses one thread per chain on future workers", {
+  skip_if_not_installed("parallelly")
+  # the method imputes the number of threads that rf would use
+  assign("mice.impute.par016", function(y, ry, x, wy = NULL, ...) {
+    if (is.null(wy)) {
+      wy <- !ry
+    }
+    rep(mice:::rf.threads(NULL, "literanger"), sum(wy))
+  }, envir = globalenv())
+  on.exit(rm("mice.impute.par016", envir = globalenv()), add = TRUE)
+  meth <- make.method(nhanes)
+  meth["bmi"] <- "par016"
+
+  skip_on_cran()
+  skip_if_not(future::availableCores() >= 2L)
+  skip_if(mice_is_dev_loaded(), "mice is loaded with devtools::load_all()")
+  imp <- with_workers(mice(
+    nhanes,
+    m = 2,
+    maxit = 1,
+    method = meth,
+    seed = 1,
+    print = FALSE,
+    future = TRUE
+  ))
+  expect_true(all(imp$imp$bmi == 1))
+})

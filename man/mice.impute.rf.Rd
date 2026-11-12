@@ -55,6 +55,21 @@ calls \code{randomForrest()} which implements Breiman's random forest
 algorithm (based on Breiman and Cutler's original Fortran code)
 for classification and regression. See Appendix A.1 of Doove et al.
 (2014) for the definition of the algorithm used.
+
+The \pkg{ranger} and \pkg{literanger} backends are multithreaded. By
+default, \code{mice.impute.rf()} caps their number of threads at
+\code{parallelly::availableCores()}: \pkg{ranger} uses at most its own
+default of 2 threads (or \code{getOption("Ncpus")}), and \pkg{literanger}
+at most all available cores. This respects the limits of schedulers
+such as Slurm and of containers, and gives one thread per chain on the
+workers of \code{mice(..., future = TRUE)}, where
+\code{availableCores()} is 1. The number of threads does not change the
+imputations. To set it yourself, pass \code{num.threads} (\pkg{ranger})
+or \code{n_thread} (\pkg{literanger}), e.g.
+\code{mice(data, method = "rf", num.threads = 4)}. For \pkg{ranger},
+the environment variable \code{R_RANGER_NUM_THREADS} and the option
+\code{ranger.num.threads} are also respected. The number of threads is
+used both to fit the forest and to predict.
 }
 \note{
 An alternative implementation was independently

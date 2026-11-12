@@ -331,10 +331,16 @@ e$parent
   warnings. Wrap such code in `if (interactive()) { ... }`.
 
 * **Avoid parallelism within parallelism.** Some imputation methods use
-  several threads themselves, such as `method = "rf"` with the `ranger`
-  package. Running such methods on many workers at once can oversubscribe
-  the cores. Use fewer workers, or limit the threads per worker, e.g.
-  `mice(..., method = "rf", num.threads = 1)`.
+  several threads themselves. Running such methods on many workers at
+  once can oversubscribe the cores. `future` sets
+  `parallelly::availableCores()` to 1 on its workers, and
+  `method = "rf"` caps the threads of `ranger` and `literanger` at this
+  value, so each chain uses one thread. This does not change the
+  imputations. To use more threads per chain, set them yourself, e.g.
+  `mice(..., method = "rf", num.threads = 2)` for `ranger` or
+  `n_thread = 2` for `literanger`. Other methods, and a multithreaded
+  BLAS library, are not limited automatically; use fewer workers for
+  these.
 
 * **Memory.** Each worker receives its own copy of the data and of the
   imputations of its chain. For large data, the memory use grows with

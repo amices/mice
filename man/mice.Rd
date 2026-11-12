@@ -438,6 +438,15 @@ Imputation methods from other packages must be installed on the workers.
 Within \code{post}, the column index \code{i} is always 1, as each
 worker holds one chain; use \code{chain} for the imputation number (see
 argument \code{post}).
+Methods that are multithreaded themselves can oversubscribe the cores
+when several chains run at the same time. \pkg{future} prevents nested
+parallelism by setting \code{parallelly::availableCores()} to 1 on its
+workers, and \code{method = "rf"} caps the number of threads of
+\pkg{ranger} and \pkg{literanger} at this value, so each chain then uses
+one thread. This does not change the imputations. A thread count set by
+the user takes precedence (see \code{\link{mice.impute.rf}()}). Other
+sources of threads, such as a multithreaded BLAS library, are not
+limited by \code{mice()}.
 The \code{mids} object stores the plan, the number of workers and the
 process id of each chain (\code{future}), and the state of the random
 number stream of each chain (\code{chainSeed}).

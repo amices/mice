@@ -1,5 +1,16 @@
 # mice (development version)
 
+- `method = "rf"` now caps the number of threads of `ranger` and
+  `literanger` at `parallelly::availableCores()`. `future` sets this to 1
+  on its workers, so with `mice(..., future = TRUE)` each chain uses one
+  thread, and the workers no longer compete for the cores. Outside
+  `future`, `ranger` keeps its default of 2 threads, and `literanger`
+  uses the available cores instead of all cores, which respects the
+  limits of schedulers such as Slurm and of containers. A thread count set
+  by the user (`num.threads`, `n_thread`, `R_RANGER_NUM_THREADS` or the
+  `ranger.num.threads` option) takes precedence. The imputations do not
+  change. In addition, `num.threads` and `n_thread` are now also used to
+  predict, and not only to fit the forest.
 - Renames the argument `parallel` of `mice()` and `mice.mids()` to
   `future`, following the advice of @HenrikBengtsson (#735, #736). With
   `future = TRUE`, the chains run as futures on the plan set by the user,
