@@ -1,9 +1,9 @@
 ## revdepcheck results
 
-We checked 177 reverse dependencies (171 from CRAN + 6 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 199 reverse dependencies (191 from CRAN + 8 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
  * We saw 5 new problems
- * We failed to check 4 packages
+ * We failed to check 5 packages
 
 Issues with CRAN packages are summarised below.
 
@@ -14,21 +14,22 @@ Issues with CRAN packages are summarised below.
   checking examples ... ERROR
   checking running R code from vignettes ...
 
-* bipd
-  checking dependencies in R code ...sh: line 1: 13687 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpM2y2Bj/file323367539f29'
+* basecamb
+  checking tests ...
 
-* broom.mixed
-  checking examples ...sh: line 1: 24508 Segmentation fault: 11  LANGUAGE=en _R_CHECK_INTERNALS2_=1 '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla > 'broom.mixed-Ex.Rout' 2>&1 < 'broom.mixed-Ex.R'
+* mfrmr
+  checking tests ...
 
-* pminternal
-  checking running R code from vignettes ...
+* parameters
+  checking tests ...
 
-* pre
+* RSquaredMI
   checking tests ...
 
 ### Failed to check
 
 * brms   (NA)
 * dynr   (NA)
+* idem   (NA)
 * pguIMP (NA)
 * rmsb   (NA)

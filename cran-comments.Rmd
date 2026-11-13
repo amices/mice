@@ -73,7 +73,7 @@ Note: Inactivate `credentials::set_github_pat()`
 ```{r eval=FALSE}
 library(revdepcheck)
 revdep_reset()
-revdep_check(pkg = ".", num_workers = 12, quiet = FALSE)
+revdep_check(pkg = ".", num_workers = 10, quiet = FALSE)
 ```
 
 ```{r}
@@ -83,19 +83,30 @@ revdep_check(pkg = ".", num_workers = 12, quiet = FALSE)
 
 ## revdepcheck results
 
-We checked 177 reverse dependencies (171 from CRAN + 6 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 199 reverse dependencies (191 from CRAN + 8 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 5 new problems
- * We failed to check 4 packages
+ * We saw 6 new problems
+ * We failed to check 5 packages
 
-Of the 5 new problems, only `autoReg` is caused by this release: it reads
-the confidence interval columns from `summary(pool(fit), conf.int = TRUE)`
-by their old `confint()`-style names (`` `2.5 %` ``/`` `97.5 %` ``), which
-this version renames to `conf.low`/`conf.high` (broom convention). We have
-contacted the maintainer about updating `autoReg` accordingly. The
-remaining new problems (`bipd`, `broom.mixed`, `pminternal`, `pre`) are
-unrelated environment flakiness (segfaults also seen as "newly fixed" in
-the same run, or local port conflicts from parallel checking) and not
-caused by changes in this package.
+All 6 new problems result from intended changes in this release. We
+notified the maintainers of all six packages by email on 13 November 2026.
+
+* `autoReg` reads the confidence interval columns from
+  `summary(pool(fit), conf.int = TRUE)` by their old `confint()`-style
+  names (`` `2.5 %` ``/`` `97.5 %` ``), which mice 3.19.10 renamed to
+  `conf.low`/`conf.high` (broom convention).
+* `basecamb`, `parameters`, `RSquaredMI` and `RNAseqCovarImpute`
+  (Bioconductor) have tests that compare against exact numbers from a
+  seeded `mice()` run with the default method `pmm`. mice 3.19.12 fixes a
+  bug in the matching of tied predicted values (#757), so the imputations
+  for a given seed change. The packages themselves are not at fault; the
+  expected values need updating.
+* `mfrmr` has a test that injects the value `2` into the imputations of a
+  logical variable and expects an error. Since mice 3.19.12, `complete()`
+  keeps logical variables logical (#764), so no error is raised.
+
+The 5 packages we failed to check (`brms`, `dynr`, `idem`, `pguIMP`,
+`rmsb`) could not be installed locally because of Stan, rJava and
+configure problems, unrelated to mice.
 
 See <https://github.com/amices/mice/tree/master/revdep> for details.

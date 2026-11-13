@@ -68,237 +68,13 @@ Run `revdepcheck::revdep_details(, "autoReg")` for more info
      Execution halted
      ```
 
-# bipd (0.3)
+# basecamb (1.1.5)
 
-* Email: <mailto:swj8874@gmail.com>
-* GitHub mirror: <https://github.com/cran/bipd>
+* GitHub: <https://github.com/codeblue-team/basecamb>
+* Email: <mailto:peter@kmarquardt.de>
+* GitHub mirror: <https://github.com/cran/basecamb>
 
-Run `revdepcheck::revdep_details(, "bipd")` for more info
-
-## Newly broken
-
-*   checking dependencies in R code ...sh: line 1: 13687 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpM2y2Bj/file323367539f29'
-     ```
-      NOTE
-     
-      *** caught segfault ***
-     address 0x2720657661682820, cause 'invalid permissions'
-     
-     Traceback:
-      1: dyn.load(file, DLLpath = DLLpath, ...)
-      2: library.dynam(lib, package, package.lib)
-      3: loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]])
-      4: asNamespace(ns)
-      5: namespaceImportFrom(ns, loadNamespace(j <- i[[1L]], c(lib.loc,     .libPaths()), versionCheck = vI[[j]]), i[[2L]], from = package)
-      6: loadNamespace(p)
-      7: withCallingHandlers(expr, message = function(c) if (inherits(c,     classes)) tryInvokeRestart("muffleMessage"))
-      8: suppressMessages(loadNamespace(p))
-      9: withCallingHandlers(expr, warning = function(w) if (inherits(w,     classes)) tryInvokeRestart("muffleWarning"))
-     10: suppressWarnings(suppressMessages(loadNamespace(p)))
-     11: doTryCatch(return(expr), name, parentenv, handler)
-     12: tryCatchOne(expr, names, parentenv, handlers[[1L]])
-     13: tryCatchList(expr, classes, parentenv, handlers)
-     14: tryCatch(suppressWarnings(suppressMessages(loadNamespace(p))),     error = function(e) e)
-     15: tools:::.check_packages_used(package = "bipd")
-     An irrecoverable exception occurred. R is aborting now ...
-     ```
-
-## Newly fixed
-
-*   checking dependencies in R code ...sh: line 1: 12569 Segmentation fault: 11  R_DEFAULT_PACKAGES=NULL '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla --no-echo 2>&1 < '/var/folders/5_/g85d42yj50b6lrjq4rzjzg8w0000gn/T//RtmpDYDlp0/file2f8b6d997e06'
-     ```
-      NOTE
-     
-      *** caught segfault ***
-     address 0x2720657661682820, cause 'invalid permissions'
-     
-     Traceback:
-      1: dyn.load(file, DLLpath = DLLpath, ...)
-      2: library.dynam(lib, package, package.lib)
-      3: loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]])
-      4: asNamespace(ns)
-      5: namespaceImportFrom(ns, loadNamespace(j <- i[[1L]], c(lib.loc,     .libPaths()), versionCheck = vI[[j]]), i[[2L]], from = package)
-      6: loadNamespace(p)
-      7: withCallingHandlers(expr, message = function(c) if (inherits(c,     classes)) tryInvokeRestart("muffleMessage"))
-      8: suppressMessages(loadNamespace(p))
-      9: withCallingHandlers(expr, warning = function(w) if (inherits(w,     classes)) tryInvokeRestart("muffleWarning"))
-     10: suppressWarnings(suppressMessages(loadNamespace(p)))
-     11: doTryCatch(return(expr), name, parentenv, handler)
-     12: tryCatchOne(expr, names, parentenv, handlers[[1L]])
-     13: tryCatchList(expr, classes, parentenv, handlers)
-     14: tryCatch(suppressWarnings(suppressMessages(loadNamespace(p))),     error = function(e) e)
-     15: tools:::.check_packages_used(package = "bipd")
-     An irrecoverable exception occurred. R is aborting now ...
-     ```
-
-## In both
-
-*   checking running R code from vignettes ...
-     ```
-     ...
-     Errors in running code in vignettes:
-     when running code in ‘IPD-meta-analysis-with-missing-data.Rmd’
-       ...
-     +     X <- with(current.data, apply(current.data[, c(" ..." ... [TRUNCATED] 
-     
-       When sourcing ‘IPD-meta-analysis-with-missing-data.R’:
-     Error: .onLoad failed in loadNamespace() for 'rjags', details:
-       call: dyn.load(file, DLLpath = DLLpath, ...)
-       error: unable to load shared object '/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/bipd/rjags/libs/rjags.so':
-       dlopen(/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/bipd/rjags/libs/rjags.so, 0x000A): Library not loaded: /usr/local/lib/libjags.4.dylib
-       Referenced from: <337070A2-BC15-3117-B643-96612554E437> /Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/bipd/rjags/libs/rjags.so
-       Reason: tried: '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64e.v1' or 'arm64' or 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/lib/libjags.4.dylib' (no such file), '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64e.v1' or 'arm64' or 'arm64')), '/Library/Frameworks/R.framework/Resources/
-     Execution halted
-     when running code in ‘IPD-meta-analysis.Rmd’
-       ...
-     +     n.iter = 5000)
-     
-       When sourcing ‘IPD-meta-analysis.R’:
-     Error: .onLoad failed in loadNamespace() for 'rjags', details:
-       call: dyn.load(file, DLLpath = DLLpath, ...)
-       error: unable to load shared object '/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/bipd/rjags/libs/rjags.so':
-       dlopen(/Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/bipd/rjags/libs/rjags.so, 0x000A): Library not loaded: /usr/local/lib/libjags.4.dylib
-       Referenced from: <337070A2-BC15-3117-B643-96612554E437> /Users/buurensv/Dropbox/Package/mice/mice/revdep/library.noindex/bipd/rjags/libs/rjags.so
-       Reason: tried: '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64e.v1' or 'arm64' or 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/usr/local/lib/libjags.4.dylib' (no such file), '/usr/local/lib/libjags.4.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64e.v1' or 'arm64' or 'arm64')), '/Library/Frameworks/R.framework/Resources/
-     Execution halted
-     ```
-
-# broom.mixed (0.2.9.7)
-
-* GitHub: <https://github.com/bbolker/broom.mixed>
-* Email: <mailto:bolker@mcmaster.ca>
-* GitHub mirror: <https://github.com/cran/broom.mixed>
-
-Run `revdepcheck::revdep_details(, "broom.mixed")` for more info
-
-## Newly broken
-
-*   checking examples ...sh: line 1: 24508 Segmentation fault: 11  LANGUAGE=en _R_CHECK_INTERNALS2_=1 '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla > 'broom.mixed-Ex.Rout' 2>&1 < 'broom.mixed-Ex.R'
-     ```
-     ...
-     Loading required package: Matrix
-     Loading required package: mediation
-     Loading required package: MASS
-     Loading required package: mvtnorm
-     
-      *** caught segfault ***
-     address 0x7469686372612065, cause 'invalid permissions'
-     
-     Traceback:
-      1: dyn.load(file, DLLpath = DLLpath, ...)
-      2: library.dynam(lib, package, package.lib)
-      3: loadNamespace(package, lib.loc)
-      4: doTryCatch(return(expr), name, parentenv, handler)
-      5: tryCatchOne(expr, names, parentenv, handlers[[1L]])
-      6: tryCatchList(expr, classes, parentenv, handlers)
-      7: tryCatch({    attr(package, "LibPath") <- which.lib.loc    ns <- loadNamespace(package, lib.loc)    env <- attachNamespace(ns, pos = pos, deps, exclude, include.only)}, error = function(e) {    P <- if (!is.null(cc <- conditionCall(e)))         paste(" in", deparse(cc)[1L])    else ""    msg <- gettextf("package or namespace load failed for %s%s:\n %s",         sQuote(package), P, conditionMessage(e))    if (logical.return && !quietly)         message(paste("Error:", msg), domain = NA)    else stop(msg, call. = FALSE, domain = NA)})
-      8: library(pkg, character.only = TRUE, logical.return = TRUE, lib.loc = lib.loc,     quietly = quietly)
-      9: .getRequiredPackages2(pkgInfo, quietly = quietly, lib.loc = c(lib.loc,     .libPaths()))
-     10: library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,     warn.conflicts = warn.conflicts, quietly = quietly, mask.ok = mask.ok,     exclude = exclude, include.only = include.only, attach.required = attach.required)
-     11: doTryCatch(return(expr), name, parentenv, handler)
-     12: tryCatchOne(expr, names, parentenv, handlers[[1L]])
-     13: tryCatchList(expr, classes, parentenv, handlers)
-     14: tryCatch(library(package, lib.loc = lib.loc, character.only = TRUE,     logical.return = TRUE, warn.conflicts = warn.conflicts, quietly = quietly,     mask.ok = mask.ok, exclude = exclude, include.only = include.only,     attach.required = attach.required), error = function(e) e)
-     15: require("mediation")
-     An irrecoverable exception occurred. R is aborting now ...
-     ```
-
-## Newly fixed
-
-*   checking examples ...sh: line 1: 24509 Segmentation fault: 11  LANGUAGE=en _R_CHECK_INTERNALS2_=1 '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla > 'broom.mixed-Ex.Rout' 2>&1 < 'broom.mixed-Ex.R'
-     ```
-     ...
-     Loading required package: Matrix
-     Loading required package: mediation
-     Loading required package: MASS
-     Loading required package: mvtnorm
-     
-      *** caught segfault ***
-     address 0x7469686372612065, cause 'invalid permissions'
-     
-     Traceback:
-      1: dyn.load(file, DLLpath = DLLpath, ...)
-      2: library.dynam(lib, package, package.lib)
-      3: loadNamespace(package, lib.loc)
-      4: doTryCatch(return(expr), name, parentenv, handler)
-      5: tryCatchOne(expr, names, parentenv, handlers[[1L]])
-      6: tryCatchList(expr, classes, parentenv, handlers)
-      7: tryCatch({    attr(package, "LibPath") <- which.lib.loc    ns <- loadNamespace(package, lib.loc)    env <- attachNamespace(ns, pos = pos, deps, exclude, include.only)}, error = function(e) {    P <- if (!is.null(cc <- conditionCall(e)))         paste(" in", deparse(cc)[1L])    else ""    msg <- gettextf("package or namespace load failed for %s%s:\n %s",         sQuote(package), P, conditionMessage(e))    if (logical.return && !quietly)         message(paste("Error:", msg), domain = NA)    else stop(msg, call. = FALSE, domain = NA)})
-      8: library(pkg, character.only = TRUE, logical.return = TRUE, lib.loc = lib.loc,     quietly = quietly)
-      9: .getRequiredPackages2(pkgInfo, quietly = quietly, lib.loc = c(lib.loc,     .libPaths()))
-     10: library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,     warn.conflicts = warn.conflicts, quietly = quietly, mask.ok = mask.ok,     exclude = exclude, include.only = include.only, attach.required = attach.required)
-     11: doTryCatch(return(expr), name, parentenv, handler)
-     12: tryCatchOne(expr, names, parentenv, handlers[[1L]])
-     13: tryCatchList(expr, classes, parentenv, handlers)
-     14: tryCatch(library(package, lib.loc = lib.loc, character.only = TRUE,     logical.return = TRUE, warn.conflicts = warn.conflicts, quietly = quietly,     mask.ok = mask.ok, exclude = exclude, include.only = include.only,     attach.required = attach.required), error = function(e) e)
-     15: require("mediation")
-     An irrecoverable exception occurred. R is aborting now ...
-     ```
-
-## In both
-
-*   checking tests ...
-     ```
-       Running ‘test-all.R’/Library/Frameworks/R.framework/Resources/bin/BATCH: line 60: 24802 Segmentation fault: 11  ${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} > ${out} 2>&1
-     
-      ERROR
-     Running the tests in ‘tests/test-all.R’ failed.
-     Last 13 lines of output:
-       29: withRestarts(tryCatch(withCallingHandlers({    eval(code, test_env)    new_expectations <- the$test_expectations > starting_expectations    if (snapshot_skipped) {        skip("On CRAN")    }    else if (!new_expectations && skip_on_empty) {        skip_empty()    }}, expectation = handle_expectation, packageNotFoundError = function(e) {    if (on_cran()) {        skip(paste0("{", e$package, "} is not installed."))    }}, snapshot_on_cran = function(cnd) {    snapshot_skipped <<- TRUE    invokeRestart("muffle_cran_snapshot")}, skip = handle_skip, warning = handle_warning, message = handle_message,     error = handle_error, interrupt = handle_interrupt), error = handle_fatal),     end_test = function() {    })
-       30: test_code(code = exprs, env = env, reporter = get_reporter() %||%     StopReporter$new())
-       31: source_file(path, env = env(env), desc = desc, shuffle = shuffle,     error_call = error_call)
-       32: FUN(X[[i]], ...)
-       33: lapply(test_paths, test_one_file, env = env, desc = desc, shuffle = shuffle,     error_call = error_call)
-       34: doTryCatch(return(expr), name, parentenv, handler)
-       35: tryCatchOne(expr, names, parentenv, handlers[[1L]])
-       36: tryCatchList(expr, classes, parentenv, handlers)
-       37: tryCatch(code, testthat_abort_reporter = function(cnd) {    cat(conditionMessage(cnd), "\n")    NULL})
-       38: with_reporter(reporters$multi, lapply(test_paths, test_one_file,     env = env, desc = desc, shuffle = shuffle, error_call = error_call))
-       39: test_files_serial(test_dir = test_dir, test_package = test_package,     test_paths = test_paths, load_helpers = load_helpers, reporter = reporter,     env = env, stop_on_failure = stop_on_failure, stop_on_warning = stop_on_warning,     desc = desc, load_package = load_package, shuffle = shuffle,     error_call = error_call)
-       40: test_files(test_dir = path, test_paths = test_paths, test_package = package,     reporter = reporter, load_helpers = load_helpers, env = env,     stop_on_failure = stop_on_failure, stop_on_warning = stop_on_warning,     load_package = load_package, parallel = parallel, shuffle = shuffle)
-       41: test_dir("testthat", package = package, reporter = reporter,     ..., load_package = "installed")
-       42: test_check("broom.mixed")
-       An irrecoverable exception occurred. R is aborting now ...
-     ```
-
-# pminternal (0.1.0)
-
-* GitHub: <https://github.com/stephenrho/pminternal>
-* Email: <mailto:steverho89@gmail.com>
-* GitHub mirror: <https://github.com/cran/pminternal>
-
-Run `revdepcheck::revdep_details(, "pminternal")` for more info
-
-## Newly broken
-
-*   checking running R code from vignettes ...
-     ```
-       ‘missing-data.Rmd’ using ‘UTF-8’... OK
-       ‘pminternal.Rmd’ using ‘UTF-8’... failed
-       ‘validate-examples.Rmd’ using ‘UTF-8’... OK
-      ERROR
-     Errors in running code in vignettes:
-     when running code in ‘pminternal.Rmd’
-       ...
-     +     ]
-     
-     > mod <- glm(y ~ ., data = gusto, family = "binomial")
-     
-     > mod_iv <- validate(mod, B = 20)
-     It is recommended that B >= 200 for bootstrap validation
-     
-       When sourcing ‘pminternal.R’:
-     Error: creation of server socket failed: port 11349 cannot be opened
-     Execution halted
-     ```
-
-# pre (1.0.9)
-
-* GitHub: <https://github.com/marjoleinF/pre>
-* Email: <mailto:m.fokkema@fsw.leidenuniv.nl>
-* GitHub mirror: <https://github.com/cran/pre>
-
-Run `revdepcheck::revdep_details(, "pre")` for more info
+Run `revdepcheck::revdep_details(, "basecamb")` for more info
 
 ## Newly broken
 
@@ -308,18 +84,225 @@ Run `revdepcheck::revdep_details(, "pre")` for more info
       ERROR
      Running the tests in ‘tests/testthat.R’ failed.
      Last 13 lines of output:
-       [ FAIL 1 | WARN 1 | SKIP 0 | PASS 130 ]
+       0 out of 5 global p-values were smaller than 0.05
+       [ FAIL 1 | WARN 0 | SKIP 0 | PASS 83 ]
        
        ══ Failed tests ════════════════════════════════════════════════════════════════
-       ── Error ('test_pre_misc.R:94:3'): cvpre gives previous results with airquality data ──
-       Error in `serverSocket(port = port)`: creation of server socket failed: port 11725 cannot be opened
+       ── Failure ('test_cox.zph.mids.R:13:3'): cox.zph.mids handles cases correctly ──
+       Expected `mean(cox.zph.mids(cox_mod, imputed_data))` to equal 0.6588979.
+       Differences:
+         `actual`: 0.672
+       `expected`: 0.659
+       
+       
+       [ FAIL 1 | WARN 0 | SKIP 0 | PASS 83 ]
+       Error:
+       ! Test failures.
+       Execution halted
+     ```
+
+# mfrmr (0.2.4)
+
+* GitHub: <https://github.com/Ryuya-dot-com/mfrmr>
+* Email: <mailto:ryuya.komuro.c4@tohoku.ac.jp>
+* GitHub mirror: <https://github.com/cran/mfrmr>
+
+Run `revdepcheck::revdep_details(, "mfrmr")` for more info
+
+## Newly broken
+
+*   checking tests ...
+     ```
+       Running ‘testthat.R’
+      ERROR
+     Running the tests in ‘tests/testthat.R’ failed.
+     Last 13 lines of output:
+         'test-anchor-migration.R:61:3', 'test-gmfrm-em.R:629:3',
+         'test-gmfrm-public-workflow.R:76:3', 'test-gpcm-inference-extensions.R:22:3',
+         'test-interaction-em.R:149:3', 'test-jml-public-workflow.R:123:3',
+         'test-jml-public-workflow.R:139:3', 'test-marginal-fit-availability.R:179:3',
+         'test-random-rater.R:202:3', 'test-random-rater.R:216:3',
+         'test-random-rater.R:250:3', 'test-testlet.R:123:3'
+       
+       ══ Failed tests ════════════════════════════════════════════════════════════════
+       ── Failure ('test-feature-clustering.R:239:3'): mice imputed logical and ordered features retain their meaning ──
+       Expected `mfrm_cluster_imputed(x, bad, x$missing, 2)` to throw a error.
+       
+       [ FAIL 1 | WARN 0 | SKIP 13 | PASS 5256 ]
+       Error:
+       ! Test failures.
+       Execution halted
+     ```
+
+## In both
+
+*   checking running R code from vignettes ...
+     ```
+     ...
+       ‘mfrmr-networks-and-reporting.Rmd’ using ‘UTF-8’... OK
+       ‘mfrmr-portable-calibration.Rmd’ using ‘UTF-8’... OK
+       ‘mfrmr-random-raters.Rmd’ using ‘UTF-8’... OK
+       ‘mfrmr-rating-agreement.Rmd’ using ‘UTF-8’... OK
+       ‘mfrmr-reporting-and-apa.Rmd’ using ‘UTF-8’... OK
+       ‘mfrmr-response-imputation.Rmd’ using ‘UTF-8’... OK
+       ‘mfrmr-screening-performance.Rmd’ using ‘UTF-8’... OK
+       ‘mfrmr-testlet-applications.Rmd’ using ‘UTF-8’... failed
+       ‘mfrmr-testlets.Rmd’ using ‘UTF-8’... OK
+       ‘mfrmr-visual-diagnostics.Rmd’ using ‘UTF-8’... OK
+       ‘mfrmr-workflow.Rmd’ using ‘UTF-8’... OK
+      ERROR
+     Errors in running code in vignettes:
+     when running code in ‘mfrmr-testlet-applications.Rmd’
+       ...
+     
+     > plan_results <- list()
+     
+     > for (model in names(fits)) for (plan in names(plans)) {
+     +     key <- paste(model, plan, sep = ": ")
+     +     plan_results[[key]] <- evaluate_parallel_p .... [TRUNCATED] 
+     
+       When sourcing ‘mfrmr-testlet-applications.R’:
+     Error: could not find function "evaluate_parallel_plan"
+     Execution halted
+     ```
+
+# parameters (0.30.0)
+
+* GitHub: <https://github.com/easystats/parameters>
+* Email: <mailto:officialeasystats@gmail.com>
+* GitHub mirror: <https://github.com/cran/parameters>
+
+Run `revdepcheck::revdep_details(, "parameters")` for more info
+
+## Newly broken
+
+*   checking tests ...
+     ```
+       Running ‘testthat.R’
+      ERROR
+     Running the tests in ‘tests/testthat.R’ failed.
+     Last 13 lines of output:
+       • TODO: fix this test (1): 'test-model_parameters.lqmm.R:40:3'
+       • empty test (2): 'test-wrs2.R:69:1', 'test-wrs2.R:81:1'
+       
+       ══ Failed tests ════════════════════════════════════════════════════════════════
+       ── Failure ('test-pool_parameters.R:10:3'): pooled parameters ──────────────────
+       Expected `pp$df_error` to equal `c(9.2225, 8.1903, 3.6727, 10.264, 6.4385)`.
+       Differences:
+         `actual`: 13.73 7.35 11.68  8.68 10.88
+       `expected`:  9.22 8.19  3.67 10.26  6.44
+       
+       
+       [ FAIL 1 | WARN 2 | SKIP 138 | PASS 925 ]
+       Error:
+       ! Test failures.
+       Execution halted
+     ```
+
+# RNAseqCovarImpute (1.10.0)
+
+* GitHub: <https://github.com/brennanhilton/RNAseqCovarImpute>
+* Email: <mailto:brennanhilton@gmail.com>
+
+Run `revdepcheck::revdep_details(, "RNAseqCovarImpute")` for more info
+
+## Newly broken
+
+*   checking tests ...
+     ```
+       Running ‘testthat.R’
+      ERROR
+     Running the tests in ‘tests/testthat.R’ failed.
+     Last 13 lines of output:
+       
+       [ FAIL 1 | WARN 0 | SKIP 0 | PASS 3 ]
+       
+       ══ Failed tests ════════════════════════════════════════════════════════════════
+       ── Failure ('test-combine_rubins.R:25:5'): consistent results ──────────────────
+       Expected `final_res$coef_combined[1]` to equal `-0.02099867`.
+       Differences:
+         `actual`: -0.0213
+       `expected`: -0.0210
+       
+       
+       [ FAIL 1 | WARN 0 | SKIP 0 | PASS 3 ]
+       Error:
+       ! Test failures.
+       Execution halted
+     ```
+
+## In both
+
+*   checking R code for possible problems ... NOTE
+     ```
+     ...
+     combine_rubins: no visible binding for global variable
+       ‘combined_p_bayes’
+     limmavoom_imputed_data_list_helper: no visible binding for global
+       variable ‘i’
+     limmavoom_imputed_data_list_helper: no visible binding for global
+       variable ‘lm_predictor’
+     limmavoom_imputed_data_pca: no visible binding for global variable
+       ‘probe’
+     lowess_all_gene_bins: no visible binding for global variable ‘gene_bin’
+     lowess_all_gene_bins: no visible binding for global variable ‘i’
+     voom_master_lowess: no visible global function definition for ‘is’
+     voom_master_lowess: no visible global function definition for ‘new’
+     voom_master_lowess: no visible global function definition for ‘lowess’
+     voom_master_lowess: no visible global function definition for
+       ‘approxfun’
+     voom_sx_sy: no visible global function definition for ‘is’
+     voom_sx_sy: no visible global function definition for ‘new’
+     Undefined global functions or variables:
+       approxfun coef_combined combined_p combined_p_bayes gene_bin i is
+       lm_predictor lowess new probe rubins_t_bayes
+     Consider adding
+       importFrom("methods", "is", "new")
+       importFrom("stats", "approxfun", "lowess")
+     to your NAMESPACE file (and ensure that your DESCRIPTION Imports field
+     contains 'methods').
+     ```
+
+*   checking Rd \usage sections ... NOTE
+     ```
+     Documented arguments not in \usage in Rd file 'impute_gene_bin_helper.Rd':
+       ‘DGE’ ‘param’
+     
+     Functions with \usage entries need to have the appropriate \alias
+     entries, and all their arguments documented.
+     The \usage entries must correspond to syntactically valid R code.
+     See chapter ‘Writing R documentation files’ in the ‘Writing R
+     Extensions’ manual.
+     ```
+
+# RSquaredMI (0.2.0)
+
+* GitHub: <https://github.com/karchjd/RsquaredMI>
+* Email: <mailto:j.d.karch@fsw.leidenuniv.nl>
+* GitHub mirror: <https://github.com/cran/RSquaredMI>
+
+Run `revdepcheck::revdep_details(, "RSquaredMI")` for more info
+
+## Newly broken
+
+*   checking tests ...
+     ```
+       Running ‘testthat.R’
+      ERROR
+     Running the tests in ‘tests/testthat.R’ failed.
+     Last 13 lines of output:
+       Expected `res` to equal `exp`.
+       Differences:
+         `actual`: 0.48 0.47 0.50 0.48 0.46 0.47 0.48 0.48 0.48
+       `expected`: 0.36 0.36 0.39 0.37 0.34 0.36 0.36 0.36 0.36
+       
        Backtrace:
            ▆
-        1. └─parallel::makeCluster(2L) at test_pre_misc.R:94:3
-        2.   └─parallel::makePSOCKcluster(names = spec, ...)
-        3.     └─base::serverSocket(port = port)
+        1. └─RSquaredMI (local) check_alternatives(res) at test-RsquaredMI.R:123:3
+        2.   └─RSquaredMI (local) check_numbers(...) at test-RsquaredMI.R:29:3
+        3.     └─testthat::expect_equal(res, exp, ignore_attr = TRUE) at test-RsquaredMI.R:2:3
        
-       [ FAIL 1 | WARN 1 | SKIP 0 | PASS 130 ]
+       [ FAIL 26 | WARN 0 | SKIP 0 | PASS 4 ]
        Error:
        ! Test failures.
        Execution halted

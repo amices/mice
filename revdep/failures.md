@@ -57,6 +57,78 @@ ERROR: configuration failed for package ‘dynr’
 
 
 ```
+# idem (5.2)
+
+* GitHub: <https://github.com/olssol/idem>
+* Email: <mailto:cwang68@jhmi.edu>
+* GitHub mirror: <https://github.com/cran/idem>
+
+Run `revdepcheck::revdep_details(, "idem")` for more info
+
+## In both
+
+*   checking whether package ‘idem’ can be installed ... ERROR
+     ```
+     Installation failed.
+     See ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/idem/new/idem.Rcheck/00install.out’ for details.
+     ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘idem’ ...
+** this is package ‘idem’ version ‘5.2’
+** package ‘idem’ successfully unpacked and MD5 sums checked
+** using staged installation
+Error in rstan::stanc(file_name, allow_undefined = TRUE, obfuscate_model_name = FALSE,  : 
+  0
+Syntax error in 'string', line 17, column 29 to column 30, parsing error:
+   -------------------------------------------------
+    15:    }
+    16:    real cond_lpdf(vector ymis, vector yobs, matrix coef,
+...
+
+Ill-formed type. Expected an unsized type in function signature.
+  For example, this means a type like "matrix", not "matrix[3,4]".
+  If you are trying to use the old array syntax, you will need to use
+  the new syntax, see:
+  https://mc-stan.org/docs/reference-manual/types.html#array-data-types.section
+Calls: <Anonymous> -> sapply -> lapply -> FUN -> <Anonymous>
+Execution halted
+ERROR: configuration failed for package ‘idem’
+* removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/idem/new/idem.Rcheck/idem’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘idem’ ...
+** this is package ‘idem’ version ‘5.2’
+** package ‘idem’ successfully unpacked and MD5 sums checked
+** using staged installation
+Error in rstan::stanc(file_name, allow_undefined = TRUE, obfuscate_model_name = FALSE,  : 
+  0
+Syntax error in 'string', line 17, column 29 to column 30, parsing error:
+   -------------------------------------------------
+    15:    }
+    16:    real cond_lpdf(vector ymis, vector yobs, matrix coef,
+...
+
+Ill-formed type. Expected an unsized type in function signature.
+  For example, this means a type like "matrix", not "matrix[3,4]".
+  If you are trying to use the old array syntax, you will need to use
+  the new syntax, see:
+  https://mc-stan.org/docs/reference-manual/types.html#array-data-types.section
+Calls: <Anonymous> -> sapply -> lapply -> FUN -> <Anonymous>
+Execution halted
+ERROR: configuration failed for package ‘idem’
+* removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/idem/old/idem.Rcheck/idem’
+
+
+```
 # pguIMP (0.1.1)
 
 * GitHub: <https://github.com/JornLotsch/pguIMP>
@@ -115,7 +187,7 @@ ERROR: lazy loading failed for package ‘pguIMP’
 
 
 ```
-# rmsb (1.1-2)
+# rmsb (1.1-3)
 
 * Email: <mailto:fh@fharrell.com>
 * GitHub mirror: <https://github.com/cran/rmsb>
@@ -136,7 +208,7 @@ Run `revdepcheck::revdep_details(, "rmsb")` for more info
 
 ```
 * installing *source* package ‘rmsb’ ...
-** this is package ‘rmsb’ version ‘1.1-2’
+** this is package ‘rmsb’ version ‘1.1-3’
 ** package ‘rmsb’ successfully unpacked and MD5 sums checked
 ** using staged installation
 Error in loadNamespace(x) : there is no package called ‘rstantools’
@@ -151,7 +223,7 @@ ERROR: configuration failed for package ‘rmsb’
 
 ```
 * installing *source* package ‘rmsb’ ...
-** this is package ‘rmsb’ version ‘1.1-2’
+** this is package ‘rmsb’ version ‘1.1-3’
 ** package ‘rmsb’ successfully unpacked and MD5 sums checked
 ** using staged installation
 Error in loadNamespace(x) : there is no package called ‘rstantools’
@@ -159,6 +231,61 @@ Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
 Execution halted
 ERROR: configuration failed for package ‘rmsb’
 * removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/rmsb/old/rmsb.Rcheck/rmsb’
+
+
+```
+# UKBAnalytica ()
+
+* GitHub: <https://github.com/amices/mice>
+* Email: <mailto:stef.vanbuuren@tno.nl>
+
+Run `revdepcheck::revdep_details(, "UKBAnalytica")` for more info
+
+## Error before installation
+
+### Devel
+
+```
+
+  There are binary versions available but the source versions are later:
+           binary source needs_compilation
+enrichplot 1.32.0 1.32.1             FALSE
+tidytree    0.4.8  0.4.9             FALSE
+
+
+
+installing the source packages ‘enrichplot’, ‘GO.db’, ‘org.Hs.eg.db’, ‘tidytree’
+
+Error in (function (libdir, packages, quiet, repos)  : 
+  all(packages %in% rownames(installed.packages(libdir[1]))) is not TRUE
+In addition: Warning messages:
+1: In utils::install.packages(pkgs = pkgs, lib = lib, repos = myrepos,  :
+  installation of package ‘enrichplot’ had non-zero exit status
+2: In utils::install.packages(pkgs = pkgs, lib = lib, repos = myrepos,  :
+  installation of package ‘enrichplot’ had non-zero exit status
+
+
+```
+### CRAN
+
+```
+
+  There are binary versions available but the source versions are later:
+           binary source needs_compilation
+enrichplot 1.32.0 1.32.1             FALSE
+tidytree    0.4.8  0.4.9             FALSE
+
+
+
+installing the source packages ‘enrichplot’, ‘GO.db’, ‘org.Hs.eg.db’, ‘tidytree’
+
+Error in (function (libdir, packages, quiet, repos)  : 
+  all(packages %in% rownames(installed.packages(libdir[1]))) is not TRUE
+In addition: Warning messages:
+1: In utils::install.packages(pkgs = pkgs, lib = lib, repos = myrepos,  :
+  installation of package ‘enrichplot’ had non-zero exit status
+2: In utils::install.packages(pkgs = pkgs, lib = lib, repos = myrepos,  :
+  installation of package ‘enrichplot’ had non-zero exit status
 
 
 ```
