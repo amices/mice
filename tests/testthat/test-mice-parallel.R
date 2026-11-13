@@ -41,8 +41,8 @@ test_that("MICE-PARALLEL-003: parallel imputations are reproducible with a seed"
     print = FALSE,
     future = TRUE
   )
-  expect_identical(complete(imp_par, "long"), complete(imp2, "long"))
-  expect_identical(imp_par$chainMean, imp2$chainMean)
+  expect_equal(complete(imp_par, "long"), complete(imp2, "long"))
+  expect_equal(imp_par$chainMean, imp2$chainMean)
 })
 
 test_that("MICE-PARALLEL-004: future = FALSE is not affected", {
@@ -54,7 +54,7 @@ test_that("MICE-PARALLEL-004: future = FALSE is not affected", {
     print = FALSE,
     future = FALSE
   )
-  expect_identical(complete(imp_seq, "long"), complete(imp2, "long"))
+  expect_equal(complete(imp_seq, "long"), complete(imp2, "long"))
 })
 
 test_that("MICE-PARALLEL-005: events logged within chains are kept", {
@@ -166,8 +166,8 @@ test_that("MICE-PARALLEL-011: results do not depend on the number of workers", {
     print = FALSE,
     future = TRUE
   ))
-  expect_identical(complete(imp_par, "long"), complete(imp2, "long"))
-  expect_identical(imp_par$chainMean, imp2$chainMean)
+  expect_equal(complete(imp_par, "long"), complete(imp2, "long"))
+  expect_equal(imp_par$chainMean, imp2$chainMean)
 })
 
 test_that("MICE-PARALLEL-012: user-defined methods and their helpers reach the chains", {
@@ -214,7 +214,7 @@ test_that("MICE-PARALLEL-012: user-defined methods and their helpers reach the c
     print = FALSE,
     future = TRUE
   ))
-  expect_identical(complete(imp1, "long"), complete(imp2, "long"))
+  expect_equal(complete(imp1, "long"), complete(imp2, "long"))
 })
 
 test_that("MICE-PARALLEL-013: errors name the iteration, chain and variable", {

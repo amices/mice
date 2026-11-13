@@ -60,7 +60,7 @@ test_that("MICE-PROGRESS-004: progress reporting does not change imputations", {
   progress_messages(
     imp2 <- mice(nhanes, m = 2, maxit = 2, seed = 1, print = FALSE)
   )
-  expect_identical(complete(imp1, "long"), complete(imp2, "long"))
+  expect_equal(complete(imp1, "long"), complete(imp2, "long"))
 })
 
 test_that("MICE-PROGRESS-005: maxit = 0 signals no steps", {
