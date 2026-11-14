@@ -71,7 +71,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parallel imputation: benchmarks</h1>
             
-            <h4 data-toc-skip class="date">2026-11-12</h4>
+            <h4 data-toc-skip class="date">2026-11-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/amices/mice/blob/HEAD/vignettes/parallel-benchmark.Rmd" class="external-link"><code>vignettes/parallel-benchmark.Rmd</code></a></small>
       <div class="d-none name"><code>parallel-benchmark.Rmd</code></div>
@@ -101,7 +101,7 @@ were obtained on:</p>
 <tbody>
 <tr class="odd">
 <td align="left">Date</td>
-<td align="left">2026-11-11</td>
+<td align="left">2026-11-14</td>
 </tr>
 <tr class="even">
 <td align="left">CPU</td>
@@ -113,15 +113,15 @@ were obtained on:</p>
 </tr>
 <tr class="even">
 <td align="left">R</td>
-<td align="left">R version 4.5.2 (2025-10-31)</td>
+<td align="left">R version 4.6.2 (2026-10-29)</td>
 </tr>
 <tr class="odd">
 <td align="left">mice</td>
-<td align="left">3.19.12</td>
+<td align="left">3.19.16</td>
 </tr>
 <tr class="even">
 <td align="left">future</td>
-<td align="left">1.75.0</td>
+<td align="left">1.82.0</td>
 </tr>
 </tbody>
 </table>
@@ -193,25 +193,25 @@ and on workers that are already running (warm):</p>
 <tbody>
 <tr class="odd">
 <td align="right">2</td>
-<td align="right">0.76</td>
-<td align="right">0.03</td>
-<td align="right">0.73</td>
+<td align="right">0.44</td>
+<td align="right">0.04</td>
+<td align="right">0.40</td>
 </tr>
 <tr class="even">
 <td align="right">4</td>
-<td align="right">0.84</td>
-<td align="right">0.04</td>
-<td align="right">0.80</td>
+<td align="right">0.48</td>
+<td align="right">0.05</td>
+<td align="right">0.43</td>
 </tr>
 <tr class="odd">
 <td align="right">8</td>
-<td align="right">0.94</td>
-<td align="right">0.05</td>
-<td align="right">0.89</td>
+<td align="right">0.56</td>
+<td align="right">0.06</td>
+<td align="right">0.50</td>
 </tr>
 </tbody>
 </table>
-<p>Starting the workers costs about 0.8 seconds per call on this
+<p>Starting the workers costs about 0.4 seconds per call on this
 machine. <code><a href="../reference/futuremice.html">futuremice()</a></code> pays this cost in every call.
 <code>mice(future = TRUE)</code> uses the workers of the plan set by the
 user, so with <code>future::plan(multisession, workers = 4)</code> it
@@ -241,25 +241,25 @@ workers.
 <ul>
 <li><p><strong>Small data.</strong> For 1000 cases and 4 variables, one
 imputation takes a few milliseconds. Sequential <code><a href="../reference/mice.html">mice()</a></code>
-needs 0.10 seconds for <code>m = 5</code> and 1.86 seconds for
+needs 0.08 seconds for <code>m = 5</code> and 1.60 seconds for
 <code>m = 100</code>. On running workers,
-<code>mice(future = TRUE)</code> with 8 workers needs 0.38 seconds for
+<code>mice(future = TRUE)</code> with 8 workers needs 0.36 seconds for
 <code>m = 100</code>. But if the workers have to be started first, the
-start-up cost of about 0.8 seconds is larger than the whole sequential
+start-up cost of about 0.4 seconds is larger than the whole sequential
 run for small <code>m</code>. For small data, parallel imputation only
 helps with many imputations, on workers that are already
 running.</p></li>
 <li><p><strong>Large data.</strong> For 10000 cases and 8 variables,
-<code><a href="../reference/mice.html">mice()</a></code> takes 1.6 seconds for <code>m = 5</code> and 30.5
-seconds for <code>m = 100</code>. With 8 workers, this becomes 0.44 and
-5.4 seconds, a speed-up of 5.7 for <code>m = 100</code>. Including the
+<code><a href="../reference/mice.html">mice()</a></code> takes 1.5 seconds for <code>m = 5</code> and 27.7
+seconds for <code>m = 100</code>. With 8 workers, this becomes 0.39 and
+4.4 seconds, a speed-up of 6.3 for <code>m = 100</code>. Including the
 start-up of new workers, parallel imputation pays off from
 <code>m = 20</code> on; for <code>m = 5</code> the gain is
 small.</p></li>
 <li><p><strong>Slow method.</strong> With <code>rf</code>,
-<code><a href="../reference/mice.html">mice()</a></code> takes 64.5 seconds for <code>m = 100</code>, and
-<code>mice(future = TRUE)</code> with 8 workers 11.0 seconds, a speed-up
-of 5.8. The slower the imputation, the smaller the share of the fixed
+<code><a href="../reference/mice.html">mice()</a></code> takes 66.9 seconds for <code>m = 100</code>, and
+<code>mice(future = TRUE)</code> with 8 workers 13.3 seconds, a speed-up
+of 5.0. The slower the imputation, the smaller the share of the fixed
 costs, and the closer the speed-up gets to the number of
 workers.</p></li>
 <li><p><strong>Number of workers.</strong> The speed-up grows with the
@@ -285,15 +285,16 @@ blocks are then combined with <code><a href="../reference/ibind.html">ibind()</a
 <code>mice(future = TRUE)</code> sets up the imputation model and the
 starting imputations once, and only runs the chains on the workers.</p>
 <p>For <code>m = 100</code> with 8 workers, <code><a href="../reference/futuremice.html">futuremice()</a></code>
-took 9.5 seconds for the large data and 12.0 seconds for the slow
-method, against 5.4 and 11.0 seconds for
-<code>mice(future = TRUE)</code>. About 0.8 seconds of the difference is
+took 6.3 seconds for the large data and 14.0 seconds for the slow
+method, against 4.4 and 13.3 seconds for
+<code>mice(future = TRUE)</code>. About 0.4 seconds of the difference is
 the start-up of the workers, which <code><a href="../reference/futuremice.html">futuremice()</a></code> pays in
 every call. The remainder is probably due to the repeated set-up per
 block and the combining of the blocks. For small data, the start-up cost
 dominates: <code><a href="../reference/futuremice.html">futuremice()</a></code> is only faster than sequential
-<code><a href="../reference/mice.html">mice()</a></code> for <code>m = 100</code> (1.30 against 1.86 seconds
-with 8 workers).</p>
+<code><a href="../reference/mice.html">mice()</a></code> for <code>m = 100</code>, or for <code>m = 50</code>
+with 4 or more workers (0.83 against 1.60 seconds for
+<code>m = 100</code> with 8 workers).</p>
 </div>
 </div>
 <div class="section level2">
