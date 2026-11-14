@@ -1,3 +1,14 @@
+# mice 3.19.17
+
+- `predict_mi()` now uses a correct pooling approach for the prediction
+  interval. For `interval = "confidence"`, Rubin's rules can still be 
+  used, but for `interval = "prediction"`, Rubin's rules give 
+  miscalibrated intervals unless the predictors are normally distributed.
+  Additionally, we implement a diagnostic that tells the user whether the
+  number of imputations is large enough to obtain valid prediction
+  intervals, and allow users to sample from the posterior predictive 
+  distribution (as a mixture over the imputations). 
+
 # mice 3.19.16
 
 - `D3()` now follows Meng and Rubin (1992) exactly. The deviance of the
