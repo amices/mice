@@ -344,7 +344,7 @@ pool_predictions <- function(predlist, interval, level, iterations, probs, nsamp
       quantiles <- apply(pooled_res, 3, \(x) {
         matrix(x["fit", ], n, length(p)) + 
           matrix(sqrt(x["t", ]), n, length(p)) * 
-          sapply(p, \(prob) qt(prob, x["df", ])) |>
+          sapply(p, \(prob) stats::qt(prob, x["df", ])) |>
           matrix(n, length(p), dimnames = list(NULL, names(p)))
       }, simplify = FALSE)
     } else if (interval == "prediction") {
@@ -393,7 +393,7 @@ pool_predictions <- function(predlist, interval, level, iterations, probs, nsamp
     samples <- apply(params, c(2), \(x) {
       scale <- if (interval == "confidence") x[,2,] else sqrt(x[,2,]^2 + t(res.var) %x% rep(1, n))
       dim <- c(n, m, nsamples)
-      array(x[,1,], dim) + array(scale, dim) * array(rt(prod(dim), df), dim)
+      array(x[,1,], dim) + array(scale, dim) * array(stats::rt(prod(dim), df), dim)
     }, simplify = FALSE)
     pooled$samples <- samples
   }
@@ -420,8 +420,8 @@ remove_sefit <- function(fit) {
 bisection_mixture_interval <- function(preds, scale, df, probs, iterations = 20) {
 
   sapply(probs, function(prob) {
-    lo <- apply(preds + scale * qt(prob, df), 1, min)
-    hi <- apply(preds + scale * qt(prob, df), 1, max)
+    lo <- apply(preds + scale * stats::qt(prob, df), 1, min)
+    hi <- apply(preds + scale * stats::qt(prob, df), 1, max)
     for (i in seq_len(iterations)) {
       mid <- (lo + hi)/2 # set midpoint of bisection
       decrease_hi <- rowMeans(pt((mid-preds)/scale, df)) > prob # check whether the midpoint exceeds
