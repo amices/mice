@@ -242,10 +242,7 @@ mice.impute.2l.bin <- function(
   }
 
   # draw all bi.star and stack into matrix (n_clmis x q)
-  B <- do.call(rbind, lapply(clmis, draw_bi))
-  if (nrow(psi.star) == 1L) {
-    B <- matrix(B, ncol = 1L)
-  }
+  B <- t(do.call(cbind, lapply(clmis, draw_bi)))
 
   clust_idx <- match(x[wy, clust], clmis)
   logit <- X[wy, , drop = FALSE] %*%
