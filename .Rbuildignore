@@ -27,3 +27,4 @@ vignettes/
 ^\.git$
 ^air\.toml$
 ^\.vscode$
+^codecov\.yml$
