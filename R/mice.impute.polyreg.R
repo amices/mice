@@ -75,8 +75,7 @@ mice.impute.polyreg <- function(
   w <- aug$w
 
   fy <- as.factor(y)
-  nc <- length(levels(fy))
-  un <- rep(runif(sum(wy)), each = nc)
+  un <- runif(sum(wy))
 
   xy <- cbind.data.frame(y = y, x = x)
 
