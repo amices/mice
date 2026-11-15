@@ -38,7 +38,13 @@
 #' @param obj An object of class \code{mids}, typically produces by a previous
 #' call to \code{mice()} or \code{mice.mids()}
 #' @param newdata An optional \code{data.frame} for which multiple imputations
-#' are generated according to the model in \code{obj}.
+#' are generated according to the model in \code{obj}. The imputation
+#' methods are taken from \code{obj}. A variable without missing values in
+#' the training data has method \code{""} in \code{obj}. If \code{newdata}
+#' has missing values in such a variable, \code{mice.mids()} assigns the
+#' default method for its type (see \code{\link{make.method}()}), and says
+#' so in a message. A method \code{""} that the user set for a variable
+#' with missing training data is kept, so these values stay \code{NA}.
 #' @param maxit The number of additional Gibbs sampling iterations. The
 #' default is 1.
 #' @param print Logical. If \code{TRUE} (default), diagnostic information
@@ -107,9 +113,11 @@ mice.mids <- function(
     }
 
     newdata <- check.newdata(newdata, obj$data)
+    obj <- fill.method.newdata(obj, newdata)
     imp.newdata <- mice(
       newdata,
       m = obj$m,
+      blocks = obj$blocks,
       method = obj$method,
       maxit = 0,
       remove.collinear = FALSE,
@@ -291,4 +299,49 @@ mice.mids <- function(
   }
 
   return(midsobj)
+}
+
+# Blocks without missing values in the training data get method "" in
+# mice(). If newdata has missing values in such a block, assign the
+# default method for its type, so that these values are imputed by the
+# trained model instead of remaining NA. A method "" for a block with
+# missing training data was chosen by the user and is kept.
+fill.method.newdata <- function(obj, newdata) {
+  blocks <- obj$blocks
+  method <- obj$method[names(blocks)]
+  vars <- intersect(colnames(newdata), colnames(obj$data))
+  wnew <- matrix(
+    FALSE,
+    nrow = nrow(newdata),
+    ncol = ncol(obj$data),
+    dimnames = list(NULL, colnames(obj$data))
+  )
+  wnew[, vars] <- is.na(newdata[, vars, drop = FALSE])
+  fill <- method == "" &
+    nimp(obj$where, blocks) == 0L &
+    nimp(wnew, blocks) > 0L
+  if (!any(fill)) {
+    return(obj)
+  }
+  fill <- names(blocks)[fill]
+  wall <- matrix(
+    TRUE,
+    nrow = nrow(obj$data),
+    ncol = ncol(obj$data),
+    dimnames = list(NULL, colnames(obj$data))
+  )
+  obj$method[fill] <- make.method(
+    data = obj$data,
+    where = wall,
+    blocks = blocks[fill]
+  )
+  obj$visitSequence <- c(obj$visitSequence, setdiff(fill, obj$visitSequence))
+  message(
+    "`newdata` has missing values in ",
+    paste0("`", fill, "`", collapse = ", "),
+    ", which had no missing values in the training data. Imputing by ",
+    paste0("\"", obj$method[fill], "\"", collapse = ", "),
+    "."
+  )
+  obj
 }
