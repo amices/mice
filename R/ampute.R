@@ -563,19 +563,14 @@ sumscores <- function(P, data, std, weights, patterns) {
 # #missing cells.
 recalculate.prop <- function(prop, n, k, patterns, freq) {
   miss <- prop * n * k # Desired #missing cells
-  # Calculate #cases according prop and #zeros in patterns
-  cases <- vapply(
-    seq_len(nrow(patterns)),
-    function(i) (miss * freq[i]) / length(patterns[i, ][patterns[i, ] == 0]),
-    numeric(1)
-  )
-  if (sum(cases) > n) {
+  cases <- miss / sum(freq * rowSums(patterns == 0))
+  if (cases > n) {
     stop(
       "Proportion of missing cells is too large in combination with the desired number of missing variables",
       call. = FALSE
     )
   } else {
-    prop <- sum(cases) / n
+    prop <- cases / n
   }
   prop
 }
