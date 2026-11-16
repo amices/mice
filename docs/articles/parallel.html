@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.16</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.18</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,9 @@
 <li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
     <li><a class="dropdown-item" href="../articles/parallel.html">Parallel imputation</a></li>
     <li><a class="dropdown-item" href="../articles/parallel-benchmark.html">Parallel imputation: benchmarks</a></li>
+    <li><a class="dropdown-item" href="../articles/newdata.html">Imputing new data</a></li>
     <li><a class="dropdown-item" href="../articles/random-effects-2l-bin.html">Random effects strategies in `mice.impute.2l.bin`</a></li>
+    <li><a class="dropdown-item" href="../articles/predictor-codes.html">Codes in the predictor matrix</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -71,7 +73,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parallel imputation</h1>
             
-            <h4 data-toc-skip class="date">2026-11-14</h4>
+            <h4 data-toc-skip class="date">2026-11-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/amices/mice/blob/HEAD/vignettes/parallel.Rmd" class="external-link"><code>vignettes/parallel.Rmd</code></a></small>
       <div class="d-none name"><code>parallel.Rmd</code></div>
@@ -117,7 +119,7 @@ call:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes</span>, m <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">123</span>, future <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Imputed 5 chains with future (multisession) on 2 workers, 5 iterations (0.31 secs)</span></span>
+<span><span class="co">#&gt;  Imputed 5 chains with future (multisession) on 2 workers, 5 iterations (0.33 secs)</span></span>
 <span><span class="va">imp</span></span>
 <span><span class="co">#&gt; Class: mids</span></span>
 <span><span class="co">#&gt; Number of multiple imputations:  5 </span></span>
@@ -254,9 +256,9 @@ sampler. The usual analysis and pooling steps are unchanged:</p>
 <code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/with.mids.html">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">wgt</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hgt</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="../reference/pool.html">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          term   estimate  std.error statistic       df      p.value</span></span>
-<span><span class="co">#&gt; 1 (Intercept) -9.3559617 2.04663853  -4.57138 742.1823 5.674799e-06</span></span>
-<span><span class="co">#&gt; 2         age  2.3237179 0.18942725  12.26707 741.6993 1.256016e-31</span></span>
-<span><span class="co">#&gt; 3         hgt  0.1922411 0.02808239   6.84561 741.9631 1.596930e-11</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 (Intercept) -9.2307298 2.05918173 -4.482717 732.8193 8.550317e-06</span></span>
+<span><span class="co">#&gt; 2         age  2.3410638 0.19104065 12.254271 718.4590 1.738862e-31</span></span>
+<span><span class="co">#&gt; 3         hgt  0.1901132 0.02827777  6.723060 728.7687 3.593962e-11</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="adding-iterations">Adding iterations<a class="anchor" aria-label="anchor" href="#adding-iterations"></a>
