@@ -1,0 +1,176 @@
+---
+title: "Codes in the predictor matrix"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+bibliography: refs.bibtex
+vignette: >
+  %\VignetteIndexEntry{Codes in the predictor matrix}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+The predictor matrix tells `mice()` which variables to use when imputing a
+variable or block. Each row is a block to be imputed, each column a
+variable in the data. For the standard methods, such as `pmm`, `norm` and
+`logreg`, the entries are simple: `1` means that the column is a predictor
+and `0` means that it is not used [@vanbuuren-2011-1].
+
+Methods for multilevel data need more information. They have to know which
+variable identifies the clusters, which predictors get a random effect, and
+whether cluster means should be added. These methods read the extra
+information from the same matrix, using codes such as `-2`, `2`, `3` and
+`4` [@vanbuuren-2018-1, chap. 7]. The codes are not the same across
+methods. The meaning of `2` in particular depends on the method: it is a
+random effect in `2l.lmer`, a contextual effect in
+`miceadds::mice.impute.2l.contextual.pmm()`, and a fixed effect in
+`jomoImpute`.
+
+This article collects the codes of the imputation methods in mice and in
+the packages that extend it: miceadds, micemd and mitml. It is based on
+the documentation and the source of mice 3.19.18, miceadds 3.20.10,
+micemd 1.11.0 and mitml 0.4.5.
+
+## Setting the codes
+
+Start from the default predictor matrix and change the row of the
+variable to impute. In the `popmis` data, pupils are nested in schools.
+The following imputes `popular` with a two-level normal model, with
+`school` as cluster variable, a random slope for `sex`, and fixed effects
+for `texp` and `teachpop`:
+
+```{r}
+library(mice)
+dat <- popmis[, c("school", "popular", "sex", "texp", "teachpop")]
+pred <- make.predictorMatrix(dat)
+pred["popular", ] <- c(-2, 0, 2, 1, 1)
+pred["popular", ]
+```
+
+```{r, eval = requireNamespace("lme4", quietly = TRUE)}
+meth <- make.method(dat)
+meth["popular"] <- "2l.lmer"
+imp <- mice(dat, method = meth, predictorMatrix = pred,
+            m = 2, maxit = 1, seed = 1, print = FALSE)
+```
+
+The other variables are complete, so their rows play no role here.
+
+## Two-level methods that follow the mice convention
+
+Most univariate two-level methods use `-2` for the cluster variable, `1`
+for a fixed effect and `2` for a fixed plus a random effect. Some add `3`
+and `4` to include the cluster mean of the predictor.
+
+| Method | Package | `-2` | `1` | `2` | `3` | `4` |
+|---|---|---|---|---|---|---|
+| `2l.lmer`, `2l.bin` | mice | cluster | fixed | fixed + random | as `1`^1^ | as `1`^1^ |
+| `2l.norm` | mice | cluster | ignored^2^ | fixed + random | – | – |
+| `2l.pan` | mice | cluster | fixed | fixed + random | fixed + cluster mean | fixed + random + cluster mean |
+| `2l.pmm`, `2l.continuous`, `2l.binary` | miceadds | cluster | fixed | fixed + random | fixed + cluster mean | fixed + random + cluster mean |
+| `2l.2stage.norm`, `.pmm`, `.bin`, `.pois` | micemd | cluster | fixed^3^ | fixed + random | as `1`^3^ | as `1`^3^ |
+| `2l.glm.norm`, `.bin`, `.pois` | micemd | cluster | fixed^3^ | fixed + random | as `1`^3^ | as `1`^3^ |
+| `2l.jomo` | micemd | cluster | included^4^ | included^4^ | – | – |
+| `2lonly.mean` | mice | cluster | – | – | – | – |
+| `2lonly.norm`, `2lonly.pmm` | mice | cluster | predictor | predictor | – | – |
+| `2lonly.function` | miceadds | cluster^5^ | predictor | – | – | – |
+
+Notes:
+
+1. `2l.lmer` and `2l.bin` take all positive codes as fixed effects and `2`
+   as a random effect. Codes `3` and `4` give no error, but they also add
+   no cluster mean. Use `2l.pan` or `miceadds::mice.impute.2l.pmm()` for
+   cluster means.
+2. `2l.norm` uses only `-2` and `2`. Predictors with code `1` are dropped
+   without a warning. The documentation advises using `2` for all
+   predictors.
+3. micemd documents only `-2` and `2`, but the source takes all positive
+   codes as fixed effects, as in `2l.lmer`.
+4. `micemd::mice.impute.2l.jomo()` includes all variables with a positive
+   code in a joint random-intercept model. Code `2` does not add a random
+   slope.
+5. miceadds recommends the argument `cluster_var` over code `-2`.
+
+## Methods that give the codes another meaning
+
+Several methods in miceadds and micemd use the same numbers for something
+else. Code `2` often means that a cluster mean is added, and some methods
+introduce their own codes.
+
+| Method | Package | Codes |
+|---|---|---|
+| `2l.contextual.pmm`, `2l.contextual.norm` | miceadds | `-2` cluster, `1` predictor, `2` predictor + cluster mean (contextual effect) |
+| `2l.latentgroupmean.ml`, `2l.latentgroupmean.mcmc` | miceadds | `-2` cluster, `1` predictor, `2` predictor + latent group mean |
+| `2l.groupmean`, `2l.groupmean.elim` | miceadds | `-2` cluster, `1` or `2` variable whose cluster mean is computed |
+| `plausible.values` | miceadds | `-2` cluster, `1` predictor, `2` predictor + cluster mean, `3` item of the scale to be imputed |
+| `pls`, `2l.pls2` | miceadds | `-2` cluster (adds the cluster mean of `y`, leaving out the case itself), `1` predictor, `4` interactions with all other predictors, `5` quadratic term, `6` left out of the interactions |
+| `2l.2stage.heckman` | micemd | `-2` cluster, `2` predictor in the outcome and selection equations, `-3` selection equation only, `-4` outcome equation only (all predictors have random effects) |
+| `ml.lmer` | miceadds | `1` fixed effect; levels and random slopes are set with the arguments `levels_id`, `variables_levels` and `random_slopes`, not with codes |
+
+## Multivariate methods for blocks
+
+The methods `jomoImpute` and `panImpute` impute a block of variables at
+once. For these methods, `mice()` passes the row of the block in the
+predictor matrix to `mitml::jomoImpute()` or `mitml::panImpute()` as its
+`type` argument, so the row contains mitml codes. These differ from the
+mice convention: in mitml, `2` is a *fixed* effect and `3` a *random*
+effect.
+
+| Code | Meaning in `mitml::jomoImpute()` and `mitml::panImpute()` |
+|---|---|
+| `1` | target variable with missing data |
+| `2` | predictor with a fixed effect on all targets (complete) |
+| `3` | predictor with a random effect on all targets (complete) |
+| `-1` | grouping variable; the model is fitted separately within each group |
+| `-2` | cluster indicator |
+| `0` | not in the model |
+
+`panImpute` requires a cluster indicator (`-2`) and at least one random
+effect. The default predictor matrix gives every variable code `1`, so
+complete variables also enter the model as targets. Set them to `2` or
+`3` to use them as predictors instead.
+
+The following imputes `bmi`, `chl` and `hyp` jointly with `jomoImpute`,
+with `age` as a fixed-effect predictor:
+
+```{r, eval = requireNamespace("mitml", quietly = TRUE)}
+blocks <- make.blocks(list(B1 = c("bmi", "chl", "hyp"), age = "age"))
+pred <- make.predictorMatrix(nhanes, blocks)
+pred["B1", "age"] <- 2
+pred
+imp <- mice(nhanes, blocks = blocks, method = c("jomoImpute", ""),
+            predictorMatrix = pred, maxit = 1, seed = 1, print = FALSE)
+```
+
+The variables in the block are always passed as targets (`1`), unless the
+row sets another code for them, such as `-2` for a cluster indicator.
+This matters for an unnamed block with a single variable, which is named
+after its variable. `make.predictorMatrix()` sets that variable to `0` in
+its own row. Before mice 3.19.18, `jomoImpute` therefore left the variable
+out of the model and stopped with "Target variables do not contain any
+missing data" ([#379](https://github.com/amices/mice/issues/379)).
+
+## Checking the codes
+
+`mice()` does not check whether the codes fit the method. A code that the
+method does not know is usually ignored or treated as another code,
+without a warning. To see what was used, inspect the predictor matrix and
+the methods stored in the result:
+
+```{r}
+imp$predictorMatrix
+imp$method
+```
+
+When in doubt, check the help page of the method, for example
+`?mice.impute.2l.pan` or `?miceadds::mice.impute.2l.contextual.pmm`.
+
+## References
