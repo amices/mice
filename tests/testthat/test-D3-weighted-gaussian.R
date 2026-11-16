@@ -19,10 +19,16 @@ test_that("D3 evaluates a weighted Gaussian model at its own MLE correctly", {
   )
   for (fit in fits) {
     pars <- mice:::d3.pars(fit)
-    expected_sigma2 <- sum(weights(fit, type = "prior") *
-      residuals(fit, type = "response")^2) / nobs(fit)
+    expected_sigma2 <- sum(
+      weights(fit, type = "prior") *
+        residuals(fit, type = "response")^2
+    ) /
+      nobs(fit)
     expect_equal(pars$sigma2, expected_sigma2)
-    expect_equal(mice:::d3.loglik(fit, pars), as.numeric(logLik(fit)),
-                 tolerance = 1e-8)
+    expect_equal(
+      mice:::d3.loglik(fit, pars),
+      as.numeric(logLik(fit)),
+      tolerance = 1e-8
+    )
   }
 })

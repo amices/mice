@@ -9,7 +9,7 @@
 [![R-CMD-check](https://github.com/amices/mice/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/amices/mice/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/amices/mice/graph/badge.svg)](https://app.codecov.io/gh/amices/mice)
-[![](https://img.shields.io/badge/github%20version-3.19.16-orange.svg)](https://amices.org/mice/)
+[![](https://img.shields.io/badge/github%20version-3.19.17-orange.svg)](https://amices.org/mice/)
 <!-- badges: end -->
 
 ## [Multivariate Imputation by Chained Equations](https://amices.org/mice/)

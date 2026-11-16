@@ -86,8 +86,14 @@ test_that("NEWDATA-008: a method set to \"\" by the user is kept", {
 })
 
 test_that("NEWDATA-009: a filled block is added to a visitSequence without it", {
-  imp0 <- mice(nhanes, m = 1, maxit = 1, print = FALSE, seed = 1,
-               visitSequence = "roman")
+  imp0 <- mice(
+    nhanes,
+    m = 1,
+    maxit = 1,
+    print = FALSE,
+    seed = 1,
+    visitSequence = "roman"
+  )
   expect_false("age" %in% imp0$visitSequence)
   nd <- nhanes[2, ]
   nd[1, "age"] <- NA
@@ -109,8 +115,15 @@ test_that("NEWDATA-010: the default method follows the type of the variable", {
 test_that("NEWDATA-011: `newdata` works when the blocks do not cover all variables", {
   imp0 <- mice(
     nhanes,
-    formulas = list(bmi = bmi ~ age + chl, chl = chl ~ age + bmi, hyp = hyp ~ age),
-    m = 1, maxit = 1, print = FALSE, seed = 1
+    formulas = list(
+      bmi = bmi ~ age + chl,
+      chl = chl ~ age + bmi,
+      hyp = hyp ~ age
+    ),
+    m = 1,
+    maxit = 1,
+    print = FALSE,
+    seed = 1
   )
   expect_silent(imp <- mice.mids(imp0, newdata = nhanes[2, ], print = FALSE))
   expect_equal(nrow(complete(imp, 1)), 1L)
