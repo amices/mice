@@ -28,3 +28,18 @@ test_that("MICE-IMPUTE-JOMOIMPUTE-002: mice can call jomoImpute", {
   expect_equal(sum(is.na(z$bmi)), 0)
   expect_equal(sum(is.na(z$chl)), 0)
 })
+
+test_that("MICE-IMPUTE-JOMOIMPUTE-003: jomoImpute imputes a single-variable block named after its variable (#379)", {
+  # the unnamed single-variable block is named "chl", which sets
+  # predictorMatrix["chl", "chl"] to 0
+  imp <- mice(
+    nhanes,
+    blocks = list(c("bmi", "hyp"), "chl"),
+    defaultMethod = c("jomoImpute", "logreg", "polyreg", "polr"),
+    maxit = 1,
+    seed = 1,
+    print = FALSE
+  )
+  expect_equal(imp$predictorMatrix["chl", "chl"], 0)
+  expect_false(anyNA(complete(imp)))
+})
