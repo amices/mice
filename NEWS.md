@@ -1,3 +1,10 @@
+# mice 3.19.18
+
+- Adds the article "Codes in the predictor matrix", with the codes that the
+  imputation methods in mice, miceadds, micemd and mitml read from the
+  predictor matrix, such as `-2` for the cluster variable and `2` for a
+  random effect (#594).
+
 # mice 3.19.17
 
 - Fixes `remove.lindep()` when it has to remove more than one linearly
