@@ -1,5 +1,14 @@
 # mice 3.19.17
 
+- Fixes the error "Target variables do not contain any missing data" of
+  `jomoImpute` and `panImpute` for a block with one variable whose name
+  equals the name of the variable, e.g. the unnamed block `"chl"` in
+  `blocks = list(c("bmi", "hyp"), "chl")`. `make.predictorMatrix()` set
+  such a variable to 0 in its own row, so it was left out of the
+  imputation model. The variables in the block are now always passed as
+  targets, unless the user set another code, such as `-2` for a cluster
+  indicator (#379).
+
 - Fixes `remove.lindep()` when it has to remove more than one linearly
   dependent predictor. After the first removal, the correlation matrix was
   not reduced, so the loop could drop an independent predictor and keep a
