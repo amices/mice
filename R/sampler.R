@@ -158,11 +158,16 @@ sampler <- function(
                     )
                   )
                 } else if (ct == "pred") {
+                  # the variables in the block are targets, also when
+                  # make.predictorMatrix() set a single-variable block
+                  # named after its variable to 0 (#379)
+                  type <- pred
+                  type[b][type[b] == 0] <- 1
                   imputes <- do.call(
                     fm,
                     args = list(
                       data = data,
-                      type = pred,
+                      type = type,
                       ...
                     )
                   )
