@@ -25,3 +25,6 @@ vignettes/
 ^Rplots\.pdf$
 ^\.claude$
 ^\.git$
+^air\.toml$
+^\.vscode$
+^codecov\.yml$

@@ -1,0 +1,199 @@
+---
+title: "Imputing new data"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+bibliography: refs.bibtex
+vignette: >
+  %\VignetteIndexEntry{Imputing new data}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+An imputation model is usually fitted and used on the same data. In
+prediction, the situation is different. We fit the imputation model once
+on training data, and later apply it to new cases, for example new
+patients for whom we want a prediction. The imputation model for the new
+cases should be the one fitted on the training data. It should not change
+because new cases come in.
+
+`mice.mids()` does this with the argument `newdata`. It adds the new
+cases to a `mids` object, imputes their missing values with the trained
+imputation model, and returns the imputations for the new cases. The new
+cases do not influence the imputation model.
+
+This vignette shows how to use `newdata`, which imputation methods
+`mice.mids()` uses for the new cases, and what to watch out for. See
+@vanbuuren-2018-1 for multiple imputation in general.
+
+```{r, message = FALSE}
+library(mice)
+```
+
+## Basic use
+
+We use the first 20 rows of `nhanes` as training data, and the last 5
+rows as new data.
+
+```{r}
+train <- nhanes[1:20, ]
+newdata <- nhanes[21:25, ]
+newdata
+```
+
+First, we fit the imputation model on the training data:
+
+```{r}
+imp <- mice(train, m = 5, seed = 1, print = FALSE)
+```
+
+Then we pass the new cases to `mice.mids()`:
+
+```{r}
+imp.new <- mice.mids(imp, newdata = newdata, maxit = 5, print = FALSE)
+complete(imp.new, 1)
+```
+
+The result is an ordinary `mids` object with only the new cases. Methods
+like `complete()` and `with()` work as usual. Internally, `mice.mids()`
+appends the new cases to the training data and runs `maxit` more
+iterations of the Gibbs sampler. The new cases are marked by the `ignore`
+argument of `mice()`. Their values are imputed, but not used to fit the
+imputation models.
+
+The default of `maxit` in `mice.mids()` is 1, which is meant for adding
+an iteration to an existing solution. For new data, use a few more
+iterations, so that the imputations of the new cases can converge.
+
+## The methods come from the trained model
+
+`mice.mids()` imputes the new cases with the imputation methods of the
+trained model, and does not choose them anew for `newdata`:
+
+```{r}
+imp$method
+imp.new$method
+```
+
+This holds since mice 3.19.8. Training and deployment then use the same
+imputation model. Earlier versions chose the methods again for
+`newdata`, which could give a different model.
+
+## Variables that were complete in the training data
+
+`mice()` gives a variable without missing values the method `""`. In
+the training data, `age` is complete:
+
+```{r}
+imp$method["age"]
+```
+
+The new cases may still have a missing value in such a variable. Below,
+`age` is missing for one new case:
+
+```{r}
+newdata2 <- newdata
+newdata2[2, "age"] <- NA
+```
+
+`mice.mids()` then assigns the default method for the type of the
+variable, here `pmm`, and says so in a message:
+
+```{r}
+imp.new2 <- mice.mids(imp, newdata = newdata2, maxit = 5, print = FALSE)
+imp.new2$method
+complete(imp.new2, 1)
+```
+
+The predictors of `age` come from the `predictorMatrix` of the trained
+model. The model for `age` is fitted on the training data, where `age`
+is observed.
+
+For a factor, the default method is `logreg`, `polyreg` or `polr`,
+depending on the number of levels and whether the factor is ordered, in
+the same way as in `make.method()`.
+
+Without this rule, the missing `age` would stay `NA`. Because `age` is a
+predictor of the other variables, the `NA` could then also stop the
+imputation of these variables for the same case. mice 3.19.8 to 3.19.16
+left such values `NA` without a warning.
+
+## Leaving a variable unimputed
+
+Sometimes we do not want to impute a variable in the new data. Set its
+method to `""` in the trained model. Below, `bmi` is not imputed:
+
+```{r}
+imp0 <- imp
+imp0$method["bmi"] <- ""
+```
+
+A missing `bmi` then stays `NA`. Because `bmi` is a predictor of the
+other variables, also remove it as a predictor. Otherwise, the `NA` in
+`bmi` stops the imputation of the other variables for the same case:
+
+```{r}
+imp0$predictorMatrix[, "bmi"] <- 0
+imp.new0 <- mice.mids(imp0, newdata = newdata, maxit = 5, print = FALSE)
+imp.new0$method
+complete(imp.new0, 1)
+```
+
+`mice.mids()` keeps a method `""` that you set for a variable with
+missing values in the training data, here `bmi`. It only assigns a
+method to a variable that was complete in the training data.
+
+## Models specified by `formulas` or `blocks`
+
+With `formulas` or `blocks`, the imputation model need not include all
+variables. Below, `age` has no formula:
+
+```{r}
+imp.f <- mice(
+  train,
+  formulas = list(
+    bmi = bmi ~ age + chl,
+    hyp = hyp ~ age,
+    chl = chl ~ age + bmi
+  ),
+  m = 5, seed = 1, print = FALSE
+)
+imp.f$method
+```
+
+A variable outside the blocks has no imputation model, so a missing
+value in the new data stays `NA`:
+
+```{r}
+imp.newf <- mice.mids(imp.f, newdata = newdata2, maxit = 5, print = FALSE)
+complete(imp.newf, 1)
+```
+
+Add a formula for such a variable to the training model if it should
+be imputed in new data.
+
+## Things to watch out for
+
+- **The new data need the same variables.** `newdata` must have the
+  same columns as the training data, with the same types. Factors should
+  also have the same levels. `mice.mids()` does not check this, and a
+  different set of levels can give a confusing warning or wrong
+  imputations.
+- **Setting a factor value to `NA`.** In R, `newdata$age <- NA`
+  replaces the whole column by a logical `NA`, so a factor is no longer a
+  factor. Use `newdata[i, "age"] <- NA` to keep the type.
+- **Reproducibility.** `mice.mids()` continues from the random number
+  state stored in the trained model. Two calls with the same object and
+  the same `newdata` give the same imputations.
+- **The imputations of the training data are not returned.** If you
+  need them, use the `mids` object of the training data.
+
+## References

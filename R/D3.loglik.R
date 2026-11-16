@@ -23,7 +23,7 @@ d3.pars.default <- function(model) {
 
 #' @export
 d3.pars.lm <- function(model) {
-  r <- residuals(model)
+  r <- residuals(model, type = "response")
   w <- model$prior.weights
   if (is.null(w)) {
     w <- weights(model)
@@ -94,7 +94,8 @@ d3.loglik.lm <- function(model, pars) {
   beta[is.na(beta)] <- 0
   r <- as.vector(y - off - X %*% beta)
   n <- length(y)
-  0.5 * sum(log(w)) -
+  logdet_w <- sum(log(w)) / 2
+  logdet_w -
     (n / 2) * log(2 * pi * pars$sigma2) -
     sum(w * r^2) / (2 * pars$sigma2)
 }
@@ -128,7 +129,10 @@ d3.loglik.glm <- function(model, pars) {
 #' @export
 d3.loglik.lmerMod <- function(model, pars) {
   if (any(abs(lme4::getME(model, "offset")) > .Machine$double.eps)) {
-    stop("D3 does not support 'lmerMod' objects fitted with an offset.", call. = FALSE)
+    stop(
+      "D3 does not support 'lmerMod' objects fitted with an offset.",
+      call. = FALSE
+    )
   }
   X <- lme4::getME(model, "X")
   eta <- as.vector(X %*% pars$beta)

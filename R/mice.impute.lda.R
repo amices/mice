@@ -47,7 +47,6 @@ mice.impute.lda <- function(y, ry, x, wy = NULL, ...) {
     wy <- !ry
   }
   fy <- as.factor(y)
-  nc <- length(levels(fy))
 
   #   SvB June 2009 - take bootstrap sample of training data
   #   idx <- sample((1:length(y))[ry], size=sum(ry), replace=TRUE)
@@ -57,7 +56,7 @@ mice.impute.lda <- function(y, ry, x, wy = NULL, ...) {
 
   fit <- MASS::lda(x, fy, subset = ry)
   post <- predict(fit, x[wy, , drop = FALSE])$posterior
-  un <- rep(runif(sum(wy)), each = nc)
+  un <- runif(sum(wy))
   idx <- 1 + rowSums(un > t(apply(post, 1, cumsum)))
   levels(fy)[idx]
 }

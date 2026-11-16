@@ -1,4 +1,4 @@
-# mice 3.19.17
+# mice 3.19.19
 
 - `predict_mi()` now pools prediction intervals as quantiles of a mixture
   of t-distributions over the imputations, found with a fast bisection
@@ -23,6 +23,56 @@
   Confidence intervals become somewhat wider and `df` in the output
   smaller; standard errors are unchanged.
 
+# mice 3.19.18
+
+- Adds the article "Codes in the predictor matrix", with the codes that the
+  imputation methods in mice, miceadds, micemd and mitml read from the
+  predictor matrix, such as `-2` for the cluster variable and `2` for a
+  random effect (#594).
+- Fixes the error "Target variables do not contain any missing data" of
+  `jomoImpute` and `panImpute` for a block with one variable whose name
+  equals the name of the variable, e.g. the unnamed block `"chl"` in
+  `blocks = list(c("bmi", "hyp"), "chl")`. `make.predictorMatrix()` set
+  such a variable to 0 in its own row, so it was left out of the
+  imputation model. The variables in the block are now always passed as
+  targets, unless the user set another code, such as `-2` for a cluster
+  indicator (#379).
+
+# mice 3.19.17
+
+- Fixes `remove.lindep()` when it has to remove more than one linearly
+  dependent predictor. After the first removal, the correlation matrix was
+  not reduced, so the loop could drop an independent predictor and keep a
+  rank-deficient set. The bug dates back to at least 2018. Imputations can
+  therefore change for data in which the predictors of a variable have two
+  or more linear dependencies. Thanks @bitowaqr (#785, #786).
+- Fixes `ampute(..., bycases = FALSE)` for patterns with different numbers
+  of missing variables. The conversion from the proportion of missing cells
+  to the proportion of incomplete cases did not match the documented meaning
+  of `freq`, so `ampute()` created more missing cells than requested, and
+  refused some feasible requests. Amputations with such patterns now have
+  less missing data than in mice 3.19.0. Thanks @bitowaqr (#787, #788).
+- Fixes the imputations of `polyreg`, `polr` and `lda` in the development
+  versions since 3.19.7. Their draws did not follow the predicted
+  probabilities, and consecutive missing values could receive the same
+  draw. mice 3.19.0 is not affected. Thanks @bitowaqr (#779, #780).
+- Fixes the error "non-conformable arrays" in `mice.impute.2l.bin()` with
+  random slopes, introduced in 3.19.6 with the argument `random.effects`
+  (#686). Thanks @bitowaqr (#781, #782).
+- Fixes `D3()` for weighted gaussian `glm` models, which counted the weights
+  twice when estimating the residual variance. `D3()` now gives the same
+  result for weighted `lm` and gaussian `glm` fits. Thanks @bitowaqr (#783,
+  #784).
+- `mice.mids()` with `newdata` now imputes variables that are incomplete in
+  `newdata` but were complete in the training data. These variables had
+  method `""`, so their missing values stayed `NA`. `mice.mids()` assigns
+  the default method for the type of the variable and reports this in a
+  message. Also fixes the error "Length of method differs from number of
+  blocks" for models trained with formulas or blocks that do not cover all
+  variables. The new vignette "Imputing new data" describes the workflow
+  (#753, #777).
+- Adds a configuration for the Air formatter (`air.toml`) and a
+  `codecov.yml` (#721, #778).
 
 # mice 3.19.16
 

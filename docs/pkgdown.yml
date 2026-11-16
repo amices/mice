@@ -2,11 +2,13 @@ pandoc: '3.10'
 pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
+  newdata: newdata.html
   overview: overview.html
   parallel-benchmark: parallel-benchmark.html
   parallel: parallel.html
+  predictor-codes: predictor-codes.html
   random-effects-2l-bin: random-effects-2l-bin.html
-last_built: 2026-11-12T22:43Z
+last_built: 2026-11-16T12:15Z
 urls:
   reference: https://amices.org/mice/reference
   article: https://amices.org/mice/articles

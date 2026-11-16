@@ -795,5 +795,8 @@ Miscellaneous functions
 - [Parallel imputation](https://amices.org/mice/articles/parallel.md):
 - [Parallel imputation:
   benchmarks](https://amices.org/mice/articles/parallel-benchmark.md):
+- [Imputing new data](https://amices.org/mice/articles/newdata.md):
 - [Random effects strategies in
   \`mice.impute.2l.bin\`](https://amices.org/mice/articles/random-effects-2l-bin.md):
+- [Codes in the predictor
+  matrix](https://amices.org/mice/articles/predictor-codes.md):

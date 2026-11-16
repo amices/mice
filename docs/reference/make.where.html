@@ -19,7 +19,7 @@ are to be imputed (TRUE) or nor (FALSE)."><meta property="og:image" content="htt
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.16</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.18</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +33,9 @@ are to be imputed (TRUE) or nor (FALSE)."><meta property="og:image" content="htt
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
     <li><a class="dropdown-item" href="../articles/parallel.html">Parallel imputation</a></li>
     <li><a class="dropdown-item" href="../articles/parallel-benchmark.html">Parallel imputation: benchmarks</a></li>
+    <li><a class="dropdown-item" href="../articles/newdata.html">Imputing new data</a></li>
     <li><a class="dropdown-item" href="../articles/random-effects-2l-bin.html">Random effects strategies in `mice.impute.2l.bin`</a></li>
+    <li><a class="dropdown-item" href="../articles/predictor-codes.html">Codes in the predictor matrix</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -103,12 +105,12 @@ is <code>keyword = "missing"</code></p></dd>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">chl</span> <span class="op">~</span> <span class="va">bmi</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="pool.html">pool.syn</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term   estimate std.error statistic        df    p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 143.150646 62.639975 2.2852922 1256.5047 0.02246168</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         bmi   1.558207  2.114827 0.7368012 1584.8050 0.46135229</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age40-59  11.289520 19.661830 0.5741846 2064.9657 0.56590543</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    age60-99   9.694369 24.859150 0.3899719  311.0471 0.69682425</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      hypyes  11.578999 18.534664 0.6247213  536.7941 0.53241945</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term   estimate std.error statistic       df    p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 149.152519  59.14165 2.5219541 1852.746 0.01175371</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         bmi   1.356159   2.05894 0.6586684 2346.742 0.51017334</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age40-59  12.997701  22.39382 0.5804146  657.206 0.56183401</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    age60-99   2.609238  20.72175 0.1259178 2068.888 0.89980921</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      hypyes  15.886792  18.96335 0.8377628 1331.575 0.40231425</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

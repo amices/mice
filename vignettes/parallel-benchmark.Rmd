@@ -262,9 +262,9 @@ seconds for `mice(future = TRUE)`. About
 the workers, which `futuremice()` pays in every call. The remainder is
 probably due to the repeated set-up per block and the combining of the
 blocks. For small data, the start-up cost dominates: `futuremice()` is
-only faster than sequential `mice()` for `m = 100`
-(`r f2(fut_time("small", 8, 100))` against
-`r f2(seq_time("small", 100))` seconds with 8 workers).
+only faster than sequential `mice()` for `m = 100`, or for `m = 50`
+with 4 or more workers (`r f2(fut_time("small", 8, 100))` against
+`r f2(seq_time("small", 100))` seconds for `m = 100` with 8 workers).
 
 ## Moving from `futuremice()` to `mice(future = TRUE)`
 

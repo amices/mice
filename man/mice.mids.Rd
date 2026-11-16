@@ -19,7 +19,13 @@ mice.mids(
 call to \code{mice()} or \code{mice.mids()}}
 
 \item{newdata}{An optional \code{data.frame} for which multiple imputations
-are generated according to the model in \code{obj}.}
+are generated according to the model in \code{obj}. The imputation
+methods are taken from \code{obj}. A variable without missing values in
+the training data has method \code{""} in \code{obj}. If \code{newdata}
+has missing values in such a variable, \code{mice.mids()} assigns the
+default method for its type (see \code{\link{make.method}()}), and says
+so in a message. A method \code{""} that the user set for a variable
+with missing training data is kept, so these values stay \code{NA}.}
 
 \item{maxit}{The number of additional Gibbs sampling iterations. The
 default is 1.}
