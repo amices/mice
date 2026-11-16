@@ -129,7 +129,9 @@ D3 <- function(fit1, fit0 = NULL, dfcom = NULL, df.com = NULL) {
   pvalue <- pf(Dm, k, w, lower.tail = FALSE)
   if (is.finite(Dm) && Dm < 0) {
     warning(
-      "D3 statistic is negative (", format(Dm, digits = 3), "). ",
+      "D3 statistic is negative (",
+      format(Dm, digits = 3),
+      "). ",
       "The coefficients are unstable across imputations, ",
       "e.g. because of separation. Do not trust this result.",
       call. = FALSE

@@ -155,7 +155,10 @@ test_that("D3-006: lm with factors, imputed data: D3() equals mitml::testModels(
 })
 
 test_that("D3-007: weighted lm: D3() with equal weights equals the unweighted result", {
-  w1 <- with(data = imp2, expr = lm(bmi ~ age + chl + hyp, weights = rep(2, 25)))
+  w1 <- with(
+    data = imp2,
+    expr = lm(bmi ~ age + chl + hyp, weights = rep(2, 25))
+  )
   w0 <- with(data = imp2, expr = lm(bmi ~ age, weights = rep(2, 25)))
   zw <- D3(w1, w0)
   # equal weights do not change the estimates, nor the likelihood ratio
