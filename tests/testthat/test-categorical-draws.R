@@ -40,9 +40,13 @@ test_that("lda categorical draws match its posterior row by row", {
     post <- predict(fit, x[!ry, , drop = FALSE])$posterior
     set.seed(100)
     u <- runif(nmis)
-    expected <- vapply(seq_len(nmis), function(i) {
-      levels(y)[which(u[i] <= cumsum(post[i, ]))[1L]]
-    }, character(1))
+    expected <- vapply(
+      seq_len(nmis),
+      function(i) {
+        levels(y)[which(u[i] <= cumsum(post[i, ]))[1L]]
+      },
+      character(1)
+    )
     set.seed(100)
     expect_identical(mice.impute.lda(y, ry, x), expected)
   }
