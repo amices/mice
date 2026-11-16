@@ -1,13 +1,28 @@
 # mice 3.19.17
 
-- `predict_mi()` now uses a correct pooling approach for the prediction
-  interval. For `interval = "confidence"`, Rubin's rules can still be 
-  used, but for `interval = "prediction"`, Rubin's rules give 
-  miscalibrated intervals unless the predictors are normally distributed.
-  Additionally, we implement a diagnostic that tells the user whether the
-  number of imputations is large enough to obtain valid prediction
-  intervals, and allow users to sample from the posterior predictive 
-  distribution (as a mixture over the imputations). 
+- `predict_mi()` now pools prediction intervals as quantiles of a mixture
+  of t-distributions over the imputations, found with a fast bisection
+  algorithm. Prediction intervals constructed using Rubin's rules and a
+  normal approximation may be miscalibrated when predictors are missing,
+  because the resulting predictive distribution need not be normal, even
+  in large samples.
+- We implement a diagnostic that tells the user whether the Monte Carlo
+  share of the predictive variance exceeds 2% for a sizable number of cases
+  (5%). When the between-imputation variance of the predictions is
+  large relative to the total variance, the typical number of `m = 5`
+  imputations will be too small to obtain valid inferences. This will 
+  be signalled by the diagnostic, and a larger number of
+  imputations will be recommended. The example now uses `m = 20`.
+- New arguments: `probs` returns arbitrary quantiles of the pooled
+  predictive distribution, `nsamples` returns draws from it (as a mixture
+  over the imputations), and `iterations` sets the number of bisection
+  steps.
+- For `interval = "confidence"`, Rubin's rules are still used, but the
+  Barnard-Rubin degrees of freedom now use the residual degrees of freedom
+  of the fitted model instead of assuming an infinite sample size.
+  Confidence intervals become somewhat wider and `df` in the output
+  smaller; standard errors are unchanged.
+
 
 # mice 3.19.16
 

@@ -42,7 +42,7 @@ to the given probabilities will be returned (overwrites \code{level})}
 
 \item{nsamples}{Number of samples from the posterior predictive distribution for
 each imputed dataset. Defaults to \code{NULL}, in which case only the quantiles
-specified by probs of the posterior predictive distribution are provided .}
+specified by probs of the posterior predictive distribution are provided.}
 
 \item{...}{
   Arguments passed on to \code{\link[stats:predict.lm]{stats::predict.lm}}
@@ -103,11 +103,14 @@ components:
 Rubin (1999).
 }
 
+If \code{nsamples} is set, this many samples are drawn from the posterior predictive
+distribution per imputed dataset. The output will be a list with variable
+\code{samples}, which is an array with dimensions \eqn{n \times m \times nsamples}.
+With \code{interval = "confidence"}, the samples are returned for the
+conditional mean of y; otherwise they are for new observations.
+
 If \code{pool = FALSE}, the function produces a list with predictions with the same
 structure as \code{predict.lm}, with one list-element per imputed dataset.
-If \code{nsamples} is set, this many samples are drawn from the posterior predictive
-distribution per imputed dataset. The samples are returned in an array with
-dimensions n * m * nsamples.
 }
 \description{
 Predict method for linear models with multiply imputed data
@@ -141,10 +144,6 @@ fits <- lapply(traindats, function(dat) lm(age ~ bmi + hyp + chl, data = dat))
 # pool the predictions with function
 pool_preds <- mice::predict_mi(object = fits, newdata = testdats,
   pool = TRUE, interval = "prediction", level = 0.95)
-}
-\references{
-Van Leeuwen, F., Volker, T. B., & Van Buuren, S. (n.d.). Prediction
-intervals with missing data.
 }
 \seealso{
 \code{\link[stats:lm]{stats::lm()}}, \code{\link[stats:predict.lm]{stats::predict.lm()}}, \code{\link[=mice]{mice()}}, \code{\link[=with.mids]{with.mids()}}

@@ -52,13 +52,14 @@ mixture_cdf <- function(q) {
 }
 
 # pool the predictions with function
-pool_preds <- predict_mi(
+# (m = 30 is just below what the diagnostic asks for here, hence suppressWarnings)
+pool_preds <- suppressWarnings(predict_mi(
   object = fits,
   newdata = testdats,
   pool = TRUE,
   interval = "prediction",
   level = 0.95
-)
+))
 
 # ---- structure ------------------------------------------------------------
 
@@ -112,8 +113,14 @@ test_that("PREDICT_MI-007: `iterations` controls the bisection", {
   expect_false(isTRUE(all.equal(p1, pool_preds)))
   expect_equal(p40, pool_preds, tolerance = 1e-5)
   expect_equal(mixture_cdf(p40[, "lwr"]), rep(0.025, ntest), tolerance = 1e-8)
-  expect_error(predict_mi(fits, testdats, interval = "prediction", iterations = 0))
-  expect_error(predict_mi(fits, testdats, interval = "prediction", iterations = "a"))
+  # non-integer values are truncated
+  p20 <- suppressWarnings(predict_mi(fits, testdats, interval = "prediction", iterations = 20.7))
+  expect_equal(p20, pool_preds)
+  # values below 1 would skip the bisection and are rejected
+  expect_error(predict_mi(fits, testdats, interval = "prediction", iterations = 0), "at least 1")
+  expect_error(predict_mi(fits, testdats, interval = "prediction", iterations = 0.5), "at least 1")
+  expect_error(predict_mi(fits, testdats, interval = "prediction", iterations = "a"), "at least 1")
+  expect_error(predict_mi(fits, testdats, interval = "prediction", iterations = c(5, 20)), "at least 1")
 })
 
 test_that("PREDICT_MI-008: A single new case gives the same result as that row of a larger set", {
@@ -154,8 +161,19 @@ test_that("PREDICT_MI-011: A single probability works without a warning from `pr
 })
 
 test_that("PREDICT_MI-012: Invalid `probs` are rejected", {
-  expect_error(predict_mi(fits, testdats, interval = "prediction", probs = c(-0.1, 0.5)))
-  expect_error(predict_mi(fits, testdats, interval = "prediction", probs = 1.5))
+  msg <- "between 0 and 1"
+  expect_error(predict_mi(fits, testdats, interval = "prediction", probs = c(-0.1, 0.5)), msg)
+  expect_error(predict_mi(fits, testdats, interval = "prediction", probs = 1.5), msg)
+  # the bounds themselves would give infinite quantiles
+  expect_error(predict_mi(fits, testdats, interval = "prediction", probs = c(0, 1)), msg)
+  expect_error(predict_mi(fits, testdats, interval = "prediction", probs = NA), msg)
+  expect_error(predict_mi(fits, testdats, interval = "prediction", probs = c(0.1, NA)), msg)
+  expect_error(predict_mi(fits, testdats, interval = "prediction", probs = "a"), msg)
+})
+
+test_that("PREDICT_MI-013: `probs` without an interval warns and returns the pooled predictions", {
+  expect_warning(p <- predict_mi(fits, testdats, probs = c(0.1, 0.9)), "probs")
+  expect_equal(p, predict_mi(fits, testdats))
 })
 
 # ---- confidence interval, se.fit, df --------------------------------------
@@ -166,7 +184,7 @@ rr <- lapply(seq_len(ntest), function(i) {
 rr_t <- sapply(rr, function(x) x$t)
 rr_df <- sapply(rr, function(x) x$df)
 
-test_that("PREDICT_MI-013: Confidence interval follows Rubin's rules", {
+test_that("PREDICT_MI-014: Confidence interval follows Rubin's rules", {
   ci <- predict_mi(fits, testdats, interval = "confidence")
   expect_equal(colnames(ci), c("fit", "lwr", "upr"))
   expect_equal(unname(ci[, "fit"]), unname(rowMeans(ref_fit)))
@@ -174,7 +192,7 @@ test_that("PREDICT_MI-013: Confidence interval follows Rubin's rules", {
   expect_equal(unname(ci[, "upr"]), unname(rowMeans(ref_fit)) + qt(0.975, rr_df) * sqrt(rr_t))
 })
 
-test_that("PREDICT_MI-014: `se.fit = TRUE` returns pooled standard errors and Barnard-Rubin df", {
+test_that("PREDICT_MI-015: `se.fit = TRUE` returns pooled standard errors and Barnard-Rubin df", {
   p <- suppressWarnings(predict_mi(fits, testdats, interval = "prediction", se.fit = TRUE))
   expect_type(p, "list")
   expect_true(all(c("fit", "se.fit", "df", "residual.scale") %in% names(p)))
@@ -188,7 +206,7 @@ test_that("PREDICT_MI-014: `se.fit = TRUE` returns pooled standard errors and Ba
 
 # ---- methods --------------------------------------------------------------
 
-test_that("PREDICT_MI-015: list and mira objects give identical results", {
+test_that("PREDICT_MI-016: list and mira objects give identical results", {
   mira <- mice::as.mira(fits)
   expect_equal(suppressWarnings(predict_mi(mira, testdats, interval = "prediction")), pool_preds)
   expect_equal(
@@ -197,7 +215,7 @@ test_that("PREDICT_MI-015: list and mira objects give identical results", {
   )
 })
 
-test_that("PREDICT_MI-016: A single lm with multiply imputed new data is pooled as a mixture", {
+test_that("PREDICT_MI-017: A single lm with multiply imputed new data is pooled as a mixture", {
   fit1 <- fits[[1]]
   r1 <- lapply(testdats, function(nd) predict(fit1, newdata = nd, se.fit = TRUE))
   f1 <- sapply(r1, function(x) x$fit)
@@ -218,7 +236,7 @@ test_that("PREDICT_MI-016: A single lm with multiply imputed new data is pooled 
   expect_false(isTRUE(all.equal(p1, p)))
 })
 
-test_that("PREDICT_MI-017: Without between-imputation variance the mixture equals predict.lm", {
+test_that("PREDICT_MI-018: Without between-imputation variance the mixture equals predict.lm", {
   # one model, the same complete new data in every 'imputation'
   nd <- testdats[[1]]
   same <- rep(list(nd), 5)
@@ -226,21 +244,45 @@ test_that("PREDICT_MI-017: Without between-imputation variance the mixture equal
   expect_equal(unname(p), unname(predict(fits[[1]], newdata = nd, interval = "prediction")), tolerance = 1e-6)
 })
 
-test_that("PREDICT_MI-018: A single lm with ordinary new data warns and returns predict.lm output", {
+test_that("PREDICT_MI-019: A single lm with ordinary new data warns and returns predict.lm output", {
   nd <- testdats[[1]]
   expect_warning(p <- predict_mi(fits[[1]], nd, interval = "prediction"), "multiple")
   expect_equal(p, predict(fits[[1]], newdata = nd, interval = "prediction"))
+  # `probs` and `nsamples` do not apply here, which is signalled
+  w <- character()
+  withCallingHandlers(
+    predict_mi(fits[[1]], nd, probs = 0.5, nsamples = 10),
+    warning = function(x) {
+      w <<- c(w, conditionMessage(x))
+      invokeRestart("muffleWarning")
+    }
+  )
+  expect_true(any(grepl("probs", w)))
 })
 
-test_that("PREDICT_MI-019: `pool = FALSE` returns one prediction per imputation", {
+test_that("PREDICT_MI-020: `pool = FALSE` returns one prediction per imputation", {
   p <- predict_mi(fits, testdats, pool = FALSE, interval = "prediction")
   expect_type(p, "list")
   expect_length(p, m)
   expect_equal(unname(p[[3]]), unname(predict(fits[[3]], newdata = testdats[[3]], interval = "prediction")))
   expect_warning(predict_mi(fits, testdats, pool = FALSE, se.fit = TRUE), "se.fit")
+  # no warning without `probs` and `nsamples`
+  expect_warning(predict_mi(fits, testdats, pool = FALSE), NA)
+  expect_warning(predict_mi(fits[[1]], testdats, pool = FALSE), NA)
 })
 
-test_that("PREDICT_MI-020: Invalid input is rejected", {
+test_that("PREDICT_MI-021: `probs` and `nsamples` warn with `pool = FALSE` and leave the output unchanged", {
+  p <- predict_mi(fits, testdats, pool = FALSE)
+  expect_warning(q <- predict_mi(fits, testdats, pool = FALSE, probs = 0.5), "pool = FALSE")
+  expect_equal(q, p)
+  expect_warning(q <- predict_mi(fits, testdats, pool = FALSE, nsamples = 10), "pool = FALSE")
+  expect_equal(q, p)
+  # also for a single lm with multiply imputed new data
+  expect_warning(predict_mi(fits[[1]], testdats, pool = FALSE, probs = 0.5), "pool = FALSE")
+  expect_warning(predict_mi(fits[[1]], testdats, pool = FALSE, nsamples = 10), "pool = FALSE")
+})
+
+test_that("PREDICT_MI-022: Invalid input is rejected", {
   expect_error(predict_mi(fits, testdats[1:5], interval = "prediction"), "different lengths")
   expect_error(predict_mi(list(1, 2), testdats[1:2]))
   expect_error(predict_mi(fits, testdats, interval = "foo"))
@@ -248,7 +290,7 @@ test_that("PREDICT_MI-020: Invalid input is rejected", {
 
 # ---- warning on the number of imputations ----------------------------------
 
-test_that("PREDICT_MI-021: Too few imputations give a warning that names a larger m", {
+test_that("PREDICT_MI-023: Too few imputations give a warning that names a larger m", {
   few <- 1:5
   expect_warning(
     predict_mi(fits[few], testdats[few], interval = "prediction"),
@@ -262,7 +304,7 @@ test_that("PREDICT_MI-021: Too few imputations give a warning that names a large
   expect_true(suggested > length(few))
 })
 
-test_that("PREDICT_MI-022: No such warning for confidence intervals or without interval", {
+test_that("PREDICT_MI-024: No such warning for confidence intervals or without interval", {
   few <- 1:5
   expect_warning(predict_mi(fits[few], testdats[few], interval = "confidence"), NA)
   expect_warning(predict_mi(fits[few], testdats[few]), NA)
@@ -270,7 +312,7 @@ test_that("PREDICT_MI-022: No such warning for confidence intervals or without i
 
 # ---- type = "terms" ---------------------------------------------------------
 
-test_that("PREDICT_MI-023: type = 'terms' returns pooled terms with bounds", {
+test_that("PREDICT_MI-025: type = 'terms' returns pooled terms with bounds", {
   p <- suppressWarnings(predict_mi(fits, testdats, interval = "prediction", type = "terms"))
   expect_type(p, "list")
   expect_equal(names(p), c("fit", "lwr", "upr"))
@@ -283,7 +325,7 @@ test_that("PREDICT_MI-023: type = 'terms' returns pooled terms with bounds", {
   expect_equal(unname(rowSums(p$fit) + attr(p$fit, "constant")), unname(rowMeans(ref_fit)))
 })
 
-test_that("PREDICT_MI-024: type = 'terms' works with `probs` and with confidence intervals", {
+test_that("PREDICT_MI-026: type = 'terms' works with `probs` and with confidence intervals", {
   p <- suppressWarnings(predict_mi(fits, testdats, interval = "prediction", type = "terms", probs = c(0.1, 0.9)))
   expect_equal(names(p), c("fit", "0.1", "0.9"))
   expect_true(all(p[["0.1"]] < p[["0.9"]]))
@@ -295,7 +337,7 @@ test_that("PREDICT_MI-024: type = 'terms' works with `probs` and with confidence
 
 # ---- samples ----------------------------------------------------------------
 
-test_that("PREDICT_MI-025: `nsamples` returns draws from the posterior predictive distribution", {
+test_that("PREDICT_MI-027: `nsamples` returns draws from the posterior predictive distribution", {
   set.seed(123)
   ns <- 400
   p <- suppressWarnings(predict_mi(fits, testdats, interval = "prediction", nsamples = ns))
@@ -309,5 +351,24 @@ test_that("PREDICT_MI-025: `nsamples` returns draws from the posterior predictiv
   # ... and their quantiles agree with the mixture quantiles
   expect_equal(mixture_cdf(apply(draws, 1, quantile, 0.025)), rep(0.025, ntest), tolerance = 0.2)
   expect_equal(mixture_cdf(apply(draws, 1, quantile, 0.975)), rep(0.975, ntest), tolerance = 0.01)
-  expect_error(predict_mi(fits, testdats, interval = "prediction", nsamples = -1))
+})
+
+test_that("PREDICT_MI-028: `nsamples` works per term, for the mean, and rejects values below 1", {
+  set.seed(123)
+  # one array per term
+  p <- suppressWarnings(predict_mi(fits, testdats, interval = "prediction", type = "terms", nsamples = 3))
+  expect_equal(names(p$samples), c("bmi", "hyp", "chl"))
+  expect_equal(dim(p$samples[["bmi"]]), c(ntest, m, 3L))
+  # draws for the mean vary less than draws for new observations
+  ns <- 400
+  s_new <- suppressWarnings(predict_mi(fits, testdats, interval = "prediction", nsamples = ns))$samples[[1]]
+  s_mean <- predict_mi(fits, testdats, interval = "confidence", nsamples = ns)$samples[[1]]
+  expect_equal(dim(s_mean), c(ntest, m, ns))
+  expect_true(all(apply(matrix(s_mean, ntest), 1, sd) < apply(matrix(s_new, ntest), 1, sd)))
+  # non-integer values are truncated
+  p <- suppressWarnings(predict_mi(fits, testdats, interval = "prediction", nsamples = 2.5))
+  expect_equal(dim(p$samples[[1]]), c(ntest, m, 2L))
+  expect_error(predict_mi(fits, testdats, interval = "prediction", nsamples = -1), "at least 1")
+  expect_error(predict_mi(fits, testdats, interval = "prediction", nsamples = 0.5), "at least 1")
+  expect_error(predict_mi(fits, testdats, interval = "prediction", nsamples = "a"), "at least 1")
 })

@@ -13,7 +13,7 @@
 #' to the given probabilities will be returned (overwrites `level`)
 #' @param nsamples Number of samples from the posterior predictive distribution for
 #' each imputed dataset. Defaults to `NULL`, in which case only the quantiles 
-#' specified by probs of the posterior predictive distribution are provided .
+#' specified by probs of the posterior predictive distribution are provided.
 #' @inheritParams stats::predict.lm
 #' @inheritDotParams stats::predict.lm
 #'
@@ -30,14 +30,15 @@
 #' * `residual scale`: average residual standard deviations
 #' * `df`: degrees of freedom for residual (per observation) according to Barnard-
 #' Rubin (1999).
+#' 
+#' If `nsamples` is set, this many samples are drawn from the posterior predictive
+#' distribution per imputed dataset. The output will be a list with variable
+#' `samples`, which is an array with dimensions \eqn{n \times m \times nsamples}. 
+#' With \code{interval = "confidence"}, the samples are returned for the 
+#' conditional mean of y; otherwise they are for new observations. 
 #'
 #' If `pool = FALSE`, the function produces a list with predictions with the same
 #' structure as `predict.lm`, with one list-element per imputed dataset.
-#' If `nsamples` is set, this many samples are drawn from the posterior predictive
-#' distribution per imputed dataset. The samples are returned in an array with 
-#' dimensions n * m * nsamples. 
-#' @references Van Leeuwen, F., Volker, T. B., & Van Buuren, S. (n.d.). Prediction
-#' intervals with missing data.
 #'
 #' @seealso [stats::lm()], [stats::predict.lm()], [mice::mice()], [mice::with.mids()]
 #'
@@ -154,6 +155,9 @@ predict_mi.mira <- function(
       preds <- remove_sefit(preds)
     }
   } else {
+    if (!is.null(probs) | !is.null(nsamples)) {
+      warning("The arguments `probs` and `nsamples` refer to the posterior predictive distribution over imputed data sets. With `pool = FALSE`, these arguments do not produce any results.")
+    }
     preds <- fit
     if (!se.fit) {
       preds <- lapply(preds, remove_sefit)
@@ -226,6 +230,11 @@ predict_mi.lm <- function(
     warning(
       "The model `object` nor the `newdata` are the result of multiple\nimputation. Returning regular predictions instead."
     )
+    if (!is.null(probs) | !is.null(nsamples)) {
+      warning(
+        "The arguments `probs` and `nsamples` are only provided for multiply imputed data."
+      )
+    }
     preds <- predict(object, newdata = newdata, se.fit = se.fit, interval = interval, level = level, ...)
   } else {
     if (inherits(newdata, "mids")) {
@@ -255,6 +264,9 @@ predict_mi.lm <- function(
         preds <- remove_sefit(preds)
       }
     } else {
+      if (!is.null(probs) | !is.null(nsamples)) {
+        warning("The arguments `probs` and `nsamples` refer to the posterior predictive distribution over imputed data sets. With `pool = FALSE`, these arguments do not produce any results.")
+      }
       preds <- fit
       if (!se.fit) {
         preds <- lapply(preds, remove_sefit)
@@ -270,15 +282,17 @@ predict_mi.lm <- function(
 
 pool_predictions <- function(predlist, interval, level, iterations, probs, nsamples, args) {
   m <- length(predlist)
-  argsnames <- names(args)
 
   type <- return_type(args)
-  if (!isTRUE(is.numeric(iterations)) | !isTRUE(iterations > 0)) stop("iterations must be a positive integer")
+  if (!isTRUE(is.numeric(iterations)) || !isTRUE(iterations >= 1)) stop("iterations must be at least 1")
   if (!is.null(nsamples)) {
-    if (!isTRUE(is.numeric(nsamples)) | !isTRUE(nsamples > 0)) stop("nsamples must be a positive integer")
+    if (!isTRUE(is.numeric(nsamples)) | !isTRUE(nsamples >= 1)) stop("nsamples must be at least 1")
   }
   if (!is.null(probs)) {
-    if (any(0 > probs | probs > 1) | any(!is.numeric(probs))) stop("probs must lie between 0 and 1")
+    if (interval == "none") {
+      warning('`probs` will be ignored when interval == "none".')
+    }
+    if (anyNA(probs) || !is.numeric(probs) || any(0 >= probs | probs >= 1)) stop("probs must lie between 0 and 1")
     p <- probs
   } else {
     p <- c((1-level)/2, 1 - (1-level)/2)
@@ -318,7 +332,7 @@ pool_predictions <- function(predlist, interval, level, iterations, probs, nsamp
     params,
     c(1, 2),
     \(x) {
-      res <- pool.scalar(x[1,], x[2,]^2, n = n, k = n - df)
+      res <- pool.scalar(x[1,], x[2,]^2, n = df+1, k = 1)
       c(fit = res$qbar, t = res$t, b = res$b, df = res$df, fmi = res$fmi)
     }
   )
@@ -344,7 +358,7 @@ pool_predictions <- function(predlist, interval, level, iterations, probs, nsamp
       quantiles <- apply(pooled_res, 3, \(x) {
         matrix(x["fit", ], n, length(p)) + 
           matrix(sqrt(x["t", ]), n, length(p)) * 
-          sapply(p, \(prob) stats::qt(prob, x["df", ])) |>
+          sapply(p, \(prob) qt(prob, x["df", ])) |>
           matrix(n, length(p), dimnames = list(NULL, names(p)))
       }, simplify = FALSE)
     } else if (interval == "prediction") {
@@ -393,7 +407,7 @@ pool_predictions <- function(predlist, interval, level, iterations, probs, nsamp
     samples <- apply(params, c(2), \(x) {
       scale <- if (interval == "confidence") x[,2,] else sqrt(x[,2,]^2 + t(res.var) %x% rep(1, n))
       dim <- c(n, m, nsamples)
-      array(x[,1,], dim) + array(scale, dim) * array(stats::rt(prod(dim), df), dim)
+      array(x[,1,], dim) + array(scale, dim) * array(rt(prod(dim), df), dim)
     }, simplify = FALSE)
     pooled$samples <- samples
   }
@@ -420,8 +434,8 @@ remove_sefit <- function(fit) {
 bisection_mixture_interval <- function(preds, scale, df, probs, iterations = 20) {
 
   sapply(probs, function(prob) {
-    lo <- apply(preds + scale * stats::qt(prob, df), 1, min)
-    hi <- apply(preds + scale * stats::qt(prob, df), 1, max)
+    lo <- apply(preds + scale * qt(prob, df), 1, min)
+    hi <- apply(preds + scale * qt(prob, df), 1, max)
     for (i in seq_len(iterations)) {
       mid <- (lo + hi)/2 # set midpoint of bisection
       decrease_hi <- rowMeans(pt((mid-preds)/scale, df)) > prob # check whether the midpoint exceeds
