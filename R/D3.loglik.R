@@ -23,7 +23,7 @@ d3.pars.default <- function(model) {
 
 #' @export
 d3.pars.lm <- function(model) {
-  r <- residuals(model)
+  r <- residuals(model, type = "response")
   w <- model$prior.weights
   if (is.null(w)) {
     w <- weights(model)
