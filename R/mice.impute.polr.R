@@ -116,8 +116,7 @@ mice.impute.polr <- function(
     post <- matrix(post, nrow = 1, ncol = length(post))
   }
   fy <- as.factor(y)
-  nc <- length(levels(fy))
-  un <- rep(runif(sum(wy)), each = nc)
+  un <- runif(sum(wy))
   if (is.vector(post)) {
     post <- matrix(c(1 - post, post), ncol = 2)
   }
