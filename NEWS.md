@@ -1,4 +1,4 @@
-# mice 3.19.17
+# mice 3.19.18
 
 - Fixes the error "Target variables do not contain any missing data" of
   `jomoImpute` and `panImpute` for a block with one variable whose name
@@ -8,6 +8,8 @@
   imputation model. The variables in the block are now always passed as
   targets, unless the user set another code, such as `-2` for a cluster
   indicator (#379).
+
+# mice 3.19.17
 
 - Fixes `remove.lindep()` when it has to remove more than one linearly
   dependent predictor. After the first removal, the correlation matrix was
