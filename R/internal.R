@@ -76,13 +76,12 @@ remove.lindep <- function(
   # correlation between x's
   cx <- cor(xobs[, keep, drop = FALSE], use = "all.obs")
   eig <- eigen(cx, symmetric = TRUE)
-  ncx <- cx
-  while (eig$values[k] / eig$values[1] < eps) {
-    j <- seq_len(k)[order(abs(eig$vectors[, k]), decreasing = TRUE)[1]]
-    keep[keep][j] <- FALSE
-    ncx <- cx[keep[keep], keep[keep], drop = FALSE]
+  while (k > 1L && eig$values[k] / eig$values[1] < eps) {
+    j <- order(abs(eig$vectors[, k]), decreasing = TRUE)[1]
+    keep[which(keep)[j]] <- FALSE
+    cx <- cx[-j, -j, drop = FALSE]
     k <- k - 1
-    eig <- eigen(ncx)
+    eig <- eigen(cx, symmetric = TRUE)
   }
   if (!all(keep)) {
     out <- paste(dimnames(x)[[2]][!keep], collapse = ", ")
