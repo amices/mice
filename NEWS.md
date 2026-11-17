@@ -1,5 +1,11 @@
 # mice 3.19.dev
 
+- `with()` now accepts a formula with a dot, such as
+  `with(imp, glm(hyp ~ ., family = binomial))`. Before, this stopped with
+  "'.' in formula and no 'data' argument". If the top-level call has a dot
+  formula, no `data` argument, and calls a function with a `data`
+  argument, `with()` adds `data = .mice.data`, the completed data set.
+  Other expressions are evaluated as before (#265).
 - Implements `ifdo()`, for conditional post-processing of imputations in
   the `post` argument of `mice()`. For example,
   `post["Ozone"] <- "ifdo(c(Ozone < 1, Ozone > 200), c(1, 200))"` gives the
