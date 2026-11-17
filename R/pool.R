@@ -163,6 +163,15 @@ pool <- function(object, dfcom = NULL, rule = NULL, custom.t = NULL) {
   }
 
   model <- getfit(object, 1L)
+  if (inherits(model, "htest")) {
+    stop(
+      "pool() cannot pool the results of `",
+      model$method,
+      "`, which has no estimate with a standard error. ",
+      "Use D2() to pool test statistics or p-values.",
+      call. = FALSE
+    )
+  }
   dfcom <- get.dfcom(model, dfcom)
   w <- summary(
     getfit(object),
