@@ -9,6 +9,20 @@
 - `remove.lindep()` now also removes predictors with a correlation of -0.99
   or lower with the outcome, as it already did for 0.99 or higher.
   Imputations can change for data with such predictors.
+- `with()` now accepts a formula with a dot, such as
+  `with(imp, glm(hyp ~ ., family = binomial))`. Before, this stopped with
+  "'.' in formula and no 'data' argument". If the top-level call has a dot
+  formula, no `data` argument, and calls a function with a `data`
+  argument, `with()` adds `data = .mice.data`, the completed data set.
+  Other expressions are evaluated as before (#265).
+- Implements `ifdo()`, for conditional post-processing of imputations in
+  the `post` argument of `mice()`. For example,
+  `post["Ozone"] <- "ifdo(c(Ozone < 1, Ozone > 200), c(1, 200))"` gives the
+  same imputations as the `squeeze()` example in section 6.4.6 of *Flexible
+  Imputation of Missing Data*. Conditions and actions can use any variable
+  in the data. Before, `ifdo()` was a stub that printed "Function ifdo()
+  not yet implemented." and left the imputations unchanged, without an
+  error (#43).
 
 # mice 3.19.19
 
