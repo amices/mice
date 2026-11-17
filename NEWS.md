@@ -9,6 +9,12 @@
   chi-squared statistics with `df` degrees of freedom, set by the new
   argument `df` (default 1, for a 2 x 2 table). `pool()` on such results now
   points to `D2()` (#508).
+- `pool.scalar()` gains an argument `dfcom`, the residual degrees of
+  freedom of the complete-data analysis, with default `n - k`. Set
+  `dfcom = df.residual(fit)` to get the same degrees of freedom as `pool()`.
+  The documentation now explains that `k` is the number of parameters of
+  the whole model, the same for every coefficient, including the variance
+  parameters of a mixed model (#483).
 - `remove.lindep()` now writes every predictor it removes to
   `loggedEvents`. Before, it removed predictors silently when only one
   predictor or none was left, e.g. when a predictor was a copy of the
