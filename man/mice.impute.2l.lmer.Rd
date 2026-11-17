@@ -28,7 +28,10 @@ indicates locations in \code{y} for which imputations are created.}
 \item{intercept}{Logical determining whether the intercept is automatically
 added.}
 
-\item{\dots}{Arguments passed down to \code{lmer}}
+\item{\dots}{Arguments passed down to \code{lmer}. Only arguments
+that \code{lme4::lmer()} accepts (such as \code{control} or \code{REML})
+are forwarded; other arguments, such as a global \code{ridge} meant for
+other imputation methods, are ignored.}
 }
 \value{
 Vector with imputed data, same type as \code{y}, and of length
@@ -49,8 +52,8 @@ value in cases where creating draws from the posterior is not
 possible. The procedure throws a warning when this happens.
 
 If \code{lme4::lmer()} fails, the procedure prints the warning
-\code{"lmer does not run. Simplify imputation model"} and returns the
-current imputation.  If that happens we see flat lines in the
+\code{"lmer does not run (<error message>). Simplify imputation model"}
+and returns the current imputation. If that happens we see flat lines in the
 trace line plots. Thus, the appearance of flat trace lines should be taken
 as an additional alert to a problem with imputation model fitting.
 }

@@ -13,8 +13,8 @@
 #' possible. The procedure throws a warning when this happens.
 #'
 #' If \code{lme4::lmer()} fails, the procedure prints the warning
-#' \code{"lmer does not run. Simplify imputation model"} and returns the
-#' current imputation.  If that happens we see flat lines in the
+#' \code{"lmer does not run (<error message>). Simplify imputation model"}
+#' and returns the current imputation. If that happens we see flat lines in the
 #' trace line plots. Thus, the appearance of flat trace lines should be taken
 #' as an additional alert to a problem with imputation model fitting.
 #' @name mice.impute.2l.lmer
@@ -25,7 +25,10 @@
 #' a '1'.
 #' @param intercept Logical determining whether the intercept is automatically
 #' added.
-#' @param \dots Arguments passed down to \code{lmer}
+#' @param \dots Arguments passed down to \code{lmer}. Only arguments
+#' that \code{lme4::lmer()} accepts (such as \code{control} or \code{REML})
+#' are forwarded; other arguments, such as a global \code{ridge} meant for
+#' other imputation methods, are ignored.
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #' \code{sum(wy)}
 #' @author Shahab Jolani, 2017
@@ -92,14 +95,19 @@ mice.impute.2l.lmer <- function(
     clust,
     ")"
   )
+  args <- c(
+    list(formula(randmodel), data = data.frame(yobs, xobs)),
+    lme4.dots(lme4::lmer, list(...), exclude = c("formula", "data"))
+  )
   suppressWarnings(
-    fit <- try(
-      lme4::lmer(formula(randmodel), data = data.frame(yobs, xobs), ...),
-      silent = TRUE
-    )
+    fit <- try(do.call(lme4::lmer, args), silent = TRUE)
   )
   if (inherits(fit, "try-error")) {
-    warning("lmer does not run. Simplify imputation model")
+    warning(
+      "lmer does not run (",
+      trimws(attr(fit, "condition")$message),
+      "). Simplify imputation model"
+    )
     return(y[wy])
   }
 
@@ -202,4 +210,12 @@ mice.impute.2l.lmer <- function(
     )
   }
   y[wy]
+}
+
+# Select the arguments in `dots` that the lme4 fitter `fun` accepts.
+# mice() passes its extra arguments (e.g. `ridge`) to every imputation
+# method, but lmer() and glmer() stop on arguments they do not know (#792).
+lme4.dots <- function(fun, dots, exclude = character(0)) {
+  keep <- setdiff(names(formals(fun)), exclude)
+  dots[names(dots) %in% keep]
 }

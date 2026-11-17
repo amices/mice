@@ -41,7 +41,10 @@ added.}
 drawn for sporadic clusters. One of \code{"laplace"} (default),
 \code{"eb"}, or \code{"marginal"}. See Details.}
 
-\item{\dots}{Arguments passed down to \code{glmer}}
+\item{\dots}{Arguments passed down to \code{glmer}. Only arguments
+that \code{lme4::glmer()} accepts (such as \code{control} or
+\code{nAGQ}) are forwarded; other arguments, such as a global
+\code{ridge} meant for other imputation methods, are ignored.}
 }
 \value{
 Vector with imputed data, same type as \code{y}, and of length
