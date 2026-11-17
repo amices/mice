@@ -66,3 +66,49 @@ test_that("REMOVE-LINDEP-001: removes copies", {
   expect_identical(unname(k7), c(TRUE))
   expect_identical(unname(k8), c(FALSE, FALSE))
 })
+
+test_that("REMOVE-LINDEP-002: logs a copy of the outcome as the only removal (#306)", {
+  set.seed(123)
+  n <- 200
+  x <- rnorm(n)
+  y <- x + rnorm(n)
+  d <- data.frame(x = x, y = y, z = y)
+  d$y[sample(n, 50)] <- NA
+  expect_warning(
+    imp <- mice(
+      d,
+      method = "norm",
+      remove.collinear = FALSE,
+      m = 1,
+      maxit = 1,
+      seed = 1,
+      print = FALSE
+    ),
+    "Number of logged events"
+  )
+  ev <- imp$loggedEvents
+  expect_true(any(ev$dep == "y" & ev$out == "z"))
+})
+
+test_that("REMOVE-LINDEP-003: removes negative copies and logs constant outcomes", {
+  set.seed(1)
+  x <- matrix(
+    rnorm(40),
+    nrow = 10,
+    dimnames = list(NULL, c("a", "b", "c", "d"))
+  )
+  ry <- rep(TRUE, 10)
+  .mice.state <- list(it = 1, im = 1, dep = "y", meth = "test", log = FALSE)
+  loggedEvents <- NULL
+
+  y <- -x[, "b"]
+  keep <- mice:::remove.lindep(x, y, ry, frame = 1)
+  expect_identical(unname(keep), c(TRUE, FALSE, TRUE, TRUE))
+  expect_true("b" %in% loggedEvents$out)
+
+  loggedEvents <- NULL
+  .mice.state$log <- FALSE
+  keep <- mice:::remove.lindep(x, rep(1, 10), ry, frame = 1)
+  expect_false(any(keep))
+  expect_identical(loggedEvents$out, "a, b, c, d")
+})

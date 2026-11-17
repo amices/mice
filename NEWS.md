@@ -10,6 +10,29 @@
   is no function `mice.impute.<method>()` for a requested method, instead
   of failing during the iterations with "object 'mice.impute.<method>' not
   found".
+- `remove.lindep()` now writes every predictor it removes to
+  `loggedEvents`. Before, it removed predictors silently when only one
+  predictor or none was left, e.g. when a predictor was a copy of the
+  outcome, or when the observed outcome was constant. The printed
+  `predictorMatrix` then suggested a model that was not fitted, with no
+  warning (#306).
+- `remove.lindep()` now also removes predictors with a correlation of -0.99
+  or lower with the outcome, as it already did for 0.99 or higher.
+  Imputations can change for data with such predictors.
+- `with()` now accepts a formula with a dot, such as
+  `with(imp, glm(hyp ~ ., family = binomial))`. Before, this stopped with
+  "'.' in formula and no 'data' argument". If the top-level call has a dot
+  formula, no `data` argument, and calls a function with a `data`
+  argument, `with()` adds `data = .mice.data`, the completed data set.
+  Other expressions are evaluated as before (#265).
+- Implements `ifdo()`, for conditional post-processing of imputations in
+  the `post` argument of `mice()`. For example,
+  `post["Ozone"] <- "ifdo(c(Ozone < 1, Ozone > 200), c(1, 200))"` gives the
+  same imputations as the `squeeze()` example in section 6.4.6 of *Flexible
+  Imputation of Missing Data*. Conditions and actions can use any variable
+  in the data. Before, `ifdo()` was a stub that printed "Function ifdo()
+  not yet implemented." and left the imputations unchanged, without an
+  error (#43).
 
 # mice 3.19.19
 
