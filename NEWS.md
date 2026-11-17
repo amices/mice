@@ -1,3 +1,15 @@
+# mice 3.19.dev
+
+- `remove.lindep()` now writes every predictor it removes to
+  `loggedEvents`. Before, it removed predictors silently when only one
+  predictor or none was left, e.g. when a predictor was a copy of the
+  outcome, or when the observed outcome was constant. The printed
+  `predictorMatrix` then suggested a model that was not fitted, with no
+  warning (#306).
+- `remove.lindep()` now also removes predictors with a correlation of -0.99
+  or lower with the outcome, as it already did for 0.99 or higher.
+  Imputations can change for data with such predictors.
+
 # mice 3.19.19
 
 - `predict_mi()` now pools prediction intervals as quantiles of a mixture
