@@ -1,3 +1,12 @@
+# mice 3.19.dev
+
+- `with()` now accepts a formula with a dot, such as
+  `with(imp, glm(hyp ~ ., family = binomial))`. Before, this stopped with
+  "'.' in formula and no 'data' argument". If the top-level call has a dot
+  formula, no `data` argument, and calls a function with a `data`
+  argument, `with()` adds `data = .mice.data`, the completed data set.
+  Other expressions are evaluated as before (#265).
+
 # mice 3.19.19
 
 - `predict_mi()` now pools prediction intervals as quantiles of a mixture

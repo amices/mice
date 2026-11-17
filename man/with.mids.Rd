@@ -11,8 +11,11 @@
 \item{data}{An object of type \code{mids}, which stands for 'multiply imputed
 data set', typically created by a call to function \code{mice()}.}
 
-\item{expr}{An expression to evaluate for each imputed data set. Formula's
-containing a dot (notation for "all other variables") do not work.}
+\item{expr}{An expression to evaluate for each imputed data set. A
+formula with a dot (notation for "all other variables"), such as
+\code{glm(hyp ~ ., family = binomial)}, works if the formula is written
+in the top-level call, the call has no \code{data} argument, and the
+called function has one. See Details.}
 
 \item{\dots}{Not used}
 }
@@ -21,6 +24,23 @@ An object of S3 class \code{\link{mira}}
 }
 \description{
 Performs a computation of each of imputed datasets in data.
+}
+\details{
+\code{with()} evaluates \code{expr} with the columns of each completed
+data set as variables, so a model like \code{lm(bmi ~ age)} finds its
+variables without a \code{data} argument. A dot in a formula, however,
+can only be expanded from a \code{data} argument. If the top-level call
+in \code{expr} has a formula with a dot, no \code{data} argument, and
+calls a function with a \code{data} argument, \code{with()} adds
+\code{data = .mice.data}, where \code{.mice.data} is the completed data
+set. The fitted call then shows \code{data = .mice.data}. That object
+only exists during \code{with()}, so \code{update()} of such a fit
+outside \code{with()} needs a new \code{data} argument.
+
+A dot formula stored in a variable, or a dot formula in a nested call,
+such as \code{summary(lm(bmi ~ .))}, is not detected. Write
+\code{data = mget(names(nhanes))} (with the name of your data) to pass
+the completed data explicitly in such cases.
 }
 \note{
 Version 3.11.10 changed to tidy evaluation on a quosure. This change
@@ -38,6 +58,9 @@ getfit(with(imp, table(hyp, age)))
 fit1 <- with(imp, lm(bmi ~ age + hyp + chl))
 fit2 <- with(imp, glm(hyp ~ age + chl, family = binomial))
 fit3 <- with(imp, anova(lm(bmi ~ age + chl)))
+
+# a dot formula: all other variables as predictors
+fit4 <- with(imp, lm(bmi ~ .))
 }
 \references{
 van Buuren S and Groothuis-Oudshoorn K (2011). \code{mice}:
