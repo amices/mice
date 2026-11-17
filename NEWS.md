@@ -1,3 +1,12 @@
+# mice 3.19.dev
+
+- `pool.scalar()` gains an argument `dfcom`, the residual degrees of
+  freedom of the complete-data analysis, with default `n - k`. Set
+  `dfcom = df.residual(fit)` to get the same degrees of freedom as `pool()`.
+  The documentation now explains that `k` is the number of parameters of
+  the whole model, the same for every coefficient, including the variance
+  parameters of a mixed model (#483).
+
 # mice 3.19.19
 
 - `predict_mi()` now pools prediction intervals as quantiles of a mixture
