@@ -23,7 +23,9 @@ indicates locations in \code{y} for which imputations are created.}
 
 \item{quad.outcome}{The name of the outcome in the quadratic analysis as a
 character string. For example, if the substantive model of interest is
-\code{y ~ x + xx}, then \code{"y"} would be the \code{quad.outcome}}
+\code{y ~ x + xx}, then \code{"y"} would be the \code{quad.outcome}.
+The outcome must be numeric, and must be a predictor of the variable that
+is imputed.}
 
 \item{...}{Other named arguments.}
 }
@@ -48,6 +50,13 @@ et al (2012) for more details. The method ensures that 1) the imputed data
 for \eqn{Y} and \eqn{Y^2} are mutually consistent, and 2) that provides unbiased
 estimates of the regression weights in a complete-data linear regression that
 use both \eqn{Y} and \eqn{Y^2}.
+
+The method assumes a linear regression of the outcome on \eqn{Y} and
+\eqn{Y^2}. It is not suited for a binary or categorical outcome, for
+example in a logistic regression with a quadratic term, also not if the
+outcome is coded as 0/1. For such models, consider
+substantive-model-compatible imputation, e.g. with the \pkg{smcfcs}
+package.
 }
 \note{
 There are two situations to consider. If only the linear term \code{Y}

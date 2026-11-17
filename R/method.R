@@ -86,6 +86,24 @@ check.method <- function(method, data, where, blocks, defaultMethod) {
     if (length(method[active.check]) == 0) fullNames <- character(0)
   }
 
+  # stop early if an active imputation method does not exist
+  active <- unique(method[which(active.check & !is.na(method))])
+  found <- vapply(
+    active,
+    function(a) exists(paste0("mice.impute.", a), mode = "function"),
+    logical(1)
+  )
+  if (!all(found)) {
+    stop(
+      "Imputation method(s) not found: ",
+      paste0("'", active[!found], "'", collapse = ", "),
+      ". There is no function ",
+      paste0("mice.impute.", active[!found], "()", collapse = ", "),
+      ". Check the spelling, or load the package that provides it.",
+      call. = FALSE
+    )
+  }
+
   # type checks on built-in imputation methods
   for (j in names(blocks)) {
     vname <- blocks[[j]]

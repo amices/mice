@@ -1,3 +1,16 @@
+# mice 3.19.dev
+
+- `mice.impute.quadratic()` now stops with a clear message if the outcome
+  in `quad.outcome` is a factor, instead of saying that the outcome cannot
+  be found in the data. The documentation now states that the method
+  assumes a linear model for the outcome, and is not suited for a binary or
+  categorical outcome, also not when it is coded as 0/1, and points to the
+  smcfcs package for such models (#575).
+- `mice()` now stops early with "Imputation method(s) not found" if there
+  is no function `mice.impute.<method>()` for a requested method, instead
+  of failing during the iterations with "object 'mice.impute.<method>' not
+  found".
+
 # mice 3.19.19
 
 - `predict_mi()` now pools prediction intervals as quantiles of a mixture
