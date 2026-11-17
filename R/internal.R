@@ -53,36 +53,39 @@ remove.lindep <- function(
   xobs <- x[ry, , drop = FALSE]
   yobs <- as.numeric(y[ry])
   if (var(yobs) < eps) {
-    return(rep(FALSE, ncol(xobs)))
-  }
-
-  keep <- unlist(apply(xobs, 2, var) > eps)
-  keep[is.na(keep)] <- FALSE
-  highcor <- suppressWarnings(unlist(apply(xobs, 2, cor, yobs) < maxcor))
-  keep <- keep & highcor
-  if (all(!keep)) {
-    updateLog(
-      out = "All predictors are constant or have too high correlation.",
-      frame = frame
+    # constant outcome: drop all predictors
+    keep <- rep(FALSE, ncol(xobs))
+  } else {
+    keep <- unlist(apply(xobs, 2, var) > eps)
+    keep[is.na(keep)] <- FALSE
+    highcor <- suppressWarnings(
+      unlist(apply(xobs, 2, function(v) abs(cor(v, yobs)) < maxcor))
     )
+    keep <- keep & highcor
+    keep[is.na(keep)] <- FALSE
+    if (all(!keep)) {
+      updateLog(
+        out = "All predictors are constant or have too high correlation.",
+        frame = frame
+      )
+    }
+
+    # remove linear dependencies among the remaining predictors
+    k <- sum(keep)
+    if (k > 1L) {
+      cx <- cor(xobs[, keep, drop = FALSE], use = "all.obs")
+      eig <- eigen(cx, symmetric = TRUE)
+      while (k > 1L && eig$values[k] / eig$values[1] < eps) {
+        j <- order(abs(eig$vectors[, k]), decreasing = TRUE)[1]
+        keep[which(keep)[j]] <- FALSE
+        cx <- cx[-j, -j, drop = FALSE]
+        k <- k - 1
+        eig <- eigen(cx, symmetric = TRUE)
+      }
+    }
   }
 
-  # no need to calculate correlations, so return
-  k <- sum(keep)
-  if (k <= 1L) {
-    return(keep)
-  } # at most one TRUE
-
-  # correlation between x's
-  cx <- cor(xobs[, keep, drop = FALSE], use = "all.obs")
-  eig <- eigen(cx, symmetric = TRUE)
-  while (k > 1L && eig$values[k] / eig$values[1] < eps) {
-    j <- order(abs(eig$vectors[, k]), decreasing = TRUE)[1]
-    keep[which(keep)[j]] <- FALSE
-    cx <- cx[-j, -j, drop = FALSE]
-    k <- k - 1
-    eig <- eigen(cx, symmetric = TRUE)
-  }
+  # log every removed predictor, whatever the reason (#306)
   if (!all(keep)) {
     out <- paste(dimnames(x)[[2]][!keep], collapse = ", ")
     updateLog(out = out, frame = frame)
