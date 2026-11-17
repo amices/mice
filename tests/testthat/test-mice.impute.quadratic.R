@@ -12,7 +12,7 @@ test_that("MICE-IMPUTE-QUADRATIC-001: Requires a valid quad.outcome", {
   expect_error(mice.impute.quadratic(dat$x, ry, xmat), "quad.outcome")
   expect_error(
     mice.impute.quadratic(dat$x, ry, xmat, quad.outcome = "z"),
-    "can not be found"
+    "is not a predictor"
   )
 })
 
@@ -40,4 +40,23 @@ test_that("MICE-IMPUTE-QUADRATIC-003: mice() keeps the square consistent through
   cmp <- complete(imp)
   expect_false(anyNA(cmp))
   expect_equal(cmp$xx, cmp$x^2)
+})
+
+test_that("MICE-IMPUTE-QUADRATIC-003: a factor outcome gives a clear error (#575)", {
+  d <- dat
+  d$y <- factor(d$y > 0, labels = c("no", "yes"))
+  pred <- make.predictorMatrix(d)
+  pred["x", "xx"] <- 0
+  expect_error(
+    mice(
+      d,
+      method = c("quadratic", "~I(x^2)", ""),
+      predictorMatrix = pred,
+      quad.outcome = "y",
+      m = 1,
+      maxit = 1,
+      print = FALSE
+    ),
+    "needs a numeric outcome"
+  )
 })

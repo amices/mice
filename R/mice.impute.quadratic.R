@@ -7,7 +7,9 @@
 #' @inheritParams mice.impute.pmm
 #' @param quad.outcome The name of the outcome in the quadratic analysis as a
 #' character string. For example, if the substantive model of interest is
-#' \code{y ~ x + xx}, then \code{"y"} would be the \code{quad.outcome}
+#' \code{y ~ x + xx}, then \code{"y"} would be the \code{quad.outcome}.
+#' The outcome must be numeric, and must be a predictor of the variable that
+#' is imputed.
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #' \code{sum(wy)}
 #' @details
@@ -23,6 +25,13 @@
 #' for \eqn{Y} and \eqn{Y^2} are mutually consistent, and 2) that provides unbiased
 #' estimates of the regression weights in a complete-data linear regression that
 #' use both \eqn{Y} and \eqn{Y^2}.
+#'
+#' The method assumes a linear regression of the outcome on \eqn{Y} and
+#' \eqn{Y^2}. It is not suited for a binary or categorical outcome, for
+#' example in a logistic regression with a quadratic term, also not if the
+#' outcome is coded as 0/1. For such models, consider
+#' substantive-model-compatible imputation, e.g. with the \pkg{smcfcs}
+#' package.
 #'
 #' @note There are two situations to consider. If only the linear term \code{Y}
 #' is present in the data, calculate the quadratic term \code{YY} after
@@ -88,8 +97,24 @@ mice.impute.quadratic <- function(
     )
   }
   if (!quad.outcome %in% colnames(x)) {
+    # a factor enters x as dummy columns, e.g. y1 or yyes (#575)
+    dummies <- startsWith(colnames(x), quad.outcome)
+    if (any(dummies)) {
+      stop(
+        "mice.impute.quadratic() needs a numeric outcome, but '",
+        quad.outcome,
+        "' in 'quad.outcome' is a factor. The method assumes a linear ",
+        "model for the outcome, and is not suited for a binary or ",
+        "categorical outcome. Consider the smcfcs package.",
+        call. = FALSE
+      )
+    }
     stop(
-      "The name specified for the outcome in 'quad.outcome' can not be found in the data"
+      "The outcome '",
+      quad.outcome,
+      "' in 'quad.outcome' is not a predictor of this variable. ",
+      "Check the spelling, and set it to 1 in 'predictorMatrix'.",
+      call. = FALSE
     )
   }
   if (is.null(wy)) {
