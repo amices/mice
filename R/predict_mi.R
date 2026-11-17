@@ -7,12 +7,12 @@
 #' If omitted, the fitted values are used.
 #' @param pool Logical indicating whether to pool the predictions (and potentially
 #' obtain pooled prediction intervals).
-#' @param iterations Number of iterations for the bisection algorithm that finds the 
+#' @param iterations Number of iterations for the bisection algorithm that finds the
 #' mixture quantiles
 #' @param probs Quantiles from the posterior predictive distribution corresponding
 #' to the given probabilities will be returned (overwrites `level`)
 #' @param nsamples Number of samples from the posterior predictive distribution for
-#' each imputed dataset. Defaults to `NULL`, in which case only the quantiles 
+#' each imputed dataset. Defaults to `NULL`, in which case only the quantiles
 #' specified by probs of the posterior predictive distribution are provided.
 #' @inheritParams stats::predict.lm
 #' @inheritDotParams stats::predict.lm
@@ -22,20 +22,20 @@
 #' the probabilities specified by the user. The default returns a prediction matrix
 #'  with column names `fit`, `lwr`, `upr` if `interval` is set. For custom probabilities,
 #' names are set to the respective probabilities used to calculate the prediction quantiles.
-#' For `type = "terms"`, a matrix is returned with a column per term and potentially an 
-#' attribute `"constant"`. If `se.fit = TRUE`, a list is returned with the following 
+#' For `type = "terms"`, a matrix is returned with a column per term and potentially an
+#' attribute `"constant"`. If `se.fit = TRUE`, a list is returned with the following
 #' components:
 #' * `fit`: vector or matrix as above
 #' * `se.fit`: standard error of __pooled__ predicted means
 #' * `residual scale`: average residual standard deviations
 #' * `df`: degrees of freedom for residual (per observation) according to Barnard-
 #' Rubin (1999).
-#' 
+#'
 #' If `nsamples` is set, this many samples are drawn from the posterior predictive
 #' distribution per imputed dataset. The output will be a list with variable
-#' `samples`, which is an array with dimensions \eqn{n \times m \times nsamples}. 
-#' With \code{interval = "confidence"}, the samples are returned for the 
-#' conditional mean of y; otherwise they are for new observations. 
+#' `samples`, which is an array with dimensions \eqn{n \times m \times nsamples}.
+#' With \code{interval = "confidence"}, the samples are returned for the
+#' conditional mean of y; otherwise they are for new observations.
 #'
 #' If `pool = FALSE`, the function produces a list with predictions with the same
 #' structure as `predict.lm`, with one list-element per imputed dataset.
@@ -147,7 +147,7 @@ predict_mi.mira <- function(
       interval = interval,
       level = level,
       args = args,
-      iterations = iterations, 
+      iterations = iterations,
       probs = probs,
       nsamples = nsamples
     )
@@ -156,7 +156,9 @@ predict_mi.mira <- function(
     }
   } else {
     if (!is.null(probs) | !is.null(nsamples)) {
-      warning("The arguments `probs` and `nsamples` refer to the posterior predictive distribution over imputed data sets. With `pool = FALSE`, these arguments do not produce any results.")
+      warning(
+        "The arguments `probs` and `nsamples` refer to the posterior predictive distribution over imputed data sets. With `pool = FALSE`, these arguments do not produce any results."
+      )
     }
     preds <- fit
     if (!se.fit) {
@@ -235,7 +237,14 @@ predict_mi.lm <- function(
         "The arguments `probs` and `nsamples` are only provided for multiply imputed data."
       )
     }
-    preds <- predict(object, newdata = newdata, se.fit = se.fit, interval = interval, level = level, ...)
+    preds <- predict(
+      object,
+      newdata = newdata,
+      se.fit = se.fit,
+      interval = interval,
+      level = level,
+      ...
+    )
   } else {
     if (inherits(newdata, "mids")) {
       newdata <- mice::complete(newdata, action = "all")
@@ -265,7 +274,9 @@ predict_mi.lm <- function(
       }
     } else {
       if (!is.null(probs) | !is.null(nsamples)) {
-        warning("The arguments `probs` and `nsamples` refer to the posterior predictive distribution over imputed data sets. With `pool = FALSE`, these arguments do not produce any results.")
+        warning(
+          "The arguments `probs` and `nsamples` refer to the posterior predictive distribution over imputed data sets. With `pool = FALSE`, these arguments do not produce any results."
+        )
       }
       preds <- fit
       if (!se.fit) {
@@ -280,26 +291,39 @@ predict_mi.lm <- function(
   preds
 }
 
-pool_predictions <- function(predlist, interval, level, iterations, probs, nsamples, args) {
+pool_predictions <- function(
+  predlist,
+  interval,
+  level,
+  iterations,
+  probs,
+  nsamples,
+  args
+) {
   m <- length(predlist)
 
   type <- return_type(args)
-  if (!isTRUE(is.numeric(iterations)) || !isTRUE(iterations >= 1)) stop("iterations must be at least 1")
+  if (!isTRUE(is.numeric(iterations)) || !isTRUE(iterations >= 1)) {
+    stop("iterations must be at least 1")
+  }
   if (!is.null(nsamples)) {
-    if (!isTRUE(is.numeric(nsamples)) | !isTRUE(nsamples >= 1)) stop("nsamples must be at least 1")
+    if (!isTRUE(is.numeric(nsamples)) | !isTRUE(nsamples >= 1)) {
+      stop("nsamples must be at least 1")
+    }
   }
   if (!is.null(probs)) {
     if (interval == "none") {
       warning('`probs` will be ignored when interval == "none".')
     }
-    if (anyNA(probs) || !is.numeric(probs) || any(0 >= probs | probs >= 1)) stop("probs must lie between 0 and 1")
+    if (anyNA(probs) || !is.numeric(probs) || any(0 >= probs | probs >= 1)) {
+      stop("probs must lie between 0 and 1")
+    }
     p <- probs
   } else {
-    p <- c((1-level)/2, 1 - (1-level)/2)
+    p <- c((1 - level) / 2, 1 - (1 - level) / 2)
   }
   smallest_probdiff <- ifelse(length(p) > 1, min(diff(sort(p))), 1)
   names(p) <- round(p, max(4, -floor(log10(smallest_probdiff))))
-    
 
   pooled <- predlist[[1]]
 
@@ -320,8 +344,12 @@ pool_predictions <- function(predlist, interval, level, iterations, probs, nsamp
       array(
         #                             4th dim imputations
         c(as.matrix(pred$fit)[, seq_len(nterms)], pred$se.fit),
-        dim = c(n, nterms, 2), 
-        dimnames = list(NULL, if (type == "terms") colnames(pooled$fit), c("fit", "se.fit"))
+        dim = c(n, nterms, 2),
+        dimnames = list(
+          NULL,
+          if (type == "terms") colnames(pooled$fit),
+          c("fit", "se.fit")
+        )
       )
     },
     simplify = "array"
@@ -332,7 +360,7 @@ pool_predictions <- function(predlist, interval, level, iterations, probs, nsamp
     params,
     c(1, 2),
     \(x) {
-      res <- pool.scalar(x[1,], x[2,]^2, n = df+1, k = 1)
+      res <- pool.scalar(x[1, ], x[2, ]^2, n = df + 1, k = 1)
       c(fit = res$qbar, t = res$t, b = res$b, df = res$df, fmi = res$fmi)
     }
   )
@@ -355,60 +383,83 @@ pool_predictions <- function(predlist, interval, level, iterations, probs, nsamp
 
   if (interval %in% c("confidence", "prediction")) {
     if (interval == "confidence") {
-      quantiles <- apply(pooled_res, 3, \(x) {
-        matrix(x["fit", ], n, length(p)) + 
-          matrix(sqrt(x["t", ]), n, length(p)) * 
-          sapply(p, \(prob) qt(prob, x["df", ])) |>
-          matrix(n, length(p), dimnames = list(NULL, names(p)))
-      }, simplify = FALSE)
+      quantiles <- apply(
+        pooled_res,
+        3,
+        \(x) {
+          matrix(x["fit", ], n, length(p)) +
+            matrix(sqrt(x["t", ]), n, length(p)) *
+              sapply(p, \(prob) qt(prob, x["df", ])) |>
+                matrix(n, length(p), dimnames = list(NULL, names(p)))
+        },
+        simplify = FALSE
+      )
     } else if (interval == "prediction") {
       b <- pooled_res["b", , ]
       Tpred <- pooled_res["t", , ] + mean(res.var)
-      d <- quantile((b/m) / Tpred, 0.95)
+      d <- quantile((b / m) / Tpred, 0.95)
       if (d > 0.02 & type != "terms") {
         warning(
           "The MC error of the prediction interval is relatively large. ",
           "At least 5% of the entries have above 2% MC error. Consider",
-          " increasing the number of imputations to about m = ", 
-          ceiling(m * d / 0.02), "."
+          " increasing the number of imputations to about m = ",
+          ceiling(m * d / 0.02),
+          "."
         )
       }
-      quantiles <- apply(params, 2, \(x) {
-        bisection_mixture_interval(
-          matrix(x[, 1, ], nrow = n), 
-          sqrt(matrix(x[, 2, ]^2, nrow = n) + t(res.var) %x% rep(1, n)), 
-          df, 
-          p, 
-          iterations
-        )
-      }, simplify = FALSE)
+      quantiles <- apply(
+        params,
+        2,
+        \(x) {
+          bisection_mixture_interval(
+            matrix(x[, 1, ], nrow = n),
+            sqrt(matrix(x[, 2, ]^2, nrow = n) + t(res.var) %x% rep(1, n)),
+            df,
+            p,
+            iterations
+          )
+        },
+        simplify = FALSE
+      )
     }
     if (type == "terms") {
       if (is.null(probs)) {
-        pooled$lwr <- sapply(quantiles, \(x) x[,1])
-        pooled$upr <- sapply(quantiles, \(x) x[,2])
+        pooled$lwr <- sapply(quantiles, \(x) x[, 1])
+        pooled$upr <- sapply(quantiles, \(x) x[, 2])
       } else {
         pooled$lwr <- NULL
         pooled$upr <- NULL
-        for (x in names(p)) pooled[[x]] <- sapply(quantiles, \(q) q[,x])
+        for (x in names(p)) {
+          pooled[[x]] <- sapply(quantiles, \(q) q[, x])
+        }
       }
     } else {
       if (is.null(probs)) {
-        pooled$fit[, "lwr"] <- quantiles[[1]][,1]
-        pooled$fit[, "upr"] <- quantiles[[1]][,2]
+        pooled$fit[, "lwr"] <- quantiles[[1]][, 1]
+        pooled$fit[, "upr"] <- quantiles[[1]][, 2]
       } else {
         pooled$fit <- cbind(
-          fit = pooled$fit[, "fit"], quantiles[[1]]
+          fit = pooled$fit[, "fit"],
+          quantiles[[1]]
         )
       }
     }
   }
   if (!is.null(nsamples)) {
-    samples <- apply(params, c(2), \(x) {
-      scale <- if (interval == "confidence") x[,2,] else sqrt(x[,2,]^2 + t(res.var) %x% rep(1, n))
-      dim <- c(n, m, nsamples)
-      array(x[,1,], dim) + array(scale, dim) * array(rt(prod(dim), df), dim)
-    }, simplify = FALSE)
+    samples <- apply(
+      params,
+      c(2),
+      \(x) {
+        scale <- if (interval == "confidence") {
+          x[, 2, ]
+        } else {
+          sqrt(x[, 2, ]^2 + t(res.var) %x% rep(1, n))
+        }
+        dim <- c(n, m, nsamples)
+        array(x[, 1, ], dim) + array(scale, dim) * array(rt(prod(dim), df), dim)
+      },
+      simplify = FALSE
+    )
     pooled$samples <- samples
   }
 
@@ -431,17 +482,27 @@ remove_sefit <- function(fit) {
   fit
 }
 
-bisection_mixture_interval <- function(preds, scale, df, probs, iterations = 20) {
-
+bisection_mixture_interval <- function(
+  preds,
+  scale,
+  df,
+  probs,
+  iterations = 20
+) {
   sapply(probs, function(prob) {
     lo <- apply(preds + scale * qt(prob, df), 1, min)
     hi <- apply(preds + scale * qt(prob, df), 1, max)
     for (i in seq_len(iterations)) {
-      mid <- (lo + hi)/2 # set midpoint of bisection
-      decrease_hi <- rowMeans(pt((mid-preds)/scale, df)) > prob # check whether the midpoint exceeds
+      mid <- (lo + hi) / 2 # set midpoint of bisection
+      decrease_hi <- rowMeans(pt((mid - preds) / scale, df)) > prob # check whether the midpoint exceeds
       lo[!decrease_hi] <- mid[!decrease_hi]
       hi[decrease_hi] <- mid[decrease_hi]
     }
-    (lo+hi)/2
-  }) |> matrix(nrow = nrow(preds), ncol = length(probs), dimnames = list(NULL, names(probs)))
+    (lo + hi) / 2
+  }) |>
+    matrix(
+      nrow = nrow(preds),
+      ncol = length(probs),
+      dimnames = list(NULL, names(probs))
+    )
 }
