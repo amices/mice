@@ -11,6 +11,9 @@ predict_mi(
   se.fit = FALSE,
   interval = c("none", "confidence", "prediction"),
   level = 0.95,
+  iterations = 20,
+  probs = NULL,
+  nsamples = NULL,
   ...
 )
 }
@@ -30,6 +33,16 @@ obtain pooled prediction intervals).}
 \item{interval}{Type of interval calculation.  Can be abbreviated.}
 
 \item{level}{Tolerance/confidence level.}
+
+\item{iterations}{Number of iterations for the bisection algorithm that finds the
+mixture quantiles}
+
+\item{probs}{Quantiles from the posterior predictive distribution corresponding
+to the given probabilities will be returned (overwrites \code{level})}
+
+\item{nsamples}{Number of samples from the posterior predictive distribution for
+each imputed dataset. Defaults to \code{NULL}, in which case only the quantiles
+specified by probs of the posterior predictive distribution are provided.}
 
 \item{...}{
   Arguments passed on to \code{\link[stats:predict.lm]{stats::predict.lm}}
@@ -75,10 +88,13 @@ obtain pooled prediction intervals).}
 }
 \value{
 If \code{pool = TRUE}, predict_mi produces a vector of predictions or a
-matrix of predictions and bounds with column names \code{fit}, \code{lwr}, \code{upr} if
-additionally \code{interval} is set. For \code{type = "terms"} this is a matrix with a
-column per term and may have an attribute \code{"constant"}. If \code{se.fit = TRUE}, a
-list is returned with the following components:
+matrix of predictions and confidence/prediction bounds. The bounds depend on
+the probabilities specified by the user. The default returns a prediction matrix
+with column names \code{fit}, \code{lwr}, \code{upr} if \code{interval} is set. For custom probabilities,
+names are set to the respective probabilities used to calculate the prediction quantiles.
+For \code{type = "terms"}, a matrix is returned with a column per term and potentially an
+attribute \code{"constant"}. If \code{se.fit = TRUE}, a list is returned with the following
+components:
 \itemize{
 \item \code{fit}: vector or matrix as above
 \item \code{se.fit}: standard error of \strong{pooled} predicted means
@@ -86,6 +102,12 @@ list is returned with the following components:
 \item \code{df}: degrees of freedom for residual (per observation) according to Barnard-
 Rubin (1999).
 }
+
+If \code{nsamples} is set, this many samples are drawn from the posterior predictive
+distribution per imputed dataset. The output will be a list with variable
+\code{samples}, which is an array with dimensions \eqn{n \times m \times nsamples}.
+With \code{interval = "confidence"}, the samples are returned for the
+conditional mean of y; otherwise they are for new observations.
 
 If \code{pool = FALSE}, the function produces a list with predictions with the same
 structure as \code{predict.lm}, with one list-element per imputed dataset.
@@ -95,19 +117,20 @@ Predict method for linear models with multiply imputed data
 }
 \examples{
 # Dataframe with missings in X
-# Create Imp and Lm object
+# Create imputations and linear model object
 dat <- mice::nhanes
 
 # add indicator training and test
 # first 20 for training, last 5 for testing
 dat$set <- c(rep("train", 20), rep("test", 5))
+dat$age[dat$set == "test"] <- NA # set test cases outcome to missing
 
 # Make prediction matrix and ensure that set is not used as a predictor
 predmat <- mice::make.predictorMatrix(dat)
 predmat[,"set"] <- 0
 
 # Impute missing values based on the train set
-imp <- mice(dat, m = 5, maxit = 5 , seed = 1, predictorMatrix = predmat,
+imp <- mice(dat, m = 20, maxit = 5 , seed = 1, predictorMatrix = predmat,
   ignore = ifelse(dat$set == "test", TRUE, FALSE), print = FALSE)
 impdats <- complete(imp, "all")
 
