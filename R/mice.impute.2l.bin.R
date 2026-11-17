@@ -33,7 +33,10 @@
 #' @param random.effects Character string specifying how the random effect is
 #'   drawn for sporadic clusters. One of \code{"laplace"} (default),
 #'   \code{"eb"}, or \code{"marginal"}. See Details.
-#' @param \dots Arguments passed down to \code{glmer}
+#' @param \dots Arguments passed down to \code{glmer}. Only arguments
+#' that \code{lme4::glmer()} accepts (such as \code{control} or
+#' \code{nAGQ}) are forwarded; other arguments, such as a global
+#' \code{ridge} meant for other imputation methods, are ignored.
 #' @return Vector with imputed data, same type as \code{y}, and of length
 #'   \code{sum(wy)}
 #' @author Shahab Jolani, 2015; adapted to mice, SvB, 2018;
@@ -117,22 +120,24 @@ mice.impute.2l.bin <- function(
     ")"
   )
 
-  suppressWarnings(
-    fit <- try(
-      lme4::glmer(
-        formula(randmodel),
-        data = data.frame(yobs, xobs),
-        family = binomial,
-        ...
-      ),
-      silent = TRUE
+  args <- c(
+    list(formula(randmodel), data = data.frame(yobs, xobs), family = binomial),
+    lme4.dots(
+      lme4::glmer,
+      list(...),
+      exclude = c("formula", "data", "family")
     )
   )
-  if (!is.null(attr(fit, "class"))) {
-    if (attr(fit, "class") == "try-error") {
-      warning("glmer does not run. Simplify imputation model")
-      return(y[wy])
-    }
+  suppressWarnings(
+    fit <- try(do.call(lme4::glmer, args), silent = TRUE)
+  )
+  if (inherits(fit, "try-error")) {
+    warning(
+      "glmer does not run (",
+      trimws(attr(fit, "condition")$message),
+      "). Simplify imputation model"
+    )
+    return(y[wy])
   }
 
   # draw beta*

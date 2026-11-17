@@ -1,3 +1,16 @@
+# mice 3.19.19
+
+- Fixes `2l.lmer` and `2l.bin` when `mice()` gets extra arguments meant
+  for other imputation methods, such as a global `ridge` for `pmm` or
+  `norm` variables. `mice()` passes such arguments to every method, and
+  `lme4::lmer()` and `lme4::glmer()` stopped on the unknown argument. The
+  methods then fell back to the current imputations at every iteration, so
+  the imputations stayed at their random starting values. Only the
+  arguments that `lmer()` or `glmer()` accept are now forwarded. The
+  fallback warning now includes the error message of the failing call.
+  Imputations change for users who combined these methods with extra
+  arguments to `mice()`. Thanks @acpuchades (#792).
+
 # mice 3.19.18
 
 - Adds the article "Codes in the predictor matrix", with the codes that the
