@@ -1,3 +1,14 @@
+# mice 3.19.dev
+
+- Implements `ifdo()`, for conditional post-processing of imputations in
+  the `post` argument of `mice()`. For example,
+  `post["Ozone"] <- "ifdo(c(Ozone < 1, Ozone > 200), c(1, 200))"` gives the
+  same imputations as the `squeeze()` example in section 6.4.6 of *Flexible
+  Imputation of Missing Data*. Conditions and actions can use any variable
+  in the data. Before, `ifdo()` was a stub that printed "Function ifdo()
+  not yet implemented." and left the imputations unchanged, without an
+  error (#43).
+
 # mice 3.19.19
 
 - `predict_mi()` now pools prediction intervals as quantiles of a mixture

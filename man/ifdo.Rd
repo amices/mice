@@ -2,22 +2,62 @@
 % Please edit documentation in R/auxiliary.R
 \name{ifdo}
 \alias{ifdo}
-\title{Conditional imputation helper}
+\title{Conditional post-processing of imputations}
 \usage{
 ifdo(cond, action)
 }
 \arguments{
-\item{cond}{a condition}
+\item{cond}{A condition, or several conditions combined with \code{c()},
+e.g. \code{c(Ozone < 1, Ozone > 200)}. Conditions are expressions in terms
+of the variables in the data.}
 
-\item{action}{the action to do}
+\item{action}{The replacement values, one for each condition, combined
+with \code{c()} if there is more than one, e.g. \code{c(1, 200)}.}
 }
 \value{
-Currently returns an error message.
+Called for its side effect: it updates the imputations of the
+current variable. Returns \code{NULL} invisibly.
 }
 \description{
-Sorry, the \code{ifdo()} function is not yet implemented.
+\code{ifdo()} replaces imputations that meet a condition. It is meant to
+be used inside the \code{post} argument of \code{\link{mice}()}, where it
+acts on the imputations of the current variable in the current iteration.
+}
+\details{
+Each condition is evaluated against the data as they are after the
+imputation of the current variable, so the current variable holds its new
+imputations. Expressions may refer to any variable in the data. For the
+rows where condition \code{k} is \code{TRUE}, the imputations are replaced
+by action \code{k}. An action can be a constant, or an expression that is
+evaluated for those rows, such as \code{Ozone / 2}. All conditions are
+evaluated before any replacement is made, so a later action does not
+change which rows meet a later condition. If a row meets more than one
+condition, the last action wins. Rows where a condition is \code{NA} are
+left unchanged.
+
+\code{ifdo()} works wherever \code{mice()} applies \code{post}, that is,
+for variables imputed by a univariate method. It does nothing useful
+outside \code{post}.
+}
+\examples{
+post <- make.post(airquality[, 1:2])
+post["Ozone"] <- "ifdo(c(Ozone < 1, Ozone > 200), c(1, 200))"
+imp <- mice(airquality[, 1:2],
+  method = "norm.nob", m = 1, maxit = 1,
+  seed = 1, post = post, print = FALSE
+)
+range(imp$imp$Ozone)
+
+# same result as
+post["Ozone"] <- "imp[[j]][, i] <- squeeze(imp[[j]][, i], c(1, 200))"
+}
+\references{
+Van Buuren, S. (2018). \emph{Flexible Imputation of Missing Data. Second
+Edition.} Chapman & Hall/CRC. Section 6.4.6.
+}
+\seealso{
+\code{\link{squeeze}}, \code{\link{make.post}}
 }
 \author{
-Stef van Buuren, 2012
+Stef van Buuren, 2012, 2026
 }
-\keyword{internal}
