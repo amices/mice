@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.18</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.19</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,6 +60,9 @@
 <span>  se.fit <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  interval <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"confidence"</span>, <span class="st">"prediction"</span><span class="op">)</span>,</span>
 <span>  level <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  iterations <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  probs <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  nsamples <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -94,6 +97,22 @@ obtain pooled prediction intervals).</p></dd>
 
 <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
 <dd><p>Tolerance/confidence level.</p></dd>
+
+
+<dt id="arg-iterations">iterations<a class="anchor" aria-label="anchor" href="#arg-iterations"></a></dt>
+<dd><p>Number of iterations for the bisection algorithm that finds the
+mixture quantiles</p></dd>
+
+
+<dt id="arg-probs">probs<a class="anchor" aria-label="anchor" href="#arg-probs"></a></dt>
+<dd><p>Quantiles from the posterior predictive distribution corresponding
+to the given probabilities will be returned (overwrites <code>level</code>)</p></dd>
+
+
+<dt id="arg-nsamples">nsamples<a class="anchor" aria-label="anchor" href="#arg-nsamples"></a></dt>
+<dd><p>Number of samples from the posterior predictive distribution for
+each imputed dataset. Defaults to <code>NULL</code>, in which case only the quantiles
+specified by probs of the posterior predictive distribution are provided.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -169,15 +188,23 @@ obtain pooled prediction intervals).</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>If <code>pool = TRUE</code>, predict_mi produces a vector of predictions or a
-matrix of predictions and bounds with column names <code>fit</code>, <code>lwr</code>, <code>upr</code> if
-additionally <code>interval</code> is set. For <code>type = "terms"</code> this is a matrix with a
-column per term and may have an attribute <code>"constant"</code>. If <code>se.fit = TRUE</code>, a
-list is returned with the following components:</p><ul><li><p><code>fit</code>: vector or matrix as above</p></li>
+matrix of predictions and confidence/prediction bounds. The bounds depend on
+the probabilities specified by the user. The default returns a prediction matrix
+with column names <code>fit</code>, <code>lwr</code>, <code>upr</code> if <code>interval</code> is set. For custom probabilities,
+names are set to the respective probabilities used to calculate the prediction quantiles.
+For <code>type = "terms"</code>, a matrix is returned with a column per term and potentially an
+attribute <code>"constant"</code>. If <code>se.fit = TRUE</code>, a list is returned with the following
+components:</p><ul><li><p><code>fit</code>: vector or matrix as above</p></li>
 <li><p><code>se.fit</code>: standard error of <strong>pooled</strong> predicted means</p></li>
 <li><p><code>residual scale</code>: average residual standard deviations</p></li>
 <li><p><code>df</code>: degrees of freedom for residual (per observation) according to Barnard-
 Rubin (1999).</p></li>
-</ul><p>If <code>pool = FALSE</code>, the function produces a list with predictions with the same
+</ul><p>If <code>nsamples</code> is set, this many samples are drawn from the posterior predictive
+distribution per imputed dataset. The output will be a list with variable
+<code>samples</code>, which is an array with dimensions \(n \times m \times nsamples\).
+With <code>interval = "confidence"</code>, the samples are returned for the
+conditional mean of y; otherwise they are for new observations.</p>
+<p>If <code>pool = FALSE</code>, the function produces a list with predictions with the same
 structure as <code>predict.lm</code>, with one list-element per imputed dataset.</p>
     </div>
     <div class="section level2">
@@ -188,19 +215,20 @@ structure as <code>predict.lm</code>, with one list-element per imputed dataset.
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Dataframe with missings in X</span></span></span>
-<span class="r-in"><span><span class="co"># Create Imp and Lm object</span></span></span>
+<span class="r-in"><span><span class="co"># Create imputations and linear model object</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="va"><a href="nhanes.html">nhanes</a></span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># add indicator training and test</span></span></span>
 <span class="r-in"><span><span class="co"># first 20 for training, last 5 for testing</span></span></span>
 <span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">set</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"train"</span>, <span class="fl">20</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">age</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">set</span> <span class="op">==</span> <span class="st">"test"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span> <span class="co"># set test cases outcome to missing</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Make prediction matrix and ensure that set is not used as a predictor</span></span></span>
 <span class="r-in"><span><span class="va">predmat</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="make.predictorMatrix.html">make.predictorMatrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">predmat</span><span class="op">[</span>,<span class="st">"set"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Impute missing values based on the train set</span></span></span>
-<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">dat</span>, m <span class="op">=</span> <span class="fl">5</span>, maxit <span class="op">=</span> <span class="fl">5</span> , seed <span class="op">=</span> <span class="fl">1</span>, predictorMatrix <span class="op">=</span> <span class="va">predmat</span>,</span></span>
+<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">dat</span>, m <span class="op">=</span> <span class="fl">20</span>, maxit <span class="op">=</span> <span class="fl">5</span> , seed <span class="op">=</span> <span class="fl">1</span>, predictorMatrix <span class="op">=</span> <span class="va">predmat</span>,</span></span>
 <span class="r-in"><span>  ignore <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">set</span> <span class="op">==</span> <span class="st">"test"</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">impdats</span> <span class="op">&lt;-</span> <span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp</span>, <span class="st">"all"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -214,6 +242,7 @@ structure as <code>predict.lm</code>, with one list-element per imputed dataset.
 <span class="r-in"><span><span class="co"># pool the predictions with function</span></span></span>
 <span class="r-in"><span><span class="va">pool_preds</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="fu">predict_mi</span><span class="op">(</span>object <span class="op">=</span> <span class="va">fits</span>, newdata <span class="op">=</span> <span class="va">testdats</span>,</span></span>
 <span class="r-in"><span>  pool <span class="op">=</span> <span class="cn">TRUE</span>, interval <span class="op">=</span> <span class="st">"prediction"</span>, level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The MC error of the prediction interval is relatively large. At least 5% of the entries have above 2% MC error. Consider increasing the number of imputations to about m = 32.</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

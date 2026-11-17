@@ -15,7 +15,7 @@ using a two-level logistic model using lme4::glmer()"><meta property="og:image" 
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.18</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.19</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,7 +112,10 @@ drawn for sporadic clusters. One of <code>"laplace"</code> (default),
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed down to <code>glmer</code></p></dd>
+<dd><p>Arguments passed down to <code>glmer</code>. Only arguments
+that <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">lme4::glmer()</a></code> accepts (such as <code>control</code> or
+<code>nAGQ</code>) are forwarded; other arguments, such as a global
+<code>ridge</code> meant for other imputation methods, are ignored.</p></dd>
 
 </dl></div>
     <div class="section level2">

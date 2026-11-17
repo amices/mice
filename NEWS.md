@@ -1,15 +1,5 @@
 # mice 3.19.19
 
-- Fixes `2l.lmer` and `2l.bin` when `mice()` gets extra arguments meant
-  for other imputation methods, such as a global `ridge` for `pmm` or
-  `norm` variables. `mice()` passes such arguments to every method, and
-  `lme4::lmer()` and `lme4::glmer()` stopped on the unknown argument. The
-  methods then fell back to the current imputations at every iteration, so
-  the imputations stayed at their random starting values. Only the
-  arguments that `lmer()` or `glmer()` accept are now forwarded. The
-  fallback warning now includes the error message of the failing call.
-  Imputations change for users who combined these methods with extra
-  arguments to `mice()`. Thanks @acpuchades (#792).
 - `predict_mi()` now pools prediction intervals as quantiles of a mixture
   of t-distributions over the imputations, found with a fast bisection
   algorithm. Prediction intervals constructed using Rubin's rules and a
@@ -32,6 +22,16 @@
   of the fitted model instead of assuming an infinite sample size.
   Confidence intervals become somewhat wider and `df` in the output
   smaller; standard errors are unchanged.
+- Fixes `2l.lmer` and `2l.bin` when `mice()` gets extra arguments meant
+  for other imputation methods, such as a global `ridge` for `pmm` or
+  `norm` variables. `mice()` passes such arguments to every method, and
+  `lme4::lmer()` and `lme4::glmer()` stopped on the unknown argument. The
+  methods then fell back to the current imputations at every iteration, so
+  the imputations stayed at their random starting values. Only the
+  arguments that `lmer()` or `glmer()` accept are now forwarded. The
+  fallback warning now includes the error message of the failing call.
+  Imputations change for users who combined these methods with extra
+  arguments to `mice()`. Thanks @acpuchades (#792).
 
 # mice 3.19.18
 

@@ -15,7 +15,7 @@ two-level normal model using lme4::lmer()."><meta property="og:image" content="h
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.18</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.19</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,7 +97,10 @@ added.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed down to <code>lmer</code></p></dd>
+<dd><p>Arguments passed down to <code>lmer</code>. Only arguments
+that <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lme4::lmer()</a></code> accepts (such as <code>control</code> or <code>REML</code>)
+are forwarded; other arguments, such as a global <code>ridge</code> meant for
+other imputation methods, are ignored.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -115,8 +118,8 @@ variance-covariance matrix or the random effects to their estimated
 value in cases where creating draws from the posterior is not
 possible. The procedure throws a warning when this happens.</p>
 <p>If <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lme4::lmer()</a></code> fails, the procedure prints the warning
-<code>"lmer does not run. Simplify imputation model"</code> and returns the
-current imputation.  If that happens we see flat lines in the
+<code>"lmer does not run (&lt;error message&gt;). Simplify imputation model"</code>
+and returns the current imputation. If that happens we see flat lines in the
 trace line plots. Thus, the appearance of flat trace lines should be taken
 as an additional alert to a problem with imputation model fitting.</p>
     </div>
