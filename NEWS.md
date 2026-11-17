@@ -10,6 +10,21 @@
   is no function `mice.impute.<method>()` for a requested method, instead
   of failing during the iterations with "object 'mice.impute.<method>' not
   found".
+- `D2()` now pools the results of statistical tests of class `htest`, such
+  as `with(imp, chisq.test(...))` and `with(imp, fisher.test(...))`. Before,
+  these stopped with "Column(s) not found: std.error". `D2()` pools
+  chi-squared statistics, such as those of `chisq.test()`,
+  `mcnemar.test()` and `kruskal.test()`, with their degrees of freedom. For
+  other tests, such as `fisher.test()`, it converts the p-values into
+  chi-squared statistics with `df` degrees of freedom, set by the new
+  argument `df` (default 1, for a 2 x 2 table). `pool()` on such results now
+  points to `D2()` (#508).
+- `pool.scalar()` gains an argument `dfcom`, the residual degrees of
+  freedom of the complete-data analysis, with default `n - k`. Set
+  `dfcom = df.residual(fit)` to get the same degrees of freedom as `pool()`.
+  The documentation now explains that `k` is the number of parameters of
+  the whole model, the same for every coefficient, including the variance
+  parameters of a mixed model (#483).
 - `remove.lindep()` now writes every predictor it removes to
   `loggedEvents`. Before, it removed predictors silently when only one
   predictor or none was left, e.g. when a predictor was a copy of the

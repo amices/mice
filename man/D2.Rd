@@ -4,7 +4,7 @@
 \alias{D2}
 \title{Compare two nested models using D2-statistic}
 \usage{
-D2(fit1, fit0 = NULL, use = "wald")
+D2(fit1, fit0 = NULL, use = "wald", df = 1)
 }
 \arguments{
 \item{fit1}{An object of class \code{mira}, produced by \code{with()}.}
@@ -14,10 +14,32 @@ model in \code{fit0} is a nested within \code{fit1}. The default null
 model \code{fit0 = NULL} compares \code{fit1} to the intercept-only model.}
 
 \item{use}{A character string denoting Wald- or likelihood-based based tests. Can be either \code{"wald"} or \code{"likelihood"}. Only used if \code{method = "D2"}.}
+
+\item{df}{The degrees of freedom of the test, used only if \code{fit1}
+holds \code{htest} results that have no chi-squared statistic, such as
+\code{fisher.test()}. See Details.}
 }
 \description{
 The D2-statistic pools test statistics from the repeated analyses.
 The method is less powerful than the D1- and D3-statistics.
+}
+\details{
+If \code{fit1} holds the results of a test of class \code{htest}, as
+produced by e.g. \code{with(imp, chisq.test(...))} or
+\code{with(imp, fisher.test(...))}, \code{D2()} pools the test results
+directly with the formulas of Li et al. (1991). There is no null model,
+so \code{fit0} is ignored.
+\itemize{
+\item For tests with a chi-squared statistic, such as
+\code{chisq.test()}, \code{mcnemar.test()}, \code{mantelhaen.test()},
+\code{kruskal.test()} and \code{friedman.test()}, \code{D2()} pools
+the statistics, with their degrees of freedom.
+\item For other tests, such as \code{fisher.test()}, \code{D2()}
+converts each p-value into a chi-squared statistic with \code{df}
+degrees of freedom, and pools these. The default \code{df = 1} fits a
+2 x 2 table. For an r x c table, set \code{df = (r - 1) * (c - 1)}.
+The conversion of the p-value of an exact test is an approximation.
+}
 }
 \note{
 Warning: \code{D2()} assumes that the order of the variables is the
@@ -37,6 +59,13 @@ fit1 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc + reg, family = binomial))
 fit0 <- with(imp, glm(gen > levels(gen)[1] ~ hgt + hc, family = binomial))
 D2(fit1, fit0)
 }
+
+# Pool chi-squared and Fisher tests of a 2 x 2 table
+data <- nhanes2
+data$chl <- cut(data$chl, breaks = 2)
+imp <- mice(data, seed = 1, print = FALSE)
+D2(with(imp, chisq.test(xtabs(~ hyp + chl), correct = FALSE)))
+D2(with(imp, fisher.test(xtabs(~ hyp + chl))))
 }
 \references{
 Li, K. H., X. L. Meng, T. E. Raghunathan, and D. B. Rubin. 1991.
