@@ -17,7 +17,9 @@ test_that("CHECK-METHOD-NOTFOUND-001: unknown methods give a clear error (#575)"
 
 test_that("CHECK-METHOD-NOTFOUND-002: user-defined methods are found", {
   mice.impute.mymethod <- function(y, ry, x, wy = NULL, ...) {
-    if (is.null(wy)) wy <- !ry
+    if (is.null(wy)) {
+      wy <- !ry
+    }
     rep(mean(y[ry]), sum(wy))
   }
   assign("mice.impute.mymethod", mice.impute.mymethod, envir = globalenv())

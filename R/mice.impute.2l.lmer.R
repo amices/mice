@@ -72,7 +72,9 @@ mice.impute.2l.lmer <- function(
   rande <- names(type[type == 2])
   fixe <- names(type[type > 0])
 
+  # rows with a missing cluster are not in ry or wy (#657)
   lev <- unique(x[, clust])
+  lev <- lev[!is.na(lev)]
 
   X <- x[, fixe, drop = FALSE]
   Z <- x[, rande, drop = FALSE]

@@ -103,7 +103,9 @@ variable is used as a predictor for the target block (in the rows).
 By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
 rows and columns with all 1's, except for the diagonal.
 Note: For two-level imputation models (which have \code{"2l"} in their names)
-other codes (e.g, \code{2} or \code{-2}) are also allowed.}
+other codes (e.g, \code{2} or \code{-2}) are also allowed. The cluster
+variable (code \code{-2}) can be integer, numeric or factor, but not
+character. See the article "Codes in the predictor matrix".}
 
 \item{visitSequence}{A vector of block names of arbitrary length, specifying the
 sequence of blocks that are imputed during one iteration of the Gibbs
