@@ -65,7 +65,9 @@ mice.impute.2l.norm <- function(
   if (is.null(wy)) {
     wy <- !ry
   }
-  n.class <- length(unique(x[, type == -2]))
+  # rows with a missing cluster are not in ry or wy (#657)
+  clust <- x[, type == -2]
+  n.class <- length(unique(clust[!is.na(clust)]))
   if (n.class == 0) {
     stop("No class variable")
   }

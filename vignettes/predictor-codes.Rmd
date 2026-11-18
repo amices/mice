@@ -99,6 +99,21 @@ Notes:
    slope.
 5. miceadds recommends the argument `cluster_var` over code `-2`.
 
+## The cluster variable
+
+The variable with code `-2` can be an integer, numeric or factor variable.
+`mice()` passes a factor to the imputation method as integer codes, and
+leaves the data unchanged, so `complete()` returns the factor. A character
+variable is not allowed, because `mice()` does not use character variables.
+Convert it first, e.g. `data$school <- as.integer(factor(data$school))`.
+Note that `as.integer()` alone gives `NA` for codes such as `"A12"`.
+
+`mice()` cannot impute a missing cluster identifier, so it stops if the
+cluster variable has missing values and an imputation method. Without a
+method, the rows with a missing cluster are not imputed by the methods that
+use the cluster variable, and `mice()` writes their number to
+`loggedEvents`.
+
 ## Methods that give the codes another meaning
 
 Several methods in miceadds and micemd use the same numbers for something

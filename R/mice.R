@@ -222,7 +222,9 @@
 #' By default, the \code{predictorMatrix} is a square matrix of \code{ncol(data)}
 #' rows and columns with all 1's, except for the diagonal.
 #' Note: For two-level imputation models (which have \code{"2l"} in their names)
-#' other codes (e.g, \code{2} or \code{-2}) are also allowed.
+#' other codes (e.g, \code{2} or \code{-2}) are also allowed. The cluster
+#' variable (code \code{-2}) can be integer, numeric or factor, but not
+#' character. See the article "Codes in the predictor matrix".
 #' @param ignore A logical vector of \code{nrow(data)} elements indicating
 #' which rows are ignored when creating the imputation model. The default
 #' \code{NULL} includes all rows that have an observed value of the variable
@@ -553,6 +555,7 @@ mice <- function(
     blocks = blocks,
     defaultMethod = defaultMethod
   )
+  cluster.na <- check.cluster.missing(data, predictorMatrix, method, blocks)
   post <- check.post(post, data)
   blots <- check.blots(blots, data, blocks)
   ignore <- check.ignore(ignore, data)
@@ -577,6 +580,17 @@ mice <- function(
     .mice.state$dep <- h
     .mice.state$meth <- method[[h]]
     updateLog(out = "no predictors: imputed by an intercept-only model")
+  }
+  for (j in cluster.na) {
+    .mice.state$dep <- j
+    .mice.state$meth <- ""
+    updateLog(
+      out = paste0(
+        "cluster variable has ",
+        sum(is.na(data[[j]])),
+        " missing values: these rows are not imputed by methods that use it"
+      )
+    )
   }
   .mice.state$dep <- .mice.state$meth <- ""
 

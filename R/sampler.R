@@ -264,9 +264,15 @@ sampler.univ <- function(
 ) {
   j <- yname[1L]
 
+  fclust <- character(0)
   if (ct == "pred") {
     vars <- colnames(data)[pred != 0]
-    xnames <- setdiff(vars, j)
+    # a factor cluster variable enters x as integer codes (#657)
+    fclust <- vars[
+      pred[vars] == -2 & vapply(data[vars], is.factor, logical(1))
+    ]
+    fclust <- setdiff(fclust, j)
+    xnames <- setdiff(vars, c(j, fclust))
     if (length(xnames) > 0L) {
       formula <- reformulate(backticks(xnames), response = backticks(j))
       formula <- update(formula, ". ~ . ")
@@ -295,6 +301,12 @@ sampler.univ <- function(
     type <- pred[labels(terms(formula))][attr(x, "assign")]
     x <- x[, -1L, drop = FALSE]
     names(type) <- colnames(x)
+    # codes from the whole column, so they are the same for all rows
+    for (v in fclust) {
+      x <- cbind(x, as.integer(factor(data[[v]])))
+      colnames(x)[ncol(x)] <- v
+      type <- c(type, stats::setNames(-2, v))
+    }
   }
   if (ct == "formula") {
     x <- x[, -1L, drop = FALSE]
