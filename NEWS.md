@@ -1,5 +1,15 @@
 # mice 3.19.20
 
+- `quickpred()` now selects predictors for variables without missing data
+  from the correlations among the data, as for other variables, instead of
+  setting their rows to zero. This makes `quickpred()` consistent with
+  `make.predictorMatrix()`. Imputations do not change with the default
+  `where`, because these rows are not used. If `where` asks to impute
+  observed values, these variables now get predictors, whereas before they
+  were imputed without any predictor (#602).
+- `mice()` now writes to `loggedEvents` each variable that it imputes from
+  a row in `predictorMatrix` without any predictor, i.e. by an
+  intercept-only model.
 - `mice.impute.quadratic()` now stops with a clear message if the outcome
   in `quad.outcome` is a factor, instead of saying that the outcome cannot
   be found in the data. The documentation now states that the method
