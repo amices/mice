@@ -1,391 +1,294 @@
-# mice 3.19.21
+# mice 3.20.0
 
-- The entry in `loggedEvents` that signals a ridge penalty for
-  (nearly) multi-collinear predictors is now one short line, "ridge penalty
-  applied: predictors (nearly) multi-collinear". The old message contained
-  line breaks, which `loggedEvents` printed as `\n`. The explanation of
-  the causes moved to the documentation of `estimice()` and `mids` (#669).
-- The cluster variable of two-level methods (code `-2` in
-  `predictorMatrix`) can now be a factor. `mice()` passes it to the method as
-  integer codes and leaves the data unchanged, so `complete()` returns the
-  factor. Imputations are identical to those with the same clusters coded
-  as integers. A character cluster variable now stops early with advice to
-  convert it by `as.integer(factor(x))`. Before, it was dropped as a
-  predictor, and the methods failed later with "No class variable" or an
-  invalid `lmer` formula (#657).
-- A cluster variable with missing values now stops early if it has an
-  imputation method, because mice cannot impute cluster membership.
-  Without a method, `mice()` writes the number of missing cluster values to
-  `loggedEvents`, and the rows with a missing cluster are not imputed.
-  `2l.norm` and `2l.lmer` crashed on such rows; they now skip them, as
-  `2l.pan` and `2l.bin` already did.
+### Major changes
 
-# mice 3.19.20
+* **Parallel imputation inside `mice()`**. With `mice(..., future = TRUE)`,
+  each of the `m` chains of the Gibbs sampler runs over all iterations as a
+  separate future on the plan set by the user, e.g. `plan(multisession)`,
+  `plan(future.mirai::mirai_multisession)` or a cluster. `mice()` never
+  sets or changes the plan. The results are combined into one `mids`
+  object, including `chainMean`, `chainVar` and `loggedEvents`. Each chain
+  gets its own random number stream, so results are reproducible with
+  `seed` and do not depend on the number of workers, but they differ from
+  `future = FALSE`. The default `future = FALSE` is the classic sequential
+  sampler and is unchanged. User-defined imputation methods (e.g.
+  `mice.impute.mymethod()` in the global environment) and the global
+  objects used in `post` are sent to the workers. With `print = TRUE`,
+  `mice()` reports the plan and the number of workers. The `mids` object
+  has two new fields: `future` (a list with `plan`, `workers` and `pid`)
+  and `chainSeed` (the state of the random number stream of each chain).
+  `mice.mids()` gains the argument `future`. By default, an object created
+  with `future = TRUE` continues as futures, with the same result as one
+  `mice()` call with all iterations. `rbind()`, `cbind()`, `filter()` and
+  `ibind()` keep the new fields. Thanks @HenrikBengtsson for advice
+  (#735, #736). Requires `future` and `future.apply`. See the vignettes
+  [Parallel imputation](https://amices.org/mice/articles/parallel.html)
+  and [Parallel imputation: benchmarks](https://amices.org/mice/articles/parallel-benchmark.html).
 
-- `quickpred()` now selects predictors for variables without missing data
-  from the correlations among the data, as for other variables, instead of
-  setting their rows to zero. This makes `quickpred()` consistent with
-  `make.predictorMatrix()`. Imputations do not change with the default
-  `where`, because these rows are not used. If `where` asks to impute
-  observed values, these variables now get predictors, whereas before they
-  were imputed without any predictor (#602).
-- `mice()` now writes to `loggedEvents` each variable that it imputes from
-  a row in `predictorMatrix` without any predictor, i.e. by an
-  intercept-only model.
-- `mice.impute.quadratic()` now stops with a clear message if the outcome
-  in `quad.outcome` is a factor, instead of saying that the outcome cannot
-  be found in the data. The documentation now states that the method
-  assumes a linear model for the outcome, and is not suited for a binary or
-  categorical outcome, also not when it is coded as 0/1, and points to the
-  smcfcs package for such models (#575).
-- `mice()` now stops early with "Imputation method(s) not found" if there
-  is no function `mice.impute.<method>()` for a requested method, instead
-  of failing during the iterations with "object 'mice.impute.<method>' not
-  found".
-- `D2()` now pools the results of statistical tests of class `htest`, such
-  as `with(imp, chisq.test(...))` and `with(imp, fisher.test(...))`. Before,
-  these stopped with "Column(s) not found: std.error". `D2()` pools
-  chi-squared statistics, such as those of `chisq.test()`,
-  `mcnemar.test()` and `kruskal.test()`, with their degrees of freedom. For
-  other tests, such as `fisher.test()`, it converts the p-values into
-  chi-squared statistics with `df` degrees of freedom, set by the new
-  argument `df` (default 1, for a 2 x 2 table). `pool()` on such results now
-  points to `D2()` (#508).
-- `pool.scalar()` gains an argument `dfcom`, the residual degrees of
-  freedom of the complete-data analysis, with default `n - k`. Set
-  `dfcom = df.residual(fit)` to get the same degrees of freedom as `pool()`.
-  The documentation now explains that `k` is the number of parameters of
-  the whole model, the same for every coefficient, including the variance
-  parameters of a mixed model (#483).
-- `remove.lindep()` now writes every predictor it removes to
-  `loggedEvents`. Before, it removed predictors silently when only one
-  predictor or none was left, e.g. when a predictor was a copy of the
-  outcome, or when the observed outcome was constant. The printed
-  `predictorMatrix` then suggested a model that was not fitted, with no
-  warning (#306).
-- `remove.lindep()` now also removes predictors with a correlation of -0.99
-  or lower with the outcome, as it already did for 0.99 or higher.
-  Imputations can change for data with such predictors.
-- `with()` now accepts a formula with a dot, such as
-  `with(imp, glm(hyp ~ ., family = binomial))`. Before, this stopped with
-  "'.' in formula and no 'data' argument". If the top-level call has a dot
-  formula, no `data` argument, and calls a function with a `data`
-  argument, `with()` adds `data = .mice.data`, the completed data set.
-  Other expressions are evaluated as before (#265).
-- Implements `ifdo()`, for conditional post-processing of imputations in
-  the `post` argument of `mice()`. For example,
-  `post["Ozone"] <- "ifdo(c(Ozone < 1, Ozone > 200), c(1, 200))"` gives the
-  same imputations as the `squeeze()` example in section 6.4.6 of *Flexible
-  Imputation of Missing Data*. Conditions and actions can use any variable
-  in the data. Before, `ifdo()` was a stub that printed "Function ifdo()
-  not yet implemented." and left the imputations unchanged, without an
-  error (#43).
-
-# mice 3.19.19
-
-- `predict_mi()` now pools prediction intervals as quantiles of a mixture
-  of t-distributions over the imputations, found with a fast bisection
-  algorithm. Prediction intervals constructed using Rubin's rules and a
-  normal approximation may be miscalibrated when predictors are missing,
-  because the resulting predictive distribution need not be normal, even
-  in large samples.
-- We implement a diagnostic that tells the user whether the Monte Carlo
-  share of the predictive variance exceeds 2% for a sizable number of cases
-  (5%). When the between-imputation variance of the predictions is
-  large relative to the total variance, the typical number of `m = 5`
-  imputations will be too small to obtain valid inferences. This will 
-  be signalled by the diagnostic, and a larger number of
-  imputations will be recommended. The example now uses `m = 20`.
-- New arguments: `probs` returns arbitrary quantiles of the pooled
-  predictive distribution, `nsamples` returns draws from it (as a mixture
-  over the imputations), and `iterations` sets the number of bisection
-  steps.
-- For `interval = "confidence"`, Rubin's rules are still used, but the
-  Barnard-Rubin degrees of freedom now use the residual degrees of freedom
-  of the fitted model instead of assuming an infinite sample size.
-  Confidence intervals become somewhat wider and `df` in the output
-  smaller; standard errors are unchanged.
-- Fixes `2l.lmer` and `2l.bin` when `mice()` gets extra arguments meant
-  for other imputation methods, such as a global `ridge` for `pmm` or
-  `norm` variables. `mice()` passes such arguments to every method, and
-  `lme4::lmer()` and `lme4::glmer()` stopped on the unknown argument. The
-  methods then fell back to the current imputations at every iteration, so
-  the imputations stayed at their random starting values. Only the
-  arguments that `lmer()` or `glmer()` accept are now forwarded. The
-  fallback warning now includes the error message of the failing call.
-  Imputations change for users who combined these methods with extra
-  arguments to `mice()`. Thanks @acpuchades (#792).
-
-# mice 3.19.18
-
-- Adds the article "Codes in the predictor matrix", with the codes that the
-  imputation methods in mice, miceadds, micemd and mitml read from the
-  predictor matrix, such as `-2` for the cluster variable and `2` for a
-  random effect (#594).
-- Fixes the error "Target variables do not contain any missing data" of
-  `jomoImpute` and `panImpute` for a block with one variable whose name
-  equals the name of the variable, e.g. the unnamed block `"chl"` in
-  `blocks = list(c("bmi", "hyp"), "chl")`. `make.predictorMatrix()` set
-  such a variable to 0 in its own row, so it was left out of the
-  imputation model. The variables in the block are now always passed as
-  targets, unless the user set another code, such as `-2` for a cluster
-  indicator (#379).
-
-# mice 3.19.17
-
-- Fixes `remove.lindep()` when it has to remove more than one linearly
-  dependent predictor. After the first removal, the correlation matrix was
-  not reduced, so the loop could drop an independent predictor and keep a
-  rank-deficient set. The bug dates back to at least 2018. Imputations can
-  therefore change for data in which the predictors of a variable have two
-  or more linear dependencies. Thanks @bitowaqr (#785, #786).
-- Fixes `ampute(..., bycases = FALSE)` for patterns with different numbers
-  of missing variables. The conversion from the proportion of missing cells
-  to the proportion of incomplete cases did not match the documented meaning
-  of `freq`, so `ampute()` created more missing cells than requested, and
-  refused some feasible requests. Amputations with such patterns now have
-  less missing data than in mice 3.19.0. Thanks @bitowaqr (#787, #788).
-- Fixes the imputations of `polyreg`, `polr` and `lda` in the development
-  versions since 3.19.7. Their draws did not follow the predicted
-  probabilities, and consecutive missing values could receive the same
-  draw. mice 3.19.0 is not affected. Thanks @bitowaqr (#779, #780).
-- Fixes the error "non-conformable arrays" in `mice.impute.2l.bin()` with
-  random slopes, introduced in 3.19.6 with the argument `random.effects`
-  (#686). Thanks @bitowaqr (#781, #782).
-- Fixes `D3()` for weighted gaussian `glm` models, which counted the weights
-  twice when estimating the residual variance. `D3()` now gives the same
-  result for weighted `lm` and gaussian `glm` fits. Thanks @bitowaqr (#783,
-  #784).
-- `mice.mids()` with `newdata` now imputes variables that are incomplete in
-  `newdata` but were complete in the training data. These variables had
-  method `""`, so their missing values stayed `NA`. `mice.mids()` assigns
-  the default method for the type of the variable and reports this in a
-  message. Also fixes the error "Length of method differs from number of
-  blocks" for models trained with formulas or blocks that do not cover all
-  variables. The new vignette "Imputing new data" describes the workflow
-  (#753, #777).
-- Adds a configuration for the Air formatter (`air.toml`) and a
-  `codecov.yml` (#721, #778).
-
-# mice 3.19.16
-
-- `D3()` now follows Meng and Rubin (1992) exactly. The deviance of the
-  constrained models is evaluated with all parameters fixed at their pooled
-  values, including the nuisance parameters: the residual variance in `lm`
-  and gaussian `glm`, and the variance components in `lmer` models. Models
-  fitted by REML are refitted by ML. For these classes `D3()` now gives the
-  same result as `mitml::testModels(method = "D3")`. Previously, `D3()`
-  constrained only the regression coefficients and re-estimated the
-  nuisance parameters, which inflated the statistic somewhat. The `D3`
-  statistics and p-values for `lm` and `lmer` therefore change. For other
-  model classes `D3()` keeps the previous approach.
-- `D3()` now warns when the statistic is negative, which happens when the
-  coefficients are unstable across imputations, e.g. under separation in
-  logistic regression.
-
-- `parlmice()` no longer changes the RNG kind of the session to
-  `L'Ecuyer-CMRG`, a side effect of `parallel::clusterSetRNGStream()`.
-
-- Requires R 4.1.0 or later, which `broom`, `dplyr` and `tidyr` already
-  required. The old declaration of R 2.10 was not accurate. Removes the
-  unused `cpp11` entry from `LinkingTo`.
-
-- Moves `glmnet` from `Imports` to `Suggests`. `glmnet` is only needed by
-  the four `lasso` methods, which already ask to install it on demand.
-  This removes `glmnet`, `foreach`, `iterators` and `shape` from the
-  installation of `mice`.
-
-- Moves `mitml` from `Imports` to `Suggests`. `mitml` is only needed by
-  `D1()`, `D2()`, `mice.impute.panImpute()` and `mice.impute.jomoImpute()`,
-  which already ask to install it on demand. This removes 26 packages from
-  the installation of `mice`, including `jomo`, `pan`, `lme4`, `haven` and
-  `readr`.
-
-# mice 3.19.15
-
-- `method = "rf"` now caps the number of threads of `ranger` and
-  `literanger` at `parallelly::availableCores()`. `future` sets this to 1
-  on its workers, so with `mice(..., future = TRUE)` each chain uses one
-  thread, and the workers no longer compete for the cores. Outside
-  `future`, `ranger` keeps its default of 2 threads, and `literanger`
-  uses the available cores instead of all cores, which respects the
-  limits of schedulers such as Slurm and of containers. A thread count set
-  by the user (`num.threads`, `n_thread`, `R_RANGER_NUM_THREADS` or the
-  `ranger.num.threads` option) takes precedence. The imputations do not
-  change. In addition, `num.threads` and `n_thread` are now also used to
-  predict, and not only to fit the forest.
-- Renames the argument `parallel` of `mice()` and `mice.mids()` to
-  `future`, following the advice of @HenrikBengtsson (#735, #736). With
-  `future = TRUE`, the chains run as futures on the plan set by the user,
-  which `mice()` uses as is and never changes, including
-  `plan(sequential)`. `mice()` no longer sets up a `multisession` plan
-  itself, so the user chooses the backend, e.g. `plan(multisession)`,
-  `plan(future.mirai::mirai_multisession)` or a cluster. The argument
-  `n.core` is removed; set the number of workers with `future::plan()`.
-  The default `future = FALSE` is the classic sequential sampler, with the
-  same results and iteration history as before. The arguments `parallel`
-  and `n.core` were only available in the development versions 3.19.13
-  and 3.19.14. They are now ignored, with a warning for `parallel = TRUE`
-  and for `n.core` together with `future = TRUE`.
-- With `future = TRUE` and `print = TRUE`, `mice()` reports the plan and
-  the number of workers that ran the chains, e.g. `Imputed 5 chains with
-  future (multisession) on 4 workers`. The `mids` object stores this in
-  the new field `future`, a list with `plan`, `workers` and the process id
-  of each chain (`pid`), which replaces the logical field `parallel`.
-  Objects created by 3.19.13 and 3.19.14 still continue as futures in
-  `mice.mids()`.
-- `futuremice()` now determines the number of cores by
-  `parallelly::availableCores(omit = 1, max = m)`. Before, it used
-  `availableCores() - 1`, which gave zero workers, and an error, on a
-  machine or job with a single core (#735). Requires `parallelly` 1.45.0
-  or later.
-
-# mice 3.19.14
-
-- `futuremice()` no longer resets the `future` plan to `sequential` when it finishes, but restores the plan that was active before the call, following the advice for package developers in `future` (#735). Thanks @HenrikBengtsson
-
-# mice 3.19.13
-
-- Adds native parallel imputation with `mice(..., parallel = TRUE)`. The `m`
-  chains of the Gibbs sampler are independent, so each chain runs over all
-  iterations on its own worker through `future.apply::future_lapply()`, and
-  the results are combined into one `mids` object, including `chainMean`,
-  `chainVar` and `loggedEvents`. A `future` plan set by the user is respected;
-  otherwise `mice()` sets up a `multisession` plan with
-  `min(m, availableCores() - 1)` workers, or `min(m, n.core)` workers for the
-  new `n.core` argument, and resets it on exit. Each chain gets its own random
-  number stream, so results are reproducible with `seed` and do not depend on
-  the number of workers, but differ from `parallel = FALSE`. The sequential
-  sampler is unchanged. Requires the `future` and `future.apply` packages.
-- Adds progress reporting through the `progressr` package. `mice()` and
+* **Progress reporting** through the `progressr` package. `mice()` and
   `mice.mids()` signal one step after each iteration of each chain
-  (`m * maxit` steps), both sequentially and with `parallel = TRUE`, where the
-  steps are relayed from the workers while the chains run. Enable it with
-  `progressr::with_progress(mice(...))` or `progressr::handlers(global = TRUE)`.
-  Nothing is shown without a handler, and the imputations are unchanged.
-  `progressr` is a suggested package. Based on the idea in #750 by Joshua
-  Carpenter (see also #516, #551, #565).
-- Errors raised by an imputation method or a `post` statement now report
-  where the Gibbs sampler stopped, e.g. `mice() stopped at iteration 3,
-  imputation 2, variable 'bmi' (method 'pmm')`, followed by the original
-  message. The error has class `mice_sampler_error` with fields `iteration`,
-  `imputation`, `variable`, `method`, `post` and `parent` (the original
-  error). With `parallel = TRUE`, the imputation number is that of the
-  failing chain.
-- With `parallel = TRUE`, imputation methods defined by the user, e.g.
-  `mice.impute.mymethod()` in the global environment, are now sent to the
-  workers, together with the helper functions and objects they use.
-  Previously these methods were not found on `multisession` workers. The
-  same holds for objects from the global environment used in `post`, such
-  as a vector `delta` in `imp[[j]][, i] + delta[chain]`.
-- `post` expressions can use the new variable `chain`, the imputation
-  number, for post-processing that differs between imputations, e.g.
-  `imp[[j]][, i] <- imp[[j]][, i] + delta[chain]`. Use `i` only to index
-  `imp[[j]]`: it equals `chain` for `parallel = FALSE`, but is always 1 with
-  `parallel = TRUE`, where each worker holds one chain.
-- `mice.mids()` gains the arguments `parallel` and `n.core`. By default, an
-  object created with `parallel = TRUE` continues in parallel, with the
-  same result as a single `mice()` call with all iterations. Setting
-  `parallel` explicitly continues a sequential object in parallel, or a
-  parallel object sequentially. To support this, the `mids` object has two
-  new fields: `parallel`, and `chainSeed`, the state of the random number
-  stream of each chain. `rbind()`, `cbind()`, `filter()` and `ibind()` keep
-  these fields; objects from earlier versions continue sequentially.
-- `mice()` and `mice.mids()` gain the argument `print`, which replaces
+  (`m * maxit` steps), both sequentially and with `future = TRUE`. Enable
+  it with `progressr::with_progress(mice(...))` or
+  `progressr::handlers(global = TRUE)`. Nothing is shown without a
+  handler, and the imputations do not change. Based on the idea in #750
+  by Joshua Carpenter (see also #516, #551, #565).
+
+* **`D3()` now follows Meng and Rubin (1992) exactly.** The deviance of the
+  constrained models is evaluated with all parameters fixed at their
+  pooled values, including the nuisance parameters: the residual variance
+  in `lm` and gaussian `glm`, and the variance components in `lmer`
+  models. Models fitted by REML are refitted by ML. For these classes
+  `D3()` gives the same result as `mitml::testModels(method = "D3")`.
+  Previously, `D3()` re-estimated the nuisance parameters, which inflated
+  the statistic somewhat. For other model classes `D3()` keeps the
+  previous approach. `D3()` now warns when the statistic is negative,
+  e.g. under separation in logistic regression.
+
+* **Adds `mice.impute.svm()`** for imputing binary variables in
+  high-dimensional data by Support Vector Machines combined with
+  bootstrapping (#751, #752). Contributed @mtakahashi123
+
+* **Adds the `random.effects` argument to `mice.impute.2l.bin()`** with
+  options `"laplace"` (default), `"eb"` and `"marginal"`, implementing the
+  FCS-GLM distinction between sporadic and systematic missingness of
+  Audigier et al. (2018). Also vectorises the imputation loop (#686). The
+  new vignette `random-effects-2l-bin` discusses the three strategies.
+
+* **Fewer hard dependencies.** `glmnet` and `mitml` move from `Imports` to
+  `Suggests`. They are only needed by the `lasso` methods, `D1()`, `D2()`,
+  `mice.impute.panImpute()` and `mice.impute.jomoImpute()`, which ask to
+  install them on demand. This removes about 30 packages from the
+  installation of `mice`, including `foreach`, `jomo`, `pan`, `lme4`,
+  `haven` and `readr`. Requires R 4.1.0 or later, which `broom`, `dplyr`
+  and `tidyr` already required. Removes the unused `cpp11` entry from
+  `LinkingTo`.
+
+* **Better prediction intervals in `predict_mi()`.** Prediction intervals
+  are now quantiles of the mixture of t-distributions over the imputations,
+  found by bisection. Intervals from Rubin's rules with a normal
+  approximation may be miscalibrated when predictors are missing, because
+  the predictive distribution need not be normal, even in large samples.
+  A new diagnostic signals when the Monte Carlo share of the predictive
+  variance exceeds 2% for more than 5% of the cases, and recommends more
+  imputations. New arguments: `probs` (quantiles of the pooled predictive
+  distribution), `nsamples` (draws from it) and `iterations` (bisection
+  steps).
+
+* **`D2()` pools statistical tests** of class `htest`, such as
+  `with(imp, chisq.test(...))` and `with(imp, fisher.test(...))`.
+  Chi-squared statistics (e.g. `chisq.test()`, `mcnemar.test()`,
+  `kruskal.test()`) are pooled with their degrees of freedom. For other
+  tests, such as `fisher.test()`, the p-values are converted into
+  chi-squared statistics with `df` degrees of freedom (new argument,
+  default 1). `pool()` on such results points to `D2()` (#508).
+
+* **`with()` accepts dot formulas**, such as
+  `with(imp, glm(hyp ~ ., family = binomial))`. If the top-level call has a
+  formula with a dot and no `data` argument, and calls a function with a
+  `data` argument, `with()` adds `data = .mice.data`, the completed data
+  set. Other expressions are evaluated as before (#265).
+
+* **Implements `ifdo()`** for conditional post-processing in the `post`
+  argument, e.g. `post["Ozone"] <- "ifdo(c(Ozone < 1, Ozone > 200), c(1, 200))"`,
+  as in section 6.4.6 of *Flexible Imputation of Missing Data*. Before,
+  `ifdo()` was a stub that printed "not yet implemented" and left the
+  imputations unchanged (#43).
+
+* **Factor cluster variables.** The cluster variable of two-level methods
+  (code `-2` in `predictorMatrix`) can now be a factor. `mice()` passes it
+  to the method as integer codes and leaves the data unchanged, so
+  `complete()` returns the factor (#657).
+
+* Adds the article [Codes in the predictor matrix](https://amices.org/mice/articles/predictor-codes.html),
+  with the codes that the imputation methods in mice, miceadds, micemd and
+  mitml read from the predictor matrix (#594).
+
+### Breaking changes
+
+* **PMM results change for tied predicted values.** Fixes miscalibrated
+  donor selection in `matchindex()`, the default PMM matching engine since
+  mice 3.11.8, when many target cases share the same (or nearly the same)
+  predicted value, e.g. intercept-only models, models with few categorical
+  predictors, or heavily rounded outcomes. Ties were broken once per
+  imputed dataset, so all tied target cases drew from the same small set
+  of donors. This inflated the between-imputation variance and gave too
+  wide confidence intervals. Ties are now broken independently for each
+  target case. **Affected versions:** mice 3.11.8 through 3.19.11. To
+  reproduce earlier results, install that version, e.g.
+  `remotes::install_version("mice", version = "3.19.0")` (#757, #236).
+
+* The confidence interval columns of `summary(pool(fit), conf.int = TRUE)`,
+  `summary.mipo()` and `pool.table()` are named `conf.low` and `conf.high`
+  (broom convention) instead of `2.5 %` and `97.5 %`. Duplicate CI columns
+  in `summary.mipo()` are removed (#719).
+
+* The `D3` statistics and p-values for `lm`, gaussian `glm` and `lmer`
+  models change (see above).
+
+* `mice.mids()` with `newdata` now inherits the imputation methods from
+  the `mids` object instead of re-initializing them, so that training and
+  deployment imputation models behave the same (#753, #777). A variable that had
+  no missing values in the training data has method `""`. If `newdata` has
+  missing values in such a variable, `mice.mids()` assigns the default
+  method for its type and says so in a message. Without this, the missing
+  values stayed `NA`, and could also leave other variables `NA` when used
+  as a predictor. A method `""` that the user set is kept. See the
+  vignette [Imputing new data](https://amices.org/mice/articles/newdata.html).
+* Fixes an error "Length of method differs from number of blocks" in
+  `mice.mids()` with `newdata` when the model was trained with `formulas`
+  or `blocks` that do not cover all variables.
+
+* The internal logging object is renamed from `state` to `.mice.state`
+  (#527). Extension packages whose `mice.impute.*` functions call
+  `mice:::updateLog()` outside the Gibbs sampler of `mice()` will no
+  longer find the logging state.
+
+* The `mipo` class no longer inherits from `data.frame`. The new
+  `as.data.frame.mipo()` returns `summary()`, which repairs
+  `knitr::kable()` and `rmarkdown::paged_table()` on `mipo` objects (#733).
+
+* **`remove.lindep()` results change.** Fixes the removal of more than
+  one linearly dependent predictor: after the first removal, the
+  correlation matrix was not reduced, so the loop could drop an independent
+  predictor and keep a rank-deficient set. The bug dates back to at least
+  2018. Imputations can change for data in which the predictors of a
+  variable have two or more linear dependencies. Thanks @bitowaqr (#785,
+  #786).
+
+* `remove.lindep()` now also removes predictors with a correlation of
+  -0.99 or lower with the outcome, as it already did for 0.99 or higher.
+  Imputations can change for data with such predictors.
+
+* **`ampute(..., bycases = FALSE)` results change.** Fixes the conversion
+  from the proportion of missing cells to the proportion of incomplete
+  cases for patterns with different numbers of missing variables, which
+  did not match the documented meaning of `freq`. Amputations with such
+  patterns now have less missing data than in mice 3.19.0, and some
+  feasible requests that were refused now work. Thanks @bitowaqr (#787,
+  #788).
+
+* `predict_mi(interval = "confidence")` uses the residual degrees of
+  freedom of the fitted model in the Barnard-Rubin adjustment, instead of
+  an infinite sample size. Confidence intervals become somewhat wider and
+  `df` smaller; standard errors are unchanged.
+
+* `quickpred()` now selects predictors for variables without missing data
+  in the same way as for other variables, instead of setting their rows to
+  zero, consistent with `make.predictorMatrix()`. Imputations do not
+  change with the default `where`. If `where` asks to impute observed
+  values, these variables now get predictors instead of an intercept-only
+  model (#602).
+
+* `mice()` now stops early for a character cluster variable, with advice
+  to convert it by `as.integer(factor(x))`, and for a cluster variable
+  with missing values that has an imputation method, because mice cannot
+  impute cluster membership. Before, these failed later or imputed
+  meaningless cluster codes (#657).
+
+### Minor changes
+
+* `mice()` and `mice.mids()` gain the argument `print`, which replaces
   `printFlag` as the recommended way to silence the iteration history,
-  e.g. `mice(nhanes, print = FALSE)`. The default can be set with
-  `options(mice.print = FALSE)`. `printFlag` and the option
-  `mice.printFlag` keep working as legacy names; if both `print` and
-  `printFlag` are given, `printFlag` takes precedence.
-- Fixes a bug where an argument in `...` that partially matched an
-  argument of the internal sampler, such as `print = FALSE` next to
-  `printFlag`, shifted the positional arguments, so that the value of
-  `printFlag` was passed to the imputation methods. This silently changed
-  the imputations, e.g. `rf` used a single tree instead of `ntree`, and
-  occurred in particular with `futuremice(..., print = FALSE)`.
+  e.g. `mice(nhanes, print = FALSE)`. Set the default with
+  `options(mice.print = FALSE)`. `printFlag` and `options(mice.printFlag)`
+  keep working; if both `print` and `printFlag` are given, `printFlag`
+  takes precedence.
+* Errors in an imputation method or a `post` statement now report where
+  the sampler stopped, e.g. `mice() stopped at iteration 3, imputation 2,
+  variable 'bmi' (method 'pmm')`, followed by the original message. The
+  error has class `mice_sampler_error` with fields `iteration`,
+  `imputation`, `variable`, `method`, `post` and `parent`.
+* `post` expressions can use the new variable `chain`, the imputation
+  number, e.g. `imp[[j]][, i] <- imp[[j]][, i] + delta[chain]`.
+* `method = "rf"` caps the number of threads of `ranger` and `literanger`
+  at `parallelly::availableCores()`, so that futures do not compete for
+  cores and scheduler limits (Slurm, containers) are respected. A thread
+  count set by the user takes precedence. `num.threads` and `n_thread` are
+  now also used for prediction. The imputations do not change.
+* `futuremice()` determines the number of cores by
+  `parallelly::availableCores(omit = 1, max = m)`, which works on a
+  single-core machine, and restores the `future` plan that was active
+  before the call instead of resetting it to `sequential` (#735). Thanks
+  @HenrikBengtsson. Requires `parallelly` 1.45.0 or later.
+* `parlmice()` no longer changes the RNG kind of the session to
+  `L'Ecuyer-CMRG`.
+* `mice()` warns when the data contain `POSIXct` or `POSIXlt` columns,
+  which can make the predictor matrix near-singular, and `estimice()`
+  gives an informative error when the ridge-penalised `solve()` fails
+  (#746).
+* Reformats the R source with the Air formatter, and adds `air.toml` and
+  `codecov.yml` (#721, #778).
+* Cleans up the testthat suite, and gives every `test_that()` label a
+  stable `<FUNCTION>-<NNN>` ID (e.g. `BARNARD-RUBIN-001`) for comparison
+  with other implementations. Tests that compare separate `mice()` runs
+  use `expect_equal()`, as MKL is not bitwise reproducible.
+* Fixes math rendering in the documentation and the link to the `mcar()`
+  reference (#769). Thanks @saikrishna488
+* Updates bibliography entries.
+* `remove.lindep()` now writes every predictor that it removes to
+  `loggedEvents`. Before, removals were silent when at most one predictor
+  was left, e.g. when a predictor was a copy of the outcome (#306).
+* `mice()` writes to `loggedEvents` each variable that it imputes from a
+  row in `predictorMatrix` without any predictor, i.e. by an
+  intercept-only model (#602).
+* `mice()` writes the number of missing values of a cluster variable
+  without an imputation method to `loggedEvents`. The rows with a missing
+  cluster are not imputed by the methods that use it (#657).
+* The `loggedEvents` entry for a ridge penalty on (nearly) multi-collinear
+  predictors is now one line, "ridge penalty applied: predictors (nearly)
+  multi-collinear". The old message contained line breaks, printed as
+  `\n` (#669).
+* `mice()` stops early with "Imputation method(s) not found" if there is
+  no function `mice.impute.<method>()` for a requested method.
+* `mice.impute.quadratic()` stops with a clear message for a factor
+  outcome in `quad.outcome`. The documentation states that the method
+  assumes a linear model for the outcome, and points to the smcfcs package
+  for binary outcomes (#575).
+* `pool.scalar()` gains the argument `dfcom`, with default `n - k`; set
+  `dfcom = df.residual(fit)` to get the degrees of freedom of `pool()`.
+  The documentation explains that `k` counts all parameters of the model,
+  including the variance parameters of a mixed model (#483).
 
-# mice 3.19.12
+### Bug fixes
 
-- Fixes miscalibrated donor selection in `matchindex()`, the default PMM matching engine since mice 3.11.8 (2020), for predictive mean matching models where many target cases share the same (or nearly the same) predicted value, e.g. an intercept-only imputation model, models with few categorical predictors, or heavily rounded/discretised outcomes. Previously, ties among donors were broken once per call to `matchindex()` (i.e. once per imputed dataset), so all target cases with a tied predicted value drew from the same small, fixed subset of donors within one completed dataset. This inflated the between-imputation variance and produced overly conservative (too wide) confidence intervals under Rubin's rules. Ties are now broken independently for each target case. **Affected versions:** mice 3.11.8 through 3.19.11 (any analysis using the default `method = "pmm"` with tied or near-tied predicted values). To reproduce results computed with an affected version, reinstall that specific version, e.g. `remotes::install_version("mice", version = "3.19.11")`, rather than relying on a compatibility flag in the current version. See [#757](https://github.com/amices/mice/issues/757) and the original discussion in [#236](https://github.com/amices/mice/issues/236).
-- Fixes a bug in `mcar()` (#762,#763)
-- Preserves logical variable classes in `complete()` (#764,#765). Thanks @dajiaohuang
-- Fixes math rendering in the documentation and the link to the `mcar()` reference (#769). Thanks @saikrishna488
-
-# mice 3.19.11
-
-- Fixes test failures on CRAN's MKL check ("Objects equal but not identical"
-  in `MICE-INITIALIZE-011`). MKL is not bitwise reproducible, so two separate
-  `mice()` runs with the same seed can differ in the last digits. Tests that
-  compare imputations across separate runs now use `expect_equal()` instead of
-  `expect_identical()`. No user-facing behavior changes.
-
-# mice 3.19.10
-
-- **Breaking change:** Confidence interval columns from `summary(pool(fit), conf.int = TRUE)`,
-  `summary.mipo()` and `pool.table()` are named `conf.low`/`conf.high` (broom convention)
-  instead of the raw `confint()`-style `2.5 %`/`97.5 %` labels. Code that indexes these
-  columns by name should be updated accordingly.
-- Fixes `barnard.rubin()` silently returning only the first element when called
-  with vector `b` and `dfcom = Inf`. The infinite-`dfcom` branch used a scalar
-  `if`, so only the length-1 result was returned instead of a vector matching
-  `b`. Now vectorised with `ifelse()`, consistent with the finite-`dfcom` case.
-- Cleans up the testthat suite: restores or removes commented-out tests,
-  replaces deprecated `context()`/`expect_is()` calls, guards optional-package
-  tests with `skip_if_not_installed()`, and fixes a handful of latent test bugs
-  (a `set.seed <- 818` typo that silently disabled seeding, and a tautological
-  assertion in `test-blocks.R`). No user-facing behavior changes.
-- Adds a stable `<FUNCTION>-<NNN>` ID (e.g. `BARNARD-RUBIN-001`) to every
-  `test_that()` label in the testthat suite, derived from the test file name
-  and assigned in file order. These IDs let this R suite be compared directly
-  against other implementations that share the same scheme,
-  so equivalent test cases are greppable across languages instead of relying
-  on manual cross-referencing. No user-facing behavior changes.
-
-# mice 3.19.9
-
-- Adds `mice.impute.svm()` as a binary variables imputation technique for high 
-  dimensional data based on proper multiple imputation using Support Vector 
-  Machines combined with bootstrapping. Solves (#751) with (#752). Thanks @mtakahashi123
-
-# mice 3.19.8
-
-- Implements new behavior in `mice.mids() that inherits the imputation methods from the trained imputation model rather than re-initializing methods anew. This gives consistent behavior between train and deployment imputation models ([#753](https://github.com/amices/mice/issues/753))
-- Fixes `Error in s$it : $ operator is invalid for atomic vectors` when the data or global environment contains a variable named `state`. The internal logging object is renamed from `state` to `.mice.state` to avoid name collisions (#527). **Breaking change for extension packages:** custom `mice.impute.*` functions that call the internal `mice:::updateLog()` must ensure `.mice.state` is visible in the call stack (it is, when called from within `mice()`). Direct calls to `mice:::updateLog()` outside of the `mice()` Gibbs sampler will fail to find the logging state.
-- Fixes `Error in apply(draws, 2, sum) : dim(X) must have a positive length` in `mice.impute.polr()`, `mice.impute.lda()` and `mice.impute.polyreg()` occuring when only one missing value was present (#684).
-- Fixes `Error in colMeans(as.matrix(imp[[j]]))` crash when data contains character variables. The chain statistics loop now skips character columns, consistent with the existing factor handling (#601)
-
-# mice 3.19.7
-
-- Fixes duplicate CI columns in `summary.mipo()` (#719)
-- Adds `random.effects` argument to `mice.impute.2l.bin()` with options `"laplace"` (default), `"eb"`, and `"marginal"`, implementing the FCS-GLM distinction between sporadic and systematic missingness as described in Audigier et al. (2018). Also vectorises the imputation loop (#686)
-- Adds vignette `random-effects-2l-bin` discussing the three random effects strategies for two-level binary imputation
-
-# mice 3.19.6 
-
-- Fixes `knitr::kable()` and `as.data.frame()` on mipo objects ([#733](https://github.com/amices/mice/issues/733)), The `mipo` class inherited from `data.frame` but is structurally a list, causing `as.data.frame()` to return 0 rows and breaking `knitr::kable()` and `rmarkdown::paged_table()`. Remove the spurious `data.frame` inheritance and add an `as.data.frame.mipo()` method that returns `summary()`.
-
-# mice 3.19.5
-
-- Fixes `mice.impute.midastouch()` producing "invalid factor level" warnings when imputing factors with non-default levels (e.g. `0/1` or labelled factors). The function converted `y` to numeric for internal calculations but returned integer codes instead of the original factor values, causing assignment failures in the completed data. Fix: preserve the original `y` and return from it (#738)
-- Adds an early warning in `mice()` when the data contain `POSIXct` or `POSIXlt` date-time columns. Such variables are stored as large numbers (~1e9–1e10) that can make the predictor matrix near-singular in norm-based methods, causing an opaque `solve()` crash. The warning names the offending columns and suggests converting them to `Date` or a standardised numeric before imputing (#746)
-- Improves the error message in `estimice()` when the ridge-penalised `solve()` also fails. Previously this crashed silently; it now stops with a message explaining that extreme predictor scales (e.g. POSIX date-time columns) are the likely cause and suggests standardising or removing such variables (#746)
-
-# mice 3.19.4
-
-- Fixes `pool()` returning `dfcom = 1` for `clmm` models from the `ordinal` package, which caused incorrect degrees of freedom, p-values and confidence intervals. Root cause: `clmm` returns empty vectors from both `stats::df.residual()` and `stats::residuals()`, so `get.dfcom()` computed `nobs = 0` and silently floored `dfcom` to 1. Fix: use `stats::nobs()` as the primary fallback, consistent with broom conventions (#748)
-
-# mice 3.19.3
-
-- Adds support for `options(mice.printFlag = FALSE)`
-
-# mice 3.19.2
-
-- Reformats .R source files using the opiniated Air formatter to improve clarity and consistency ([#721](https://github.com/amices/mice/issues/721))
-
-# mice 3.19.1
-
-- Fixes bug `ampute(run = FALSE)` (#732)
-- Updates bibliography entries
+* Fixes a bug where an argument in `...` that partially matched an
+  argument of the internal sampler shifted the positional arguments, so
+  that the value of `printFlag` reached the imputation methods. This
+  silently changed imputations, e.g. `rf` used one tree instead of
+  `ntree`, in particular with `futuremice(..., print = FALSE)`.
+* Fixes `pool()` returning `dfcom = 1` for `clmm` models from `ordinal`,
+  which gave wrong degrees of freedom, p-values and confidence intervals
+  (#748).
+* Fixes `barnard.rubin()` returning only the first element for vector `b`
+  and `dfcom = Inf`.
+* Fixes "invalid factor level" warnings in `mice.impute.midastouch()` for
+  factors with non-default levels (#738).
+* Fixes `dim(X) must have a positive length` in `mice.impute.polr()`,
+  `mice.impute.lda()` and `mice.impute.polyreg()` with one missing value
+  (#684).
+* Fixes `$ operator is invalid for atomic vectors` when the data or the
+  global environment contains a variable named `state` (#527).
+* Fixes a crash in the chain statistics when the data contain character
+  variables (#601).
+* Preserves logical variables in `complete()` (#764, #765). Thanks
+  @dajiaohuang
+* Fixes a bug in `mcar()` (#762, #763).
+* Fixes `ampute(run = FALSE)` (#732).
+* Fixes `2l.lmer` and `2l.bin` when `mice()` gets extra arguments for
+  other methods, such as a global `ridge`. These reached `lme4::lmer()` and
+  `lme4::glmer()`, which stopped, so the imputations stayed at their
+  starting values. Imputations change for users who combined these methods
+  with extra arguments. Thanks @acpuchades (#792).
+* Fixes the error "Target variables do not contain any missing data" of
+  `jomoImpute` and `panImpute` for a block with one variable that has the
+  name of that variable (#379).
+* Fixes `D3()` for weighted gaussian `glm` models, which counted the
+  weights twice in the residual variance. Thanks @bitowaqr (#783, #784).
+* Fixes crashes of `2l.norm` and `2l.lmer` on rows with a missing cluster
+  variable; they now skip these rows, as `2l.pan` and `2l.bin` did (#657).
+* Fixes the draws of `polyreg`, `polr` and `lda`, and random slopes in
+  `2l.bin()`, in the development versions. mice 3.19.0 is not affected.
+  Thanks @bitowaqr (#779, #780, #781, #782).
 
 # mice 3.19.0
 

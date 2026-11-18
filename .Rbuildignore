@@ -10,7 +10,8 @@ cran-comments.md
 cran-comments.Rmd
 changes_mice*
 ^data-raw$
-.png
+^[^/]*\.png$
+^man/figures/MICE_sticker_SMALL\.png$
 ^script$
 ^CODE_OF_CONDUCT*
 ^mice\.Rproj$
