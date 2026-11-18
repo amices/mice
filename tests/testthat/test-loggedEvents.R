@@ -9,3 +9,12 @@ test_that("LOGGEDEVENTS-001: loggedEvents is NULL", {
   expect_null(imp1$loggedEvents)
   expect_type(imp2$loggedEvents, "list")
 })
+
+test_that("LOGGEDEVENTS-002: the ridge penalty entry is one line (#669)", {
+  imp <- suppressWarnings(
+    mice(boys[boys$gen != "G5", ], m = 1, maxit = 1, print = FALSE, eps = 0)
+  )
+  out <- imp$loggedEvents$out
+  expect_true(any(grepl("ridge penalty applied", out)))
+  expect_false(any(grepl("\n", out, fixed = TRUE)))
+})

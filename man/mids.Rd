@@ -322,6 +322,9 @@ During iteration, the program does the following actions:
 (for categorical data, a 'variable' corresponds to a dummy variable)
 \item  Proportional odds regression imputation that does not converge
 and is replaced by \code{polyreg}.
+\item A ridge penalty is added because the predictors are (nearly)
+multi-collinear, so that the imputation model can be estimated. See
+\code{\link{estimice}} for common causes.
 }
 
 Explanation of elements in \code{loggedEvents}:

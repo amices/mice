@@ -43,7 +43,11 @@ crossproduct to allow for proper calculation of the inverse.
 \note{
 This functions adds a star to variable names in the mice iteration
 history to signal that a ridge penalty was added. In that case, it
-also adds an entry to \code{loggedEvents}.
+also adds the entry "ridge penalty applied: predictors (nearly)
+multi-collinear" to \code{loggedEvents}. The results can then be
+unstable. Common causes are duplicated variables, variables that are
+linear transformations of each other, and factors with a level for
+(nearly) every respondent, such as names.
 }
 \author{
 Gerko Vink, 2018

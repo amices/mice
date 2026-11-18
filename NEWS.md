@@ -1,3 +1,11 @@
+# mice 3.19.dev
+
+- The entry in `loggedEvents` that signals a ridge penalty for
+  (nearly) multi-collinear predictors is now one short line, "ridge penalty
+  applied: predictors (nearly) multi-collinear". The old message contained
+  line breaks, which `loggedEvents` printed as `\n`. The explanation of
+  the causes moved to the documentation of `estimice()` and `mids` (#669).
+
 # mice 3.19.20
 
 - `quickpred()` now selects predictors for variables without missing data
