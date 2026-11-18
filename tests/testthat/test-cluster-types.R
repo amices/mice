@@ -2,7 +2,7 @@ d0 <- brandsma[1:400, c("sch", "lpo", "iqv")]
 d0$iqv[is.na(d0$iqv)] <- mean(d0$iqv, na.rm = TRUE)
 d0$sch <- as.integer(factor(d0$sch))
 pred <- make.predictorMatrix(d0)
-pred[, ] <- 0
+pred[,] <- 0
 pred["lpo", c("sch", "iqv")] <- c(-2, 1)
 
 impute <- function(data, method, ...) {
@@ -42,7 +42,7 @@ test_that("CLUSTER-TYPES-003: 2l.bin accepts a factor cluster", {
   d$b <- factor(as.integer(d$lpo > median(d$lpo, na.rm = TRUE)))
   d$lpo <- NULL
   p <- make.predictorMatrix(d)
-  p[, ] <- 0
+  p[,] <- 0
   p["b", c("sch", "iqv")] <- c(-2, 1)
   imp <- mice(
     d,
