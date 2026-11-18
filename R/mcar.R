@@ -20,7 +20,7 @@
 #' [set.seed()]) to minimize Monte Carlo error and ensure reproducibility.
 #' @param use_chisq Atomic integer, indicating the minimum number of cases
 #' within a group *k* that triggers the use of asymptotic Chi-square
-#' distribution instead of the emprical distribution in the Neyman uniformity
+#' distribution instead of the empirical distribution in the Neyman uniformity
 #' test, which is performed as part of Hawkins' test.
 #' @param alpha Atomic numeric, indicating the significance level of tests.
 #' @details Three types of missingness have been distinguished in the literature
@@ -34,7 +34,7 @@
 #' Jamshidian and Jalal's non-parametric MCAR test assumes that the missing data
 #' are either MCAR or MAR, and tests whether the missingness is independent of
 #' the observed values. If so, the covariance matrices of the imputed data will
-#' be equal accross groups with different patterns of missingness. This test
+#' be equal across groups with different patterns of missingness. This test
 #' consists of the following procedure:
 #' \enumerate{
 #'   \item Data are imputed.
@@ -61,7 +61,7 @@
 #' MCAR from MNAR, so a non-significant result does not rule out MNAR.
 #'
 #' This is a re-implementation of the function `TestMCARNormality`, which was
-#' originally published in the R-packgage `MissMech`, which has been removed
+#' originally published in the R package `MissMech`, which has been removed
 #' from CRAN. This new implementation is faster, as its backend is written in
 #' C++. It also enhances the functionality of the original:
 #' \itemize{

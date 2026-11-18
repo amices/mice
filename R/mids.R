@@ -49,7 +49,7 @@
 #'    \item{\code{predictorMatrix}:}{A numerical matrix of containing
 #'    integers specifying the predictor set.}
 #'    \item{\code{visitSequence}:}{A vector of variable and block names that
-#'     specifies how variables and blocks are visited in one iteration throuh
+#'     specifies how variables and blocks are visited in one iteration through
 #'     the data.}
 #'    \item{\code{formulas}:}{A named list of formula's, or expressions that
 #'    can be converted into formula's by \code{as.formula}. List elements
@@ -226,7 +226,7 @@ mids <- function(
 #' Plot the trace lines of the MICE algorithm
 #'
 #' @section Plot:
-#' The \code{plot()} metho plots the trace lines of the MICE algorithm.
+#' The \code{plot()} method plots the trace lines of the MICE algorithm.
 #' The \code{plot} method for a \code{mids} object plots the mean imputed
 #' value per imputation and the mean standard deviation of the imputed
 #' values against the iteration number for each of the $m$ replications.

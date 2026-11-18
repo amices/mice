@@ -21,7 +21,7 @@ pool.table(
 in tidy format (see details).}
 
 \item{type}{A string, either \code{"minimal"}, \code{"tests"} or \code{"all"}.
-Use minimal to mimick the output of \code{summary(pool(fit))}. The default
+Use minimal to mimic the output of \code{summary(pool(fit))}. The default
 is \code{"all"}.}
 
 \item{conf.int}{Logical indicating whether to include

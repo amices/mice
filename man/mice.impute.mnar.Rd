@@ -73,7 +73,7 @@ For example, the high-level call might like something like
 blots = list(chl = list(ums = "-3+2*bmi")))}.
 
 The \code{ums} parameter is required, and might look like this:
-\code{"-4+1*Y"}. The \code{ums} specifcation must have the
+\code{"-4+1*Y"}. The \code{ums} specification must have the
 following characteristics:
 \enumerate{
 \item{A single term corresponding to the intercept (constant) term,

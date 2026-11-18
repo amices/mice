@@ -12,7 +12,7 @@ broom::glance
 #' @param ... extra arguments (not used)
 #' @export
 #' @keywords internal
-#' @return A dataframe withh these columns:
+#' @return A dataframe with these columns:
 #' \itemize{
 #'      \item term
 #'      \item estimate

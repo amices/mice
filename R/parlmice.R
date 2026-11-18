@@ -26,7 +26,7 @@
 #' @aliases parlmice
 #' @param data A data frame or matrix containing the incomplete data. Similar to
 #' the first argument of \code{\link{mice}}.
-#' @param m The number of desired imputated datasets. By default $m=5$ as with \code{mice}
+#' @param m The number of desired imputed datasets. By default $m=5$ as with \code{mice}
 #' @param seed A scalar to be used as the seed value for the mice algorithm within
 #' each parallel stream. Please note that the imputations will be the same for all
 #' streams and, hence, this should be used if and only if \code{n.core = 1} and

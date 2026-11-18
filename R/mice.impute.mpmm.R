@@ -12,7 +12,7 @@
 #' @details
 #' This function implements the predictive mean matching and applies canonical
 #' regression analysis to select donors fora set of missing variables. In general,
-#' canonical regressionanalysis looks for a linear combination of covariates that
+#' canonical regression analysis looks for a linear combination of covariates that
 #' predicts a linear combination of outcomes (a set of missing variables)
 #' optimally in a least-square sense (Israels, 1987). The predicted
 #' value of the linear combination of the set of missing variables

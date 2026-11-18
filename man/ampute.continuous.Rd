@@ -7,11 +7,11 @@
 ampute.continuous(P, scores, prop, type)
 }
 \arguments{
-\item{P}{A vector containing the pattern numbers of the cases's candidacies.
+\item{P}{A vector containing the pattern numbers of the cases' candidacies.
 For each case, a value between 1 and #patterns is given. For example, a
 case with value 2 is candidate for missing data pattern 2.}
 
-\item{scores}{A list containing vectors with the candidates's weighted sum scores,
+\item{scores}{A list containing vectors with the candidates' weighted sum scores,
 the result of an underlying function in \code{\link{ampute}}.}
 
 \item{prop}{A scalar specifying the proportion of missingness. Should be a value

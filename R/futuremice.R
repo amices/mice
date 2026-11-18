@@ -34,7 +34,7 @@
 #' @aliases futuremice
 #' @param data A data frame or matrix containing the incomplete data. Similar to
 #' the first argument of \code{\link{mice}}.
-#' @param m The number of desired imputated datasets. By default $m=5$ as with
+#' @param m The number of desired imputed datasets. By default $m=5$ as with
 #' \code{mice}
 #' @param parallelseed A scalar to be used to obtain reproducible results over
 #' the futures. The default \code{parallelseed = NA} will result in a seed value

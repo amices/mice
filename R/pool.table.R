@@ -18,7 +18,7 @@
 #' other calculated pooling statistics. The default \code{t} calculation
 #' has the form \code{".data$ubar + (1 + 1 / .data$m) * .data$b"}.
 #' @param type A string, either \code{"minimal"}, \code{"tests"} or \code{"all"}.
-#' Use minimal to mimick the output of \code{summary(pool(fit))}. The default
+#' Use minimal to mimic the output of \code{summary(pool(fit))}. The default
 #' is \code{"all"}.
 #' @param conf.int Logical indicating whether to include
 #' a confidence interval.

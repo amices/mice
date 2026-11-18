@@ -19,7 +19,7 @@ parlmice(
 \item{data}{A data frame or matrix containing the incomplete data. Similar to
 the first argument of \code{\link{mice}}.}
 
-\item{m}{The number of desired imputated datasets. By default $m=5$ as with \code{mice}}
+\item{m}{The number of desired imputed datasets. By default $m=5$ as with \code{mice}}
 
 \item{seed}{A scalar to be used as the seed value for the mice algorithm within
 each parallel stream. Please note that the imputations will be the same for all

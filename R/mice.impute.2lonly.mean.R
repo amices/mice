@@ -25,7 +25,7 @@
 #' missing \code{y} by filling in the class mean.
 #'
 #' For factor variables, \code{mice.impute.2lonly.mean()} imputes the
-#' most frequently occuring category within the class.
+#' most frequently occurring category within the class.
 #'
 #' If there are no observed \code{y} in the class, all entries of the
 #' class are set to \code{NA}. Note that this may produce problems

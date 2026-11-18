@@ -13,7 +13,7 @@
 #'   \describe{
 #'   \item{\code{ID}}{a numeric vector giving the ID of patient}
 #'   \item{\code{outcome}}{a numeric vector giving the response
-#'   (0=none or mild seperation, 1=moderate or severe)}
+#'   (0=none or mild separation, 1=moderate or severe)}
 #'   \item{\code{treatment}}{a numeric vector giving the treatment group}
 #'   \item{\code{month}}{a numeric vector giving the time of the visit
 #'   (not exactly monthly intervals hence not round numbers)}

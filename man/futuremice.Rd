@@ -21,7 +21,7 @@ futuremice(
 \item{data}{A data frame or matrix containing the incomplete data. Similar to
 the first argument of \code{\link{mice}}.}
 
-\item{m}{The number of desired imputated datasets. By default $m=5$ as with
+\item{m}{The number of desired imputed datasets. By default $m=5$ as with
 \code{mice}}
 
 \item{parallelseed}{A scalar to be used to obtain reproducible results over

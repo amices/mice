@@ -16,7 +16,7 @@
 \item{...}{extra arguments (not used)}
 }
 \value{
-A dataframe withh these columns:
+A dataframe with these columns:
 \itemize{
 \item term
 \item estimate
