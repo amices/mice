@@ -52,6 +52,7 @@ reference:
   - name.blocks
   - name.formulas
   - quickpred
+  - ifdo
   - squeeze
 - title: Plots comparing observed to imputed/amputed data
   desc: |
