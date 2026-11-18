@@ -53,10 +53,15 @@ Status: OK
 
 ### win-builder
 
-```{r eval=FALSE}
-devtools::check_win_devel()
+Uploaded through <https://win-builder.r-project.org/upload.aspx> on
+18 November 2026:
 
-Status: TODO
+```{r eval=FALSE}
+R Under development (unstable) (2026-11-17 r90926 ucrt)
+Status: OK
+
+R version 4.6.2 (2026-10-29 ucrt)
+Status: OK
 ```
 
 
