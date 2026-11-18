@@ -5,6 +5,13 @@ template:
   math-rendering: mathjax
   params:
     bootswatch: lumen
+authors:
+  footer:
+    roles: [cre]
+    text: "Maintained by"
+  sidebar:
+    roles: [cre, aut]
+    after: "With many [contributors](authors.html)."
 reference:
 - title: Main imputation functions
   desc: |
