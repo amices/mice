@@ -1,16 +1,3 @@
-# brms (2.23.0)
-
-* GitHub: <https://github.com/paul-buerkner/brms>
-* Email: <mailto:paul.buerkner@gmail.com>
-* GitHub mirror: <https://github.com/cran/brms>
-
-Run `revdepcheck::revdep_details(, "brms")` for more info
-
-## In both
-
-*   R CMD check timed out
-
-
 # dynr (0.1.16-114)
 
 * GitHub: <https://github.com/mhunter1/dynr>
@@ -231,61 +218,6 @@ Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
 Execution halted
 ERROR: configuration failed for package ‘rmsb’
 * removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/rmsb/old/rmsb.Rcheck/rmsb’
-
-
-```
-# UKBAnalytica ()
-
-* GitHub: <https://github.com/amices/mice>
-* Email: <mailto:stef.vanbuuren@tno.nl>
-
-Run `revdepcheck::revdep_details(, "UKBAnalytica")` for more info
-
-## Error before installation
-
-### Devel
-
-```
-
-  There are binary versions available but the source versions are later:
-           binary source needs_compilation
-enrichplot 1.32.0 1.32.1             FALSE
-tidytree    0.4.8  0.4.9             FALSE
-
-
-
-installing the source packages ‘enrichplot’, ‘GO.db’, ‘org.Hs.eg.db’, ‘tidytree’
-
-Error in (function (libdir, packages, quiet, repos)  : 
-  all(packages %in% rownames(installed.packages(libdir[1]))) is not TRUE
-In addition: Warning messages:
-1: In utils::install.packages(pkgs = pkgs, lib = lib, repos = myrepos,  :
-  installation of package ‘enrichplot’ had non-zero exit status
-2: In utils::install.packages(pkgs = pkgs, lib = lib, repos = myrepos,  :
-  installation of package ‘enrichplot’ had non-zero exit status
-
-
-```
-### CRAN
-
-```
-
-  There are binary versions available but the source versions are later:
-           binary source needs_compilation
-enrichplot 1.32.0 1.32.1             FALSE
-tidytree    0.4.8  0.4.9             FALSE
-
-
-
-installing the source packages ‘enrichplot’, ‘GO.db’, ‘org.Hs.eg.db’, ‘tidytree’
-
-Error in (function (libdir, packages, quiet, repos)  : 
-  all(packages %in% rownames(installed.packages(libdir[1]))) is not TRUE
-In addition: Warning messages:
-1: In utils::install.packages(pkgs = pkgs, lib = lib, repos = myrepos,  :
-  installation of package ‘enrichplot’ had non-zero exit status
-2: In utils::install.packages(pkgs = pkgs, lib = lib, repos = myrepos,  :
-  installation of package ‘enrichplot’ had non-zero exit status
 
 
 ```

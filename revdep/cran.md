@@ -1,9 +1,9 @@
 ## revdepcheck results
 
-We checked 199 reverse dependencies (191 from CRAN + 8 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 206 reverse dependencies (199 from CRAN + 7 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 5 new problems
- * We failed to check 5 packages
+ * We saw 4 new problems
+ * We failed to check 4 packages
 
 Issues with CRAN packages are summarised below.
 
@@ -23,12 +23,8 @@ Issues with CRAN packages are summarised below.
 * parameters
   checking tests ...
 
-* RSquaredMI
-  checking tests ...
-
 ### Failed to check
 
-* brms   (NA)
 * dynr   (NA)
 * idem   (NA)
 * pguIMP (NA)

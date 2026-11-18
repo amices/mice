@@ -3,32 +3,45 @@ cran-comments
 
 ## Release summary
 
-`mice 3.19.10` adds new features, bug fixes, and enhancements. See <https://github.com/amices/mice/blob/master/NEWS.md>
+`mice 3.20.0` is a major update of `mice 3.19.0`. It adds parallel
+imputation through the `future` framework, progress reporting, new
+imputation and pooling options, and many bug fixes. It also moves
+`glmnet` and `mitml` from Imports to Suggests, and requires R \>= 4.1.0.
+
+Some changes are intended and change results or output for existing
+code, most notably a fix of the matching of tied predicted values in
+predictive mean matching (#757), and the broom-style names
+`conf.low`/`conf.high` of the confidence interval columns (#719). These
+affect a few reverse dependencies, see below.
+
+See <https://github.com/amices/mice/blob/master/NEWS.md>
 
 ## Test environments
 
 ``` r
-packageVersion("mice")
+read.dcf("DESCRIPTION", fields = "Version")[[1]]
 ```
 
-    ## [1] '3.19.10'
+    ## [1] "3.20.0"
 
 ``` r
 R.Version()$version.string
 ```
 
-    ## [1] "R version 4.5.2 (2025-10-31)"
+    ## [1] "R version 4.6.2 (2026-10-29)"
 
 ## Local checks
 
 NOTE: Run in OSX terminal, not in Rstudio terminal.
 
 ``` bash
-env _R_CHECK_DEPENDS_ONLY_=true 
-R CMD check mice_3.19.10.tar.gz
+R CMD build mice
+R CMD check --as-cran mice_3.20.0.tar.gz
 
 Status: OK
 ```
+
+On R 4.6.2 (2026-10-29), platform aarch64-apple-darwin23 (macOS).
 
 ``` r
 devtools::check(env_vars = c('_R_CHECK_DEPENDS_ONLY_' = "true"))
@@ -43,7 +56,7 @@ Status: OK
 ``` r
 devtools::check_win_devel()
 
-Upload error: timeout
+Status: TODO
 ```
 
 ### Platform checks
@@ -55,10 +68,10 @@ macos-latest (release)
 windows-latest (release)
 ubuntu-latest (devel)
 ubuntu-latest (release)
-ubuntu-latest (oldrel)
+ubuntu-latest (oldrel-1)
 ```
 
-Status: OK
+Status: OK (GitHub Actions, 18 November 2026)
 
 For details: <https://github.com/amices/mice/actions>
 
@@ -71,7 +84,7 @@ Note: Inactivate `credentials::set_github_pat()`
 ``` r
 library(revdepcheck)
 revdep_reset()
-revdep_check(pkg = ".", num_workers = 12, quiet = FALSE)
+revdep_check(pkg = ".", num_workers = 10, quiet = FALSE)
 ```
 
 ``` r
@@ -80,11 +93,35 @@ revdep_check(pkg = ".", num_workers = 12, quiet = FALSE)
 
 ## revdepcheck results
 
-We checked 177 reverse dependencies (171 from CRAN + 6 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 206 reverse dependencies (199 from CRAN + 7 from
+Bioconductor), comparing R CMD check results across CRAN and dev
+versions of this package.
 
--   We saw 5 new problems
--   We failed to check 4 packages
+- We saw 4 new problems in CRAN packages, and 1 in a Bioconductor
+  package
+- We failed to check 4 packages
 
-Of the 5 new problems, only `autoReg` is caused by this release: it reads the confidence interval columns from `summary(pool(fit), conf.int = TRUE)` by their old `confint()`-style names (`` `2.5 %` ``/`` `97.5 %` ``), which this version renames to `conf.low`/`conf.high` (broom convention). We have contacted the maintainer about updating `autoReg` accordingly. The remaining new problems (`bipd`, `broom.mixed`, `pminternal`, `pre`) are unrelated environment flakiness (segfaults also seen as "newly fixed" in the same run, or local port conflicts from parallel checking) and not caused by changes in this package.
+All 5 new problems result from intended changes in this release. We
+notified the maintainers of these packages by email on 13 November 2026.
+`RSquaredMI`, which had the same problem, has since been updated on CRAN
+and now passes.
+
+- `autoReg` reads the confidence interval columns from
+  `summary(pool(fit), conf.int = TRUE)` by their old `confint()`-style
+  names (`` `2.5 %` ``/`` `97.5 %` ``), which this release renames to
+  `conf.low`/`conf.high` (broom convention, \#719).
+- `basecamb`, `parameters` and `RNAseqCovarImpute` (Bioconductor) have
+  tests that compare against exact numbers from a seeded `mice()` run
+  with the default method `pmm`. This release fixes a bug in the
+  matching of tied predicted values (#757), so the imputations for a
+  given seed change. The packages themselves are not at fault; the
+  expected values need updating.
+- `mfrmr` has a test that injects the value `2` into the imputations of
+  a logical variable and expects an error. This release keeps logical
+  variables logical in `complete()` (#764), so no error is raised.
+
+The 4 packages we failed to check (`dynr`, `idem`, `pguIMP`, `rmsb`)
+could not be installed locally because of configure, Stan and rJava
+problems, unrelated to mice.
 
 See <https://github.com/amices/mice/tree/master/revdep> for details.

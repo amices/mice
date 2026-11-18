@@ -275,36 +275,3 @@ Run `revdepcheck::revdep_details(, "RNAseqCovarImpute")` for more info
      Extensions’ manual.
      ```
 
-# RSquaredMI (0.2.0)
-
-* GitHub: <https://github.com/karchjd/RsquaredMI>
-* Email: <mailto:j.d.karch@fsw.leidenuniv.nl>
-* GitHub mirror: <https://github.com/cran/RSquaredMI>
-
-Run `revdepcheck::revdep_details(, "RSquaredMI")` for more info
-
-## Newly broken
-
-*   checking tests ...
-     ```
-       Running ‘testthat.R’
-      ERROR
-     Running the tests in ‘tests/testthat.R’ failed.
-     Last 13 lines of output:
-       Expected `res` to equal `exp`.
-       Differences:
-         `actual`: 0.48 0.47 0.50 0.48 0.46 0.47 0.48 0.48 0.48
-       `expected`: 0.36 0.36 0.39 0.37 0.34 0.36 0.36 0.36 0.36
-       
-       Backtrace:
-           ▆
-        1. └─RSquaredMI (local) check_alternatives(res) at test-RsquaredMI.R:123:3
-        2.   └─RSquaredMI (local) check_numbers(...) at test-RsquaredMI.R:29:3
-        3.     └─testthat::expect_equal(res, exp, ignore_attr = TRUE) at test-RsquaredMI.R:2:3
-       
-       [ FAIL 26 | WARN 0 | SKIP 0 | PASS 4 ]
-       Error:
-       ! Test failures.
-       Execution halted
-     ```
-
