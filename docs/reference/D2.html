@@ -15,7 +15,7 @@ The method is less powerful than the D1- and D3-statistics."><meta property="og:
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.19</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.20</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,7 +56,7 @@ The method is less powerful than the D1- and D3-statistics.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">D2</span><span class="op">(</span><span class="va">fit1</span>, fit0 <span class="op">=</span> <span class="cn">NULL</span>, use <span class="op">=</span> <span class="st">"wald"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">D2</span><span class="op">(</span><span class="va">fit1</span>, fit0 <span class="op">=</span> <span class="cn">NULL</span>, use <span class="op">=</span> <span class="st">"wald"</span>, df <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -76,7 +76,29 @@ model <code>fit0 = NULL</code> compares <code>fit1</code> to the intercept-only 
 <dt id="arg-use">use<a class="anchor" aria-label="anchor" href="#arg-use"></a></dt>
 <dd><p>A character string denoting Wald- or likelihood-based based tests. Can be either <code>"wald"</code> or <code>"likelihood"</code>. Only used if <code>method = "D2"</code>.</p></dd>
 
+
+<dt id="arg-df">df<a class="anchor" aria-label="anchor" href="#arg-df"></a></dt>
+<dd><p>The degrees of freedom of the test, used only if <code>fit1</code>
+holds <code>htest</code> results that have no chi-squared statistic, such as
+<code><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">fisher.test()</a></code>. See Details.</p></dd>
+
 </dl></div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>If <code>fit1</code> holds the results of a test of class <code>htest</code>, as
+produced by e.g. <code>with(imp, chisq.test(...))</code> or
+<code>with(imp, fisher.test(...))</code>, <code>D2()</code> pools the test results
+directly with the formulas of Li et al. (1991). There is no null model,
+so <code>fit0</code> is ignored.</p><ul><li><p>For tests with a chi-squared statistic, such as
+<code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test()</a></code>, <code><a href="https://rdrr.io/r/stats/mcnemar.test.html" class="external-link">mcnemar.test()</a></code>, <code><a href="https://rdrr.io/r/stats/mantelhaen.test.html" class="external-link">mantelhaen.test()</a></code>,
+<code><a href="https://rdrr.io/r/stats/kruskal.test.html" class="external-link">kruskal.test()</a></code> and <code><a href="https://rdrr.io/r/stats/friedman.test.html" class="external-link">friedman.test()</a></code>, <code>D2()</code> pools
+the statistics, with their degrees of freedom.</p></li>
+<li><p>For other tests, such as <code><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">fisher.test()</a></code>, <code>D2()</code>
+converts each p-value into a chi-squared statistic with <code>df</code>
+degrees of freedom, and pools these. The default <code>df = 1</code> fits a
+2 x 2 table. For an r x c table, set <code>df = (r - 1) * (c - 1)</code>.
+The conversion of the p-value of an exact test is an approximation.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>Warning: <code>D2()</code> assumes that the order of the variables is the
@@ -111,6 +133,22 @@ Significance Levels from Repeated p-Values with Multiply-Imputed Data.
 <span class="r-in"><span><span class="va">fit0</span> <span class="op">&lt;-</span> <span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">gen</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">gen</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">~</span> <span class="va">hgt</span> <span class="op">+</span> <span class="va">hc</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">D2</span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit0</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Pool chi-squared and Fisher tests of a 2 x 2 table</span></span></span>
+<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">nhanes2</span></span></span>
+<span class="r-in"><span><span class="va">data</span><span class="op">$</span><span class="va">chl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">chl</span>, breaks <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">data</span>, seed <span class="op">=</span> <span class="fl">1</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">D2</span><span class="op">(</span><span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span>, correct <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Chi-squared approximation may be incorrect</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Chi-squared approximation may be incorrect</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Chi-squared approximation may be incorrect</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Chi-squared approximation may be incorrect</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Chi-squared approximation may be incorrect</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    test statistic df1      df2 dfcom   p.value       riv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1 ~~ 2 0.6910819   1 17.76031    NA 0.4168337 0.9032206</span>
+<span class="r-in"><span><span class="fu">D2</span><span class="op">(</span><span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">fisher.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    test statistic df1      df2 dfcom   p.value      riv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1 ~~ 2 0.2976061   1 15.09165    NA 0.5933594 1.061122</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

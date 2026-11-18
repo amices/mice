@@ -26,6 +26,15 @@ predictor variables on the columns. An entry of \code{0} means that
 the column variable is NOT used to impute the row variable or block.
 A nonzero value indicates that it is used.
 }
+\details{
+Rows of variables without missing data also get predictors. These rows
+are not used by default, because there is nothing to impute, as the
+empty method from \code{\link{make.method}()} shows. They are used if
+the \code{where} argument of \code{\link{mice}()} asks to impute
+observed values, e.g. for over-imputation or synthetic data. A row
+without predictors then gives an intercept-only imputation model, which
+\code{mice()} writes to \code{loggedEvents}.
+}
 \examples{
 make.predictorMatrix(nhanes)
 make.predictorMatrix(nhanes, blocks = make.blocks(nhanes, "collect"))

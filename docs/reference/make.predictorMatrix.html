@@ -23,7 +23,7 @@ A nonzero value indicates that it is used."><meta property="og:image" content="h
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.19</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.20</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,6 +92,16 @@ names are copied into the output predictor matrix.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A matrix</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Rows of variables without missing data also get predictors. These rows
+are not used by default, because there is nothing to impute, as the
+empty method from <code><a href="make.method.html">make.method()</a></code> shows. They are used if
+the <code>where</code> argument of <code><a href="mice.html">mice()</a></code> asks to impute
+observed values, e.g. for over-imputation or synthetic data. A row
+without predictors then gives an intercept-only imputation model, which
+<code><a href="mice.html">mice()</a></code> writes to <code>loggedEvents</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

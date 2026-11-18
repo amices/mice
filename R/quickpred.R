@@ -34,6 +34,12 @@
 #' relatively small. Using a square matrix extends the idea to the columns, so
 #' that one can also apply cellwise thresholds.
 #'
+#' Variables without missing data get their predictors in the same way, from
+#' the correlations among the data. Their rows are not used unless the
+#' \code{where} argument of \code{\link{mice}()} asks to impute observed
+#' values. Earlier versions set these rows to zero, so that such variables
+#' were then imputed without any predictor.
+#'
 #' @note \code{quickpred()} uses \code{\link[base]{data.matrix}} to convert
 #' factors to numbers through their internal codes. Especially for unordered
 #' factors the resulting quantification may not make sense.
@@ -137,7 +143,6 @@ quickpred <- function(
 
   # some final processing
   diag(predictorMatrix) <- 0
-  predictorMatrix[colSums(!r) == 0, ] <- 0
 
   predictorMatrix
 }

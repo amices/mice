@@ -74,6 +74,12 @@ variables. Setting a high values for can be useful for auxiliary, less
 important, variables. The set of predictor for those variables can remain
 relatively small. Using a square matrix extends the idea to the columns, so
 that one can also apply cellwise thresholds.
+
+Variables without missing data get their predictors in the same way, from
+the correlations among the data. Their rows are not used unless the
+\code{where} argument of \code{\link{mice}()} asks to impute observed
+values. Earlier versions set these rows to zero, so that such variables
+were then imputed without any predictor.
 }
 \note{
 \code{quickpred()} uses \code{\link[base]{data.matrix}} to convert

@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.19</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.20</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,14 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pool.scalar</span><span class="op">(</span><span class="va">Q</span>, <span class="va">U</span>, n <span class="op">=</span> <span class="cn">Inf</span>, k <span class="op">=</span> <span class="fl">1</span>, rule <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rubin1987"</span>, <span class="st">"reiter2003"</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pool.scalar</span><span class="op">(</span></span>
+<span>  <span class="va">Q</span>,</span>
+<span>  <span class="va">U</span>,</span>
+<span>  n <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>  k <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  rule <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rubin1987"</span>, <span class="st">"reiter2003"</span><span class="op">)</span>,</span>
+<span>  dfcom <span class="op">=</span> <span class="va">n</span> <span class="op">-</span> <span class="va">k</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">pool.scalar.syn</span><span class="op">(</span><span class="va">Q</span>, <span class="va">U</span>, n <span class="op">=</span> <span class="cn">Inf</span>, k <span class="op">=</span> <span class="fl">1</span>, rule <span class="op">=</span> <span class="st">"reiter2003"</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -78,14 +85,25 @@ an infinite sample <code>n = Inf</code> is assumed.</p></dd>
 
 
 <dt id="arg-k">k<a class="anchor" aria-label="anchor" href="#arg-k"></a></dt>
-<dd><p>A number indicating the number of parameters to be estimated.
-By default, <code>k = 1</code> is assumed.</p></dd>
+<dd><p>A number indicating the number of parameters estimated in the
+complete-data model. Use the same <code>k</code> for every coefficient of that
+model, not 1 per coefficient. Count all estimated parameters, including
+the variance parameters of a mixed model, but not the predicted random
+effects. By default, <code>k = 1</code> is assumed.</p></dd>
 
 
 <dt id="arg-rule">rule<a class="anchor" aria-label="anchor" href="#arg-rule"></a></dt>
 <dd><p>A string indicating the pooling rule. Currently supported are
 <code>"rubin1987"</code> (default, for missing data) and <code>"reiter2003"</code>
 (for synthetic data created from a complete data set).</p></dd>
+
+
+<dt id="arg-dfcom">dfcom<a class="anchor" aria-label="anchor" href="#arg-dfcom"></a></dt>
+<dd><p>The residual degrees of freedom of the complete-data
+analysis, used for the Barnard-Rubin adjustment. The default is
+<code>n - k</code>. Set <code>dfcom = df.residual(fit)</code> to use the value that
+<code><a href="pool.html">pool()</a></code> uses for a fitted model <code>fit</code>. Ignored for
+<code>rule = "reiter2003"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -133,6 +151,16 @@ formula (3.1.10) Rubin (1987). (Not defined for synthetic data.)</p></dd>
 computes the total variance over the repeated analyses, and computes the
 relative increase in variance due to missing data or data synthesisation
 and the fraction of missing information.</p>
+<p>The arguments <code>n</code> and <code>k</code> only enter through the complete-data
+degrees of freedom <code>dfcom = n - k</code>, which sets the degrees of freedom
+of the pooled estimate. <code><a href="pool.html">pool()</a></code> takes <code>dfcom</code> from
+<code><a href="https://rdrr.io/r/stats/df.residual.html" class="external-link">df.residual()</a></code> of the fitted model. For <code>lme4</code> models, this
+is the number of observations minus the number of fixed effects,
+variance parameters and the residual standard deviation. The choice of
+<code>k</code> matters little unless <code>n - k</code> is small.</p>
+<p>To pool all coefficients of a model at once, use
+<code><a href="pool.table.html">pool.table()</a></code> on a data frame with the estimates and
+standard errors of each imputed data set.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -238,6 +266,42 @@ Public Use Microdata Sets. <em>Survey Methodology</em>, <b>29</b>, 181-189.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       lambda       fmi</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.08118427 0.1717756</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.37092971 0.5341828</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># same, with the residual degrees of freedom of the fitted model</span></span></span>
+<span class="r-in"><span><span class="fu">pool.scalar</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  Q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1.5457</span>, <span class="op">-</span><span class="fl">1.428</span><span class="op">)</span>, U <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.9723</span><span class="op">^</span><span class="fl">2</span>, <span class="fl">1.041</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  dfcom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/df.residual.html" class="external-link">df.residual</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">analyses</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $m</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $qhat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.5457 -1.4280</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $u</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9453673 1.0836810</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $qbar</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.48685</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ubar</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.014524</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.006926645</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $t</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.024914</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $df</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 20.97025</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $r</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01024122</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fmi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.09272831</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># manual pooling for synthetic data created from complete data</span></span></span>
 <span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="va">cars</span>,</span></span>

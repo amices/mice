@@ -15,7 +15,7 @@ main effect and quadratic effect in the complete-data model."><meta property="og
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.19</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.20</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,9 @@ indicates locations in <code>y</code> for which imputations are created.</p></dd
 <dt id="arg-quad-outcome">quad.outcome<a class="anchor" aria-label="anchor" href="#arg-quad-outcome"></a></dt>
 <dd><p>The name of the outcome in the quadratic analysis as a
 character string. For example, if the substantive model of interest is
-<code>y ~ x + xx</code>, then <code>"y"</code> would be the <code>quad.outcome</code></p></dd>
+<code>y ~ x + xx</code>, then <code>"y"</code> would be the <code>quad.outcome</code>.
+The outcome must be numeric, and must be a predictor of the variable that
+is imputed.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -113,6 +115,12 @@ et al (2012) for more details. The method ensures that 1) the imputed data
 for \(Y\) and \(Y^2\) are mutually consistent, and 2) that provides unbiased
 estimates of the regression weights in a complete-data linear regression that
 use both \(Y\) and \(Y^2\).</p>
+<p>The method assumes a linear regression of the outcome on \(Y\) and
+\(Y^2\). It is not suited for a binary or categorical outcome, for
+example in a logistic regression with a quadratic term, also not if the
+outcome is coded as 0/1. For such models, consider
+substantive-model-compatible imputation, e.g. with the <span class="pkg">smcfcs</span>
+package.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>

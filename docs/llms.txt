@@ -464,6 +464,9 @@ the following set of helpers.
 - [`quickpred()`](https://amices.org/mice/reference/quickpred.md) :
   Quick selection of predictors from the data
 
+- [`ifdo()`](https://amices.org/mice/reference/ifdo.md) : Conditional
+  post-processing of imputations
+
 - [`squeeze()`](https://amices.org/mice/reference/squeeze.md) : Squeeze
   the imputed values to be within specified boundaries.
 

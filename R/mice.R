@@ -573,6 +573,12 @@ mice <- function(
   predictorMatrix <- setup$predictorMatrix
   visitSequence <- setup$visitSequence
   post <- setup$post
+  for (h in no.predictors(method, predictorMatrix, where, blocks, calltype)) {
+    .mice.state$dep <- h
+    .mice.state$meth <- method[[h]]
+    updateLog(out = "no predictors: imputed by an intercept-only model")
+  }
+  .mice.state$dep <- .mice.state$meth <- ""
 
   # initialize imputations
   nmis <- apply(is.na(data), 2, sum)

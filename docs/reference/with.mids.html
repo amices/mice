@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.19</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.20</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,8 +67,11 @@ data set', typically created by a call to function <code><a href="mice.html">mic
 
 
 <dt id="arg-expr">expr<a class="anchor" aria-label="anchor" href="#arg-expr"></a></dt>
-<dd><p>An expression to evaluate for each imputed data set. Formula's
-containing a dot (notation for "all other variables") do not work.</p></dd>
+<dd><p>An expression to evaluate for each imputed data set. A
+formula with a dot (notation for "all other variables"), such as
+<code>glm(hyp ~ ., family = binomial)</code>, works if the formula is written
+in the top-level call, the call has no <code>data</code> argument, and the
+called function has one. See Details.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -78,6 +81,23 @@ containing a dot (notation for "all other variables") do not work.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>An object of S3 class <code><a href="mira.html">mira</a></code></p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p><code>with()</code> evaluates <code>expr</code> with the columns of each completed
+data set as variables, so a model like <code>lm(bmi ~ age)</code> finds its
+variables without a <code>data</code> argument. A dot in a formula, however,
+can only be expanded from a <code>data</code> argument. If the top-level call
+in <code>expr</code> has a formula with a dot, no <code>data</code> argument, and
+calls a function with a <code>data</code> argument, <code>with()</code> adds
+<code>data = .mice.data</code>, where <code>.mice.data</code> is the completed data
+set. The fitted call then shows <code>data = .mice.data</code>. That object
+only exists during <code>with()</code>, so <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code> of such a fit
+outside <code>with()</code> needs a new <code>data</code> argument.</p>
+<p>A dot formula stored in a variable, or a dot formula in a nested call,
+such as <code>summary(lm(bmi ~ .))</code>, is not detected. Write
+<code>data = mget(names(nhanes))</code> (with the name of your data) to pass
+the completed data explicitly in such cases.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
@@ -126,6 +146,9 @@ Statistical Software</em>, <b>45</b>(3), 1-67.
 <span class="r-in"><span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu">with</span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu">with</span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">hyp</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">chl</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fit3</span> <span class="op">&lt;-</span> <span class="fu">with</span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># a dot formula: all other variables as predictors</span></span></span>
+<span class="r-in"><span><span class="va">fit4</span> <span class="op">&lt;-</span> <span class="fu">with</span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

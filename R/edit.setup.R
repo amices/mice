@@ -116,3 +116,28 @@ mice.edit.setup <- function(
   setup$method <- meth
   setup
 }
+
+# Returns the names of the blocks that are imputed from a predictor row
+# without any predictor, e.g. a complete variable with a zero row in
+# predictorMatrix that is imputed because `where` asks for it. Such blocks
+# are imputed by an intercept-only model, which may be intended (#602).
+no.predictors <- function(method, predictorMatrix, where, blocks, calltype) {
+  nimp <- nimp(where, blocks)
+  out <- character(0)
+  for (h in names(blocks)) {
+    if (
+      !isTRUE(nimp[h] > 0) ||
+        is.na(method[h]) ||
+        method[h] == "" ||
+        is.passive(method[h]) ||
+        !identical(unname(calltype[h]), "pred") ||
+        !h %in% rownames(predictorMatrix)
+    ) {
+      next
+    }
+    if (all(predictorMatrix[h, ] == 0)) {
+      out <- c(out, h)
+    }
+  }
+  out
+}
