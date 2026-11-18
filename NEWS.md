@@ -1,4 +1,4 @@
-# mice 3.19.dev
+# mice 3.19.20
 
 - `mice.impute.quadratic()` now stops with a clear message if the outcome
   in `quad.outcome` is a factor, instead of saying that the outcome cannot
