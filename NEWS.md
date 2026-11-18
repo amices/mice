@@ -150,10 +150,10 @@
 * **`remove.lindep()` results change.** Fixes the removal of more than
   one linearly dependent predictor: after the first removal, the
   correlation matrix was not reduced, so the loop could drop an independent
-  predictor and keep a rank-deficient set. The bug dates back to at least
-  2018. Imputations can change for data in which the predictors of a
-  variable have two or more linear dependencies. Thanks @bitowaqr (#785,
-  #786).
+  predictor and keep a rank-deficient set. The bug dates back to at
+  least 2018. Imputations can change for data in which the predictors of
+  a variable have two or more linear dependencies. Thanks @bitowaqr
+  (#785, #786).
 
 * `remove.lindep()` now also removes predictors with a correlation of
   -0.99 or lower with the outcome, as it already did for 0.99 or higher.
@@ -208,8 +208,8 @@
 * `futuremice()` determines the number of cores by
   `parallelly::availableCores(omit = 1, max = m)`, which works on a
   single-core machine, and restores the `future` plan that was active
-  before the call instead of resetting it to `sequential` (#735). Thanks
-  @HenrikBengtsson. Requires `parallelly` 1.45.0 or later.
+  before the call instead of resetting it to `sequential` (#735).
+  Thanks @HenrikBengtsson. Requires `parallelly` 1.45.0 or later.
 * `parlmice()` no longer changes the RNG kind of the session to
   `L'Ecuyer-CMRG`.
 * `mice()` warns when the data contain `POSIXct` or `POSIXlt` columns,
