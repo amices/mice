@@ -104,7 +104,11 @@ norm.draw <- function(y, ry, x, rank.adjust = TRUE, ...) {
 #' @note
 #' This functions adds a star to variable names in the mice iteration
 #' history to signal that a ridge penalty was added. In that case, it
-#' also adds an entry to \code{loggedEvents}.
+#' also adds the entry "ridge penalty applied: predictors (nearly)
+#' multi-collinear" to \code{loggedEvents}. The results can then be
+#' unstable. Common causes are duplicated variables, variables that are
+#' linear transformations of each other, and factors with a level for
+#' (nearly) every respondent, such as names.
 #'
 #' @aliases estimice
 #' @param x Matrix (\code{n} x \code{p}) of complete covariates.
@@ -146,11 +150,8 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...) {
           )
         }
       )
-      mess <- paste0(
-        "mice detected that your data are (nearly) multi-collinear.\n",
-        "It applied a ridge penalty to continue calculations, but the results can be unstable.\n",
-        "Does your dataset contain duplicates, linear transformation, or factors with unique respondent names?"
-      )
+      # one line: loggedEvents prints newlines as \n (#669)
+      mess <- "ridge penalty applied: predictors (nearly) multi-collinear"
       updateLog(out = mess, frame = 6)
       if (get.printFlag()) {
         cat("*")
@@ -192,11 +193,8 @@ estimice <- function(x, y, ls.meth = "qr", ridge = 1e-05, ...) {
           )
         }
       )
-      mess <- paste0(
-        "mice detected that your data are (nearly) multi-collinear.\n",
-        "It applied a ridge penalty to continue calculations, but the results can be unstable.\n",
-        "Does your dataset contain duplicates, linear transformation, or factors with unique respondent names?"
-      )
+      # one line: loggedEvents prints newlines as \n (#669)
+      mess <- "ridge penalty applied: predictors (nearly) multi-collinear"
       updateLog(out = mess, frame = 6)
       if (get.printFlag()) {
         cat("*")

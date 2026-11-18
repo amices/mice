@@ -1,5 +1,10 @@
 # mice 3.19.dev
 
+- The entry in `loggedEvents` that signals a ridge penalty for
+  (nearly) multi-collinear predictors is now one short line, "ridge penalty
+  applied: predictors (nearly) multi-collinear". The old message contained
+  line breaks, which `loggedEvents` printed as `\n`. The explanation of
+  the causes moved to the documentation of `estimice()` and `mids` (#669).
 - The cluster variable of two-level methods (code `-2` in
   `predictorMatrix`) can now be a factor. `mice()` passes it to the method as
   integer codes and leaves the data unchanged, so `complete()` returns the
