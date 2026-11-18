@@ -1,4 +1,4 @@
-# mice 3.19.dev
+# mice 3.19.21
 
 - The entry in `loggedEvents` that signals a ridge penalty for
   (nearly) multi-collinear predictors is now one short line, "ridge penalty
