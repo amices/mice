@@ -21,7 +21,10 @@ test_that("WITH-DOT-002: dot formulas work with D1() and D3()", {
 
 test_that("WITH-DOT-003: namespaced calls and dot terms", {
   fit <- with(imp, stats::lm(bmi ~ . - chl))
-  expect_identical(names(coef(fit$analyses[[1]])), c("(Intercept)", "age", "hyp2"))
+  expect_identical(
+    names(coef(fit$analyses[[1]])),
+    c("(Intercept)", "age", "hyp2")
+  )
 })
 
 test_that("WITH-DOT-004: calls without a dot formula are not changed", {

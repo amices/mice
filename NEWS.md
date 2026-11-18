@@ -1,3 +1,20 @@
+# mice 3.19.dev
+
+- The cluster variable of two-level methods (code `-2` in
+  `predictorMatrix`) can now be a factor. `mice()` passes it to the method as
+  integer codes and leaves the data unchanged, so `complete()` returns the
+  factor. Imputations are identical to those with the same clusters coded
+  as integers. A character cluster variable now stops early with advice to
+  convert it by `as.integer(factor(x))`. Before, it was dropped as a
+  predictor, and the methods failed later with "No class variable" or an
+  invalid `lmer` formula (#657).
+- A cluster variable with missing values now stops early if it has an
+  imputation method, because mice cannot impute cluster membership.
+  Without a method, `mice()` writes the number of missing cluster values to
+  `loggedEvents`, and the rows with a missing cluster are not imputed.
+  `2l.norm` and `2l.lmer` crashed on such rows; they now skip them, as
+  `2l.pan` and `2l.bin` already did.
+
 # mice 3.19.20
 
 - `quickpred()` now selects predictors for variables without missing data

@@ -64,14 +64,62 @@ check.m <- function(m) {
 
 
 check.cluster <- function(data, predictorMatrix) {
-  # stop if the cluster variable is a factor
-  isclassvar <- apply(predictorMatrix == -2, 2, any)
-  for (j in colnames(predictorMatrix)) {
-    if (isclassvar[j] && lapply(data, is.factor)[[j]]) {
-      stop("Convert cluster variable ", j, " to integer by as.integer()")
+  # mice does not use character variables, so a character cluster variable
+  # would be dropped, and the 2l methods would fail later (#657)
+  for (j in cluster.vars(predictorMatrix)) {
+    if (is.character(data[[j]])) {
+      stop(
+        "Cluster variable '",
+        j,
+        "' is a character variable, which mice does not use. ",
+        "Convert it to integer codes by as.integer(factor(",
+        j,
+        ")) before calling mice().",
+        call. = FALSE
+      )
     }
   }
   TRUE
+}
+
+# names of the columns coded -2 (cluster variable) in any row
+cluster.vars <- function(predictorMatrix) {
+  isclassvar <- apply(predictorMatrix == -2, 2, any)
+  colnames(predictorMatrix)[isclassvar]
+}
+
+# Stops if a cluster variable with missing values has an imputation method,
+# because generic methods cannot impute cluster membership. Returns the
+# cluster variables with missing values that are not imputed.
+check.cluster.missing <- function(data, predictorMatrix, method, blocks) {
+  out <- character(0)
+  for (j in cluster.vars(predictorMatrix)) {
+    if (!anyNA(data[[j]])) {
+      next
+    }
+    # blocks that impute j: j is a member, the block has a method, and the
+    # block does not use j as its cluster variable (e.g. jomoImpute)
+    h <- names(blocks)[vapply(blocks, function(b) j %in% b, logical(1))]
+    h <- h[!is.na(method[h]) & method[h] != ""]
+    is.cluster.of <- function(b) {
+      b %in% rownames(predictorMatrix) && predictorMatrix[b, j] == -2
+    }
+    h <- h[!vapply(h, is.cluster.of, logical(1))]
+    meth <- unname(method[h])
+    if (length(meth)) {
+      stop(
+        "Cluster variable '",
+        j,
+        "' has missing values and imputation method '",
+        meth[1L],
+        "'. mice cannot impute cluster membership. ",
+        "Remove the rows with a missing cluster, or set its method to \"\".",
+        call. = FALSE
+      )
+    }
+    out <- c(out, j)
+  }
+  out
 }
 
 check.ignore <- function(ignore, data) {
