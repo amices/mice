@@ -85,7 +85,7 @@ be returned. The default is <code>format = "imputes"</code>.</p></dd>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function implements the predictive mean matching and applies canonical
 regression analysis to select donors fora set of missing variables. In general,
-canonical regressionanalysis looks for a linear combination of covariates that
+canonical regression analysis looks for a linear combination of covariates that
 predicts a linear combination of outcomes (a set of missing variables)
 optimally in a least-square sense (Israels, 1987). The predicted
 value of the linear combination of the set of missing variables
@@ -150,10 +150,10 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># analyse and check</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="pool.html">pool</a></span><span class="op">(</span><span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">x2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term  estimate  std.error  statistic        df      p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 0.0332306 0.03762678  0.8831634 923.69213 3.773778e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2           x 0.5153809 0.03299427 15.6203122  85.28838 9.553246e-27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          x2 0.4759027 0.02467935 19.2834365  18.62253 9.232673e-14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term estimate std.error statistic    df  p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept)   0.0332    0.0376     0.883 923.7 3.77e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           x   0.5154    0.0330    15.620  85.3 9.55e-27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          x2   0.4759    0.0247    19.283  18.6 9.23e-14</span>
 <span class="r-in"><span><span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">x2</span>, col <span class="op">=</span> <span class="fu"><a href="mdc.html">mdc</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span><span class="fu"><a href="complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">m</span><span class="op">]</span>, <span class="va">x2</span><span class="op">[</span><span class="va">m</span><span class="op">]</span>, col <span class="op">=</span> <span class="fu"><a href="mdc.html">mdc</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="mice.impute.mpmm-1.png" alt="" width="700" height="433"></span>

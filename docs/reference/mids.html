@@ -139,7 +139,7 @@ as <code>data</code> indicating where in the data the imputations should be
 created. The default, <code>where = is.na(data)</code>, specifies that the
 missing data should be imputed. The <code>where</code> argument may be used to
 overimpute observed data, or to skip imputations for selected missing values.
-Note: Imputation methods that generate imptutations outside of
+Note: Imputation methods that generate imputations outside of
 <code>mice</code>, like <code><a href="mice.impute.panImpute.html">mice.impute.panImpute()</a></code> may depend on a complete
 predictor space. In that case, a custom <code>where</code> matrix can not be
 specified.</p></dd>
@@ -418,7 +418,7 @@ integers specifying the predictor set.</p></dd>
 
 <dt><code>visitSequence</code>:</dt>
 <dd><p>A vector of variable and block names that
-specifies how variables and blocks are visited in one iteration throuh
+specifies how variables and blocks are visited in one iteration through
 the data.</p></dd>
 
 <dt><code>formulas</code>:</dt>
@@ -529,7 +529,7 @@ generic functions: <code>print</code>, <code>summary</code>, <code>plot</code>.<
     <h2 id="plot">Plot<a class="anchor" aria-label="anchor" href="#plot"></a></h2>
 
 
-<p>The <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> metho plots the trace lines of the MICE algorithm.
+<p>The <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method plots the trace lines of the MICE algorithm.
 The <code>plot</code> method for a <code>mids</code> object plots the mean imputed
 value per imputation and the mean standard deviation of the imputed
 values against the iteration number for each of the $m$ replications.

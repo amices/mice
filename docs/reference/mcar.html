@@ -107,7 +107,7 @@ sampling, use a high number of <code>replications</code> (and optionally,
 <dt id="arg-use-chisq">use_chisq<a class="anchor" aria-label="anchor" href="#arg-use-chisq"></a></dt>
 <dd><p>Atomic integer, indicating the minimum number of cases
 within a group <em>k</em> that triggers the use of asymptotic Chi-square
-distribution instead of the emprical distribution in the Neyman uniformity
+distribution instead of the empirical distribution in the Neyman uniformity
 test, which is performed as part of Hawkins' test.</p></dd>
 
 
@@ -131,7 +131,7 @@ unobserved data.</p>
 <p>Jamshidian and Jalal's non-parametric MCAR test assumes that the missing data
 are either MCAR or MAR, and tests whether the missingness is independent of
 the observed values. If so, the covariance matrices of the imputed data will
-be equal accross groups with different patterns of missingness. This test
+be equal across groups with different patterns of missingness. This test
 consists of the following procedure:</p><ol><li><p>Data are imputed.</p></li>
 <li><p>The imputed data are split into <em>k</em> groups according to the
 <em>k</em> missing data patterns in the original data (see
@@ -153,7 +153,7 @@ it can be concluded that missingness is MAR.</p></li>
 indicate whether missingness is MCAR or MAR. The procedure cannot distinguish
 MCAR from MNAR, so a non-significant result does not rule out MNAR.</p>
 <p>This is a re-implementation of the function <code>TestMCARNormality</code>, which was
-originally published in the R-packgage <code>MissMech</code>, which has been removed
+originally published in the R package <code>MissMech</code>, which has been removed
 from CRAN. This new implementation is faster, as its backend is written in
 C++. It also enhances the functionality of the original:</p><ul><li><p>Multiply imputed data can now be used; the median p-value and test
 statistic across replications is then reported, as suggested by
@@ -219,7 +219,7 @@ missing completely at random for incomplete multivariate data. Psychometrika,
 <span class="r-out co"><span class="r-pr">#&gt;</span> Missing data patterns: 2 used, 3 removed.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Cases used: 20 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Hawkins' test: median chi^2 (4) = 2.392725, median p = 0.6639424</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hawkins' test: median chi^2 (4) = 2.39, median p = 0.664</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Interpretation of results:</span>

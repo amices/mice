@@ -223,14 +223,14 @@ Chapman &amp; Hall/CRC. Boca Raton, FL.</p>
 <span class="r-in"><span><span class="co"># Pool results</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="pool.html">pool</a></span><span class="op">(</span><span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">xx</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class: mipo    m = 5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term m    estimate         ubar            b           t dfcom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 5 0.007192889 0.0015794557 5.699852e-05 0.001647854   997</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2           x 5 0.522087857 0.0011113808 4.990191e-04 0.001710204   997</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          xx 5 0.493210480 0.0006300634 8.500719e-05 0.000732072   997</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          df        riv     lambda        fmi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 676.01433 0.04330493 0.04150746 0.04433064</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  31.05852 0.53880986 0.35014713 0.38830809</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 166.06315 0.16190216 0.13934234 0.14952383</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term m estimate    ubar        b        t dfcom    df    riv lambda</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 5  0.00719 0.00158 0.000057 0.001648   997 676.0 0.0433 0.0415</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           x 5  0.52209 0.00111 0.000499 0.001710   997  31.1 0.5388 0.3501</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          xx 5  0.49321 0.00063 0.000085 0.000732   997 166.1 0.1619 0.1393</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      fmi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.0443</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.3883</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.1495</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Plot results</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="stripplot.mids.html">stripplot</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span></span></span>
