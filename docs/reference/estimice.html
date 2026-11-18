@@ -19,7 +19,7 @@ but can be called by any user-specified imputation function."><meta property="og
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.20</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.21</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,7 +112,11 @@ crossproduct to allow for proper calculation of the inverse.</p>
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>This functions adds a star to variable names in the mice iteration
 history to signal that a ridge penalty was added. In that case, it
-also adds an entry to <code>loggedEvents</code>.</p>
+also adds the entry "ridge penalty applied: predictors (nearly)
+multi-collinear" to <code>loggedEvents</code>. The results can then be
+unstable. Common causes are duplicated variables, variables that are
+linear transformations of each other, and factors with a level for
+(nearly) every respondent, such as names.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

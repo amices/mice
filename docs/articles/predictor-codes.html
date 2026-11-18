@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.20</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.21</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -304,6 +304,25 @@ with a positive code in a joint random-intercept model. Code
 <li>miceadds recommends the argument <code>cluster_var</code> over code
 <code>-2</code>.</li>
 </ol>
+</div>
+<div class="section level2">
+<h2 id="the-cluster-variable">The cluster variable<a class="anchor" aria-label="anchor" href="#the-cluster-variable"></a>
+</h2>
+<p>The variable with code <code>-2</code> can be an integer, numeric or
+factor variable. <code><a href="../reference/mice.html">mice()</a></code> passes a factor to the imputation
+method as integer codes, and leaves the data unchanged, so
+<code><a href="../reference/complete.mids.html">complete()</a></code> returns the factor. A character variable is not
+allowed, because <code><a href="../reference/mice.html">mice()</a></code> does not use character variables.
+Convert it first,
+e.g. <code>data$school &lt;- as.integer(factor(data$school))</code>.
+Note that <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> alone gives <code>NA</code> for
+codes such as <code>"A12"</code>.</p>
+<p><code><a href="../reference/mice.html">mice()</a></code> cannot impute a missing cluster identifier, so it
+stops if the cluster variable has missing values and an imputation
+method. Without a method, the rows with a missing cluster are not
+imputed by the methods that use the cluster variable, and
+<code><a href="../reference/mice.html">mice()</a></code> writes their number to
+<code>loggedEvents</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="methods-that-give-the-codes-another-meaning">Methods that give the codes another meaning<a class="anchor" aria-label="anchor" href="#methods-that-give-the-codes-another-meaning"></a>

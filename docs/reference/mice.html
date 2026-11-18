@@ -31,7 +31,7 @@ Generates Multivariate Imputations by Chained Equations (MICE)"><meta property="
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.20</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.21</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,7 +137,9 @@ variable is used as a predictor for the target block (in the rows).
 By default, the <code>predictorMatrix</code> is a square matrix of <code>ncol(data)</code>
 rows and columns with all 1's, except for the diagonal.
 Note: For two-level imputation models (which have <code>"2l"</code> in their names)
-other codes (e.g, <code>2</code> or <code>-2</code>) are also allowed.</p></dd>
+other codes (e.g, <code>2</code> or <code>-2</code>) are also allowed. The cluster
+variable (code <code>-2</code>) can be integer, numeric or factor, but not
+character. See the article "Codes in the predictor matrix".</p></dd>
 
 
 <dt id="arg-ignore">ignore<a class="anchor" aria-label="anchor" href="#arg-ignore"></a></dt>

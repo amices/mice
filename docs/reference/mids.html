@@ -23,7 +23,7 @@ as.mids() and filter()."><meta property="og:image" content="https://amices.org/m
 
     <a class="navbar-brand me-2" href="../index.html">mice</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.20</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.19.21</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -187,7 +187,9 @@ variable is used as a predictor for the target block (in the rows).
 By default, the <code>predictorMatrix</code> is a square matrix of <code>ncol(data)</code>
 rows and columns with all 1's, except for the diagonal.
 Note: For two-level imputation models (which have <code>"2l"</code> in their names)
-other codes (e.g, <code>2</code> or <code>-2</code>) are also allowed.</p></dd>
+other codes (e.g, <code>2</code> or <code>-2</code>) are also allowed. The cluster
+variable (code <code>-2</code>) can be integer, numeric or factor, but not
+character. See the article "Codes in the predictor matrix".</p></dd>
 
 
 <dt id="arg-visitsequence">visitSequence<a class="anchor" aria-label="anchor" href="#arg-visitsequence"></a></dt>
@@ -495,6 +497,9 @@ During iteration, the program does the following actions:</p><ul><li><p>One or m
 (for categorical data, a 'variable' corresponds to a dummy variable)</p></li>
 <li><p>Proportional odds regression imputation that does not converge
 and is replaced by <code>polyreg</code>.</p></li>
+<li><p>A ridge penalty is added because the predictors are (nearly)
+multi-collinear, so that the imputation model can be estimated. See
+<code><a href="estimice.html">estimice</a></code> for common causes.</p></li>
 </ul><p>Explanation of elements in <code>loggedEvents</code>:</p><dl><dt><code>it</code></dt>
 <dd><p>iteration number at which the record was added,</p></dd>
 
