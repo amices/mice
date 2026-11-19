@@ -1,6 +1,6 @@
 #' Imputation by indirect use of lasso linear regression
 #'
-#' Imputes univariate missing data using Bayesian linear regression following a
+#' Imputes univariate missing data using predictive mean matching following a
 #' preprocessing lasso variable selection step.
 #'
 #' @aliases mice.impute.lasso.select.pmm lasso.select.pmm
@@ -19,9 +19,9 @@
 #' \item Define a Bayesian linear model using \code{y[ry]} as the
 #' dependent variable, the active set of \code{x[ry, ]} as predictors, and standard
 #' non-informative priors
-#' \item Draw parameter values for the intercept, regression weights, and error
-#' variance from their posterior distribution
-#' \item Draw imputations from the posterior predictive distribution
+#' \item Draw parameter values for the intercept and regression weights
+#' \item To impute \code{y}, predictive mean matching, based on van Buuren (2018, p. 81),
+#' is used with the drawn parameters as input
 #' }
 #' The user can specify a \code{predictorMatrix} in the \code{mice} call
 #' to define which predictors are provided to this univariate imputation method.
@@ -32,15 +32,22 @@
 #' However, a non-zero entry does not guarantee the variable will be used,
 #' as this decision is ultimately made by the lasso variable selection
 #' procedure.
-#'
+#' 
+#' Currently this method only works for continuous variables.
+#' 
 #' The method is based on the Indirect Use of Regularized Regression (IURR) proposed by
-#' Zhao & Long (2016) and Deng et al (2016).
-#' @author Edoardo Costantini, 2021
+#' Zhao & Long (2016) and Deng et al (2016) but modified to use predictive mean matching to
+#' generate imputations instead of using Bayesian linear regression.
+#' @author Ruben Custers, 2026
 #' @references
 #'
 #' Deng, Y., Chang, C., Ido, M. S., & Long, Q. (2016). Multiple imputation for
 #' general missing data patterns in the presence of high-dimensional data.
 #' Scientific reports, 6(1), 1-10.
+#'
+#' Van Buuren, S. (2018).
+#' \href{https://stefvanbuuren.name/fimd/sec-pmm.html}{\emph{Flexible Imputation of Missing Data. Second Edition.}}
+#' Chapman & Hall/CRC. Boca Raton, FL.
 #'
 #' Zhao, Y., & Long, Q. (2016). Multiple imputation in the presence of
 #' high-dimensional data. Statistical Methods in Medical Research, 25(5),

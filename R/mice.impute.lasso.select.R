@@ -24,7 +24,7 @@
   yobs <- y[ry]
   
   # Train imputation model
-  # used later in the estiamtion require this.
+  # used later in the estimation require this.
   cv_lasso <- glmnet::cv.glmnet(
     x = xobs,
     y = yobs,
