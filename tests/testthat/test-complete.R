@@ -56,6 +56,7 @@ test_that("COMPLETE-004: workflow mids, mild and long produce same estimates", {
   fit <- by(cmp, as.factor(cmp$.imp), lm, formula = chl ~ age + bmi + hyp)
   est.long <- pool(fit)
 
-  expect_identical(getqbar(est.mice), getqbar(est.mild))
-  expect_identical(getqbar(est.mice), getqbar(est.long))
+  # equal, not identical: BLAS (e.g. MKL) may differ in the last bits
+  expect_equal(getqbar(est.mice), getqbar(est.mild))
+  expect_equal(getqbar(est.mice), getqbar(est.long))
 })

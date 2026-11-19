@@ -1,6 +1,15 @@
 cran-comments
 ================
 
+## Resubmission
+
+This is a resubmission. The CRAN check with MKL reported three test
+failures (“Objects equal but not identical”) in `test-cluster-types.R`
+and `test-complete.R`. These tests compared floating-point results from
+different code paths with `expect_identical()`. They now use
+`expect_equal()`, so they no longer depend on the last bits produced by
+the BLAS library.
+
 ## Release summary
 
 `mice 3.20.0` is a major update of `mice 3.19.0`. It adds parallel

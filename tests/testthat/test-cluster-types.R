@@ -26,7 +26,8 @@ test_that("CLUSTER-TYPES-001: factor clusters give the same imputations as integ
   for (m in c("2l.norm", "2l.lmer", "2l.pan")) {
     i1 <- impute(d0, m)
     i2 <- impute(d1, m)
-    expect_identical(i1$imp$lpo, i2$imp$lpo, info = m)
+    # equal, not identical: BLAS (e.g. MKL) may differ in the last bits
+    expect_equal(i1$imp$lpo, i2$imp$lpo, info = m)
     expect_s3_class(complete(i2)$sch, "factor")
   }
 })
