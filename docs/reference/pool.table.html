@@ -152,12 +152,18 @@ The value <code>dfcom = Inf</code> is acceptable for large samples
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">chl</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">bmi</span> <span class="op">+</span> <span class="va">hyp</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">pld1</span> <span class="op">&lt;-</span> <span class="fu"><a href="pool.html">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">pld1</span><span class="op">$</span><span class="va">pooled</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term m estimate    ubar      b       t dfcom    df   riv lambda   fmi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2   -27.06 2054.49  826.5 3294.27    20 4.358 0.603  0.376 0.546</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    age40-59 2    63.83  285.27  643.4 1250.37    20 1.196 3.383  0.772 0.881</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age60-99 2    99.69  346.11  547.8 1167.77    20 1.471 2.374  0.704 0.836</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         bmi 2     6.84    2.57    1.6    4.96    20 2.954 0.932  0.482 0.656</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      hypyes 2   -11.50  296.60 1800.4 2997.16    20 0.732 9.105  0.901 0.954</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term m   estimate        ubar           b           t dfcom        df</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2 -27.061909 2054.489358  826.519323 3294.268342    20 4.3583827</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    age40-59 2  63.827655  285.274591  643.397385 1250.370669    20 1.1964970</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age60-99 2  99.694020  346.106025  547.775204 1167.768830    20 1.4709221</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         bmi 2   6.839737    2.568036    1.595641    4.961497    20 2.9540555</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      hypyes 2 -11.495286  296.595683 1800.375408 2997.158795    20 0.7324639</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         riv    lambda       fmi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.6034487 0.3763443 0.5458532</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 3.3830425 0.7718480 0.8805825</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2.3740205 0.7036177 0.8361999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.9320202 0.4824071 0.6562694</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 9.1052003 0.9010411 0.9540671</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># using pool.table() on tidy table</span></span></span>
 <span class="r-in"><span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"term"</span>, <span class="st">"estimate"</span>, <span class="st">"std.error"</span>, <span class="st">"df.residual"</span><span class="op">)</span><span class="op">]</span></span></span>
@@ -177,12 +183,18 @@ The value <code>dfcom = Inf</code> is acceptable for large samples
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> hypyes        -<span style="color: #BB0000;">41.5</span>      17.6           20</span>
 <span class="r-in"><span><span class="va">pld2</span> <span class="op">&lt;-</span> <span class="fu">pool.table</span><span class="op">(</span><span class="va">tbl</span>, type <span class="op">=</span> <span class="st">"minimal"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">pld2</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term m estimate    ubar      b       t dfcom    df   riv lambda   fmi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2   -27.06 2054.49  826.5 3294.27    20 4.358 0.603  0.376 0.546</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    age40-59 2    63.83  285.27  643.4 1250.37    20 1.196 3.383  0.772 0.881</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age60-99 2    99.69  346.11  547.8 1167.77    20 1.471 2.374  0.704 0.836</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         bmi 2     6.84    2.57    1.6    4.96    20 2.954 0.932  0.482 0.656</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      hypyes 2   -11.50  296.60 1800.4 2997.16    20 0.732 9.105  0.901 0.954</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term m   estimate        ubar           b           t dfcom        df</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2 -27.061909 2054.489358  826.519323 3294.268342    20 4.3583827</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    age40-59 2  63.827655  285.274591  643.397385 1250.370669    20 1.1964970</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age60-99 2  99.694020  346.106025  547.775204 1167.768830    20 1.4709221</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         bmi 2   6.839737    2.568036    1.595641    4.961497    20 2.9540555</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      hypyes 2 -11.495286  296.595683 1800.375408 2997.158795    20 0.7324639</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         riv    lambda       fmi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.6034487 0.3763443 0.5458532</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 3.3830425 0.7718480 0.8805825</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2.3740205 0.7036177 0.8361999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.9320202 0.4824071 0.6562694</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 9.1052003 0.9010411 0.9540671</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">pld1</span><span class="op">$</span><span class="va">pooled</span>, <span class="va">pld2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
@@ -190,34 +202,46 @@ The value <code>dfcom = Inf</code> is acceptable for large samples
 <span class="r-in"><span><span class="co"># conventional workflow: all numerical output</span></span></span>
 <span class="r-in"><span><span class="va">all1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pld1</span>, type <span class="op">=</span> <span class="st">"all"</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">all1</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term m estimate std.error statistic    df p.value  conf.low conf.high</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2   -27.06     57.40    -0.471 4.358  0.6599  -181.381       127</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    age40-59 2    63.83     35.36     1.805 1.196  0.2897  -243.683       371</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age60-99 2    99.69     34.17     2.917 1.471  0.1416  -111.701       311</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         bmi 2     6.84      2.23     3.071 2.954  0.0557    -0.312        14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      hypyes 2   -11.50     54.75    -0.210 0.732  0.8770 -1717.534      1695</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     riv lambda   fmi    ubar      b       t dfcom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.603  0.376 0.546 2054.49  826.5 3294.27    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 3.383  0.772 0.881  285.27  643.4 1250.37    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2.374  0.704 0.836  346.11  547.8 1167.77    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.932  0.482 0.656    2.57    1.6    4.96    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 9.105  0.901 0.954  296.60 1800.4 2997.16    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term m   estimate std.error  statistic        df    p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2 -27.061909 57.395717 -0.4714970 4.3583827 0.65992966</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    age40-59 2  63.827655 35.360581  1.8050511 1.1964970 0.28967781</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age60-99 2  99.694020 34.172633  2.9173643 1.4709221 0.14163099</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         bmi 2   6.839737  2.227442  3.0706691 2.9540555 0.05565033</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      hypyes 2 -11.495286 54.746313 -0.2099737 0.7324639 0.87703238</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        conf.low  conf.high       riv    lambda       fmi        ubar</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  -181.3808450  127.25703 0.6034487 0.3763443 0.5458532 2054.489358</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  -243.6825561  371.33787 3.3830425 0.7718480 0.8805825  285.274591</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -111.7011748  311.08921 2.3740205 0.7036177 0.8361999  346.106025</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    -0.3117585   13.99123 0.9320202 0.4824071 0.6562694    2.568036</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 -1717.5339526 1694.54338 9.1052003 0.9010411 0.9540671  296.595683</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             b           t dfcom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  826.519323 3294.268342    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  643.397385 1250.370669    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  547.775204 1167.768830    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    1.595641    4.961497    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 1800.375408 2997.158795    20</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># pool.table workflow: all numerical output</span></span></span>
 <span class="r-in"><span><span class="va">all2</span> <span class="op">&lt;-</span> <span class="fu">pool.table</span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">all2</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term m estimate std.error statistic    df p.value  conf.low conf.high</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2   -27.06     57.40    -0.471 4.358  0.6599  -181.381       127</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    age40-59 2    63.83     35.36     1.805 1.196  0.2897  -243.683       371</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age60-99 2    99.69     34.17     2.917 1.471  0.1416  -111.701       311</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         bmi 2     6.84      2.23     3.071 2.954  0.0557    -0.312        14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      hypyes 2   -11.50     54.75    -0.210 0.732  0.8770 -1717.534      1695</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     riv lambda   fmi    ubar      b       t dfcom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.603  0.376 0.546 2054.49  826.5 3294.27    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 3.383  0.772 0.881  285.27  643.4 1250.37    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2.374  0.704 0.836  346.11  547.8 1167.77    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.932  0.482 0.656    2.57    1.6    4.96    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 9.105  0.901 0.954  296.60 1800.4 2997.16    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term m   estimate std.error  statistic        df    p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2 -27.061909 57.395717 -0.4714970 4.3583827 0.65992966</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    age40-59 2  63.827655 35.360581  1.8050511 1.1964970 0.28967781</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age60-99 2  99.694020 34.172633  2.9173643 1.4709221 0.14163099</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         bmi 2   6.839737  2.227442  3.0706691 2.9540555 0.05565033</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      hypyes 2 -11.495286 54.746313 -0.2099737 0.7324639 0.87703238</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        conf.low  conf.high       riv    lambda       fmi        ubar</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  -181.3808450  127.25703 0.6034487 0.3763443 0.5458532 2054.489358</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  -243.6825561  371.33787 3.3830425 0.7718480 0.8805825  285.274591</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -111.7011748  311.08921 2.3740205 0.7036177 0.8361999  346.106025</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    -0.3117585   13.99123 0.9320202 0.4824071 0.6562694    2.568036</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 -1717.5339526 1694.54338 9.1052003 0.9010411 0.9540671  296.595683</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             b           t dfcom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  826.519323 3294.268342    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  643.397385 1250.370669    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  547.775204 1167.768830    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    1.595641    4.961497    20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 1800.375408 2997.158795    20</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">all1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"data.frame"</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">all1</span>, <span class="va">all2</span><span class="op">)</span></span></span>

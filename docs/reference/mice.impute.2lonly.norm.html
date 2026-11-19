@@ -185,10 +185,12 @@ Mathematics Education, Kiel, Germany), <a href="mailto:robitzsch@ipn.uni-kiel.de
 <span class="r-in"><span><span class="co"># w ... imputation at level 2 using norm</span></span></span>
 <span class="r-in"><span><span class="co"># v ... imputation at level 2 using pmm</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">imp1</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dfr</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  m <span class="op">=</span> <span class="fl">1</span>, predictorMatrix <span class="op">=</span> <span class="va">predM1</span>,</span></span>
-<span class="r-in"><span>  method <span class="op">=</span> <span class="va">impM1</span>, maxit <span class="op">=</span> <span class="fl">1</span>, paniter <span class="op">=</span> <span class="fl">500</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"pan"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">imp1</span> <span class="op">&lt;-</span> <span class="fu"><a href="mice.html">mice</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dfr</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    m <span class="op">=</span> <span class="fl">1</span>, predictorMatrix <span class="op">=</span> <span class="va">predM1</span>,</span></span>
+<span class="r-in"><span>    method <span class="op">=</span> <span class="va">impM1</span>, maxit <span class="op">=</span> <span class="fl">1</span>, paniter <span class="op">=</span> <span class="fl">500</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  iter imp variable</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1   1  y  w  v</span>

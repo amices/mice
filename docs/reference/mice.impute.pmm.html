@@ -252,7 +252,7 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># percentage of missing data in tv</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">!</span><span class="va">ry</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">ry</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.692</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.6918845</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Impute missing tv data</span></span></span>
 <span class="r-in"><span><span class="va">yimp</span> <span class="op">&lt;-</span> <span class="fu">mice.impute.pmm</span><span class="op">(</span><span class="va">y</span>, <span class="va">ry</span>, <span class="va">x</span><span class="op">)</span></span></span>
@@ -275,7 +275,7 @@ Software</em>, <b>45</b>(3), 1-67. <a href="https://doi.org/10.18637/jss.v045.i0
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="mice.impute.pmm-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">yimp</span>, use <span class="op">=</span> <span class="st">"pair"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.739</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7387041</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Use blots to exclude different values per column</span></span></span>
 <span class="r-in"><span><span class="co"># Create blots object</span></span></span>

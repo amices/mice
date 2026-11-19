@@ -191,19 +191,19 @@ Public Use Microdata Sets. <em>Survey Methodology</em>, <b>29</b>, 181-189.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = bmi ~ age)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Min     1Q Median     3Q    Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  -8.25  -2.35   0.73   2.03   6.65 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Min      1Q  Median      3Q     Max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -8.2464 -2.3464  0.7304  2.0304  6.6536 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   30.623      1.761   17.39  9.9e-15 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age           -1.977      0.908   -2.18     0.04 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   30.623      1.761  17.392 9.92e-15 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age           -1.977      0.908  -2.177     0.04 *  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 3.7 on 23 degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.171,	Adjusted R-squared:  0.135 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 4.74 on 1 and 23 DF,  p-value: 0.04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 3.695 on 23 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.1709,	Adjusted R-squared:  0.1348 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 4.739 on 1 and 23 DF,  p-value: 0.04</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">analyses</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -212,57 +212,60 @@ Public Use Microdata Sets. <em>Survey Methodology</em>, <b>29</b>, 181-189.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Min     1Q Median     3Q    Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  -8.05  -2.54   1.15   1.71   6.85 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -8.052 -2.537  1.148  1.706  6.848 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   31.209      1.652   18.89  1.7e-15 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age           -2.757      0.852   -3.24   0.0036 ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   31.209      1.652  18.891 1.67e-15 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age           -2.757      0.852  -3.237  0.00365 ** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 3.47 on 23 degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.313,	Adjusted R-squared:  0.283 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 10.5 on 1 and 23 DF,  p-value: 0.00365</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 3.467 on 23 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.3129,	Adjusted R-squared:  0.2831 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 10.48 on 1 and 23 DF,  p-value: 0.003645</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">pool.scalar</span><span class="op">(</span>Q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1.5457</span>, <span class="op">-</span><span class="fl">1.428</span><span class="op">)</span>, U <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.9723</span><span class="op">^</span><span class="fl">2</span>, <span class="fl">1.041</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">25</span>, k <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $m</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $qhat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.55 -1.43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.5457 -1.4280</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $u</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.945 1.084</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9453673 1.0836810</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $qbar</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.48685</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ubar</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.014524</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.00693</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.006926645</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $t</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.024914</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $df</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 20.97025</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $r</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01024122</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $fmi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0927</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.09272831</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># check: automatic pooling using broom</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="pool.html">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class: mipo    m = 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term m estimate  ubar     b    t dfcom    df    riv lambda   fmi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2    30.92 2.915 0.172 3.17    23 17.28 0.0884 0.0812 0.172</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         age 2    -2.37 0.775 0.305 1.23    23  4.71 0.5896 0.3709 0.534</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term m estimate      ubar         b        t dfcom       df        riv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2 30.91618 2.9147323 0.1716923 3.172271    23 17.28486 0.08835752</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         age 2 -2.36715 0.7751948 0.3047278 1.232286    23  4.70669 0.58964749</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       lambda       fmi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.08118427 0.1717756</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.37092971 0.5341828</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># same, with the residual degrees of freedom of the fitted model</span></span></span>
 <span class="r-in"><span><span class="fu">pool.scalar</span><span class="op">(</span></span></span>
@@ -273,31 +276,31 @@ Public Use Microdata Sets. <em>Survey Methodology</em>, <b>29</b>, 181-189.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $qhat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.55 -1.43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.5457 -1.4280</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $u</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.945 1.084</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9453673 1.0836810</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $qbar</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.48685</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ubar</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.014524</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.00693</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.006926645</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $t</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.024914</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $df</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 20.97025</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $r</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01024122</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $fmi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0927</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.09272831</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># manual pooling for synthetic data created from complete data</span></span></span>
@@ -314,19 +317,19 @@ Public Use Microdata Sets. <em>Survey Methodology</em>, <b>29</b>, 181-189.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = speed ~ dist)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Min     1Q Median     3Q    Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -8.974 -3.518  0.456  3.183  7.886 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Min      1Q  Median      3Q     Max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -8.9743 -3.5181  0.4556  3.1834  7.8855 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  10.9424     1.1636    9.40  1.8e-12 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dist          0.0924     0.0227    4.07  0.00018 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 10.94236    1.16358   9.404 1.82e-12 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dist         0.09236    0.02272   4.066 0.000177 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 4.34 on 48 degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.256,	Adjusted R-squared:  0.241 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 16.5 on 1 and 48 DF,  p-value: 0.000177</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 4.344 on 48 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.2562,	Adjusted R-squared:  0.2407 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 16.53 on 1 and 48 DF,  p-value: 0.0001769</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">analyses</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -334,47 +337,47 @@ Public Use Microdata Sets. <em>Survey Methodology</em>, <b>29</b>, 181-189.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = speed ~ dist)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Min     1Q Median     3Q    Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -8.179 -2.470  0.098  2.381  7.442 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Min      1Q  Median      3Q     Max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -8.1788 -2.4704  0.0981  2.3806  7.4421 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  11.9690     1.1702   10.23  1.2e-13 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dist          0.1035     0.0253    4.09  0.00016 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 11.96899    1.17022  10.228  1.2e-13 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dist         0.10350    0.02528   4.093 0.000162 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 3.68 on 48 degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.259,	Adjusted R-squared:  0.243 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 16.8 on 1 and 48 DF,  p-value: 0.000162</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 3.677 on 48 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.2587,	Adjusted R-squared:  0.2433 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 16.75 on 1 and 48 DF,  p-value: 0.0001621</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">pool.scalar.syn</span><span class="op">(</span>Q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.12182</span>, <span class="fl">0.13209</span><span class="op">)</span>, U <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.02121</span><span class="op">^</span><span class="fl">2</span>, <span class="fl">0.02516</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">50</span>, k <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $m</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $qhat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.122 0.132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.12182 0.13209</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $u</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.000450 0.000633</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0004498641 0.0006330256</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $qbar</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.126955</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ubar</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.000541</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0005414448</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5.27e-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5.273645e-05</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $t</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.000568</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0005678131</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $df</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 464</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 463.7127</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $r</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.146</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1460992</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $fmi</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
@@ -383,9 +386,12 @@ Public Use Microdata Sets. <em>Survey Methodology</em>, <b>29</b>, 181-189.</p>
 <span class="r-in"><span><span class="co"># check: automatic pooling using broom</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="pool.html">pool.syn</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class: mipo    m = 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term m estimate     ubar        b        t dfcom  df   riv lambda fmi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2  11.4557 1.361668 0.526975 1.625156    48  38 0.581     NA  NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        dist 2   0.0979 0.000578 0.000062 0.000609    48 385 0.161     NA  NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term m    estimate         ubar            b            t dfcom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 2 11.45567489 1.3616682784 5.269746e-01 1.6251555632    48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        dist 2  0.09792857 0.0005776804 6.203061e-05 0.0006086957    48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          df       riv lambda fmi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  38.04263 0.5805099     NA  NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 385.16627 0.1610682     NA  NA</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

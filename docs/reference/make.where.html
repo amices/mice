@@ -105,12 +105,12 @@ is <code>keyword = "missing"</code></p></dd>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="with.mids.html">with</a></span><span class="op">(</span><span class="va">imp</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">chl</span> <span class="op">~</span> <span class="va">bmi</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="pool.html">pool.syn</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          term estimate std.error statistic   df p.value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept)   149.15     59.14     2.522 1853  0.0118</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         bmi     1.36      2.06     0.659 2347  0.5102</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age40-59    13.00     22.39     0.580  657  0.5618</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    age60-99     2.61     20.72     0.126 2069  0.8998</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      hypyes    15.89     18.96     0.838 1332  0.4023</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          term   estimate std.error statistic       df    p.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 149.152519  59.14165 2.5219541 1852.746 0.01175371</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         bmi   1.356159   2.05894 0.6586684 2346.742 0.51017334</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    age40-59  12.997701  22.39382 0.5804146  657.206 0.56183401</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    age60-99   2.609238  20.72175 0.1259178 2068.888 0.89980921</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      hypyes  15.886792  18.96335 0.8377628 1331.575 0.40231425</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
