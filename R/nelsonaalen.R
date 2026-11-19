@@ -24,18 +24,19 @@
 #' Chapman & Hall/CRC. Boca Raton, FL.
 #' @keywords misc
 #' @examples
-#' require(MASS)
+#' if (requireNamespace("survival", quietly = TRUE)) {
+#'   leuk <- MASS::leuk
+#'   leuk$status <- 1 ## no censoring occurs in leuk data (MASS)
+#'   ch <- nelsonaalen(leuk, time, status)
+#'   plot(x = leuk$time, y = ch, ylab = "Cumulative hazard", xlab = "Time")
 #'
-#' leuk$status <- 1 ## no censoring occurs in leuk data (MASS)
-#' ch <- nelsonaalen(leuk, time, status)
-#' plot(x = leuk$time, y = ch, ylab = "Cumulative hazard", xlab = "Time")
-#'
-#' ### See example on http://www.engineeredsoftware.com/lmar/pe_cum_hazard_function.htm
-#' time <- c(43, 67, 92, 94, 149, rep(149, 7))
-#' status <- c(rep(1, 5), rep(0, 7))
-#' eng <- data.frame(time, status)
-#' ch <- nelsonaalen(eng, time, status)
-#' plot(x = time, y = ch, ylab = "Cumulative hazard", xlab = "Time")
+#'   ### See example on http://www.engineeredsoftware.com/lmar/pe_cum_hazard_function.htm
+#'   time <- c(43, 67, 92, 94, 149, rep(149, 7))
+#'   status <- c(rep(1, 5), rep(0, 7))
+#'   eng <- data.frame(time, status)
+#'   ch <- nelsonaalen(eng, time, status)
+#'   plot(x = time, y = ch, ylab = "Cumulative hazard", xlab = "Time")
+#' }
 #' @export
 nelsonaalen <- function(data, timevar, statusvar, ...) {
   if (!is.data.frame(data)) {
@@ -46,6 +47,7 @@ nelsonaalen <- function(data, timevar, statusvar, ...) {
   time <- data[, timevar, drop = TRUE]
   status <- data[, statusvar, drop = TRUE]
 
+  install.on.demand("survival")
   coxph_obj <- survival::coxph(survival::Surv(time, status) ~ 1, ...)
   hazard <- survival::basehaz(coxph_obj)
 

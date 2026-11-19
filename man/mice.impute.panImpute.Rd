@@ -66,7 +66,9 @@ method <- c("panImpute", "pmm")
 ini <- mice(nhanes, blocks = blocks, method = method, maxit = 0)
 pred <- ini$pred
 pred["B1", "hyp"] <- -2
-imp <- mice(nhanes, blocks = blocks, method = method, pred = pred, maxit = 1)
+if (requireNamespace("mitml", quietly = TRUE)) {
+  imp <- mice(nhanes, blocks = blocks, method = method, pred = pred, maxit = 1)
+}
 }
 \references{
 Grund S, Luedtke O, Robitzsch A (2016). Multiple

@@ -80,10 +80,12 @@
 #' # w ... imputation at level 2 using norm
 #' # v ... imputation at level 2 using pmm
 #'
-#' imp1 <- mice(as.matrix(dfr),
-#'   m = 1, predictorMatrix = predM1,
-#'   method = impM1, maxit = 1, paniter = 500
-#' )
+#' if (requireNamespace("pan", quietly = TRUE)) {
+#'   imp1 <- mice(as.matrix(dfr),
+#'     m = 1, predictorMatrix = predM1,
+#'     method = impM1, maxit = 1, paniter = 500
+#'   )
+#' }
 #'
 #' # Demonstration that 2lonly.norm aborts for partial missing data.
 #' # Better use 2lonly.mean for repair.

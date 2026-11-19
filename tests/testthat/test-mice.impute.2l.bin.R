@@ -1,3 +1,5 @@
+skip_if_not_installed("lme4")
+
 # toenail: outcome is factor
 data("toenail2")
 data_factor <- tidyr::complete(toenail2, patientID, visit) |>

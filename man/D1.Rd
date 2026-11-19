@@ -33,7 +33,7 @@ same in different models. See
 imp <- mice(nhanes2, seed = 51009, print = FALSE)
 mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
 mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
-D1(mi1, mi0)
+if (requireNamespace("mitml", quietly = TRUE)) D1(mi1, mi0)
 \dontrun{
 # Compare two logistic regression models
 imp <- mice(boys, maxit = 2, print = FALSE)

@@ -89,7 +89,7 @@
 #'
 #' # skip imputation on solaris
 #' is.solaris <- function() grepl("SunOS", Sys.info()["sysname"])
-#' if (!is.solaris()) {
+#' if (!is.solaris() && requireNamespace("pan", quietly = TRUE)) {
 #'   imp <- mice(dfr,
 #'     m = 1, predictorMatrix = predM1,
 #'     method = impM1, maxit = 1, paniter = 500

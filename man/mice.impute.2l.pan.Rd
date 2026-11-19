@@ -99,16 +99,19 @@ predM1["y", "x"] <- 1 # fixed x effects imputation
 impM1 <- impM
 impM1["y"] <- "2l.pan"
 
-# multilevel imputation
-imp1 <- mice(as.matrix(dfr),
-  m = 1, predictorMatrix = predM1,
-  method = impM1, maxit = 1
-)
+if (requireNamespace("pan", quietly = TRUE)) {
+  # multilevel imputation
+  imp1 <- mice(as.matrix(dfr),
+    m = 1, predictorMatrix = predM1,
+    method = impM1, maxit = 1
+  )
 
-# multilevel analysis
-library(lme4)
-mod <- lmer(y ~ (1 + x | group) + x, data = complete(imp1))
-summary(mod)
+  # multilevel analysis
+  if (requireNamespace("lme4", quietly = TRUE)) {
+    mod <- lme4::lmer(y ~ (1 + x | group) + x, data = complete(imp1))
+    summary(mod)
+  }
+}
 
 # Examples of predictorMatrix specification
 

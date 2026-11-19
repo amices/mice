@@ -51,7 +51,7 @@ same in different models. See
 imp <- mice(nhanes2, seed = 51009, print = FALSE)
 mi1 <- with(data = imp, expr = lm(bmi ~ age + hyp + chl))
 mi0 <- with(data = imp, expr = lm(bmi ~ age + hyp))
-D2(mi1, mi0)
+if (requireNamespace("mitml", quietly = TRUE)) D2(mi1, mi0)
 \dontrun{
 # Compare two logistic regression models
 imp <- mice(boys, maxit = 2, print = FALSE)
@@ -64,8 +64,10 @@ D2(fit1, fit0)
 data <- nhanes2
 data$chl <- cut(data$chl, breaks = 2)
 imp <- mice(data, seed = 1, print = FALSE)
-D2(with(imp, chisq.test(xtabs(~ hyp + chl), correct = FALSE)))
-D2(with(imp, fisher.test(xtabs(~ hyp + chl))))
+if (requireNamespace("mitml", quietly = TRUE)) {
+  D2(with(imp, chisq.test(xtabs(~ hyp + chl), correct = FALSE)))
+  D2(with(imp, fisher.test(xtabs(~ hyp + chl))))
+}
 }
 \references{
 Li, K. H., X. L. Meng, T. E. Raghunathan, and D. B. Rubin. 1991.

@@ -9,12 +9,22 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Resubmission
 
-This is a resubmission. The CRAN check with MKL reported three test
-failures ("Objects equal but not identical") in `test-cluster-types.R`
-and `test-complete.R`. These tests compared floating-point results from
-different code paths with `expect_identical()`. They now use
-`expect_equal()`, so they no longer depend on the last bits produced by
-the BLAS library.
+This is a resubmission. Changes since the first submission:
+
+* The CRAN check with MKL reported three test failures ("Objects equal
+  but not identical") in `test-cluster-types.R` and `test-complete.R`.
+  These tests compared floating-point results from different code paths
+  with `expect_identical()`. They now use `expect_equal()`, so they no
+  longer depend on the last bits produced by the BLAS library.
+* The reverse dependency check found that `ggmice` failed because
+  `mice::fluxplot()` could not load `MASS`. `MASS` was in `Suggests`, but
+  `fluxplot()` and `mice.impute.polr()` use it unconditionally. In earlier
+  versions `MASS` was always installed through `mitml`, which this release
+  moves to `Suggests`. `MASS` now moves to `Imports`.
+* Following this, we ran `R CMD check` with `_R_CHECK_DEPENDS_ONLY_=true`.
+  Some examples and tests used `lme4`, `mitml`, `pan`, `ranger` or
+  `survival` without checking for them. They are now conditional on these
+  packages, and `nelsonaalen()` asks for `survival` on demand.
 
 ## Release summary
 
@@ -133,6 +143,22 @@ and now passes.
 * `mfrmr` has a test that injects the value `2` into the imputations of a
   logical variable and expects an error. This release keeps logical
   variables logical in `complete()` (#764), so no error is raised.
+
+The CRAN incoming check found four more packages with changes to worse.
+Our local check skipped vignettes and ran on macOS, so it missed them:
+
+* `ggmice`: a bug in `mice`, fixed in this resubmission (see above).
+* `smdi` (vignette) reads the old confidence interval column names, as
+  `autoReg` does (#719).
+* `ggeffects` has a test, skipped on macOS, that compares against exact
+  numbers from a seeded `mice()` run with `pmm` (#757).
+* `FuzzyImputationTest` subsets a matrix of imputed rows without
+  `drop = FALSE`. Whether this fails depends on the imputed values, which
+  change with the `pmm` fix (#757). The test passes locally with both the
+  old and the new `mice`.
+
+We notified the maintainers of `ggeffects`, `smdi` and
+`FuzzyImputationTest` on 19 November 2026.
 
 The 4 packages we failed to check (`dynr`, `idem`, `pguIMP`, `rmsb`)
 could not be installed locally because of configure, Stan and rJava

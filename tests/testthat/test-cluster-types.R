@@ -19,11 +19,14 @@ impute <- function(data, method, ...) {
   )
 }
 
+has.lme4 <- requireNamespace("lme4", quietly = TRUE)
+has.pan <- requireNamespace("pan", quietly = TRUE)
+
 d1 <- d0
 d1$sch <- factor(d1$sch, labels = paste0("S", sort(unique(d0$sch))))
 
 test_that("CLUSTER-TYPES-001: factor clusters give the same imputations as integers (#657)", {
-  for (m in c("2l.norm", "2l.lmer", "2l.pan")) {
+  for (m in c("2l.norm", if (has.lme4) "2l.lmer", if (has.pan) "2l.pan")) {
     i1 <- impute(d0, m)
     i2 <- impute(d1, m)
     # equal, not identical: BLAS (e.g. MKL) may differ in the last bits
@@ -39,6 +42,7 @@ test_that("CLUSTER-TYPES-002: unused factor levels do not matter", {
 })
 
 test_that("CLUSTER-TYPES-003: 2l.bin accepts a factor cluster", {
+  skip_if_not_installed("lme4")
   d <- d1
   d$b <- factor(as.integer(d$lpo > median(d$lpo, na.rm = TRUE)))
   d$lpo <- NULL
@@ -80,7 +84,7 @@ test_that("CLUSTER-TYPES-005: an imputed cluster with missing values stops", {
 })
 
 test_that("CLUSTER-TYPES-006: missing cluster values are logged, rows not imputed", {
-  for (m in c("2l.norm", "2l.lmer")) {
+  for (m in c("2l.norm", if (has.lme4) "2l.lmer")) {
     d <- d1
     d$sch[c(1:5, 200)] <- NA
     d$lpo[1] <- NA

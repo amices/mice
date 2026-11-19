@@ -30,18 +30,19 @@ survival time H0(T) rather than T or log(T) as a predictor in imputation
 models.  See section 7.1 of Van Buuren (2012) for an example.
 }
 \examples{
-require(MASS)
+if (requireNamespace("survival", quietly = TRUE)) {
+  leuk <- MASS::leuk
+  leuk$status <- 1 ## no censoring occurs in leuk data (MASS)
+  ch <- nelsonaalen(leuk, time, status)
+  plot(x = leuk$time, y = ch, ylab = "Cumulative hazard", xlab = "Time")
 
-leuk$status <- 1 ## no censoring occurs in leuk data (MASS)
-ch <- nelsonaalen(leuk, time, status)
-plot(x = leuk$time, y = ch, ylab = "Cumulative hazard", xlab = "Time")
-
-### See example on http://www.engineeredsoftware.com/lmar/pe_cum_hazard_function.htm
-time <- c(43, 67, 92, 94, 149, rep(149, 7))
-status <- c(rep(1, 5), rep(0, 7))
-eng <- data.frame(time, status)
-ch <- nelsonaalen(eng, time, status)
-plot(x = time, y = ch, ylab = "Cumulative hazard", xlab = "Time")
+  ### See example on http://www.engineeredsoftware.com/lmar/pe_cum_hazard_function.htm
+  time <- c(43, 67, 92, 94, 149, rep(149, 7))
+  status <- c(rep(1, 5), rep(0, 7))
+  eng <- data.frame(time, status)
+  ch <- nelsonaalen(eng, time, status)
+  plot(x = time, y = ch, ylab = "Cumulative hazard", xlab = "Time")
+}
 }
 \references{
 White, I. R., Royston, P. (2009). Imputing missing covariate

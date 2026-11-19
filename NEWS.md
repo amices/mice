@@ -61,7 +61,9 @@
   installation of `mice`, including `foreach`, `jomo`, `pan`, `lme4`,
   `haven` and `readr`. Requires R 4.1.0 or later, which `broom`, `dplyr`
   and `tidyr` already required. Removes the unused `cpp11` entry from
-  `LinkingTo`.
+  `LinkingTo`. `MASS` moves from `Suggests` to `Imports`, because
+  `mice.impute.polr()`, `fluxplot()` and the `2l.bin` and `2l.lmer` methods
+  call it directly. `MASS` was formerly installed through `mitml`.
 
 * **Better prediction intervals in `predict_mi()`.** Prediction intervals
   are now quantiles of the mixture of t-distributions over the imputations,

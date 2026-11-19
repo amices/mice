@@ -89,6 +89,7 @@ test_that("SAMPLER-ERROR-005: arguments in ... do not shift the sampler argument
   # an argument in ... that partially matched an argument of sampler(),
   # e.g. `from` for `fromto`, used to shift the positional arguments, so
   # that printFlag was passed to the methods (e.g. as ntree of rf)
+  skip_if_not_installed("ranger")
   a <- mice(nhanes, method = "rf", seed = 1, print = FALSE)
   b <- mice(nhanes, method = "rf", seed = 1, print = FALSE, from = 1)
   expect_identical(a$imp, b$imp)

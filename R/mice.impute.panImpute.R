@@ -56,7 +56,9 @@
 #' ini <- mice(nhanes, blocks = blocks, method = method, maxit = 0)
 #' pred <- ini$pred
 #' pred["B1", "hyp"] <- -2
-#' imp <- mice(nhanes, blocks = blocks, method = method, pred = pred, maxit = 1)
+#' if (requireNamespace("mitml", quietly = TRUE)) {
+#'   imp <- mice(nhanes, blocks = blocks, method = method, pred = pred, maxit = 1)
+#' }
 #' @export
 mice.impute.panImpute <- function(
   data,
