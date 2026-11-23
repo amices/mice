@@ -52,8 +52,8 @@ remove.lindep <- function(
 
   xobs <- x[ry, , drop = FALSE]
   yobs <- as.numeric(y[ry])
-  if (var(yobs) < eps) {
-    # constant outcome: drop all predictors
+  if (length(yobs) == 1L || var(yobs) < eps) {
+    # Drop all predictors for a single observation or negligible variance.
     keep <- rep(FALSE, ncol(xobs))
   } else {
     keep <- unlist(apply(xobs, 2, var) > eps)

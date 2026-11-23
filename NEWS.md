@@ -230,6 +230,9 @@
 * `remove.lindep()` now writes every predictor that it removes to
   `loggedEvents`. Before, removals were silent when at most one predictor
   was left, e.g. when a predictor was a copy of the outcome (#306).
+* `remove.lindep()` drops the predictors when only one usable outcome
+  observation remains, allowing the sampler to use an intercept-only fit
+  (#803).
 * `mice()` writes to `loggedEvents` each variable that it imputes from a
   row in `predictorMatrix` without any predictor, i.e. by an
   intercept-only model (#602).
