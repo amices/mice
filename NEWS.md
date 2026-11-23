@@ -1,3 +1,19 @@
+# mice 3.20.1
+
+### Minor changes
+
+* `mice()` keeps a method that the user specifies for a block without cells
+  to impute, instead of replacing it by the empty method `""`. For example,
+  `mice(nhanes, method = "pmm")$method` is now `"pmm"` for the complete
+  variable `age`. `mice()` does not call the method for such blocks, so
+  imputations do not change. Whether a block is imputed now follows from
+  `where`, as for the rows of `predictorMatrix`; the empty method `""`
+  means that the user does not want to impute the block. `make.method()`
+  still sets `""` for blocks without cells to impute, so the default
+  methods do not change. Code that uses `method != ""` to find the imputed
+  variables should use `nimp(imp$where, imp$blocks) > 0` instead
+  (#602).
+
 # mice 3.20.0
 
 ### Major changes

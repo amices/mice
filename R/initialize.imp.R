@@ -12,6 +12,7 @@ initialize.imp <- function(
   imp <- vector("list", ncol(data))
   names(imp) <- names(data)
   r <- !is.na(data)
+  nimp <- nimp(where, blocks)
   for (h in visitSequence) {
     for (j in blocks[[h]]) {
       y <- data[, j]
@@ -19,7 +20,7 @@ initialize.imp <- function(
       wy <- where[, j]
       imp[[j]] <- as.data.frame(matrix(NA, nrow = sum(wy), ncol = m))
       dimnames(imp[[j]]) <- list(row.names(data)[wy], 1:m)
-      if (method[h] != "") {
+      if (method[h] != "" && nimp[[h]] > 0L) {
         for (i in seq_len(m)) {
           if (nmis[j] < nrow(data) && is.null(data.init)) {
             imp[[j]][, i] <- mice.impute.sample(y, ry, wy = wy)

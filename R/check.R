@@ -91,16 +91,24 @@ cluster.vars <- function(predictorMatrix) {
 # Stops if a cluster variable with missing values has an imputation method,
 # because generic methods cannot impute cluster membership. Returns the
 # cluster variables with missing values that are not imputed.
-check.cluster.missing <- function(data, predictorMatrix, method, blocks) {
+check.cluster.missing <- function(
+  data,
+  predictorMatrix,
+  method,
+  blocks,
+  where = is.na(data)
+) {
+  nimp <- nimp(where, blocks)
   out <- character(0)
   for (j in cluster.vars(predictorMatrix)) {
     if (!anyNA(data[[j]])) {
       next
     }
-    # blocks that impute j: j is a member, the block has a method, and the
-    # block does not use j as its cluster variable (e.g. jomoImpute)
+    # blocks that impute j: j is a member, the block has a method and cells
+    # to impute, and the block does not use j as its cluster variable
+    # (e.g. jomoImpute)
     h <- names(blocks)[vapply(blocks, function(b) j %in% b, logical(1))]
-    h <- h[!is.na(method[h]) & method[h] != ""]
+    h <- h[!is.na(method[h]) & method[h] != "" & nimp[h] > 0L]
     is.cluster.of <- function(b) {
       b %in% rownames(predictorMatrix) && predictorMatrix[b, j] == -2
     }

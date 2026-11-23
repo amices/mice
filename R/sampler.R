@@ -29,6 +29,7 @@ sampler <- function(
   to <- fromto[2]
   maxit <- to - from + 1
   r <- !is.na(data)
+  nimp <- nimp(where, blocks)
 
   # set up array for convergence checking
   chainMean <- chainVar <- initialize.chain(names(data), maxit, m)
@@ -78,7 +79,7 @@ sampler <- function(
 
           # univariate/multivariate logic
           theMethod <- method[h]
-          empt <- theMethod == ""
+          empt <- theMethod == "" || nimp[[h]] == 0L
           univ <- !empt &&
             !is.passive(theMethod) &&
             !handles.format(paste0("mice.impute.", theMethod))
