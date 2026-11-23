@@ -51,38 +51,21 @@ md.pattern <- function(x, plot = TRUE, rotate.names = FALSE) {
   pat <- apply(R, 1, function(x) paste(as.numeric(x), collapse = ""))
   # sort rowwise
   sortR <- matrix(R[order(pat), ], dim(x))
-  if (nrow(x) == 1) {
-    mpat <- is.na(x)
-  } else {
-    mpat <- sortR[!duplicated(sortR), ]
-  }
+  mpat <- sortR[!duplicated(sortR), , drop = FALSE]
   # update row and column margins
   if (all(!is.na(x))) {
     cat(" /\\     /\\\n{  `---'  }\n{  O   O  }\n==>  V <==")
     cat("  No need for mice. This data set is completely observed.\n")
     cat(" \\  \\|/  /\n  `-----'\n\n")
-    mpat <- t(as.matrix(mpat, byrow = TRUE))
-    rownames(mpat) <- table(pat)
-  } else {
-    if (is.null(dim(mpat))) {
-      mpat <- t(as.matrix(mpat))
-    }
-    rownames(mpat) <- table(pat)
   }
+  rownames(mpat) <- table(pat)
   r <- cbind(abs(mpat - 1), rowSums(mpat))
   r <- rbind(r, c(nmis[order(nmis)], sum(nmis)))
   if (plot) {
     op <- par(mar = rep(0, 4))
     on.exit(par(op))
     plot.new()
-    if (is.null(dim(sortR[!duplicated(sortR), ]))) {
-      R <- t(as.matrix(r[1:nrow(r) - 1, 1:ncol(r) - 1]))
-    } else {
-      if (is.null(dim(R))) {
-        R <- t(as.matrix(R))
-      }
-      R <- r[1:nrow(r) - 1, 1:ncol(r) - 1]
-    }
+    R <- r[-nrow(r), -ncol(r), drop = FALSE]
     if (rotate.names) {
       adj <- c(0, 0.5)
       srt <- 90
