@@ -276,6 +276,8 @@
   @dajiaohuang
 * Fixes a bug in `mcar()` (#762, #763).
 * Fixes `ampute(run = FALSE)` (#732).
+* `ampute()` keeps per-pattern `type` and `odds` aligned when it removes
+  patterns containing only ones (#807).
 * Fixes `2l.lmer` and `2l.bin` when `mice()` gets extra arguments for
   other methods, such as a global `ridge`. These reached `lme4::lmer()` and
   `lme4::glmer()`, which stopped, so the imputations stayed at their
