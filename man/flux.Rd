@@ -14,7 +14,8 @@ values are coded as NA's.}
 include all columns in the calculations.}
 }
 \value{
-A data frame with \code{ncol(data)} rows and six columns:
+A data frame with one row for each variable in \code{local} and six
+columns:
 pobs = Proportion observed,
 influx = Influx
 outflux = Outflux

@@ -53,7 +53,8 @@ include all columns in the calculations.}
 \item{\dots}{Further arguments passed to \code{plot()} or \code{eqscplot()}.}
 }
 \value{
-An invisible data frame with \code{ncol(data)} rows and six columns:
+An invisible data frame with one row for each variable in
+\code{local} and six columns:
 pobs = Proportion observed,
 influx = Influx
 outflux = Outflux
