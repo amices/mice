@@ -112,3 +112,25 @@ test_that("REMOVE-LINDEP-003: removes negative copies and logs constant outcomes
   expect_false(any(keep))
   expect_identical(loggedEvents$out, "a, b, c, d")
 })
+
+test_that("REMOVE-LINDEP-004: handles one usable outcome observation (#803)", {
+  d <- data.frame(
+    y = c(1, 2, NA, NA, NA, NA),
+    a = c(1, NA, 3, 4, 5, 6),
+    b = c(3, 1, 4, 1, 5, 9)
+  )
+  expect_warning(
+    imp <- mice(
+      d,
+      method = c("norm", "", ""),
+      remove.collinear = FALSE,
+      m = 1,
+      maxit = 1,
+      seed = 1,
+      print = FALSE
+    ),
+    "Number of logged events"
+  )
+  expect_equal(complete(imp)$y, c(1, 2, 1, 1, 1, 1))
+  expect_true(any(imp$loggedEvents$dep == "y" & imp$loggedEvents$out == "a, b"))
+})
