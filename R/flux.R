@@ -32,7 +32,8 @@
 #' values are coded as NA's.
 #' @param local A vector of names of columns of \code{data}. The default is to
 #' include all columns in the calculations.
-#' @return A data frame with \code{ncol(data)} rows and six columns:
+#' @return A data frame with one row for each variable in \code{local} and six
+#' columns:
 #' pobs = Proportion observed,
 #' influx = Influx
 #' outflux = Outflux
@@ -55,7 +56,7 @@ flux <- function(data, local = names(data)) {
   .avg <- function(row) sum(row, na.rm = TRUE) / (length(row) - 1)
   ## calculates influx and outflux statistics
   ## of the missing data pattern
-  x <- colMeans(!is.na(data))
+  x <- colMeans(!is.na(data))[local]
   pat <- md.pairs(data)
   pat$rr <- pat$rr[local, , drop = FALSE]
   pat$rm <- pat$rm[local, , drop = FALSE]
@@ -63,7 +64,7 @@ flux <- function(data, local = names(data)) {
   pat$mm <- pat$mm[local, , drop = FALSE]
   ainb <- apply(pat$mr / (pat$mr + pat$mm), 1, .avg)
   aout <- apply(pat$rm / (pat$rm + pat$rr), 1, .avg)
-  fico <- fico(data)
+  fico <- fico(data)[local]
   outflux <- rowSums(pat$rm) / (rowSums(pat$rm + pat$mm))
   influx <- rowSums(pat$mr) / (rowSums(pat$mr + pat$rr))
   data.frame(
@@ -120,7 +121,8 @@ flux <- function(data, local = names(data)) {
 #' @param pty See \code{par}.
 #' @param lwd See \code{par}. Controls axis line thickness and diagonal
 #' @param \dots Further arguments passed to \code{plot()} or \code{eqscplot()}.
-#' @return An invisible data frame with \code{ncol(data)} rows and six columns:
+#' @return An invisible data frame with one row for each variable in
+#' \code{local} and six columns:
 #' pobs = Proportion observed,
 #' influx = Influx
 #' outflux = Outflux
@@ -192,7 +194,7 @@ fluxplot <- function(
     axis(2, lwd = lwd, las = las)
     abline(1, -1, lty = 2, lwd = lwd)
     if (labels) {
-      text(x = f$influx, y = f$outflux, label = names(data), ...)
+      text(x = f$influx, y = f$outflux, label = row.names(f), ...)
     } else {
       points(x = f$influx, y = f$outflux, ...)
     }
