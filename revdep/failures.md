@@ -11,7 +11,7 @@ Run `revdepcheck::revdep_details(, "dynr")` for more info
 *   checking whether package ‘dynr’ can be installed ... ERROR
      ```
      Installation failed.
-     See ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/dynr/new/dynr.Rcheck/00install.out’ for details.
+     See ‘/private/tmp/claude-501/-Users-buurensv-Dropbox-Package-mice-mice/40eed97e-5d9f-4f1d-be44-9f84c17a6016/scratchpad/mice-master/revdep/checks.noindex/dynr/new/dynr.Rcheck/00install.out’ for details.
      ```
 
 ## Installation
@@ -26,7 +26,7 @@ Run `revdepcheck::revdep_details(, "dynr")` for more info
 checking for gsl-config... no
 configure: error: gsl-config not found, is GSL installed?
 ERROR: configuration failed for package ‘dynr’
-* removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/dynr/new/dynr.Rcheck/dynr’
+* removing ‘/private/tmp/claude-501/-Users-buurensv-Dropbox-Package-mice-mice/40eed97e-5d9f-4f1d-be44-9f84c17a6016/scratchpad/mice-master/revdep/checks.noindex/dynr/new/dynr.Rcheck/dynr’
 
 
 ```
@@ -40,7 +40,7 @@ ERROR: configuration failed for package ‘dynr’
 checking for gsl-config... no
 configure: error: gsl-config not found, is GSL installed?
 ERROR: configuration failed for package ‘dynr’
-* removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/dynr/old/dynr.Rcheck/dynr’
+* removing ‘/private/tmp/claude-501/-Users-buurensv-Dropbox-Package-mice-mice/40eed97e-5d9f-4f1d-be44-9f84c17a6016/scratchpad/mice-master/revdep/checks.noindex/dynr/old/dynr.Rcheck/dynr’
 
 
 ```
@@ -57,7 +57,7 @@ Run `revdepcheck::revdep_details(, "idem")` for more info
 *   checking whether package ‘idem’ can be installed ... ERROR
      ```
      Installation failed.
-     See ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/idem/new/idem.Rcheck/00install.out’ for details.
+     See ‘/private/tmp/claude-501/-Users-buurensv-Dropbox-Package-mice-mice/40eed97e-5d9f-4f1d-be44-9f84c17a6016/scratchpad/mice-master/revdep/checks.noindex/idem/new/idem.Rcheck/00install.out’ for details.
      ```
 
 ## Installation
@@ -85,7 +85,7 @@ Ill-formed type. Expected an unsized type in function signature.
 Calls: <Anonymous> -> sapply -> lapply -> FUN -> <Anonymous>
 Execution halted
 ERROR: configuration failed for package ‘idem’
-* removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/idem/new/idem.Rcheck/idem’
+* removing ‘/private/tmp/claude-501/-Users-buurensv-Dropbox-Package-mice-mice/40eed97e-5d9f-4f1d-be44-9f84c17a6016/scratchpad/mice-master/revdep/checks.noindex/idem/new/idem.Rcheck/idem’
 
 
 ```
@@ -112,7 +112,54 @@ Ill-formed type. Expected an unsized type in function signature.
 Calls: <Anonymous> -> sapply -> lapply -> FUN -> <Anonymous>
 Execution halted
 ERROR: configuration failed for package ‘idem’
-* removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/idem/old/idem.Rcheck/idem’
+* removing ‘/private/tmp/claude-501/-Users-buurensv-Dropbox-Package-mice-mice/40eed97e-5d9f-4f1d-be44-9f84c17a6016/scratchpad/mice-master/revdep/checks.noindex/idem/old/idem.Rcheck/idem’
+
+
+```
+# NADIA ()
+
+* GitHub: <https://github.com/amices/mice>
+* Email: <mailto:stef.vanbuuren@tno.nl>
+
+Run `revdepcheck::revdep_details(, "NADIA")` for more info
+
+## Error before installation
+
+### Devel
+
+```
+
+  There is a binary version available but the source version is later:
+             binary source needs_compilation
+BiocParallel 1.47.0 1.48.0              TRUE
+
+  Binaries will be installed
+  These will not be installed
+
+
+Package which is only available in source form, and may need
+  compilation of C/C++/Fortran: ‘sva’
+Error in (function (libdir, packages, quiet, repos)  : 
+  all(packages %in% rownames(installed.packages(libdir[1]))) is not TRUE
+
+
+```
+### CRAN
+
+```
+
+  There is a binary version available but the source version is later:
+             binary source needs_compilation
+BiocParallel 1.47.0 1.48.0              TRUE
+
+  Binaries will be installed
+  These will not be installed
+
+
+Package which is only available in source form, and may need
+  compilation of C/C++/Fortran: ‘sva’
+Error in (function (libdir, packages, quiet, repos)  : 
+  all(packages %in% rownames(installed.packages(libdir[1]))) is not TRUE
 
 
 ```
@@ -129,7 +176,7 @@ Run `revdepcheck::revdep_details(, "pguIMP")` for more info
 *   checking whether package ‘pguIMP’ can be installed ... ERROR
      ```
      Installation failed.
-     See ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/pguIMP/new/pguIMP.Rcheck/00install.out’ for details.
+     See ‘/private/tmp/claude-501/-Users-buurensv-Dropbox-Package-mice-mice/40eed97e-5d9f-4f1d-be44-9f84c17a6016/scratchpad/mice-master/revdep/checks.noindex/pguIMP/new/pguIMP.Rcheck/00install.out’ for details.
      ```
 
 ## Installation
@@ -150,7 +197,7 @@ Error: .onLoad failed in loadNamespace() for 'rJava', details:
   dlopen(/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib, 0x000A): tried: '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64e.v1' or 'arm64' or 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (no such file), '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64e.v1' or 'arm64' or 'arm64'))
 Execution halted
 ERROR: lazy loading failed for package ‘pguIMP’
-* removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/pguIMP/new/pguIMP.Rcheck/pguIMP’
+* removing ‘/private/tmp/claude-501/-Users-buurensv-Dropbox-Package-mice-mice/40eed97e-5d9f-4f1d-be44-9f84c17a6016/scratchpad/mice-master/revdep/checks.noindex/pguIMP/new/pguIMP.Rcheck/pguIMP’
 
 
 ```
@@ -170,7 +217,7 @@ Error: .onLoad failed in loadNamespace() for 'rJava', details:
   dlopen(/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib, 0x000A): tried: '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64e.v1' or 'arm64' or 'arm64')), '/System/Volumes/Preboot/Cryptexes/OS/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (no such file), '/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jli/libjli.dylib' (mach-o file, but is an incompatible architecture (have 'x86_64', need 'arm64e' or 'arm64e.v1' or 'arm64' or 'arm64'))
 Execution halted
 ERROR: lazy loading failed for package ‘pguIMP’
-* removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/pguIMP/old/pguIMP.Rcheck/pguIMP’
+* removing ‘/private/tmp/claude-501/-Users-buurensv-Dropbox-Package-mice-mice/40eed97e-5d9f-4f1d-be44-9f84c17a6016/scratchpad/mice-master/revdep/checks.noindex/pguIMP/old/pguIMP.Rcheck/pguIMP’
 
 
 ```
@@ -186,7 +233,7 @@ Run `revdepcheck::revdep_details(, "rmsb")` for more info
 *   checking whether package ‘rmsb’ can be installed ... ERROR
      ```
      Installation failed.
-     See ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/rmsb/new/rmsb.Rcheck/00install.out’ for details.
+     See ‘/private/tmp/claude-501/-Users-buurensv-Dropbox-Package-mice-mice/40eed97e-5d9f-4f1d-be44-9f84c17a6016/scratchpad/mice-master/revdep/checks.noindex/rmsb/new/rmsb.Rcheck/00install.out’ for details.
      ```
 
 ## Installation
@@ -202,7 +249,7 @@ Error in loadNamespace(x) : there is no package called ‘rstantools’
 Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
 Execution halted
 ERROR: configuration failed for package ‘rmsb’
-* removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/rmsb/new/rmsb.Rcheck/rmsb’
+* removing ‘/private/tmp/claude-501/-Users-buurensv-Dropbox-Package-mice-mice/40eed97e-5d9f-4f1d-be44-9f84c17a6016/scratchpad/mice-master/revdep/checks.noindex/rmsb/new/rmsb.Rcheck/rmsb’
 
 
 ```
@@ -217,7 +264,7 @@ Error in loadNamespace(x) : there is no package called ‘rstantools’
 Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
 Execution halted
 ERROR: configuration failed for package ‘rmsb’
-* removing ‘/Users/buurensv/Dropbox/Package/mice/mice/revdep/checks.noindex/rmsb/old/rmsb.Rcheck/rmsb’
+* removing ‘/private/tmp/claude-501/-Users-buurensv-Dropbox-Package-mice-mice/40eed97e-5d9f-4f1d-be44-9f84c17a6016/scratchpad/mice-master/revdep/checks.noindex/rmsb/old/rmsb.Rcheck/rmsb’
 
 
 ```

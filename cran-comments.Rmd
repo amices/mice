@@ -119,30 +119,31 @@ revdep_check(pkg = ".", num_workers = 10, quiet = FALSE)
 
 ## revdepcheck results
 
-We checked 206 reverse dependencies (199 from CRAN + 7 from Bioconductor),
-comparing R CMD check results across CRAN and dev versions of this package.
+We reran the check on 26 November 2026 against the resubmitted version
+(commit 2cb25c6). We checked 206 reverse dependencies (197 from CRAN + 9
+from Bioconductor), comparing R CMD check results across CRAN and dev
+versions of this package.
 
- * We saw 4 new problems in CRAN packages, and 1 in a Bioconductor package
- * We failed to check 4 packages
+ * We saw 3 new problems
+ * We failed to check 5 packages
 
-All 5 new problems result from intended changes in this release. We
+All 3 new problems result from intended changes in this release. We
 notified the maintainers of these packages by email on 13 November 2026.
-`RSquaredMI`, which had the same problem, has since been updated on CRAN
-and now passes.
 
 * `autoReg` reads the confidence interval columns from
   `summary(pool(fit), conf.int = TRUE)` by their old `confint()`-style
   names (`` `2.5 %` ``/`` `97.5 %` ``), which this release renames to
   `conf.low`/`conf.high` (broom convention, #719).
-* `basecamb`, `parameters` and `RNAseqCovarImpute` (Bioconductor) have
-  tests that compare against exact numbers from a seeded `mice()` run with
-  the default method `pmm`. This release fixes a bug in the matching of
-  tied predicted values (#757), so the imputations for a given seed
-  change. The packages themselves are not at fault; the expected values
-  need updating.
-* `mfrmr` has a test that injects the value `2` into the imputations of a
-  logical variable and expects an error. This release keeps logical
-  variables logical in `complete()` (#764), so no error is raised.
+* `basecamb` and `parameters` have tests that compare against exact
+  numbers from a seeded `mice()` run with the default method `pmm`. This
+  release fixes a bug in the matching of tied predicted values (#757), so
+  the imputations for a given seed change. The packages themselves are not
+  at fault; the expected values need updating.
+
+Since the first submission, three packages that the earlier check flagged
+are resolved: `RSquaredMI` (0.2.1 on CRAN) and `RNAseqCovarImpute`
+(Bioconductor 1.12.0) now pass, and `mfrmr` (0.3.2) no longer depends on
+`mice`.
 
 The CRAN incoming check found four more packages with changes to worse.
 Our local check skipped vignettes and ran on macOS, so it missed them:
@@ -158,10 +159,10 @@ Our local check skipped vignettes and ran on macOS, so it missed them:
   old and the new `mice`.
 
 We notified the maintainers of `ggeffects`, `smdi` and
-`FuzzyImputationTest` on 19 November 2026.
+`FuzzyImputationTest` on 19 November 2026. All four pass in the rerun.
 
-The 4 packages we failed to check (`dynr`, `idem`, `pguIMP`, `rmsb`)
-could not be installed locally because of configure, Stan and rJava
-problems, unrelated to mice.
+The 5 packages we failed to check (`dynr`, `idem`, `pguIMP`, `rmsb`,
+`NADIA`) could not be installed locally because of configure, Stan, rJava
+and Bioconductor (`sva`) installation problems, unrelated to mice.
 
 See <https://github.com/amices/mice/tree/master/revdep> for details.

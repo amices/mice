@@ -10,7 +10,7 @@
 |collate  |C.UTF-8                         |
 |ctype    |C.UTF-8                         |
 |tz       |Europe/Amsterdam                |
-|date     |2026-11-18                      |
+|date     |2026-11-27                      |
 |pandoc   |3.10 @ /opt/homebrew/bin/pandoc |
 |quarto   |1.9.36 @ /usr/local/bin/quarto  |
 
@@ -74,22 +74,21 @@
 
 # Revdeps
 
-## Failed to check (4)
+## Failed to check (5)
 
 |package |version    |error |warning |note |
 |:-------|:----------|:-----|:-------|:----|
 |dynr    |0.1.16-114 |1     |        |     |
 |idem    |5.2        |1     |        |     |
+|NADIA   |?          |      |        |     |
 |pguIMP  |0.1.1      |1     |        |     |
 |rmsb    |1.1-3      |1     |        |     |
 
-## New problems (5)
+## New problems (3)
 
-|package           |version |error    |warning |note |
-|:-----------------|:-------|:--------|:-------|:----|
-|[autoReg](problems.md#autoreg)|0.3.5   |__+2__   |        |     |
-|[basecamb](problems.md#basecamb)|1.1.5   |__+1__   |        |     |
-|[mfrmr](problems.md#mfrmr)|0.2.4   |1 __+1__ |        |     |
-|[parameters](problems.md#parameters)|0.30.0  |__+1__   |        |     |
-|[RNAseqCovarImpute](problems.md#rnaseqcovarimpute)|1.10.0  |__+1__   |        |2    |
+|package    |version |error  |warning |note |
+|:----------|:-------|:------|:-------|:----|
+|[autoReg](problems.md#autoreg)|0.3.5   |__+2__ |        |     |
+|[basecamb](problems.md#basecamb)|1.1.5   |__+1__ |        |     |
+|[parameters](problems.md#parameters)|0.30.0  |__+1__ |        |     |
 
