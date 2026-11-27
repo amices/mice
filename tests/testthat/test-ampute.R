@@ -538,6 +538,41 @@ test_that("AMPUTE-006: prop and freq are properly adjusted when patterns contain
   )
 })
 
+test_that("AMPUTE-010: probability settings follow retained patterns (#807)", {
+  set.seed(1)
+  data <- matrix(rnorm(300), ncol = 3)
+  patterns <- rbind(c(1, 1, 1), c(0, 1, 1), c(1, 0, 1))
+  freq <- c(0.25, 0.5, 0.25)
+  type <- c("LEFT", "MID", "TAIL")
+  odds <- rbind(c(1, 2, 3, 4), c(4, 3, 2, 1), c(1, 1, 1, 1))
+
+  draw <- function(...) {
+    set.seed(1)
+    suppressWarnings(ampute(data, ...))
+  }
+
+  actual <- draw(patterns = patterns, freq = freq, type = type)
+  expected <- draw(
+    patterns = patterns[-1, ],
+    freq = freq[-1] / sum(freq[-1]),
+    prop = 0.375,
+    type = type[-1]
+  )
+  expect_identical(actual$type, type[-1])
+  expect_equal(actual$amp, expected$amp)
+
+  actual <- draw(patterns = patterns, freq = freq, cont = FALSE, odds = odds)
+  expected <- draw(
+    patterns = patterns[-1, ],
+    freq = freq[-1] / sum(freq[-1]),
+    prop = 0.375,
+    cont = FALSE,
+    odds = odds[-1, , drop = FALSE]
+  )
+  expect_identical(actual$odds, odds[-1, , drop = FALSE])
+  expect_equal(actual$amp, expected$amp)
+})
+
 # The following test was created to evaluate warnings when not all patterns can be generated (#317)
 
 test_that("AMPUTE-007: warnings appear when not all patterns can be generated", {

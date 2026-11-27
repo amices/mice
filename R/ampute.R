@@ -424,6 +424,15 @@ ampute <- function(
   if (!nrow(odds) %in% c(nrow(patterns), nrow(patterns.new))) {
     stop("The objects patterns and odds are not matching", call. = FALSE)
   }
+  if (nrow(patterns.new) < nrow(patterns)) {
+    row.one <- check.pat[["row.one"]]
+    if (length(type) == nrow(patterns)) {
+      type <- type[-row.one]
+    }
+    if (nrow(odds) == nrow(patterns)) {
+      odds <- odds[-row.one, , drop = FALSE]
+    }
+  }
   #
   # Start using arguments
   # Create empty objects
