@@ -628,3 +628,26 @@ test_that("AMPUTE-008: ampute() works under extreme condition", {
 })
 
 # --- end test Shangzhi-hong (#216) Dec 2019
+
+test_that("AMPUTE-009: extra pattern frequencies are discarded", {
+  patterns <- rbind(c(0, 1, 1), c(1, 0, 1))
+  set.seed(11)
+  expected <- ampute(
+    complete.data,
+    patterns = patterns,
+    freq = c(0.2, 0.3),
+    mech = "MCAR"
+  )
+  set.seed(11)
+  expect_warning(
+    actual <- ampute(
+      complete.data,
+      patterns = patterns,
+      freq = c(0.2, 0.3, 0.5),
+      mech = "MCAR"
+    ),
+    "Length of vector with relative frequencies"
+  )
+  expect_equal(actual$freq, expected$freq)
+  expect_equal(actual$amp, expected$amp)
+})

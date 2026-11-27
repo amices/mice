@@ -268,7 +268,7 @@ ampute <- function(
   }
   if (length(freq) != nrow(patterns)) {
     if (length(freq) > nrow(patterns)) {
-      freq <- freq[seq_along(nrow(patterns))]
+      freq <- freq[seq_len(nrow(patterns))]
     } else {
       freq <- c(freq, rep.int(0.2, nrow(patterns) - length(freq)))
     }
