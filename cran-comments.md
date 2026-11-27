@@ -3,7 +3,15 @@ cran-comments
 
 ## Resubmission
 
-This is a resubmission. Changes since the first submission:
+This is a second resubmission of `mice 3.20.0`. The code is the same as
+in the first resubmission of 19 November 2026. In response to that
+submission, CRAN advised us to resubmit after one or two weeks, so that
+the maintainers of affected reverse dependencies could update their
+packages. We reran the reverse dependency check on 26 November 2026; see
+“Downstream dependencies” below.
+
+Changes in the first resubmission, compared with the original
+submission:
 
 - The CRAN check with MKL reported three test failures (“Objects equal
   but not identical”) in `test-cluster-types.R` and `test-complete.R`.
