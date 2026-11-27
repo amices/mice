@@ -13,7 +13,10 @@ test_that("BARNARD-RUBIN-001: new BR matches old for lambda >= 1e-4, dfcom finit
   dfcom <- 100
   lambdas <- seq(1, 1e-04, length.out = 100)
   b <- lambdas * t / (1 + 1 / M)
-  expect_equal(barnard.rubin(M, b, t, dfcom), barnard.rubin_old(M, b, t, dfcom))
+  expect_equal(
+    barnard.rubin(M, b, t, dfcom),
+    barnard.rubin_old(M, b, t, rep(dfcom, length(b)))
+  )
 })
 
 test_that("BARNARD-RUBIN-002: new BR equals (m-1)/lambda^2 for lambda >= 1e-4, dfcom infinite", {
@@ -31,7 +34,8 @@ test_that("BARNARD-RUBIN-003: new BR differs from old for lambda < 1e-4 (no floo
   lambdas_small <- seq(1e-04, 0, length.out = 100)[-1] # exclude 1e-4 boundary
   b <- lambdas_small * t / (1 + 1 / M)
   expect_true(all(
-    barnard.rubin(M, b, t, dfcom) != barnard.rubin_old(M, b, t, dfcom)
+    barnard.rubin(M, b, t, dfcom) !=
+      barnard.rubin_old(M, b, t, rep(dfcom, length(b)))
   ))
 })
 
@@ -42,7 +46,7 @@ test_that("BARNARD-RUBIN-004: new BR handles tiny lambda and approaches correct 
   lambda <- c(0, 1e-8, 1e-6, 5e-5)
   b <- lambda * t / (1 + 1 / M)
 
-  old <- barnard.rubin_old(M, b, t, dfcom)
+  old <- barnard.rubin_old(M, b, t, rep(dfcom, length(b)))
   new <- barnard.rubin(M, b, t, dfcom)
 
   limit0 <- dfcom * (dfcom + 1) / (dfcom + 3) # limit as lambda -> 0
@@ -64,4 +68,12 @@ test_that("BARNARD-RUBIN-005: dfcom = Inf reduces to (m-1)/lambda^2 for lambda >
     expect_equal(barnard.rubin_old(M, b[i], t, dfcom = Inf), nu_old[i])
     expect_equal(barnard.rubin(M, b[i], t, dfcom = Inf), nu_old[i])
   }
+})
+
+test_that("BARNARD-RUBIN-006: recycles finite and infinite dfcom", {
+  b <- c(0.01, 0.02, 0.03, 0.04)
+  t <- c(0.055, 0.12, 0.2, 0.3)
+  dfcom <- c(20, Inf)
+  expected <- mapply(barnard.rubin, m = 2, b = b, t = t, dfcom = dfcom)
+  expect_equal(barnard.rubin(2, b, t, dfcom), expected)
 })

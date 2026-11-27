@@ -6,5 +6,8 @@ barnard.rubin <- function(m, b, t, dfcom = Inf) {
   }
   tmp <- (1 - lambda) * (1 + dfcom) * dfcom
   df_br <- (m - 1) * tmp / ((dfcom + 3) * (m - 1) + (lambda^2) * tmp)
+  if (length(dfcom) != length(df_br)) {
+    dfcom <- rep_len(dfcom, length(df_br))
+  }
   ifelse(is.infinite(dfcom), dfold, df_br)
 }
